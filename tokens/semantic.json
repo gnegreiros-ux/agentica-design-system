@@ -1,0 +1,79 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "level": "semantic",
+    "description": "Traduction des primitives en langage métier compréhensible par designers, développeurs et agents IA. Encode l'INTENTION, pas la valeur.",
+    "version": "1.0.0",
+    "owner": "design-system-team",
+    "rule": "Les agents comprennent la FONCTION, pas seulement la valeur. (Jan Six, GitHub, IDS 2026)"
+  },
+  "semantic": {
+    "color": {
+      "action": {
+        "primary":          { "value": "{primitive.color.blue.700}",    "$type": "color", "intent": "Action principale, CTA confirmé", "useFor": ["bouton primaire", "lien d'action principal"], "avoidFor": ["décoration", "actions destructives"] },
+        "secondary":        { "value": "{primitive.color.blue.100}",    "$type": "color", "intent": "Action secondaire, support" },
+        "critical":         { "value": "{primitive.color.red.700}",     "$type": "color", "intent": "Action irréversible ou à impact légal/financier", "useFor": ["suppression définitive", "confirmation de perte"], "avoidFor": ["erreurs légères", "avertissements"] },
+        "disabled":         { "value": "{primitive.color.neutral.300}", "$type": "color", "intent": "État désactivé" }
+      },
+      "feedback": {
+        "success":          { "value": "{primitive.color.green.700}",   "$type": "color", "intent": "Confirmation positive, succès" },
+        "warning":          { "value": "{primitive.color.yellow.600}",  "$type": "color", "intent": "Avertissement, attention requise" },
+        "danger":           { "value": "{primitive.color.red.700}",     "$type": "color", "intent": "Erreur, danger, action critique" },
+        "info":             { "value": "{primitive.color.blue.600}",    "$type": "color", "intent": "Information neutre" }
+      },
+      "background": {
+        "page":             { "value": "{primitive.color.neutral.50}",  "$type": "color", "intent": "Fond de page principal" },
+        "surface":          { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Fond de carte, panneau, dialogue" },
+        "subtle":           { "value": "{primitive.color.neutral.100}", "$type": "color", "intent": "Fond légèrement contrasté" },
+        "overlay":          { "value": "rgba(0,0,0,0.5)",               "$type": "color", "intent": "Fond de modal, backdrop" }
+      },
+      "text": {
+        "primary":          { "value": "{primitive.color.neutral.900}", "$type": "color", "intent": "Texte principal, corps de texte" },
+        "secondary":        { "value": "{primitive.color.neutral.600}", "$type": "color", "intent": "Texte secondaire, métadonnées" },
+        "disabled":         { "value": "{primitive.color.neutral.400}", "$type": "color", "intent": "Texte inactif" },
+        "inverse":          { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Texte sur fond sombre" },
+        "onAction":         { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Texte sur fond action.primary" }
+      },
+      "border": {
+        "default":          { "value": "{primitive.color.neutral.200}", "$type": "color" },
+        "strong":           { "value": "{primitive.color.neutral.400}", "$type": "color" },
+        "focus":            { "value": "{primitive.color.blue.500}",    "$type": "color", "intent": "Anneau de focus, accessibilité" },
+        "danger":           { "value": "{primitive.color.red.600}",     "$type": "color" }
+      }
+    },
+    "space": {
+      "control": {
+        "padding-x":        { "value": "{primitive.space.4}",  "$type": "dimension", "intent": "Padding horizontal des contrôles (boutons, inputs)" },
+        "padding-y":        { "value": "{primitive.space.2}",  "$type": "dimension", "intent": "Padding vertical des contrôles" },
+        "gap":              { "value": "{primitive.space.2}",  "$type": "dimension", "intent": "Espace entre icône et texte dans un contrôle" }
+      },
+      "layout": {
+        "section":          { "value": "{primitive.space.8}",  "$type": "dimension", "intent": "Espace entre sections de page" },
+        "component":        { "value": "{primitive.space.4}",  "$type": "dimension", "intent": "Espace interne standard d'un composant" },
+        "stack":            { "value": "{primitive.space.3}",  "$type": "dimension", "intent": "Espace vertical entre éléments empilés" }
+      }
+    },
+    "radius": {
+      "control":            { "value": "{primitive.radius.md}", "$type": "dimension", "intent": "Radius des contrôles interactifs (boutons, inputs)" },
+      "surface":            { "value": "{primitive.radius.lg}", "$type": "dimension", "intent": "Radius des cartes et panneaux" },
+      "overlay":            { "value": "{primitive.radius.xl}", "$type": "dimension", "intent": "Radius des modals et dialogues" }
+    },
+    "typography": {
+      "body": {
+        "size":             { "value": "{primitive.fontSize.md}",      "$type": "dimension" },
+        "weight":           { "value": "{primitive.fontWeight.regular}","$type": "fontWeight" },
+        "lineHeight":       { "value": "{primitive.lineHeight.normal}", "$type": "number" }
+      },
+      "label": {
+        "size":             { "value": "{primitive.fontSize.sm}",      "$type": "dimension" },
+        "weight":           { "value": "{primitive.fontWeight.medium}", "$type": "fontWeight" },
+        "lineHeight":       { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
+      },
+      "heading": {
+        "size":             { "value": "{primitive.fontSize.xl}",       "$type": "dimension" },
+        "weight":           { "value": "{primitive.fontWeight.semibold}","$type": "fontWeight" },
+        "lineHeight":       { "value": "{primitive.lineHeight.tight}",   "$type": "number" }
+      }
+    }
+  }
+}

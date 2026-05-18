@@ -1,0 +1,125 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "level": "component",
+    "description": "Décisions spécifiques à chaque composant. Ce sont des CONTRATS INSTITUTIONNELS. Toute modification requiert une approbation du Principal Designer. (Romina Kavcic, IDS 2026)",
+    "version": "1.0.0",
+    "owner": "design-system-team",
+    "approvalRequired": true
+  },
+  "component": {
+    "button": {
+      "$metadata": {
+        "intent": "Déclencher une action dans l'interface",
+        "owner": "design-system-team",
+        "approvalLevel": "principal-designer"
+      },
+      "primary": {
+        "background":           { "value": "{semantic.color.action.primary}",       "$type": "color" },
+        "background-hover":     { "value": "{primitive.color.blue.800}",            "$type": "color" },
+        "background-disabled":  { "value": "{semantic.color.action.disabled}",      "$type": "color" },
+        "text":                 { "value": "{semantic.color.text.onAction}",         "$type": "color" },
+        "border":               { "value": "transparent",                           "$type": "color" },
+        "radius":               { "value": "{semantic.radius.control}",             "$type": "dimension" },
+        "padding-x":            { "value": "{semantic.space.control.padding-x}",    "$type": "dimension" },
+        "padding-y":            { "value": "{semantic.space.control.padding-y}",    "$type": "dimension" },
+        "font-size":            { "value": "{semantic.typography.label.size}",      "$type": "dimension" },
+        "font-weight":          { "value": "{semantic.typography.label.weight}",    "$type": "fontWeight" }
+      },
+      "secondary": {
+        "background":           { "value": "{semantic.color.background.surface}",   "$type": "color" },
+        "background-hover":     { "value": "{semantic.color.background.subtle}",    "$type": "color" },
+        "text":                 { "value": "{semantic.color.action.primary}",        "$type": "color" },
+        "border":               { "value": "{semantic.color.border.default}",       "$type": "color" },
+        "radius":               { "value": "{semantic.radius.control}",             "$type": "dimension" },
+        "padding-x":            { "value": "{semantic.space.control.padding-x}",    "$type": "dimension" },
+        "padding-y":            { "value": "{semantic.space.control.padding-y}",    "$type": "dimension" }
+      },
+      "critical": {
+        "$metadata": {
+          "intent": "Action irréversible à impact légal, financier ou de sécurité",
+          "rules": [
+            "Confirmation explicite obligatoire avant exécution",
+            "Prévention du double-clic obligatoire",
+            "Libellé explicite obligatoire — jamais 'OK' ou 'Confirmer' seul",
+            "Contraste minimum 4.5:1 sur fond blanc",
+            "Traçabilité haute obligatoire"
+          ],
+          "approvalLevel": "principal-designer",
+          "auditLevel": "high"
+        },
+        "background":            { "value": "{semantic.color.action.critical}",     "$type": "color" },
+        "background-hover":      { "value": "{primitive.color.red.800}",            "$type": "color" },
+        "text":                  { "value": "{semantic.color.text.onAction}",        "$type": "color" },
+        "border":                { "value": "transparent",                          "$type": "color" },
+        "radius":                { "value": "{semantic.radius.control}",            "$type": "dimension" },
+        "padding-x":             { "value": "{semantic.space.control.padding-x}",   "$type": "dimension" },
+        "padding-y":             { "value": "{semantic.space.control.padding-y}",   "$type": "dimension" },
+        "requiresConfirmation":  { "value": true,   "$type": "boolean" },
+        "preventDoubleSubmit":   { "value": true,   "$type": "boolean" },
+        "minimumContrast":       { "value": "4.5:1","$type": "string" },
+        "auditLevel":            { "value": "high", "$type": "string" },
+        "requiresExplicitLabel": { "value": true,   "$type": "boolean" }
+      },
+      "ghost": {
+        "background":            { "value": "transparent",                          "$type": "color" },
+        "background-hover":      { "value": "{semantic.color.background.subtle}",   "$type": "color" },
+        "text":                  { "value": "{semantic.color.action.primary}",       "$type": "color" },
+        "border":                { "value": "transparent",                          "$type": "color" }
+      }
+    },
+    "input": {
+      "$metadata": {
+        "intent": "Permettre la saisie de données par l'utilisateur",
+        "owner": "design-system-team"
+      },
+      "default": {
+        "background":            { "value": "{semantic.color.background.surface}",  "$type": "color" },
+        "border":                { "value": "{semantic.color.border.default}",      "$type": "color" },
+        "border-focus":          { "value": "{semantic.color.border.focus}",        "$type": "color" },
+        "border-error":          { "value": "{semantic.color.border.danger}",       "$type": "color" },
+        "text":                  { "value": "{semantic.color.text.primary}",        "$type": "color" },
+        "placeholder":           { "value": "{semantic.color.text.secondary}",      "$type": "color" },
+        "radius":                { "value": "{semantic.radius.control}",            "$type": "dimension" },
+        "padding-x":             { "value": "{semantic.space.control.padding-x}",   "$type": "dimension" },
+        "padding-y":             { "value": "{semantic.space.control.padding-y}",   "$type": "dimension" },
+        "font-size":             { "value": "{semantic.typography.body.size}",      "$type": "dimension" }
+      }
+    },
+    "card": {
+      "$metadata": {
+        "intent": "Regrouper des informations liées dans un conteneur visuel distinct",
+        "owner": "design-system-team"
+      },
+      "default": {
+        "background":            { "value": "{semantic.color.background.surface}",  "$type": "color" },
+        "border":                { "value": "{semantic.color.border.default}",      "$type": "color" },
+        "radius":                { "value": "{semantic.radius.surface}",            "$type": "dimension" },
+        "padding":               { "value": "{semantic.space.layout.component}",    "$type": "dimension" },
+        "shadow":                { "value": "{primitive.shadow.sm}",                "$type": "shadow" }
+      }
+    },
+    "badge": {
+      "$metadata": {
+        "intent": "Indiquer un état, un statut ou un décompte",
+        "owner": "design-system-team"
+      },
+      "success": {
+        "background":            { "value": "{primitive.color.green.100}",          "$type": "color" },
+        "text":                  { "value": "{primitive.color.green.700}",          "$type": "color" }
+      },
+      "warning": {
+        "background":            { "value": "{primitive.color.yellow.100}",         "$type": "color" },
+        "text":                  { "value": "{primitive.color.yellow.600}",         "$type": "color" }
+      },
+      "danger": {
+        "background":            { "value": "{primitive.color.red.100}",            "$type": "color" },
+        "text":                  { "value": "{primitive.color.red.700}",            "$type": "color" }
+      },
+      "info": {
+        "background":            { "value": "{primitive.color.blue.100}",           "$type": "color" },
+        "text":                  { "value": "{primitive.color.blue.700}",           "$type": "color" }
+      }
+    }
+  }
+}
