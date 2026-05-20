@@ -1,9 +1,4 @@
 {
-  "$metadata": {
-    "description": "Configuration Style Dictionary — Compilation des tokens vers les formats techniques. (Amazon Style Dictionary)",
-    "version": "4.0.0",
-    "docs": "https://styledictionary.com"
-  },
   "source": [
     "tokens/primitives.json",
     "tokens/semantic.json",
@@ -18,57 +13,17 @@
         {
           "destination": "primitives.css",
           "format": "css/variables",
-          "filter": {
-            "attributes": { "level": "primitive" }
-          },
-          "options": {
-            "selector": ":root",
-            "outputReferences": false
-          }
+          "filter": { "attributes": { "level": "primitive" } }
         },
         {
           "destination": "semantic.css",
           "format": "css/variables",
-          "filter": {
-            "attributes": { "level": "semantic" }
-          },
-          "options": {
-            "selector": ":root",
-            "outputReferences": true
-          }
+          "filter": { "attributes": { "level": "semantic" } }
         },
         {
-          "destination": "component.css",
+          "destination": "components.css",
           "format": "css/variables",
-          "filter": {
-            "attributes": { "level": "component" }
-          },
-          "options": {
-            "selector": ":root",
-            "outputReferences": true
-          }
-        },
-        {
-          "destination": "all.css",
-          "format": "css/variables",
-          "options": {
-            "selector": ":root",
-            "outputReferences": true
-          }
-        }
-      ]
-    },
-    "json": {
-      "transformGroup": "js",
-      "buildPath": "dist/json/",
-      "files": [
-        {
-          "destination": "tokens.json",
-          "format": "json/nested"
-        },
-        {
-          "destination": "tokens-flat.json",
-          "format": "json/flat"
+          "filter": { "attributes": { "level": "component" } }
         }
       ]
     },
@@ -79,20 +34,17 @@
         {
           "destination": "tokens.js",
           "format": "javascript/es6"
-        },
-        {
-          "destination": "tokens.cjs",
-          "format": "javascript/module"
         }
       ]
     },
-    "typescript": {
-      "transformGroup": "js",
-      "buildPath": "dist/ts/",
+    "ios": {
+      "transformGroup": "ios-swift",
+      "buildPath": "dist/ios/",
       "files": [
         {
-          "destination": "tokens.d.ts",
-          "format": "typescript/es6-declarations"
+          "destination": "DesignTokens.swift",
+          "format": "ios-swift/class.swift",
+          "className": "DesignTokens"
         }
       ]
     },
@@ -101,38 +53,14 @@
       "buildPath": "dist/android/",
       "files": [
         {
-          "destination": "colors.xml",
-          "format": "android/colors",
-          "filter": { "attributes": { "category": "color" } }
+          "destination": "tokens.colors.xml",
+          "format": "android/colors"
         },
         {
-          "destination": "dimens.xml",
-          "format": "android/dimens",
-          "filter": { "attributes": { "category": "size" } }
+          "destination": "tokens.dimens.xml",
+          "format": "android/dimens"
         }
       ]
-    },
-    "ios-swift": {
-      "transformGroup": "ios-swift",
-      "buildPath": "dist/ios/",
-      "files": [
-        {
-          "destination": "StyleDictionaryColor.swift",
-          "format": "ios-swift/class.swift",
-          "filter": { "attributes": { "category": "color" } }
-        },
-        {
-          "destination": "StyleDictionarySize.swift",
-          "format": "ios-swift/class.swift",
-          "filter": { "attributes": { "category": "size" } }
-        }
-      ]
-    }
-  },
-  "transform": {
-    "custom/naming": {
-      "type": "name",
-      "transformer": "transformers/naming.js"
     }
   }
 }

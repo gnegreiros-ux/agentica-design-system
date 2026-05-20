@@ -49,73 +49,56 @@ Tokens primitifs   →  Tokens sémantiques  →  Tokens de composant
 
 ---
 
-## 3. Contraintes d'accessibilité — Non négociables
+## 3. Composants — règles générales
 
-| Règle | Standard | Valeur minimale |
-|-------|----------|-----------------|
-| Contraste texte | WCAG 2.1 AA | 4.5:1 |
-| Contraste grandes interfaces | WCAG 2.1 AA | 3:1 |
-| Focus visible | WCAG 2.1 AA | Obligatoire |
-| Navigation clavier | WCAG 2.1 | Tous les composants |
-| Attributs ARIA | WAI-ARIA 1.2 | Selon contexte |
+Chaque composant est un **contrat**. Il encode :
+- Son intention (pourquoi il existe)
+- Ses variantes autorisées
+- Ses règles d'accessibilité non négociables
+- Ses comportements (états, animations)
+- Sa gouvernance (qui approuve les changements)
 
-> **Règle absolue :** Aucun composant ne peut être fusionné (merged) sans avoir passé l'audit d'accessibilité.
-
----
-
-## 4. Conventions de nommage
-
-### Tokens
-- Format : `[catégorie].[rôle].[variante]`
-- Exemples valides : `color.action.primary`, `space.control.padding`, `radius.button.default`
-- Exemples invalides : `blue500`, `mainColor`, `btnPadding`
-
-### Composants
-- Format kebab-case : `ramq-button`, `ramq-input`, `ramq-modal`
-- Préfixe organisationnel obligatoire.
-
-### Fichiers
-- Composants : `[nom-composant].md` dans `guidelines/components/`
-- Fondations : `[nom-fondation].md` dans `guidelines/foundations/`
+Les contrats de composants sont dans `guidelines/components/`.
 
 ---
 
-## 5. Règles d'escalade — Dernier mot humain
+## 4. Accessibilité — non négociable
 
-| Niveau d'autonomie | Action | Approbation requise |
-|-------------------|--------|---------------------|
-| Niveau 0 | Lecture, surveillance | Aucune |
-| Niveau 1 | Rapport, suggestion | Aucune (lecture seule) |
-| Niveau 2 | PR de correction automatique | Révision humaine obligatoire |
-| Niveau 3 | Mise à jour documentation | Validation du responsable |
-| Niveau 4 | Changement de token/contrat | Approbation Principal Designer |
-
-> **Règle absolue :** Aucun agent n'a le droit de modifier un token de composant sans approbation humaine explicite.
+| Règle | Standard |
+|-------|----------|
+| Contraste texte normal | WCAG AA — 4.5:1 minimum |
+| Contraste texte large | WCAG AA — 3:1 minimum |
+| Navigation clavier | 100% des interactions accessibles |
+| Attributs ARIA | Obligatoires sur tous les composants interactifs |
+| Tests automatisés | axe-core + Playwright avant chaque déploiement |
 
 ---
 
-## 6. Audit et auto-guérison
+## 5. Token Change Request (TCR)
 
-### Dérives détectées automatiquement
-- Couleurs codées en dur (ex. `#3B82F6` au lieu d'un token)
-- Tokens dépréciés encore utilisés
-- Composants sans métadonnées complètes
-- Instances détachées dans Figma
-- Ratio de contraste insuffisant
+Tout changement de token suit ce flux :
 
-### Processus de correction
-1. Agent Observer détecte la dérive → rapport automatique
-2. Agent Auditor évalue l'impact → score de conformité
-3. Agent Guardian propose une PR de correction (niveau 2)
-4. **Humain approuve ou rejette** → déploiement
+1. Problème identifié et documenté
+2. Demande formelle soumise (TCR)
+3. Couche identifiée (primitif / sémantique / composant)
+4. Évaluation de l'impact
+5. Approbation selon le niveau de risque
+6. Modification + compilation automatique
+7. Tests et audits
+8. Communication aux équipes
+
+**Le dernier mot appartient toujours à l'équipe design system.**
 
 ---
 
-## 7. Sources de référence
+## 6. Ce que les agents peuvent faire
 
-- Nielsen Norman Group — [Design Systems 101](https://nngroup.com/articles/design-systems-101/)
-- The Design System Guide — Romina Kavcic — [thedesignsystem.guide](https://thedesignsystem.guide)
-- Into Design Systems — [intodesignsystems.com](https://intodesignsystems.com)
-- WCAG 2.1 — [w3.org/TR/WCAG21](https://www.w3.org/TR/WCAG21/)
-- Style Dictionary — [styledictionary.com](https://styledictionary.com)
-- Google Labs DESIGN.md spec — [github.com/google-labs-code/design.md](https://github.com/google-labs-code/design.md)
+| Action | Autorisé |
+|--------|----------|
+| Lire les contrats de composants | ✅ |
+| Générer du code depuis les tokens | ✅ |
+| Détecter les dérives | ✅ |
+| Proposer des corrections | ✅ (avec approbation humaine) |
+| Modifier un token sémantique | ❌ — TCR requis |
+| Modifier un contrat de composant | ❌ — approbation Principal Designer |
+| Déployer en production | ❌ — validation humaine obligatoire |

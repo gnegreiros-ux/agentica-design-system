@@ -2,77 +2,71 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "level": "semantic",
-    "description": "Traduction des primitives en langage métier compréhensible par designers, développeurs et agents IA. Encode l'INTENTION, pas la valeur.",
+    "description": "Traduction des primitives en langage métier. Encode l'INTENTION, pas la valeur. Lisible par les humains et les agents IA.",
     "version": "1.0.0",
-    "owner": "design-system-team",
-    "rule": "Les agents comprennent la FONCTION, pas seulement la valeur. (Jan Six, GitHub, IDS 2026)"
+    "rule": "Les agents comprennent la FONCTION, pas la valeur. color.feedback.danger est une intention. red-700 est une valeur décorative."
   },
   "semantic": {
     "color": {
       "action": {
-        "primary":          { "value": "{primitive.color.blue.700}",    "$type": "color", "intent": "Action principale, CTA confirmé", "useFor": ["bouton primaire", "lien d'action principal"], "avoidFor": ["décoration", "actions destructives"] },
-        "secondary":        { "value": "{primitive.color.blue.100}",    "$type": "color", "intent": "Action secondaire, support" },
-        "critical":         { "value": "{primitive.color.red.700}",     "$type": "color", "intent": "Action irréversible ou à impact légal/financier", "useFor": ["suppression définitive", "confirmation de perte"], "avoidFor": ["erreurs légères", "avertissements"] },
-        "disabled":         { "value": "{primitive.color.neutral.300}", "$type": "color", "intent": "État désactivé" }
+        "primary":          { "value": "{color.blue.700}",    "$type": "color", "$intent": "Action principale — CTA, bouton primaire" },
+        "primary-hover":    { "value": "{color.blue.900}",    "$type": "color", "$intent": "État survol de l'action principale" },
+        "primary-disabled": { "value": "{color.neutral.300}", "$type": "color", "$intent": "Action principale désactivée" }
       },
       "feedback": {
-        "success":          { "value": "{primitive.color.green.700}",   "$type": "color", "intent": "Confirmation positive, succès" },
-        "warning":          { "value": "{primitive.color.yellow.600}",  "$type": "color", "intent": "Avertissement, attention requise" },
-        "danger":           { "value": "{primitive.color.red.700}",     "$type": "color", "intent": "Erreur, danger, action critique" },
-        "info":             { "value": "{primitive.color.blue.600}",    "$type": "color", "intent": "Information neutre" }
+        "danger":        { "value": "{color.red.700}",   "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
+        "danger-subtle": { "value": "{color.red.100}",   "$type": "color", "$intent": "Fond subtil pour état danger" },
+        "success":       { "value": "{color.green.700}", "$type": "color", "$intent": "Confirmation, succès, validation" },
+        "info":          { "value": "{color.blue.700}",  "$type": "color", "$intent": "Information neutre, aide contextuelle" }
       },
       "background": {
-        "page":             { "value": "{primitive.color.neutral.50}",  "$type": "color", "intent": "Fond de page principal" },
-        "surface":          { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Fond de carte, panneau, dialogue" },
-        "subtle":           { "value": "{primitive.color.neutral.100}", "$type": "color", "intent": "Fond légèrement contrasté" },
-        "overlay":          { "value": "rgba(0,0,0,0.5)",               "$type": "color", "intent": "Fond de modal, backdrop" }
+        "page":    { "value": "{color.neutral.50}",  "$type": "color", "$intent": "Fond de page principale" },
+        "surface": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Fond de carte, panneau, modal" },
+        "subtle":  { "value": "{color.neutral.100}", "$type": "color", "$intent": "Fond secondaire, survol discret" }
       },
       "text": {
-        "primary":          { "value": "{primitive.color.neutral.900}", "$type": "color", "intent": "Texte principal, corps de texte" },
-        "secondary":        { "value": "{primitive.color.neutral.600}", "$type": "color", "intent": "Texte secondaire, métadonnées" },
-        "disabled":         { "value": "{primitive.color.neutral.400}", "$type": "color", "intent": "Texte inactif" },
-        "inverse":          { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Texte sur fond sombre" },
-        "onAction":         { "value": "{primitive.color.neutral.0}",   "$type": "color", "intent": "Texte sur fond action.primary" }
+        "primary":   { "value": "{color.neutral.900}", "$type": "color", "$intent": "Texte principal, haute lisibilité" },
+        "secondary": { "value": "{color.neutral.700}", "$type": "color", "$intent": "Texte secondaire, labels, métadonnées" },
+        "disabled":  { "value": "{color.neutral.300}", "$type": "color", "$intent": "Texte désactivé" },
+        "on-action": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond d'action (bouton primaire)" },
+        "on-danger": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
       },
       "border": {
-        "default":          { "value": "{primitive.color.neutral.200}", "$type": "color" },
-        "strong":           { "value": "{primitive.color.neutral.400}", "$type": "color" },
-        "focus":            { "value": "{primitive.color.blue.500}",    "$type": "color", "intent": "Anneau de focus, accessibilité" },
-        "danger":           { "value": "{primitive.color.red.600}",     "$type": "color" }
+        "default": { "value": "{color.neutral.200}", "$type": "color", "$intent": "Bordure standard" },
+        "focus":   { "value": "{color.blue.700}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier" },
+        "danger":  { "value": "{color.red.700}",    "$type": "color", "$intent": "Bordure état erreur" }
       }
     },
     "space": {
       "control": {
-        "padding-x":        { "value": "{primitive.space.4}",  "$type": "dimension", "intent": "Padding horizontal des contrôles (boutons, inputs)" },
-        "padding-y":        { "value": "{primitive.space.2}",  "$type": "dimension", "intent": "Padding vertical des contrôles" },
-        "gap":              { "value": "{primitive.space.2}",  "$type": "dimension", "intent": "Espace entre icône et texte dans un contrôle" }
+        "padding-x": { "value": "{space.4}", "$type": "dimension", "$intent": "Espacement horizontal des contrôles interactifs" },
+        "padding-y": { "value": "{space.2}", "$type": "dimension", "$intent": "Espacement vertical des contrôles interactifs" },
+        "gap":       { "value": "{space.2}", "$type": "dimension", "$intent": "Écart interne entre éléments d'un contrôle" }
       },
       "layout": {
-        "section":          { "value": "{primitive.space.8}",  "$type": "dimension", "intent": "Espace entre sections de page" },
-        "component":        { "value": "{primitive.space.4}",  "$type": "dimension", "intent": "Espace interne standard d'un composant" },
-        "stack":            { "value": "{primitive.space.3}",  "$type": "dimension", "intent": "Espace vertical entre éléments empilés" }
+        "section":   { "value": "{space.8}", "$type": "dimension", "$intent": "Espacement entre sections de page" },
+        "component": { "value": "{space.5}", "$type": "dimension", "$intent": "Espacement entre composants" }
       }
     },
     "radius": {
-      "control":            { "value": "{primitive.radius.md}", "$type": "dimension", "intent": "Radius des contrôles interactifs (boutons, inputs)" },
-      "surface":            { "value": "{primitive.radius.lg}", "$type": "dimension", "intent": "Radius des cartes et panneaux" },
-      "overlay":            { "value": "{primitive.radius.xl}", "$type": "dimension", "intent": "Radius des modals et dialogues" }
+      "control": { "value": "{radius.sm}", "$type": "dimension", "$intent": "Rayon pour contrôles interactifs (boutons, inputs)" },
+      "card":    { "value": "{radius.md}", "$type": "dimension", "$intent": "Rayon pour conteneurs (cartes, panneaux)" }
     },
     "typography": {
       "body": {
-        "size":             { "value": "{primitive.fontSize.md}",      "$type": "dimension" },
-        "weight":           { "value": "{primitive.fontWeight.regular}","$type": "fontWeight" },
-        "lineHeight":       { "value": "{primitive.lineHeight.normal}", "$type": "number" }
+        "size":        { "value": "{fontSize.md}",      "$type": "dimension" },
+        "weight":      { "value": "{fontWeight.regular}","$type": "fontWeight" },
+        "line-height": { "value": "{lineHeight.normal}", "$type": "number" }
       },
       "label": {
-        "size":             { "value": "{primitive.fontSize.sm}",      "$type": "dimension" },
-        "weight":           { "value": "{primitive.fontWeight.medium}", "$type": "fontWeight" },
-        "lineHeight":       { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
+        "size":        { "value": "{fontSize.sm}",      "$type": "dimension" },
+        "weight":      { "value": "{fontWeight.medium}", "$type": "fontWeight" },
+        "line-height": { "value": "{lineHeight.tight}",  "$type": "number" }
       },
       "heading": {
-        "size":             { "value": "{primitive.fontSize.xl}",       "$type": "dimension" },
-        "weight":           { "value": "{primitive.fontWeight.semibold}","$type": "fontWeight" },
-        "lineHeight":       { "value": "{primitive.lineHeight.tight}",   "$type": "number" }
+        "size":        { "value": "{fontSize.xl}",       "$type": "dimension" },
+        "weight":      { "value": "{fontWeight.bold}",   "$type": "fontWeight" },
+        "line-height": { "value": "{lineHeight.tight}",  "$type": "number" }
       }
     }
   }
