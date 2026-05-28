@@ -94,6 +94,12 @@
 | ADR-006 | Choix de Chromatic pour les tests de régression visuelle | ✅ Actif |
 | ADR-007 | Choix de axe-core pour les tests d'accessibilité | ✅ Actif |
 | ADR-008 | Choix de Radix UI Colors pour la palette primitive | ✅ Actif |
+| ADR-009 | Choix de Storybook pour la documentation des composants | ✅ Actif |
+| ADR-010 | Choix de Playwright pour les tests E2E et d'accessibilité | ✅ Actif |
+| ADR-011 | Choix de Tokens Studio pour la synchronisation Figma ↔ JSON | ✅ Actif |
+| ADR-012 | Détection de dérive par script d'audit (audit-tokens.js) | ✅ Actif |
+| ADR-013 | DESIGN.md comme contrat portable versionné avec le code | ✅ Actif |
+| ADR-014 | Choix de Conventional Commits pour les messages de commit | ✅ Actif |
 
 > Dossier complet : `decisions/`
 

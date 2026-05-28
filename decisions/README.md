@@ -66,6 +66,12 @@ des décisions déjà tranchées.
 | [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choix de Chromatic pour les tests de régression visuelle | 2026-05-28 | ✅ Actif |
 | [ADR-007](ADR-007-axe-core-accessibilite.md) | Choix de axe-core pour les tests d'accessibilité | 2026-05-28 | ✅ Actif |
 | [ADR-008](ADR-008-radix-colors.md) | Choix de Radix UI Colors pour la palette primitive | 2026-05-28 | ✅ Actif |
+| [ADR-009](ADR-009-storybook.md) | Choix de Storybook pour la documentation des composants | 2026-05-28 | ✅ Actif |
+| [ADR-010](ADR-010-playwright.md) | Choix de Playwright pour les tests E2E et d'accessibilité | 2026-05-28 | ✅ Actif |
+| [ADR-011](ADR-011-tokens-studio.md) | Choix de Tokens Studio pour la synchronisation Figma ↔ JSON | 2026-05-28 | ✅ Actif |
+| [ADR-012](ADR-012-audit-tokens-script.md) | Détection de dérive par script d'audit (audit-tokens.js) | 2026-05-28 | ✅ Actif |
+| [ADR-013](ADR-013-design-md-contrat-portable.md) | DESIGN.md comme contrat portable versionné avec le code | 2026-05-28 | ✅ Actif |
+| [ADR-014](ADR-014-conventional-commits.md) | Choix de Conventional Commits pour les messages de commit | 2026-05-28 | ✅ Actif |
 
 ---
 
