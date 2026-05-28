@@ -90,6 +90,7 @@
 | ADR-002 | Choix de Lit pour les Web Components | ✅ Actif |
 | ADR-003 | Choix de Style Dictionary pour la compilation des tokens | ✅ Actif |
 | ADR-004 | Gouvernance humaine : le dernier mot est toujours humain | ✅ Actif |
+| ADR-005 | Remplacement de la variante `danger` par `critical` | ✅ Actif |
 
 > Dossier complet : `decisions/`
 
