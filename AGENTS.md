@@ -65,6 +65,7 @@ DESIGN.md                              ← contrat portable — toujours lire en
 .claude/instructions/codebase-context.md ← contexte technique
 .claude/instructions/session-spec.md   ← spec condensée pour cette session
 tokens/semantic.json                   ← source de vérité des intentions UX
+decisions/                             ← pourquoi les décisions ont été prises (ADRs)
 ```
 
 ---
