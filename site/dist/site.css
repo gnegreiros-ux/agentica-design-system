@@ -2,6 +2,9 @@
 /* Agentic Design System — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
+html { scroll-padding-top: 72px; }
+
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
 

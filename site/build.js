@@ -173,6 +173,9 @@ function siteCSS() { return `
 /* Agentic Design System — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
+html { scroll-padding-top: 72px; }
+
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
 
@@ -562,6 +565,12 @@ function sidebarDecisions(base, adrs) {
   const links = adrs.slice(0,10).map(a => `<a href="${base}decisions/${a.slug}.html">ADR-${String(a.num).padStart(3,'0')}</a>`).join('');
   const more = adrs.length > 10 ? `<a href="${base}decisions/index.html">→ Tous les ADRs (${adrs.length})</a>` : '';
   return `<div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="${base}decisions/index.html">Index des ADRs</a>${links}${more}</div>`;
+}
+
+// Variante pour les pages déjà dans decisions/ — liens relatifs sans préfixe
+function sidebarDecisionsLocal(adrs) {
+  const links = adrs.map(a => `<a href="${a.slug}.html">ADR-${String(a.num).padStart(3,'0')}</a>`).join('');
+  return `<div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a>${links}</div>`;
 }
 
 // ─── PAGE: HOME ────────────────────────────────────────────────────────────
@@ -1071,7 +1080,7 @@ function buildDecisionsIndex(adrs) {
 
   write(path.join(DIST, 'decisions/index.html'), layout({
     title: 'Décisions (ADRs)', depth: 1,
-    sidebar: sidebarDecisions('', adrs),
+    sidebar: sidebarDecisionsLocal(adrs),
     body
   }));
 }
@@ -1096,7 +1105,7 @@ function buildADR(adr, adrs) {
   const body = meta + content + nav;
   write(path.join(DIST, `decisions/${adr.slug}.html`), layout({
     title: adr.title, depth: 1,
-    sidebar: sidebarDecisions('', adrs),
+    sidebar: sidebarDecisionsLocal(adrs),
     body
   }));
 }
