@@ -73,6 +73,7 @@ des décisions déjà tranchées.
 | [ADR-013](ADR-013-design-md-contrat-portable.md) | DESIGN.md comme contrat portable versionné avec le code | 2026-05-28 | ✅ Actif |
 | [ADR-014](ADR-014-conventional-commits.md) | Choix de Conventional Commits pour les messages de commit | 2026-05-28 | ✅ Actif |
 | [ADR-015](ADR-015-hook-rappel-adr.md) | Hook automatique de rappel ADR sur modifications critiques | 2026-05-28 | ✅ Actif |
+| [ADR-016](ADR-016-journal-construction.md) | Journal de construction automatique du kit | 2026-05-28 | ✅ Actif |
 
 ---
 
