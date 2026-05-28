@@ -59,6 +59,7 @@ des décisions déjà tranchées.
 | ADR | Titre | Date | Statut |
 |-----|-------|------|--------|
 | [ADR-001](ADR-001-trois-niveaux-tokens.md) | Architecture 3 niveaux de tokens | 2026-05-28 | ✅ Actif |
+| [ADR-002](ADR-002-lit-web-components.md) | Choix de Lit pour les Web Components | 2026-05-28 | ✅ Actif |
 
 ---
 
