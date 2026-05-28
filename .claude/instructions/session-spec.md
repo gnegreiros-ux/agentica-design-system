@@ -93,6 +93,7 @@
 | ADR-005 | Remplacement de la variante `danger` par `critical` | ✅ Actif |
 | ADR-006 | Choix de Chromatic pour les tests de régression visuelle | ✅ Actif |
 | ADR-007 | Choix de axe-core pour les tests d'accessibilité | ✅ Actif |
+| ADR-008 | Choix de Radix UI Colors pour la palette primitive | ✅ Actif |
 
 > Dossier complet : `decisions/`
 

@@ -65,6 +65,7 @@ des décisions déjà tranchées.
 | [ADR-005](ADR-005-variante-critical-vs-danger.md) | Remplacement de la variante `danger` par `critical` | 2026-05-28 | ✅ Actif |
 | [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choix de Chromatic pour les tests de régression visuelle | 2026-05-28 | ✅ Actif |
 | [ADR-007](ADR-007-axe-core-accessibilite.md) | Choix de axe-core pour les tests d'accessibilité | 2026-05-28 | ✅ Actif |
+| [ADR-008](ADR-008-radix-colors.md) | Choix de Radix UI Colors pour la palette primitive | 2026-05-28 | ✅ Actif |
 
 ---
 
