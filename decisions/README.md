@@ -61,6 +61,7 @@ des décisions déjà tranchées.
 | [ADR-001](ADR-001-trois-niveaux-tokens.md) | Architecture 3 niveaux de tokens | 2026-05-28 | ✅ Actif |
 | [ADR-002](ADR-002-lit-web-components.md) | Choix de Lit pour les Web Components | 2026-05-28 | ✅ Actif |
 | [ADR-003](ADR-003-style-dictionary.md) | Choix de Style Dictionary pour la compilation des tokens | 2026-05-28 | ✅ Actif |
+| [ADR-004](ADR-004-gouvernance-humaine.md) | Gouvernance humaine : le dernier mot est toujours humain | 2026-05-28 | ✅ Actif |
 
 ---
 
