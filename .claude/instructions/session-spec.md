@@ -88,6 +88,7 @@
 |-----|----------|--------|
 | ADR-001 | Architecture 3 niveaux de tokens (primitif → sémantique → composant) | ✅ Actif |
 | ADR-002 | Choix de Lit pour les Web Components | ✅ Actif |
+| ADR-003 | Choix de Style Dictionary pour la compilation des tokens | ✅ Actif |
 
 > Dossier complet : `decisions/`
 
