@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>DESIGN.md comme contrat portable versionné avec le code — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 013</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead, Principal Designer, Direction produit</div>
+</div><h1>ADR-013 — DESIGN.md comme contrat portable versionné avec le code</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Principal Designer, Direction produit <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-013-design-md-contrat-portable.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, decisions/ADR-004-gouvernance-humaine.md <strong>Relations:</strong> DESIGN.md, AGENTS.md, .claude/instructions/session-spec.md, decisions/ADR-004-gouvernance-humaine.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Un système de design encode des décisions d'organisation : quelles valeurs, quels principes, quelle gouvernance. Ces décisions vivent traditionnellement dans des wikis, des présentations, des documents Notion, ou dans la tête des personnes clés de l'équipe.</p>
+<p>Ce stockage a deux défauts majeurs pour un système agentique :</p>
+<p><strong>1. La désynchronisation avec le code</strong> Un principe documenté dans Notion n'est pas lié au code qui l'implémente. Un agent qui lit le code ne voit pas le principe. Un agent qui lit Notion ne voit pas si le principe est implémenté ou non.</p>
+<p><strong>2. L'inaccessibilité par les agents</strong> Un agent IA n'a pas accès à Notion, Confluence, ou aux présentations PowerPoint. Il peut lire le repo git. Si les décisions de gouvernance ne sont pas dans le repo, les agents opèrent sans ces contraintes — même si elles existent formellement ailleurs.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment rendre les principes et la gouvernance du système de design accessibles aux agents, synchronisés avec le code, et versionnés au même titre que les tokens ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Création de <code>DESIGN.md</code> comme <strong>contrat portable</strong> — un fichier Markdown à la racine du repo qui encode les principes, l'architecture des tokens, les règles d'accessibilité, et la gouvernance, dans un format lisible par les humains et par les agents IA.</p>
+<p><code>DESIGN.md</code> est versionné avec le code. Toute modification de <code>DESIGN.md</code> suit le même processus qu'une modification de token : PR, review, approbation.</p>
+<p>Le concept s'inspire des travaux de Google Labs (avril 2026) sur les spécifications portables pour systèmes de design agentiques — <code>DESIGN.md</code> est la réponse locale à la question "comment un agent connaît-il les règles du jeu ?"</p>
+<p><strong>Ce que DESIGN.md contient :</strong></p>
+<ul><li>Identité et intention du système (nom, organisation, version, responsable)</li><li>Architecture des tokens (les trois niveaux, règles de gouvernance)</li><li>Règles générales des composants</li><li>Règles d'accessibilité non négociables</li><li>Le processus TCR (Token Change Request)</li><li>Ce que les agents peuvent et ne peuvent pas faire</li></ul>
+<p><strong>Ce que DESIGN.md ne contient pas :</strong></p>
+<ul><li>Les valeurs des tokens (dans <code>tokens/*.json</code>)</li><li>Les contrats de composants (dans <code>guidelines/components/</code>)</li><li>Les décisions techniques (dans <code>decisions/</code>)</li></ul>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Wiki interne (Notion, Confluence)</strong></td><td>Non accessible aux agents. Désynchronisé du code par nature — personne ne met à jour le wiki quand le code change. Pas versionné avec git — aucune traçabilité de qui a changé quoi et quand.</td></tr><tr><td><strong>README.md uniquement</strong></td><td>Le README est une introduction au projet, pas un contrat de gouvernance. Mélanger les deux surcharge le README et rend les deux rôles moins lisibles. <code>DESIGN.md</code> est un fichier dédié à la gouvernance.</td></tr><tr><td><strong>Commentaires dans les fichiers de code</strong></td><td>Non centralisés. Un agent doit lire tous les fichiers pour reconstituer les règles. Pas approprié pour des principes qui s'appliquent à l'ensemble du système.</td></tr><tr><td><strong>Variables d'environnement ou config JSON</strong></td><td>Les principes de gouvernance ne sont pas de la configuration technique. Un fichier JSON de config ne se lit pas naturellement par les humains et ne peut pas exprimer des nuances de gouvernance.</td></tr><tr><td><strong>Pas de document de gouvernance</strong></td><td>Rejeté explicitement. Sans <code>DESIGN.md</code>, chaque agent commence avec un contexte vide et reconstruit les règles depuis le code — avec des erreurs garanties. La première instruction de <code>AGENTS.md</code> est "lire DESIGN.md en premier".</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li><code>DESIGN.md</code> est le premier fichier à lire (AGENTS.md l'indique explicitement)</li><li>Un agent qui a lu <code>DESIGN.md</code> connaît : les principes directeurs, la structure</li></ul>
+<p>  des tokens, les règles d'accessibilité, le processus TCR, et ses propres limites</p>
+<ul><li><code>DESIGN.md</code> reste stable entre les sessions — les agents retrouvent le même contrat</li></ul>
+<p>  à chaque démarrage, sans dépendre de la mémoire de la session précédente</p>
+<p><strong>Pour les équipes :</strong></p>
+<ul><li><code>DESIGN.md</code> est la réponse à "où est la gouvernance du système ?" — une URL de fichier</li></ul>
+<p>  git, pas un lien vers un wiki possiblement déprécié</p>
+<ul><li>Toute nouvelle personne (humain ou agent) qui clone le repo trouve immédiatement</li></ul>
+<p>  le contrat de l'organisation dans le fichier</p>
+<p><strong>Pour la gouvernance :</strong></p>
+<ul><li>Modifier <code>DESIGN.md</code> est un acte de gouvernance — traçable dans git, sujet à review</li><li>Si une règle change dans <code>DESIGN.md</code>, le diff git montre exactement ce qui a changé,</li></ul>
+<p>  qui l'a approuvé, et dans quel contexte</p>
+<ul><li>La désynchronisation entre les principes déclarés et le code implémenté devient</li></ul>
+<p>  visible : si <code>DESIGN.md</code> dit une chose et le code en fait une autre, c'est un bug   de gouvernance détectable</p>
+<p><strong>Coût accepté :</strong></p>
+<ul><li><code>DESIGN.md</code> doit être maintenu à jour — vieillir sans mise à jour est pire</li></ul>
+<p>  qu'une absence de document</p>
+<ul><li>La tentation est de tout mettre dans <code>DESIGN.md</code> — résister. Seuls les principes</li></ul>
+<p>  et la gouvernance globale y ont leur place. Les détails vont dans <code>decisions/</code>,   les contrats dans <code>guidelines/</code>, les valeurs dans <code>tokens/</code></p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision fondatrice, inspirée des travaux présentés à l'AI Design Systems Conference 2026. La question qui l'a déclenchée : "si un agent clone ce repo demain, que connaît-il de nos règles ?" Sans <code>DESIGN.md</code>, la réponse était "rien — il lit le code et devine". Avec <code>DESIGN.md</code>, la réponse est "tout ce qu'il a besoin de savoir pour travailler sans improviser".</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-012.html" class="ds-btn secondary" style="font-size:13px">← ADR-012</a>
+    <a href="adr-014.html" class="ds-btn secondary" style="font-size:13px">ADR-014 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

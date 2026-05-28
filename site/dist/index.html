@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Accueil — Agentic Design System</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="foundations/color.html">Fondations</a><a href="components/button.html">Composants</a><a href="tokens/index.html">Tokens</a><a href="decisions/index.html">Décisions</a><a href="agents/index.html">Agents</a></nav>
+</header>
+<div class="home-layout" id="main-content">
+  
+  <main class="" role="main">
+<div class="hero">
+  <div class="hero-badge">Agentic Design System · v1.0.0</div>
+  <h1>Un système de design<br><span>compris par les humains<br>et les agents IA.</span></h1>
+  <p class="hero-tagline">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</p>
+  <div class="hero-actions">
+    <a href="foundations/color.html" class="ds-btn primary">Explorer les fondations</a>
+    <a href="components/button.html" class="ds-btn secondary">Voir les composants</a>
+    <a href="agents/index.html" class="ds-btn ghost">Documentation agents →</a>
+  </div>
+</div>
+<div class="stat-band" role="region" aria-label="Statistiques du système">
+  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text">Niveaux de tokens</span></div>
+  <div class="stat-item"><span class="stat-num">33</span><span class="stat-text">Échelles de couleur Radix</span></div>
+  <div class="stat-item"><span class="stat-num">396+</span><span class="stat-text">Tokens primitifs</span></div>
+  <div class="stat-item"><span class="stat-num">16</span><span class="stat-text">Décisions architecturales</span></div>
+  <div class="stat-item"><span class="stat-num">AA</span><span class="stat-text">WCAG 2.1 garanti</span></div>
+</div>
+
+<div class="home-section">
+  <h2>Pipeline de tokens</h2>
+  <p>Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</p>
+  <div class="pipeline" role="region" aria-label="Pipeline des tokens">
+    <div class="pipeline-step">
+      <div class="pipeline-tag">Niveau 1 — Primitif</div>
+      <div class="pipeline-title">Valeurs physiques</div>
+      <div class="pipeline-desc">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</div>
+      <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-tag">Niveau 2 — Sémantique</div>
+      <div class="pipeline-title">Intentions UX</div>
+      <div class="pipeline-desc">Traduit les primitives en langage métier. C'est ce que les agents doivent utiliser pour comprendre l'intention.</div>
+      <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-tag">Niveau 3 — Composant</div>
+      <div class="pipeline-title">Contrats institutionnels</div>
+      <div class="pipeline-desc">Décisions spécifiques à chaque composant. Portent les règles comportementales. Toute modification requiert approbation.</div>
+      <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
+    </div>
+  </div>
+</div>
+
+<div class="home-section">
+  <h2>Explorer le système</h2>
+  <p>Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</p>
+  <div class="nav-grid">
+    <a href="foundations/color.html" class="nav-card"><span class="nav-card-icon">🎨</span><div class="nav-card-title">Fondations</div><div class="nav-card-desc">Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.</div></a><a href="components/button.html" class="nav-card"><span class="nav-card-icon">🧩</span><div class="nav-card-title">Composants</div><div class="nav-card-desc">Contrats UI exécutables : variantes, états, tokens, accessibilité, code.</div></a><a href="tokens/index.html" class="nav-card"><span class="nav-card-icon">⚡</span><div class="nav-card-title">Explorateur de tokens</div><div class="nav-card-desc">Naviguez dans les 3 niveaux : primitif → sémantique → composant.</div></a><a href="decisions/index.html" class="nav-card"><span class="nav-card-icon">📋</span><div class="nav-card-title">Décisions (ADRs)</div><div class="nav-card-desc">Pourquoi chaque décision existe — 16 ADRs actifs avec contexte et alternatives.</div></a><a href="agents/index.html" class="nav-card"><span class="nav-card-icon">🤖</span><div class="nav-card-title">Pour les agents IA</div><div class="nav-card-desc">Règles, routage et contraintes pour les agents qui travaillent avec ce système.</div></a><a href="https://github.com" class="nav-card"><span class="nav-card-icon">⚙️</span><div class="nav-card-title">Code source</div><div class="nav-card-desc">Tokens JSON, scripts d'audit, configuration Style Dictionary.</div></a>
+  </div>
+</div>
+
+<div class="home-section">
+  <h2>Valeurs non négociables</h2>
+  <p>Ces quatre principes guident chaque décision du système et chaque action des agents.</p>
+  <div class="principle-grid">
+    <div class="principle-card"><div class="principle-num">Principe 01</div><div class="principle-title">Souveraineté numérique</div><div class="principle-desc">Les données, décisions et outils restent sous contrôle organisationnel.</div></div><div class="principle-card"><div class="principle-num">Principe 02</div><div class="principle-title">Accessibilité première</div><div class="principle-desc">WCAG 2.1 AA minimum. Non contournable, non négociable.</div></div><div class="principle-card"><div class="principle-num">Principe 03</div><div class="principle-title">Auditabilité totale</div><div class="principle-desc">Toute décision est traçable, versionnée, justifiée.</div></div><div class="principle-card"><div class="principle-num">Principe 04</div><div class="principle-title">Le dernier mot est humain</div><div class="principle-desc">Les agents proposent. Les humains décident. Toujours.</div></div>
+  </div>
+</div>
+</main>
+</div>
+<script src="site.js"></script>
+</body>
+</html>

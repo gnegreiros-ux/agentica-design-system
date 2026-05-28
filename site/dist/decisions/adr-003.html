@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Style Dictionary pour la compilation des tokens — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 003</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead, Tech Lead</div>
+</div><h1>ADR-003 — Choix de Style Dictionary pour la compilation des tokens</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Tech Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-003-style-dictionary.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-001-trois-niveaux-tokens.md <strong>Relations:</strong> style-dictionary/config.json, tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/tokens-system.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>L'ADR-001 établit que les tokens sont définis en JSON dans trois fichiers sources. Ces fichiers JSON ne sont pas consommables directement par les plateformes cibles :</p>
+<table><thead><tr><th>Plateforme</th><th>Format attendu</th></tr></thead><tbody><tr><td>Web (CSS)</td><td>Custom Properties <code>--ds-*</code> dans des fichiers <code>.css</code></td></tr><tr><td>JavaScript</td><td>Constantes ES6 exportables</td></tr><tr><td>iOS</td><td>Classe Swift <code>DesignTokens</code></td></tr><tr><td>Android</td><td>Fichiers XML <code>colors.xml</code> et <code>dimens.xml</code></td></tr></tbody></table>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment transformer une source de vérité JSON unique en sorties multi-plateformes de manière reproductible, versionnable et automatisable en CI/CD ?</strong></p></blockquote>
+<p>Contraintes :</p>
+<ul><li>Une seule commande doit tout générer (<code>npx style-dictionary build</code>)</li><li>La config doit être lisible par les agents pour qu'ils comprennent la structure de <code>dist/</code></li><li>L'outil doit être maintenu activement et supporter les standards de tokens (W3C Design Tokens)</li></ul>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de <strong>Style Dictionary</strong> (Amazon) comme pipeline de compilation des tokens.</p>
+<p>La configuration dans <code>style-dictionary/config.json</code> déclare :</p>
+<ul><li><strong>Sources</strong> : <code>tokens/primitives.json</code>, <code>tokens/semantic.json</code>, <code>tokens/component.json</code></li><li><strong>Plateformes</strong> : <code>css</code>, <code>js</code>, <code>ios</code>, <code>android</code></li><li><strong>Sorties</strong> : <code>dist/css/</code>, <code>dist/js/</code>, <code>dist/ios/</code>, <code>dist/android/</code></li></ul>
+<p>Chaque plateforme dispose de son <code>transformGroup</code> natif — Style Dictionary gère les transformations de nommage, de valeur et de format sans code personnalisé.</p>
+<p>Le filtre par attribut <code>level</code> (primitive / semantic / component) permet de générer des fichiers CSS séparés par couche, ce qui évite de charger les tokens primitifs dans les applications qui n'en ont pas besoin.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Scripts de transformation maison</strong></td><td>Maintenance permanente, aucune gestion des transformations de valeur (px → pt pour iOS, hex → rgba, etc.), pas de support communautaire. Reinventer une roue déjà bien faite.</td></tr><tr><td><strong>Theo (Salesforce)</strong></td><td>Projet en maintenance minimale depuis 2022. Moins de formats de sortie natifs. Communauté significativement plus petite.</td></tr><tr><td><strong>Diez</strong></td><td>Architecture plus complexe (serveur de tokens, SDK par plateforme). Overkill pour un projet qui veut rester proche des standards W3C. Moins adapté à une intégration CI simple.</td></tr><tr><td><strong>Export direct depuis Tokens Studio (Figma)</strong></td><td>Couplage à Figma comme source de vérité. Rompt la souveraineté numérique — la source devient Figma, pas le repo. Les agents n'ont pas accès à Figma. Pas automatisable sans plugin payant.</td></tr><tr><td><strong>Compilation manuelle lors du build</strong></td><td>Non reproductible. Chaque développeur obtient des sorties potentiellement différentes selon son environnement. Incompatible avec un CI/CD fiable.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les développeurs :</strong></p>
+<ul><li>Une seule commande compile toutes les plateformes : <code>npx style-dictionary build --config style-dictionary/config.json</code></li><li>Les sorties dans <code>dist/</code> sont gitignorées — elles se regénèrent à chaque build</li><li>Ajouter une nouvelle plateforme (ex: Flutter) = ajouter un bloc dans <code>config.json</code>, pas modifier le code des tokens</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>La structure de <code>dist/</code> est prévisible et documentée par <code>config.json</code></li><li>Un agent peut lire <code>config.json</code> pour savoir exactement quels fichiers existent dans <code>dist/</code> sans les lire</li><li>Les noms de tokens CSS générés (<code>--ds-primitive-color-blue-700</code>) sont dérivés mécaniquement</li></ul>
+<p>  du JSON source — un agent peut prédire le nom CSS d'un token à partir de son chemin JSON</p>
+<p><strong>Pour la CI/CD :</strong></p>
+<ul><li>Le script <code>audit-tokens.js</code> s'exécute après <code>style-dictionary build</code> pour détecter</li></ul>
+<p>  tokens orphelins, fantômes et valeurs en dur</p>
+<ul><li>En mode <code>--ci</code>, la commande retourne <code>exit 1</code> si des violations sont détectées — bloquant le merge</li></ul>
+<p><strong>Pour Figma / Tokens Studio :</strong></p>
+<ul><li>Tokens Studio lit les mêmes fichiers JSON source — Style Dictionary et Figma partagent</li></ul>
+<p>  la même source de vérité sans duplication</p>
+<ul><li>Le flux de mise à jour reste : JSON → Style Dictionary → <code>dist/</code> + Tokens Studio sync</li></ul>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Dépendance à un outil Amazon (mitigée par son adoption large et son alignement W3C)</li><li>La config <code>style-dictionary/config.json</code> doit être maintenue si les plateformes cibles évoluent</li><li>Les transformations personnalisées (ex: token sémantique qui référence un primitif)</li></ul>
+<p>  nécessitent un <code>transform</code> custom si le comportement par défaut ne suffit pas</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Aucun incident en production. Décision prise lors de la mise en place de l'architecture initiale. Style Dictionary est utilisé par Salesforce, Adobe, GitHub et Shopify pour le même besoin — validation externe suffisante pour écarter le risque d'adoption.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-002.html" class="ds-btn secondary" style="font-size:13px">← ADR-002</a>
+    <a href="adr-004.html" class="ds-btn secondary" style="font-size:13px">ADR-004 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

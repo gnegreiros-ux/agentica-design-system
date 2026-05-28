@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Playwright pour les tests E2E et d'accessibilité — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 010</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Tech Lead, Design System Lead</div>
+</div><h1>ADR-010 — Choix de Playwright pour les tests E2E et d'accessibilité</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Tech Lead, Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-010-playwright.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md <strong>Relations:</strong> .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md, decisions/ADR-009-storybook.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>axe-core (ADR-007) audite les composants au niveau de leur structure sémantique. Chromatic (ADR-006) audite leur apparence visuelle en isolation. Aucun des deux ne teste le comportement d'un composant dans un parcours utilisateur réel : la navigation clavier complète, la gestion du focus trap dans une modale, ou le déclenchement correct du pattern de confirmation d'un bouton <code>critical</code>.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment tester les interactions et parcours complets que ni axe-core ni Chromatic ne peuvent couvrir — notamment les comportements clavier et les séquences d'actions requises par les contrats de composants ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de <strong>Playwright</strong> (Microsoft) pour les tests E2E et les tests d'interaction accessibilité, en complément d'axe-core.</p>
+<p>Playwright couvre deux cas que les autres outils ne peuvent pas adresser :</p>
+<p><strong>1. Tests d'interaction accessibilité</strong> axe-core audite la structure ARIA statique. Playwright teste le comportement dynamique : la touche <code>Tab</code> passe-t-elle dans le bon ordre ? <code>Escape</code> ferme-t-il le bon élément ? L'annonce du lecteur d'écran se déclenche-t-elle après l'action ?</p>
+<pre class="code-block"><code class="lang-javascript">// Exemple : test du bouton critical
+test('critical button requires confirmation before action', async ({ page }) =&gt; {
+  await page.click('ds-button[variant="critical"]');
+  await expect(page.locator('[role="dialog"]')).toBeVisible(); // confirmation dialog
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[role="dialog"]')).not.toBeVisible();
+});</code></pre>
+<p><strong>2. Intégration axe-core dans les parcours complets</strong> Via <code>@axe-core/playwright</code>, axe-core peut être exécuté sur des pages entières en contexte réel — pas seulement sur des composants isolés dans Storybook. Les violations qui n'apparaissent que dans un contexte d'intégration sont ainsi détectées.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Cypress</strong></td><td>Excellent outil E2E, mais plus lent et plus lourd que Playwright pour les tests de composants Web. Support Web Components moins mature. L'API Playwright est plus proche du navigateur natif, ce qui est un avantage pour tester le Shadow DOM et les Custom Elements.</td></tr><tr><td><strong>Jest + Testing Library</strong></td><td>Excellents pour les tests unitaires de composants React/Vue. Mais les tests JSDOM ne simulent pas un vrai navigateur — le Shadow DOM des Web Components n'est pas supporté nativement. Les tests d'accessibilité clavier en JSDOM sont peu fiables.</td></tr><tr><td><strong>WebDriverIO</strong></td><td>Wrapper autour de WebDriver/DevTools. Plus verbeux que Playwright, configuration plus complexe. Playwright offre les mêmes capacités avec une API plus moderne et un meilleur support des navigateurs multiples.</td></tr><tr><td><strong>Puppeteer</strong></td><td>Développé par Google, basé sur Chrome uniquement. Playwright supporte Chrome, Firefox et Safari en parallèle — garantie plus large de la compatibilité cross-browser des composants.</td></tr><tr><td><strong>Tests manuels uniquement</strong></td><td>Non automatisables en CI. La navigation clavier complète de chaque composant dans chaque variante est irréaliste à vérifier manuellement à chaque PR.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour le CI/CD :</strong></p>
+<ul><li>Tests Playwright exécutés après le build Storybook — ils testent les composants</li></ul>
+<p>  dans leurs stories pour assurer le contexte isolé</p>
+<ul><li>Le tag <code>--grep a11y</code> permet d'exécuter uniquement les tests d'accessibilité</li></ul>
+<p>  (référencé dans <code>How-to-devs.md</code>)</p>
+<ul><li>En mode CI, les violations axe-core via Playwright bloquent le merge au même titre</li></ul>
+<p>  que les violations détectées dans Storybook</p>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Les tests Playwright sont le contrat exécutable des <strong>comportements</strong> des composants</li><li>Un agent qui génère une implémentation de bouton <code>critical</code> sans pattern de confirmation</li></ul>
+<p>  verra le test Playwright correspondant échouer — feedback automatique sans intervention humaine</p>
+<ul><li>Les agents peuvent lire les tests Playwright pour comprendre les comportements attendus</li></ul>
+<p>  d'un composant (complément du contrat <code>.md</code>)</p>
+<p><strong>Pour les développeurs :</strong></p>
+<ul><li>Les tests d'interaction remplacent partiellement la documentation comportementale :</li></ul>
+<p>  le test dit exactement ce que le composant doit faire, pas seulement ce qu'il doit être</p>
+<ul><li>Playwright génère des traces d'exécution (screenshots + vidéo) sur échec —</li></ul>
+<p>  facilite le debug sans reproduction manuelle</p>
+<p><strong>Périmètre vs axe-core (ADR-007) :</strong></p>
+<table><thead><tr><th>axe-core (Storybook)</th><th>Playwright + axe-core</th></tr></thead><tbody><tr><td><strong>Contexte</strong></td><td>Composant isolé</td><td>Page / parcours complet</td></tr><tr><td><strong>Interactions</strong></td><td>Statique</td><td>Dynamique (clic, clavier, focus)</td></tr><tr><td><strong>Vitesse</strong></td><td>Rapide</td><td>Plus lent (vrai navigateur)</td></tr><tr><td><strong>Déclenchement</strong></td><td>Développement + PR</td><td>PR + pre-deploy</td></tr></tbody></table>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Les tests Playwright sont les plus lents du pipeline CI (rendu navigateur complet)</li><li>Chaque comportement critique d'un composant doit être explicitement testé —</li></ul>
+<p>  pas de couverture automatique comme avec axe-core</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision fondatrice. Le pattern de confirmation du bouton <code>critical</code> (ADR-005) est le cas d'usage emblématique : axe-core valide que le dialog de confirmation a un rôle ARIA correct, mais seul Playwright peut vérifier qu'il s'affiche effectivement quand le bouton est cliqué.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-009.html" class="ds-btn secondary" style="font-size:13px">← ADR-009</a>
+    <a href="adr-011.html" class="ds-btn secondary" style="font-size:13px">ADR-011 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

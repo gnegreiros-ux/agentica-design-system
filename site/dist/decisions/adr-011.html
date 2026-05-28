@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Tokens Studio pour la synchronisation Figma ↔ JSON — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 011</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead, Principal Designer</div>
+</div><h1>ADR-011 — Choix de Tokens Studio pour la synchronisation Figma ↔ JSON</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Principal Designer <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-011-tokens-studio.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, tokens/component.json, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md, decisions/ADR-008-radix-colors.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Le système de design opère sur deux surfaces simultanément :</p>
+<ul><li><strong>Le code</strong> — JSON tokens + Web Components compilés par Style Dictionary</li><li><strong>Figma</strong> — maquettes et composants utilisés par l'équipe design</li></ul>
+<p>Sans synchronisation entre ces deux surfaces, les équipes travaillent sur deux sources de vérité divergentes. Le designer modifie un token dans Figma, le développeur modifie le JSON — les deux systèmes dérivent silencieusement.</p>
+<p>La contrainte de souveraineté numérique (ADR-004, DESIGN.md) complique le problème : la source de vérité doit rester dans le repo git, pas dans Figma. Figma est un outil de consultation et de design, pas de gouvernance des tokens.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment maintenir Figma et le repo JSON synchronisés sans inverser la direction de la vérité — le JSON commande, Figma suit ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de <strong>Tokens Studio for Figma</strong> (plugin Figma) comme pont de synchronisation bidirectionnel entre les fichiers JSON du repo et les variables/styles Figma.</p>
+<p>La direction de synchronisation est non négociable :</p>
+<pre class="code-block"><code class="lang-text">tokens/*.json  →  Tokens Studio  →  Variables Figma
+     ↑ source de vérité               ↓ consommateur</code></pre>
+<p>Le plugin lit les fichiers JSON depuis le repo GitHub (via sync Settings → GitHub) et importe les tokens dans Figma dans le même ordre que l'ADR-001 : <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code>.</p>
+<p><strong>Ce que les designers NE doivent pas faire via Tokens Studio :</strong> modifier les tokens directement dans Figma et pousser vers le repo. Tout changement de token suit le processus TCR (DESIGN.md) — Figma est en lecture.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Variables Figma natives uniquement (sans plugin)</strong></td><td>Figma Variables ne se synchronisent pas avec un repo git nativement. Chaque mise à jour de token nécessiterait une mise à jour manuelle dans Figma — source de dérive garantie. Acceptable pour de petites équipes, mais non scalable.</td></tr><tr><td><strong>Theo / Style Dictionary → export Figma</strong></td><td>Style Dictionary peut exporter vers des formats Figma (JSON spécifique). Mais l'import dans Figma reste manuel — pas de sync bidirectionnelle ni d'interface de gestion dans Figma. Tokens Studio offre l'UI de gestion que ces exports n'ont pas.</td></tr><tr><td><strong>Script de sync custom</strong></td><td>Maintenable à court terme pour un petit catalogue de tokens. Non maintenable à l'échelle (30 palettes × 12 steps × 3 couches = centaines de tokens). Les mises à jour de l'API Figma casseraient le script sans préavis.</td></tr><tr><td><strong>Zeroheight / Supernova</strong></td><td>Plateformes de documentation de design system avec sync Figma. Centrées sur la documentation, pas sur la synchronisation de tokens au niveau JSON. Ajoutent une dépendance externe payante pour une fonction que Tokens Studio couvre gratuitement.</td></tr><tr><td><strong>Pas de synchronisation (deux vérités)</strong></td><td>Rejeté explicitement. L'expérience des équipes sans synchronisation est documentée : après quelques sprints, les designers travaillent sur des tokens qui n'existent plus dans le code, et les développeurs ignorent des changements décidés dans Figma.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les designers :</strong></p>
+<ul><li>Workflow d'import : Settings → Sync → GitHub → pointer vers <code>tokens/</code></li><li>Import dans l'ordre : <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code></li><li>Les tokens disponibles dans Figma sont toujours les tokens définis dans le repo —</li></ul>
+<p>  pas de token local possible sans passer par le processus TCR</p>
+<ul><li>Toute variable locale créée directement dans Figma = dette — à signaler à l'équipe</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Tokens Studio n'est pas dans la boucle des agents — les agents travaillent</li></ul>
+<p>  directement avec les fichiers JSON, jamais avec Figma</p>
+<ul><li>Le plugin garantit que ce que les designers voient dans Figma correspond à ce</li></ul>
+<p>  que les agents lisent dans le JSON — cohérence de la source de vérité partagée</p>
+<p><strong>Pour la gouvernance :</strong></p>
+<ul><li>La direction JSON → Figma préserve la souveraineté numérique : les tokens</li></ul>
+<p>  ne peuvent pas être modifiés "en douce" via Figma et poussés vers le repo</p>
+<ul><li>Toute modification de token reste tracée dans git, via TCR, avec approbation</li></ul>
+<p><strong>Pour Style Dictionary (ADR-003) :</strong></p>
+<ul><li>Style Dictionary et Tokens Studio partagent la même source : <code>tokens/*.json</code></li><li>Les deux compilent depuis le même JSON — pas de format intermédiaire à maintenir</li><li>Style Dictionary génère les sorties code (CSS, JS, Swift, Android)</li><li>Tokens Studio gère la sortie design (Variables Figma)</li></ul>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Tokens Studio est un plugin tiers (Figma Marketplace) — dépendance à sa maintenance</li><li>La version gratuite couvre les besoins de base ; certaines fonctionnalités avancées</li></ul>
+<p>  (sync automatique, webhooks) nécessitent un abonnement</p>
+<ul><li>Le plugin doit être réinstallé/reconfiguré si le repo est déplacé</li></ul>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision fondatrice. Motivée par l'observation systématique dans les équipes sans synchronisation : les maquettes Figma utilisent des tokens nommés différemment du code, créant deux langages parallèles au sein de la même équipe. Un designer qui parle de <code>Bleu Principal</code> et un développeur qui parle de <code>color.action.primary</code> décrivent la même valeur sans le savoir. Tokens Studio aligne les deux langages sur le même JSON.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-010.html" class="ds-btn secondary" style="font-size:13px">← ADR-010</a>
+    <a href="adr-012.html" class="ds-btn secondary" style="font-size:13px">ADR-012 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

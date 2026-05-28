@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Pour les agents IA — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  
+  <main class="content" role="main">
+<h1>Pour les agents IA</h1>
+<p class="page-lead">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</p>
+
+<blockquote><p>Le dernier mot est toujours humain.</p></blockquote>
+
+<h2 class="first">Types d'agents</h2>
+<div class="agent-grid">
+
+<div class="agent-card">
+  <div class="agent-type">Agent Figma</div>
+  <div class="agent-name">Designer Agent</div>
+  <div class="agent-desc">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements incohérents.</div>
+</div>
+<div class="agent-card">
+  <div class="agent-type">Agent Code</div>
+  <div class="agent-name">Developer Agent</div>
+  <div class="agent-desc">Détecte les mauvais usages de tokens dans le code, ouvre des PRs de correction.</div>
+</div>
+<div class="agent-card">
+  <div class="agent-type">Agent Docs</div>
+  <div class="agent-name">Documentation Agent</div>
+  <div class="agent-desc">Génère des changelogs, guides de migration, notes d'accessibilité.</div>
+</div>
+<div class="agent-card">
+  <div class="agent-type">Agent Tests</div>
+  <div class="agent-name">QA Agent</div>
+  <div class="agent-desc">Exécute les tests d'accessibilité, de régression visuelle, de conformité des tokens.</div>
+</div>
+</div>
+
+<h2>Ce que les agents peuvent faire</h2>
+<div class="rules-split">
+  <div class="rule-can">
+    <h3>✅ Autorisé</h3>
+    <ul>
+      <li>Lire tous les fichiers du dépôt</li>
+      <li>Générer du code respectant les contrats</li>
+      <li>Détecter les dérives de tokens</li>
+      <li>Proposer des corrections</li>
+      <li>Créer une branche <code>fix/</code> ou <code>docs/</code></li>
+      <li>Faire des commits sur une branche feature</li>
+      <li>Ouvrir une PR avec description complète</li>
+    </ul>
+  </div>
+  <div class="rule-cannot">
+    <h3>❌ Interdit</h3>
+    <ul>
+      <li>Merger une PR sans approbation humaine</li>
+      <li>Pusher directement sur <code>main</code> ou <code>develop</code></li>
+      <li>Modifier <code>tokens/component.json</code> sans approbation explicite</li>
+      <li>Inventer des variantes ou tokens non définis</li>
+      <li>Utiliser des valeurs en dur (hex, px, etc.)</li>
+      <li>Ignorer les règles d'accessibilité</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Ordre de lecture obligatoire</h2>
+<p>Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</p>
+<table>
+  <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+  <tbody><tr><td><code>AGENTS.md</code></td><td>Routeur d'agents — première lecture obligatoire</td></tr><tr><td><code>DESIGN.md</code></td><td>Contrat de marque portable</td></tr><tr><td><code>.claude/rules/project-overview.md</code></td><td>Contexte général</td></tr><tr><td><code>.claude/rules/tokens-system.md</code></td><td>Règles des tokens</td></tr><tr><td><code>.claude/rules/development.md</code></td><td>Règles de développement</td></tr><tr><td><code>guidelines/components/button.md</code></td><td>Contrat du composant concerné</td></tr><tr><td><code>.claude/instructions/session-spec.md</code></td><td>Quick reference pour la session</td></tr></tbody>
+</table>
+
+<h2>Règle d'escalade</h2>
+<p>Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</p>
+
+<h2>Règle de nommage — rappel</h2>
+<pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent */
+color: var(--ds-component-button-primary-background);
+
+/* ❌ Interdit — valeur brute, aucune intention */
+color: #0d74ce;
+
+/* ❌ Interdit — token primitif utilisé directement */
+color: var(--ds-primitive-color-blue-11);</code></pre>
+
+<h2>Compétences (Skills)</h2>
+<table>
+  <thead><tr><th>Skill</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td>Compose des interfaces depuis du langage naturel en respectant les contrats</td></tr>
+    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td>Génère les métadonnées de composant</td></tr>
+    <tr><td><code>.claude/skills/codebase-index.md</code></td><td>Index du dépôt pour navigation rapide</td></tr>
+  </tbody>
+</table>
+</main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

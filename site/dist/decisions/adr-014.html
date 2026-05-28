@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Conventional Commits pour les messages de commit — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 014</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Tech Lead, Design System Lead</div>
+</div><h1>ADR-014 — Choix de Conventional Commits pour les messages de commit</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Tech Lead, Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-014-conventional-commits.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-012-audit-tokens-script.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>L'historique git est l'une des sources de mémoire décisionnelle du système. Un commit qui dit <code>fix stuff</code> ne transmet aucune information exploitable — ni par un humain qui fait une revue, ni par un agent qui cherche quand un comportement a changé, ni par un pipeline CI qui décide si un changement nécessite une revue de gouvernance.</p>
+<p>Dans un système agentique, les commits ont un rôle supplémentaire : ils sont des événements lisibles par machine. Un commit de type <code>token</code> peut déclencher automatiquement une revue de gouvernance. Un commit de type <code>a11y</code> peut déclencher une re-exécution des tests axe-core en priorité.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment rendre les messages de commit exploitables par les agents et les pipelines CI, tout en restant lisibles et sans friction pour les humains ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de la spécification <strong>Conventional Commits</strong> avec un type supplémentaire spécifique au système de design : <code>token</code>.</p>
+<p>Format : <code><a href="[scope]">type</a>: [description courte]</code></p>
+<p>Les types autorisés dans ce projet :</p>
+<table><thead><tr><th>Type</th><th>Usage</th><th>Déclencheur CI</th></tr></thead><tbody><tr><td><code>feat</code></td><td>Nouveau composant ou fonctionnalité</td><td>—</td></tr><tr><td><code>fix</code></td><td>Correction de bug</td><td>—</td></tr><tr><td><code>token</code></td><td>Modification de tokens</td><td><strong>Revue de gouvernance obligatoire</strong></td></tr><tr><td><code>docs</code></td><td>Documentation uniquement</td><td>—</td></tr><tr><td><code>a11y</code></td><td>Amélioration accessibilité</td><td>Re-run axe-core en priorité</td></tr><tr><td><code>style</code></td><td>Changement de style sans impact fonctionnel</td><td>—</td></tr><tr><td><code>refactor</code></td><td>Refactoring sans changement de comportement</td><td>—</td></tr><tr><td><code>test</code></td><td>Ajout ou modification de tests</td><td>—</td></tr><tr><td><code>chore</code></td><td>Maintenance, dépendances</td><td>—</td></tr><tr><td><code>ci</code></td><td>Configuration CI/CD</td><td>—</td></tr></tbody></table>
+<p>Le type <code>token</code> est une extension locale à Conventional Commits. Il signale explicitement qu'une modification de fichier de tokens est incluse — déclenchant une revue de gouvernance et potentiellement un TCR.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Messages de commit libres</strong></td><td>Non parsables par machine. Un agent qui cherche "quand <code>color.action.primary</code> a-t-il changé ?" doit lire chaque message de commit. Avec Conventional Commits, il filtre par <code>token(semantic)</code>.</td></tr><tr><td><strong>Semantic Versioning dans les commits (ex: v1.2.3)</strong></td><td>Versionner chaque commit individuellement est lourd et duplique l'information portée par les tags git. Conventional Commits + git tags couvrent ce besoin sans verbosité.</td></tr><tr><td><strong>Préfixes maison</strong> (<code>[DS]</code>, <code>[TOKEN]</code>, <code>[FIX]</code>)</td><td>Sans spécification partagée, les préfixes dérivent rapidement : <code>[DS-fix]</code>, <code>[ds fix]</code>, <code>[FixDS]</code>. Conventional Commits est une spécification publique avec des outils de validation (<code>commitlint</code>) — pas besoin d'écrire et maintenir la nôtre.</td></tr><tr><td><strong>Gitmoji</strong></td><td>Expressif visuellement mais difficile à filtrer par machine (<code>🐛</code> pour fix, <code>✨</code> pour feat). L'équipe peut ajouter des emojis en complément mais pas en remplacement du type textuel.</td></tr><tr><td><strong>AngularJS commit convention</strong></td><td>Conventional Commits est directement dérivé de la convention Angular et en est la standardisation publique. Adopter la spécification standard plutôt que la version d'un framework spécifique.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent qui génère un commit doit choisir le type approprié — <code>token</code> si un fichier</li></ul>
+<p>  <code>tokens/*.json</code> est modifié, <code>a11y</code> si la modification cible l'accessibilité</p>
+<ul><li>Le type <code>token</code> est une règle de gouvernance encodée dans le message de commit :</li></ul>
+<p>  un agent qui écrit <code>token(semantic): ...</code> sait qu'il déclenche une revue humaine</p>
+<ul><li>Les agents peuvent filtrer l'historique git par type pour répondre à des questions :</li></ul>
+<p>  <code>git log --grep="^token" -- tokens/semantic.json</code> → tous les changements de tokens sémantiques</p>
+<p><strong>Pour le CI/CD :</strong></p>
+<ul><li><code>commitlint</code> peut valider le format de chaque commit en pre-commit hook</li><li>Le type <code>token</code> peut déclencher une GitHub Action spécifique : notification</li></ul>
+<p>  au Principal Designer, check de TCR associé, audit de dérive automatique</p>
+<ul><li>Le type <code>docs</code> est exclu des pipelines de test de régression visuelle —</li></ul>
+<p>  pas besoin de faire tourner Chromatic pour un changement de documentation</p>
+<p><strong>Pour les humains :</strong></p>
+<ul><li>La PR est plus facile à comprendre : le titre (<code>token(semantic): ajouter color.feedback.warning</code>)</li></ul>
+<p>  dit immédiatement quelle gouvernance s'applique</p>
+<ul><li>Le changelog généré automatiquement depuis les commits est structuré et lisible</li><li>La recherche dans l'historique est prévisible : <code>git log --grep="^feat(button)"</code></li></ul>
+<p><strong>Pour la mémoire du système (ADR-013) :</strong></p>
+<ul><li>Les commits sont une couche de la mémoire décisionnelle du projet</li><li>Un commit <code>token(semantic): ajouter color.feedback.warning</code> + le TCR associé dans</li></ul>
+<p>  <code>decisions/</code> constituent une trace complète : le quoi (commit), le pourquoi (ADR/TCR)</p>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Friction légère pour les contributeurs non familiers avec Conventional Commits</li><li>Le linting des commits (<code>commitlint</code>) peut frustrer en cas de typo dans le type</li><li>Le type <code>token</code> est une extension locale — les outils génériques de changelog</li></ul>
+<p>  ne le connaissent pas et peuvent l'ignorer</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision fondatrice. Le déclencheur indirect : lors de tests avec des agents génératifs sur l'historique git du projet, les agents ne pouvaient pas répondre à "quand ce token a-t-il été modifié ?" avec des messages de commit libres. Avec Conventional Commits, la même question devient une requête <code>git log</code> structurée.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-013.html" class="ds-btn secondary" style="font-size:13px">← ADR-013</a>
+    <a href="adr-015.html" class="ds-btn secondary" style="font-size:13px">ADR-015 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

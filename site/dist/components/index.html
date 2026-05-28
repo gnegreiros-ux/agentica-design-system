@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Composants — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html" class="active">Vue d'ensemble</a><a href="components/button.html">Button</a></div></aside>
+  <main class="content" role="main">
+<h1>Composants</h1>
+<p class="page-lead">Chaque composant est un contrat — intention, variantes autorisées, tokens associés, règles d'accessibilité, cas limites, gouvernance. Les agents appliquent ces contrats sans les improviser.</p>
+
+<h2 class="first">Catalogue</h2>
+<div class="nav-grid">
+  <a href="button.html" class="nav-card">
+    <span class="nav-card-icon">🔘</span>
+    <div class="nav-card-title">Button</div>
+    <div class="nav-card-desc">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</div>
+  </a>
+  <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
+    <span class="nav-card-icon">📝</span>
+    <div class="nav-card-title">Input <span class="badge" style="margin-left:6px">Bientôt</span></div>
+    <div class="nav-card-desc">Saisie de données avec états : défaut, focus, erreur, désactivé.</div>
+  </div>
+  <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
+    <span class="nav-card-icon">🃏</span>
+    <div class="nav-card-title">Card <span class="badge" style="margin-left:6px">Bientôt</span></div>
+    <div class="nav-card-desc">Conteneur visuel pour regrouper des informations liées.</div>
+  </div>
+</div>
+
+<h2>Workflow de création</h2>
+<ol style="color:var(--ds-semantic-color-text-secondary);padding-left:22px">
+  <li>Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></li>
+  <li>Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</li>
+  <li>Implémenter le Web Component (Lit) dans <code>src/components/ds-[nom].js</code></li>
+  <li>Créer la Storybook story pour documentation et tests visuels</li>
+  <li>Ouvrir une PR avec impact tokens documenté — approbation requise si composant modifié</li>
+</ol>
+</main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

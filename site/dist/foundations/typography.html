@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Typographie — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html" class="active">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html">Button</a></div></aside>
+  <main class="content" role="main">
+<h1>Typographie</h1>
+<p class="page-lead">Trois niveaux typographiques : <strong>body</strong> pour la lecture, <strong>label</strong> pour les contrôles interactifs, <strong>heading</strong> pour la hiérarchie. Jamais de <code>font-size</code> en dur.</p>
+
+<h2 class="first">Spécimens typographiques</h2>
+<div class="type-specimen">
+  <div class="type-spec-label">Heading — var(--ds-semantic-typography-heading-size) · weight 700</div>
+  <div style="font-size:var(--ds-semantic-typography-heading-size);font-weight:var(--ds-semantic-typography-heading-weight);line-height:var(--ds-semantic-typography-heading-line-height);color:var(--ds-semantic-color-text-primary)">Titre de section principal</div>
+</div>
+<div class="type-specimen">
+  <div class="type-spec-label">Body — var(--ds-semantic-typography-body-size) · weight 400</div>
+  <div style="font-size:var(--ds-semantic-typography-body-size);font-weight:var(--ds-semantic-typography-body-weight);line-height:var(--ds-semantic-typography-body-line-height);color:var(--ds-semantic-color-text-secondary)">Texte courant. Ce paragraphe illustre la lisibilité du texte principal avec le token body. L'interlignage de 1.5 assure une lecture confortable sur tous les écrans et résolutions.</div>
+</div>
+<div class="type-specimen">
+  <div class="type-spec-label">Label — var(--ds-semantic-typography-label-size) · weight 500</div>
+  <div style="font-size:var(--ds-semantic-typography-label-size);font-weight:var(--ds-semantic-typography-label-weight);line-height:var(--ds-semantic-typography-label-line-height);color:var(--ds-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
+</div>
+
+<h2>Tokens sémantiques</h2>
+<table>
+  <thead><tr><th>Token CSS</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <tbody><tr class="token-row"><td><code>--ds-semantic-typography-body-size</code></td><td style="font-family:monospace">16px</td><td>Taille du texte courant</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-body-weight</code></td><td style="font-family:monospace">400</td><td>Graisse du texte courant</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-body-line-height</code></td><td style="font-family:monospace">1.5</td><td>Interlignage du texte courant</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-label-size</code></td><td style="font-family:monospace">14px</td><td>Taille des labels et libellés de boutons</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-label-weight</code></td><td style="font-family:monospace">500</td><td>Graisse des labels — légèrement plus fort</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-label-line-height</code></td><td style="font-family:monospace">1.25</td><td>Interlignage compact des labels</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-heading-size</code></td><td style="font-family:monospace">24px</td><td>Taille des titres de section</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-heading-weight</code></td><td style="font-family:monospace">700</td><td>Graisse bold pour hiérarchie forte</td></tr><tr class="token-row"><td><code>--ds-semantic-typography-heading-line-height</code></td><td style="font-family:monospace">1.25</td><td>Interlignage compact des titres</td></tr></tbody>
+</table>
+
+<h2>Règles</h2>
+<ul>
+  <li>❌ <code>font-size: 16px</code> — utiliser <code>var(--ds-semantic-typography-body-size)</code></li>
+  <li>❌ <code>font-weight: bold</code> — utiliser le token de graisse approprié</li>
+  <li>✅ Police système : Inter (Google Fonts) avec fallback system-ui</li>
+  <li>✅ Toujours définir <code>line-height</code> via un token</li>
+</ul>
+</main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

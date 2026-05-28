@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Storybook pour la documentation des composants — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 009</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead, Tech Lead</div>
+</div><h1>ADR-009 — Choix de Storybook pour la documentation des composants</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Tech Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-009-storybook.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md <strong>Relations:</strong> .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Un système de design sans environnement de prévisualisation isolé a deux problèmes structurels : les composants ne peuvent être testés qu'en les intégrant dans une application réelle, et la documentation est séparée du composant qu'elle décrit.</p>
+<p>Pour un système agentique, un troisième problème s'ajoute : les agents ont besoin d'un catalogue structuré de composants avec leurs variantes, états, et propriétés accessibles sous une forme standardisée. Une documentation narrative dans un wiki n'est pas analysable par machine.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment fournir simultanément un environnement de développement isolé, une documentation vivante synchronisée avec le code, et un catalogue structuré accessible aux agents ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de <strong>Storybook</strong> comme plateforme de documentation et de canvas de développement.</p>
+<p>Chaque composant est documenté via des <strong>stories</strong> — des fichiers <code>.stories.js</code> qui décrivent chaque variante et état du composant de manière isolée :</p>
+<pre class="code-block"><code class="lang-javascript">// button.stories.js
+export default { title: 'Components/Button', component: 'ds-button' };
+export const Primary = { args: { variant: 'primary', label: 'Soumettre' } };
+export const Critical = { args: { variant: 'critical', label: 'Supprimer définitivement' } };</code></pre>
+<p>Storybook sert trois rôles simultanés dans le système :</p>
+<p>1. <strong>Canvas de développement</strong> — chaque composant est développé et testé en isolation,    sans dépendance à une application hôte 2. <strong>Documentation vivante</strong> — les stories sont la source de vérité du comportement    réel des composants, toujours synchronisées avec le code 3. <strong>Pont vers Chromatic</strong> — Storybook est l'entrée du pipeline Chromatic (ADR-006) :    chaque story est automatiquement capturée pour les tests de régression visuelle</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Documentation statique (Markdown + MDX seul)</strong></td><td>Décrit le composant sans le montrer. Un développeur doit intégrer le composant dans son projet pour voir s'il se comporte comme documenté. Aucun lien entre la documentation et le code exécutable.</td></tr><tr><td><strong>Styleguidist</strong></td><td>Similaire à Storybook mais moins adopté, moins d'intégrations (pas de Chromatic natif, pas d'addon axe-core). L'écosystème Storybook est significativement plus riche pour les Web Components.</td></tr><tr><td><strong>Figma comme seule source de prévisualisation</strong></td><td>Figma montre le design, pas le composant réel. Un composant peut être visuellement conforme dans Figma et dysfonctionner dans le code. Storybook exécute le composant réel dans un navigateur.</td></tr><tr><td><strong>Page de démo interne</strong></td><td>Une page HTML qui liste les composants. Non maintenable à l'échelle, pas de structure pour les variantes et états, pas d'intégration CI/CD, pas d'addon d'accessibilité.</td></tr><tr><td><strong>Pas de documentation interactive</strong></td><td>Rejeté explicitement : un système de design sans canvas de prévisualisation force les équipes consommatrices à intégrer les composants à l'aveugle. Le taux d'erreur d'intégration est directement lié à la qualité de la documentation interactive.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les développeurs :</strong></p>
+<ul><li>Chaque nouveau composant ou variante requiert une story correspondante — c'est une</li></ul>
+<p>  règle de PR (<code>.claude/rules/development.md</code>)</p>
+<ul><li>Le développement se fait dans Storybook d'abord, puis l'intégration en application</li><li>Le hot reload de Storybook affiche immédiatement les changements de tokens CSS</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>La structure des stories est lisible par machine : un agent peut lister toutes</li></ul>
+<p>  les variantes documentées d'un composant en lisant le fichier <code>.stories.js</code></p>
+<ul><li>Les args des stories (<code>variant</code>, <code>disabled</code>, <code>loading</code>) correspondent directement</li></ul>
+<p>  aux propriétés déclarées dans le Web Component (<code>static properties</code>) — cohérence garantie</p>
+<ul><li>Un agent peut vérifier qu'une story existe pour chaque variante définie dans</li></ul>
+<p>  <code>component.json</code> — absence de story = composant non agent-ready (voir skill <code>ai-component-metadata</code>)</p>
+<p><strong>Pour Chromatic (ADR-006) :</strong></p>
+<ul><li>Storybook est l'entrée obligatoire de Chromatic — pas de story, pas de capture visuelle</li><li>L'addon <code>@storybook/addon-a11y</code> (axe-core) audite chaque story en temps réel</li></ul>
+<p>  pendant le développement, avant le commit</p>
+<p><strong>Pour les équipes consommatrices :</strong></p>
+<ul><li>Storybook publié est la documentation officielle du système</li><li>Les équipes peuvent voir et interagir avec chaque variante sans installer les dépendances</li></ul>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Chaque composant nécessite un fichier <code>.stories.js</code> à maintenir — dette si les stories</li></ul>
+<p>  ne sont pas mises à jour en même temps que le composant</p>
+<ul><li>Build Storybook ajouté au pipeline CI (quelques minutes supplémentaires)</li></ul>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision fondatrice. Storybook est le standard de facto pour les design systems basés sur des composants (GitHub, Shopify, Atlassian, IBM l'utilisent tous). L'intégration native avec Chromatic, axe-core et Web Components a confirmé le choix.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-008.html" class="ds-btn secondary" style="font-size:13px">← ADR-008</a>
+    <a href="adr-010.html" class="ds-btn secondary" style="font-size:13px">ADR-010 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

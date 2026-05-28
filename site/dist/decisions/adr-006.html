@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Choix de Chromatic pour les tests de régression visuelle — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 006</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead, Tech Lead</div>
+</div><h1>ADR-006 — Choix de Chromatic pour les tests de régression visuelle</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Tech Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-006-chromatic-tests-visuels.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-004-gouvernance-humaine.md <strong>Relations:</strong> .claude/rules/development.md, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Un système de design livre des contrats visuels. Un token modifié, un style Shadow DOM mal encapsulé, ou une propriété CSS surchargée peuvent introduire une régression visuelle silencieuse — le code compile, les tests unitaires passent, mais le composant ne ressemble plus à ce qu'il devrait.</p>
+<p>Ce risque est amplifié dans un système agentique : un agent qui modifie du code peut introduire une dérive visuelle sans qu'aucun test fonctionnel ne la détecte.</p>
+<p>Trois questions ont guidé le choix :</p>
+<p><strong>1. Comment capturer l'état visuel de référence de chaque composant ?</strong> Les tests unitaires vérifient le comportement. Les tests d'accessibilité vérifient les attributs. Aucun des deux ne capture ce que voit réellement l'utilisateur.</p>
+<p><strong>2. Comment intégrer la revue visuelle dans le workflow de PR existant ?</strong> Un outil qui produit des captures hors du workflow git sera ignoré. La revue visuelle doit bloquer le merge si une régression est détectée, au même titre qu'un test unitaire qui échoue.</p>
+<p><strong>3. Comment rendre les régressions visuelles auditables ?</strong> L'ADR-004 établit que toute décision doit être traçable. Une régression visuelle approuvée (changement intentionnel) doit être distinguée d'une régression non approuvée (bug). Cette distinction doit être versionnée.</p>
+<hr>
+<h2>Décision</h2>
+<p>Adoption de <strong>Chromatic</strong> comme plateforme de tests de régression visuelle, intégrée directement à Storybook et au pipeline CI/CD.</p>
+<p>Chromatic fonctionne en trois temps :</p>
+<p>1. <strong>Capture</strong> — à chaque PR, Chromatic rend chaque story Storybook dans un    navigateur réel et prend une capture pixel-perfect de chaque variante et état 2. <strong>Comparaison</strong> — les captures sont comparées à la baseline approuvée (dernier merge sur <code>main</code>) 3. <strong>Décision</strong> — tout écart pixel déclenche une revue humaine obligatoire dans    l'interface Chromatic avant que le check CI ne passe</p>
+<p>La baseline est stockée dans le cloud Chromatic, versionnée par commit. L'approbation d'un changement visuel est une action humaine explicite et traçable.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Percy (BrowserStack)</strong></td><td>Fonctionnellement similaire à Chromatic mais sans intégration native Storybook. Nécessite de configurer un runner séparé pour capturer les stories. Chromatic est développé par l'équipe Storybook — l'intégration est native et sans friction.</td></tr><tr><td><strong>Playwright visual comparisons</strong> (<code>toHaveScreenshot</code>)</td><td>Excellent outil généraliste, mais orienté parcours utilisateur complets. Capturer chaque story dans chaque variante et état nécessite d'écrire un test par combinaison. Chromatic le fait automatiquement à partir des stories existantes, sans code supplémentaire.</td></tr><tr><td><strong>Jest + jest-image-snapshot</strong></td><td>Comparaison locale uniquement. Les baselines vivent dans le repo (fichiers PNG volumineux en git). Pas d'interface de revue — un développeur doit comparer manuellement deux images. Pas adapté à un workflow de PR collaboratif.</td></tr><tr><td><strong>Loki</strong></td><td>Open source, basé sur Storybook. Requiert une infrastructure de comparaison à héberger soi-même. La souveraineté numérique est un principe du projet (ADR-004), mais Chromatic est ici acceptable : les captures sont des artefacts de CI, pas des données de marque ou de gouvernance.</td></tr><tr><td><strong>Revue visuelle manuelle</strong></td><td>Ne passe pas à l'échelle. Avec 4 variantes × 6 états = 24 combinaisons pour <code>button</code> seul, une revue manuelle exhaustive par PR est irréaliste. Elle sera systématiquement abrégée sous pression de livraison.</td></tr><tr><td><strong>Pas de tests visuels</strong></td><td>Risque accepté explicitement dans certaines phases. Rejeté ici car le système livre des contrats visuels à d'autres équipes. Une régression non détectée dans <code>ds-button</code> impacte toutes les applications consommatrices simultanement.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour le workflow de PR :</strong></p>
+<ul><li>Chaque PR déclenche automatiquement une capture Chromatic de toutes les stories</li><li>Un écart visuel bloque le merge jusqu'à approbation humaine explicite dans Chromatic</li><li>Les changements visuels intentionnels (nouvelle variante, ajustement de spacing)</li></ul>
+<p>  sont approuvés et deviennent la nouvelle baseline — action tracée par commit</p>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent qui modifie du code sait que toute sortie visuelle sera capturée et comparée</li><li>Cette contrainte améliore la qualité des PR générées par des agents : le changement</li></ul>
+<p>  visuel attendu doit être décrit dans la description de la PR pour que le reviewer   sache quoi approuver dans Chromatic</p>
+<ul><li>Les agents ne peuvent pas approuver des captures Chromatic — c'est une action humaine</li></ul>
+<p>  (voir ADR-004 : frontières d'autonomie des agents)</p>
+<p><strong>Pour l'auditabilité :</strong></p>
+<ul><li>L'historique des baselines Chromatic constitue un journal visuel du système :</li></ul>
+<p>  on peut voir exactement à quel commit <code>ds-button</code> a changé d'apparence et pourquoi</p>
+<ul><li>Ce journal complète les ADRs (décisions textuelles) avec une trace visuelle</li></ul>
+<p><strong>Pour les équipes consommatrices :</strong></p>
+<ul><li>Les régressions visuelles sont détectées avant le merge, pas après déploiement</li><li>Les équipes consommatrices peuvent consulter les captures Chromatic dans les PRs</li></ul>
+<p>  pour évaluer l'impact visuel d'une mise à jour avant de l'adopter</p>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Dépendance à un service cloud payant (Chromatic est freemium avec limite de snapshots)</li><li>Les captures sont hébergées chez Chromatic, pas dans le repo — acceptable car</li></ul>
+<p>  ce sont des artefacts de CI, pas des sources de vérité</p>
+<ul><li>Premier setup : connecter Chromatic au repo, configurer le token CI, définir</li></ul>
+<p>  les stories comme point d'entrée</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Décision prise en amont, motivée par un pattern récurrent dans les design systems sans tests visuels : une modification de token sémantique global (<code>color.action.primary</code>) passe tous les tests fonctionnels mais change l'apparence de 12 composants simultanément. Sans Chromatic, ce type de régression n'est découvert qu'en production ou lors d'une revue manuelle aléatoire.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-005.html" class="ds-btn secondary" style="font-size:13px">← ADR-005</a>
+    <a href="adr-007.html" class="ds-btn secondary" style="font-size:13px">ADR-007 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

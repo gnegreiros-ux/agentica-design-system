@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Décisions (ADRs) — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<h1>Décisions architecturales</h1>
+<p class="page-lead">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée, pourquoi cette règle de gouvernance est là. Ce registre rend ces décisions traçables et auditables.</p>
+
+<blockquote><p>Le système de design est devenu un dataset, pas un deliverable. — The Design System Guide, 2026</p></blockquote>
+
+<h2 class="first">Index des ADRs</h2>
+<p>16 décisions actives. Un ADR ne se supprime jamais — on le marque <em>remplacé</em> ou <em>déprécié</em>.</p>
+<table>
+  <thead><tr><th>ADR</th><th>Titre</th><th>Statut</th><th>Date</th></tr></thead>
+  <tbody>
+<tr>
+  <td class="adr-num">ADR-001</td>
+  <td class="adr-title"><a href="adr-001.html">Architecture 3 niveaux de tokens</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-002</td>
+  <td class="adr-title"><a href="adr-002.html">Choix de Lit pour les Web Components</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-003</td>
+  <td class="adr-title"><a href="adr-003.html">Choix de Style Dictionary pour la compilation des tokens</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-004</td>
+  <td class="adr-title"><a href="adr-004.html">Gouvernance humaine : le dernier mot est toujours humain</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-005</td>
+  <td class="adr-title"><a href="adr-005.html">Remplacement de la variante `danger` par `critical`</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-006</td>
+  <td class="adr-title"><a href="adr-006.html">Choix de Chromatic pour les tests de régression visuelle</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-007</td>
+  <td class="adr-title"><a href="adr-007.html">Choix de axe-core pour les tests d'accessibilité</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-008</td>
+  <td class="adr-title"><a href="adr-008.html">Choix de Radix UI Colors pour la palette primitive</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-009</td>
+  <td class="adr-title"><a href="adr-009.html">Choix de Storybook pour la documentation des composants</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-010</td>
+  <td class="adr-title"><a href="adr-010.html">Choix de Playwright pour les tests E2E et d'accessibilité</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-011</td>
+  <td class="adr-title"><a href="adr-011.html">Choix de Tokens Studio pour la synchronisation Figma ↔ JSON</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-012</td>
+  <td class="adr-title"><a href="adr-012.html">Détection de dérive par script d'audit (audit-tokens.js)</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-013</td>
+  <td class="adr-title"><a href="adr-013.html">DESIGN.md comme contrat portable versionné avec le code</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-014</td>
+  <td class="adr-title"><a href="adr-014.html">Choix de Conventional Commits pour les messages de commit</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-015</td>
+  <td class="adr-title"><a href="adr-015.html">Hook automatique de rappel ADR sur modifications critiques</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr>
+<tr>
+  <td class="adr-num">ADR-016</td>
+  <td class="adr-title"><a href="adr-016.html">Journal de construction automatique du kit</a></td>
+  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td>2026-05-28</td>
+</tr></tbody>
+</table>
+
+<h2>Règles du registre</h2>
+<ul>
+  <li>Un ADR ne se supprime jamais — on le marque <code>remplacé</code> ou <code>déprécié</code></li>
+  <li>Un ADR est immutable une fois <code>actif</code> — toute modification crée un nouvel ADR</li>
+  <li>Les agents lisent ce dossier pour comprendre les <em>pourquoi</em>, pas les <em>quoi</em></li>
+  <li>Tout TCR (Token Change Request) majeur doit référencer ou créer un ADR</li>
+</ul>
+</main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

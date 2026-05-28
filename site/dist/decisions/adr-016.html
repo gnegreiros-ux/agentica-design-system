@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Journal de construction automatique du kit — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="decisions/index.html">Index des ADRs</a><a href="decisions/adr-001.html">ADR-001</a><a href="decisions/adr-002.html">ADR-002</a><a href="decisions/adr-003.html">ADR-003</a><a href="decisions/adr-004.html">ADR-004</a><a href="decisions/adr-005.html">ADR-005</a><a href="decisions/adr-006.html">ADR-006</a><a href="decisions/adr-007.html">ADR-007</a><a href="decisions/adr-008.html">ADR-008</a><a href="decisions/adr-009.html">ADR-009</a><a href="decisions/adr-010.html">ADR-010</a><a href="decisions/index.html">→ Tous les ADRs (16)</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 016</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead</div>
+</div><h1>ADR-016 — Journal de construction automatique du kit</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-016-journal-construction.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> log/kit-construction.md, .claude/hooks/log-kit-construction.sh, .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Un système de design agentique accumule deux catégories de décisions distinctes :</p>
+<p>1. <strong>Les décisions de design</strong> — quelles couleurs, quels espacements, quelles variantes.    Ces décisions sont tracées dans <code>tokens/</code>, <code>guidelines/</code>, <code>components/</code>, et dans les ADR.</p>
+<p>2. <strong>Les décisions de construction du kit</strong> — comment le système fonctionne en tant qu'outil :    les règles pour les agents (<code>.claude/</code>), les hooks d'automatisation, les contrats    de gouvernance (<code>decisions/</code>), les fichiers racines (<code>AGENTS.md</code>, <code>DESIGN.md</code>).</p>
+<p>La seconde catégorie était invisible. Les commits git capturent le _quoi_, mais pas la chronologie des actions — quand un hook a été ajouté, quand une règle a été modifiée, dans quel ordre le kit a été assemblé. Pour un agent qui reprend le travail en milieu de construction, cette absence de journal rend la reconstruction du contexte difficile.</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment rendre la construction du kit elle-même observable, sans dépendre de la mémoire de session ou de la lecture exhaustive de l'historique git ?</strong></p></blockquote>
+<hr>
+<h2>Décision</h2>
+<p>Mise en place d'un journal de construction automatique :</p>
+<ul><li><strong>Fichier</strong> : <code>log/kit-construction.md</code> — tableau chronologique horodaté</li><li><strong>Script</strong> : <code>.claude/hooks/log-kit-construction.sh</code> — s'exécute après chaque <code>Write</code> ou <code>Edit</code></li><li><strong>Déclenchement</strong> : fichiers dans <code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code></li><li><strong>Mode</strong> : asynchrone (<code>async: true</code>) — ne bloque pas le flux de travail</li></ul>
+<p>Format d'une entrée :</p>
+<pre class="code-block"><code class="lang-text">| 2026-05-28 16:34 | Créé    | `decisions/ADR-015-hook-rappel-adr.md` |
+| 2026-05-28 16:35 | Modifié | `.claude/settings.json` |</code></pre>
+<p>La distinction <code>Créé</code> / <code>Modifié</code> est inférée du tool appelé : <code>Write</code> = Créé, <code>Edit</code> = Modifié.</p>
+<hr>
+<h2>Périmètre — ce qui est loggué et ce qui ne l'est pas</h2>
+<table><thead><tr><th>Zone</th><th>Loggué</th><th>Raison</th></tr></thead><tbody><tr><td><code>.claude/</code></td><td>✅</td><td>Configuration, règles, hooks — construction du kit</td></tr><tr><td><code>decisions/</code></td><td>✅</td><td>ADR — décisions architecturales du kit</td></tr><tr><td><code>AGENTS.md</code>, <code>DESIGN.md</code></td><td>✅</td><td>Contrats fondateurs du kit</td></tr><tr><td><code>tokens/</code></td><td>❌</td><td>Contenu du système de design — hors scope</td></tr><tr><td><code>guidelines/</code></td><td>❌</td><td>Contenu du système de design — hors scope</td></tr><tr><td><code>components/</code></td><td>❌</td><td>Contenu du système de design — hors scope</td></tr><tr><td><code>log/</code></td><td>❌</td><td>Le journal ne se logue pas lui-même</td></tr></tbody></table>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Git log comme journal</strong></td><td><code>git log</code> liste les commits, pas les actions individuelles. Une session peut produire plusieurs dizaines d'éditions entre deux commits. Le journal capture la granularité intra-commit.</td></tr><tr><td><strong>Journal manuel</strong></td><td>Dépend de la discipline humaine ou de l'agent. Un hook est structurellement fiable — il s'exécute indépendamment de qui fait la modification.</td></tr><tr><td><strong>Log dans un fichier <code>.claude/</code> (non versionné)</strong></td><td>Un journal non versionné n'est pas partageable et disparaît si le dossier est recréé. <code>log/kit-construction.md</code> est commité avec le reste du kit.</td></tr><tr><td><strong>Hook bloquant (synchrone)</strong></td><td>L'écriture dans un fichier log ne doit pas ralentir le flux de travail. <code>async: true</code> garantit que Claude n'attend pas la fin du script.</td></tr><tr><td><strong>Entrées riches (motif du changement, auteur)</strong></td><td>Un hook ne peut pas inférer l'intention derrière une modification. Seuls les faits observables (fichier, timestamp, tool) sont consignés. Le _pourquoi_ appartient aux ADR et aux messages de commit.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent qui reprend une session peut lire <code>log/kit-construction.md</code> pour comprendre</li></ul>
+<p>  ce qui a été fait récemment, sans reconstituer l'historique git</p>
+<ul><li>Le journal distingue la construction du kit (ce fichier) des modifications de contenu</li></ul>
+<p>  (tokens, guidelines) — deux registres séparés pour deux types d'activité distincts</p>
+<p><strong>Pour les humains :</strong></p>
+<ul><li>Observabilité immédiate : <code>cat log/kit-construction.md</code> donne une chronologie lisible</li><li>Rétroactivité possible : les entrées antérieures au hook peuvent être ajoutées manuellement</li></ul>
+<p>  ou par un agent d'initialisation</p>
+<p><strong>Relation avec ADR-015 :</strong></p>
+<ul><li>ADR-015 (hook rappel ADR) surveille <code>tokens/</code>, <code>guidelines/</code>, <code>components/</code> — le contenu</li><li>ADR-016 (ce journal) surveille <code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code> — le kit</li><li>Les deux hooks coexistent sur le même event <code>PostToolUse Write|Edit</code>, sans interférence</li></ul>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Le chemin absolu du projet est encodé dans le script — à adapter si le dépôt est déplacé</li><li>Le journal grossit indéfiniment ; une rotation annuelle ou par version majeure est envisageable</li></ul>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Constat lors de l'assemblage du kit : après plusieurs sessions de travail, il était difficile de répondre à « qu'est-ce qui a été mis en place aujourd'hui ? » sans relire l'intégralité de l'historique git. Le journal automatique rend cette question triviale.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-015.html" class="ds-btn secondary" style="font-size:13px">← ADR-015</a>
+    <span></span>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>
