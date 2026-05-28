@@ -31,3 +31,5 @@
 | 2026-05-28 00:00 | Créé    | `.claude/settings.json` |
 | 2026-05-28 00:00 | Créé    | `decisions/ADR-015-hook-rappel-adr.md` |
 | 2026-05-28 00:00 | Modifié | `decisions/README.md` |
+| 2026-05-28 16:41 | Créé | `decisions/ADR-016-journal-construction.md` |
+| 2026-05-28 16:41 | Modifié | `decisions/README.md` |
