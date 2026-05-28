@@ -64,6 +64,7 @@ des décisions déjà tranchées.
 | [ADR-004](ADR-004-gouvernance-humaine.md) | Gouvernance humaine : le dernier mot est toujours humain | 2026-05-28 | ✅ Actif |
 | [ADR-005](ADR-005-variante-critical-vs-danger.md) | Remplacement de la variante `danger` par `critical` | 2026-05-28 | ✅ Actif |
 | [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choix de Chromatic pour les tests de régression visuelle | 2026-05-28 | ✅ Actif |
+| [ADR-007](ADR-007-axe-core-accessibilite.md) | Choix de axe-core pour les tests d'accessibilité | 2026-05-28 | ✅ Actif |
 
 ---
 
