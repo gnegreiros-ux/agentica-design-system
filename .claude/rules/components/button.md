@@ -2,6 +2,10 @@
 
 > Règles spécifiques au composant Button pour les agents.
 > Ce fichier complète le contrat complet dans `guidelines/components/button.md`.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/components/button.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, guidelines/components/button.md
+> **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/tokens-system.md
 
 ---
 

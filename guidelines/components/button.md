@@ -4,6 +4,10 @@
 > Responsable : design-system-team
 > Dernière révision : [DATE]
 > Toute modification requiert approbation du Principal Designer.
+> **Type:** contract
+> **Chemin logique:** guidelines/components/button.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/components/button.md
+> **Relations:** tokens/component.json, .claude/rules/components/button.md, DESIGN.md
 
 ---
 

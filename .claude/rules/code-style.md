@@ -1,6 +1,10 @@
 # Rule : code-style
 
 > Conventions de style et de nommage pour ce projet.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/code-style.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** .claude/rules/git-workflow.md, .claude/rules/development.md
 
 ---
 

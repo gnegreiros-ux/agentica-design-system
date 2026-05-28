@@ -1,6 +1,10 @@
 # Rule : project-overview
 
 > Contexte général du projet — à lire en premier pour tout agent travaillant dans ce dépôt.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/project-overview.md
+> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/instructions/codebase-context.md
 
 ---
 

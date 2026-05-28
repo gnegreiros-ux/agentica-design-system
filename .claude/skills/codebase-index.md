@@ -2,6 +2,10 @@
 
 > Capacité réutilisable : indexer et cartographier le système de design.
 > Permet de connaître l'état complet du système à tout moment.
+> **Type:** skill
+> **Chemin logique:** .claude/skills/codebase-index.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/ai-component-metadata.md
 
 ---
 

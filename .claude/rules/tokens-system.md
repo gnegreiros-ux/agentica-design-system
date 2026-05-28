@@ -2,6 +2,10 @@
 
 > Règles absolues pour la gestion des tokens dans ce système.
 > Ces règles s'appliquent à tout agent et à toute équipe.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/tokens-system.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, DESIGN.md
 
 ---
 

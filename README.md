@@ -2,6 +2,10 @@
 
 > Un système de design structuré pour être lu par les humains **et** par les agents IA.
 > Basé sur les travaux présentés à l'AI Design Systems Conference 2026 (Into Design Systems).
+> **Type:** instruction
+> **Chemin logique:** README.md
+> **Lecture avant:** (point d'entrée — lire en premier)
+> **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
 ---
 

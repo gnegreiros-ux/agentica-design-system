@@ -2,6 +2,10 @@
 
 > Règles de développement pour ce système de design.
 > À lire si tu génères du code, ouvres une PR ou travailles sur des composants.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/development.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, .claude/rules/code-style.md
 
 ---
 

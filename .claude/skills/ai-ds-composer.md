@@ -2,6 +2,10 @@
 
 > Capacité réutilisable : assembler des patterns d'interface à partir du langage naturel.
 > Ce skill traduit une demande en assemblage de composants valides du système.
+> **Type:** skill
+> **Chemin logique:** .claude/skills/ai-ds-composer.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** guidelines/components/overview.md, .claude/rules/components/, tokens/component.json
 
 ---
 

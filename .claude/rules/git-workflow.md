@@ -1,6 +1,10 @@
 # Rule : git-workflow
 
 > Conventions Git pour ce projet. À lire avant d'ouvrir une PR ou de faire un commit.
+> **Type:** rule
+> **Chemin logique:** .claude/rules/git-workflow.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** .claude/rules/development.md, .claude/rules/tokens-system.md
 
 ---
 

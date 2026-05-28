@@ -2,6 +2,10 @@
 
 > Capacité réutilisable : auditer et enrichir les métadonnées des composants.
 > Utiliser ce skill pour vérifier qu'un composant est "agent-ready".
+> **Type:** skill
+> **Chemin logique:** .claude/skills/ai-component-metadata.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/codebase-index.md
 
 ---
 

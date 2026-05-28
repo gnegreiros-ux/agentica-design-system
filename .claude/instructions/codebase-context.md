@@ -2,6 +2,10 @@
 
 > Méthodologie pour comprendre et naviguer dans ce dépôt.
 > Ce fichier décrit COMMENT travailler dans ce système, pas seulement QUOI faire.
+> **Type:** instruction
+> **Chemin logique:** .claude/instructions/codebase-context.md
+> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Relations:** AGENTS.md, .claude/rules/project-overview.md, .claude/rules/tokens-system.md
 
 ---
 

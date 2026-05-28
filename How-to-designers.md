@@ -2,6 +2,10 @@
 
 > Ce guide s'adresse à l'équipe qui **maintient** le système, pas aux équipes produit.
 > Dernier mot toujours humain. Les agents proposent, vous approuvez.
+> **Type:** instruction
+> **Chemin logique:** How-to-designers.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md
 
 ---
 
