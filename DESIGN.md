@@ -15,7 +15,7 @@
 
 ## 1. Identité et intention du système
 
-**Nom du système :** sda
+**Nom du système :** Système de design agentique (sda)
 **Organisation :** GNegreiros.com
 **Version :** 1.0.0
 **Dernière mise à jour :** 2026-05-29
