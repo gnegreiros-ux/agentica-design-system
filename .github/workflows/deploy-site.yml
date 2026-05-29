@@ -29,6 +29,10 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
       - name: Build site
         working-directory: site
         run: node build.js
