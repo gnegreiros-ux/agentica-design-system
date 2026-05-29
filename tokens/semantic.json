@@ -22,12 +22,13 @@
       "background": {
         "page":    { "value": "{color.neutral.50}",  "$type": "color", "$intent": "Fond de page principale" },
         "surface": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Fond de carte, panneau, modal" },
-        "subtle":  { "value": "{color.neutral.100}", "$type": "color", "$intent": "Fond secondaire, survol discret" }
+        "subtle":  { "value": "{color.neutral.100}", "$type": "color", "$intent": "Fond secondaire, survol discret" },
+        "hover":   { "value": "{color.neutral.50}",  "$type": "color", "$intent": "Fond au survol (tableaux, listes) — #fafafa" }
       },
       "text": {
         "primary":   { "value": "{color.neutral.900}", "$type": "color", "$intent": "Texte principal, haute lisibilité" },
         "secondary": { "value": "{color.neutral.700}", "$type": "color", "$intent": "Texte secondaire, labels, métadonnées" },
-        "disabled":  { "value": "{color.neutral.300}", "$type": "color", "$intent": "Texte désactivé" },
+        "disabled":  { "value": "{color.neutral.500}", "$type": "color", "$intent": "Texte désactivé — #767676, ratio 4.54:1 (WCAG 1.4.3 exempte les UI inactives, maintenu accessible par convention)" },
         "on-action": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond d'action (bouton primaire)" },
         "on-danger": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
       },
