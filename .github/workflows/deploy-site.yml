@@ -8,6 +8,7 @@ on:
       - 'decisions/**'
       - 'guidelines/**'
       - 'site/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:
