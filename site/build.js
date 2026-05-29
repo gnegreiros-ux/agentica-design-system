@@ -732,45 +732,55 @@ function buildColor() {
 
 // ─── PAGE: SPACING ──────────────────────────────────────────────────────────
 function buildSpacing() {
-  const tokens = [
-    ['space-control-padding-x','semantic.space.control.padding-x','16px','Espacement horizontal des contrôles interactifs'],
-    ['space-control-padding-y','semantic.space.control.padding-y','8px','Espacement vertical des contrôles interactifs'],
-    ['space-control-gap',      'semantic.space.control.gap',      '8px','Écart interne entre éléments d\'un contrôle'],
-    ['space-layout-section',   'semantic.space.layout.section',   '32px','Espacement entre sections de page'],
-    ['space-layout-component', 'semantic.space.layout.component', '20px','Espacement entre composants'],
-    ['radius-control',         'semantic.radius.control',         '6px','Rayon pour contrôles interactifs'],
-    ['radius-card',            'semantic.radius.card',            '10px','Rayon pour conteneurs (cartes, panneaux)'],
+  const semTokens = [
+    ['space-control-padding-x', 'semantic.space.control.padding-x', SEM['space-control-padding-x'], 'Padding horizontal des contrôles interactifs'],
+    ['space-control-padding-y', 'semantic.space.control.padding-y', SEM['space-control-padding-y'], 'Padding vertical des contrôles interactifs'],
+    ['space-control-gap',       'semantic.space.control.gap',       SEM['space-control-gap'],       'Écart interne (icône + label dans un contrôle)'],
+    ['space-layout-section',    'semantic.space.layout.section',    SEM['space-layout-section'],    'Séparation entre sections de page'],
+    ['space-layout-component',  'semantic.space.layout.component',  SEM['space-layout-component'],  'Séparation entre composants'],
+    ['radius-control',          'semantic.radius.control',          SEM['radius-control'],          'Rayon pour contrôles interactifs'],
+    ['radius-card',             'semantic.radius.card',             SEM['radius-card'],             'Rayon pour conteneurs (cartes, panneaux)'],
   ];
-  const spaceItems = [
-    ['8px','space-2','control-gap / padding-y'],
-    ['16px','space-4','control-padding-x'],
-    ['20px','space-5','layout-component'],
-    ['32px','space-8','layout-section'],
+  const primitives4px = [
+    ['1',  '4px',  'Micro'],
+    ['2',  '8px',  'Petit'],
+    ['3',  '12px', ''],
+    ['4',  '16px', 'Standard'],
+    ['5',  '20px', ''],
+    ['6',  '24px', ''],
+    ['8',  '32px', 'Grand'],
+    ['10', '40px', ''],
+    ['12', '48px', 'Macro'],
+    ['16', '64px', 'Macro XL'],
   ];
-  const bars = spaceItems.map(([px, key, label]) =>
-    `<div class="space-item"><div class="space-bar" style="width:${px}" aria-label="${px}"></div><div class="space-label">${px}<br><span style="color:var(--sda-semantic-color-text-disabled)">${label}</span></div></div>`
+  const bars = primitives4px.map(([step, px, label]) =>
+    `<div class="space-item"><div class="space-bar" style="width:${px};height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="${px}"></div><div class="space-label" style="font-size:12px"><code>space.${step}</code> <strong>${px}</strong>${label ? `<br><span style="color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
   ).join('');
-  const rows = tokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
+  const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1>Espacement</h1>
-<p class="page-lead">Les tokens d'espacement traduisent l'intention de layout en valeurs réutilisables. Jamais de <code>padding: 16px</code> en dur — toujours via <code>var(--sda-semantic-space-control-padding-x)</code>.</p>
+<p class="page-lead">Toute valeur dimensionnelle est un multiple de <strong>4px</strong>. L'échelle compte 10 échelons (4px → 64px). Jamais de valeur en dur — toujours via un token sémantique.</p>
 
-<h2 class="first">Échelle visuelle</h2>
-<div class="demo-box"><div class="space-demo">${bars}</div></div>
+<h2 class="first">Grille 4px — échelle primitive</h2>
+<p>Module de base : <code>4px</code>. Toute valeur hors de cette échelle est une dérive.</p>
+<div class="demo-box"><div class="space-demo" style="display:flex;flex-direction:column;gap:12px">${bars}</div></div>
 
 <h2>Tokens sémantiques</h2>
+<p>Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</p>
 <table>
   <thead><tr><th>Token CSS</th><th>Référence</th><th>Valeur</th><th>Intention</th></tr></thead>
-  <tbody>${rows}</tbody>
+  <tbody>${semRows}</tbody>
 </table>
 
 <h2>Règles absolues</h2>
 <ul>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — utiliser <code>var(--sda-semantic-space-control-padding-x)</code></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — utiliser <code>var(--sda-semantic-space-layout-section)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>border-radius: 4px</code> — utiliser <code>var(--sda-semantic-radius-control)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>var(--sda-primitive-space-4)</code> dans un composant — passer par le token sémantique</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Valeur hors-grille : <code>14px</code>, <code>18px</code>, <code>22px</code> — choisir l'échelon le plus proche</li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours via CSS Custom Properties référençant un token sémantique</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Si aucun token sémantique ne correspond, en créer un (PR requise)</li>
 </ul>
 `;
 
@@ -783,34 +793,45 @@ function buildSpacing() {
 
 // ─── PAGE: TYPOGRAPHY ───────────────────────────────────────────────────────
 function buildTypography() {
+  const fontFamily = SEM['typography-fontFamily'] || "'Atkinson Hyperlegible', system-ui, sans-serif";
   const tokens = [
-    ['typography-body-size',          '16px','Taille du texte courant'],
-    ['typography-body-weight',        '400', 'Graisse du texte courant'],
-    ['typography-body-line-height',   '1.5', 'Interlignage du texte courant'],
-    ['typography-label-size',         '14px','Taille des labels et libellés de boutons'],
-    ['typography-label-weight',       '500', 'Graisse des labels — légèrement plus fort'],
-    ['typography-label-line-height',  '1.25','Interlignage compact des labels'],
-    ['typography-heading-size',       '24px','Taille des titres de section'],
-    ['typography-heading-weight',     '700', 'Graisse bold pour hiérarchie forte'],
-    ['typography-heading-line-height','1.25','Interlignage compact des titres'],
+    ['typography-fontFamily',         fontFamily, 'Police système — Atkinson Hyperlegible (accessibilité basse vision)'],
+    ['typography-body-size',          SEM['typography-body-size']         || '16px', 'Taille du texte courant'],
+    ['typography-body-weight',        SEM['typography-body-weight']        || '400',  'Graisse du texte courant'],
+    ['typography-body-line-height',   SEM['typography-body-line-height']   || '1.5',  'Interlignage du texte courant'],
+    ['typography-label-size',         SEM['typography-label-size']         || '14px', 'Taille des labels et libellés de boutons'],
+    ['typography-label-weight',       SEM['typography-label-weight']        || '500',  'Graisse des labels (arrondie à 400 — Atkinson n\'a pas de 500)'],
+    ['typography-label-line-height',  SEM['typography-label-line-height']  || '1.25', 'Interlignage compact des labels'],
+    ['typography-heading-size',       SEM['typography-heading-size']       || '24px', 'Taille des titres de section'],
+    ['typography-heading-weight',     SEM['typography-heading-weight']      || '700',  'Graisse bold pour hiérarchie forte'],
+    ['typography-heading-line-height',SEM['typography-heading-line-height']|| '1.25', 'Interlignage compact des titres'],
   ];
-  const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
+  const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td style="font-family:monospace;font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis" title="${v}">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1>Typographie</h1>
-<p class="page-lead">Trois niveaux typographiques : <strong>body</strong> pour la lecture, <strong>label</strong> pour les contrôles interactifs, <strong>heading</strong> pour la hiérarchie. Jamais de <code>font-size</code> en dur.</p>
+<p class="page-lead">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision, différenciation maximale des caractères ambigus (l/1, O/0, b/d). Trois niveaux : <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. Jamais de valeur en dur.</p>
 
-<h2 class="first">Spécimens typographiques</h2>
+<h2 class="first">Police — Atkinson Hyperlegible</h2>
+<div class="demo-box" style="padding:24px 28px">
+  <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-semantic-typography-fontFamily</code></p>
+  <div style="font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;color:var(--sda-semantic-color-text-primary)">Aa Bb Cc Dd Ii Ll Oo</div>
+  <div style="font-size:20px;margin-top:8px;color:var(--sda-semantic-color-text-secondary)">0 1 2 3 4 5 6 7 8 9</div>
+  <div style="font-size:16px;margin-top:8px;color:var(--sda-semantic-color-text-secondary)">l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m</div>
+  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</p>
+</div>
+
+<h2>Spécimens typographiques</h2>
 <div class="type-specimen">
-  <div class="type-spec-label">Heading — var(--sda-semantic-typography-heading-size) · weight 700</div>
+  <div class="type-spec-label">Heading — <code>--sda-semantic-typography-heading-size</code> · weight 700</div>
   <div style="font-size:var(--sda-semantic-typography-heading-size);font-weight:var(--sda-semantic-typography-heading-weight);line-height:var(--sda-semantic-typography-heading-line-height);color:var(--sda-semantic-color-text-primary)">Titre de section principal</div>
 </div>
 <div class="type-specimen">
-  <div class="type-spec-label">Body — var(--sda-semantic-typography-body-size) · weight 400</div>
+  <div class="type-spec-label">Body — <code>--sda-semantic-typography-body-size</code> · weight 400</div>
   <div style="font-size:var(--sda-semantic-typography-body-size);font-weight:var(--sda-semantic-typography-body-weight);line-height:var(--sda-semantic-typography-body-line-height);color:var(--sda-semantic-color-text-secondary)">Texte courant. Ce paragraphe illustre la lisibilité du texte principal avec le token body. L'interlignage de 1.5 assure une lecture confortable sur tous les écrans et résolutions.</div>
 </div>
 <div class="type-specimen">
-  <div class="type-spec-label">Label — var(--sda-semantic-typography-label-size) · weight 500</div>
+  <div class="type-spec-label">Label — <code>--sda-semantic-typography-label-size</code> · weight 500→400</div>
   <div style="font-size:var(--sda-semantic-typography-label-size);font-weight:var(--sda-semantic-typography-label-weight);line-height:var(--sda-semantic-typography-label-line-height);color:var(--sda-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
 </div>
 
@@ -823,9 +844,10 @@ function buildTypography() {
 <h2>Règles</h2>
 <ul>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — utiliser <code>var(--sda-semantic-typography-body-size)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — utiliser le token de graisse approprié</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Police système : Inter (Google Fonts) avec fallback system-ui</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours définir <code>line-height</code> via un token</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — utiliser <code>var(--sda-semantic-typography-fontFamily)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — utiliser <code>var(--sda-semantic-typography-heading-weight)</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Import Google Fonts : <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours définir <code>line-height</code> via un token sémantique</li>
 </ul>
 `;
 
