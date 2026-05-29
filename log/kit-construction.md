@@ -48,3 +48,8 @@
 | 2026-05-29 09:32 | Modifié | `.claude/hooks/log-kit-construction.sh` |
 | 2026-05-29 09:33 | Modifié | `.claude/hooks/log-kit-construction.sh` |
 | 2026-05-29 10:13 | Créé | `.claude/instructions/site-checklist.md` |
+| 2026-05-29 — | Modifié | `site/build.js`, `site/dist/` — traduction EN complète de toutes les pages internes (couleur, espacement, typo, icônes, composants, button, icon, tokens, décisions, agents, sidebars) |
+| 2026-05-29 — | Modifié | `site/build.js`, `site/dist/site.js` — partage version EN via paramètre URL `?lang=en` (replaceState au clic) |
+| 2026-05-29 — | Modifié | `site/build.js`, `site/dist/index.html` — correction lien GitHub : `gnegreiros/` → `gnegreiros-ux/agentic-design-system` |
+| 2026-05-29 — | Modifié | `site/build.js`, `site/dist/site.css` — fix swatch couleur dans tableau tokens sémantiques : ajout `display:inline-block` |
+| 2026-05-29 — | Modifié | `site/build.js`, `site/dist/site.css`, `site/dist/foundations/spacing.html` — preview espacement en liste verticale, suppression `border-top` du label |
