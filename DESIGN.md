@@ -9,7 +9,7 @@
 > **Lecture avant:** AGENTS.md
 > **Relations:** AGENTS.md, tokens/semantic.json, tokens/component.json, guidelines/components/
 
-> **Note pour la réutilisation :** Remplacer les valeurs "sda" et "GNegreiros.com" ci-dessous par le nom du système et de votre organisation.
+> **Note pour la réutilisation :** Remplacer "Système de design agentique (sda)" et "GNegreiros.com" par le nom du système et de votre organisation.
 
 ---
 
