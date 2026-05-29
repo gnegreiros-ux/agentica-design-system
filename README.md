@@ -1,4 +1,4 @@
-# Agentic Design System — Kit de démarrage
+# Système de design agentique — Kit de démarrage
 
 > Un système de design structuré pour être lu par les humains **et** par les agents IA.
 > Basé sur les travaux présentés à l'AI Design Systems Conference 2026 (Into Design Systems).

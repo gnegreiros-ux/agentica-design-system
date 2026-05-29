@@ -1,4 +1,4 @@
-# Journal de construction — Agentic Design System Kit
+# Journal de construction — Système de design agentique Kit
 
 > Toutes les modifications aux fichiers de configuration, règles, et décisions du kit.
 > Mis à jour automatiquement par hook `PostToolUse` à chaque modification.
@@ -41,3 +41,4 @@
 | 2026-05-29 08:16 | Créé | `decisions/ADR-021-atkinson-hyperlegible.md` |
 | 2026-05-29 08:16 | Créé | `decisions/ADR-022-lucide-icons.md` |
 | 2026-05-29 08:16 | Créé | `components/ds-icon.js`, `guidelines/components/icon.md` |
+| 2026-05-29 09:13 | Créé | `.claude/instructions/session-spec.md` |

@@ -12,7 +12,7 @@
 
 | Champ | Valeur |
 |-------|--------|
-| Nom | Agentic Design System |
+| Nom | Système de design agentique |
 | Sigle | sda |
 | Auteur | Guilherme Negreiros |
 | Version | 1.0.0 |

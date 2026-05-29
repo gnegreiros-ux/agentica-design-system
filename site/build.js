@@ -164,7 +164,7 @@ function tokensCSS() {
 }
 
 function siteCSS() { return `
-/* Agentic Design System — site.css (uses design system tokens) */
+/* Système de design agentique — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
@@ -513,8 +513,8 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
-<title>${title} — Agentic Design System</title>
+<meta name="description" content="Documentation officielle de l'Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>${title} — Système de design agentique</title>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
@@ -522,9 +522,9 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 <body>
 <a class="skip-link" href="#main-content">Aller au contenu</a>
 <header class="site-header" role="banner">
-  <a class="logo" href="${base}index.html" aria-label="Agentic Design System — Accueil">
+  <a class="logo" href="${base}index.html" aria-label="Système de design agentique — Accueil">
     <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">Agentic Design System</span>
+    <span class="logo-name">Système de design agentique</span>
   </a>
   <span class="logo-version">v1.0.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
@@ -589,7 +589,7 @@ function buildHome(adrs) {
 
   const body = `
 <div class="hero">
-  <div class="hero-badge">Agentic Design System · v1.0.0</div>
+  <div class="hero-badge">Système de design agentique · v1.0.0</div>
   <h1>Un système de design<br><span>compris par les humains<br>et les agents IA.</span></h1>
   <p class="hero-tagline">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</p>
   <div class="hero-actions">
@@ -1252,7 +1252,7 @@ function loadADRs() {
 
 // ─── MAIN BUILD ─────────────────────────────────────────────────────────────
 function build() {
-  console.log('\nAgentic Design System — build\n');
+  console.log('\nSystème de design agentique — build\n');
   ensureDir(DIST);
   ensureDir(path.join(DIST, 'foundations'));
   ensureDir(path.join(DIST, 'components'));
