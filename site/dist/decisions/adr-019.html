@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Résolution dynamique des tokens dans le build — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 019</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Design System Lead</div>
+</div><h1>ADR-019 — Résolution dynamique des tokens dans le build</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-019-resolution-dynamique-tokens-build.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, site/build.js, decisions/ADR-018-migration-references-primitives-radix.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>ADR-018 avait documenté deux dettes techniques restantes :</p>
+<p>1. <code>site/build.js</code> hardcodait toutes les valeurs sémantiques dans un objet <code>SEM</code> statique 2. Les tokens non-couleur de <code>semantic.json</code> (<code>{space.4}</code>, <code>{fontSize.md}</code>, etc.)    référençaient des primitives inexistantes dans <code>primitives.json</code></p>
+<p>Ces deux dettes s'adressaient ensemble : l'une rendait l'autre inévitable.</p>
+<h3>La dette dans <code>build.js</code></h3>
+<pre class="code-block"><code class="lang-js">// Avant — 37 lignes hardcodées, source de dérive possible
+const SEM = {
+  'color-action-primary': '#0d74ce',
+  'space-control-padding-x': '16px',
+  // ...
+};</code></pre>
+<p>Si une valeur changeait dans <code>primitives.json</code> ou <code>semantic.json</code>, elle ne se propageait pas automatiquement dans le CSS généré — un humain devait mettre à jour <code>build.js</code> manuellement.</p>
+<h3>Les références non-couleur non résolues</h3>
+<p><code>semantic.json</code> utilisait <code>{space.4}</code>, <code>{radius.sm}</code>, <code>{fontSize.md}</code>, etc. Aucune de ces références n'existait dans <code>primitives.json</code> (qui ne contenait que des couleurs). <code>build.js</code> contournait silencieusement ce problème avec les valeurs hardcodées.</p>
+<hr>
+<h2>Décision</h2>
+<h3>1. Ajout des primitives non-couleur dans <code>primitives.json</code></h3>
+<p>Cinq nouvelles catégories ajoutées sous <code>primitive</code> (au même niveau que <code>color</code>) :</p>
+<table><thead><tr><th>Catégorie</th><th>Steps</th><th>Valeurs</th></tr></thead><tbody><tr><td><code>space</code></td><td>2, 4, 5, 8</td><td>8px, 16px, 20px, 32px</td></tr><tr><td><code>fontSize</code></td><td>sm, md, xl</td><td>14px, 16px, 24px</td></tr><tr><td><code>fontWeight</code></td><td>regular, medium, bold</td><td>400, 500, 700</td></tr><tr><td><code>lineHeight</code></td><td>tight, normal</td><td>1.25, 1.5</td></tr><tr><td><code>radius</code></td><td>sm, md</td><td>6px, 10px</td></tr></tbody></table>
+<h3>2. Mise à jour des références dans <code>semantic.json</code></h3>
+<p>Toutes les références non-couleur migrent vers <code>{primitive.X.Y}</code> :</p>
+<pre class="code-block"><code class="lang-json">"padding-x": { "value": "{primitive.space.4}" }
+"control":   { "value": "{primitive.radius.sm}" }
+"size":      { "value": "{primitive.fontSize.md}" }</code></pre>
+<p>L'ensemble des 35 tokens sémantiques (19 couleurs + 16 non-couleur) référencent maintenant des chemins résolvables dans <code>primitives.json</code>.</p>
+<h3>3. Résolveur dynamique dans <code>build.js</code></h3>
+<p>L'objet <code>SEM</code> hardcodé (37 lignes) est remplacé par trois fonctions :</p>
+<pre class="code-block"><code class="lang-js">// Parcourt l'arbre de tokens par chemin pointé
+function resolveRef(ref, data) {
+  return ref.split('.').reduce((node, key) =&gt; node?.[key], data);
+}
+
+// Résout une valeur {primitive.X.Y} → valeur CSS finale
+function resolveValue(val, data) { ... }
+
+// Aplatit les tokens imbriqués en clés CSS 'category-sub-name'
+function flattenTokens(obj, data, prefix = '') { ... }
+
+const SEM = flattenTokens(semanticData.semantic, primitives);</code></pre>
+<p>La résolution est faite au moment du build — toute modification dans <code>primitives.json</code> ou <code>semantic.json</code> se propage automatiquement dans <code>site/dist/tokens.css</code>.</p>
+<h3>4. Correction de <code>extractColorScales</code></h3>
+<p>Ajout d'un guard <code>if (step === '_readme') continue</code> dans la boucle interne, pour protéger contre les entrées de documentation dans les scales de couleur.</p>
+<hr>
+<h2>Invariant de sortie — zéro changement visuel</h2>
+<p>Les 35 valeurs résolues après migration sont <strong>strictement identiques</strong> à celles de l'objet <code>SEM</code> hardcodé qu'elles remplacent. Vérifiable par diff :</p>
+<pre class="code-block"><code class="lang-text">--ds-semantic-color-action-primary: #0d74ce    ← inchangé
+--ds-semantic-space-control-padding-x: 16px    ← inchangé
+--ds-semantic-typography-body-line-height: 1.5 ← inchangé</code></pre>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Utiliser Style Dictionary</strong></td><td>Dépendance externe pour un build qui n'en a pas. Style Dictionary ajoute une configuration non triviale et une abstraction pour un résolveur qui s'écrit en ~20 lignes. Choix cohérent avec la philosophie du projet : pas de dépendance sans justification.</td></tr><tr><td><strong>Garder le SEM hardcodé + ajouter des primitives</strong></td><td>Résout la dette dans <code>semantic.json</code> mais laisse <code>build.js</code> désynchronisé. Un changement de token nécessiterait toujours deux modifications manuelles.</td></tr><tr><td><strong>Résolveur récursif multi-niveaux (tokens référençant des tokens)</strong></td><td>Non nécessaire : dans ce système, les tokens sémantiques référencent uniquement des primitives, jamais d'autres sémantiques. Le résolveur single-level est suffisant et plus simple à auditer.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour le pipeline de build :</strong></p>
+<ul><li>Toute modification dans <code>tokens/primitives.json</code> ou <code>tokens/semantic.json</code></li></ul>
+<p>  se propage automatiquement dans <code>site/dist/tokens.css</code> au prochain build</p>
+<ul><li>Plus de désynchronisation silencieuse possible entre tokens et CSS généré</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>La chaîne de résolution complète est maintenant traçable :</li></ul>
+<p>  <code>semantic.json</code> → <code>{primitive.X.Y}</code> → <code>primitives.json</code> → valeur CSS</p>
+<ul><li>Aucune valeur "magique" ne subsiste dans <code>build.js</code></li></ul>
+<p><strong>Dette technique soldée :</strong></p>
+<ul><li>Toutes les références dans <code>semantic.json</code> se résolvent désormais</li><li><code>build.js</code> ne contient plus de valeurs hardcodées pour les tokens</li><li>Les deux dettes documentées dans ADR-018 sont closes</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+    <a href="adr-018.html" class="ds-btn secondary" style="font-size:13px">← ADR-018</a>
+    <span></span>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>
