@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle de l'Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
 <title>Icon — Système de design agentique</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Aller au contenu</a>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
 <header class="site-header" role="banner">
   <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
     <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">Système de design agentique</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
   </a>
   <span class="logo-version">v1.0.0</span>
-  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
 </header>
 <div class="layout" id="main-content">
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="../foundations/color.html">Couleur</a><a href="../foundations/spacing.html">Espacement</a><a href="../foundations/typography.html">Typographie</a><a href="../foundations/icons.html">Icônes</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="../components/index.html">Vue d'ensemble</a><a href="../components/button.html">Button</a><a href="../components/icon.html" class="active">Icon</a></div></aside>
   <main class="content" role="main">
 <h1>Icon</h1>
-<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte, accessibilité WCAG 1.1.1 intégrée.</p>
+<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</p>
 
 <h2 class="first">Tokens</h2>
 <table>
@@ -31,22 +44,44 @@
   <tbody><tr class="token-row"><td><code>--sda-semantic-icon-size-inline</code></td><td><code>semantic.icon.size.inline</code></td><td style="font-family:monospace">16px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-control</code></td><td><code>semantic.icon.size.control</code></td><td style="font-family:monospace">20px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-nav</code></td><td><code>semantic.icon.size.nav</code></td><td style="font-family:monospace">24px</td></tr></tbody>
 </table>
 
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> À faire</h3>
+    <ul>
+      <li>Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
+      <li>Ajouter <code>label="…"</code> si l'icône est la seule information visible</li>
+      <li>Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</li>
+      <li>Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> À éviter</h3>
+    <ul>
+      <li>SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</li>
+      <li>Taille codée en dur : <code>style="width:20px"</code></li>
+      <li>Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
+      <li>Tailles inventées hors des 3 tokens sémantiques définis</li>
+    </ul>
+  </div>
+</div>
+
 <h2>Référence complète</h2>
-<h1>Composant — Icône (<code>ds-icon</code>)</h1>
-<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md <strong>Auteur:</strong> Guilherme Negreiros <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/ds-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
+<h1>Composant — Icône (<code>sda-icon</code>)</h1>
+<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md > <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/sda-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
 <hr>
 <h2>Bibliothèque — Lucide Icons</h2>
 <p>Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></p>
 <hr>
 <h2>API du composant</h2>
 <pre class="code-block"><code class="lang-html">&lt;!-- Icône sémantique (avec label obligatoire) --&gt;
-&lt;ds-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/ds-icon&gt;
+&lt;sda-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/sda-icon&gt;
 
 &lt;!-- Icône décorative (aria masquée) --&gt;
-&lt;ds-icon name="check" size="inline" decorative&gt;&lt;/ds-icon&gt;
+&lt;sda-icon name="check" size="inline" decorative&gt;&lt;/sda-icon&gt;
 
 &lt;!-- Icône de navigation --&gt;
-&lt;ds-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/ds-icon&gt;</code></pre>
+&lt;sda-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/sda-icon&gt;</code></pre>
 <table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th><th>Requis</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>trash-2</code>)</td><td>—</td><td>✅</td></tr><tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td><td>Si non décoratif</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement ornementale</td><td><code>false</code></td><td>—</td></tr></tbody></table>
 <hr>
 <h2>Tailles et tokens</h2>
@@ -58,7 +93,7 @@
 ✅ size correspond au contexte (control dans un bouton, inline dans un texte)
 ✅ Nom d'icône exact selon lucide.dev (kebab-case)
 
-❌ Jamais d'icône sémantique sans label : &lt;ds-icon name="trash-2"&gt;
+❌ Jamais d'icône sémantique sans label : &lt;sda-icon name="trash-2"&gt;
 ❌ Jamais de taille en dur : style="width: 20px"
 ❌ Jamais de variante inventée hors inline/control/nav
 ❌ Jamais d'icône hors bibliothèque Lucide sans approbation</code></pre>
@@ -66,29 +101,29 @@
 <h2>Usage avec ds-button</h2>
 <pre class="code-block"><code class="lang-html">&lt;!-- Bouton avec icône décorative + texte --&gt;
 &lt;ds-button variant="critical"&gt;
-  &lt;ds-icon name="trash-2" size="control" decorative&gt;&lt;/ds-icon&gt;
+  &lt;sda-icon name="trash-2" size="control" decorative&gt;&lt;/sda-icon&gt;
   Supprimer définitivement
 &lt;/ds-button&gt;
 
-&lt;!-- Bouton icône seul — label obligatoire sur ds-icon --&gt;
+&lt;!-- Bouton icône seul — label obligatoire sur sda-icon --&gt;
 &lt;ds-button variant="ghost" aria-label="Fermer"&gt;
-  &lt;ds-icon name="x" size="control" label="Fermer"&gt;&lt;/ds-icon&gt;
+  &lt;sda-icon name="x" size="control" label="Fermer"&gt;&lt;/sda-icon&gt;
 &lt;/ds-button&gt;</code></pre>
 <hr>
 <h2>Accessibilité — WCAG 1.1.1</h2>
 <table><thead><tr><th>Scénario</th><th>Implémentation</th></tr></thead><tbody><tr><td>Icône seule (bouton, lien)</td><td><code>label="Action décrite"</code> → <code>aria-label</code> injecté</td></tr><tr><td>Icône + texte adjacent</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Icône dans un champ</td><td><code>label</code> sur le champ parent (<code>aria-describedby</code>)</td></tr></tbody></table>
 <hr>
 <h2>Anti-patterns à détecter</h2>
-<pre class="code-block"><code class="lang-html">❌ &lt;ds-icon name="trash-2"&gt;&lt;/ds-icon&gt;
+<pre class="code-block"><code class="lang-html">❌ &lt;sda-icon name="trash-2"&gt;&lt;/sda-icon&gt;
    → Icône sémantique sans label — escalader
 
-❌ &lt;ds-icon name="danger" size="control"&gt;
+❌ &lt;sda-icon name="danger" size="control"&gt;
    → Nom "danger" inexistant dans Lucide — utiliser "alert-triangle" ou "x-circle"
 
-❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors ds-icon)
+❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors sda-icon)
    → Dérive — pas de contrat d'accessibilité ni de token
 
-❌ &lt;ds-icon name="check" style="width: 18px;"&gt;
+❌ &lt;sda-icon name="check" style="width: 18px;"&gt;
    → Taille en dur — utiliser size="inline" ou size="control"</code></pre>
 <hr>
 <h2>Installation</h2>
@@ -98,7 +133,23 @@ npm install lucide
 # CDN (projets statiques)
 &lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</code></pre>
 </main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
 <script src="../site.js"></script>
 </body>
 </html>

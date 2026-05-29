@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle de l'Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
 <title>Espacement — Système de design agentique</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Aller au contenu</a>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
 <header class="site-header" role="banner">
   <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
     <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">Système de design agentique</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
   </a>
   <span class="logo-version">v1.0.0</span>
-  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
 </header>
 <div class="layout" id="main-content">
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="../foundations/color.html">Couleur</a><a href="../foundations/spacing.html" class="active">Espacement</a><a href="../foundations/typography.html">Typographie</a><a href="../foundations/icons.html">Icônes</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="../components/index.html">Vue d'ensemble</a><a href="../components/button.html">Button</a><a href="../components/icon.html">Icon</a></div></aside>
@@ -27,7 +40,7 @@
 
 <h2 class="first">Grille 4px — échelle primitive</h2>
 <p>Module de base : <code>4px</code>. Toute valeur hors de cette échelle est une dérive.</p>
-<div class="demo-box"><div class="space-demo" style="display:flex;flex-direction:column;gap:12px"><div class="space-item"><div class="space-bar" style="width:4px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="4px"></div><div class="space-label" style="font-size:12px"><code>space.1</code> <strong>4px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Micro</span></div></div><div class="space-item"><div class="space-bar" style="width:8px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="8px"></div><div class="space-label" style="font-size:12px"><code>space.2</code> <strong>8px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Petit</span></div></div><div class="space-item"><div class="space-bar" style="width:12px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="12px"></div><div class="space-label" style="font-size:12px"><code>space.3</code> <strong>12px</strong></div></div><div class="space-item"><div class="space-bar" style="width:16px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="16px"></div><div class="space-label" style="font-size:12px"><code>space.4</code> <strong>16px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Standard</span></div></div><div class="space-item"><div class="space-bar" style="width:20px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="20px"></div><div class="space-label" style="font-size:12px"><code>space.5</code> <strong>20px</strong></div></div><div class="space-item"><div class="space-bar" style="width:24px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="24px"></div><div class="space-label" style="font-size:12px"><code>space.6</code> <strong>24px</strong></div></div><div class="space-item"><div class="space-bar" style="width:32px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="32px"></div><div class="space-label" style="font-size:12px"><code>space.8</code> <strong>32px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Grand</span></div></div><div class="space-item"><div class="space-bar" style="width:40px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="40px"></div><div class="space-label" style="font-size:12px"><code>space.10</code> <strong>40px</strong></div></div><div class="space-item"><div class="space-bar" style="width:48px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="48px"></div><div class="space-label" style="font-size:12px"><code>space.12</code> <strong>48px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Macro</span></div></div><div class="space-item"><div class="space-bar" style="width:64px;height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="64px"></div><div class="space-label" style="font-size:12px"><code>space.16</code> <strong>64px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Macro XL</span></div></div></div></div>
+<div class="demo-box"><div class="space-demo"><div class="space-item"><div class="space-bar" style="width:4px;height:4px;background:#fecaca;border-radius:2px" aria-label="4px"></div><div class="space-label" style="font-size:12px"><code>space.1</code> <strong>4px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Micro</span></div></div><div class="space-item"><div class="space-bar" style="width:8px;height:8px;background:#fecaca;border-radius:2px" aria-label="8px"></div><div class="space-label" style="font-size:12px"><code>space.2</code> <strong>8px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Petit</span></div></div><div class="space-item"><div class="space-bar" style="width:12px;height:12px;background:#fecaca;border-radius:2px" aria-label="12px"></div><div class="space-label" style="font-size:12px"><code>space.3</code> <strong>12px</strong></div></div><div class="space-item"><div class="space-bar" style="width:16px;height:16px;background:#fecaca;border-radius:2px" aria-label="16px"></div><div class="space-label" style="font-size:12px"><code>space.4</code> <strong>16px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Standard</span></div></div><div class="space-item"><div class="space-bar" style="width:20px;height:20px;background:#fecaca;border-radius:2px" aria-label="20px"></div><div class="space-label" style="font-size:12px"><code>space.5</code> <strong>20px</strong></div></div><div class="space-item"><div class="space-bar" style="width:24px;height:24px;background:#fecaca;border-radius:2px" aria-label="24px"></div><div class="space-label" style="font-size:12px"><code>space.6</code> <strong>24px</strong></div></div><div class="space-item"><div class="space-bar" style="width:32px;height:32px;background:#fecaca;border-radius:2px" aria-label="32px"></div><div class="space-label" style="font-size:12px"><code>space.8</code> <strong>32px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Grand</span></div></div><div class="space-item"><div class="space-bar" style="width:40px;height:40px;background:#fecaca;border-radius:2px" aria-label="40px"></div><div class="space-label" style="font-size:12px"><code>space.10</code> <strong>40px</strong></div></div><div class="space-item"><div class="space-bar" style="width:48px;height:48px;background:#fecaca;border-radius:2px" aria-label="48px"></div><div class="space-label" style="font-size:12px"><code>space.12</code> <strong>48px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Macro</span></div></div><div class="space-item"><div class="space-bar" style="width:64px;height:64px;background:#fecaca;border-radius:2px" aria-label="64px"></div><div class="space-label" style="font-size:12px"><code>space.16</code> <strong>64px</strong><br><span style="color:var(--sda-semantic-color-text-secondary)">Macro XL</span></div></div></div></div>
 
 <h2>Tokens sémantiques</h2>
 <p>Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</p>
@@ -46,7 +59,23 @@
   <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Si aucun token sémantique ne correspond, en créer un (PR requise)</li>
 </ul>
 </main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
 <script src="../site.js"></script>
 </body>
 </html>

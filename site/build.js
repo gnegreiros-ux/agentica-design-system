@@ -199,7 +199,8 @@ body{
 .site-header{
   position:fixed;top:0;left:0;right:0;height:60px;z-index:100;
   background:var(--sda-semantic-color-background-surface);
-  border-bottom:1px solid var(--sda-semantic-color-border-default);
+  border-bottom:2px solid var(--sda-semantic-color-border-default);
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
@@ -260,18 +261,16 @@ body{
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
 .stat-band{
-  background:var(--sda-semantic-color-background-surface);
-  border-top:1px solid var(--sda-semantic-color-border-default);
-  border-bottom:1px solid var(--sda-semantic-color-border-default);
+  background:#0f1117;
   display:flex;flex-wrap:wrap;
 }
 .stat-item{
   flex:1;min-width:150px;padding:28px 32px;text-align:center;
-  border-right:1px solid var(--sda-semantic-color-border-default);
+  border-right:1px solid rgba(255,255,255,.08);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:32px;font-weight:800;color:var(--sda-semantic-color-action-primary);display:block;letter-spacing:-.02em}
-.stat-text{font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-top:4px;display:block}
+.stat-num{font-size:36px;font-weight:800;color:#60a5fa;display:block;letter-spacing:-.02em}
+.stat-text{font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;display:block}
 
 .home-section{padding:64px 72px;max-width:1100px;margin:0 auto}
 .home-section h2{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
@@ -359,9 +358,9 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
-.space-demo{display:flex;align-items:flex-end;gap:24px;margin:28px 0;flex-wrap:wrap}
+.space-demo{display:flex;align-items:flex-end;gap:16px;margin:28px 0;flex-wrap:wrap}
 .space-item{display:flex;flex-direction:column;align-items:center;gap:8px}
-.space-bar{background:var(--sda-semantic-color-action-primary);opacity:.75;border-radius:3px;min-width:8px;height:24px}
+.space-bar{background:#fecaca;border-radius:3px;min-width:8px;}
 .space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);text-align:center}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
@@ -425,7 +424,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .adr-meta strong{color:var(--sda-semantic-color-text-primary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
 .agent-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
 .agent-type{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
 .agent-name{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
@@ -458,12 +457,106 @@ td code{color:var(--sda-semantic-color-action-primary)}
 a{color:var(--sda-semantic-color-action-primary)}
 .skip-link{position:absolute;top:-40px;left:8px;background:var(--sda-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
+
+/* ── LANG TOGGLE ─────────────────────────────────────────── */
+.lang-toggle-group{display:flex;gap:2px;margin-left:8px;flex-shrink:0}
+.lang-btn{padding:3px 9px;font-size:11.5px;font-weight:700;border-radius:4px;border:1.5px solid var(--sda-semantic-color-border-default);background:none;color:var(--sda-semantic-color-text-secondary);cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s;letter-spacing:.04em}
+.lang-btn.active{background:var(--sda-semantic-color-action-primary);color:#fff;border-color:var(--sda-semantic-color-action-primary)}
+html[data-lang="fr"] .lang-en{display:none}
+html[data-lang="en"] .lang-fr{display:none}
+
+/* ── MOBILE MENU ─────────────────────────────────────────── */
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--sda-semantic-color-text-primary);border-radius:4px}
+.menu-toggle:hover{background:var(--sda-semantic-color-background-subtle)}
+
+/* ── TOC ─────────────────────────────────────────────────── */
+.toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-left:1px solid var(--sda-semantic-color-border-default);background:var(--sda-semantic-color-background-surface)}
+.toc:empty{display:none;width:0;padding:0;border:none}
+.toc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:10px;display:block}
+.toc a{display:block;font-size:12.5px;color:var(--sda-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
+.toc a:hover,.toc a.active{color:var(--sda-semantic-color-action-primary);border-left-color:var(--sda-semantic-color-action-primary)}
+
+/* ── DO / DON'T ──────────────────────────────────────────── */
+.dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.do-section,.dont-section{padding:20px;border-radius:var(--sda-semantic-radius-card);border:1px solid}
+.do-section{background:#f0fdf4;border-color:#86efac}
+.dont-section{background:#fef2f2;border-color:#fecaca}
+.do-section h3{color:#15803d;margin-top:0;font-size:14px}
+.dont-section h3{color:#b91c1c;margin-top:0;font-size:14px}
+.do-section li{color:#166534;font-size:13px}
+.dont-section li{color:#991b1b;font-size:13px}
+
+/* ── TOKEN TILES ─────────────────────────────────────────── */
+.token-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.token-tile{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;text-align:center}
+.token-tile-count{font-size:40px;font-weight:800;color:var(--sda-semantic-color-action-primary);letter-spacing:-.02em;display:block}
+.token-tile-label{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);margin-top:6px;display:block}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer{background:#0f1117;color:rgba(255,255,255,.55);padding:24px 32px;font-size:13px;margin-top:auto}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
+.footer-links a:hover{color:#fff}
+.footer-credit{font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+
+/* ── TECH STACK PIPELINE ─────────────────────────────────── */
+.stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
+.stack-node{flex:1;min-width:100px;padding:18px 14px;background:var(--sda-semantic-color-background-surface);text-align:center;border-right:1px solid var(--sda-semantic-color-border-default);position:relative}
+.stack-node:last-child{border-right:none;background:var(--sda-semantic-color-background-subtle)}
+.stack-node-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
+.stack-node-label{font-size:11.5px;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.stack-node-sub{font-size:10.5px;color:var(--sda-semantic-color-text-secondary);margin-top:3px}
+
+/* ── RESPONSIVE (additions) ──────────────────────────────── */
+@media(max-width:1200px){.toc{display:none}}
+@media(max-width:768px){
+  .menu-toggle{display:flex;align-items:center}
+  .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--sda-semantic-color-background-surface);border-bottom:1px solid var(--sda-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+  .top-nav.open{display:flex}
+  .top-nav a{padding:12px 24px;border-radius:0;font-size:15px}
+  .dos-donts{grid-template-columns:1fr}
+  .token-tiles{grid-template-columns:1fr}
+  .agent-grid{grid-template-columns:1fr}
+  .stack-flow{flex-direction:column}
+  .stack-node{border-right:none;border-bottom:1px solid var(--sda-semantic-color-border-default)}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+}
 `; }
 
 function siteJS() { return `
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Active nav links
+  // ── Language toggle ─────────────────────────────────────
+  const savedLang = localStorage.getItem('sda-lang') || 'fr';
+  document.documentElement.setAttribute('data-lang', savedLang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.dataset.lang === savedLang) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      document.documentElement.setAttribute('data-lang', lang);
+      localStorage.setItem('sda-lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    });
+  });
+
+  // ── Mobile menu ──────────────────────────────────────────
+  const menuToggle = document.querySelector('.menu-toggle');
+  const topNav = document.querySelector('.top-nav');
+  if (menuToggle && topNav) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = topNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+    document.addEventListener('click', e => {
+      if (!menuToggle.contains(e.target) && !topNav.contains(e.target)) {
+        topNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ── Active nav links ─────────────────────────────────────
   const p = window.location.pathname;
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
@@ -474,18 +567,68 @@ document.addEventListener('DOMContentLoaded', () => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) a.classList.add('active');
   });
 
-  // Token explorer tabs
-  document.querySelectorAll('.exp-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.exp-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.exp-panel').forEach(pn => pn.classList.remove('active'));
-      tab.classList.add('active');
-      const el = document.getElementById(tab.dataset.target);
-      if (el) el.classList.add('active');
-    });
-  });
+  // ── Animated counters ────────────────────────────────────
+  function animateCounter(el, target, duration) {
+    const start = performance.now();
+    const suffix = el.dataset.suffix || '';
+    (function update(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if (t < 1) requestAnimationFrame(update);
+    })(performance.now());
+  }
+  const statBand = document.querySelector('.stat-band');
+  if (statBand) {
+    const io = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        statBand.querySelectorAll('.stat-num[data-count]').forEach(el => {
+          animateCounter(el, parseInt(el.dataset.count), 1400);
+        });
+        io.disconnect();
+      }
+    }, { threshold: 0.3 });
+    io.observe(statBand);
+  }
 
-  // Token search
+  // ── TOC auto-generation ──────────────────────────────────
+  const tocEl = document.getElementById('page-toc');
+  if (tocEl) {
+    const headings = Array.from(document.querySelectorAll('.content h2'));
+    if (headings.length > 1) {
+      function slugify(t) {
+        return t.toLowerCase()
+          .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[ïî]/g,'i')
+          .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u')
+          .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+      }
+      const title = document.createElement('span');
+      title.className = 'toc-title';
+      title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
+      tocEl.appendChild(title);
+      headings.forEach(h => {
+        if (!h.id) h.id = slugify(h.textContent);
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent;
+        tocEl.appendChild(a);
+      });
+      // Active tracking
+      const tocLinks = tocEl.querySelectorAll('a');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const active = tocEl.querySelector('a[href="#' + e.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-10px 0px -80% 0px' });
+      headings.forEach(h => obs.observe(h));
+    }
+  }
+
+  // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
   if (search) {
     search.addEventListener('input', () => {
@@ -496,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Copy buttons on code blocks
+  // ── Copy buttons on code blocks ──────────────────────────
   document.querySelectorAll('pre.code-block').forEach(pre => {
     const btn = document.createElement('button');
     Object.assign(btn.style, {position:'absolute',top:'12px',right:'12px',background:'rgba(255,255,255,.1)',color:'#8b949e',border:'none',padding:'4px 10px',borderRadius:'4px',fontSize:'11px',cursor:'pointer',fontFamily:'inherit'});
@@ -516,41 +659,79 @@ document.addEventListener('DOMContentLoaded', () => {
 function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidth = false }) {
   const base = depth > 0 ? '../' : '';
   const navLinks = [
-    { href: `${base}index.html`,            label: 'Accueil' },
-    { href: `${base}foundations/color.html`,label: 'Fondations' },
-    { href: `${base}components/button.html`,label: 'Composants' },
-    { href: `${base}tokens/index.html`,     label: 'Tokens' },
-    { href: `${base}decisions/index.html`,  label: 'Décisions' },
-    { href: `${base}agents/index.html`,     label: 'Agents' },
+    { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
+    { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
+    { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
+    { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
+    { href: `${base}decisions/index.html`,  labelFr: 'Décisions',   labelEn: 'Decisions' },
+    { href: `${base}agents/index.html`,     labelFr: 'Agents',      labelEn: 'Agents' },
   ];
-  const nav = navLinks.map(n => `<a href="${n.href}">${n.label}</a>`).join('');
-  const sidebarHtml = sidebar ? `<aside class="sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>` : '';
+  const nav = navLinks.map(n =>
+    `<a href="${n.href}"><span class="lang-fr">${n.labelFr}</span><span class="lang-en">${n.labelEn}</span></a>`
+  ).join('');
+
+  const sidebarHtml = sidebar
+    ? `<aside class="sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
+    : '';
+  const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
   const mainClass = fullWidth ? 'home-layout' : 'layout';
+
+  const footer = `
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© ${new Date().getFullYear()}</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer">${icon('globe', 15)} Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      ${icon('bot', 14)}
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>`;
+
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle de l'Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
 <title>${title} — Système de design agentique</title>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Aller au contenu</a>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
 <header class="site-header" role="banner">
   <a class="logo" href="${base}index.html" aria-label="Système de design agentique — Accueil">
     <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">Système de design agentique</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
   </a>
   <span class="logo-version">v1.0.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    ${icon('menu', 22)}
+  </button>
 </header>
 <div class="${mainClass}" id="main-content">
   ${sidebarHtml}
   <main class="${fullWidth ? '' : 'content'}" role="main">${body}</main>
+  ${tocHtml}
 </div>
+${footer}
 <script src="${base}site.js"></script>
 </body>
 </html>`;
@@ -587,82 +768,308 @@ function sidebarDecisionsLocal(adrs) {
   return `<div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a>${links}</div>`;
 }
 
+function sidebarTokens(base, current) {
+  const links = [
+    ['#primitifs',   'Primitifs'],
+    ['#semantiques', 'Sémantiques'],
+    ['#composants',  'Composants'],
+  ].map(([h,l]) => `<a href="${base}tokens/index.html${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
+  return `<div class="sidebar-group"><span class="sidebar-label">Tokens</span>${links}</div>`;
+}
+
+function sidebarAgents(base) {
+  return `<div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="${base}agents/index.html">Vue d'ensemble</a></div>`;
+}
+
 // ─── PAGE: HOME ────────────────────────────────────────────────────────────
+function countAllTokens(obj) {
+  let n = 0;
+  for (const [k, v] of Object.entries(obj || {})) {
+    if (k.startsWith('$') || k === '_readme') continue;
+    if (v && typeof v === 'object' && ('$value' in v || 'value' in v)) n++;
+    else if (v && typeof v === 'object') n += countAllTokens(v);
+  }
+  return n;
+}
+
 function buildHome(adrs) {
   const colorCount = Object.keys(COLOR_SCALES).length;
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a, s) => a + Object.keys(s).length, 0);
+  const semCount   = Object.keys(SEM).length;
+  const compCount  = Object.keys(COMP).length;
+  const primCount  = countAllTokens(primitives.primitive || primitives);
+  const totalTokens = primCount + semCount + compCount;
+
   const principles = [
-    ['01','Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel.'],
-    ['02','Accessibilité première','WCAG 2.1 AA minimum. Non contournable, non négociable.'],
-    ['03','Auditabilité totale','Toute décision est traçable, versionnée, justifiée.'],
-    ['04','Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.'],
+    [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel.','Digital sovereignty','Data, decisions and tools remain under organizational control.'],
+    [icon('accessibility',24),'Accessibilité première','WCAG 2.1 AA minimum. Non contournable, non négociable.','Accessibility first','WCAG 2.1 AA minimum. Non-negotiable.'],
+    [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée.','Full auditability','Every decision is traceable, versioned, and justified.'],
+    [icon('user-check',24),'Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.','Humans decide','Agents propose. Humans decide. Always.'],
   ];
+
   const sections = [
-    ['foundations/color.html',icon('palette'),'Fondations','Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.'],
-    ['components/button.html',icon('puzzle'),'Composants','Contrats UI exécutables : variantes, états, tokens, accessibilité, code.'],
-    ['tokens/index.html',icon('zap'),'Explorateur de tokens','Naviguez dans les 3 niveaux : primitif → sémantique → composant.'],
-    ['decisions/index.html',icon('clipboard-list'),'Décisions (ADRs)','Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.'],
-    ['agents/index.html',icon('bot'),'Pour les agents IA','Règles, routage et contraintes pour les agents qui travaillent avec ce système.'],
-    ['https://github.com',icon('settings'),'Code source','Tokens JSON, scripts d\'audit, configuration Style Dictionary.'],
+    ['foundations/color.html',  icon('palette',32),          'Fondations',           'Foundations',           'Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.','Color, spacing, typography — primitives and their semantic intentions.'],
+    ['components/index.html',   icon('puzzle',32),            'Composants',           'Components',            'Contrats UI exécutables : variantes, états, tokens, accessibilité, code.','Executable UI contracts: variants, states, tokens, accessibility, code.'],
+    ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
+    ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
+    ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
+    ['https://github.com',      icon('github',32),            'Code source',          'Source code',           'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.'],
+  ];
+
+  const stackNodes = [
+    [icon('file-text',20),   'Décision',       'Decision',       'ADRs'],
+    [icon('book-open',20),   'Documentation',  'Documentation',  'Guidelines'],
+    [icon('pen-tool',20),    'Design',         'Design',         'Figma'],
+    [icon('code-2',20),      'Code',           'Code',           'Web Components'],
+    [icon('check-circle',20),'Validation',     'Validation',     'axe-core'],
+    [icon('shield-check',20),'Audit',          'Audit',          'Chromatic'],
+    [icon('rocket',20),      'Déploiement',    'Deploy',         'CI/CD'],
   ];
 
   const body = `
 <div class="hero">
-  <div class="hero-badge">Système de design agentique · v1.0.0</div>
-  <h1>Un système de design<br><span>compris par les humains<br>et les agents IA.</span></h1>
-  <p class="hero-tagline">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</p>
-  <div class="hero-actions">
-    <a href="foundations/color.html" class="ds-btn primary">Explorer les fondations</a>
-    <a href="components/button.html" class="ds-btn secondary">Voir les composants</a>
-    <a href="agents/index.html" class="ds-btn ghost">Documentation agents →</a>
+  <div class="hero-badge">
+    <span class="lang-fr">Système de design agentique · v1.0.0</span>
+    <span class="lang-en">Agentic Design System · v1.0.0</span>
   </div>
-</div>
-<div class="stat-band" role="region" aria-label="Statistiques du système">
-  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text">Niveaux de tokens</span></div>
-  <div class="stat-item"><span class="stat-num">${colorCount}</span><span class="stat-text">Échelles de couleur Radix</span></div>
-  <div class="stat-item"><span class="stat-num">${scaleSteps}+</span><span class="stat-text">Tokens primitifs</span></div>
-  <div class="stat-item"><span class="stat-num">${adrs.length}</span><span class="stat-text">Décisions architecturales</span></div>
-  <div class="stat-item"><span class="stat-num">AA</span><span class="stat-text">WCAG 2.1 garanti</span></div>
+  <h1>
+    <span class="lang-fr">Un système de design<br><span>compris par les humains<br>et les agents IA.</span></span>
+    <span class="lang-en">A design system<br><span>understood by humans<br>and AI agents.</span></span>
+  </h1>
+  <p class="hero-tagline">
+    <span class="lang-fr">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</span>
+    <span class="lang-en">Interface decisions encoded as structured tokens, component contracts and machine-readable rules — so every contributor, human or agent, correctly applies the team's design decisions.</span>
+  </p>
+  <div class="hero-actions">
+    <a href="foundations/color.html" class="ds-btn primary">
+      <span class="lang-fr">Explorer les fondations</span>
+      <span class="lang-en">Explore foundations</span>
+    </a>
+    <a href="components/index.html" class="ds-btn secondary">
+      <span class="lang-fr">Voir les composants</span>
+      <span class="lang-en">View components</span>
+    </a>
+    <a href="agents/index.html" class="ds-btn ghost">
+      <span class="lang-fr">Documentation agents →</span>
+      <span class="lang-en">Agent documentation →</span>
+    </a>
+  </div>
 </div>
 
 <div class="home-section">
-  <h2>Pipeline de tokens</h2>
-  <p>Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</p>
+  <h2>
+    <span class="lang-fr">Valeurs non négociables</span>
+    <span class="lang-en">Non-negotiable values</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span>
+    <span class="lang-en">These four principles guide every system decision and every agent action.</span>
+  </p>
+  <div class="principle-grid">
+    ${principles.map(([ico,fr,descFr,en,descEn]) => `
+    <div class="principle-card">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px">${ico}</div>
+      <div class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></div>
+    </div>`).join('')}
+  </div>
+</div>
+
+<div class="stat-band" role="region" aria-label="Statistiques du système">
+  <div class="stat-item">
+    <span class="stat-num" data-count="21">21</span>
+    <span class="stat-text">WCAG 2.1 AA</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="${adrs.length}">${adrs.length}</span>
+    <span class="stat-text">
+      <span class="lang-fr">Décisions architecturales</span>
+      <span class="lang-en">Architecture decisions</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="3">3</span>
+    <span class="stat-text">
+      <span class="lang-fr">Niveaux de tokens</span>
+      <span class="lang-en">Token levels</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="${totalTokens}">${totalTokens}</span>
+    <span class="stat-text">
+      <span class="lang-fr">Tokens au total</span>
+      <span class="lang-en">Tokens total</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="${colorCount}">${colorCount}</span>
+    <span class="stat-text">
+      <span class="lang-fr">Échelles de couleur</span>
+      <span class="lang-en">Color scales</span>
+    </span>
+  </div>
+</div>
+
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Pipeline de tokens</span>
+    <span class="lang-en">Token pipeline</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span>
+    <span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span>
+  </p>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 1 — Primitif</div>
-      <div class="pipeline-title">Valeurs physiques</div>
-      <div class="pipeline-desc">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 1 — Primitif</span>
+        <span class="lang-en">Level 1 — Primitive</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Valeurs physiques</span>
+        <span class="lang-en">Physical values</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span>
+        <span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span>
+      </div>
       <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 2 — Sémantique</div>
-      <div class="pipeline-title">Intentions UX</div>
-      <div class="pipeline-desc">Traduit les primitives en langage métier. C'est ce que les agents doivent utiliser pour comprendre l'intention.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 2 — Sémantique</span>
+        <span class="lang-en">Level 2 — Semantic</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Intentions UX</span>
+        <span class="lang-en">UX intentions</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span>
+        <span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span>
+      </div>
       <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 3 — Composant</div>
-      <div class="pipeline-title">Contrats institutionnels</div>
-      <div class="pipeline-desc">Décisions spécifiques à chaque composant. Portent les règles comportementales. Toute modification requiert approbation.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 3 — Composant</span>
+        <span class="lang-en">Level 3 — Component</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Contrats institutionnels</span>
+        <span class="lang-en">Institutional contracts</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span>
+        <span class="lang-en">Component-specific decisions. Any change requires approval.</span>
+      </div>
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
     </div>
   </div>
 </div>
 
 <div class="home-section">
-  <h2>Explorer le système</h2>
-  <p>Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</p>
+  <h2>
+    <span class="lang-fr">Explorer le système</span>
+    <span class="lang-en">Explore the system</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span>
+    <span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span>
+  </p>
   <div class="nav-grid">
-    ${sections.map(([h,i,t,d]) => `<a href="${h}" class="nav-card"><span class="nav-card-icon">${i}</span><div class="nav-card-title">${t}</div><div class="nav-card-desc">${d}</div></a>`).join('')}
+    ${sections.map(([h,ico,fr,en,dFr,dEn]) => `
+    <a href="${h}" class="nav-card">
+      <span class="nav-card-icon">${ico}</span>
+      <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+    </a>`).join('')}
   </div>
 </div>
 
 <div class="home-section">
-  <h2>Valeurs non négociables</h2>
-  <p>Ces quatre principes guident chaque décision du système et chaque action des agents.</p>
-  <div class="principle-grid">
-    ${principles.map(([n,t,d]) => `<div class="principle-card"><div class="principle-num">Principe ${n}</div><div class="principle-title">${t}</div><div class="principle-desc">${d}</div></div>`).join('')}
+  <h2>
+    <span class="lang-fr">Décisions architecturales (ADRs)</span>
+    <span class="lang-en">Architecture Decision Records (ADRs)</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée. Les ADRs rendent ces décisions visibles, traçables et auditables par les humains comme par les agents.</span>
+    <span class="lang-en">A design system accumulates invisible decisions: why this token is named this way, why this variant was rejected. ADRs make these decisions visible, traceable and auditable by both humans and agents.</span>
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('file-text',20)}</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Format Markdown</span>
+        <span class="lang-en">Markdown format</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Chaque décision est un fichier .md versionné dans le dépôt — lisible par Git, GitHub et les agents.</span>
+        <span class="lang-en">Each decision is a versioned .md file in the repo — readable by Git, GitHub and agents.</span>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('git-branch',20)}</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Immutabilité</span>
+        <span class="lang-en">Immutability</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span>
+        <span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('bot',20)}</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Lisible par les agents</span>
+        <span class="lang-en">Agent-readable</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span>
+        <span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span>
+      </div>
+    </div>
+  </div>
+  <p><a href="decisions/index.html" class="ds-btn secondary" style="font-size:13px">
+    <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
+    <span class="lang-en">View all ${adrs.length} ADRs →</span>
+  </a></p>
+</div>
+
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Stack technique</span>
+    <span class="lang-en">Technical stack</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
+    <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
+  </p>
+  <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
+    ${stackNodes.map(([ico,fr,en,sub]) => `
+    <div class="stack-node">
+      <div class="stack-node-icon">${ico}</div>
+      <div class="stack-node-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="stack-node-sub">${sub}</div>
+    </div>`).join('')}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px">
+    ${[
+      [icon('layers',18),'Lit (Google)','Web Components','Contrats UI universels, framework-agnostic','Universal UI contracts, framework-agnostic'],
+      [icon('palette',18),'Style Dictionary','Token compilation','JSON → CSS, JS, Swift, Android','JSON → CSS, JS, Swift, Android'],
+      [icon('camera',18),'Chromatic','Visual testing','Régressions visuelles, PR previews','Visual regressions, PR previews'],
+      [icon('accessibility',18),'axe-core','Accessibility','Audit automatique WCAG','Automatic WCAG audit'],
+      [icon('test-tube',18),'Playwright','E2E tests','Parcours complets automatisés','Automated end-to-end flows'],
+      [icon('book-open',18),'Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
+    ].map(([ico,name,role,dFr,dEn]) => `
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px">${ico}</div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">${name} <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— ${role}</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+      </div>
+    </div>`).join('')}
   </div>
 </div>
 `;
@@ -707,19 +1114,45 @@ function buildColor() {
 </tr>`).join('');
 
   const body = `
-<h1>Couleur</h1>
+<h1>Couleurs</h1>
 <p class="page-lead">Système de couleur en trois niveaux : palettes primitives Radix UI → intentions sémantiques → contrats de composant. Les agents utilisent les tokens sémantiques, jamais les valeurs primitives.</p>
 
-<h2 class="first">Tokens sémantiques</h2>
+<h2 class="first">Palette primitive — Radix UI</h2>
+<p>${Object.keys(COLOR_SCALES).length} échelles de couleur, chacune avec <strong>12 paliers numérotés</strong> selon un système perceptuellement uniforme, conçu pour l'accessibilité et le mode sombre.</p>
+
+<div class="radix-guide" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 28px">
+  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 1–2</div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Fonds de page</div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Arrière-plans très subtils, quasi-blanc</div>
+  </div>
+  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 3–5</div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Éléments interactifs</div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Survol, sélection, fonds de composants</div>
+  </div>
+  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 6–8</div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Bordures</div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Séparateurs, contours de champs, dividers</div>
+  </div>
+  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 9–12</div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Solides & texte</div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">CTA, texte haute lisibilité, contraste garanti</div>
+  </div>
+</div>
+
+<blockquote><p><strong>Pourquoi Radix UI ?</strong> Chaque palette est testée pour garantir un contraste WCAG AA aux paliers 11–12, et conçue pour fonctionner en mode clair et sombre sans surcharge de tokens. Les paliers sont perceptuellement uniformes — le saut visuel entre deux paliers consécutifs est constant quelle que soit la teinte.</p></blockquote>
+
+<div class="palette-section">${palette}</div>
+
+<h2>Tokens sémantiques</h2>
 <p>Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</p>
 <table>
   <thead><tr><th>Couleur</th><th>Token CSS</th><th>Valeur</th><th>Intention</th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
-
-<h2>Palette primitive — Radix UI</h2>
-<p>${Object.keys(COLOR_SCALES).length} échelles de couleur, chacune avec 12 paliers numérotés. Paliers 1-2 pour les fonds, 11-12 pour le texte haute lisibilité.</p>
-<div class="palette-section">${palette}</div>
 
 <blockquote><p>Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</p></blockquote>
 `;
@@ -755,7 +1188,7 @@ function buildSpacing() {
     ['16', '64px', 'Macro XL'],
   ];
   const bars = primitives4px.map(([step, px, label]) =>
-    `<div class="space-item"><div class="space-bar" style="width:${px};height:20px;background:var(--sda-semantic-color-action-primary);opacity:.7;border-radius:2px" aria-label="${px}"></div><div class="space-label" style="font-size:12px"><code>space.${step}</code> <strong>${px}</strong>${label ? `<br><span style="color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
+    `<div class="space-item"><div class="space-bar" style="width:${px};height:${px};background:#fecaca;border-radius:2px" aria-label="${px}"></div><div class="space-label" style="font-size:12px"><code>space.${step}</code> <strong>${px}</strong>${label ? `<br><span style="color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
   ).join('');
   const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
@@ -765,7 +1198,7 @@ function buildSpacing() {
 
 <h2 class="first">Grille 4px — échelle primitive</h2>
 <p>Module de base : <code>4px</code>. Toute valeur hors de cette échelle est une dérive.</p>
-<div class="demo-box"><div class="space-demo" style="display:flex;flex-direction:column;gap:12px">${bars}</div></div>
+<div class="demo-box"><div class="space-demo">${bars}</div></div>
 
 <h2>Tokens sémantiques</h2>
 <p>Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</p>
@@ -816,10 +1249,19 @@ function buildTypography() {
 <h2 class="first">Police — Atkinson Hyperlegible</h2>
 <div class="demo-box" style="padding:24px 28px">
   <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-semantic-typography-fontFamily</code></p>
-  <div style="font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;color:var(--sda-semantic-color-text-primary)">Aa Bb Cc Dd Ii Ll Oo</div>
-  <div style="font-size:20px;margin-top:8px;color:var(--sda-semantic-color-text-secondary)">0 1 2 3 4 5 6 7 8 9</div>
-  <div style="font-size:16px;margin-top:8px;color:var(--sda-semantic-color-text-secondary)">l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m</div>
-  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</p>
+  <div style="font-size:28px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:var(--sda-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div style="font-size:28px;line-height:1.3;color:var(--sda-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
+  <div style="font-size:24px;line-height:1.4;color:var(--sda-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
+  <div style="font-size:18px;line-height:1.5;color:var(--sda-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
+  <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px">Caractères ambigus — différenciation maximale</span>
+    l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m &nbsp;·&nbsp; rn m
+  </div>
+  <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px">Caractères accentués</span>
+    À Â Ä Æ Ç É È Ê Ë Î Ï Ô Œ Ù Û Ü à â ä æ ç é è ê ë î ï ô œ ù û ü
+  </div>
+  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</p>
 </div>
 
 <h2>Spécimens typographiques</h2>
@@ -909,11 +1351,11 @@ function buildIconsFoundation() {
 
 <h2>Règles absolues</h2>
 <ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours utiliser <code>&lt;ds-icon name="…" size="control"&gt;</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône sémantique (seule info visible) → <code>label="…"</code> obligatoire</li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône décorative (texte adjacent) → <code>decorative</code> obligatoire</li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> Taille en dur : <code>style="width:20px"</code> — utiliser <code>size="control"</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> SVG inline hors <code>&lt;ds-icon&gt;</code> — pas de contrat d'accessibilité</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> SVG inline hors <code>&lt;sda-icon&gt;</code> — pas de contrat d'accessibilité</li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
 </ul>
 
@@ -934,38 +1376,38 @@ function buildComponentsIndex() {
 <h1>Composants</h1>
 <p class="page-lead">Chaque composant est un contrat — intention, variantes autorisées, tokens associés, règles d'accessibilité, cas limites, gouvernance. Les agents appliquent ces contrats sans les improviser.</p>
 
-<h2 class="first">Catalogue</h2>
+<h2 class="first">Workflow de création</h2>
+<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
+  <li>Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></li>
+  <li>Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</li>
+  <li>Implémenter le Web Component (Lit) dans <code>src/components/sda-[nom].js</code></li>
+  <li>Créer la Storybook story pour documentation et tests visuels</li>
+  <li>Ouvrir une PR avec impact tokens documenté — approbation requise si composant modifié</li>
+</ol>
+
+<h2>Catalogue</h2>
 <div class="nav-grid">
   <a href="button.html" class="nav-card">
-    <span class="nav-card-icon">${icon('mouse-pointer-click')}</span>
+    <span class="nav-card-icon">${icon('mouse-pointer-click',32)}</span>
     <div class="nav-card-title">Button</div>
     <div class="nav-card-desc">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</div>
   </a>
   <a href="icon.html" class="nav-card">
-    <span class="nav-card-icon">${icon('star')}</span>
+    <span class="nav-card-icon">${icon('star',32)}</span>
     <div class="nav-card-title">Icon</div>
     <div class="nav-card-desc">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1.</div>
   </a>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
-    <span class="nav-card-icon">${icon('pen-line')}</span>
+    <span class="nav-card-icon">${icon('pen-line',32)}</span>
     <div class="nav-card-title">Input <span class="badge" style="margin-left:6px">Bientôt</span></div>
     <div class="nav-card-desc">Saisie de données avec états : défaut, focus, erreur, désactivé.</div>
   </div>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
-    <span class="nav-card-icon">${icon('layout-template')}</span>
+    <span class="nav-card-icon">${icon('layout-template',32)}</span>
     <div class="nav-card-title">Card <span class="badge" style="margin-left:6px">Bientôt</span></div>
     <div class="nav-card-desc">Conteneur visuel pour regrouper des informations liées.</div>
   </div>
 </div>
-
-<h2>Workflow de création</h2>
-<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
-  <li>Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></li>
-  <li>Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</li>
-  <li>Implémenter le Web Component (Lit) dans <code>src/components/ds-[nom].js</code></li>
-  <li>Créer la Storybook story pour documentation et tests visuels</li>
-  <li>Ouvrir une PR avec impact tokens documenté — approbation requise si composant modifié</li>
-</ol>
 `;
 
   write(path.join(DIST, 'components/index.html'), layout({
@@ -1090,14 +1532,38 @@ class DsButton extends LitElement {
 }
 customElements.define('ds-button', DsButton);</code></pre>
 
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} À faire</h3>
+    <ul>
+      <li>Libellé explicite décrivant l'action (<em>«&nbsp;Supprimer définitivement le dossier&nbsp;»</em>)</li>
+      <li>Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
+      <li>Toujours un <code>:focus-visible</code> visible pour la navigation clavier</li>
+      <li>État <code>loading</code> avec <code>aria-busy="true"</code> pour les actions asynchrones</li>
+      <li>Pattern de confirmation obligatoire avant chaque action <code>critical</code></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} À éviter</h3>
+    <ul>
+      <li>Libellé vague : <em>«&nbsp;OK&nbsp;»</em>, <em>«&nbsp;Confirmer&nbsp;»</em>, <em>«&nbsp;Valider&nbsp;»</em> seul</li>
+      <li>Deux boutons <code>primary</code> côte à côte dans le même formulaire</li>
+      <li>Couleurs ou espacements en dur (<code>style="background:red"</code>)</li>
+      <li>Variantes inventées hors de <code>tokens/component.json</code></li>
+      <li>Bouton <code>critical</code> sans pattern de confirmation</li>
+    </ul>
+  </div>
+</div>
+
 <h2>Anti-patterns</h2>
 <table>
   <thead><tr><th>Mauvais</th><th>Pourquoi</th></tr></thead>
   <tbody>
     <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td>Valeur en dur, variante non reconnue, pas de token</td></tr>
-    <tr><td><code>&lt;ds-button variant="critical"&gt;OK&lt;/ds-button&gt;</code></td><td>Libellé non explicite pour une action critique</td></tr>
+    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td>Libellé non explicite pour une action critique</td></tr>
     <tr><td>Deux <code>variant="primary"</code> dans le même formulaire</td><td>Hiérarchie cassée — perte de clarté UX</td></tr>
-    <tr><td><code>&lt;ds-button variant="danger"&gt;</code></td><td>Variante inexistante — escalader, demander la variante correcte</td></tr>
+    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td>Variante inexistante — escalader, demander la variante correcte</td></tr>
   </tbody>
 </table>
 `;
@@ -1112,7 +1578,13 @@ customElements.define('ds-button', DsButton);</code></pre>
 // ─── PAGE: ICON ─────────────────────────────────────────────────────────────
 function buildIcon() {
   const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
-  const content = parseMd(read(mdPath));
+  // Strip frontmatter meta block and fix ds-icon → sda-icon
+  let rawMd = read(mdPath)
+    .replace(/\*\*Auteur:\*\*[^\n]*\n/g, '')
+    .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '')
+    .replace(/ds-icon/g, 'sda-icon');
+  const content = parseMd(rawMd);
+
   const tokenRows = [
     ['icon-size-inline',  'semantic.icon.size.inline',  SEM['icon-size-inline']],
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
@@ -1123,13 +1595,35 @@ function buildIcon() {
 
   const body = `
 <h1>Icon</h1>
-<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte, accessibilité WCAG 1.1.1 intégrée.</p>
+<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</p>
 
 <h2 class="first">Tokens</h2>
 <table>
   <thead><tr><th>CSS Custom Property</th><th>Token sémantique</th><th>Valeur</th></tr></thead>
   <tbody>${tokenRows}</tbody>
 </table>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} À faire</h3>
+    <ul>
+      <li>Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
+      <li>Ajouter <code>label="…"</code> si l'icône est la seule information visible</li>
+      <li>Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</li>
+      <li>Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} À éviter</h3>
+    <ul>
+      <li>SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</li>
+      <li>Taille codée en dur : <code>style="width:20px"</code></li>
+      <li>Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
+      <li>Tailles inventées hors des 3 tokens sémantiques définis</li>
+    </ul>
+  </div>
+</div>
 
 <h2>Référence complète</h2>
 ${content}
@@ -1144,49 +1638,92 @@ ${content}
 
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
+  const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
+  const semCount   = Object.keys(SEM).length;
+  const compCount  = Object.keys(COMP).length;
+
+  // Resolve component token to its actual value by looking up the semantic token
+  function resolveCompValue(varRef) {
+    const m = varRef.match(/var\(--sda-semantic-(.+)\)/);
+    if (!m) return varRef;
+    return SEM[m[1]] || varRef;
+  }
+
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:3px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:monospace;font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:monospace;font-size:12px">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
+  // Build a full semantic map with alias info
   const semRows = Object.entries(SEM).map(([k, v]) => {
     const isColor = k.startsWith('color-');
-    const swatch = isColor ? `<span style="width:20px;height:20px;border-radius:3px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px">${swatch}<code>--sda-semantic-${k}</code></div></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`;
+    const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
+    const aliasNode = getSemanticAlias(k);
+    const aliasCell = aliasNode ? `<td style="font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--sda-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:monospace;font-size:12px">${v}</td></tr>`;
   }).join('');
 
-  const compRows = Object.entries(COMP).map(([k, v]) =>
-    `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">${v}</td></tr>`
-  ).join('');
+  const compRows = Object.entries(COMP).map(([k, v]) => {
+    const resolved = resolveCompValue(v);
+    const isColor = k.includes('background') || k.includes('text') || k.includes('border');
+    const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
+    return `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:monospace;font-size:12px">${resolved}</span></div></td></tr>`;
+  }).join('');
 
   const body = `
 <h1>Explorateur de tokens</h1>
-<p class="page-lead">Les ${Object.values(COLOR_SCALES).reduce((a,s)=>a+Object.keys(s).length,0)} tokens primitifs, ${Object.keys(SEM).length} tokens sémantiques et ${Object.keys(COMP).length} tokens de composant — navigables, filtrables, et directement applicables via CSS Custom Properties.</p>
+<p class="page-lead">Trois niveaux de tokens — navigables, filtrables, directement applicables via CSS Custom Properties.</p>
+
+<div class="token-tiles">
+  <div class="token-tile">
+    <span class="token-tile-count">${scaleSteps}</span>
+    <span class="token-tile-label">Tokens primitifs (couleurs)</span>
+  </div>
+  <div class="token-tile">
+    <span class="token-tile-count">${semCount}</span>
+    <span class="token-tile-label">Tokens sémantiques</span>
+  </div>
+  <div class="token-tile">
+    <span class="token-tile-count">${compCount}</span>
+    <span class="token-tile-label">Tokens de composant</span>
+  </div>
+</div>
 
 <input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens">
 
-<div class="explorer-tabs" role="tablist" aria-label="Niveaux de tokens">
-  <button class="exp-tab active" data-target="prim-panel" role="tab" aria-selected="true">Primitifs</button>
-  <button class="exp-tab" data-target="sem-panel" role="tab" aria-selected="false">Sémantiques</button>
-  <button class="exp-tab" data-target="comp-panel" role="tab" aria-selected="false">Composant</button>
-</div>
+<h2 id="primitifs" class="first">Tokens primitifs</h2>
+<p>Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></p>
+<table><thead><tr><th>Token CSS</th><th>Valeur</th><th>Description</th></tr></thead><tbody>${primRows}</tbody></table>
 
-<div id="prim-panel" class="exp-panel active" role="tabpanel">
-  <p style="margin-bottom:16px">Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></p>
-  <table><thead><tr><th>Token CSS</th><th>Valeur</th><th>Usage recommandé</th></tr></thead><tbody>${primRows}</tbody></table>
-</div>
-<div id="sem-panel" class="exp-panel" role="tabpanel">
-  <p style="margin-bottom:16px">Intentions UX. Ces tokens sont ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur.</p>
-  <table><thead><tr><th>Token CSS</th><th>Valeur résolue</th></tr></thead><tbody>${semRows}</tbody></table>
-</div>
-<div id="comp-panel" class="exp-panel" role="tabpanel">
-  <p style="margin-bottom:16px">Contrats institutionnels. Toute modification requiert une approbation formelle (TCR).</p>
-  <table><thead><tr><th>Token CSS</th><th>Référence sémantique</th></tr></thead><tbody>${compRows}</tbody></table>
-</div>
+<h2 id="semantiques">Tokens sémantiques</h2>
+<p>Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</p>
+<table><thead><tr><th>Token CSS</th><th>Alias (référence)</th><th>Valeur résolue</th></tr></thead><tbody>${semRows}</tbody></table>
+
+<h2 id="composants">Tokens de composant</h2>
+<p>Contrats institutionnels. Toute modification requiert une approbation formelle.</p>
+<table><thead><tr><th>Token CSS</th><th>Alias sémantique</th><th>Valeur résolue</th></tr></thead><tbody>${compRows}</tbody></table>
 `;
 
-  write(path.join(DIST, 'tokens/index.html'), layout({ title: 'Tokens', depth: 1, body }));
+  write(path.join(DIST, 'tokens/index.html'), layout({
+    title: 'Tokens', depth: 1,
+    sidebar: sidebarFoundations('../','') + sidebarComponents('../','') + sidebarTokens('../',''),
+    body
+  }));
+}
+
+// Helper: returns the raw alias string for a semantic token key by walking semanticData
+function getSemanticAlias(flatKey) {
+  const parts = flatKey.split('-');
+  let node = semanticData.semantic;
+  for (const part of parts) {
+    if (!node || typeof node !== 'object') return null;
+    node = node[part];
+  }
+  if (node && 'value' in node && typeof node.value === 'string' && node.value.includes('{')) {
+    return node.value;
+  }
+  return null;
 }
 
 // ─── PAGE: DECISIONS INDEX ──────────────────────────────────────────────────
@@ -1223,7 +1760,7 @@ function buildDecisionsIndex(adrs) {
 
   write(path.join(DIST, 'decisions/index.html'), layout({
     title: 'Décisions (ADRs)', depth: 1,
-    sidebar: sidebarDecisionsLocal(adrs),
+    sidebar: sidebarDecisionsLocal(adrs) + sidebarAgents('../'),
     body
   }));
 }
@@ -1272,6 +1809,8 @@ function buildAgents() {
     ['.claude/instructions/session-spec.md','Quick reference pour la session'],
   ];
 
+  const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('book-open',24), icon('shield-check',24)];
+
   const body = `
 <h1>Pour les agents IA</h1>
 <p class="page-lead">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</p>
@@ -1280,8 +1819,9 @@ function buildAgents() {
 
 <h2 class="first">Types d'agents</h2>
 <div class="agent-grid">
-${agentTypes.map(([name, type, desc]) => `
+${agentTypes.map(([name, type, desc], i) => `
 <div class="agent-card">
+  <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px">${agentIcons[i]}</div>
   <div class="agent-type">Agent ${type}</div>
   <div class="agent-name">${name}</div>
   <div class="agent-desc">${desc}</div>
@@ -1346,7 +1886,11 @@ color: var(--sda-primitive-color-blue-11);</code></pre>
 </table>
 `;
 
-  write(path.join(DIST, 'agents/index.html'), layout({ title: 'Pour les agents IA', depth: 1, body }));
+  write(path.join(DIST, 'agents/index.html'), layout({
+    title: 'Pour les agents IA', depth: 1,
+    sidebar: sidebarAgents('../'),
+    body
+  }));
 }
 
 // ─── LOAD ADRS ──────────────────────────────────────────────────────────────

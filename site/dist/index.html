@@ -1,87 +1,401 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle de l'Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
 <title>Accueil — Système de design agentique</title>
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Aller au contenu</a>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
 <header class="site-header" role="banner">
   <a class="logo" href="index.html" aria-label="Système de design agentique — Accueil">
     <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">Système de design agentique</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
   </a>
   <span class="logo-version">v1.0.0</span>
-  <nav class="top-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="foundations/color.html">Fondations</a><a href="components/button.html">Composants</a><a href="tokens/index.html">Tokens</a><a href="decisions/index.html">Décisions</a><a href="agents/index.html">Agents</a></nav>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
 </header>
 <div class="home-layout" id="main-content">
   
   <main class="" role="main">
 <div class="hero">
-  <div class="hero-badge">Système de design agentique · v1.0.0</div>
-  <h1>Un système de design<br><span>compris par les humains<br>et les agents IA.</span></h1>
-  <p class="hero-tagline">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</p>
-  <div class="hero-actions">
-    <a href="foundations/color.html" class="ds-btn primary">Explorer les fondations</a>
-    <a href="components/button.html" class="ds-btn secondary">Voir les composants</a>
-    <a href="agents/index.html" class="ds-btn ghost">Documentation agents →</a>
+  <div class="hero-badge">
+    <span class="lang-fr">Système de design agentique · v1.0.0</span>
+    <span class="lang-en">Agentic Design System · v1.0.0</span>
   </div>
-</div>
-<div class="stat-band" role="region" aria-label="Statistiques du système">
-  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text">Niveaux de tokens</span></div>
-  <div class="stat-item"><span class="stat-num">34</span><span class="stat-text">Échelles de couleur Radix</span></div>
-  <div class="stat-item"><span class="stat-num">399+</span><span class="stat-text">Tokens primitifs</span></div>
-  <div class="stat-item"><span class="stat-num">22</span><span class="stat-text">Décisions architecturales</span></div>
-  <div class="stat-item"><span class="stat-num">AA</span><span class="stat-text">WCAG 2.1 garanti</span></div>
+  <h1>
+    <span class="lang-fr">Un système de design<br><span>compris par les humains<br>et les agents IA.</span></span>
+    <span class="lang-en">A design system<br><span>understood by humans<br>and AI agents.</span></span>
+  </h1>
+  <p class="hero-tagline">
+    <span class="lang-fr">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</span>
+    <span class="lang-en">Interface decisions encoded as structured tokens, component contracts and machine-readable rules — so every contributor, human or agent, correctly applies the team's design decisions.</span>
+  </p>
+  <div class="hero-actions">
+    <a href="foundations/color.html" class="ds-btn primary">
+      <span class="lang-fr">Explorer les fondations</span>
+      <span class="lang-en">Explore foundations</span>
+    </a>
+    <a href="components/index.html" class="ds-btn secondary">
+      <span class="lang-fr">Voir les composants</span>
+      <span class="lang-en">View components</span>
+    </a>
+    <a href="agents/index.html" class="ds-btn ghost">
+      <span class="lang-fr">Documentation agents →</span>
+      <span class="lang-en">Agent documentation →</span>
+    </a>
+  </div>
 </div>
 
 <div class="home-section">
-  <h2>Pipeline de tokens</h2>
-  <p>Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</p>
+  <h2>
+    <span class="lang-fr">Valeurs non négociables</span>
+    <span class="lang-en">Non-negotiable values</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span>
+    <span class="lang-en">These four principles guide every system decision and every agent action.</span>
+  </p>
+  <div class="principle-grid">
+    
+    <div class="principle-card">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+      <div class="principle-title"><span class="lang-fr">Souveraineté numérique</span><span class="lang-en">Digital sovereignty</span></div>
+      <div class="principle-desc"><span class="lang-fr">Les données, décisions et outils restent sous contrôle organisationnel.</span><span class="lang-en">Data, decisions and tools remain under organizational control.</span></div>
+    </div>
+    <div class="principle-card">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.36 3.5"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/></svg></div>
+      <div class="principle-title"><span class="lang-fr">Accessibilité première</span><span class="lang-en">Accessibility first</span></div>
+      <div class="principle-desc"><span class="lang-fr">WCAG 2.1 AA minimum. Non contournable, non négociable.</span><span class="lang-en">WCAG 2.1 AA minimum. Non-negotiable.</span></div>
+    </div>
+    <div class="principle-card">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+      <div class="principle-title"><span class="lang-fr">Auditabilité totale</span><span class="lang-en">Full auditability</span></div>
+      <div class="principle-desc"><span class="lang-fr">Toute décision est traçable, versionnée, justifiée.</span><span class="lang-en">Every decision is traceable, versioned, and justified.</span></div>
+    </div>
+    <div class="principle-card">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div class="principle-title"><span class="lang-fr">Le dernier mot est humain</span><span class="lang-en">Humans decide</span></div>
+      <div class="principle-desc"><span class="lang-fr">Les agents proposent. Les humains décident. Toujours.</span><span class="lang-en">Agents propose. Humans decide. Always.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="stat-band" role="region" aria-label="Statistiques du système">
+  <div class="stat-item">
+    <span class="stat-num" data-count="21">21</span>
+    <span class="stat-text">WCAG 2.1 AA</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="22">22</span>
+    <span class="stat-text">
+      <span class="lang-fr">Décisions architecturales</span>
+      <span class="lang-en">Architecture decisions</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="3">3</span>
+    <span class="stat-text">
+      <span class="lang-fr">Niveaux de tokens</span>
+      <span class="lang-en">Token levels</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="494">494</span>
+    <span class="stat-text">
+      <span class="lang-fr">Tokens au total</span>
+      <span class="lang-en">Tokens total</span>
+    </span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-count="34">34</span>
+    <span class="stat-text">
+      <span class="lang-fr">Échelles de couleur</span>
+      <span class="lang-en">Color scales</span>
+    </span>
+  </div>
+</div>
+
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Pipeline de tokens</span>
+    <span class="lang-en">Token pipeline</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span>
+    <span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span>
+  </p>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 1 — Primitif</div>
-      <div class="pipeline-title">Valeurs physiques</div>
-      <div class="pipeline-desc">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 1 — Primitif</span>
+        <span class="lang-en">Level 1 — Primitive</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Valeurs physiques</span>
+        <span class="lang-en">Physical values</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span>
+        <span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span>
+      </div>
       <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 2 — Sémantique</div>
-      <div class="pipeline-title">Intentions UX</div>
-      <div class="pipeline-desc">Traduit les primitives en langage métier. C'est ce que les agents doivent utiliser pour comprendre l'intention.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 2 — Sémantique</span>
+        <span class="lang-en">Level 2 — Semantic</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Intentions UX</span>
+        <span class="lang-en">UX intentions</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span>
+        <span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span>
+      </div>
       <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">Niveau 3 — Composant</div>
-      <div class="pipeline-title">Contrats institutionnels</div>
-      <div class="pipeline-desc">Décisions spécifiques à chaque composant. Portent les règles comportementales. Toute modification requiert approbation.</div>
+      <div class="pipeline-tag">
+        <span class="lang-fr">Niveau 3 — Composant</span>
+        <span class="lang-en">Level 3 — Component</span>
+      </div>
+      <div class="pipeline-title">
+        <span class="lang-fr">Contrats institutionnels</span>
+        <span class="lang-en">Institutional contracts</span>
+      </div>
+      <div class="pipeline-desc">
+        <span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span>
+        <span class="lang-en">Component-specific decisions. Any change requires approval.</span>
+      </div>
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
     </div>
   </div>
 </div>
 
 <div class="home-section">
-  <h2>Explorer le système</h2>
-  <p>Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</p>
+  <h2>
+    <span class="lang-fr">Explorer le système</span>
+    <span class="lang-en">Explore the system</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span>
+    <span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span>
+  </p>
   <div class="nav-grid">
-    <a href="foundations/color.html" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg></span><div class="nav-card-title">Fondations</div><div class="nav-card-desc">Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.</div></a><a href="components/button.html" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/></svg></span><div class="nav-card-title">Composants</div><div class="nav-card-desc">Contrats UI exécutables : variantes, états, tokens, accessibilité, code.</div></a><a href="tokens/index.html" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span><div class="nav-card-title">Explorateur de tokens</div><div class="nav-card-desc">Naviguez dans les 3 niveaux : primitif → sémantique → composant.</div></a><a href="decisions/index.html" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span><div class="nav-card-title">Décisions (ADRs)</div><div class="nav-card-desc">Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.</div></a><a href="agents/index.html" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span><div class="nav-card-title">Pour les agents IA</div><div class="nav-card-desc">Règles, routage et contraintes pour les agents qui travaillent avec ce système.</div></a><a href="https://github.com" class="nav-card"><span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span><div class="nav-card-title">Code source</div><div class="nav-card-desc">Tokens JSON, scripts d'audit, configuration Style Dictionary.</div></a>
+    
+    <a href="foundations/color.html" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.</span><span class="lang-en">Color, spacing, typography — primitives and their semantic intentions.</span></div>
+    </a>
+    <a href="components/index.html" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Contrats UI exécutables : variantes, états, tokens, accessibilité, code.</span><span class="lang-en">Executable UI contracts: variants, states, tokens, accessibility, code.</span></div>
+    </a>
+    <a href="tokens/index.html" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Naviguez dans les 3 niveaux : primitif → sémantique → composant.</span><span class="lang-en">Navigate the 3 levels: primitive → semantic → component.</span></div>
+    </a>
+    <a href="decisions/index.html" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Décisions (ADRs)</span><span class="lang-en">Decisions (ADRs)</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.</span><span class="lang-en">Why each decision was made — 22 active ADRs with context and alternatives.</span></div>
+    </a>
+    <a href="agents/index.html" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Règles, routage et contraintes pour les agents qui travaillent avec ce système.</span><span class="lang-en">Rules, routing and constraints for agents working with this system.</span></div>
+    </a>
+    <a href="https://github.com" class="nav-card">
+      <span class="nav-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></span>
+      <div class="nav-card-title"><span class="lang-fr">Code source</span><span class="lang-en">Source code</span></div>
+      <div class="nav-card-desc"><span class="lang-fr">Tokens JSON, scripts d'audit, configuration Style Dictionary.</span><span class="lang-en">JSON tokens, audit scripts, Style Dictionary configuration.</span></div>
+    </a>
   </div>
 </div>
 
 <div class="home-section">
-  <h2>Valeurs non négociables</h2>
-  <p>Ces quatre principes guident chaque décision du système et chaque action des agents.</p>
-  <div class="principle-grid">
-    <div class="principle-card"><div class="principle-num">Principe 01</div><div class="principle-title">Souveraineté numérique</div><div class="principle-desc">Les données, décisions et outils restent sous contrôle organisationnel.</div></div><div class="principle-card"><div class="principle-num">Principe 02</div><div class="principle-title">Accessibilité première</div><div class="principle-desc">WCAG 2.1 AA minimum. Non contournable, non négociable.</div></div><div class="principle-card"><div class="principle-num">Principe 03</div><div class="principle-title">Auditabilité totale</div><div class="principle-desc">Toute décision est traçable, versionnée, justifiée.</div></div><div class="principle-card"><div class="principle-num">Principe 04</div><div class="principle-title">Le dernier mot est humain</div><div class="principle-desc">Les agents proposent. Les humains décident. Toujours.</div></div>
+  <h2>
+    <span class="lang-fr">Décisions architecturales (ADRs)</span>
+    <span class="lang-en">Architecture Decision Records (ADRs)</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée. Les ADRs rendent ces décisions visibles, traçables et auditables par les humains comme par les agents.</span>
+    <span class="lang-en">A design system accumulates invisible decisions: why this token is named this way, why this variant was rejected. ADRs make these decisions visible, traceable and auditable by both humans and agents.</span>
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Format Markdown</span>
+        <span class="lang-en">Markdown format</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Chaque décision est un fichier .md versionné dans le dépôt — lisible par Git, GitHub et les agents.</span>
+        <span class="lang-en">Each decision is a versioned .md file in the repo — readable by Git, GitHub and agents.</span>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Immutabilité</span>
+        <span class="lang-en">Immutability</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span>
+        <span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
+      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+        <span class="lang-fr">Lisible par les agents</span>
+        <span class="lang-en">Agent-readable</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+        <span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span>
+        <span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span>
+      </div>
+    </div>
+  </div>
+  <p><a href="decisions/index.html" class="ds-btn secondary" style="font-size:13px">
+    <span class="lang-fr">Voir les 22 ADRs →</span>
+    <span class="lang-en">View all 22 ADRs →</span>
+  </a></p>
+</div>
+
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Stack technique</span>
+    <span class="lang-en">Technical stack</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
+    <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
+  </p>
+  <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
+    
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Décision</span><span class="lang-en">Decision</span></div>
+      <div class="stack-node-sub">ADRs</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></div>
+      <div class="stack-node-sub">Guidelines</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Design</span><span class="lang-en">Design</span></div>
+      <div class="stack-node-sub">Figma</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Code</span><span class="lang-en">Code</span></div>
+      <div class="stack-node-sub">Web Components</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Validation</span><span class="lang-en">Validation</span></div>
+      <div class="stack-node-sub">axe-core</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Audit</span><span class="lang-en">Audit</span></div>
+      <div class="stack-node-sub">Chromatic</div>
+    </div>
+    <div class="stack-node">
+      <div class="stack-node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+      <div class="stack-node-label"><span class="lang-fr">Déploiement</span><span class="lang-en">Deploy</span></div>
+      <div class="stack-node-sub">CI/CD</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px">
+    
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">Lit (Google) <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— Web Components</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span></div>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">Style Dictionary <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— Token compilation</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span></div>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">Chromatic <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— Visual testing</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">Régressions visuelles, PR previews</span><span class="lang-en">Visual regressions, PR previews</span></div>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.36 3.5"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">axe-core <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— Accessibility</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span></div>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5c-1.4 0-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">Playwright <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— E2E tests</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span></div>
+      </div>
+    </div>
+    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+      <div>
+        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">Storybook <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— Documentation</span></div>
+        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span></div>
+      </div>
+    </div>
   </div>
 </div>
 </main>
+  
 </div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
 <script src="site.js"></script>
 </body>
 </html>
