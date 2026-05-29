@@ -359,10 +359,10 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
-.space-demo{display:flex;align-items:flex-end;gap:16px;margin:28px 0;flex-wrap:wrap}
-.space-item{display:flex;flex-direction:column;align-items:center;gap:8px}
-.space-bar{background:#fecaca;border-radius:3px;min-width:8px;}
-.space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);text-align:center}
+.space-demo{display:flex;flex-direction:column;gap:6px;margin:28px 0}
+.space-item{display:flex;align-items:center;gap:12px}
+.space-bar{background:#fca5a5;border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
+.space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 .type-specimen{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;margin:12px 0}
@@ -1300,7 +1300,7 @@ function buildSpacing() {
     ['16', '64px', 'Macro XL'],
   ];
   const bars = primitives4px.map(([step, px, label]) =>
-    `<div class="space-item"><div style="height:72px;display:flex;align-items:flex-end;justify-content:center"><div class="space-bar" style="width:36px;height:${px};background:#fca5a5;border-radius:2px 2px 0 0;min-height:4px" aria-label="${px}"></div></div><div class="space-label" style="font-size:12px;border-top:2px solid #fca5a5;padding-top:6px;min-width:56px;text-align:center"><code>space.${step}</code><br><strong>${px}</strong>${label ? `<br><span style="font-size:10px;color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
+    `<div class="space-item"><div class="space-label"><code>space.${step}</code></div><div class="space-bar" style="width:${px}" aria-label="${px}"></div><strong style="font-family:monospace;font-size:12px;color:var(--sda-semantic-color-text-secondary)">${px}</strong>${label ? `<span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:4px">${label}</span>` : ''}</div>`
   ).join('');
   const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
