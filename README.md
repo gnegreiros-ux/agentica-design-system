@@ -7,6 +7,8 @@
 > **Lecture avant:** (point d'entrée — lire en premier)
 > **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
+**Site de documentation :** https://gnegreiros-ux.github.io/agentic-design-system/
+
 ---
 
 ## Principe fondamental
