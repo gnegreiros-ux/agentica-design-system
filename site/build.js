@@ -725,7 +725,7 @@ function buildColor() {
 
   write(path.join(DIST, 'foundations/color.html'), layout({
     title: 'Couleur', depth: 1,
-    sidebar: sidebarFoundations('', 'color.html') + sidebarComponents('', ''),
+    sidebar: sidebarFoundations('../', 'color.html') + sidebarComponents('../', ''),
     body
   }));
 }
@@ -786,7 +786,7 @@ function buildSpacing() {
 
   write(path.join(DIST, 'foundations/spacing.html'), layout({
     title: 'Espacement', depth: 1,
-    sidebar: sidebarFoundations('', 'spacing.html') + sidebarComponents('', ''),
+    sidebar: sidebarFoundations('../', 'spacing.html') + sidebarComponents('../', ''),
     body
   }));
 }
@@ -853,7 +853,7 @@ function buildTypography() {
 
   write(path.join(DIST, 'foundations/typography.html'), layout({
     title: 'Typographie', depth: 1,
-    sidebar: sidebarFoundations('', 'typography.html') + sidebarComponents('', ''),
+    sidebar: sidebarFoundations('../', 'typography.html') + sidebarComponents('../', ''),
     body
   }));
 }
@@ -900,7 +900,7 @@ function buildComponentsIndex() {
 
   write(path.join(DIST, 'components/index.html'), layout({
     title: 'Composants', depth: 1,
-    sidebar: sidebarFoundations('', '') + sidebarComponents('', 'index.html'),
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'index.html'),
     body
   }));
 }
@@ -1034,7 +1034,7 @@ customElements.define('ds-button', DsButton);</code></pre>
 
   write(path.join(DIST, 'components/button.html'), layout({
     title: 'Button', depth: 1,
-    sidebar: sidebarFoundations('', '') + sidebarComponents('', 'button.html'),
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'button.html'),
     body
   }));
 }
@@ -1067,7 +1067,7 @@ ${content}
 
   write(path.join(DIST, 'components/icon.html'), layout({
     title: 'Icon', depth: 1,
-    sidebar: sidebarFoundations('', '') + sidebarComponents('', 'icon.html'),
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'icon.html'),
     body
   }));
 }
