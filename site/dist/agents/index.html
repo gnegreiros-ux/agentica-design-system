@@ -33,43 +33,44 @@
   </button>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="../agents/index.html">Vue d'ensemble</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="../agents/index.html">Vue d'ensemble</a><a href="../agents/index.html#types">Types d'agents</a><a href="../agents/index.html#actions">Ce qu'ils peuvent faire</a><a href="../agents/index.html#lecture">Ordre de lecture</a><a href="../agents/index.html#escalade">Règle d'escalade</a><a href="../agents/index.html#skills">Compétences</a></div></aside>
   <main class="content" role="main">
 <h1>Pour les agents IA</h1>
 <p class="page-lead">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</p>
 
 <blockquote><p>Le dernier mot est toujours humain.</p></blockquote>
 
-<h2 class="first">Types d'agents</h2>
+<h2 class="first" id="types">Types d'agents</h2>
+<p>Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</p>
 <div class="agent-grid">
 
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/></svg></div>
   <div class="agent-type">Agent Figma</div>
   <div class="agent-name">Designer Agent</div>
-  <div class="agent-desc">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements incohérents.</div>
+  <div class="agent-desc">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.</div>
 </div>
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
   <div class="agent-type">Agent Code</div>
   <div class="agent-name">Developer Agent</div>
-  <div class="agent-desc">Détecte les mauvais usages de tokens dans le code, ouvre des PRs de correction.</div>
-</div>
-<div class="agent-card">
-  <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
-  <div class="agent-type">Agent Docs</div>
-  <div class="agent-name">Documentation Agent</div>
-  <div class="agent-desc">Génère des changelogs, guides de migration, notes d'accessibilité.</div>
+  <div class="agent-desc">Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.</div>
 </div>
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
   <div class="agent-type">Agent Tests</div>
   <div class="agent-name">QA Agent</div>
-  <div class="agent-desc">Exécute les tests d'accessibilité, de régression visuelle, de conformité des tokens.</div>
+  <div class="agent-desc">Exécute les tests d'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.</div>
+</div>
+<div class="agent-card">
+  <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+  <div class="agent-type">Agent Docs</div>
+  <div class="agent-name">Documentation Agent</div>
+  <div class="agent-desc">Génère des changelogs, guides de migration, notes d'accessibilité, mises à jour des guidelines.</div>
 </div>
 </div>
 
-<h2>Ce que les agents peuvent faire</h2>
+<h2 id="actions">Ce que les agents peuvent faire</h2>
 <div class="rules-split">
   <div class="rule-can">
     <h3><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Autorisé</h3>
@@ -96,14 +97,14 @@
   </div>
 </div>
 
-<h2>Ordre de lecture obligatoire</h2>
+<h2 id="lecture">Ordre de lecture obligatoire</h2>
 <p>Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</p>
 <table>
   <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
   <tbody><tr><td><code>AGENTS.md</code></td><td>Routeur d'agents — première lecture obligatoire</td></tr><tr><td><code>DESIGN.md</code></td><td>Contrat de marque portable</td></tr><tr><td><code>.claude/rules/project-overview.md</code></td><td>Contexte général</td></tr><tr><td><code>.claude/rules/tokens-system.md</code></td><td>Règles des tokens</td></tr><tr><td><code>.claude/rules/development.md</code></td><td>Règles de développement</td></tr><tr><td><code>guidelines/components/button.md</code></td><td>Contrat du composant concerné</td></tr><tr><td><code>.claude/instructions/session-spec.md</code></td><td>Quick reference pour la session</td></tr></tbody>
 </table>
 
-<h2>Règle d'escalade</h2>
+<h2 id="escalade">Règle d'escalade</h2>
 <p>Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</p>
 
 <h2>Règle de nommage — rappel</h2>
@@ -116,7 +117,7 @@ color: #0d74ce;
 /* ❌ Interdit — token primitif utilisé directement */
 color: var(--sda-primitive-color-blue-11);</code></pre>
 
-<h2>Compétences (Skills)</h2>
+<h2 id="skills">Compétences (Skills)</h2>
 <table>
   <thead><tr><th>Skill</th><th>Rôle</th></tr></thead>
   <tbody>
@@ -125,7 +126,19 @@ color: var(--sda-primitive-color-blue-11);</code></pre>
     <tr><td><code>.claude/skills/codebase-index.md</code></td><td>Index du dépôt pour navigation rapide</td></tr>
   </tbody>
 </table>
-</main>
+
+<div class="contribution-banner">
+  <div class="contrib-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
+  <div class="contrib-body">
+    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+    <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
+    <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
+  </div>
+  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+    <span class="lang-fr">Voir sur GitHub →</span>
+    <span class="lang-en">View on GitHub →</span>
+  </a>
+</div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
 

@@ -199,8 +199,9 @@ body{
 .site-header{
   position:fixed;top:0;left:0;right:0;height:60px;z-index:100;
   background:var(--sda-semantic-color-background-surface);
-  border-bottom:2px solid var(--sda-semantic-color-border-default);
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
+  border-top:3px solid var(--sda-semantic-color-action-primary);
+  border-bottom:1px solid var(--sda-semantic-color-border-default);
+  box-shadow:0 2px 24px rgba(0,0,0,.12);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
@@ -500,6 +501,30 @@ html[data-lang="en"] .lang-fr{display:none}
 .footer-links a:hover{color:#fff}
 .footer-credit{font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
 
+/* ── CONTRIBUTION BANNER ─────────────────────────────────── */
+.contribution-banner{display:flex;align-items:center;gap:16px;background:var(--sda-semantic-color-background-subtle);border:1px solid var(--sda-semantic-color-border-default);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 var(--sda-semantic-radius-card) var(--sda-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
+.contribution-banner .contrib-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0}
+.contribution-banner .contrib-body{flex:1}
+.contribution-banner .contrib-body strong{color:var(--sda-semantic-color-text-primary);font-size:14px;display:block;margin-bottom:3px}
+.contribution-banner .contrib-body span{font-size:13px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+@media(max-width:768px){.contribution-banner{flex-direction:column;align-items:flex-start}}
+
+/* ── AUDIENCE CARDS ──────────────────────────────────────── */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:28px 0}
+.audience-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
+.audience-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:10px}
+.audience-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--sda-semantic-color-text-secondary);margin-bottom:4px}
+.audience-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.audience-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+
+/* ── KPI BAND ────────────────────────────────────────────── */
+.kpi-band{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:28px 0}
+.kpi-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px 22px}
+.kpi-num{font-size:32px;font-weight:800;color:var(--sda-semantic-color-action-primary);letter-spacing:-.02em;display:block;margin-bottom:4px}
+.kpi-label{font-size:13px;color:var(--sda-semantic-color-text-primary);font-weight:600;margin-bottom:6px;display:block}
+.kpi-source{font-size:11px;color:var(--sda-semantic-color-text-secondary)}
+.kpi-source a{color:var(--sda-semantic-color-action-primary);font-size:11px}
+
 /* ── TECH STACK PIPELINE ─────────────────────────────────── */
 .stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
 .stack-node{flex:1;min-width:100px;padding:18px 14px;background:var(--sda-semantic-color-background-surface);text-align:center;border-right:1px solid var(--sda-semantic-color-border-default);position:relative}
@@ -778,7 +803,23 @@ function sidebarTokens(base, current) {
 }
 
 function sidebarAgents(base) {
-  return `<div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="${base}agents/index.html">Vue d'ensemble</a></div>`;
+  return `<div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="${base}agents/index.html">Vue d'ensemble</a><a href="${base}agents/index.html#types">Types d'agents</a><a href="${base}agents/index.html#actions">Ce qu'ils peuvent faire</a><a href="${base}agents/index.html#lecture">Ordre de lecture</a><a href="${base}agents/index.html#escalade">Règle d'escalade</a><a href="${base}agents/index.html#skills">Compétences</a></div>`;
+}
+
+function contributionBanner() {
+  return `
+<div class="contribution-banner">
+  <div class="contrib-icon">${icon('github', 22)}</div>
+  <div class="contrib-body">
+    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+    <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
+    <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
+  </div>
+  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+    <span class="lang-fr">Voir sur GitHub →</span>
+    <span class="lang-en">View on GitHub →</span>
+  </a>
+</div>`;
 }
 
 // ─── PAGE: HOME ────────────────────────────────────────────────────────────
@@ -826,6 +867,20 @@ function buildHome(adrs) {
     [icon('rocket',20),      'Déploiement',    'Deploy',         'CI/CD'],
   ];
 
+  const audiences = [
+    [icon('briefcase',22),'Gestionnaires','Managers','Livraisons 2× plus rapides, moins de régressions visuelles, gouvernance documentée et traçable.','2× faster delivery, fewer visual regressions, documented and traceable governance.'],
+    [icon('pen-tool',22),'Designers','Designers','Tokens Figma synchronisés, marque appliquée automatiquement, cohérence garantie à chaque mise à jour.','Synced Figma tokens, auto-applied brand guidelines, consistency guaranteed on every update.'],
+    [icon('code-2',22),'Développeurs','Developers','Web Components framework-agnostic, variables CSS générées, zéro valeur en dur, audit accessibilité intégré.','Framework-agnostic Web Components, generated CSS variables, zero hardcoded values, built-in accessibility audit.'],
+    [icon('clipboard-list',22),'Product Owners','Product Owners','Décisions architecturales traçables, conformité WCAG AA garantie, pipeline qualité automatisé.','Traceable architecture decisions, guaranteed WCAG AA compliance, automated quality pipeline.'],
+  ];
+
+  const kpis = [
+    ['2×','Livraisons plus rapides','Faster delivery','Les équipes avec un design system mature livrent jusqu\'à 2× plus fréquemment — Sparkbox Design Systems Survey 2024','Teams with a mature design system ship up to 2× more frequently — Sparkbox Design Systems Survey 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
+    ['80%','Moins de violations a11y','Fewer a11y violations','Réduction des violations d\'accessibilité grâce aux composants WCAG AA natifs — IBM Carbon Case Study','Reduction in accessibility violations through native WCAG AA components — IBM Carbon Case Study','https://carbondesignsystem.com','IBM Carbon'],
+    ['34%','Délais respectés','Deadlines met','Les équipes utilisant un design system respectent davantage leurs délais de livraison — Sparkbox DSS 2024','Teams using a design system are more likely to meet delivery deadlines — Sparkbox DSS 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
+    ['3 niveaux','Architecture token','Token architecture','Primitif → Sémantique → Composant : une architecture qui sépare les valeurs des intentions — compréhensible par les humains ET les agents IA.','Primitive → Semantic → Component: an architecture separating values from intentions — understandable by humans AND AI agents.','',''],
+  ];
+
   const body = `
 <div class="hero">
   <div class="hero-badge">
@@ -837,8 +892,8 @@ function buildHome(adrs) {
     <span class="lang-en">A design system<br><span>understood by humans<br>and AI agents.</span></span>
   </h1>
   <p class="hero-tagline">
-    <span class="lang-fr">Les décisions d'interface encodées sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — pour que chaque intervenant, humain ou agent, applique correctement les décisions de l'équipe.</span>
-    <span class="lang-en">Interface decisions encoded as structured tokens, component contracts and machine-readable rules — so every contributor, human or agent, correctly applies the team's design decisions.</span>
+    <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Un design system conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
+    <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. A design system built for teams that move fast — and the agents that assist them.</span>
   </p>
   <div class="hero-actions">
     <a href="foundations/color.html" class="ds-btn primary">
@@ -853,6 +908,44 @@ function buildHome(adrs) {
       <span class="lang-fr">Documentation agents →</span>
       <span class="lang-en">Agent documentation →</span>
     </a>
+  </div>
+</div>
+
+<div class="home-section">
+  <h2 style="margin-top:0;padding-top:0;border-top:none">
+    <span class="lang-fr">Pour chaque membre de l'équipe</span>
+    <span class="lang-en">For every team member</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Un système de design unifié parle à tous — gestionnaires, designers, développeurs et POs — avec une valeur concrète pour chacun.</span>
+    <span class="lang-en">A unified design system speaks to everyone — managers, designers, developers, and POs — with concrete value for each.</span>
+  </p>
+  <div class="audience-grid">
+    ${audiences.map(([ico,fr,en,dFr,dEn]) => `
+    <div class="audience-card">
+      <div class="audience-icon">${ico}</div>
+      <div class="audience-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="audience-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+    </div>`).join('')}
+  </div>
+</div>
+
+<div class="home-section" style="padding-top:0">
+  <h2>
+    <span class="lang-fr">Preuves & chiffres</span>
+    <span class="lang-en">Evidence & numbers</span>
+  </h2>
+  <p>
+    <span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span>
+    <span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span>
+  </p>
+  <div class="kpi-band">
+    ${kpis.map(([num,fr,en,dFr,dEn,url,src]) => `
+    <div class="kpi-card">
+      <span class="kpi-num">${num}</span>
+      <span class="kpi-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></span>
+      <span class="kpi-source"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span>${url ? ` <a href="${url}" target="_blank" rel="noopener">(${src})</a>` : ''}</span>
+    </div>`).join('')}
   </div>
 </div>
 
@@ -1160,7 +1253,7 @@ function buildColor() {
   write(path.join(DIST, 'foundations/color.html'), layout({
     title: 'Couleur', depth: 1,
     sidebar: sidebarFoundations('../', 'color.html') + sidebarComponents('../', ''),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1188,7 +1281,7 @@ function buildSpacing() {
     ['16', '64px', 'Macro XL'],
   ];
   const bars = primitives4px.map(([step, px, label]) =>
-    `<div class="space-item"><div class="space-bar" style="width:${px};height:${px};background:#fecaca;border-radius:2px" aria-label="${px}"></div><div class="space-label" style="font-size:12px"><code>space.${step}</code> <strong>${px}</strong>${label ? `<br><span style="color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
+    `<div class="space-item"><div style="height:72px;display:flex;align-items:flex-end;justify-content:center"><div class="space-bar" style="width:36px;height:${px};background:#fca5a5;border-radius:2px 2px 0 0;min-height:4px" aria-label="${px}"></div></div><div class="space-label" style="font-size:12px;border-top:2px solid #fca5a5;padding-top:6px;min-width:56px;text-align:center"><code>space.${step}</code><br><strong>${px}</strong>${label ? `<br><span style="font-size:10px;color:var(--sda-semantic-color-text-secondary)">${label}</span>` : ''}</div></div>`
   ).join('');
   const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
@@ -1221,7 +1314,7 @@ function buildSpacing() {
   write(path.join(DIST, 'foundations/spacing.html'), layout({
     title: 'Espacement', depth: 1,
     sidebar: sidebarFoundations('../', 'spacing.html') + sidebarComponents('../', ''),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1297,7 +1390,7 @@ function buildTypography() {
   write(path.join(DIST, 'foundations/typography.html'), layout({
     title: 'Typographie', depth: 1,
     sidebar: sidebarFoundations('../', 'typography.html') + sidebarComponents('../', ''),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1366,7 +1459,7 @@ function buildIconsFoundation() {
   write(path.join(DIST, 'foundations/icons.html'), layout({
     title: 'Icônes', depth: 1,
     sidebar: sidebarFoundations('../', 'icons.html') + sidebarComponents('../', ''),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1413,7 +1506,7 @@ function buildComponentsIndex() {
   write(path.join(DIST, 'components/index.html'), layout({
     title: 'Composants', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'index.html'),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1571,7 +1664,7 @@ customElements.define('ds-button', DsButton);</code></pre>
   write(path.join(DIST, 'components/button.html'), layout({
     title: 'Button', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'button.html'),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1632,7 +1725,7 @@ ${content}
   write(path.join(DIST, 'components/icon.html'), layout({
     title: 'Icon', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'icon.html'),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1708,7 +1801,7 @@ function buildTokens() {
   write(path.join(DIST, 'tokens/index.html'), layout({
     title: 'Tokens', depth: 1,
     sidebar: sidebarFoundations('../','') + sidebarComponents('../','') + sidebarTokens('../',''),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1761,7 +1854,7 @@ function buildDecisionsIndex(adrs) {
   write(path.join(DIST, 'decisions/index.html'), layout({
     title: 'Décisions (ADRs)', depth: 1,
     sidebar: sidebarDecisionsLocal(adrs) + sidebarAgents('../'),
-    body
+    body: body + contributionBanner()
   }));
 }
 
@@ -1793,10 +1886,10 @@ function buildADR(adr, adrs) {
 // ─── PAGE: AGENTS ───────────────────────────────────────────────────────────
 function buildAgents() {
   const agentTypes = [
-    ['Designer Agent','Figma','Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements incohérents.'],
-    ['Developer Agent','Code','Détecte les mauvais usages de tokens dans le code, ouvre des PRs de correction.'],
-    ['Documentation Agent','Docs','Génère des changelogs, guides de migration, notes d\'accessibilité.'],
-    ['QA Agent','Tests','Exécute les tests d\'accessibilité, de régression visuelle, de conformité des tokens.'],
+    ['Designer Agent','Figma','Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.'],
+    ['Developer Agent','Code','Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.'],
+    ['QA Agent','Tests','Exécute les tests d\'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.'],
+    ['Documentation Agent','Docs','Génère des changelogs, guides de migration, notes d\'accessibilité, mises à jour des guidelines.'],
   ];
 
   const readingOrder = [
@@ -1809,7 +1902,7 @@ function buildAgents() {
     ['.claude/instructions/session-spec.md','Quick reference pour la session'],
   ];
 
-  const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('book-open',24), icon('shield-check',24)];
+  const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('shield-check',24), icon('book-open',24)];
 
   const body = `
 <h1>Pour les agents IA</h1>
@@ -1817,7 +1910,8 @@ function buildAgents() {
 
 <blockquote><p>Le dernier mot est toujours humain.</p></blockquote>
 
-<h2 class="first">Types d'agents</h2>
+<h2 class="first" id="types">Types d'agents</h2>
+<p>Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</p>
 <div class="agent-grid">
 ${agentTypes.map(([name, type, desc], i) => `
 <div class="agent-card">
@@ -1828,7 +1922,7 @@ ${agentTypes.map(([name, type, desc], i) => `
 </div>`).join('')}
 </div>
 
-<h2>Ce que les agents peuvent faire</h2>
+<h2 id="actions">Ce que les agents peuvent faire</h2>
 <div class="rules-split">
   <div class="rule-can">
     <h3><span class='icon-ok'>${icon('circle-check', 16)}</span> Autorisé</h3>
@@ -1855,14 +1949,14 @@ ${agentTypes.map(([name, type, desc], i) => `
   </div>
 </div>
 
-<h2>Ordre de lecture obligatoire</h2>
+<h2 id="lecture">Ordre de lecture obligatoire</h2>
 <p>Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</p>
 <table>
   <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
   <tbody>${readingOrder.map(([f,r]) => `<tr><td><code>${f}</code></td><td>${r}</td></tr>`).join('')}</tbody>
 </table>
 
-<h2>Règle d'escalade</h2>
+<h2 id="escalade">Règle d'escalade</h2>
 <p>Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</p>
 
 <h2>Règle de nommage — rappel</h2>
@@ -1875,7 +1969,7 @@ color: #0d74ce;
 /* ❌ Interdit — token primitif utilisé directement */
 color: var(--sda-primitive-color-blue-11);</code></pre>
 
-<h2>Compétences (Skills)</h2>
+<h2 id="skills">Compétences (Skills)</h2>
 <table>
   <thead><tr><th>Skill</th><th>Rôle</th></tr></thead>
   <tbody>
@@ -1889,7 +1983,7 @@ color: var(--sda-primitive-color-blue-11);</code></pre>
   write(path.join(DIST, 'agents/index.html'), layout({
     title: 'Pour les agents IA', depth: 1,
     sidebar: sidebarAgents('../'),
-    body
+    body: body + contributionBanner()
   }));
 }
 

@@ -21,8 +21,9 @@ body{
 .site-header{
   position:fixed;top:0;left:0;right:0;height:60px;z-index:100;
   background:var(--sda-semantic-color-background-surface);
-  border-bottom:2px solid var(--sda-semantic-color-border-default);
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
+  border-top:3px solid var(--sda-semantic-color-action-primary);
+  border-bottom:1px solid var(--sda-semantic-color-border-default);
+  box-shadow:0 2px 24px rgba(0,0,0,.12);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
@@ -321,6 +322,30 @@ html[data-lang="en"] .lang-fr{display:none}
 .footer-links a{color:rgba(255,255,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
 .footer-links a:hover{color:#fff}
 .footer-credit{font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+
+/* ── CONTRIBUTION BANNER ─────────────────────────────────── */
+.contribution-banner{display:flex;align-items:center;gap:16px;background:var(--sda-semantic-color-background-subtle);border:1px solid var(--sda-semantic-color-border-default);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 var(--sda-semantic-radius-card) var(--sda-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
+.contribution-banner .contrib-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0}
+.contribution-banner .contrib-body{flex:1}
+.contribution-banner .contrib-body strong{color:var(--sda-semantic-color-text-primary);font-size:14px;display:block;margin-bottom:3px}
+.contribution-banner .contrib-body span{font-size:13px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+@media(max-width:768px){.contribution-banner{flex-direction:column;align-items:flex-start}}
+
+/* ── AUDIENCE CARDS ──────────────────────────────────────── */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:28px 0}
+.audience-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
+.audience-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:10px}
+.audience-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--sda-semantic-color-text-secondary);margin-bottom:4px}
+.audience-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.audience-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+
+/* ── KPI BAND ────────────────────────────────────────────── */
+.kpi-band{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:28px 0}
+.kpi-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px 22px}
+.kpi-num{font-size:32px;font-weight:800;color:var(--sda-semantic-color-action-primary);letter-spacing:-.02em;display:block;margin-bottom:4px}
+.kpi-label{font-size:13px;color:var(--sda-semantic-color-text-primary);font-weight:600;margin-bottom:6px;display:block}
+.kpi-source{font-size:11px;color:var(--sda-semantic-color-text-secondary)}
+.kpi-source a{color:var(--sda-semantic-color-action-primary);font-size:11px}
 
 /* ── TECH STACK PIPELINE ─────────────────────────────────── */
 .stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
