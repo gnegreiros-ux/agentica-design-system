@@ -33,3 +33,6 @@
 | 2026-05-28 00:00 | Modifié | `decisions/README.md` |
 | 2026-05-28 16:41 | Créé | `decisions/ADR-016-journal-construction.md` |
 | 2026-05-28 16:41 | Modifié | `decisions/README.md` |
+| 2026-05-28 23:27 | Créé | `decisions/ADR-017-correction-contraste-text-disabled.md` |
+| 2026-05-28 23:55 | Créé | `decisions/ADR-018-migration-references-primitives-radix.md` |
+| 2026-05-29 00:08 | Créé | `decisions/ADR-019-resolution-dynamique-tokens-build.md` |

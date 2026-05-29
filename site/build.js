@@ -64,7 +64,8 @@ function parseMd(text) {
 }
 
 // ─── TOKEN DATA ────────────────────────────────────────────────────────────
-const primitives = readJson(path.join(TOKENS_DIR, 'primitives.json'));
+const primitives   = readJson(path.join(TOKENS_DIR, 'primitives.json'));
+const semanticData = readJson(path.join(TOKENS_DIR, 'semantic.json'));
 
 function extractColorScales(prim) {
   const scales = {};
@@ -73,6 +74,7 @@ function extractColorScales(prim) {
     if (name === '_readme') continue;
     scales[name] = {};
     for (const [step, data] of Object.entries(steps)) {
+      if (step === '_readme') continue;
       if (data?.$value) scales[name][step] = { value: data.$value, desc: data.$description || '' };
     }
   }
@@ -81,45 +83,36 @@ function extractColorScales(prim) {
 
 const COLOR_SCALES = extractColorScales(primitives);
 
-// Resolved values — semantic references use {primitive.color.X.Y} (Radix notation)
-// mapped here to their resolved hex values from primitives.json
-const SEM = {
-  'color-action-primary':          '#0d74ce',
-  'color-action-primary-hover':    '#113264',
-  'color-action-primary-disabled': '#d9d9d9',
-  'color-feedback-danger':         '#ce2c31',
-  'color-feedback-danger-subtle':  '#feebec',
-  'color-feedback-success':        '#18794e',
-  'color-feedback-info':           '#0d74ce',
-  'color-background-page':         '#fcfcfc',
-  'color-background-surface':      '#ffffff',
-  'color-background-subtle':       '#f0f0f0',
-  'color-text-primary':            '#202020',
-  'color-text-secondary':          '#646464',
-  'color-text-disabled':           '#767676',
-  'color-text-on-action':          '#ffffff',
-  'color-text-on-danger':          '#ffffff',
-  'color-background-hover':        '#fafafa',
-  'color-border-default':          '#e8e8e8',
-  'color-border-focus':            '#0d74ce',
-  'color-border-danger':           '#ce2c31',
-  'space-control-padding-x':       '16px',
-  'space-control-padding-y':       '8px',
-  'space-control-gap':             '8px',
-  'space-layout-section':          '32px',
-  'space-layout-component':        '20px',
-  'radius-control':                '6px',
-  'radius-card':                   '10px',
-  'typography-body-size':          '16px',
-  'typography-body-weight':        '400',
-  'typography-body-line-height':   '1.5',
-  'typography-label-size':         '14px',
-  'typography-label-weight':       '500',
-  'typography-label-line-height':  '1.25',
-  'typography-heading-size':       '24px',
-  'typography-heading-weight':     '700',
-  'typography-heading-line-height':'1.25',
-};
+// Resolves a {primitive.X.Y} reference against the primitives tree
+function resolveRef(ref, data) {
+  return ref.split('.').reduce((node, key) => node?.[key], data);
+}
+
+function resolveValue(val, data) {
+  if (typeof val !== 'string') return String(val);
+  const m = val.match(/^\{(.+)\}$/);
+  if (!m) return val;
+  const node = resolveRef(m[1], data);
+  return node?.['$value'] ?? (typeof node === 'string' ? node : val);
+}
+
+// Flattens nested semantic tokens into 'category-subcategory-name' CSS keys
+function flattenTokens(obj, data, prefix = '') {
+  const result = {};
+  for (const [key, node] of Object.entries(obj)) {
+    if (key.startsWith('$') || key === '_readme') continue;
+    const k = prefix ? `${prefix}-${key}` : key;
+    if (node && typeof node === 'object' && 'value' in node) {
+      result[k] = resolveValue(node.value, data);
+    } else if (node && typeof node === 'object') {
+      Object.assign(result, flattenTokens(node, data, k));
+    }
+  }
+  return result;
+}
+
+// SEM is now resolved dynamically from semantic.json + primitives.json
+const SEM = flattenTokens(semanticData.semantic, primitives);
 
 const COMP = {
   'button-primary-background':          'var(--ds-semantic-color-action-primary)',

@@ -40,34 +40,34 @@
     },
     "space": {
       "control": {
-        "padding-x": { "value": "{space.4}", "$type": "dimension", "$intent": "Espacement horizontal des contrôles interactifs" },
-        "padding-y": { "value": "{space.2}", "$type": "dimension", "$intent": "Espacement vertical des contrôles interactifs" },
-        "gap":       { "value": "{space.2}", "$type": "dimension", "$intent": "Écart interne entre éléments d'un contrôle" }
+        "padding-x": { "value": "{primitive.space.4}", "$type": "dimension", "$intent": "Espacement horizontal des contrôles interactifs" },
+        "padding-y": { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "Espacement vertical des contrôles interactifs" },
+        "gap":       { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "Écart interne entre éléments d'un contrôle" }
       },
       "layout": {
-        "section":   { "value": "{space.8}", "$type": "dimension", "$intent": "Espacement entre sections de page" },
-        "component": { "value": "{space.5}", "$type": "dimension", "$intent": "Espacement entre composants" }
+        "section":   { "value": "{primitive.space.8}", "$type": "dimension", "$intent": "Espacement entre sections de page" },
+        "component": { "value": "{primitive.space.5}", "$type": "dimension", "$intent": "Espacement entre composants" }
       }
     },
     "radius": {
-      "control": { "value": "{radius.sm}", "$type": "dimension", "$intent": "Rayon pour contrôles interactifs (boutons, inputs)" },
-      "card":    { "value": "{radius.md}", "$type": "dimension", "$intent": "Rayon pour conteneurs (cartes, panneaux)" }
+      "control": { "value": "{primitive.radius.sm}", "$type": "dimension", "$intent": "Rayon pour contrôles interactifs (boutons, inputs)" },
+      "card":    { "value": "{primitive.radius.md}", "$type": "dimension", "$intent": "Rayon pour conteneurs (cartes, panneaux)" }
     },
     "typography": {
       "body": {
-        "size":        { "value": "{fontSize.md}",      "$type": "dimension" },
-        "weight":      { "value": "{fontWeight.regular}","$type": "fontWeight" },
-        "line-height": { "value": "{lineHeight.normal}", "$type": "number" }
+        "size":        { "value": "{primitive.fontSize.md}",      "$type": "dimension" },
+        "weight":      { "value": "{primitive.fontWeight.regular}","$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.normal}", "$type": "number" }
       },
       "label": {
-        "size":        { "value": "{fontSize.sm}",      "$type": "dimension" },
-        "weight":      { "value": "{fontWeight.medium}", "$type": "fontWeight" },
-        "line-height": { "value": "{lineHeight.tight}",  "$type": "number" }
+        "size":        { "value": "{primitive.fontSize.sm}",      "$type": "dimension" },
+        "weight":      { "value": "{primitive.fontWeight.medium}", "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
       },
       "heading": {
-        "size":        { "value": "{fontSize.xl}",       "$type": "dimension" },
-        "weight":      { "value": "{fontWeight.bold}",   "$type": "fontWeight" },
-        "line-height": { "value": "{lineHeight.tight}",  "$type": "number" }
+        "size":        { "value": "{primitive.fontSize.xl}",       "$type": "dimension" },
+        "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
       }
     }
   }

@@ -372,6 +372,9 @@
   --ds-primitive-color-orange-10: #ef5f00;
   --ds-primitive-color-orange-11: #cc4e00;
   --ds-primitive-color-orange-12: #582d1d;
+  --ds-primitive-color-neutral-0: #ffffff;
+  --ds-primitive-color-neutral-50: #fafafa;
+  --ds-primitive-color-neutral-500: #767676;
   --ds-primitive-color-white-1: rgba(255,255,255,1.00);
   --ds-primitive-color-white-2: rgba(255,255,255,0.97);
   --ds-primitive-color-white-3: rgba(255,255,255,0.93);
@@ -408,12 +411,12 @@
   --ds-semantic-color-background-page: #fcfcfc;
   --ds-semantic-color-background-surface: #ffffff;
   --ds-semantic-color-background-subtle: #f0f0f0;
+  --ds-semantic-color-background-hover: #fafafa;
   --ds-semantic-color-text-primary: #202020;
   --ds-semantic-color-text-secondary: #646464;
   --ds-semantic-color-text-disabled: #767676;
   --ds-semantic-color-text-on-action: #ffffff;
   --ds-semantic-color-text-on-danger: #ffffff;
-  --ds-semantic-color-background-hover: #fafafa;
   --ds-semantic-color-border-default: #e8e8e8;
   --ds-semantic-color-border-focus: #0d74ce;
   --ds-semantic-color-border-danger: #ce2c31;

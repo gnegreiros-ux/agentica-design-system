@@ -476,14 +476,9 @@
       },
 
       "neutral": {
-        "_readme": {
-          "$value": "Pont sémantique Tailwind→Radix",
-          "$type": "other",
-          "$description": "3 valeurs sans équivalent exact dans l'échelle Radix gray : neutral.0 (blanc pur), neutral.50 (#fafafa, Tailwind neutral.50), neutral.500 (#767676, texte désactivé accessible 4.54:1). Toutes les autres valeurs neutres références directement primitive.color.gray.X."
-        },
         "0":   { "$value": "#ffffff", "$type": "color", "$description": "Blanc pur — fond de surface, texte sur action/danger" },
-        "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol (Tailwind neutral.50) — légèrement plus clair que gray.2 (#f9f9f9)" },
-        "500": { "$value": "#767676", "$type": "color", "$description": "Texte désactivé accessible — 4.54:1 sur blanc (WCAG AA). Absent de l'échelle Radix gray, valeur choisie pour l'accessibilité." }
+        "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol — Tailwind neutral.50 (Radix gray.2 = #f9f9f9)" },
+        "500": { "$value": "#767676", "$type": "color", "$description": "Texte désactivé accessible — 4.54:1 sur blanc (WCAG AA). Non présent dans Radix gray. Voir ADR-017." }
       },
 
       "white": {
@@ -515,6 +510,31 @@
         "11": { "$value": "rgba(0,0,0,0.80)", "$type": "color", "$description": "Black alpha 80%" },
         "12": { "$value": "rgba(0,0,0,0.90)", "$type": "color", "$description": "Black alpha 90%" }
       }
+    },
+
+    "space": {
+      "2": { "$value": "8px",  "$type": "dimension", "$description": "4px × 2" },
+      "4": { "$value": "16px", "$type": "dimension", "$description": "4px × 4" },
+      "5": { "$value": "20px", "$type": "dimension", "$description": "4px × 5" },
+      "8": { "$value": "32px", "$type": "dimension", "$description": "4px × 8" }
+    },
+    "fontSize": {
+      "sm": { "$value": "14px", "$type": "dimension", "$description": "Small — labels, métadonnées" },
+      "md": { "$value": "16px", "$type": "dimension", "$description": "Medium — corps de texte" },
+      "xl": { "$value": "24px", "$type": "dimension", "$description": "Extra large — titres" }
+    },
+    "fontWeight": {
+      "regular": { "$value": "400", "$type": "fontWeight", "$description": "Normal — corps de texte" },
+      "medium":  { "$value": "500", "$type": "fontWeight", "$description": "Medium — labels, contrôles" },
+      "bold":    { "$value": "700", "$type": "fontWeight", "$description": "Bold — titres, emphase" }
+    },
+    "lineHeight": {
+      "tight":  { "$value": "1.25", "$type": "number", "$description": "Compact — titres, labels" },
+      "normal": { "$value": "1.5",  "$type": "number", "$description": "Lisible — corps de texte" }
+    },
+    "radius": {
+      "sm": { "$value": "6px",  "$type": "dimension", "$description": "Petit rayon — contrôles interactifs (boutons, inputs)" },
+      "md": { "$value": "10px", "$type": "dimension", "$description": "Rayon moyen — cartes, panneaux" }
     }
   }
 }
