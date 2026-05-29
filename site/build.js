@@ -346,7 +346,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
 .color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
-.color-swatch{width:44px;height:44px;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
 .color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
 .color-value{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)}
@@ -553,7 +553,8 @@ function siteJS() { return `
 document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
-  const savedLang = localStorage.getItem('sda-lang') || 'fr';
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const savedLang = urlLang || localStorage.getItem('sda-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.dataset.lang === savedLang) btn.classList.add('active');
@@ -561,6 +562,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
       localStorage.setItem('sda-lang', lang);
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     });
   });
@@ -764,33 +768,33 @@ ${footer}
 
 function sidebarFoundations(base, current) {
   const links = [
-    ['color.html','Couleur'],
-    ['spacing.html','Espacement'],
-    ['typography.html','Typographie'],
-    ['icons.html','Icônes'],
+    ['color.html',      '<span class="lang-fr">Couleur</span><span class="lang-en">Color</span>'],
+    ['spacing.html',    '<span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span>'],
+    ['typography.html', '<span class="lang-fr">Typographie</span><span class="lang-en">Typography</span>'],
+    ['icons.html',      '<span class="lang-fr">Icônes</span><span class="lang-en">Icons</span>'],
   ].map(([h,l]) => `<a href="${base}foundations/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
-  return `<div class="sidebar-group"><span class="sidebar-label">Fondations</span>${links}</div>`;
+  return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span>${links}</div>`;
 }
 
 function sidebarComponents(base, current) {
   const links = [
-    ['index.html','Vue d\'ensemble'],
+    ['index.html', '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
     ['button.html','Button'],
-    ['icon.html','Icon'],
+    ['icon.html',  'Icon'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
-  return `<div class="sidebar-group"><span class="sidebar-label">Composants</span>${links}</div>`;
+  return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
 
 function sidebarDecisions(base, adrs) {
   const links = adrs.slice(0,10).map(a => `<a href="${base}decisions/${a.slug}.html">ADR-${String(a.num).padStart(3,'0')}</a>`).join('');
-  const more = adrs.length > 10 ? `<a href="${base}decisions/index.html">→ Tous les ADRs (${adrs.length})</a>` : '';
-  return `<div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="${base}decisions/index.html">Index des ADRs</a>${links}${more}</div>`;
+  const more = adrs.length > 10 ? `<a href="${base}decisions/index.html">→ <span class="lang-fr">Tous les ADRs</span><span class="lang-en">All ADRs</span> (${adrs.length})</a>` : '';
+  return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="${base}decisions/index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a>${links}${more}</div>`;
 }
 
 // Variante pour les pages déjà dans decisions/ — liens relatifs sans préfixe
 function sidebarDecisionsLocal(adrs) {
   const links = adrs.map(a => `<a href="${a.slug}.html">ADR-${String(a.num).padStart(3,'0')}</a>`).join('');
-  return `<div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a>${links}</div>`;
+  return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a>${links}</div>`;
 }
 
 function sidebarTokens(base, current) {
@@ -803,7 +807,7 @@ function sidebarTokens(base, current) {
 }
 
 function sidebarAgents(base) {
-  return `<div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="${base}agents/index.html">Vue d'ensemble</a><a href="${base}agents/index.html#types">Types d'agents</a><a href="${base}agents/index.html#actions">Ce qu'ils peuvent faire</a><a href="${base}agents/index.html#lecture">Ordre de lecture</a><a href="${base}agents/index.html#escalade">Règle d'escalade</a><a href="${base}agents/index.html#skills">Compétences</a></div>`;
+  return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span><a href="${base}agents/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="${base}agents/index.html#types"><span class="lang-fr">Types d'agents</span><span class="lang-en">Agent types</span></a><a href="${base}agents/index.html#actions"><span class="lang-fr">Ce qu'ils peuvent faire</span><span class="lang-en">What they can do</span></a><a href="${base}agents/index.html#lecture"><span class="lang-fr">Ordre de lecture</span><span class="lang-en">Reading order</span></a><a href="${base}agents/index.html#escalade"><span class="lang-fr">Règle d'escalade</span><span class="lang-en">Escalation rule</span></a><a href="${base}agents/index.html#skills"><span class="lang-fr">Compétences</span><span class="lang-en">Skills</span></a></div>`;
 }
 
 function contributionBanner() {
@@ -815,7 +819,7 @@ function contributionBanner() {
     <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
     <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
   </div>
-  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
     <span class="lang-fr">Voir sur GitHub →</span>
     <span class="lang-en">View on GitHub →</span>
   </a>
@@ -854,7 +858,7 @@ function buildHome(adrs) {
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
-    ['https://github.com',      icon('github',32),            'Code source',          'Source code',           'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.'],
+    ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.'],
   ];
 
   const stackNodes = [
@@ -1173,22 +1177,22 @@ function buildHome(adrs) {
 // ─── PAGE: COLOR ────────────────────────────────────────────────────────────
 function buildColor() {
   const semanticColors = [
-    ['color-action-primary',         'color.action.primary',         SEM['color-action-primary'],         'Action principale — CTA, bouton primaire'],
-    ['color-action-primary-hover',   'color.action.primary-hover',   SEM['color-action-primary-hover'],   'État survol de l\'action principale'],
-    ['color-action-primary-disabled','color.action.primary-disabled',SEM['color-action-primary-disabled'],'Action principale désactivée'],
-    ['color-feedback-danger',        'color.feedback.danger',        SEM['color-feedback-danger'],        'Erreur, action destructrice, alerte critique'],
-    ['color-feedback-danger-subtle', 'color.feedback.danger-subtle', SEM['color-feedback-danger-subtle'], 'Fond subtil pour état danger'],
-    ['color-feedback-success',       'color.feedback.success',       SEM['color-feedback-success'],       'Confirmation, succès, validation'],
-    ['color-feedback-info',          'color.feedback.info',          SEM['color-feedback-info'],          'Information neutre, aide contextuelle'],
-    ['color-background-page',        'color.background.page',        SEM['color-background-page'],        'Fond de page principale'],
-    ['color-background-surface',     'color.background.surface',     SEM['color-background-surface'],     'Fond de carte, panneau, modal'],
-    ['color-background-subtle',      'color.background.subtle',      SEM['color-background-subtle'],      'Fond secondaire, survol discret'],
-    ['color-text-primary',           'color.text.primary',           SEM['color-text-primary'],           'Texte principal, haute lisibilité'],
-    ['color-text-secondary',         'color.text.secondary',         SEM['color-text-secondary'],         'Texte secondaire, labels, métadonnées'],
-    ['color-text-disabled',          'color.text.disabled',          SEM['color-text-disabled'],          'Texte désactivé'],
-    ['color-border-default',         'color.border.default',         SEM['color-border-default'],         'Bordure standard'],
-    ['color-border-focus',           'color.border.focus',           SEM['color-border-focus'],           'Bordure focus — accessibilité clavier'],
-    ['color-border-danger',          'color.border.danger',          SEM['color-border-danger'],          'Bordure état erreur'],
+    ['color-action-primary',         'color.action.primary',         SEM['color-action-primary'],         '<span class="lang-fr">Action principale — CTA, bouton primaire</span><span class="lang-en">Primary action — CTA, primary button</span>'],
+    ['color-action-primary-hover',   'color.action.primary-hover',   SEM['color-action-primary-hover'],   '<span class="lang-fr">État survol de l\'action principale</span><span class="lang-en">Primary action hover state</span>'],
+    ['color-action-primary-disabled','color.action.primary-disabled',SEM['color-action-primary-disabled'],'<span class="lang-fr">Action principale désactivée</span><span class="lang-en">Disabled primary action</span>'],
+    ['color-feedback-danger',        'color.feedback.danger',        SEM['color-feedback-danger'],        '<span class="lang-fr">Erreur, action destructrice, alerte critique</span><span class="lang-en">Error, destructive action, critical alert</span>'],
+    ['color-feedback-danger-subtle', 'color.feedback.danger-subtle', SEM['color-feedback-danger-subtle'], '<span class="lang-fr">Fond subtil pour état danger</span><span class="lang-en">Subtle background for danger state</span>'],
+    ['color-feedback-success',       'color.feedback.success',       SEM['color-feedback-success'],       '<span class="lang-fr">Confirmation, succès, validation</span><span class="lang-en">Confirmation, success, validation</span>'],
+    ['color-feedback-info',          'color.feedback.info',          SEM['color-feedback-info'],          '<span class="lang-fr">Information neutre, aide contextuelle</span><span class="lang-en">Neutral information, contextual help</span>'],
+    ['color-background-page',        'color.background.page',        SEM['color-background-page'],        '<span class="lang-fr">Fond de page principale</span><span class="lang-en">Main page background</span>'],
+    ['color-background-surface',     'color.background.surface',     SEM['color-background-surface'],     '<span class="lang-fr">Fond de carte, panneau, modal</span><span class="lang-en">Card, panel, modal background</span>'],
+    ['color-background-subtle',      'color.background.subtle',      SEM['color-background-subtle'],      '<span class="lang-fr">Fond secondaire, survol discret</span><span class="lang-en">Secondary background, subtle hover</span>'],
+    ['color-text-primary',           'color.text.primary',           SEM['color-text-primary'],           '<span class="lang-fr">Texte principal, haute lisibilité</span><span class="lang-en">Primary text, high readability</span>'],
+    ['color-text-secondary',         'color.text.secondary',         SEM['color-text-secondary'],         '<span class="lang-fr">Texte secondaire, labels, métadonnées</span><span class="lang-en">Secondary text, labels, metadata</span>'],
+    ['color-text-disabled',          'color.text.disabled',          SEM['color-text-disabled'],          '<span class="lang-fr">Texte désactivé</span><span class="lang-en">Disabled text</span>'],
+    ['color-border-default',         'color.border.default',         SEM['color-border-default'],         '<span class="lang-fr">Bordure standard</span><span class="lang-en">Default border</span>'],
+    ['color-border-focus',           'color.border.focus',           SEM['color-border-focus'],           '<span class="lang-fr">Bordure focus — accessibilité clavier</span><span class="lang-en">Focus border — keyboard accessibility</span>'],
+    ['color-border-danger',          'color.border.danger',          SEM['color-border-danger'],          '<span class="lang-fr">Bordure état erreur</span><span class="lang-en">Error state border</span>'],
   ];
 
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
@@ -1207,47 +1211,62 @@ function buildColor() {
 </tr>`).join('');
 
   const body = `
-<h1>Couleurs</h1>
-<p class="page-lead">Système de couleur en trois niveaux : palettes primitives Radix UI → intentions sémantiques → contrats de composant. Les agents utilisent les tokens sémantiques, jamais les valeurs primitives.</p>
+<h1><span class="lang-fr">Couleurs</span><span class="lang-en">Colors</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Système de couleur en trois niveaux : palettes primitives Radix UI → intentions sémantiques → contrats de composant. Les agents utilisent les tokens sémantiques, jamais les valeurs primitives.</span>
+  <span class="lang-en">Three-level color system: Radix UI primitive palettes → semantic intentions → component contracts. Agents use semantic tokens, never primitive values.</span>
+</p>
 
-<h2 class="first">Palette primitive — Radix UI</h2>
-<p>${Object.keys(COLOR_SCALES).length} échelles de couleur, chacune avec <strong>12 paliers numérotés</strong> selon un système perceptuellement uniforme, conçu pour l'accessibilité et le mode sombre.</p>
+<h2 class="first"><span class="lang-fr">Palette primitive — Radix UI</span><span class="lang-en">Primitive palette — Radix UI</span></h2>
+<p>
+  <span class="lang-fr">${Object.keys(COLOR_SCALES).length} échelles de couleur, chacune avec <strong>12 paliers numérotés</strong> selon un système perceptuellement uniforme, conçu pour l'accessibilité et le mode sombre.</span>
+  <span class="lang-en">${Object.keys(COLOR_SCALES).length} color scales, each with <strong>12 numbered steps</strong> following a perceptually uniform system designed for accessibility and dark mode.</span>
+</p>
 
 <div class="radix-guide" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 28px">
   <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 1–2</div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Fonds de page</div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Arrière-plans très subtils, quasi-blanc</div>
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 1–2</span><span class="lang-en">Steps 1–2</span></div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Fonds de page</span><span class="lang-en">Page backgrounds</span></div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Arrière-plans très subtils, quasi-blanc</span><span class="lang-en">Very subtle backgrounds, near-white</span></div>
   </div>
   <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 3–5</div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Éléments interactifs</div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Survol, sélection, fonds de composants</div>
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 3–5</span><span class="lang-en">Steps 3–5</span></div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Éléments interactifs</span><span class="lang-en">Interactive elements</span></div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Survol, sélection, fonds de composants</span><span class="lang-en">Hover, selection, component backgrounds</span></div>
   </div>
   <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 6–8</div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Bordures</div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">Séparateurs, contours de champs, dividers</div>
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 6–8</span><span class="lang-en">Steps 6–8</span></div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Bordures</span><span class="lang-en">Borders</span></div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Séparateurs, contours de champs, dividers</span><span class="lang-en">Separators, field outlines, dividers</span></div>
   </div>
   <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">Paliers 9–12</div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px">Solides & texte</div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">CTA, texte haute lisibilité, contraste garanti</div>
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 9–12</span><span class="lang-en">Steps 9–12</span></div>
+    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Solides & texte</span><span class="lang-en">Solids & text</span></div>
+    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">CTA, texte haute lisibilité, contraste garanti</span><span class="lang-en">CTA, high-readability text, guaranteed contrast</span></div>
   </div>
 </div>
 
-<blockquote><p><strong>Pourquoi Radix UI ?</strong> Chaque palette est testée pour garantir un contraste WCAG AA aux paliers 11–12, et conçue pour fonctionner en mode clair et sombre sans surcharge de tokens. Les paliers sont perceptuellement uniformes — le saut visuel entre deux paliers consécutifs est constant quelle que soit la teinte.</p></blockquote>
+<blockquote><p>
+  <span class="lang-fr"><strong>Pourquoi Radix UI ?</strong> Chaque palette est testée pour garantir un contraste WCAG AA aux paliers 11–12, et conçue pour fonctionner en mode clair et sombre sans surcharge de tokens. Les paliers sont perceptuellement uniformes — le saut visuel entre deux paliers consécutifs est constant quelle que soit la teinte.</span>
+  <span class="lang-en"><strong>Why Radix UI?</strong> Each palette is tested to guarantee WCAG AA contrast at steps 11–12, and designed to work in light and dark mode without token overhead. Steps are perceptually uniform — the visual jump between two consecutive steps is constant regardless of hue.</span>
+</p></blockquote>
 
 <div class="palette-section">${palette}</div>
 
-<h2>Tokens sémantiques</h2>
-<p>Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</p>
+<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<p>
+  <span class="lang-fr">Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
+  <span class="lang-en">These 16 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
+</p>
 <table>
-  <thead><tr><th>Couleur</th><th>Token CSS</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
 
-<blockquote><p>Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</p></blockquote>
+<blockquote><p>
+  <span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</span>
+  <span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>#0d74ce</code> as an intention — it is just a value.</span>
+</p></blockquote>
 `;
 
   write(path.join(DIST, 'foundations/color.html'), layout({
@@ -1260,13 +1279,13 @@ function buildColor() {
 // ─── PAGE: SPACING ──────────────────────────────────────────────────────────
 function buildSpacing() {
   const semTokens = [
-    ['space-control-padding-x', 'semantic.space.control.padding-x', SEM['space-control-padding-x'], 'Padding horizontal des contrôles interactifs'],
-    ['space-control-padding-y', 'semantic.space.control.padding-y', SEM['space-control-padding-y'], 'Padding vertical des contrôles interactifs'],
-    ['space-control-gap',       'semantic.space.control.gap',       SEM['space-control-gap'],       'Écart interne (icône + label dans un contrôle)'],
-    ['space-layout-section',    'semantic.space.layout.section',    SEM['space-layout-section'],    'Séparation entre sections de page'],
-    ['space-layout-component',  'semantic.space.layout.component',  SEM['space-layout-component'],  'Séparation entre composants'],
-    ['radius-control',          'semantic.radius.control',          SEM['radius-control'],          'Rayon pour contrôles interactifs'],
-    ['radius-card',             'semantic.radius.card',             SEM['radius-card'],             'Rayon pour conteneurs (cartes, panneaux)'],
+    ['space-control-padding-x', 'semantic.space.control.padding-x', SEM['space-control-padding-x'], '<span class="lang-fr">Padding horizontal des contrôles interactifs</span><span class="lang-en">Horizontal padding for interactive controls</span>'],
+    ['space-control-padding-y', 'semantic.space.control.padding-y', SEM['space-control-padding-y'], '<span class="lang-fr">Padding vertical des contrôles interactifs</span><span class="lang-en">Vertical padding for interactive controls</span>'],
+    ['space-control-gap',       'semantic.space.control.gap',       SEM['space-control-gap'],       '<span class="lang-fr">Écart interne (icône + label dans un contrôle)</span><span class="lang-en">Internal gap (icon + label inside a control)</span>'],
+    ['space-layout-section',    'semantic.space.layout.section',    SEM['space-layout-section'],    '<span class="lang-fr">Séparation entre sections de page</span><span class="lang-en">Spacing between page sections</span>'],
+    ['space-layout-component',  'semantic.space.layout.component',  SEM['space-layout-component'],  '<span class="lang-fr">Séparation entre composants</span><span class="lang-en">Spacing between components</span>'],
+    ['radius-control',          'semantic.radius.control',          SEM['radius-control'],          '<span class="lang-fr">Rayon pour contrôles interactifs</span><span class="lang-en">Radius for interactive controls</span>'],
+    ['radius-card',             'semantic.radius.card',             SEM['radius-card'],             '<span class="lang-fr">Rayon pour conteneurs (cartes, panneaux)</span><span class="lang-en">Radius for containers (cards, panels)</span>'],
   ];
   const primitives4px = [
     ['1',  '4px',  'Micro'],
@@ -1286,28 +1305,37 @@ function buildSpacing() {
   const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
-<h1>Espacement</h1>
-<p class="page-lead">Toute valeur dimensionnelle est un multiple de <strong>4px</strong>. L'échelle compte 10 échelons (4px → 64px). Jamais de valeur en dur — toujours via un token sémantique.</p>
+<h1><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Toute valeur dimensionnelle est un multiple de <strong>4px</strong>. L'échelle compte 10 échelons (4px → 64px). Jamais de valeur en dur — toujours via un token sémantique.</span>
+  <span class="lang-en">Every dimension is a multiple of <strong>4px</strong>. The scale has 10 steps (4px → 64px). No hardcoded values — always via a semantic token.</span>
+</p>
 
-<h2 class="first">Grille 4px — échelle primitive</h2>
-<p>Module de base : <code>4px</code>. Toute valeur hors de cette échelle est une dérive.</p>
+<h2 class="first"><span class="lang-fr">Grille 4px — échelle primitive</span><span class="lang-en">4px grid — primitive scale</span></h2>
+<p>
+  <span class="lang-fr">Module de base : <code>4px</code>. Toute valeur hors de cette échelle est une dérive.</span>
+  <span class="lang-en">Base unit: <code>4px</code>. Any value outside this scale is a drift.</span>
+</p>
 <div class="demo-box"><div class="space-demo">${bars}</div></div>
 
-<h2>Tokens sémantiques</h2>
-<p>Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</p>
+<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<p>
+  <span class="lang-fr">Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</span>
+  <span class="lang-en">Components exclusively use these tokens — never primitives directly.</span>
+</p>
 <table>
-  <thead><tr><th>Token CSS</th><th>Référence</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
 
-<h2>Règles absolues</h2>
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — utiliser <code>var(--sda-semantic-space-control-padding-x)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — utiliser <code>var(--sda-semantic-space-layout-section)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>var(--sda-primitive-space-4)</code> dans un composant — passer par le token sémantique</li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Valeur hors-grille : <code>14px</code>, <code>18px</code>, <code>22px</code> — choisir l'échelon le plus proche</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours via CSS Custom Properties référençant un token sémantique</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Si aucun token sémantique ne correspond, en créer un (PR requise)</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-control-padding-x)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-layout-section)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>var(--sda-primitive-space-4)</code> <span class="lang-fr">dans un composant — passer par le token sémantique</span><span class="lang-en">in a component — use the semantic token instead</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Valeur hors-grille :</span><span class="lang-en">Off-grid value:</span> <code>14px</code>, <code>18px</code>, <code>22px</code> — <span class="lang-fr">choisir l'échelon le plus proche</span><span class="lang-en">choose the closest step</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours via CSS Custom Properties référençant un token sémantique</span><span class="lang-en">Always via CSS Custom Properties referencing a semantic token</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Si aucun token sémantique ne correspond, en créer un (PR requise)</span><span class="lang-en">If no semantic token matches, create one (PR required)</span></li>
 </ul>
 `;
 
@@ -1322,24 +1350,27 @@ function buildSpacing() {
 function buildTypography() {
   const fontFamily = SEM['typography-fontFamily'] || "'Atkinson Hyperlegible', system-ui, sans-serif";
   const tokens = [
-    ['typography-fontFamily',         fontFamily, 'Police système — Atkinson Hyperlegible (accessibilité basse vision)'],
-    ['typography-body-size',          SEM['typography-body-size']         || '16px', 'Taille du texte courant'],
-    ['typography-body-weight',        SEM['typography-body-weight']        || '400',  'Graisse du texte courant'],
-    ['typography-body-line-height',   SEM['typography-body-line-height']   || '1.5',  'Interlignage du texte courant'],
-    ['typography-label-size',         SEM['typography-label-size']         || '14px', 'Taille des labels et libellés de boutons'],
-    ['typography-label-weight',       SEM['typography-label-weight']        || '500',  'Graisse des labels (arrondie à 400 — Atkinson n\'a pas de 500)'],
-    ['typography-label-line-height',  SEM['typography-label-line-height']  || '1.25', 'Interlignage compact des labels'],
-    ['typography-heading-size',       SEM['typography-heading-size']       || '24px', 'Taille des titres de section'],
-    ['typography-heading-weight',     SEM['typography-heading-weight']      || '700',  'Graisse bold pour hiérarchie forte'],
-    ['typography-heading-line-height',SEM['typography-heading-line-height']|| '1.25', 'Interlignage compact des titres'],
+    ['typography-fontFamily',         fontFamily, '<span class="lang-fr">Police système — Atkinson Hyperlegible (accessibilité basse vision)</span><span class="lang-en">System typeface — Atkinson Hyperlegible (low-vision accessibility)</span>'],
+    ['typography-body-size',          SEM['typography-body-size']         || '16px', '<span class="lang-fr">Taille du texte courant</span><span class="lang-en">Body text size</span>'],
+    ['typography-body-weight',        SEM['typography-body-weight']        || '400',  '<span class="lang-fr">Graisse du texte courant</span><span class="lang-en">Body text weight</span>'],
+    ['typography-body-line-height',   SEM['typography-body-line-height']   || '1.5',  '<span class="lang-fr">Interlignage du texte courant</span><span class="lang-en">Body line height</span>'],
+    ['typography-label-size',         SEM['typography-label-size']         || '14px', '<span class="lang-fr">Taille des labels et libellés de boutons</span><span class="lang-en">Label and button text size</span>'],
+    ['typography-label-weight',       SEM['typography-label-weight']        || '500',  '<span class="lang-fr">Graisse des labels (arrondie à 400 — Atkinson n\'a pas de 500)</span><span class="lang-en">Label weight (rounded to 400 — Atkinson has no 500)</span>'],
+    ['typography-label-line-height',  SEM['typography-label-line-height']  || '1.25', '<span class="lang-fr">Interlignage compact des labels</span><span class="lang-en">Compact label line height</span>'],
+    ['typography-heading-size',       SEM['typography-heading-size']       || '24px', '<span class="lang-fr">Taille des titres de section</span><span class="lang-en">Section heading size</span>'],
+    ['typography-heading-weight',     SEM['typography-heading-weight']      || '700',  '<span class="lang-fr">Graisse bold pour hiérarchie forte</span><span class="lang-en">Bold weight for strong hierarchy</span>'],
+    ['typography-heading-line-height',SEM['typography-heading-line-height']|| '1.25', '<span class="lang-fr">Interlignage compact des titres</span><span class="lang-en">Compact heading line height</span>'],
   ];
   const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td style="font-family:monospace;font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis" title="${v}">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
-<h1>Typographie</h1>
-<p class="page-lead">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision, différenciation maximale des caractères ambigus (l/1, O/0, b/d). Trois niveaux : <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. Jamais de valeur en dur.</p>
+<h1><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision, différenciation maximale des caractères ambigus (l/1, O/0, b/d). Trois niveaux : <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. Jamais de valeur en dur.</span>
+  <span class="lang-en">Primary typeface: <strong>Atkinson Hyperlegible</strong> — designed for low vision, maximum disambiguation of ambiguous characters (l/1, O/0, b/d). Three levels: <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. No hardcoded values.</span>
+</p>
 
-<h2 class="first">Police — Atkinson Hyperlegible</h2>
+<h2 class="first"><span class="lang-fr">Police — Atkinson Hyperlegible</span><span class="lang-en">Typeface — Atkinson Hyperlegible</span></h2>
 <div class="demo-box" style="padding:24px 28px">
   <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-semantic-typography-fontFamily</code></p>
   <div style="font-size:28px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:var(--sda-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
@@ -1347,17 +1378,20 @@ function buildTypography() {
   <div style="font-size:24px;line-height:1.4;color:var(--sda-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
   <div style="font-size:18px;line-height:1.5;color:var(--sda-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
   <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
-    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px">Caractères ambigus — différenciation maximale</span>
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères ambigus — différenciation maximale</span><span class="lang-en">Ambiguous characters — maximum disambiguation</span></span>
     l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m &nbsp;·&nbsp; rn m
   </div>
   <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
-    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px">Caractères accentués</span>
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères accentués</span><span class="lang-en">Accented characters</span></span>
     À Â Ä Æ Ç É È Ê Ë Î Ï Ô Œ Ù Û Ü à â ä æ ç é è ê ë î ï ô œ ù û ü
   </div>
-  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</p>
+  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
+    <span class="lang-fr">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</span>
+    <span class="lang-en">2 weights available: Regular (400) · Bold (700). The <code>fontWeight.medium</code> token (500) rounds to 400.</span>
+  </p>
 </div>
 
-<h2>Spécimens typographiques</h2>
+<h2><span class="lang-fr">Spécimens typographiques</span><span class="lang-en">Type specimens</span></h2>
 <div class="type-specimen">
   <div class="type-spec-label">Heading — <code>--sda-semantic-typography-heading-size</code> · weight 700</div>
   <div style="font-size:var(--sda-semantic-typography-heading-size);font-weight:var(--sda-semantic-typography-heading-weight);line-height:var(--sda-semantic-typography-heading-line-height);color:var(--sda-semantic-color-text-primary)">Titre de section principal</div>
@@ -1371,19 +1405,19 @@ function buildTypography() {
   <div style="font-size:var(--sda-semantic-typography-label-size);font-weight:var(--sda-semantic-typography-label-weight);line-height:var(--sda-semantic-typography-label-line-height);color:var(--sda-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
 </div>
 
-<h2>Tokens sémantiques</h2>
+<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <table>
-  <thead><tr><th>Token CSS</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${rows}</tbody>
 </table>
 
-<h2>Règles</h2>
+<h2><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></h2>
 <ul>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — utiliser <code>var(--sda-semantic-typography-body-size)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — utiliser <code>var(--sda-semantic-typography-fontFamily)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — utiliser <code>var(--sda-semantic-typography-heading-weight)</code></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Import Google Fonts : <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours définir <code>line-height</code> via un token sémantique</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-body-size)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-fontFamily)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-heading-weight)</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Import Google Fonts :</span><span class="lang-en">Google Fonts import:</span> <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours définir <code>line-height</code> via un token sémantique</span><span class="lang-en">Always set <code>line-height</code> via a semantic token</span></li>
 </ul>
 `;
 
@@ -1397,9 +1431,9 @@ function buildTypography() {
 // ─── PAGE: ICONS FOUNDATION ─────────────────────────────────────────────────
 function buildIconsFoundation() {
   const sizes = [
-    ['inline',  SEM['icon-size-inline']  || '16px', 'Dans un texte courant, un label'],
-    ['control', SEM['icon-size-control'] || '20px', 'Dans un bouton, un input, un badge'],
-    ['nav',     SEM['icon-size-nav']     || '24px', 'Navigation, en-tête, emphase'],
+    ['inline',  SEM['icon-size-inline']  || '16px', '<span class="lang-fr">Dans un texte courant, un label</span><span class="lang-en">In body text, a label</span>'],
+    ['control', SEM['icon-size-control'] || '20px', '<span class="lang-fr">Dans un bouton, un input, un badge</span><span class="lang-en">In a button, input, or badge</span>'],
+    ['nav',     SEM['icon-size-nav']     || '24px', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
   ];
   const sizeRows = sizes.map(([name, val, intent]) =>
     `<tr class="token-row"><td><code>--sda-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:monospace">${val}</td><td>${intent}</td></tr>`
@@ -1422,38 +1456,47 @@ function buildIconsFoundation() {
   ).join('');
 
   const body = `
-<h1>Icônes</h1>
-<p class="page-lead">Bibliothèque officielle : <strong>Lucide Icons</strong> (MIT) — 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée. Référence canonique : <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</p>
+<h1><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Bibliothèque officielle : <strong>Lucide Icons</strong> (MIT) — 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée. Référence canonique : <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+  <span class="lang-en">Official library: <strong>Lucide Icons</strong> (MIT) — 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>), built-in WCAG 1.1.1 accessibility. Canonical reference: <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+</p>
 
-<h2 class="first">Tailles — 3 échelons sémantiques</h2>
+<h2 class="first"><span class="lang-fr">Tailles — 3 échelons sémantiques</span><span class="lang-en">Sizes — 3 semantic steps</span></h2>
 <div class="demo-box" style="padding:8px 24px">
   ${sizeDemo}
 </div>
 
-<h2>Tokens sémantiques</h2>
+<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <table>
-  <thead><tr><th>Token CSS</th><th>Référence</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${sizeRows}</tbody>
 </table>
 
-<h2>Galerie — aperçu Lucide</h2>
-<p style="color:var(--sda-semantic-color-text-secondary);font-size:14px;margin-bottom:16px">Extrait de 20 icônes. Catalogue complet sur <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</p>
+<h2><span class="lang-fr">Galerie — aperçu Lucide</span><span class="lang-en">Gallery — Lucide preview</span></h2>
+<p style="color:var(--sda-semantic-color-text-secondary);font-size:14px;margin-bottom:16px">
+  <span class="lang-fr">Extrait de 20 icônes. Catalogue complet sur <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+  <span class="lang-en">Sample of 20 icons. Full catalog at <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px">
   ${iconGrid}
 </div>
 
-<h2>Règles absolues</h2>
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône sémantique (seule info visible) → <code>label="…"</code> obligatoire</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône décorative (texte adjacent) → <code>decorative</code> obligatoire</li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Taille en dur : <code>style="width:20px"</code> — utiliser <code>size="control"</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> SVG inline hors <code>&lt;sda-icon&gt;</code> — pas de contrat d'accessibilité</li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Icône sémantique (seule info visible) → <code>label="…"</code> obligatoire</span><span class="lang-en">Semantic icon (sole visible info) → <code>label="…"</code> required</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Icône décorative (texte adjacent) → <code>decorative</code> obligatoire</span><span class="lang-en">Decorative icon (adjacent text) → <code>decorative</code> required</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Taille en dur : <code>style="width:20px"</code> — utiliser <code>size="control"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code> — use <code>size="control"</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">SVG inline hors <code>&lt;sda-icon&gt;</code> — pas de contrat d'accessibilité</span><span class="lang-en">Inline SVG outside <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
 </ul>
 
-<h2>Composant</h2>
-<p>Voir le contrat complet du Web Component : <a href="../components/icon.html">ds-icon →</a></p>
+<h2><span class="lang-fr">Composant</span><span class="lang-en">Component</span></h2>
+<p>
+  <span class="lang-fr">Voir le contrat complet du Web Component : <a href="../components/icon.html">ds-icon →</a></span>
+  <span class="lang-en">See the full Web Component contract: <a href="../components/icon.html">ds-icon →</a></span>
+</p>
 `;
 
   write(path.join(DIST, 'foundations/icons.html'), layout({
@@ -1466,39 +1509,54 @@ function buildIconsFoundation() {
 // ─── PAGE: COMPONENTS INDEX ─────────────────────────────────────────────────
 function buildComponentsIndex() {
   const body = `
-<h1>Composants</h1>
-<p class="page-lead">Chaque composant est un contrat — intention, variantes autorisées, tokens associés, règles d'accessibilité, cas limites, gouvernance. Les agents appliquent ces contrats sans les improviser.</p>
+<h1><span class="lang-fr">Composants</span><span class="lang-en">Components</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Chaque composant est un contrat — intention, variantes autorisées, tokens associés, règles d'accessibilité, cas limites, gouvernance. Les agents appliquent ces contrats sans les improviser.</span>
+  <span class="lang-en">Each component is a contract — intent, allowed variants, associated tokens, accessibility rules, edge cases, governance. Agents apply these contracts without improvising.</span>
+</p>
 
-<h2 class="first">Workflow de création</h2>
+<h2 class="first"><span class="lang-fr">Workflow de création</span><span class="lang-en">Creation workflow</span></h2>
 <ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
-  <li>Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></li>
-  <li>Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</li>
-  <li>Implémenter le Web Component (Lit) dans <code>src/components/sda-[nom].js</code></li>
-  <li>Créer la Storybook story pour documentation et tests visuels</li>
-  <li>Ouvrir une PR avec impact tokens documenté — approbation requise si composant modifié</li>
+  <li><span class="lang-fr">Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></span><span class="lang-en">Define the component intent in <code>guidelines/components/[name].md</code></span></li>
+  <li><span class="lang-fr">Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</span><span class="lang-en">Create tokens in <code>tokens/component.json</code> referencing semantic tokens</span></li>
+  <li><span class="lang-fr">Implémenter le Web Component (Lit) dans <code>src/components/sda-[nom].js</code></span><span class="lang-en">Implement the Web Component (Lit) in <code>src/components/sda-[name].js</code></span></li>
+  <li><span class="lang-fr">Créer la Storybook story pour documentation et tests visuels</span><span class="lang-en">Create the Storybook story for documentation and visual tests</span></li>
+  <li><span class="lang-fr">Ouvrir une PR avec impact tokens documenté — approbation requise si composant modifié</span><span class="lang-en">Open a PR with documented token impact — approval required if component is modified</span></li>
 </ol>
 
-<h2>Catalogue</h2>
+<h2><span class="lang-fr">Catalogue</span><span class="lang-en">Catalog</span></h2>
 <div class="nav-grid">
   <a href="button.html" class="nav-card">
     <span class="nav-card-icon">${icon('mouse-pointer-click',32)}</span>
     <div class="nav-card-title">Button</div>
-    <div class="nav-card-desc">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</span>
+      <span class="lang-en">4 variants: primary, secondary, ghost, critical. Special rules for irreversible actions.</span>
+    </div>
   </a>
   <a href="icon.html" class="nav-card">
     <span class="nav-card-icon">${icon('star',32)}</span>
     <div class="nav-card-title">Icon</div>
-    <div class="nav-card-desc">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1.</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1.</span>
+      <span class="lang-en">Lucide library — 1,500+ icons, 3 sizes, WCAG 1.1.1 rules.</span>
+    </div>
   </a>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
     <span class="nav-card-icon">${icon('pen-line',32)}</span>
-    <div class="nav-card-title">Input <span class="badge" style="margin-left:6px">Bientôt</span></div>
-    <div class="nav-card-desc">Saisie de données avec états : défaut, focus, erreur, désactivé.</div>
+    <div class="nav-card-title">Input <span class="badge" style="margin-left:6px"><span class="lang-fr">Bientôt</span><span class="lang-en">Soon</span></span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Saisie de données avec états : défaut, focus, erreur, désactivé.</span>
+      <span class="lang-en">Data entry with states: default, focus, error, disabled.</span>
+    </div>
   </div>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
     <span class="nav-card-icon">${icon('layout-template',32)}</span>
-    <div class="nav-card-title">Card <span class="badge" style="margin-left:6px">Bientôt</span></div>
-    <div class="nav-card-desc">Conteneur visuel pour regrouper des informations liées.</div>
+    <div class="nav-card-title">Card <span class="badge" style="margin-left:6px"><span class="lang-fr">Bientôt</span><span class="lang-en">Soon</span></span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Conteneur visuel pour regrouper des informations liées.</span>
+      <span class="lang-en">Visual container for grouping related information.</span>
+    </div>
   </div>
 </div>
 `;
@@ -1528,76 +1586,79 @@ function buildButton() {
 
   const body = `
 <h1>Button</h1>
-<p class="page-lead">Déclenche une action utilisateur. Quatre variantes, chacune avec une hiérarchie et un usage précis. La variante <code>critical</code> porte des règles comportementales spéciales pour les actions irréversibles.</p>
+<p class="page-lead">
+  <span class="lang-fr">Déclenche une action utilisateur. Quatre variantes, chacune avec une hiérarchie et un usage précis. La variante <code>critical</code> porte des règles comportementales spéciales pour les actions irréversibles.</span>
+  <span class="lang-en">Triggers a user action. Four variants, each with a precise hierarchy and use case. The <code>critical</code> variant carries special behavioral rules for irreversible actions.</span>
+</p>
 
-<h2 class="first">Variantes</h2>
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
 <div class="demo-box">
   <div class="demo-group">
-    <span class="demo-group-label">Primary — action principale, 1 maximum par section</span>
+    <span class="demo-group-label"><span class="lang-fr">Primary — action principale, 1 maximum par section</span><span class="lang-en">Primary — main action, 1 maximum per section</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary">Enregistrer les modifications</button>
-      <button class="ds-btn primary" disabled>Enregistrer (désactivé)</button>
+      <button class="ds-btn primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
+      <button class="ds-btn primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Secondary — action alternative</span>
+    <span class="demo-group-label"><span class="lang-fr">Secondary — action alternative</span><span class="lang-en">Secondary — alternative action</span></span>
     <div class="demo-row">
-      <button class="ds-btn secondary">Annuler</button>
-      <button class="ds-btn secondary" disabled>Annuler (désactivé)</button>
+      <button class="ds-btn secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
+      <button class="ds-btn secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Ghost — action tertiaire, faible emphase</span>
+    <span class="demo-group-label"><span class="lang-fr">Ghost — action tertiaire, faible emphase</span><span class="lang-en">Ghost — tertiary action, low emphasis</span></span>
     <div class="demo-row">
-      <button class="ds-btn ghost">En savoir plus</button>
-      <button class="ds-btn ghost" disabled>En savoir plus (désactivé)</button>
+      <button class="ds-btn ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
+      <button class="ds-btn ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Critical — action irréversible (confirmation obligatoire)</span>
+    <span class="demo-group-label"><span class="lang-fr">Critical — action irréversible (confirmation obligatoire)</span><span class="lang-en">Critical — irreversible action (confirmation required)</span></span>
     <div class="demo-row">
-      <button class="ds-btn critical">Supprimer définitivement</button>
+      <button class="ds-btn critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
     </div>
   </div>
 </div>
 
-<h2>Règles absolues</h2>
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais deux boutons <code>primary</code> côte à côte</li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais de couleur ou espacement en dur</li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais de variante inventée hors de <code>component.json</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
 </ul>
 
-<h2>Tokens de composant</h2>
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table>
-  <thead><tr><th>Token CSS</th><th>Référence sémantique</th><th>Valeur résolue</th></tr></thead>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
   <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`).join('')}</tbody>
 </table>
 
-<h2>Accessibilité</h2>
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
 <ul>
-  <li>Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</li>
-  <li>Navigation clavier complète — Tab, Enter, Space</li>
-  <li>Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></li>
-  <li>Pour les boutons icône seul : <code>aria-label</code> obligatoire</li>
-  <li>État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</li>
-  <li>État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></li>
+  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
+  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span></li>
+  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
+  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
+  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
 </ul>
 
-<h2>Règles spéciales — variante critical</h2>
-<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. Avant d'utiliser cette variante, vérifier :</p>
+<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
+<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
 <ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
-  <li>Le pattern de confirmation existe dans l'interface (modale, popconfirm)</li>
-  <li>Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</li>
-  <li>Le contraste est ≥ 4.5:1 sur fond blanc</li>
-  <li>L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</li>
+  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
+  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
+  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
+  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
 </ol>
 
-<h2>Implémentation — Lit Web Component</h2>
+<h2><span class="lang-fr">Implémentation — Lit Web Component</span><span class="lang-en">Implementation — Lit Web Component</span></h2>
 <pre class="code-block"><code class="lang-javascript">import { LitElement, html, css } from 'lit';
 
 class DsButton extends LitElement {
@@ -1628,35 +1689,35 @@ customElements.define('ds-button', DsButton);</code></pre>
 <h2>DOs et DON'Ts</h2>
 <div class="dos-donts">
   <div class="do-section">
-    <h3>${icon('circle-check',16)} À faire</h3>
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li>Libellé explicite décrivant l'action (<em>«&nbsp;Supprimer définitivement le dossier&nbsp;»</em>)</li>
-      <li>Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
-      <li>Toujours un <code>:focus-visible</code> visible pour la navigation clavier</li>
-      <li>État <code>loading</code> avec <code>aria-busy="true"</code> pour les actions asynchrones</li>
-      <li>Pattern de confirmation obligatoire avant chaque action <code>critical</code></li>
+      <li><span class="lang-fr">Libellé explicite décrivant l'action (<em>«&nbsp;Supprimer définitivement le dossier&nbsp;»</em>)</span><span class="lang-en">Explicit label describing the action (<em>"Delete folder permanently"</em>)</span></li>
+      <li><span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+      <li><span class="lang-fr">Toujours un <code>:focus-visible</code> visible pour la navigation clavier</span><span class="lang-en">Always a visible <code>:focus-visible</code> for keyboard navigation</span></li>
+      <li><span class="lang-fr">État <code>loading</code> avec <code>aria-busy="true"</code> pour les actions asynchrones</span><span class="lang-en"><code>loading</code> state with <code>aria-busy="true"</code> for async actions</span></li>
+      <li><span class="lang-fr">Pattern de confirmation obligatoire avant chaque action <code>critical</code></span><span class="lang-en">Mandatory confirmation pattern before each <code>critical</code> action</span></li>
     </ul>
   </div>
   <div class="dont-section">
-    <h3>${icon('circle-x',16)} À éviter</h3>
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li>Libellé vague : <em>«&nbsp;OK&nbsp;»</em>, <em>«&nbsp;Confirmer&nbsp;»</em>, <em>«&nbsp;Valider&nbsp;»</em> seul</li>
-      <li>Deux boutons <code>primary</code> côte à côte dans le même formulaire</li>
-      <li>Couleurs ou espacements en dur (<code>style="background:red"</code>)</li>
-      <li>Variantes inventées hors de <code>tokens/component.json</code></li>
-      <li>Bouton <code>critical</code> sans pattern de confirmation</li>
+      <li><span class="lang-fr">Libellé vague : <em>«&nbsp;OK&nbsp;»</em>, <em>«&nbsp;Confirmer&nbsp;»</em>, <em>«&nbsp;Valider&nbsp;»</em> seul</span><span class="lang-en">Vague label: <em>"OK"</em>, <em>"Confirm"</em>, <em>"Submit"</em> alone</span></li>
+      <li><span class="lang-fr">Deux boutons <code>primary</code> côte à côte dans le même formulaire</span><span class="lang-en">Two <code>primary</code> buttons side by side in the same form</span></li>
+      <li><span class="lang-fr">Couleurs ou espacements en dur (<code>style="background:red"</code>)</span><span class="lang-en">Hardcoded colors or spacing (<code>style="background:red"</code>)</span></li>
+      <li><span class="lang-fr">Variantes inventées hors de <code>tokens/component.json</code></span><span class="lang-en">Invented variants outside <code>tokens/component.json</code></span></li>
+      <li><span class="lang-fr">Bouton <code>critical</code> sans pattern de confirmation</span><span class="lang-en"><code>critical</code> button without a confirmation pattern</span></li>
     </ul>
   </div>
 </div>
 
-<h2>Anti-patterns</h2>
+<h2><span class="lang-fr">Anti-patterns</span><span class="lang-en">Anti-patterns</span></h2>
 <table>
-  <thead><tr><th>Mauvais</th><th>Pourquoi</th></tr></thead>
+  <thead><tr><th><span class="lang-fr">Mauvais</span><span class="lang-en">Bad</span></th><th><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></th></tr></thead>
   <tbody>
-    <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td>Valeur en dur, variante non reconnue, pas de token</td></tr>
-    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td>Libellé non explicite pour une action critique</td></tr>
-    <tr><td>Deux <code>variant="primary"</code> dans le même formulaire</td><td>Hiérarchie cassée — perte de clarté UX</td></tr>
-    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td>Variante inexistante — escalader, demander la variante correcte</td></tr>
+    <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td><span class="lang-fr">Valeur en dur, variante non reconnue, pas de token</span><span class="lang-en">Hardcoded value, unrecognized variant, no token</span></td></tr>
+    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td><span class="lang-fr">Libellé non explicite pour une action critique</span><span class="lang-en">Non-explicit label for a critical action</span></td></tr>
+    <tr><td><span class="lang-fr">Deux <code>variant="primary"</code> dans le même formulaire</span><span class="lang-en">Two <code>variant="primary"</code> in the same form</span></td><td><span class="lang-fr">Hiérarchie cassée — perte de clarté UX</span><span class="lang-en">Broken hierarchy — loss of UX clarity</span></td></tr>
+    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td><span class="lang-fr">Variante inexistante — escalader, demander la variante correcte</span><span class="lang-en">Non-existent variant — escalate, ask for the correct variant</span></td></tr>
   </tbody>
 </table>
 `;
@@ -1688,37 +1749,40 @@ function buildIcon() {
 
   const body = `
 <h1>Icon</h1>
-<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</p>
+<p class="page-lead">
+  <span class="lang-fr">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</span>
+  <span class="lang-en">Universal icon component based on Lucide Icons (MIT). 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>), built-in WCAG 1.1.1 accessibility.</span>
+</p>
 
 <h2 class="first">Tokens</h2>
 <table>
-  <thead><tr><th>CSS Custom Property</th><th>Token sémantique</th><th>Valeur</th></tr></thead>
+  <thead><tr><th>CSS Custom Property</th><th><span class="lang-fr">Token sémantique</span><span class="lang-en">Semantic token</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
   <tbody>${tokenRows}</tbody>
 </table>
 
 <h2>DOs et DON'Ts</h2>
 <div class="dos-donts">
   <div class="do-section">
-    <h3>${icon('circle-check',16)} À faire</h3>
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li>Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
-      <li>Ajouter <code>label="…"</code> si l'icône est la seule information visible</li>
-      <li>Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</li>
-      <li>Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</li>
+      <li><span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+      <li><span class="lang-fr">Ajouter <code>label="…"</code> si l'icône est la seule information visible</span><span class="lang-en">Add <code>label="…"</code> if the icon is the sole visible information</span></li>
+      <li><span class="lang-fr">Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</span><span class="lang-en">Add <code>decorative</code> if the icon accompanies text that describes it</span></li>
+      <li><span class="lang-fr">Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</span><span class="lang-en">Choose the size token matching the context: <code>inline</code> in text, <code>control</code> in a button, <code>nav</code> in a header</span></li>
     </ul>
   </div>
   <div class="dont-section">
-    <h3>${icon('circle-x',16)} À éviter</h3>
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li>SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</li>
-      <li>Taille codée en dur : <code>style="width:20px"</code></li>
-      <li>Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
-      <li>Tailles inventées hors des 3 tokens sémantiques définis</li>
+      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+      <li><span class="lang-fr">Taille codée en dur : <code>style="width:20px"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code></span></li>
+      <li><span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
+      <li><span class="lang-fr">Tailles inventées hors des 3 tokens sémantiques définis</span><span class="lang-en">Sizes invented outside the 3 defined semantic tokens</span></li>
     </ul>
   </div>
 </div>
 
-<h2>Référence complète</h2>
+<h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
 ${content}
 `;
 
@@ -1765,37 +1829,49 @@ function buildTokens() {
   }).join('');
 
   const body = `
-<h1>Explorateur de tokens</h1>
-<p class="page-lead">Trois niveaux de tokens — navigables, filtrables, directement applicables via CSS Custom Properties.</p>
+<h1><span class="lang-fr">Explorateur de tokens</span><span class="lang-en">Token explorer</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Trois niveaux de tokens — navigables, filtrables, directement applicables via CSS Custom Properties.</span>
+  <span class="lang-en">Three token levels — browsable, filterable, directly applicable via CSS Custom Properties.</span>
+</p>
 
 <div class="token-tiles">
   <div class="token-tile">
     <span class="token-tile-count">${scaleSteps}</span>
-    <span class="token-tile-label">Tokens primitifs (couleurs)</span>
+    <span class="token-tile-label"><span class="lang-fr">Tokens primitifs (couleurs)</span><span class="lang-en">Primitive tokens (colors)</span></span>
   </div>
   <div class="token-tile">
     <span class="token-tile-count">${semCount}</span>
-    <span class="token-tile-label">Tokens sémantiques</span>
+    <span class="token-tile-label"><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></span>
   </div>
   <div class="token-tile">
     <span class="token-tile-count">${compCount}</span>
-    <span class="token-tile-label">Tokens de composant</span>
+    <span class="token-tile-label"><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></span>
   </div>
 </div>
 
 <input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens">
 
-<h2 id="primitifs" class="first">Tokens primitifs</h2>
-<p>Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></p>
-<table><thead><tr><th>Token CSS</th><th>Valeur</th><th>Description</th></tr></thead><tbody>${primRows}</tbody></table>
+<h2 id="primitifs" class="first"><span class="lang-fr">Tokens primitifs</span><span class="lang-en">Primitive tokens</span></h2>
+<p>
+  <span class="lang-fr">Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></span>
+  <span class="lang-en">Physical values from Radix UI. <strong>Never used directly in components.</strong></span>
+</p>
+<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th></tr></thead><tbody>${primRows}</tbody></table>
 
-<h2 id="semantiques">Tokens sémantiques</h2>
-<p>Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</p>
-<table><thead><tr><th>Token CSS</th><th>Alias (référence)</th><th>Valeur résolue</th></tr></thead><tbody>${semRows}</tbody></table>
+<h2 id="semantiques"><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<p>
+  <span class="lang-fr">Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span>
+  <span class="lang-en">UX intentions — what agents must use to understand function, not raw values.</span>
+</p>
+<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias (référence)</span><span class="lang-en">Alias (reference)</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${semRows}</tbody></table>
 
-<h2 id="composants">Tokens de composant</h2>
-<p>Contrats institutionnels. Toute modification requiert une approbation formelle.</p>
-<table><thead><tr><th>Token CSS</th><th>Alias sémantique</th><th>Valeur résolue</th></tr></thead><tbody>${compRows}</tbody></table>
+<h2 id="composants"><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<p>
+  <span class="lang-fr">Contrats institutionnels. Toute modification requiert une approbation formelle.</span>
+  <span class="lang-en">Institutional contracts. Any change requires formal approval.</span>
+</p>
+<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias sémantique</span><span class="lang-en">Semantic alias</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${compRows}</tbody></table>
 `;
 
   write(path.join(DIST, 'tokens/index.html'), layout({
@@ -1825,29 +1901,38 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> Actif</span></td>
+  <td><span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
   <td>${a.date}</td>
 </tr>`).join('');
 
   const body = `
-<h1>Décisions architecturales</h1>
-<p class="page-lead">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée, pourquoi cette règle de gouvernance est là. Ce registre rend ces décisions traçables et auditables.</p>
+<h1><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture Decision Records</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée, pourquoi cette règle de gouvernance est là. Ce registre rend ces décisions traçables et auditables.</span>
+  <span class="lang-en">A design system accumulates invisible decisions: why this token is named this way, why this variant was rejected, why this governance rule exists. This registry makes those decisions traceable and auditable.</span>
+</p>
 
-<blockquote><p>Le système de design est devenu un dataset, pas un deliverable. — The Design System Guide, 2026</p></blockquote>
+<blockquote><p>
+  <span class="lang-fr">Le système de design est devenu un dataset, pas un deliverable. — The Design System Guide, 2026</span>
+  <span class="lang-en">The design system has become a dataset, not a deliverable. — The Design System Guide, 2026</span>
+</p></blockquote>
 
-<h2 class="first">Index des ADRs</h2>
-<p>${adrs.length} décisions actives. Un ADR ne se supprime jamais — on le marque <em>remplacé</em> ou <em>déprécié</em>.</p>
+<h2 class="first"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></h2>
+<p>
+  <span class="lang-fr">${adrs.length} décisions actives. Un ADR ne se supprime jamais — on le marque <em>remplacé</em> ou <em>déprécié</em>.</span>
+  <span class="lang-en">${adrs.length} active decisions. An ADR is never deleted — it is marked <em>superseded</em> or <em>deprecated</em>.</span>
+</p>
 <table>
-  <thead><tr><th>ADR</th><th>Titre</th><th>Statut</th><th>Date</th></tr></thead>
+  <thead><tr><th>ADR</th><th><span class="lang-fr">Titre</span><span class="lang-en">Title</span></th><th><span class="lang-fr">Statut</span><span class="lang-en">Status</span></th><th><span class="lang-fr">Date</span><span class="lang-en">Date</span></th></tr></thead>
   <tbody>${rows}</tbody>
 </table>
 
-<h2>Règles du registre</h2>
+<h2><span class="lang-fr">Règles du registre</span><span class="lang-en">Registry rules</span></h2>
 <ul>
-  <li>Un ADR ne se supprime jamais — on le marque <code>remplacé</code> ou <code>déprécié</code></li>
-  <li>Un ADR est immutable une fois <code>actif</code> — toute modification crée un nouvel ADR</li>
-  <li>Les agents lisent ce dossier pour comprendre les <em>pourquoi</em>, pas les <em>quoi</em></li>
-  <li>Tout TCR (Token Change Request) majeur doit référencer ou créer un ADR</li>
+  <li><span class="lang-fr">Un ADR ne se supprime jamais — on le marque <code>remplacé</code> ou <code>déprécié</code></span><span class="lang-en">An ADR is never deleted — it is marked <code>superseded</code> or <code>deprecated</code></span></li>
+  <li><span class="lang-fr">Un ADR est immutable une fois <code>actif</code> — toute modification crée un nouvel ADR</span><span class="lang-en">An ADR is immutable once <code>active</code> — any modification creates a new ADR</span></li>
+  <li><span class="lang-fr">Les agents lisent ce dossier pour comprendre les <em>pourquoi</em>, pas les <em>quoi</em></span><span class="lang-en">Agents read this folder to understand the <em>why</em>, not just the <em>what</em></span></li>
+  <li><span class="lang-fr">Tout TCR (Token Change Request) majeur doit référencer ou créer un ADR</span><span class="lang-en">Every major TCR (Token Change Request) must reference or create an ADR</span></li>
 </ul>
 `;
 
@@ -1864,9 +1949,9 @@ function buildADR(adr, adrs) {
   const meta = `
 <div class="adr-meta">
   <div class="adr-meta-item"><strong>ADR</strong> ${String(adr.num).padStart(3,'0')}</div>
-  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> Actif</span></div>
-  <div class="adr-meta-item"><strong>Date</strong> ${adr.date}</div>
-  ${adr.deciders ? `<div class="adr-meta-item"><strong>Décideurs</strong> ${esc(adr.deciders)}</div>` : ''}
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> ${adr.date}</div>
+  ${adr.deciders ? `<div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> ${esc(adr.deciders)}</div>` : ''}
 </div>`;
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
@@ -1886,32 +1971,41 @@ function buildADR(adr, adrs) {
 // ─── PAGE: AGENTS ───────────────────────────────────────────────────────────
 function buildAgents() {
   const agentTypes = [
-    ['Designer Agent','Figma','Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.'],
-    ['Developer Agent','Code','Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.'],
-    ['QA Agent','Tests','Exécute les tests d\'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.'],
-    ['Documentation Agent','Docs','Génère des changelogs, guides de migration, notes d\'accessibilité, mises à jour des guidelines.'],
+    ['Designer Agent','Figma','<span class="lang-fr">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.</span><span class="lang-en">Detects drift in Figma: detached instances, missing descriptions, inconsistent spacing and tokens.</span>'],
+    ['Developer Agent','Code','<span class="lang-fr">Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.</span><span class="lang-en">Detects bad token usage in code, generates Web Components, opens fix PRs.</span>'],
+    ['QA Agent','Tests','<span class="lang-fr">Exécute les tests d\'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.</span><span class="lang-en">Runs accessibility, visual regression, and token compliance tests before every merge.</span>'],
+    ['Documentation Agent','Docs','<span class="lang-fr">Génère des changelogs, guides de migration, notes d\'accessibilité, mises à jour des guidelines.</span><span class="lang-en">Generates changelogs, migration guides, accessibility notes, and guideline updates.</span>'],
   ];
 
   const readingOrder = [
-    ['AGENTS.md','Routeur d\'agents — première lecture obligatoire'],
-    ['DESIGN.md','Contrat de marque portable'],
-    ['.claude/rules/project-overview.md','Contexte général'],
-    ['.claude/rules/tokens-system.md','Règles des tokens'],
-    ['.claude/rules/development.md','Règles de développement'],
-    ['guidelines/components/button.md','Contrat du composant concerné'],
-    ['.claude/instructions/session-spec.md','Quick reference pour la session'],
+    ['AGENTS.md','<span class="lang-fr">Routeur d\'agents — première lecture obligatoire</span><span class="lang-en">Agent router — mandatory first read</span>'],
+    ['DESIGN.md','<span class="lang-fr">Contrat de marque portable</span><span class="lang-en">Portable brand contract</span>'],
+    ['.claude/rules/project-overview.md','<span class="lang-fr">Contexte général</span><span class="lang-en">General context</span>'],
+    ['.claude/rules/tokens-system.md','<span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span>'],
+    ['.claude/rules/development.md','<span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span>'],
+    ['guidelines/components/button.md','<span class="lang-fr">Contrat du composant concerné</span><span class="lang-en">Contract for the relevant component</span>'],
+    ['.claude/instructions/session-spec.md','<span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span>'],
   ];
 
   const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('shield-check',24), icon('book-open',24)];
 
   const body = `
-<h1>Pour les agents IA</h1>
-<p class="page-lead">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</p>
+<h1><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</span>
+  <span class="lang-en">This design system is built to be understood and used by AI agents. Agents observe, analyze, propose. Humans approve, decide, deploy.</span>
+</p>
 
-<blockquote><p>Le dernier mot est toujours humain.</p></blockquote>
+<blockquote><p>
+  <span class="lang-fr">Le dernier mot est toujours humain.</span>
+  <span class="lang-en">The final decision is always human.</span>
+</p></blockquote>
 
-<h2 class="first" id="types">Types d'agents</h2>
-<p>Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</p>
+<h2 class="first" id="types"><span class="lang-fr">Types d'agents</span><span class="lang-en">Agent types</span></h2>
+<p>
+  <span class="lang-fr">Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</span>
+  <span class="lang-en">Four roles in production pipeline order — from design to deployment.</span>
+</p>
 <div class="agent-grid">
 ${agentTypes.map(([name, type, desc], i) => `
 <div class="agent-card">
@@ -1922,60 +2016,66 @@ ${agentTypes.map(([name, type, desc], i) => `
 </div>`).join('')}
 </div>
 
-<h2 id="actions">Ce que les agents peuvent faire</h2>
+<h2 id="actions"><span class="lang-fr">Ce que les agents peuvent faire</span><span class="lang-en">What agents can do</span></h2>
 <div class="rules-split">
   <div class="rule-can">
-    <h3><span class='icon-ok'>${icon('circle-check', 16)}</span> Autorisé</h3>
+    <h3><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Autorisé</span><span class="lang-en">Allowed</span></h3>
     <ul>
-      <li>Lire tous les fichiers du dépôt</li>
-      <li>Générer du code respectant les contrats</li>
-      <li>Détecter les dérives de tokens</li>
-      <li>Proposer des corrections</li>
-      <li>Créer une branche <code>fix/</code> ou <code>docs/</code></li>
-      <li>Faire des commits sur une branche feature</li>
-      <li>Ouvrir une PR avec description complète</li>
+      <li><span class="lang-fr">Lire tous les fichiers du dépôt</span><span class="lang-en">Read all files in the repository</span></li>
+      <li><span class="lang-fr">Générer du code respectant les contrats</span><span class="lang-en">Generate code following the contracts</span></li>
+      <li><span class="lang-fr">Détecter les dérives de tokens</span><span class="lang-en">Detect token drift</span></li>
+      <li><span class="lang-fr">Proposer des corrections</span><span class="lang-en">Propose fixes</span></li>
+      <li><span class="lang-fr">Créer une branche <code>fix/</code> ou <code>docs/</code></span><span class="lang-en">Create a <code>fix/</code> or <code>docs/</code> branch</span></li>
+      <li><span class="lang-fr">Faire des commits sur une branche feature</span><span class="lang-en">Commit on a feature branch</span></li>
+      <li><span class="lang-fr">Ouvrir une PR avec description complète</span><span class="lang-en">Open a PR with full description</span></li>
     </ul>
   </div>
   <div class="rule-cannot">
-    <h3><span class='icon-no'>${icon('circle-x', 16)}</span> Interdit</h3>
+    <h3><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Interdit</span><span class="lang-en">Forbidden</span></h3>
     <ul>
-      <li>Merger une PR sans approbation humaine</li>
-      <li>Pusher directement sur <code>main</code> ou <code>develop</code></li>
-      <li>Modifier <code>tokens/component.json</code> sans approbation explicite</li>
-      <li>Inventer des variantes ou tokens non définis</li>
-      <li>Utiliser des valeurs en dur (hex, px, etc.)</li>
-      <li>Ignorer les règles d'accessibilité</li>
+      <li><span class="lang-fr">Merger une PR sans approbation humaine</span><span class="lang-en">Merge a PR without human approval</span></li>
+      <li><span class="lang-fr">Pusher directement sur <code>main</code> ou <code>develop</code></span><span class="lang-en">Push directly to <code>main</code> or <code>develop</code></span></li>
+      <li><span class="lang-fr">Modifier <code>tokens/component.json</code> sans approbation explicite</span><span class="lang-en">Modify <code>tokens/component.json</code> without explicit approval</span></li>
+      <li><span class="lang-fr">Inventer des variantes ou tokens non définis</span><span class="lang-en">Invent undefined variants or tokens</span></li>
+      <li><span class="lang-fr">Utiliser des valeurs en dur (hex, px, etc.)</span><span class="lang-en">Use hardcoded values (hex, px, etc.)</span></li>
+      <li><span class="lang-fr">Ignorer les règles d'accessibilité</span><span class="lang-en">Ignore accessibility rules</span></li>
     </ul>
   </div>
 </div>
 
-<h2 id="lecture">Ordre de lecture obligatoire</h2>
-<p>Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</p>
+<h2 id="lecture"><span class="lang-fr">Ordre de lecture obligatoire</span><span class="lang-en">Mandatory reading order</span></h2>
+<p>
+  <span class="lang-fr">Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</span>
+  <span class="lang-en">Before any action in this repository, an agent must read in this order:</span>
+</p>
 <table>
-  <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+  <thead><tr><th><span class="lang-fr">Fichier</span><span class="lang-en">File</span></th><th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th></tr></thead>
   <tbody>${readingOrder.map(([f,r]) => `<tr><td><code>${f}</code></td><td>${r}</td></tr>`).join('')}</tbody>
 </table>
 
-<h2 id="escalade">Règle d'escalade</h2>
-<p>Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</p>
+<h2 id="escalade"><span class="lang-fr">Règle d'escalade</span><span class="lang-en">Escalation rule</span></h2>
+<p>
+  <span class="lang-fr">Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</span>
+  <span class="lang-en">Any change to semantic or component tokens triggers automatic escalation to a human. Agents cannot approve their own modifications to these tokens.</span>
+</p>
 
-<h2>Règle de nommage — rappel</h2>
-<pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent */
+<h2><span class="lang-fr">Règle de nommage — rappel</span><span class="lang-en">Naming rule — reminder</span></h2>
+<pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent / intent readable by an agent */
 color: var(--sda-component-button-primary-background);
 
-/* ❌ Interdit — valeur brute, aucune intention */
+/* ❌ Interdit — valeur brute, aucune intention / raw value, no intent */
 color: #0d74ce;
 
-/* ❌ Interdit — token primitif utilisé directement */
+/* ❌ Interdit — token primitif utilisé directement / primitive token used directly */
 color: var(--sda-primitive-color-blue-11);</code></pre>
 
-<h2 id="skills">Compétences (Skills)</h2>
+<h2 id="skills"><span class="lang-fr">Compétences (Skills)</span><span class="lang-en">Skills</span></h2>
 <table>
-  <thead><tr><th>Skill</th><th>Rôle</th></tr></thead>
+  <thead><tr><th>Skill</th><th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th></tr></thead>
   <tbody>
-    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td>Compose des interfaces depuis du langage naturel en respectant les contrats</td></tr>
-    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td>Génère les métadonnées de composant</td></tr>
-    <tr><td><code>.claude/skills/codebase-index.md</code></td><td>Index du dépôt pour navigation rapide</td></tr>
+    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td><span class="lang-fr">Compose des interfaces depuis du langage naturel en respectant les contrats</span><span class="lang-en">Composes interfaces from natural language following the contracts</span></td></tr>
+    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td><span class="lang-fr">Génère les métadonnées de composant</span><span class="lang-en">Generates component metadata</span></td></tr>
+    <tr><td><code>.claude/skills/codebase-index.md</code></td><td><span class="lang-fr">Index du dépôt pour navigation rapide</span><span class="lang-en">Repository index for fast navigation</span></td></tr>
   </tbody>
 </table>
 `;

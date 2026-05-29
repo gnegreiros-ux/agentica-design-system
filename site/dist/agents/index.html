@@ -33,97 +33,112 @@
   </button>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Agents IA</span><a href="../agents/index.html">Vue d'ensemble</a><a href="../agents/index.html#types">Types d'agents</a><a href="../agents/index.html#actions">Ce qu'ils peuvent faire</a><a href="../agents/index.html#lecture">Ordre de lecture</a><a href="../agents/index.html#escalade">Règle d'escalade</a><a href="../agents/index.html#skills">Compétences</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span><a href="../agents/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../agents/index.html#types"><span class="lang-fr">Types d'agents</span><span class="lang-en">Agent types</span></a><a href="../agents/index.html#actions"><span class="lang-fr">Ce qu'ils peuvent faire</span><span class="lang-en">What they can do</span></a><a href="../agents/index.html#lecture"><span class="lang-fr">Ordre de lecture</span><span class="lang-en">Reading order</span></a><a href="../agents/index.html#escalade"><span class="lang-fr">Règle d'escalade</span><span class="lang-en">Escalation rule</span></a><a href="../agents/index.html#skills"><span class="lang-fr">Compétences</span><span class="lang-en">Skills</span></a></div></aside>
   <main class="content" role="main">
-<h1>Pour les agents IA</h1>
-<p class="page-lead">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</p>
+<h1><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Ce système de design est conçu pour être compris et utilisé par des agents IA. Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.</span>
+  <span class="lang-en">This design system is built to be understood and used by AI agents. Agents observe, analyze, propose. Humans approve, decide, deploy.</span>
+</p>
 
-<blockquote><p>Le dernier mot est toujours humain.</p></blockquote>
+<blockquote><p>
+  <span class="lang-fr">Le dernier mot est toujours humain.</span>
+  <span class="lang-en">The final decision is always human.</span>
+</p></blockquote>
 
-<h2 class="first" id="types">Types d'agents</h2>
-<p>Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</p>
+<h2 class="first" id="types"><span class="lang-fr">Types d'agents</span><span class="lang-en">Agent types</span></h2>
+<p>
+  <span class="lang-fr">Quatre rôles dans l'ordre du pipeline de production — de la conception au déploiement.</span>
+  <span class="lang-en">Four roles in production pipeline order — from design to deployment.</span>
+</p>
 <div class="agent-grid">
 
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/></svg></div>
   <div class="agent-type">Agent Figma</div>
   <div class="agent-name">Designer Agent</div>
-  <div class="agent-desc">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.</div>
+  <div class="agent-desc"><span class="lang-fr">Détecte les dérives dans Figma : instances détachées, descriptions manquantes, espacements et tokens incohérents.</span><span class="lang-en">Detects drift in Figma: detached instances, missing descriptions, inconsistent spacing and tokens.</span></div>
 </div>
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
   <div class="agent-type">Agent Code</div>
   <div class="agent-name">Developer Agent</div>
-  <div class="agent-desc">Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.</div>
+  <div class="agent-desc"><span class="lang-fr">Détecte les mauvais usages de tokens dans le code, génère les Web Components, ouvre des PRs de correction.</span><span class="lang-en">Detects bad token usage in code, generates Web Components, opens fix PRs.</span></div>
 </div>
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
   <div class="agent-type">Agent Tests</div>
   <div class="agent-name">QA Agent</div>
-  <div class="agent-desc">Exécute les tests d'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.</div>
+  <div class="agent-desc"><span class="lang-fr">Exécute les tests d'accessibilité, de régression visuelle, de conformité des tokens avant tout merge.</span><span class="lang-en">Runs accessibility, visual regression, and token compliance tests before every merge.</span></div>
 </div>
 <div class="agent-card">
   <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
   <div class="agent-type">Agent Docs</div>
   <div class="agent-name">Documentation Agent</div>
-  <div class="agent-desc">Génère des changelogs, guides de migration, notes d'accessibilité, mises à jour des guidelines.</div>
+  <div class="agent-desc"><span class="lang-fr">Génère des changelogs, guides de migration, notes d'accessibilité, mises à jour des guidelines.</span><span class="lang-en">Generates changelogs, migration guides, accessibility notes, and guideline updates.</span></div>
 </div>
 </div>
 
-<h2 id="actions">Ce que les agents peuvent faire</h2>
+<h2 id="actions"><span class="lang-fr">Ce que les agents peuvent faire</span><span class="lang-en">What agents can do</span></h2>
 <div class="rules-split">
   <div class="rule-can">
-    <h3><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Autorisé</h3>
+    <h3><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Autorisé</span><span class="lang-en">Allowed</span></h3>
     <ul>
-      <li>Lire tous les fichiers du dépôt</li>
-      <li>Générer du code respectant les contrats</li>
-      <li>Détecter les dérives de tokens</li>
-      <li>Proposer des corrections</li>
-      <li>Créer une branche <code>fix/</code> ou <code>docs/</code></li>
-      <li>Faire des commits sur une branche feature</li>
-      <li>Ouvrir une PR avec description complète</li>
+      <li><span class="lang-fr">Lire tous les fichiers du dépôt</span><span class="lang-en">Read all files in the repository</span></li>
+      <li><span class="lang-fr">Générer du code respectant les contrats</span><span class="lang-en">Generate code following the contracts</span></li>
+      <li><span class="lang-fr">Détecter les dérives de tokens</span><span class="lang-en">Detect token drift</span></li>
+      <li><span class="lang-fr">Proposer des corrections</span><span class="lang-en">Propose fixes</span></li>
+      <li><span class="lang-fr">Créer une branche <code>fix/</code> ou <code>docs/</code></span><span class="lang-en">Create a <code>fix/</code> or <code>docs/</code> branch</span></li>
+      <li><span class="lang-fr">Faire des commits sur une branche feature</span><span class="lang-en">Commit on a feature branch</span></li>
+      <li><span class="lang-fr">Ouvrir une PR avec description complète</span><span class="lang-en">Open a PR with full description</span></li>
     </ul>
   </div>
   <div class="rule-cannot">
-    <h3><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> Interdit</h3>
+    <h3><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <span class="lang-fr">Interdit</span><span class="lang-en">Forbidden</span></h3>
     <ul>
-      <li>Merger une PR sans approbation humaine</li>
-      <li>Pusher directement sur <code>main</code> ou <code>develop</code></li>
-      <li>Modifier <code>tokens/component.json</code> sans approbation explicite</li>
-      <li>Inventer des variantes ou tokens non définis</li>
-      <li>Utiliser des valeurs en dur (hex, px, etc.)</li>
-      <li>Ignorer les règles d'accessibilité</li>
+      <li><span class="lang-fr">Merger une PR sans approbation humaine</span><span class="lang-en">Merge a PR without human approval</span></li>
+      <li><span class="lang-fr">Pusher directement sur <code>main</code> ou <code>develop</code></span><span class="lang-en">Push directly to <code>main</code> or <code>develop</code></span></li>
+      <li><span class="lang-fr">Modifier <code>tokens/component.json</code> sans approbation explicite</span><span class="lang-en">Modify <code>tokens/component.json</code> without explicit approval</span></li>
+      <li><span class="lang-fr">Inventer des variantes ou tokens non définis</span><span class="lang-en">Invent undefined variants or tokens</span></li>
+      <li><span class="lang-fr">Utiliser des valeurs en dur (hex, px, etc.)</span><span class="lang-en">Use hardcoded values (hex, px, etc.)</span></li>
+      <li><span class="lang-fr">Ignorer les règles d'accessibilité</span><span class="lang-en">Ignore accessibility rules</span></li>
     </ul>
   </div>
 </div>
 
-<h2 id="lecture">Ordre de lecture obligatoire</h2>
-<p>Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</p>
+<h2 id="lecture"><span class="lang-fr">Ordre de lecture obligatoire</span><span class="lang-en">Mandatory reading order</span></h2>
+<p>
+  <span class="lang-fr">Avant toute action dans ce dépôt, un agent doit lire dans cet ordre :</span>
+  <span class="lang-en">Before any action in this repository, an agent must read in this order:</span>
+</p>
 <table>
-  <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
-  <tbody><tr><td><code>AGENTS.md</code></td><td>Routeur d'agents — première lecture obligatoire</td></tr><tr><td><code>DESIGN.md</code></td><td>Contrat de marque portable</td></tr><tr><td><code>.claude/rules/project-overview.md</code></td><td>Contexte général</td></tr><tr><td><code>.claude/rules/tokens-system.md</code></td><td>Règles des tokens</td></tr><tr><td><code>.claude/rules/development.md</code></td><td>Règles de développement</td></tr><tr><td><code>guidelines/components/button.md</code></td><td>Contrat du composant concerné</td></tr><tr><td><code>.claude/instructions/session-spec.md</code></td><td>Quick reference pour la session</td></tr></tbody>
+  <thead><tr><th><span class="lang-fr">Fichier</span><span class="lang-en">File</span></th><th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th></tr></thead>
+  <tbody><tr><td><code>AGENTS.md</code></td><td><span class="lang-fr">Routeur d'agents — première lecture obligatoire</span><span class="lang-en">Agent router — mandatory first read</span></td></tr><tr><td><code>DESIGN.md</code></td><td><span class="lang-fr">Contrat de marque portable</span><span class="lang-en">Portable brand contract</span></td></tr><tr><td><code>.claude/rules/project-overview.md</code></td><td><span class="lang-fr">Contexte général</span><span class="lang-en">General context</span></td></tr><tr><td><code>.claude/rules/tokens-system.md</code></td><td><span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span></td></tr><tr><td><code>.claude/rules/development.md</code></td><td><span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span></td></tr><tr><td><code>guidelines/components/button.md</code></td><td><span class="lang-fr">Contrat du composant concerné</span><span class="lang-en">Contract for the relevant component</span></td></tr><tr><td><code>.claude/instructions/session-spec.md</code></td><td><span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span></td></tr></tbody>
 </table>
 
-<h2 id="escalade">Règle d'escalade</h2>
-<p>Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</p>
+<h2 id="escalade"><span class="lang-fr">Règle d'escalade</span><span class="lang-en">Escalation rule</span></h2>
+<p>
+  <span class="lang-fr">Toute modification touchant les tokens sémantiques ou de composant déclenche une escalade automatique vers un humain. Les agents ne peuvent pas approuver leurs propres modifications sur ces tokens.</span>
+  <span class="lang-en">Any change to semantic or component tokens triggers automatic escalation to a human. Agents cannot approve their own modifications to these tokens.</span>
+</p>
 
-<h2>Règle de nommage — rappel</h2>
-<pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent */
+<h2><span class="lang-fr">Règle de nommage — rappel</span><span class="lang-en">Naming rule — reminder</span></h2>
+<pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent / intent readable by an agent */
 color: var(--sda-component-button-primary-background);
 
-/* ❌ Interdit — valeur brute, aucune intention */
+/* ❌ Interdit — valeur brute, aucune intention / raw value, no intent */
 color: #0d74ce;
 
-/* ❌ Interdit — token primitif utilisé directement */
+/* ❌ Interdit — token primitif utilisé directement / primitive token used directly */
 color: var(--sda-primitive-color-blue-11);</code></pre>
 
-<h2 id="skills">Compétences (Skills)</h2>
+<h2 id="skills"><span class="lang-fr">Compétences (Skills)</span><span class="lang-en">Skills</span></h2>
 <table>
-  <thead><tr><th>Skill</th><th>Rôle</th></tr></thead>
+  <thead><tr><th>Skill</th><th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th></tr></thead>
   <tbody>
-    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td>Compose des interfaces depuis du langage naturel en respectant les contrats</td></tr>
-    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td>Génère les métadonnées de composant</td></tr>
-    <tr><td><code>.claude/skills/codebase-index.md</code></td><td>Index du dépôt pour navigation rapide</td></tr>
+    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td><span class="lang-fr">Compose des interfaces depuis du langage naturel en respectant les contrats</span><span class="lang-en">Composes interfaces from natural language following the contracts</span></td></tr>
+    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td><span class="lang-fr">Génère les métadonnées de composant</span><span class="lang-en">Generates component metadata</span></td></tr>
+    <tr><td><code>.claude/skills/codebase-index.md</code></td><td><span class="lang-fr">Index du dépôt pour navigation rapide</span><span class="lang-en">Repository index for fast navigation</span></td></tr>
   </tbody>
 </table>
 
@@ -134,7 +149,7 @@ color: var(--sda-primitive-color-blue-11);</code></pre>
     <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
     <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
   </div>
-  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
     <span class="lang-fr">Voir sur GitHub →</span>
     <span class="lang-en">View on GitHub →</span>
   </a>

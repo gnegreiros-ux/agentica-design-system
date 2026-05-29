@@ -33,79 +33,82 @@
   </button>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="../foundations/color.html">Couleur</a><a href="../foundations/spacing.html">Espacement</a><a href="../foundations/typography.html">Typographie</a><a href="../foundations/icons.html">Icônes</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="../components/index.html">Vue d'ensemble</a><a href="../components/button.html" class="active">Button</a><a href="../components/icon.html">Icon</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span><a href="../foundations/color.html"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></a><a href="../foundations/spacing.html"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></a><a href="../foundations/typography.html"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></a><a href="../foundations/icons.html"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></a></div><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span><a href="../components/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../components/button.html" class="active">Button</a><a href="../components/icon.html">Icon</a></div></aside>
   <main class="content" role="main">
 <h1>Button</h1>
-<p class="page-lead">Déclenche une action utilisateur. Quatre variantes, chacune avec une hiérarchie et un usage précis. La variante <code>critical</code> porte des règles comportementales spéciales pour les actions irréversibles.</p>
+<p class="page-lead">
+  <span class="lang-fr">Déclenche une action utilisateur. Quatre variantes, chacune avec une hiérarchie et un usage précis. La variante <code>critical</code> porte des règles comportementales spéciales pour les actions irréversibles.</span>
+  <span class="lang-en">Triggers a user action. Four variants, each with a precise hierarchy and use case. The <code>critical</code> variant carries special behavioral rules for irreversible actions.</span>
+</p>
 
-<h2 class="first">Variantes</h2>
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
 <div class="demo-box">
   <div class="demo-group">
-    <span class="demo-group-label">Primary — action principale, 1 maximum par section</span>
+    <span class="demo-group-label"><span class="lang-fr">Primary — action principale, 1 maximum par section</span><span class="lang-en">Primary — main action, 1 maximum per section</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary">Enregistrer les modifications</button>
-      <button class="ds-btn primary" disabled>Enregistrer (désactivé)</button>
+      <button class="ds-btn primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
+      <button class="ds-btn primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Secondary — action alternative</span>
+    <span class="demo-group-label"><span class="lang-fr">Secondary — action alternative</span><span class="lang-en">Secondary — alternative action</span></span>
     <div class="demo-row">
-      <button class="ds-btn secondary">Annuler</button>
-      <button class="ds-btn secondary" disabled>Annuler (désactivé)</button>
+      <button class="ds-btn secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
+      <button class="ds-btn secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Ghost — action tertiaire, faible emphase</span>
+    <span class="demo-group-label"><span class="lang-fr">Ghost — action tertiaire, faible emphase</span><span class="lang-en">Ghost — tertiary action, low emphasis</span></span>
     <div class="demo-row">
-      <button class="ds-btn ghost">En savoir plus</button>
-      <button class="ds-btn ghost" disabled>En savoir plus (désactivé)</button>
+      <button class="ds-btn ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
+      <button class="ds-btn ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
-    <span class="demo-group-label">Critical — action irréversible (confirmation obligatoire)</span>
+    <span class="demo-group-label"><span class="lang-fr">Critical — action irréversible (confirmation obligatoire)</span><span class="lang-en">Critical — irreversible action (confirmation required)</span></span>
     <div class="demo-row">
-      <button class="ds-btn critical">Supprimer définitivement</button>
+      <button class="ds-btn critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
     </div>
   </div>
 </div>
 
-<h2>Règles absolues</h2>
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
-  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
-  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
-  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
-  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> Jamais deux boutons <code>primary</code> côte à côte</li>
-  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> Jamais de couleur ou espacement en dur</li>
-  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> Jamais de variante inventée hors de <code>component.json</code></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span></li>
+  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
+  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
+  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
 </ul>
 
-<h2>Tokens de composant</h2>
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table>
-  <thead><tr><th>Token CSS</th><th>Référence sémantique</th><th>Valeur résolue</th></tr></thead>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
   <tbody><tr class="token-row"><td><code>--sda-component-button-primary-background</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-background-hover</code></td><td><code>semantic.color.action.primary-hover</code></td><td style="font-family:monospace;font-size:12px">#113264</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-background-disabled</code></td><td><code>semantic.color.action.primary-disabled</code></td><td style="font-family:monospace;font-size:12px">#d9d9d9</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-text</code></td><td><code>semantic.color.text.on-action</code></td><td style="font-family:monospace;font-size:12px">#ffffff</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-padding-x</code></td><td><code>semantic.space.control.padding-x</code></td><td style="font-family:monospace;font-size:12px">16px</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-padding-y</code></td><td><code>semantic.space.control.padding-y</code></td><td style="font-family:monospace;font-size:12px">8px</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-radius</code></td><td><code>semantic.radius.control</code></td><td style="font-family:monospace;font-size:12px">6px</td></tr><tr class="token-row"><td><code>--sda-component-button-critical-background</code></td><td><code>semantic.color.feedback.danger</code></td><td style="font-family:monospace;font-size:12px">#ce2c31</td></tr><tr class="token-row"><td><code>--sda-component-button-secondary-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-secondary-border</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-ghost-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr></tbody>
 </table>
 
-<h2>Accessibilité</h2>
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
 <ul>
-  <li>Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</li>
-  <li>Navigation clavier complète — Tab, Enter, Space</li>
-  <li>Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></li>
-  <li>Pour les boutons icône seul : <code>aria-label</code> obligatoire</li>
-  <li>État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</li>
-  <li>État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></li>
+  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
+  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span></li>
+  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
+  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
+  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
 </ul>
 
-<h2>Règles spéciales — variante critical</h2>
-<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. Avant d'utiliser cette variante, vérifier :</p>
+<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
+<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
 <ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
-  <li>Le pattern de confirmation existe dans l'interface (modale, popconfirm)</li>
-  <li>Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</li>
-  <li>Le contraste est ≥ 4.5:1 sur fond blanc</li>
-  <li>L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</li>
+  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
+  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
+  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
+  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
 </ol>
 
-<h2>Implémentation — Lit Web Component</h2>
+<h2><span class="lang-fr">Implémentation — Lit Web Component</span><span class="lang-en">Implementation — Lit Web Component</span></h2>
 <pre class="code-block"><code class="lang-javascript">import { LitElement, html, css } from 'lit';
 
 class DsButton extends LitElement {
@@ -136,35 +139,35 @@ customElements.define('ds-button', DsButton);</code></pre>
 <h2>DOs et DON'Ts</h2>
 <div class="dos-donts">
   <div class="do-section">
-    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> À faire</h3>
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li>Libellé explicite décrivant l'action (<em>«&nbsp;Supprimer définitivement le dossier&nbsp;»</em>)</li>
-      <li>Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
-      <li>Toujours un <code>:focus-visible</code> visible pour la navigation clavier</li>
-      <li>État <code>loading</code> avec <code>aria-busy="true"</code> pour les actions asynchrones</li>
-      <li>Pattern de confirmation obligatoire avant chaque action <code>critical</code></li>
+      <li><span class="lang-fr">Libellé explicite décrivant l'action (<em>«&nbsp;Supprimer définitivement le dossier&nbsp;»</em>)</span><span class="lang-en">Explicit label describing the action (<em>"Delete folder permanently"</em>)</span></li>
+      <li><span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+      <li><span class="lang-fr">Toujours un <code>:focus-visible</code> visible pour la navigation clavier</span><span class="lang-en">Always a visible <code>:focus-visible</code> for keyboard navigation</span></li>
+      <li><span class="lang-fr">État <code>loading</code> avec <code>aria-busy="true"</code> pour les actions asynchrones</span><span class="lang-en"><code>loading</code> state with <code>aria-busy="true"</code> for async actions</span></li>
+      <li><span class="lang-fr">Pattern de confirmation obligatoire avant chaque action <code>critical</code></span><span class="lang-en">Mandatory confirmation pattern before each <code>critical</code> action</span></li>
     </ul>
   </div>
   <div class="dont-section">
-    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> À éviter</h3>
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li>Libellé vague : <em>«&nbsp;OK&nbsp;»</em>, <em>«&nbsp;Confirmer&nbsp;»</em>, <em>«&nbsp;Valider&nbsp;»</em> seul</li>
-      <li>Deux boutons <code>primary</code> côte à côte dans le même formulaire</li>
-      <li>Couleurs ou espacements en dur (<code>style="background:red"</code>)</li>
-      <li>Variantes inventées hors de <code>tokens/component.json</code></li>
-      <li>Bouton <code>critical</code> sans pattern de confirmation</li>
+      <li><span class="lang-fr">Libellé vague : <em>«&nbsp;OK&nbsp;»</em>, <em>«&nbsp;Confirmer&nbsp;»</em>, <em>«&nbsp;Valider&nbsp;»</em> seul</span><span class="lang-en">Vague label: <em>"OK"</em>, <em>"Confirm"</em>, <em>"Submit"</em> alone</span></li>
+      <li><span class="lang-fr">Deux boutons <code>primary</code> côte à côte dans le même formulaire</span><span class="lang-en">Two <code>primary</code> buttons side by side in the same form</span></li>
+      <li><span class="lang-fr">Couleurs ou espacements en dur (<code>style="background:red"</code>)</span><span class="lang-en">Hardcoded colors or spacing (<code>style="background:red"</code>)</span></li>
+      <li><span class="lang-fr">Variantes inventées hors de <code>tokens/component.json</code></span><span class="lang-en">Invented variants outside <code>tokens/component.json</code></span></li>
+      <li><span class="lang-fr">Bouton <code>critical</code> sans pattern de confirmation</span><span class="lang-en"><code>critical</code> button without a confirmation pattern</span></li>
     </ul>
   </div>
 </div>
 
-<h2>Anti-patterns</h2>
+<h2><span class="lang-fr">Anti-patterns</span><span class="lang-en">Anti-patterns</span></h2>
 <table>
-  <thead><tr><th>Mauvais</th><th>Pourquoi</th></tr></thead>
+  <thead><tr><th><span class="lang-fr">Mauvais</span><span class="lang-en">Bad</span></th><th><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></th></tr></thead>
   <tbody>
-    <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td>Valeur en dur, variante non reconnue, pas de token</td></tr>
-    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td>Libellé non explicite pour une action critique</td></tr>
-    <tr><td>Deux <code>variant="primary"</code> dans le même formulaire</td><td>Hiérarchie cassée — perte de clarté UX</td></tr>
-    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td>Variante inexistante — escalader, demander la variante correcte</td></tr>
+    <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td><span class="lang-fr">Valeur en dur, variante non reconnue, pas de token</span><span class="lang-en">Hardcoded value, unrecognized variant, no token</span></td></tr>
+    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td><span class="lang-fr">Libellé non explicite pour une action critique</span><span class="lang-en">Non-explicit label for a critical action</span></td></tr>
+    <tr><td><span class="lang-fr">Deux <code>variant="primary"</code> dans le même formulaire</span><span class="lang-en">Two <code>variant="primary"</code> in the same form</span></td><td><span class="lang-fr">Hiérarchie cassée — perte de clarté UX</span><span class="lang-en">Broken hierarchy — loss of UX clarity</span></td></tr>
+    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td><span class="lang-fr">Variante inexistante — escalader, demander la variante correcte</span><span class="lang-en">Non-existent variant — escalate, ask for the correct variant</span></td></tr>
   </tbody>
 </table>
 
@@ -175,7 +178,7 @@ customElements.define('ds-button', DsButton);</code></pre>
     <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
     <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
   </div>
-  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
     <span class="lang-fr">Voir sur GitHub →</span>
     <span class="lang-en">View on GitHub →</span>
   </a>

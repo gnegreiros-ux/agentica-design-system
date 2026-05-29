@@ -33,40 +33,43 @@
   </button>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="../foundations/color.html">Couleur</a><a href="../foundations/spacing.html">Espacement</a><a href="../foundations/typography.html">Typographie</a><a href="../foundations/icons.html">Icônes</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="../components/index.html">Vue d'ensemble</a><a href="../components/button.html">Button</a><a href="../components/icon.html" class="active">Icon</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span><a href="../foundations/color.html"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></a><a href="../foundations/spacing.html"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></a><a href="../foundations/typography.html"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></a><a href="../foundations/icons.html"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></a></div><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span><a href="../components/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../components/button.html">Button</a><a href="../components/icon.html" class="active">Icon</a></div></aside>
   <main class="content" role="main">
 <h1>Icon</h1>
-<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</p>
+<p class="page-lead">
+  <span class="lang-fr">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</span>
+  <span class="lang-en">Universal icon component based on Lucide Icons (MIT). 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>), built-in WCAG 1.1.1 accessibility.</span>
+</p>
 
 <h2 class="first">Tokens</h2>
 <table>
-  <thead><tr><th>CSS Custom Property</th><th>Token sémantique</th><th>Valeur</th></tr></thead>
+  <thead><tr><th>CSS Custom Property</th><th><span class="lang-fr">Token sémantique</span><span class="lang-en">Semantic token</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
   <tbody><tr class="token-row"><td><code>--sda-semantic-icon-size-inline</code></td><td><code>semantic.icon.size.inline</code></td><td style="font-family:monospace">16px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-control</code></td><td><code>semantic.icon.size.control</code></td><td style="font-family:monospace">20px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-nav</code></td><td><code>semantic.icon.size.nav</code></td><td style="font-family:monospace">24px</td></tr></tbody>
 </table>
 
 <h2>DOs et DON'Ts</h2>
 <div class="dos-donts">
   <div class="do-section">
-    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> À faire</h3>
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li>Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></li>
-      <li>Ajouter <code>label="…"</code> si l'icône est la seule information visible</li>
-      <li>Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</li>
-      <li>Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</li>
+      <li><span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+      <li><span class="lang-fr">Ajouter <code>label="…"</code> si l'icône est la seule information visible</span><span class="lang-en">Add <code>label="…"</code> if the icon is the sole visible information</span></li>
+      <li><span class="lang-fr">Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</span><span class="lang-en">Add <code>decorative</code> if the icon accompanies text that describes it</span></li>
+      <li><span class="lang-fr">Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</span><span class="lang-en">Choose the size token matching the context: <code>inline</code> in text, <code>control</code> in a button, <code>nav</code> in a header</span></li>
     </ul>
   </div>
   <div class="dont-section">
-    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> À éviter</h3>
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li>SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</li>
-      <li>Taille codée en dur : <code>style="width:20px"</code></li>
-      <li>Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
-      <li>Tailles inventées hors des 3 tokens sémantiques définis</li>
+      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+      <li><span class="lang-fr">Taille codée en dur : <code>style="width:20px"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code></span></li>
+      <li><span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
+      <li><span class="lang-fr">Tailles inventées hors des 3 tokens sémantiques définis</span><span class="lang-en">Sizes invented outside the 3 defined semantic tokens</span></li>
     </ul>
   </div>
 </div>
 
-<h2>Référence complète</h2>
+<h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
 <h1>Composant — Icône (<code>sda-icon</code>)</h1>
 <blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md > <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/sda-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
 <hr>
@@ -140,7 +143,7 @@ npm install lucide
     <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
     <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
   </div>
-  <a href="https://github.com/gnegreiros/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
     <span class="lang-fr">Voir sur GitHub →</span>
     <span class="lang-en">View on GitHub →</span>
   </a>

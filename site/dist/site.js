@@ -2,7 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
-  const savedLang = localStorage.getItem('sda-lang') || 'fr';
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const savedLang = urlLang || localStorage.getItem('sda-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.dataset.lang === savedLang) btn.classList.add('active');
@@ -10,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
       localStorage.setItem('sda-lang', lang);
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     });
   });

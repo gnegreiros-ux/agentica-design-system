@@ -168,7 +168,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
 .color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
-.color-swatch{width:44px;height:44px;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
 .color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
 .color-value{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)}
