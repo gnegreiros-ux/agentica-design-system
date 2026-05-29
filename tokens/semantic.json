@@ -54,6 +54,7 @@
       "card":    { "value": "{primitive.radius.md}", "$type": "dimension", "$intent": "Rayon pour conteneurs (cartes, panneaux)" }
     },
     "typography": {
+      "fontFamily": { "value": "{primitive.fontFamily.base}", "$type": "fontFamily", "$intent": "Police système — Atkinson Hyperlegible pour lisibilité maximale (basse vision, WCAG)" },
       "body": {
         "size":        { "value": "{primitive.fontSize.md}",      "$type": "dimension" },
         "weight":      { "value": "{primitive.fontWeight.regular}","$type": "fontWeight" },
@@ -68,6 +69,13 @@
         "size":        { "value": "{primitive.fontSize.xl}",       "$type": "dimension" },
         "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
         "line-height": { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
+      }
+    },
+    "icon": {
+      "size": {
+        "inline":  { "value": "{primitive.iconSize.sm}", "$type": "dimension", "$intent": "Icône dans un texte ou label" },
+        "control": { "value": "{primitive.iconSize.md}", "$type": "dimension", "$intent": "Icône dans un contrôle interactif" },
+        "nav":     { "value": "{primitive.iconSize.lg}", "$type": "dimension", "$intent": "Icône de navigation ou d'emphase" }
       }
     }
   }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Icon — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html">Button</a><a href="components/icon.html" class="active">Icon</a></div></aside>
+  <main class="content" role="main">
+<h1>Icon</h1>
+<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte, accessibilité WCAG 1.1.1 intégrée.</p>
+
+<h2 class="first">Tokens</h2>
+<table>
+  <thead><tr><th>CSS Custom Property</th><th>Token sémantique</th><th>Valeur</th></tr></thead>
+  <tbody><tr class="token-row"><td><code>--sda-semantic-icon-size-inline</code></td><td><code>semantic.icon.size.inline</code></td><td style="font-family:monospace">16px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-control</code></td><td><code>semantic.icon.size.control</code></td><td style="font-family:monospace">20px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-nav</code></td><td><code>semantic.icon.size.nav</code></td><td style="font-family:monospace">24px</td></tr></tbody>
+</table>
+
+<h2>Référence complète</h2>
+<h1>Composant — Icône (<code>ds-icon</code>)</h1>
+<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md <strong>Auteur:</strong> Guilherme Negreiros <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/ds-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
+<hr>
+<h2>Bibliothèque — Lucide Icons</h2>
+<p>Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></p>
+<hr>
+<h2>API du composant</h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Icône sémantique (avec label obligatoire) --&gt;
+&lt;ds-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/ds-icon&gt;
+
+&lt;!-- Icône décorative (aria masquée) --&gt;
+&lt;ds-icon name="check" size="inline" decorative&gt;&lt;/ds-icon&gt;
+
+&lt;!-- Icône de navigation --&gt;
+&lt;ds-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/ds-icon&gt;</code></pre>
+<table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th><th>Requis</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>trash-2</code>)</td><td>—</td><td>✅</td></tr><tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td><td>Si non décoratif</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement ornementale</td><td><code>false</code></td><td>—</td></tr></tbody></table>
+<hr>
+<h2>Tailles et tokens</h2>
+<table><thead><tr><th><code>size</code></th><th>Token sémantique</th><th>Valeur</th><th>Contexte</th></tr></thead><tbody><tr><td><code>inline</code></td><td><code>semantic.icon.size.inline</code></td><td>16px</td><td>Dans un texte courant, un label</td></tr><tr><td><code>control</code></td><td><code>semantic.icon.size.control</code></td><td>20px</td><td>Dans un bouton, un input, un badge</td></tr><tr><td><code>nav</code></td><td><code>semantic.icon.size.nav</code></td><td>24px</td><td>Navigation, en-tête, emphase</td></tr></tbody></table>
+<hr>
+<h2>Règles absolues</h2>
+<pre class="code-block"><code class="lang-text">✅ Toujours un label si l'icône est la seule information (ex: bouton icône seul)
+✅ decorative si l'icône accompagne un texte qui la décrit déjà
+✅ size correspond au contexte (control dans un bouton, inline dans un texte)
+✅ Nom d'icône exact selon lucide.dev (kebab-case)
+
+❌ Jamais d'icône sémantique sans label : &lt;ds-icon name="trash-2"&gt;
+❌ Jamais de taille en dur : style="width: 20px"
+❌ Jamais de variante inventée hors inline/control/nav
+❌ Jamais d'icône hors bibliothèque Lucide sans approbation</code></pre>
+<hr>
+<h2>Usage avec ds-button</h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Bouton avec icône décorative + texte --&gt;
+&lt;ds-button variant="critical"&gt;
+  &lt;ds-icon name="trash-2" size="control" decorative&gt;&lt;/ds-icon&gt;
+  Supprimer définitivement
+&lt;/ds-button&gt;
+
+&lt;!-- Bouton icône seul — label obligatoire sur ds-icon --&gt;
+&lt;ds-button variant="ghost" aria-label="Fermer"&gt;
+  &lt;ds-icon name="x" size="control" label="Fermer"&gt;&lt;/ds-icon&gt;
+&lt;/ds-button&gt;</code></pre>
+<hr>
+<h2>Accessibilité — WCAG 1.1.1</h2>
+<table><thead><tr><th>Scénario</th><th>Implémentation</th></tr></thead><tbody><tr><td>Icône seule (bouton, lien)</td><td><code>label="Action décrite"</code> → <code>aria-label</code> injecté</td></tr><tr><td>Icône + texte adjacent</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Icône dans un champ</td><td><code>label</code> sur le champ parent (<code>aria-describedby</code>)</td></tr></tbody></table>
+<hr>
+<h2>Anti-patterns à détecter</h2>
+<pre class="code-block"><code class="lang-html">❌ &lt;ds-icon name="trash-2"&gt;&lt;/ds-icon&gt;
+   → Icône sémantique sans label — escalader
+
+❌ &lt;ds-icon name="danger" size="control"&gt;
+   → Nom "danger" inexistant dans Lucide — utiliser "alert-triangle" ou "x-circle"
+
+❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors ds-icon)
+   → Dérive — pas de contrat d'accessibilité ni de token
+
+❌ &lt;ds-icon name="check" style="width: 18px;"&gt;
+   → Taille en dur — utiliser size="inline" ou size="control"</code></pre>
+<hr>
+<h2>Installation</h2>
+<pre class="code-block"><code class="lang-bash"># npm (recommandé pour les projets avec bundler)
+npm install lucide
+
+# CDN (projets statiques)
+&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</code></pre>
+</main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

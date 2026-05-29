@@ -74,7 +74,7 @@ dans les applications qui n'en ont pas besoin.
 **Pour les agents IA :**
 - La structure de `dist/` est prévisible et documentée par `config.json`
 - Un agent peut lire `config.json` pour savoir exactement quels fichiers existent dans `dist/` sans les lire
-- Les noms de tokens CSS générés (`--ds-primitive-color-blue-700`) sont dérivés mécaniquement
+- Les noms de tokens CSS générés (`--sda-primitive-color-blue-700`) sont dérivés mécaniquement
   du JSON source — un agent peut prédire le nom CSS d'un token à partir de son chemin JSON
 
 **Pour la CI/CD :**

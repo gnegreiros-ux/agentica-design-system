@@ -20,7 +20,7 @@
   <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html" class="active">Button</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html" class="active">Button</a><a href="components/icon.html">Icon</a></div></aside>
   <main class="content" role="main">
 <h1>Button</h1>
 <p class="page-lead">Déclenche une action utilisateur. Quatre variantes, chacune avec une hiérarchie et un usage précis. La variante <code>critical</code> porte des règles comportementales spéciales pour les actions irréversibles.</p>
@@ -61,7 +61,7 @@
   <li>✅ Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
   <li>✅ Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
   <li>✅ Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
-  <li>✅ Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--ds-semantic-color-border-focus)</code></li>
+  <li>✅ Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
   <li>❌ Jamais deux boutons <code>primary</code> côte à côte</li>
   <li>❌ Jamais de couleur ou espacement en dur</li>
   <li>❌ Jamais de variante inventée hors de <code>component.json</code></li>
@@ -70,14 +70,14 @@
 <h2>Tokens de composant</h2>
 <table>
   <thead><tr><th>Token CSS</th><th>Référence sémantique</th><th>Valeur résolue</th></tr></thead>
-  <tbody><tr class="token-row"><td><code>--ds-component-button-primary-background</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-background-hover</code></td><td><code>semantic.color.action.primary-hover</code></td><td style="font-family:monospace;font-size:12px">#113264</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-background-disabled</code></td><td><code>semantic.color.action.primary-disabled</code></td><td style="font-family:monospace;font-size:12px">#d9d9d9</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-text</code></td><td><code>semantic.color.text.on-action</code></td><td style="font-family:monospace;font-size:12px">#ffffff</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-padding-x</code></td><td><code>semantic.space.control.padding-x</code></td><td style="font-family:monospace;font-size:12px">16px</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-padding-y</code></td><td><code>semantic.space.control.padding-y</code></td><td style="font-family:monospace;font-size:12px">8px</td></tr><tr class="token-row"><td><code>--ds-component-button-primary-radius</code></td><td><code>semantic.radius.control</code></td><td style="font-family:monospace;font-size:12px">6px</td></tr><tr class="token-row"><td><code>--ds-component-button-critical-background</code></td><td><code>semantic.color.feedback.danger</code></td><td style="font-family:monospace;font-size:12px">#ce2c31</td></tr><tr class="token-row"><td><code>--ds-component-button-secondary-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--ds-component-button-secondary-border</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--ds-component-button-ghost-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr></tbody>
+  <tbody><tr class="token-row"><td><code>--sda-component-button-primary-background</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-background-hover</code></td><td><code>semantic.color.action.primary-hover</code></td><td style="font-family:monospace;font-size:12px">#113264</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-background-disabled</code></td><td><code>semantic.color.action.primary-disabled</code></td><td style="font-family:monospace;font-size:12px">#d9d9d9</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-text</code></td><td><code>semantic.color.text.on-action</code></td><td style="font-family:monospace;font-size:12px">#ffffff</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-padding-x</code></td><td><code>semantic.space.control.padding-x</code></td><td style="font-family:monospace;font-size:12px">16px</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-padding-y</code></td><td><code>semantic.space.control.padding-y</code></td><td style="font-family:monospace;font-size:12px">8px</td></tr><tr class="token-row"><td><code>--sda-component-button-primary-radius</code></td><td><code>semantic.radius.control</code></td><td style="font-family:monospace;font-size:12px">6px</td></tr><tr class="token-row"><td><code>--sda-component-button-critical-background</code></td><td><code>semantic.color.feedback.danger</code></td><td style="font-family:monospace;font-size:12px">#ce2c31</td></tr><tr class="token-row"><td><code>--sda-component-button-secondary-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-secondary-border</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr><tr class="token-row"><td><code>--sda-component-button-ghost-text</code></td><td><code>semantic.color.action.primary</code></td><td style="font-family:monospace;font-size:12px">#0d74ce</td></tr></tbody>
 </table>
 
 <h2>Accessibilité</h2>
 <ul>
   <li>Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</li>
   <li>Navigation clavier complète — Tab, Enter, Space</li>
-  <li>Focus visible : <code>outline: 2px solid var(--ds-semantic-color-border-focus); outline-offset: 2px</code></li>
+  <li>Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></li>
   <li>Pour les boutons icône seul : <code>aria-label</code> obligatoire</li>
   <li>État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</li>
   <li>État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></li>
@@ -85,7 +85,7 @@
 
 <h2>Règles spéciales — variante critical</h2>
 <p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. Avant d'utiliser cette variante, vérifier :</p>
-<ol style="color:var(--ds-semantic-color-text-secondary);padding-left:22px">
+<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
   <li>Le pattern de confirmation existe dans l'interface (modale, popconfirm)</li>
   <li>Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</li>
   <li>Le contraste est ≥ 4.5:1 sur fond blanc</li>
@@ -104,16 +104,16 @@ class DsButton extends LitElement {
 
   static styles = css`
     button {
-      background: var(--ds-component-button-primary-background);
-      color:      var(--ds-component-button-primary-text);
-      padding:    var(--ds-component-button-primary-padding-y) var(--ds-component-button-primary-padding-x);
-      border-radius: var(--ds-component-button-primary-radius);
-      font-size:  var(--ds-semantic-typography-label-size);
-      font-weight:var(--ds-semantic-typography-label-weight);
+      background: var(--sda-component-button-primary-background);
+      color:      var(--sda-component-button-primary-text);
+      padding:    var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
+      border-radius: var(--sda-component-button-primary-radius);
+      font-size:  var(--sda-semantic-typography-label-size);
+      font-weight:var(--sda-semantic-typography-label-weight);
       border: none; cursor: pointer;
     }
     button:focus-visible {
-      outline: 2px solid var(--ds-semantic-color-border-focus);
+      outline: 2px solid var(--sda-semantic-color-border-focus);
       outline-offset: 2px;
     }
   `;

@@ -70,8 +70,8 @@ Si la demande requiert quelque chose qui n'existe pas dans le système :
 [Code HTML / pseudo-code avec les composants]
 
 ### Tokens appliqués
-- background: `var(--ds-component-button-primary-background)`
-- spacing: `var(--ds-semantic-space-layout-component)`
+- background: `var(--sda-component-button-primary-background)`
+- spacing: `var(--sda-semantic-space-layout-component)`
 
 ### Règles respectées
 - [x] Un seul bouton primary

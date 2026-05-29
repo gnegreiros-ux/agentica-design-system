@@ -24,9 +24,9 @@ Quatre types de dérive ont été identifiés comme prioritaires :
 | Type | Description | Exemple |
 |------|-------------|---------|
 | **Token orphelin** | Défini dans `component.json`, jamais utilisé dans le code | `button.ghost.border` non référencé |
-| **Token fantôme** | Utilisé dans le code, absent de `semantic.json` | `var(--ds-semantic-color-action-secondary)` inexistant |
+| **Token fantôme** | Utilisé dans le code, absent de `semantic.json` | `var(--sda-semantic-color-action-secondary)` inexistant |
 | **Valeur hardcodée** | Hex, RGB, px arbitraire dans le code | `color: #3B82F6` au lieu de `var(--ds-color-action-primary)` |
-| **Primitif direct** | Token primitif utilisé dans un composant | `var(--ds-primitive-color-blue-9)` dans un Web Component |
+| **Primitif direct** | Token primitif utilisé dans un composant | `var(--sda-primitive-color-blue-9)` dans un Web Component |
 
 La question posée était :
 
@@ -45,7 +45,7 @@ exécutable directement avec `node scripts/audit-tokens.js`.
 Il opère en quatre audits séquentiels :
 
 1. **Tokens orphelins** — compare `component.json` avec les usages dans le code source
-2. **Tokens fantômes** — détecte les `var(--ds-semantic-*)` sans équivalent dans `semantic.json`
+2. **Tokens fantômes** — détecte les `var(--sda-semantic-*)` sans équivalent dans `semantic.json`
 3. **Valeurs hardcodées** — regex sur hex, rgb, hsl, Tailwind arbitrary values, px inline
 4. **Structure des trois couches** — vérifie que les références entre couches sont résolubles
 
@@ -81,7 +81,7 @@ et comprendre exactement quels patterns sont considérés comme des dérives dan
 
 | Alternative | Raison du rejet |
 |-------------|-----------------|
-| **ESLint uniquement** | ESLint analyse le code statiquement mais ne peut pas croiser le code avec le contenu des fichiers JSON de tokens. Détecter qu'un `var(--ds-semantic-color-action-secondary)` est fantôme nécessite de lire `semantic.json` au runtime — ce qu'ESLint ne fait pas. |
+| **ESLint uniquement** | ESLint analyse le code statiquement mais ne peut pas croiser le code avec le contenu des fichiers JSON de tokens. Détecter qu'un `var(--sda-semantic-color-action-secondary)` est fantôme nécessite de lire `semantic.json` au runtime — ce qu'ESLint ne fait pas. |
 | **Outil de gouvernance tokens tiers (Token Health, Theo Validator)** | Outils peu matures ou trop couplés à un écosystème spécifique. Aucun ne couvre simultanément les quatre types de dérive du projet dans une seule commande. Dépendance externe pour une fonction critique de gouvernance. |
 | **Lint dans Storybook / Chromatic** | Ces outils audient le rendu visuel et l'accessibilité. Ils ne lisent pas les fichiers JSON de tokens ni ne comparent les usages CSS avec les définitions — pas leur rôle. |
 | **Revue manuelle pre-PR** | Non reproductible. Un développeur pressé oublie de vérifier. Un agent génère du code sans vérifier. Le script tourne automatiquement en CI — pas de risque d'oubli. |

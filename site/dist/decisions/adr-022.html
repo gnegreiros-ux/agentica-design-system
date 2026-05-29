@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Lucide Icons comme bibliothèque d'icônes — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 022</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-022 — Lucide Icons comme bibliothèque d'icônes</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-022-lucide-icons.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, components/ds-icon.js, guidelines/components/icon.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Le design system référençait <code><ds-icon></code> dans les exemples de composants (notamment <code>guidelines/components/button.md</code>) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.</p>
+<hr>
+<h2>Décision</h2>
+<h3>Bibliothèque : Lucide Icons</h3>
+<p><strong>Lucide</strong> (fork de Feather Icons, MIT) est adopté comme bibliothèque d'icônes officielle du système.</p>
+<p><strong>Caractéristiques techniques :</strong></p>
+<ul><li>1 500+ icônes, couverture UI complète</li><li>Cohérence géométrique stricte : <code>strokeWidth: 1.5px</code> constant sur toutes les icônes</li><li>Format SVG pur — pas de font, pas de sprite obligatoire</li><li>Tree-shakeable — seules les icônes utilisées sont bundlées</li><li>Licence MIT — aucune contrainte commerciale</li></ul>
+<p><strong>Adoption sectorielle :</strong> Linear, Vercel, shadcn/ui, Raycast — signal de qualité et de pérennité.</p>
+<h3>Web Component : <code>ds-icon</code></h3>
+<p>Un composant Lit encapsule Lucide et expose l'API du design system :</p>
+<pre class="code-block"><code class="lang-javascript">// Usage
+&lt;ds-icon name="trash-2" size="control" label="Supprimer"&gt;&lt;/ds-icon&gt;
+&lt;ds-icon name="check" size="inline" decorative&gt;&lt;/ds-icon&gt;</code></pre>
+<p><strong>Props :</strong></p>
+<table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>"trash-2"</code>)</td><td>— (requis)</td></tr><tr><td><code>size</code></td><td>String</td><td><code>"inline"</code> / <code>"control"</code> / <code>"nav"</code></td><td><code>"control"</code></td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement décorative</td><td><code>false</code></td></tr></tbody></table>
+<p><strong>Règle WCAG 1.1.1 :</strong> Si <code>decorative</code> est absent, <code>label</code> est obligatoire → <code>aria-label</code> injecté. Si <code>decorative</code> est présent → <code>aria-hidden="true"</code>.</p>
+<h3>Tokens de taille d'icône</h3>
+<pre class="code-block"><code class="lang-json">// primitives.json
+"iconSize": {
+  "sm": "16px",  // inline — dans un texte
+  "md": "20px",  // control — dans un bouton, input
+  "lg": "24px"   // nav — navigation, emphase
+}
+
+// semantic.json
+"icon.size.inline":  "{primitive.iconSize.sm}"
+"icon.size.control": "{primitive.iconSize.md}"
+"icon.size.nav":     "{primitive.iconSize.lg}"</code></pre>
+<h3>Intégration dans le site de documentation</h3>
+<p>Lucide est ajouté comme dépendance npm dans <code>site/package.json</code>. Le build génère une page de référence des icônes à <code>site/dist/components/icon.html</code>.</p>
+<hr>
+<h2>Argumentaire WCAG</h2>
+<ul><li><strong>1.1.1 (Contenu non textuel) :</strong> Toute icône sémantique a un <code>aria-label</code>. Les icônes décoratives ont <code>aria-hidden="true"</code>.</li><li><strong>1.4.3 (Contraste) :</strong> Les icônes héritent de <code>color: currentColor</code> — le contraste est celui du texte parent, toujours conforme.</li><li><strong>2.5.3 (Label dans le nom) :</strong> Les boutons icône-seule exposent leur label via <code>aria-label</code> sur <code>ds-icon</code>.</li></ul>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Material Icons</strong></td><td>Font icon — problèmes FOUT, accessibilité plus complexe, couplage Google.</td></tr><tr><td><strong>Heroicons</strong></td><td>Qualité équivalente mais moindre adoption, moins de variantes.</td></tr><tr><td><strong>Font Awesome</strong></td><td>Modèle freemium, dépendance propriétaire pour icônes avancées.</td></tr><tr><td><strong>SVG sprite custom</strong></td><td>Maintenance manuelle insoutenable pour 100+ icônes.</td></tr><tr><td><strong>Phosphor Icons</strong></td><td>Qualité équivalente mais écosystème React-centrique, moins de support Web Components.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les tokens :</strong></p>
+<ul><li><code>primitive.iconSize</code> (sm/md/lg) et <code>semantic.icon.size</code> (inline/control/nav) ajoutés</li></ul>
+<p><strong>Pour les composants :</strong></p>
+<ul><li><code>components/ds-icon.js</code> fournit le contrat d'implémentation Lit</li><li><code>guidelines/components/icon.md</code> documente les règles d'usage et les anti-patterns</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li><code>size="control"</code> est une intention lisible — l'agent comprend que c'est une icône dans un contrôle interactif</li><li>Les anti-patterns (icône sans label, taille en dur) sont auditables</li></ul>
+<p><strong>Pour les équipes :</strong></p>
+<ul><li>Fin des solutions ad hoc : une seule API, un seul token, une seule bibliothèque</li><li>Noms d'icônes documentés sur lucide.dev — référence canonique</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-021.html" class="ds-btn secondary" style="font-size:13px">← ADR-021</a>
+    <span></span>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

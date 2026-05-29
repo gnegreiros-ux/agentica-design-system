@@ -4,6 +4,7 @@
 > Lire ce fichier en premier. Toujours.
 > **Type:** instruction
 > **Chemin logique:** AGENTS.md
+> **Auteur:** Guilherme Negreiros
 > **Lecture avant:** DESIGN.md
 > **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md
 

@@ -20,7 +20,7 @@
   <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html" class="active">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html">Button</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Fondations</span><a href="foundations/color.html" class="active">Couleur</a><a href="foundations/spacing.html">Espacement</a><a href="foundations/typography.html">Typographie</a></div><div class="sidebar-group"><span class="sidebar-label">Composants</span><a href="components/index.html">Vue d'ensemble</a><a href="components/button.html">Button</a><a href="components/icon.html">Icon</a></div></aside>
   <main class="content" role="main">
 <h1>Couleur</h1>
 <p class="page-lead">Système de couleur en trois niveaux : palettes primitives Radix UI → intentions sémantiques → contrats de composant. Les agents utilisent les tokens sémantiques, jamais les valeurs primitives.</p>
@@ -32,97 +32,97 @@
   <tbody>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#0d74ce;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-action-primary</code></td>
+  <td><code>--sda-semantic-color-action-primary</code></td>
   <td style="font-family:monospace;font-size:12px">#0d74ce</td>
   <td>Action principale — CTA, bouton primaire</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#113264;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-action-primary-hover</code></td>
+  <td><code>--sda-semantic-color-action-primary-hover</code></td>
   <td style="font-family:monospace;font-size:12px">#113264</td>
   <td>État survol de l'action principale</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#d9d9d9;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-action-primary-disabled</code></td>
+  <td><code>--sda-semantic-color-action-primary-disabled</code></td>
   <td style="font-family:monospace;font-size:12px">#d9d9d9</td>
   <td>Action principale désactivée</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#ce2c31;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-feedback-danger</code></td>
+  <td><code>--sda-semantic-color-feedback-danger</code></td>
   <td style="font-family:monospace;font-size:12px">#ce2c31</td>
   <td>Erreur, action destructrice, alerte critique</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#feebec;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-feedback-danger-subtle</code></td>
+  <td><code>--sda-semantic-color-feedback-danger-subtle</code></td>
   <td style="font-family:monospace;font-size:12px">#feebec</td>
   <td>Fond subtil pour état danger</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#18794e;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-feedback-success</code></td>
+  <td><code>--sda-semantic-color-feedback-success</code></td>
   <td style="font-family:monospace;font-size:12px">#18794e</td>
   <td>Confirmation, succès, validation</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#0d74ce;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-feedback-info</code></td>
+  <td><code>--sda-semantic-color-feedback-info</code></td>
   <td style="font-family:monospace;font-size:12px">#0d74ce</td>
   <td>Information neutre, aide contextuelle</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#fcfcfc;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-background-page</code></td>
+  <td><code>--sda-semantic-color-background-page</code></td>
   <td style="font-family:monospace;font-size:12px">#fcfcfc</td>
   <td>Fond de page principale</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#ffffff;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-background-surface</code></td>
+  <td><code>--sda-semantic-color-background-surface</code></td>
   <td style="font-family:monospace;font-size:12px">#ffffff</td>
   <td>Fond de carte, panneau, modal</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#f0f0f0;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-background-subtle</code></td>
+  <td><code>--sda-semantic-color-background-subtle</code></td>
   <td style="font-family:monospace;font-size:12px">#f0f0f0</td>
   <td>Fond secondaire, survol discret</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#202020;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-text-primary</code></td>
+  <td><code>--sda-semantic-color-text-primary</code></td>
   <td style="font-family:monospace;font-size:12px">#202020</td>
   <td>Texte principal, haute lisibilité</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#646464;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-text-secondary</code></td>
+  <td><code>--sda-semantic-color-text-secondary</code></td>
   <td style="font-family:monospace;font-size:12px">#646464</td>
   <td>Texte secondaire, labels, métadonnées</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#767676;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-text-disabled</code></td>
+  <td><code>--sda-semantic-color-text-disabled</code></td>
   <td style="font-family:monospace;font-size:12px">#767676</td>
   <td>Texte désactivé</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#e8e8e8;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-border-default</code></td>
+  <td><code>--sda-semantic-color-border-default</code></td>
   <td style="font-family:monospace;font-size:12px">#e8e8e8</td>
   <td>Bordure standard</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#0d74ce;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-border-focus</code></td>
+  <td><code>--sda-semantic-color-border-focus</code></td>
   <td style="font-family:monospace;font-size:12px">#0d74ce</td>
   <td>Bordure focus — accessibilité clavier</td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#ce2c31;border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-color-border-danger</code></td>
+  <td><code>--sda-semantic-color-border-danger</code></td>
   <td style="font-family:monospace;font-size:12px">#ce2c31</td>
   <td>Bordure état erreur</td>
 </tr></tbody>

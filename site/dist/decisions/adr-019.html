@@ -20,7 +20,7 @@
   <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
   <div class="adr-meta-item"><strong>ADR</strong> 019</div>
@@ -75,9 +75,9 @@ const SEM = flattenTokens(semanticData.semantic, primitives);</code></pre>
 <hr>
 <h2>Invariant de sortie — zéro changement visuel</h2>
 <p>Les 35 valeurs résolues après migration sont <strong>strictement identiques</strong> à celles de l'objet <code>SEM</code> hardcodé qu'elles remplacent. Vérifiable par diff :</p>
-<pre class="code-block"><code class="lang-text">--ds-semantic-color-action-primary: #0d74ce    ← inchangé
---ds-semantic-space-control-padding-x: 16px    ← inchangé
---ds-semantic-typography-body-line-height: 1.5 ← inchangé</code></pre>
+<pre class="code-block"><code class="lang-text">--sda-semantic-color-action-primary: #0d74ce    ← inchangé
+--sda-semantic-space-control-padding-x: 16px    ← inchangé
+--sda-semantic-typography-body-line-height: 1.5 ← inchangé</code></pre>
 <hr>
 <h2>Alternatives rejetées</h2>
 <table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Utiliser Style Dictionary</strong></td><td>Dépendance externe pour un build qui n'en a pas. Style Dictionary ajoute une configuration non triviale et une abstraction pour un résolveur qui s'écrit en ~20 lignes. Choix cohérent avec la philosophie du projet : pas de dépendance sans justification.</td></tr><tr><td><strong>Garder le SEM hardcodé + ajouter des primitives</strong></td><td>Résout la dette dans <code>semantic.json</code> mais laisse <code>build.js</code> désynchronisé. Un changement de token nécessiterait toujours deux modifications manuelles.</td></tr><tr><td><strong>Résolveur récursif multi-niveaux (tokens référençant des tokens)</strong></td><td>Non nécessaire : dans ce système, les tokens sémantiques référencent uniquement des primitives, jamais d'autres sémantiques. Le résolveur single-level est suffisant et plus simple à auditer.</td></tr></tbody></table>
@@ -92,9 +92,9 @@ const SEM = flattenTokens(semanticData.semantic, primitives);</code></pre>
 <p>  <code>semantic.json</code> → <code>{primitive.X.Y}</code> → <code>primitives.json</code> → valeur CSS</p>
 <ul><li>Aucune valeur "magique" ne subsiste dans <code>build.js</code></li></ul>
 <p><strong>Dette technique soldée :</strong></p>
-<ul><li>Toutes les références dans <code>semantic.json</code> se résolvent désormais</li><li><code>build.js</code> ne contient plus de valeurs hardcodées pour les tokens</li><li>Les deux dettes documentées dans ADR-018 sont closes</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+<ul><li>Toutes les références dans <code>semantic.json</code> se résolvent désormais</li><li><code>build.js</code> ne contient plus de valeurs hardcodées pour les tokens</li><li>Les deux dettes documentées dans ADR-018 sont closes</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
     <a href="adr-018.html" class="ds-btn secondary" style="font-size:13px">← ADR-018</a>
-    <span></span>
+    <a href="adr-020.html" class="ds-btn secondary" style="font-size:13px">ADR-020 →</a>
   </div></main>
 </div>
 <script src="../site.js"></script>

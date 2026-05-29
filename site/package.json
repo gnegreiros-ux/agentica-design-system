@@ -8,7 +8,9 @@
     "audit": "node audit-a11y.js",
     "dev": "node build.js --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lucide": "^0.511.0"
+  },
   "devDependencies": {
     "chokidar": "^3.6.0"
   }

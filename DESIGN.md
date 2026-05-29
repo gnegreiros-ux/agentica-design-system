@@ -5,18 +5,21 @@
 > Source : Google Labs, avril 2026 — licence Apache 2.0
 > **Type:** contract
 > **Chemin logique:** DESIGN.md
+> **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md
 > **Relations:** AGENTS.md, tokens/semantic.json, tokens/component.json, guidelines/components/
+
+> **Note pour la réutilisation :** Remplacer les valeurs "sda" et "GNegreiros.com" ci-dessous par le nom du système et de votre organisation.
 
 ---
 
 ## 1. Identité et intention du système
 
-**Nom du système :** [NOM_DU_SYSTÈME]
-**Organisation :** [NOM_ORGANISATION]
+**Nom du système :** sda
+**Organisation :** GNegreiros.com
 **Version :** 1.0.0
-**Dernière mise à jour :** [DATE]
-**Responsable :** [NOM_RESPONSABLE]
+**Dernière mise à jour :** 2026-05-29
+**Responsable :** Guilherme Negreiros
 
 ### Mission
 Ce système de design encode les décisions d'interface partagées par toutes les équipes.

@@ -7,6 +7,10 @@
 > **Relations:** guidelines/components/button.md, .claude/skills/ai-ds-composer.md
 
 Chaque composant est un contrat.
-Composants : button.md
 
-Pour ajouter : contrat .md + tokens component.json + Web Component + Storybook
+| Composant | Fichier | Statut |
+|-----------|---------|--------|
+| Button | `button.md` | ✅ Actif |
+| Icon | `icon.md` | ✅ Actif |
+
+Pour ajouter un composant : contrat `.md` + tokens `component.json` + Web Component + Storybook

@@ -7,6 +7,7 @@
 > **Lecture avant:** (point d'entrée — lire en premier)
 > **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
+**Auteur :** Guilherme Negreiros
 **Site de documentation :** https://gnegreiros-ux.github.io/agentic-design-system/
 
 ---
@@ -59,15 +60,19 @@ agentic-design-system/
 │       ├── ai-ds-composer.md
 │       └── codebase-index.md
 │
+├── components/
+│   └── ds-icon.js                     ← Web Component icône (Lucide)
+│
 └── guidelines/
     ├── overview.md
     ├── foundations/
     │   ├── color.md
-    │   ├── typography.md
-    │   └── spacing.md
+    │   ├── typography.md              ← Atkinson Hyperlegible (accessibilité)
+    │   └── spacing.md                 ← grille 4px
     └── components/
         ├── overview.md
-        └── button.md                  ← contrat complet (exemple de référence)
+        ├── button.md                  ← contrat complet (exemple de référence)
+        └── icon.md                    ← contrat ds-icon (Lucide)
 ```
 
 ---
@@ -138,10 +143,12 @@ Toujours passer par la couche sémantique.
 
 ---
 
-## Sources
+## Crédits
 
-- *AI Design Systems Conference 2026* — Into Design Systems
-- Romina Kavcic — The Design System Guide
-- Jan Six — GitHub (Tokens Studio, IDS 2026)
+Ce kit a été conçu et développé par **Guilherme Negreiros** en s'appuyant sur les travaux et enseignements des personnes et ressources suivantes :
+
+- *The Design System Guide* — Romina Kavcic
+- *Into Design Systems* — AI Design Systems Conference 2026
+- Jan Six — GitHub / Tokens Studio (IDS 2026)
 - Cristian Morales Achiardi — Enara Health (IDS 2026)
 - George William Amalan — *Your Design System Is a Suggestion Box*, Design Systems Collective, mai 2026

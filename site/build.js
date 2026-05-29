@@ -115,38 +115,38 @@ function flattenTokens(obj, data, prefix = '') {
 const SEM = flattenTokens(semanticData.semantic, primitives);
 
 const COMP = {
-  'button-primary-background':          'var(--ds-semantic-color-action-primary)',
-  'button-primary-background-hover':    'var(--ds-semantic-color-action-primary-hover)',
-  'button-primary-background-disabled': 'var(--ds-semantic-color-action-primary-disabled)',
-  'button-primary-text':                'var(--ds-semantic-color-text-on-action)',
-  'button-primary-padding-x':           'var(--ds-semantic-space-control-padding-x)',
-  'button-primary-padding-y':           'var(--ds-semantic-space-control-padding-y)',
-  'button-primary-radius':              'var(--ds-semantic-radius-control)',
-  'button-critical-background':         'var(--ds-semantic-color-feedback-danger)',
-  'button-critical-background-hover':   'var(--ds-semantic-color-feedback-danger-subtle)',
-  'button-critical-text':               'var(--ds-semantic-color-text-on-danger)',
-  'button-critical-border':             'var(--ds-semantic-color-feedback-danger)',
+  'button-primary-background':          'var(--sda-semantic-color-action-primary)',
+  'button-primary-background-hover':    'var(--sda-semantic-color-action-primary-hover)',
+  'button-primary-background-disabled': 'var(--sda-semantic-color-action-primary-disabled)',
+  'button-primary-text':                'var(--sda-semantic-color-text-on-action)',
+  'button-primary-padding-x':           'var(--sda-semantic-space-control-padding-x)',
+  'button-primary-padding-y':           'var(--sda-semantic-space-control-padding-y)',
+  'button-primary-radius':              'var(--sda-semantic-radius-control)',
+  'button-critical-background':         'var(--sda-semantic-color-feedback-danger)',
+  'button-critical-background-hover':   'var(--sda-semantic-color-feedback-danger-subtle)',
+  'button-critical-text':               'var(--sda-semantic-color-text-on-danger)',
+  'button-critical-border':             'var(--sda-semantic-color-feedback-danger)',
   'button-secondary-background':        'transparent',
-  'button-secondary-background-hover':  'var(--ds-semantic-color-background-subtle)',
-  'button-secondary-text':              'var(--ds-semantic-color-action-primary)',
-  'button-secondary-border':            'var(--ds-semantic-color-action-primary)',
+  'button-secondary-background-hover':  'var(--sda-semantic-color-background-subtle)',
+  'button-secondary-text':              'var(--sda-semantic-color-action-primary)',
+  'button-secondary-border':            'var(--sda-semantic-color-action-primary)',
   'button-ghost-background':            'transparent',
-  'button-ghost-background-hover':      'var(--ds-semantic-color-background-subtle)',
-  'button-ghost-text':                  'var(--ds-semantic-color-action-primary)',
+  'button-ghost-background-hover':      'var(--sda-semantic-color-background-subtle)',
+  'button-ghost-text':                  'var(--sda-semantic-color-action-primary)',
   'button-ghost-border':                'transparent',
-  'input-default-background':           'var(--ds-semantic-color-background-surface)',
-  'input-default-border':               'var(--ds-semantic-color-border-default)',
-  'input-default-border-focus':         'var(--ds-semantic-color-border-focus)',
-  'input-default-border-error':         'var(--ds-semantic-color-border-danger)',
-  'input-default-text':                 'var(--ds-semantic-color-text-primary)',
-  'input-default-placeholder':          'var(--ds-semantic-color-text-secondary)',
-  'input-default-radius':               'var(--ds-semantic-radius-control)',
-  'input-default-padding-x':            'var(--ds-semantic-space-control-padding-x)',
-  'input-default-padding-y':            'var(--ds-semantic-space-control-padding-y)',
-  'card-default-background':            'var(--ds-semantic-color-background-surface)',
-  'card-default-border':                'var(--ds-semantic-color-border-default)',
-  'card-default-radius':                'var(--ds-semantic-radius-card)',
-  'card-default-padding':               'var(--ds-semantic-space-layout-component)',
+  'input-default-background':           'var(--sda-semantic-color-background-surface)',
+  'input-default-border':               'var(--sda-semantic-color-border-default)',
+  'input-default-border-focus':         'var(--sda-semantic-color-border-focus)',
+  'input-default-border-error':         'var(--sda-semantic-color-border-danger)',
+  'input-default-text':                 'var(--sda-semantic-color-text-primary)',
+  'input-default-placeholder':          'var(--sda-semantic-color-text-secondary)',
+  'input-default-radius':               'var(--sda-semantic-radius-control)',
+  'input-default-padding-x':            'var(--sda-semantic-space-control-padding-x)',
+  'input-default-padding-y':            'var(--sda-semantic-space-control-padding-y)',
+  'card-default-background':            'var(--sda-semantic-color-background-surface)',
+  'card-default-border':                'var(--sda-semantic-color-border-default)',
+  'card-default-radius':                'var(--sda-semantic-radius-card)',
+  'card-default-padding':               'var(--sda-semantic-space-layout-component)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -154,18 +154,18 @@ function tokensCSS() {
   const lines = [':root {', '  /* ── Primitive colors — Radix UI ── */'];
   for (const [scale, steps] of Object.entries(COLOR_SCALES))
     for (const [step, { value }] of Object.entries(steps))
-      lines.push(`  --ds-primitive-color-${scale}-${step}: ${value};`);
+      lines.push(`  --sda-primitive-color-${scale}-${step}: ${value};`);
   lines.push('\n  /* ── Semantic tokens — UX intentions ── */');
-  for (const [k, v] of Object.entries(SEM)) lines.push(`  --ds-semantic-${k}: ${v};`);
+  for (const [k, v] of Object.entries(SEM)) lines.push(`  --sda-semantic-${k}: ${v};`);
   lines.push('\n  /* ── Component tokens — UI contracts ── */');
-  for (const [k, v] of Object.entries(COMP)) lines.push(`  --ds-component-${k}: ${v};`);
+  for (const [k, v] of Object.entries(COMP)) lines.push(`  --sda-component-${k}: ${v};`);
   lines.push('}');
   return lines.join('\n');
 }
 
 function siteCSS() { return `
 /* Agentic Design System — site.css (uses design system tokens) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
 html { scroll-padding-top: 72px; }
@@ -174,62 +174,62 @@ html { scroll-padding-top: 72px; }
 *{margin:0;padding:0}
 
 body{
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  background:var(--ds-semantic-color-background-page);
-  color:var(--ds-semantic-color-text-primary);
-  font-size:var(--ds-semantic-typography-body-size);
-  font-weight:var(--ds-semantic-typography-body-weight);
-  line-height:var(--ds-semantic-typography-body-line-height);
+  font-family:'Atkinson Hyperlegible',system-ui,sans-serif;
+  background:var(--sda-semantic-color-background-page);
+  color:var(--sda-semantic-color-text-primary);
+  font-size:var(--sda-semantic-typography-body-size);
+  font-weight:var(--sda-semantic-typography-body-weight);
+  line-height:var(--sda-semantic-typography-body-line-height);
 }
 
 /* ── HEADER ─────────────────────────────────────────────── */
 .site-header{
   position:fixed;top:0;left:0;right:0;height:60px;z-index:100;
-  background:var(--ds-semantic-color-background-surface);
-  border-bottom:1px solid var(--ds-semantic-color-border-default);
+  background:var(--sda-semantic-color-background-surface);
+  border-bottom:1px solid var(--sda-semantic-color-border-default);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
 .logo-mark{
-  width:32px;height:32px;border-radius:var(--ds-semantic-radius-control);
-  background:var(--ds-semantic-color-action-primary);color:#fff;
+  width:32px;height:32px;border-radius:var(--sda-semantic-radius-control);
+  background:var(--sda-semantic-color-action-primary);color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:11px;font-weight:800;letter-spacing:.06em;flex-shrink:0;
 }
-.logo-name{font-size:15px;font-weight:700;color:var(--ds-semantic-color-text-primary)}
-.logo-version{font-size:11px;color:var(--ds-semantic-color-text-secondary);background:var(--ds-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
+.logo-name{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.logo-version{font-size:11px;color:var(--sda-semantic-color-text-secondary);background:var(--sda-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
-  text-decoration:none;color:var(--ds-semantic-color-text-secondary);font-size:13.5px;
-  padding:6px 12px;border-radius:var(--ds-semantic-radius-control);font-weight:500;
+  text-decoration:none;color:var(--sda-semantic-color-text-secondary);font-size:13.5px;
+  padding:6px 12px;border-radius:var(--sda-semantic-radius-control);font-weight:500;
   transition:background .12s,color .12s;
 }
-.top-nav a:hover,.top-nav a.active{background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-primary)}
-.top-nav a.active{color:var(--ds-semantic-color-action-primary)}
+.top-nav a:hover,.top-nav a.active{background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-primary)}
+.top-nav a.active{color:var(--sda-semantic-color-action-primary)}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
 .sidebar{
   width:236px;flex-shrink:0;
-  border-right:1px solid var(--ds-semantic-color-border-default);
-  background:var(--ds-semantic-color-background-surface);
+  border-right:1px solid var(--sda-semantic-color-border-default);
+  background:var(--sda-semantic-color-background-surface);
   position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;
   padding:20px 0;
 }
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
   font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--ds-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
+  color:var(--sda-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
   display:block;padding:6px 20px;text-decoration:none;font-size:13.5px;
-  color:var(--ds-semantic-color-text-secondary);border-radius:0;
+  color:var(--sda-semantic-color-text-secondary);border-radius:0;
   transition:background .1s,color .1s;border-left:2px solid transparent;
 }
-.sidebar a:hover{background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-primary)}
+.sidebar a:hover{background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-primary)}
 .sidebar a.active{
-  background:var(--ds-semantic-color-background-surface);color:var(--ds-semantic-color-action-primary);
-  border-left-color:var(--ds-semantic-color-action-primary);border-left-width:3px;font-weight:600;
+  background:var(--sda-semantic-color-background-surface);color:var(--sda-semantic-color-action-primary);
+  border-left-color:var(--sda-semantic-color-action-primary);border-left-width:3px;font-weight:600;
 }
 .content{flex:1;padding:52px 64px;max-width:960px}
 
@@ -238,104 +238,104 @@ body{
 .hero{padding:80px 72px 56px;max-width:1100px;margin:0 auto}
 .hero-badge{
   display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-on-action);
-  background:var(--ds-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-on-action);
+  background:var(--sda-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
 .hero h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-.035em;margin-bottom:20px}
-.hero h1 span{color:var(--ds-semantic-color-action-primary)}
-.hero-tagline{font-size:19px;color:var(--ds-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
+.hero h1 span{color:var(--sda-semantic-color-action-primary)}
+.hero-tagline{font-size:19px;color:var(--sda-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
 .stat-band{
-  background:var(--ds-semantic-color-background-surface);
-  border-top:1px solid var(--ds-semantic-color-border-default);
-  border-bottom:1px solid var(--ds-semantic-color-border-default);
+  background:var(--sda-semantic-color-background-surface);
+  border-top:1px solid var(--sda-semantic-color-border-default);
+  border-bottom:1px solid var(--sda-semantic-color-border-default);
   display:flex;flex-wrap:wrap;
 }
 .stat-item{
   flex:1;min-width:150px;padding:28px 32px;text-align:center;
-  border-right:1px solid var(--ds-semantic-color-border-default);
+  border-right:1px solid var(--sda-semantic-color-border-default);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:32px;font-weight:800;color:var(--ds-semantic-color-action-primary);display:block;letter-spacing:-.02em}
-.stat-text{font-size:13px;color:var(--ds-semantic-color-text-secondary);margin-top:4px;display:block}
+.stat-num{font-size:32px;font-weight:800;color:var(--sda-semantic-color-action-primary);display:block;letter-spacing:-.02em}
+.stat-text{font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-top:4px;display:block}
 
 .home-section{padding:64px 72px;max-width:1100px;margin:0 auto}
 .home-section h2{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
-.home-section > p{font-size:15px;color:var(--ds-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
+.home-section > p{font-size:15px;color:var(--sda-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
 
 /* ── NAV CARDS ───────────────────────────────────────────── */
 .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .nav-card{
-  background:var(--ds-semantic-color-background-surface);
-  border:1px solid var(--ds-semantic-color-border-default);
-  border-radius:var(--ds-semantic-radius-card);
+  background:var(--sda-semantic-color-background-surface);
+  border:1px solid var(--sda-semantic-color-border-default);
+  border-radius:var(--sda-semantic-radius-card);
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
-.nav-card:hover{border-color:var(--ds-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
+.nav-card:hover{border-color:var(--sda-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
 .nav-card-icon{font-size:28px;margin-bottom:12px;display:block}
-.nav-card-title{font-size:15px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:6px}
-.nav-card-desc{font-size:13px;color:var(--ds-semantic-color-text-secondary);line-height:1.55}
+.nav-card-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
+.nav-card-desc{font-size:13px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
 
 /* ── TOKEN PIPELINE ─────────────────────────────────────── */
-.pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);overflow:hidden}
-.pipeline-step{flex:1;padding:24px;background:var(--ds-semantic-color-background-surface)}
-.pipeline-step+.pipeline-step{border-left:1px solid var(--ds-semantic-color-border-default)}
-.pipeline-step:first-child{background:var(--ds-semantic-color-background-subtle)}
-.pipeline-step:last-child{background:var(--ds-semantic-color-background-surface);border-left:3px solid var(--ds-semantic-color-action-primary)}
-.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-secondary);margin-bottom:6px}
-.pipeline-title{font-size:15px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:6px}
-.pipeline-desc{font-size:12.5px;color:var(--ds-semantic-color-text-secondary);line-height:1.5}
-.pipeline-example{font-family:monospace;font-size:11.5px;color:var(--ds-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--ds-semantic-color-border-default)}
+.pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
+.pipeline-step{flex:1;padding:24px;background:var(--sda-semantic-color-background-surface)}
+.pipeline-step+.pipeline-step{border-left:1px solid var(--sda-semantic-color-border-default)}
+.pipeline-step:first-child{background:var(--sda-semantic-color-background-subtle)}
+.pipeline-step:last-child{background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary)}
+.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.pipeline-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
+.pipeline-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
+.pipeline-example{font-family:monospace;font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
-.principle-card{background:var(--ds-semantic-color-background-surface);border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);padding:22px}
-.principle-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-action-primary);margin-bottom:8px}
-.principle-title{font-size:14px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:6px}
-.principle-desc{font-size:12.5px;color:var(--ds-semantic-color-text-secondary);line-height:1.55}
+.principle-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:22px}
+.principle-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-action-primary);margin-bottom:8px}
+.principle-title{font-size:14px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
+.principle-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 h1:not(.hero h1){font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-.025em;margin-bottom:10px}
-.page-lead{font-size:17px;color:var(--ds-semantic-color-text-secondary);line-height:1.65;margin-bottom:48px;max-width:580px}
-h2{font-size:20px;font-weight:700;letter-spacing:-.015em;margin-top:56px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--ds-semantic-color-border-default)}
+.page-lead{font-size:17px;color:var(--sda-semantic-color-text-secondary);line-height:1.65;margin-bottom:48px;max-width:580px}
+h2{font-size:20px;font-weight:700;letter-spacing:-.015em;margin-top:56px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--sda-semantic-color-border-default)}
 h2.first{margin-top:32px;padding-top:0;border-top:none}
 h3{font-size:16px;font-weight:700;margin-top:32px;margin-bottom:12px}
-p{color:var(--ds-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
+p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
 
-code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--ds-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--ds-semantic-color-text-primary)}
-pre.code-block{background:#1a1e24;border-radius:var(--ds-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
+code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
+pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
 pre.code-block code{background:none;color:#c9d1d9;font-size:13px;padding:0;border-radius:0}
 
-blockquote{border-left:3px solid var(--ds-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--ds-semantic-color-background-subtle);border-radius:0 var(--ds-semantic-radius-control) var(--ds-semantic-radius-control) 0}
-blockquote p{margin:0;font-style:italic;color:var(--ds-semantic-color-text-primary)}
+blockquote{border-left:3px solid var(--sda-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--sda-semantic-color-background-subtle);border-radius:0 var(--sda-semantic-radius-control) var(--sda-semantic-radius-control) 0}
+blockquote p{margin:0;font-style:italic;color:var(--sda-semantic-color-text-primary)}
 
-hr{border:none;border-top:1px solid var(--ds-semantic-color-border-default);margin:32px 0}
+hr{border:none;border-top:1px solid var(--sda-semantic-color-border-default);margin:32px 0}
 
 ul,ol{padding-left:22px;margin:12px 0}
-li{margin-bottom:6px;color:var(--ds-semantic-color-text-secondary);line-height:1.65}
+li{margin-bottom:6px;color:var(--sda-semantic-color-text-secondary);line-height:1.65}
 li code{font-size:.8em}
 
 /* ── TABLES ─────────────────────────────────────────────── */
 table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:13.5px}
-th{text-align:left;padding:10px 16px;background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-secondary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ds-semantic-color-border-default)}
-td{padding:12px 16px;border-bottom:1px solid var(--ds-semantic-color-border-default);color:var(--ds-semantic-color-text-secondary);vertical-align:middle}
+th{text-align:left;padding:10px 16px;background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-secondary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--sda-semantic-color-border-default)}
+td{padding:12px 16px;border-bottom:1px solid var(--sda-semantic-color-border-default);color:var(--sda-semantic-color-text-secondary);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--ds-semantic-color-background-hover)}
-td code{color:var(--ds-semantic-color-action-primary)}
+tr:hover td{background:var(--sda-semantic-color-background-hover)}
+td code{color:var(--sda-semantic-color-action-primary)}
 
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
-.color-token{background:var(--ds-semantic-color-background-surface);border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
-.color-swatch{width:44px;height:44px;border-radius:var(--ds-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
+.color-swatch{width:44px;height:44px;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
-.color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:3px}
-.color-value{font-family:monospace;font-size:11px;color:var(--ds-semantic-color-text-secondary)}
-.color-intent{font-size:11.5px;color:var(--ds-semantic-color-text-secondary);margin-top:4px}
+.color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
+.color-value{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)}
+.color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
-.palette-scale-name{font-size:13px;font-weight:700;text-transform:capitalize;color:var(--ds-semantic-color-text-primary);margin-bottom:8px}
+.palette-scale-name{font-size:13px;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
 .palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
@@ -343,77 +343,77 @@ td code{color:var(--ds-semantic-color-action-primary)}
 /* ── SPACING ────────────────────────────────────────────── */
 .space-demo{display:flex;align-items:flex-end;gap:24px;margin:28px 0;flex-wrap:wrap}
 .space-item{display:flex;flex-direction:column;align-items:center;gap:8px}
-.space-bar{background:var(--ds-semantic-color-action-primary);opacity:.75;border-radius:3px;min-width:8px;height:24px}
-.space-label{font-family:monospace;font-size:11px;color:var(--ds-semantic-color-text-secondary);text-align:center}
+.space-bar{background:var(--sda-semantic-color-action-primary);opacity:.75;border-radius:3px;min-width:8px;height:24px}
+.space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);text-align:center}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
-.type-specimen{background:var(--ds-semantic-color-background-surface);border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);padding:24px;margin:12px 0}
-.type-spec-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-secondary);margin-bottom:12px}
+.type-specimen{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;margin:12px 0}
+.type-spec-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:12px}
 
 /* ── COMPONENT DEMOS ────────────────────────────────────── */
-.demo-box{background:var(--ds-semantic-color-background-surface);border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);padding:40px;margin:24px 0}
+.demo-box{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:40px;margin:24px 0}
 .demo-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .demo-group{margin-bottom:28px}
 .demo-group:last-child{margin-bottom:0}
-.demo-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-secondary);margin-bottom:12px;display:block}
+.demo-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:12px;display:block}
 
 .ds-btn{
   display:inline-flex;align-items:center;gap:6px;
-  padding:var(--ds-component-button-primary-padding-y) var(--ds-component-button-primary-padding-x);
-  border-radius:var(--ds-component-button-primary-radius);
+  padding:var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
+  border-radius:var(--sda-component-button-primary-radius);
   font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;
   border:1.5px solid transparent;transition:background .12s,color .12s,border-color .12s;line-height:1.4;
 }
-.ds-btn:focus-visible{outline:2px solid var(--ds-semantic-color-border-focus);outline-offset:2px}
+.ds-btn:focus-visible{outline:2px solid var(--sda-semantic-color-border-focus);outline-offset:2px}
 .ds-btn:disabled{cursor:not-allowed;opacity:.45}
-.ds-btn.primary{background:var(--ds-component-button-primary-background);color:var(--ds-component-button-primary-text);border-color:var(--ds-component-button-primary-background)}
-.ds-btn.primary:hover:not(:disabled){background:var(--ds-component-button-primary-background-hover);border-color:var(--ds-component-button-primary-background-hover)}
-.ds-btn.secondary{background:var(--ds-component-button-secondary-background);color:var(--ds-component-button-secondary-text);border-color:var(--ds-component-button-secondary-border)}
-.ds-btn.secondary:hover:not(:disabled){background:var(--ds-component-button-secondary-background-hover)}
-.ds-btn.ghost{background:var(--ds-component-button-ghost-background);color:var(--ds-component-button-ghost-text);border-color:transparent}
-.ds-btn.ghost:hover:not(:disabled){background:var(--ds-component-button-ghost-background-hover)}
-.ds-btn.critical{background:var(--ds-component-button-critical-background);color:var(--ds-component-button-critical-text);border-color:var(--ds-component-button-critical-border)}
-.ds-btn.critical:hover:not(:disabled){background:var(--ds-component-button-critical-background-hover);color:var(--ds-component-button-critical-border)}
+.ds-btn.primary{background:var(--sda-component-button-primary-background);color:var(--sda-component-button-primary-text);border-color:var(--sda-component-button-primary-background)}
+.ds-btn.primary:hover:not(:disabled){background:var(--sda-component-button-primary-background-hover);border-color:var(--sda-component-button-primary-background-hover)}
+.ds-btn.secondary{background:var(--sda-component-button-secondary-background);color:var(--sda-component-button-secondary-text);border-color:var(--sda-component-button-secondary-border)}
+.ds-btn.secondary:hover:not(:disabled){background:var(--sda-component-button-secondary-background-hover)}
+.ds-btn.ghost{background:var(--sda-component-button-ghost-background);color:var(--sda-component-button-ghost-text);border-color:transparent}
+.ds-btn.ghost:hover:not(:disabled){background:var(--sda-component-button-ghost-background-hover)}
+.ds-btn.critical{background:var(--sda-component-button-critical-background);color:var(--sda-component-button-critical-text);border-color:var(--sda-component-button-critical-border)}
+.ds-btn.critical:hover:not(:disabled){background:var(--sda-component-button-critical-background-hover);color:var(--sda-component-button-critical-border)}
 
-.variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-secondary)}
+.variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-secondary)}
 
 /* ── TOKEN EXPLORER ─────────────────────────────────────── */
 .explorer-search{
   width:100%;max-width:480px;padding:10px 14px;
-  border:1.5px solid var(--ds-semantic-color-border-default);
-  border-radius:var(--ds-semantic-radius-control);
-  font-size:14px;background:var(--ds-semantic-color-background-surface);
-  color:var(--ds-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
+  border:1.5px solid var(--sda-semantic-color-border-default);
+  border-radius:var(--sda-semantic-radius-control);
+  font-size:14px;background:var(--sda-semantic-color-background-surface);
+  color:var(--sda-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
 }
-.explorer-search:focus{outline:none;border-color:var(--ds-semantic-color-border-focus)}
-.explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--ds-semantic-color-border-default);margin-bottom:20px}
+.explorer-search:focus{outline:none;border-color:var(--sda-semantic-color-border-focus)}
+.explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--sda-semantic-color-border-default);margin-bottom:20px}
 .exp-tab{
-  padding:8px 20px;font-size:13.5px;font-weight:600;color:var(--ds-semantic-color-text-secondary);
+  padding:8px 20px;font-size:13.5px;font-weight:600;color:var(--sda-semantic-color-text-secondary);
   border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;
   margin-bottom:-2px;font-family:inherit;transition:color .1s;
 }
-.exp-tab.active{color:var(--ds-semantic-color-action-primary);border-bottom-color:var(--ds-semantic-color-action-primary)}
+.exp-tab.active{color:var(--sda-semantic-color-action-primary);border-bottom-color:var(--sda-semantic-color-action-primary)}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
-.token-row td:first-child code{color:var(--ds-semantic-color-action-primary)}
+.token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
-.adr-num{font-family:monospace;font-size:12px;color:var(--ds-semantic-color-text-secondary)}
-.adr-title a{color:var(--ds-semantic-color-action-primary);text-decoration:none;font-weight:600}
+.adr-num{font-family:monospace;font-size:12px;color:var(--sda-semantic-color-text-secondary)}
+.adr-title a{color:var(--sda-semantic-color-action-primary);text-decoration:none;font-weight:600}
 .adr-title a:hover{text-decoration:underline}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:20px}
 .badge-active{background:#ecfdf5;color:#18794e}
-.adr-meta{background:var(--ds-semantic-color-background-subtle);border-radius:var(--ds-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:13px}
-.adr-meta strong{color:var(--ds-semantic-color-text-primary)}
+.adr-meta{background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:13px}
+.adr-meta strong{color:var(--sda-semantic-color-text-primary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
-.agent-card{background:var(--ds-semantic-color-background-surface);border:1px solid var(--ds-semantic-color-border-default);border-radius:var(--ds-semantic-radius-card);padding:20px}
-.agent-type{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-secondary);margin-bottom:6px}
-.agent-name{font-size:15px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:8px}
-.agent-desc{font-size:12.5px;color:var(--ds-semantic-color-text-secondary);line-height:1.5}
+.agent-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
+.agent-type{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.agent-name{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.agent-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
 .rules-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
-.rule-can,.rule-cannot{padding:20px;border-radius:var(--ds-semantic-radius-card);border:1px solid}
+.rule-can,.rule-cannot{padding:20px;border-radius:var(--sda-semantic-radius-card);border:1px solid}
 .rule-can{background:#ecfdf5;border-color:#bbf7d0}
 .rule-cannot{background:#fef2f2;border-color:#fecaca}
 .rule-can h3{color:#15803d;margin-top:0;font-size:14px}
@@ -424,21 +424,21 @@ td code{color:var(--ds-semantic-color-action-primary)}
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .layout{flex-direction:column}
-  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--ds-semantic-color-border-default)}
+  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--sda-semantic-color-border-default)}
   .content{padding:28px 20px}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:34px}
   .home-section{padding:40px 20px}
   .pipeline{flex-direction:column}
-  .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--ds-semantic-color-border-default)}
+  .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--sda-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .top-nav{display:none}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
-*:focus-visible{outline:2px solid var(--ds-semantic-color-border-focus);outline-offset:2px}
-a{color:var(--ds-semantic-color-action-primary)}
-.skip-link{position:absolute;top:-40px;left:8px;background:var(--ds-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;z-index:1000}
+*:focus-visible{outline:2px solid var(--sda-semantic-color-border-focus);outline-offset:2px}
+a{color:var(--sda-semantic-color-action-primary)}
+.skip-link{position:absolute;top:-40px;left:8px;background:var(--sda-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 `; }
 
@@ -551,6 +551,7 @@ function sidebarComponents(base, current) {
   const links = [
     ['index.html','Vue d\'ensemble'],
     ['button.html','Button'],
+    ['icon.html','Icon'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label">Composants</span>${links}</div>`;
 }
@@ -581,7 +582,7 @@ function buildHome(adrs) {
     ['foundations/color.html','🎨','Fondations','Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.'],
     ['components/button.html','🧩','Composants','Contrats UI exécutables : variantes, états, tokens, accessibilité, code.'],
     ['tokens/index.html','⚡','Explorateur de tokens','Naviguez dans les 3 niveaux : primitif → sémantique → composant.'],
-    ['decisions/index.html','📋','Décisions (ADRs)','Pourquoi chaque décision existe — 16 ADRs actifs avec contexte et alternatives.'],
+    ['decisions/index.html','📋','Décisions (ADRs)','Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.'],
     ['agents/index.html','🤖','Pour les agents IA','Règles, routage et contraintes pour les agents qui travaillent avec ce système.'],
     ['https://github.com','⚙️','Code source','Tokens JSON, scripts d\'audit, configuration Style Dictionary.'],
   ];
@@ -681,7 +682,7 @@ function buildColor() {
   const semRows = semanticColors.map(([key, name, value, intent]) => `
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--ds-semantic-${key}</code></td>
+  <td><code>--sda-semantic-${key}</code></td>
   <td style="font-family:monospace;font-size:12px">${value}</td>
   <td>${intent}</td>
 </tr>`).join('');
@@ -729,13 +730,13 @@ function buildSpacing() {
     ['32px','space-8','layout-section'],
   ];
   const bars = spaceItems.map(([px, key, label]) =>
-    `<div class="space-item"><div class="space-bar" style="width:${px}" aria-label="${px}"></div><div class="space-label">${px}<br><span style="color:var(--ds-semantic-color-text-disabled)">${label}</span></div></div>`
+    `<div class="space-item"><div class="space-bar" style="width:${px}" aria-label="${px}"></div><div class="space-label">${px}<br><span style="color:var(--sda-semantic-color-text-disabled)">${label}</span></div></div>`
   ).join('');
-  const rows = tokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--ds-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
+  const rows = tokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1>Espacement</h1>
-<p class="page-lead">Les tokens d'espacement traduisent l'intention de layout en valeurs réutilisables. Jamais de <code>padding: 16px</code> en dur — toujours via <code>var(--ds-semantic-space-control-padding-x)</code>.</p>
+<p class="page-lead">Les tokens d'espacement traduisent l'intention de layout en valeurs réutilisables. Jamais de <code>padding: 16px</code> en dur — toujours via <code>var(--sda-semantic-space-control-padding-x)</code>.</p>
 
 <h2 class="first">Échelle visuelle</h2>
 <div class="demo-box"><div class="space-demo">${bars}</div></div>
@@ -748,9 +749,9 @@ function buildSpacing() {
 
 <h2>Règles absolues</h2>
 <ul>
-  <li>❌ <code>padding: 16px</code> — utiliser <code>var(--ds-semantic-space-control-padding-x)</code></li>
-  <li>❌ <code>margin: 32px</code> — utiliser <code>var(--ds-semantic-space-layout-section)</code></li>
-  <li>❌ <code>border-radius: 4px</code> — utiliser <code>var(--ds-semantic-radius-control)</code></li>
+  <li>❌ <code>padding: 16px</code> — utiliser <code>var(--sda-semantic-space-control-padding-x)</code></li>
+  <li>❌ <code>margin: 32px</code> — utiliser <code>var(--sda-semantic-space-layout-section)</code></li>
+  <li>❌ <code>border-radius: 4px</code> — utiliser <code>var(--sda-semantic-radius-control)</code></li>
   <li>✅ Toujours via CSS Custom Properties référençant un token sémantique</li>
 </ul>
 `;
@@ -775,7 +776,7 @@ function buildTypography() {
     ['typography-heading-weight',     '700', 'Graisse bold pour hiérarchie forte'],
     ['typography-heading-line-height','1.25','Interlignage compact des titres'],
   ];
-  const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--ds-semantic-${k}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
+  const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1>Typographie</h1>
@@ -783,16 +784,16 @@ function buildTypography() {
 
 <h2 class="first">Spécimens typographiques</h2>
 <div class="type-specimen">
-  <div class="type-spec-label">Heading — var(--ds-semantic-typography-heading-size) · weight 700</div>
-  <div style="font-size:var(--ds-semantic-typography-heading-size);font-weight:var(--ds-semantic-typography-heading-weight);line-height:var(--ds-semantic-typography-heading-line-height);color:var(--ds-semantic-color-text-primary)">Titre de section principal</div>
+  <div class="type-spec-label">Heading — var(--sda-semantic-typography-heading-size) · weight 700</div>
+  <div style="font-size:var(--sda-semantic-typography-heading-size);font-weight:var(--sda-semantic-typography-heading-weight);line-height:var(--sda-semantic-typography-heading-line-height);color:var(--sda-semantic-color-text-primary)">Titre de section principal</div>
 </div>
 <div class="type-specimen">
-  <div class="type-spec-label">Body — var(--ds-semantic-typography-body-size) · weight 400</div>
-  <div style="font-size:var(--ds-semantic-typography-body-size);font-weight:var(--ds-semantic-typography-body-weight);line-height:var(--ds-semantic-typography-body-line-height);color:var(--ds-semantic-color-text-secondary)">Texte courant. Ce paragraphe illustre la lisibilité du texte principal avec le token body. L'interlignage de 1.5 assure une lecture confortable sur tous les écrans et résolutions.</div>
+  <div class="type-spec-label">Body — var(--sda-semantic-typography-body-size) · weight 400</div>
+  <div style="font-size:var(--sda-semantic-typography-body-size);font-weight:var(--sda-semantic-typography-body-weight);line-height:var(--sda-semantic-typography-body-line-height);color:var(--sda-semantic-color-text-secondary)">Texte courant. Ce paragraphe illustre la lisibilité du texte principal avec le token body. L'interlignage de 1.5 assure une lecture confortable sur tous les écrans et résolutions.</div>
 </div>
 <div class="type-specimen">
-  <div class="type-spec-label">Label — var(--ds-semantic-typography-label-size) · weight 500</div>
-  <div style="font-size:var(--ds-semantic-typography-label-size);font-weight:var(--ds-semantic-typography-label-weight);line-height:var(--ds-semantic-typography-label-line-height);color:var(--ds-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
+  <div class="type-spec-label">Label — var(--sda-semantic-typography-label-size) · weight 500</div>
+  <div style="font-size:var(--sda-semantic-typography-label-size);font-weight:var(--sda-semantic-typography-label-weight);line-height:var(--sda-semantic-typography-label-line-height);color:var(--sda-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
 </div>
 
 <h2>Tokens sémantiques</h2>
@@ -803,7 +804,7 @@ function buildTypography() {
 
 <h2>Règles</h2>
 <ul>
-  <li>❌ <code>font-size: 16px</code> — utiliser <code>var(--ds-semantic-typography-body-size)</code></li>
+  <li>❌ <code>font-size: 16px</code> — utiliser <code>var(--sda-semantic-typography-body-size)</code></li>
   <li>❌ <code>font-weight: bold</code> — utiliser le token de graisse approprié</li>
   <li>✅ Police système : Inter (Google Fonts) avec fallback system-ui</li>
   <li>✅ Toujours définir <code>line-height</code> via un token</li>
@@ -843,7 +844,7 @@ function buildComponentsIndex() {
 </div>
 
 <h2>Workflow de création</h2>
-<ol style="color:var(--ds-semantic-color-text-secondary);padding-left:22px">
+<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
   <li>Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></li>
   <li>Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</li>
   <li>Implémenter le Web Component (Lit) dans <code>src/components/ds-[nom].js</code></li>
@@ -915,7 +916,7 @@ function buildButton() {
   <li>✅ Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
   <li>✅ Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
   <li>✅ Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
-  <li>✅ Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--ds-semantic-color-border-focus)</code></li>
+  <li>✅ Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
   <li>❌ Jamais deux boutons <code>primary</code> côte à côte</li>
   <li>❌ Jamais de couleur ou espacement en dur</li>
   <li>❌ Jamais de variante inventée hors de <code>component.json</code></li>
@@ -924,14 +925,14 @@ function buildButton() {
 <h2>Tokens de composant</h2>
 <table>
   <thead><tr><th>Token CSS</th><th>Référence sémantique</th><th>Valeur résolue</th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--ds-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2>Accessibilité</h2>
 <ul>
   <li>Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</li>
   <li>Navigation clavier complète — Tab, Enter, Space</li>
-  <li>Focus visible : <code>outline: 2px solid var(--ds-semantic-color-border-focus); outline-offset: 2px</code></li>
+  <li>Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></li>
   <li>Pour les boutons icône seul : <code>aria-label</code> obligatoire</li>
   <li>État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</li>
   <li>État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></li>
@@ -939,7 +940,7 @@ function buildButton() {
 
 <h2>Règles spéciales — variante critical</h2>
 <p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. Avant d'utiliser cette variante, vérifier :</p>
-<ol style="color:var(--ds-semantic-color-text-secondary);padding-left:22px">
+<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
   <li>Le pattern de confirmation existe dans l'interface (modale, popconfirm)</li>
   <li>Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</li>
   <li>Le contraste est ≥ 4.5:1 sur fond blanc</li>
@@ -958,16 +959,16 @@ class DsButton extends LitElement {
 
   static styles = css\`
     button {
-      background: var(--ds-component-button-primary-background);
-      color:      var(--ds-component-button-primary-text);
-      padding:    var(--ds-component-button-primary-padding-y) var(--ds-component-button-primary-padding-x);
-      border-radius: var(--ds-component-button-primary-radius);
-      font-size:  var(--ds-semantic-typography-label-size);
-      font-weight:var(--ds-semantic-typography-label-weight);
+      background: var(--sda-component-button-primary-background);
+      color:      var(--sda-component-button-primary-text);
+      padding:    var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
+      border-radius: var(--sda-component-button-primary-radius);
+      font-size:  var(--sda-semantic-typography-label-size);
+      font-weight:var(--sda-semantic-typography-label-weight);
       border: none; cursor: pointer;
     }
     button:focus-visible {
-      outline: 2px solid var(--ds-semantic-color-border-focus);
+      outline: 2px solid var(--sda-semantic-color-border-focus);
       outline-offset: 2px;
     }
   \`;
@@ -993,22 +994,55 @@ customElements.define('ds-button', DsButton);</code></pre>
   }));
 }
 
+// ─── PAGE: ICON ─────────────────────────────────────────────────────────────
+function buildIcon() {
+  const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
+  const content = parseMd(read(mdPath));
+  const tokenRows = [
+    ['icon-size-inline',  'semantic.icon.size.inline',  SEM['icon-size-inline']],
+    ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
+    ['icon-size-nav',     'semantic.icon.size.nav',     SEM['icon-size-nav']],
+  ].map(([comp, sem, val]) =>
+    `<tr class="token-row"><td><code>--sda-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:monospace">${val || '—'}</td></tr>`
+  ).join('');
+
+  const body = `
+<h1>Icon</h1>
+<p class="page-lead">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte, accessibilité WCAG 1.1.1 intégrée.</p>
+
+<h2 class="first">Tokens</h2>
+<table>
+  <thead><tr><th>CSS Custom Property</th><th>Token sémantique</th><th>Valeur</th></tr></thead>
+  <tbody>${tokenRows}</tbody>
+</table>
+
+<h2>Référence complète</h2>
+${content}
+`;
+
+  write(path.join(DIST, 'components/icon.html'), layout({
+    title: 'Icon', depth: 1,
+    sidebar: sidebarFoundations('', '') + sidebarComponents('', 'icon.html'),
+    body
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:3px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--ds-primitive-color-${scale}-${step}</code></div></td><td style="font-family:monospace;font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:3px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:monospace;font-size:12px">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
   const semRows = Object.entries(SEM).map(([k, v]) => {
     const isColor = k.startsWith('color-');
     const swatch = isColor ? `<span style="width:20px;height:20px;border-radius:3px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px">${swatch}<code>--ds-semantic-${k}</code></div></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`;
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:8px">${swatch}<code>--sda-semantic-${k}</code></div></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`;
   }).join('');
 
   const compRows = Object.entries(COMP).map(([k, v]) =>
-    `<tr class="token-row"><td><code>--ds-component-${k}</code></td><td style="font-size:12px;color:var(--ds-semantic-color-text-secondary)">${v}</td></tr>`
+    `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-size:12px;color:var(--sda-semantic-color-text-secondary)">${v}</td></tr>`
   ).join('');
 
   const body = `
@@ -1091,7 +1125,7 @@ function buildADR(adr, adrs) {
 </div>`;
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
-  const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--ds-semantic-color-border-default)">
+  const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
     ${prev ? `<a href="${prev.slug}.html" class="ds-btn secondary" style="font-size:13px">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
     ${next ? `<a href="${next.slug}.html" class="ds-btn secondary" style="font-size:13px">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
   </div>`;
@@ -1178,13 +1212,13 @@ ${agentTypes.map(([name, type, desc]) => `
 
 <h2>Règle de nommage — rappel</h2>
 <pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent */
-color: var(--ds-component-button-primary-background);
+color: var(--sda-component-button-primary-background);
 
 /* ❌ Interdit — valeur brute, aucune intention */
 color: #0d74ce;
 
 /* ❌ Interdit — token primitif utilisé directement */
-color: var(--ds-primitive-color-blue-11);</code></pre>
+color: var(--sda-primitive-color-blue-11);</code></pre>
 
 <h2>Compétences (Skills)</h2>
 <table>
@@ -1237,12 +1271,13 @@ function build() {
   buildTypography();
   buildComponentsIndex();
   buildButton();
+  buildIcon();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
 
-  const total = 7 + adrs.length;
+  const total = 8 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

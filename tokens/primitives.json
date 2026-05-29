@@ -513,10 +513,16 @@
     },
 
     "space": {
-      "2": { "$value": "8px",  "$type": "dimension", "$description": "4px × 2" },
-      "4": { "$value": "16px", "$type": "dimension", "$description": "4px × 4" },
-      "5": { "$value": "20px", "$type": "dimension", "$description": "4px × 5" },
-      "8": { "$value": "32px", "$type": "dimension", "$description": "4px × 8" }
+      "1":  { "$value": "4px",  "$type": "dimension", "$description": "4px × 1 — micro espacement" },
+      "2":  { "$value": "8px",  "$type": "dimension", "$description": "4px × 2" },
+      "3":  { "$value": "12px", "$type": "dimension", "$description": "4px × 3" },
+      "4":  { "$value": "16px", "$type": "dimension", "$description": "4px × 4" },
+      "5":  { "$value": "20px", "$type": "dimension", "$description": "4px × 5" },
+      "6":  { "$value": "24px", "$type": "dimension", "$description": "4px × 6" },
+      "8":  { "$value": "32px", "$type": "dimension", "$description": "4px × 8" },
+      "10": { "$value": "40px", "$type": "dimension", "$description": "4px × 10" },
+      "12": { "$value": "48px", "$type": "dimension", "$description": "4px × 12" },
+      "16": { "$value": "64px", "$type": "dimension", "$description": "4px × 16 — macro espacement" }
     },
     "fontSize": {
       "sm": { "$value": "14px", "$type": "dimension", "$description": "Small — labels, métadonnées" },
@@ -535,6 +541,14 @@
     "radius": {
       "sm": { "$value": "6px",  "$type": "dimension", "$description": "Petit rayon — contrôles interactifs (boutons, inputs)" },
       "md": { "$value": "10px", "$type": "dimension", "$description": "Rayon moyen — cartes, panneaux" }
+    },
+    "fontFamily": {
+      "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif", "$type": "fontFamily", "$description": "Police principale — optimisée basse vision, différenciation maximale des caractères ambigus (WCAG)" }
+    },
+    "iconSize": {
+      "sm": { "$value": "16px", "$type": "dimension", "$description": "Icône petite — inline, labels" },
+      "md": { "$value": "20px", "$type": "dimension", "$description": "Icône standard — contrôles, boutons" },
+      "lg": { "$value": "24px", "$type": "dimension", "$description": "Icône grande — navigation, emphase" }
     }
   }
 }

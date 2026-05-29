@@ -25,13 +25,13 @@ Format : `--[prefix]-[niveau]-[composant]-[variant]-[propriété]`
 
 ```css
 /* Primitif */
---ds-primitive-color-blue-700: #1D4ED8;
+--sda-primitive-color-blue-700: #1D4ED8;
 
 /* Sémantique */
---ds-semantic-color-action-primary: var(--ds-primitive-color-blue-700);
+--sda-semantic-color-action-primary: var(--sda-primitive-color-blue-700);
 
 /* Composant */
---ds-component-button-primary-background: var(--ds-semantic-color-action-primary);
+--sda-component-button-primary-background: var(--sda-semantic-color-action-primary);
 ```
 
 ---

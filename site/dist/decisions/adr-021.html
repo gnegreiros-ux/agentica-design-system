@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle de l'Agentic Design System — tokens, composants, décisions et règles de gouvernance.">
+<title>Atkinson Hyperlegible comme police principale — Agentic Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Agentic Design System — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">Agentic Design System</span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../foundations/color.html">Fondations</a><a href="../components/button.html">Composants</a><a href="../tokens/index.html">Tokens</a><a href="../decisions/index.html">Décisions</a><a href="../agents/index.html">Agents</a></nav>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Décisions</span><a href="index.html">Index des ADRs</a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 021</div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Date</strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong>Décideurs</strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-021 — Atkinson Hyperlegible comme police principale</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-021-atkinson-hyperlegible.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Le système utilisait Inter (Google Fonts) comme police par défaut — choix courant mais sans justification d'accessibilité documentée. La police n'était pas tokenisée : la valeur était hardcodée dans <code>site/build.js</code> et ne faisait pas partie du système de tokens.</p>
+<p>Deux problèmes à résoudre : 1. Aucun argumentaire d'accessibilité pour le choix typographique 2. La police n'étant pas un token, les agents ne pouvaient pas la tracer ni la faire respecter</p>
+<hr>
+<h2>Décision</h2>
+<h3>Police : Atkinson Hyperlegible</h3>
+<p>Conçue par <strong>Applied Design Works</strong> pour le <strong>Braille Institute of America</strong> (2019, libre de droits — Open Font License). Cliniquement validée pour améliorer la lisibilité auprès des personnes à basse vision.</p>
+<p><strong>Différenciateurs techniques :</strong></p>
+<table><thead><tr><th>Paire ambiguë</th><th>Inter</th><th>Atkinson Hyperlegible</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Similaires</td><td>Délibérément distincts</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Similaires</td><td>Délibérément distincts</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Miroirs</td><td>Asymétries intentionnelles</td></tr><tr><td><code>n</code> / <code>u</code> / <code>m</code></td><td>Similaires</td><td>Contre-formes accentuées</td></tr></tbody></table>
+<p><strong>Graisses disponibles :</strong> Regular (400) et Bold (700) uniquement.</p>
+<blockquote><p>⚠️ Le token <code>primitive.fontWeight.medium</code> (500) n'a pas d'équivalent dans Atkinson Hyperlegible. Les navigateurs l'arrondissent à 400 (Regular). Ce comportement est acceptable et documenté — les labels et contrôles restent lisibles à 400.</p></blockquote>
+<h3>Tokenisation</h3>
+<p>La police est désormais un token primitif (<code>primitive.fontFamily.base</code>) référencé par un token sémantique (<code>semantic.typography.fontFamily</code>). Elle n'est plus hardcodée dans le build.</p>
+<pre class="code-block"><code class="lang-json">// primitives.json
+"fontFamily": {
+  "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif" }
+}
+
+// semantic.json
+"typography": {
+  "fontFamily": { "value": "{primitive.fontFamily.base}" }
+}</code></pre>
+<h3>Chaîne de résolution dans le build</h3>
+<pre class="code-block"><code class="lang-text">semantic.typography.fontFamily
+  → {primitive.fontFamily.base}
+  → 'Atkinson Hyperlegible', system-ui, sans-serif
+  → --sda-semantic-typography-fontFamily dans tokens.css</code></pre>
+<h3>Import Google Fonts</h3>
+<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
+<hr>
+<h2>Argumentaire WCAG</h2>
+<p>WCAG 2.x ne prescrit pas de police spécifique mais le critère <strong>1.4.8 (Visual Presentation, AAA)</strong> recommande que le texte soit lisible sans effort. Atkinson Hyperlegible est la réponse la plus directe à ce principe au niveau AA+.</p>
+<p>Étude clinique Braille Institute (2019) : amélioration mesurée de la précision de lecture pour les utilisateurs à acuité visuelle réduite, sans dégradation pour les utilisateurs normo-voyants.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Inter</strong></td><td>Choix courant sans justification d'accessibilité. Paires ambiguës non traitées.</td></tr><tr><td><strong>Lexie Readable</strong></td><td>Moins répandue, moins maintenue, non disponible sur Google Fonts.</td></tr><tr><td><strong>OpenDyslexic</strong></td><td>Esthétique trop marquée pour un design system généraliste. Études d'efficacité contestées.</td></tr><tr><td><strong>System font stack</strong></td><td>Incohérence cross-plateforme. Aucun contrôle sur la différenciation des caractères.</td></tr><tr><td><strong>Atkinson Hyperlegible Next</strong></td><td>Version 2024+, encore expérimentale. À reconsidérer en v2.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour le système de tokens :</strong></p>
+<ul><li><code>primitive.fontFamily.base</code> et <code>semantic.typography.fontFamily</code> ajoutés</li><li>Toute modification future de la police passe par ces tokens (traçable, auditable)</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>La police est maintenant une intention (<code>semantic.typography.fontFamily</code>) et non une valeur hardcodée</li><li>Les agents peuvent référencer et faire respecter le token dans les composants</li></ul>
+<p><strong>Pour les utilisateurs :</strong></p>
+<ul><li>Meilleure lisibilité pour les personnes à basse vision</li><li>Aucune dégradation pour les autres — Atkinson Hyperlegible est une police de labeur complète</li></ul>
+<p><strong>Limitation documentée :</strong></p>
+<ul><li>Pas de graisse 500 — <code>fontWeight.medium</code> s'arrondit à 400 dans les navigateurs</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-020.html" class="ds-btn secondary" style="font-size:13px">← ADR-020</a>
+    <a href="adr-022.html" class="ds-btn secondary" style="font-size:13px">ADR-022 →</a>
+  </div></main>
+</div>
+<script src="../site.js"></script>
+</body>
+</html>
