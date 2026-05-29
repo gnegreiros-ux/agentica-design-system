@@ -36,3 +36,8 @@
 | 2026-05-28 23:27 | Créé | `decisions/ADR-017-correction-contraste-text-disabled.md` |
 | 2026-05-28 23:55 | Créé | `decisions/ADR-018-migration-references-primitives-radix.md` |
 | 2026-05-29 00:08 | Créé | `decisions/ADR-019-resolution-dynamique-tokens-build.md` |
+| 2026-05-29 08:13 | Modifié | `AGENTS.md`, `DESIGN.md`, `README.md`, `How-to-designers.md`, `How-to-devs.md` |
+| 2026-05-29 08:14 | Créé | `decisions/ADR-020-grille-4px.md` |
+| 2026-05-29 08:16 | Créé | `decisions/ADR-021-atkinson-hyperlegible.md` |
+| 2026-05-29 08:16 | Créé | `decisions/ADR-022-lucide-icons.md` |
+| 2026-05-29 08:16 | Créé | `components/ds-icon.js`, `guidelines/components/icon.md` |
