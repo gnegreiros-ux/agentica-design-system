@@ -45,3 +45,5 @@
 | 2026-05-29 09:16 | Modifié | `DESIGN.md` — nom système complet + note de réutilisation |
 | 2026-05-29 09:30 | Modifié | `site/build.js`, tous fichiers sources — renommage "Agentic Design System" → "Système de design agentique" |
 | 2026-05-29 09:45 | Modifié | `site/build.js`, `site/dist/` — remplacement de tous les emojis UI par des icônes Lucide SVG inline |
+| 2026-05-29 09:32 | Modifié | `.claude/hooks/log-kit-construction.sh` |
+| 2026-05-29 09:33 | Modifié | `.claude/hooks/log-kit-construction.sh` |
