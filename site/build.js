@@ -561,6 +561,7 @@ function sidebarFoundations(base, current) {
     ['color.html','Couleur'],
     ['spacing.html','Espacement'],
     ['typography.html','Typographie'],
+    ['icons.html','Icônes'],
   ].map(([h,l]) => `<a href="${base}foundations/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label">Fondations</span>${links}</div>`;
 }
@@ -854,6 +855,75 @@ function buildTypography() {
   write(path.join(DIST, 'foundations/typography.html'), layout({
     title: 'Typographie', depth: 1,
     sidebar: sidebarFoundations('../', 'typography.html') + sidebarComponents('../', ''),
+    body
+  }));
+}
+
+// ─── PAGE: ICONS FOUNDATION ─────────────────────────────────────────────────
+function buildIconsFoundation() {
+  const sizes = [
+    ['inline',  SEM['icon-size-inline']  || '16px', 'Dans un texte courant, un label'],
+    ['control', SEM['icon-size-control'] || '20px', 'Dans un bouton, un input, un badge'],
+    ['nav',     SEM['icon-size-nav']     || '24px', 'Navigation, en-tête, emphase'],
+  ];
+  const sizeRows = sizes.map(([name, val, intent]) =>
+    `<tr class="token-row"><td><code>--sda-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:monospace">${val}</td><td>${intent}</td></tr>`
+  ).join('');
+
+  const sampleIcons = ['home','search','settings','user','bell','heart','star','trash-2','check','x','arrow-right','plus','edit','download','upload','eye','lock','mail','calendar','file-text'];
+  const iconGrid = sampleIcons.map(name =>
+    `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-control)">
+      ${icon(name, 24)}
+      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);font-family:monospace">${name}</span>
+    </div>`
+  ).join('');
+
+  const sizeDemo = sizes.map(([name, val]) =>
+    `<div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--sda-semantic-color-border-default)">
+      <div style="width:80px;color:var(--sda-semantic-color-text-secondary);font-size:13px"><code>${name}</code></div>
+      ${icon('star', parseInt(val), 'var(--sda-semantic-color-action-primary)')}
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)">${val} — <code>--sda-semantic-icon-size-${name}</code></div>
+    </div>`
+  ).join('');
+
+  const body = `
+<h1>Icônes</h1>
+<p class="page-lead">Bibliothèque officielle : <strong>Lucide Icons</strong> (MIT) — 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée. Référence canonique : <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</p>
+
+<h2 class="first">Tailles — 3 échelons sémantiques</h2>
+<div class="demo-box" style="padding:8px 24px">
+  ${sizeDemo}
+</div>
+
+<h2>Tokens sémantiques</h2>
+<table>
+  <thead><tr><th>Token CSS</th><th>Référence</th><th>Valeur</th><th>Intention</th></tr></thead>
+  <tbody>${sizeRows}</tbody>
+</table>
+
+<h2>Galerie — aperçu Lucide</h2>
+<p style="color:var(--sda-semantic-color-text-secondary);font-size:14px;margin-bottom:16px">Extrait de 20 icônes. Catalogue complet sur <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px">
+  ${iconGrid}
+</div>
+
+<h2>Règles absolues</h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours utiliser <code>&lt;ds-icon name="…" size="control"&gt;</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône sémantique (seule info visible) → <code>label="…"</code> obligatoire</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Icône décorative (texte adjacent) → <code>decorative</code> obligatoire</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Taille en dur : <code>style="width:20px"</code> — utiliser <code>size="control"</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> SVG inline hors <code>&lt;ds-icon&gt;</code> — pas de contrat d'accessibilité</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Icône sémantique sans <code>label</code> ni <code>decorative</code></li>
+</ul>
+
+<h2>Composant</h2>
+<p>Voir le contrat complet du Web Component : <a href="../components/icon.html">ds-icon →</a></p>
+`;
+
+  write(path.join(DIST, 'foundations/icons.html'), layout({
+    title: 'Icônes', depth: 1,
+    sidebar: sidebarFoundations('../', 'icons.html') + sidebarComponents('../', ''),
     body
   }));
 }
@@ -1314,6 +1384,7 @@ function build() {
   buildColor();
   buildSpacing();
   buildTypography();
+  buildIconsFoundation();
   buildComponentsIndex();
   buildButton();
   buildIcon();
@@ -1322,7 +1393,7 @@ function build() {
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
 
-  const total = 8 + adrs.length;
+  const total = 9 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 
