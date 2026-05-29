@@ -81,8 +81,8 @@ function extractColorScales(prim) {
 
 const COLOR_SCALES = extractColorScales(primitives);
 
-// Resolved values — semantic references use {color.blue.700} (Tailwind-like notation)
-// mapped here to actual Radix values from primitives.json
+// Resolved values — semantic references use {primitive.color.X.Y} (Radix notation)
+// mapped here to their resolved hex values from primitives.json
 const SEM = {
   'color-action-primary':          '#0d74ce',
   'color-action-primary-hover':    '#113264',

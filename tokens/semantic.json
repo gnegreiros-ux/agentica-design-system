@@ -9,33 +9,33 @@
   "semantic": {
     "color": {
       "action": {
-        "primary":          { "value": "{color.blue.700}",    "$type": "color", "$intent": "Action principale — CTA, bouton primaire" },
-        "primary-hover":    { "value": "{color.blue.900}",    "$type": "color", "$intent": "État survol de l'action principale" },
-        "primary-disabled": { "value": "{color.neutral.300}", "$type": "color", "$intent": "Action principale désactivée" }
+        "primary":          { "value": "{primitive.color.blue.11}",  "$type": "color", "$intent": "Action principale — CTA, bouton primaire" },
+        "primary-hover":    { "value": "{primitive.color.blue.12}",  "$type": "color", "$intent": "État survol de l'action principale" },
+        "primary-disabled": { "value": "{primitive.color.gray.6}",   "$type": "color", "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)" }
       },
       "feedback": {
-        "danger":        { "value": "{color.red.700}",   "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
-        "danger-subtle": { "value": "{color.red.100}",   "$type": "color", "$intent": "Fond subtil pour état danger" },
-        "success":       { "value": "{color.green.700}", "$type": "color", "$intent": "Confirmation, succès, validation" },
-        "info":          { "value": "{color.blue.700}",  "$type": "color", "$intent": "Information neutre, aide contextuelle" }
+        "danger":        { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
+        "danger-subtle": { "value": "{primitive.color.red.3}",    "$type": "color", "$intent": "Fond subtil pour état danger" },
+        "success":       { "value": "{primitive.color.green.11}", "$type": "color", "$intent": "Confirmation, succès, validation" },
+        "info":          { "value": "{primitive.color.blue.11}",  "$type": "color", "$intent": "Information neutre, aide contextuelle" }
       },
       "background": {
-        "page":    { "value": "{color.neutral.50}",  "$type": "color", "$intent": "Fond de page principale" },
-        "surface": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Fond de carte, panneau, modal" },
-        "subtle":  { "value": "{color.neutral.100}", "$type": "color", "$intent": "Fond secondaire, survol discret" },
-        "hover":   { "value": "{color.neutral.50}",  "$type": "color", "$intent": "Fond au survol (tableaux, listes) — #fafafa" }
+        "page":    { "value": "{primitive.color.gray.1}",      "$type": "color", "$intent": "Fond de page principale" },
+        "surface": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Fond de carte, panneau, modal" },
+        "subtle":  { "value": "{primitive.color.gray.3}",      "$type": "color", "$intent": "Fond secondaire, survol discret" },
+        "hover":   { "value": "{primitive.color.neutral.50}",  "$type": "color", "$intent": "Fond au survol (tableaux, listes)" }
       },
       "text": {
-        "primary":   { "value": "{color.neutral.900}", "$type": "color", "$intent": "Texte principal, haute lisibilité" },
-        "secondary": { "value": "{color.neutral.700}", "$type": "color", "$intent": "Texte secondaire, labels, métadonnées" },
-        "disabled":  { "value": "{color.neutral.500}", "$type": "color", "$intent": "Texte désactivé — #767676, ratio 4.54:1 (WCAG 1.4.3 exempte les UI inactives, maintenu accessible par convention)" },
-        "on-action": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond d'action (bouton primaire)" },
-        "on-danger": { "value": "{color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
+        "primary":   { "value": "{primitive.color.gray.12}",     "$type": "color", "$intent": "Texte principal, haute lisibilité" },
+        "secondary": { "value": "{primitive.color.gray.11}",     "$type": "color", "$intent": "Texte secondaire, labels, métadonnées" },
+        "disabled":  { "value": "{primitive.color.neutral.500}", "$type": "color", "$intent": "Texte désactivé — 4.54:1 sur blanc (WCAG 1.4.3 exempte les UI inactives, maintenu accessible par convention)" },
+        "on-action": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond d'action (bouton primaire)" },
+        "on-danger": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
       },
       "border": {
-        "default": { "value": "{color.neutral.200}", "$type": "color", "$intent": "Bordure standard" },
-        "focus":   { "value": "{color.blue.700}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier" },
-        "danger":  { "value": "{color.red.700}",    "$type": "color", "$intent": "Bordure état erreur" }
+        "default": { "value": "{primitive.color.gray.4}",    "$type": "color", "$intent": "Bordure standard" },
+        "focus":   { "value": "{primitive.color.blue.11}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier" },
+        "danger":  { "value": "{primitive.color.red.11}",    "$type": "color", "$intent": "Bordure état erreur" }
       }
     },
     "space": {

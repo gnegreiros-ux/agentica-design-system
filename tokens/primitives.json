@@ -475,6 +475,17 @@
         "12": { "$value": "#582d1d", "$type": "color", "$description": "High-contrast text" }
       },
 
+      "neutral": {
+        "_readme": {
+          "$value": "Pont sémantique Tailwind→Radix",
+          "$type": "other",
+          "$description": "3 valeurs sans équivalent exact dans l'échelle Radix gray : neutral.0 (blanc pur), neutral.50 (#fafafa, Tailwind neutral.50), neutral.500 (#767676, texte désactivé accessible 4.54:1). Toutes les autres valeurs neutres références directement primitive.color.gray.X."
+        },
+        "0":   { "$value": "#ffffff", "$type": "color", "$description": "Blanc pur — fond de surface, texte sur action/danger" },
+        "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol (Tailwind neutral.50) — légèrement plus clair que gray.2 (#f9f9f9)" },
+        "500": { "$value": "#767676", "$type": "color", "$description": "Texte désactivé accessible — 4.54:1 sur blanc (WCAG AA). Absent de l'échelle Radix gray, valeur choisie pour l'accessibilité." }
+      },
+
       "white": {
         "1":  { "$value": "rgba(255,255,255,1.00)", "$type": "color", "$description": "Pure white" },
         "2":  { "$value": "rgba(255,255,255,0.97)", "$type": "color", "$description": "White alpha 97%" },
