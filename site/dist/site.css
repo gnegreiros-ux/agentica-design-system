@@ -109,9 +109,14 @@ body{
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
 .nav-card:hover{border-color:var(--sda-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
-.nav-card-icon{font-size:28px;margin-bottom:12px;display:block}
+.nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--sda-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:13px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.icon-ok{color:#1a7f37;display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-no{color:#ce2c31;display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
+.badge .icon-ok,.badge .icon-no{margin-right:3px}
+h3 .icon-ok,h3 .icon-no{margin-right:6px}
 
 /* ── TOKEN PIPELINE ─────────────────────────────────────── */
 .pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}

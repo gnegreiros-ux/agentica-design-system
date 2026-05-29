@@ -63,6 +63,19 @@ function parseMd(text) {
   return out.join('\n');
 }
 
+// ─── LUCIDE ICONS ─────────────────────────────────────────────────────────
+const lucideIcons = require('lucide');
+function icon(name, size = 24, color = 'currentColor') {
+  const key = name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+  const data = lucideIcons[key];
+  if (!data) return '';
+  const children = data.map(([tag, attrs]) => {
+    const a = Object.entries(attrs || {}).map(([k, v]) => `${k}="${v}"`).join(' ');
+    return `<${tag} ${a}/>`;
+  }).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${children}</svg>`;
+}
+
 // ─── TOKEN DATA ────────────────────────────────────────────────────────────
 const primitives   = readJson(path.join(TOKENS_DIR, 'primitives.json'));
 const semanticData = readJson(path.join(TOKENS_DIR, 'semantic.json'));
@@ -274,9 +287,14 @@ body{
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
 .nav-card:hover{border-color:var(--sda-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
-.nav-card-icon{font-size:28px;margin-bottom:12px;display:block}
+.nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--sda-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:15px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:13px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.icon-ok{color:#1a7f37;display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-no{color:#ce2c31;display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
+.badge .icon-ok,.badge .icon-no{margin-right:3px}
+h3 .icon-ok,h3 .icon-no{margin-right:6px}
 
 /* ── TOKEN PIPELINE ─────────────────────────────────────── */
 .pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
@@ -579,12 +597,12 @@ function buildHome(adrs) {
     ['04','Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.'],
   ];
   const sections = [
-    ['foundations/color.html','🎨','Fondations','Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.'],
-    ['components/button.html','🧩','Composants','Contrats UI exécutables : variantes, états, tokens, accessibilité, code.'],
-    ['tokens/index.html','⚡','Explorateur de tokens','Naviguez dans les 3 niveaux : primitif → sémantique → composant.'],
-    ['decisions/index.html','📋','Décisions (ADRs)','Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.'],
-    ['agents/index.html','🤖','Pour les agents IA','Règles, routage et contraintes pour les agents qui travaillent avec ce système.'],
-    ['https://github.com','⚙️','Code source','Tokens JSON, scripts d\'audit, configuration Style Dictionary.'],
+    ['foundations/color.html',icon('palette'),'Fondations','Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.'],
+    ['components/button.html',icon('puzzle'),'Composants','Contrats UI exécutables : variantes, états, tokens, accessibilité, code.'],
+    ['tokens/index.html',icon('zap'),'Explorateur de tokens','Naviguez dans les 3 niveaux : primitif → sémantique → composant.'],
+    ['decisions/index.html',icon('clipboard-list'),'Décisions (ADRs)','Pourquoi chaque décision existe — 22 ADRs actifs avec contexte et alternatives.'],
+    ['agents/index.html',icon('bot'),'Pour les agents IA','Règles, routage et contraintes pour les agents qui travaillent avec ce système.'],
+    ['https://github.com',icon('settings'),'Code source','Tokens JSON, scripts d\'audit, configuration Style Dictionary.'],
   ];
 
   const body = `
@@ -749,10 +767,10 @@ function buildSpacing() {
 
 <h2>Règles absolues</h2>
 <ul>
-  <li>❌ <code>padding: 16px</code> — utiliser <code>var(--sda-semantic-space-control-padding-x)</code></li>
-  <li>❌ <code>margin: 32px</code> — utiliser <code>var(--sda-semantic-space-layout-section)</code></li>
-  <li>❌ <code>border-radius: 4px</code> — utiliser <code>var(--sda-semantic-radius-control)</code></li>
-  <li>✅ Toujours via CSS Custom Properties référençant un token sémantique</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — utiliser <code>var(--sda-semantic-space-control-padding-x)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — utiliser <code>var(--sda-semantic-space-layout-section)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>border-radius: 4px</code> — utiliser <code>var(--sda-semantic-radius-control)</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours via CSS Custom Properties référençant un token sémantique</li>
 </ul>
 `;
 
@@ -804,10 +822,10 @@ function buildTypography() {
 
 <h2>Règles</h2>
 <ul>
-  <li>❌ <code>font-size: 16px</code> — utiliser <code>var(--sda-semantic-typography-body-size)</code></li>
-  <li>❌ <code>font-weight: bold</code> — utiliser le token de graisse approprié</li>
-  <li>✅ Police système : Inter (Google Fonts) avec fallback system-ui</li>
-  <li>✅ Toujours définir <code>line-height</code> via un token</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — utiliser <code>var(--sda-semantic-typography-body-size)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — utiliser le token de graisse approprié</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Police système : Inter (Google Fonts) avec fallback system-ui</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours définir <code>line-height</code> via un token</li>
 </ul>
 `;
 
@@ -827,17 +845,22 @@ function buildComponentsIndex() {
 <h2 class="first">Catalogue</h2>
 <div class="nav-grid">
   <a href="button.html" class="nav-card">
-    <span class="nav-card-icon">🔘</span>
+    <span class="nav-card-icon">${icon('mouse-pointer-click')}</span>
     <div class="nav-card-title">Button</div>
     <div class="nav-card-desc">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</div>
   </a>
+  <a href="icon.html" class="nav-card">
+    <span class="nav-card-icon">${icon('star')}</span>
+    <div class="nav-card-title">Icon</div>
+    <div class="nav-card-desc">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1.</div>
+  </a>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
-    <span class="nav-card-icon">📝</span>
+    <span class="nav-card-icon">${icon('pen-line')}</span>
     <div class="nav-card-title">Input <span class="badge" style="margin-left:6px">Bientôt</span></div>
     <div class="nav-card-desc">Saisie de données avec états : défaut, focus, erreur, désactivé.</div>
   </div>
   <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
-    <span class="nav-card-icon">🃏</span>
+    <span class="nav-card-icon">${icon('layout-template')}</span>
     <div class="nav-card-title">Card <span class="badge" style="margin-left:6px">Bientôt</span></div>
     <div class="nav-card-desc">Conteneur visuel pour regrouper des informations liées.</div>
   </div>
@@ -913,13 +936,13 @@ function buildButton() {
 
 <h2>Règles absolues</h2>
 <ul>
-  <li>✅ Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
-  <li>✅ Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
-  <li>✅ Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
-  <li>✅ Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
-  <li>❌ Jamais deux boutons <code>primary</code> côte à côte</li>
-  <li>❌ Jamais de couleur ou espacement en dur</li>
-  <li>❌ Jamais de variante inventée hors de <code>component.json</code></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Maximum 1 bouton <code>primary</code> par section ou formulaire</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais deux boutons <code>primary</code> côte à côte</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais de couleur ou espacement en dur</li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> Jamais de variante inventée hors de <code>component.json</code></li>
 </ul>
 
 <h2>Tokens de composant</h2>
@@ -1080,7 +1103,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><span class="badge badge-active">✅ Actif</span></td>
+  <td><span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> Actif</span></td>
   <td>${a.date}</td>
 </tr>`).join('');
 
@@ -1119,7 +1142,7 @@ function buildADR(adr, adrs) {
   const meta = `
 <div class="adr-meta">
   <div class="adr-meta-item"><strong>ADR</strong> ${String(adr.num).padStart(3,'0')}</div>
-  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active">✅ Actif</span></div>
+  <div class="adr-meta-item"><strong>Statut</strong> <span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> Actif</span></div>
   <div class="adr-meta-item"><strong>Date</strong> ${adr.date}</div>
   ${adr.deciders ? `<div class="adr-meta-item"><strong>Décideurs</strong> ${esc(adr.deciders)}</div>` : ''}
 </div>`;
@@ -1176,7 +1199,7 @@ ${agentTypes.map(([name, type, desc]) => `
 <h2>Ce que les agents peuvent faire</h2>
 <div class="rules-split">
   <div class="rule-can">
-    <h3>✅ Autorisé</h3>
+    <h3><span class='icon-ok'>${icon('circle-check', 16)}</span> Autorisé</h3>
     <ul>
       <li>Lire tous les fichiers du dépôt</li>
       <li>Générer du code respectant les contrats</li>
@@ -1188,7 +1211,7 @@ ${agentTypes.map(([name, type, desc]) => `
     </ul>
   </div>
   <div class="rule-cannot">
-    <h3>❌ Interdit</h3>
+    <h3><span class='icon-no'>${icon('circle-x', 16)}</span> Interdit</h3>
     <ul>
       <li>Merger une PR sans approbation humaine</li>
       <li>Pusher directement sur <code>main</code> ou <code>develop</code></li>
