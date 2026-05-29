@@ -34,13 +34,15 @@ const CONTRAST_PAIRS = [
   ['#646464','#ffffff','Secondary text on surface',             4.5],
   ['#646464','#fcfcfc','Secondary text on page',                4.5],
   ['#ffffff','#ce2c31','Critical button: text on bg',           4.5],
-  ['#0d74ce','#ffffff','Link on surface',                       4.5],
-  ['#0d74ce','#fcfcfc','Link on page',                         4.5],
-  ['#0d74ce','#eff6ff','Active sidebar link',                   3.0],  // UI component
-  ['#18794e','#ecfdf5','Success badge text on bg',             3.0],   // UI component
+  ['#0d74ce','#ffffff','Link / active sidebar: text on surface',4.5],
+  ['#0d74ce','#fcfcfc','Link on page background',               4.5],
+  ['#0d74ce','#fafafa','Link on hover row background',          4.5],
+  ['#18794e','#ecfdf5','Success badge text on bg',             3.0],   // UI component (1.4.11)
   ['#0d74ce','#e8e8e8','Border focus on default border',       3.0],   // UI component (1.4.11)
   ['#202020','#f0f0f0','Text on subtle background',             4.5],
-  ['#d9d9d9','#ffffff','Disabled text on surface — intentional',1.0],  // explicit exemption
+  ['#646464','#f0f0f0','Secondary text on subtle background',   4.5],
+  ['#767676','#ffffff','Disabled text on surface',              4.5],
+  ['#767676','#fcfcfc','Disabled text on page bg — 1.4.3 exempt (inactive UI)',1.0],
 ];
 
 // ─── PARSEUR HTML MINIMAL ───────────────────────────────────────────────────

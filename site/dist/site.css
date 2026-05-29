@@ -54,7 +54,7 @@ body{
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
   font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--ds-semantic-color-text-disabled);padding:8px 20px 4px;display:block;
+  color:var(--ds-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
   display:block;padding:6px 20px;text-decoration:none;font-size:13.5px;
@@ -63,8 +63,8 @@ body{
 }
 .sidebar a:hover{background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-primary)}
 .sidebar a.active{
-  background:#eff6ff;color:var(--ds-semantic-color-action-primary);
-  border-left-color:var(--ds-semantic-color-action-primary);font-weight:600;
+  background:var(--ds-semantic-color-background-surface);color:var(--ds-semantic-color-action-primary);
+  border-left-color:var(--ds-semantic-color-action-primary);border-left-width:3px;font-weight:600;
 }
 .content{flex:1;padding:52px 64px;max-width:960px}
 
@@ -73,8 +73,8 @@ body{
 .hero{padding:80px 72px 56px;max-width:1100px;margin:0 auto}
 .hero-badge{
   display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-action-primary);
-  background:#eff6ff;padding:4px 14px;border-radius:20px;margin-bottom:24px;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-on-action);
+  background:var(--ds-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
 .hero h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-.035em;margin-bottom:20px}
 .hero h1 span{color:var(--ds-semantic-color-action-primary)}
@@ -118,8 +118,8 @@ body{
 .pipeline-step{flex:1;padding:24px;background:var(--ds-semantic-color-background-surface)}
 .pipeline-step+.pipeline-step{border-left:1px solid var(--ds-semantic-color-border-default)}
 .pipeline-step:first-child{background:var(--ds-semantic-color-background-subtle)}
-.pipeline-step:last-child{background:#eff6ff}
-.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-disabled);margin-bottom:6px}
+.pipeline-step:last-child{background:var(--ds-semantic-color-background-surface);border-left:3px solid var(--ds-semantic-color-action-primary)}
+.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ds-semantic-color-text-secondary);margin-bottom:6px}
 .pipeline-title{font-size:15px;font-weight:700;color:var(--ds-semantic-color-text-primary);margin-bottom:6px}
 .pipeline-desc{font-size:12.5px;color:var(--ds-semantic-color-text-secondary);line-height:1.5}
 .pipeline-example{font-family:monospace;font-size:11.5px;color:var(--ds-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--ds-semantic-color-border-default)}
@@ -157,7 +157,7 @@ table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:13.5px}
 th{text-align:left;padding:10px 16px;background:var(--ds-semantic-color-background-subtle);color:var(--ds-semantic-color-text-secondary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ds-semantic-color-border-default)}
 td{padding:12px 16px;border-bottom:1px solid var(--ds-semantic-color-border-default);color:var(--ds-semantic-color-text-secondary);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--ds-semantic-color-background-subtle)}
+tr:hover td{background:var(--ds-semantic-color-background-hover)}
 td code{color:var(--ds-semantic-color-action-primary)}
 
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
