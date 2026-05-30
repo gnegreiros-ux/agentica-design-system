@@ -231,6 +231,8 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
+.token-table{table-layout:fixed}
+.token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)}

@@ -409,6 +409,8 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
+.token-table{table-layout:fixed}
+.token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)}
@@ -1310,7 +1312,7 @@ function buildColor() {
   <span class="lang-fr">Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
   <span class="lang-en">These 16 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
 </p>
-<table>
+<table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
   <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
@@ -1375,7 +1377,7 @@ function buildSpacing() {
   <span class="lang-fr">Les composants utilisent exclusivement ces tokens — jamais les primitifs directement.</span>
   <span class="lang-en">Components exclusively use these tokens — never primitives directly.</span>
 </p>
-<table>
+<table class="token-table"><colgroup><col style="width:42%"><col style="width:28%"><col style="width:14%"><col style="width:16%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
@@ -1508,7 +1510,7 @@ function buildTypography() {
 <div class="demo-box" style="padding:16px 24px">${scaleSpecimens}</div>
 
 <h2><span class="lang-fr">Tableau — primitifs fontSize</span><span class="lang-en">Table — fontSize primitives</span></h2>
-<table>
+<table class="token-table"><colgroup><col style="width:12%"><col style="width:18%"><col style="width:18%"><col style="width:12%"><col style="width:40%"></colgroup>
   <thead><tr>
     <th><span class="lang-fr">Échelon</span><span class="lang-en">Step</span></th>
     <th><span class="lang-fr">Valeur rem (px)</span><span class="lang-en">Value rem (px)</span></th>
@@ -1595,7 +1597,7 @@ function buildIconsFoundation() {
 </div>
 
 <h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
-<table>
+<table class="token-table"><colgroup><col style="width:44%"><col style="width:28%"><col style="width:14%"><col style="width:14%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${sizeRows}</tbody>
 </table>
@@ -1761,7 +1763,7 @@ function buildButton() {
 </ul>
 
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
-<table>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
   <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--sda-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
 </table>
@@ -1882,7 +1884,7 @@ function buildIcon() {
 </p>
 
 <h2 class="first">Tokens</h2>
-<table>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>CSS Custom Property</th><th><span class="lang-fr">Token sémantique</span><span class="lang-en">Semantic token</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
   <tbody>${tokenRows}</tbody>
 </table>
@@ -1984,21 +1986,21 @@ function buildTokens() {
   <span class="lang-fr">Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></span>
   <span class="lang-en">Physical values from Radix UI. <strong>Never used directly in components.</strong></span>
 </p>
-<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th></tr></thead><tbody>${primRows}</tbody></table>
+<table class="token-table"><colgroup><col style="width:52%"><col style="width:16%"><col style="width:32%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th></tr></thead><tbody>${primRows}</tbody></table>
 
 <h2 id="semantiques"><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
   <span class="lang-fr">Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span>
   <span class="lang-en">UX intentions — what agents must use to understand function, not raw values.</span>
 </p>
-<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias (référence)</span><span class="lang-en">Alias (reference)</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${semRows}</tbody></table>
+<table class="token-table"><colgroup><col style="width:48%"><col style="width:32%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias (référence)</span><span class="lang-en">Alias (reference)</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${semRows}</tbody></table>
 
 <h2 id="composants"><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <p>
   <span class="lang-fr">Contrats institutionnels. Toute modification requiert une approbation formelle.</span>
   <span class="lang-en">Institutional contracts. Any change requires formal approval.</span>
 </p>
-<table><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias sémantique</span><span class="lang-en">Semantic alias</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${compRows}</tbody></table>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias sémantique</span><span class="lang-en">Semantic alias</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${compRows}</tbody></table>
 `;
 
   write(path.join(DIST, 'tokens/index.html'), layout({
