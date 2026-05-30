@@ -85,10 +85,17 @@ document.addEventListener('DOMContentLoaded', () => {
       title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
       tocEl.appendChild(title);
       headings.forEach(h => {
-        if (!h.id) h.id = slugify(h.textContent);
+        const frSpan = h.querySelector('.lang-fr');
+        const enSpan = h.querySelector('.lang-en');
+        const frText = frSpan ? frSpan.textContent : h.textContent;
+        if (!h.id) h.id = slugify(frText);
         const a = document.createElement('a');
         a.href = '#' + h.id;
-        a.textContent = h.textContent;
+        if (frSpan && enSpan) {
+          a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
+        } else {
+          a.textContent = frText;
+        }
         tocEl.appendChild(a);
       });
       // Active tracking

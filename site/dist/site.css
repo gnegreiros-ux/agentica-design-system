@@ -1,6 +1,7 @@
 
 /* Système de design agentique — site.css (uses design system tokens) */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+:root{--sda-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
 html { scroll-padding-top: 72px; }
@@ -127,7 +128,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
 .pipeline-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
 .pipeline-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
-.pipeline-example{font-family:monospace;font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
+.pipeline-example{font-family:var(--sda-font-mono);font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -144,7 +145,7 @@ h2.first{margin-top:32px;padding-top:0;border-top:none}
 h3{font-size:1rem;font-weight:700;margin-top:32px;margin-bottom:12px}
 p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
 
-code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
+code{font-family:var(--sda-font-mono);font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
 pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
 pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
 
@@ -170,21 +171,21 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
 .color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
-.color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
-.color-value{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)}
+.color-name{font-family:var(--sda-font-mono);font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
+.color-value{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)}
 .color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
 .palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
-.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
+.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--sda-font-mono);pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
 .space-demo{display:flex;flex-direction:column;gap:6px;margin:28px 0}
 .space-item{display:flex;align-items:center;gap:12px}
 .space-bar{background:#fca5a5;border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
-.space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
+.space-label{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 .type-specimen{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;margin:12px 0}
@@ -238,7 +239,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
-.adr-num{font-family:monospace;font-size:12px;color:var(--sda-semantic-color-text-secondary)}
+.adr-num{font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)}
 .adr-title a{color:var(--sda-semantic-color-action-primary);text-decoration:none;font-weight:600}
 .adr-title a:hover{text-decoration:underline}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:20px}
@@ -351,7 +352,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .density-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .density-card-formula{display:flex;gap:6px;align-items:center}
 .density-card-bar{height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px}
-.density-card-math{font-size:0.75rem;font-family:monospace;color:var(--sda-semantic-color-text-secondary)}
+.density-card-math{font-size:0.75rem;font-family:var(--sda-font-mono);color:var(--sda-semantic-color-text-secondary)}
 
 /* ── LINEHEIGHT DEMO CARDS ───────────────────────────────── */
 .lh-demo-grid{display:flex;gap:24px;flex-wrap:wrap}

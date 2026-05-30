@@ -178,7 +178,8 @@ function tokensCSS() {
 
 function siteCSS() { return `
 /* Système de design agentique — site.css (uses design system tokens) */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+:root{--sda-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
 html { scroll-padding-top: 72px; }
@@ -305,7 +306,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
 .pipeline-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
 .pipeline-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
-.pipeline-example{font-family:monospace;font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
+.pipeline-example{font-family:var(--sda-font-mono);font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -322,7 +323,7 @@ h2.first{margin-top:32px;padding-top:0;border-top:none}
 h3{font-size:1rem;font-weight:700;margin-top:32px;margin-bottom:12px}
 p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
 
-code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
+code{font-family:var(--sda-font-mono);font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
 pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
 pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
 
@@ -348,21 +349,21 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
 .color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
-.color-name{font-family:monospace;font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
-.color-value{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)}
+.color-name{font-family:var(--sda-font-mono);font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
+.color-value{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)}
 .color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
 .palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
-.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
+.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--sda-font-mono);pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
 .space-demo{display:flex;flex-direction:column;gap:6px;margin:28px 0}
 .space-item{display:flex;align-items:center;gap:12px}
 .space-bar{background:#fca5a5;border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
-.space-label{font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
+.space-label{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 .type-specimen{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;margin:12px 0}
@@ -416,7 +417,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
-.adr-num{font-family:monospace;font-size:12px;color:var(--sda-semantic-color-text-secondary)}
+.adr-num{font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)}
 .adr-title a{color:var(--sda-semantic-color-action-primary);text-decoration:none;font-weight:600}
 .adr-title a:hover{text-decoration:underline}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:20px}
@@ -529,7 +530,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .density-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .density-card-formula{display:flex;gap:6px;align-items:center}
 .density-card-bar{height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px}
-.density-card-math{font-size:0.75rem;font-family:monospace;color:var(--sda-semantic-color-text-secondary)}
+.density-card-math{font-size:0.75rem;font-family:var(--sda-font-mono);color:var(--sda-semantic-color-text-secondary)}
 
 /* ── LINEHEIGHT DEMO CARDS ───────────────────────────────── */
 .lh-demo-grid{display:flex;gap:24px;flex-wrap:wrap}
@@ -675,10 +676,17 @@ document.addEventListener('DOMContentLoaded', () => {
       title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
       tocEl.appendChild(title);
       headings.forEach(h => {
-        if (!h.id) h.id = slugify(h.textContent);
+        const frSpan = h.querySelector('.lang-fr');
+        const enSpan = h.querySelector('.lang-en');
+        const frText = frSpan ? frSpan.textContent : h.textContent;
+        if (!h.id) h.id = slugify(frText);
         const a = document.createElement('a');
         a.href = '#' + h.id;
-        a.textContent = h.textContent;
+        if (frSpan && enSpan) {
+          a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
+        } else {
+          a.textContent = frText;
+        }
         tocEl.appendChild(a);
       });
       // Active tracking
@@ -1245,7 +1253,7 @@ function buildColor() {
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
   <td><code>--sda-semantic-${key}</code></td>
-  <td style="font-family:monospace;font-size:12px">${value}</td>
+  <td style="font-family:var(--sda-font-mono);font-size:12px">${value}</td>
   <td>${intent}</td>
 </tr>`).join('');
 
@@ -1339,9 +1347,9 @@ function buildSpacing() {
     ['16', '64px', 'Macro XL'],
   ];
   const bars = primitives4px.map(([step, px, label]) =>
-    `<div class="space-item"><div class="space-label"><code>space.${step}</code></div><div class="space-bar" style="width:${px}" aria-label="${px}"></div><strong style="font-family:monospace;font-size:12px;color:var(--sda-semantic-color-text-secondary)">${px}</strong>${label ? `<span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:4px">${label}</span>` : ''}</div>`
+    `<div class="space-item"><div class="space-label"><code>space.${step}</code></div><div class="space-bar" style="width:${px}" aria-label="${px}"></div><strong style="font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)">${px}</strong>${label ? `<span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:4px">${label}</span>` : ''}</div>`
   ).join('');
-  const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:monospace">${v}</td><td>${i}</td></tr>`).join('');
+  const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:var(--sda-font-mono)">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></h1>
@@ -1444,9 +1452,9 @@ function buildTypography() {
   const scaleRows = scaleSteps.map(({ step, px, rem, role, lh, weight }) =>
     `<tr class="token-row">
       <td><code>fontSize.${step}</code></td>
-      <td style="font-family:monospace">${rem} <span style="color:var(--sda-semantic-color-text-secondary);font-size:11px">(${px})</span></td>
-      <td style="font-family:monospace">${lh}</td>
-      <td style="font-family:monospace">${weight}</td>
+      <td style="font-family:var(--sda-font-mono)">${rem} <span style="color:var(--sda-semantic-color-text-secondary);font-size:11px">(${px})</span></td>
+      <td style="font-family:var(--sda-font-mono)">${lh}</td>
+      <td style="font-family:var(--sda-font-mono)">${weight}</td>
       <td style="color:var(--sda-semantic-color-text-secondary)">${role}</td>
     </tr>`
   ).join('');
@@ -1550,14 +1558,14 @@ function buildIconsFoundation() {
     ['nav',     SEM['icon-size-nav']     || '24px', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
   ];
   const sizeRows = sizes.map(([name, val, intent]) =>
-    `<tr class="token-row"><td><code>--sda-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:monospace">${val}</td><td>${intent}</td></tr>`
+    `<tr class="token-row"><td><code>--sda-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--sda-font-mono)">${val}</td><td>${intent}</td></tr>`
   ).join('');
 
   const sampleIcons = ['home','search','settings','user','bell','heart','star','trash-2','check','x','arrow-right','plus','edit','download','upload','eye','lock','mail','calendar','file-text'];
   const iconGrid = sampleIcons.map(name =>
     `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-control)">
       ${icon(name, 24)}
-      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);font-family:monospace">${name}</span>
+      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);font-family:var(--sda-font-mono)">${name}</span>
     </div>`
   ).join('');
 
@@ -1750,7 +1758,7 @@ function buildButton() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:monospace;font-size:12px">${v}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--sda-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -1858,7 +1866,7 @@ function buildIcon() {
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
     ['icon-size-nav',     'semantic.icon.size.nav',     SEM['icon-size-nav']],
   ].map(([comp, sem, val]) =>
-    `<tr class="token-row"><td><code>--sda-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:monospace">${val || '—'}</td></tr>`
+    `<tr class="token-row"><td><code>--sda-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:var(--sda-font-mono)">${val || '—'}</td></tr>`
   ).join('');
 
   const body = `
@@ -1922,7 +1930,7 @@ function buildTokens() {
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:monospace;font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--sda-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
@@ -1931,15 +1939,15 @@ function buildTokens() {
     const isColor = k.startsWith('color-');
     const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
-    const aliasCell = aliasNode ? `<td style="font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--sda-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:monospace;font-size:12px">${v}</td></tr>`;
+    const aliasCell = aliasNode ? `<td style="font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--sda-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--sda-font-mono);font-size:12px">${v}</td></tr>`;
   }).join('');
 
   const compRows = Object.entries(COMP).map(([k, v]) => {
     const resolved = resolveCompValue(v);
     const isColor = k.includes('background') || k.includes('text') || k.includes('border');
     const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-family:monospace;font-size:11px;color:var(--sda-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:monospace;font-size:12px">${resolved}</span></div></td></tr>`;
+    return `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--sda-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
   }).join('');
 
   const body = `
