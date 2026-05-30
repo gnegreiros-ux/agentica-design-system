@@ -58,6 +58,46 @@
   <tbody><tr class="token-row"><td><code>--sda-semantic-space-control-padding-x</code></td><td><code>semantic.space.control.padding-x</code></td><td style="font-family:monospace">16px</td><td><span class="lang-fr">Padding horizontal des contrôles interactifs</span><span class="lang-en">Horizontal padding for interactive controls</span></td></tr><tr class="token-row"><td><code>--sda-semantic-space-control-padding-y</code></td><td><code>semantic.space.control.padding-y</code></td><td style="font-family:monospace">8px</td><td><span class="lang-fr">Padding vertical des contrôles interactifs</span><span class="lang-en">Vertical padding for interactive controls</span></td></tr><tr class="token-row"><td><code>--sda-semantic-space-control-gap</code></td><td><code>semantic.space.control.gap</code></td><td style="font-family:monospace">8px</td><td><span class="lang-fr">Écart interne (icône + label dans un contrôle)</span><span class="lang-en">Internal gap (icon + label inside a control)</span></td></tr><tr class="token-row"><td><code>--sda-semantic-space-layout-section</code></td><td><code>semantic.space.layout.section</code></td><td style="font-family:monospace">32px</td><td><span class="lang-fr">Séparation entre sections de page</span><span class="lang-en">Spacing between page sections</span></td></tr><tr class="token-row"><td><code>--sda-semantic-space-layout-component</code></td><td><code>semantic.space.layout.component</code></td><td style="font-family:monospace">20px</td><td><span class="lang-fr">Séparation entre composants</span><span class="lang-en">Spacing between components</span></td></tr><tr class="token-row"><td><code>--sda-semantic-radius-control</code></td><td><code>semantic.radius.control</code></td><td style="font-family:monospace">6px</td><td><span class="lang-fr">Rayon pour contrôles interactifs</span><span class="lang-en">Radius for interactive controls</span></td></tr><tr class="token-row"><td><code>--sda-semantic-radius-card</code></td><td><code>semantic.radius.card</code></td><td style="font-family:monospace">10px</td><td><span class="lang-fr">Rayon pour conteneurs (cartes, panneaux)</span><span class="lang-en">Radius for containers (cards, panels)</span></td></tr></tbody>
 </table>
 
+<h2><span class="lang-fr">Densité — math tokens</span><span class="lang-en">Density — math tokens</span></h2>
+<p>
+  <span class="lang-fr">Trois modes calculés via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). L'arrondi <code>floor()</code>/<code>ceil()</code> garantit l'alignement 4px quel que soit le facteur. Voir <a href="../decisions/index.html">ADR-025</a>.</span>
+  <span class="lang-en">Three modes computed via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). <code>floor()</code>/<code>ceil()</code> rounding guarantees 4px alignment regardless of the factor. See <a href="../decisions/index.html">ADR-025</a>.</span>
+</p>
+<div class="demo-box" style="padding:16px 24px">
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">compact — ×0.75</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:12px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">floor(16 × 0.75 / 4) × 4 = 12px</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:2px solid var(--sda-semantic-color-action-primary)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-action-primary);margin-bottom:6px">normal — ×1.0</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:16px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">16px (valeur primitive directe)</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">comfortable — ×1.25</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:20px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">ceil(16 × 1.25 / 4) × 4 = 20px</span>
+      </div>
+    </div>
+  </div>
+  <blockquote style="margin:0;padding:12px 16px;background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 4px 4px 0">
+    <p style="margin:0;font-size:13px;color:var(--sda-semantic-color-text-secondary)">
+      <span class="lang-fr"><code>floor(valeur × facteur / 4) × 4</code> — compact utilise floor(), comfortable utilise ceil(). Voir ADR-020 + ADR-025.</span>
+      <span class="lang-en"><code>floor(value × factor / 4) × 4</code> — compact uses floor(), comfortable uses ceil(). See ADR-020 + ADR-025.</span>
+    </p>
+  </blockquote>
+</div>
+
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
   <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <code>padding: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-control-padding-x)</code></li>

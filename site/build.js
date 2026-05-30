@@ -1328,6 +1328,46 @@ function buildSpacing() {
   <tbody>${semRows}</tbody>
 </table>
 
+<h2><span class="lang-fr">Densité — math tokens</span><span class="lang-en">Density — math tokens</span></h2>
+<p>
+  <span class="lang-fr">Trois modes calculés via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). L'arrondi <code>floor()</code>/<code>ceil()</code> garantit l'alignement 4px quel que soit le facteur. Voir <a href="../decisions/index.html">ADR-025</a>.</span>
+  <span class="lang-en">Three modes computed via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). <code>floor()</code>/<code>ceil()</code> rounding guarantees 4px alignment regardless of the factor. See <a href="../decisions/index.html">ADR-025</a>.</span>
+</p>
+<div class="demo-box" style="padding:16px 24px">
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">compact — ×0.75</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:12px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">floor(16 × 0.75 / 4) × 4 = 12px</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:2px solid var(--sda-semantic-color-action-primary)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-action-primary);margin-bottom:6px">normal — ×1.0</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:16px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">16px (valeur primitive directe)</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">comfortable — ×1.25</div>
+      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:20px"></div>
+        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">ceil(16 × 1.25 / 4) × 4 = 20px</span>
+      </div>
+    </div>
+  </div>
+  <blockquote style="margin:0;padding:12px 16px;background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 4px 4px 0">
+    <p style="margin:0;font-size:13px;color:var(--sda-semantic-color-text-secondary)">
+      <span class="lang-fr"><code>floor(valeur × facteur / 4) × 4</code> — compact utilise floor(), comfortable utilise ceil(). Voir ADR-020 + ADR-025.</span>
+      <span class="lang-en"><code>floor(value × factor / 4) × 4</code> — compact uses floor(), comfortable uses ceil(). See ADR-020 + ADR-025.</span>
+    </p>
+  </blockquote>
+</div>
+
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-control-padding-x)</code></li>
@@ -1349,25 +1389,42 @@ function buildSpacing() {
 // ─── PAGE: TYPOGRAPHY ───────────────────────────────────────────────────────
 function buildTypography() {
   const fontFamily = SEM['typography-fontFamily'] || "'Atkinson Hyperlegible', system-ui, sans-serif";
-  const tokens = [
-    ['typography-fontFamily',         fontFamily, '<span class="lang-fr">Police système — Atkinson Hyperlegible (accessibilité basse vision)</span><span class="lang-en">System typeface — Atkinson Hyperlegible (low-vision accessibility)</span>'],
-    ['typography-body-size',          SEM['typography-body-size']         || '16px', '<span class="lang-fr">Taille du texte courant</span><span class="lang-en">Body text size</span>'],
-    ['typography-body-weight',        SEM['typography-body-weight']        || '400',  '<span class="lang-fr">Graisse du texte courant</span><span class="lang-en">Body text weight</span>'],
-    ['typography-body-line-height',   SEM['typography-body-line-height']   || '1.5',  '<span class="lang-fr">Interlignage du texte courant</span><span class="lang-en">Body line height</span>'],
-    ['typography-label-size',         SEM['typography-label-size']         || '14px', '<span class="lang-fr">Taille des labels et libellés de boutons</span><span class="lang-en">Label and button text size</span>'],
-    ['typography-label-weight',       SEM['typography-label-weight']        || '500',  '<span class="lang-fr">Graisse des labels (arrondie à 400 — Atkinson n\'a pas de 500)</span><span class="lang-en">Label weight (rounded to 400 — Atkinson has no 500)</span>'],
-    ['typography-label-line-height',  SEM['typography-label-line-height']  || '1.25', '<span class="lang-fr">Interlignage compact des labels</span><span class="lang-en">Compact label line height</span>'],
-    ['typography-heading-size',       SEM['typography-heading-size']       || '24px', '<span class="lang-fr">Taille des titres de section</span><span class="lang-en">Section heading size</span>'],
-    ['typography-heading-weight',     SEM['typography-heading-weight']      || '700',  '<span class="lang-fr">Graisse bold pour hiérarchie forte</span><span class="lang-en">Bold weight for strong hierarchy</span>'],
-    ['typography-heading-line-height',SEM['typography-heading-line-height']|| '1.25', '<span class="lang-fr">Interlignage compact des titres</span><span class="lang-en">Compact heading line height</span>'],
+
+  // Échelle Minor Third (ratio 1.200) — ADR-023
+  const scaleSteps = [
+    { step: '5xl',  px: '48px', rem: '3rem',    role: 'Hero display',    lh: '1.0',  weight: 700 },
+    { step: '4xl',  px: '40px', rem: '2.5rem',  role: 'Heading 1',       lh: '1.0',  weight: 700 },
+    { step: '3xl',  px: '32px', rem: '2rem',    role: 'Heading 2',       lh: '1.0',  weight: 700 },
+    { step: '2xl',  px: '28px', rem: '1.75rem', role: 'Heading 3',       lh: '1.1',  weight: 700 },
+    { step: 'xl',   px: '24px', rem: '1.5rem',  role: 'Heading 4',       lh: '1.1',  weight: 700 },
+    { step: 'lg',   px: '20px', rem: '1.25rem', role: 'Heading 5',       lh: '1.1',  weight: 700 },
+    { step: 'base', px: '16px', rem: '1rem',    role: 'Body',            lh: '1.6',  weight: 400 },
+    { step: 'sm',   px: '14px', rem: '0.875rem',role: 'Label / metadata', lh: '1.6',  weight: 400 },
+    { step: 'xs',   px: '12px', rem: '0.75rem', role: 'Detail / caption', lh: '1.6',  weight: 400 },
   ];
-  const rows = tokens.map(([k, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td style="font-family:monospace;font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis" title="${v}">${v}</td><td>${i}</td></tr>`).join('');
+  const scaleRows = scaleSteps.map(({ step, px, rem, role, lh, weight }) =>
+    `<tr class="token-row">
+      <td><code>fontSize.${step}</code></td>
+      <td style="font-family:monospace">${rem} <span style="color:var(--sda-semantic-color-text-secondary);font-size:11px">(${px})</span></td>
+      <td style="font-family:monospace">${lh}</td>
+      <td style="font-family:monospace">${weight}</td>
+      <td style="color:var(--sda-semantic-color-text-secondary)">${role}</td>
+    </tr>`
+  ).join('');
+
+  const scaleSpecimens = scaleSteps.map(({ step, rem, role, lh, weight }) =>
+    `<div style="display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--sda-semantic-color-border-default)">
+      <code style="min-width:56px;font-size:11px;color:var(--sda-semantic-color-text-secondary);flex-shrink:0">${step}</code>
+      <div style="font-size:${rem};font-weight:${weight};line-height:${lh};color:var(--sda-semantic-color-text-primary)">${role}</div>
+      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:auto;flex-shrink:0">${rem} · lh ${lh}</span>
+    </div>`
+  ).join('');
 
   const body = `
 <h1><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></h1>
 <p class="page-lead">
-  <span class="lang-fr">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision, différenciation maximale des caractères ambigus (l/1, O/0, b/d). Trois niveaux : <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. Jamais de valeur en dur.</span>
-  <span class="lang-en">Primary typeface: <strong>Atkinson Hyperlegible</strong> — designed for low vision, maximum disambiguation of ambiguous characters (l/1, O/0, b/d). Three levels: <strong>body</strong>, <strong>label</strong>, <strong>heading</strong>. No hardcoded values.</span>
+  <span class="lang-fr">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision. Échelle <strong>Minor Third</strong> (ratio 1.200, 9 échelons xs→5xl) arrondie au multiple de 4px. Trois modes de line-height : <code>reading</code> (1.6), <code>heading</code> (1.1), <code>display</code> (1.0). Voir <a href="../decisions/index.html">ADR-023</a>.</span>
+  <span class="lang-en">Primary typeface: <strong>Atkinson Hyperlegible</strong> — designed for low vision. <strong>Minor Third</strong> scale (ratio 1.200, 9 steps xs→5xl) rounded to 4px multiples. Three line-height modes: <code>reading</code> (1.6), <code>heading</code> (1.1), <code>display</code> (1.0). See <a href="../decisions/index.html">ADR-023</a>.</span>
 </p>
 
 <h2 class="first"><span class="lang-fr">Police — Atkinson Hyperlegible</span><span class="lang-en">Typeface — Atkinson Hyperlegible</span></h2>
@@ -1391,33 +1448,51 @@ function buildTypography() {
   </p>
 </div>
 
-<h2><span class="lang-fr">Spécimens typographiques</span><span class="lang-en">Type specimens</span></h2>
-<div class="type-specimen">
-  <div class="type-spec-label">Heading — <code>--sda-semantic-typography-heading-size</code> · weight 700</div>
-  <div style="font-size:var(--sda-semantic-typography-heading-size);font-weight:var(--sda-semantic-typography-heading-weight);line-height:var(--sda-semantic-typography-heading-line-height);color:var(--sda-semantic-color-text-primary)">Titre de section principal</div>
-</div>
-<div class="type-specimen">
-  <div class="type-spec-label">Body — <code>--sda-semantic-typography-body-size</code> · weight 400</div>
-  <div style="font-size:var(--sda-semantic-typography-body-size);font-weight:var(--sda-semantic-typography-body-weight);line-height:var(--sda-semantic-typography-body-line-height);color:var(--sda-semantic-color-text-secondary)">Texte courant. Ce paragraphe illustre la lisibilité du texte principal avec le token body. L'interlignage de 1.5 assure une lecture confortable sur tous les écrans et résolutions.</div>
-</div>
-<div class="type-specimen">
-  <div class="type-spec-label">Label — <code>--sda-semantic-typography-label-size</code> · weight 500→400</div>
-  <div style="font-size:var(--sda-semantic-typography-label-size);font-weight:var(--sda-semantic-typography-label-weight);line-height:var(--sda-semantic-typography-label-line-height);color:var(--sda-semantic-color-text-primary)">Label de bouton · Champ de formulaire · Badge de statut</div>
-</div>
+<h2><span class="lang-fr">Échelle Minor Third — 9 échelons</span><span class="lang-en">Minor Third scale — 9 steps</span></h2>
+<p>
+  <span class="lang-fr">Ratio : <strong>1.200</strong> (tierce mineure). Chaque échelon = échelon précédent × 1.2, arrondi au multiple de 4px le plus proche. Unité <code>rem</code> pour respecter le zoom navigateur (WCAG 1.4.4).</span>
+  <span class="lang-en">Ratio: <strong>1.200</strong> (minor third). Each step = previous step × 1.2, rounded to the nearest 4px multiple. <code>rem</code> unit to honour browser zoom (WCAG 1.4.4).</span>
+</p>
+<div class="demo-box" style="padding:16px 24px">${scaleSpecimens}</div>
 
-<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<h2><span class="lang-fr">Tableau — primitifs fontSize</span><span class="lang-en">Table — fontSize primitives</span></h2>
 <table>
-  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
-  <tbody>${rows}</tbody>
+  <thead><tr>
+    <th><span class="lang-fr">Échelon</span><span class="lang-en">Step</span></th>
+    <th><span class="lang-fr">Valeur rem (px)</span><span class="lang-en">Value rem (px)</span></th>
+    <th>Line-height</th>
+    <th>Weight</th>
+    <th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th>
+  </tr></thead>
+  <tbody>${scaleRows}</tbody>
 </table>
+
+<h2><span class="lang-fr">Modes de line-height</span><span class="lang-en">Line-height modes</span></h2>
+<div class="demo-box" style="padding:16px 24px">
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>reading</code> — 1.6</div>
+      <div style="font-size:14px;line-height:1.6;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.</span><span class="lang-en">Body text, labels, captions. Conforms to WCAG 1.4.12. Maximises reading comfort across multiple lines.</span></div>
+    </div>
+    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>heading</code> — 1.1</div>
+      <div style="font-size:20px;line-height:1.1;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Titres h5 → h3. Compact sans être étouffant.</span><span class="lang-en">Headings h5 → h3. Compact without feeling cramped.</span></div>
+    </div>
+    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>display</code> — 1.0</div>
+      <div style="font-size:32px;line-height:1.0;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">h2, h1, hero.</span><span class="lang-en">h2, h1, hero.</span></div>
+    </div>
+  </div>
+</div>
 
 <h2><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></h2>
 <ul>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-body-size)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-primitive-fontSize-base)</code></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-fontFamily)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-heading-weight)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-primitive-fontWeight-bold)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Taille hors-échelle :</span><span class="lang-en">Off-scale size:</span> <code>15px</code>, <code>18px</code>, <code>22px</code> — <span class="lang-fr">choisir l'échelon Minor Third le plus proche</span><span class="lang-en">pick the closest Minor Third step</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Import Google Fonts :</span><span class="lang-en">Google Fonts import:</span> <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours définir <code>line-height</code> via un token sémantique</span><span class="lang-en">Always set <code>line-height</code> via a semantic token</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours choisir le mode <code>lineHeight</code> selon le rôle : <code>reading</code> ≤ base, <code>heading</code> pour lg–2xl, <code>display</code> pour 3xl+</span><span class="lang-en">Always pick the <code>lineHeight</code> mode for the role: <code>reading</code> ≤ base, <code>heading</code> for lg–2xl, <code>display</code> for 3xl+</span></li>
 </ul>
 `;
 
