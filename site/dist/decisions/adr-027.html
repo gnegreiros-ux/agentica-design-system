@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>Pipeline d'impact pré-commit avec approbation humaine — Système de design agentique</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 027</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-30</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-027 — Pipeline d'impact pré-commit avec approbation humaine</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> governance <strong>Chemin logique:</strong> decisions/ADR-027-pipeline-impact-pre-commit.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/project-overview.md <strong>Relations:</strong> .claude/rules/post-change-pipeline.md, .claude/skills/post-change-pipeline.md, .claude/rules/git-workflow.md, log/kit-construction.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Lors des premières sessions de travail avec des agents IA sur ce dépôt, un pattern problématique a été observé : les agents committaient des changements sans proposer les mises à jour collatérales nécessaires (log du kit, site rebuild, ADR). L'humain devait systématiquement demander ces mises à jour après coup, créant :</p>
+<ul><li>Un historique git incohérent (modifications et leurs conséquences dans des commits séparés)</li><li>Un log du kit incomplet ou mis à jour de mémoire (plutôt qu'en temps réel)</li><li>Des oublis de rebuild site après modification de <code>build.js</code> ou des tokens</li><li>Une gouvernance affaiblie : l'humain ne savait pas ce qu'il approuvait implicitement</li></ul>
+<p>Ce projet repose sur le principe fondamental : <strong>le dernier mot est toujours humain</strong>. Ce principe nécessite un mécanisme opérationnel — pas seulement une intention déclarée.</p>
+<hr>
+<h2>Décision</h2>
+<h3>Pipeline obligatoire pré-commit</h3>
+<p>Tout agent travaillant sur ce dépôt doit, après chaque modification et avant tout commit, exécuter le pipeline suivant :</p>
+<p><strong>Étape 1 — Analyse d'impact</strong> Identifier les fichiers modifiés via <code>git diff --name-only</code> et appliquer la matrice d'impact définie dans <code>.claude/skills/post-change-pipeline.md</code>.</p>
+<p><strong>Étape 2 — Rapport structuré</strong> Présenter à l'humain un rapport avec les mises à jour proposées sous forme de checklist, en explicitant le raisonnement pour chaque item.</p>
+<p><strong>Étape 3 — Attente d'approbation</strong> Ne rien exécuter avant une réponse explicite de l'humain. L'absence de réponse n'est pas une approbation.</p>
+<p><strong>Étape 4 — Exécution ordonnée</strong> Exécuter uniquement les tâches approuvées, dans l'ordre : tokens → site rebuild → log → ADRs → commit.</p>
+<h3>Matrice d'impact</h3>
+<table><thead><tr><th>Fichiers modifiés</th><th>Mises à jour évaluées</th></tr></thead><tbody><tr><td><code>tokens/primitives.json</code></td><td>Site rebuild, log, ADR si nouveau token</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Site rebuild, log, <code>tokens.css</code></td></tr><tr><td><code>tokens/component.json</code></td><td>Site rebuild, log, <strong>approbation Principal Designer</strong></td></tr><tr><td><code>site/build.js</code></td><td>Site rebuild</td></tr><tr><td><code>guidelines/</code>, <code>components/</code></td><td>Site rebuild, log</td></tr><tr><td><code>decisions/ADR-*.md</code></td><td>Site rebuild (page ADR), log</td></tr><tr><td><code>.claude/rules/</code>, <code>.claude/skills/</code></td><td>Log, ADR si décision architecturale</td></tr><tr><td>Tout changement</td><td>Log du kit (toujours)</td></tr></tbody></table>
+<h3>Détection intelligente</h3>
+<p>Le pipeline ne propose que les mises à jour pertinentes selon les fichiers réellement modifiés — pas une checklist exhaustive systématique. L'objectif est de minimiser la friction tout en garantissant la complétude.</p>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi un pipeline explicite plutôt qu'un hook git ?</h3>
+<p>Un hook pre-commit s'exécute sans contexte humain — il peut rejeter un commit mais ne peut pas proposer des mises à jour alternatives ni attendre une approbation. Le pipeline agent-humain est intentionnellement conversationnel : il soumet un rapport, attend une décision, puis exécute.</p>
+<h3>Pourquoi la détection d'impact par fichiers modifiés ?</h3>
+<p>Une checklist statique (toujours vérifier tout) crée de la fatigue décisionnelle. La détection par <code>git diff</code> ne propose que ce qui est réellement pertinent, rendant chaque rapport d'impact significatif et actionnable.</p>
+<h3>Pourquoi l'ordre d'exécution est-il prescrit ?</h3>
+<p>L'ordre tokens → site → log → ADR → commit garantit que chaque artefact est produit avant d'être référencé dans le suivant. Un log mis à jour avant le rebuild contiendrait un état qui n'existe pas encore sur disque.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Hook pre-commit automatique</strong></td><td>Pas de boucle de rétroaction humaine — viole le principe "le dernier mot est humain"</td></tr><tr><td><strong>Checklist exhaustive à chaque commit</strong></td><td>Fatigue décisionnelle, items non pertinents selon les changements</td></tr><tr><td><strong>Confiance à l'agent pour décider seul</strong></td><td>Historique git incohérent observé en pratique lors des premières sessions</td></tr><tr><td><strong>Mise à jour du log après le commit</strong></td><td>Log découplé du changement — historique peu fiable</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les agents :</strong></p>
+<ul><li>Lire <code>.claude/rules/post-change-pipeline.md</code> avant tout commit</li><li>Exécuter <code>.claude/skills/post-change-pipeline.md</code> après chaque modification</li><li>Ne jamais commiter sans rapport approuvé</li></ul>
+<p><strong>Pour l'humain :</strong></p>
+<ul><li>Recevoir un rapport structuré avant chaque commit</li><li>Approuver ou modifier la liste des mises à jour proposées</li><li>Garder le contrôle sur ce qui entre dans l'historique git</li></ul>
+<p><strong>Pour le projet :</strong></p>
+<ul><li>Historique git cohérent : chaque commit est complet et auto-suffisant</li><li>Log du kit fidèle à l'état réel du dépôt</li><li>Gouvernance opérationnelle, pas seulement déclarative</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-026.html" class="ds-btn secondary">← ADR-026</a>
+    <span></span>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

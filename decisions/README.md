@@ -84,6 +84,7 @@ des décisions déjà tranchées.
 | [ADR-024](ADR-024-brand-palette-teal-accent-secondary.md) | Brand palette : Teal primaire, Accent rose, Secondary bordeaux | 2026-05-29 | ✅ Actif |
 | [ADR-025](ADR-025-densite-espacement-math-tokens.md) | Densité d'espacement : floor/ceil sur grille 4px via math tokens | 2026-05-29 | ✅ Actif |
 | [ADR-026](ADR-026-sync-figma-palettes-custom.md) | Stratégie de synchronisation Figma pour les palettes de marque custom | 2026-05-29 | ✅ Actif |
+| [ADR-027](ADR-027-pipeline-impact-pre-commit.md) | Pipeline d'impact pré-commit avec approbation humaine | 2026-05-30 | ✅ Actif |
 
 ---
 

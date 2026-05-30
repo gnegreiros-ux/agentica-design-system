@@ -66,3 +66,8 @@
 | 2026-05-30 — | Modifié | `site/build.js`, `site/dist/foundations/typography.html` — échelle Minor Third (9 échelons xs→5xl, rem, line-height, poids), spécimens visuels, 3 modes lineHeight (reading/heading/display) |
 | 2026-05-30 — | Modifié | `site/build.js`, `site/dist/foundations/spacing.html` — section densité math tokens (compact ×0.75, normal ×1.0, comfortable ×1.25), formule floor/ceil, ADR-025 |
 | 2026-05-30 — | Modifié | `site/dist/` — rebuild complet, synchronisation ADR-023→026, tokens.css, couleur, index |
+| 2026-05-30 10:54 | Créé | `.claude/skills/post-change-pipeline.md` |
+| 2026-05-30 10:54 | Créé | `.claude/rules/post-change-pipeline.md` |
+| 2026-05-30 10:56 | Créé | `decisions/ADR-027-pipeline-impact-pre-commit.md` |
+| 2026-05-30 10:59 | Modifié | `decisions/README.md` |
+| 2026-05-30 — | Modifié | `site/dist/` — rebuild, page ADR-027 générée (36 fichiers total)
