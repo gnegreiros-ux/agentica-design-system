@@ -9,9 +9,9 @@
   "semantic": {
     "color": {
       "action": {
-        "primary":          { "value": "{primitive.color.blue.11}",  "$type": "color", "$intent": "Action principale — CTA, bouton primaire" },
-        "primary-hover":    { "value": "{primitive.color.blue.12}",  "$type": "color", "$intent": "État survol de l'action principale" },
-        "primary-disabled": { "value": "{primitive.color.gray.6}",   "$type": "color", "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)" }
+        "primary":          { "value": "{primitive.color.teal.9}",  "$type": "color", "$intent": "Action principale — CTA, bouton primaire (brand teal). Voir ADR-024." },
+        "primary-hover":    { "value": "{primitive.color.teal.10}", "$type": "color", "$intent": "État survol de l'action principale" },
+        "primary-disabled": { "value": "{primitive.color.gray.6}",  "$type": "color", "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)" }
       },
       "feedback": {
         "danger":        { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
@@ -33,20 +33,73 @@
         "on-danger": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
       },
       "border": {
-        "default": { "value": "{primitive.color.gray.4}",    "$type": "color", "$intent": "Bordure standard" },
-        "focus":   { "value": "{primitive.color.blue.11}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier" },
-        "danger":  { "value": "{primitive.color.red.11}",    "$type": "color", "$intent": "Bordure état erreur" }
+        "default": { "value": "{primitive.color.gray.4}",   "$type": "color", "$intent": "Bordure standard" },
+        "focus":   { "value": "{primitive.color.teal.9}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier (brand teal). Voir ADR-024." },
+        "danger":  { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Bordure état erreur" }
+      },
+      "brand": {
+        "primary":          { "value": "{primitive.color.teal.9}",       "$type": "color", "$intent": "Couleur de marque primaire — identité, CTA principal" },
+        "primary-hover":    { "value": "{primitive.color.teal.10}",      "$type": "color", "$intent": "Survol de la couleur primaire" },
+        "primary-subtle":   { "value": "{primitive.color.teal.3}",       "$type": "color", "$intent": "Fond subtil primaire — chips, tags, badges légers" },
+        "accent":           { "value": "{primitive.color.accent.9}",     "$type": "color", "$intent": "Couleur d'accentuation — highlights, badges, CTA secondaire" },
+        "accent-hover":     { "value": "{primitive.color.accent.10}",    "$type": "color", "$intent": "Survol de l'accent" },
+        "accent-subtle":    { "value": "{primitive.color.accent.3}",     "$type": "color", "$intent": "Fond subtil accent" },
+        "accent-text":      { "value": "{primitive.color.accent.11}",    "$type": "color", "$intent": "Texte accent sur fond clair — 7.1:1 WCAG AA+" },
+        "secondary":        { "value": "{primitive.color.secondary.9}",  "$type": "color", "$intent": "Couleur secondaire de marque — fond solide dark (12.2:1 avec blanc)" },
+        "secondary-hover":  { "value": "{primitive.color.secondary.10}", "$type": "color", "$intent": "Survol de la couleur secondaire" },
+        "secondary-text":   { "value": "{primitive.color.secondary.12}", "$type": "color", "$intent": "Texte secondaire sur fond clair — 13.8:1 WCAG AAA" }
       }
     },
     "space": {
+      "density": {
+        "_readme": {
+          "value": "Trois groupes explicites (compact/normal/comfortable). compact utilise floor(), comfortable utilise ceil(), tous deux divisés par primitive.density.grid-unit (4) pour garantir l'alignement 4px. Technique : Sam's math equations in Tokens Studio. Voir ADR-025.",
+          "$type": "other"
+        },
+        "factor": {
+          "compact":     { "value": "{primitive.density.factor.compact}",     "$type": "number", "$intent": "0.75 — scaling vers le bas, floor() pour alignement grille" },
+          "normal":      { "value": "{primitive.density.factor.normal}",      "$type": "number", "$intent": "1.0 — pas de calcul, valeurs primitives directes" },
+          "comfortable": { "value": "{primitive.density.factor.comfortable}", "$type": "number", "$intent": "1.25 — scaling vers le haut, ceil() pour alignement grille" }
+        }
+      },
       "control": {
-        "padding-x": { "value": "{primitive.space.4}", "$type": "dimension", "$intent": "Espacement horizontal des contrôles interactifs" },
-        "padding-y": { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "Espacement vertical des contrôles interactifs" },
-        "gap":       { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "Écart interne entre éléments d'un contrôle" }
+        "padding-x": { "value": "{primitive.space.4}", "$type": "dimension", "$intent": "16px — Espacement horizontal des contrôles (densité normale). Voir space.compact ou space.comfortable pour les autres densités." },
+        "padding-y": { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "8px — Espacement vertical des contrôles (densité normale)." },
+        "gap":       { "value": "{primitive.space.2}", "$type": "dimension", "$intent": "8px — Écart interne entre éléments d'un contrôle (densité normale)." }
       },
       "layout": {
-        "section":   { "value": "{primitive.space.8}", "$type": "dimension", "$intent": "Espacement entre sections de page" },
-        "component": { "value": "{primitive.space.5}", "$type": "dimension", "$intent": "Espacement entre composants" }
+        "section":   { "value": "{primitive.space.8}", "$type": "dimension", "$intent": "32px — Espacement entre sections de page (densité normale)." },
+        "component": { "value": "{primitive.space.5}", "$type": "dimension", "$intent": "20px — Espacement entre composants (densité normale)." }
+      },
+      "compact": {
+        "_readme": {
+          "value": "Densité compacte — floor(valeur × 0.75 / 4) × 4. Toutes les valeurs sont des multiples de 4px. Usage : dashboards, tableaux, outils data-dense.",
+          "$type": "other"
+        },
+        "control": {
+          "padding-x": { "value": "floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "12px — padding-x compact (16 × 0.75 = 12, déjà sur grille)" },
+          "padding-y": { "value": "floor({primitive.space.2} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "4px — padding-y compact (8 × 0.75 = 6 → floor(6/4)×4 = 4px)" },
+          "gap":       { "value": "floor({primitive.space.2} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "4px — gap compact" }
+        },
+        "layout": {
+          "section":   { "value": "floor({primitive.space.8} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "24px — section compact (32 × 0.75 = 24, déjà sur grille)" },
+          "component": { "value": "floor({primitive.space.5} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "12px — component compact (20 × 0.75 = 15 → floor(15/4)×4 = 12px)" }
+        }
+      },
+      "comfortable": {
+        "_readme": {
+          "value": "Densité confortable — ceil(valeur × 1.25 / 4) × 4. Toutes les valeurs sont des multiples de 4px. Usage : marketing, onboarding, pages de lecture.",
+          "$type": "other"
+        },
+        "control": {
+          "padding-x": { "value": "ceil({primitive.space.4} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "20px — padding-x comfortable (16 × 1.25 = 20, déjà sur grille)" },
+          "padding-y": { "value": "ceil({primitive.space.2} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "12px — padding-y comfortable (8 × 1.25 = 10 → ceil(10/4)×4 = 12px)" },
+          "gap":       { "value": "ceil({primitive.space.2} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "12px — gap comfortable" }
+        },
+        "layout": {
+          "section":   { "value": "ceil({primitive.space.8} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "40px — section comfortable (32 × 1.25 = 40, déjà sur grille)" },
+          "component": { "value": "ceil({primitive.space.5} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}", "$type": "dimension", "$intent": "28px — component comfortable (20 × 1.25 = 25 → ceil(25/4)×4 = 28px)" }
+        }
       }
     },
     "radius": {
@@ -55,20 +108,52 @@
     },
     "typography": {
       "fontFamily": { "value": "{primitive.fontFamily.base}", "$type": "fontFamily", "$intent": "Police système — Atkinson Hyperlegible pour lisibilité maximale (basse vision, WCAG)" },
-      "body": {
-        "size":        { "value": "{primitive.fontSize.md}",      "$type": "dimension" },
-        "weight":      { "value": "{primitive.fontWeight.regular}","$type": "fontWeight" },
-        "line-height": { "value": "{primitive.lineHeight.normal}", "$type": "number" }
+      "detail": {
+        "size":        { "value": "{primitive.fontSize.xs}",       "$type": "dimension", "$intent": "12px — Annotations, captions, aide contextuelle" },
+        "weight":      { "value": "{primitive.fontWeight.regular}", "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.reading}", "$type": "number" }
       },
       "label": {
-        "size":        { "value": "{primitive.fontSize.sm}",      "$type": "dimension" },
-        "weight":      { "value": "{primitive.fontWeight.medium}", "$type": "fontWeight" },
-        "line-height": { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
+        "size":        { "value": "{primitive.fontSize.sm}",       "$type": "dimension", "$intent": "14px — Labels de formulaire, métadonnées, tags" },
+        "weight":      { "value": "{primitive.fontWeight.medium}",  "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.reading}", "$type": "number" }
+      },
+      "body": {
+        "size":        { "value": "{primitive.fontSize.base}",     "$type": "dimension", "$intent": "16px — Corps de texte principal" },
+        "weight":      { "value": "{primitive.fontWeight.regular}", "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.reading}", "$type": "number" }
       },
       "heading": {
-        "size":        { "value": "{primitive.fontSize.xl}",       "$type": "dimension" },
-        "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
-        "line-height": { "value": "{primitive.lineHeight.tight}",  "$type": "number" }
+        "5": {
+          "size":        { "value": "{primitive.fontSize.lg}",      "$type": "dimension", "$intent": "20px — H5, sous-titres de section" },
+          "weight":      { "value": "{primitive.fontWeight.medium}", "$type": "fontWeight" },
+          "line-height": { "value": "{primitive.lineHeight.heading}", "$type": "number" }
+        },
+        "4": {
+          "size":        { "value": "{primitive.fontSize.xl}",      "$type": "dimension", "$intent": "24px — H4" },
+          "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
+          "line-height": { "value": "{primitive.lineHeight.heading}", "$type": "number" }
+        },
+        "3": {
+          "size":        { "value": "{primitive.fontSize.2xl}",     "$type": "dimension", "$intent": "28px — H3" },
+          "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
+          "line-height": { "value": "{primitive.lineHeight.heading}", "$type": "number" }
+        },
+        "2": {
+          "size":        { "value": "{primitive.fontSize.3xl}",     "$type": "dimension", "$intent": "32px — H2" },
+          "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
+          "line-height": { "value": "{primitive.lineHeight.display}", "$type": "number" }
+        },
+        "1": {
+          "size":        { "value": "{primitive.fontSize.4xl}",     "$type": "dimension", "$intent": "40px — H1 principal" },
+          "weight":      { "value": "{primitive.fontWeight.bold}",   "$type": "fontWeight" },
+          "line-height": { "value": "{primitive.lineHeight.display}", "$type": "number" }
+        }
+      },
+      "hero": {
+        "size":        { "value": "{primitive.fontSize.5xl}",      "$type": "dimension", "$intent": "48px — Titre hero, landing page" },
+        "weight":      { "value": "{primitive.fontWeight.bold}",    "$type": "fontWeight" },
+        "line-height": { "value": "{primitive.lineHeight.display}",  "$type": "number" }
       }
     },
     "icon": {

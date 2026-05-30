@@ -1,11 +1,11 @@
 # Fondation — Typographie
 
-> Fondation typographie du système de design — police, tokens et règles d'usage.
+> Fondation typographie du système de design — police, échelle, tokens et règles d'usage.
 > **Type:** guideline
 > **Chemin logique:** guidelines/foundations/typography.md
 > **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** tokens/semantic.json, tokens/primitives.json, decisions/ADR-021-atkinson-hyperlegible.md
+> **Relations:** tokens/semantic.json, tokens/primitives.json, decisions/ADR-021-atkinson-hyperlegible.md, decisions/ADR-023-echelle-typographique-minor-third.md
 
 ---
 
@@ -23,7 +23,7 @@ Objectif : différenciation maximale des caractères ambigus pour les personnes 
 | `b` / `d` / `p` / `q` | Asymétries intentionnelles — non-miroirs |
 | `n` / `u` / `m` | Contre-formes accentuées |
 
-Voir [ADR-021](../../decisions/ADR-021-atkinson-hyperlegible.md) pour l'argumentaire complet et les alternatives rejetées.
+Voir [ADR-021](../../decisions/ADR-021-atkinson-hyperlegible.md) pour l'argumentaire complet.
 
 ---
 
@@ -37,27 +37,55 @@ Atkinson Hyperlegible ne supporte que **2 graisses** :
 | `fontWeight.medium`  | 500 | → 400 (arrondi navigateur) | Labels, contrôles — comportement documenté |
 | `fontWeight.bold`    | 700 | Bold | Titres, emphase |
 
-> ⚠️ `fontWeight.medium` (500) n'existe pas dans Atkinson Hyperlegible. Les navigateurs l'arrondissent à Regular (400). Les labels restent lisibles — ce compromis est acceptable et choisi délibérément.
+> ⚠️ `fontWeight.medium` (500) n'existe pas dans Atkinson Hyperlegible. Les navigateurs l'arrondissent à Regular (400). Ce compromis est acceptable et choisi délibérément.
 
 ---
 
-## Tokens de référence
+## Échelle de tailles — Minor Third (ratio 1.2)
 
-**Primitifs :**
-- `primitive.fontFamily.base` → `'Atkinson Hyperlegible', system-ui, sans-serif`
-- `primitive.fontSize.sm` → 14px (labels)
-- `primitive.fontSize.md` → 16px (corps)
-- `primitive.fontSize.xl` → 24px (titres)
-- `primitive.fontWeight.regular` → 400
-- `primitive.fontWeight.bold` → 700
-- `primitive.lineHeight.tight` → 1.25
-- `primitive.lineHeight.normal` → 1.5
+Voir [ADR-023](../../decisions/ADR-023-echelle-typographique-minor-third.md) pour l'argumentaire complet.
 
-**Sémantiques :**
-- `semantic.typography.fontFamily` → Atkinson Hyperlegible
-- `semantic.typography.body` → 16px / 400 / 1.5
-- `semantic.typography.label` → 14px / 500(→400) / 1.25
-- `semantic.typography.heading` → 24px / 700 / 1.25
+**Principe :** ratio 1.200 (Minor Third), arrondi au multiple de 4px le plus proche. Unité : `rem` (respecte le zoom navigateur — WCAG 1.4.4).
+
+| Token primitif | rem | px | Contexte |
+|---------------|-----|----|---------|
+| `primitive.fontSize.xs`   | 0.75rem  | 12px | Détails, annotations, captions |
+| `primitive.fontSize.sm`   | 0.875rem | 14px | Labels, métadonnées, helper text |
+| `primitive.fontSize.base` | 1rem     | 16px | Corps de texte principal |
+| `primitive.fontSize.lg`   | 1.25rem  | 20px | Heading 5, sous-titres |
+| `primitive.fontSize.xl`   | 1.5rem   | 24px | Heading 4 |
+| `primitive.fontSize.2xl`  | 1.75rem  | 28px | Heading 3 |
+| `primitive.fontSize.3xl`  | 2rem     | 32px | Heading 2 |
+| `primitive.fontSize.4xl`  | 2.5rem   | 40px | Heading 1 |
+| `primitive.fontSize.5xl`  | 3rem     | 48px | Hero display |
+
+---
+
+## Règles de line-height
+
+Trois valeurs seulement, assignées par contexte de taille :
+
+| Token | Valeur | Règle |
+|-------|--------|-------|
+| `primitive.lineHeight.reading` | 1.6 | Tout texte ≤ base (xs, sm, base) — WCAG 1.4.12 |
+| `primitive.lineHeight.heading` | 1.1 | Titres intermédiaires (lg, xl, 2xl) |
+| `primitive.lineHeight.display` | 1.0 | Grands titres (3xl, 4xl, 5xl) |
+
+---
+
+## Styles sémantiques — les 9 niveaux
+
+| Token sémantique | Taille | Graisse | Line-height | Rôle |
+|-----------------|--------|---------|-------------|------|
+| `semantic.typography.detail`    | xs (12px)  | 400 | 1.6 | Annotations, captions, aide contextuelle |
+| `semantic.typography.label`     | sm (14px)  | 500 | 1.6 | Labels de formulaire, tags, métadonnées |
+| `semantic.typography.body`      | base (16px)| 400 | 1.6 | Corps de texte principal |
+| `semantic.typography.heading.5` | lg (20px)  | 500 | 1.1 | H5, sous-titres de section |
+| `semantic.typography.heading.4` | xl (24px)  | 700 | 1.1 | H4 |
+| `semantic.typography.heading.3` | 2xl (28px) | 700 | 1.1 | H3 |
+| `semantic.typography.heading.2` | 3xl (32px) | 700 | 1.0 | H2 |
+| `semantic.typography.heading.1` | 4xl (40px) | 700 | 1.0 | H1 principal |
+| `semantic.typography.hero`      | 5xl (48px) | 700 | 1.0 | Titre hero, landing page |
 
 ---
 
@@ -66,10 +94,12 @@ Atkinson Hyperlegible ne supporte que **2 graisses** :
 ```
 ✅ Toujours référencer un token sémantique pour la typographie
 ✅ font-family toujours via var(--sda-semantic-typography-fontFamily)
+✅ Choisir le niveau par INTENTION (h1 pour titre principal, body pour paragraphe)
 
 ❌ Jamais de font-size en dur : font-size: 16px
 ❌ Jamais de font-family en dur : font-family: 'Atkinson Hyperlegible'
-❌ Jamais de token primitif directement dans un composant
+�� Jamais de token primitif directement dans un composant
+❌ Jamais inventer un niveau intermédiaire (ex: 18px) — choisir l'échelon existant
 ```
 
 ---

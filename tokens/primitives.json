@@ -1,6 +1,6 @@
 {
   "$metadata": {
-    "tokenSetOrder": ["primitive/color"]
+    "tokenSetOrder": ["primitive/color", "primitive/space", "primitive/typography", "primitive/density"]
   },
   "primitive": {
     "color": {
@@ -475,6 +475,46 @@
         "12": { "$value": "#582d1d", "$type": "color", "$description": "High-contrast text" }
       },
 
+      "accent": {
+        "_readme": {
+          "$value": "Brand Accent — Palette custom rose-corail. Voir ADR-024.",
+          "$type": "other",
+          "$description": "Palette de marque accent. Step 9 = solide CTA. Step 11 = texte sur fond clair (7.1:1 WCAG AA). Step 1-2 = fonds subtils."
+        },
+        "1":  { "$value": "#f0eded", "$type": "color", "$description": "App background" },
+        "2":  { "$value": "#eee8e8", "$type": "color", "$description": "Subtle background" },
+        "3":  { "$value": "#ebdadc", "$type": "color", "$description": "UI element background" },
+        "4":  { "$value": "#ecccd0", "$type": "color", "$description": "Hovered UI element background" },
+        "5":  { "$value": "#e7bdc3", "$type": "color", "$description": "Active / selected UI element background" },
+        "6":  { "$value": "#dfadb4", "$type": "color", "$description": "Subtle border and separator" },
+        "7":  { "$value": "#d49aa2", "$type": "color", "$description": "UI element border and focus ring" },
+        "8":  { "$value": "#c8818c", "$type": "color", "$description": "Hovered UI element border" },
+        "9":  { "$value": "#ed6b86", "$type": "color", "$description": "Solid background — brand accent / CTA secondaire" },
+        "10": { "$value": "#e05f7b", "$type": "color", "$description": "Hovered solid background" },
+        "11": { "$value": "#a6294c", "$type": "color", "$description": "Texte accent — 7.1:1 sur blanc (WCAG AA+AAA)" },
+        "12": { "$value": "#5d1f2e", "$type": "color", "$description": "High-contrast text" }
+      },
+
+      "secondary": {
+        "_readme": {
+          "$value": "Brand Secondary — Palette custom bordeaux. Voir ADR-024.",
+          "$type": "other",
+          "$description": "Palette de marque secondaire. Step 9 (#463239) est très sombre (L≈20) — fond solide avec texte blanc (12:1). Step 12 = texte haute lisibilité sur fond clair (13.8:1 WCAG AAA)."
+        },
+        "1":  { "$value": "#f0edee", "$type": "color", "$description": "App background" },
+        "2":  { "$value": "#f0e7ea", "$type": "color", "$description": "Subtle background" },
+        "3":  { "$value": "#edd9df", "$type": "color", "$description": "UI element background" },
+        "4":  { "$value": "#ebcbd5", "$type": "color", "$description": "Hovered UI element background" },
+        "5":  { "$value": "#e4becb", "$type": "color", "$description": "Active / selected UI element background" },
+        "6":  { "$value": "#d8b2bf", "$type": "color", "$description": "Subtle border and separator" },
+        "7":  { "$value": "#c8a3af", "$type": "color", "$description": "UI element border and focus ring" },
+        "8":  { "$value": "#b18d99", "$type": "color", "$description": "Hovered UI element border" },
+        "9":  { "$value": "#463239", "$type": "color", "$description": "Solid dark background — 12.2:1 avec texte blanc" },
+        "10": { "$value": "#5f404b", "$type": "color", "$description": "Hovered solid background" },
+        "11": { "$value": "#6b4b56", "$type": "color", "$description": "Texte medium sur fond clair" },
+        "12": { "$value": "#432f36", "$type": "color", "$description": "High-contrast text — 13.8:1 sur blanc (WCAG AAA)" }
+      },
+
       "neutral": {
         "0":   { "$value": "#ffffff", "$type": "color", "$description": "Blanc pur — fond de surface, texte sur action/danger" },
         "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol — Tailwind neutral.50 (Radix gray.2 = #f9f9f9)" },
@@ -525,9 +565,19 @@
       "16": { "$value": "64px", "$type": "dimension", "$description": "4px × 16 — macro espacement" }
     },
     "fontSize": {
-      "sm": { "$value": "14px", "$type": "dimension", "$description": "Small — labels, métadonnées" },
-      "md": { "$value": "16px", "$type": "dimension", "$description": "Medium — corps de texte" },
-      "xl": { "$value": "24px", "$type": "dimension", "$description": "Extra large — titres" }
+      "_readme": {
+        "$value": "Échelle Minor Third (ratio 1.200), arrondie au multiple de 4px. Unité rem pour l'accessibilité (zoom navigateur). Voir ADR-023.",
+        "$type": "other"
+      },
+      "xs":   { "$value": "0.75rem",  "$type": "dimension", "$description": "12px — Détails, annotations, captions. Line-height: reading (1.6)" },
+      "sm":   { "$value": "0.875rem", "$type": "dimension", "$description": "14px — Labels, métadonnées, helper text. Line-height: reading (1.6)" },
+      "base": { "$value": "1rem",     "$type": "dimension", "$description": "16px — Corps de texte principal. Line-height: reading (1.6)" },
+      "lg":   { "$value": "1.25rem",  "$type": "dimension", "$description": "20px — Heading 5, sous-titres (Minor Third ×1). Line-height: heading (1.1)" },
+      "xl":   { "$value": "1.5rem",   "$type": "dimension", "$description": "24px — Heading 4 (Minor Third ×2). Line-height: heading (1.1)" },
+      "2xl":  { "$value": "1.75rem",  "$type": "dimension", "$description": "28px — Heading 3 (Minor Third ×3). Line-height: heading (1.1)" },
+      "3xl":  { "$value": "2rem",     "$type": "dimension", "$description": "32px — Heading 2 (Minor Third ×4). Line-height: display (1.0)" },
+      "4xl":  { "$value": "2.5rem",   "$type": "dimension", "$description": "40px — Heading 1 (Minor Third ×5). Line-height: display (1.0)" },
+      "5xl":  { "$value": "3rem",     "$type": "dimension", "$description": "48px — Hero display. Line-height: display (1.0)" }
     },
     "fontWeight": {
       "regular": { "$value": "400", "$type": "fontWeight", "$description": "Normal — corps de texte" },
@@ -535,8 +585,9 @@
       "bold":    { "$value": "700", "$type": "fontWeight", "$description": "Bold — titres, emphase" }
     },
     "lineHeight": {
-      "tight":  { "$value": "1.25", "$type": "number", "$description": "Compact — titres, labels" },
-      "normal": { "$value": "1.5",  "$type": "number", "$description": "Lisible — corps de texte" }
+      "reading": { "$value": "1.6", "$type": "number", "$description": "Lecture — corps de texte, labels, détails (≤ base). Conforme WCAG 1.4.12." },
+      "heading":  { "$value": "1.1", "$type": "number", "$description": "Titres intermédiaires (lg, xl, 2xl — h5 à h3)." },
+      "display":  { "$value": "1.0", "$type": "number", "$description": "Grands titres (3xl, 4xl, 5xl — h2, h1, hero)." }
     },
     "radius": {
       "sm": { "$value": "6px",  "$type": "dimension", "$description": "Petit rayon — contrôles interactifs (boutons, inputs)" },
@@ -549,6 +600,22 @@
       "sm": { "$value": "16px", "$type": "dimension", "$description": "Icône petite — inline, labels" },
       "md": { "$value": "20px", "$type": "dimension", "$description": "Icône standard — contrôles, boutons" },
       "lg": { "$value": "24px", "$type": "dimension", "$description": "Icône grande — navigation, emphase" }
+    },
+    "density": {
+      "_readme": {
+        "$value": "Facteurs de densité pour l'espacement. Voir ADR-025. Utilisés via math tokens dans semantic.json avec floor/ceil pour garantir l'alignement 4px (technique Sam's math equations, ADR-025).",
+        "$type": "other"
+      },
+      "factor": {
+        "normal":      { "$value": "1",    "$type": "number", "$description": "Densité normale — formulaires, settings, usage quotidien SaaS" },
+        "comfortable": { "$value": "1.25", "$type": "number", "$description": "Densité confortable — marketing, onboarding, pages de lecture (+25%)" },
+        "compact":     { "$value": "0.75", "$type": "number", "$description": "Densité compacte — dashboards, tableaux de données, outils pro (−25%)" }
+      },
+      "grid-unit": {
+        "$value": "4",
+        "$type": "number",
+        "$description": "Diviseur de grille pour l'arrondi floor/ceil. floor(valeur * facteur / grid-unit) * grid-unit garantit un multiple de 4px. Voir ADR-020 et ADR-025."
+      }
     }
   }
 }

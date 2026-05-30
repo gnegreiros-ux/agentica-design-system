@@ -74,6 +74,16 @@ des décisions déjà tranchées.
 | [ADR-014](ADR-014-conventional-commits.md) | Choix de Conventional Commits pour les messages de commit | 2026-05-28 | ✅ Actif |
 | [ADR-015](ADR-015-hook-rappel-adr.md) | Hook automatique de rappel ADR sur modifications critiques | 2026-05-28 | ✅ Actif |
 | [ADR-016](ADR-016-journal-construction.md) | Journal de construction automatique du kit | 2026-05-28 | ✅ Actif |
+| [ADR-017](ADR-017-correction-contraste-text-disabled.md) | Correction valeur contraste texte désactivé (4.54:1) | 2026-05-28 | ✅ Actif |
+| [ADR-018](ADR-018-migration-references-primitives-radix.md) | Migration des références primitives vers la convention Radix | 2026-05-28 | ✅ Actif |
+| [ADR-019](ADR-019-resolution-dynamique-tokens-build.md) | Résolution dynamique des tokens au build (Site Dictionary) | 2026-05-29 | ✅ Actif |
+| [ADR-020](ADR-020-grille-4px.md) | Grille 4px comme échelle dimensionnelle systémique | 2026-05-29 | ✅ Actif |
+| [ADR-021](ADR-021-atkinson-hyperlegible.md) | Atkinson Hyperlegible comme police principale | 2026-05-29 | ✅ Actif |
+| [ADR-022](ADR-022-lucide-icons.md) | Lucide Icons comme bibliothèque d'icônes | 2026-05-29 | ✅ Actif |
+| [ADR-023](ADR-023-echelle-typographique-minor-third.md) | Échelle typographique Minor Third rem + règles de line-height | 2026-05-29 | ✅ Actif |
+| [ADR-024](ADR-024-brand-palette-teal-accent-secondary.md) | Brand palette : Teal primaire, Accent rose, Secondary bordeaux | 2026-05-29 | ✅ Actif |
+| [ADR-025](ADR-025-densite-espacement-math-tokens.md) | Densité d'espacement : floor/ceil sur grille 4px via math tokens | 2026-05-29 | ✅ Actif |
+| [ADR-026](ADR-026-sync-figma-palettes-custom.md) | Stratégie de synchronisation Figma pour les palettes de marque custom | 2026-05-29 | ✅ Actif |
 
 ---
 

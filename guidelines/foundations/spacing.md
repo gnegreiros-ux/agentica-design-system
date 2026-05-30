@@ -85,3 +85,47 @@ margin-bottom: var(--sda-semantic-space-layout-component);
 | Marge entre sections | `layout.section` | 32px |
 | Espacement micro (badge, tag) | `primitive.space.1` via nouveau token sémantique | 4px |
 | Padding carte | Créer `semantic.space.card.padding` = `space.6` | 24px |
+
+---
+
+## Système de densité
+
+Voir [ADR-025](../../decisions/ADR-025-densite-espacement-math-tokens.md) pour l'argumentaire complet et la technique floor/ceil.
+
+Trois niveaux d'espacement adaptés aux contextes d'usage :
+
+| Mode | Facteur | Contexte | Groupe de tokens |
+|------|---------|----------|-----------------|
+| **compact** | ×0.75 | Dashboards, tableaux, outils data-dense | `semantic.space.compact.*` |
+| **normal** | ×1.0 | Usage courant — formulaires, settings | `semantic.space.control.*` (défaut) |
+| **comfortable** | ×1.25 | Marketing, onboarding, lecture longue | `semantic.space.comfortable.*` |
+
+### Valeurs résolues par mode — toutes sur grille 4px
+
+| Token de base | Normal | Compact | Comfortable |
+|--------------|--------|---------|-------------|
+| `control.padding-x` (base: 16px) | **16px** | **12px** | **20px** |
+| `control.padding-y` (base: 8px) | **8px** | **4px** | **12px** |
+| `control.gap` (base: 8px) | **8px** | **4px** | **12px** |
+| `layout.section` (base: 32px) | **32px** | **24px** | **40px** |
+| `layout.component` (base: 20px) | **20px** | **12px** | **28px** |
+
+La technique `floor()/ceil()` garantit que toutes les valeurs calculées restent des multiples de 4px.
+
+### Usage dans les composants
+
+```css
+/* Normal (défaut) */
+padding: var(--sda-semantic-space-control-padding-y) var(--sda-semantic-space-control-padding-x);
+
+/* Compact — SaaS data-dense */
+padding: var(--sda-semantic-space-compact-control-padding-y) var(--sda-semantic-space-compact-control-padding-x);
+
+/* Comfortable — marketing */
+padding: var(--sda-semantic-space-comfortable-control-padding-y) var(--sda-semantic-space-comfortable-control-padding-x);
+```
+
+```
+❌ Jamais de valeur intermédiaire inventée : padding: 10px
+✅ Si la densité ne correspond pas — choisir l'échelon le plus proche parmi les trois modes
+```

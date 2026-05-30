@@ -53,3 +53,12 @@
 | 2026-05-29 — | Modifié | `site/build.js`, `site/dist/index.html` — correction lien GitHub : `gnegreiros/` → `gnegreiros-ux/agentic-design-system` |
 | 2026-05-29 — | Modifié | `site/build.js`, `site/dist/site.css` — fix swatch couleur dans tableau tokens sémantiques : ajout `display:inline-block` |
 | 2026-05-29 — | Modifié | `site/build.js`, `site/dist/site.css`, `site/dist/foundations/spacing.html` — preview espacement en liste verticale, suppression `border-top` du label |
+| 2026-05-29 19:43 | Créé | `decisions/ADR-023-echelle-typographique-minor-third.md` |
+| 2026-05-29 19:43 | Créé | `decisions/ADR-024-brand-palette-teal-accent-secondary.md` |
+| 2026-05-29 19:44 | Créé | `decisions/ADR-025-densite-espacement-math-tokens.md` |
+| 2026-05-29 19:44 | Modifié | `tokens/primitives.json` — palettes brand (accent, secondary), échelle typo Minor Third rem (xs→5xl), lineHeight (reading/heading/display), densité (normal/comfortable/compact) |
+| 2026-05-29 19:44 | Modifié | `tokens/semantic.json` — action.primary → teal.9, border.focus → teal.9, nouveau groupe color.brand, typo étendue (detail/label/body/h5→h1/hero), espacement avec math tokens densité |
+| 2026-05-29 19:54 | Créé | `decisions/ADR-026-sync-figma-palettes-custom.md` |
+| 2026-05-29 19:54 | Modifié | `decisions/ADR-024-brand-palette-teal-accent-secondary.md` |
+| 2026-05-29 20:13 | Créé | `decisions/ADR-025-densite-espacement-math-tokens.md` |
+| 2026-05-29 20:33 | Modifié | `decisions/README.md` |
