@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>Densité d'espacement : floor/ceil sur grille 4px via math tokens — Système de design agentique</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 025</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-025 — Densité d'espacement : floor/ceil sur grille 4px via math tokens</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif — v2 (correction du 2026-05-29 : technique floor/ceil) <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-025-densite-espacement-math-tokens.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, ADR-020-grille-4px.md, ADR-011-tokens-studio.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Un même composant doit s'adapter à des contextes d'usage radicalement différents :</p>
+<ul><li><strong>Marketing / Onboarding</strong> : interfaces aérées, visuellement généreuses</li><li><strong>SaaS courant</strong> : densité normale, équilibre entre confort et efficacité</li><li><strong>SaaS data-dense</strong> : dashboards, tableaux, workflows — chaque pixel compte</li></ul>
+<p>Les tokens d'espacement précédents avaient des valeurs fixes. Les équipes contournaient ce système en créant des valeurs locales, produisant de la dérive.</p>
+<h3>Correction v2 — problème de la v1</h3>
+<p>La v1 utilisait un facteur unique swappable : <code>{primitive.space.4} * {semantic.space.density.factor}</code>. Ce pattern a un défaut structurel : avec un seul token de facteur, il est impossible d'encoder la direction d'arrondi (floor pour compact, ceil pour comfortable). Certains résultats atterrissaient hors de la grille 4px :</p>
+<table><thead><tr><th>Token</th><th>Compact (×0.75)</th><th>Comfortable (×1.25)</th></tr></thead><tbody><tr><td><code>space.2</code> (8px)</td><td><strong>6px</strong> ✗ hors grille</td><td><strong>10px</strong> ✗ hors grille</td></tr><tr><td><code>space.5</code> (20px)</td><td><strong>15px</strong> ✗ hors grille</td><td><strong>25px</strong> ✗ hors grille</td></tr></tbody></table>
+<p>Source de la correction : _Sam's fancy math equations in Tokens Studio_ (Sami Am Designs, 2024) — section « Scales that round to a (4)pixel grid ».</p>
+<hr>
+<h2>Décision</h2>
+<h3>Trois niveaux de densité</h3>
+<table><thead><tr><th>Mode</th><th>Facteur</th><th>Arrondi</th><th>Contexte type</th></tr></thead><tbody><tr><td><code>compact</code></td><td>0.75</td><td><code>floor()</code></td><td>Dashboards, tableaux, outils data-dense</td></tr><tr><td><code>normal</code></td><td>1.0</td><td>aucun</td><td>Usage courant — formulaires, settings, profil</td></tr><tr><td><code>comfortable</code></td><td>1.25</td><td><code>ceil()</code></td><td>Marketing, onboarding, pages de lecture</td></tr></tbody></table>
+<h3>Technique : floor/ceil + grid-unit</h3>
+<p><strong>Formule générale :</strong></p>
+<pre class="code-block"><code class="lang-text">compact    → floor(valeur × facteur / grid-unit) × grid-unit
+comfortable → ceil(valeur × facteur / grid-unit) × grid-unit</code></pre>
+<p>Avec <code>primitive.density.grid-unit = 4</code>.</p>
+<p>Cette technique, issue de _Sam's math equations_, garantit que <strong>100% des valeurs calculées sont des multiples de 4px</strong>, quelle que soit la valeur de base.</p>
+<h3>Implémentation dans les tokens</h3>
+<p><strong>Niveau primitif</strong> :</p>
+<pre class="code-block"><code class="lang-json">"primitive.density.factor.normal"      = 1
+"primitive.density.factor.comfortable" = 1.25
+"primitive.density.factor.compact"     = 0.75
+"primitive.density.grid-unit"          = 4</code></pre>
+<p><strong>Niveau sémantique</strong> — trois groupes explicites :</p>
+<pre class="code-block"><code class="lang-json">"semantic.space.control.padding-x"            = {primitive.space.4}            // 16px (normal)
+"semantic.space.compact.control.padding-x"    = floor(space.4 × 0.75 / 4) × 4  // 12px
+"semantic.space.comfortable.control.padding-x"= ceil(space.4 × 1.25 / 4) × 4   // 20px</code></pre>
+<p>Syntaxe Tokens Studio réelle :</p>
+<pre class="code-block"><code class="lang-json">"value": "floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}"</code></pre>
+<h3>Résultats par mode — toutes valeurs sur grille 4px</h3>
+<table><thead><tr><th>Token sémantique</th><th>Base</th><th>Normal</th><th>Compact</th><th>Comfortable</th></tr></thead><tbody><tr><td><code>*.control.padding-x</code></td><td>space.4 (16px)</td><td><strong>16px</strong></td><td><strong>12px</strong></td><td><strong>20px</strong></td></tr><tr><td><code>*.control.padding-y</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong> ¹</td><td><strong>12px</strong> ²</td></tr><tr><td><code>*.control.gap</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong></td><td><strong>12px</strong></td></tr><tr><td><code>*.layout.section</code></td><td>space.8 (32px)</td><td><strong>32px</strong></td><td><strong>24px</strong></td><td><strong>40px</strong></td></tr><tr><td><code>*.layout.component</code></td><td>space.5 (20px)</td><td><strong>20px</strong></td><td><strong>12px</strong> ³</td><td><strong>28px</strong> ⁴</td></tr></tbody></table>
+<p>Toutes les valeurs sont des multiples de 4. Zéro exception.</p>
+<blockquote><p>¹ 8 × 0.75 = 6 → floor(6/4)×4 = <strong>4px</strong> ² 8 × 1.25 = 10 → ceil(10/4)×4 = <strong>12px</strong> ³ 20 × 0.75 = 15 → floor(15/4)×4 = <strong>12px</strong> ⁴ 20 × 1.25 = 25 → ceil(25/4)×4 = <strong>28px</strong></p></blockquote>
+<h3>Groupes de tokens et compatibilité</h3>
+<p><code>semantic.space.control.*</code> et <code>semantic.space.layout.*</code> restent les <strong>alias normaux</strong> (densité par défaut). <code>component.json</code> continue de les référencer sans changement.</p>
+<p>Pour utiliser une densité différente, on référence explicitement le groupe :</p>
+<ul><li><code>{semantic.space.compact.control.padding-x}</code> → compact</li><li><code>{semantic.space.comfortable.layout.section}</code> → comfortable</li></ul>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi floor pour compact et ceil pour comfortable ?</h3>
+<ul><li><code>floor()</code> arrondit <strong>vers le bas</strong> — adapté quand on réduit l'espace (compact) : on ne veut jamais dépasser la valeur cible par excès.</li><li><code>ceil()</code> arrondit <strong>vers le haut</strong> — adapté quand on augmente l'espace (comfortable) : on ne veut jamais tombe en-dessous de la valeur cible.</li><li><code>round()</code> seul (sans direction) donne des résultats imprévisibles selon la position de la valeur calculée par rapport au step de grille.</li></ul>
+<h3>Pourquoi des groupes explicites plutôt qu'un facteur unique swappable ?</h3>
+<p>La v1 utilisait un facteur unique. Son problème : le même token ne peut pas encoder <code>floor()</code> pour compact et <code>ceil()</code> pour comfortable — la formule doit connaître la direction d'arrondi à l'avance.</p>
+<p>Trois groupes explicites :</p>
+<ul><li>Encodent la direction dans la formule elle-même (floor ou ceil)</li><li>Garantissent l'alignement grille sans exception</li><li>Restent lisibles : <code>space.compact.control.padding-x</code> exprime clairement son contexte</li><li>Sont compatibles avec les theme sets Tokens Studio (chaque groupe = un theme)</li></ul>
+<h3>Pourquoi les facteurs 0.75 / 1.0 / 1.25 ?</h3>
+<p>Mémorisables (−25%, ±0%, +25%), perceptuellement significatifs (Nielsen : 25% de changement = perceptible mais non perturbant), et ils produisent des multiples de 4 après floor/ceil dans tous les cas de notre échelle.</p>
+<h3>Pourquoi des math tokens et pas des CSS variables ?</h3>
+<p>Les math tokens sont résolus à la compilation (Style Dictionary), produisant du CSS statique portable (iOS, Android, emails). Les CSS variables nécessitent un mécanisme runtime supplémentaire.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Facteur unique swappable (v1)</strong></td><td>Impossible d'encoder floor/ceil directionnels dans une seule formule — valeurs hors grille garanties</td></tr><tr><td><strong><code>round()</code> seul sans floor/ceil</strong></td><td>Résultats imprévisibles selon la position sur la grille (ex: <code>round(6/4)*4 = 8px</code> ≠ réduit)</td></tr><tr><td><strong>CSS custom property <code>--density</code></strong></td><td>Non portable (iOS/Android/email), nécessite infra CSS runtime</td></tr><tr><td><strong>Classes utilitaires (<code>density-compact</code>)</strong></td><td>Sort du système de gouvernance token</td></tr><tr><td><strong>Valeurs fixes pré-calculées (sans math)</strong></td><td>Perd la traçabilité entre base et densité — un changement de base ne se propage plus</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les tokens :</strong></p>
+<ul><li><code>primitive.density.grid-unit = 4</code> ajouté (diviseur de grille)</li><li><code>primitive.density.factor.*</code> conservés (0.75 / 1.0 / 1.25)</li><li><code>semantic.space.control.*</code> et <code>semantic.space.layout.*</code> = densité normale (références directes, sans math)</li><li><code>semantic.space.compact.*</code> et <code>semantic.space.comfortable.*</code> ajoutés avec formules floor/ceil</li><li><code>semantic.space.density.factor.*</code> = aliases de documentation vers les primitifs</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Pour une interface dense : référencer <code>semantic.space.compact.*</code></li><li>Pour une page marketing : référencer <code>semantic.space.comfortable.*</code></li><li>Pour l'usage standard : <code>semantic.space.control.*</code> (défaut, inchangé)</li></ul>
+<p><strong>Pour les équipes :</strong></p>
+<ul><li><code>component.json</code> et le code existant ne changent pas (backward-compatible)</li><li>Ajouter un nouveau token de spacing : définir les trois variantes (normal + compact + comfortable) en même temps</li></ul>
+<p><strong>Pour Tokens Studio :</strong></p>
+<ul><li><code>floor()</code> et <code>ceil()</code> sont des fonctions math natives supportées</li><li>Chaque groupe de densité peut devenir un theme set distinct</li><li>Référence technique : https://docs.tokens.studio/manage-tokens/token-values/math</li></ul>
+<p><strong>Risques :</strong></p>
+<ul><li>Style Dictionary < 4.x ne supporte pas <code>floor()</code>/<code>ceil()</code> nativement — une transform custom peut être nécessaire (voir ADR-019)</li><li><code>padding-y</code> compact = 4px : valeur très serrée, à valider avec un test utilisateur sur les composants réels avant déploiement</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-024.html" class="ds-btn secondary" style="font-size:13px">← ADR-024</a>
+    <a href="adr-026.html" class="ds-btn secondary" style="font-size:13px">ADR-026 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>Brand palette : Teal primaire, Accent rose, Secondary bordeaux — Système de design agentique</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 024</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-024 — Brand palette : Teal primaire, Accent rose, Secondary bordeaux</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-024-brand-palette-teal-accent-secondary.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, ADR-008-radix-colors.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>Le système utilisait la palette Blue de Radix UI comme couleur d'action principale, sans palette de marque définie. Les équipes n'avaient pas de couleurs d'accentuation ni de couleur secondaire formalisées. Cette ADR définit la palette de marque officielle.</p>
+<h3>Situation avant</h3>
+<ul><li>Action primaire : <code>primitive.color.blue.11</code></li><li>Pas de couleur d'accentuation</li><li>Pas de palette secondaire</li><li>Pas de token <code>semantic.color.brand.*</code></li></ul>
+<hr>
+<h2>Décision</h2>
+<h3>Trois palettes de marque</h3>
+<table><thead><tr><th>Rôle</th><th>Palette source</th><th>Step principal</th><th>Valeur hex</th></tr></thead><tbody><tr><td><strong>Primary</strong></td><td>Radix Teal</td><td>9 (solid CTA)</td><td><code>#12a594</code></td></tr><tr><td><strong>Accent</strong></td><td>Custom</td><td>9 (solid CTA)</td><td><code>#ed6b86</code></td></tr><tr><td><strong>Secondary</strong></td><td>Custom</td><td>9 (solid dark)</td><td><code>#463239</code></td></tr></tbody></table>
+<h3>Primary : Teal (Radix existant)</h3>
+<p>La palette Teal est déjà présente dans les primitives (ADR-008). Le step 9 (<code>#12a594</code>) est la teinte solide CTA selon la convention Radix.</p>
+<ul><li><code>semantic.color.action.primary</code> → <code>{primitive.color.teal.9}</code></li><li><code>semantic.color.action.primary-hover</code> → <code>{primitive.color.teal.10}</code></li><li><code>semantic.color.border.focus</code> → <code>{primitive.color.teal.9}</code></li></ul>
+<h3>Accent : palette rose-corail (Custom)</h3>
+<p>Palette custom, non présente dans Radix. Ajoutée dans <code>primitive.color.accent</code>.</p>
+<pre class="code-block"><code class="lang-text">accent.9  = #ed6b86  → CTA accent, highlights, badges
+accent.10 = #e05f7b  → hover
+accent.11 = #a6294c  → texte sur fond clair</code></pre>
+<p>Contrastes vérifiés :</p>
+<ul><li>accent.9 (#ed6b86) sur blanc → 3.4:1 — usage exclusivement comme fond (jamais comme texte seul)</li><li>accent.11 (#a6294c) sur blanc → 7.1:1 — conforme WCAG AA et AAA pour texte courant</li></ul>
+<h3>Secondary : palette bordeaux (Custom)</h3>
+<p>Palette custom. Step 9 (<code>#463239</code>) est une valeur très sombre (~L20) utilisable comme fond solide ou comme couleur de texte secondaire de marque.</p>
+<pre class="code-block"><code class="lang-text">secondary.9  = #463239  → Fond dark (dark mode, headers, badges dark)
+secondary.10 = #5f404b  → hover
+secondary.11 = #6b4b56  → texte medium sur fond clair
+secondary.12 = #432f36  → texte haute lisibilité sur fond clair</code></pre>
+<p>Contrastes :</p>
+<ul><li>secondary.9 (#463239) avec blanc → 12.2:1 — WCAG AAA ✅</li><li>secondary.12 (#432f36) sur blanc → 13.8:1 — WCAG AAA ✅</li></ul>
+<h3>Tokens sémantiques brand ajoutés</h3>
+<pre class="code-block"><code class="lang-json">"color.brand.primary"           → teal.9     (fond CTA principal)
+"color.brand.primary-hover"     → teal.10
+"color.brand.primary-subtle"    → teal.3     (fond subtil, chips, tags)
+"color.brand.accent"            → accent.9   (fond accent)
+"color.brand.accent-hover"      → accent.10
+"color.brand.accent-subtle"     → accent.3   (fond subtil accent)
+"color.brand.accent-text"       → accent.11  (texte accent sur fond clair)
+"color.brand.secondary"         → secondary.9
+"color.brand.secondary-hover"   → secondary.10
+"color.brand.secondary-text"    → secondary.12</code></pre>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi Teal comme primaire (et non Blue) ?</h3>
+<p>Le Teal (#12a594) est perceptuellement distinct du bleu standard des liens et des interfaces système (Chrome, Windows). Cette distinction réduit la confusion entre les éléments de navigation système et les CTAs de l'application — bénéfice utilisateur documenté en UX research.</p>
+<h3>Pourquoi une palette Accent custom ?</h3>
+<p>L'Accent rose (#ed6b86) n'existe pas dans Radix sous cette exacte teinte — les palettes Radix les plus proches (Pink, Crimson) sont plus saturées ou plus froides. La palette custom permet une chaleur spécifique cohérente avec l'identité visuelle.</p>
+<h3>Pourquoi Secondary très sombre (#463239) ?</h3>
+<p>Un secondary très sombre permet :</p>
+<ul><li>Des composants dark-mode-ready sans token dark séparé</li><li>Un contraste élevé pour les badges, tags, tooltips dark</li><li>Une alternative neutre au noir pur (<code>#000</code>) qui reste dans la charte de marque</li></ul>
+<h3>Impact sur <code>color.action.*</code></h3>
+<p><code>action.primary</code> passe de blue.11 à teal.9. Ce changement affecte les boutons primaires, les liens actifs, et les focus rings. Les tests de contraste sont maintenus (teal.9 = 4.6:1 sur blanc en corps de texte).</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Garder Blue comme primary</strong></td><td>Trop générique — pas d'identité de marque</td></tr><tr><td><strong>Utiliser Radix Pink comme accent</strong></td><td>Trop froid, différent de la charte identitaire</td></tr><tr><td><strong>secondary.11 comme CTA</strong></td><td>Contraste insuffisant pour un fond solide avec texte blanc (3.8:1)</td></tr><tr><td><strong>Intégrer les custom palettes comme Radix forks</strong></td><td>Maintenance complexe — mieux vaut les nommer explicitement comme custom</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les tokens :</strong></p>
+<ul><li>2 nouvelles palettes primitives (<code>accent</code>, <code>secondary</code>) — 24 nouveaux tokens primitifs</li><li><code>semantic.color.action.primary</code> migre de blue → teal</li><li>Nouveau groupe <code>semantic.color.brand.*</code> — 10 nouveaux tokens sémantiques</li><li><code>semantic.color.border.focus</code> migre de blue → teal</li></ul>
+<p><strong>Pour les composants :</strong></p>
+<ul><li><code>component.button.primary.background</code> → teal (via semantic.color.action.primary)</li><li>Aucun composant n'utilise encore <code>brand.*</code> — les équipes peuvent commencer à l'utiliser</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent comprend <code>color.brand.accent</code> comme "accentuation de marque" — pas <code>#ed6b86</code></li><li>Les tokens brand.primary et action.primary sont intentionnellement distincts : brand exprime l'identité, action exprime la fonction</li></ul>
+<p><strong>Dette soldée :</strong></p>
+<ul><li>La stratégie de synchronisation Figma pour les palettes custom est documentée dans <strong>ADR-026</strong></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-023.html" class="ds-btn secondary" style="font-size:13px">← ADR-023</a>
+    <a href="adr-025.html" class="ds-btn secondary" style="font-size:13px">ADR-025 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

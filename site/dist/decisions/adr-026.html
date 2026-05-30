@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>Stratégie de synchronisation Figma pour les palettes de marque custom — Système de design agentique</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 026</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead, Principal Designer</div>
+</div><h1>ADR-026 — Stratégie de synchronisation Figma pour les palettes de marque custom</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead, Principal Designer <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-026-sync-figma-palettes-custom.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-011-tokens-studio.md, decisions/ADR-024-brand-palette-teal-accent-secondary.md, tokens/primitives.json, tokens/semantic.json</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>ADR-024 a introduit deux palettes de marque custom (<code>accent</code> rose-corail et <code>secondary</code> bordeaux) dans <code>tokens/primitives.json</code>. Contrairement aux palettes Radix UI déjà présentes (Teal, Blue, Red, etc.), ces palettes :</p>
+<p>1. <strong>Ne sont pas dans Figma Community</strong> — Tokens Studio ne peut pas les importer depuis un fichier partagé officiel 2. <strong>N'ont pas de documentation de référence externe</strong> — les utilisateurs doivent comprendre chaque step depuis le JSON seul 3. <strong>Peuvent évoluer</strong> — les valeurs hex sont décisions de design, pas des constantes issues d'un système tiers</p>
+<p>La question soulevée dans la dette d'ADR-024 :</p>
+<blockquote><p>Comment les palettes custom sont-elles synchronisées avec Figma de manière fiable, gouvernée, et sans créer une seconde source de vérité ?</p></blockquote>
+<hr>
+<h2>Décision</h2>
+<h3>Principe : même pipeline que les palettes Radix</h3>
+<p>Les palettes custom (<code>accent</code>, <code>secondary</code>) sont traitées <strong>exactement comme les palettes Radix</strong> dans le pipeline de sync. Il n'existe pas de processus spécial pour elles.</p>
+<pre class="code-block"><code class="lang-text">tokens/primitives.json
+  ↓ (Tokens Studio lit ce fichier)
+Variables Figma — Collection "Primitives"
+  ↓ (les designers utilisent via semantic tokens)
+Variables Figma — Collection "Semantic" + "Component"</code></pre>
+<p>Tokens Studio ne fait pas de distinction entre une palette Radix et une palette custom — il lit le JSON et mappe les tokens à des Variables Figma selon la structure du fichier.</p>
+<hr>
+<h3>Configuration Tokens Studio</h3>
+<p><strong>Collection Figma cible</strong> : <code>Primitives</code> (même collection que <code>primitive.color.teal</code>, <code>primitive.color.blue</code>, etc.)</p>
+<p><strong>Nommage automatique dans Figma</strong> :</p>
+<ul><li><code>primitive/color/accent/1</code> → variable Figma <code>accent/1</code></li><li><code>primitive/color/accent/9</code> → variable Figma <code>accent/9</code></li><li><code>primitive/color/secondary/9</code> → variable Figma <code>secondary/9</code></li><li>etc.</li></ul>
+<p>Les tokens <code>_readme</code> (type <code>other</code>) sont ignorés par Tokens Studio à l'import — ils ne génèrent pas de variables Figma. Ils servent exclusivement à la documentation du JSON pour les agents et développeurs.</p>
+<p><strong>Import order</strong> (inchangé depuis ADR-011) : 1. <code>primitives.json</code> → Collection <code>Primitives</code> 2. <code>semantic.json</code> → Collection <code>Semantic</code> 3. <code>component.json</code> → Collection <code>Component</code></p>
+<hr>
+<h3>Quand les valeurs custom changent</h3>
+<p>Toute modification des valeurs hex d'une palette custom suit le processus standard :</p>
+<p>1. Ouvrir une PR de type <code>token(primitives)</code> sur une branche <code>token/brand-palette-update</code> 2. Modifier les valeurs dans <code>tokens/primitives.json</code> 3. Approbation obligatoire du <strong>Principal Designer</strong> (règle gouvernance ADR-001, ADR-004) 4. Merge → le pipeline de sync Tokens Studio détecte le changement au prochain pull depuis Figma</p>
+<p>Les designers <strong>ne modifient pas</strong> les valeurs directement dans Figma. Si une teinte ne convient pas, ils ouvrent une issue / soumettent une PR — pas une modification locale de variable Figma.</p>
+<hr>
+<h3>Documentation des steps dans Figma</h3>
+<p>Les descriptions des variables Figma (champ <code>description</code> dans Tokens Studio) sont renseignées depuis le champ <code>$description</code> de chaque token JSON. Les designers voient directement dans le panneau Figma :</p>
+<table><thead><tr><th>Variable Figma</th><th>Description automatique</th></tr></thead><tbody><tr><td><code>accent/9</code></td><td>Solid background — brand accent / CTA secondaire</td></tr><tr><td><code>accent/11</code></td><td>Texte accent — 7.1:1 sur blanc (WCAG AA+AAA)</td></tr><tr><td><code>secondary/9</code></td><td>Solid dark background — 12.2:1 avec texte blanc</td></tr><tr><td><code>secondary/12</code></td><td>High-contrast text — 13.8:1 sur blanc (WCAG AAA)</td></tr></tbody></table>
+<p>La règle d'usage par step (héritée de la convention Radix — steps 1-2 fonds, 9-10 solides, 11-12 texte) s'applique aux palettes custom. Elle est documentée dans le champ <code>_readme</code> de chaque palette dans <code>primitives.json</code>.</p>
+<hr>
+<h3>Validation après sync</h3>
+<p>Après chaque mise à jour de palette custom dans Figma, le Principal Designer valide :</p>
+<ul><li>[ ] Les 12 steps de chaque palette apparaissent dans la collection <code>Primitives</code></li><li>[ ] Les tokens sémantiques <code>semantic/color/brand/*</code> résolvent correctement les alias</li><li>[ ] Aucune variable Figma orpheline (alias cassé) dans les collections <code>Semantic</code> ou <code>Component</code></li><li>[ ] Les descriptions de variables correspondent aux <code>$description</code> du JSON</li></ul>
+<hr>
+<h3>Ce qu'un agent peut faire</h3>
+<pre class="code-block"><code class="lang-text">✅ Modifier les valeurs hex dans tokens/primitives.json via PR
+✅ Ajouter un nouveau step intermédiaire (ex: accent/9-5) si justifié
+✅ Mettre à jour les $description pour améliorer la documentation Figma
+❌ Modifier les variables Figma directement (jamais — direction JSON → Figma)
+❌ Créer une nouvelle palette sans ADR et sans approbation Principal Designer</code></pre>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi ne pas créer une collection Figma séparée pour les palettes custom ?</h3>
+<p>Une collection <code>Brand</code> séparée des <code>Primitives</code> :</p>
+<ul><li>Introduit une asymétrie dans la structure Figma vs la structure JSON (où tout est dans <code>primitives.json</code>)</li><li>Complique les règles d'import Tokens Studio (ordre, résolution des alias)</li><li>Ne bénéficie pas aux agents — qui travaillent sur le JSON, pas sur Figma</li></ul>
+<p>Garder tout dans la collection <code>Primitives</code> préserve la cohérence entre JSON et Figma.</p>
+<h3>Pourquoi les <code>_readme</code> ne créent-ils pas de variables Figma ?</h3>
+<p>Tokens Studio ignore les tokens de type <code>other</code> à l'import des variables (ils ne sont pas des valeurs de design — pas de <code>$value</code> utile). Ce comportement est documenté et intentionnel. Les <code>_readme</code> sont un pattern de documentation interne au JSON.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Créer les palettes custom manuellement dans Figma</strong></td><td>Crée une seconde source de vérité hors du repo. Dérive garantie à la prochaine mise à jour.</td></tr><tr><td><strong>Héberger les palettes custom dans un fichier JSON séparé</strong></td><td>Fragmente <code>primitives.json</code> sans bénéfice — Tokens Studio peut gérer un seul fichier pour tous les primitifs.</td></tr><tr><td><strong>Utiliser des Figma Styles (pas des Variables)</strong></td><td>Les Figma Styles ne supportent pas les alias/références — les tokens sémantiques ne pourraient pas pointer vers les primitifs. Variables Figma est le bon mécanisme.</td></tr><tr><td><strong>Attendre un fork Radix</strong></td><td>Les couleurs custom ne correspondent à aucune palette Radix existante. Attendre une hypothétique palette Radix similaire n'est pas actionnable.</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Immédiates :</strong></p>
+<ul><li>Les palettes <code>accent</code> et <code>secondary</code> sont disponibles dans Figma au prochain pull Tokens Studio depuis le repo</li><li>Aucune configuration supplémentaire requise — elles apparaissent automatiquement dans la collection <code>Primitives</code></li></ul>
+<p><strong>Pour les designers :</strong></p>
+<ul><li>Même workflow que pour les palettes Radix — rien à apprendre de nouveau</li><li>Les descriptions de step sont visibles directement dans le panneau Variables Figma</li><li>Toute demande de modification de teinte passe par une PR, pas par une modification Figma locale</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Les agents continuent de travailler exclusivement sur les fichiers JSON</li><li>La sync Figma est transparente pour les agents — elle ne change pas les règles d'usage des tokens</li></ul>
+<p><strong>Pour la gouvernance :</strong></p>
+<ul><li>Une palette custom sans ADR = dérive — l'audit-tokens.js peut détecter des tokens sans documentation associée</li><li>Toute nouvelle palette custom déclenche la création d'un ADR + approbation Principal Designer</li></ul>
+<p><strong>Dette soldée :</strong></p>
+<ul><li>La dette documentée dans ADR-024 ("un ADR séparé devra documenter la stratégie de sync Figma pour les palettes custom") est soldée par cet ADR.</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-025.html" class="ds-btn secondary" style="font-size:13px">← ADR-025</a>
+    <span></span>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

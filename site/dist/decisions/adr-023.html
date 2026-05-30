@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
+<title>Échelle typographique : Minor Third rem + règles de line-height — Système de design agentique</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">ADS</span>
+    <span class="logo-name">
+      <span class="lang-fr">Système de design agentique</span>
+      <span class="lang-en">Agentic Design System</span>
+    </span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale"><a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a><a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a></nav>
+  <div class="lang-toggle-group" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+  </button>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a></div></aside>
+  <main class="content" role="main">
+<div class="adr-meta">
+  <div class="adr-meta-item"><strong>ADR</strong> 023</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
+</div><h1>ADR-023 — Échelle typographique : Minor Third rem + règles de line-height</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-023-echelle-typographique-minor-third.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, guidelines/foundations/typography.md</p></blockquote>
+<hr>
+<h2>Contexte</h2>
+<p>L'échelle typographique précédente comportait 3 tailles (sm/md/xl en px) sans logique d'échelle formalisée, sans gestion du line-height par contexte, et sans distinction entre les besoins des contextes marketing, e-commerce et SaaS. L'objectif est une échelle accessible, cohérente, et adaptée aux profils d'usage.</p>
+<h3>Situation avant</h3>
+<pre class="code-block"><code class="lang-json">"fontSize": {
+  "sm": "14px",
+  "md": "16px",
+  "xl": "24px"
+},
+"lineHeight": {
+  "tight": "1.25",
+  "normal": "1.5"
+}</code></pre>
+<p>Trois tailles en px, deux line-heights sans règles d'assignation.</p>
+<hr>
+<h2>Décision</h2>
+<h3>Unité : rem (relatif à la base navigateur)</h3>
+<p>Toutes les tailles de police sont exprimées en <code>rem</code> (reference = 1rem = 16px). Cette convention :</p>
+<ul><li>Respecte les préférences de zoom utilisateur (accessibilité WCAG)</li><li>Permet aux utilisateurs malvoyants d'agrandir sans casser les mises en page relatives</li><li>Reste compatible avec la grille 4px (les px équivalents sont des multiples de 4)</li></ul>
+<h3>Échelle : Minor Third (ratio 1.2)</h3>
+<p>L'échelle des grandes tailles (titres) suit la gamme musicale Minor Third (ratio 1.2), arrondie au multiple de 4px le plus proche pour respecter la grille.</p>
+<pre class="code-block"><code class="lang-text">16px × 1.200¹ = 19.2  → 20px  (lg)
+16px × 1.200² = 23.0  → 24px  (xl)
+16px × 1.200³ = 27.6  → 28px  (2xl)
+16px × 1.200⁴ = 33.2  → 32px  (3xl)
+16px × 1.200⁵ = 39.8  → 40px  (4xl)</code></pre>
+<table><thead><tr><th>Token</th><th>rem</th><th>px</th><th>Line-height</th><th>Rôle</th></tr></thead><tbody><tr><td><code>fontSize.xs</code></td><td>0.75rem</td><td>12px</td><td>1.6</td><td>Détails, annotations, captions</td></tr><tr><td><code>fontSize.sm</code></td><td>0.875rem</td><td>14px</td><td>1.6</td><td>Labels, métadonnées, helper text</td></tr><tr><td><code>fontSize.base</code></td><td>1rem</td><td>16px</td><td>1.6</td><td>Corps de texte principal</td></tr><tr><td><code>fontSize.lg</code></td><td>1.25rem</td><td>20px</td><td>1.1</td><td>Heading 5, sous-titres</td></tr><tr><td><code>fontSize.xl</code></td><td>1.5rem</td><td>24px</td><td>1.1</td><td>Heading 4</td></tr><tr><td><code>fontSize.2xl</code></td><td>1.75rem</td><td>28px</td><td>1.1</td><td>Heading 3</td></tr><tr><td><code>fontSize.3xl</code></td><td>2rem</td><td>32px</td><td>1.0</td><td>Heading 2</td></tr><tr><td><code>fontSize.4xl</code></td><td>2.5rem</td><td>40px</td><td>1.0</td><td>Heading 1</td></tr><tr><td><code>fontSize.5xl</code></td><td>3rem</td><td>48px</td><td>1.0</td><td>Hero display</td></tr></tbody></table>
+<h3>Règles de line-height</h3>
+<p>Trois valeurs seulement, assignées par contexte :</p>
+<table><thead><tr><th>Token</th><th>Valeur</th><th>Règle d'assignation</th></tr></thead><tbody><tr><td><code>lineHeight.reading</code></td><td>1.6</td><td>Tout texte de taille ≤ base (xs, sm, base)</td></tr><tr><td><code>lineHeight.heading</code></td><td>1.1</td><td>Titres intermédiaires (lg, xl, 2xl)</td></tr><tr><td><code>lineHeight.display</code></td><td>1.0</td><td>Grands titres (3xl, 4xl, 5xl)</td></tr></tbody></table>
+<p><strong>Justification :</strong></p>
+<ul><li>1.6 sur les petites tailles → lisibilité maximale, conformité WCAG 1.4.12</li><li>1.0–1.1 sur les grands titres → impact visuel, cohérence entre sites marketing et SaaS</li></ul>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi Minor Third ?</h3>
+<p>Le Minor Third (1.200) est l'échelle la plus adaptée aux interfaces hybrides (marketing + SaaS) :</p>
+<ul><li>Assez expressive pour les pages marketing (titres visuellement hiérarchisés)</li><li>Assez sobre pour les SaaS (pas d'écarts gigantesques entre niveaux)</li><li>Les valeurs arrondies à 4px restent toutes mémorisables</li></ul>
+<h3>Pourquoi rem et pas px ?</h3>
+<p>Les préférences d'accessibilité navigateur (zoom texte, taille police de base) utilisent rem comme levier. Un système en px ignore ces préférences. La WCAG recommande les unités relatives pour le texte (Success Criterion 1.4.4).</p>
+<h3>Pourquoi line-height 1.6 pour les textes courants ?</h3>
+<p>La WCAG 2.1 Success Criterion 1.4.12 (Text Spacing) demande que le contenu reste lisible avec un line-height de 1.5×. Une valeur par défaut de 1.6 couvre d'office ce critère sans nécessiter d'override.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Major Second (1.125)</strong></td><td>Différenciation trop faible entre les niveaux de titre</td></tr><tr><td><strong>Perfect Fourth (1.333)</strong></td><td>Trop dramatique pour les interfaces SaaS à forte densité d'information</td></tr><tr><td><strong>Scale fixe (8, 12, 16, 20, 24, 32, 40)</strong></td><td>Pas de ratio mathématique — difficile à étendre cohéremment</td></tr><tr><td><strong>Garder les px</strong></td><td>Incompatible avec les préférences de zoom navigateur (WCAG 1.4.4)</td></tr><tr><td><strong>line-height unique 1.5</strong></td><td>Trop compressé sur les petits textes, trop aéré sur les très grands</td></tr></tbody></table>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les tokens :</strong></p>
+<ul><li><code>primitive.fontSize</code> passe de 3 à 9 valeurs (xs → 5xl)</li><li><code>primitive.lineHeight</code> passe de 2 à 3 valeurs (reading, heading, display)</li><li><code>semantic.typography</code> s'étend de 3 styles (body, label, heading) à 9 (detail, label, body, h5→h1, hero)</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent peut choisir le niveau typographique correct par intention (corps vs titre vs hero) sans improviser des tailles</li></ul>
+<p><strong>Pour les équipes :</strong></p>
+<ul><li>Règle simple : si c'est du texte courant → base (1rem) ; si c'est un titre → choisir parmi lg→4xl ; si c'est de la déco hero → 5xl</li><li>Aucune valeur intermédiaire en dur autorisée</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+    <a href="adr-022.html" class="ds-btn secondary" style="font-size:13px">← ADR-022</a>
+    <a href="adr-024.html" class="ds-btn secondary" style="font-size:13px">ADR-024 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span>
+      <span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>
