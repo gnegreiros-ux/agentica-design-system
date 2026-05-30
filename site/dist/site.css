@@ -28,13 +28,7 @@ body{
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
-.logo-mark{
-  width:32px;height:32px;border-radius:var(--sda-semantic-radius-control);
-  background:var(--sda-semantic-color-action-primary);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:800;letter-spacing:.06em;flex-shrink:0;
-}
-.logo-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.logo-img{height:28px;width:auto;flex-shrink:0;display:block}
 .logo-version{font-size:11px;color:var(--sda-semantic-color-text-secondary);background:var(--sda-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{

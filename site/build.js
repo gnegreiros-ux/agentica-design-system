@@ -206,13 +206,7 @@ body{
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
-.logo-mark{
-  width:32px;height:32px;border-radius:var(--sda-semantic-radius-control);
-  background:var(--sda-semantic-color-action-primary);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:800;letter-spacing:.06em;flex-shrink:0;
-}
-.logo-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.logo-img{height:28px;width:auto;flex-shrink:0;display:block}
 .logo-version{font-size:11px;color:var(--sda-semantic-color-text-secondary);background:var(--sda-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
@@ -732,7 +726,8 @@ document.addEventListener('DOMContentLoaded', () => {
 `; }
 
 // ─── HTML LAYOUT ───────────────────────────────────────────────────────────
-function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidth = false }) {
+function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false }) {
+  const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
   const navLinks = [
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
@@ -773,23 +768,28 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, décisions et gouvernance.">
-<title>${title} — Agentica</title>
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<title>${docTitle}</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="${title} — Agentica">
-<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent.">
+<meta property="og:title" content="${docTitle}">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
 <meta property="og:url" content="https://designsystem.gnegreiros.com/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${title} — Agentica">
-<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent.">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="${docTitle}">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='4' font-family='sans-serif' font-size='13' font-weight='800' fill='white'>A</text></svg>">
 </head>
 <body>
 <a class="skip-link" href="#main-content">
@@ -798,8 +798,7 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 </a>
 <header class="site-header" role="banner">
   <a class="logo" href="${base}index.html" aria-label="Agentica — Accueil">
-    <span class="logo-mark" aria-hidden="true">A</span>
-    <span class="logo-name">Agentica</span>
+    <img src="${base}logo.svg" alt="Agentica" class="logo-img" height="28" width="125">
   </a>
   <span class="logo-version">v1.0.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
@@ -1224,7 +1223,7 @@ function buildHome(adrs) {
 </div>
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', depth: 0, fullWidth: true, body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, body }));
 }
 
 // ─── PAGE: COLOR ────────────────────────────────────────────────────────────
@@ -2246,9 +2245,31 @@ function build() {
   write(path.join(DIST, 'site.js'), siteJS());
 
   // Copie de l'image sociale (OG image)
-  const socialSrc = path.join(__dirname, '..', 'Prototype redesign site web système de design', 'inspiration', 'Agentica social image.jpg');
+  const socialSrc = path.join(__dirname, '..', 'Brand', 'Agentica social image.jpg');
   const socialDst = path.join(DIST, 'social.jpg');
   if (fs.existsSync(socialSrc)) fs.copyFileSync(socialSrc, socialDst);
+
+  // Favicons depuis Brand/Favicon/
+  const brandFaviconDir = path.join(__dirname, '..', 'Brand', 'Favicon');
+  ['favicon.ico','favicon-16x16.png','favicon-32x32.png','apple-touch-icon.png','android-chrome-192x192.png','android-chrome-512x512.png'].forEach(f => {
+    const src = path.join(brandFaviconDir, f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, f));
+  });
+  write(path.join(DIST, 'site.webmanifest'), JSON.stringify({
+    name: 'Agentica',
+    short_name: 'Agentica',
+    icons: [
+      { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' }
+    ],
+    theme_color: '#12A594',
+    background_color: '#ffffff',
+    display: 'standalone'
+  }, null, 2));
+
+  // Logo SVG depuis Brand/logo/
+  const logoSrc = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - teal.svg');
+  if (fs.existsSync(logoSrc)) fs.copyFileSync(logoSrc, path.join(DIST, 'logo.svg'));
 
   const adrs = loadADRs();
   buildHome(adrs);
