@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Couleur — Système de design agentique</title>
+<meta name="description" content="Système de couleur en trois niveaux : palettes primitives Radix UI, intentions sémantiques et contrats de composant. Accessibilité WCAG 2.2, mode sombre, perceptuellement uniforme.">
+<link rel="canonical" href="https://systeme-design-agentique.gnegreiros.com/foundations/color.html">
+<link rel="alternate" hreflang="fr" href="https://systeme-design-agentique.gnegreiros.com/foundations/color.html?lang=fr">
+<link rel="alternate" hreflang="en" href="https://systeme-design-agentique.gnegreiros.com/foundations/color.html?lang=en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Couleur — Système de design agentique">
+<meta property="og:description" content="Palettes primitives Radix UI, intentions sémantiques et contrats de composant.">
+<meta name="theme-color" content="#0b0d14">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='13' font-weight='800' fill='white'>SDA</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main-content"><span class="lang-fr">Aller au contenu</span><span class="lang-en">Skip to content</span></a>
+<header class="site-header" role="banner">
+  <a class="logo" href="../index.html" aria-label="Système de design agentique — Accueil">
+    <span class="logo-mark" aria-hidden="true">SDA</span>
+    <span class="logo-name"><span class="lang-fr">Système de design agentique</span><span class="lang-en">Agentic Design System</span></span>
+  </a>
+  <span class="logo-version">v1.0.0</span>
+  <nav class="top-nav" aria-label="Navigation principale">
+    <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="../foundations/color.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+    <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+    <a href="../tokens/index.html"><span class="lang-fr">Tokens</span><span class="lang-en">Tokens</span></a>
+    <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    <a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+  </nav>
+  <div class="header-tools">
+    <div class="lang-toggle-group" role="group" aria-label="Langue / Language">
+      <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+      <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="theme-btn" aria-label="Activer le thème sombre / Switch to dark theme" aria-pressed="false">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M4 18h16M4 6h16"/></svg>
+    </button>
+  </div>
+</header>
+<div class="layout" id="main-content">
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire">
+    <div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span>
+      <a href="../foundations/color.html" class="active"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></a>
+      <a href="../foundations/spacing.html"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></a>
+      <a href="../foundations/typography.html"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></a>
+      <a href="../foundations/icons.html"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></a>
+    </div>
+    <div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>
+      <a href="../components/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a>
+      <a href="../components/button.html">Button</a>
+      <a href="../components/icon.html">Icon</a>
+    </div>
+  </aside>
+  <main class="content" role="main">
+<h1><span class="lang-fr">Couleurs</span><span class="lang-en">Colors</span></h1>
+<p class="page-lead"><span class="lang-fr">Système de couleur en trois niveaux : palettes primitives Radix UI → intentions sémantiques → contrats de composant. Les agents utilisent les tokens sémantiques, jamais les valeurs primitives.</span><span class="lang-en">Three-level color system: Radix UI primitive palettes → semantic intentions → component contracts. Agents use semantic tokens, never primitive values.</span></p>
+
+<h2 class="first"><span class="lang-fr">Palette primitive — Radix UI</span><span class="lang-en">Primitive palette — Radix UI</span></h2>
+<p><span class="lang-fr">33 échelles de couleur, chacune avec <strong>12 paliers numérotés</strong> selon un système perceptuellement uniforme, conçu pour l'accessibilité et le mode sombre.</span><span class="lang-en">33 color scales, each with <strong>12 numbered steps</strong> following a perceptually uniform system designed for accessibility and dark mode.</span></p>
+<div class="radix-guide">
+  <div class="card-surface" style="padding:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 1–2</span><span class="lang-en">Steps 1–2</span></div><div style="font-weight:700;font-size:14px;margin-bottom:4px"><span class="lang-fr">Fonds de page</span><span class="lang-en">Page backgrounds</span></div><div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Arrière-plans très subtils</span><span class="lang-en">Very subtle backgrounds</span></div></div>
+  <div class="card-surface" style="padding:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 3–5</span><span class="lang-en">Steps 3–5</span></div><div style="font-weight:700;font-size:14px;margin-bottom:4px"><span class="lang-fr">Éléments interactifs</span><span class="lang-en">Interactive elements</span></div><div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Survol, sélection, fonds</span><span class="lang-en">Hover, selection, fills</span></div></div>
+  <div class="card-surface" style="padding:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 6–8</span><span class="lang-en">Steps 6–8</span></div><div style="font-weight:700;font-size:14px;margin-bottom:4px"><span class="lang-fr">Bordures</span><span class="lang-en">Borders</span></div><div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Séparateurs, contours</span><span class="lang-en">Separators, outlines</span></div></div>
+  <div class="card-surface" style="padding:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 9–12</span><span class="lang-en">Steps 9–12</span></div><div style="font-weight:700;font-size:14px;margin-bottom:4px"><span class="lang-fr">Solides & texte</span><span class="lang-en">Solids & text</span></div><div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">CTA, texte, contraste garanti</span><span class="lang-en">CTA, text, guaranteed contrast</span></div></div>
+</div>
+<blockquote><p><span class="lang-fr"><strong>Pourquoi Radix UI ?</strong> Chaque palette garantit un contraste WCAG AA aux paliers 11–12 et fonctionne en mode clair comme sombre. Les paliers sont perceptuellement uniformes — le saut visuel entre deux paliers consécutifs est constant quelle que soit la teinte.</span><span class="lang-en"><strong>Why Radix UI?</strong> Each palette guarantees WCAG AA contrast at steps 11–12 and works in both light and dark mode. Steps are perceptually uniform — the visual jump between two consecutive steps is constant regardless of hue.</span></p></blockquote>
+<div class="palette-grid">
+<div class="palette-section"><div class="palette-scale-name">gray</div><div class="palette-steps">
+<div class="palette-step" style="background:#fcfcfc" title="1: #fcfcfc — App background" aria-label="gray étape 1: #fcfcfc"></div>
+<div class="palette-step" style="background:#f9f9f9" title="2: #f9f9f9 — Subtle background" aria-label="gray étape 2: #f9f9f9"></div>
+<div class="palette-step" style="background:#f0f0f0" title="3: #f0f0f0 — UI element background" aria-label="gray étape 3: #f0f0f0"></div>
+<div class="palette-step" style="background:#e8e8e8" title="4: #e8e8e8 — Hovered UI element background" aria-label="gray étape 4: #e8e8e8"></div>
+<div class="palette-step" style="background:#e0e0e0" title="5: #e0e0e0 — Active / selected UI element background" aria-label="gray étape 5: #e0e0e0"></div>
+<div class="palette-step" style="background:#d9d9d9" title="6: #d9d9d9 — Subtle border and separator" aria-label="gray étape 6: #d9d9d9"></div>
+<div class="palette-step" style="background:#cecece" title="7: #cecece — UI element border and focus ring" aria-label="gray étape 7: #cecece"></div>
+<div class="palette-step" style="background:#bbbbbb" title="8: #bbbbbb — Hovered UI element border" aria-label="gray étape 8: #bbbbbb"></div>
+<div class="palette-step" style="background:#8d8d8d" title="9: #8d8d8d — Solid background — brand / CTA" aria-label="gray étape 9: #8d8d8d"></div>
+<div class="palette-step" style="background:#838383" title="10: #838383 — Hovered solid background" aria-label="gray étape 10: #838383"></div>
+<div class="palette-step" style="background:#646464" title="11: #646464 — Low-contrast text" aria-label="gray étape 11: #646464"></div>
+<div class="palette-step" style="background:#202020" title="12: #202020 — High-contrast text" aria-label="gray étape 12: #202020"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">mauve</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfcfd" title="1: #fdfcfd — App background" aria-label="mauve étape 1: #fdfcfd"></div>
+<div class="palette-step" style="background:#faf9fb" title="2: #faf9fb — Subtle background" aria-label="mauve étape 2: #faf9fb"></div>
+<div class="palette-step" style="background:#f2eff3" title="3: #f2eff3 — UI element background" aria-label="mauve étape 3: #f2eff3"></div>
+<div class="palette-step" style="background:#eae7ec" title="4: #eae7ec — Hovered UI element background" aria-label="mauve étape 4: #eae7ec"></div>
+<div class="palette-step" style="background:#e3dfe6" title="5: #e3dfe6 — Active / selected UI element background" aria-label="mauve étape 5: #e3dfe6"></div>
+<div class="palette-step" style="background:#dbd8e0" title="6: #dbd8e0 — Subtle border and separator" aria-label="mauve étape 6: #dbd8e0"></div>
+<div class="palette-step" style="background:#d0cdd7" title="7: #d0cdd7 — UI element border and focus ring" aria-label="mauve étape 7: #d0cdd7"></div>
+<div class="palette-step" style="background:#bcbac7" title="8: #bcbac7 — Hovered UI element border" aria-label="mauve étape 8: #bcbac7"></div>
+<div class="palette-step" style="background:#8e8c99" title="9: #8e8c99 — Solid background — brand / CTA" aria-label="mauve étape 9: #8e8c99"></div>
+<div class="palette-step" style="background:#84828e" title="10: #84828e — Hovered solid background" aria-label="mauve étape 10: #84828e"></div>
+<div class="palette-step" style="background:#65636d" title="11: #65636d — Low-contrast text" aria-label="mauve étape 11: #65636d"></div>
+<div class="palette-step" style="background:#211f26" title="12: #211f26 — High-contrast text" aria-label="mauve étape 12: #211f26"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">slate</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfcfd" title="1: #fbfcfd — App background" aria-label="slate étape 1: #fbfcfd"></div>
+<div class="palette-step" style="background:#f8f9fa" title="2: #f8f9fa — Subtle background" aria-label="slate étape 2: #f8f9fa"></div>
+<div class="palette-step" style="background:#eff1f3" title="3: #eff1f3 — UI element background" aria-label="slate étape 3: #eff1f3"></div>
+<div class="palette-step" style="background:#e7e9ec" title="4: #e7e9ec — Hovered UI element background" aria-label="slate étape 4: #e7e9ec"></div>
+<div class="palette-step" style="background:#dfe3e6" title="5: #dfe3e6 — Active / selected UI element background" aria-label="slate étape 5: #dfe3e6"></div>
+<div class="palette-step" style="background:#d7dbdf" title="6: #d7dbdf — Subtle border and separator" aria-label="slate étape 6: #d7dbdf"></div>
+<div class="palette-step" style="background:#c9cdd2" title="7: #c9cdd2 — UI element border and focus ring" aria-label="slate étape 7: #c9cdd2"></div>
+<div class="palette-step" style="background:#b9bfc9" title="8: #b9bfc9 — Hovered UI element border" aria-label="slate étape 8: #b9bfc9"></div>
+<div class="palette-step" style="background:#8b9098" title="9: #8b9098 — Solid background — brand / CTA" aria-label="slate étape 9: #8b9098"></div>
+<div class="palette-step" style="background:#80868e" title="10: #80868e — Hovered solid background" aria-label="slate étape 10: #80868e"></div>
+<div class="palette-step" style="background:#60646c" title="11: #60646c — Low-contrast text" aria-label="slate étape 11: #60646c"></div>
+<div class="palette-step" style="background:#1c2024" title="12: #1c2024 — High-contrast text" aria-label="slate étape 12: #1c2024"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">sage</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfdfc" title="1: #fbfdfc — App background" aria-label="sage étape 1: #fbfdfc"></div>
+<div class="palette-step" style="background:#f7f9f8" title="2: #f7f9f8 — Subtle background" aria-label="sage étape 2: #f7f9f8"></div>
+<div class="palette-step" style="background:#eef1f0" title="3: #eef1f0 — UI element background" aria-label="sage étape 3: #eef1f0"></div>
+<div class="palette-step" style="background:#e6e9e8" title="4: #e6e9e8 — Hovered UI element background" aria-label="sage étape 4: #e6e9e8"></div>
+<div class="palette-step" style="background:#dfe2e0" title="5: #dfe2e0 — Active / selected UI element background" aria-label="sage étape 5: #dfe2e0"></div>
+<div class="palette-step" style="background:#d7dad9" title="6: #d7dad9 — Subtle border and separator" aria-label="sage étape 6: #d7dad9"></div>
+<div class="palette-step" style="background:#c9cdcb" title="7: #c9cdcb — UI element border and focus ring" aria-label="sage étape 7: #c9cdcb"></div>
+<div class="palette-step" style="background:#b5bcba" title="8: #b5bcba — Hovered UI element border" aria-label="sage étape 8: #b5bcba"></div>
+<div class="palette-step" style="background:#869e9a" title="9: #869e9a — Solid background — brand / CTA" aria-label="sage étape 9: #869e9a"></div>
+<div class="palette-step" style="background:#7c9490" title="10: #7c9490 — Hovered solid background" aria-label="sage étape 10: #7c9490"></div>
+<div class="palette-step" style="background:#5c7672" title="11: #5c7672 — Low-contrast text" aria-label="sage étape 11: #5c7672"></div>
+<div class="palette-step" style="background:#1a2421" title="12: #1a2421 — High-contrast text" aria-label="sage étape 12: #1a2421"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">olive</div><div class="palette-steps">
+<div class="palette-step" style="background:#fcfdfc" title="1: #fcfdfc — App background" aria-label="olive étape 1: #fcfdfc"></div>
+<div class="palette-step" style="background:#f8faf8" title="2: #f8faf8 — Subtle background" aria-label="olive étape 2: #f8faf8"></div>
+<div class="palette-step" style="background:#eff1ee" title="3: #eff1ee — UI element background" aria-label="olive étape 3: #eff1ee"></div>
+<div class="palette-step" style="background:#e7e9e6" title="4: #e7e9e6 — Hovered UI element background" aria-label="olive étape 4: #e7e9e6"></div>
+<div class="palette-step" style="background:#dfe2de" title="5: #dfe2de — Active / selected UI element background" aria-label="olive étape 5: #dfe2de"></div>
+<div class="palette-step" style="background:#d7dad6" title="6: #d7dad6 — Subtle border and separator" aria-label="olive étape 6: #d7dad6"></div>
+<div class="palette-step" style="background:#c8cdc7" title="7: #c8cdc7 — UI element border and focus ring" aria-label="olive étape 7: #c8cdc7"></div>
+<div class="palette-step" style="background:#b4bab3" title="8: #b4bab3 — Hovered UI element border" aria-label="olive étape 8: #b4bab3"></div>
+<div class="palette-step" style="background:#8b9389" title="9: #8b9389 — Solid background — brand / CTA" aria-label="olive étape 9: #8b9389"></div>
+<div class="palette-step" style="background:#818a7f" title="10: #818a7f — Hovered solid background" aria-label="olive étape 10: #818a7f"></div>
+<div class="palette-step" style="background:#606b5e" title="11: #606b5e — Low-contrast text" aria-label="olive étape 11: #606b5e"></div>
+<div class="palette-step" style="background:#1d201c" title="12: #1d201c — High-contrast text" aria-label="olive étape 12: #1d201c"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">sand</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfdfc" title="1: #fdfdfc — App background" aria-label="sand étape 1: #fdfdfc"></div>
+<div class="palette-step" style="background:#f9f9f8" title="2: #f9f9f8 — Subtle background" aria-label="sand étape 2: #f9f9f8"></div>
+<div class="palette-step" style="background:#f1f0ef" title="3: #f1f0ef — UI element background" aria-label="sand étape 3: #f1f0ef"></div>
+<div class="palette-step" style="background:#e9e8e6" title="4: #e9e8e6 — Hovered UI element background" aria-label="sand étape 4: #e9e8e6"></div>
+<div class="palette-step" style="background:#e2e1de" title="5: #e2e1de — Active / selected UI element background" aria-label="sand étape 5: #e2e1de"></div>
+<div class="palette-step" style="background:#dad9d6" title="6: #dad9d6 — Subtle border and separator" aria-label="sand étape 6: #dad9d6"></div>
+<div class="palette-step" style="background:#cdceca" title="7: #cdceca — UI element border and focus ring" aria-label="sand étape 7: #cdceca"></div>
+<div class="palette-step" style="background:#b9bbb5" title="8: #b9bbb5 — Hovered UI element border" aria-label="sand étape 8: #b9bbb5"></div>
+<div class="palette-step" style="background:#8d8e86" title="9: #8d8e86 — Solid background — brand / CTA" aria-label="sand étape 9: #8d8e86"></div>
+<div class="palette-step" style="background:#83847c" title="10: #83847c — Hovered solid background" aria-label="sand étape 10: #83847c"></div>
+<div class="palette-step" style="background:#63645b" title="11: #63645b — Low-contrast text" aria-label="sand étape 11: #63645b"></div>
+<div class="palette-step" style="background:#21201c" title="12: #21201c — High-contrast text" aria-label="sand étape 12: #21201c"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">tomato</div><div class="palette-steps">
+<div class="palette-step" style="background:#fffcfc" title="1: #fffcfc — App background" aria-label="tomato étape 1: #fffcfc"></div>
+<div class="palette-step" style="background:#fff8f7" title="2: #fff8f7 — Subtle background" aria-label="tomato étape 2: #fff8f7"></div>
+<div class="palette-step" style="background:#feebe7" title="3: #feebe7 — UI element background" aria-label="tomato étape 3: #feebe7"></div>
+<div class="palette-step" style="background:#ffdcd3" title="4: #ffdcd3 — Hovered UI element background" aria-label="tomato étape 4: #ffdcd3"></div>
+<div class="palette-step" style="background:#ffcdc2" title="5: #ffcdc2 — Active / selected UI element background" aria-label="tomato étape 5: #ffcdc2"></div>
+<div class="palette-step" style="background:#fdbdaf" title="6: #fdbdaf — Subtle border and separator" aria-label="tomato étape 6: #fdbdaf"></div>
+<div class="palette-step" style="background:#f5a898" title="7: #f5a898 — UI element border and focus ring" aria-label="tomato étape 7: #f5a898"></div>
+<div class="palette-step" style="background:#ec8e7b" title="8: #ec8e7b — Hovered UI element border" aria-label="tomato étape 8: #ec8e7b"></div>
+<div class="palette-step" style="background:#e54d2e" title="9: #e54d2e — Solid background — brand / CTA" aria-label="tomato étape 9: #e54d2e"></div>
+<div class="palette-step" style="background:#dd4425" title="10: #dd4425 — Hovered solid background" aria-label="tomato étape 10: #dd4425"></div>
+<div class="palette-step" style="background:#d13415" title="11: #d13415 — Low-contrast text" aria-label="tomato étape 11: #d13415"></div>
+<div class="palette-step" style="background:#5c271f" title="12: #5c271f — High-contrast text" aria-label="tomato étape 12: #5c271f"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">red</div><div class="palette-steps">
+<div class="palette-step" style="background:#fffcfc" title="1: #fffcfc — App background" aria-label="red étape 1: #fffcfc"></div>
+<div class="palette-step" style="background:#fff7f7" title="2: #fff7f7 — Subtle background" aria-label="red étape 2: #fff7f7"></div>
+<div class="palette-step" style="background:#feebec" title="3: #feebec — UI element background" aria-label="red étape 3: #feebec"></div>
+<div class="palette-step" style="background:#ffdbdc" title="4: #ffdbdc — Hovered UI element background" aria-label="red étape 4: #ffdbdc"></div>
+<div class="palette-step" style="background:#ffcdce" title="5: #ffcdce — Active / selected UI element background" aria-label="red étape 5: #ffcdce"></div>
+<div class="palette-step" style="background:#fdbdbe" title="6: #fdbdbe — Subtle border and separator" aria-label="red étape 6: #fdbdbe"></div>
+<div class="palette-step" style="background:#f4a9aa" title="7: #f4a9aa — UI element border and focus ring" aria-label="red étape 7: #f4a9aa"></div>
+<div class="palette-step" style="background:#eb8e90" title="8: #eb8e90 — Hovered UI element border" aria-label="red étape 8: #eb8e90"></div>
+<div class="palette-step" style="background:#e5484d" title="9: #e5484d — Solid background — brand / CTA" aria-label="red étape 9: #e5484d"></div>
+<div class="palette-step" style="background:#dc3e42" title="10: #dc3e42 — Hovered solid background" aria-label="red étape 10: #dc3e42"></div>
+<div class="palette-step" style="background:#ce2c31" title="11: #ce2c31 — Low-contrast text" aria-label="red étape 11: #ce2c31"></div>
+<div class="palette-step" style="background:#641723" title="12: #641723 — High-contrast text" aria-label="red étape 12: #641723"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">ruby</div><div class="palette-steps">
+<div class="palette-step" style="background:#fffcfd" title="1: #fffcfd — App background" aria-label="ruby étape 1: #fffcfd"></div>
+<div class="palette-step" style="background:#fff7f8" title="2: #fff7f8 — Subtle background" aria-label="ruby étape 2: #fff7f8"></div>
+<div class="palette-step" style="background:#feeaed" title="3: #feeaed — UI element background" aria-label="ruby étape 3: #feeaed"></div>
+<div class="palette-step" style="background:#ffdbe1" title="4: #ffdbe1 — Hovered UI element background" aria-label="ruby étape 4: #ffdbe1"></div>
+<div class="palette-step" style="background:#ffccd6" title="5: #ffccd6 — Active / selected UI element background" aria-label="ruby étape 5: #ffccd6"></div>
+<div class="palette-step" style="background:#fabcc7" title="6: #fabcc7 — Subtle border and separator" aria-label="ruby étape 6: #fabcc7"></div>
+<div class="palette-step" style="background:#f2a7b6" title="7: #f2a7b6 — UI element border and focus ring" aria-label="ruby étape 7: #f2a7b6"></div>
+<div class="palette-step" style="background:#e88098" title="8: #e88098 — Hovered UI element border" aria-label="ruby étape 8: #e88098"></div>
+<div class="palette-step" style="background:#e54666" title="9: #e54666 — Solid background — brand / CTA" aria-label="ruby étape 9: #e54666"></div>
+<div class="palette-step" style="background:#dc3b5d" title="10: #dc3b5d — Hovered solid background" aria-label="ruby étape 10: #dc3b5d"></div>
+<div class="palette-step" style="background:#ca244d" title="11: #ca244d — Low-contrast text" aria-label="ruby étape 11: #ca244d"></div>
+<div class="palette-step" style="background:#64172b" title="12: #64172b — High-contrast text" aria-label="ruby étape 12: #64172b"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">crimson</div><div class="palette-steps">
+<div class="palette-step" style="background:#fffcfd" title="1: #fffcfd — App background" aria-label="crimson étape 1: #fffcfd"></div>
+<div class="palette-step" style="background:#fff7fb" title="2: #fff7fb — Subtle background" aria-label="crimson étape 2: #fff7fb"></div>
+<div class="palette-step" style="background:#feecf4" title="3: #feecf4 — UI element background" aria-label="crimson étape 3: #feecf4"></div>
+<div class="palette-step" style="background:#ffdcea" title="4: #ffdcea — Hovered UI element background" aria-label="crimson étape 4: #ffdcea"></div>
+<div class="palette-step" style="background:#ffcedf" title="5: #ffcedf — Active / selected UI element background" aria-label="crimson étape 5: #ffcedf"></div>
+<div class="palette-step" style="background:#f8bdd0" title="6: #f8bdd0 — Subtle border and separator" aria-label="crimson étape 6: #f8bdd0"></div>
+<div class="palette-step" style="background:#eda9c0" title="7: #eda9c0 — UI element border and focus ring" aria-label="crimson étape 7: #eda9c0"></div>
+<div class="palette-step" style="background:#e087a9" title="8: #e087a9 — Hovered UI element border" aria-label="crimson étape 8: #e087a9"></div>
+<div class="palette-step" style="background:#e93d82" title="9: #e93d82 — Solid background — brand / CTA" aria-label="crimson étape 9: #e93d82"></div>
+<div class="palette-step" style="background:#df3478" title="10: #df3478 — Hovered solid background" aria-label="crimson étape 10: #df3478"></div>
+<div class="palette-step" style="background:#cb1d63" title="11: #cb1d63 — Low-contrast text" aria-label="crimson étape 11: #cb1d63"></div>
+<div class="palette-step" style="background:#621639" title="12: #621639 — High-contrast text" aria-label="crimson étape 12: #621639"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">pink</div><div class="palette-steps">
+<div class="palette-step" style="background:#fffcfe" title="1: #fffcfe — App background" aria-label="pink étape 1: #fffcfe"></div>
+<div class="palette-step" style="background:#fff7fc" title="2: #fff7fc — Subtle background" aria-label="pink étape 2: #fff7fc"></div>
+<div class="palette-step" style="background:#feeef8" title="3: #feeef8 — UI element background" aria-label="pink étape 3: #feeef8"></div>
+<div class="palette-step" style="background:#fce0f3" title="4: #fce0f3 — Hovered UI element background" aria-label="pink étape 4: #fce0f3"></div>
+<div class="palette-step" style="background:#f9d2eb" title="5: #f9d2eb — Active / selected UI element background" aria-label="pink étape 5: #f9d2eb"></div>
+<div class="palette-step" style="background:#f3c0e0" title="6: #f3c0e0 — Subtle border and separator" aria-label="pink étape 6: #f3c0e0"></div>
+<div class="palette-step" style="background:#ebacce" title="7: #ebacce — UI element border and focus ring" aria-label="pink étape 7: #ebacce"></div>
+<div class="palette-step" style="background:#de85b5" title="8: #de85b5 — Hovered UI element border" aria-label="pink étape 8: #de85b5"></div>
+<div class="palette-step" style="background:#d6409f" title="9: #d6409f — Solid background — brand / CTA" aria-label="pink étape 9: #d6409f"></div>
+<div class="palette-step" style="background:#cf3897" title="10: #cf3897 — Hovered solid background" aria-label="pink étape 10: #cf3897"></div>
+<div class="palette-step" style="background:#c2298a" title="11: #c2298a — Low-contrast text" aria-label="pink étape 11: #c2298a"></div>
+<div class="palette-step" style="background:#651249" title="12: #651249 — High-contrast text" aria-label="pink étape 12: #651249"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">plum</div><div class="palette-steps">
+<div class="palette-step" style="background:#fefcff" title="1: #fefcff — App background" aria-label="plum étape 1: #fefcff"></div>
+<div class="palette-step" style="background:#fdf7ff" title="2: #fdf7ff — Subtle background" aria-label="plum étape 2: #fdf7ff"></div>
+<div class="palette-step" style="background:#fbf0fe" title="3: #fbf0fe — UI element background" aria-label="plum étape 3: #fbf0fe"></div>
+<div class="palette-step" style="background:#f7e2fb" title="4: #f7e2fb — Hovered UI element background" aria-label="plum étape 4: #f7e2fb"></div>
+<div class="palette-step" style="background:#f3d4f7" title="5: #f3d4f7 — Active / selected UI element background" aria-label="plum étape 5: #f3d4f7"></div>
+<div class="palette-step" style="background:#ecc4ee" title="6: #ecc4ee — Subtle border and separator" aria-label="plum étape 6: #ecc4ee"></div>
+<div class="palette-step" style="background:#e0afe3" title="7: #e0afe3 — UI element border and focus ring" aria-label="plum étape 7: #e0afe3"></div>
+<div class="palette-step" style="background:#ce91d3" title="8: #ce91d3 — Hovered UI element border" aria-label="plum étape 8: #ce91d3"></div>
+<div class="palette-step" style="background:#ab4aba" title="9: #ab4aba — Solid background — brand / CTA" aria-label="plum étape 9: #ab4aba"></div>
+<div class="palette-step" style="background:#a144ae" title="10: #a144ae — Hovered solid background" aria-label="plum étape 10: #a144ae"></div>
+<div class="palette-step" style="background:#953ea3" title="11: #953ea3 — Low-contrast text" aria-label="plum étape 11: #953ea3"></div>
+<div class="palette-step" style="background:#53195d" title="12: #53195d — High-contrast text" aria-label="plum étape 12: #53195d"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">purple</div><div class="palette-steps">
+<div class="palette-step" style="background:#fefcfe" title="1: #fefcfe — App background" aria-label="purple étape 1: #fefcfe"></div>
+<div class="palette-step" style="background:#fbf7fe" title="2: #fbf7fe — Subtle background" aria-label="purple étape 2: #fbf7fe"></div>
+<div class="palette-step" style="background:#f7edfe" title="3: #f7edfe — UI element background" aria-label="purple étape 3: #f7edfe"></div>
+<div class="palette-step" style="background:#f2e2fc" title="4: #f2e2fc — Hovered UI element background" aria-label="purple étape 4: #f2e2fc"></div>
+<div class="palette-step" style="background:#ead5f9" title="5: #ead5f9 — Active / selected UI element background" aria-label="purple étape 5: #ead5f9"></div>
+<div class="palette-step" style="background:#e0c4f4" title="6: #e0c4f4 — Subtle border and separator" aria-label="purple étape 6: #e0c4f4"></div>
+<div class="palette-step" style="background:#d1afec" title="7: #d1afec — UI element border and focus ring" aria-label="purple étape 7: #d1afec"></div>
+<div class="palette-step" style="background:#be93e4" title="8: #be93e4 — Hovered UI element border" aria-label="purple étape 8: #be93e4"></div>
+<div class="palette-step" style="background:#8e4ec6" title="9: #8e4ec6 — Solid background — brand / CTA" aria-label="purple étape 9: #8e4ec6"></div>
+<div class="palette-step" style="background:#8445bc" title="10: #8445bc — Hovered solid background" aria-label="purple étape 10: #8445bc"></div>
+<div class="palette-step" style="background:#793aaf" title="11: #793aaf — Low-contrast text" aria-label="purple étape 11: #793aaf"></div>
+<div class="palette-step" style="background:#402060" title="12: #402060 — High-contrast text" aria-label="purple étape 12: #402060"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">violet</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfcfe" title="1: #fdfcfe — App background" aria-label="violet étape 1: #fdfcfe"></div>
+<div class="palette-step" style="background:#faf8ff" title="2: #faf8ff — Subtle background" aria-label="violet étape 2: #faf8ff"></div>
+<div class="palette-step" style="background:#f4f0fe" title="3: #f4f0fe — UI element background" aria-label="violet étape 3: #f4f0fe"></div>
+<div class="palette-step" style="background:#ebe4ff" title="4: #ebe4ff — Hovered UI element background" aria-label="violet étape 4: #ebe4ff"></div>
+<div class="palette-step" style="background:#e1d9ff" title="5: #e1d9ff — Active / selected UI element background" aria-label="violet étape 5: #e1d9ff"></div>
+<div class="palette-step" style="background:#d4cafe" title="6: #d4cafe — Subtle border and separator" aria-label="violet étape 6: #d4cafe"></div>
+<div class="palette-step" style="background:#c2b5f5" title="7: #c2b5f5 — UI element border and focus ring" aria-label="violet étape 7: #c2b5f5"></div>
+<div class="palette-step" style="background:#aa99ec" title="8: #aa99ec — Hovered UI element border" aria-label="violet étape 8: #aa99ec"></div>
+<div class="palette-step" style="background:#6e56cf" title="9: #6e56cf — Solid background — brand / CTA" aria-label="violet étape 9: #6e56cf"></div>
+<div class="palette-step" style="background:#654dc4" title="10: #654dc4 — Hovered solid background" aria-label="violet étape 10: #654dc4"></div>
+<div class="palette-step" style="background:#6550b9" title="11: #6550b9 — Low-contrast text" aria-label="violet étape 11: #6550b9"></div>
+<div class="palette-step" style="background:#2f265f" title="12: #2f265f — High-contrast text" aria-label="violet étape 12: #2f265f"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">iris</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfdff" title="1: #fdfdff — App background" aria-label="iris étape 1: #fdfdff"></div>
+<div class="palette-step" style="background:#f8f8ff" title="2: #f8f8ff — Subtle background" aria-label="iris étape 2: #f8f8ff"></div>
+<div class="palette-step" style="background:#f0f1fe" title="3: #f0f1fe — UI element background" aria-label="iris étape 3: #f0f1fe"></div>
+<div class="palette-step" style="background:#e6e7ff" title="4: #e6e7ff — Hovered UI element background" aria-label="iris étape 4: #e6e7ff"></div>
+<div class="palette-step" style="background:#dadcff" title="5: #dadcff — Active / selected UI element background" aria-label="iris étape 5: #dadcff"></div>
+<div class="palette-step" style="background:#cbceff" title="6: #cbceff — Subtle border and separator" aria-label="iris étape 6: #cbceff"></div>
+<div class="palette-step" style="background:#b8bcf8" title="7: #b8bcf8 — UI element border and focus ring" aria-label="iris étape 7: #b8bcf8"></div>
+<div class="palette-step" style="background:#9da0f0" title="8: #9da0f0 — Hovered UI element border" aria-label="iris étape 8: #9da0f0"></div>
+<div class="palette-step" style="background:#5b5bd6" title="9: #5b5bd6 — Solid background — brand / CTA" aria-label="iris étape 9: #5b5bd6"></div>
+<div class="palette-step" style="background:#5252cd" title="10: #5252cd — Hovered solid background" aria-label="iris étape 10: #5252cd"></div>
+<div class="palette-step" style="background:#5151cd" title="11: #5151cd — Low-contrast text" aria-label="iris étape 11: #5151cd"></div>
+<div class="palette-step" style="background:#272962" title="12: #272962 — High-contrast text" aria-label="iris étape 12: #272962"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">indigo</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfdfe" title="1: #fdfdfe — App background" aria-label="indigo étape 1: #fdfdfe"></div>
+<div class="palette-step" style="background:#f7f9ff" title="2: #f7f9ff — Subtle background" aria-label="indigo étape 2: #f7f9ff"></div>
+<div class="palette-step" style="background:#edf2fe" title="3: #edf2fe — UI element background" aria-label="indigo étape 3: #edf2fe"></div>
+<div class="palette-step" style="background:#e1e9ff" title="4: #e1e9ff — Hovered UI element background" aria-label="indigo étape 4: #e1e9ff"></div>
+<div class="palette-step" style="background:#d2deff" title="5: #d2deff — Active / selected UI element background" aria-label="indigo étape 5: #d2deff"></div>
+<div class="palette-step" style="background:#c1d0fb" title="6: #c1d0fb — Subtle border and separator" aria-label="indigo étape 6: #c1d0fb"></div>
+<div class="palette-step" style="background:#abbdf9" title="7: #abbdf9 — UI element border and focus ring" aria-label="indigo étape 7: #abbdf9"></div>
+<div class="palette-step" style="background:#8da4ef" title="8: #8da4ef — Hovered UI element border" aria-label="indigo étape 8: #8da4ef"></div>
+<div class="palette-step" style="background:#3e63dd" title="9: #3e63dd — Solid background — brand / CTA" aria-label="indigo étape 9: #3e63dd"></div>
+<div class="palette-step" style="background:#3358d4" title="10: #3358d4 — Hovered solid background" aria-label="indigo étape 10: #3358d4"></div>
+<div class="palette-step" style="background:#3a5bc7" title="11: #3a5bc7 — Low-contrast text" aria-label="indigo étape 11: #3a5bc7"></div>
+<div class="palette-step" style="background:#1f2d5c" title="12: #1f2d5c — High-contrast text" aria-label="indigo étape 12: #1f2d5c"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">blue</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfdff" title="1: #fbfdff — App background" aria-label="blue étape 1: #fbfdff"></div>
+<div class="palette-step" style="background:#f4faff" title="2: #f4faff — Subtle background" aria-label="blue étape 2: #f4faff"></div>
+<div class="palette-step" style="background:#e6f4fe" title="3: #e6f4fe — UI element background" aria-label="blue étape 3: #e6f4fe"></div>
+<div class="palette-step" style="background:#d5efff" title="4: #d5efff — Hovered UI element background" aria-label="blue étape 4: #d5efff"></div>
+<div class="palette-step" style="background:#c2e5ff" title="5: #c2e5ff — Active / selected UI element background" aria-label="blue étape 5: #c2e5ff"></div>
+<div class="palette-step" style="background:#acd8fa" title="6: #acd8fa — Subtle border and separator" aria-label="blue étape 6: #acd8fa"></div>
+<div class="palette-step" style="background:#8ec8f6" title="7: #8ec8f6 — UI element border and focus ring" aria-label="blue étape 7: #8ec8f6"></div>
+<div class="palette-step" style="background:#5eb1ef" title="8: #5eb1ef — Hovered UI element border" aria-label="blue étape 8: #5eb1ef"></div>
+<div class="palette-step" style="background:#0090ff" title="9: #0090ff — Solid background — brand / CTA" aria-label="blue étape 9: #0090ff"></div>
+<div class="palette-step" style="background:#0588f0" title="10: #0588f0 — Hovered solid background" aria-label="blue étape 10: #0588f0"></div>
+<div class="palette-step" style="background:#0d74ce" title="11: #0d74ce — Low-contrast text" aria-label="blue étape 11: #0d74ce"></div>
+<div class="palette-step" style="background:#113264" title="12: #113264 — High-contrast text" aria-label="blue étape 12: #113264"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">cyan</div><div class="palette-steps">
+<div class="palette-step" style="background:#fafdfe" title="1: #fafdfe — App background" aria-label="cyan étape 1: #fafdfe"></div>
+<div class="palette-step" style="background:#f2fafb" title="2: #f2fafb — Subtle background" aria-label="cyan étape 2: #f2fafb"></div>
+<div class="palette-step" style="background:#def7f9" title="3: #def7f9 — UI element background" aria-label="cyan étape 3: #def7f9"></div>
+<div class="palette-step" style="background:#caf1f6" title="4: #caf1f6 — Hovered UI element background" aria-label="cyan étape 4: #caf1f6"></div>
+<div class="palette-step" style="background:#b5e9f0" title="5: #b5e9f0 — Active / selected UI element background" aria-label="cyan étape 5: #b5e9f0"></div>
+<div class="palette-step" style="background:#9ddde7" title="6: #9ddde7 — Subtle border and separator" aria-label="cyan étape 6: #9ddde7"></div>
+<div class="palette-step" style="background:#7dcedc" title="7: #7dcedc — UI element border and focus ring" aria-label="cyan étape 7: #7dcedc"></div>
+<div class="palette-step" style="background:#3db9cf" title="8: #3db9cf — Hovered UI element border" aria-label="cyan étape 8: #3db9cf"></div>
+<div class="palette-step" style="background:#00a2c7" title="9: #00a2c7 — Solid background — brand / CTA" aria-label="cyan étape 9: #00a2c7"></div>
+<div class="palette-step" style="background:#0797b9" title="10: #0797b9 — Hovered solid background" aria-label="cyan étape 10: #0797b9"></div>
+<div class="palette-step" style="background:#107d98" title="11: #107d98 — Low-contrast text" aria-label="cyan étape 11: #107d98"></div>
+<div class="palette-step" style="background:#0d3c48" title="12: #0d3c48 — High-contrast text" aria-label="cyan étape 12: #0d3c48"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">teal</div><div class="palette-steps">
+<div class="palette-step" style="background:#fafefd" title="1: #fafefd — App background" aria-label="teal étape 1: #fafefd"></div>
+<div class="palette-step" style="background:#f3fbf9" title="2: #f3fbf9 — Subtle background" aria-label="teal étape 2: #f3fbf9"></div>
+<div class="palette-step" style="background:#e0f8f3" title="3: #e0f8f3 — UI element background" aria-label="teal étape 3: #e0f8f3"></div>
+<div class="palette-step" style="background:#ccf3ea" title="4: #ccf3ea — Hovered UI element background" aria-label="teal étape 4: #ccf3ea"></div>
+<div class="palette-step" style="background:#b8ecdf" title="5: #b8ecdf — Active / selected UI element background" aria-label="teal étape 5: #b8ecdf"></div>
+<div class="palette-step" style="background:#a1e0d2" title="6: #a1e0d2 — Subtle border and separator" aria-label="teal étape 6: #a1e0d2"></div>
+<div class="palette-step" style="background:#83cfc4" title="7: #83cfc4 — UI element border and focus ring" aria-label="teal étape 7: #83cfc4"></div>
+<div class="palette-step" style="background:#53b9ab" title="8: #53b9ab — Hovered UI element border" aria-label="teal étape 8: #53b9ab"></div>
+<div class="palette-step" style="background:#12a594" title="9: #12a594 — Solid background — brand / CTA" aria-label="teal étape 9: #12a594"></div>
+<div class="palette-step" style="background:#0d9b8a" title="10: #0d9b8a — Hovered solid background" aria-label="teal étape 10: #0d9b8a"></div>
+<div class="palette-step" style="background:#008573" title="11: #008573 — Low-contrast text" aria-label="teal étape 11: #008573"></div>
+<div class="palette-step" style="background:#0d3d38" title="12: #0d3d38 — High-contrast text" aria-label="teal étape 12: #0d3d38"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">jade</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfefd" title="1: #fbfefd — App background" aria-label="jade étape 1: #fbfefd"></div>
+<div class="palette-step" style="background:#f4fbf7" title="2: #f4fbf7 — Subtle background" aria-label="jade étape 2: #f4fbf7"></div>
+<div class="palette-step" style="background:#e6f7ed" title="3: #e6f7ed — UI element background" aria-label="jade étape 3: #e6f7ed"></div>
+<div class="palette-step" style="background:#d6f1e3" title="4: #d6f1e3 — Hovered UI element background" aria-label="jade étape 4: #d6f1e3"></div>
+<div class="palette-step" style="background:#c3e9d7" title="5: #c3e9d7 — Active / selected UI element background" aria-label="jade étape 5: #c3e9d7"></div>
+<div class="palette-step" style="background:#acdfc8" title="6: #acdfc8 — Subtle border and separator" aria-label="jade étape 6: #acdfc8"></div>
+<div class="palette-step" style="background:#8ed1b4" title="7: #8ed1b4 — UI element border and focus ring" aria-label="jade étape 7: #8ed1b4"></div>
+<div class="palette-step" style="background:#5eba94" title="8: #5eba94 — Hovered UI element border" aria-label="jade étape 8: #5eba94"></div>
+<div class="palette-step" style="background:#29a383" title="9: #29a383 — Solid background — brand / CTA" aria-label="jade étape 9: #29a383"></div>
+<div class="palette-step" style="background:#26997b" title="10: #26997b — Hovered solid background" aria-label="jade étape 10: #26997b"></div>
+<div class="palette-step" style="background:#208368" title="11: #208368 — Low-contrast text" aria-label="jade étape 11: #208368"></div>
+<div class="palette-step" style="background:#1d3b31" title="12: #1d3b31 — High-contrast text" aria-label="jade étape 12: #1d3b31"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">green</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfefc" title="1: #fbfefc — App background" aria-label="green étape 1: #fbfefc"></div>
+<div class="palette-step" style="background:#f4fbf6" title="2: #f4fbf6 — Subtle background" aria-label="green étape 2: #f4fbf6"></div>
+<div class="palette-step" style="background:#e6f6eb" title="3: #e6f6eb — UI element background" aria-label="green étape 3: #e6f6eb"></div>
+<div class="palette-step" style="background:#d6efdf" title="4: #d6efdf — Hovered UI element background" aria-label="green étape 4: #d6efdf"></div>
+<div class="palette-step" style="background:#c4e8d1" title="5: #c4e8d1 — Active / selected UI element background" aria-label="green étape 5: #c4e8d1"></div>
+<div class="palette-step" style="background:#addfc0" title="6: #addfc0 — Subtle border and separator" aria-label="green étape 6: #addfc0"></div>
+<div class="palette-step" style="background:#8fd1aa" title="7: #8fd1aa — UI element border and focus ring" aria-label="green étape 7: #8fd1aa"></div>
+<div class="palette-step" style="background:#5eba87" title="8: #5eba87 — Hovered UI element border" aria-label="green étape 8: #5eba87"></div>
+<div class="palette-step" style="background:#30a46c" title="9: #30a46c — Solid background — brand / CTA" aria-label="green étape 9: #30a46c"></div>
+<div class="palette-step" style="background:#299764" title="10: #299764 — Hovered solid background" aria-label="green étape 10: #299764"></div>
+<div class="palette-step" style="background:#18794e" title="11: #18794e — Low-contrast text" aria-label="green étape 11: #18794e"></div>
+<div class="palette-step" style="background:#153226" title="12: #153226 — High-contrast text" aria-label="green étape 12: #153226"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">grass</div><div class="palette-steps">
+<div class="palette-step" style="background:#fbfefb" title="1: #fbfefb — App background" aria-label="grass étape 1: #fbfefb"></div>
+<div class="palette-step" style="background:#f5fbf5" title="2: #f5fbf5 — Subtle background" aria-label="grass étape 2: #f5fbf5"></div>
+<div class="palette-step" style="background:#e9f6e9" title="3: #e9f6e9 — UI element background" aria-label="grass étape 3: #e9f6e9"></div>
+<div class="palette-step" style="background:#d7eed8" title="4: #d7eed8 — Hovered UI element background" aria-label="grass étape 4: #d7eed8"></div>
+<div class="palette-step" style="background:#c2e3c4" title="5: #c2e3c4 — Active / selected UI element background" aria-label="grass étape 5: #c2e3c4"></div>
+<div class="palette-step" style="background:#a9d6ab" title="6: #a9d6ab — Subtle border and separator" aria-label="grass étape 6: #a9d6ab"></div>
+<div class="palette-step" style="background:#87c58b" title="7: #87c58b — UI element border and focus ring" aria-label="grass étape 7: #87c58b"></div>
+<div class="palette-step" style="background:#5bae63" title="8: #5bae63 — Hovered UI element border" aria-label="grass étape 8: #5bae63"></div>
+<div class="palette-step" style="background:#46a758" title="9: #46a758 — Solid background — brand / CTA" aria-label="grass étape 9: #46a758"></div>
+<div class="palette-step" style="background:#3e9b50" title="10: #3e9b50 — Hovered solid background" aria-label="grass étape 10: #3e9b50"></div>
+<div class="palette-step" style="background:#297c3b" title="11: #297c3b — Low-contrast text" aria-label="grass étape 11: #297c3b"></div>
+<div class="palette-step" style="background:#1b311e" title="12: #1b311e — High-contrast text" aria-label="grass étape 12: #1b311e"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">brown</div><div class="palette-steps">
+<div class="palette-step" style="background:#fefdfc" title="1: #fefdfc — App background" aria-label="brown étape 1: #fefdfc"></div>
+<div class="palette-step" style="background:#fcf9f6" title="2: #fcf9f6 — Subtle background" aria-label="brown étape 2: #fcf9f6"></div>
+<div class="palette-step" style="background:#f6eee7" title="3: #f6eee7 — UI element background" aria-label="brown étape 3: #f6eee7"></div>
+<div class="palette-step" style="background:#f0e4d9" title="4: #f0e4d9 — Hovered UI element background" aria-label="brown étape 4: #f0e4d9"></div>
+<div class="palette-step" style="background:#ebdaca" title="5: #ebdaca — Active / selected UI element background" aria-label="brown étape 5: #ebdaca"></div>
+<div class="palette-step" style="background:#e4cdb7" title="6: #e4cdb7 — Subtle border and separator" aria-label="brown étape 6: #e4cdb7"></div>
+<div class="palette-step" style="background:#dcbc9f" title="7: #dcbc9f — UI element border and focus ring" aria-label="brown étape 7: #dcbc9f"></div>
+<div class="palette-step" style="background:#cea37e" title="8: #cea37e — Hovered UI element border" aria-label="brown étape 8: #cea37e"></div>
+<div class="palette-step" style="background:#ad7f58" title="9: #ad7f58 — Solid background — brand / CTA" aria-label="brown étape 9: #ad7f58"></div>
+<div class="palette-step" style="background:#a07653" title="10: #a07653 — Hovered solid background" aria-label="brown étape 10: #a07653"></div>
+<div class="palette-step" style="background:#815e46" title="11: #815e46 — Low-contrast text" aria-label="brown étape 11: #815e46"></div>
+<div class="palette-step" style="background:#3e2a1e" title="12: #3e2a1e — High-contrast text" aria-label="brown étape 12: #3e2a1e"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">bronze</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfcfc" title="1: #fdfcfc — App background" aria-label="bronze étape 1: #fdfcfc"></div>
+<div class="palette-step" style="background:#fdf7f5" title="2: #fdf7f5 — Subtle background" aria-label="bronze étape 2: #fdf7f5"></div>
+<div class="palette-step" style="background:#f6edea" title="3: #f6edea — UI element background" aria-label="bronze étape 3: #f6edea"></div>
+<div class="palette-step" style="background:#efe4df" title="4: #efe4df — Hovered UI element background" aria-label="bronze étape 4: #efe4df"></div>
+<div class="palette-step" style="background:#e7d9d3" title="5: #e7d9d3 — Active / selected UI element background" aria-label="bronze étape 5: #e7d9d3"></div>
+<div class="palette-step" style="background:#dfcdc5" title="6: #dfcdc5 — Subtle border and separator" aria-label="bronze étape 6: #dfcdc5"></div>
+<div class="palette-step" style="background:#d3bcb3" title="7: #d3bcb3 — UI element border and focus ring" aria-label="bronze étape 7: #d3bcb3"></div>
+<div class="palette-step" style="background:#c2a499" title="8: #c2a499 — Hovered UI element border" aria-label="bronze étape 8: #c2a499"></div>
+<div class="palette-step" style="background:#a18072" title="9: #a18072 — Solid background — brand / CTA" aria-label="bronze étape 9: #a18072"></div>
+<div class="palette-step" style="background:#957468" title="10: #957468 — Hovered solid background" aria-label="bronze étape 10: #957468"></div>
+<div class="palette-step" style="background:#7d5e54" title="11: #7d5e54 — Low-contrast text" aria-label="bronze étape 11: #7d5e54"></div>
+<div class="palette-step" style="background:#43302b" title="12: #43302b — High-contrast text" aria-label="bronze étape 12: #43302b"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">gold</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfdfc" title="1: #fdfdfc — App background" aria-label="gold étape 1: #fdfdfc"></div>
+<div class="palette-step" style="background:#faf9f2" title="2: #faf9f2 — Subtle background" aria-label="gold étape 2: #faf9f2"></div>
+<div class="palette-step" style="background:#f2f0e7" title="3: #f2f0e7 — UI element background" aria-label="gold étape 3: #f2f0e7"></div>
+<div class="palette-step" style="background:#eae6db" title="4: #eae6db — Hovered UI element background" aria-label="gold étape 4: #eae6db"></div>
+<div class="palette-step" style="background:#e1dccf" title="5: #e1dccf — Active / selected UI element background" aria-label="gold étape 5: #e1dccf"></div>
+<div class="palette-step" style="background:#d8d0bf" title="6: #d8d0bf — Subtle border and separator" aria-label="gold étape 6: #d8d0bf"></div>
+<div class="palette-step" style="background:#cbc0aa" title="7: #cbc0aa — UI element border and focus ring" aria-label="gold étape 7: #cbc0aa"></div>
+<div class="palette-step" style="background:#b9a88d" title="8: #b9a88d — Hovered UI element border" aria-label="gold étape 8: #b9a88d"></div>
+<div class="palette-step" style="background:#978365" title="9: #978365 — Solid background — brand / CTA" aria-label="gold étape 9: #978365"></div>
+<div class="palette-step" style="background:#8c795c" title="10: #8c795c — Hovered solid background" aria-label="gold étape 10: #8c795c"></div>
+<div class="palette-step" style="background:#71624b" title="11: #71624b — Low-contrast text" aria-label="gold étape 11: #71624b"></div>
+<div class="palette-step" style="background:#3b3427" title="12: #3b3427 — High-contrast text" aria-label="gold étape 12: #3b3427"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">sky</div><div class="palette-steps">
+<div class="palette-step" style="background:#f9feff" title="1: #f9feff — App background" aria-label="sky étape 1: #f9feff"></div>
+<div class="palette-step" style="background:#f1fafd" title="2: #f1fafd — Subtle background" aria-label="sky étape 2: #f1fafd"></div>
+<div class="palette-step" style="background:#e1f6fd" title="3: #e1f6fd — UI element background" aria-label="sky étape 3: #e1f6fd"></div>
+<div class="palette-step" style="background:#d1f0fa" title="4: #d1f0fa — Hovered UI element background" aria-label="sky étape 4: #d1f0fa"></div>
+<div class="palette-step" style="background:#bee7f5" title="5: #bee7f5 — Active / selected UI element background" aria-label="sky étape 5: #bee7f5"></div>
+<div class="palette-step" style="background:#a9daed" title="6: #a9daed — Subtle border and separator" aria-label="sky étape 6: #a9daed"></div>
+<div class="palette-step" style="background:#8dcae3" title="7: #8dcae3 — UI element border and focus ring" aria-label="sky étape 7: #8dcae3"></div>
+<div class="palette-step" style="background:#60b3d7" title="8: #60b3d7 — Hovered UI element border" aria-label="sky étape 8: #60b3d7"></div>
+<div class="palette-step" style="background:#7ce2fe" title="9: #7ce2fe — Solid background — brand / CTA" aria-label="sky étape 9: #7ce2fe"></div>
+<div class="palette-step" style="background:#74daf8" title="10: #74daf8 — Hovered solid background" aria-label="sky étape 10: #74daf8"></div>
+<div class="palette-step" style="background:#00749e" title="11: #00749e — Low-contrast text" aria-label="sky étape 11: #00749e"></div>
+<div class="palette-step" style="background:#1d3e56" title="12: #1d3e56 — High-contrast text" aria-label="sky étape 12: #1d3e56"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">mint</div><div class="palette-steps">
+<div class="palette-step" style="background:#f9fefd" title="1: #f9fefd — App background" aria-label="mint étape 1: #f9fefd"></div>
+<div class="palette-step" style="background:#f2fbf9" title="2: #f2fbf9 — Subtle background" aria-label="mint étape 2: #f2fbf9"></div>
+<div class="palette-step" style="background:#ddf9f2" title="3: #ddf9f2 — UI element background" aria-label="mint étape 3: #ddf9f2"></div>
+<div class="palette-step" style="background:#c8f4e9" title="4: #c8f4e9 — Hovered UI element background" aria-label="mint étape 4: #c8f4e9"></div>
+<div class="palette-step" style="background:#b3ecde" title="5: #b3ecde — Active / selected UI element background" aria-label="mint étape 5: #b3ecde"></div>
+<div class="palette-step" style="background:#9ae0d0" title="6: #9ae0d0 — Subtle border and separator" aria-label="mint étape 6: #9ae0d0"></div>
+<div class="palette-step" style="background:#76d2be" title="7: #76d2be — UI element border and focus ring" aria-label="mint étape 7: #76d2be"></div>
+<div class="palette-step" style="background:#4fc4a7" title="8: #4fc4a7 — Hovered UI element border" aria-label="mint étape 8: #4fc4a7"></div>
+<div class="palette-step" style="background:#86ead4" title="9: #86ead4 — Solid background — brand / CTA" aria-label="mint étape 9: #86ead4"></div>
+<div class="palette-step" style="background:#7de0cb" title="10: #7de0cb — Hovered solid background" aria-label="mint étape 10: #7de0cb"></div>
+<div class="palette-step" style="background:#027864" title="11: #027864 — Low-contrast text" aria-label="mint étape 11: #027864"></div>
+<div class="palette-step" style="background:#16433c" title="12: #16433c — High-contrast text" aria-label="mint étape 12: #16433c"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">lime</div><div class="palette-steps">
+<div class="palette-step" style="background:#fcfdfa" title="1: #fcfdfa — App background" aria-label="lime étape 1: #fcfdfa"></div>
+<div class="palette-step" style="background:#f8faf3" title="2: #f8faf3 — Subtle background" aria-label="lime étape 2: #f8faf3"></div>
+<div class="palette-step" style="background:#eef6d6" title="3: #eef6d6 — UI element background" aria-label="lime étape 3: #eef6d6"></div>
+<div class="palette-step" style="background:#e2f0bd" title="4: #e2f0bd — Hovered UI element background" aria-label="lime étape 4: #e2f0bd"></div>
+<div class="palette-step" style="background:#d3e7a6" title="5: #d3e7a6 — Active / selected UI element background" aria-label="lime étape 5: #d3e7a6"></div>
+<div class="palette-step" style="background:#c2da91" title="6: #c2da91 — Subtle border and separator" aria-label="lime étape 6: #c2da91"></div>
+<div class="palette-step" style="background:#abc978" title="7: #abc978 — UI element border and focus ring" aria-label="lime étape 7: #abc978"></div>
+<div class="palette-step" style="background:#8db654" title="8: #8db654 — Hovered UI element border" aria-label="lime étape 8: #8db654"></div>
+<div class="palette-step" style="background:#bdee63" title="9: #bdee63 — Solid background — brand / CTA" aria-label="lime étape 9: #bdee63"></div>
+<div class="palette-step" style="background:#b0e64c" title="10: #b0e64c — Hovered solid background" aria-label="lime étape 10: #b0e64c"></div>
+<div class="palette-step" style="background:#5c7c2f" title="11: #5c7c2f — Low-contrast text" aria-label="lime étape 11: #5c7c2f"></div>
+<div class="palette-step" style="background:#37401c" title="12: #37401c — High-contrast text" aria-label="lime étape 12: #37401c"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">yellow</div><div class="palette-steps">
+<div class="palette-step" style="background:#fdfdf9" title="1: #fdfdf9 — App background" aria-label="yellow étape 1: #fdfdf9"></div>
+<div class="palette-step" style="background:#fefce9" title="2: #fefce9 — Subtle background" aria-label="yellow étape 2: #fefce9"></div>
+<div class="palette-step" style="background:#fffab8" title="3: #fffab8 — UI element background" aria-label="yellow étape 3: #fffab8"></div>
+<div class="palette-step" style="background:#fff394" title="4: #fff394 — Hovered UI element background" aria-label="yellow étape 4: #fff394"></div>
+<div class="palette-step" style="background:#ffe770" title="5: #ffe770 — Active / selected UI element background" aria-label="yellow étape 5: #ffe770"></div>
+<div class="palette-step" style="background:#f3d768" title="6: #f3d768 — Subtle border and separator" aria-label="yellow étape 6: #f3d768"></div>
+<div class="palette-step" style="background:#e4c767" title="7: #e4c767 — UI element border and focus ring" aria-label="yellow étape 7: #e4c767"></div>
+<div class="palette-step" style="background:#d5ae39" title="8: #d5ae39 — Hovered UI element border" aria-label="yellow étape 8: #d5ae39"></div>
+<div class="palette-step" style="background:#ffe629" title="9: #ffe629 — Solid background — brand / CTA" aria-label="yellow étape 9: #ffe629"></div>
+<div class="palette-step" style="background:#ffdc00" title="10: #ffdc00 — Hovered solid background" aria-label="yellow étape 10: #ffdc00"></div>
+<div class="palette-step" style="background:#9e6c00" title="11: #9e6c00 — Low-contrast text" aria-label="yellow étape 11: #9e6c00"></div>
+<div class="palette-step" style="background:#473b1f" title="12: #473b1f — High-contrast text" aria-label="yellow étape 12: #473b1f"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">amber</div><div class="palette-steps">
+<div class="palette-step" style="background:#fefdfb" title="1: #fefdfb — App background" aria-label="amber étape 1: #fefdfb"></div>
+<div class="palette-step" style="background:#fefbe9" title="2: #fefbe9 — Subtle background" aria-label="amber étape 2: #fefbe9"></div>
+<div class="palette-step" style="background:#fff7c2" title="3: #fff7c2 — UI element background" aria-label="amber étape 3: #fff7c2"></div>
+<div class="palette-step" style="background:#ffee9c" title="4: #ffee9c — Hovered UI element background" aria-label="amber étape 4: #ffee9c"></div>
+<div class="palette-step" style="background:#fbe577" title="5: #fbe577 — Active / selected UI element background" aria-label="amber étape 5: #fbe577"></div>
+<div class="palette-step" style="background:#f3d673" title="6: #f3d673 — Subtle border and separator" aria-label="amber étape 6: #f3d673"></div>
+<div class="palette-step" style="background:#e9c162" title="7: #e9c162 — UI element border and focus ring" aria-label="amber étape 7: #e9c162"></div>
+<div class="palette-step" style="background:#e2a336" title="8: #e2a336 — Hovered UI element border" aria-label="amber étape 8: #e2a336"></div>
+<div class="palette-step" style="background:#ffc53d" title="9: #ffc53d — Solid background — brand / CTA" aria-label="amber étape 9: #ffc53d"></div>
+<div class="palette-step" style="background:#ffba18" title="10: #ffba18 — Hovered solid background" aria-label="amber étape 10: #ffba18"></div>
+<div class="palette-step" style="background:#ab6400" title="11: #ab6400 — Low-contrast text" aria-label="amber étape 11: #ab6400"></div>
+<div class="palette-step" style="background:#4f3422" title="12: #4f3422 — High-contrast text" aria-label="amber étape 12: #4f3422"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">orange</div><div class="palette-steps">
+<div class="palette-step" style="background:#fefcfb" title="1: #fefcfb — App background" aria-label="orange étape 1: #fefcfb"></div>
+<div class="palette-step" style="background:#fff7ed" title="2: #fff7ed — Subtle background" aria-label="orange étape 2: #fff7ed"></div>
+<div class="palette-step" style="background:#ffefd6" title="3: #ffefd6 — UI element background" aria-label="orange étape 3: #ffefd6"></div>
+<div class="palette-step" style="background:#ffdfb5" title="4: #ffdfb5 — Hovered UI element background" aria-label="orange étape 4: #ffdfb5"></div>
+<div class="palette-step" style="background:#ffd19a" title="5: #ffd19a — Active / selected UI element background" aria-label="orange étape 5: #ffd19a"></div>
+<div class="palette-step" style="background:#ffc182" title="6: #ffc182 — Subtle border and separator" aria-label="orange étape 6: #ffc182"></div>
+<div class="palette-step" style="background:#f5ae73" title="7: #f5ae73 — UI element border and focus ring" aria-label="orange étape 7: #f5ae73"></div>
+<div class="palette-step" style="background:#ec9455" title="8: #ec9455 — Hovered UI element border" aria-label="orange étape 8: #ec9455"></div>
+<div class="palette-step" style="background:#f76b15" title="9: #f76b15 — Solid background — brand / CTA" aria-label="orange étape 9: #f76b15"></div>
+<div class="palette-step" style="background:#ef5f00" title="10: #ef5f00 — Hovered solid background" aria-label="orange étape 10: #ef5f00"></div>
+<div class="palette-step" style="background:#cc4e00" title="11: #cc4e00 — Low-contrast text" aria-label="orange étape 11: #cc4e00"></div>
+<div class="palette-step" style="background:#582d1d" title="12: #582d1d — High-contrast text" aria-label="orange étape 12: #582d1d"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">white</div><div class="palette-steps">
+<div class="palette-step" style="background:rgba(255,255,255,1.00)" title="1: rgba(255,255,255,1.00) — App background" aria-label="white étape 1: rgba(255,255,255,1.00)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.97)" title="2: rgba(255,255,255,0.97) — Subtle background" aria-label="white étape 2: rgba(255,255,255,0.97)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.93)" title="3: rgba(255,255,255,0.93) — UI element background" aria-label="white étape 3: rgba(255,255,255,0.93)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.90)" title="4: rgba(255,255,255,0.90) — Hovered UI element background" aria-label="white étape 4: rgba(255,255,255,0.90)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.88)" title="5: rgba(255,255,255,0.88) — Active / selected UI element background" aria-label="white étape 5: rgba(255,255,255,0.88)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.85)" title="6: rgba(255,255,255,0.85) — Subtle border and separator" aria-label="white étape 6: rgba(255,255,255,0.85)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.80)" title="7: rgba(255,255,255,0.80) — UI element border and focus ring" aria-label="white étape 7: rgba(255,255,255,0.80)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.75)" title="8: rgba(255,255,255,0.75) — Hovered UI element border" aria-label="white étape 8: rgba(255,255,255,0.75)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.60)" title="9: rgba(255,255,255,0.60) — Solid background — brand / CTA" aria-label="white étape 9: rgba(255,255,255,0.60)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.52)" title="10: rgba(255,255,255,0.52) — Hovered solid background" aria-label="white étape 10: rgba(255,255,255,0.52)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.39)" title="11: rgba(255,255,255,0.39) — Low-contrast text" aria-label="white étape 11: rgba(255,255,255,0.39)"></div>
+<div class="palette-step" style="background:rgba(255,255,255,0.18)" title="12: rgba(255,255,255,0.18) — High-contrast text" aria-label="white étape 12: rgba(255,255,255,0.18)"></div>
+</div></div>
+<div class="palette-section"><div class="palette-scale-name">black</div><div class="palette-steps">
+<div class="palette-step" style="background:rgba(0,0,0,0.05)" title="1: rgba(0,0,0,0.05) — App background" aria-label="black étape 1: rgba(0,0,0,0.05)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.10)" title="2: rgba(0,0,0,0.10) — Subtle background" aria-label="black étape 2: rgba(0,0,0,0.10)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.15)" title="3: rgba(0,0,0,0.15) — UI element background" aria-label="black étape 3: rgba(0,0,0,0.15)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.20)" title="4: rgba(0,0,0,0.20) — Hovered UI element background" aria-label="black étape 4: rgba(0,0,0,0.20)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.30)" title="5: rgba(0,0,0,0.30) — Active / selected UI element background" aria-label="black étape 5: rgba(0,0,0,0.30)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.40)" title="6: rgba(0,0,0,0.40) — Subtle border and separator" aria-label="black étape 6: rgba(0,0,0,0.40)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.50)" title="7: rgba(0,0,0,0.50) — UI element border and focus ring" aria-label="black étape 7: rgba(0,0,0,0.50)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.60)" title="8: rgba(0,0,0,0.60) — Hovered UI element border" aria-label="black étape 8: rgba(0,0,0,0.60)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.70)" title="9: rgba(0,0,0,0.70) — Solid background — brand / CTA" aria-label="black étape 9: rgba(0,0,0,0.70)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.75)" title="10: rgba(0,0,0,0.75) — Hovered solid background" aria-label="black étape 10: rgba(0,0,0,0.75)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.80)" title="11: rgba(0,0,0,0.80) — Low-contrast text" aria-label="black étape 11: rgba(0,0,0,0.80)"></div>
+<div class="palette-step" style="background:rgba(0,0,0,0.90)" title="12: rgba(0,0,0,0.90) — High-contrast text" aria-label="black étape 12: rgba(0,0,0,0.90)"></div>
+</div></div>
+</div>
+<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<p><span class="lang-fr">Ces tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement. Utilisez le champ de recherche pour filtrer.</span><span class="lang-en">These tokens encode UX intentions. Every component references them — never primitives directly. Use the search field to filter.</span></p>
+<input type="search" id="token-search" class="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique">
+<table>
+  <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
+  <tbody>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#0d74ce" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-action-primary</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#0d74ce</td>
+  <td><span class="lang-fr">Action principale — CTA, bouton primaire</span><span class="lang-en">Primary action — CTA, primary button</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#113264" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-action-primary-hover</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#113264</td>
+  <td><span class="lang-fr">État survol de l'action principale</span><span class="lang-en">Primary action hover state</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#d9d9d9" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-action-primary-disabled</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#d9d9d9</td>
+  <td><span class="lang-fr">Action principale désactivée</span><span class="lang-en">Disabled primary action</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#ce2c31" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-feedback-danger</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#ce2c31</td>
+  <td><span class="lang-fr">Erreur, action destructrice, alerte critique</span><span class="lang-en">Error, destructive action, critical alert</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#feebec" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-feedback-danger-subtle</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#feebec</td>
+  <td><span class="lang-fr">Fond subtil pour état danger</span><span class="lang-en">Subtle background for danger state</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#18794e" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-feedback-success</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#18794e</td>
+  <td><span class="lang-fr">Confirmation, succès, validation</span><span class="lang-en">Confirmation, success, validation</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#0d74ce" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-feedback-info</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#0d74ce</td>
+  <td><span class="lang-fr">Information neutre, aide contextuelle</span><span class="lang-en">Neutral information, contextual help</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#fcfcfc" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-background-page</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#fcfcfc</td>
+  <td><span class="lang-fr">Fond de page principale</span><span class="lang-en">Main page background</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#ffffff" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-background-surface</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#ffffff</td>
+  <td><span class="lang-fr">Fond de carte, panneau, modal</span><span class="lang-en">Card, panel, modal background</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#f0f0f0" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-background-subtle</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#f0f0f0</td>
+  <td><span class="lang-fr">Fond secondaire, survol discret</span><span class="lang-en">Secondary background, subtle hover</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#fafafa" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-background-hover</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#fafafa</td>
+  <td><span class="lang-fr">Fond au survol</span><span class="lang-en">Hover background</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#202020" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-text-primary</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#202020</td>
+  <td><span class="lang-fr">Texte principal, haute lisibilité</span><span class="lang-en">Primary text, high readability</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#646464" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-text-secondary</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#646464</td>
+  <td><span class="lang-fr">Texte secondaire, labels, métadonnées</span><span class="lang-en">Secondary text, labels, metadata</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#767676" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-text-disabled</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#767676</td>
+  <td><span class="lang-fr">Texte désactivé</span><span class="lang-en">Disabled text</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#ffffff" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-text-on-action</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#ffffff</td>
+  <td><span class="lang-fr">Texte sur fond d'action</span><span class="lang-en">Text on action background</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#ffffff" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-text-on-danger</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#ffffff</td>
+  <td><span class="lang-fr">Texte sur fond danger</span><span class="lang-en">Text on danger background</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#e8e8e8" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-border-default</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#e8e8e8</td>
+  <td><span class="lang-fr">Bordure standard</span><span class="lang-en">Default border</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#0d74ce" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-border-focus</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#0d74ce</td>
+  <td><span class="lang-fr">Bordure focus — accessibilité clavier</span><span class="lang-en">Focus border — keyboard accessibility</span></td>
+</tr>
+<tr class="token-row">
+  <td><span class="color-swatch" style="background:#ce2c31" aria-hidden="true"></span></td>
+  <td><code>--sda-semantic-color-border-danger</code></td>
+  <td style="font-family:var(--font-mono);font-size:12px">#ce2c31</td>
+  <td><span class="lang-fr">Bordure état erreur</span><span class="lang-en">Error state border</span></td>
+</tr></tbody>
+</table>
+<blockquote><p><span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</span><span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>#0d74ce</code> as an intention — it is just a value.</span></p></blockquote>
+
+<div class="contribution-banner">
+  <div class="contrib-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
+  <div class="contrib-body">
+    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+    <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation.</span>
+  </div>
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener" class="ds-btn secondary" style="white-space:nowrap;flex-shrink:0"><span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span></a>
+</div>
+  </main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <span>© 2026</span>
+      <a href="https://gnegreiros.com" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Guilherme Negreiros</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>
+    </div>
+    <div class="footer-credit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+      <span class="lang-fr">Développé avec Claude Code</span><span class="lang-en">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

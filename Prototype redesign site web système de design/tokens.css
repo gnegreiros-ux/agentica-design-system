@@ -1,0 +1,642 @@
+:root {
+  /* ── Primitive colors — Radix UI ── */
+  --sda-primitive-color-gray-1: #fcfcfc;
+  --sda-primitive-color-gray-2: #f9f9f9;
+  --sda-primitive-color-gray-3: #f0f0f0;
+  --sda-primitive-color-gray-4: #e8e8e8;
+  --sda-primitive-color-gray-5: #e0e0e0;
+  --sda-primitive-color-gray-6: #d9d9d9;
+  --sda-primitive-color-gray-7: #cecece;
+  --sda-primitive-color-gray-8: #bbbbbb;
+  --sda-primitive-color-gray-9: #8d8d8d;
+  --sda-primitive-color-gray-10: #838383;
+  --sda-primitive-color-gray-11: #646464;
+  --sda-primitive-color-gray-12: #202020;
+  --sda-primitive-color-mauve-1: #fdfcfd;
+  --sda-primitive-color-mauve-2: #faf9fb;
+  --sda-primitive-color-mauve-3: #f2eff3;
+  --sda-primitive-color-mauve-4: #eae7ec;
+  --sda-primitive-color-mauve-5: #e3dfe6;
+  --sda-primitive-color-mauve-6: #dbd8e0;
+  --sda-primitive-color-mauve-7: #d0cdd7;
+  --sda-primitive-color-mauve-8: #bcbac7;
+  --sda-primitive-color-mauve-9: #8e8c99;
+  --sda-primitive-color-mauve-10: #84828e;
+  --sda-primitive-color-mauve-11: #65636d;
+  --sda-primitive-color-mauve-12: #211f26;
+  --sda-primitive-color-slate-1: #fbfcfd;
+  --sda-primitive-color-slate-2: #f8f9fa;
+  --sda-primitive-color-slate-3: #eff1f3;
+  --sda-primitive-color-slate-4: #e7e9ec;
+  --sda-primitive-color-slate-5: #dfe3e6;
+  --sda-primitive-color-slate-6: #d7dbdf;
+  --sda-primitive-color-slate-7: #c9cdd2;
+  --sda-primitive-color-slate-8: #b9bfc9;
+  --sda-primitive-color-slate-9: #8b9098;
+  --sda-primitive-color-slate-10: #80868e;
+  --sda-primitive-color-slate-11: #60646c;
+  --sda-primitive-color-slate-12: #1c2024;
+  --sda-primitive-color-sage-1: #fbfdfc;
+  --sda-primitive-color-sage-2: #f7f9f8;
+  --sda-primitive-color-sage-3: #eef1f0;
+  --sda-primitive-color-sage-4: #e6e9e8;
+  --sda-primitive-color-sage-5: #dfe2e0;
+  --sda-primitive-color-sage-6: #d7dad9;
+  --sda-primitive-color-sage-7: #c9cdcb;
+  --sda-primitive-color-sage-8: #b5bcba;
+  --sda-primitive-color-sage-9: #869e9a;
+  --sda-primitive-color-sage-10: #7c9490;
+  --sda-primitive-color-sage-11: #5c7672;
+  --sda-primitive-color-sage-12: #1a2421;
+  --sda-primitive-color-olive-1: #fcfdfc;
+  --sda-primitive-color-olive-2: #f8faf8;
+  --sda-primitive-color-olive-3: #eff1ee;
+  --sda-primitive-color-olive-4: #e7e9e6;
+  --sda-primitive-color-olive-5: #dfe2de;
+  --sda-primitive-color-olive-6: #d7dad6;
+  --sda-primitive-color-olive-7: #c8cdc7;
+  --sda-primitive-color-olive-8: #b4bab3;
+  --sda-primitive-color-olive-9: #8b9389;
+  --sda-primitive-color-olive-10: #818a7f;
+  --sda-primitive-color-olive-11: #606b5e;
+  --sda-primitive-color-olive-12: #1d201c;
+  --sda-primitive-color-sand-1: #fdfdfc;
+  --sda-primitive-color-sand-2: #f9f9f8;
+  --sda-primitive-color-sand-3: #f1f0ef;
+  --sda-primitive-color-sand-4: #e9e8e6;
+  --sda-primitive-color-sand-5: #e2e1de;
+  --sda-primitive-color-sand-6: #dad9d6;
+  --sda-primitive-color-sand-7: #cdceca;
+  --sda-primitive-color-sand-8: #b9bbb5;
+  --sda-primitive-color-sand-9: #8d8e86;
+  --sda-primitive-color-sand-10: #83847c;
+  --sda-primitive-color-sand-11: #63645b;
+  --sda-primitive-color-sand-12: #21201c;
+  --sda-primitive-color-tomato-1: #fffcfc;
+  --sda-primitive-color-tomato-2: #fff8f7;
+  --sda-primitive-color-tomato-3: #feebe7;
+  --sda-primitive-color-tomato-4: #ffdcd3;
+  --sda-primitive-color-tomato-5: #ffcdc2;
+  --sda-primitive-color-tomato-6: #fdbdaf;
+  --sda-primitive-color-tomato-7: #f5a898;
+  --sda-primitive-color-tomato-8: #ec8e7b;
+  --sda-primitive-color-tomato-9: #e54d2e;
+  --sda-primitive-color-tomato-10: #dd4425;
+  --sda-primitive-color-tomato-11: #d13415;
+  --sda-primitive-color-tomato-12: #5c271f;
+  --sda-primitive-color-red-1: #fffcfc;
+  --sda-primitive-color-red-2: #fff7f7;
+  --sda-primitive-color-red-3: #feebec;
+  --sda-primitive-color-red-4: #ffdbdc;
+  --sda-primitive-color-red-5: #ffcdce;
+  --sda-primitive-color-red-6: #fdbdbe;
+  --sda-primitive-color-red-7: #f4a9aa;
+  --sda-primitive-color-red-8: #eb8e90;
+  --sda-primitive-color-red-9: #e5484d;
+  --sda-primitive-color-red-10: #dc3e42;
+  --sda-primitive-color-red-11: #ce2c31;
+  --sda-primitive-color-red-12: #641723;
+  --sda-primitive-color-ruby-1: #fffcfd;
+  --sda-primitive-color-ruby-2: #fff7f8;
+  --sda-primitive-color-ruby-3: #feeaed;
+  --sda-primitive-color-ruby-4: #ffdbe1;
+  --sda-primitive-color-ruby-5: #ffccd6;
+  --sda-primitive-color-ruby-6: #fabcc7;
+  --sda-primitive-color-ruby-7: #f2a7b6;
+  --sda-primitive-color-ruby-8: #e88098;
+  --sda-primitive-color-ruby-9: #e54666;
+  --sda-primitive-color-ruby-10: #dc3b5d;
+  --sda-primitive-color-ruby-11: #ca244d;
+  --sda-primitive-color-ruby-12: #64172b;
+  --sda-primitive-color-crimson-1: #fffcfd;
+  --sda-primitive-color-crimson-2: #fff7fb;
+  --sda-primitive-color-crimson-3: #feecf4;
+  --sda-primitive-color-crimson-4: #ffdcea;
+  --sda-primitive-color-crimson-5: #ffcedf;
+  --sda-primitive-color-crimson-6: #f8bdd0;
+  --sda-primitive-color-crimson-7: #eda9c0;
+  --sda-primitive-color-crimson-8: #e087a9;
+  --sda-primitive-color-crimson-9: #e93d82;
+  --sda-primitive-color-crimson-10: #df3478;
+  --sda-primitive-color-crimson-11: #cb1d63;
+  --sda-primitive-color-crimson-12: #621639;
+  --sda-primitive-color-pink-1: #fffcfe;
+  --sda-primitive-color-pink-2: #fff7fc;
+  --sda-primitive-color-pink-3: #feeef8;
+  --sda-primitive-color-pink-4: #fce0f3;
+  --sda-primitive-color-pink-5: #f9d2eb;
+  --sda-primitive-color-pink-6: #f3c0e0;
+  --sda-primitive-color-pink-7: #ebacce;
+  --sda-primitive-color-pink-8: #de85b5;
+  --sda-primitive-color-pink-9: #d6409f;
+  --sda-primitive-color-pink-10: #cf3897;
+  --sda-primitive-color-pink-11: #c2298a;
+  --sda-primitive-color-pink-12: #651249;
+  --sda-primitive-color-plum-1: #fefcff;
+  --sda-primitive-color-plum-2: #fdf7ff;
+  --sda-primitive-color-plum-3: #fbf0fe;
+  --sda-primitive-color-plum-4: #f7e2fb;
+  --sda-primitive-color-plum-5: #f3d4f7;
+  --sda-primitive-color-plum-6: #ecc4ee;
+  --sda-primitive-color-plum-7: #e0afe3;
+  --sda-primitive-color-plum-8: #ce91d3;
+  --sda-primitive-color-plum-9: #ab4aba;
+  --sda-primitive-color-plum-10: #a144ae;
+  --sda-primitive-color-plum-11: #953ea3;
+  --sda-primitive-color-plum-12: #53195d;
+  --sda-primitive-color-purple-1: #fefcfe;
+  --sda-primitive-color-purple-2: #fbf7fe;
+  --sda-primitive-color-purple-3: #f7edfe;
+  --sda-primitive-color-purple-4: #f2e2fc;
+  --sda-primitive-color-purple-5: #ead5f9;
+  --sda-primitive-color-purple-6: #e0c4f4;
+  --sda-primitive-color-purple-7: #d1afec;
+  --sda-primitive-color-purple-8: #be93e4;
+  --sda-primitive-color-purple-9: #8e4ec6;
+  --sda-primitive-color-purple-10: #8445bc;
+  --sda-primitive-color-purple-11: #793aaf;
+  --sda-primitive-color-purple-12: #402060;
+  --sda-primitive-color-violet-1: #fdfcfe;
+  --sda-primitive-color-violet-2: #faf8ff;
+  --sda-primitive-color-violet-3: #f4f0fe;
+  --sda-primitive-color-violet-4: #ebe4ff;
+  --sda-primitive-color-violet-5: #e1d9ff;
+  --sda-primitive-color-violet-6: #d4cafe;
+  --sda-primitive-color-violet-7: #c2b5f5;
+  --sda-primitive-color-violet-8: #aa99ec;
+  --sda-primitive-color-violet-9: #6e56cf;
+  --sda-primitive-color-violet-10: #654dc4;
+  --sda-primitive-color-violet-11: #6550b9;
+  --sda-primitive-color-violet-12: #2f265f;
+  --sda-primitive-color-iris-1: #fdfdff;
+  --sda-primitive-color-iris-2: #f8f8ff;
+  --sda-primitive-color-iris-3: #f0f1fe;
+  --sda-primitive-color-iris-4: #e6e7ff;
+  --sda-primitive-color-iris-5: #dadcff;
+  --sda-primitive-color-iris-6: #cbceff;
+  --sda-primitive-color-iris-7: #b8bcf8;
+  --sda-primitive-color-iris-8: #9da0f0;
+  --sda-primitive-color-iris-9: #5b5bd6;
+  --sda-primitive-color-iris-10: #5252cd;
+  --sda-primitive-color-iris-11: #5151cd;
+  --sda-primitive-color-iris-12: #272962;
+  --sda-primitive-color-indigo-1: #fdfdfe;
+  --sda-primitive-color-indigo-2: #f7f9ff;
+  --sda-primitive-color-indigo-3: #edf2fe;
+  --sda-primitive-color-indigo-4: #e1e9ff;
+  --sda-primitive-color-indigo-5: #d2deff;
+  --sda-primitive-color-indigo-6: #c1d0fb;
+  --sda-primitive-color-indigo-7: #abbdf9;
+  --sda-primitive-color-indigo-8: #8da4ef;
+  --sda-primitive-color-indigo-9: #3e63dd;
+  --sda-primitive-color-indigo-10: #3358d4;
+  --sda-primitive-color-indigo-11: #3a5bc7;
+  --sda-primitive-color-indigo-12: #1f2d5c;
+  --sda-primitive-color-blue-1: #fbfdff;
+  --sda-primitive-color-blue-2: #f4faff;
+  --sda-primitive-color-blue-3: #e6f4fe;
+  --sda-primitive-color-blue-4: #d5efff;
+  --sda-primitive-color-blue-5: #c2e5ff;
+  --sda-primitive-color-blue-6: #acd8fa;
+  --sda-primitive-color-blue-7: #8ec8f6;
+  --sda-primitive-color-blue-8: #5eb1ef;
+  --sda-primitive-color-blue-9: #0090ff;
+  --sda-primitive-color-blue-10: #0588f0;
+  --sda-primitive-color-blue-11: #0d74ce;
+  --sda-primitive-color-blue-12: #113264;
+  --sda-primitive-color-cyan-1: #fafdfe;
+  --sda-primitive-color-cyan-2: #f2fafb;
+  --sda-primitive-color-cyan-3: #def7f9;
+  --sda-primitive-color-cyan-4: #caf1f6;
+  --sda-primitive-color-cyan-5: #b5e9f0;
+  --sda-primitive-color-cyan-6: #9ddde7;
+  --sda-primitive-color-cyan-7: #7dcedc;
+  --sda-primitive-color-cyan-8: #3db9cf;
+  --sda-primitive-color-cyan-9: #00a2c7;
+  --sda-primitive-color-cyan-10: #0797b9;
+  --sda-primitive-color-cyan-11: #107d98;
+  --sda-primitive-color-cyan-12: #0d3c48;
+  --sda-primitive-color-teal-1: #fafefd;
+  --sda-primitive-color-teal-2: #f3fbf9;
+  --sda-primitive-color-teal-3: #e0f8f3;
+  --sda-primitive-color-teal-4: #ccf3ea;
+  --sda-primitive-color-teal-5: #b8ecdf;
+  --sda-primitive-color-teal-6: #a1e0d2;
+  --sda-primitive-color-teal-7: #83cfc4;
+  --sda-primitive-color-teal-8: #53b9ab;
+  --sda-primitive-color-teal-9: #12a594;
+  --sda-primitive-color-teal-10: #0d9b8a;
+  --sda-primitive-color-teal-11: #008573;
+  --sda-primitive-color-teal-12: #0d3d38;
+  --sda-primitive-color-jade-1: #fbfefd;
+  --sda-primitive-color-jade-2: #f4fbf7;
+  --sda-primitive-color-jade-3: #e6f7ed;
+  --sda-primitive-color-jade-4: #d6f1e3;
+  --sda-primitive-color-jade-5: #c3e9d7;
+  --sda-primitive-color-jade-6: #acdfc8;
+  --sda-primitive-color-jade-7: #8ed1b4;
+  --sda-primitive-color-jade-8: #5eba94;
+  --sda-primitive-color-jade-9: #29a383;
+  --sda-primitive-color-jade-10: #26997b;
+  --sda-primitive-color-jade-11: #208368;
+  --sda-primitive-color-jade-12: #1d3b31;
+  --sda-primitive-color-green-1: #fbfefc;
+  --sda-primitive-color-green-2: #f4fbf6;
+  --sda-primitive-color-green-3: #e6f6eb;
+  --sda-primitive-color-green-4: #d6efdf;
+  --sda-primitive-color-green-5: #c4e8d1;
+  --sda-primitive-color-green-6: #addfc0;
+  --sda-primitive-color-green-7: #8fd1aa;
+  --sda-primitive-color-green-8: #5eba87;
+  --sda-primitive-color-green-9: #30a46c;
+  --sda-primitive-color-green-10: #299764;
+  --sda-primitive-color-green-11: #18794e;
+  --sda-primitive-color-green-12: #153226;
+  --sda-primitive-color-grass-1: #fbfefb;
+  --sda-primitive-color-grass-2: #f5fbf5;
+  --sda-primitive-color-grass-3: #e9f6e9;
+  --sda-primitive-color-grass-4: #d7eed8;
+  --sda-primitive-color-grass-5: #c2e3c4;
+  --sda-primitive-color-grass-6: #a9d6ab;
+  --sda-primitive-color-grass-7: #87c58b;
+  --sda-primitive-color-grass-8: #5bae63;
+  --sda-primitive-color-grass-9: #46a758;
+  --sda-primitive-color-grass-10: #3e9b50;
+  --sda-primitive-color-grass-11: #297c3b;
+  --sda-primitive-color-grass-12: #1b311e;
+  --sda-primitive-color-brown-1: #fefdfc;
+  --sda-primitive-color-brown-2: #fcf9f6;
+  --sda-primitive-color-brown-3: #f6eee7;
+  --sda-primitive-color-brown-4: #f0e4d9;
+  --sda-primitive-color-brown-5: #ebdaca;
+  --sda-primitive-color-brown-6: #e4cdb7;
+  --sda-primitive-color-brown-7: #dcbc9f;
+  --sda-primitive-color-brown-8: #cea37e;
+  --sda-primitive-color-brown-9: #ad7f58;
+  --sda-primitive-color-brown-10: #a07653;
+  --sda-primitive-color-brown-11: #815e46;
+  --sda-primitive-color-brown-12: #3e2a1e;
+  --sda-primitive-color-bronze-1: #fdfcfc;
+  --sda-primitive-color-bronze-2: #fdf7f5;
+  --sda-primitive-color-bronze-3: #f6edea;
+  --sda-primitive-color-bronze-4: #efe4df;
+  --sda-primitive-color-bronze-5: #e7d9d3;
+  --sda-primitive-color-bronze-6: #dfcdc5;
+  --sda-primitive-color-bronze-7: #d3bcb3;
+  --sda-primitive-color-bronze-8: #c2a499;
+  --sda-primitive-color-bronze-9: #a18072;
+  --sda-primitive-color-bronze-10: #957468;
+  --sda-primitive-color-bronze-11: #7d5e54;
+  --sda-primitive-color-bronze-12: #43302b;
+  --sda-primitive-color-gold-1: #fdfdfc;
+  --sda-primitive-color-gold-2: #faf9f2;
+  --sda-primitive-color-gold-3: #f2f0e7;
+  --sda-primitive-color-gold-4: #eae6db;
+  --sda-primitive-color-gold-5: #e1dccf;
+  --sda-primitive-color-gold-6: #d8d0bf;
+  --sda-primitive-color-gold-7: #cbc0aa;
+  --sda-primitive-color-gold-8: #b9a88d;
+  --sda-primitive-color-gold-9: #978365;
+  --sda-primitive-color-gold-10: #8c795c;
+  --sda-primitive-color-gold-11: #71624b;
+  --sda-primitive-color-gold-12: #3b3427;
+  --sda-primitive-color-sky-1: #f9feff;
+  --sda-primitive-color-sky-2: #f1fafd;
+  --sda-primitive-color-sky-3: #e1f6fd;
+  --sda-primitive-color-sky-4: #d1f0fa;
+  --sda-primitive-color-sky-5: #bee7f5;
+  --sda-primitive-color-sky-6: #a9daed;
+  --sda-primitive-color-sky-7: #8dcae3;
+  --sda-primitive-color-sky-8: #60b3d7;
+  --sda-primitive-color-sky-9: #7ce2fe;
+  --sda-primitive-color-sky-10: #74daf8;
+  --sda-primitive-color-sky-11: #00749e;
+  --sda-primitive-color-sky-12: #1d3e56;
+  --sda-primitive-color-mint-1: #f9fefd;
+  --sda-primitive-color-mint-2: #f2fbf9;
+  --sda-primitive-color-mint-3: #ddf9f2;
+  --sda-primitive-color-mint-4: #c8f4e9;
+  --sda-primitive-color-mint-5: #b3ecde;
+  --sda-primitive-color-mint-6: #9ae0d0;
+  --sda-primitive-color-mint-7: #76d2be;
+  --sda-primitive-color-mint-8: #4fc4a7;
+  --sda-primitive-color-mint-9: #86ead4;
+  --sda-primitive-color-mint-10: #7de0cb;
+  --sda-primitive-color-mint-11: #027864;
+  --sda-primitive-color-mint-12: #16433c;
+  --sda-primitive-color-lime-1: #fcfdfa;
+  --sda-primitive-color-lime-2: #f8faf3;
+  --sda-primitive-color-lime-3: #eef6d6;
+  --sda-primitive-color-lime-4: #e2f0bd;
+  --sda-primitive-color-lime-5: #d3e7a6;
+  --sda-primitive-color-lime-6: #c2da91;
+  --sda-primitive-color-lime-7: #abc978;
+  --sda-primitive-color-lime-8: #8db654;
+  --sda-primitive-color-lime-9: #bdee63;
+  --sda-primitive-color-lime-10: #b0e64c;
+  --sda-primitive-color-lime-11: #5c7c2f;
+  --sda-primitive-color-lime-12: #37401c;
+  --sda-primitive-color-yellow-1: #fdfdf9;
+  --sda-primitive-color-yellow-2: #fefce9;
+  --sda-primitive-color-yellow-3: #fffab8;
+  --sda-primitive-color-yellow-4: #fff394;
+  --sda-primitive-color-yellow-5: #ffe770;
+  --sda-primitive-color-yellow-6: #f3d768;
+  --sda-primitive-color-yellow-7: #e4c767;
+  --sda-primitive-color-yellow-8: #d5ae39;
+  --sda-primitive-color-yellow-9: #ffe629;
+  --sda-primitive-color-yellow-10: #ffdc00;
+  --sda-primitive-color-yellow-11: #9e6c00;
+  --sda-primitive-color-yellow-12: #473b1f;
+  --sda-primitive-color-amber-1: #fefdfb;
+  --sda-primitive-color-amber-2: #fefbe9;
+  --sda-primitive-color-amber-3: #fff7c2;
+  --sda-primitive-color-amber-4: #ffee9c;
+  --sda-primitive-color-amber-5: #fbe577;
+  --sda-primitive-color-amber-6: #f3d673;
+  --sda-primitive-color-amber-7: #e9c162;
+  --sda-primitive-color-amber-8: #e2a336;
+  --sda-primitive-color-amber-9: #ffc53d;
+  --sda-primitive-color-amber-10: #ffba18;
+  --sda-primitive-color-amber-11: #ab6400;
+  --sda-primitive-color-amber-12: #4f3422;
+  --sda-primitive-color-orange-1: #fefcfb;
+  --sda-primitive-color-orange-2: #fff7ed;
+  --sda-primitive-color-orange-3: #ffefd6;
+  --sda-primitive-color-orange-4: #ffdfb5;
+  --sda-primitive-color-orange-5: #ffd19a;
+  --sda-primitive-color-orange-6: #ffc182;
+  --sda-primitive-color-orange-7: #f5ae73;
+  --sda-primitive-color-orange-8: #ec9455;
+  --sda-primitive-color-orange-9: #f76b15;
+  --sda-primitive-color-orange-10: #ef5f00;
+  --sda-primitive-color-orange-11: #cc4e00;
+  --sda-primitive-color-orange-12: #582d1d;
+  --sda-primitive-color-neutral-0: #ffffff;
+  --sda-primitive-color-neutral-50: #fafafa;
+  --sda-primitive-color-neutral-500: #767676;
+  --sda-primitive-color-white-1: rgba(255,255,255,1.00);
+  --sda-primitive-color-white-2: rgba(255,255,255,0.97);
+  --sda-primitive-color-white-3: rgba(255,255,255,0.93);
+  --sda-primitive-color-white-4: rgba(255,255,255,0.90);
+  --sda-primitive-color-white-5: rgba(255,255,255,0.88);
+  --sda-primitive-color-white-6: rgba(255,255,255,0.85);
+  --sda-primitive-color-white-7: rgba(255,255,255,0.80);
+  --sda-primitive-color-white-8: rgba(255,255,255,0.75);
+  --sda-primitive-color-white-9: rgba(255,255,255,0.60);
+  --sda-primitive-color-white-10: rgba(255,255,255,0.52);
+  --sda-primitive-color-white-11: rgba(255,255,255,0.39);
+  --sda-primitive-color-white-12: rgba(255,255,255,0.18);
+  --sda-primitive-color-black-1: rgba(0,0,0,0.05);
+  --sda-primitive-color-black-2: rgba(0,0,0,0.10);
+  --sda-primitive-color-black-3: rgba(0,0,0,0.15);
+  --sda-primitive-color-black-4: rgba(0,0,0,0.20);
+  --sda-primitive-color-black-5: rgba(0,0,0,0.30);
+  --sda-primitive-color-black-6: rgba(0,0,0,0.40);
+  --sda-primitive-color-black-7: rgba(0,0,0,0.50);
+  --sda-primitive-color-black-8: rgba(0,0,0,0.60);
+  --sda-primitive-color-black-9: rgba(0,0,0,0.70);
+  --sda-primitive-color-black-10: rgba(0,0,0,0.75);
+  --sda-primitive-color-black-11: rgba(0,0,0,0.80);
+  --sda-primitive-color-black-12: rgba(0,0,0,0.90);
+
+  /* ── Semantic tokens — UX intentions ── */
+  --sda-semantic-color-action-primary: #0d74ce;
+  --sda-semantic-color-action-primary-hover: #113264;
+  --sda-semantic-color-action-primary-disabled: #d9d9d9;
+  --sda-semantic-color-feedback-danger: #ce2c31;
+  --sda-semantic-color-feedback-danger-subtle: #feebec;
+  --sda-semantic-color-feedback-success: #18794e;
+  --sda-semantic-color-feedback-info: #0d74ce;
+  --sda-semantic-color-background-page: #fcfcfc;
+  --sda-semantic-color-background-surface: #ffffff;
+  --sda-semantic-color-background-subtle: #f0f0f0;
+  --sda-semantic-color-background-hover: #fafafa;
+  --sda-semantic-color-text-primary: #202020;
+  --sda-semantic-color-text-secondary: #646464;
+  --sda-semantic-color-text-disabled: #767676;
+  --sda-semantic-color-text-on-action: #ffffff;
+  --sda-semantic-color-text-on-danger: #ffffff;
+  --sda-semantic-color-border-default: #e8e8e8;
+  --sda-semantic-color-border-focus: #0d74ce;
+  --sda-semantic-color-border-danger: #ce2c31;
+  --sda-semantic-space-control-padding-x: 16px;
+  --sda-semantic-space-control-padding-y: 8px;
+  --sda-semantic-space-control-gap: 8px;
+  --sda-semantic-space-layout-section: 32px;
+  --sda-semantic-space-layout-component: 20px;
+  --sda-semantic-radius-control: 6px;
+  --sda-semantic-radius-card: 10px;
+  --sda-semantic-typography-fontFamily: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --sda-semantic-typography-body-size: 16px;
+  --sda-semantic-typography-body-weight: 400;
+  --sda-semantic-typography-body-line-height: 1.5;
+  --sda-semantic-typography-label-size: 14px;
+  --sda-semantic-typography-label-weight: 500;
+  --sda-semantic-typography-label-line-height: 1.25;
+  --sda-semantic-typography-heading-size: 24px;
+  --sda-semantic-typography-heading-weight: 700;
+  --sda-semantic-typography-heading-line-height: 1.25;
+  --sda-semantic-icon-size-inline: 16px;
+  --sda-semantic-icon-size-control: 20px;
+  --sda-semantic-icon-size-nav: 24px;
+
+  /* ── Component tokens — UI contracts ── */
+  --sda-component-button-primary-background: var(--sda-semantic-color-action-primary);
+  --sda-component-button-primary-background-hover: var(--sda-semantic-color-action-primary-hover);
+  --sda-component-button-primary-background-disabled: var(--sda-semantic-color-action-primary-disabled);
+  --sda-component-button-primary-text: var(--sda-semantic-color-text-on-action);
+  --sda-component-button-primary-padding-x: var(--sda-semantic-space-control-padding-x);
+  --sda-component-button-primary-padding-y: var(--sda-semantic-space-control-padding-y);
+  --sda-component-button-primary-radius: var(--sda-semantic-radius-control);
+  --sda-component-button-critical-background: var(--sda-semantic-color-feedback-danger);
+  --sda-component-button-critical-background-hover: var(--sda-semantic-color-feedback-danger-subtle);
+  --sda-component-button-critical-text: var(--sda-semantic-color-text-on-danger);
+  --sda-component-button-critical-border: var(--sda-semantic-color-feedback-danger);
+  --sda-component-button-secondary-background: transparent;
+  --sda-component-button-secondary-background-hover: var(--sda-semantic-color-background-subtle);
+  --sda-component-button-secondary-text: var(--sda-semantic-color-action-primary);
+  --sda-component-button-secondary-border: var(--sda-semantic-color-action-primary);
+  --sda-component-button-ghost-background: transparent;
+  --sda-component-button-ghost-background-hover: var(--sda-semantic-color-background-subtle);
+  --sda-component-button-ghost-text: var(--sda-semantic-color-action-primary);
+  --sda-component-button-ghost-border: transparent;
+  --sda-component-input-default-background: var(--sda-semantic-color-background-surface);
+  --sda-component-input-default-border: var(--sda-semantic-color-border-default);
+  --sda-component-input-default-border-focus: var(--sda-semantic-color-border-focus);
+  --sda-component-input-default-border-error: var(--sda-semantic-color-border-danger);
+  --sda-component-input-default-text: var(--sda-semantic-color-text-primary);
+  --sda-component-input-default-placeholder: var(--sda-semantic-color-text-secondary);
+  --sda-component-input-default-radius: var(--sda-semantic-radius-control);
+  --sda-component-input-default-padding-x: var(--sda-semantic-space-control-padding-x);
+  --sda-component-input-default-padding-y: var(--sda-semantic-space-control-padding-y);
+  --sda-component-card-default-background: var(--sda-semantic-color-background-surface);
+  --sda-component-card-default-border: var(--sda-semantic-color-border-default);
+  --sda-component-card-default-radius: var(--sda-semantic-radius-card);
+  --sda-component-card-default-padding: var(--sda-semantic-space-layout-component);
+}
+/* ============================================================================
+   EXTENSION REDESIGN (non destructive) — tokens de marque & profondeur.
+   N'écrase aucun token officiel ; ajoute uniquement des tokens dérivés
+   pour la vitrine (dégradés, ombres, espacement étendu) + mode sombre.
+   Tout est construit À PARTIR des primitifs/sémantiques existants.
+   ========================================================================== */
+:root {
+  /* échelle d'espacement étendue (4px) — complète layout-section/component */
+  --sda-space-1:4px;  --sda-space-2:8px;  --sda-space-3:12px; --sda-space-4:16px;
+  --sda-space-5:24px; --sda-space-6:32px; --sda-space-7:48px; --sda-space-8:64px;
+  --sda-space-9:96px; --sda-space-10:128px;
+
+  --sda-semantic-color-background-inverse:#0b0d14;
+  --sda-semantic-color-text-on-inverse:rgba(255,255,255,.92);
+  --sda-semantic-color-text-on-inverse-muted:rgba(255,255,255,.62);
+  --sda-semantic-color-border-strong:var(--sda-primitive-color-gray-6);
+  --sda-semantic-color-feedback-success-subtle:var(--sda-primitive-color-green-3);
+  --sda-semantic-color-feedback-warning:var(--sda-primitive-color-amber-11);
+  --sda-semantic-radius-pill:999px;
+
+  /* ombres = profondeur (dimension) */
+  --sda-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
+  --sda-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
+  --sda-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
+  --sda-shadow-glow:0 0 0 1px rgba(13,116,206,.18),0 12px 32px -8px rgba(13,116,206,.28);
+
+  /* dégradés — bleu→indigo→violet→cyan, construits depuis les primitifs Radix */
+  --sda-gradient-brand:linear-gradient(110deg,
+    var(--sda-primitive-color-blue-11) 0%,
+    var(--sda-primitive-color-indigo-9) 42%,
+    var(--sda-primitive-color-iris-9) 70%,
+    var(--sda-primitive-color-cyan-9) 100%);
+  --sda-gradient-text:linear-gradient(100deg,
+    var(--sda-primitive-color-blue-8) 0%,
+    var(--sda-primitive-color-indigo-8, #8da4ef) 45%,
+    var(--sda-primitive-color-cyan-7) 100%);
+  --sda-gradient-aurora:
+    radial-gradient(60% 50% at 18% 8%, rgba(94,177,239,.28) 0%, transparent 60%),
+    radial-gradient(55% 50% at 88% 22%, rgba(123,206,220,.20) 0%, transparent 62%),
+    radial-gradient(70% 60% at 60% 100%, rgba(91,91,214,.26) 0%, transparent 60%);
+  --sda-surface-grid:rgba(148,180,255,.10);
+
+  --sda-header-height:64px;
+  --sda-content-max:1180px;
+  color-scheme:light;
+}
+
+/* ── MODE SOMBRE — surcharge sémantique uniquement ───────────────────────── */
+:root[data-theme="dark"] {
+  --sda-semantic-color-action-primary:#70b8ff;
+  --sda-semantic-color-action-primary-hover:#a9d4ff;
+  --sda-semantic-color-action-primary-disabled:#33373d;
+  --sda-semantic-color-feedback-danger:#ff9592;
+  --sda-semantic-color-feedback-danger-subtle:#291415;
+  --sda-semantic-color-feedback-success:#3dd68c;
+  --sda-semantic-color-feedback-success-subtle:#132d21;
+  --sda-semantic-color-feedback-info:#70b8ff;
+  --sda-semantic-color-feedback-warning:#ffca16;
+  --sda-semantic-color-background-page:#0a0c11;
+  --sda-semantic-color-background-surface:#13161d;
+  --sda-semantic-color-background-subtle:#1b1f27;
+  --sda-semantic-color-background-hover:#232833;
+  --sda-semantic-color-background-inverse:#05070b;
+  --sda-semantic-color-text-primary:#edeef0;
+  --sda-semantic-color-text-secondary:#a4abb8;
+  --sda-semantic-color-text-disabled:#6b7280;
+  --sda-semantic-color-text-on-action:#06121f;
+  --sda-semantic-color-border-default:#272c36;
+  --sda-semantic-color-border-strong:#363c48;
+  --sda-semantic-color-border-focus:#70b8ff;
+  --sda-semantic-color-border-danger:#ff9592;
+  --sda-shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --sda-shadow-md:0 4px 14px rgba(0,0,0,.45);
+  --sda-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);
+  --sda-shadow-glow:0 0 0 1px rgba(112,184,255,.25),0 14px 36px -8px rgba(112,184,255,.20);
+  color-scheme:dark;
+}
+
+/* ============================================================================
+   MARQUE v2 (non destructif) — palette de marque + typographie.
+   Primitifs ajoutés : accent (rose) & secondary (prune). Teal déjà présent.
+   Convention Radix : pas 11 = texte/UI accessible ; pas 9/10 = aplats de marque.
+   ========================================================================== */
+:root {
+  /* ── Primitifs : ACCENT (rose) ── */
+  --sda-primitive-color-accent-1:#f0eded;  --sda-primitive-color-accent-2:#eee8e8;
+  --sda-primitive-color-accent-3:#ebdadc;  --sda-primitive-color-accent-4:#ecccd0;
+  --sda-primitive-color-accent-5:#e7bdc3;  --sda-primitive-color-accent-6:#dfadb4;
+  --sda-primitive-color-accent-7:#d49aa2;  --sda-primitive-color-accent-8:#c8818c;
+  --sda-primitive-color-accent-9:#ed6b86;  --sda-primitive-color-accent-10:#e05f7b;
+  --sda-primitive-color-accent-11:#a6294c; --sda-primitive-color-accent-12:#5d1f2e;
+  /* ── Primitifs : SECONDARY (prune) ── */
+  --sda-primitive-color-secondary-1:#f0edee;  --sda-primitive-color-secondary-2:#f0e7ea;
+  --sda-primitive-color-secondary-3:#edd9df;  --sda-primitive-color-secondary-4:#ebcbd5;
+  --sda-primitive-color-secondary-5:#e4becb;  --sda-primitive-color-secondary-6:#d8b2bf;
+  --sda-primitive-color-secondary-7:#c8a3af;  --sda-primitive-color-secondary-8:#b18d99;
+  --sda-primitive-color-secondary-9:#463239;  --sda-primitive-color-secondary-10:#5f404b;
+  --sda-primitive-color-secondary-11:#6b4b56; --sda-primitive-color-secondary-12:#432f36;
+
+  /* ── Sémantique de marque (clair) ── */
+  --sda-semantic-color-brand-primary:var(--sda-primitive-color-teal-10);     /* #0d9b8a — aplat de marque */
+  --sda-semantic-color-action-primary:var(--sda-primitive-color-teal-11);    /* #008573 — interactif AA (texte/bouton) */
+  --sda-semantic-color-action-primary-hover:var(--sda-primitive-color-teal-12);
+  --sda-semantic-color-accent:var(--sda-primitive-color-accent-9);           /* #ed6b86 */
+  --sda-semantic-color-accent-strong:var(--sda-primitive-color-accent-11);   /* #a6294c — accent texte AA */
+  --sda-semantic-color-secondary:var(--sda-primitive-color-secondary-9);     /* #463239 */
+  --sda-semantic-color-border-focus:var(--sda-primitive-color-teal-11);
+  --sda-semantic-color-background-inverse:#1a1216;                           /* prune très sombre */
+  --sda-semantic-color-text-on-action:#ffffff;
+
+  /* ── Dégradés de marque (teal → accent) ── */
+  --sda-gradient-brand:linear-gradient(115deg,
+    var(--sda-primitive-color-teal-11) 0%,
+    var(--sda-primitive-color-teal-9) 38%,
+    var(--sda-primitive-color-accent-9) 78%,
+    var(--sda-primitive-color-accent-10) 100%);
+  --sda-gradient-text:linear-gradient(100deg,
+    var(--sda-primitive-color-teal-8) 0%,
+    var(--sda-primitive-color-accent-8) 100%);            /* clair — sur fond sombre */
+  --sda-gradient-text-light:linear-gradient(100deg,
+    var(--sda-primitive-color-teal-11) 0%,
+    var(--sda-primitive-color-accent-11) 100%);           /* foncé — sur fond clair (AA grand texte) */
+  --sda-gradient-aurora:
+    radial-gradient(60% 50% at 18% 8%, rgba(18,165,148,.26) 0%, transparent 60%),
+    radial-gradient(55% 50% at 88% 22%, rgba(237,107,134,.20) 0%, transparent 62%),
+    radial-gradient(70% 60% at 60% 100%, rgba(70,50,57,.40) 0%, transparent 60%);
+  --sda-surface-grid:rgba(95,227,208,.10);
+  --sda-shadow-glow:0 0 0 1px rgba(13,155,138,.20),0 12px 32px -8px rgba(13,155,138,.30);
+
+  /* ── Échelle typographique — base 16px, 1.200 (minor third), grille 4px ── */
+  --sda-font-size-detail:.75rem;   /* 12 — détails */
+  --sda-font-size-label:.875rem;   /* 14 — labels */
+  --sda-font-size-body:1rem;       /* 16 — texte courant */
+  --sda-font-size-h5:1.25rem;      /* 20 */
+  --sda-font-size-h4:1.5rem;       /* 24 */
+  --sda-font-size-h3:1.75rem;      /* 28 */
+  --sda-font-size-h2:2rem;         /* 32 */
+  --sda-font-size-h1:2.5rem;       /* 40 */
+  --sda-font-size-display:clamp(2.5rem,5vw,3.5rem); /* hero — type display, hors échelle texte */
+  --sda-line-height-text:1.6;
+  --sda-line-height-heading:1.05;  /* spec 1,0 ; nudge +.05 pour ne pas tronquer les diacritiques FR */
+}
+
+/* ── MODE SOMBRE — marque ── */
+:root[data-theme="dark"] {
+  --sda-semantic-color-brand-primary:#34d3bb;
+  --sda-semantic-color-action-primary:#34d3bb;
+  --sda-semantic-color-action-primary-hover:#5fe0cd;
+  --sda-semantic-color-accent:#ff8aa1;
+  --sda-semantic-color-accent-strong:#ff8aa1;
+  --sda-semantic-color-border-focus:#34d3bb;
+  --sda-semantic-color-background-inverse:#120c0f;
+  --sda-semantic-color-text-on-action:#04201c;
+  --sda-shadow-glow:0 0 0 1px rgba(52,211,187,.28),0 14px 36px -8px rgba(52,211,187,.22);
+}
+
+/* ── Couleur tertiaire (slate Radix) pour patterns décoratifs ── */
+:root{
+  --sda-semantic-color-tertiary:var(--sda-primitive-color-slate-9);   /* #8b9098 — gris-bleu froid */
+  --sda-semantic-color-tertiary-strong:var(--sda-primitive-color-slate-11);
+}
+:root[data-theme="dark"]{
+  --sda-semantic-color-tertiary:#6b7280;
+  --sda-semantic-color-tertiary-strong:#9aa3b2;
+}
