@@ -62,3 +62,4 @@
 | 2026-05-29 19:54 | Modifié | `decisions/ADR-024-brand-palette-teal-accent-secondary.md` |
 | 2026-05-29 20:13 | Créé | `decisions/ADR-025-densite-espacement-math-tokens.md` |
 | 2026-05-29 20:33 | Modifié | `decisions/README.md` |
+| 2026-05-30 — | Créé | `Prototype redesign site web système de design/` — prototype de redesign du site (index.html, color.html, site.css, site.js, tokens.css, images d'inspiration) |
