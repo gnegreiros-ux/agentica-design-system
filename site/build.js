@@ -775,6 +775,18 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, décisions et gouvernance.">
 <title>${title} — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="${title} — Agentica">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title} — Agentica">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='4' font-family='sans-serif' font-size='13' font-weight='800' fill='white'>A</text></svg>">
@@ -2232,6 +2244,11 @@ function build() {
   write(path.join(DIST, 'tokens.css'), tokensCSS());
   write(path.join(DIST, 'site.css'), siteCSS());
   write(path.join(DIST, 'site.js'), siteJS());
+
+  // Copie de l'image sociale (OG image)
+  const socialSrc = path.join(__dirname, '..', 'Prototype redesign site web système de design', 'inspiration', 'Agentica social image.jpg');
+  const socialDst = path.join(DIST, 'social.jpg');
+  if (fs.existsSync(socialSrc)) fs.copyFileSync(socialSrc, socialDst);
 
   const adrs = loadADRs();
   buildHome(adrs);
