@@ -75,6 +75,32 @@
   </p>
 </div>
 
+<h2><span class="lang-fr">Police monospace — Atkinson Hyperlegible Mono</span><span class="lang-en">Monospace typeface — Atkinson Hyperlegible Mono</span></h2>
+<p>
+  <span class="lang-fr">Compagnon monospace d'Atkinson Hyperlegible — même ADN d'accessibilité, glyphes monospacés optimisés pour le code et les valeurs de tokens.</span>
+  <span class="lang-en">Monospace companion to Atkinson Hyperlegible — same accessibility DNA, monospaced glyphs optimised for code and token values.</span>
+</p>
+<div class="demo-box" style="padding:24px 28px">
+  <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-font-mono</code></p>
+  <div style="font-family:var(--sda-font-mono);font-size:22px;font-weight:700;line-height:1.3;color:var(--sda-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div style="font-family:var(--sda-font-mono);font-size:22px;line-height:1.3;color:var(--sda-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
+  <div style="font-family:var(--sda-font-mono);font-size:20px;line-height:1.4;color:var(--sda-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
+  <div style="font-family:var(--sda-font-mono);font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ /  ? + = &lt; &gt;</div>
+  <div style="font-family:var(--sda-font-mono);font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères ambigus — clé pour le code</span><span class="lang-en">Ambiguous characters — critical for code</span></span>
+    l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m &nbsp;·&nbsp; rn m
+  </div>
+  <div style="font-family:var(--sda-font-mono);font-size:13px;line-height:1.7;color:var(--sda-semantic-color-action-primary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px;word-break:break-all">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:8px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Exemple — token CSS</span><span class="lang-en">Example — CSS token</span></span>
+    --sda-semantic-color-action-primary: #12A594;<br>
+    --sda-component-button-primary-background: var(--sda-semantic-color-action-primary);
+  </div>
+  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
+    <span class="lang-fr">Utilisée sur : éléments <code>&lt;code&gt;</code>, valeurs de tokens, labels de l'explorateur, numéros ADR. Google Fonts : <code>family=Atkinson+Hyperlegible+Mono</code></span>
+    <span class="lang-en">Used on: <code>&lt;code&gt;</code> elements, token values, explorer labels, ADR numbers. Google Fonts: <code>family=Atkinson+Hyperlegible+Mono</code></span>
+  </p>
+</div>
+
 <h2><span class="lang-fr">Échelle Minor Third — 9 échelons</span><span class="lang-en">Minor Third scale — 9 steps</span></h2>
 <p>
   <span class="lang-fr">Ratio : <strong>1.200</strong> (tierce mineure). Chaque échelon = échelon précédent × 1.2, arrondi au multiple de 4px le plus proche. Unité <code>rem</code> pour respecter le zoom navigateur (WCAG 1.4.4).</span>
@@ -208,7 +234,9 @@
   <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <code>font-family: 'Atkinson Hyperlegible'</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-fontFamily)</code></li>
   <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-primitive-fontWeight-bold)</code></li>
   <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <span class="lang-fr">Taille hors-échelle :</span><span class="lang-en">Off-scale size:</span> <code>15px</code>, <code>18px</code>, <code>22px</code> — <span class="lang-fr">choisir l'échelon Minor Third le plus proche</span><span class="lang-en">pick the closest Minor Third step</span></li>
-  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Import Google Fonts :</span><span class="lang-en">Google Fonts import:</span> <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Import Google Fonts (sans-serif) :</span><span class="lang-en">Google Fonts import (sans-serif):</span> <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
+  <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Import Google Fonts (mono) :</span><span class="lang-en">Google Fonts import (mono):</span> <code>family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700</code></li>
+  <li><span class='icon-no'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span> <code>font-family: monospace</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-font-mono)</code></li>
   <li><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Toujours choisir le mode <code>lineHeight</code> selon le rôle : <code>reading</code> ≤ base, <code>heading</code> pour lg–2xl, <code>display</code> pour 3xl+</span><span class="lang-en">Always pick the <code>lineHeight</code> mode for the role: <code>reading</code> ≤ base, <code>heading</code> for lg–2xl, <code>display</code> for 3xl+</span></li>
 </ul>
 
