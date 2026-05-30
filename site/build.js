@@ -324,7 +324,7 @@ p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:
 
 code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
 pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
-pre.code-block code{background:none;color:#c9d1d9;font-size:13px;padding:0;border-radius:0}
+pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
 
 blockquote{border-left:3px solid var(--sda-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--sda-semantic-color-background-subtle);border-radius:0 var(--sda-semantic-radius-control) var(--sda-semantic-radius-control) 0}
 blockquote p{margin:0;font-style:italic;color:var(--sda-semantic-color-text-primary)}
@@ -353,7 +353,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
-.palette-scale-name{font-size:13px;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
 .palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
@@ -500,6 +500,45 @@ html[data-lang="en"] .lang-fr{display:none}
 .footer-links a{color:rgba(255,255,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
 .footer-links a:hover{color:#fff}
 .footer-credit{font-size:0.75rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+
+/* ── INFO CARDS ──────────────────────────────────────────── */
+.info-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
+.info-card-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:8px}
+.info-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
+.info-card-body{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── TOOL CARDS ──────────────────────────────────────────── */
+.tool-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start}
+.tool-card-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
+.tool-card-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.tool-card-role{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);font-weight:400}
+.tool-card-desc{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);margin-top:3px}
+
+/* ── STEP CARDS ──────────────────────────────────────────── */
+.step-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px}
+.step-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.step-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
+.step-card-body{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── DENSITY CARDS ───────────────────────────────────────── */
+.density-grid{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.density-card{flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
+.density-card.active{border-width:2px;border-color:var(--sda-semantic-color-action-primary)}
+.density-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.density-card-label.active{color:var(--sda-semantic-color-action-primary)}
+.density-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.density-card-formula{display:flex;gap:6px;align-items:center}
+.density-card-bar{height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px}
+.density-card-math{font-size:0.75rem;font-family:monospace;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── LINEHEIGHT DEMO CARDS ───────────────────────────────── */
+.lh-demo-grid{display:flex;gap:24px;flex-wrap:wrap}
+.lh-demo-card{flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
+.lh-demo-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px}
+
+/* ── GENERIC GRIDS ───────────────────────────────────────── */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.grid-auto-220{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px}
 
 /* ── CONTRIBUTION BANNER ─────────────────────────────────── */
 .contribution-banner{display:flex;align-items:center;gap:16px;background:var(--sda-semantic-color-background-subtle);border:1px solid var(--sda-semantic-color-border-default);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 var(--sda-semantic-radius-card) var(--sda-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
@@ -916,7 +955,7 @@ function buildHome(adrs) {
 </div>
 
 <div class="home-section">
-  <h2 style="margin-top:0;padding-top:0;border-top:none">
+  <h2 class="first">
     <span class="lang-fr">Pour chaque membre de l'équipe</span>
     <span class="lang-en">For every team member</span>
   </h2>
@@ -1093,42 +1132,42 @@ function buildHome(adrs) {
     <span class="lang-fr">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée. Les ADRs rendent ces décisions visibles, traçables et auditables par les humains comme par les agents.</span>
     <span class="lang-en">A design system accumulates invisible decisions: why this token is named this way, why this variant was rejected. ADRs make these decisions visible, traceable and auditable by both humans and agents.</span>
   </p>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
-    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
-      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('file-text',20)}</div>
-      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+  <div class="grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">${icon('file-text',20)}</div>
+      <div class="info-card-title">
         <span class="lang-fr">Format Markdown</span>
         <span class="lang-en">Markdown format</span>
       </div>
-      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+      <div class="info-card-body">
         <span class="lang-fr">Chaque décision est un fichier .md versionné dans le dépôt — lisible par Git, GitHub et les agents.</span>
         <span class="lang-en">Each decision is a versioned .md file in the repo — readable by Git, GitHub and agents.</span>
       </div>
     </div>
-    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
-      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('git-branch',20)}</div>
-      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+    <div class="info-card">
+      <div class="info-card-icon">${icon('git-branch',20)}</div>
+      <div class="info-card-title">
         <span class="lang-fr">Immutabilité</span>
         <span class="lang-en">Immutability</span>
       </div>
-      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+      <div class="info-card-body">
         <span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span>
         <span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span>
       </div>
     </div>
-    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px">
-      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:8px">${icon('bot',20)}</div>
-      <div style="font-weight:700;font-size:14px;margin-bottom:4px">
+    <div class="info-card">
+      <div class="info-card-icon">${icon('bot',20)}</div>
+      <div class="info-card-title">
         <span class="lang-fr">Lisible par les agents</span>
         <span class="lang-en">Agent-readable</span>
       </div>
-      <div style="font-size:12.5px;color:var(--sda-semantic-color-text-secondary)">
+      <div class="info-card-body">
         <span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span>
         <span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span>
       </div>
     </div>
   </div>
-  <p><a href="decisions/index.html" class="ds-btn secondary" style="font-size:13px">
+  <p><a href="decisions/index.html" class="ds-btn secondary">
     <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
     <span class="lang-en">View all ${adrs.length} ADRs →</span>
   </a></p>
@@ -1151,7 +1190,7 @@ function buildHome(adrs) {
       <div class="stack-node-sub">${sub}</div>
     </div>`).join('')}
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px">
+  <div class="grid-auto-220">
     ${[
       [icon('layers',18),'Lit (Google)','Web Components','Contrats UI universels, framework-agnostic','Universal UI contracts, framework-agnostic'],
       [icon('palette',18),'Style Dictionary','Token compilation','JSON → CSS, JS, Swift, Android','JSON → CSS, JS, Swift, Android'],
@@ -1160,11 +1199,11 @@ function buildHome(adrs) {
       [icon('test-tube',18),'Playwright','E2E tests','Parcours complets automatisés','Automated end-to-end flows'],
       [icon('book-open',18),'Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
     ].map(([ico,name,role,dFr,dEn]) => `
-    <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start">
-      <div style="color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px">${ico}</div>
+    <div class="tool-card">
+      <div class="tool-card-icon">${ico}</div>
       <div>
-        <div style="font-weight:700;font-size:13.5px;color:var(--sda-semantic-color-text-primary)">${name} <span style="font-weight:400;font-size:11.5px;color:var(--sda-semantic-color-text-secondary)">— ${role}</span></div>
-        <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:3px"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+        <div class="tool-card-name">${name} <span class="tool-card-role">— ${role}</span></div>
+        <div class="tool-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
       </div>
     </div>`).join('')}
   </div>
@@ -1224,25 +1263,25 @@ function buildColor() {
 </p>
 
 <div class="radix-guide" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 28px">
-  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 1–2</span><span class="lang-en">Steps 1–2</span></div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Fonds de page</span><span class="lang-en">Page backgrounds</span></div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Arrière-plans très subtils, quasi-blanc</span><span class="lang-en">Very subtle backgrounds, near-white</span></div>
+  <div class="step-card">
+    <div class="step-card-label"><span class="lang-fr">Paliers 1–2</span><span class="lang-en">Steps 1–2</span></div>
+    <div class="step-card-title"><span class="lang-fr">Fonds de page</span><span class="lang-en">Page backgrounds</span></div>
+    <div class="step-card-body"><span class="lang-fr">Arrière-plans très subtils, quasi-blanc</span><span class="lang-en">Very subtle backgrounds, near-white</span></div>
   </div>
-  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 3–5</span><span class="lang-en">Steps 3–5</span></div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Éléments interactifs</span><span class="lang-en">Interactive elements</span></div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Survol, sélection, fonds de composants</span><span class="lang-en">Hover, selection, component backgrounds</span></div>
+  <div class="step-card">
+    <div class="step-card-label"><span class="lang-fr">Paliers 3–5</span><span class="lang-en">Steps 3–5</span></div>
+    <div class="step-card-title"><span class="lang-fr">Éléments interactifs</span><span class="lang-en">Interactive elements</span></div>
+    <div class="step-card-body"><span class="lang-fr">Survol, sélection, fonds de composants</span><span class="lang-en">Hover, selection, component backgrounds</span></div>
   </div>
-  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 6–8</span><span class="lang-en">Steps 6–8</span></div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Bordures</span><span class="lang-en">Borders</span></div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Séparateurs, contours de champs, dividers</span><span class="lang-en">Separators, field outlines, dividers</span></div>
+  <div class="step-card">
+    <div class="step-card-label"><span class="lang-fr">Paliers 6–8</span><span class="lang-en">Steps 6–8</span></div>
+    <div class="step-card-title"><span class="lang-fr">Bordures</span><span class="lang-en">Borders</span></div>
+    <div class="step-card-body"><span class="lang-fr">Séparateurs, contours de champs, dividers</span><span class="lang-en">Separators, field outlines, dividers</span></div>
   </div>
-  <div style="background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px">
-    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px"><span class="lang-fr">Paliers 9–12</span><span class="lang-en">Steps 9–12</span></div>
-    <div style="font-weight:700;color:var(--sda-semantic-color-text-primary);font-size:13px;margin-bottom:4px"><span class="lang-fr">Solides & texte</span><span class="lang-en">Solids & text</span></div>
-    <div style="font-size:12px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">CTA, texte haute lisibilité, contraste garanti</span><span class="lang-en">CTA, high-readability text, guaranteed contrast</span></div>
+  <div class="step-card">
+    <div class="step-card-label"><span class="lang-fr">Paliers 9–12</span><span class="lang-en">Steps 9–12</span></div>
+    <div class="step-card-title"><span class="lang-fr">Solides & texte</span><span class="lang-en">Solids & text</span></div>
+    <div class="step-card-body"><span class="lang-fr">CTA, texte haute lisibilité, contraste garanti</span><span class="lang-en">CTA, high-readability text, guaranteed contrast</span></div>
   </div>
 </div>
 
@@ -1334,34 +1373,34 @@ function buildSpacing() {
   <span class="lang-en">Three modes computed via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). <code>floor()</code>/<code>ceil()</code> rounding guarantees 4px alignment regardless of the factor. See <a href="../decisions/index.html">ADR-025</a>.</span>
 </p>
 <div class="demo-box" style="padding:16px 24px">
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">compact — ×0.75</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:12px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">floor(16 × 0.75 / 4) × 4 = 12px</span>
+  <div class="density-grid">
+    <div class="density-card">
+      <div class="density-card-label">compact — ×0.75</div>
+      <div class="density-card-desc"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:12px"></div>
+        <span class="density-card-math">floor(16 × 0.75 / 4) × 4 = 12px</span>
       </div>
     </div>
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:2px solid var(--sda-semantic-color-action-primary)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-action-primary);margin-bottom:6px">normal — ×1.0</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:16px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">16px (valeur primitive directe)</span>
+    <div class="density-card active">
+      <div class="density-card-label active">normal — ×1.0</div>
+      <div class="density-card-desc"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:16px"></div>
+        <span class="density-card-math">16px (valeur primitive directe)</span>
       </div>
     </div>
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">comfortable — ×1.25</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:20px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">ceil(16 × 1.25 / 4) × 4 = 20px</span>
+    <div class="density-card">
+      <div class="density-card-label">comfortable — ×1.25</div>
+      <div class="density-card-desc"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:20px"></div>
+        <span class="density-card-math">ceil(16 × 1.25 / 4) × 4 = 20px</span>
       </div>
     </div>
   </div>
-  <blockquote style="margin:0;padding:12px 16px;background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 4px 4px 0">
-    <p style="margin:0;font-size:13px;color:var(--sda-semantic-color-text-secondary)">
+  <blockquote>
+    <p>
       <span class="lang-fr"><code>floor(valeur × facteur / 4) × 4</code> — compact utilise floor(), comfortable utilise ceil(). Voir ADR-020 + ADR-025.</span>
       <span class="lang-en"><code>floor(value × factor / 4) × 4</code> — compact uses floor(), comfortable uses ceil(). See ADR-020 + ADR-025.</span>
     </p>
@@ -1469,18 +1508,18 @@ function buildTypography() {
 
 <h2><span class="lang-fr">Modes de line-height</span><span class="lang-en">Line-height modes</span></h2>
 <div class="demo-box" style="padding:16px 24px">
-  <div style="display:flex;gap:24px;flex-wrap:wrap">
-    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>reading</code> — 1.6</div>
-      <div style="font-size:14px;line-height:1.6;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.</span><span class="lang-en">Body text, labels, captions. Conforms to WCAG 1.4.12. Maximises reading comfort across multiple lines.</span></div>
+  <div class="lh-demo-grid">
+    <div class="lh-demo-card">
+      <div class="lh-demo-label"><code>reading</code> — 1.6</div>
+      <div style="font-size:0.875rem;line-height:1.6;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.</span><span class="lang-en">Body text, labels, captions. Conforms to WCAG 1.4.12. Maximises reading comfort across multiple lines.</span></div>
     </div>
-    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>heading</code> — 1.1</div>
-      <div style="font-size:20px;line-height:1.1;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Titres h5 → h3. Compact sans être étouffant.</span><span class="lang-en">Headings h5 → h3. Compact without feeling cramped.</span></div>
+    <div class="lh-demo-card">
+      <div class="lh-demo-label"><code>heading</code> — 1.1</div>
+      <div style="font-size:1.25rem;line-height:1.1;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Titres h5 → h3. Compact sans être étouffant.</span><span class="lang-en">Headings h5 → h3. Compact without feeling cramped.</span></div>
     </div>
-    <div style="flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px"><code>display</code> — 1.0</div>
-      <div style="font-size:32px;line-height:1.0;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">h2, h1, hero.</span><span class="lang-en">h2, h1, hero.</span></div>
+    <div class="lh-demo-card">
+      <div class="lh-demo-label"><code>display</code> — 1.0</div>
+      <div style="font-size:2rem;line-height:1.0;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">h2, h1, hero.</span><span class="lang-en">h2, h1, hero.</span></div>
     </div>
   </div>
 </div>
@@ -2031,8 +2070,8 @@ function buildADR(adr, adrs) {
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
   const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
-    ${prev ? `<a href="${prev.slug}.html" class="ds-btn secondary" style="font-size:13px">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
-    ${next ? `<a href="${next.slug}.html" class="ds-btn secondary" style="font-size:13px">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
+    ${prev ? `<a href="${prev.slug}.html" class="ds-btn secondary">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
+    ${next ? `<a href="${next.slug}.html" class="ds-btn secondary">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
   </div>`;
 
   const body = meta + content + nav;

@@ -146,7 +146,7 @@ p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:
 
 code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
 pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
-pre.code-block code{background:none;color:#c9d1d9;font-size:13px;padding:0;border-radius:0}
+pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
 
 blockquote{border-left:3px solid var(--sda-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--sda-semantic-color-background-subtle);border-radius:0 var(--sda-semantic-radius-control) var(--sda-semantic-radius-control) 0}
 blockquote p{margin:0;font-style:italic;color:var(--sda-semantic-color-text-primary)}
@@ -175,7 +175,7 @@ td code{color:var(--sda-semantic-color-action-primary)}
 .color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
-.palette-scale-name{font-size:13px;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
 .palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:monospace;pointer-events:none}
@@ -322,6 +322,45 @@ html[data-lang="en"] .lang-fr{display:none}
 .footer-links a{color:rgba(255,255,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
 .footer-links a:hover{color:#fff}
 .footer-credit{font-size:0.75rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+
+/* ── INFO CARDS ──────────────────────────────────────────── */
+.info-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
+.info-card-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:8px}
+.info-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
+.info-card-body{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── TOOL CARDS ──────────────────────────────────────────── */
+.tool-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start}
+.tool-card-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
+.tool-card-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary)}
+.tool-card-role{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);font-weight:400}
+.tool-card-desc{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);margin-top:3px}
+
+/* ── STEP CARDS ──────────────────────────────────────────── */
+.step-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px}
+.step-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.step-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
+.step-card-body{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── DENSITY CARDS ───────────────────────────────────────── */
+.density-grid{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.density-card{flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
+.density-card.active{border-width:2px;border-color:var(--sda-semantic-color-action-primary)}
+.density-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
+.density-card-label.active{color:var(--sda-semantic-color-action-primary)}
+.density-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.density-card-formula{display:flex;gap:6px;align-items:center}
+.density-card-bar{height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px}
+.density-card-math{font-size:0.75rem;font-family:monospace;color:var(--sda-semantic-color-text-secondary)}
+
+/* ── LINEHEIGHT DEMO CARDS ───────────────────────────────── */
+.lh-demo-grid{display:flex;gap:24px;flex-wrap:wrap}
+.lh-demo-card{flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
+.lh-demo-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px}
+
+/* ── GENERIC GRIDS ───────────────────────────────────────── */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.grid-auto-220{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px}
 
 /* ── CONTRIBUTION BANNER ─────────────────────────────────── */
 .contribution-banner{display:flex;align-items:center;gap:16px;background:var(--sda-semantic-color-background-subtle);border:1px solid var(--sda-semantic-color-border-default);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 var(--sda-semantic-radius-card) var(--sda-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}

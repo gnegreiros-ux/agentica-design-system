@@ -64,34 +64,34 @@
   <span class="lang-en">Three modes computed via <strong>math tokens</strong> (Sam's Math Equations, Tokens Studio). <code>floor()</code>/<code>ceil()</code> rounding guarantees 4px alignment regardless of the factor. See <a href="../decisions/index.html">ADR-025</a>.</span>
 </p>
 <div class="demo-box" style="padding:16px 24px">
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">compact — ×0.75</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:12px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">floor(16 × 0.75 / 4) × 4 = 12px</span>
+  <div class="density-grid">
+    <div class="density-card">
+      <div class="density-card-label">compact — ×0.75</div>
+      <div class="density-card-desc"><span class="lang-fr">Dashboards, tableaux, outils pro</span><span class="lang-en">Dashboards, tables, pro tools</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:12px"></div>
+        <span class="density-card-math">floor(16 × 0.75 / 4) × 4 = 12px</span>
       </div>
     </div>
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:2px solid var(--sda-semantic-color-action-primary)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-action-primary);margin-bottom:6px">normal — ×1.0</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:16px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">16px (valeur primitive directe)</span>
+    <div class="density-card active">
+      <div class="density-card-label active">normal — ×1.0</div>
+      <div class="density-card-desc"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:16px"></div>
+        <span class="density-card-math">16px (valeur primitive directe)</span>
       </div>
     </div>
-    <div style="flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px">comfortable — ×1.25</div>
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-primary);margin-bottom:8px"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <div style="height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px;width:20px"></div>
-        <span style="font-size:11px;font-family:monospace;color:var(--sda-semantic-color-text-secondary)">ceil(16 × 1.25 / 4) × 4 = 20px</span>
+    <div class="density-card">
+      <div class="density-card-label">comfortable — ×1.25</div>
+      <div class="density-card-desc"><span class="lang-fr">Marketing, onboarding, lecture</span><span class="lang-en">Marketing, onboarding, reading</span></div>
+      <div class="density-card-formula">
+        <div class="density-card-bar" style="width:20px"></div>
+        <span class="density-card-math">ceil(16 × 1.25 / 4) × 4 = 20px</span>
       </div>
     </div>
   </div>
-  <blockquote style="margin:0;padding:12px 16px;background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 4px 4px 0">
-    <p style="margin:0;font-size:13px;color:var(--sda-semantic-color-text-secondary)">
+  <blockquote>
+    <p>
       <span class="lang-fr"><code>floor(valeur × facteur / 4) × 4</code> — compact utilise floor(), comfortable utilise ceil(). Voir ADR-020 + ADR-025.</span>
       <span class="lang-en"><code>floor(value × factor / 4) × 4</code> — compact uses floor(), comfortable uses ceil(). See ADR-020 + ADR-025.</span>
     </p>
