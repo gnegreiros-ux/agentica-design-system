@@ -57,7 +57,7 @@
 <h2 class="first">Tokens</h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>CSS Custom Property</th><th><span class="lang-fr">Token sémantique</span><span class="lang-en">Semantic token</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody><tr class="token-row"><td><code>--sda-semantic-icon-size-inline</code></td><td><code>semantic.icon.size.inline</code></td><td style="font-family:var(--sda-font-mono)">16px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-control</code></td><td><code>semantic.icon.size.control</code></td><td style="font-family:var(--sda-font-mono)">20px</td></tr><tr class="token-row"><td><code>--sda-semantic-icon-size-nav</code></td><td><code>semantic.icon.size.nav</code></td><td style="font-family:var(--sda-font-mono)">24px</td></tr></tbody>
+  <tbody><tr class="token-row"><td><code>--agtc-semantic-icon-size-inline</code></td><td><code>semantic.icon.size.inline</code></td><td style="font-family:var(--agtc-font-mono)">16px</td></tr><tr class="token-row"><td><code>--agtc-semantic-icon-size-control</code></td><td><code>semantic.icon.size.control</code></td><td style="font-family:var(--agtc-font-mono)">20px</td></tr><tr class="token-row"><td><code>--agtc-semantic-icon-size-nav</code></td><td><code>semantic.icon.size.nav</code></td><td style="font-family:var(--agtc-font-mono)">24px</td></tr></tbody>
 </table>
 
 <h2>DOs et DON'Ts</h2>
@@ -65,7 +65,7 @@
   <div class="do-section">
     <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li><span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+      <li><span class="lang-fr">Toujours utiliser <code>&lt;agtc-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;agtc-icon name="…" size="control"&gt;</code></span></li>
       <li><span class="lang-fr">Ajouter <code>label="…"</code> si l'icône est la seule information visible</span><span class="lang-en">Add <code>label="…"</code> if the icon is the sole visible information</span></li>
       <li><span class="lang-fr">Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</span><span class="lang-en">Add <code>decorative</code> if the icon accompanies text that describes it</span></li>
       <li><span class="lang-fr">Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</span><span class="lang-en">Choose the size token matching the context: <code>inline</code> in text, <code>control</code> in a button, <code>nav</code> in a header</span></li>
@@ -74,7 +74,7 @@
   <div class="dont-section">
     <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;agtc-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;agtc-icon&gt;</code> — no accessibility contract</span></li>
       <li><span class="lang-fr">Taille codée en dur : <code>style="width:20px"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code></span></li>
       <li><span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
       <li><span class="lang-fr">Tailles inventées hors des 3 tokens sémantiques définis</span><span class="lang-en">Sizes invented outside the 3 defined semantic tokens</span></li>
@@ -83,21 +83,21 @@
 </div>
 
 <h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
-<h1>Composant — Icône (<code>sda-icon</code>)</h1>
-<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md > <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/sda-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
+<h1>Composant — Icône (<code>agtc-icon</code>)</h1>
+<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md > <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/agtc-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
 <hr>
 <h2>Bibliothèque — Lucide Icons</h2>
 <p>Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></p>
 <hr>
 <h2>API du composant</h2>
 <pre class="code-block"><code class="lang-html">&lt;!-- Icône sémantique (avec label obligatoire) --&gt;
-&lt;sda-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/sda-icon&gt;
+&lt;agtc-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/agtc-icon&gt;
 
 &lt;!-- Icône décorative (aria masquée) --&gt;
-&lt;sda-icon name="check" size="inline" decorative&gt;&lt;/sda-icon&gt;
+&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;
 
 &lt;!-- Icône de navigation --&gt;
-&lt;sda-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/sda-icon&gt;</code></pre>
+&lt;agtc-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/agtc-icon&gt;</code></pre>
 <table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th><th>Requis</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>trash-2</code>)</td><td>—</td><td>✅</td></tr><tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td><td>Si non décoratif</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement ornementale</td><td><code>false</code></td><td>—</td></tr></tbody></table>
 <hr>
 <h2>Tailles et tokens</h2>
@@ -109,7 +109,7 @@
 ✅ size correspond au contexte (control dans un bouton, inline dans un texte)
 ✅ Nom d'icône exact selon lucide.dev (kebab-case)
 
-❌ Jamais d'icône sémantique sans label : &lt;sda-icon name="trash-2"&gt;
+❌ Jamais d'icône sémantique sans label : &lt;agtc-icon name="trash-2"&gt;
 ❌ Jamais de taille en dur : style="width: 20px"
 ❌ Jamais de variante inventée hors inline/control/nav
 ❌ Jamais d'icône hors bibliothèque Lucide sans approbation</code></pre>
@@ -117,29 +117,29 @@
 <h2>Usage avec ds-button</h2>
 <pre class="code-block"><code class="lang-html">&lt;!-- Bouton avec icône décorative + texte --&gt;
 &lt;ds-button variant="critical"&gt;
-  &lt;sda-icon name="trash-2" size="control" decorative&gt;&lt;/sda-icon&gt;
+  &lt;agtc-icon name="trash-2" size="control" decorative&gt;&lt;/agtc-icon&gt;
   Supprimer définitivement
 &lt;/ds-button&gt;
 
-&lt;!-- Bouton icône seul — label obligatoire sur sda-icon --&gt;
+&lt;!-- Bouton icône seul — label obligatoire sur agtc-icon --&gt;
 &lt;ds-button variant="ghost" aria-label="Fermer"&gt;
-  &lt;sda-icon name="x" size="control" label="Fermer"&gt;&lt;/sda-icon&gt;
+  &lt;agtc-icon name="x" size="control" label="Fermer"&gt;&lt;/agtc-icon&gt;
 &lt;/ds-button&gt;</code></pre>
 <hr>
 <h2>Accessibilité — WCAG 1.1.1</h2>
 <table><thead><tr><th>Scénario</th><th>Implémentation</th></tr></thead><tbody><tr><td>Icône seule (bouton, lien)</td><td><code>label="Action décrite"</code> → <code>aria-label</code> injecté</td></tr><tr><td>Icône + texte adjacent</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Icône dans un champ</td><td><code>label</code> sur le champ parent (<code>aria-describedby</code>)</td></tr></tbody></table>
 <hr>
 <h2>Anti-patterns à détecter</h2>
-<pre class="code-block"><code class="lang-html">❌ &lt;sda-icon name="trash-2"&gt;&lt;/sda-icon&gt;
+<pre class="code-block"><code class="lang-html">❌ &lt;agtc-icon name="trash-2"&gt;&lt;/agtc-icon&gt;
    → Icône sémantique sans label — escalader
 
-❌ &lt;sda-icon name="danger" size="control"&gt;
+❌ &lt;agtc-icon name="danger" size="control"&gt;
    → Nom "danger" inexistant dans Lucide — utiliser "alert-triangle" ou "x-circle"
 
-❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors sda-icon)
+❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors agtc-icon)
    → Dérive — pas de contrat d'accessibilité ni de token
 
-❌ &lt;sda-icon name="check" style="width: 18px;"&gt;
+❌ &lt;agtc-icon name="check" style="width: 18px;"&gt;
    → Taille en dur — utiliser size="inline" ou size="control"</code></pre>
 <hr>
 <h2>Installation</h2>

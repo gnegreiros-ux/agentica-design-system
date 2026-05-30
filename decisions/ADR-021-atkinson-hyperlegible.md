@@ -61,7 +61,7 @@ La police est désormais un token primitif (`primitive.fontFamily.base`) référ
 semantic.typography.fontFamily
   → {primitive.fontFamily.base}
   → 'Atkinson Hyperlegible', system-ui, sans-serif
-  → --sda-semantic-typography-fontFamily dans tokens.css
+  → --agtc-semantic-typography-fontFamily dans tokens.css
 ```
 
 ### Import Google Fonts

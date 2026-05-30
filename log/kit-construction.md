@@ -94,3 +94,4 @@
 | 2026-05-30 18:15 | Créé | `decisions/ADR-029-quality-gate-pre-commit.md` |
 | 2026-05-30 18:16 | Modifié | `decisions/README.md` |
 | 2026-05-30 18:16 | Créé | `.claude/rules/post-change-pipeline.md` |
+| 2026-05-30 — | Modifié | Tous les fichiers source — renommage sigle `sda` → `agtc`, préfixe CSS `--sda-` → `--agtc-`, balises WC `sda-icon/sda-button` → `agtc-icon/agtc-button`, localStorage `sda-lang` → `agtc-lang` |

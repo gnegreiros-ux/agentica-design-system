@@ -93,7 +93,7 @@ Trois valeurs seulement, assignées par contexte de taille :
 
 ```
 ✅ Toujours référencer un token sémantique pour la typographie
-✅ font-family toujours via var(--sda-semantic-typography-fontFamily)
+✅ font-family toujours via var(--agtc-semantic-typography-fontFamily)
 ✅ Choisir le niveau par INTENTION (h1 pour titre principal, body pour paragraphe)
 
 ❌ Jamais de font-size en dur : font-size: 16px

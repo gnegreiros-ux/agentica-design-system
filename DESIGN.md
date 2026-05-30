@@ -2,20 +2,19 @@
 
 > Spécification portable, versionnée avec le code.
 > Lisible par les humains et par les agents IA.
-> Source : Google Labs, avril 2026 — licence Apache 2.0
 > **Type:** contract
 > **Chemin logique:** DESIGN.md
 > **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md
 > **Relations:** AGENTS.md, tokens/semantic.json, tokens/component.json, guidelines/components/
 
-> **Note pour la réutilisation :** Remplacer "Agentica (sda)" et "GNegreiros.com" par le nom du système et de votre organisation.
+> **Note pour la réutilisation :** Remplacer "Agentica (agtc)" et "GNegreiros.com" par le nom du système et de votre organisation.
 
 ---
 
 ## 1. Identité et intention du système
 
-**Nom du système :** Agentica — Système de design agentique (sda)
+**Nom du système :** Agentica (agtc)
 **Organisation :** GNegreiros.com
 **Site :** https://designsystem.gnegreiros.com
 **Version :** 1.0.0

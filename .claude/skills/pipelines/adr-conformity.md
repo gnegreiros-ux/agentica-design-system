@@ -30,7 +30,7 @@
 - ❌ Valeurs comme `6px`, `10px`, `14px`, `18px` dans les tokens d'espacement
 
 ### ADR-021 — Atkinson Hyperlegible (sans-serif)
-- ✅ Police principale via `var(--sda-semantic-typography-fontFamily)`
+- ✅ Police principale via `var(--agtc-semantic-typography-fontFamily)`
 - ❌ `font-family: 'Atkinson Hyperlegible'` en dur dans le code
 
 ### ADR-023 — Échelle Minor Third
@@ -42,7 +42,7 @@
 - ❌ Commit sans rapport d'impact approuvé
 
 ### ADR-028 — Atkinson Hyperlegible Mono
-- ✅ Police mono via `var(--sda-font-mono)`
+- ✅ Police mono via `var(--agtc-font-mono)`
 - ❌ `font-family: monospace` ou `font-family: 'JetBrains Mono'` en dur
 
 ---
@@ -54,6 +54,6 @@
 - [x] ADR-001 : aucun token primitif dans les composants
 - [x] ADR-020 : espacements sur grille 4px
 - [x] ADR-023 : font-sizes sur échelle Minor Third
-- [x] ADR-028 : font-family mono via var(--sda-font-mono)
+- [x] ADR-028 : font-family mono via var(--agtc-font-mono)
 - [ ] ⚠️ ADR-004 : tokens/component.json modifié → approbation requise
 ```

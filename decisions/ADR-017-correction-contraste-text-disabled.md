@@ -100,9 +100,9 @@ Les éléments non désactivés qui utilisaient `text-disabled` ont été bascul
   la conformité sans résoudre la chaîne de tokens
 
 **Pour les composants :**
-- Tout composant utilisant `var(--sda-semantic-color-text-disabled)` bénéficie
+- Tout composant utilisant `var(--agtc-semantic-color-text-disabled)` bénéficie
   automatiquement du contraste corrigé
-- `var(--sda-semantic-color-background-hover)` est disponible pour les survols de lignes
+- `var(--agtc-semantic-color-background-hover)` est disponible pour les survols de lignes
 
 **Incohérence structurelle restante :**
 - `tokens/semantic.json` référence `{color.neutral.500}` qui ne se résout pas dans

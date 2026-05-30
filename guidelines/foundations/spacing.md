@@ -54,9 +54,9 @@ Les tokens sémantiques traduisent l'échelle en intentions UX :
 
 En CSS :
 ```css
-padding: var(--sda-semantic-space-control-padding-y) var(--sda-semantic-space-control-padding-x);
-gap: var(--sda-semantic-space-control-gap);
-margin-bottom: var(--sda-semantic-space-layout-component);
+padding: var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);
+gap: var(--agtc-semantic-space-control-gap);
+margin-bottom: var(--agtc-semantic-space-layout-component);
 ```
 
 ---
@@ -70,7 +70,7 @@ margin-bottom: var(--sda-semantic-space-layout-component);
 
 ❌ Jamais de valeur px en dur : padding: 14px
 ❌ Jamais de Tailwind arbitrary values : p-[14px]
-❌ Jamais de token primitif dans un composant : var(--sda-primitive-space-4)
+❌ Jamais de token primitif dans un composant : var(--agtc-primitive-space-4)
 ```
 
 ---
@@ -116,13 +116,13 @@ La technique `floor()/ceil()` garantit que toutes les valeurs calculées restent
 
 ```css
 /* Normal (défaut) */
-padding: var(--sda-semantic-space-control-padding-y) var(--sda-semantic-space-control-padding-x);
+padding: var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);
 
 /* Compact — SaaS data-dense */
-padding: var(--sda-semantic-space-compact-control-padding-y) var(--sda-semantic-space-compact-control-padding-x);
+padding: var(--agtc-semantic-space-compact-control-padding-y) var(--agtc-semantic-space-compact-control-padding-x);
 
 /* Comfortable — marketing */
-padding: var(--sda-semantic-space-comfortable-control-padding-y) var(--sda-semantic-space-comfortable-control-padding-x);
+padding: var(--agtc-semantic-space-comfortable-control-padding-y) var(--agtc-semantic-space-comfortable-control-padding-x);
 ```
 
 ```

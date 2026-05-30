@@ -106,9 +106,9 @@ Les 35 valeurs résolues après migration sont **strictement identiques** à cel
 de l'objet `SEM` hardcodé qu'elles remplacent. Vérifiable par diff :
 
 ```
---sda-semantic-color-action-primary: #0d74ce    ← inchangé
---sda-semantic-space-control-padding-x: 16px    ← inchangé
---sda-semantic-typography-body-line-height: 1.5 ← inchangé
+--agtc-semantic-color-action-primary: #0d74ce    ← inchangé
+--agtc-semantic-space-control-padding-x: 16px    ← inchangé
+--agtc-semantic-typography-body-line-height: 1.5 ← inchangé
 ```
 
 ---

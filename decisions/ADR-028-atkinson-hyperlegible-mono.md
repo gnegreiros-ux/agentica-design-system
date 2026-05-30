@@ -44,7 +44,7 @@ La police est exposée via un token CSS custom property dans le build :
 
 ```css
 /* :root dans site.css */
---sda-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
+--agtc-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
 ```
 
 La chaîne de fallback garantit un résultat acceptable même sans connexion Internet :
@@ -60,7 +60,7 @@ Chargé dans le même `@import` qu'Atkinson Hyperlegible (une seule requête ré
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 ```
 
-### Éléments utilisant `--sda-font-mono`
+### Éléments utilisant `--agtc-font-mono`
 
 | Élément | Contexte |
 |---------|----------|
@@ -69,7 +69,7 @@ Chargé dans le même `@import` qu'Atkinson Hyperlegible (une seule requête ré
 | `.space-label` | Page espacement — labels de scale |
 | `.color-name`, `.color-value` | Page couleur — hex, nom du token |
 | `.adr-num`, `.density-card-math` | Pages décisions — formules math tokens |
-| Inline `style="font-family:var(--sda-font-mono)"` | Cellules de valeurs dans les tableaux de tokens |
+| Inline `style="font-family:var(--agtc-font-mono)"` | Cellules de valeurs dans les tableaux de tokens |
 
 ---
 
@@ -98,12 +98,12 @@ La cohérence typographique entre la police de texte (Atkinson Hyperlegible) et 
 ## Conséquences
 
 **Pour le système de tokens :**
-- `--sda-font-mono` devient la référence obligatoire pour tout élément monospace
+- `--agtc-font-mono` devient la référence obligatoire pour tout élément monospace
 - `font-family: monospace` en dur est interdit (détectable par audit ESLint)
 
 **Pour les agents IA :**
 - La police monospace est une décision traçable, pas un défaut système
-- Les agents peuvent vérifier qu'un composant utilise `var(--sda-font-mono)` plutôt qu'une valeur hardcodée
+- Les agents peuvent vérifier qu'un composant utilise `var(--agtc-font-mono)` plutôt qu'une valeur hardcodée
 
 **Pour les utilisateurs :**
 - Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision

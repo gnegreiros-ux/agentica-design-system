@@ -128,38 +128,38 @@ function flattenTokens(obj, data, prefix = '') {
 const SEM = flattenTokens(semanticData.semantic, primitives);
 
 const COMP = {
-  'button-primary-background':          'var(--sda-semantic-color-action-primary)',
-  'button-primary-background-hover':    'var(--sda-semantic-color-action-primary-hover)',
-  'button-primary-background-disabled': 'var(--sda-semantic-color-action-primary-disabled)',
-  'button-primary-text':                'var(--sda-semantic-color-text-on-action)',
-  'button-primary-padding-x':           'var(--sda-semantic-space-control-padding-x)',
-  'button-primary-padding-y':           'var(--sda-semantic-space-control-padding-y)',
-  'button-primary-radius':              'var(--sda-semantic-radius-control)',
-  'button-critical-background':         'var(--sda-semantic-color-feedback-danger)',
-  'button-critical-background-hover':   'var(--sda-semantic-color-feedback-danger-subtle)',
-  'button-critical-text':               'var(--sda-semantic-color-text-on-danger)',
-  'button-critical-border':             'var(--sda-semantic-color-feedback-danger)',
+  'button-primary-background':          'var(--agtc-semantic-color-action-primary)',
+  'button-primary-background-hover':    'var(--agtc-semantic-color-action-primary-hover)',
+  'button-primary-background-disabled': 'var(--agtc-semantic-color-action-primary-disabled)',
+  'button-primary-text':                'var(--agtc-semantic-color-text-on-action)',
+  'button-primary-padding-x':           'var(--agtc-semantic-space-control-padding-x)',
+  'button-primary-padding-y':           'var(--agtc-semantic-space-control-padding-y)',
+  'button-primary-radius':              'var(--agtc-semantic-radius-control)',
+  'button-critical-background':         'var(--agtc-semantic-color-feedback-danger)',
+  'button-critical-background-hover':   'var(--agtc-semantic-color-feedback-danger-subtle)',
+  'button-critical-text':               'var(--agtc-semantic-color-text-on-danger)',
+  'button-critical-border':             'var(--agtc-semantic-color-feedback-danger)',
   'button-secondary-background':        'transparent',
-  'button-secondary-background-hover':  'var(--sda-semantic-color-background-subtle)',
-  'button-secondary-text':              'var(--sda-semantic-color-action-primary)',
-  'button-secondary-border':            'var(--sda-semantic-color-action-primary)',
+  'button-secondary-background-hover':  'var(--agtc-semantic-color-background-subtle)',
+  'button-secondary-text':              'var(--agtc-semantic-color-action-primary)',
+  'button-secondary-border':            'var(--agtc-semantic-color-action-primary)',
   'button-ghost-background':            'transparent',
-  'button-ghost-background-hover':      'var(--sda-semantic-color-background-subtle)',
-  'button-ghost-text':                  'var(--sda-semantic-color-action-primary)',
+  'button-ghost-background-hover':      'var(--agtc-semantic-color-background-subtle)',
+  'button-ghost-text':                  'var(--agtc-semantic-color-action-primary)',
   'button-ghost-border':                'transparent',
-  'input-default-background':           'var(--sda-semantic-color-background-surface)',
-  'input-default-border':               'var(--sda-semantic-color-border-default)',
-  'input-default-border-focus':         'var(--sda-semantic-color-border-focus)',
-  'input-default-border-error':         'var(--sda-semantic-color-border-danger)',
-  'input-default-text':                 'var(--sda-semantic-color-text-primary)',
-  'input-default-placeholder':          'var(--sda-semantic-color-text-secondary)',
-  'input-default-radius':               'var(--sda-semantic-radius-control)',
-  'input-default-padding-x':            'var(--sda-semantic-space-control-padding-x)',
-  'input-default-padding-y':            'var(--sda-semantic-space-control-padding-y)',
-  'card-default-background':            'var(--sda-semantic-color-background-surface)',
-  'card-default-border':                'var(--sda-semantic-color-border-default)',
-  'card-default-radius':                'var(--sda-semantic-radius-card)',
-  'card-default-padding':               'var(--sda-semantic-space-layout-component)',
+  'input-default-background':           'var(--agtc-semantic-color-background-surface)',
+  'input-default-border':               'var(--agtc-semantic-color-border-default)',
+  'input-default-border-focus':         'var(--agtc-semantic-color-border-focus)',
+  'input-default-border-error':         'var(--agtc-semantic-color-border-danger)',
+  'input-default-text':                 'var(--agtc-semantic-color-text-primary)',
+  'input-default-placeholder':          'var(--agtc-semantic-color-text-secondary)',
+  'input-default-radius':               'var(--agtc-semantic-radius-control)',
+  'input-default-padding-x':            'var(--agtc-semantic-space-control-padding-x)',
+  'input-default-padding-y':            'var(--agtc-semantic-space-control-padding-y)',
+  'card-default-background':            'var(--agtc-semantic-color-background-surface)',
+  'card-default-border':                'var(--agtc-semantic-color-border-default)',
+  'card-default-radius':                'var(--agtc-semantic-radius-card)',
+  'card-default-padding':               'var(--agtc-semantic-space-layout-component)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -167,11 +167,11 @@ function tokensCSS() {
   const lines = [':root {', '  /* ── Primitive colors — Radix UI ── */'];
   for (const [scale, steps] of Object.entries(COLOR_SCALES))
     for (const [step, { value }] of Object.entries(steps))
-      lines.push(`  --sda-primitive-color-${scale}-${step}: ${value};`);
+      lines.push(`  --agtc-primitive-color-${scale}-${step}: ${value};`);
   lines.push('\n  /* ── Semantic tokens — UX intentions ── */');
-  for (const [k, v] of Object.entries(SEM)) lines.push(`  --sda-semantic-${k}: ${v};`);
+  for (const [k, v] of Object.entries(SEM)) lines.push(`  --agtc-semantic-${k}: ${v};`);
   lines.push('\n  /* ── Component tokens — UI contracts ── */');
-  for (const [k, v] of Object.entries(COMP)) lines.push(`  --sda-component-${k}: ${v};`);
+  for (const [k, v] of Object.entries(COMP)) lines.push(`  --agtc-component-${k}: ${v};`);
   lines.push('}');
   return lines.join('\n');
 }
@@ -179,7 +179,7 @@ function tokensCSS() {
 function siteCSS() { return `
 /* Agentica — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-:root{--sda-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
+:root{--agtc-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
 html { scroll-padding-top: 72px; }
@@ -189,57 +189,57 @@ html { scroll-padding-top: 72px; }
 
 body{
   font-family:'Atkinson Hyperlegible',system-ui,sans-serif;
-  background:var(--sda-semantic-color-background-page);
-  color:var(--sda-semantic-color-text-primary);
-  font-size:var(--sda-semantic-typography-body-size);
-  font-weight:var(--sda-semantic-typography-body-weight);
-  line-height:var(--sda-semantic-typography-body-line-height);
+  background:var(--agtc-semantic-color-background-page);
+  color:var(--agtc-semantic-color-text-primary);
+  font-size:var(--agtc-semantic-typography-body-size);
+  font-weight:var(--agtc-semantic-typography-body-weight);
+  line-height:var(--agtc-semantic-typography-body-line-height);
 }
 
 /* ── HEADER ─────────────────────────────────────────────── */
 .site-header{
   position:fixed;top:0;left:0;right:0;height:60px;z-index:100;
-  background:var(--sda-semantic-color-background-surface);
-  border-top:3px solid var(--sda-semantic-color-action-primary);
-  border-bottom:1px solid var(--sda-semantic-color-border-default);
+  background:var(--agtc-semantic-color-background-surface);
+  border-top:3px solid var(--agtc-semantic-color-action-primary);
+  border-bottom:1px solid var(--agtc-semantic-color-border-default);
   box-shadow:0 2px 24px rgba(0,0,0,.12);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
 .logo-img{height:28px;width:auto;flex-shrink:0;display:block}
-.logo-version{font-size:11px;color:var(--sda-semantic-color-text-secondary);background:var(--sda-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
+.logo-version{font-size:11px;color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
-  text-decoration:none;color:var(--sda-semantic-color-text-secondary);font-size:0.875rem;
-  padding:6px 12px;border-radius:var(--sda-semantic-radius-control);font-weight:500;
+  text-decoration:none;color:var(--agtc-semantic-color-text-secondary);font-size:0.875rem;
+  padding:6px 12px;border-radius:var(--agtc-semantic-radius-control);font-weight:500;
   transition:background .12s,color .12s;
 }
-.top-nav a:hover,.top-nav a.active{background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-primary)}
-.top-nav a.active{color:var(--sda-semantic-color-action-primary)}
+.top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
 .sidebar{
   width:236px;flex-shrink:0;
-  border-right:1px solid var(--sda-semantic-color-border-default);
-  background:var(--sda-semantic-color-background-surface);
+  border-right:1px solid var(--agtc-semantic-color-border-default);
+  background:var(--agtc-semantic-color-background-surface);
   position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;
   padding:20px 0;
 }
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
   font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--sda-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
+  color:var(--agtc-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
   display:block;padding:6px 20px;text-decoration:none;font-size:0.875rem;
-  color:var(--sda-semantic-color-text-secondary);border-radius:0;
+  color:var(--agtc-semantic-color-text-secondary);border-radius:0;
   transition:background .1s,color .1s;border-left:2px solid transparent;
 }
-.sidebar a:hover{background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-primary)}
+.sidebar a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .sidebar a.active{
-  background:var(--sda-semantic-color-background-surface);color:var(--sda-semantic-color-action-primary);
-  border-left-color:var(--sda-semantic-color-action-primary);border-left-width:3px;font-weight:600;
+  background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
+  border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:600;
 }
 .content{flex:1;padding:52px 64px;max-width:960px}
 
@@ -248,12 +248,12 @@ body{
 .hero{padding:80px 72px 56px;max-width:1100px;margin:0 auto}
 .hero-badge{
   display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-on-action);
-  background:var(--sda-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-on-action);
+  background:var(--agtc-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
 .hero h1{font-size:3rem;font-weight:800;line-height:1.08;letter-spacing:-.035em;margin-bottom:20px}
-.hero h1 span{color:var(--sda-semantic-color-action-primary)}
-.hero-tagline{font-size:1.25rem;color:var(--sda-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
+.hero h1 span{color:var(--agtc-semantic-color-action-primary)}
+.hero-tagline{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
 .stat-band{
@@ -265,26 +265,26 @@ body{
   border-right:1px solid rgba(255,255,255,.08);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:2.5rem;font-weight:800;color:var(--sda-semantic-color-action-primary);display:block;letter-spacing:-.02em}
+.stat-num{font-size:2.5rem;font-weight:800;color:var(--agtc-semantic-color-action-primary);display:block;letter-spacing:-.02em}
 .stat-text{font-size:0.875rem;color:rgba(255,255,255,.5);margin-top:4px;display:block}
 
 .home-section{padding:64px 72px;max-width:1100px;margin:0 auto}
 .home-section h2{font-size:1.75rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
-.home-section > p{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
+.home-section > p{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
 
 /* ── NAV CARDS ───────────────────────────────────────────── */
 .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .nav-card{
-  background:var(--sda-semantic-color-background-surface);
-  border:1px solid var(--sda-semantic-color-border-default);
-  border-radius:var(--sda-semantic-radius-card);
+  background:var(--agtc-semantic-color-background-surface);
+  border:1px solid var(--agtc-semantic-color-border-default);
+  border-radius:var(--agtc-semantic-radius-card);
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
-.nav-card:hover{border-color:var(--sda-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
-.nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--sda-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
-.nav-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
-.nav-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
+.nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
+.nav-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.nav-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 .icon-ok{color:#1a7f37;display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-no{color:#ce2c31;display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
@@ -292,203 +292,203 @@ body{
 h3 .icon-ok,h3 .icon-no{margin-right:6px}
 
 /* ── TOKEN PIPELINE ─────────────────────────────────────── */
-.pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
-.pipeline-step{flex:1;padding:24px;background:var(--sda-semantic-color-background-surface)}
-.pipeline-step+.pipeline-step{border-left:1px solid var(--sda-semantic-color-border-default)}
-.pipeline-step:first-child{background:var(--sda-semantic-color-background-subtle)}
-.pipeline-step:last-child{background:var(--sda-semantic-color-background-surface);border-left:3px solid var(--sda-semantic-color-action-primary)}
-.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
-.pipeline-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
-.pipeline-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
-.pipeline-example{font-family:var(--sda-font-mono);font-size:11.5px;color:var(--sda-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--sda-semantic-color-border-default)}
+.pipeline{display:flex;align-items:stretch;margin:32px 0;gap:0;border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
+.pipeline-step{flex:1;padding:24px;background:var(--agtc-semantic-color-background-surface)}
+.pipeline-step+.pipeline-step{border-left:1px solid var(--agtc-semantic-color-border-default)}
+.pipeline-step:first-child{background:var(--agtc-semantic-color-background-subtle)}
+.pipeline-step:last-child{background:var(--agtc-semantic-color-background-surface);border-left:3px solid var(--agtc-semantic-color-action-primary)}
+.pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
+.pipeline-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.pipeline-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
+.pipeline-example{font-family:var(--agtc-font-mono);font-size:11.5px;color:var(--agtc-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--agtc-semantic-color-border-default)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
-.principle-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:22px}
-.principle-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-action-primary);margin-bottom:8px}
-.principle-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:6px}
-.principle-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.principle-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:22px}
+.principle-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
+.principle-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.principle-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 h1:not(.hero h1){font-size:2rem;font-weight:800;line-height:1.0;letter-spacing:-.025em;margin-bottom:10px}
-.page-lead{font-size:1.25rem;color:var(--sda-semantic-color-text-secondary);line-height:1.65;margin-bottom:48px;max-width:580px}
-h2{font-size:1.25rem;font-weight:700;letter-spacing:-.015em;margin-top:56px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--sda-semantic-color-border-default)}
+.page-lead{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.65;margin-bottom:48px;max-width:580px}
+h2{font-size:1.25rem;font-weight:700;letter-spacing:-.015em;margin-top:56px;margin-bottom:16px;padding-top:48px;border-top:1px solid var(--agtc-semantic-color-border-default)}
 h2.first{margin-top:32px;padding-top:0;border-top:none}
 h3{font-size:1rem;font-weight:700;margin-top:32px;margin-bottom:12px}
-p{color:var(--sda-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
+p{color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
 
-code{font-family:var(--sda-font-mono);font-size:.85em;background:var(--sda-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--sda-semantic-color-text-primary)}
-pre.code-block{background:#1a1e24;border-radius:var(--sda-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
+code{font-family:var(--agtc-font-mono);font-size:.85em;background:var(--agtc-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--agtc-semantic-color-text-primary)}
+pre.code-block{background:#1a1e24;border-radius:var(--agtc-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
 pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
 
-blockquote{border-left:3px solid var(--sda-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--sda-semantic-color-background-subtle);border-radius:0 var(--sda-semantic-radius-control) var(--sda-semantic-radius-control) 0}
-blockquote p{margin:0;font-style:italic;color:var(--sda-semantic-color-text-primary)}
+blockquote{border-left:3px solid var(--agtc-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--agtc-semantic-color-background-subtle);border-radius:0 var(--agtc-semantic-radius-control) var(--agtc-semantic-radius-control) 0}
+blockquote p{margin:0;font-style:italic;color:var(--agtc-semantic-color-text-primary)}
 
-hr{border:none;border-top:1px solid var(--sda-semantic-color-border-default);margin:32px 0}
+hr{border:none;border-top:1px solid var(--agtc-semantic-color-border-default);margin:32px 0}
 
 ul,ol{padding-left:22px;margin:12px 0}
-li{margin-bottom:6px;color:var(--sda-semantic-color-text-secondary);line-height:1.65}
+li{margin-bottom:6px;color:var(--agtc-semantic-color-text-secondary);line-height:1.65}
 li code{font-size:.8em}
 
 /* ── TABLES ─────────────────────────────────────────────── */
 table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem}
-th{text-align:left;padding:10px 16px;background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-secondary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--sda-semantic-color-border-default)}
-td{padding:12px 16px;border-bottom:1px solid var(--sda-semantic-color-border-default);color:var(--sda-semantic-color-text-secondary);vertical-align:middle}
+th{text-align:left;padding:10px 16px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
+td{padding:12px 16px;border-bottom:1px solid var(--agtc-semantic-color-border-default);color:var(--agtc-semantic-color-text-secondary);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--sda-semantic-color-background-hover)}
-td code{color:var(--sda-semantic-color-action-primary)}
+tr:hover td{background:var(--agtc-semantic-color-background-hover)}
+td code{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
-.color-token{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
-.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--sda-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.color-token{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
+.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--agtc-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .color-info{}
-.color-name{font-family:var(--sda-font-mono);font-size:12px;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:3px}
-.color-value{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)}
-.color-intent{font-size:11.5px;color:var(--sda-semantic-color-text-secondary);margin-top:4px}
+.color-name{font-family:var(--agtc-font-mono);font-size:12px;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:3px}
+.color-value{font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)}
+.color-intent{font-size:11.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
 .palette-section{margin:40px 0}
-.palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
-.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--sda-font-mono);pointer-events:none}
+.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--agtc-font-mono);pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
 .space-demo{display:flex;flex-direction:column;gap:6px;margin:28px 0}
 .space-item{display:flex;align-items:center;gap:12px}
 .space-bar{background:#fca5a5;border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
-.space-label{font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary);min-width:72px}
+.space-label{font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary);min-width:72px}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
-.type-specimen{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;margin:12px 0}
-.type-spec-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:12px}
+.type-specimen{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:24px;margin:12px 0}
+.type-spec-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:12px}
 
 /* ── COMPONENT DEMOS ────────────────────────────────────── */
-.demo-box{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:40px;margin:24px 0}
+.demo-box{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:40px;margin:24px 0}
 .demo-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .demo-group{margin-bottom:28px}
 .demo-group:last-child{margin-bottom:0}
-.demo-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:12px;display:block}
+.demo-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:12px;display:block}
 
 .ds-btn{
   display:inline-flex;align-items:center;gap:6px;
-  padding:var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
-  border-radius:var(--sda-component-button-primary-radius);
+  padding:var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
+  border-radius:var(--agtc-component-button-primary-radius);
   font-size:0.875rem;font-weight:500;font-family:inherit;cursor:pointer;
   border:1.5px solid transparent;transition:background .12s,color .12s,border-color .12s;line-height:1.4;
 }
-.ds-btn:focus-visible{outline:2px solid var(--sda-semantic-color-border-focus);outline-offset:2px}
+.ds-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 .ds-btn:disabled{cursor:not-allowed;opacity:.45}
-.ds-btn.primary{background:var(--sda-component-button-primary-background);color:var(--sda-component-button-primary-text);border-color:var(--sda-component-button-primary-background)}
-.ds-btn.primary:hover:not(:disabled){background:var(--sda-component-button-primary-background-hover);border-color:var(--sda-component-button-primary-background-hover)}
-.ds-btn.secondary{background:var(--sda-component-button-secondary-background);color:var(--sda-component-button-secondary-text);border-color:var(--sda-component-button-secondary-border)}
-.ds-btn.secondary:hover:not(:disabled){background:var(--sda-component-button-secondary-background-hover)}
-.ds-btn.ghost{background:var(--sda-component-button-ghost-background);color:var(--sda-component-button-ghost-text);border-color:transparent}
-.ds-btn.ghost:hover:not(:disabled){background:var(--sda-component-button-ghost-background-hover)}
-.ds-btn.critical{background:var(--sda-component-button-critical-background);color:var(--sda-component-button-critical-text);border-color:var(--sda-component-button-critical-border)}
-.ds-btn.critical:hover:not(:disabled){background:var(--sda-component-button-critical-background-hover);color:var(--sda-component-button-critical-border)}
+.ds-btn.primary{background:var(--agtc-component-button-primary-background);color:var(--agtc-component-button-primary-text);border-color:var(--agtc-component-button-primary-background)}
+.ds-btn.primary:hover:not(:disabled){background:var(--agtc-component-button-primary-background-hover);border-color:var(--agtc-component-button-primary-background-hover)}
+.ds-btn.secondary{background:var(--agtc-component-button-secondary-background);color:var(--agtc-component-button-secondary-text);border-color:var(--agtc-component-button-secondary-border)}
+.ds-btn.secondary:hover:not(:disabled){background:var(--agtc-component-button-secondary-background-hover)}
+.ds-btn.ghost{background:var(--agtc-component-button-ghost-background);color:var(--agtc-component-button-ghost-text);border-color:transparent}
+.ds-btn.ghost:hover:not(:disabled){background:var(--agtc-component-button-ghost-background-hover)}
+.ds-btn.critical{background:var(--agtc-component-button-critical-background);color:var(--agtc-component-button-critical-text);border-color:var(--agtc-component-button-critical-border)}
+.ds-btn.critical:hover:not(:disabled){background:var(--agtc-component-button-critical-background-hover);color:var(--agtc-component-button-critical-border)}
 
-.variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--sda-semantic-color-background-subtle);color:var(--sda-semantic-color-text-secondary)}
+.variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── TOKEN EXPLORER ─────────────────────────────────────── */
 .explorer-search{
   width:100%;max-width:480px;padding:10px 14px;
-  border:1.5px solid var(--sda-semantic-color-border-default);
-  border-radius:var(--sda-semantic-radius-control);
-  font-size:0.875rem;background:var(--sda-semantic-color-background-surface);
-  color:var(--sda-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
+  border:1.5px solid var(--agtc-semantic-color-border-default);
+  border-radius:var(--agtc-semantic-radius-control);
+  font-size:0.875rem;background:var(--agtc-semantic-color-background-surface);
+  color:var(--agtc-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
 }
-.explorer-search:focus{outline:none;border-color:var(--sda-semantic-color-border-focus)}
-.explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--sda-semantic-color-border-default);margin-bottom:20px}
+.explorer-search:focus{outline:none;border-color:var(--agtc-semantic-color-border-focus)}
+.explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--agtc-semantic-color-border-default);margin-bottom:20px}
 .exp-tab{
-  padding:8px 20px;font-size:0.875rem;font-weight:600;color:var(--sda-semantic-color-text-secondary);
+  padding:8px 20px;font-size:0.875rem;font-weight:600;color:var(--agtc-semantic-color-text-secondary);
   border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;
   margin-bottom:-2px;font-family:inherit;transition:color .1s;
 }
-.exp-tab.active{color:var(--sda-semantic-color-action-primary);border-bottom-color:var(--sda-semantic-color-action-primary)}
+.exp-tab.active{color:var(--agtc-semantic-color-action-primary);border-bottom-color:var(--agtc-semantic-color-action-primary)}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
-.token-row td:first-child code{color:var(--sda-semantic-color-action-primary)}
+.token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
 .token-table{table-layout:fixed}
 .token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
-.adr-num{font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)}
-.adr-title a{color:var(--sda-semantic-color-action-primary);text-decoration:none;font-weight:600}
+.adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
+.adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:600}
 .adr-title a:hover{text-decoration:underline}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:20px}
 .badge-active{background:#ecfdf5;color:#18794e}
-.adr-meta{background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
-.adr-meta strong{color:var(--sda-semantic-color-text-primary)}
+.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
+.adr-meta strong{color:var(--agtc-semantic-color-text-primary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-.agent-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
-.agent-type{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
-.agent-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
-.agent-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.5}
+.agent-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
+.agent-type{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
+.agent-name{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
+.agent-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
 .rules-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
-.rule-can,.rule-cannot{padding:20px;border-radius:var(--sda-semantic-radius-card);border:1px solid}
+.rule-can,.rule-cannot{padding:20px;border-radius:var(--agtc-semantic-radius-card);border:1px solid}
 .rule-can{background:#ecfdf5;border-color:#bbf7d0}
 .rule-cannot{background:#fef2f2;border-color:#fecaca}
-.rule-can h3{color:var(--sda-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
-.rule-cannot h3{color:var(--sda-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
-.rule-can li{color:var(--sda-semantic-color-feedback-success);font-size:0.875rem}
-.rule-cannot li{color:var(--sda-semantic-color-feedback-danger);font-size:0.875rem}
+.rule-can h3{color:var(--agtc-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
+.rule-cannot h3{color:var(--agtc-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
+.rule-can li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
+.rule-cannot li{color:var(--agtc-semantic-color-feedback-danger);font-size:0.875rem}
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .layout{flex-direction:column}
-  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--sda-semantic-color-border-default)}
+  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
   .content{padding:28px 20px}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
   .pipeline{flex-direction:column}
-  .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--sda-semantic-color-border-default)}
+  .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .top-nav{display:none}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
-*:focus-visible{outline:2px solid var(--sda-semantic-color-border-focus);outline-offset:2px}
-a{color:var(--sda-semantic-color-action-primary)}
-.skip-link{position:absolute;top:-40px;left:8px;background:var(--sda-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
+*:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+a{color:var(--agtc-semantic-color-action-primary)}
+.skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 
 /* ── LANG TOGGLE ─────────────────────────────────────────── */
 .lang-toggle-group{display:flex;gap:2px;margin-left:8px;flex-shrink:0}
-.lang-btn{padding:3px 9px;font-size:11.5px;font-weight:700;border-radius:4px;border:1.5px solid var(--sda-semantic-color-border-default);background:none;color:var(--sda-semantic-color-text-secondary);cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s;letter-spacing:.04em}
-.lang-btn.active{background:var(--sda-semantic-color-action-primary);color:#fff;border-color:var(--sda-semantic-color-action-primary)}
+.lang-btn{padding:3px 9px;font-size:11.5px;font-weight:700;border-radius:4px;border:1.5px solid var(--agtc-semantic-color-border-default);background:none;color:var(--agtc-semantic-color-text-secondary);cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s;letter-spacing:.04em}
+.lang-btn.active{background:var(--agtc-semantic-color-action-primary);color:#fff;border-color:var(--agtc-semantic-color-action-primary)}
 html[data-lang="fr"] .lang-en{display:none}
 html[data-lang="en"] .lang-fr{display:none}
 
 /* ── MOBILE MENU ─────────────────────────────────────────── */
-.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--sda-semantic-color-text-primary);border-radius:4px}
-.menu-toggle:hover{background:var(--sda-semantic-color-background-subtle)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px}
+.menu-toggle:hover{background:var(--agtc-semantic-color-background-subtle)}
 
 /* ── TOC ─────────────────────────────────────────────────── */
-.toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-left:1px solid var(--sda-semantic-color-border-default);background:var(--sda-semantic-color-background-surface)}
+.toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-left:1px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)}
 .toc:empty{display:none;width:0;padding:0;border:none}
-.toc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sda-semantic-color-text-secondary);margin-bottom:10px;display:block}
-.toc a{display:block;font-size:12.5px;color:var(--sda-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
-.toc a:hover,.toc a.active{color:var(--sda-semantic-color-action-primary);border-left-color:var(--sda-semantic-color-action-primary)}
+.toc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:10px;display:block}
+.toc a{display:block;font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
+.toc a:hover,.toc a.active{color:var(--agtc-semantic-color-action-primary);border-left-color:var(--agtc-semantic-color-action-primary)}
 
 /* ── DO / DON'T ──────────────────────────────────────────── */
 .dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-.do-section,.dont-section{padding:20px;border-radius:var(--sda-semantic-radius-card);border:1px solid}
+.do-section,.dont-section{padding:20px;border-radius:var(--agtc-semantic-radius-card);border:1px solid}
 .do-section{background:#f0fdf4;border-color:#86efac}
 .dont-section{background:#fef2f2;border-color:#fecaca}
-.do-section h3{color:var(--sda-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
-.dont-section h3{color:var(--sda-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
-.do-section li{color:var(--sda-semantic-color-feedback-success);font-size:0.875rem}
-.dont-section li{color:var(--sda-semantic-color-feedback-danger);font-size:0.875rem}
+.do-section h3{color:var(--agtc-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
+.dont-section h3{color:var(--agtc-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
+.do-section li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
+.dont-section li{color:var(--agtc-semantic-color-feedback-danger);font-size:0.875rem}
 
 /* ── TOKEN TILES ─────────────────────────────────────────── */
 .token-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
-.token-tile{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:24px;text-align:center}
-.token-tile-count{font-size:2.5rem;font-weight:800;color:var(--sda-semantic-color-action-primary);letter-spacing:-.02em;display:block}
-.token-tile-label{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);margin-top:6px;display:block}
+.token-tile{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:24px;text-align:center}
+.token-tile-count{font-size:2.5rem;font-weight:800;color:var(--agtc-semantic-color-action-primary);letter-spacing:-.02em;display:block}
+.token-tile-label{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:6px;display:block}
 
 /* ── FOOTER ──────────────────────────────────────────────── */
 .site-footer{background:#0f1117;color:rgba(255,255,255,.55);padding:24px 32px;font-size:0.875rem;margin-top:auto}
@@ -499,88 +499,88 @@ html[data-lang="en"] .lang-fr{display:none}
 .footer-credit{font-size:0.75rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
 
 /* ── INFO CARDS ──────────────────────────────────────────── */
-.info-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
-.info-card-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:8px}
-.info-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
-.info-card-body{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary)}
+.info-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
+.info-card-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
+.info-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
+.info-card-body{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── TOOL CARDS ──────────────────────────────────────────── */
-.tool-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start}
-.tool-card-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
-.tool-card-name{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary)}
-.tool-card-role{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);font-weight:400}
-.tool-card-desc{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary);margin-top:3px}
+.tool-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:16px;display:flex;gap:12px;align-items:flex-start}
+.tool-card-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
+.tool-card-name{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary)}
+.tool-card-role{font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);font-weight:400}
+.tool-card-desc{font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
-.step-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:16px}
-.step-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
-.step-card-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:4px}
-.step-card-body{font-size:0.75rem;color:var(--sda-semantic-color-text-secondary)}
+.step-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:16px}
+.step-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
+.step-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
+.step-card-body{font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── DENSITY CARDS ───────────────────────────────────────── */
 .density-grid{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-.density-card{flex:1;min-width:140px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
-.density-card.active{border-width:2px;border-color:var(--sda-semantic-color-action-primary)}
-.density-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:6px}
-.density-card-label.active{color:var(--sda-semantic-color-action-primary)}
-.density-card-desc{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
+.density-card{flex:1;min-width:140px;padding:16px;background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-control);border:1px solid var(--agtc-semantic-color-border-default)}
+.density-card.active{border-width:2px;border-color:var(--agtc-semantic-color-action-primary)}
+.density-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
+.density-card-label.active{color:var(--agtc-semantic-color-action-primary)}
+.density-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
 .density-card-formula{display:flex;gap:6px;align-items:center}
-.density-card-bar{height:24px;background:var(--sda-semantic-color-action-primary);border-radius:2px}
-.density-card-math{font-size:0.75rem;font-family:var(--sda-font-mono);color:var(--sda-semantic-color-text-secondary)}
+.density-card-bar{height:24px;background:var(--agtc-semantic-color-action-primary);border-radius:2px}
+.density-card-math{font-size:0.75rem;font-family:var(--agtc-font-mono);color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── LINEHEIGHT DEMO CARDS ───────────────────────────────── */
 .lh-demo-grid{display:flex;gap:24px;flex-wrap:wrap}
-.lh-demo-card{flex:1;min-width:160px;padding:16px;background:var(--sda-semantic-color-background-subtle);border-radius:var(--sda-semantic-radius-control);border:1px solid var(--sda-semantic-color-border-default)}
-.lh-demo-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sda-semantic-color-text-secondary);margin-bottom:8px}
+.lh-demo-card{flex:1;min-width:160px;padding:16px;background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-control);border:1px solid var(--agtc-semantic-color-border-default)}
+.lh-demo-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:8px}
 
 /* ── GENERIC GRIDS ───────────────────────────────────────── */
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
 .grid-auto-220{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px}
 
 /* ── CONTRIBUTION BANNER ─────────────────────────────────── */
-.contribution-banner{display:flex;align-items:center;gap:16px;background:var(--sda-semantic-color-background-subtle);border:1px solid var(--sda-semantic-color-border-default);border-left:3px solid var(--sda-semantic-color-action-primary);border-radius:0 var(--sda-semantic-radius-card) var(--sda-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
-.contribution-banner .contrib-icon{color:var(--sda-semantic-color-action-primary);flex-shrink:0}
+.contribution-banner{display:flex;align-items:center;gap:16px;background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-left:3px solid var(--agtc-semantic-color-action-primary);border-radius:0 var(--agtc-semantic-radius-card) var(--agtc-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
+.contribution-banner .contrib-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0}
 .contribution-banner .contrib-body{flex:1}
-.contribution-banner .contrib-body strong{color:var(--sda-semantic-color-text-primary);font-size:0.875rem;display:block;margin-bottom:3px}
-.contribution-banner .contrib-body span{font-size:0.875rem;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.contribution-banner .contrib-body strong{color:var(--agtc-semantic-color-text-primary);font-size:0.875rem;display:block;margin-bottom:3px}
+.contribution-banner .contrib-body span{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 @media(max-width:768px){.contribution-banner{flex-direction:column;align-items:flex-start}}
 
 /* ── AUDIENCE CARDS ──────────────────────────────────────── */
 .audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:28px 0}
-.audience-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px}
-.audience-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:10px}
-.audience-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--sda-semantic-color-text-secondary);margin-bottom:4px}
-.audience-title{font-size:0.875rem;font-weight:700;color:var(--sda-semantic-color-text-primary);margin-bottom:8px}
-.audience-desc{font-size:12.5px;color:var(--sda-semantic-color-text-secondary);line-height:1.55}
+.audience-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
+.audience-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:10px}
+.audience-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:4px}
+.audience-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
+.audience-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── KPI BAND ────────────────────────────────────────────── */
 .kpi-band{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:28px 0}
-.kpi-card{background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);padding:20px 22px}
-.kpi-num{font-size:2rem;font-weight:800;color:var(--sda-semantic-color-action-primary);letter-spacing:-.02em;display:block;margin-bottom:4px}
-.kpi-label{font-size:0.875rem;color:var(--sda-semantic-color-text-primary);font-weight:600;margin-bottom:6px;display:block}
-.kpi-source{font-size:11px;color:var(--sda-semantic-color-text-secondary)}
-.kpi-source a{color:var(--sda-semantic-color-action-primary);font-size:11px}
+.kpi-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px 22px}
+.kpi-num{font-size:2rem;font-weight:800;color:var(--agtc-semantic-color-action-primary);letter-spacing:-.02em;display:block;margin-bottom:4px}
+.kpi-label{font-size:0.875rem;color:var(--agtc-semantic-color-text-primary);font-weight:600;margin-bottom:6px;display:block}
+.kpi-source{font-size:11px;color:var(--agtc-semantic-color-text-secondary)}
+.kpi-source a{color:var(--agtc-semantic-color-action-primary);font-size:11px}
 
 /* ── TECH STACK PIPELINE ─────────────────────────────────── */
-.stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-card);overflow:hidden}
-.stack-node{flex:1;min-width:100px;padding:18px 14px;background:var(--sda-semantic-color-background-surface);text-align:center;border-right:1px solid var(--sda-semantic-color-border-default);position:relative}
-.stack-node:last-child{border-right:none;background:var(--sda-semantic-color-background-subtle)}
-.stack-node-icon{color:var(--sda-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
-.stack-node-label{font-size:11.5px;font-weight:700;color:var(--sda-semantic-color-text-primary)}
-.stack-node-sub{font-size:10.5px;color:var(--sda-semantic-color-text-secondary);margin-top:3px}
+.stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
+.stack-node{flex:1;min-width:100px;padding:18px 14px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative}
+.stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
+.stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
+.stack-node-label{font-size:11.5px;font-weight:700;color:var(--agtc-semantic-color-text-primary)}
+.stack-node-sub{font-size:10.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
 @media(max-width:768px){
   .menu-toggle{display:flex;align-items:center}
-  .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--sda-semantic-color-background-surface);border-bottom:1px solid var(--sda-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+  .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.1)}
   .top-nav.open{display:flex}
   .top-nav a{padding:12px 24px;border-radius:0;font-size:0.875rem}
   .dos-donts{grid-template-columns:1fr}
   .token-tiles{grid-template-columns:1fr}
   .agent-grid{grid-template-columns:1fr}
   .stack-flow{flex-direction:column}
-  .stack-node{border-right:none;border-bottom:1px solid var(--sda-semantic-color-border-default)}
+  .stack-node{border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
   .footer-inner{flex-direction:column;align-items:flex-start}
 }
 `; }
@@ -590,14 +590,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || localStorage.getItem('sda-lang') || 'fr';
+  const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.dataset.lang === savedLang) btn.classList.add('active');
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('sda-lang', lang);
+      localStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -1019,7 +1019,7 @@ function buildHome(adrs) {
   <div class="principle-grid">
     ${principles.map(([ico,fr,descFr,en,descEn]) => `
     <div class="principle-card">
-      <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:12px">${ico}</div>
+      <div style="color:var(--agtc-semantic-color-action-primary);margin-bottom:12px">${ico}</div>
       <div class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></div>
     </div>`).join('')}
@@ -1259,8 +1259,8 @@ function buildColor() {
   const semRows = semanticColors.map(([key, name, value, intent]) => `
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
-  <td><code>--sda-semantic-${key}</code></td>
-  <td style="font-family:var(--sda-font-mono);font-size:12px">${value}</td>
+  <td><code>--agtc-semantic-${key}</code></td>
+  <td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td>
   <td>${intent}</td>
 </tr>`).join('');
 
@@ -1354,9 +1354,9 @@ function buildSpacing() {
     ['16', '64px', 'Macro XL'],
   ];
   const bars = primitives4px.map(([step, px, label]) =>
-    `<div class="space-item"><div class="space-label"><code>space.${step}</code></div><div class="space-bar" style="width:${px}" aria-label="${px}"></div><strong style="font-family:var(--sda-font-mono);font-size:12px;color:var(--sda-semantic-color-text-secondary)">${px}</strong>${label ? `<span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:4px">${label}</span>` : ''}</div>`
+    `<div class="space-item"><div class="space-label"><code>space.${step}</code></div><div class="space-bar" style="width:${px}" aria-label="${px}"></div><strong style="font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)">${px}</strong>${label ? `<span style="font-size:11px;color:var(--agtc-semantic-color-text-secondary);margin-left:4px">${label}</span>` : ''}</div>`
   ).join('');
-  const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--sda-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:var(--sda-font-mono)">${v}</td><td>${i}</td></tr>`).join('');
+  const semRows = semTokens.map(([k, name, v, i]) => `<tr class="token-row"><td><code>--agtc-semantic-${k}</code></td><td><code>${name}</code></td><td style="font-family:var(--agtc-font-mono)">${v}</td><td>${i}</td></tr>`).join('');
 
   const body = `
 <h1><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></h1>
@@ -1424,9 +1424,9 @@ function buildSpacing() {
 
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-control-padding-x)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-space-layout-section)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>var(--sda-primitive-space-4)</code> <span class="lang-fr">dans un composant — passer par le token sémantique</span><span class="lang-en">in a component — use the semantic token instead</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>padding: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-semantic-space-control-padding-x)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>margin: 32px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-semantic-space-layout-section)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>var(--agtc-primitive-space-4)</code> <span class="lang-fr">dans un composant — passer par le token sémantique</span><span class="lang-en">in a component — use the semantic token instead</span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Valeur hors-grille :</span><span class="lang-en">Off-grid value:</span> <code>14px</code>, <code>18px</code>, <code>22px</code> — <span class="lang-fr">choisir l'échelon le plus proche</span><span class="lang-en">choose the closest step</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours via CSS Custom Properties référençant un token sémantique</span><span class="lang-en">Always via CSS Custom Properties referencing a semantic token</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Si aucun token sémantique ne correspond, en créer un (PR requise)</span><span class="lang-en">If no semantic token matches, create one (PR required)</span></li>
@@ -1459,18 +1459,18 @@ function buildTypography() {
   const scaleRows = scaleSteps.map(({ step, px, rem, role, lh, weight }) =>
     `<tr class="token-row">
       <td><code>fontSize.${step}</code></td>
-      <td style="font-family:var(--sda-font-mono)">${rem} <span style="color:var(--sda-semantic-color-text-secondary);font-size:11px">(${px})</span></td>
-      <td style="font-family:var(--sda-font-mono)">${lh}</td>
-      <td style="font-family:var(--sda-font-mono)">${weight}</td>
-      <td style="color:var(--sda-semantic-color-text-secondary)">${role}</td>
+      <td style="font-family:var(--agtc-font-mono)">${rem} <span style="color:var(--agtc-semantic-color-text-secondary);font-size:11px">(${px})</span></td>
+      <td style="font-family:var(--agtc-font-mono)">${lh}</td>
+      <td style="font-family:var(--agtc-font-mono)">${weight}</td>
+      <td style="color:var(--agtc-semantic-color-text-secondary)">${role}</td>
     </tr>`
   ).join('');
 
   const scaleSpecimens = scaleSteps.map(({ step, rem, role, lh, weight }) =>
-    `<div style="display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--sda-semantic-color-border-default)">
-      <code style="min-width:56px;font-size:11px;color:var(--sda-semantic-color-text-secondary);flex-shrink:0">${step}</code>
-      <div style="font-size:${rem};font-weight:${weight};line-height:${lh};color:var(--sda-semantic-color-text-primary)">${role}</div>
-      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);margin-left:auto;flex-shrink:0">${rem} · lh ${lh}</span>
+    `<div style="display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)">
+      <code style="min-width:56px;font-size:11px;color:var(--agtc-semantic-color-text-secondary);flex-shrink:0">${step}</code>
+      <div style="font-size:${rem};font-weight:${weight};line-height:${lh};color:var(--agtc-semantic-color-text-primary)">${role}</div>
+      <span style="font-size:11px;color:var(--agtc-semantic-color-text-secondary);margin-left:auto;flex-shrink:0">${rem} · lh ${lh}</span>
     </div>`
   ).join('');
 
@@ -1483,20 +1483,20 @@ function buildTypography() {
 
 <h2 class="first"><span class="lang-fr">Police — Atkinson Hyperlegible</span><span class="lang-en">Typeface — Atkinson Hyperlegible</span></h2>
 <div class="demo-box" style="padding:24px 28px">
-  <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-semantic-typography-fontFamily</code></p>
-  <div style="font-size:28px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:var(--sda-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
-  <div style="font-size:28px;line-height:1.3;color:var(--sda-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
-  <div style="font-size:24px;line-height:1.4;color:var(--sda-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
-  <div style="font-size:18px;line-height:1.5;color:var(--sda-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
-  <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+  <p style="font-size:13px;color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px"><code>--agtc-semantic-typography-fontFamily</code></p>
+  <div style="font-size:28px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:var(--agtc-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div style="font-size:28px;line-height:1.3;color:var(--agtc-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
+  <div style="font-size:24px;line-height:1.4;color:var(--agtc-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
+  <div style="font-size:18px;line-height:1.5;color:var(--agtc-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
+  <div style="font-size:16px;line-height:1.6;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--agtc-semantic-color-border-default);padding-top:12px">
     <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères ambigus — différenciation maximale</span><span class="lang-en">Ambiguous characters — maximum disambiguation</span></span>
     l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m &nbsp;·&nbsp; rn m
   </div>
-  <div style="font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+  <div style="font-size:16px;line-height:1.6;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--agtc-semantic-color-border-default);padding-top:12px">
     <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères accentués</span><span class="lang-en">Accented characters</span></span>
     À Â Ä Æ Ç É È Ê Ë Î Ï Ô Œ Ù Û Ü à â ä æ ç é è ê ë î ï ô œ ù û ü
   </div>
-  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
+  <p style="font-size:12px;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
     <span class="lang-fr">2 graisses disponibles : Regular (400) · Bold (700). Le token <code>fontWeight.medium</code> (500) s'arrondit à 400.</span>
     <span class="lang-en">2 weights available: Regular (400) · Bold (700). The <code>fontWeight.medium</code> token (500) rounds to 400.</span>
   </p>
@@ -1508,21 +1508,21 @@ function buildTypography() {
   <span class="lang-en">Monospace companion to Atkinson Hyperlegible — same accessibility DNA, monospaced glyphs optimised for code and token values.</span>
 </p>
 <div class="demo-box" style="padding:24px 28px">
-  <p style="font-size:13px;color:var(--sda-semantic-color-text-secondary);margin-bottom:16px"><code>--sda-font-mono</code></p>
-  <div style="font-family:var(--sda-font-mono);font-size:22px;font-weight:700;line-height:1.3;color:var(--sda-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
-  <div style="font-family:var(--sda-font-mono);font-size:22px;line-height:1.3;color:var(--sda-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
-  <div style="font-family:var(--sda-font-mono);font-size:20px;line-height:1.4;color:var(--sda-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
-  <div style="font-family:var(--sda-font-mono);font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
-  <div style="font-family:var(--sda-font-mono);font-size:16px;line-height:1.6;color:var(--sda-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px">
+  <p style="font-size:13px;color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px"><code>--agtc-font-mono</code></p>
+  <div style="font-family:var(--agtc-font-mono);font-size:22px;font-weight:700;line-height:1.3;color:var(--agtc-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div style="font-family:var(--agtc-font-mono);font-size:22px;line-height:1.3;color:var(--agtc-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
+  <div style="font-family:var(--agtc-font-mono);font-size:20px;line-height:1.4;color:var(--agtc-semantic-color-text-primary);margin-top:8px;font-weight:700">0 1 2 3 4 5 6 7 8 9</div>
+  <div style="font-family:var(--agtc-font-mono);font-size:16px;line-height:1.6;color:var(--agtc-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
+  <div style="font-family:var(--agtc-font-mono);font-size:16px;line-height:1.6;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;border-top:1px solid var(--agtc-semantic-color-border-default);padding-top:12px">
     <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px"><span class="lang-fr">Caractères ambigus — clé pour le code</span><span class="lang-en">Ambiguous characters — critical for code</span></span>
     l 1 I &nbsp;·&nbsp; O 0 &nbsp;·&nbsp; b d p q &nbsp;·&nbsp; n u m &nbsp;·&nbsp; rn m
   </div>
-  <div style="font-family:var(--sda-font-mono);font-size:13px;line-height:1.7;color:var(--sda-semantic-color-action-primary);margin-top:12px;border-top:1px solid var(--sda-semantic-color-border-default);padding-top:12px;word-break:break-all">
-    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:8px;color:var(--sda-semantic-color-text-secondary)"><span class="lang-fr">Exemple — token CSS</span><span class="lang-en">Example — CSS token</span></span>
-    --sda-semantic-color-action-primary: #12A594;<br>
-    --sda-component-button-primary-background: var(--sda-semantic-color-action-primary);
+  <div style="font-family:var(--agtc-font-mono);font-size:13px;line-height:1.7;color:var(--agtc-semantic-color-action-primary);margin-top:12px;border-top:1px solid var(--agtc-semantic-color-border-default);padding-top:12px;word-break:break-all">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Exemple — token CSS</span><span class="lang-en">Example — CSS token</span></span>
+    --agtc-semantic-color-action-primary: #12A594;<br>
+    --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);
   </div>
-  <p style="font-size:12px;color:var(--sda-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
+  <p style="font-size:12px;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">
     <span class="lang-fr">Utilisée sur : éléments <code>&lt;code&gt;</code>, valeurs de tokens, labels de l'explorateur, numéros ADR. Google Fonts : <code>family=Atkinson+Hyperlegible+Mono</code></span>
     <span class="lang-en">Used on: <code>&lt;code&gt;</code> elements, token values, explorer labels, ADR numbers. Google Fonts: <code>family=Atkinson+Hyperlegible+Mono</code></span>
   </p>
@@ -1552,28 +1552,28 @@ function buildTypography() {
   <div class="lh-demo-grid">
     <div class="lh-demo-card">
       <div class="lh-demo-label"><code>reading</code> — 1.6</div>
-      <div style="font-size:0.875rem;line-height:1.6;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.</span><span class="lang-en">Body text, labels, captions. Conforms to WCAG 1.4.12. Maximises reading comfort across multiple lines.</span></div>
+      <div style="font-size:0.875rem;line-height:1.6;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.</span><span class="lang-en">Body text, labels, captions. Conforms to WCAG 1.4.12. Maximises reading comfort across multiple lines.</span></div>
     </div>
     <div class="lh-demo-card">
       <div class="lh-demo-label"><code>heading</code> — 1.1</div>
-      <div style="font-size:1.25rem;line-height:1.1;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">Titres h5 → h3. Compact sans être étouffant.</span><span class="lang-en">Headings h5 → h3. Compact without feeling cramped.</span></div>
+      <div style="font-size:1.25rem;line-height:1.1;font-weight:700;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Titres h5 → h3. Compact sans être étouffant.</span><span class="lang-en">Headings h5 → h3. Compact without feeling cramped.</span></div>
     </div>
     <div class="lh-demo-card">
       <div class="lh-demo-label"><code>display</code> — 1.0</div>
-      <div style="font-size:2rem;line-height:1.0;font-weight:700;color:var(--sda-semantic-color-text-primary)"><span class="lang-fr">h2, h1, hero.</span><span class="lang-en">h2, h1, hero.</span></div>
+      <div style="font-size:2rem;line-height:1.0;font-weight:700;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">h2, h1, hero.</span><span class="lang-en">h2, h1, hero.</span></div>
     </div>
   </div>
 </div>
 
 <h2><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></h2>
 <ul>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-primitive-fontSize-base)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-semantic-typography-fontFamily)</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-primitive-fontWeight-bold)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-size: 16px</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-primitive-fontSize-base)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: 'Atkinson Hyperlegible'</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-semantic-typography-fontFamily)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-weight: bold</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-primitive-fontWeight-bold)</code></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Taille hors-échelle :</span><span class="lang-en">Off-scale size:</span> <code>15px</code>, <code>18px</code>, <code>22px</code> — <span class="lang-fr">choisir l'échelon Minor Third le plus proche</span><span class="lang-en">pick the closest Minor Third step</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Import Google Fonts (sans-serif) :</span><span class="lang-en">Google Fonts import (sans-serif):</span> <code>family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700</code></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Import Google Fonts (mono) :</span><span class="lang-en">Google Fonts import (mono):</span> <code>family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700</code></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: monospace</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--sda-font-mono)</code></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <code>font-family: monospace</code> — <span class="lang-fr">utiliser</span><span class="lang-en">use</span> <code>var(--agtc-font-mono)</code></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours choisir le mode <code>lineHeight</code> selon le rôle : <code>reading</code> ≤ base, <code>heading</code> pour lg–2xl, <code>display</code> pour 3xl+</span><span class="lang-en">Always pick the <code>lineHeight</code> mode for the role: <code>reading</code> ≤ base, <code>heading</code> for lg–2xl, <code>display</code> for 3xl+</span></li>
 </ul>
 `;
@@ -1593,22 +1593,22 @@ function buildIconsFoundation() {
     ['nav',     SEM['icon-size-nav']     || '24px', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
   ];
   const sizeRows = sizes.map(([name, val, intent]) =>
-    `<tr class="token-row"><td><code>--sda-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--sda-font-mono)">${val}</td><td>${intent}</td></tr>`
+    `<tr class="token-row"><td><code>--agtc-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--agtc-font-mono)">${val}</td><td>${intent}</td></tr>`
   ).join('');
 
   const sampleIcons = ['home','search','settings','user','bell','heart','star','trash-2','check','x','arrow-right','plus','edit','download','upload','eye','lock','mail','calendar','file-text'];
   const iconGrid = sampleIcons.map(name =>
-    `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:var(--sda-semantic-color-background-surface);border:1px solid var(--sda-semantic-color-border-default);border-radius:var(--sda-semantic-radius-control)">
+    `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control)">
       ${icon(name, 24)}
-      <span style="font-size:11px;color:var(--sda-semantic-color-text-secondary);font-family:var(--sda-font-mono)">${name}</span>
+      <span style="font-size:11px;color:var(--agtc-semantic-color-text-secondary);font-family:var(--agtc-font-mono)">${name}</span>
     </div>`
   ).join('');
 
   const sizeDemo = sizes.map(([name, val]) =>
-    `<div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--sda-semantic-color-border-default)">
-      <div style="width:80px;color:var(--sda-semantic-color-text-secondary);font-size:13px"><code>${name}</code></div>
-      ${icon('star', parseInt(val), 'var(--sda-semantic-color-action-primary)')}
-      <div style="font-size:13px;color:var(--sda-semantic-color-text-secondary)">${val} — <code>--sda-semantic-icon-size-${name}</code></div>
+    `<div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)">
+      <div style="width:80px;color:var(--agtc-semantic-color-text-secondary);font-size:13px"><code>${name}</code></div>
+      ${icon('star', parseInt(val), 'var(--agtc-semantic-color-action-primary)')}
+      <div style="font-size:13px;color:var(--agtc-semantic-color-text-secondary)">${val} — <code>--agtc-semantic-icon-size-${name}</code></div>
     </div>`
   ).join('');
 
@@ -1631,7 +1631,7 @@ function buildIconsFoundation() {
 </table>
 
 <h2><span class="lang-fr">Galerie — aperçu Lucide</span><span class="lang-en">Gallery — Lucide preview</span></h2>
-<p style="color:var(--sda-semantic-color-text-secondary);font-size:14px;margin-bottom:16px">
+<p style="color:var(--agtc-semantic-color-text-secondary);font-size:14px;margin-bottom:16px">
   <span class="lang-fr">Extrait de 20 icônes. Catalogue complet sur <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
   <span class="lang-en">Sample of 20 icons. Full catalog at <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
 </p>
@@ -1641,11 +1641,11 @@ function buildIconsFoundation() {
 
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
 <ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours utiliser <code>&lt;agtc-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;agtc-icon name="…" size="control"&gt;</code></span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Icône sémantique (seule info visible) → <code>label="…"</code> obligatoire</span><span class="lang-en">Semantic icon (sole visible info) → <code>label="…"</code> required</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Icône décorative (texte adjacent) → <code>decorative</code> obligatoire</span><span class="lang-en">Decorative icon (adjacent text) → <code>decorative</code> required</span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Taille en dur : <code>style="width:20px"</code> — utiliser <code>size="control"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code> — use <code>size="control"</code></span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">SVG inline hors <code>&lt;sda-icon&gt;</code> — pas de contrat d'accessibilité</span><span class="lang-en">Inline SVG outside <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">SVG inline hors <code>&lt;agtc-icon&gt;</code> — pas de contrat d'accessibilité</span><span class="lang-en">Inline SVG outside <code>&lt;agtc-icon&gt;</code> — no accessibility contract</span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
 </ul>
 
@@ -1673,7 +1673,7 @@ function buildComponentsIndex() {
 </p>
 
 <h2 class="first"><span class="lang-fr">Workflow de création</span><span class="lang-en">Creation workflow</span></h2>
-<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
+<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
   <li><span class="lang-fr">Définir l'intention du composant dans <code>guidelines/components/[nom].md</code></span><span class="lang-en">Define the component intent in <code>guidelines/components/[name].md</code></span></li>
   <li><span class="lang-fr">Créer les tokens dans <code>tokens/component.json</code> en référençant les sémantiques</span><span class="lang-en">Create tokens in <code>tokens/component.json</code> referencing semantic tokens</span></li>
   <li><span class="lang-fr">Implémenter le Web Component (Lit) dans <code>src/components/sda-[nom].js</code></span><span class="lang-en">Implement the Web Component (Lit) in <code>src/components/sda-[name].js</code></span></li>
@@ -1784,7 +1784,7 @@ function buildButton() {
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
   <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--sda-semantic-color-border-focus)</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
   <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
@@ -1793,14 +1793,14 @@ function buildButton() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--sda-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
 <ul>
   <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
   <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
-  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--sda-semantic-color-border-focus); outline-offset: 2px</code></span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span></li>
   <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
   <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
   <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
@@ -1808,7 +1808,7 @@ function buildButton() {
 
 <h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
 <p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
-<ol style="color:var(--sda-semantic-color-text-secondary);padding-left:22px">
+<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
   <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
   <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
   <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
@@ -1827,16 +1827,16 @@ class DsButton extends LitElement {
 
   static styles = css\`
     button {
-      background: var(--sda-component-button-primary-background);
-      color:      var(--sda-component-button-primary-text);
-      padding:    var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
-      border-radius: var(--sda-component-button-primary-radius);
-      font-size:  var(--sda-semantic-typography-label-size);
-      font-weight:var(--sda-semantic-typography-label-weight);
+      background: var(--agtc-component-button-primary-background);
+      color:      var(--agtc-component-button-primary-text);
+      padding:    var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
+      border-radius: var(--agtc-component-button-primary-radius);
+      font-size:  var(--agtc-semantic-typography-label-size);
+      font-weight:var(--agtc-semantic-typography-label-weight);
       border: none; cursor: pointer;
     }
     button:focus-visible {
-      outline: 2px solid var(--sda-semantic-color-border-focus);
+      outline: 2px solid var(--agtc-semantic-color-border-focus);
       outline-offset: 2px;
     }
   \`;
@@ -1872,9 +1872,9 @@ customElements.define('ds-button', DsButton);</code></pre>
   <thead><tr><th><span class="lang-fr">Mauvais</span><span class="lang-en">Bad</span></th><th><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></th></tr></thead>
   <tbody>
     <tr><td><code>&lt;button style="background:red"&gt;Supprimer&lt;/button&gt;</code></td><td><span class="lang-fr">Valeur en dur, variante non reconnue, pas de token</span><span class="lang-en">Hardcoded value, unrecognized variant, no token</span></td></tr>
-    <tr><td><code>&lt;sda-button variant="critical"&gt;OK&lt;/sda-button&gt;</code></td><td><span class="lang-fr">Libellé non explicite pour une action critique</span><span class="lang-en">Non-explicit label for a critical action</span></td></tr>
+    <tr><td><code>&lt;agtc-button variant="critical"&gt;OK&lt;/agtc-button&gt;</code></td><td><span class="lang-fr">Libellé non explicite pour une action critique</span><span class="lang-en">Non-explicit label for a critical action</span></td></tr>
     <tr><td><span class="lang-fr">Deux <code>variant="primary"</code> dans le même formulaire</span><span class="lang-en">Two <code>variant="primary"</code> in the same form</span></td><td><span class="lang-fr">Hiérarchie cassée — perte de clarté UX</span><span class="lang-en">Broken hierarchy — loss of UX clarity</span></td></tr>
-    <tr><td><code>&lt;sda-button variant="danger"&gt;</code></td><td><span class="lang-fr">Variante inexistante — escalader, demander la variante correcte</span><span class="lang-en">Non-existent variant — escalate, ask for the correct variant</span></td></tr>
+    <tr><td><code>&lt;agtc-button variant="danger"&gt;</code></td><td><span class="lang-fr">Variante inexistante — escalader, demander la variante correcte</span><span class="lang-en">Non-existent variant — escalate, ask for the correct variant</span></td></tr>
   </tbody>
 </table>
 `;
@@ -1889,11 +1889,11 @@ customElements.define('ds-button', DsButton);</code></pre>
 // ─── PAGE: ICON ─────────────────────────────────────────────────────────────
 function buildIcon() {
   const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
-  // Strip frontmatter meta block and fix ds-icon → sda-icon
+  // Strip frontmatter meta block and fix ds-icon → agtc-icon
   let rawMd = read(mdPath)
     .replace(/\*\*Auteur:\*\*[^\n]*\n/g, '')
     .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '')
-    .replace(/ds-icon/g, 'sda-icon');
+    .replace(/ds-icon/g, 'agtc-icon');
   const content = parseMd(rawMd);
 
   const tokenRows = [
@@ -1901,7 +1901,7 @@ function buildIcon() {
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
     ['icon-size-nav',     'semantic.icon.size.nav',     SEM['icon-size-nav']],
   ].map(([comp, sem, val]) =>
-    `<tr class="token-row"><td><code>--sda-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:var(--sda-font-mono)">${val || '—'}</td></tr>`
+    `<tr class="token-row"><td><code>--agtc-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:var(--agtc-font-mono)">${val || '—'}</td></tr>`
   ).join('');
 
   const body = `
@@ -1922,7 +1922,7 @@ function buildIcon() {
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
     <ul>
-      <li><span class="lang-fr">Toujours utiliser <code>&lt;sda-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;sda-icon name="…" size="control"&gt;</code></span></li>
+      <li><span class="lang-fr">Toujours utiliser <code>&lt;agtc-icon name="…" size="control"&gt;</code></span><span class="lang-en">Always use <code>&lt;agtc-icon name="…" size="control"&gt;</code></span></li>
       <li><span class="lang-fr">Ajouter <code>label="…"</code> si l'icône est la seule information visible</span><span class="lang-en">Add <code>label="…"</code> if the icon is the sole visible information</span></li>
       <li><span class="lang-fr">Ajouter <code>decorative</code> si l'icône accompagne un texte qui la décrit</span><span class="lang-en">Add <code>decorative</code> if the icon accompanies text that describes it</span></li>
       <li><span class="lang-fr">Choisir le token de taille correspondant au contexte : <code>inline</code> dans un texte, <code>control</code> dans un bouton, <code>nav</code> en en-tête</span><span class="lang-en">Choose the size token matching the context: <code>inline</code> in text, <code>control</code> in a button, <code>nav</code> in a header</span></li>
@@ -1931,7 +1931,7 @@ function buildIcon() {
   <div class="dont-section">
     <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
     <ul>
-      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;sda-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;sda-icon&gt;</code> — no accessibility contract</span></li>
+      <li><span class="lang-fr">SVG inline sans passer par <code>&lt;agtc-icon&gt;</code> — aucun contrat d'accessibilité</span><span class="lang-en">Inline SVG without <code>&lt;agtc-icon&gt;</code> — no accessibility contract</span></li>
       <li><span class="lang-fr">Taille codée en dur : <code>style="width:20px"</code></span><span class="lang-en">Hardcoded size: <code>style="width:20px"</code></span></li>
       <li><span class="lang-fr">Icône sémantique sans <code>label</code> ni <code>decorative</code></span><span class="lang-en">Semantic icon without <code>label</code> or <code>decorative</code></span></li>
       <li><span class="lang-fr">Tailles inventées hors des 3 tokens sémantiques définis</span><span class="lang-en">Sizes invented outside the 3 defined semantic tokens</span></li>
@@ -1958,14 +1958,14 @@ function buildTokens() {
 
   // Resolve component token to its actual value by looking up the semantic token
   function resolveCompValue(varRef) {
-    const m = varRef.match(/var\(--sda-semantic-(.+)\)/);
+    const m = varRef.match(/var\(--agtc-semantic-(.+)\)/);
     if (!m) return varRef;
     return SEM[m[1]] || varRef;
   }
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--sda-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--sda-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
@@ -1974,15 +1974,15 @@ function buildTokens() {
     const isColor = k.startsWith('color-');
     const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
-    const aliasCell = aliasNode ? `<td style="font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--sda-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--sda-font-mono);font-size:12px">${v}</td></tr>`;
+    const aliasCell = aliasNode ? `<td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`;
   }).join('');
 
   const compRows = Object.entries(COMP).map(([k, v]) => {
     const resolved = resolveCompValue(v);
     const isColor = k.includes('background') || k.includes('text') || k.includes('border');
     const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><code>--sda-component-${k}</code></td><td style="font-family:var(--sda-font-mono);font-size:11px;color:var(--sda-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--sda-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
+    return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--agtc-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
   }).join('');
 
   const body = `
@@ -2112,7 +2112,7 @@ function buildADR(adr, adrs) {
 </div>`;
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
-  const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+  const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     ${prev ? `<a href="${prev.slug}.html" class="ds-btn secondary">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
     ${next ? `<a href="${next.slug}.html" class="ds-btn secondary">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
   </div>`;
@@ -2166,7 +2166,7 @@ function buildAgents() {
 <div class="agent-grid">
 ${agentTypes.map(([name, type, desc], i) => `
 <div class="agent-card">
-  <div style="color:var(--sda-semantic-color-action-primary);margin-bottom:10px">${agentIcons[i]}</div>
+  <div style="color:var(--agtc-semantic-color-action-primary);margin-bottom:10px">${agentIcons[i]}</div>
   <div class="agent-type">Agent ${type}</div>
   <div class="agent-name">${name}</div>
   <div class="agent-desc">${desc}</div>
@@ -2218,13 +2218,13 @@ ${agentTypes.map(([name, type, desc], i) => `
 
 <h2><span class="lang-fr">Règle de nommage — rappel</span><span class="lang-en">Naming rule — reminder</span></h2>
 <pre class="code-block"><code class="lang-css">/* ✅ Correct — intention lisible par un agent / intent readable by an agent */
-color: var(--sda-component-button-primary-background);
+color: var(--agtc-component-button-primary-background);
 
 /* ❌ Interdit — valeur brute, aucune intention / raw value, no intent */
 color: #0d74ce;
 
 /* ❌ Interdit — token primitif utilisé directement / primitive token used directly */
-color: var(--sda-primitive-color-blue-11);</code></pre>
+color: var(--agtc-primitive-color-blue-11);</code></pre>
 
 <h2 id="skills"><span class="lang-fr">Compétences (Skills)</span><span class="lang-en">Skills</span></h2>
 <table>

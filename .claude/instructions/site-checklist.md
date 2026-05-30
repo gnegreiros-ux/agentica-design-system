@@ -12,7 +12,7 @@
 
 - [ ] Toute nouvelle valeur primitive a `$value`, `$type`, `$description`
 - [ ] Les tokens sémantiques référencent des primitifs via `{primitive.X.Y}` — jamais de valeur en dur
-- [ ] Aucun préfixe `--ds-` — uniquement `--sda-`
+- [ ] Aucun préfixe `--ds-` — uniquement `--agtc-`
 - [ ] Un ADR créé si la décision est architecturale (nouvelle police, nouvelle bibliothèque, nouveau système)
 
 ---

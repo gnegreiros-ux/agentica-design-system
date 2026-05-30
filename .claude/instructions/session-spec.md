@@ -16,7 +16,7 @@
 | Sigle | sda |
 | Auteur | Guilherme Negreiros |
 | Version | 1.0.0 |
-| Préfixe CSS | `--sda-` |
+| Préfixe CSS | `--agtc-` |
 | Gouvernance | Le dernier mot est toujours humain |
 | Stack | Lit (Web Components), Style Dictionary, axe-core, Storybook, Lucide Icons |
 
@@ -86,7 +86,7 @@
 ❌ Jamais de variante inventée (hors component.json)
 ❌ Jamais de merge sans approbation humaine
 ❌ Jamais d'icône sémantique sans label ou decorative
-✅ Toujours via var(--sda-[token])
+✅ Toujours via var(--agtc-[token])
 ✅ Toujours :focus-visible visible
 ✅ Toujours aria-* appropriés
 ✅ Escalader si doute sur impact d'une action
@@ -163,4 +163,4 @@ Aucun token déprécié à ce jour.
 
 Date : 2026-05-29
 Modifié par : Guilherme Negreiros
-Raison : Ajout des tokens fontFamily, iconSize, space étendu (grille 4px) — ADR-020/021/022. Mise à jour préfixe --ds- → --sda-. Ajout ds-icon dans l'inventaire composants. Complétion des ADRs 015-022.
+Raison : Ajout des tokens fontFamily, iconSize, space étendu (grille 4px) — ADR-020/021/022. Mise à jour préfixe --ds- → --agtc-. Ajout ds-icon dans l'inventaire composants. Complétion des ADRs 015-022.

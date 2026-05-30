@@ -69,14 +69,14 @@
 <h3>Tokenisation</h3>
 <p>La police est exposée via un token CSS custom property dans le build :</p>
 <pre class="code-block"><code class="lang-css">/* :root dans site.css */
---sda-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;</code></pre>
+--agtc-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;</code></pre>
 <p>La chaîne de fallback garantit un résultat acceptable même sans connexion Internet :</p>
 <ul><li><code>JetBrains Mono</code> — développeur, haute lisibilité</li><li><code>Cascadia Code</code> — Windows/VS Code, modern</li><li><code>monospace</code> — dernier recours système</li></ul>
 <h3>Import Google Fonts</h3>
 <p>Chargé dans le même <code>@import</code> qu'Atkinson Hyperlegible (une seule requête réseau) :</p>
 <pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
-<h3>Éléments utilisant <code>--sda-font-mono</code></h3>
-<table><thead><tr><th>Élément</th><th>Contexte</th></tr></thead><tbody><tr><td><code>code</code></td><td>Toutes les pages — noms de tokens, exemples de code</td></tr><tr><td><code>.adr-num</code></td><td>Pages décisions — numéro <code>ADR-0XX</code></td></tr><tr><td><code>.space-label</code></td><td>Page espacement — labels de scale</td></tr><tr><td><code>.color-name</code>, <code>.color-value</code></td><td>Page couleur — hex, nom du token</td></tr><tr><td><code>.adr-num</code>, <code>.density-card-math</code></td><td>Pages décisions — formules math tokens</td></tr><tr><td>Inline <code>style="font-family:var(--sda-font-mono)"</code></td><td>Cellules de valeurs dans les tableaux de tokens</td></tr></tbody></table>
+<h3>Éléments utilisant <code>--agtc-font-mono</code></h3>
+<table><thead><tr><th>Élément</th><th>Contexte</th></tr></thead><tbody><tr><td><code>code</code></td><td>Toutes les pages — noms de tokens, exemples de code</td></tr><tr><td><code>.adr-num</code></td><td>Pages décisions — numéro <code>ADR-0XX</code></td></tr><tr><td><code>.space-label</code></td><td>Page espacement — labels de scale</td></tr><tr><td><code>.color-name</code>, <code>.color-value</code></td><td>Page couleur — hex, nom du token</td></tr><tr><td><code>.adr-num</code>, <code>.density-card-math</code></td><td>Pages décisions — formules math tokens</td></tr><tr><td>Inline <code>style="font-family:var(--agtc-font-mono)"</code></td><td>Cellules de valeurs dans les tableaux de tokens</td></tr></tbody></table>
 <hr>
 <h2>Argumentaire</h2>
 <p>La cohérence typographique entre la police de texte (Atkinson Hyperlegible) et la police de code (Atkinson Hyperlegible Mono) est un critère de qualité de design system. L'utilisation d'une famille partagée garantit :</p>
@@ -87,11 +87,11 @@
 <hr>
 <h2>Conséquences</h2>
 <p><strong>Pour le système de tokens :</strong></p>
-<ul><li><code>--sda-font-mono</code> devient la référence obligatoire pour tout élément monospace</li><li><code>font-family: monospace</code> en dur est interdit (détectable par audit ESLint)</li></ul>
+<ul><li><code>--agtc-font-mono</code> devient la référence obligatoire pour tout élément monospace</li><li><code>font-family: monospace</code> en dur est interdit (détectable par audit ESLint)</li></ul>
 <p><strong>Pour les agents IA :</strong></p>
-<ul><li>La police monospace est une décision traçable, pas un défaut système</li><li>Les agents peuvent vérifier qu'un composant utilise <code>var(--sda-font-mono)</code> plutôt qu'une valeur hardcodée</li></ul>
+<ul><li>La police monospace est une décision traçable, pas un défaut système</li><li>Les agents peuvent vérifier qu'un composant utilise <code>var(--agtc-font-mono)</code> plutôt qu'une valeur hardcodée</li></ul>
 <p><strong>Pour les utilisateurs :</strong></p>
-<ul><li>Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision</li><li>Cohérence visuelle renforcée entre le texte courant et les éléments de code</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--sda-semantic-color-border-default)">
+<ul><li>Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision</li><li>Cohérence visuelle renforcée entre le texte courant et les éléments de code</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-027.html" class="ds-btn secondary">← ADR-027</a>
     <a href="adr-029.html" class="ds-btn secondary">ADR-029 →</a>
   </div></main>

@@ -39,7 +39,7 @@ const DRIFT_PATTERNS = [
   { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Valeur hsl() en dur' },
   { name: 'tailwind-arbitrary', regex: /(?:p|m|text|bg|border)-\[[\d.]+(?:px|rem|em)[^\]]*\]/g, severity: 'error', message: 'Tailwind arbitrary value' },
   { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Valeur px inline sans token' },
-  { name: 'primitive-direct',regex: /var\(--sda-primitive-/g,            severity: 'warning', message: 'Token primitif utilisé directement' },
+  { name: 'primitive-direct',regex: /var\(--agtc-primitive-/g,            severity: 'warning', message: 'Token primitif utilisé directement' },
 ];
 
 // ─── Utilitaires ──────────────────────────────────────────────────────────────
@@ -105,8 +105,8 @@ function auditOrphanedTokens(componentTokens, sourceFiles) {
   const orphaned = [];
 
   for (const tokenKey of allComponentKeys) {
-    // Convertir en pattern CSS var : button.primary.background → --sda-component-button-primary-background
-    const cssVar = '--sda-component-' + tokenKey.replace(/\./g, '-');
+    // Convertir en pattern CSS var : button.primary.background → --agtc-component-button-primary-background
+    const cssVar = '--agtc-component-' + tokenKey.replace(/\./g, '-');
     const used = sourceFiles.some(file => {
       const content = fs.readFileSync(file, 'utf8');
       return content.includes(cssVar) || content.includes(tokenKey);
@@ -127,8 +127,8 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   const definedKeys = extractTokenKeys(semanticTokens);
   const phantoms = [];
 
-  // Chercher toutes les références --sda-semantic-* dans les sources
-  const semanticVarRegex = /var\(--sda-semantic-([\w-]+)\)/g;
+  // Chercher toutes les références --agtc-semantic-* dans les sources
+  const semanticVarRegex = /var\(--agtc-semantic-([\w-]+)\)/g;
   for (const file of sourceFiles) {
     const content = fs.readFileSync(file, 'utf8');
     let match;
@@ -138,7 +138,7 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
       const tokenKey = 'semantic.' + usedVar.replace(/-/g, '.');
       const isDefined = definedKeys.some(k => k === tokenKey || k.startsWith(tokenKey));
       if (!isDefined && !phantoms.find(p => p.cssVar === usedVar)) {
-        phantoms.push({ cssVar: `--sda-semantic-${usedVar}`, file: path.relative(process.cwd(), file) });
+        phantoms.push({ cssVar: `--agtc-semantic-${usedVar}`, file: path.relative(process.cwd(), file) });
       }
     }
   }

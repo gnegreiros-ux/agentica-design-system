@@ -54,21 +54,21 @@ class DsButton extends LitElement {
       display: inline-block;
     }
     button {
-      background: var(--sda-component-button-primary-background);
-      color: var(--sda-component-button-primary-text);
-      border-radius: var(--sda-component-button-primary-radius);
-      padding: var(--sda-component-button-primary-padding-y) var(--sda-component-button-primary-padding-x);
-      font-size: var(--sda-component-button-primary-font-size);
-      font-weight: var(--sda-component-button-primary-font-weight);
+      background: var(--agtc-component-button-primary-background);
+      color: var(--agtc-component-button-primary-text);
+      border-radius: var(--agtc-component-button-primary-radius);
+      padding: var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
+      font-size: var(--agtc-component-button-primary-font-size);
+      font-weight: var(--agtc-component-button-primary-font-weight);
       border: none;
       cursor: pointer;
     }
     button:focus-visible {
-      outline: 2px solid var(--sda-semantic-color-border-focus);
+      outline: 2px solid var(--agtc-semantic-color-border-focus);
       outline-offset: 2px;
     }
     button:disabled {
-      background: var(--sda-component-button-primary-background-disabled);
+      background: var(--agtc-component-button-primary-background-disabled);
       cursor: not-allowed;
     }
   `;

@@ -56,7 +56,7 @@ Chaque élément interactif doit avoir un `:focus-visible` explicite :
 ```css
 /* obligatoire */
 :focus-visible {
-  outline: 2px solid var(--sda-semantic-color-border-focus);
+  outline: 2px solid var(--agtc-semantic-color-border-focus);
   outline-offset: 2px;
 }
 ```

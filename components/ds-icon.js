@@ -13,8 +13,8 @@ class DsIcon extends LitElement {
     :host { display: inline-flex; align-items: center; justify-content: center; }
 
     svg {
-      width: var(--sda-icon-size, var(--sda-semantic-icon-size-control));
-      height: var(--sda-icon-size, var(--sda-semantic-icon-size-control));
+      width: var(--agtc-icon-size, var(--agtc-semantic-icon-size-control));
+      height: var(--agtc-icon-size, var(--agtc-semantic-icon-size-control));
       stroke: currentColor;
       stroke-width: 1.5;
       stroke-linecap: round;
@@ -22,9 +22,9 @@ class DsIcon extends LitElement {
       fill: none;
     }
 
-    :host([size='inline'])  { --sda-icon-size: var(--sda-semantic-icon-size-inline); }
-    :host([size='control']) { --sda-icon-size: var(--sda-semantic-icon-size-control); }
-    :host([size='nav'])     { --sda-icon-size: var(--sda-semantic-icon-size-nav); }
+    :host([size='inline'])  { --agtc-icon-size: var(--agtc-semantic-icon-size-inline); }
+    :host([size='control']) { --agtc-icon-size: var(--agtc-semantic-icon-size-control); }
+    :host([size='nav'])     { --agtc-icon-size: var(--agtc-semantic-icon-size-nav); }
   `;
 
   render() {

@@ -46,7 +46,7 @@ Vérifier que tout token référencé dans `semantic.json` existe dans `primitiv
 - Chaque `{primitive.X.Y}` → entrée correspondante dans `primitives.json`
 
 Vérifier que tout token référencé dans `component.json` existe dans `semantic.json` :
-- Chaque `var(--sda-semantic-X)` → token dans `semantic.json`
+- Chaque `var(--agtc-semantic-X)` → token dans `semantic.json`
 
 ### 3. Tokens orphelins
 
