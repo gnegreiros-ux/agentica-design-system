@@ -71,3 +71,6 @@
 | 2026-05-30 10:56 | Créé | `decisions/ADR-027-pipeline-impact-pre-commit.md` |
 | 2026-05-30 10:59 | Modifié | `decisions/README.md` |
 | 2026-05-30 — | Modifié | `site/dist/` — rebuild, page ADR-027 générée (36 fichiers total)
+| 2026-05-30 11:37 | Modifié | `DESIGN.md` |
+| 2026-05-30 — | Modifié | `site/build.js`, `README.md`, `DESIGN.md` — changement de marque : "Système de design agentique" → **Agentica**, URL → designsystem.gnegreiros.com, hero + logo + meta mis à jour |
+| 2026-05-30 — | Modifié | `site/dist/` — rebuild complet (36 fichiers), toutes les pages avec nouvelle identité Agentica |

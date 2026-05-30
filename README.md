@@ -1,4 +1,4 @@
-# Système de design agentique — Kit de démarrage
+# Agentica — Système de design agentique
 
 > Un système de design structuré pour être lu par les humains **et** par les agents IA.
 > Basé sur les travaux présentés à l'AI Design Systems Conference 2026 (Into Design Systems).
@@ -8,7 +8,7 @@
 > **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
 **Auteur :** Guilherme Negreiros
-**Site de documentation :** https://gnegreiros-ux.github.io/agentic-design-system/
+**Site de documentation :** https://designsystem.gnegreiros.com
 
 ---
 

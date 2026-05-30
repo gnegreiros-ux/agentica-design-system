@@ -1,5 +1,5 @@
 
-/* Système de design agentique — site.css (uses design system tokens) */
+/* Agentica — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 :root{--sda-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
 

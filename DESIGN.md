@@ -9,16 +9,17 @@
 > **Lecture avant:** AGENTS.md
 > **Relations:** AGENTS.md, tokens/semantic.json, tokens/component.json, guidelines/components/
 
-> **Note pour la réutilisation :** Remplacer "Système de design agentique (sda)" et "GNegreiros.com" par le nom du système et de votre organisation.
+> **Note pour la réutilisation :** Remplacer "Agentica (sda)" et "GNegreiros.com" par le nom du système et de votre organisation.
 
 ---
 
 ## 1. Identité et intention du système
 
-**Nom du système :** Système de design agentique (sda)
+**Nom du système :** Agentica — Système de design agentique (sda)
 **Organisation :** GNegreiros.com
+**Site :** https://designsystem.gnegreiros.com
 **Version :** 1.0.0
-**Dernière mise à jour :** 2026-05-29
+**Dernière mise à jour :** 2026-05-30
 **Responsable :** Guilherme Negreiros
 
 ### Mission

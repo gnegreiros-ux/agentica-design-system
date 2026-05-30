@@ -177,7 +177,7 @@ function tokensCSS() {
 }
 
 function siteCSS() { return `
-/* Système de design agentique — site.css (uses design system tokens) */
+/* Agentica — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 :root{--sda-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
 
@@ -773,11 +773,11 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Documentation officielle du Système de design agentique — tokens, composants, décisions et règles de gouvernance.">
-<title>${title} — Système de design agentique</title>
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, décisions et gouvernance.">
+<title>${title} — Agentica</title>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='5' font-family='sans-serif' font-size='14' font-weight='800' fill='white'>ADS</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d74ce'/><text y='22' x='4' font-family='sans-serif' font-size='13' font-weight='800' fill='white'>A</text></svg>">
 </head>
 <body>
 <a class="skip-link" href="#main-content">
@@ -785,12 +785,9 @@ function layout({ title, depth = 0, section = '', sidebar = null, body, fullWidt
   <span class="lang-en">Skip to content</span>
 </a>
 <header class="site-header" role="banner">
-  <a class="logo" href="${base}index.html" aria-label="Système de design agentique — Accueil">
-    <span class="logo-mark" aria-hidden="true">ADS</span>
-    <span class="logo-name">
-      <span class="lang-fr">Système de design agentique</span>
-      <span class="lang-en">Agentic Design System</span>
-    </span>
+  <a class="logo" href="${base}index.html" aria-label="Agentica — Accueil">
+    <span class="logo-mark" aria-hidden="true">A</span>
+    <span class="logo-name">Agentica</span>
   </a>
   <span class="logo-version">v1.0.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
@@ -934,17 +931,14 @@ function buildHome(adrs) {
 
   const body = `
 <div class="hero">
-  <div class="hero-badge">
-    <span class="lang-fr">Système de design agentique · v1.0.0</span>
-    <span class="lang-en">Agentic Design System · v1.0.0</span>
-  </div>
+  <div class="hero-badge">Agentica · v1.0.0</div>
   <h1>
-    <span class="lang-fr">Un système de design<br><span>compris par les humains<br>et les agents IA.</span></span>
-    <span class="lang-en">A design system<br><span>understood by humans<br>and AI agents.</span></span>
+    <span class="lang-fr">Les humains décident.<br><span>Les agents exécutent.<br>Le système garantit.</span></span>
+    <span class="lang-en">Humans decide.<br><span>Agents execute.<br>The system ensures.</span></span>
   </h1>
   <p class="hero-tagline">
-    <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Un design system conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
-    <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. A design system built for teams that move fast — and the agents that assist them.</span>
+    <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
+    <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
   </p>
   <div class="hero-actions">
     <a href="foundations/color.html" class="ds-btn primary">
@@ -2227,7 +2221,7 @@ function loadADRs() {
 
 // ─── MAIN BUILD ─────────────────────────────────────────────────────────────
 function build() {
-  console.log('\nSystème de design agentique — build\n');
+  console.log('\nAgentica — build\n');
   ensureDir(DIST);
   ensureDir(path.join(DIST, 'foundations'));
   ensureDir(path.join(DIST, 'components'));
