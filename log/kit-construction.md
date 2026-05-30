@@ -63,3 +63,5 @@
 | 2026-05-29 20:13 | Créé | `decisions/ADR-025-densite-espacement-math-tokens.md` |
 | 2026-05-29 20:33 | Modifié | `decisions/README.md` |
 | 2026-05-30 — | Créé | `Prototype redesign site web système de design/` — prototype de redesign du site (index.html, color.html, site.css, site.js, tokens.css, images d'inspiration) |
+| 2026-05-30 — | Modifié | `site/build.js`, `site/dist/foundations/typography.html` — échelle Minor Third (9 échelons xs→5xl, rem, line-height, poids), spécimens visuels, 3 modes lineHeight (reading/heading/display) |
+| 2026-05-30 — | Modifié | `site/build.js`, `site/dist/foundations/spacing.html` — section densité math tokens (compact ×0.75, normal ×1.0, comfortable ×1.25), formule floor/ceil, ADR-025 |
