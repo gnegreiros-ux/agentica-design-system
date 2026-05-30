@@ -76,3 +76,5 @@
 | 2026-05-30 — | Modifié | `site/dist/` — rebuild complet (36 fichiers), toutes les pages avec nouvelle identité Agentica
 | 2026-05-30 — | Créé    | `Brand/` — dossier brand : logo SVG/PNG (5 variantes + symbole), favicons (ico, 16/32px, apple-touch, android-chrome), palette, color-pattern, image sociale |
 | 2026-05-30 — | Modifié | `site/build.js`, `site/dist/` — logo SVG teal en header, favicons réels (Brand/Favicon/), webmanifest Agentica, métadonnées OG/Twitter optimisées (title 54 car, description 142 car, twitter:domain/url ajoutés) |
+| 2026-05-30 17:58 | Créé | `decisions/ADR-028-atkinson-hyperlegible-mono.md` |
+| 2026-05-30 17:58 | Modifié | `decisions/README.md` |

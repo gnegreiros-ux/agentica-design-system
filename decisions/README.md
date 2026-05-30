@@ -85,6 +85,7 @@ des décisions déjà tranchées.
 | [ADR-025](ADR-025-densite-espacement-math-tokens.md) | Densité d'espacement : floor/ceil sur grille 4px via math tokens | 2026-05-29 | ✅ Actif |
 | [ADR-026](ADR-026-sync-figma-palettes-custom.md) | Stratégie de synchronisation Figma pour les palettes de marque custom | 2026-05-29 | ✅ Actif |
 | [ADR-027](ADR-027-pipeline-impact-pre-commit.md) | Pipeline d'impact pré-commit avec approbation humaine | 2026-05-30 | ✅ Actif |
+| [ADR-028](ADR-028-atkinson-hyperlegible-mono.md) | Atkinson Hyperlegible Mono comme police monospace tokenisée | 2026-05-30 | ✅ Actif |
 
 ---
 
