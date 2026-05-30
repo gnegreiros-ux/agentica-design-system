@@ -87,6 +87,7 @@ des décisions déjà tranchées.
 | [ADR-027](ADR-027-pipeline-impact-pre-commit.md) | Pipeline d'impact pré-commit avec approbation humaine | 2026-05-30 | ✅ Actif |
 | [ADR-028](ADR-028-atkinson-hyperlegible-mono.md) | Atkinson Hyperlegible Mono comme police monospace tokenisée | 2026-05-30 | ✅ Actif |
 | [ADR-029](ADR-029-quality-gate-pre-commit.md) | Quality gate pré-commit modulaire (pipelines extensibles) | 2026-05-30 | ✅ Actif |
+| [ADR-030](ADR-030-style-dictionary-build-multi-platform.md) | Style Dictionary : build multi-plateforme avec formats custom | 2026-05-30 | ✅ Actif |
 
 ---
 

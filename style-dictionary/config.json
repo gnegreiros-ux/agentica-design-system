@@ -1,4 +1,5 @@
 {
+  "_note": "Ce fichier est une référence de documentation. L'exécutable est build.js — il enregistre les parseurs et formats custom avant d'étendre cette config.",
   "source": [
     "tokens/primitives.json",
     "tokens/semantic.json",
@@ -6,60 +7,52 @@
   ],
   "platforms": {
     "css": {
-      "transformGroup": "css",
-      "prefix": "sda",
-      "buildPath": "dist/css/",
+      "transformGroup": "css/agtc",
+      "prefix": "agtc",
+      "buildPath": "dist/tokens/css/",
       "files": [
-        {
-          "destination": "primitives.css",
-          "format": "css/variables",
-          "filter": { "attributes": { "level": "primitive" } }
-        },
-        {
-          "destination": "semantic.css",
-          "format": "css/variables",
-          "filter": { "attributes": { "level": "semantic" } }
-        },
-        {
-          "destination": "components.css",
-          "format": "css/variables",
-          "filter": { "attributes": { "level": "component" } }
-        }
+        { "destination": "primitives.css", "format": "css/variables", "filter": { "attributes": { "level": "primitive" } } },
+        { "destination": "semantic.css",   "format": "css/variables", "options": { "outputReferences": true }, "filter": { "attributes": { "level": "semantic" } } },
+        { "destination": "components.css", "format": "css/variables", "options": { "outputReferences": true }, "filter": { "attributes": { "level": "component" } } },
+        { "destination": "all.css",        "format": "css/variables", "options": { "outputReferences": true } }
       ]
     },
     "js": {
       "transformGroup": "js",
-      "buildPath": "dist/js/",
+      "buildPath": "dist/tokens/js/",
       "files": [
-        {
-          "destination": "tokens.js",
-          "format": "javascript/es6"
-        }
+        { "destination": "tokens.js", "format": "javascript/es6" }
+      ]
+    },
+    "tailwind": {
+      "transformGroup": "css/agtc",
+      "prefix": "agtc",
+      "buildPath": "dist/tokens/tailwind/",
+      "files": [
+        { "destination": "tokens.js", "format": "tailwind/config" }
+      ]
+    },
+    "angular": {
+      "transformGroup": "css/agtc",
+      "prefix": "agtc",
+      "buildPath": "dist/tokens/angular/",
+      "files": [
+        { "destination": "_m3-theme.scss", "format": "material-angular/m3-theme" }
       ]
     },
     "ios": {
       "transformGroup": "ios-swift",
-      "buildPath": "dist/ios/",
+      "buildPath": "dist/tokens/ios/",
       "files": [
-        {
-          "destination": "DesignTokens.swift",
-          "format": "ios-swift/class.swift",
-          "className": "DesignTokens"
-        }
+        { "destination": "AgenticaTokens.swift", "format": "ios-swift/class.swift", "className": "AgenticaTokens" }
       ]
     },
     "android": {
       "transformGroup": "android",
-      "buildPath": "dist/android/",
+      "buildPath": "dist/tokens/android/",
       "files": [
-        {
-          "destination": "tokens.colors.xml",
-          "format": "android/colors"
-        },
-        {
-          "destination": "tokens.dimens.xml",
-          "format": "android/dimens"
-        }
+        { "destination": "tokens.colors.xml", "format": "android/colors" },
+        { "destination": "tokens.dimens.xml",  "format": "android/dimens" }
       ]
     }
   }

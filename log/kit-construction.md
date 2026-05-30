@@ -95,3 +95,15 @@
 | 2026-05-30 18:16 | Modifié | `decisions/README.md` |
 | 2026-05-30 18:16 | Créé | `.claude/rules/post-change-pipeline.md` |
 | 2026-05-30 — | Modifié | Tous les fichiers source — renommage sigle `sda` → `agtc`, préfixe CSS `--sda-` → `--agtc-`, balises WC `sda-icon/sda-button` → `agtc-icon/agtc-button`, localStorage `sda-lang` → `agtc-lang` |
+| 2026-05-30 — | Créé | `package.json` — racine du monorepo, script `npm run tokens` |
+| 2026-05-30 — | Créé | `.gitignore` — exclut `node_modules/`, `.tokens-build-tmp/` |
+| 2026-05-30 — | Créé | `style-dictionary/build.js` — build SD avec parseur DTCG, transform `attribute/level`, formats custom Tailwind + M3 Angular |
+| 2026-05-30 — | Modifié | `style-dictionary/config.json` — préfixe `sda` → `agtc`, ajout plateformes tailwind / angular / ios / android |
+| 2026-05-30 — | Généré | `dist/tokens/css/` — primitives.css / semantic.css / components.css / all.css (--agtc- prefix, outputReferences) |
+| 2026-05-30 — | Généré | `dist/tokens/js/tokens.js` — exports ES6 |
+| 2026-05-30 — | Généré | `dist/tokens/tailwind/tokens.js` — extension theme.extend Tailwind |
+| 2026-05-30 — | Généré | `dist/tokens/angular/_m3-theme.scss` — palettes M3 + alias SCSS |
+| 2026-05-30 — | Généré | `dist/tokens/ios/AgenticaTokens.swift` — classe Swift |
+| 2026-05-30 — | Généré | `dist/tokens/android/` — XML couleurs + dimensions |
+| 2026-05-30 — | Créé | `decisions/ADR-030-style-dictionary-build-multi-platform.md` |
+| 2026-05-30 — | Modifié | `decisions/README.md` — ajout ADR-030 |

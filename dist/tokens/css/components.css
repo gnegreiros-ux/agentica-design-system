@@ -1,0 +1,39 @@
+/**
+ * Do not edit directly
+ * Generated on Sat, 30 May 2026 23:43:24 GMT
+ */
+
+:root {
+  --agtc-button-ghost-border: transparent;
+  --agtc-button-ghost-background: transparent;
+  --agtc-button-secondary-background: transparent;
+  --agtc-card-default-padding: var(--agtc-semantic-space-layout-component);
+  --agtc-card-default-radius: var(--agtc-semantic-radius-card);
+  --agtc-card-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-card-default-background: var(--agtc-semantic-color-background-surface);
+  --agtc-input-default-padding-y: var(--agtc-semantic-space-control-padding-y);
+  --agtc-input-default-padding-x: var(--agtc-semantic-space-control-padding-x);
+  --agtc-input-default-radius: var(--agtc-semantic-radius-control);
+  --agtc-input-default-placeholder: var(--agtc-semantic-color-text-secondary);
+  --agtc-input-default-text: var(--agtc-semantic-color-text-primary);
+  --agtc-input-default-border-error: var(--agtc-semantic-color-border-danger);
+  --agtc-input-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-input-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-input-default-background: var(--agtc-semantic-color-background-surface);
+  --agtc-button-ghost-text: var(--agtc-semantic-color-action-primary);
+  --agtc-button-ghost-background-hover: var(--agtc-semantic-color-background-subtle);
+  --agtc-button-secondary-border: var(--agtc-semantic-color-action-primary);
+  --agtc-button-secondary-text: var(--agtc-semantic-color-action-primary);
+  --agtc-button-secondary-background-hover: var(--agtc-semantic-color-background-subtle);
+  --agtc-button-critical-border: var(--agtc-semantic-color-feedback-danger);
+  --agtc-button-critical-text: var(--agtc-semantic-color-text-on-danger);
+  --agtc-button-critical-background-hover: var(--agtc-semantic-color-feedback-danger-subtle);
+  --agtc-button-critical-background: var(--agtc-semantic-color-feedback-danger);
+  --agtc-button-primary-radius: var(--agtc-semantic-radius-control);
+  --agtc-button-primary-padding-y: var(--agtc-semantic-space-control-padding-y);
+  --agtc-button-primary-padding-x: var(--agtc-semantic-space-control-padding-x);
+  --agtc-button-primary-text: var(--agtc-semantic-color-text-on-action);
+  --agtc-button-primary-background-disabled: var(--agtc-semantic-color-action-primary-disabled);
+  --agtc-button-primary-background-hover: var(--agtc-semantic-color-action-primary-hover);
+  --agtc-button-primary-background: var(--agtc-semantic-color-action-primary);
+}

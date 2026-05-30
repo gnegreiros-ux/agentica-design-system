@@ -1,0 +1,13 @@
+{
+  "name": "@agentica/design-system",
+  "version": "0.1.0",
+  "description": "Agentica — Système de design agentique",
+  "private": true,
+  "scripts": {
+    "tokens": "node style-dictionary/build.js",
+    "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.js'"
+  },
+  "devDependencies": {
+    "style-dictionary": "^3.9.2"
+  }
+}
