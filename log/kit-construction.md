@@ -78,3 +78,19 @@
 | 2026-05-30 — | Modifié | `site/build.js`, `site/dist/` — logo SVG teal en header, favicons réels (Brand/Favicon/), webmanifest Agentica, métadonnées OG/Twitter optimisées (title 54 car, description 142 car, twitter:domain/url ajoutés) |
 | 2026-05-30 17:58 | Créé | `decisions/ADR-028-atkinson-hyperlegible-mono.md` |
 | 2026-05-30 17:58 | Modifié | `decisions/README.md` |
+| 2026-05-30 18:12 | Créé | `.claude/skills/quality-gate.md` |
+| 2026-05-30 18:12 | Créé | `.claude/skills/pipelines/tokens-audit.md` |
+| 2026-05-30 18:13 | Créé | `.claude/skills/pipelines/wcag.md` |
+| 2026-05-30 18:13 | Créé | `.claude/skills/pipelines/adr-conformity.md` |
+| 2026-05-30 18:13 | Créé | `.claude/skills/pipelines/adr-triggers.md` |
+| 2026-05-30 18:14 | Créé | `.claude/skills/pipelines/docs.md` |
+| 2026-05-30 18:14 | Créé | `.claude/skills/pipelines/site.md` |
+| 2026-05-30 18:14 | Créé | `.claude/skills/pipelines/commit.md` |
+| 2026-05-30 18:14 | Créé | `.claude/skills/pipelines/style-dictionary.md` |
+| 2026-05-30 18:15 | Créé | `.claude/skills/pipelines/storybook.md` |
+| 2026-05-30 18:15 | Créé | `.claude/skills/pipelines/chromatic.md` |
+| 2026-05-30 18:15 | Créé | `.claude/skills/pipelines/axe-core.md` |
+| 2026-05-30 18:15 | Créé | `.claude/skills/pipelines/playwright.md` |
+| 2026-05-30 18:15 | Créé | `decisions/ADR-029-quality-gate-pre-commit.md` |
+| 2026-05-30 18:16 | Modifié | `decisions/README.md` |
+| 2026-05-30 18:16 | Créé | `.claude/rules/post-change-pipeline.md` |
