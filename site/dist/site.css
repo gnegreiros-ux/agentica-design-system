@@ -27,7 +27,9 @@ body{
   box-shadow:0 2px 24px rgba(0,0,0,.12);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
-.logo{font-size:1.125rem;font-weight:800;letter-spacing:-.02em;color:#12A594;text-decoration:none;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
+.logo-name{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:#12A594;line-height:1}
 .logo-version{font-size:11px;color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
@@ -72,7 +74,8 @@ body{
   text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-on-action);
   background:var(--agtc-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
-.hero h1{font-size:3rem;font-weight:800;line-height:1.08;letter-spacing:-.035em;margin-bottom:20px}
+.hero-name{font-size:4rem;font-weight:800;line-height:1;letter-spacing:-.04em;color:#12A594;margin-bottom:16px}
+.hero h1{font-size:2.75rem;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px}
 .hero h1 span{color:var(--agtc-semantic-color-action-primary)}
 .hero-tagline{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
