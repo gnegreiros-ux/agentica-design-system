@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sun, 31 May 2026 20:55:59 GMT
+// Generated on Sun, 31 May 2026 21:01:37 GMT
 
 
 import UIKit
@@ -59,6 +59,14 @@ public class AgenticaTokens {
     public static let cardDefaultBorder = #e8e8e8
     public static let cardDefaultPadding = 20px
     public static let cardDefaultRadius = 10px
+    public static let cardElevatedBackground = #ffffff
+    public static let cardElevatedBorder = transparent
+    public static let cardElevatedShadow = 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)
+    public static let cardFlatBackground = #f0f0f0
+    public static let cardFlatBorder = transparent
+    public static let cardPaddingLg = 24px
+    public static let cardPaddingNone = 0px
+    public static let cardPaddingSm = 12px
     public static let inputDefaultBackground = #ffffff
     public static let inputDefaultBorder = #e8e8e8
     public static let inputDefaultBorderError = #ce2c31

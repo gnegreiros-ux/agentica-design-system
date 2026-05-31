@@ -139,3 +139,10 @@
 | 2026-05-31 — | Créé | `components/agtc-badge.js` — 6 variantes, 2 tailles, icônes, icon-only |
 | 2026-05-31 — | Créé | `components/agtc-badge.stories.js` — 9 stories + AllVariants |
 | 2026-05-31 — | Modifié | `.storybook/preview.js` — import agtc-badge.js |
+| 2026-05-31 — | Modifié | `tokens/component.json` — tokens card : elevated / flat / padding-none / sm / lg |
+| 2026-05-31 — | Rebuild | `dist/tokens/` — 12 tokens card compilés |
+| 2026-05-31 — | Créé | `components/agtc-card.js` — 3 variantes, 4 paddings, slots header/body/footer |
+| 2026-05-31 — | Créé | `components/agtc-card.stories.js` — 8 stories + AllVariants + composition |
+| 2026-05-31 — | Créé | `decisions/ADR-035-agtc-card-implementation.md` |
+| 2026-05-31 — | Modifié | `.storybook/preview.js` — import agtc-card.js |
+| 2026-05-31 17:02 | Créé | `decisions/ADR-035-agtc-card-implementation.md` |

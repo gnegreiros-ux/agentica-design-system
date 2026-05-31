@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 31 May 2026 20:55:59 GMT
+ * Generated on Sun, 31 May 2026 21:01:37 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -599,3 +599,11 @@ export const CardDefaultBackground = "#ffffff";
 export const CardDefaultBorder = "#e8e8e8";
 export const CardDefaultRadius = "10px";
 export const CardDefaultPadding = "20px";
+export const CardElevatedBackground = "#ffffff";
+export const CardElevatedBorder = "transparent";
+export const CardElevatedShadow = "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)";
+export const CardFlatBackground = "#f0f0f0";
+export const CardFlatBorder = "transparent";
+export const CardPaddingNone = "0px";
+export const CardPaddingSm = "12px";
+export const CardPaddingLg = "24px";

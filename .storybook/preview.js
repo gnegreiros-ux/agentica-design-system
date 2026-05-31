@@ -4,6 +4,7 @@ import '../components/agtc-icon.js';
 import '../components/agtc-button.js';
 import '../components/agtc-input.js';
 import '../components/agtc-badge.js';
+import '../components/agtc-card.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {

@@ -1,9 +1,13 @@
 /**
  * Do not edit directly
- * Generated on Sun, 31 May 2026 20:55:59 GMT
+ * Generated on Sun, 31 May 2026 21:01:37 GMT
  */
 
 :root {
+  --agtc-card-padding-none: 0px;
+  --agtc-card-flat-border: transparent;
+  --agtc-card-elevated-shadow: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
+  --agtc-card-elevated-border: transparent;
   --agtc-badge-sm-padding-y: 2px;
   --agtc-badge-sm-radius: 9999px;
   --agtc-badge-md-radius: 9999px;
@@ -473,6 +477,8 @@
   --agtc-primitive-color-gray-3: #f0f0f0;
   --agtc-primitive-color-gray-2: #f9f9f9;
   --agtc-primitive-color-gray-1: #fcfcfc;
+  --agtc-card-padding-lg: var(--agtc-primitive-space-6);
+  --agtc-card-padding-sm: var(--agtc-primitive-space-3);
   --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
   --agtc-badge-md-padding-y: var(--agtc-primitive-space-1);
   --agtc-badge-md-padding-x: var(--agtc-primitive-space-3);
@@ -561,6 +567,8 @@
   --agtc-semantic-color-action-primary-disabled: var(--agtc-primitive-color-gray-6);
   --agtc-semantic-color-action-primary-hover: var(--agtc-primitive-color-teal-10);
   --agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9);
+  --agtc-card-flat-background: var(--agtc-semantic-color-background-subtle);
+  --agtc-card-elevated-background: var(--agtc-semantic-color-background-surface);
   --agtc-card-default-padding: var(--agtc-semantic-space-layout-component);
   --agtc-card-default-radius: var(--agtc-semantic-radius-card);
   --agtc-card-default-border: var(--agtc-semantic-color-border-default);
