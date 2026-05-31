@@ -58,9 +58,8 @@ class AgtcIcon extends LitElement {
       console.warn(`[agtc-icon] Icône "${this.name}" introuvable dans Lucide.`);
       return;
     }
-    const [, attrs, children] = iconDef;
-    Object.entries(attrs || {}).forEach(([k, v]) => svg.setAttribute(k, v));
-    svg.innerHTML = children
+    // Lucide v1.x : iconDef est directement un tableau de [tag, attrs]
+    svg.innerHTML = iconDef
       .map(([tag, a]) => {
         const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
         Object.entries(a).forEach(([k, v]) => el.setAttribute(k, v));

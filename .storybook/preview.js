@@ -1,4 +1,5 @@
 import '../dist/tokens/css/all.css';
+import './global.css';
 import '../components/agtc-icon.js';
 import '../components/agtc-button.js';
 import '../components/agtc-input.js';
