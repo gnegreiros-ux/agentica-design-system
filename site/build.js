@@ -10,6 +10,8 @@ const DIST       = path.join(__dirname, 'dist');
 const TOKENS_DIR = path.join(ROOT, 'tokens');
 const DEC_DIR    = path.join(ROOT, 'decisions');
 
+const { runAudit, MANUAL_CHECKS } = require('./audit-lib');
+
 const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); };
 const write = (fp, c) => { ensureDir(path.dirname(fp)); fs.writeFileSync(fp, c, 'utf8'); };
 const read  = (fp) => { try { return fs.readFileSync(fp, 'utf8'); } catch { return ''; } };
@@ -502,6 +504,42 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── INFO CARDS ──────────────────────────────────────────── */
 .info-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
 .info-card-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
+
+/* ── AUDIT PAGE ──────────────────────────────────────────── */
+.audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
+.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:700;font-size:1rem;margin-bottom:16px}
+.audit-badge.pass{background:#ecfdf5;color:#18794e}
+.audit-badge.fail{background:#fff1f2;color:#ce2c31}
+.audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:0.875rem;margin-bottom:6px}
+.audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:0.8rem}
+.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px;text-align:center}
+.audit-card--pass{border-color:#86efac}
+.audit-card--warn{border-color:#fde68a}
+.audit-card--fail{border-color:#fca5a5}
+.audit-number{display:block;font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+.audit-card--pass .audit-number{color:#18794e}
+.audit-card--warn .audit-number{color:#d97706}
+.audit-card--fail .audit-number{color:#ce2c31}
+.audit-section{margin-bottom:48px}
+.audit-section h2{font-size:1.1rem;font-weight:700;margin:0 0 16px;padding-bottom:8px;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
+.audit-contrast-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.audit-contrast-table th{text-align:left;padding:8px 10px;background:var(--agtc-semantic-color-background-subtle);border-bottom:2px solid var(--agtc-semantic-color-border-default);font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:.04em}
+.audit-contrast-table td{padding:8px 10px;border-bottom:1px solid var(--agtc-semantic-color-border-default);vertical-align:middle}
+.audit-contrast-table tr:last-child td{border-bottom:none}
+.audit-contrast-pass{color:#18794e;font-weight:600}
+.audit-contrast-fail{color:#ce2c31;font-weight:600}
+.audit-swatch{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;border:1px solid rgba(0,0,0,.1);margin-right:4px}
+.audit-manual-list{list-style:none;padding:0;margin:0}
+.audit-manual-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
+.audit-manual-item:last-child{border-bottom:none}
+.audit-manual-crit{font-size:0.75rem;font-weight:700;color:var(--agtc-semantic-color-text-secondary);font-family:var(--agtc-semantic-typography-mono-family,monospace);flex-shrink:0;width:52px;padding-top:1px}
+.audit-manual-body strong{display:block;font-size:0.875rem;margin-bottom:3px}
+.audit-manual-body span{font-size:0.8rem;color:var(--agtc-semantic-color-text-secondary)}
+.audit-method{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:20px 24px;font-size:0.825rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6}
+.audit-footer-link{color:rgba(255,255,255,.3);text-decoration:none;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;transition:color .12s}
+.audit-footer-link:hover{color:rgba(255,255,255,.7)}
+@media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
 .info-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
 .info-card-body{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
 
@@ -750,6 +788,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
   const mainClass = fullWidth ? 'home-layout' : 'layout';
 
+  const auditHref = (depth > 0 ? '../'.repeat(depth) : '') + 'audit.html';
   const footer = `
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
@@ -762,6 +801,12 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       ${icon('bot', 14)}
       <span class="lang-fr">Développé avec Claude Code</span>
       <span class="lang-en">Built with Claude Code</span>
+      <span style="opacity:.3">·</span>
+      <a href="${auditHref}" class="audit-footer-link" aria-label="Rapport d'audit WCAG">
+        ${icon('shield-check', 13)}
+        <span class="lang-fr">Audit</span>
+        <span class="lang-en">Audit</span>
+      </a>
     </div>
   </div>
 </footer>`;
@@ -2331,6 +2376,166 @@ function loadADRs() {
   }).sort((a,b) => a.num - b.num);
 }
 
+// ─── PAGE: AUDIT ────────────────────────────────────────────────────────────
+function buildAudit() {
+  const auditFile = path.join(DIST, 'audit.html');
+  // On exclut audit.html lui-même de l'analyse (il n'existe pas encore à ce stade)
+  const r = runAudit({ excludeFile: auditFile });
+
+  const dateStr = r.timestamp.toLocaleDateString('fr-FR', {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+  const dateStrEn = r.timestamp.toLocaleDateString('en-CA', {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const passing = r.totalViolations === 0;
+  const badgeCls = passing ? 'pass' : 'fail';
+  const badgeIconName = passing ? 'shield-check' : 'shield-alert';
+
+  // ── Cartes résumé ──────────────────────────────────────────────────────────
+  const cards = `
+<div class="audit-cards">
+  <div class="audit-card">
+    <span class="audit-number">${r.pageCount}</span>
+    <span class="lang-fr">Pages analysées</span>
+    <span class="lang-en">Pages audited</span>
+  </div>
+  <div class="audit-card audit-card--pass">
+    <span class="audit-number" style="color:var(--agtc-semantic-color-action-primary)">${r.totalPassed}</span>
+    <span class="lang-fr">Vérifications réussies</span>
+    <span class="lang-en">Checks passed</span>
+  </div>
+  <div class="audit-card ${r.totalWarnings > 0 ? 'audit-card--warn' : ''}">
+    <span class="audit-number ${r.totalWarnings > 0 ? '' : ''}" style="${r.totalWarnings > 0 ? 'color:#d97706' : ''}">${r.totalWarnings}</span>
+    <span class="lang-fr">Avertissements</span>
+    <span class="lang-en">Warnings</span>
+  </div>
+  <div class="audit-card ${r.totalViolations > 0 ? 'audit-card--fail' : 'audit-card--pass'}">
+    <span class="audit-number">${r.totalViolations}</span>
+    <span class="lang-fr">Violation${r.totalViolations !== 1 ? 's' : ''}</span>
+    <span class="lang-en">Violation${r.totalViolations !== 1 ? 's' : ''}</span>
+  </div>
+</div>`;
+
+  // ── Tableau de contraste ──────────────────────────────────────────────────
+  const contrastRows = r.contrastResults.map(c => {
+    const ratio = c.ratio;
+    const ok    = c.pass;
+    const cls   = ok ? 'audit-contrast-pass' : 'audit-contrast-fail';
+    const statusIcon = ok ? icon('check', 14) : icon('x', 14);
+    return `<tr>
+      <td><span class="audit-swatch" style="background:${c.fg}"></span><code>${c.fg}</code></td>
+      <td><span class="audit-swatch" style="background:${c.bg}"></span><code>${c.bg}</code></td>
+      <td class="${cls}">${statusIcon} ${ratio}:1</td>
+      <td style="color:var(--agtc-semantic-color-text-secondary);font-size:0.8rem">≥ ${c.required}:1</td>
+      <td style="font-size:0.825rem">${c.label}</td>
+    </tr>`;
+  }).join('');
+
+  const contrastTable = `
+<table class="audit-contrast-table" aria-label="Résultats des ratios de contraste WCAG">
+  <colgroup>
+    <col style="width:110px">
+    <col style="width:110px">
+    <col style="width:100px">
+    <col style="width:80px">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th><span class="lang-fr">Avant-plan</span><span class="lang-en">Foreground</span></th>
+      <th><span class="lang-fr">Arrière-plan</span><span class="lang-en">Background</span></th>
+      <th><span class="lang-fr">Ratio</span><span class="lang-en">Ratio</span></th>
+      <th><span class="lang-fr">Requis</span><span class="lang-en">Required</span></th>
+      <th><span class="lang-fr">Contexte</span><span class="lang-en">Context</span></th>
+    </tr>
+  </thead>
+  <tbody>${contrastRows}</tbody>
+</table>`;
+
+  // ── Violations (si présentes) ─────────────────────────────────────────────
+  let violationsSection = '';
+  if (r.allViolations.length > 0) {
+    const rows = r.allViolations.map(v =>
+      `<li style="padding:8px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default);font-size:0.85rem">
+        <strong>SC ${v.criterion}</strong> — ${esc(v.msg)}
+        <span style="color:var(--agtc-semantic-color-text-secondary);margin-left:8px;font-size:0.8rem">${v.file}</span>
+      </li>`
+    ).join('');
+    violationsSection = `
+<div class="audit-section">
+  <h2>${icon('alert-circle', 16)} <span class="lang-fr">Violations</span><span class="lang-en">Violations</span></h2>
+  <ul style="list-style:none;padding:0;margin:0">${rows}</ul>
+</div>`;
+  }
+
+  // ── Liste des vérifications manuelles ─────────────────────────────────────
+  const manualItems = MANUAL_CHECKS.map(({ criterion, titleFr, titleEn, descFr, descEn }) => `
+  <li class="audit-manual-item">
+    <span class="audit-manual-crit">SC ${criterion}</span>
+    <div class="audit-manual-body">
+      <strong><span class="lang-fr">${titleFr}</span><span class="lang-en">${titleEn}</span></strong>
+      <span><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></span>
+    </div>
+  </li>`).join('');
+
+  const body = `
+<div class="audit-hero">
+  <div class="audit-badge ${badgeCls}">
+    ${icon(badgeIconName, 20)}
+    <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
+    <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
+  </div>
+  <p class="audit-meta">
+    <span class="lang-fr">${r.pageCount} pages · ${r.totalPassed} vérifications réussies · analyse statique</span>
+    <span class="lang-en">${r.pageCount} pages · ${r.totalPassed} checks passed · static analysis</span>
+  </p>
+  <p class="audit-date">
+    <span class="lang-fr">Généré le ${dateStr}</span>
+    <span class="lang-en">Generated on ${dateStrEn}</span>
+  </p>
+</div>
+
+${cards}
+
+${violationsSection}
+
+<div class="audit-section">
+  <h2>${icon('droplets', 16)} <span class="lang-fr">Ratios de contraste — SC 1.4.3 / 1.4.11</span><span class="lang-en">Contrast ratios — SC 1.4.3 / 1.4.11</span></h2>
+  ${contrastTable}
+</div>
+
+<div class="audit-section">
+  <h2>${icon('clipboard-list', 16)} <span class="lang-fr">Vérifications manuelles requises</span><span class="lang-en">Required manual checks</span></h2>
+  <p style="font-size:0.85rem;color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px">
+    <span class="lang-fr">Ces critères ne peuvent pas être vérifiés automatiquement. Une revue manuelle périodique est recommandée.</span>
+    <span class="lang-en">These criteria cannot be automatically verified. Periodic manual review is recommended.</span>
+  </p>
+  <ul class="audit-manual-list">${manualItems}</ul>
+</div>
+
+<div class="audit-section">
+  <h2>${icon('info', 16)} <span class="lang-fr">Méthode d'audit</span><span class="lang-en">Audit method</span></h2>
+  <div class="audit-method">
+    <span class="lang-fr">Cet audit est une <strong>analyse statique automatisée</strong> du HTML généré. Il vérifie la structure sémantique, les noms accessibles, la hiérarchie des titres, les ratios de contraste des tokens, et les critères WCAG 2.2 détectables sans navigateur. Il ne remplace pas un audit avec lecteur d'écran, ni une vérification de la navigation clavier en conditions réelles. Les critères marqués « vérification manuelle » doivent être testés par un humain.</span>
+    <span class="lang-en">This audit is an <strong>automated static analysis</strong> of generated HTML. It checks semantic structure, accessible names, heading hierarchy, token contrast ratios, and WCAG 2.2 criteria detectable without a browser. It does not replace a screen reader audit or real-world keyboard navigation testing. Criteria marked "manual check" must be tested by a human.</span>
+  </div>
+</div>
+`;
+
+  write(auditFile, layout({
+    title: 'Audit WCAG',
+    pageTitle: 'Audit WCAG 2.2',
+    depth: 0,
+    sidebar: null,
+    fullWidth: false,
+    body,
+  }));
+}
+
 // ─── MAIN BUILD ─────────────────────────────────────────────────────────────
 function build() {
   console.log('\nAgentica — build\n');
@@ -2385,8 +2590,9 @@ function build() {
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
+  buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
 
-  const total = 9 + adrs.length;
+  const total = 10 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 
