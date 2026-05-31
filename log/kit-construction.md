@@ -114,3 +114,8 @@
 | 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
 | 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
 | 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 21:19 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 21:19 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 — | Modifié | `components/agtc-button.js` — propriétés `icon` + `icon-suffix`, fallback slot, approche hybride |
+| 2026-05-30 — | Modifié | `decisions/ADR-031-agtc-button-implementation.md` — décisions 10/11/12 : hybride, compat frameworks, icon-only |
+| 2026-05-30 — | Modifié | `site/build.js` — démo icônes, tableau compat frameworks, CSS icon-only, rebuild 40 fichiers |

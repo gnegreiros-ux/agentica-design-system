@@ -164,7 +164,63 @@ du bouton est préservée.
 
 Le spinner reste visible car il est en dehors de `.content` (frère dans le shadow DOM).
 
-### 9. Mode `icon-only` — padding carré et accessibilité obligatoire
+### 10. Approche hybride icônes — propriétés + slots
+
+**Problème :** Les slots nommés (décision 7) sont idéaux en Web Component standard mais
+créent deux incompatibilités concrètes :
+- **Figma Code Connect** génère du code plat (`<agtc-button icon="plus">`) — il ne peut
+  pas générer du HTML imbriqué avec des slots.
+- **React < 19** : dans JSX, `slot="prefix"` ne fonctionne pas nativement sur les enfants
+  car JSX ne produit pas de vrais nœuds DOM avant le rendu.
+
+**Décision : propriétés `icon` et `icon-suffix` comme fallback des slots nommés.**
+
+```javascript
+// Propriété → Figma Code Connect, React, tous frameworks
+<agtc-button icon="plus">Ajouter</agtc-button>
+<agtc-button variant="secondary" icon-suffix="arrow-right">Continuer</agtc-button>
+<agtc-button icon-only icon="x" label="Fermer"></agtc-button>
+
+// Slot → composition avancée, SVG custom, cas hors-système
+<agtc-button>
+  <agtc-icon slot="prefix" name="plus"></agtc-icon>
+  Ajouter
+</agtc-button>
+```
+
+**Mécanisme : fallback content natif des slots Web Component.**
+
+En HTML standard, le contenu à l'intérieur d'un `<slot>` est du contenu de remplacement —
+il s'affiche uniquement si aucun nœud n'est assigné à ce slot depuis le light DOM.
+
+```html
+<!-- Shadow DOM du composant -->
+<slot name="prefix">
+  <!-- Rendu si aucun slot="prefix" dans le light DOM -->
+  <agtc-icon name="${this.icon}" size="control"></agtc-icon>
+</slot>
+```
+
+- `icon="plus"` → aucun nœud slotté → fallback `<agtc-icon name="plus">` s'affiche
+- `<agtc-icon slot="prefix">` → nœud slotté fourni → fallback ignoré, slot content affiché
+- Les deux simultanément : le contenu slotté a toujours la priorité
+
+**Prérequis :** `agtc-icon` doit être enregistré par le consommateur avant d'utiliser
+les propriétés `icon` / `icon-suffix`. Les slots acceptent n'importe quel élément HTML.
+
+**Compatibilité frameworks :**
+
+| Framework | Propriété `icon="..."` | Slot `slot="prefix"` |
+|-----------|----------------------|----------------------|
+| HTML natif | ✅ | ✅ |
+| React 18 | ✅ | ⚠️ besoin de `ref` + `setAttribute` |
+| React 19 | ✅ | ✅ |
+| Angular | ✅ | ✅ |
+| Vue 3 | ✅ | ✅ |
+| Svelte | ✅ | ✅ |
+| Figma Code Connect | ✅ | ❌ |
+
+### 12. Mode `icon-only` — padding carré et accessibilité obligatoire
 
 **Problème :** Un bouton sans texte visible doit avoir un padding égal et un label
 accessible. Comment enforcer cela sans complexité excessive ?

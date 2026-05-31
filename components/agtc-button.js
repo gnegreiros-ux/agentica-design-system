@@ -3,13 +3,23 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 // ─── CONTRAT ────────────────────────────────────────────────────────────────
 // Variantes : primary | secondary | ghost | critical
-// Icônes : slot[name="prefix"] | slot[name="suffix"] | icon-only
-//   - icon-only : padding carré, label="" requis (WCAG 1.1.1)
+//
+// Icônes — approche hybride (propriété + slot, slot a la priorité) :
+//   icon="name"         → <agtc-icon> en prefix via fallback slot
+//   icon-suffix="name"  → <agtc-icon> en suffix via fallback slot
+//   slot[name="prefix"] → composition libre (SVG custom, etc.)
+//   slot[name="suffix"] → idem
+//   icon-only           → padding carré, label="" requis (WCAG 1.1.1)
+//
+// La propriété active Figma Code Connect et les frameworks (React…).
+// Le slot reste disponible pour la composition avancée.
+// Prérequis : agtc-icon doit être enregistré par le consommateur.
+//
 // Règle critical : deux clics requis (confirmation explicite).
 //   - 1er clic → état confirming, event agtc-confirm-request
 //   - 2e clic  → action confirmée, events agtc-confirm + agtc-click
-//   - blur ou Escape → reset
-// Largeur préservée pendant le loading (.content visibility:hidden, icons incluses).
+//   - blur ou Escape → reset automatique
+// Largeur préservée pendant le loading (.content visibility:hidden, icônes incluses).
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcButton extends LitElement {
@@ -18,6 +28,8 @@ class AgtcButton extends LitElement {
     disabled:     { type: Boolean, reflect: true },
     loading:      { type: Boolean, reflect: true },
     iconOnly:     { type: Boolean, reflect: true, attribute: 'icon-only' },
+    icon:         { type: String },
+    iconSuffix:   { type: String,  attribute: 'icon-suffix' },
     type:         { type: String },
     label:        { type: String },
     loadingLabel: { type: String,  attribute: 'loading-label' },
@@ -30,6 +42,8 @@ class AgtcButton extends LitElement {
     this.disabled     = false;
     this.loading      = false;
     this.iconOnly     = false;
+    this.icon         = undefined;
+    this.iconSuffix   = undefined;
     this.type         = 'button';
     this.label        = undefined;
     this.loadingLabel = 'En cours…';
@@ -293,11 +307,15 @@ class AgtcButton extends LitElement {
         <span class="spinner" aria-hidden="true"></span>
 
         <span class="content">
-          <slot name="prefix"></slot>
+          <slot name="prefix">
+            ${this.icon ? html`<agtc-icon name="${this.icon}" size="control"></agtc-icon>` : ''}
+          </slot>
           <span class="label">
             ${this._confirming ? 'Confirmer ?' : html`<slot></slot>`}
           </span>
-          <slot name="suffix"></slot>
+          <slot name="suffix">
+            ${this.iconSuffix ? html`<agtc-icon name="${this.iconSuffix}" size="control"></agtc-icon>` : ''}
+          </slot>
         </span>
 
         ${busy && !this.label ? html`<span class="sr-only">${this.loadingLabel}</span>` : ''}

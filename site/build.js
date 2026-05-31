@@ -387,6 +387,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .ds-btn.ghost:hover:not(:disabled){background:var(--agtc-component-button-ghost-background-hover)}
 .ds-btn.critical{background:var(--agtc-component-button-critical-background);color:var(--agtc-component-button-critical-text);border-color:var(--agtc-component-button-critical-border)}
 .ds-btn.critical:hover:not(:disabled){background:var(--agtc-component-button-critical-background-hover);color:var(--agtc-component-button-critical-border)}
+.ds-btn.icon-only{padding:var(--agtc-component-button-primary-padding-y)}
 
 .variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
@@ -1815,33 +1816,105 @@ function buildButton() {
   <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
 </ol>
 
+<h2><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></h2>
+<p>
+  <span class="lang-fr">Approche hybride : propriété (Figma, React, tous frameworks) ou slot (composition avancée). Le contenu slotté a toujours la priorité sur la propriété.</span>
+  <span class="lang-en">Hybrid approach: property (Figma, React, all frameworks) or slot (advanced composition). Slotted content always takes priority over the property.</span>
+</p>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Icône avant (prefix)</span><span class="lang-en">Leading icon (prefix)</span></span>
+    <div class="demo-row">
+      <button class="ds-btn primary">${icon('plus',16)} <span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></button>
+      <button class="ds-btn secondary">${icon('download',16)} <span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></button>
+      <button class="ds-btn ghost">${icon('settings',16)} <span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></button>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Icône après (suffix)</span><span class="lang-en">Trailing icon (suffix)</span></span>
+    <div class="demo-row">
+      <button class="ds-btn primary"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span> ${icon('arrow-right',16)}</button>
+      <button class="ds-btn secondary"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span> ${icon('external-link',16)}</button>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Icon-only — <code>label</code> obligatoire (WCAG 1.1.1)</span><span class="lang-en">Icon-only — <code>label</code> required (WCAG 1.1.1)</span></span>
+    <div class="demo-row">
+      <button class="ds-btn primary icon-only" aria-label="Ajouter">${icon('plus',16)}</button>
+      <button class="ds-btn secondary icon-only" aria-label="Modifier">${icon('pencil',16)}</button>
+      <button class="ds-btn ghost icon-only" aria-label="Paramètres">${icon('settings',16)}</button>
+      <button class="ds-btn critical icon-only" aria-label="Supprimer définitivement">${icon('trash-2',16)}</button>
+    </div>
+  </div>
+</div>
+<pre class="code-block"><code class="lang-html">&lt;!-- Propriété icon — Figma Code Connect, React et tous les frameworks --&gt;
+&lt;agtc-button icon="plus"&gt;<span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>&lt;/agtc-button&gt;
+&lt;agtc-button variant="secondary" icon-suffix="arrow-right"&gt;<span class="lang-fr">Continuer</span><span class="lang-en">Continue</span>&lt;/agtc-button&gt;
+
+&lt;!-- Icon-only — label="" obligatoire --&gt;
+&lt;agtc-button icon-only icon="x" label="<span class="lang-fr">Fermer le panneau</span><span class="lang-en">Close panel</span>"&gt;&lt;/agtc-button&gt;
+
+&lt;!-- Slot — composition avancée, SVG custom --&gt;
+&lt;agtc-button&gt;
+  &lt;agtc-icon slot="prefix" name="plus"&gt;&lt;/agtc-icon&gt;
+  <span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>
+&lt;/agtc-button&gt;</code></pre>
+
+<h2><span class="lang-fr">Compatibilité frameworks</span><span class="lang-en">Framework compatibility</span></h2>
+<table class="token-table"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
+  <thead><tr><th>Framework</th><th><code>icon="..."</code></th><th><code>slot="prefix"</code></th><th>Figma Code Connect</th></tr></thead>
+  <tbody>
+    <tr><td>HTML natif</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td>React 19</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>React 18</td><td>✅</td><td>⚠️ <span class="lang-fr">via ref</span><span class="lang-en">via ref</span></td><td>✅</td></tr>
+    <tr><td>Angular</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Vue 3</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Svelte</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  </tbody>
+</table>
+
 <h2><span class="lang-fr">Implémentation — Lit Web Component</span><span class="lang-en">Implementation — Lit Web Component</span></h2>
 <pre class="code-block"><code class="lang-javascript">import { LitElement, html, css } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
+// agtc-icon doit être enregistré par le consommateur pour les propriétés icon/icon-suffix
+// import './agtc-icon.js';
 
-class DsButton extends LitElement {
+class AgtcButton extends LitElement {
   static properties = {
-    variant: { type: String }, // 'primary' | 'secondary' | 'critical' | 'ghost'
-    disabled: { type: Boolean },
-    loading:  { type: Boolean },
+    variant:    { type: String,  reflect: true }, // 'primary'|'secondary'|'ghost'|'critical'
+    disabled:   { type: Boolean, reflect: true },
+    loading:    { type: Boolean, reflect: true },
+    iconOnly:   { type: Boolean, reflect: true, attribute: 'icon-only' },
+    icon:       { type: String },                 // nom d'icône Lucide (prefix)
+    iconSuffix: { type: String,  attribute: 'icon-suffix' }, // nom d'icône (suffix)
+    label:      { type: String },                 // aria-label — obligatoire pour icon-only
+    loadingLabel: { type: String, attribute: 'loading-label' },
   };
 
-  static styles = css\`
-    button {
-      background: var(--agtc-component-button-primary-background);
-      color:      var(--agtc-component-button-primary-text);
-      padding:    var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
-      border-radius: var(--agtc-component-button-primary-radius);
-      font-size:  var(--agtc-semantic-typography-label-size);
-      font-weight:var(--agtc-semantic-typography-label-weight);
-      border: none; cursor: pointer;
-    }
-    button:focus-visible {
-      outline: 2px solid var(--agtc-semantic-color-border-focus);
-      outline-offset: 2px;
-    }
-  \`;
+  render() {
+    const busy = this.loading;
+    return html\`
+      &lt;button
+        class="\${[this.variant, busy ? 'loading' : '', this.iconOnly ? 'icon-only' : ''].filter(Boolean).join(' ')}"
+        ?disabled="\${this.disabled || busy}"
+        aria-busy="\${busy}"
+        aria-label="\${ifDefined(this.label ? (busy ? this.loadingLabel : this.label) : undefined)}"
+      &gt;
+        &lt;span class="spinner" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;span class="content"&gt;
+          &lt;slot name="prefix"&gt;
+            \${this.icon ? html\`&lt;agtc-icon name="\${this.icon}" size="control"&gt;&lt;/agtc-icon&gt;\` : ''}
+          &lt;/slot&gt;
+          &lt;slot&gt;&lt;/slot&gt;
+          &lt;slot name="suffix"&gt;
+            \${this.iconSuffix ? html\`&lt;agtc-icon name="\${this.iconSuffix}" size="control"&gt;&lt;/agtc-icon&gt;\` : ''}
+          &lt;/slot&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    \`;
+  }
 }
-customElements.define('ds-button', DsButton);</code></pre>
+customElements.define('agtc-button', AgtcButton);</code></pre>
 
 <h2>DOs et DON'Ts</h2>
 <div class="dos-donts">

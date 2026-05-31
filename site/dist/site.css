@@ -209,6 +209,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .ds-btn.ghost:hover:not(:disabled){background:var(--agtc-component-button-ghost-background-hover)}
 .ds-btn.critical{background:var(--agtc-component-button-critical-background);color:var(--agtc-component-button-critical-text);border-color:var(--agtc-component-button-critical-border)}
 .ds-btn.critical:hover:not(:disabled){background:var(--agtc-component-button-critical-background-hover);color:var(--agtc-component-button-critical-border)}
+.ds-btn.icon-only{padding:var(--agtc-component-button-primary-padding-y)}
 
 .variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
