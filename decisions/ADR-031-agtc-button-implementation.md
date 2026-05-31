@@ -110,11 +110,87 @@ serait une fausse piste visuelle.
 
 ### 6. Réflexion des attributs (`reflect: true`)
 
-`variant`, `disabled`, `loading` sont reflétés sur le host (`reflect: true`).
+`variant`, `disabled`, `loading`, `icon-only` sont reflétés sur le host (`reflect: true`).
 Cela permet :
 - `:host([disabled])` → `pointer-events: none` (belt + suspenders en plus du `disabled` natif)
 - Sélecteurs CSS externes sur `agtc-button[variant="critical"]`
 - Inspection d'état par les agents IA via `element.getAttribute('variant')`
+
+### 7. Support des icônes — slots nommés et `display: contents`
+
+**Problème :** Comment intégrer des icônes avant/après le texte sans coupler le composant
+à un système d'icônes spécifique, et sans créer de gaps parasites quand les slots sont vides ?
+
+**Décision : deux slots nommés (`prefix` / `suffix`) avec `display: contents`.**
+
+```html
+<slot name="prefix"></slot>  <!-- icône avant -->
+<span class="label"><slot></slot></span>  <!-- texte -->
+<slot name="suffix"></slot>  <!-- icône après -->
+```
+
+```css
+slot[name="prefix"],
+slot[name="suffix"] {
+  display: contents; /* transparent au flex layout */
+}
+```
+
+`display: contents` rend le `<slot>` invisible pour le layout : l'élément slotté
+(ex. `<agtc-icon>`) devient un flex item direct du `<button>`. Un slot vide
+ne génère ni boîte ni gap superflu — le comportement est identique à l'absence de slot.
+
+**Raison :** Les slots nommés sont agnostiques au système d'icônes. N'importe quel
+élément peut être slotté (SVG, `<agtc-icon>`, image). Le `gap` CSS du button ne
+s'applique qu'entre les flex items réellement présents.
+
+### 8. Wrapper `.content` pour le loading avec icônes
+
+**Problème :** Avec l'ajout des slots d'icônes, le `visibility: hidden` sur `.label`
+seul ne suffit plus — les icônes restaient visibles pendant le loading.
+
+**Décision : wrapper `.content { display: contents }` englobant prefix + label + suffix.**
+
+```css
+.content { display: contents; }
+button.loading .content { visibility: hidden; }
+```
+
+`visibility: hidden` est une propriété héritée. Même sur un élément `display: contents`
+(qui n'a pas de boîte propre), elle se propage aux enfants via la cascade CSS.
+Les enfants (icônes + texte) héritent `visibility: hidden`, sont cachés visuellement
+et retirés de l'arbre d'accessibilité, mais conservent leurs boîtes flex — la largeur
+du bouton est préservée.
+
+Le spinner reste visible car il est en dehors de `.content` (frère dans le shadow DOM).
+
+### 9. Mode `icon-only` — padding carré et accessibilité obligatoire
+
+**Problème :** Un bouton sans texte visible doit avoir un padding égal et un label
+accessible. Comment enforcer cela sans complexité excessive ?
+
+**Décision : attribut booléen `icon-only` + propriété `label` obligatoire.**
+
+```css
+button.icon-only {
+  padding: var(--agtc-button-primary-padding-y); /* même valeur sur les 4 côtés */
+}
+```
+
+```javascript
+updated() {
+  if (this.iconOnly && !this.label) {
+    console.warn('[agtc-button] icon-only sans label="" — inaccessible (WCAG 1.1.1).');
+  }
+}
+```
+
+La propriété `label` se forwarde vers `aria-label` sur le `<button>` interne.
+Elle bascule automatiquement vers `loadingLabel` pendant le chargement.
+
+**Raison :** `aria-label` sur le host `<agtc-button>` ne serait pas lu par les assistants
+techniques (il s'applique à l'élément custom, pas au `<button>` dans le shadow DOM).
+Le forwarding vers le `<button>` interne est obligatoire pour l'accessibilité.
 
 ---
 
@@ -153,6 +229,40 @@ Tous les événements : `bubbles: true, composed: true` (traversent le Shadow DO
 
 <!-- Submit dans un formulaire -->
 <agtc-button type="submit">Valider</agtc-button>
+
+<!-- Icône avant le texte (slot prefix) -->
+<agtc-button>
+  <agtc-icon slot="prefix" name="plus"></agtc-icon>
+  Ajouter un élément
+</agtc-button>
+
+<!-- Icône après le texte (slot suffix) -->
+<agtc-button variant="secondary">
+  Continuer
+  <agtc-icon slot="suffix" name="arrow-right"></agtc-icon>
+</agtc-button>
+
+<!-- Icône avant ET après -->
+<agtc-button variant="ghost">
+  <agtc-icon slot="prefix" name="download"></agtc-icon>
+  Télécharger le rapport
+  <agtc-icon slot="suffix" name="external-link"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only — label="" obligatoire (WCAG 1.1.1) -->
+<agtc-button icon-only label="Fermer le panneau">
+  <agtc-icon slot="prefix" name="x"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only critical -->
+<agtc-button variant="critical" icon-only label="Supprimer définitivement">
+  <agtc-icon slot="prefix" name="trash-2"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only loading — aria-label bascule vers loadingLabel -->
+<agtc-button icon-only label="Enregistrer" loading loading-label="Enregistrement…">
+  <agtc-icon slot="prefix" name="save"></agtc-icon>
+</agtc-button>
 ```
 
 ```javascript
@@ -167,7 +277,7 @@ document.querySelector('agtc-button[variant="critical"]')
 
 ## Ce qui n'est PAS dans ce composant
 
-- **Icône intégrée** — utiliser `<agtc-icon>` dans le slot : `<agtc-button><agtc-icon name="trash-2"></agtc-icon> Supprimer</agtc-button>`
 - **Rendu `<a>`** — pour les liens, utiliser `<a>` natif ou un futur `<agtc-link>`
-- **Modal de confirmation** — `agtc-confirm-request` permet au host d'afficher sa propre UI de confirmation si nécessaire
+- **Modal de confirmation** — `agtc-confirm-request` permet au host d'afficher sa propre UI si nécessaire
 - **Audit log** — responsabilité du host sur l'événement `agtc-confirm`
+- **Tooltip sur icon-only** — à implémenter au niveau du host ; le composant se limite à l'`aria-label`

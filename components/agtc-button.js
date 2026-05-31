@@ -1,12 +1,15 @@
 import { LitElement, html, css } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 // ─── CONTRAT ────────────────────────────────────────────────────────────────
 // Variantes : primary | secondary | ghost | critical
+// Icônes : slot[name="prefix"] | slot[name="suffix"] | icon-only
+//   - icon-only : padding carré, label="" requis (WCAG 1.1.1)
 // Règle critical : deux clics requis (confirmation explicite).
 //   - 1er clic → état confirming, event agtc-confirm-request
-//   - 2e clic  → action confirmée, event agtc-confirm + agtc-click
+//   - 2e clic  → action confirmée, events agtc-confirm + agtc-click
 //   - blur ou Escape → reset
-// Largeur préservée pendant le loading (label masqué visuellement, slot intact).
+// Largeur préservée pendant le loading (.content visibility:hidden, icons incluses).
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcButton extends LitElement {
@@ -14,7 +17,9 @@ class AgtcButton extends LitElement {
     variant:      { type: String,  reflect: true },
     disabled:     { type: Boolean, reflect: true },
     loading:      { type: Boolean, reflect: true },
+    iconOnly:     { type: Boolean, reflect: true, attribute: 'icon-only' },
     type:         { type: String },
+    label:        { type: String },
     loadingLabel: { type: String,  attribute: 'loading-label' },
     _confirming:  { type: Boolean, state: true },
   };
@@ -24,10 +29,18 @@ class AgtcButton extends LitElement {
     this.variant      = 'primary';
     this.disabled     = false;
     this.loading      = false;
+    this.iconOnly     = false;
     this.type         = 'button';
+    this.label        = undefined;
     this.loadingLabel = 'En cours…';
     this._confirming  = false;
     this._confirmTimer = null;
+  }
+
+  updated() {
+    if (this.iconOnly && !this.label) {
+      console.warn('[agtc-button] icon-only sans label="" — inaccessible (WCAG 1.1.1). Ajouter label="Description de l\'action".');
+    }
   }
 
   disconnectedCallback() {
@@ -102,6 +115,19 @@ class AgtcButton extends LitElement {
       cursor: pointer;
       transition: background 0.12s, color 0.12s, border-color 0.12s;
       user-select: none;
+    }
+
+    /* ── Icon slots — transparents au flex layout ──────────────────────────── */
+    /* display:contents permet aux éléments slottés d'être des flex items directs.
+       Un slot vide ne génère pas d'espace ni de gap superflu. */
+    slot[name="prefix"],
+    slot[name="suffix"] {
+      display: contents;
+    }
+
+    /* ── Icon-only — padding carré ─────────────────────────────────────────── */
+    button.icon-only {
+      padding: var(--agtc-button-primary-padding-y);
     }
 
     /* ── Focus — non négociable ────────────────────────────────────────────── */
@@ -180,12 +206,20 @@ class AgtcButton extends LitElement {
       cursor: wait;
     }
 
-    .label {
+    /* .content est display:contents — transparent au layout.
+       visibility:hidden se propage aux enfants via héritage CSS,
+       les cache visuellement ET de l'arbre d'accessibilité tout en
+       préservant leurs boîtes flex (largeur du bouton stable). */
+    .content {
       display: contents;
     }
-    button.loading .label {
-      /* hides text visually but preserves layout — keeps button width stable */
+    button.loading .content {
       visibility: hidden;
+    }
+
+    /* .label est display:contents — le texte devient flex item direct */
+    .label {
+      display: contents;
     }
 
     .spinner {
@@ -204,7 +238,7 @@ class AgtcButton extends LitElement {
       animation: spin 0.65s linear infinite;
     }
 
-    /* Visually hidden — for screen readers only */
+    /* Visible uniquement pour les lecteurs d'écran */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -235,7 +269,14 @@ class AgtcButton extends LitElement {
       this.variant || 'primary',
       busy             ? 'loading'    : '',
       this._confirming ? 'confirming' : '',
+      this.iconOnly    ? 'icon-only'  : '',
     ].filter(Boolean).join(' ');
+
+    // Pour icon-only : aria-label bascule vers loadingLabel pendant le chargement.
+    // Pour les autres : aria-label n'est pas défini (le contenu du bouton fait foi).
+    const ariaLabel = this.label
+      ? (busy ? this.loadingLabel : this.label)
+      : undefined;
 
     return html`
       <button
@@ -244,17 +285,22 @@ class AgtcButton extends LitElement {
         ?disabled="${off}"
         aria-disabled="${off}"
         aria-busy="${busy}"
+        aria-label="${ifDefined(ariaLabel)}"
         @click="${this._handleClick}"
         @blur="${this._resetConfirm}"
         @keydown="${e => e.key === 'Escape' && this._resetConfirm()}"
       >
         <span class="spinner" aria-hidden="true"></span>
 
-        <span class="label" aria-hidden="${busy ? 'true' : 'false'}">
-          ${this._confirming ? 'Confirmer ?' : html`<slot></slot>`}
+        <span class="content">
+          <slot name="prefix"></slot>
+          <span class="label">
+            ${this._confirming ? 'Confirmer ?' : html`<slot></slot>`}
+          </span>
+          <slot name="suffix"></slot>
         </span>
 
-        ${busy ? html`<span class="sr-only">${this.loadingLabel}</span>` : ''}
+        ${busy && !this.label ? html`<span class="sr-only">${this.loadingLabel}</span>` : ''}
       </button>
     `;
   }

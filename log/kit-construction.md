@@ -111,3 +111,6 @@
 | 2026-05-30 — | Modifié | `package.json` — ajout Lit (devDependency + peerDependency) |
 | 2026-05-30 21:02 | Créé | `decisions/ADR-031-agtc-button-implementation.md` |
 | 2026-05-30 21:02 | Modifié | `decisions/README.md` |
+| 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 21:09 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
