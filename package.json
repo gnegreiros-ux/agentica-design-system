@@ -5,8 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "tokens": "node style-dictionary/build.js",
-    "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.js'",
+    "tokens": "node style-dictionary/build.cjs",
+    "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.cjs'",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic --project-token=chpt_cf5fb6470183e4a"

@@ -4,12 +4,38 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 30 May 2026 23:43:24 GMT
+// Generated on Sun, 31 May 2026 20:55:59 GMT
 
 
 import UIKit
 
 public class AgenticaTokens {
+    public static let badgeBrandBackground = #e0f8f3
+    public static let badgeBrandBorder = transparent
+    public static let badgeBrandText = #008573
+    public static let badgeDangerBackground = #feebec
+    public static let badgeDangerBorder = transparent
+    public static let badgeDangerText = #ce2c31
+    public static let badgeInfoBackground = #e6f4fe
+    public static let badgeInfoBorder = transparent
+    public static let badgeInfoText = #0d74ce
+    public static let badgeMdFontSize = 0.875rem
+    public static let badgeMdPaddingX = 12px
+    public static let badgeMdPaddingY = 4px
+    public static let badgeMdRadius = 9999px
+    public static let badgeNeutralBackground = #f0f0f0
+    public static let badgeNeutralBorder = #e8e8e8
+    public static let badgeNeutralText = #646464
+    public static let badgeSmFontSize = 0.75rem
+    public static let badgeSmPaddingX = 8px
+    public static let badgeSmPaddingY = 2px
+    public static let badgeSmRadius = 9999px
+    public static let badgeSuccessBackground = #e6f6eb
+    public static let badgeSuccessBorder = transparent
+    public static let badgeSuccessText = #18794e
+    public static let badgeWarningBackground = #ffefd6
+    public static let badgeWarningBorder = transparent
+    public static let badgeWarningText = #cc4e00
     public static let buttonCriticalBackground = #ce2c31
     public static let buttonCriticalBackgroundHover = #feebec
     public static let buttonCriticalBorder = #ce2c31

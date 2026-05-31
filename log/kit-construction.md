@@ -131,3 +131,11 @@
 | 2026-05-31 — | Créé | `decisions/ADR-033-agtc-input-implementation.md` |
 | 2026-05-31 — | Créé | `components/agtc-input.js` — Web Component Lit, 7 types, label/helper/error, toggle password, icônes hybrides |
 | 2026-05-31 — | Créé | `components/agtc-input.stories.js` — 8 états + types + icônes + AllStates |
+| 2026-05-31 — | Créé | `decisions/ADR-034-agtc-badge-implementation.md` |
+| 2026-05-31 — | Modifié | `tokens/component.json` — ajout tokens badge (6 variantes × 2 tailles, 26 tokens) |
+| 2026-05-31 — | Rebuild | `dist/tokens/` — tokens badge compilés dans CSS + JS + Swift + Android |
+| 2026-05-31 — | Fix | `style-dictionary/build.js` → `build.cjs` — CJS incompatible avec "type":"module" |
+| 2026-05-31 — | Fix | `components/agtc-icon.js` — API Lucide v1.x (structure [[tag,attrs]]) |
+| 2026-05-31 — | Créé | `components/agtc-badge.js` — 6 variantes, 2 tailles, icônes, icon-only |
+| 2026-05-31 — | Créé | `components/agtc-badge.stories.js` — 9 stories + AllVariants |
+| 2026-05-31 — | Modifié | `.storybook/preview.js` — import agtc-badge.js |

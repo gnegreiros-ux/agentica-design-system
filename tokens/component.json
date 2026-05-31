@@ -64,6 +64,54 @@
       "padding-y":    { "value": "{semantic.space.control.padding-y}",  "$type": "dimension" }
     }
   },
+  "badge": {
+    "$metadata": {
+      "intent": "Indiquer un statut, une catégorie ou un compteur.",
+      "owner": "design-system-team"
+    },
+    "neutral": {
+      "background": { "value": "{semantic.color.background.subtle}",  "$type": "color" },
+      "text":       { "value": "{semantic.color.text.secondary}",     "$type": "color" },
+      "border":     { "value": "{semantic.color.border.default}",     "$type": "color" }
+    },
+    "brand": {
+      "background": { "value": "{semantic.color.brand.primary-subtle}", "$type": "color" },
+      "text":       { "value": "{primitive.color.teal.11}",             "$type": "color" },
+      "border":     { "value": "transparent",                           "$type": "color" }
+    },
+    "success": {
+      "background": { "value": "{primitive.color.green.3}",          "$type": "color" },
+      "text":       { "value": "{semantic.color.feedback.success}",  "$type": "color" },
+      "border":     { "value": "transparent",                        "$type": "color" }
+    },
+    "warning": {
+      "background": { "value": "{primitive.color.orange.3}",         "$type": "color" },
+      "text":       { "value": "{primitive.color.orange.11}",        "$type": "color" },
+      "border":     { "value": "transparent",                        "$type": "color" }
+    },
+    "danger": {
+      "background": { "value": "{semantic.color.feedback.danger-subtle}", "$type": "color" },
+      "text":       { "value": "{semantic.color.feedback.danger}",        "$type": "color" },
+      "border":     { "value": "transparent",                             "$type": "color" }
+    },
+    "info": {
+      "background": { "value": "{primitive.color.blue.3}",           "$type": "color" },
+      "text":       { "value": "{semantic.color.feedback.info}",     "$type": "color" },
+      "border":     { "value": "transparent",                        "$type": "color" }
+    },
+    "md": {
+      "radius":    { "value": "9999px",                              "$type": "dimension" },
+      "padding-x": { "value": "{primitive.space.3}",                 "$type": "dimension" },
+      "padding-y": { "value": "{primitive.space.1}",                 "$type": "dimension" },
+      "font-size": { "value": "{semantic.typography.label.size}",    "$type": "dimension" }
+    },
+    "sm": {
+      "radius":    { "value": "9999px",                              "$type": "dimension" },
+      "padding-x": { "value": "{primitive.space.2}",                 "$type": "dimension" },
+      "padding-y": { "value": "2px",                                 "$type": "dimension" },
+      "font-size": { "value": "{semantic.typography.detail.size}",   "$type": "dimension" }
+    }
+  },
   "card": {
     "$metadata": {
       "intent": "Regrouper des informations liées dans un conteneur visuel distinct",

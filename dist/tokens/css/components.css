@@ -1,16 +1,42 @@
 /**
  * Do not edit directly
- * Generated on Sat, 30 May 2026 23:43:24 GMT
+ * Generated on Sun, 31 May 2026 20:55:59 GMT
  */
 
 :root {
+  --agtc-badge-sm-padding-y: 2px;
+  --agtc-badge-sm-radius: 9999px;
+  --agtc-badge-md-radius: 9999px;
+  --agtc-badge-info-border: transparent;
+  --agtc-badge-danger-border: transparent;
+  --agtc-badge-warning-border: transparent;
+  --agtc-badge-success-border: transparent;
+  --agtc-badge-brand-border: transparent;
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
+  --agtc-badge-md-padding-y: var(--agtc-primitive-space-1);
+  --agtc-badge-md-padding-x: var(--agtc-primitive-space-3);
+  --agtc-badge-info-background: var(--agtc-primitive-color-blue-3);
+  --agtc-badge-warning-text: var(--agtc-primitive-color-orange-11);
+  --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
+  --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
+  --agtc-badge-brand-text: var(--agtc-primitive-color-teal-11);
   --agtc-card-default-padding: var(--agtc-semantic-space-layout-component);
   --agtc-card-default-radius: var(--agtc-semantic-radius-card);
   --agtc-card-default-border: var(--agtc-semantic-color-border-default);
   --agtc-card-default-background: var(--agtc-semantic-color-background-surface);
+  --agtc-badge-sm-font-size: var(--agtc-semantic-typography-detail-size);
+  --agtc-badge-md-font-size: var(--agtc-semantic-typography-label-size);
+  --agtc-badge-info-text: var(--agtc-semantic-color-feedback-info);
+  --agtc-badge-danger-text: var(--agtc-semantic-color-feedback-danger);
+  --agtc-badge-danger-background: var(--agtc-semantic-color-feedback-danger-subtle);
+  --agtc-badge-success-text: var(--agtc-semantic-color-feedback-success);
+  --agtc-badge-brand-background: var(--agtc-semantic-color-brand-primary-subtle);
+  --agtc-badge-neutral-border: var(--agtc-semantic-color-border-default);
+  --agtc-badge-neutral-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-badge-neutral-background: var(--agtc-semantic-color-background-subtle);
   --agtc-input-default-padding-y: var(--agtc-semantic-space-control-padding-y);
   --agtc-input-default-padding-x: var(--agtc-semantic-space-control-padding-x);
   --agtc-input-default-radius: var(--agtc-semantic-radius-control);

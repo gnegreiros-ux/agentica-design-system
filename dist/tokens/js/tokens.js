@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 30 May 2026 23:43:24 GMT
+ * Generated on Sun, 31 May 2026 20:55:59 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -569,6 +569,32 @@ export const InputDefaultPlaceholder = "#646464";
 export const InputDefaultRadius = "6px";
 export const InputDefaultPaddingX = "16px";
 export const InputDefaultPaddingY = "8px";
+export const BadgeNeutralBackground = "#f0f0f0";
+export const BadgeNeutralText = "#646464";
+export const BadgeNeutralBorder = "#e8e8e8";
+export const BadgeBrandBackground = "#e0f8f3";
+export const BadgeBrandText = "#008573";
+export const BadgeBrandBorder = "transparent";
+export const BadgeSuccessBackground = "#e6f6eb";
+export const BadgeSuccessText = "#18794e";
+export const BadgeSuccessBorder = "transparent";
+export const BadgeWarningBackground = "#ffefd6";
+export const BadgeWarningText = "#cc4e00";
+export const BadgeWarningBorder = "transparent";
+export const BadgeDangerBackground = "#feebec";
+export const BadgeDangerText = "#ce2c31";
+export const BadgeDangerBorder = "transparent";
+export const BadgeInfoBackground = "#e6f4fe";
+export const BadgeInfoText = "#0d74ce";
+export const BadgeInfoBorder = "transparent";
+export const BadgeMdRadius = "9999px";
+export const BadgeMdPaddingX = "12px";
+export const BadgeMdPaddingY = "4px";
+export const BadgeMdFontSize = "0.875rem";
+export const BadgeSmRadius = "9999px";
+export const BadgeSmPaddingX = "8px";
+export const BadgeSmPaddingY = "2px";
+export const BadgeSmFontSize = "0.75rem";
 export const CardDefaultBackground = "#ffffff";
 export const CardDefaultBorder = "#e8e8e8";
 export const CardDefaultRadius = "10px";
