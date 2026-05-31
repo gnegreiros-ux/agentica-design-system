@@ -1,6 +1,7 @@
 import '../dist/tokens/css/all.css';
-import '../components/agtc-button.js';
 import '../components/agtc-icon.js';
+import '../components/agtc-button.js';
+import '../components/agtc-input.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
