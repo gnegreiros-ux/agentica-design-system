@@ -1652,8 +1652,8 @@ function buildIconsFoundation() {
 
 <h2><span class="lang-fr">Composant</span><span class="lang-en">Component</span></h2>
 <p>
-  <span class="lang-fr">Voir le contrat complet du Web Component : <a href="../components/icon.html">ds-icon →</a></span>
-  <span class="lang-en">See the full Web Component contract: <a href="../components/icon.html">ds-icon →</a></span>
+  <span class="lang-fr">Voir le contrat complet du Web Component : <a href="../components/icon.html">agtc-icon →</a></span>
+  <span class="lang-en">See the full Web Component contract: <a href="../components/icon.html">agtc-icon →</a></span>
 </p>
 `;
 
@@ -1962,11 +1962,9 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
 // ─── PAGE: ICON ─────────────────────────────────────────────────────────────
 function buildIcon() {
   const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
-  // Strip frontmatter meta block and fix ds-icon → agtc-icon
   let rawMd = read(mdPath)
     .replace(/\*\*Auteur:\*\*[^\n]*\n/g, '')
-    .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '')
-    .replace(/ds-icon/g, 'agtc-icon');
+    .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '');
   const content = parseMd(rawMd);
 
   const tokenRows = [

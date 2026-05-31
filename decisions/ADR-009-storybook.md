@@ -38,7 +38,7 @@ qui décrivent chaque variante et état du composant de manière isolée :
 
 ```javascript
 // button.stories.js
-export default { title: 'Components/Button', component: 'ds-button' };
+export default { title: 'Components/Button', component: 'agtc-button' };
 export const Primary = { args: { variant: 'primary', label: 'Soumettre' } };
 export const Critical = { args: { variant: 'critical', label: 'Supprimer définitivement' } };
 ```

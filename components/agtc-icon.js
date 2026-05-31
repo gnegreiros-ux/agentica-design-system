@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
-import { createIcons, icons } from 'lucide';
+import { icons } from 'lucide';
 
-class DsIcon extends LitElement {
+class AgtcIcon extends LitElement {
   static properties = {
     name:      { type: String },
     size:      { type: String },  // 'inline' | 'control' | 'nav'
@@ -47,7 +47,6 @@ class DsIcon extends LitElement {
   }
 
   updated() {
-    // Injecte les paths SVG Lucide dans le shadow DOM après rendu
     const svg = this.shadowRoot?.querySelector('svg[data-lucide]');
     if (!svg || !this.name) return;
     const iconName = this.name
@@ -56,7 +55,7 @@ class DsIcon extends LitElement {
       .join('');
     const iconDef = icons[iconName];
     if (!iconDef) {
-      console.warn(`[ds-icon] Icône "${this.name}" introuvable dans Lucide.`);
+      console.warn(`[agtc-icon] Icône "${this.name}" introuvable dans Lucide.`);
       return;
     }
     const [, attrs, children] = iconDef;
@@ -71,4 +70,5 @@ class DsIcon extends LitElement {
   }
 }
 
-customElements.define('ds-icon', DsIcon);
+customElements.define('agtc-icon', AgtcIcon);
+export { AgtcIcon };

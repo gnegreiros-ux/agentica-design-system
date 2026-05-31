@@ -6,13 +6,13 @@
 > **Type:** contract
 > **Chemin logique:** decisions/ADR-022-lucide-icons.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** tokens/primitives.json, tokens/semantic.json, components/ds-icon.js, guidelines/components/icon.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md
 
 ---
 
 ## Contexte
 
-Le design system référençait `<ds-icon>` dans les exemples de composants (notamment `guidelines/components/button.md`) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.
+Le design system référençait `<agtc-icon>` dans les exemples de composants (notamment `guidelines/components/button.md`) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.
 
 ---
 
@@ -31,14 +31,14 @@ Le design system référençait `<ds-icon>` dans les exemples de composants (not
 
 **Adoption sectorielle :** Linear, Vercel, shadcn/ui, Raycast — signal de qualité et de pérennité.
 
-### Web Component : `ds-icon`
+### Web Component : `agtc-icon`
 
 Un composant Lit encapsule Lucide et expose l'API du design system :
 
 ```javascript
 // Usage
-<ds-icon name="trash-2" size="control" label="Supprimer"></ds-icon>
-<ds-icon name="check" size="inline" decorative></ds-icon>
+<agtc-icon name="trash-2" size="control" label="Supprimer"></agtc-icon>
+<agtc-icon name="check" size="inline" decorative></agtc-icon>
 ```
 
 **Props :**
@@ -77,7 +77,7 @@ Lucide est ajouté comme dépendance npm dans `site/package.json`. Le build gén
 
 - **1.1.1 (Contenu non textuel) :** Toute icône sémantique a un `aria-label`. Les icônes décoratives ont `aria-hidden="true"`.
 - **1.4.3 (Contraste) :** Les icônes héritent de `color: currentColor` — le contraste est celui du texte parent, toujours conforme.
-- **2.5.3 (Label dans le nom) :** Les boutons icône-seule exposent leur label via `aria-label` sur `ds-icon`.
+- **2.5.3 (Label dans le nom) :** Les boutons icône-seule exposent leur label via `aria-label` sur `agtc-icon`.
 
 ---
 
@@ -99,7 +99,7 @@ Lucide est ajouté comme dépendance npm dans `site/package.json`. Le build gén
 - `primitive.iconSize` (sm/md/lg) et `semantic.icon.size` (inline/control/nav) ajoutés
 
 **Pour les composants :**
-- `components/ds-icon.js` fournit le contrat d'implémentation Lit
+- `components/agtc-icon.js` fournit le contrat d'implémentation Lit
 - `guidelines/components/icon.md` documente les règles d'usage et les anti-patterns
 
 **Pour les agents IA :**

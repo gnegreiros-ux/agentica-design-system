@@ -67,7 +67,7 @@
 <p><strong>1. Tests d'interaction accessibilité</strong> axe-core audite la structure ARIA statique. Playwright teste le comportement dynamique : la touche <code>Tab</code> passe-t-elle dans le bon ordre ? <code>Escape</code> ferme-t-il le bon élément ? L'annonce du lecteur d'écran se déclenche-t-elle après l'action ?</p>
 <pre class="code-block"><code class="lang-javascript">// Exemple : test du bouton critical
 test('critical button requires confirmation before action', async ({ page }) =&gt; {
-  await page.click('ds-button[variant="critical"]');
+  await page.click('agtc-button[variant="critical"]');
   await expect(page.locator('[role="dialog"]')).toBeVisible(); // confirmation dialog
   await page.keyboard.press('Escape');
   await expect(page.locator('[role="dialog"]')).not.toBeVisible();

@@ -60,7 +60,7 @@
 <p>Le système de design doit servir plusieurs équipes utilisant des frameworks différents (React, Angular, Vue, vanilla JS). La question posée était :</p>
 <blockquote><p><strong>Comment livrer des composants UI qui fonctionnent partout sans imposer un framework ?</strong></p></blockquote>
 <p>Deux contraintes non négociables orientaient le choix :</p>
-<p>1. <strong>Portabilité universelle</strong> — un composant <code>ds-button</code> doit fonctionner identiquement    dans une app React, Angular, ou une page HTML statique, sans adaptation. 2. <strong>Contrat lisible par machine</strong> — les composants doivent exposer leurs propriétés    (<code>variant</code>, <code>disabled</code>, <code>loading</code>) de manière structurée pour que les agents IA    puissent les inspecter et les générer correctement.</p>
+<p>1. <strong>Portabilité universelle</strong> — un composant <code>agtc-button</code> doit fonctionner identiquement    dans une app React, Angular, ou une page HTML statique, sans adaptation. 2. <strong>Contrat lisible par machine</strong> — les composants doivent exposer leurs propriétés    (<code>variant</code>, <code>disabled</code>, <code>loading</code>) de manière structurée pour que les agents IA    puissent les inspecter et les générer correctement.</p>
 <p>Les Web Components natifs (standard W3C) répondent à la contrainte 1 nativement. Mais les écrire en vanilla est verbeux et ne gère pas la réactivité élégamment. Un outil de bas niveau était nécessaire pour réduire le boilerplate sans ajouter de dépendance lourde.</p>
 <hr>
 <h2>Décision</h2>
@@ -74,7 +74,7 @@
 <hr>
 <h2>Conséquences</h2>
 <p><strong>Pour les développeurs consommateurs :</strong></p>
-<ul><li>Import universel : <code>&lt;ds-button variant="primary"&gt;</code> fonctionne dans n'importe quel contexte HTML</li><li>Wrappers framework optionnels (React, Angular) générables automatiquement</li><li>Pas de peer dependency à installer — le Custom Element est autonome</li></ul>
+<ul><li>Import universel : <code>&lt;agtc-button variant="primary"&gt;</code> fonctionne dans n'importe quel contexte HTML</li><li>Wrappers framework optionnels (React, Angular) générables automatiquement</li><li>Pas de peer dependency à installer — le Custom Element est autonome</li></ul>
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li>Les propriétés déclarées dans <code>static properties</code> sont inspectables et documentables</li><li>Le pattern <code>variant: { type: String }</code> est lisible par machine — un agent peut lister</li></ul>
 <p>  les variantes autorisées sans parser du CSS ou du JSX</p>
@@ -83,7 +83,7 @@
 <p><strong>Pour la gouvernance des tokens :</strong></p>
 <ul><li>Le Shadow DOM encapsule les styles — aucun style global ne peut surcharger un composant</li></ul>
 <p>  sans passer par les CSS Custom Properties (<code>var(--ds-[token])</code>)</p>
-<ul><li>Cette encapsulation force l'usage des tokens : impossible de styler <code>ds-button</code> depuis</li></ul>
+<ul><li>Cette encapsulation force l'usage des tokens : impossible de styler <code>agtc-button</code> depuis</li></ul>
 <p>  l'extérieur autrement qu'en modifiant une CSS Custom Property définie dans le système</p>
 <p><strong>Coût accepté :</strong></p>
 <ul><li>Apprentissage de l'API Lit pour les développeurs non familiers</li><li>Le Shadow DOM complique certains patterns de test (querySelector depuis l'extérieur)</li><li>Dépendance à un projet Google — risque de dépriorisation mitigé par le fait que</li></ul>

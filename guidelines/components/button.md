@@ -112,38 +112,38 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 ### Web Component (Lit)
 ```html
 <!-- Primary -->
-<ds-button variant="primary">Soumettre la demande</ds-button>
+<agtc-button variant="primary">Soumettre la demande</agtc-button>
 
 <!-- Secondary -->
-<ds-button variant="secondary">Annuler</ds-button>
+<agtc-button variant="secondary">Annuler</agtc-button>
 
 <!-- Critical — confirmation obligatoire -->
-<ds-button variant="critical" requires-confirmation>
+<agtc-button variant="critical" requires-confirmation>
   Supprimer définitivement le dossier
-</ds-button>
+</agtc-button>
 
 <!-- Ghost -->
-<ds-button variant="ghost">En savoir plus</ds-button>
+<agtc-button variant="ghost">En savoir plus</agtc-button>
 
 <!-- Loading -->
-<ds-button variant="primary" loading>En cours…</ds-button>
+<agtc-button variant="primary" loading>En cours…</agtc-button>
 
 <!-- Disabled -->
-<ds-button variant="primary" disabled aria-disabled="true">
+<agtc-button variant="primary" disabled aria-disabled="true">
   Non disponible
-</ds-button>
+</agtc-button>
 
 <!-- Icône seule — aria-label obligatoire -->
-<ds-button variant="ghost" aria-label="Fermer le panneau">
-  <ds-icon name="close"></ds-icon>
-</ds-button>
+<agtc-button variant="ghost" aria-label="Fermer le panneau">
+  <agtc-icon name="close"></agtc-icon>
+</agtc-button>
 ```
 
 ### Angular
 ```html
-<ds-button variant="critical" (ds-confirm)="onDeleteConfirmed()">
+<agtc-button variant="critical" (ds-confirm)="onDeleteConfirmed()">
   Supprimer définitivement le dossier
-</ds-button>
+</agtc-button>
 ```
 
 ### React

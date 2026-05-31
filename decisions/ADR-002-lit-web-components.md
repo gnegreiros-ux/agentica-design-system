@@ -19,7 +19,7 @@ Le système de design doit servir plusieurs équipes utilisant des frameworks di
 
 Deux contraintes non négociables orientaient le choix :
 
-1. **Portabilité universelle** — un composant `ds-button` doit fonctionner identiquement
+1. **Portabilité universelle** — un composant `agtc-button` doit fonctionner identiquement
    dans une app React, Angular, ou une page HTML statique, sans adaptation.
 2. **Contrat lisible par machine** — les composants doivent exposer leurs propriétés
    (`variant`, `disabled`, `loading`) de manière structurée pour que les agents IA
@@ -62,7 +62,7 @@ du point de vue des consommateurs.
 ## Conséquences
 
 **Pour les développeurs consommateurs :**
-- Import universel : `<ds-button variant="primary">` fonctionne dans n'importe quel contexte HTML
+- Import universel : `<agtc-button variant="primary">` fonctionne dans n'importe quel contexte HTML
 - Wrappers framework optionnels (React, Angular) générables automatiquement
 - Pas de peer dependency à installer — le Custom Element est autonome
 
@@ -76,7 +76,7 @@ du point de vue des consommateurs.
 **Pour la gouvernance des tokens :**
 - Le Shadow DOM encapsule les styles — aucun style global ne peut surcharger un composant
   sans passer par les CSS Custom Properties (`var(--ds-[token])`)
-- Cette encapsulation force l'usage des tokens : impossible de styler `ds-button` depuis
+- Cette encapsulation force l'usage des tokens : impossible de styler `agtc-button` depuis
   l'extérieur autrement qu'en modifiant une CSS Custom Property définie dans le système
 
 **Coût accepté :**

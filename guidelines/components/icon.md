@@ -1,11 +1,11 @@
-# Composant — Icône (`ds-icon`)
+# Composant — Icône (`agtc-icon`)
 
 > Contrat du composant icône — règles d'usage, accessibilité et anti-patterns.
 > **Type:** guideline
 > **Chemin logique:** guidelines/components/icon.md
 > **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** components/ds-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md
+> **Relations:** components/agtc-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md
 
 ---
 
@@ -19,13 +19,13 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 
 ```html
 <!-- Icône sémantique (avec label obligatoire) -->
-<ds-icon name="trash-2" size="control" label="Supprimer le fichier"></ds-icon>
+<agtc-icon name="trash-2" size="control" label="Supprimer le fichier"></agtc-icon>
 
 <!-- Icône décorative (aria masquée) -->
-<ds-icon name="check" size="inline" decorative></ds-icon>
+<agtc-icon name="check" size="inline" decorative></agtc-icon>
 
 <!-- Icône de navigation -->
-<ds-icon name="settings" size="nav" label="Paramètres"></ds-icon>
+<agtc-icon name="settings" size="nav" label="Paramètres"></agtc-icon>
 ```
 
 | Prop | Type | Valeurs | Défaut | Requis |
@@ -55,7 +55,7 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 ✅ size correspond au contexte (control dans un bouton, inline dans un texte)
 ✅ Nom d'icône exact selon lucide.dev (kebab-case)
 
-❌ Jamais d'icône sémantique sans label : <ds-icon name="trash-2">
+❌ Jamais d'icône sémantique sans label : <agtc-icon name="trash-2">
 ❌ Jamais de taille en dur : style="width: 20px"
 ❌ Jamais de variante inventée hors inline/control/nav
 ❌ Jamais d'icône hors bibliothèque Lucide sans approbation
@@ -63,19 +63,19 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 
 ---
 
-## Usage avec ds-button
+## Usage avec agtc-button
 
 ```html
 <!-- Bouton avec icône décorative + texte -->
-<ds-button variant="critical">
-  <ds-icon name="trash-2" size="control" decorative></ds-icon>
+<agtc-button variant="critical">
+  <agtc-icon name="trash-2" size="control" decorative></agtc-icon>
   Supprimer définitivement
-</ds-button>
+</agtc-button>
 
-<!-- Bouton icône seul — label obligatoire sur ds-icon -->
-<ds-button variant="ghost" aria-label="Fermer">
-  <ds-icon name="x" size="control" label="Fermer"></ds-icon>
-</ds-button>
+<!-- Bouton icône seul — label obligatoire sur agtc-icon -->
+<agtc-button variant="ghost" aria-label="Fermer">
+  <agtc-icon name="x" size="control" label="Fermer"></agtc-icon>
+</agtc-button>
 ```
 
 ---
@@ -93,16 +93,16 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 ## Anti-patterns à détecter
 
 ```html
-❌ <ds-icon name="trash-2"></ds-icon>
+❌ <agtc-icon name="trash-2"></agtc-icon>
    → Icône sémantique sans label — escalader
 
-❌ <ds-icon name="danger" size="control">
+❌ <agtc-icon name="danger" size="control">
    → Nom "danger" inexistant dans Lucide — utiliser "alert-triangle" ou "x-circle"
 
-❌ <svg>...</svg>  (SVG inline hors ds-icon)
+❌ <svg>...</svg>  (SVG inline hors agtc-icon)
    → Dérive — pas de contrat d'accessibilité ni de token
 
-❌ <ds-icon name="check" style="width: 18px;">
+❌ <agtc-icon name="check" style="width: 18px;">
    → Taille en dur — utiliser size="inline" ou size="control"
 ```
 

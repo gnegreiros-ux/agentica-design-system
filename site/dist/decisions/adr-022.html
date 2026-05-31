@@ -54,10 +54,10 @@
   <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
 </div><h1>ADR-022 — Lucide Icons comme bibliothèque d'icônes</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-022-lucide-icons.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, components/ds-icon.js, guidelines/components/icon.md</p></blockquote>
+<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-022-lucide-icons.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md</p></blockquote>
 <hr>
 <h2>Contexte</h2>
-<p>Le design system référençait <code>&lt;ds-icon&gt;</code> dans les exemples de composants (notamment <code>guidelines/components/button.md</code>) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.</p>
+<p>Le design system référençait <code>&lt;agtc-icon&gt;</code> dans les exemples de composants (notamment <code>guidelines/components/button.md</code>) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.</p>
 <hr>
 <h2>Décision</h2>
 <h3>Bibliothèque : Lucide Icons</h3>
@@ -65,11 +65,11 @@
 <p><strong>Caractéristiques techniques :</strong></p>
 <ul><li>1 500+ icônes, couverture UI complète</li><li>Cohérence géométrique stricte : <code>strokeWidth: 1.5px</code> constant sur toutes les icônes</li><li>Format SVG pur — pas de font, pas de sprite obligatoire</li><li>Tree-shakeable — seules les icônes utilisées sont bundlées</li><li>Licence MIT — aucune contrainte commerciale</li></ul>
 <p><strong>Adoption sectorielle :</strong> Linear, Vercel, shadcn/ui, Raycast — signal de qualité et de pérennité.</p>
-<h3>Web Component : <code>ds-icon</code></h3>
+<h3>Web Component : <code>agtc-icon</code></h3>
 <p>Un composant Lit encapsule Lucide et expose l'API du design system :</p>
 <pre class="code-block"><code class="lang-javascript">// Usage
-&lt;ds-icon name="trash-2" size="control" label="Supprimer"&gt;&lt;/ds-icon&gt;
-&lt;ds-icon name="check" size="inline" decorative&gt;&lt;/ds-icon&gt;</code></pre>
+&lt;agtc-icon name="trash-2" size="control" label="Supprimer"&gt;&lt;/agtc-icon&gt;
+&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;</code></pre>
 <p><strong>Props :</strong></p>
 <table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>"trash-2"</code>)</td><td>— (requis)</td></tr><tr><td><code>size</code></td><td>String</td><td><code>"inline"</code> / <code>"control"</code> / <code>"nav"</code></td><td><code>"control"</code></td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement décorative</td><td><code>false</code></td></tr></tbody></table>
 <p><strong>Règle WCAG 1.1.1 :</strong> Si <code>decorative</code> est absent, <code>label</code> est obligatoire → <code>aria-label</code> injecté. Si <code>decorative</code> est présent → <code>aria-hidden="true"</code>.</p>
@@ -89,7 +89,7 @@
 <p>Lucide est ajouté comme dépendance npm dans <code>site/package.json</code>. Le build génère une page de référence des icônes à <code>site/dist/components/icon.html</code>.</p>
 <hr>
 <h2>Argumentaire WCAG</h2>
-<ul><li><strong>1.1.1 (Contenu non textuel) :</strong> Toute icône sémantique a un <code>aria-label</code>. Les icônes décoratives ont <code>aria-hidden="true"</code>.</li><li><strong>1.4.3 (Contraste) :</strong> Les icônes héritent de <code>color: currentColor</code> — le contraste est celui du texte parent, toujours conforme.</li><li><strong>2.5.3 (Label dans le nom) :</strong> Les boutons icône-seule exposent leur label via <code>aria-label</code> sur <code>ds-icon</code>.</li></ul>
+<ul><li><strong>1.1.1 (Contenu non textuel) :</strong> Toute icône sémantique a un <code>aria-label</code>. Les icônes décoratives ont <code>aria-hidden="true"</code>.</li><li><strong>1.4.3 (Contraste) :</strong> Les icônes héritent de <code>color: currentColor</code> — le contraste est celui du texte parent, toujours conforme.</li><li><strong>2.5.3 (Label dans le nom) :</strong> Les boutons icône-seule exposent leur label via <code>aria-label</code> sur <code>agtc-icon</code>.</li></ul>
 <hr>
 <h2>Alternatives rejetées</h2>
 <table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Material Icons</strong></td><td>Font icon — problèmes FOUT, accessibilité plus complexe, couplage Google.</td></tr><tr><td><strong>Heroicons</strong></td><td>Qualité équivalente mais moindre adoption, moins de variantes.</td></tr><tr><td><strong>Font Awesome</strong></td><td>Modèle freemium, dépendance propriétaire pour icônes avancées.</td></tr><tr><td><strong>SVG sprite custom</strong></td><td>Maintenance manuelle insoutenable pour 100+ icônes.</td></tr><tr><td><strong>Phosphor Icons</strong></td><td>Qualité équivalente mais écosystème React-centrique, moins de support Web Components.</td></tr></tbody></table>
@@ -98,7 +98,7 @@
 <p><strong>Pour les tokens :</strong></p>
 <ul><li><code>primitive.iconSize</code> (sm/md/lg) et <code>semantic.icon.size</code> (inline/control/nav) ajoutés</li></ul>
 <p><strong>Pour les composants :</strong></p>
-<ul><li><code>components/ds-icon.js</code> fournit le contrat d'implémentation Lit</li><li><code>guidelines/components/icon.md</code> documente les règles d'usage et les anti-patterns</li></ul>
+<ul><li><code>components/agtc-icon.js</code> fournit le contrat d'implémentation Lit</li><li><code>guidelines/components/icon.md</code> documente les règles d'usage et les anti-patterns</li></ul>
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li><code>size="control"</code> est une intention lisible — l'agent comprend que c'est une icône dans un contrôle interactif</li><li>Les anti-patterns (icône sans label, taille en dur) sont auditables</li></ul>
 <p><strong>Pour les équipes :</strong></p>

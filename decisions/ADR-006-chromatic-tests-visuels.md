@@ -65,7 +65,7 @@ L'approbation d'un changement visuel est une action humaine explicite et traçab
 | **Jest + jest-image-snapshot** | Comparaison locale uniquement. Les baselines vivent dans le repo (fichiers PNG volumineux en git). Pas d'interface de revue — un développeur doit comparer manuellement deux images. Pas adapté à un workflow de PR collaboratif. |
 | **Loki** | Open source, basé sur Storybook. Requiert une infrastructure de comparaison à héberger soi-même. La souveraineté numérique est un principe du projet (ADR-004), mais Chromatic est ici acceptable : les captures sont des artefacts de CI, pas des données de marque ou de gouvernance. |
 | **Revue visuelle manuelle** | Ne passe pas à l'échelle. Avec 4 variantes × 6 états = 24 combinaisons pour `button` seul, une revue manuelle exhaustive par PR est irréaliste. Elle sera systématiquement abrégée sous pression de livraison. |
-| **Pas de tests visuels** | Risque accepté explicitement dans certaines phases. Rejeté ici car le système livre des contrats visuels à d'autres équipes. Une régression non détectée dans `ds-button` impacte toutes les applications consommatrices simultanement. |
+| **Pas de tests visuels** | Risque accepté explicitement dans certaines phases. Rejeté ici car le système livre des contrats visuels à d'autres équipes. Une régression non détectée dans `agtc-button` impacte toutes les applications consommatrices simultanement. |
 
 ---
 
@@ -87,7 +87,7 @@ L'approbation d'un changement visuel est une action humaine explicite et traçab
 
 **Pour l'auditabilité :**
 - L'historique des baselines Chromatic constitue un journal visuel du système :
-  on peut voir exactement à quel commit `ds-button` a changé d'apparence et pourquoi
+  on peut voir exactement à quel commit `agtc-button` a changé d'apparence et pourquoi
 - Ce journal complète les ADRs (décisions textuelles) avec une trace visuelle
 
 **Pour les équipes consommatrices :**

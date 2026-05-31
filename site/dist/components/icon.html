@@ -114,17 +114,17 @@
 ❌ Jamais de variante inventée hors inline/control/nav
 ❌ Jamais d'icône hors bibliothèque Lucide sans approbation</code></pre>
 <hr>
-<h2>Usage avec ds-button</h2>
+<h2>Usage avec agtc-button</h2>
 <pre class="code-block"><code class="lang-html">&lt;!-- Bouton avec icône décorative + texte --&gt;
-&lt;ds-button variant="critical"&gt;
+&lt;agtc-button variant="critical"&gt;
   &lt;agtc-icon name="trash-2" size="control" decorative&gt;&lt;/agtc-icon&gt;
   Supprimer définitivement
-&lt;/ds-button&gt;
+&lt;/agtc-button&gt;
 
 &lt;!-- Bouton icône seul — label obligatoire sur agtc-icon --&gt;
-&lt;ds-button variant="ghost" aria-label="Fermer"&gt;
+&lt;agtc-button variant="ghost" aria-label="Fermer"&gt;
   &lt;agtc-icon name="x" size="control" label="Fermer"&gt;&lt;/agtc-icon&gt;
-&lt;/ds-button&gt;</code></pre>
+&lt;/agtc-button&gt;</code></pre>
 <hr>
 <h2>Accessibilité — WCAG 1.1.1</h2>
 <table><thead><tr><th>Scénario</th><th>Implémentation</th></tr></thead><tbody><tr><td>Icône seule (bouton, lien)</td><td><code>label="Action décrite"</code> → <code>aria-label</code> injecté</td></tr><tr><td>Icône + texte adjacent</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Icône dans un champ</td><td><code>label</code> sur le champ parent (<code>aria-describedby</code>)</td></tr></tbody></table>

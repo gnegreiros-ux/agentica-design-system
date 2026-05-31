@@ -41,7 +41,7 @@ le bon élément ? L'annonce du lecteur d'écran se déclenche-t-elle après l'a
 ```javascript
 // Exemple : test du bouton critical
 test('critical button requires confirmation before action', async ({ page }) => {
-  await page.click('ds-button[variant="critical"]');
+  await page.click('agtc-button[variant="critical"]');
   await expect(page.locator('[role="dialog"]')).toBeVisible(); // confirmation dialog
   await page.keyboard.press('Escape');
   await expect(page.locator('[role="dialog"]')).not.toBeVisible();
