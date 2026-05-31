@@ -2409,7 +2409,7 @@ function buildAudit() {
     <span class="lang-en">Checks passed</span>
   </div>
   <div class="audit-card ${r.totalWarnings > 0 ? 'audit-card--warn' : ''}">
-    <span class="audit-number ${r.totalWarnings > 0 ? '' : ''}" style="${r.totalWarnings > 0 ? 'color:#d97706' : ''}">${r.totalWarnings}</span>
+    <span class="audit-number">${r.totalWarnings}</span>
     <span class="lang-fr">Avertissements</span>
     <span class="lang-en">Warnings</span>
   </div>
