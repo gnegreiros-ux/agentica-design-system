@@ -27,9 +27,7 @@ body{
   box-shadow:0 2px 24px rgba(0,0,0,.12);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0}
-.logo-mark{height:28px;width:28px;flex-shrink:0;display:block}
-.logo-name{font-size:1.125rem;font-weight:800;letter-spacing:-.02em;color:#12A594;line-height:1}
+.logo{font-size:1.125rem;font-weight:800;letter-spacing:-.02em;color:#12A594;text-decoration:none;flex-shrink:0}
 .logo-version{font-size:11px;color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
