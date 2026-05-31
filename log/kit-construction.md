@@ -119,3 +119,12 @@
 | 2026-05-30 — | Modifié | `components/agtc-button.js` — propriétés `icon` + `icon-suffix`, fallback slot, approche hybride |
 | 2026-05-30 — | Modifié | `decisions/ADR-031-agtc-button-implementation.md` — décisions 10/11/12 : hybride, compat frameworks, icon-only |
 | 2026-05-30 — | Modifié | `site/build.js` — démo icônes, tableau compat frameworks, CSS icon-only, rebuild 40 fichiers |
+| 2026-05-30 22:39 | Créé | `decisions/ADR-032-storybook-stories-convention.md` |
+| 2026-05-30 — | Phase 3 | **Storybook + Chromatic** — installation et configuration |
+| 2026-05-30 — | Installé | `@storybook/web-components-vite` v10, `@storybook/addon-a11y`, `@chromatic-com/storybook` |
+| 2026-05-30 — | Créé | `.storybook/main.js` — framework web-components-vite, stories colocalisées dans `components/` |
+| 2026-05-30 — | Créé | `.storybook/preview.js` — tokens CSS Agentica injectés, addon-a11y en mode error |
+| 2026-05-30 — | Créé | `components/agtc-button.stories.js` — 4 variantes × états + flux critical + icônes + AllVariants |
+| 2026-05-30 — | Modifié | `package.json` — ajout `"type":"module"`, scripts `chromatic`, dépendance `lucide` |
+| 2026-05-30 — | Créé | `vitest.config.js` — intégration Storybook + Vitest (via addon-vitest) |
+| 2026-05-30 — | Mis à jour | `decisions/ADR-032-storybook-stories-convention.md` — convention stories complète |
