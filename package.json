@@ -9,7 +9,7 @@
     "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.js'",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --project-token=CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "chromatic --project-token=chpt_cf5fb6470183e4a"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
