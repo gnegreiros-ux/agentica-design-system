@@ -217,8 +217,13 @@ body{
   padding:6px 12px;border-radius:var(--agtc-semantic-radius-control);font-weight:500;
   transition:background .12s,color .12s;
 }
+.top-nav a:visited{color:var(--agtc-semantic-color-text-secondary)}
 .top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
+.top-nav a.active:visited{color:var(--agtc-semantic-color-action-primary)}
+.github-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
+.github-btn:hover,.github-btn:visited{color:var(--agtc-semantic-color-text-secondary)}
+.github-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
@@ -250,13 +255,13 @@ body{
 .home-layout{margin-top:60px}
 .hero{padding:80px 72px 56px;max-width:1100px;margin:0 auto}
 .hero-badge{
-  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:400;
   text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-on-action);
   background:var(--agtc-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
 .hero-name{font-size:4rem;font-weight:800;line-height:1;letter-spacing:-.04em;color:#12A594;margin-bottom:16px}
-.hero h1{font-size:2.75rem;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px}
-.hero h1 span{color:var(--agtc-semantic-color-action-primary)}
+.hero h1{font-size:2.75rem;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--agtc-semantic-color-text-primary)}
+.hero h1 .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
 .hero-tagline{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
@@ -380,6 +385,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   border-radius:var(--agtc-component-button-primary-radius);
   font-size:0.875rem;font-weight:500;font-family:inherit;cursor:pointer;
   border:1.5px solid transparent;transition:background .12s,color .12s,border-color .12s;line-height:1.4;
+  text-decoration:none;
 }
 .ds-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 .ds-btn:disabled{cursor:not-allowed;opacity:.45}
@@ -859,6 +865,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
     <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
   </div>
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+    ${icon('github', 18)}
+  </a>
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     ${icon('menu', 22)}
   </button>
@@ -998,8 +1007,8 @@ function buildHome(adrs) {
   <div class="hero-badge">v1.0.0</div>
   <p class="hero-name">Agentica</p>
   <h1>
-    <span class="lang-fr">Les humains décident.<br><span>Les agents exécutent.<br>Le système garantit.</span></span>
-    <span class="lang-en">Humans decide.<br><span>Agents execute.<br>The system ensures.</span></span>
+    <span class="lang-fr">Les humains <em class="verb">décident</em>.<br><span>Les agents <em class="verb">exécutent</em>.<br>Le système <em class="verb">garantit</em>.</span></span>
+    <span class="lang-en">Humans <em class="verb">decide</em>.<br><span>Agents <em class="verb">execute</em>.<br>The system <em class="verb">ensures</em>.</span></span>
   </h1>
   <p class="hero-tagline">
     <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
