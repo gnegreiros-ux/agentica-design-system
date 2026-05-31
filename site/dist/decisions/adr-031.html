@@ -79,7 +79,7 @@
 button.loading .spinner { display: block; }      /* spinner centré, flottant */</code></pre>
 <p><code>visibility: hidden</code> (contrairement à <code>display: none</code> ou <code>opacity: 0</code>) préserve l'espace occupé par le texte. Le spinner flotte par-dessus sans altérer la taille.</p>
 <p><strong>Accessibilité loading :</strong></p>
-<ul><li><code>aria-busy="true"</code> sur le <code><button></code></li><li><code>aria-hidden="true"</code> sur <code>.label</code> (le texte visible est masqué)</li><li><code><span class="sr-only">${loadingLabel}</span></code> pour les lecteurs d'écran</li><li><code>loadingLabel</code> est un attribut configurable (défaut : « En cours… »)</li></ul>
+<ul><li><code>aria-busy="true"</code> sur le <code>&lt;button&gt;</code></li><li><code>aria-hidden="true"</code> sur <code>.label</code> (le texte visible est masqué)</li><li><code>&lt;span class="sr-only"&gt;${loadingLabel}&lt;/span&gt;</code> pour les lecteurs d'écran</li><li><code>loadingLabel</code> est un attribut configurable (défaut : « En cours… »)</li></ul>
 <h3>3. Tokens CSS — padding et radius partagés</h3>
 <p><strong>Problème :</strong> <code>tokens/component.json</code> ne définit les tokens <code>padding-x</code>, <code>padding-y</code>, <code>radius</code> que pour la variante <code>primary</code>. Les variantes <code>secondary</code>, <code>ghost</code>, <code>critical</code> n'ont pas leurs propres tokens de dimension.</p>
 <p><strong>Décision : toutes les variantes réutilisent les tokens primary pour les dimensions.</strong></p>
@@ -110,8 +110,8 @@ border-radius: var(--agtc-button-primary-radius);</code></pre>
 slot[name="suffix"] {
   display: contents; /* transparent au flex layout */
 }</code></pre>
-<p><code>display: contents</code> rend le <code><slot></code> invisible pour le layout : l'élément slotté (ex. <code><agtc-icon></code>) devient un flex item direct du <code><button></code>. Un slot vide ne génère ni boîte ni gap superflu — le comportement est identique à l'absence de slot.</p>
-<p><strong>Raison :</strong> Les slots nommés sont agnostiques au système d'icônes. N'importe quel élément peut être slotté (SVG, <code><agtc-icon></code>, image). Le <code>gap</code> CSS du button ne s'applique qu'entre les flex items réellement présents.</p>
+<p><code>display: contents</code> rend le <code>&lt;slot&gt;</code> invisible pour le layout : l'élément slotté (ex. <code>&lt;agtc-icon&gt;</code>) devient un flex item direct du <code>&lt;button&gt;</code>. Un slot vide ne génère ni boîte ni gap superflu — le comportement est identique à l'absence de slot.</p>
+<p><strong>Raison :</strong> Les slots nommés sont agnostiques au système d'icônes. N'importe quel élément peut être slotté (SVG, <code>&lt;agtc-icon&gt;</code>, image). Le <code>gap</code> CSS du button ne s'applique qu'entre les flex items réellement présents.</p>
 <h3>8. Wrapper <code>.content</code> pour le loading avec icônes</h3>
 <p><strong>Problème :</strong> Avec l'ajout des slots d'icônes, le <code>visibility: hidden</code> sur <code>.label</code> seul ne suffit plus — les icônes restaient visibles pendant le loading.</p>
 <p><strong>Décision : wrapper <code>.content { display: contents }</code> englobant prefix + label + suffix.</strong></p>
@@ -121,7 +121,7 @@ button.loading .content { visibility: hidden; }</code></pre>
 <p>Le spinner reste visible car il est en dehors de <code>.content</code> (frère dans le shadow DOM).</p>
 <h3>10. Approche hybride icônes — propriétés + slots</h3>
 <p><strong>Problème :</strong> Les slots nommés (décision 7) sont idéaux en Web Component standard mais créent deux incompatibilités concrètes :</p>
-<ul><li><strong>Figma Code Connect</strong> génère du code plat (<code><agtc-button icon="plus"></code>) — il ne peut</li></ul>
+<ul><li><strong>Figma Code Connect</strong> génère du code plat (<code>&lt;agtc-button icon="plus"&gt;</code>) — il ne peut</li></ul>
 <p>  pas générer du HTML imbriqué avec des slots.</p>
 <ul><li><strong>React < 19</strong> : dans JSX, <code>slot="prefix"</code> ne fonctionne pas nativement sur les enfants</li></ul>
 <p>  car JSX ne produit pas de vrais nœuds DOM avant le rendu.</p>
@@ -137,13 +137,13 @@ button.loading .content { visibility: hidden; }</code></pre>
   Ajouter
 &lt;/agtc-button&gt;</code></pre>
 <p><strong>Mécanisme : fallback content natif des slots Web Component.</strong></p>
-<p>En HTML standard, le contenu à l'intérieur d'un <code><slot></code> est du contenu de remplacement — il s'affiche uniquement si aucun nœud n'est assigné à ce slot depuis le light DOM.</p>
+<p>En HTML standard, le contenu à l'intérieur d'un <code>&lt;slot&gt;</code> est du contenu de remplacement — il s'affiche uniquement si aucun nœud n'est assigné à ce slot depuis le light DOM.</p>
 <pre class="code-block"><code class="lang-html">&lt;!-- Shadow DOM du composant --&gt;
 &lt;slot name="prefix"&gt;
   &lt;!-- Rendu si aucun slot="prefix" dans le light DOM --&gt;
   &lt;agtc-icon name="${this.icon}" size="control"&gt;&lt;/agtc-icon&gt;
 &lt;/slot&gt;</code></pre>
-<ul><li><code>icon="plus"</code> → aucun nœud slotté → fallback <code><agtc-icon name="plus"></code> s'affiche</li><li><code><agtc-icon slot="prefix"></code> → nœud slotté fourni → fallback ignoré, slot content affiché</li><li>Les deux simultanément : le contenu slotté a toujours la priorité</li></ul>
+<ul><li><code>icon="plus"</code> → aucun nœud slotté → fallback <code>&lt;agtc-icon name="plus"&gt;</code> s'affiche</li><li><code>&lt;agtc-icon slot="prefix"&gt;</code> → nœud slotté fourni → fallback ignoré, slot content affiché</li><li>Les deux simultanément : le contenu slotté a toujours la priorité</li></ul>
 <p><strong>Prérequis :</strong> <code>agtc-icon</code> doit être enregistré par le consommateur avant d'utiliser les propriétés <code>icon</code> / <code>icon-suffix</code>. Les slots acceptent n'importe quel élément HTML.</p>
 <p><strong>Compatibilité frameworks :</strong></p>
 <table><thead><tr><th>Framework</th><th>Propriété <code>icon="..."</code></th><th>Slot <code>slot="prefix"</code></th></tr></thead><tbody><tr><td>HTML natif</td><td>✅</td><td>✅</td></tr><tr><td>React 18</td><td>✅</td><td>⚠️ besoin de <code>ref</code> + <code>setAttribute</code></td></tr><tr><td>React 19</td><td>✅</td><td>✅</td></tr><tr><td>Angular</td><td>✅</td><td>✅</td></tr><tr><td>Vue 3</td><td>✅</td><td>✅</td></tr><tr><td>Svelte</td><td>✅</td><td>✅</td></tr><tr><td>Figma Code Connect</td><td>✅</td><td>❌</td></tr></tbody></table>
@@ -158,8 +158,8 @@ button.loading .content { visibility: hidden; }</code></pre>
     console.warn('[agtc-button] icon-only sans label="" — inaccessible (WCAG 1.1.1).');
   }
 }</code></pre>
-<p>La propriété <code>label</code> se forwarde vers <code>aria-label</code> sur le <code><button></code> interne. Elle bascule automatiquement vers <code>loadingLabel</code> pendant le chargement.</p>
-<p><strong>Raison :</strong> <code>aria-label</code> sur le host <code><agtc-button></code> ne serait pas lu par les assistants techniques (il s'applique à l'élément custom, pas au <code><button></code> dans le shadow DOM). Le forwarding vers le <code><button></code> interne est obligatoire pour l'accessibilité.</p>
+<p>La propriété <code>label</code> se forwarde vers <code>aria-label</code> sur le <code>&lt;button&gt;</code> interne. Elle bascule automatiquement vers <code>loadingLabel</code> pendant le chargement.</p>
+<p><strong>Raison :</strong> <code>aria-label</code> sur le host <code>&lt;agtc-button&gt;</code> ne serait pas lu par les assistants techniques (il s'applique à l'élément custom, pas au <code>&lt;button&gt;</code> dans le shadow DOM). Le forwarding vers le <code>&lt;button&gt;</code> interne est obligatoire pour l'accessibilité.</p>
 <hr>
 <h2>Événements</h2>
 <table><thead><tr><th>Événement</th><th>Quand</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>agtc-click</code></td><td>Tout clic validé (non-disabled, non-loading)</td><td><code>{ variant }</code></td></tr><tr><td><code>agtc-confirm-request</code></td><td>1er clic sur critical</td><td>—</td></tr><tr><td><code>agtc-confirm</code></td><td>2e clic sur critical (action confirmée)</td><td>—</td></tr></tbody></table>
@@ -227,7 +227,7 @@ document.querySelector('agtc-button[variant="critical"]')
   });</code></pre>
 <hr>
 <h2>Ce qui n'est PAS dans ce composant</h2>
-<ul><li><strong>Rendu <code><a></code></strong> — pour les liens, utiliser <code><a></code> natif ou un futur <code><agtc-link></code></li><li><strong>Modal de confirmation</strong> — <code>agtc-confirm-request</code> permet au host d'afficher sa propre UI si nécessaire</li><li><strong>Audit log</strong> — responsabilité du host sur l'événement <code>agtc-confirm</code></li><li><strong>Tooltip sur icon-only</strong> — à implémenter au niveau du host ; le composant se limite à l'<code>aria-label</code></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li><strong>Rendu <code>&lt;a&gt;</code></strong> — pour les liens, utiliser <code>&lt;a&gt;</code> natif ou un futur <code>&lt;agtc-link&gt;</code></li><li><strong>Modal de confirmation</strong> — <code>agtc-confirm-request</code> permet au host d'afficher sa propre UI si nécessaire</li><li><strong>Audit log</strong> — responsabilité du host sur l'événement <code>agtc-confirm</code></li><li><strong>Tooltip sur icon-only</strong> — à implémenter au niveau du host ; le composant se limite à l'<code>aria-label</code></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-030.html" class="ds-btn secondary">← ADR-030</a>
     <span></span>
   </div></main>

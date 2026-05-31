@@ -22,7 +22,7 @@ function esc(t) {
 function inl(t) {
   return t
     .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
-    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/`([^`]+)`/g, (_, c) => `<code>${esc(c)}</code>`)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2">$1</a>');
 }
 function parseMd(text) {

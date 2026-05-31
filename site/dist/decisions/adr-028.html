@@ -57,7 +57,7 @@
 <blockquote><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-028-atkinson-hyperlegible-mono.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> ADR-021-atkinson-hyperlegible.md, tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md</p></blockquote>
 <hr>
 <h2>Contexte</h2>
-<p>Depuis ADR-021, la police principale est Atkinson Hyperlegible (sans-serif). Le système utilisait la valeur générique <code>monospace</code> comme police de repli pour les éléments de code (<code><code></code>, labels de tokens, numéros ADR).</p>
+<p>Depuis ADR-021, la police principale est Atkinson Hyperlegible (sans-serif). Le système utilisait la valeur générique <code>monospace</code> comme police de repli pour les éléments de code (<code>&lt;code&gt;</code>, labels de tokens, numéros ADR).</p>
 <p>Problèmes à résoudre : 1. <code>font-family: monospace</code> est incontrôlable — chaque OS et navigateur rend un résultat différent (Courier New, Menlo, Consolas, DejaVu Sans Mono) 2. Aucune cohérence d'accessibilité entre la police de texte et la police de code 3. Le choix n'était pas tokenisé ni documenté — invisible pour les agents</p>
 <hr>
 <h2>Décision</h2>
