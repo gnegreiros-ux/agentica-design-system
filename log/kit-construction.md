@@ -128,3 +128,6 @@
 | 2026-05-30 — | Modifié | `package.json` — ajout `"type":"module"`, scripts `chromatic`, dépendance `lucide` |
 | 2026-05-30 — | Créé | `vitest.config.js` — intégration Storybook + Vitest (via addon-vitest) |
 | 2026-05-30 — | Mis à jour | `decisions/ADR-032-storybook-stories-convention.md` — convention stories complète |
+| 2026-05-31 — | Créé | `decisions/ADR-033-agtc-input-implementation.md` |
+| 2026-05-31 — | Créé | `components/agtc-input.js` — Web Component Lit, 7 types, label/helper/error, toggle password, icônes hybrides |
+| 2026-05-31 — | Créé | `components/agtc-input.stories.js` — 8 états + types + icônes + AllStates |
