@@ -107,3 +107,7 @@
 | 2026-05-30 — | Généré | `dist/tokens/android/` — XML couleurs + dimensions |
 | 2026-05-30 — | Créé | `decisions/ADR-030-style-dictionary-build-multi-platform.md` |
 | 2026-05-30 — | Modifié | `decisions/README.md` — ajout ADR-030 |
+| 2026-05-30 — | Créé | `components/agtc-button.js` — Web Component Lit, 4 variantes, confirmation critical 2-clics, loading width-stable |
+| 2026-05-30 — | Modifié | `package.json` — ajout Lit (devDependency + peerDependency) |
+| 2026-05-30 21:02 | Créé | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-05-30 21:02 | Modifié | `decisions/README.md` |

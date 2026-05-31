@@ -7,7 +7,11 @@
     "tokens": "node style-dictionary/build.js",
     "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.js'"
   },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
   "devDependencies": {
+    "lit": "^3.0.0",
     "style-dictionary": "^3.9.2"
   }
 }
