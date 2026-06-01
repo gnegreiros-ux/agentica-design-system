@@ -107,6 +107,25 @@ navigateurs et ne peuvent pas être stylés avec les tokens du système.
 
 ---
 
+## Patterns UX de référence appliqués
+
+> Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036). Décision du
+> Design System Lead : **tous les patterns approuvés**. Détail et liens dans
+> `guidelines/components/input.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| Pattern | Source |
+|---------|--------|
+| Validation à `onBlur`, re-validation à la frappe une fois en erreur | NN/g — How to Report Errors in Forms |
+| Erreur inline + `role="alert"` | NN/g — Error-Message Guidelines |
+| Message d'erreur constructif | NN/g — Error-Message Guidelines |
+| Help text persistant via `aria-describedby` | NN/g |
+| Required marker `*` + `aria-required` | NN/g — Forms |
+| Forgiving format (`tel`/`number`) | IxDF — forgiving formats |
+| Label visible toujours présent | NN/g |
+| Anti hostile patterns (pas d'effacement du champ en erreur) | NN/g — Hostile Patterns in Error Messages |
+
+---
+
 ## Périmètre de la version 1.0
 
 | Inclus | Exclu (version future) |

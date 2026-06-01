@@ -16,6 +16,16 @@
         "hooks": [
           {
             "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '(/components/agtc-[^/]*\\.js$|/guidelines/components/[^/]*\\.md$)' && ! echo \"$f\" | grep -q '\\.stories\\.'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"RAPPEL UX PATTERNS: composant cree ou modifie (%s). SI le changement touche un comportement UX (variante, etat, validation, affichage erreur/aide, interaction, nouveau type): execute le skill ux-pattern-review, presente les patterns de reference AVEC LIENS a approuver, puis documente la decision sur les 6 surfaces (guideline, code, story, site, ADR, log). Sinon, ignore ce rappel.\"}}' \"$f\"; fi",
+            "statusMessage": "Vérification patterns UX…"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
             "command": "/Users/gnegreiros/Documents/Git/agentic-design-system/.claude/hooks/log-kit-construction.sh",
             "statusMessage": "Journal de construction…",
             "async": true

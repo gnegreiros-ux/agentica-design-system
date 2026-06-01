@@ -149,3 +149,24 @@
 | 2026-05-31 20:26 | Modifié | `.claude/settings.json` |
 | 2026-05-31 20:29 | Modifié | `decisions/ADR-015-hook-rappel-adr.md` |
 | 2026-05-31 20:29 | Modifié | `decisions/ADR-015-hook-rappel-adr.md` |
+| 2026-05-31 22:50 | Créé | `.claude/rules/ux-patterns-sources.md` |
+| 2026-05-31 22:51 | Créé | `.claude/skills/ux-pattern-review.md` |
+| 2026-05-31 22:51 | Créé | `.claude/skills/pipelines/ux-patterns.md` |
+| 2026-05-31 22:51 | Modifié | `.claude/skills/quality-gate.md` |
+| 2026-05-31 22:51 | Modifié | `.claude/skills/quality-gate.md` |
+| 2026-05-31 22:51 | Modifié | `.claude/rules/post-change-pipeline.md` |
+| 2026-05-31 22:52 | Créé | `.claude/settings.json` |
+| 2026-05-31 22:53 | Modifié | `.claude/settings.json` |
+| 2026-05-31 22:54 | Créé | `decisions/ADR-036-ux-pattern-review-pre-composant.md` |
+| 2026-05-31 22:54 | Modifié | `decisions/README.md` |
+| 2026-05-31 22:54 | Modifié | `AGENTS.md` |
+| 2026-06-01 08:27 | Modifié | `decisions/ADR-033-agtc-input-implementation.md` |
+| 2026-06-01 08:27 | Revue UX | `input` — patterns NN/g+IxDF approuvés (tous), 6 surfaces documentées (ADR-036) |
+| 2026-06-01 08:45 | Modifié | `decisions/ADR-022-lucide-icons.md` |
+| 2026-06-01 08:45 | Revue UX | `icon` — patterns NN/g+IF approuvés (tous), 5 surfaces (pas de story) — ADR-036/022 |
+| 2026-06-01 09:16 | Modifié | `decisions/ADR-031-agtc-button-implementation.md` |
+| 2026-06-01 09:16 | Revue UX | `button` — patterns NN/g+IxDF+Smashing approuvés (tous, B4 reformulé), 6 surfaces (ADR-031/036) |
+| 2026-06-01 09:22 | Modifié | `decisions/ADR-034-agtc-badge-implementation.md` |
+| 2026-06-01 09:22 | Revue UX | `badge` — patterns NN/g+Dashboard approuvés (tous, BA1 = reco), 6 surfaces (ADR-034/036) |
+| 2026-06-01 09:32 | Modifié | `decisions/ADR-035-agtc-card-implementation.md` |
+| 2026-06-01 09:32 | Revue UX | `card` — patterns Dashboard+Smashing (C1/C3/C4 approuvés, C2 révisé anti-imbrication), 6 surfaces (ADR-035/036) |

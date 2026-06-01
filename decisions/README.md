@@ -89,6 +89,11 @@ des décisions déjà tranchées.
 | [ADR-029](ADR-029-quality-gate-pre-commit.md) | Quality gate pré-commit modulaire (pipelines extensibles) | 2026-05-30 | ✅ Actif |
 | [ADR-030](ADR-030-style-dictionary-build-multi-platform.md) | Style Dictionary : build multi-plateforme avec formats custom | 2026-05-30 | ✅ Actif |
 | [ADR-031](ADR-031-agtc-button-implementation.md) | agtc-button : pattern confirmation critical, loading, tokens partagés | 2026-05-30 | ✅ Actif |
+| [ADR-032](ADR-032-storybook-stories-convention.md) | Convention des stories Storybook pour les composants Agentica | 2026-05-30 | ✅ Actif |
+| [ADR-033](ADR-033-agtc-input-implementation.md) | Implémentation de `agtc-input` | 2026-05-31 | ✅ Actif |
+| [ADR-034](ADR-034-agtc-badge-implementation.md) | Implémentation de `agtc-badge` | 2026-05-31 | ✅ Actif |
+| [ADR-035](ADR-035-agtc-card-implementation.md) | Implémentation de `agtc-card` | 2026-05-31 | ✅ Actif |
+| [ADR-036](ADR-036-ux-pattern-review-pre-composant.md) | Revue des patterns UX de référence avant publication d'un composant | 2026-05-31 | ✅ Actif |
 
 ---
 

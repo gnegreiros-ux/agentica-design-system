@@ -10,6 +10,14 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 // Badge icon-only : icon="name" + icon-only + label="…" (WCAG 1.1.1)
 //
 // Non interactif — si une action est requise, utiliser agtc-button.
+//
+// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
+//   Statut pas encodé uniquement par la couleur (recommandé : icône/libellé
+//     distinctif pour danger/warning) — NN/g indicators :
+//     https://www.nngroup.com/articles/design-pattern-guidelines/
+//   role=status pour annoncer les changements aux AT — NN/g
+//   Mapping sémantique traffic-light — Dashboard : https://dashboarddesignpatterns.github.io/patterns.html
+//   Détail : guidelines/components/badge.md § PATTERNS UX DE RÉFÉRENCE
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcBadge extends LitElement {

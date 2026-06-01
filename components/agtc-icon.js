@@ -1,6 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { icons } from 'lucide';
 
+// ─── PATTERNS UX DE RÉFÉRENCE (ADR-036, tous approuvés) ──────────────────────
+//   Icône + texte quand le sens n'est pas universel — NN/g icon usability :
+//     https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Label obligatoire si l'icône porte l'information ; decorative → aria-hidden.
+//   Signification cohérente et non trompeuse (IF — transparence) :
+//     https://catalogue.projectsbyif.com/
+//   Détail : guidelines/components/icon.md § PATTERNS UX DE RÉFÉRENCE
+// ─────────────────────────────────────────────────────────────────────────────
+
 class AgtcIcon extends LitElement {
   static properties = {
     name:      { type: String },

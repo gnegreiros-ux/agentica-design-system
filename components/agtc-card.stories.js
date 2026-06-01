@@ -5,6 +5,22 @@ export default {
   title: 'Components/agtc-card',
   component: 'agtc-card',
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          'Patterns UX de référence appliqués (ADR-036 ; C1/C3/C4 approuvés, C2 révisé) :',
+          '',
+          '- **Clustering** du contenu lié — [Dashboard — grouped layout](https://dashboarddesignpatterns.github.io/patterns.html)',
+          '- **Carte cliquable (C2 révisé)** : 1 destination → lien englobant ; ≥ 2 actions distinctes → lien primaire en overlay `::after` + boutons au-dessus, ou conteneur non interactif. **Jamais d\'interactif imbriqué** — [Smashing — clickable cards](https://www.smashingmagazine.com/category/design-patterns/)',
+          '- **Hiérarchie via élévation/ombre**, pas via couleur seule — [Dashboard — composition](https://dashboarddesignpatterns.github.io/patterns.html)',
+          '- **Détail-on-demand** : la carte résume, le détail s\'ouvre ailleurs — [Dashboard — screenspace](https://dashboarddesignpatterns.github.io/patterns.html)',
+          '',
+          'Détail : `guidelines/components/card.md` § PATTERNS UX DE RÉFÉRENCE.',
+        ].join('\n'),
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',

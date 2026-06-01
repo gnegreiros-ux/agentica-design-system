@@ -135,6 +135,31 @@ Les séparateurs sont masqués si le slot est vide (détection via `slotchange`)
 | Padding inline style | Utiliser les valeurs de `padding` |
 | Carte sans contenu | Affichage vide — toujours fournir un body |
 | Variante inventée | Escalader au design system team |
+| **Élément interactif imbriqué** (`<button>` dans un `<a>` englobant) | Invalide en HTML, ambigu au clic et au clavier (cf. pattern C2) |
+| Carte « tout cliquable » contenant ≥ 2 actions distinctes | Conflit de cibles — utiliser l'overlay `::after` ou des actions propres (cf. C2) |
+
+---
+
+## PATTERNS UX DE RÉFÉRENCE
+
+> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **C1, C3, C4 approuvés + C2 révisé**.
+
+| Pattern | Source | Appliqué | Justification |
+|---------|--------|----------|---------------|
+| Groupement visuel clair (clustering) du contenu lié | [Dashboard — grouped layout](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Intention du composant |
+| **Carte cliquable — règle révisée** | [Smashing — clickable cards](https://www.smashingmagazine.com/category/design-patterns/) · [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ (révisé) | Voir contrat ci-dessous |
+| Hiérarchie via élévation/ombre, pas via couleur seule | [Dashboard — composition](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Variante `elevated` |
+| Détail-on-demand : la carte résume, le détail s'ouvre ailleurs | [Dashboard — screenspace](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Guideline d'usage : éviter la carte « réceptacle de tout le détail » |
+
+### Contrat de cliquabilité (C2 révisé)
+
+- **Carte avec une seule destination** → le lien couvre **toute la surface** (cible de clic
+  englobante, focus visible sur la carte).
+- **Carte avec des actions distinctes** (≥ 2 boutons/liens) → la carte **n'est pas** un lien global :
+  - soit un **lien primaire** (le titre) étendu sur la carte via un overlay `::after`, avec les
+    boutons secondaires posés au-dessus (`position: relative; z-index`) pour rester cliquables ;
+  - soit un **conteneur non interactif** où chaque action porte son propre `<button>`/`<a>`.
+- **Jamais d'élément interactif imbriqué** dans un autre.
 
 ---
 

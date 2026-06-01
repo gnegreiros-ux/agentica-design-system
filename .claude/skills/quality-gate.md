@@ -30,6 +30,7 @@ Exécuter ce quality gate **après toute modification**, quelle que soit sa tail
 |----------|---------|--------|-------------|
 | Cohérence tokens | `pipelines/tokens-audit.md` | ✅ Actif | Oui |
 | WCAG 2.2 | `pipelines/wcag.md` | ✅ Actif | Oui |
+| Revue patterns UX | `pipelines/ux-patterns.md` | ✅ Actif | Oui (nouveau composant + modif UX pertinente) |
 | Conformité règles / ADRs | `pipelines/adr-conformity.md` | ✅ Actif | Oui |
 | ADRs manquants | `pipelines/adr-triggers.md` | ✅ Actif | Oui |
 | Documentation | `pipelines/docs.md` | ✅ Actif | Oui |
@@ -76,6 +77,12 @@ Exécuter ce quality gate **après toute modification**, quelle que soit sa tail
 - [ ] Focus visible sur tous les éléments interactifs
 - [ ] Touch targets ≥ 24×24px (WCAG 2.5.8)
 - [ ] Pas d'animation sans prefers-reduced-motion
+
+### 2b. Revue patterns UX (si composant créé/modifié — sinon « N/A »)
+- [ ] Patterns suggérés présentés à l'humain avec liens directs
+- [ ] Décision humaine consignée (✅/❌ par pattern)
+- [ ] 6 surfaces documentées : guideline, code, story, site, ADR, log
+- ou : N/A — aucun composant créé ni modification UX pertinente
 
 ### 3. Conformité règles / ADRs
 - [ ] ADR actif n°XX respecté : [règle spécifique]

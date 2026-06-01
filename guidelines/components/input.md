@@ -123,6 +123,28 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
+## PATTERNS UX DE RÉFÉRENCE
+
+> Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
+> (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.
+
+| Pattern | Source | Appliqué | Justification |
+|---------|--------|----------|---------------|
+| Label visible toujours présent (jamais placeholder seul) | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | WCAG 1.3.1 — `label` obligatoire |
+| **Validation à la perte de focus (`onBlur`)** par défaut | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Ne pas signaler l'erreur pendant la frappe initiale |
+| **Re-validation à la frappe une fois le champ en erreur** | [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Récompenser la correction immédiatement |
+| Erreur inline sous le champ + `role="alert"` | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Erreur localisée et annoncée aux AT |
+| Message d'erreur constructif (dit quoi corriger) | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Règle d'écriture du `error-message` |
+| Help text persistant, distinct de l'erreur, `aria-describedby` | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `helper-text` lié par `aria-describedby` |
+| Required marker `*` + `aria-required` | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Champ obligatoire signalé visuellement et aux AT |
+| Forgiving format (tolérer espaces/formats : `tel`, `number`) | [IxDF — forgiving formats](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Réduire les erreurs de saisie |
+| Éviter les hostile patterns (pas de blocage agressif, pas d'effacement du champ en erreur) | [NN/g — Hostile Patterns in Error Messages](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Anti-dark-pattern |
+
+**Contrat de validation (synthèse des patterns 2 + 3) :** valider à `onBlur`, puis re-valider à
+chaque frappe tant que le champ est en état d'erreur. Ne jamais valider à la première frappe.
+
+---
+
 ## IMPLÉMENTATION
 
 ### Web Component (Lit)

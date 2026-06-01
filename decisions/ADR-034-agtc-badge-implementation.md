@@ -10,6 +10,20 @@
 
 ---
 
+## Patterns UX de référence appliqués
+
+> Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+> Détail et liens : `guidelines/components/badge.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| Pattern | Source |
+|---------|--------|
+| Statut pas encodé uniquement par la couleur (recommandé icône/libellé pour danger/warning) | NN/g — indicators |
+| `role="status"` pour annoncer les changements aux AT | NN/g |
+| Mapping sémantique cohérent (traffic-light) | Dashboard — color/semantic |
+| Badge non interactif — encapsuler si cliquable | NN/g |
+
+---
+
 ## Contexte
 
 `agtc-badge` est un label non interactif qui encode une information de statut,

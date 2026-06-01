@@ -63,6 +63,7 @@ L'orchestrateur coordonne les agents. Il décide :
 DESIGN.md                              ← contrat portable — toujours lire en premier
 .claude/rules/project-overview.md      ← contexte du projet
 .claude/rules/tokens-system.md         ← règles des tokens
+.claude/rules/ux-patterns-sources.md   ← sources + revue patterns UX (avant tout composant)
 .claude/instructions/codebase-context.md ← contexte technique
 .claude/instructions/session-spec.md   ← spec condensée pour cette session
 tokens/semantic.json                   ← source de vérité des intentions UX

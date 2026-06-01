@@ -22,6 +22,15 @@ import { live } from 'lit/directives/live.js';
 // Événements :
 //   agtc-input  → { value, name } à chaque frappe
 //   agtc-change → { value, name } à la perte de focus
+//
+// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
+//   Validation à onBlur, puis re-validation à la frappe une fois en erreur
+//     — NN/g How to Report Errors in Forms : https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Erreur inline + role=alert, help text persistant via aria-describedby
+//     — NN/g Error-Message Guidelines : https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Forgiving format (tel/number) — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
+//   Anti hostile patterns (pas d'effacement du champ en erreur)
+//   Détail complet : guidelines/components/input.md § PATTERNS UX DE RÉFÉRENCE
 // ────────────────────────────────────────────────────────────────────────────
 
 let _uid = 0;

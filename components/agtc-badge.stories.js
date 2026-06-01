@@ -5,6 +5,22 @@ export default {
   title: 'Components/agtc-badge',
   component: 'agtc-badge',
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          '',
+          '- **Statut pas encodé uniquement par la couleur** — recommandé : icône/libellé distinctif pour `danger`/`warning` — [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **`role="status"`** pour annoncer les changements aux AT — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Mapping sémantique cohérent** (traffic-light) — [Dashboard](https://dashboarddesignpatterns.github.io/patterns.html)',
+          '- **Non interactif** — encapsuler dans un `<button>` si cliquable — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '',
+          'Détail : `guidelines/components/badge.md` § PATTERNS UX DE RÉFÉRENCE.',
+        ].join('\n'),
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',

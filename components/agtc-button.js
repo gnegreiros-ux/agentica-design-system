@@ -13,6 +13,15 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 //
 // La propriété active Figma Code Connect et les frameworks (React…).
 // Le slot reste disponible pour la composition avancée.
+//
+// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
+//   Une seule action primaire par contexte — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
+//   Confirmation explicite pour critical — NN/g error prevention
+//   Largeur préservée pendant loading (pas de saut de layout) — Smashing
+//   Ne jamais désactiver sans indiquer la raison (disabled motivé > masquer)
+//     — Smashing hidden vs disabled : https://www.smashingmagazine.com/category/design-patterns/
+//   Libellé décrivant la conséquence — NN/g : https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Détail : guidelines/components/button.md § PATTERNS UX DE RÉFÉRENCE
 // Prérequis : agtc-icon doit être enregistré par le consommateur.
 //
 // Règle critical : deux clics requis (confirmation explicite).

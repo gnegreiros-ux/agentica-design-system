@@ -115,6 +115,19 @@ Le badge est **non interactif** par défaut.
 
 ---
 
+## PATTERNS UX DE RÉFÉRENCE
+
+> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+
+| Pattern | Source | Appliqué | Justification |
+|---------|--------|----------|---------------|
+| Statut pas encodé uniquement par la couleur | [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | **Recommandé** : pour les statuts critiques (`danger`/`warning`), ajouter une icône ou un libellé distinctif (non imposé, mais bonne pratique) |
+| `role="status"` pour annoncer les changements aux AT | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Déjà en place |
+| Mapping sémantique cohérent (traffic-light) | [Dashboard — color/semantic](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Variantes success/warning/danger |
+| Badge non interactif — encapsuler si cliquable | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Anti-pattern existant |
+
+---
+
 ## IMPLÉMENTATION
 
 ### Web Component (Lit)

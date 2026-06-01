@@ -5,6 +5,23 @@ export default {
   title: 'Components/agtc-button',
   component: 'agtc-button',
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          '',
+          '- **Une seule action primaire** par contexte — [IxDF — clear primary action](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **Confirmation explicite** pour `critical` — [NN/g — error prevention](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Largeur préservée** pendant le `loading` — [Smashing](https://www.smashingmagazine.com/category/design-patterns/)',
+          '- **Ne jamais désactiver sans indiquer la raison** (`disabled` motivé plutôt que masquer) — [Smashing — hidden vs disabled](https://www.smashingmagazine.com/category/design-patterns/)',
+          '- **Libellé décrivant la conséquence** (pas « OK ») — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '',
+          'Détail : `guidelines/components/button.md` § PATTERNS UX DE RÉFÉRENCE.',
+        ].join('\n'),
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',

@@ -93,6 +93,21 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 | Libellé générique ("OK", "Confirmer") | Non accessible |
 | Bouton sans texte visible sans `aria-label` | Inaccessible |
 | Couleur hardcodée dans le style | Contourne le design system |
+| Désactiver un bouton sans indiquer la raison | L'utilisateur ne comprend pas pourquoi l'action est bloquée (cf. pattern B4) |
+
+---
+
+## PATTERNS UX DE RÉFÉRENCE
+
+> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+
+| Pattern | Source | Appliqué | Justification |
+|---------|--------|----------|---------------|
+| Une seule action primaire claire par contexte | [IxDF — clear primary action](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Hiérarchie d'action lisible |
+| Confirmation explicite pour action destructrice (`critical`) | [NN/g — error prevention](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `requires-confirmation` |
+| Largeur préservée pendant le `loading` | [Smashing](https://www.smashingmagazine.com/category/design-patterns/) | ✅ | Pas de saut de layout |
+| **Ne jamais désactiver sans indiquer la raison** (préférer `disabled` motivé plutôt que masquer l'action) | [Smashing — hidden vs disabled](https://www.smashingmagazine.com/category/design-patterns/) | ✅ | Un `disabled` muet est un anti-pattern d'accessibilité — fournir texte d'aide/tooltip expliquant le blocage |
+| Libellé décrivant la conséquence, pas « OK » | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Libellé explicite |
 
 ---
 

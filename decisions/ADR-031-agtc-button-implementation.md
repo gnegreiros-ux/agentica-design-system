@@ -7,6 +7,21 @@
 
 ---
 
+## Patterns UX de référence appliqués
+
+> Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+> Détail et liens : `guidelines/components/button.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| Pattern | Source |
+|---------|--------|
+| Une seule action primaire par contexte | IxDF — clear primary action |
+| Confirmation explicite pour `critical` | NN/g — error prevention |
+| Largeur préservée pendant le `loading` | Smashing |
+| Ne jamais désactiver sans indiquer la raison | Smashing — hidden vs disabled |
+| Libellé décrivant la conséquence | NN/g |
+
+---
+
 ## Contexte
 
 Le système de design dispose d'un contrat de composant button complet (`tokens/component.json`,

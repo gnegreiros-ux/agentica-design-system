@@ -27,11 +27,12 @@ Pipelines actifs (bloquants) :
 |---|----------|---------|
 | 1 | Cohérence tokens | `pipelines/tokens-audit.md` |
 | 2 | WCAG 2.2 | `pipelines/wcag.md` |
-| 3 | Conformité règles / ADRs | `pipelines/adr-conformity.md` |
-| 4 | ADRs manquants | `pipelines/adr-triggers.md` |
-| 5 | Documentation | `pipelines/docs.md` |
-| 6 | Site rebuild | `pipelines/site.md` |
-| 7 | Commit | `pipelines/commit.md` |
+| 3 | Revue patterns UX | `pipelines/ux-patterns.md` |
+| 4 | Conformité règles / ADRs | `pipelines/adr-conformity.md` |
+| 5 | ADRs manquants | `pipelines/adr-triggers.md` |
+| 6 | Documentation | `pipelines/docs.md` |
+| 7 | Site rebuild | `pipelines/site.md` |
+| 8 | Commit | `pipelines/commit.md` |
 
 Pipelines planifiés (non bloquants jusqu'à activation) :
 `style-dictionary.md` · `storybook.md` · `chromatic.md` · `axe-core.md` · `playwright.md`

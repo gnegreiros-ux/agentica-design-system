@@ -5,6 +5,23 @@ export default {
   title: 'Components/agtc-input',
   component: 'agtc-input',
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          '',
+          '- **Validation à `onBlur`**, puis re-validation à la frappe une fois le champ en erreur — [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Erreur inline** sous le champ + `role="alert"` ; **help text** persistant via `aria-describedby` — [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Required marker** `*` + `aria-required` — [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Forgiving format** (`tel`/`number`) — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **Anti hostile patterns** (pas d\'effacement du champ en erreur) — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '',
+          'Détail : `guidelines/components/input.md` § PATTERNS UX DE RÉFÉRENCE.',
+        ].join('\n'),
+      },
+    },
+  },
   argTypes: {
     type: {
       control: 'select',

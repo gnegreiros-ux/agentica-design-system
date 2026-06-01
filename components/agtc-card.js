@@ -10,6 +10,15 @@ import { LitElement, html, css } from 'lit';
 //   slot[name="footer"] → séparateur haut automatique si contenu présent
 //
 // Non interactif par défaut.
+//
+// Patterns UX de référence appliqués (ADR-036 ; C1/C3/C4 approuvés, C2 révisé) :
+//   Clustering du contenu lié — Dashboard : https://dashboarddesignpatterns.github.io/patterns.html
+//   Carte cliquable (C2 révisé) : 1 destination → lien englobant ; actions distinctes →
+//     lien primaire en overlay ::after + boutons au-dessus, OU conteneur non interactif.
+//     Jamais d'interactif imbriqué — Smashing : https://www.smashingmagazine.com/category/design-patterns/
+//   Hiérarchie via élévation, pas couleur seule (Dashboard).
+//   Détail-on-demand : la carte résume, le détail s'ouvre ailleurs (Dashboard).
+//   Détail : guidelines/components/card.md § PATTERNS UX DE RÉFÉRENCE
 // Pour une carte cliquable, placer un <a> ou <agtc-button> à l'intérieur.
 // ────────────────────────────────────────────────────────────────────────────
 

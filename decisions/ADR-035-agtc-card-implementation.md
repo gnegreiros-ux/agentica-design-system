@@ -10,6 +10,21 @@
 
 ---
 
+## Patterns UX de référence appliqués
+
+> Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036).
+> Décision : **C1, C3, C4 approuvés ; C2 révisé** (règle de cliquabilité anti-imbrication).
+> Détail et liens : `guidelines/components/card.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| Pattern | Source |
+|---------|--------|
+| Clustering du contenu lié | Dashboard — grouped layout |
+| Carte cliquable — C2 révisé (1 destination = lien englobant ; actions distinctes = overlay `::after` ou conteneur non interactif ; jamais d'interactif imbriqué) | Smashing — clickable cards · NN/g |
+| Hiérarchie via élévation/ombre, pas couleur seule | Dashboard — composition |
+| Détail-on-demand (la carte résume) | Dashboard — screenspace |
+
+---
+
 ## Contexte
 
 `agtc-card` est un conteneur visuel pour regrouper des informations liées.

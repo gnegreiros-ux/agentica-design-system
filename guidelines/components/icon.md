@@ -108,6 +108,20 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 
 ---
 
+## PATTERNS UX DE RÉFÉRENCE
+
+> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+> Pas de story Storybook pour ce composant → propagation sur 5 surfaces.
+
+| Pattern | Source | Appliqué | Justification |
+|---------|--------|----------|---------------|
+| Icône + texte quand le sens n'est pas universel (ne pas se fier à l'icône seule) | [NN/g — icon usability](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `decorative` accompagne un texte ; sinon `label` requis |
+| Label accessible obligatoire si l'icône porte l'information | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Règle absolue — `label` → `aria-label` |
+| Icônes décoratives masquées aux AT (`aria-hidden`) | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `decorative` → `aria-hidden="true"` |
+| Signification cohérente et non trompeuse (même icône = même sens partout) | [IF — transparence](https://catalogue.projectsbyif.com/) | ✅ | Cohérence sémantique imposée par la bibliothèque Lucide unique (ADR-022) |
+
+---
+
 ## Installation
 
 ```bash

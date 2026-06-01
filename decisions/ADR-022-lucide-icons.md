@@ -10,6 +10,21 @@
 
 ---
 
+## Patterns UX de référence appliqués
+
+> Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+> `agtc-icon` n'a pas d'ADR d'implémentation dédié — sa décision de patterns est consignée ici.
+> Détail et liens : `guidelines/components/icon.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| Pattern | Source |
+|---------|--------|
+| Icône + texte quand le sens n'est pas universel | NN/g — icon usability |
+| Label obligatoire si l'icône porte l'information | NN/g |
+| Icônes décoratives masquées aux AT (`aria-hidden`) | NN/g |
+| Signification cohérente et non trompeuse | IF — transparence |
+
+---
+
 ## Contexte
 
 Le design system référençait `<agtc-icon>` dans les exemples de composants (notamment `guidelines/components/button.md`) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.
