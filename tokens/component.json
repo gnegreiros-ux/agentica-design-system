@@ -135,5 +135,22 @@
     "padding-none": { "value": "0px",                                 "$type": "dimension" },
     "padding-sm":   { "value": "{primitive.space.3}",                 "$type": "dimension" },
     "padding-lg":   { "value": "{primitive.space.6}",                 "$type": "dimension" }
+  },
+  "checkbox": {
+    "$metadata": {
+      "intent": "Sélection binaire indépendante — cocher/décocher une option ou marquer une tâche faite",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "background":   { "value": "{semantic.color.background.surface}",    "$type": "color" },
+      "border":       { "value": "{semantic.color.border.default}",        "$type": "color" },
+      "border-hover": { "value": "{semantic.color.action.primary}",        "$type": "color" },
+      "border-focus": { "value": "{semantic.color.border.focus}",          "$type": "color" },
+      "fill":         { "value": "{semantic.color.action.primary}",        "$type": "color" },
+      "fill-hover":   { "value": "{semantic.color.action.primary-hover}",  "$type": "color" },
+      "check":        { "value": "{semantic.color.text.on-action}",        "$type": "color" },
+      "label":        { "value": "{semantic.color.text.primary}",          "$type": "color" },
+      "radius":       { "value": "{semantic.radius.control}",              "$type": "dimension" }
+    }
   }
 }

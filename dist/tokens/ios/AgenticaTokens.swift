@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Mon, 01 Jun 2026 00:22:59 GMT
+// Generated on Mon, 01 Jun 2026 17:41:31 GMT
 
 
 import UIKit
@@ -67,6 +67,15 @@ public class AgenticaTokens {
     public static let cardPaddingLg = 24px
     public static let cardPaddingNone = 0px
     public static let cardPaddingSm = 12px
+    public static let checkboxDefaultBackground = #ffffff
+    public static let checkboxDefaultBorder = #e8e8e8
+    public static let checkboxDefaultBorderFocus = #12a594
+    public static let checkboxDefaultBorderHover = #12a594
+    public static let checkboxDefaultCheck = #ffffff
+    public static let checkboxDefaultFill = #12a594
+    public static let checkboxDefaultFillHover = #0d9b8a
+    public static let checkboxDefaultLabel = #202020
+    public static let checkboxDefaultRadius = 6px
     public static let inputDefaultBackground = #ffffff
     public static let inputDefaultBorder = #e8e8e8
     public static let inputDefaultBorderError = #ce2c31

@@ -94,6 +94,7 @@ des décisions déjà tranchées.
 | [ADR-034](ADR-034-agtc-badge-implementation.md) | Implémentation de `agtc-badge` | 2026-05-31 | ✅ Actif |
 | [ADR-035](ADR-035-agtc-card-implementation.md) | Implémentation de `agtc-card` | 2026-05-31 | ✅ Actif |
 | [ADR-036](ADR-036-ux-pattern-review-pre-composant.md) | Revue des patterns UX de référence avant publication d'un composant | 2026-05-31 | ✅ Actif |
+| [ADR-037](ADR-037-agtc-checkbox-implementation.md) | Implémentation de `agtc-checkbox` | 2026-06-01 | ✅ Actif |
 
 ---
 

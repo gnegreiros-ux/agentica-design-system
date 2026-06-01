@@ -935,6 +935,7 @@ function sidebarComponents(base, current) {
     ['input.html', 'Input'],
     ['badge.html', 'Badge'],
     ['card.html',  'Card'],
+    ['checkbox.html', 'Checkbox'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1837,6 +1838,14 @@ function buildComponentsIndex() {
       <span class="lang-en">3 variants, 4 paddings, header/body/footer slots, free composition.</span>
     </div>
   </a>
+  <a href="checkbox.html" class="nav-card">
+    <span class="nav-card-icon">${icon('square-check',32)}</span>
+    <div class="nav-card-title">Checkbox</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Sélection binaire, forme carrée (NN/g), états complets + indeterminate, label cliquable.</span>
+      <span class="lang-en">Binary selection, square shape (NN/g), full states + indeterminate, clickable label.</span>
+    </div>
+  </a>
 </div>
 `;
 
@@ -2524,6 +2533,128 @@ function buildCard() {
   }));
 }
 
+// ─── PAGE: CHECKBOX ──────────────────────────────────────────────────────────
+function buildCheckbox() {
+  // Rendu statique tokenisé d'une case (carrée). state: 'default' | 'checked' | 'indeterminate' | 'disabled' | 'disabled-checked'
+  const BOX = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:var(--agtc-semantic-radius-control);flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
+  const GLYPH = 'width:78%;height:78%;fill:none;stroke:var(--agtc-semantic-color-text-on-action);stroke-width:3;stroke-linecap:round;stroke-linejoin:round';
+  function box(state) {
+    if (state === 'checked')
+      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-action-primary)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M5 12.5l4 4L19 7"/></svg></span>`;
+    if (state === 'indeterminate')
+      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-action-primary)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M6 12h12"/></svg></span>`;
+    if (state === 'disabled-checked')
+      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary-disabled);background:var(--agtc-semantic-color-action-primary-disabled)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M5 12.5l4 4L19 7"/></svg></span>`;
+    if (state === 'disabled')
+      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-subtle)"></span>`;
+    return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)"></span>`;
+  }
+  function row(state, label, dim) {
+    return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px${dim?';opacity:.6':''}">${box(state)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
+  }
+
+  const tokenRows = [
+    ['checkbox-default-background',   'semantic.color.background.surface',   SEM['color-background-surface']],
+    ['checkbox-default-border',       'semantic.color.border.default',       SEM['color-border-default']],
+    ['checkbox-default-border-hover', 'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['checkbox-default-border-focus', 'semantic.color.border.focus',         SEM['color-border-focus']],
+    ['checkbox-default-fill',         'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['checkbox-default-fill-hover',   'semantic.color.action.primary-hover', SEM['color-action-primary-hover']],
+    ['checkbox-default-check',        'semantic.color.text.on-action',       SEM['color-text-on-action']],
+    ['checkbox-default-label',        'semantic.color.text.primary',         SEM['color-text-primary']],
+    ['checkbox-default-radius',       'semantic.radius.control',             SEM['radius-control']],
+  ];
+
+  const body = `
+<h1>Checkbox</h1>
+<p class="page-lead">
+  <span class="lang-fr">Sélection binaire indépendante — cocher/décocher une option ou marquer une tâche faite. Forme <strong>carrée</strong> par convention (NN/g) : le rond signale un bouton radio. Le libellé est cliquable et la cible tactile fait ≥ 24px (WCAG 2.5.8).</span>
+  <span class="lang-en">Independent binary selection — check/uncheck an option or mark a task done. <strong>Square</strong> shape by convention (NN/g): round signals a radio button. The label is clickable and the touch target is ≥ 24px (WCAG 2.5.8).</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">États</span><span class="lang-en">States</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Default · Checked · Indeterminate</span><span class="lang-en">Default · Checked · Indeterminate</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      ${row('default', '<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>')}
+      ${row('checked', '<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>')}
+      ${row('indeterminate', '<span class="lang-fr">Tout sélectionner (partiel)</span><span class="lang-en">Select all (partial)</span>')}
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      ${row('disabled', '<span class="lang-fr">Option indisponible</span><span class="lang-en">Option unavailable</span>', true)}
+      ${row('disabled-checked', '<span class="lang-fr">Option verrouillée</span><span class="lang-en">Locked option</span>', true)}
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Forme carrée — jamais ronde (le rond = radio, NN/g)</span><span class="lang-en">Square shape — never round (round = radio, NN/g)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Libellé cliquable (case ou texte) + cible ≥ 24px</span><span class="lang-en">Clickable label (box or text) + ≥ 24px target</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>&lt;input type="checkbox"&gt;</code> natif — rôle et clavier gérés nativement</span><span class="lang-en">Native <code>&lt;input type="checkbox"&gt;</code> — role and keyboard handled natively</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de case pré-cochée pour un consentement (dark pattern)</span><span class="lang-en">Never a pre-checked consent box (dark pattern)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de libellé en négation (« Ne pas m'envoyer… »)</span><span class="lang-en">Never a negated label ("Don't send me…")</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Élément accessible : <code>&lt;input type="checkbox"&gt;</code> natif dans un <code>&lt;label&gt;</code> englobant</span><span class="lang-en">Accessible element: native <code>&lt;input type="checkbox"&gt;</code> inside a wrapping <code>&lt;label&gt;</code></span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline</code> sur la case via <code>:focus-visible</code></span><span class="lang-en">Visible focus: <code>outline</code> on the box via <code>:focus-visible</code></span></li>
+  <li><span class="lang-fr">Indéterminé : propriété DOM <code>indeterminate</code> → <code>aria-checked="mixed"</code></span><span class="lang-en">Indeterminate: DOM <code>indeterminate</code> property → <code>aria-checked="mixed"</code></span></li>
+  <li><span class="lang-fr">Cible tactile ≥ 24×24px (WCAG 2.5.8)</span><span class="lang-en">Touch target ≥ 24×24px (WCAG 2.5.8)</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Basique --&gt;
+&lt;agtc-checkbox label="<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>" name="newsletter"&gt;&lt;/agtc-checkbox&gt;
+
+&lt;!-- Cochée --&gt;
+&lt;agtc-checkbox label="<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>" checked&gt;&lt;/agtc-checkbox&gt;
+
+&lt;!-- Parent d'un groupe « tout cocher » --&gt;
+&lt;agtc-checkbox label="<span class="lang-fr">Tout sélectionner</span><span class="lang-en">Select all</span>" indeterminate&gt;&lt;/agtc-checkbox&gt;
+
+&lt;!-- Texte en slot --&gt;
+&lt;agtc-checkbox&gt;<span class="lang-fr">J'accepte les</span><span class="lang-en">I accept the</span> &lt;a href="/cgu"&gt;<span class="lang-fr">conditions</span><span class="lang-en">terms</span>&lt;/a&gt;&lt;/agtc-checkbox&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Utiliser une checkbox pour une sélection indépendante (0–N)</span><span class="lang-en">Use a checkbox for independent selection (0–N)</span></li>
+      <li><span class="lang-fr">Formuler le libellé positivement</span><span class="lang-en">Phrase the label positively</span></li>
+      <li><span class="lang-fr">Écouter <code>agtc-change</code> pour réagir à la bascule</span><span class="lang-en">Listen to <code>agtc-change</code> to react to toggling</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Forme ronde — confusion avec un radio</span><span class="lang-en">Round shape — confusion with a radio</span></li>
+      <li><span class="lang-fr">Checkbox pour un réglage à effet immédiat — préférer un toggle</span><span class="lang-en">Checkbox for an immediate-effect setting — prefer a toggle</span></li>
+      <li><span class="lang-fr">Case pré-cochée pour un consentement</span><span class="lang-en">Pre-checked consent box</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/checkbox.html'), layout({
+    title: 'Checkbox', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'checkbox.html'),
+    body: body + uxPatternsFromMd('checkbox') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3047,6 +3178,7 @@ function build() {
   buildInput();
   buildBadge();
   buildCard();
+  buildCheckbox();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));

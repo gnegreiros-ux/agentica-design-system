@@ -180,3 +180,7 @@
 | 2026-06-01 11:00 | Activation | Chromatic activé (ADR-006) — workflow CI `.github/workflows/chromatic.yml`, token sorti de `package.json` vers secret GitHub `CHROMATIC_PROJECT_TOKEN` (régénéré, ancien révoqué), pipeline + quality-gate → Actif |
 | 2026-06-01 11:00 | Fix CI | `chromatic.yml` — `npm install` au lieu de `npm ci` (lockfile racine désync : arête `@emnapi/core` sans nœud) |
 | 2026-06-01 11:00 | Maintenance | Workflows — `actions/checkout` et `actions/setup-node` v4 → v5 (Node 24, dépréciation Node 20 du 2026-06-16) |
+| 2026-06-01 13:41 | Créé | `decisions/ADR-037-agtc-checkbox-implementation.md` |
+| 2026-06-01 13:41 | Modifié | `decisions/README.md` |
+| 2026-06-01 14:10 | Revue UX | `checkbox` — patterns NN/g+IxDF approuvés (CB1–CB7), forme **carrée** (écart assumé vs réf. ToDo ronde), `indeterminate` inclus — ADR-036/037 |
+| 2026-06-01 14:10 | Composant | `agtc-checkbox` créé — 6 surfaces : tokens `component.checkbox`, code, story, guideline, ADR-037, site. WCAG 0 violation, Storybook OK. Seul composant DS manquant identifié à partir d'une réf. ToDo |

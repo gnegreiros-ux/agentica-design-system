@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Lucide Icons comme bibliothèque d'icônes — Agentica</title>
+<title>Implémentation de `agtc-checkbox` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Lucide Icons comme bibliothèque d'icônes — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-checkbox` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Lucide Icons comme bibliothèque d'icônes — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-checkbox` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,66 +55,46 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 022</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 037</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-29</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
-</div><h1>ADR-022 — Lucide Icons comme bibliothèque d'icônes</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-29 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-022-lucide-icons.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md</p></blockquote>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-01</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
+</div><h1>ADR-037 — Implémentation de <code>agtc-checkbox</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-01 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-037-agtc-checkbox-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/checkbox.md, tokens/component.json</p></blockquote>
 <hr>
 <h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. <code>agtc-icon</code> n'a pas d'ADR d'implémentation dédié — sa décision de patterns est consignée ici. Détail et liens : <code>guidelines/components/icon.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Icône + texte quand le sens n'est pas universel</td><td>NN/g — icon usability</td></tr><tr><td>Label obligatoire si l'icône porte l'information</td><td>NN/g</td></tr><tr><td>Icônes décoratives masquées aux AT (<code>aria-hidden</code>)</td><td>NN/g</td></tr><tr><td>Signification cohérente et non trompeuse</td><td>IF — transparence</td></tr></tbody></table>
+<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>CB1 à CB7 approuvés</strong>, forme <strong>carrée</strong> retenue, état <strong>indeterminate inclus</strong>. Détail et liens : <code>guidelines/components/checkbox.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Checkbox (pas toggle) pour un item indépendant</td><td>NN/g — checkbox vs toggle</td></tr><tr><td>Forme carrée (le rond signale un radio)</td><td>NN/g — checkboxes</td></tr><tr><td>Label cliquable (case ou texte, loi de Fitts)</td><td>NN/g · IxDF</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>États visibles complets</td><td>NN/g</td></tr><tr><td>Libellé positif (pas de négation)</td><td>NN/g</td></tr><tr><td>Pas de pré-cochage de consentement</td><td>IxDF</td></tr><tr><td>Sémantique ARIA native</td><td>NN/g</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p>Le design system référençait <code>&lt;agtc-icon&gt;</code> dans les exemples de composants (notamment <code>guidelines/components/button.md</code>) sans qu'aucun système d'icônes ne soit défini. Aucun token de taille d'icône n'existait. Les équipes créaient des solutions ad hoc (emoji, SVG inline, classes Tailwind) — chacune une dérive potentielle.</p>
+<p>La référence d'une ToDo app a mis en évidence le seul composant DS atomique manquant pour ce type d'interface : la case à cocher. Card, input, button et icon existent déjà.</p>
+<p>Trois questions ont guidé les décisions :</p>
+<p>1. <strong>Forme</strong> — la maquette ToDo montre des cercles, mais NN/g recommande le carré. 2. <strong>Élément technique</strong> — case stylée custom vs <code>&lt;input&gt;</code> natif masqué. 3. <strong>Périmètre des états</strong> — faut-il inclure <code>indeterminate</code> dès la v1 ?</p>
 <hr>
-<h2>Décision</h2>
-<h3>Bibliothèque : Lucide Icons</h3>
-<p><strong>Lucide</strong> (fork de Feather Icons, MIT) est adopté comme bibliothèque d'icônes officielle du système.</p>
-<p><strong>Caractéristiques techniques :</strong></p>
-<ul><li>1 500+ icônes, couverture UI complète</li><li>Cohérence géométrique stricte : <code>strokeWidth: 1.5px</code> constant sur toutes les icônes</li><li>Format SVG pur — pas de font, pas de sprite obligatoire</li><li>Tree-shakeable — seules les icônes utilisées sont bundlées</li><li>Licence MIT — aucune contrainte commerciale</li></ul>
-<p><strong>Adoption sectorielle :</strong> Linear, Vercel, shadcn/ui, Raycast — signal de qualité et de pérennité.</p>
-<h3>Web Component : <code>agtc-icon</code></h3>
-<p>Un composant Lit encapsule Lucide et expose l'API du design system :</p>
-<pre class="code-block"><code class="lang-javascript">// Usage
-&lt;agtc-icon name="trash-2" size="control" label="Supprimer"&gt;&lt;/agtc-icon&gt;
-&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;</code></pre>
-<p><strong>Props :</strong></p>
-<table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>"trash-2"</code>)</td><td>— (requis)</td></tr><tr><td><code>size</code></td><td>String</td><td><code>"inline"</code> / <code>"control"</code> / <code>"nav"</code></td><td><code>"control"</code></td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement décorative</td><td><code>false</code></td></tr></tbody></table>
-<p><strong>Règle WCAG 1.1.1 :</strong> Si <code>decorative</code> est absent, <code>label</code> est obligatoire → <code>aria-label</code> injecté. Si <code>decorative</code> est présent → <code>aria-hidden="true"</code>.</p>
-<h3>Tokens de taille d'icône</h3>
-<pre class="code-block"><code class="lang-json">// primitives.json
-"iconSize": {
-  "sm": "16px",  // inline — dans un texte
-  "md": "20px",  // control — dans un bouton, input
-  "lg": "24px"   // nav — navigation, emphase
-}
-
-// semantic.json
-"icon.size.inline":  "{primitive.iconSize.sm}"
-"icon.size.control": "{primitive.iconSize.md}"
-"icon.size.nav":     "{primitive.iconSize.lg}"</code></pre>
-<h3>Intégration dans le site de documentation</h3>
-<p>Lucide est ajouté comme dépendance npm dans <code>site/package.json</code>. Le build génère une page de référence des icônes à <code>site/dist/components/icon.html</code>.</p>
+<h2>Décisions</h2>
+<h3>Décision 1 — Forme carrée uniquement</h3>
+<p>NN/g est explicite : *« A checkbox should be a small square »*. Le rond signale conventionnellement un bouton radio ; l'utiliser pour une checkbox induit en erreur.</p>
+<p><strong>Décision :</strong> forme <strong>carrée</strong> (rayon <code>semantic.radius.control</code>). L'apparence ronde de la maquette de référence est <strong>écartée</strong> au profit de la convention d'usabilité.</p>
+<p><strong>Alternative rejetée :</strong> attribut <code>shape="round"</code>. Rejeté pour ne pas encourager un écart à la convention dès la v1 ; pourra être rouvert via gouvernance si un besoin récurrent émerge.</p>
 <hr>
-<h2>Argumentaire WCAG</h2>
-<ul><li><strong>1.1.1 (Contenu non textuel) :</strong> Toute icône sémantique a un <code>aria-label</code>. Les icônes décoratives ont <code>aria-hidden="true"</code>.</li><li><strong>1.4.3 (Contraste) :</strong> Les icônes héritent de <code>color: currentColor</code> — le contraste est celui du texte parent, toujours conforme.</li><li><strong>2.5.3 (Label dans le nom) :</strong> Les boutons icône-seule exposent leur label via <code>aria-label</code> sur <code>agtc-icon</code>.</li></ul>
+<h3>Décision 2 — <code>&lt;input type="checkbox"&gt;</code> natif masqué + case stylée décorative</h3>
+<p>L'élément accessible est un vrai <code>&lt;input type="checkbox"&gt;</code> (rôle, état coché, gestion clavier native via Espace, nom accessible via le <code>&lt;label&gt;</code> implicite englobant). Il est <strong>visuellement masqué</strong> mais reste dans l'arbre d'accessibilité. La case visible (<code>.box</code> + SVG) est <strong>décorative</strong> (<code>aria-hidden</code>).</p>
+<p><strong>Alternative rejetée :</strong> <code>&lt;div role="checkbox" tabindex="0"&gt;</code> avec gestion clavier manuelle — anti-pattern WCAG 4.1.2 (réimplémenter un contrôle natif est fragile et coûteux en a11y).</p>
 <hr>
-<h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Material Icons</strong></td><td>Font icon — problèmes FOUT, accessibilité plus complexe, couplage Google.</td></tr><tr><td><strong>Heroicons</strong></td><td>Qualité équivalente mais moindre adoption, moins de variantes.</td></tr><tr><td><strong>Font Awesome</strong></td><td>Modèle freemium, dépendance propriétaire pour icônes avancées.</td></tr><tr><td><strong>SVG sprite custom</strong></td><td>Maintenance manuelle insoutenable pour 100+ icônes.</td></tr><tr><td><strong>Phosphor Icons</strong></td><td>Qualité équivalente mais écosystème React-centrique, moins de support Web Components.</td></tr></tbody></table>
+<h3>Décision 3 — État <code>indeterminate</code> inclus en v1</h3>
+<p><code>indeterminate</code> anticipe le pattern « tout cocher » d'un groupe (parent partiellement coché). Il ne s'exprime que via la <strong>propriété DOM</strong> <code>input.indeterminate</code> (jamais un attribut HTML), synchronisée dans <code>updated()</code>, et expose <code>aria-checked="mixed"</code> via le natif.</p>
+<p>Cocher ou décocher lève automatiquement l'état indéterminé.</p>
 <hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les tokens :</strong></p>
-<ul><li><code>primitive.iconSize</code> (sm/md/lg) et <code>semantic.icon.size</code> (inline/control/nav) ajoutés</li></ul>
-<p><strong>Pour les composants :</strong></p>
-<ul><li><code>components/agtc-icon.js</code> fournit le contrat d'implémentation Lit</li><li><code>guidelines/components/icon.md</code> documente les règles d'usage et les anti-patterns</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li><code>size="control"</code> est une intention lisible — l'agent comprend que c'est une icône dans un contrôle interactif</li><li>Les anti-patterns (icône sans label, taille en dur) sont auditables</li></ul>
-<p><strong>Pour les équipes :</strong></p>
-<ul><li>Fin des solutions ad hoc : une seule API, un seul token, une seule bibliothèque</li><li>Noms d'icônes documentés sur lucide.dev — référence canonique</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-021.html" class="ds-btn secondary">← ADR-021</a>
-    <a href="adr-023.html" class="ds-btn secondary">ADR-023 →</a>
+<h3>Décision 4 — Label cliquable et cible ≥ 24px</h3>
+<p>Le <code>&lt;label&gt;</code> englobe la case et le texte : cliquer l'un ou l'autre bascule l'état (loi de Fitts). La zone interactive <code>.root</code> a <code>min-height: 24px</code> pour satisfaire WCAG 2.5.8 (Target Size Minimum). La taille visuelle de la case est de 20px (<code>semantic.icon.size.control</code>).</p>
+<hr>
+<h2>Périmètre v1</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>États default/hover/focus/checked/indeterminate/disabled</td><td>Variante <code>shape="round"</code></td></tr><tr><td>Label via attribut ou slot</td><td><code>agtc-radio</code> (choix exclusif)</td></tr><tr><td>Événement <code>agtc-change</code></td><td><code>agtc-toggle</code> (effet immédiat on/off)</td></tr><tr><td><code>required</code> + <code>aria-required</code></td><td>Groupe <code>agtc-checkbox-group</code> (gestion select-all)</td></tr></tbody></table>
+<hr>
+<h2>Tokens ajoutés dans <code>component.json</code></h2>
+<table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-checkbox-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-checkbox-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-checkbox-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-checkbox-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-checkbox-default-check</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>--agtc-checkbox-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-036.html" class="ds-btn secondary">← ADR-036</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

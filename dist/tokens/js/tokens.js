@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 01 Jun 2026 00:22:59 GMT
+ * Generated on Mon, 01 Jun 2026 17:41:31 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -607,3 +607,12 @@ export const CardFlatBorder = "transparent";
 export const CardPaddingNone = "0px";
 export const CardPaddingSm = "12px";
 export const CardPaddingLg = "24px";
+export const CheckboxDefaultBackground = "#ffffff";
+export const CheckboxDefaultBorder = "#e8e8e8";
+export const CheckboxDefaultBorderHover = "#12a594";
+export const CheckboxDefaultBorderFocus = "#12a594";
+export const CheckboxDefaultFill = "#12a594";
+export const CheckboxDefaultFillHover = "#0d9b8a";
+export const CheckboxDefaultCheck = "#ffffff";
+export const CheckboxDefaultLabel = "#202020";
+export const CheckboxDefaultRadius = "6px";
