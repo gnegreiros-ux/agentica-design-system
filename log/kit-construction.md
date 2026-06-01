@@ -170,3 +170,4 @@
 | 2026-06-01 09:22 | Revue UX | `badge` — patterns NN/g+Dashboard approuvés (tous, BA1 = reco), 6 surfaces (ADR-034/036) |
 | 2026-06-01 09:32 | Modifié | `decisions/ADR-035-agtc-card-implementation.md` |
 | 2026-06-01 09:32 | Revue UX | `card` — patterns Dashboard+Smashing (C1/C3/C4 approuvés, C2 révisé anti-imbrication), 6 surfaces (ADR-035/036) |
+| 2026-06-01 09:56 | Refacto | `site/build.js` — section Patterns UX lue depuis les guidelines md (source unique), fin de la duplication codée en dur |

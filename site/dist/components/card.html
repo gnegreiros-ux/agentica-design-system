@@ -161,16 +161,15 @@
     </ul>
   </div>
 </div>
-
-<h2>Patterns UX de référence</h2>
-<p class="page-lead" style="margin-top:0">
-  <span class="lang-fr">Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : C1, C3, C4 approuvés ; C2 révisé.</span>
-  <span class="lang-en">Patterns approved through the <code>ux-pattern-review</code> workflow (ADR-036). Decision: C1, C3, C4 approuvés ; C2 révisé.</span>
-</p>
-<table class="token-table">
-  <thead><tr><th>Pattern</th><th>Source</th><th>Justification</th></tr></thead>
-  <tbody><tr><td>Clustering du contenu lié</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html" target="_blank" rel="noopener noreferrer">Dashboard — grouped layout</a></td><td>Intention du composant</td></tr><tr><td>Carte cliquable (C2 révisé) : 1 destination = lien englobant ; ≥ 2 actions = overlay ::after ou conteneur non interactif ; jamais d'interactif imbriqué</td><td><a href="https://www.smashingmagazine.com/category/design-patterns/" target="_blank" rel="noopener noreferrer">Smashing — clickable cards</a></td><td>Évite les éléments interactifs imbriqués</td></tr><tr><td>Hiérarchie via élévation/ombre, pas couleur seule</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html" target="_blank" rel="noopener noreferrer">Dashboard — composition</a></td><td>Variante elevated</td></tr><tr><td>Détail-on-demand : la carte résume, le détail s'ouvre ailleurs</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html" target="_blank" rel="noopener noreferrer">Dashboard — screenspace</a></td><td>Éviter la carte « réceptacle de tout le détail »</td></tr></tbody>
-</table>
+<h2>PATTERNS UX DE RÉFÉRENCE</h2>
+<blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>C1, C3, C4 approuvés + C2 révisé</strong>.</p></blockquote>
+<table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Groupement visuel clair (clustering) du contenu lié</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — grouped layout</a></td><td>✅</td><td>Intention du composant</td></tr><tr><td><strong>Carte cliquable — règle révisée</strong></td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing — clickable cards</a> · <a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅ (révisé)</td><td>Voir contrat ci-dessous</td></tr><tr><td>Hiérarchie via élévation/ombre, pas via couleur seule</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — composition</a></td><td>✅</td><td>Variante <code>elevated</code></td></tr><tr><td>Détail-on-demand : la carte résume, le détail s'ouvre ailleurs</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — screenspace</a></td><td>✅</td><td>Guideline d'usage : éviter la carte « réceptacle de tout le détail »</td></tr></tbody></table>
+<h3>Contrat de cliquabilité (C2 révisé)</h3>
+<ul><li><strong>Carte avec une seule destination</strong> → le lien couvre <strong>toute la surface</strong> (cible de clic</li></ul>
+<p>  englobante, focus visible sur la carte).</p>
+<ul><li><strong>Carte avec des actions distinctes</strong> (≥ 2 boutons/liens) → la carte <strong>n'est pas</strong> un lien global :</li></ul>
+<p>  - soit un <strong>lien primaire</strong> (le titre) étendu sur la carte via un overlay <code>::after</code>, avec les     boutons secondaires posés au-dessus (<code>position: relative; z-index</code>) pour rester cliquables ;   - soit un <strong>conteneur non interactif</strong> où chaque action porte son propre <code>&lt;button&gt;</code>/<code>&lt;a&gt;</code>.</p>
+<ul><li><strong>Jamais d'élément interactif imbriqué</strong> dans un autre.</li></ul>
 <div class="contribution-banner">
   <div class="contrib-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
   <div class="contrib-body">

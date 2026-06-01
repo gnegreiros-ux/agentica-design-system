@@ -964,22 +964,20 @@ function sidebarAgents(base) {
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span><a href="${base}agents/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="${base}agents/index.html#types"><span class="lang-fr">Types d'agents</span><span class="lang-en">Agent types</span></a><a href="${base}agents/index.html#actions"><span class="lang-fr">Ce qu'ils peuvent faire</span><span class="lang-en">What they can do</span></a><a href="${base}agents/index.html#lecture"><span class="lang-fr">Ordre de lecture</span><span class="lang-en">Reading order</span></a><a href="${base}agents/index.html#escalade"><span class="lang-fr">Règle d'escalade</span><span class="lang-en">Escalation rule</span></a><a href="${base}agents/index.html#skills"><span class="lang-fr">Compétences</span><span class="lang-en">Skills</span></a></div>`;
 }
 
-// Section « Patterns UX de référence » — propagée depuis le workflow ux-pattern-review (ADR-036).
-// rows : [pattern, sourceLabel, sourceUrl, justification]
-function uxPatterns(decision, rows) {
-  const trs = rows.map(([pat, src, url, why]) =>
-    `<tr><td>${pat}</td><td><a href="${url}" target="_blank" rel="noopener noreferrer">${src}</a></td><td>${why}</td></tr>`
-  ).join('');
-  return `
-<h2>Patterns UX de référence</h2>
-<p class="page-lead" style="margin-top:0">
-  <span class="lang-fr">Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : ${decision}.</span>
-  <span class="lang-en">Patterns approved through the <code>ux-pattern-review</code> workflow (ADR-036). Decision: ${decision}.</span>
-</p>
-<table class="token-table">
-  <thead><tr><th>Pattern</th><th>Source</th><th>Justification</th></tr></thead>
-  <tbody>${trs}</tbody>
-</table>`;
+// Section « Patterns UX de référence » — lue depuis la guideline markdown du composant
+// (source unique de vérité). Extrait la section "## PATTERNS UX DE RÉFÉRENCE" et la rend
+// via parseMd, comme la page icon. Voir workflow ux-pattern-review / ADR-036.
+function uxPatternsFromMd(comp) {
+  const md = read(path.join(ROOT, `guidelines/components/${comp}.md`));
+  const lines = md.split('\n');
+  const start = lines.findIndex(l => /^##\s+PATTERNS UX DE RÉFÉRENCE/i.test(l));
+  if (start === -1) return '';
+  let end = start + 1;
+  while (end < lines.length && !/^##\s+/.test(lines[end])) end++;
+  const section = lines.slice(start, end);
+  // retirer lignes vides / séparateurs en fin de section
+  while (section.length && (section[section.length - 1].trim() === '' || /^-{3,}$/.test(section[section.length - 1].trim()))) section.pop();
+  return parseMd(section.join('\n'));
 }
 
 function contributionBanner() {
@@ -2078,13 +2076,7 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
   write(path.join(DIST, 'components/button.html'), layout({
     title: 'Button', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'button.html'),
-    body: body + uxPatterns('tous approuvés', [
-      ['Une seule action primaire par contexte', 'IxDF — clear primary action', 'https://ixdf.org/literature/topics/ui-design-patterns', 'Hiérarchie d\'action lisible'],
-      ['Confirmation explicite pour action destructrice (critical)', 'NN/g — error prevention', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'requires-confirmation'],
-      ['Largeur préservée pendant le loading', 'Smashing', 'https://www.smashingmagazine.com/category/design-patterns/', 'Pas de saut de layout'],
-      ['Ne jamais désactiver sans indiquer la raison', 'Smashing — hidden vs disabled', 'https://www.smashingmagazine.com/category/design-patterns/', 'Un disabled muet est un anti-pattern — expliquer le blocage'],
-      ['Libellé décrivant la conséquence (pas « OK »)', 'NN/g', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Libellé explicite'],
-    ]) + contributionBanner()
+    body: body + uxPatternsFromMd('button') + contributionBanner()
   }));
 }
 
@@ -2287,15 +2279,7 @@ function buildInput() {
   write(path.join(DIST, 'components/input.html'), layout({
     title: 'Input', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'input.html'),
-    body: body + uxPatterns('tous approuvés', [
-      ['Label visible toujours présent (jamais placeholder seul)', 'NN/g', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'WCAG 1.3.1'],
-      ['Validation à onBlur, re-validation à la frappe une fois en erreur', 'NN/g — How to Report Errors in Forms', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Ne pas signaler l\'erreur pendant la frappe initiale ; récompenser la correction'],
-      ['Erreur inline sous le champ + role="alert"', 'NN/g — Error-Message Guidelines', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Erreur localisée et annoncée aux AT'],
-      ['Help text persistant, distinct de l\'erreur, aria-describedby', 'NN/g', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Aide contextuelle accessible'],
-      ['Required marker * + aria-required', 'NN/g — Forms', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Champ obligatoire signalé'],
-      ['Forgiving format (tel/number)', 'IxDF — forgiving formats', 'https://ixdf.org/literature/topics/ui-design-patterns', 'Réduire les erreurs de saisie'],
-      ['Éviter les hostile patterns (pas d\'effacement du champ en erreur)', 'NN/g — Hostile Patterns in Error Messages', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Anti-dark-pattern'],
-    ]) + contributionBanner()
+    body: body + uxPatternsFromMd('input') + contributionBanner()
   }));
 }
 
@@ -2408,12 +2392,7 @@ function buildBadge() {
   write(path.join(DIST, 'components/badge.html'), layout({
     title: 'Badge', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'badge.html'),
-    body: body + uxPatterns('tous approuvés', [
-      ['Statut pas encodé uniquement par la couleur', 'NN/g — indicators', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Recommandé : icône/libellé distinctif pour danger/warning'],
-      ['role="status" pour annoncer les changements aux AT', 'NN/g', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Déjà en place'],
-      ['Mapping sémantique cohérent (traffic-light)', 'Dashboard — color/semantic', 'https://dashboarddesignpatterns.github.io/patterns.html', 'Variantes success/warning/danger'],
-      ['Badge non interactif — encapsuler si cliquable', 'NN/g', 'https://www.nngroup.com/articles/design-pattern-guidelines/', 'Anti-pattern existant'],
-    ]) + contributionBanner()
+    body: body + uxPatternsFromMd('badge') + contributionBanner()
   }));
 }
 
@@ -2541,12 +2520,7 @@ function buildCard() {
   write(path.join(DIST, 'components/card.html'), layout({
     title: 'Card', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'card.html'),
-    body: body + uxPatterns('C1, C3, C4 approuvés ; C2 révisé', [
-      ['Clustering du contenu lié', 'Dashboard — grouped layout', 'https://dashboarddesignpatterns.github.io/patterns.html', 'Intention du composant'],
-      ['Carte cliquable (C2 révisé) : 1 destination = lien englobant ; ≥ 2 actions = overlay ::after ou conteneur non interactif ; jamais d\'interactif imbriqué', 'Smashing — clickable cards', 'https://www.smashingmagazine.com/category/design-patterns/', 'Évite les éléments interactifs imbriqués'],
-      ['Hiérarchie via élévation/ombre, pas couleur seule', 'Dashboard — composition', 'https://dashboarddesignpatterns.github.io/patterns.html', 'Variante elevated'],
-      ['Détail-on-demand : la carte résume, le détail s\'ouvre ailleurs', 'Dashboard — screenspace', 'https://dashboarddesignpatterns.github.io/patterns.html', 'Éviter la carte « réceptacle de tout le détail »'],
-    ]) + contributionBanner()
+    body: body + uxPatternsFromMd('card') + contributionBanner()
   }));
 }
 
