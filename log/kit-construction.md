@@ -146,3 +146,6 @@
 | 2026-05-31 — | Créé | `decisions/ADR-035-agtc-card-implementation.md` |
 | 2026-05-31 — | Modifié | `.storybook/preview.js` — import agtc-card.js |
 | 2026-05-31 17:02 | Créé | `decisions/ADR-035-agtc-card-implementation.md` |
+| 2026-05-31 20:26 | Modifié | `.claude/settings.json` |
+| 2026-05-31 20:29 | Modifié | `decisions/ADR-015-hook-rappel-adr.md` |
+| 2026-05-31 20:29 | Modifié | `decisions/ADR-015-hook-rappel-adr.md` |
