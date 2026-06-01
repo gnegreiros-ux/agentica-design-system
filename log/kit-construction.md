@@ -178,3 +178,5 @@
 | 2026-06-01 11:00 | Modifié | `decisions/ADR-006-chromatic-tests-visuels.md` |
 | 2026-06-01 11:00 | Créé | `components/agtc-icon.stories.js` — 6ᵉ surface (Storybook) de la revue UX `icon`, complète enfin l'entrée du 08:45 |
 | 2026-06-01 11:00 | Activation | Chromatic activé (ADR-006) — workflow CI `.github/workflows/chromatic.yml`, token sorti de `package.json` vers secret GitHub `CHROMATIC_PROJECT_TOKEN` (régénéré, ancien révoqué), pipeline + quality-gate → Actif |
+| 2026-06-01 11:00 | Fix CI | `chromatic.yml` — `npm install` au lieu de `npm ci` (lockfile racine désync : arête `@emnapi/core` sans nœud) |
+| 2026-06-01 11:00 | Maintenance | Workflows — `actions/checkout` et `actions/setup-node` v4 → v5 (Node 24, dépréciation Node 20 du 2026-06-16) |
