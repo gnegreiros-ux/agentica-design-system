@@ -33,7 +33,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        # npm install (et non npm ci) : le lockfile racine porte la couverture
+        # multi-plateforme mais une arête transitive (@emnapi/core) sans nœud résolu
+        # fait échouer le mode strict de npm ci. npm install réconcilie et installe
+        # les binaires natifs Linux requis par le build Storybook.
+        run: npm install --no-audit --no-fund
 
       - name: Publier sur Chromatic
         uses: chromaui/action@latest
