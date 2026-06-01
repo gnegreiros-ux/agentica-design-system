@@ -85,13 +85,13 @@ export const WithHeaderAndFooter = {
     <div style="max-width:360px;">
       <agtc-card>
         <div slot="header" style="display:flex;align-items:center;gap:8px;">
-          <agtc-icon name="user" size="control" style="color:#888;"></agtc-icon>
+          <agtc-icon name="user" size="control" style="color:#646464;"></agtc-icon>
           <strong style="font-size:0.875rem;">Profil utilisateur</strong>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:8px;">
           <p style="margin:0;font-size:0.875rem;color:#444;">Guilherme Negreiros</p>
-          <p style="margin:0;font-size:0.75rem;color:#888;">Design System Lead</p>
+          <p style="margin:0;font-size:0.75rem;color:#646464;">Design System Lead</p>
         </div>
 
         <div slot="footer" style="display:flex;justify-content:flex-end;gap:8px;">

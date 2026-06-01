@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 31 May 2026 21:01:37 GMT
+ * Generated on Mon, 01 Jun 2026 00:22:59 GMT
  */
 
 :root {
@@ -482,11 +482,12 @@
   --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
   --agtc-badge-md-padding-y: var(--agtc-primitive-space-1);
   --agtc-badge-md-padding-x: var(--agtc-primitive-space-3);
+  --agtc-badge-info-text: var(--agtc-primitive-color-blue-12);
   --agtc-badge-info-background: var(--agtc-primitive-color-blue-3);
-  --agtc-badge-warning-text: var(--agtc-primitive-color-orange-11);
+  --agtc-badge-warning-text: var(--agtc-primitive-color-orange-12);
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
-  --agtc-badge-brand-text: var(--agtc-primitive-color-teal-11);
+  --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-icon-size-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-icon-size-md);
   --agtc-semantic-icon-size-inline: var(--agtc-primitive-icon-size-sm);
@@ -575,7 +576,6 @@
   --agtc-card-default-background: var(--agtc-semantic-color-background-surface);
   --agtc-badge-sm-font-size: var(--agtc-semantic-typography-detail-size);
   --agtc-badge-md-font-size: var(--agtc-semantic-typography-label-size);
-  --agtc-badge-info-text: var(--agtc-semantic-color-feedback-info);
   --agtc-badge-danger-text: var(--agtc-semantic-color-feedback-danger);
   --agtc-badge-danger-background: var(--agtc-semantic-color-feedback-danger-subtle);
   --agtc-badge-success-text: var(--agtc-semantic-color-feedback-success);

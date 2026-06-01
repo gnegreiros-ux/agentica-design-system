@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 31 May 2026 21:01:37 GMT
+ * Generated on Mon, 01 Jun 2026 00:22:59 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -573,19 +573,19 @@ export const BadgeNeutralBackground = "#f0f0f0";
 export const BadgeNeutralText = "#646464";
 export const BadgeNeutralBorder = "#e8e8e8";
 export const BadgeBrandBackground = "#e0f8f3";
-export const BadgeBrandText = "#008573";
+export const BadgeBrandText = "#0d3d38";
 export const BadgeBrandBorder = "transparent";
 export const BadgeSuccessBackground = "#e6f6eb";
 export const BadgeSuccessText = "#18794e";
 export const BadgeSuccessBorder = "transparent";
 export const BadgeWarningBackground = "#ffefd6";
-export const BadgeWarningText = "#cc4e00";
+export const BadgeWarningText = "#582d1d";
 export const BadgeWarningBorder = "transparent";
 export const BadgeDangerBackground = "#feebec";
 export const BadgeDangerText = "#ce2c31";
 export const BadgeDangerBorder = "transparent";
 export const BadgeInfoBackground = "#e6f4fe";
-export const BadgeInfoText = "#0d74ce";
+export const BadgeInfoText = "#113264";
 export const BadgeInfoBorder = "transparent";
 export const BadgeMdRadius = "9999px";
 export const BadgeMdPaddingX = "12px";

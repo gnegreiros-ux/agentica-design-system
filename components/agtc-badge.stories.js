@@ -119,7 +119,7 @@ export const AllVariants = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:20px;">
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 8px;">md — sans icône</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — sans icône</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral">Brouillon</agtc-badge>
           <agtc-badge variant="brand">Agentica</agtc-badge>
@@ -130,7 +130,7 @@ export const AllVariants = {
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 8px;">md — avec icône</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — avec icône</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral" icon="file">Brouillon</agtc-badge>
           <agtc-badge variant="brand"   icon="zap">Agentica</agtc-badge>
@@ -141,7 +141,7 @@ export const AllVariants = {
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 8px;">sm</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">sm</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral" size="sm">Brouillon</agtc-badge>
           <agtc-badge variant="brand"   size="sm">Agentica</agtc-badge>

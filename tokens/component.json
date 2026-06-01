@@ -76,7 +76,7 @@
     },
     "brand": {
       "background": { "value": "{semantic.color.brand.primary-subtle}", "$type": "color" },
-      "text":       { "value": "{primitive.color.teal.11}",             "$type": "color" },
+      "text":       { "value": "{primitive.color.teal.12}",             "$type": "color" },
       "border":     { "value": "transparent",                           "$type": "color" }
     },
     "success": {
@@ -86,7 +86,7 @@
     },
     "warning": {
       "background": { "value": "{primitive.color.orange.3}",         "$type": "color" },
-      "text":       { "value": "{primitive.color.orange.11}",        "$type": "color" },
+      "text":       { "value": "{primitive.color.orange.12}",        "$type": "color" },
       "border":     { "value": "transparent",                        "$type": "color" }
     },
     "danger": {
@@ -96,7 +96,7 @@
     },
     "info": {
       "background": { "value": "{primitive.color.blue.3}",           "$type": "color" },
-      "text":       { "value": "{semantic.color.feedback.info}",     "$type": "color" },
+      "text":       { "value": "{primitive.color.blue.12}",          "$type": "color" },
       "border":     { "value": "transparent",                        "$type": "color" }
     },
     "md": {

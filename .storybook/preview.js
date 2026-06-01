@@ -16,8 +16,15 @@ const preview = {
       },
     },
     a11y: {
-      // 'error' blocks CI on a11y violations (see ADR-007)
       test: 'error',
+      config: {
+        rules: [
+          // Faux positifs structurels de l'iframe Storybook — pas des violations de composants
+          { id: 'landmark-one-main',   enabled: false },
+          { id: 'page-has-heading-one', enabled: false },
+          { id: 'region',              enabled: false },
+        ],
+      },
     },
     backgrounds: {
       default: 'white',
