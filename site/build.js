@@ -162,6 +162,40 @@ const COMP = {
   'card-default-border':                'var(--agtc-semantic-color-border-default)',
   'card-default-radius':                'var(--agtc-semantic-radius-card)',
   'card-default-padding':               'var(--agtc-semantic-space-layout-component)',
+  'card-elevated-background':           'var(--agtc-semantic-color-background-surface)',
+  'card-elevated-border':               'transparent',
+  'card-elevated-shadow':               '0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)',
+  'card-flat-background':               'var(--agtc-semantic-color-background-subtle)',
+  'card-flat-border':                   'transparent',
+  'card-padding-none':                  '0px',
+  'card-padding-sm':                    'var(--agtc-primitive-space-3)',
+  'card-padding-lg':                    'var(--agtc-primitive-space-6)',
+  'badge-neutral-background':           'var(--agtc-semantic-color-background-subtle)',
+  'badge-neutral-text':                 'var(--agtc-semantic-color-text-secondary)',
+  'badge-neutral-border':               'var(--agtc-semantic-color-border-default)',
+  'badge-brand-background':             'var(--agtc-semantic-color-brand-primary-subtle)',
+  'badge-brand-text':                   'var(--agtc-primitive-color-teal-12)',
+  'badge-brand-border':                 'transparent',
+  'badge-success-background':           'var(--agtc-primitive-color-green-3)',
+  'badge-success-text':                 'var(--agtc-semantic-color-feedback-success)',
+  'badge-success-border':               'transparent',
+  'badge-warning-background':           'var(--agtc-primitive-color-orange-3)',
+  'badge-warning-text':                 'var(--agtc-primitive-color-orange-12)',
+  'badge-warning-border':               'transparent',
+  'badge-danger-background':            'var(--agtc-semantic-color-feedback-danger-subtle)',
+  'badge-danger-text':                  'var(--agtc-semantic-color-feedback-danger)',
+  'badge-danger-border':                'transparent',
+  'badge-info-background':              'var(--agtc-primitive-color-blue-3)',
+  'badge-info-text':                    'var(--agtc-primitive-color-blue-12)',
+  'badge-info-border':                  'transparent',
+  'badge-md-radius':                    '9999px',
+  'badge-md-padding-x':                 'var(--agtc-primitive-space-3)',
+  'badge-md-padding-y':                 'var(--agtc-primitive-space-1)',
+  'badge-md-font-size':                 'var(--agtc-semantic-typography-label-size)',
+  'badge-sm-radius':                    '9999px',
+  'badge-sm-padding-x':                 'var(--agtc-primitive-space-2)',
+  'badge-sm-padding-y':                 '2px',
+  'badge-sm-font-size':                 'var(--agtc-semantic-typography-detail-size)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -898,6 +932,9 @@ function sidebarComponents(base, current) {
     ['index.html', '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
     ['button.html','Button'],
     ['icon.html',  'Icon'],
+    ['input.html', 'Input'],
+    ['badge.html', 'Badge'],
+    ['card.html',  'Card'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1760,22 +1797,30 @@ function buildComponentsIndex() {
       <span class="lang-en">Lucide library — 1,500+ icons, 3 sizes, WCAG 1.1.1 rules.</span>
     </div>
   </a>
-  <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
+  <a href="input.html" class="nav-card">
     <span class="nav-card-icon">${icon('pen-line',32)}</span>
-    <div class="nav-card-title">Input <span class="badge" style="margin-left:6px"><span class="lang-fr">Bientôt</span><span class="lang-en">Soon</span></span></div>
+    <div class="nav-card-title">Input</div>
     <div class="nav-card-desc">
-      <span class="lang-fr">Saisie de données avec états : défaut, focus, erreur, désactivé.</span>
-      <span class="lang-en">Data entry with states: default, focus, error, disabled.</span>
+      <span class="lang-fr">7 types, label obligatoire, toggle password, icônes hybrides, états complets.</span>
+      <span class="lang-en">7 types, required label, password toggle, hybrid icons, complete states.</span>
     </div>
-  </div>
-  <div class="nav-card" style="opacity:.5;cursor:default;pointer-events:none">
+  </a>
+  <a href="badge.html" class="nav-card">
+    <span class="nav-card-icon">${icon('tag',32)}</span>
+    <div class="nav-card-title">Badge</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">6 variantes sémantiques, 2 tailles, icônes, mode icon-only accessible.</span>
+      <span class="lang-en">6 semantic variants, 2 sizes, icons, accessible icon-only mode.</span>
+    </div>
+  </a>
+  <a href="card.html" class="nav-card">
     <span class="nav-card-icon">${icon('layout-template',32)}</span>
-    <div class="nav-card-title">Card <span class="badge" style="margin-left:6px"><span class="lang-fr">Bientôt</span><span class="lang-en">Soon</span></span></div>
+    <div class="nav-card-title">Card</div>
     <div class="nav-card-desc">
-      <span class="lang-fr">Conteneur visuel pour regrouper des informations liées.</span>
-      <span class="lang-en">Visual container for grouping related information.</span>
+      <span class="lang-fr">3 variantes, 4 paddings, slots header/body/footer, composition libre.</span>
+      <span class="lang-en">3 variants, 4 paddings, header/body/footer slots, free composition.</span>
     </div>
-  </div>
+  </a>
 </div>
 `;
 
@@ -2077,6 +2122,388 @@ ${content}
   write(path.join(DIST, 'components/icon.html'), layout({
     title: 'Icon', depth: 1,
     sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'icon.html'),
+    body: body + contributionBanner()
+  }));
+}
+
+// ─── PAGE: INPUT ────────────────────────────────────────────────────────────
+function buildInput() {
+  const tokenRows = [
+    ['input-default-background',    'semantic.color.background.surface',  SEM['color-background-surface']],
+    ['input-default-border',        'semantic.color.border.default',       SEM['color-border-default']],
+    ['input-default-border-focus',  'semantic.color.border.focus',         SEM['color-border-focus']],
+    ['input-default-border-error',  'semantic.color.border.danger',        SEM['color-border-danger']],
+    ['input-default-text',          'semantic.color.text.primary',         SEM['color-text-primary']],
+    ['input-default-placeholder',   'semantic.color.text.secondary',       SEM['color-text-secondary']],
+    ['input-default-radius',        'semantic.radius.control',             SEM['radius-control']],
+    ['input-default-padding-x',     'semantic.space.control.padding-x',    SEM['space-control-padding-x']],
+    ['input-default-padding-y',     'semantic.space.control.padding-y',    SEM['space-control-padding-y']],
+  ];
+
+  const body = `
+<h1>Input</h1>
+<p class="page-lead">
+  <span class="lang-fr">Saisie de données avec label obligatoire, 7 types, icônes hybrides et gestion d'erreur accessible. Le label est non négociable — un input sans label est inaccessible (WCAG 1.3.1).</span>
+  <span class="lang-en">Data entry with required label, 7 types, hybrid icons, and accessible error handling. The label is non-negotiable — an input without a label is inaccessible (WCAG 1.3.1).</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">États</span><span class="lang-en">States</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:4px;width:280px">
+        <label style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Nom complet</span><span class="lang-en">Full name</span></label>
+        <input type="text" placeholder="Jean Dupont" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
+        <span style="font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Tel qu'il apparaît sur votre document officiel.</span><span class="lang-en">As it appears on your official document.</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Erreur</span><span class="lang-en">Error</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:4px;width:280px">
+        <label style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Adresse e-mail</span><span class="lang-en">Email address</span></label>
+        <input type="email" value="jean@" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-danger);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
+        <span style="font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-feedback-danger)" role="alert"><span class="lang-fr">Format d'adresse invalide.</span><span class="lang-en">Invalid email format.</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:4px;width:280px">
+        <label style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-disabled)"><span class="lang-fr">Code d'accès</span><span class="lang-en">Access code</span></label>
+        <input type="text" value="••••••" disabled style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-disabled);outline:none;font-family:inherit;cursor:not-allowed">
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours fournir <code>label="…"</code> — jamais placeholder seul (WCAG 1.3.1)</span><span class="lang-en">Always provide <code>label="…"</code> — never placeholder alone (WCAG 1.3.1)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Utiliser <code>invalid</code> + <code>error-message</code> ensemble — l'erreur doit être expliquée</span><span class="lang-en">Use <code>invalid</code> + <code>error-message</code> together — the error must be explained</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le focus visible est sur le wrapper <code>.control</code> — clavier et pointeur couverts</span><span class="lang-en">Visible focus is on the <code>.control</code> wrapper — keyboard and pointer covered</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais d'input sans label — avertissement console + violation WCAG 1.3.1</span><span class="lang-en">Never an input without label — console warning + WCAG 1.3.1 violation</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de valeur ou espacement codé en dur</span><span class="lang-en">Never hardcoded values or spacing</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Types supportés</span><span class="lang-en">Supported types</span></h2>
+<table class="token-table">
+  <thead><tr><th>Type</th><th><span class="lang-fr">Usage</span><span class="lang-en">Usage</span></th><th><span class="lang-fr">Particularité</span><span class="lang-en">Note</span></th></tr></thead>
+  <tbody>
+    <tr><td><code>text</code></td><td><span class="lang-fr">Saisie libre</span><span class="lang-en">Free text</span></td><td><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></td></tr>
+    <tr><td><code>email</code></td><td><span class="lang-fr">Adresse e-mail</span><span class="lang-en">Email address</span></td><td><span class="lang-fr">Validation native</span><span class="lang-en">Native validation</span></td></tr>
+    <tr><td><code>password</code></td><td><span class="lang-fr">Mot de passe</span><span class="lang-en">Password</span></td><td><span class="lang-fr">Toggle show/hide intégré</span><span class="lang-en">Built-in show/hide toggle</span></td></tr>
+    <tr><td><code>number</code></td><td><span class="lang-fr">Valeur numérique</span><span class="lang-en">Numeric value</span></td><td><span class="lang-fr">Spinners supprimés</span><span class="lang-en">Spinners removed</span></td></tr>
+    <tr><td><code>search</code></td><td><span class="lang-fr">Recherche</span><span class="lang-en">Search</span></td><td>—</td></tr>
+    <tr><td><code>tel</code></td><td><span class="lang-fr">Téléphone</span><span class="lang-en">Phone</span></td><td>—</td></tr>
+    <tr><td><code>url</code></td><td>URL</td><td><span class="lang-fr">Validation native</span><span class="lang-en">Native validation</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>label</code> lié via <code>for</code>/<code>id</code> — jamais <code>aria-label</code> seul sur l'input</span><span class="lang-en"><code>label</code> linked via <code>for</code>/<code>id</code> — never <code>aria-label</code> alone on input</span></li>
+  <li><span class="lang-fr"><code>aria-invalid="true"</code> + <code>role="alert"</code> sur l'error-message</span><span class="lang-en"><code>aria-invalid="true"</code> + <code>role="alert"</code> on error-message</span></li>
+  <li><span class="lang-fr"><code>aria-describedby</code> lie helper-text et error-message à l'input</span><span class="lang-en"><code>aria-describedby</code> links helper-text and error-message to the input</span></li>
+  <li><span class="lang-fr">Type <code>password</code> : <code>aria-label</code> du toggle change dynamiquement</span><span class="lang-en"><code>password</code> type: toggle <code>aria-label</code> changes dynamically</span></li>
+  <li><span class="lang-fr">Champ requis : <code>aria-required="true"</code> + marqueur <code>*</code> visuel</span><span class="lang-en">Required field: <code>aria-required="true"</code> + visual <code>*</code> marker</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Basique --&gt;
+&lt;agtc-input label="<span class="lang-fr">Nom complet</span><span class="lang-en">Full name</span>" name="fullname"&gt;&lt;/agtc-input&gt;
+
+&lt;!-- Avec aide et erreur --&gt;
+&lt;agtc-input
+  label="<span class="lang-fr">Adresse e-mail</span><span class="lang-en">Email address</span>"
+  type="email"
+  helper-text="<span class="lang-fr">Utilisée pour les notifications</span><span class="lang-en">Used for notifications</span>"
+  invalid
+  error-message="<span class="lang-fr">Format invalide</span><span class="lang-en">Invalid format</span>"
+&gt;&lt;/agtc-input&gt;
+
+&lt;!-- Mot de passe avec toggle intégré --&gt;
+&lt;agtc-input label="<span class="lang-fr">Mot de passe</span><span class="lang-en">Password</span>" type="password" required&gt;&lt;/agtc-input&gt;
+
+&lt;!-- Avec icône --&gt;
+&lt;agtc-input label="<span class="lang-fr">Rechercher</span><span class="lang-en">Search</span>" type="search" icon="search"&gt;&lt;/agtc-input&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Toujours fournir <code>label</code> avec un texte descriptif</span><span class="lang-en">Always provide <code>label</code> with descriptive text</span></li>
+      <li><span class="lang-fr">Utiliser <code>helper-text</code> pour les contraintes de format</span><span class="lang-en">Use <code>helper-text</code> for format constraints</span></li>
+      <li><span class="lang-fr">Paire <code>invalid</code> + <code>error-message</code> — jamais l'un sans l'autre</span><span class="lang-en">Pair <code>invalid</code> + <code>error-message</code> — never one without the other</span></li>
+      <li><span class="lang-fr">Utiliser <code>required</code> pour les champs obligatoires</span><span class="lang-en">Use <code>required</code> for mandatory fields</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Input sans <code>label</code> — inaccessible</span><span class="lang-en">Input without <code>label</code> — inaccessible</span></li>
+      <li><span class="lang-fr">Placeholder comme seule étiquette — disparaît à la saisie</span><span class="lang-en">Placeholder as sole label — disappears on input</span></li>
+      <li><span class="lang-fr"><code>invalid</code> sans <code>error-message</code> — erreur sans explication</span><span class="lang-en"><code>invalid</code> without <code>error-message</code> — error without explanation</span></li>
+      <li><span class="lang-fr">Styles inline sur le champ</span><span class="lang-en">Inline styles on the field</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/input.html'), layout({
+    title: 'Input', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'input.html'),
+    body: body + contributionBanner()
+  }));
+}
+
+// ─── PAGE: BADGE ─────────────────────────────────────────────────────────────
+function buildBadge() {
+  const tokenRows = [
+    ['badge-neutral-background', 'semantic.color.background.subtle',     SEM['color-background-subtle']],
+    ['badge-neutral-text',       'semantic.color.text.secondary',         SEM['color-text-secondary']],
+    ['badge-neutral-border',     'semantic.color.border.default',         SEM['color-border-default']],
+    ['badge-brand-background',   'semantic.color.brand.primary-subtle',   SEM['color-brand-primary-subtle']],
+    ['badge-success-background', 'primitive.color.green.3',               ''],
+    ['badge-success-text',       'semantic.color.feedback.success',       SEM['color-feedback-success']],
+    ['badge-warning-background', 'primitive.color.orange.3',              ''],
+    ['badge-danger-background',  'semantic.color.feedback.danger-subtle', SEM['color-feedback-danger-subtle']],
+    ['badge-danger-text',        'semantic.color.feedback.danger',        SEM['color-feedback-danger']],
+    ['badge-info-background',    'primitive.color.blue.3',                ''],
+    ['badge-md-radius',          '—',                                     '9999px'],
+    ['badge-md-font-size',       'semantic.typography.label.size',        SEM['typography-label-size']],
+    ['badge-sm-font-size',       'semantic.typography.detail.size',       SEM['typography-detail-size']],
+  ];
+
+  const variantDemo = (variant, labelFr, labelEn) => `
+    <div class="demo-group">
+      <span class="demo-group-label">${variant}</span>
+      <div class="demo-row" style="gap:8px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-${variant}-background);color:var(--agtc-component-badge-${variant}-text);border:1px solid var(--agtc-component-badge-${variant}-border)"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
+        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-${variant}-background);color:var(--agtc-component-badge-${variant}-text);border:1px solid var(--agtc-component-badge-${variant}-border)"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></span>
+      </div>
+    </div>`;
+
+  const body = `
+<h1>Badge</h1>
+<p class="page-lead">
+  <span class="lang-fr">Étiquette compacte non interactive pour afficher un statut, une catégorie ou un compteur. 6 variantes sémantiques, 2 tailles, icônes, mode icon-only accessible.</span>
+  <span class="lang-en">Compact non-interactive label for displaying status, category, or count. 6 semantic variants, 2 sizes, icons, accessible icon-only mode.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
+<div class="demo-box">
+  ${variantDemo('neutral', 'Neutre', 'Neutral')}
+  ${variantDemo('brand', 'Beta', 'Beta')}
+  ${variantDemo('success', 'Actif', 'Active')}
+  ${variantDemo('warning', 'En attente', 'Pending')}
+  ${variantDemo('danger', 'Rejeté', 'Rejected')}
+  ${variantDemo('info', 'En cours', 'In progress')}
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Non interactif — pour une action, utiliser <code>&lt;agtc-button&gt;</code></span><span class="lang-en">Non-interactive — for an action, use <code>&lt;agtc-button&gt;</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>icon-only</code> exige <code>label="…"</code> — WCAG 1.1.1</span><span class="lang-en"><code>icon-only</code> requires <code>label="…"</code> — WCAG 1.1.1</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Choisir la variante par intention sémantique, pas par couleur</span><span class="lang-en">Choose variant by semantic intent, not by color</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur codée en dur</span><span class="lang-en">Never hardcoded color</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>role="status"</code> — les changements de statut sont annoncés aux lecteurs d'écran</span><span class="lang-en"><code>role="status"</code> — status changes are announced to screen readers</span></li>
+  <li><span class="lang-fr">Mode <code>icon-only</code> : <code>aria-label</code> obligatoire</span><span class="lang-en"><code>icon-only</code> mode: <code>aria-label</code> required</span></li>
+  <li><span class="lang-fr">Badge décoratif sans texte : <code>aria-hidden="true"</code></span><span class="lang-en">Decorative badge without text: <code>aria-hidden="true"</code></span></li>
+  <li><span class="lang-fr">Contraste 4.5:1 sur fond blanc vérifié pour toutes les variantes</span><span class="lang-en">4.5:1 contrast on white background verified for all variants</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Variantes --&gt;
+&lt;agtc-badge&gt;<span class="lang-fr">Neutre</span><span class="lang-en">Neutral</span>&lt;/agtc-badge&gt;
+&lt;agtc-badge variant="success"&gt;<span class="lang-fr">Actif</span><span class="lang-en">Active</span>&lt;/agtc-badge&gt;
+&lt;agtc-badge variant="warning"&gt;<span class="lang-fr">En attente</span><span class="lang-en">Pending</span>&lt;/agtc-badge&gt;
+&lt;agtc-badge variant="danger"&gt;<span class="lang-fr">Rejeté</span><span class="lang-en">Rejected</span>&lt;/agtc-badge&gt;
+&lt;agtc-badge variant="info"&gt;<span class="lang-fr">En cours</span><span class="lang-en">In progress</span>&lt;/agtc-badge&gt;
+&lt;agtc-badge variant="brand"&gt;Beta&lt;/agtc-badge&gt;
+
+&lt;!-- Taille sm --&gt;
+&lt;agtc-badge size="sm" variant="neutral"&gt;Draft&lt;/agtc-badge&gt;
+
+&lt;!-- Avec icône --&gt;
+&lt;agtc-badge variant="success" icon="check"&gt;<span class="lang-fr">Approuvé</span><span class="lang-en">Approved</span>&lt;/agtc-badge&gt;
+
+&lt;!-- Icon-only — label obligatoire --&gt;
+&lt;agtc-badge icon-only icon="check" label="<span class="lang-fr">Approuvé</span><span class="lang-en">Approved</span>" variant="success"&gt;&lt;/agtc-badge&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Choisir la variante par intention (<em>success</em> pour validé, <em>danger</em> pour erreur)</span><span class="lang-en">Choose variant by intent (<em>success</em> for approved, <em>danger</em> for error)</span></li>
+      <li><span class="lang-fr">Ajouter <code>label</code> sur <code>icon-only</code> pour les lecteurs d'écran</span><span class="lang-en">Add <code>label</code> on <code>icon-only</code> for screen readers</span></li>
+      <li><span class="lang-fr">Utiliser <code>size="sm"</code> dans les tableaux et espaces denses</span><span class="lang-en">Use <code>size="sm"</code> in tables and dense layouts</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Badge cliquable sans encapsulation dans <code>&lt;button&gt;</code></span><span class="lang-en">Clickable badge without wrapping in <code>&lt;button&gt;</code></span></li>
+      <li><span class="lang-fr"><code>icon-only</code> sans <code>label</code> — inaccessible</span><span class="lang-en"><code>icon-only</code> without <code>label</code> — inaccessible</span></li>
+      <li><span class="lang-fr">Variante choisie par couleur, pas par intention</span><span class="lang-en">Variant chosen by color, not by intent</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/badge.html'), layout({
+    title: 'Badge', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'badge.html'),
+    body: body + contributionBanner()
+  }));
+}
+
+// ─── PAGE: CARD ──────────────────────────────────────────────────────────────
+function buildCard() {
+  const tokenRows = [
+    ['card-default-background',  'semantic.color.background.surface',  SEM['color-background-surface']],
+    ['card-default-border',      'semantic.color.border.default',       SEM['color-border-default']],
+    ['card-default-radius',      'semantic.radius.card',                SEM['radius-card']],
+    ['card-default-padding',     'semantic.space.layout.component',     SEM['space-layout-component']],
+    ['card-elevated-shadow',     '—',                                   '0 1px 3px rgba(0,0,0,.10)'],
+    ['card-flat-background',     'semantic.color.background.subtle',    SEM['color-background-subtle']],
+    ['card-padding-none',        '—',                                   '0px'],
+    ['card-padding-sm',          'primitive.space.3',                   ''],
+    ['card-padding-lg',          'primitive.space.6',                   ''],
+  ];
+
+  const cardDemo = (variant, labelFr, labelEn, extraStyle='') =>
+    `<div style="border-radius:var(--agtc-component-card-default-radius);padding:var(--agtc-component-card-default-padding);background:var(--agtc-component-card-${variant}-background);border:1px solid var(--agtc-component-card-${variant}-border);${extraStyle}">
+      <strong style="display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-primary)">${variant}</strong>
+      <span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
+    </div>`;
+
+  const body = `
+<h1>Card</h1>
+<p class="page-lead">
+  <span class="lang-fr">Conteneur visuel pour regrouper des informations liées. 3 variantes, 4 paddings, slots header/body/footer avec séparateurs automatiques. Non interactif par défaut.</span>
+  <span class="lang-en">Visual container for grouping related information. 3 variants, 4 paddings, header/body/footer slots with automatic separators. Non-interactive by default.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Trois variantes</span><span class="lang-en">Three variants</span></span>
+    <div class="demo-row" style="gap:16px;align-items:flex-start;flex-wrap:wrap">
+      ${cardDemo('default', 'Bordure fine, usage général.', 'Thin border, general use.')}
+      ${cardDemo('elevated', 'Ombre portée, mise en avant.', 'Drop shadow, highlighted.', 'box-shadow:var(--agtc-component-card-elevated-shadow)')}
+      ${cardDemo('flat', 'Fond subtil, sections secondaires.', 'Subtle background, secondary sections.')}
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Slots</span><span class="lang-en">Slots</span></h2>
+<table class="token-table">
+  <thead><tr><th>Slot</th><th><span class="lang-fr">Comportement</span><span class="lang-en">Behavior</span></th></tr></thead>
+  <tbody>
+    <tr><td><code>header</code></td><td><span class="lang-fr">Séparateur bas automatique si contenu présent</span><span class="lang-en">Automatic bottom separator if content present</span></td></tr>
+    <tr><td><span class="lang-fr">(défaut)</span><span class="lang-en">(default)</span></td><td><span class="lang-fr">Corps de la carte</span><span class="lang-en">Card body</span></td></tr>
+    <tr><td><code>footer</code></td><td><span class="lang-fr">Séparateur haut automatique si contenu présent</span><span class="lang-en">Automatic top separator if content present</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Padding</span><span class="lang-en">Padding</span></h2>
+<table class="token-table">
+  <thead><tr><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Token</span><span class="lang-en">Token</span></th><th><span class="lang-fr">Usage</span><span class="lang-en">Usage</span></th></tr></thead>
+  <tbody>
+    <tr><td><code>none</code></td><td><code>0px</code></td><td><span class="lang-fr">Médias plein-bord, listes sans padding</span><span class="lang-en">Full-bleed media, lists without padding</span></td></tr>
+    <tr><td><code>sm</code></td><td><code>primitive.space.3</code></td><td><span class="lang-fr">Espaces contraints</span><span class="lang-en">Constrained spaces</span></td></tr>
+    <tr><td><code>md</code></td><td><code>semantic.space.layout.component</code></td><td><span class="lang-fr">Défaut — usage général</span><span class="lang-en">Default — general use</span></td></tr>
+    <tr><td><code>lg</code></td><td><code>primitive.space.6</code></td><td><span class="lang-fr">Contenu spacieux, formulaires</span><span class="lang-en">Spacious content, forms</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Non interactif par défaut — sémantique neutre (<code>&lt;div&gt;</code>)</span><span class="lang-en">Non-interactive by default — neutral semantics (<code>&lt;div&gt;</code>)</span></li>
+  <li><span class="lang-fr">Carte cliquable : encapsuler dans un <code>&lt;a&gt;</code> avec texte accessible</span><span class="lang-en">Clickable card: wrap in an <code>&lt;a&gt;</code> with accessible text</span></li>
+  <li><span class="lang-fr"><code>overflow: hidden</code> — le contenu ne déborde jamais du rayon</span><span class="lang-en"><code>overflow: hidden</code> — content never overflows the border radius</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Défaut --&gt;
+&lt;agtc-card&gt;
+  &lt;p&gt;<span class="lang-fr">Contenu de la carte.</span><span class="lang-en">Card content.</span>&lt;/p&gt;
+&lt;/agtc-card&gt;
+
+&lt;!-- Elevated avec header et footer --&gt;
+&lt;agtc-card variant="elevated" padding="lg"&gt;
+  &lt;span slot="header"&gt;<span class="lang-fr">Titre</span><span class="lang-en">Title</span>&lt;/span&gt;
+  &lt;p&gt;<span class="lang-fr">Contenu principal.</span><span class="lang-en">Main content.</span>&lt;/p&gt;
+  &lt;div slot="footer"&gt;
+    &lt;agtc-button variant="primary"&gt;<span class="lang-fr">Confirmer</span><span class="lang-en">Confirm</span>&lt;/agtc-button&gt;
+  &lt;/div&gt;
+&lt;/agtc-card&gt;
+
+&lt;!-- Flat --&gt;
+&lt;agtc-card variant="flat"&gt;
+  &lt;p&gt;<span class="lang-fr">Section secondaire.</span><span class="lang-en">Secondary section.</span>&lt;/p&gt;
+&lt;/agtc-card&gt;
+
+&lt;!-- Carte cliquable --&gt;
+&lt;agtc-card variant="elevated"&gt;
+  &lt;a href="/detail" style="display:block;text-decoration:none"&gt;
+    &lt;h3&gt;<span class="lang-fr">Titre</span><span class="lang-en">Title</span>&lt;/h3&gt;
+  &lt;/a&gt;
+&lt;/agtc-card&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Utiliser <code>padding="none"</code> pour les médias plein-bord</span><span class="lang-en">Use <code>padding="none"</code> for full-bleed media</span></li>
+      <li><span class="lang-fr">Encapsuler dans <code>&lt;a&gt;</code> pour une carte cliquable</span><span class="lang-en">Wrap in <code>&lt;a&gt;</code> for a clickable card</span></li>
+      <li><span class="lang-fr">Utiliser <code>slot="footer"</code> pour les actions</span><span class="lang-en">Use <code>slot="footer"</code> for actions</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Carte cliquable sans <code>&lt;a&gt;</code> — non accessible</span><span class="lang-en">Clickable card without <code>&lt;a&gt;</code> — inaccessible</span></li>
+      <li><span class="lang-fr">Fond ou padding en dur — utiliser les attributs <code>variant</code> et <code>padding</code></span><span class="lang-en">Hardcoded background or padding — use <code>variant</code> and <code>padding</code> attributes</span></li>
+      <li><span class="lang-fr">Variante inventée hors de <code>component.json</code></span><span class="lang-en">Invented variant outside <code>component.json</code></span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/card.html'), layout({
+    title: 'Card', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'card.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2601,13 +3028,16 @@ function build() {
   buildComponentsIndex();
   buildButton();
   buildIcon();
+  buildInput();
+  buildBadge();
+  buildCard();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
   buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
 
-  const total = 10 + adrs.length;
+  const total = 13 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

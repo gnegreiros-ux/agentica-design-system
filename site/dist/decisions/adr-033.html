@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Choix de Storybook pour la documentation des composants — Agentica</title>
+<title>Implémentation de `agtc-input` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-input` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-input` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,58 +55,55 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 009</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 033</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead, Tech Lead</div>
-</div><h1>ADR-009 — Choix de Storybook pour la documentation des composants</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Tech Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-009-storybook.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md <strong>Relations:</strong> .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md</p></blockquote>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-31</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
+</div><h1>ADR-033 — Implémentation de <code>agtc-input</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-033-agtc-input-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/development.md <strong>Relations:</strong> decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-002-lit-web-components.md, tokens/component.json</p></blockquote>
 <hr>
 <h2>Contexte</h2>
-<p>Un système de design sans environnement de prévisualisation isolé a deux problèmes structurels : les composants ne peuvent être testés qu'en les intégrant dans une application réelle, et la documentation est séparée du composant qu'elle décrit.</p>
-<p>Pour un système agentique, un troisième problème s'ajoute : les agents ont besoin d'un catalogue structuré de composants avec leurs variantes, états, et propriétés accessibles sous une forme standardisée. Une documentation narrative dans un wiki n'est pas analysable par machine.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment fournir simultanément un environnement de développement isolé, une documentation vivante synchronisée avec le code, et un catalogue structuré accessible aux agents ?</strong></p></blockquote>
+<p><code>agtc-input</code> est le deuxième composant du système. Il couvre la saisie de texte dans les formulaires — le point d'entrée le plus fréquent des données utilisateur.</p>
+<p>Trois contraintes ont guidé les décisions :</p>
+<p>1. <strong>Accessibilité</strong> — un champ de saisie sans label visible est inaccessible    (WCAG 1.3.1). Chaque état (erreur, désactivé, lecture seule) doit être    communiqué à l'arbre d'accessibilité, pas seulement visuellement.</p>
+<p>2. <strong>Shadow DOM</strong> — l'association <code>&lt;label for="id"&gt;</code> ne traverse pas les    frontières Shadow DOM. L'implémentation doit contourner cette limite.</p>
+<p>3. <strong>Cohérence avec <code>agtc-button</code></strong> — même approche icône hybride (propriété +    slot), mêmes conventions d'événements, même structure de tokens.</p>
 <hr>
-<h2>Décision</h2>
-<p>Adoption de <strong>Storybook</strong> comme plateforme de documentation et de canvas de développement.</p>
-<p>Chaque composant est documenté via des <strong>stories</strong> — des fichiers <code>.stories.js</code> qui décrivent chaque variante et état du composant de manière isolée :</p>
-<pre class="code-block"><code class="lang-javascript">// button.stories.js
-export default { title: 'Components/Button', component: 'agtc-button' };
-export const Primary = { args: { variant: 'primary', label: 'Soumettre' } };
-export const Critical = { args: { variant: 'critical', label: 'Supprimer définitivement' } };</code></pre>
-<p>Storybook sert trois rôles simultanés dans le système :</p>
-<p>1. <strong>Canvas de développement</strong> — chaque composant est développé et testé en isolation,    sans dépendance à une application hôte 2. <strong>Documentation vivante</strong> — les stories sont la source de vérité du comportement    réel des composants, toujours synchronisées avec le code 3. <strong>Pont vers Chromatic</strong> — Storybook est l'entrée du pipeline Chromatic (ADR-006) :    chaque story est automatiquement capturée pour les tests de régression visuelle</p>
+<h2>Décisions</h2>
+<h3>Décision 1 — Label et input colocalisés dans le Shadow DOM</h3>
+<p><strong>Problème :</strong> <code>&lt;label for="id"&gt;</code> externe ne peut pas pointer vers un <code>&lt;input&gt;</code> dans le Shadow DOM.</p>
+<p><strong>Décision :</strong> Le label est rendu à l'intérieur du Shadow DOM avec un <code>for</code> pointant vers l'<code>id</code> interne de l'<code>&lt;input&gt;</code>. Un compteur statique garantit l'unicité des ids entre instances.</p>
+<p><strong>Alternative rejetée :</strong> <code>aria-label</code> sur l'input à la place du label visible. Rejeté : viole WCAG 1.3.1 (le label doit être persistant et visible, pas seulement déclaré pour les AT).</p>
 <hr>
-<h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Documentation statique (Markdown + MDX seul)</strong></td><td>Décrit le composant sans le montrer. Un développeur doit intégrer le composant dans son projet pour voir s'il se comporte comme documenté. Aucun lien entre la documentation et le code exécutable.</td></tr><tr><td><strong>Styleguidist</strong></td><td>Similaire à Storybook mais moins adopté, moins d'intégrations (pas de Chromatic natif, pas d'addon axe-core). L'écosystème Storybook est significativement plus riche pour les Web Components.</td></tr><tr><td><strong>Figma comme seule source de prévisualisation</strong></td><td>Figma montre le design, pas le composant réel. Un composant peut être visuellement conforme dans Figma et dysfonctionner dans le code. Storybook exécute le composant réel dans un navigateur.</td></tr><tr><td><strong>Page de démo interne</strong></td><td>Une page HTML qui liste les composants. Non maintenable à l'échelle, pas de structure pour les variantes et états, pas d'intégration CI/CD, pas d'addon d'accessibilité.</td></tr><tr><td><strong>Pas de documentation interactive</strong></td><td>Rejeté explicitement : un système de design sans canvas de prévisualisation force les équipes consommatrices à intégrer les composants à l'aveugle. Le taux d'erreur d'intégration est directement lié à la qualité de la documentation interactive.</td></tr></tbody></table>
+<h3>Décision 2 — Focus ring sur le wrapper <code>.control</code>, pas sur l'input</h3>
+<p><strong>Problème :</strong> L'input natif a <code>outline: none</code> pour permettre un style custom. Le focus doit rester visible (WCAG 2.4.7).</p>
+<p><strong>Décision :</strong> Le wrapper <code>.control</code> porte le focus ring via <code>:focus-within</code>. <code>outline: 2.5px solid</code> + <code>outline-offset: 2px</code> — identique à <code>agtc-button</code>.</p>
+<p><strong>Justification :</strong> Le focus ring sur le wrapper est visuellement plus propre (encadre l'ensemble du contrôle incluant les icônes) et reste WCAG conforme car l'indicateur de focus est clairement visible.</p>
 <hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les développeurs :</strong></p>
-<ul><li>Chaque nouveau composant ou variante requiert une story correspondante — c'est une</li></ul>
-<p>  règle de PR (<code>.claude/rules/development.md</code>)</p>
-<ul><li>Le développement se fait dans Storybook d'abord, puis l'intégration en application</li><li>Le hot reload de Storybook affiche immédiatement les changements de tokens CSS</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>La structure des stories est lisible par machine : un agent peut lister toutes</li></ul>
-<p>  les variantes documentées d'un composant en lisant le fichier <code>.stories.js</code></p>
-<ul><li>Les args des stories (<code>variant</code>, <code>disabled</code>, <code>loading</code>) correspondent directement</li></ul>
-<p>  aux propriétés déclarées dans le Web Component (<code>static properties</code>) — cohérence garantie</p>
-<ul><li>Un agent peut vérifier qu'une story existe pour chaque variante définie dans</li></ul>
-<p>  <code>component.json</code> — absence de story = composant non agent-ready (voir skill <code>ai-component-metadata</code>)</p>
-<p><strong>Pour Chromatic (ADR-006) :</strong></p>
-<ul><li>Storybook est l'entrée obligatoire de Chromatic — pas de story, pas de capture visuelle</li><li>L'addon <code>@storybook/addon-a11y</code> (axe-core) audite chaque story en temps réel</li></ul>
-<p>  pendant le développement, avant le commit</p>
-<p><strong>Pour les équipes consommatrices :</strong></p>
-<ul><li>Storybook publié est la documentation officielle du système</li><li>Les équipes peuvent voir et interagir avec chaque variante sans installer les dépendances</li></ul>
-<p><strong>Coût accepté :</strong></p>
-<ul><li>Chaque composant nécessite un fichier <code>.stories.js</code> à maintenir — dette si les stories</li></ul>
-<p>  ne sont pas mises à jour en même temps que le composant</p>
-<ul><li>Build Storybook ajouté au pipeline CI (quelques minutes supplémentaires)</li></ul>
+<h3>Décision 3 — <code>aria-describedby</code> pour helper-text et error-message</h3>
+<p>Les ids <code>{_id}-helper</code> et <code>{_id}-error</code> sont toujours présents dans le DOM. <code>aria-describedby</code> est construit dynamiquement : seuls les ids pertinents sont inclus selon l'état du composant.</p>
+<p>Le message d'erreur porte <code>role="alert"</code> pour annoncer l'erreur aux lecteurs d'écran dès qu'elle apparaît, sans nécessiter de navigation vers l'élément.</p>
 <hr>
-<h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Storybook est le standard de facto pour les design systems basés sur des composants (GitHub, Shopify, Atlassian, IBM l'utilisent tous). L'intégration native avec Chromatic, axe-core et Web Components a confirmé le choix.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-008.html" class="ds-btn secondary">← ADR-008</a>
-    <a href="adr-010.html" class="ds-btn secondary">ADR-010 →</a>
+<h3>Décision 4 — Toggle show/hide natif pour <code>type="password"</code></h3>
+<p>Un bouton interne est rendu automatiquement quand <code>type="password"</code>. Il bascule l'attribut <code>type</code> de l'input entre <code>password</code> et <code>text</code>.</p>
+<p><strong>Justification :</strong> Permettre à l'utilisateur de vérifier sa saisie est une exigence d'accessibilité (évite les erreurs sur les mots de passe masqués). L'aria-label du bouton bascule entre "Afficher le mot de passe" et "Masquer le mot de passe".</p>
+<p>Le slot <code>suffix</code> reste disponible pour la composition libre si le consommateur veut remplacer le toggle natif.</p>
+<hr>
+<h3>Décision 5 — Directive <code>live()</code> pour la synchronisation de valeur</h3>
+<p>L'input utilise <code>.value="${live(this.value)}"</code> pour synchroniser la valeur de la propriété Lit avec la valeur native de l'input lors des re-renders.</p>
+<p>Sans <code>live()</code>, Lit ne met pas à jour la valeur native si l'utilisateur a commencé à taper (DOM drift). <code>live()</code> compare toujours contre la valeur DOM actuelle, garantissant la cohérence.</p>
+<hr>
+<h3>Décision 6 — Suppression des spinners natifs sur <code>type="number"</code></h3>
+<p>Les spinners CSS natifs (<code>-webkit-inner-spin-button</code>) sont supprimés. Le contrôle de la valeur numérique se fait via clavier (<code>↑</code>/<code>↓</code>) et saisie directe.</p>
+<p><strong>Justification :</strong> Les spinners natifs sont visuellement incohérents entre navigateurs et ne peuvent pas être stylés avec les tokens du système.</p>
+<hr>
+<h2>Périmètre de la version 1.0</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (version future)</th></tr></thead><tbody><tr><td>7 types natifs</td><td><code>type="date"</code>, <code>type="file"</code></td></tr><tr><td>États : default / focus / invalid / disabled / readonly</td><td>État success (validation positive)</td></tr><tr><td>Icônes prefix/suffix (hybride prop+slot)</td><td>Compteur de caractères</td></tr><tr><td>Toggle password intégré</td><td>Suggestions / autocomplete custom</td></tr><tr><td>helper-text + error-message</td><td>Champ multiligne (<code>agtc-textarea</code>)</td></tr></tbody></table>
+<hr>
+<h2>Tokens utilisés</h2>
+<table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Tokens composant compilés depuis <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Couleur message d'erreur</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Fond état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Texte état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icônes</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typographie de la valeur saisie</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typographie du label, helper, erreur</td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-032.html" class="ds-btn secondary">← ADR-032</a>
+    <a href="adr-034.html" class="ds-btn secondary">ADR-034 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

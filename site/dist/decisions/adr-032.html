@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Choix de Storybook pour la documentation des composants — Agentica</title>
+<title>Convention des stories Storybook pour les composants Agentica — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta property="og:title" content="Convention des stories Storybook pour les composants Agentica — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta name="twitter:title" content="Convention des stories Storybook pour les composants Agentica — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,58 +55,63 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 009</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 032</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead, Tech Lead</div>
-</div><h1>ADR-009 — Choix de Storybook pour la documentation des composants</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead, Tech Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-009-storybook.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md <strong>Relations:</strong> .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md</p></blockquote>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-30</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
+</div><h1>ADR-032 — Convention des stories Storybook pour les composants Agentica</h1>
+<blockquote><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-032-storybook-stories-convention.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md <strong>Relations:</strong> decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-031-agtc-button-implementation.md, .claude/rules/development.md</p></blockquote>
 <hr>
 <h2>Contexte</h2>
-<p>Un système de design sans environnement de prévisualisation isolé a deux problèmes structurels : les composants ne peuvent être testés qu'en les intégrant dans une application réelle, et la documentation est séparée du composant qu'elle décrit.</p>
-<p>Pour un système agentique, un troisième problème s'ajoute : les agents ont besoin d'un catalogue structuré de composants avec leurs variantes, états, et propriétés accessibles sous une forme standardisée. Une documentation narrative dans un wiki n'est pas analysable par machine.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment fournir simultanément un environnement de développement isolé, une documentation vivante synchronisée avec le code, et un catalogue structuré accessible aux agents ?</strong></p></blockquote>
+<p>ADR-009 décide d'utiliser Storybook. ADR-032 précise <strong>comment</strong> écrire les stories dans ce système — la convention de structure, de nommage et de contenu obligatoire pour chaque composant.</p>
+<p>Sans convention explicite, deux problèmes émergent :</p>
+<p>1. <strong>Incohérence entre composants</strong> — chaque développeur ou agent structure ses    stories différemment, rendant le catalogue illisible et Chromatic imprévisible. 2. <strong>Stories incomplètes</strong> — les états critiques (loading, disabled, confirming)    ne sont pas systématiquement documentés, créant des angles morts dans les    tests de régression visuelle.</p>
 <hr>
 <h2>Décision</h2>
-<p>Adoption de <strong>Storybook</strong> comme plateforme de documentation et de canvas de développement.</p>
-<p>Chaque composant est documenté via des <strong>stories</strong> — des fichiers <code>.stories.js</code> qui décrivent chaque variante et état du composant de manière isolée :</p>
-<pre class="code-block"><code class="lang-javascript">// button.stories.js
-export default { title: 'Components/Button', component: 'agtc-button' };
-export const Primary = { args: { variant: 'primary', label: 'Soumettre' } };
-export const Critical = { args: { variant: 'critical', label: 'Supprimer définitivement' } };</code></pre>
-<p>Storybook sert trois rôles simultanés dans le système :</p>
-<p>1. <strong>Canvas de développement</strong> — chaque composant est développé et testé en isolation,    sans dépendance à une application hôte 2. <strong>Documentation vivante</strong> — les stories sont la source de vérité du comportement    réel des composants, toujours synchronisées avec le code 3. <strong>Pont vers Chromatic</strong> — Storybook est l'entrée du pipeline Chromatic (ADR-006) :    chaque story est automatiquement capturée pour les tests de régression visuelle</p>
+<h3>Structure obligatoire d'un fichier <code>.stories.js</code></h3>
+<p>Chaque composant possède un fichier <code>[composant].stories.js</code> colocalisé avec <code>[composant].js</code> dans <code>components/</code>.</p>
+<pre class="code-block"><code class="lang-text">components/
+  agtc-button.js
+  agtc-button.stories.js    ← colocalisé
+  agtc-icon.js
+  agtc-icon.stories.js</code></pre>
+<h3>Stories minimales obligatoires pour tout composant</h3>
+<table><thead><tr><th>Story</th><th>Contenu</th></tr></thead><tbody><tr><td><code>[Variante]</code> (une par variante)</td><td>Composant isolé, état default</td></tr><tr><td><code>Disabled</code></td><td>Toutes les variantes en état <code>disabled</code></td></tr><tr><td><code>Loading</code></td><td>Toutes les variantes en état <code>loading</code> (si applicable)</td></tr><tr><td><code>AllVariants</code></td><td>Vue d'ensemble des variantes × états — entrée Chromatic principale</td></tr></tbody></table>
+<h3>Stories spécifiques à <code>agtc-button</code></h3>
+<table><thead><tr><th>Story</th><th>Raison</th></tr></thead><tbody><tr><td><code>CriticalConfirmFlow</code></td><td>Documenter le flux 2-clics de la variante critical (ADR-031)</td></tr><tr><td><code>WithIconPrefix</code> / <code>WithIconSuffix</code></td><td>Documenter l'approche hybride icônes (property + slot)</td></tr><tr><td><code>WithCustomSlot</code></td><td>Documenter la composition libre via slot SVG</td></tr></tbody></table>
+<h3>Règles de nommage</h3>
+<pre class="code-block"><code class="lang-javascript">// ✅ Story de variante isolée
+export const Primary = { name: 'Primary — action principale', ... };
+
+// ✅ Story d'état groupé
+export const Disabled = { name: 'États — Disabled (toutes variantes)', ... };
+
+// ✅ Story de comportement
+export const CriticalConfirmFlow = { name: 'Critical — flux de confirmation (2 clics)', ... };
+
+// ✅ Vue d'ensemble (toujours présente, entrée Chromatic)
+export const AllVariants = { name: "Vue d'ensemble — toutes les variantes", ... };</code></pre>
+<h3>Configuration Storybook</h3>
+<ul><li><strong>Stories path</strong> : <code>components/**/*.stories.@(js|jsx|mjs|ts|tsx)</code> (colocalisé)</li><li><strong>Tokens CSS</strong> : <code>dist/tokens/css/all.css</code> importé dans <code>preview.js</code></li><li><strong>Addon a11y</strong> : <code>test: 'error'</code> — les violations WCAG bloquent en CI (ADR-007)</li><li><strong>Addon vitest</strong> : retiré de la config principale (pas encore activé)</li></ul>
 <hr>
 <h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Documentation statique (Markdown + MDX seul)</strong></td><td>Décrit le composant sans le montrer. Un développeur doit intégrer le composant dans son projet pour voir s'il se comporte comme documenté. Aucun lien entre la documentation et le code exécutable.</td></tr><tr><td><strong>Styleguidist</strong></td><td>Similaire à Storybook mais moins adopté, moins d'intégrations (pas de Chromatic natif, pas d'addon axe-core). L'écosystème Storybook est significativement plus riche pour les Web Components.</td></tr><tr><td><strong>Figma comme seule source de prévisualisation</strong></td><td>Figma montre le design, pas le composant réel. Un composant peut être visuellement conforme dans Figma et dysfonctionner dans le code. Storybook exécute le composant réel dans un navigateur.</td></tr><tr><td><strong>Page de démo interne</strong></td><td>Une page HTML qui liste les composants. Non maintenable à l'échelle, pas de structure pour les variantes et états, pas d'intégration CI/CD, pas d'addon d'accessibilité.</td></tr><tr><td><strong>Pas de documentation interactive</strong></td><td>Rejeté explicitement : un système de design sans canvas de prévisualisation force les équipes consommatrices à intégrer les composants à l'aveugle. Le taux d'erreur d'intégration est directement lié à la qualité de la documentation interactive.</td></tr></tbody></table>
+<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Stories dans <code>stories/</code> (dossier séparé)</strong></td><td>Crée une distance entre le composant et sa documentation. Un composant renommé ou supprimé laisse une story orpheline sans avertissement évident. La colocation force la synchronisation.</td></tr><tr><td><strong>Une story par état (fichier séparé)</strong></td><td>Fragmentation excessive. Chromatic capture toutes les stories d'un composant — regrouper les états dans un fichier unique réduit le bruit dans l'interface de review.</td></tr><tr><td><strong>Stories en TypeScript (<code>.stories.ts</code>)</strong></td><td>Le projet utilise JavaScript ES6+ pour les composants (ADR-002). Introduire TypeScript uniquement pour les stories crée une incohérence de stack sans bénéfice proportionnel.</td></tr></tbody></table>
 <hr>
 <h2>Conséquences</h2>
-<p><strong>Pour les développeurs :</strong></p>
-<ul><li>Chaque nouveau composant ou variante requiert une story correspondante — c'est une</li></ul>
-<p>  règle de PR (<code>.claude/rules/development.md</code>)</p>
-<ul><li>Le développement se fait dans Storybook d'abord, puis l'intégration en application</li><li>Le hot reload de Storybook affiche immédiatement les changements de tokens CSS</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>La structure des stories est lisible par machine : un agent peut lister toutes</li></ul>
-<p>  les variantes documentées d'un composant en lisant le fichier <code>.stories.js</code></p>
-<ul><li>Les args des stories (<code>variant</code>, <code>disabled</code>, <code>loading</code>) correspondent directement</li></ul>
-<p>  aux propriétés déclarées dans le Web Component (<code>static properties</code>) — cohérence garantie</p>
-<ul><li>Un agent peut vérifier qu'une story existe pour chaque variante définie dans</li></ul>
-<p>  <code>component.json</code> — absence de story = composant non agent-ready (voir skill <code>ai-component-metadata</code>)</p>
+<p><strong>Pour les développeurs et agents :</strong></p>
+<ul><li>Tout nouveau composant requiert son <code>.stories.js</code> avec les stories minimales listées ci-dessus</li><li>C'est une condition de merge (<code>.claude/rules/development.md</code>) — une PR sans story est incomplète</li><li>Les stories sont l'entrée de Chromatic : leur structure détermine quelles captures sont générées</li></ul>
 <p><strong>Pour Chromatic (ADR-006) :</strong></p>
-<ul><li>Storybook est l'entrée obligatoire de Chromatic — pas de story, pas de capture visuelle</li><li>L'addon <code>@storybook/addon-a11y</code> (axe-core) audite chaque story en temps réel</li></ul>
-<p>  pendant le développement, avant le commit</p>
-<p><strong>Pour les équipes consommatrices :</strong></p>
-<ul><li>Storybook publié est la documentation officielle du système</li><li>Les équipes peuvent voir et interagir avec chaque variante sans installer les dépendances</li></ul>
+<ul><li><code>AllVariants</code> est la story de référence principale — son rendu est la baseline visuelle</li><li>Chaque story isolée par variante permet de cibler précisément quelle variante a régressé</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Un agent peut vérifier la couverture des stories en comparant les variantes de <code>component.json</code></li></ul>
+<p>  aux exports du fichier <code>.stories.js</code> — toute variante sans story est un angle mort</p>
+<ul><li>La colocation composant/story permet à un agent de trouver la story à partir du composant</li></ul>
+<p>  sans connaissance préalable de la structure du projet</p>
 <p><strong>Coût accepté :</strong></p>
-<ul><li>Chaque composant nécessite un fichier <code>.stories.js</code> à maintenir — dette si les stories</li></ul>
-<p>  ne sont pas mises à jour en même temps que le composant</p>
-<ul><li>Build Storybook ajouté au pipeline CI (quelques minutes supplémentaires)</li></ul>
-<hr>
-<h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Storybook est le standard de facto pour les design systems basés sur des composants (GitHub, Shopify, Atlassian, IBM l'utilisent tous). L'intégration native avec Chromatic, axe-core et Web Components a confirmé le choix.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-008.html" class="ds-btn secondary">← ADR-008</a>
-    <a href="adr-010.html" class="ds-btn secondary">ADR-010 →</a>
+<ul><li>Maintenir les stories en synchronisation avec les composants est une discipline active</li><li>Une story qui ne reflète plus le comportement réel est pire que pas de story</li></ul>
+<p>  (elle donne une fausse confiance aux reviewers Chromatic)</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-031.html" class="ds-btn secondary">← ADR-031</a>
+    <a href="adr-033.html" class="ds-btn secondary">ADR-033 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

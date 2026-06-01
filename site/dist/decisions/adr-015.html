@@ -52,7 +52,7 @@
   </button>
 </header>
 <div class="layout" id="main-content">
-  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a></div></aside>
+  <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
   <div class="adr-meta-item"><strong>ADR</strong> 015</div>
@@ -60,7 +60,7 @@
   <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
 </div><h1>ADR-015 — Hook automatique de rappel ADR sur modifications critiques</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-015-hook-rappel-adr.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md</p></blockquote>
+<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Dernière révision :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif (amendé) <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-015-hook-rappel-adr.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md</p></blockquote>
 <hr>
 <h2>Contexte</h2>
 <p>Les fichiers <code>tokens/</code>, <code>guidelines/</code>, et <code>components/</code> contiennent les décisions structurantes du système de design : valeurs de tokens, contrats de composants, documentation normative. Toute modification dans ces zones devrait, en principe, être accompagnée d'un ADR ou d'un TCR qui en explique le pourquoi.</p>
@@ -111,7 +111,34 @@ pour documenter ce changement ? (Oui/Non)</code></pre>
 <p><strong>Coût accepté :</strong></p>
 <ul><li>Le rappel s'affiche même pour des changements mineurs (correction de typo dans un token)</li><li>L'utilisateur doit répondre Non explicitement — légère friction pour les changements évidents</li></ul>
 <hr>
-<h2>Incidents ou déclencheurs</h2>
+<h2>Amendement — 2026-05-31 : rappel ADR sur <code>Write</code> uniquement</h2>
+<h3>Problème observé</h3>
+<p>Lors des sessions de développement des composants <code>agtc-badge</code>, <code>agtc-card</code> et des corrections WCAG qui ont suivi, le hook se déclenchait sur <strong>chaque <code>Edit</code></strong> dans les zones critiques — y compris pour des corrections de bugs sans décision architecturale (changement d'un ratio de contraste insuffisant, correction d'une typo dans une story, ajustement d'une couleur qui échoue un test axe).</p>
+<p>Résultat concret : pour corriger les 27 violations WCAG du badge (3 couleurs de texte à remplacer), le hook a interrompu le travail <strong>6 fois</strong> pour poser une question dont la réponse était systématiquement non. La friction documentaire devenait du bruit plutôt qu'une garde-fou utile.</p>
+<h3>Distinction fondamentale</h3>
+<table><thead><tr><th>Type de changement</th><th>Besoin d'ADR</th><th>Exemple</th></tr></thead><tbody><tr><td><strong>Nouveau fichier</strong> (<code>Write</code>)</td><td>Oui — c'est une création, donc une décision</td><td>Ajouter <code>agtc-badge.js</code>, créer un token</td></tr><tr><td><strong>Modification</strong> (<code>Edit</code>)</td><td>Rarement — souvent un bug fix ou un ajustement</td><td>Corriger un contraste, renommer une variable</td></tr></tbody></table>
+<p>La question "faut-il un ADR ?" est pertinente quand on <strong>crée</strong> quelque chose (nouveau composant, nouveau token, nouvelle guideline). Elle est presque toujours non pertinente quand on <strong>modifie</strong> quelque chose qui existe déjà — l'ADR original couvre déjà la décision.</p>
+<h3>Changement appliqué</h3>
+<p>Le hook <code>PostToolUse</code> est maintenant séparé en deux entrées :</p>
+<pre class="code-block"><code class="lang-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "...rappel ADR..." }]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{ "type": "command", "command": "...log construction..." }]
+      }
+    ]
+  }
+}</code></pre>
+<ul><li><strong>Rappel ADR</strong> : <code>Write</code> uniquement — se déclenche à la création d'un fichier</li><li><strong>Log de construction</strong> : <code>Write|Edit</code> — inchangé, capture toutes les modifications</li></ul>
+<h3>Coût accepté de l'amendement</h3>
+<p>Un <code>Edit</code> qui représente réellement une nouvelle décision architecturale ne déclenchera plus automatiquement le rappel. La discipline reste nécessaire : si une modification de token ou de composant encode une décision non triviale, l'humain ou l'agent doit créer l'ADR manuellement. Le hook n'est plus le seul garde-fou pour les modifications.</p>
+<hr>
+<h2>Incidents ou déclencheurs (version originale)</h2>
 <p>Constat répété : lors de sessions de travail sur les tokens et les guidelines, des modifications structurantes étaient commitées sans ADR associé. L'historique git conservait le diff mais pas la justification. Ce hook est la réponse procédurale à ce manque de discipline documentaire.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-014.html" class="ds-btn secondary">← ADR-014</a>
     <a href="adr-016.html" class="ds-btn secondary">ADR-016 →</a>
