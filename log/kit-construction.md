@@ -171,3 +171,10 @@
 | 2026-06-01 09:32 | Modifié | `decisions/ADR-035-agtc-card-implementation.md` |
 | 2026-06-01 09:32 | Revue UX | `card` — patterns Dashboard+Smashing (C1/C3/C4 approuvés, C2 révisé anti-imbrication), 6 surfaces (ADR-035/036) |
 | 2026-06-01 09:56 | Refacto | `site/build.js` — section Patterns UX lue depuis les guidelines md (source unique), fin de la duplication codée en dur |
+| 2026-06-01 10:59 | Modifié | `.claude/skills/pipelines/chromatic.md` |
+| 2026-06-01 10:59 | Modifié | `.claude/skills/pipelines/chromatic.md` |
+| 2026-06-01 10:59 | Modifié | `.claude/skills/pipelines/chromatic.md` |
+| 2026-06-01 10:59 | Modifié | `.claude/skills/quality-gate.md` |
+| 2026-06-01 11:00 | Modifié | `decisions/ADR-006-chromatic-tests-visuels.md` |
+| 2026-06-01 11:00 | Créé | `components/agtc-icon.stories.js` — 6ᵉ surface (Storybook) de la revue UX `icon`, complète enfin l'entrée du 08:45 |
+| 2026-06-01 11:00 | Activation | Chromatic activé (ADR-006) — workflow CI `.github/workflows/chromatic.yml`, token sorti de `package.json` vers secret GitHub `CHROMATIC_PROJECT_TOKEN` (régénéré, ancien révoqué), pipeline + quality-gate → Actif |

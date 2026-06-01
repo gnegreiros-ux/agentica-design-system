@@ -111,3 +111,18 @@ sans tests visuels : une modification de token sémantique global (`color.action
 passe tous les tests fonctionnels mais change l'apparence de 12 composants simultanément.
 Sans Chromatic, ce type de régression n'est découvert qu'en production ou lors d'une
 revue manuelle aléatoire.
+
+---
+
+## Mise en œuvre
+
+| Date | Événement |
+|------|-----------|
+| 2026-05-28 | Décision adoptée (ADR-006) |
+| 2026-06-01 | **Activation** — pipeline `chromatic.md` → Actif, workflow CI `.github/workflows/chromatic.yml` ajouté |
+
+**Gestion du token.** Le `CHROMATIC_PROJECT_TOKEN` vit exclusivement dans les secrets
+GitHub — jamais en clair dans le dépôt (ni `package.json`, ni workflow). Le token initial
+avait été committé en clair (commit `ba30858`) ; il a été **régénéré** sur chromatic.com lors
+de l'activation, révoquant la valeur exposée dans l'historique git. Toute rotation future suit
+le même protocole : régénérer sur chromatic.com puis mettre à jour le secret GitHub.

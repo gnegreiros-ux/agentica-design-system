@@ -38,7 +38,7 @@ Exécuter ce quality gate **après toute modification**, quelle que soit sa tail
 | Commit | `pipelines/commit.md` | ✅ Actif | Oui |
 | Style Dictionary | `pipelines/style-dictionary.md` | 🔜 Planifié | Quand actif |
 | Storybook | `pipelines/storybook.md` | 🔜 Planifié | Quand actif |
-| Chromatic | `pipelines/chromatic.md` | 🔜 Planifié | Quand actif |
+| Chromatic | `pipelines/chromatic.md` | ✅ Actif | Oui (changement `components/`, `tokens/`, `.storybook/`) |
 | axe-core | `pipelines/axe-core.md` | 🔜 Planifié | Quand actif |
 | Playwright | `pipelines/playwright.md` | 🔜 Planifié | Quand actif |
 

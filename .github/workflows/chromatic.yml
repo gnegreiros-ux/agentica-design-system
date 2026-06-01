@@ -1,0 +1,42 @@
+name: Chromatic — Régression visuelle
+
+# Tests de régression visuelle des composants (ADR-006).
+# Le token vit dans le secret GitHub CHROMATIC_PROJECT_TOKEN — jamais en clair dans le dépôt.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    paths:
+      - 'components/**'
+      - 'tokens/**'
+      - '.storybook/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/chromatic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Chromatic compare avec la baseline — historique git complet requis
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publier sur Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true # un écart visuel ne bloque pas le CI — l'humain approuve dans Chromatic
