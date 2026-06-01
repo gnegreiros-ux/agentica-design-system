@@ -1,7 +1,8 @@
 # ADR-015 — Hook automatique de rappel ADR sur modifications critiques
 
 > **Date :** 2026-05-28
-> **Statut :** ✅ Actif
+> **Dernière révision :** 2026-05-31
+> **Statut :** ✅ Actif (amendé)
 > **Décideurs :** Design System Lead
 > **Type:** contract
 > **Chemin logique:** decisions/ADR-015-hook-rappel-adr.md
@@ -110,7 +111,68 @@ L'utilisateur répond Oui ou Non — aucun ADR n'est créé sans décision humai
 
 ---
 
-## Incidents ou déclencheurs
+## Amendement — 2026-05-31 : rappel ADR sur `Write` uniquement
+
+### Problème observé
+
+Lors des sessions de développement des composants `agtc-badge`, `agtc-card` et
+des corrections WCAG qui ont suivi, le hook se déclenchait sur **chaque `Edit`**
+dans les zones critiques — y compris pour des corrections de bugs sans décision
+architecturale (changement d'un ratio de contraste insuffisant, correction d'une
+typo dans une story, ajustement d'une couleur qui échoue un test axe).
+
+Résultat concret : pour corriger les 27 violations WCAG du badge (3 couleurs de
+texte à remplacer), le hook a interrompu le travail **6 fois** pour poser une
+question dont la réponse était systématiquement non. La friction documentaire
+devenait du bruit plutôt qu'une garde-fou utile.
+
+### Distinction fondamentale
+
+| Type de changement | Besoin d'ADR | Exemple |
+|--------------------|--------------|---------|
+| **Nouveau fichier** (`Write`) | Oui — c'est une création, donc une décision | Ajouter `agtc-badge.js`, créer un token |
+| **Modification** (`Edit`) | Rarement — souvent un bug fix ou un ajustement | Corriger un contraste, renommer une variable |
+
+La question "faut-il un ADR ?" est pertinente quand on **crée** quelque chose
+(nouveau composant, nouveau token, nouvelle guideline). Elle est presque toujours
+non pertinente quand on **modifie** quelque chose qui existe déjà — l'ADR original
+couvre déjà la décision.
+
+### Changement appliqué
+
+Le hook `PostToolUse` est maintenant séparé en deux entrées :
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "...rappel ADR..." }]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{ "type": "command", "command": "...log construction..." }]
+      }
+    ]
+  }
+}
+```
+
+- **Rappel ADR** : `Write` uniquement — se déclenche à la création d'un fichier
+- **Log de construction** : `Write|Edit` — inchangé, capture toutes les modifications
+
+### Coût accepté de l'amendement
+
+Un `Edit` qui représente réellement une nouvelle décision architecturale ne
+déclenchera plus automatiquement le rappel. La discipline reste nécessaire :
+si une modification de token ou de composant encode une décision non triviale,
+l'humain ou l'agent doit créer l'ADR manuellement. Le hook n'est plus le seul
+garde-fou pour les modifications.
+
+---
+
+## Incidents ou déclencheurs (version originale)
 
 Constat répété : lors de sessions de travail sur les tokens et les guidelines,
 des modifications structurantes étaient commitées sans ADR associé. L'historique
