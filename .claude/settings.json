@@ -2,13 +2,18 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Write",
         "hooks": [
           {
             "type": "command",
             "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"RAPPEL ADR: Le fichier modifie est dans une zone critique du systeme de design (%s). Demande immediatement a l utilisateur: Souhaitez-vous creer un ADR pour documenter ce changement ? (Oui/Non)\"}}' \"$f\"; fi",
             "statusMessage": "Vérification ADR…"
-          },
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
           {
             "type": "command",
             "command": "/Users/gnegreiros/Documents/Git/agentic-design-system/.claude/hooks/log-kit-construction.sh",
