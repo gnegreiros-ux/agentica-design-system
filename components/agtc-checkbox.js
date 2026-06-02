@@ -171,6 +171,10 @@ class AgtcCheckbox extends LitElement {
     :host([disabled]) .label-text {
       color: var(--agtc-semantic-color-text-disabled);
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .box { transition: none; }
+    }
   `;
 
   render() {
