@@ -6,6 +6,9 @@ import '../components/agtc-input.js';
 import '../components/agtc-badge.js';
 import '../components/agtc-card.js';
 import '../components/agtc-checkbox.js';
+import '../components/agtc-radio.js';
+import '../components/agtc-radio-group.js';
+import '../components/agtc-toggle.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {

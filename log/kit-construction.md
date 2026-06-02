@@ -184,3 +184,10 @@
 | 2026-06-01 13:41 | Modifié | `decisions/README.md` |
 | 2026-06-01 14:10 | Revue UX | `checkbox` — patterns NN/g+IxDF approuvés (CB1–CB7), forme **carrée** (écart assumé vs réf. ToDo ronde), `indeterminate` inclus — ADR-036/037 |
 | 2026-06-01 14:10 | Composant | `agtc-checkbox` créé — 6 surfaces : tokens `component.checkbox`, code, story, guideline, ADR-037, site. WCAG 0 violation, Storybook OK. Seul composant DS manquant identifié à partir d'une réf. ToDo |
+| 2026-06-01 19:19 | Créé | `decisions/ADR-038-agtc-radio-implementation.md` |
+| 2026-06-01 19:19 | Créé | `decisions/ADR-039-agtc-toggle-implementation.md` |
+| 2026-06-01 19:21 | Modifié | `decisions/README.md` |
+| 2026-06-01 19:25 | Revue UX | `radio` — patterns NN/g+IxDF approuvés (R1–R7), forme **ronde**, architecture groupe+radio (exclusivité shadow DOM) — ADR-036/038 |
+| 2026-06-01 19:25 | Composant | `agtc-radio` + `agtc-radio-group` créés — 6 surfaces : tokens `component.radio`, code (role=radiogroup, focus roving, clavier flèches), 2 stories, guideline, ADR-038, site |
+| 2026-06-01 19:25 | Revue UX | `toggle` — patterns NN/g+IxDF approuvés (T1–T7), `role="switch"`, état par position seule (WCAG 1.4.1), track-off proxy gray.9 — ADR-036/039 |
+| 2026-06-01 19:25 | Composant | `agtc-toggle` créé — 6 surfaces : tokens `component.toggle`, code (effet immédiat), story, guideline, ADR-039, site. WCAG 0 violation (57 pages), Storybook OK |

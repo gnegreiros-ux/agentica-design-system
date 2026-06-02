@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 01 Jun 2026 17:41:31 GMT
+ * Generated on Mon, 01 Jun 2026 23:14:44 GMT
  */
 
 :root {
@@ -19,6 +19,8 @@
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-toggle-default-track-off-hover: var(--agtc-primitive-color-gray-10);
+  --agtc-toggle-default-track-off: var(--agtc-primitive-color-gray-9);
   --agtc-card-padding-lg: var(--agtc-primitive-space-6);
   --agtc-card-padding-sm: var(--agtc-primitive-space-3);
   --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
@@ -30,6 +32,18 @@
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
   --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
+  --agtc-toggle-default-label: var(--agtc-semantic-color-text-primary);
+  --agtc-toggle-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-toggle-default-knob: var(--agtc-semantic-color-background-surface);
+  --agtc-toggle-default-track-on-hover: var(--agtc-semantic-color-action-primary-hover);
+  --agtc-toggle-default-track-on: var(--agtc-semantic-color-action-primary);
+  --agtc-radio-default-label: var(--agtc-semantic-color-text-primary);
+  --agtc-radio-default-fill-hover: var(--agtc-semantic-color-action-primary-hover);
+  --agtc-radio-default-fill: var(--agtc-semantic-color-action-primary);
+  --agtc-radio-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-radio-default-border-hover: var(--agtc-semantic-color-action-primary);
+  --agtc-radio-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-radio-default-background: var(--agtc-semantic-color-background-surface);
   --agtc-checkbox-default-radius: var(--agtc-semantic-radius-control);
   --agtc-checkbox-default-label: var(--agtc-semantic-color-text-primary);
   --agtc-checkbox-default-check: var(--agtc-semantic-color-text-on-action);

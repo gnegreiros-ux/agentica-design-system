@@ -936,6 +936,8 @@ function sidebarComponents(base, current) {
     ['badge.html', 'Badge'],
     ['card.html',  'Card'],
     ['checkbox.html', 'Checkbox'],
+    ['radio.html', 'Radio'],
+    ['toggle.html', 'Toggle'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1846,6 +1848,22 @@ function buildComponentsIndex() {
       <span class="lang-en">Binary selection, square shape (NN/g), full states + indeterminate, clickable label.</span>
     </div>
   </a>
+  <a href="radio.html" class="nav-card">
+    <span class="nav-card-icon">${icon('circle-dot',32)}</span>
+    <div class="nav-card-title">Radio</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Choix exclusif, forme ronde (NN/g), groupe ARIA radiogroup, navigation flèches.</span>
+      <span class="lang-en">Exclusive choice, round shape (NN/g), ARIA radiogroup, arrow-key navigation.</span>
+    </div>
+  </a>
+  <a href="toggle.html" class="nav-card">
+    <span class="nav-card-icon">${icon('toggle-right',32)}</span>
+    <div class="nav-card-title">Toggle</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Réglage on/off à effet immédiat, role=switch, état par position (WCAG 1.4.1).</span>
+      <span class="lang-en">Immediate on/off setting, role=switch, state by position (WCAG 1.4.1).</span>
+    </div>
+  </a>
 </div>
 `;
 
@@ -2655,6 +2673,170 @@ function buildCheckbox() {
   }));
 }
 
+// ─── PAGE: RADIO ─────────────────────────────────────────────────────────────
+function buildRadio() {
+  const RING = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:9999px;flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
+  function radio(state) {
+    if (state === 'selected')
+      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-surface)"><span style="width:50%;height:50%;border-radius:9999px;background:var(--agtc-semantic-color-action-primary)"></span></span>`;
+    if (state === 'disabled')
+      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-subtle)"></span>`;
+    return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)"></span>`;
+  }
+  function row(state, label, dim) {
+    return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px${dim?';opacity:.6':''}">${radio(state)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
+  }
+
+  const tokenRows = [
+    ['radio-default-background',   'semantic.color.background.surface',   SEM['color-background-surface']],
+    ['radio-default-border',       'semantic.color.border.default',       SEM['color-border-default']],
+    ['radio-default-border-hover', 'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['radio-default-border-focus', 'semantic.color.border.focus',         SEM['color-border-focus']],
+    ['radio-default-fill',         'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['radio-default-label',        'semantic.color.text.primary',         SEM['color-text-primary']],
+  ];
+
+  const body = `
+<h1>Radio</h1>
+<p class="page-lead">
+  <span class="lang-fr">Sélection mutuellement exclusive — exactement un choix. Forme <strong>ronde</strong> (NN/g) : le carré signale une checkbox. Toujours dans un <code>&lt;agtc-radio-group&gt;</code> qui gère l'exclusivité, le focus roving et la navigation aux flèches.</span>
+  <span class="lang-en">Mutually exclusive selection — exactly one choice. <strong>Round</strong> shape (NN/g): square signals a checkbox. Always inside an <code>&lt;agtc-radio-group&gt;</code> handling exclusivity, roving focus, and arrow navigation.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">États</span><span class="lang-en">States</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Groupe « Formule »</span><span class="lang-en">"Plan" group</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      ${row('default', 'Gratuit')}
+      ${row('selected', 'Pro')}
+      ${row('disabled', '<span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span>', true)}
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Navigation clavier</span><span class="lang-en">Keyboard navigation</span></h2>
+<table class="token-table">
+  <thead><tr><th><span class="lang-fr">Touche</span><span class="lang-en">Key</span></th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td><code>Tab</code></td><td><span class="lang-fr">Entre/sort du groupe (focus roving)</span><span class="lang-en">Enter/leave the group (roving focus)</span></td></tr>
+    <tr><td><code>↓</code> / <code>→</code></td><td><span class="lang-fr">Option suivante (sélectionne, boucle)</span><span class="lang-en">Next option (selects, wraps)</span></td></tr>
+    <tr><td><code>↑</code> / <code>←</code></td><td><span class="lang-fr">Option précédente (sélectionne, boucle)</span><span class="lang-en">Previous option (selects, wraps)</span></td></tr>
+    <tr><td><code>Espace</code> / <code>Entrée</code></td><td><span class="lang-fr">Sélectionne l'option focalisée</span><span class="lang-en">Selects the focused option</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Forme ronde — jamais carrée (le carré = checkbox)</span><span class="lang-en">Round shape — never square (square = checkbox)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours dans un <code>&lt;agtc-radio-group&gt;</code></span><span class="lang-en">Always inside an <code>&lt;agtc-radio-group&gt;</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Pré-sélectionner un défaut sensé (sauf exception éthique/légale)</span><span class="lang-en">Pre-select a sensible default (except ethical/legal cases)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Sélection multiple attendue — utiliser des checkboxes</span><span class="lang-en">Multiple selection expected — use checkboxes</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-radio-group name="plan" value="pro" label="<span class="lang-fr">Formule</span><span class="lang-en">Plan</span>"&gt;
+  &lt;agtc-radio value="free"&gt;<span class="lang-fr">Gratuit</span><span class="lang-en">Free</span>&lt;/agtc-radio&gt;
+  &lt;agtc-radio value="pro"&gt;Pro&lt;/agtc-radio&gt;
+  &lt;agtc-radio value="team"&gt;<span class="lang-fr">Équipe</span><span class="lang-en">Team</span>&lt;/agtc-radio&gt;
+&lt;/agtc-radio-group&gt;</code></pre>
+`;
+
+  write(path.join(DIST, 'components/radio.html'), layout({
+    title: 'Radio', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'radio.html'),
+    body: body + uxPatternsFromMd('radio') + contributionBanner()
+  }));
+}
+
+// ─── PAGE: TOGGLE ────────────────────────────────────────────────────────────
+function buildToggle() {
+  function toggle(on, dim) {
+    const track = on ? 'var(--agtc-semantic-color-action-primary)' : '#8d8d8d';
+    const x = on ? '18px' : '2px';
+    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:9999px;background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:9999px;background:var(--agtc-semantic-color-background-surface);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
+  }
+  function row(on, label, dim) {
+    return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
+  }
+
+  const tokenRows = [
+    ['toggle-default-track-off',       'primitive.color.gray.9 (proxy)',      '#8d8d8d'],
+    ['toggle-default-track-off-hover', 'primitive.color.gray.10 (proxy)',     '#838383'],
+    ['toggle-default-track-on',        'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['toggle-default-track-on-hover',  'semantic.color.action.primary-hover', SEM['color-action-primary-hover']],
+    ['toggle-default-knob',            'semantic.color.background.surface',   SEM['color-background-surface']],
+    ['toggle-default-border-focus',    'semantic.color.border.focus',         SEM['color-border-focus']],
+    ['toggle-default-label',           'semantic.color.text.primary',         SEM['color-text-primary']],
+  ];
+
+  const body = `
+<h1>Toggle</h1>
+<p class="page-lead">
+  <span class="lang-fr">Interrupteur on/off à <strong>effet immédiat</strong> — le changement s'applique instantanément, sans bouton « Enregistrer ». L'état est signalé par la <strong>position du curseur</strong> (indicateur non-couleur, WCAG 1.4.1).</span>
+  <span class="lang-en">Immediate-effect on/off switch — the change applies instantly, no "Save" button. State is signaled by the <strong>knob position</strong> (non-color indicator, WCAG 1.4.1).</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">États</span><span class="lang-en">States</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label">Off · On</span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      ${row(false, '<span class="lang-fr">Mode sombre</span><span class="lang-en">Dark mode</span>')}
+      ${row(true, '<span class="lang-fr">Notifications par e-mail</span><span class="lang-en">Email notifications</span>')}
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
+    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      ${row(false, '<span class="lang-fr">Synchronisation</span><span class="lang-en">Sync</span>', true)}
+      ${row(true, '<span class="lang-fr">Sauvegarde auto</span><span class="lang-en">Auto-save</span>', true)}
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Checkbox ou toggle ?</span><span class="lang-en">Checkbox or toggle?</span></h2>
+<table class="token-table">
+  <thead><tr><th></th><th>Checkbox</th><th>Toggle</th></tr></thead>
+  <tbody>
+    <tr><td><span class="lang-fr">Effet</span><span class="lang-en">Effect</span></td><td><span class="lang-fr">À la soumission</span><span class="lang-en">On submit</span></td><td><span class="lang-fr"><strong>Immédiat</strong></span><span class="lang-en"><strong>Immediate</strong></span></td></tr>
+    <tr><td><span class="lang-fr">Usage</span><span class="lang-en">Use</span></td><td><span class="lang-fr">Sélection 0–N dans un formulaire</span><span class="lang-en">0–N selection in a form</span></td><td><span class="lang-fr">Réglage on/off instantané</span><span class="lang-en">Instant on/off setting</span></td></tr>
+    <tr><td><span class="lang-fr">Exemple</span><span class="lang-en">Example</span></td><td>« J'accepte les CGU »</td><td><span class="lang-fr">« Mode sombre »</span><span class="lang-en">"Dark mode"</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Effet immédiat — jamais dans un formulaire soumis ensemble</span><span class="lang-en">Immediate effect — never in a submitted form</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">État signalé par la position (pas la couleur seule)</span><span class="lang-en">State signaled by position (not color alone)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>role="switch"</code> natif, clavier Espace</span><span class="lang-en">Native <code>role="switch"</code>, Space key</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Libellé interrogatif — préférer un libellé concis</span><span class="lang-en">Interrogative label — prefer a concise one</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-toggle label="<span class="lang-fr">Notifications par e-mail</span><span class="lang-en">Email notifications</span>" name="email-notif"&gt;&lt;/agtc-toggle&gt;
+&lt;agtc-toggle label="<span class="lang-fr">Mode sombre</span><span class="lang-en">Dark mode</span>" checked&gt;&lt;/agtc-toggle&gt;</code></pre>
+`;
+
+  write(path.join(DIST, 'components/toggle.html'), layout({
+    title: 'Toggle', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'toggle.html'),
+    body: body + uxPatternsFromMd('toggle') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3179,6 +3361,8 @@ function build() {
   buildBadge();
   buildCard();
   buildCheckbox();
+  buildRadio();
+  buildToggle();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));

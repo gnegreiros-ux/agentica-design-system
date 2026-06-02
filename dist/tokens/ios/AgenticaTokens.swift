@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Mon, 01 Jun 2026 17:41:31 GMT
+// Generated on Mon, 01 Jun 2026 23:14:44 GMT
 
 
 import UIKit
@@ -543,6 +543,13 @@ public class AgenticaTokens {
     public static let primitiveSpace5 = 20px
     public static let primitiveSpace6 = 24px
     public static let primitiveSpace8 = 32px
+    public static let radioDefaultBackground = #ffffff
+    public static let radioDefaultBorder = #e8e8e8
+    public static let radioDefaultBorderFocus = #12a594
+    public static let radioDefaultBorderHover = #12a594
+    public static let radioDefaultFill = #12a594
+    public static let radioDefaultFillHover = #0d9b8a
+    public static let radioDefaultLabel = #202020
     public static let semanticColorActionPrimary = #12a594
     public static let semanticColorActionPrimaryDisabled = #d9d9d9
     public static let semanticColorActionPrimaryHover = #0d9b8a
@@ -623,4 +630,11 @@ public class AgenticaTokens {
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500
+    public static let toggleDefaultBorderFocus = #12a594
+    public static let toggleDefaultKnob = #ffffff
+    public static let toggleDefaultLabel = #202020
+    public static let toggleDefaultTrackOff = #8d8d8d
+    public static let toggleDefaultTrackOffHover = #838383
+    public static let toggleDefaultTrackOn = #12a594
+    public static let toggleDefaultTrackOnHover = #0d9b8a
 }

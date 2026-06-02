@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 01 Jun 2026 17:41:31 GMT
+ * Generated on Mon, 01 Jun 2026 23:14:44 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -616,3 +616,17 @@ export const CheckboxDefaultFillHover = "#0d9b8a";
 export const CheckboxDefaultCheck = "#ffffff";
 export const CheckboxDefaultLabel = "#202020";
 export const CheckboxDefaultRadius = "6px";
+export const RadioDefaultBackground = "#ffffff";
+export const RadioDefaultBorder = "#e8e8e8";
+export const RadioDefaultBorderHover = "#12a594";
+export const RadioDefaultBorderFocus = "#12a594";
+export const RadioDefaultFill = "#12a594";
+export const RadioDefaultFillHover = "#0d9b8a";
+export const RadioDefaultLabel = "#202020";
+export const ToggleDefaultTrackOff = "#8d8d8d";
+export const ToggleDefaultTrackOffHover = "#838383";
+export const ToggleDefaultTrackOn = "#12a594";
+export const ToggleDefaultTrackOnHover = "#0d9b8a";
+export const ToggleDefaultKnob = "#ffffff";
+export const ToggleDefaultBorderFocus = "#12a594";
+export const ToggleDefaultLabel = "#202020";

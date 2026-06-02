@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Hook automatique de rappel ADR sur modifications critiques — Agentica</title>
+<title>Implémentation de `agtc-toggle` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-toggle` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-toggle` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,93 +55,41 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 015</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 039</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-01</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
-</div><h1>ADR-015 — Hook automatique de rappel ADR sur modifications critiques</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Dernière révision :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif (amendé) <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-015-hook-rappel-adr.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md</p></blockquote>
+</div><h1>ADR-039 — Implémentation de <code>agtc-toggle</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-01 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-039-agtc-toggle-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/toggle.md, tokens/component.json</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
+<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>T1–T7 approuvés</strong>, indicateur d'état par <strong>position du curseur seule</strong>. Détail et liens : <code>guidelines/components/toggle.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td><code>role="switch"</code> + <code>aria-checked</code></td><td>NN/g — toggle switch</td></tr><tr><td>Effet immédiat (pas de submit)</td><td>NN/g</td></tr><tr><td>État par position du curseur (pas couleur seule)</td><td>NN/g · WCAG 1.4.1</td></tr><tr><td>Curseur délimité, contraste ≥ 3:1</td><td>NN/g · WCAG 1.4.11</td></tr><tr><td>Label concis frontload décrivant l'état « on »</td><td>NN/g</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Binaire uniquement</td><td>NN/g</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p>Les fichiers <code>tokens/</code>, <code>guidelines/</code>, et <code>components/</code> contiennent les décisions structurantes du système de design : valeurs de tokens, contrats de composants, documentation normative. Toute modification dans ces zones devrait, en principe, être accompagnée d'un ADR ou d'un TCR qui en explique le pourquoi.</p>
-<p>En pratique, la documentation était oubliée. Un agent ou un humain modifiait <code>tokens/semantic.json</code> pour ajouter un token, commitait, et aucun ADR n'était créé. L'historique git conservait le _quoi_ mais perdait le _pourquoi_.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment s'assurer qu'une modification dans une zone critique du système déclenche systématiquement une réflexion sur la nécessité d'un ADR, sans bloquer le flux de travail ni imposer un ADR pour chaque changement mineur ?</strong></p></blockquote>
+<p>Le toggle complète checkbox/radio : c'est le contrôle des réglages à <strong>effet immédiat</strong>. Trois questions ont guidé les décisions :</p>
+<p>1. <strong>Sémantique</strong> — <code>role="switch"</code> vs simple checkbox. 2. <strong>Indicateur d'état</strong> — position seule vs ajout de libellés on/off (I/O). 3. <strong>Couleur de la piste « off »</strong> — aucun token sémantique neutre-médium n'existe.</p>
 <hr>
-<h2>Décision</h2>
-<p>Ajout d'un hook <code>PostToolUse</code> dans <code>.claude/settings.json</code> qui s'active après chaque opération <code>Write</code> ou <code>Edit</code> sur un fichier dont le chemin contient <code>/tokens/</code>, <code>/guidelines/</code>, ou <code>/components/</code>.</p>
-<p>Le hook injecte un rappel dans le contexte du modèle via <code>additionalContext</code> :</p>
-<pre class="code-block"><code class="lang-text">RAPPEL ADR : Le fichier modifié est dans une zone critique du système de design.
-Demande immédiatement à l'utilisateur : Souhaitez-vous créer un ADR
-pour documenter ce changement ? (Oui/Non)</code></pre>
-<p>Ce rappel oblige Claude à poser la question à chaque modification critique. L'utilisateur répond Oui ou Non — aucun ADR n'est créé sans décision humaine explicite.</p>
-<h3>Configuration (<code>/.claude/settings.json</code>)</h3>
-<pre class="code-block"><code class="lang-json">{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{...additionalContext...}' \"$f\"; fi",
-            "statusMessage": "Vérification ADR…"
-          }
-        ]
-      }
-    ]
-  }
-}</code></pre>
+<h2>Décisions</h2>
+<h3>Décision 1 — <code>&lt;input type="checkbox" role="switch"&gt;</code> natif masqué</h3>
+<p>L'élément accessible est un checkbox natif promu en <code>switch</code> via <code>role</code>. Il fournit le rôle, l'état coché, la gestion clavier (Espace) et le nom accessible (via le <code>&lt;label&gt;</code> englobant). La piste et le curseur stylés sont <strong>décoratifs</strong> (<code>aria-hidden</code>).</p>
+<p><strong>Alternative rejetée :</strong> <code>&lt;div role="switch"&gt;</code> avec gestion clavier manuelle — fragile et inutile puisque le natif fournit tout (anti-pattern WCAG 4.1.2).</p>
 <hr>
-<h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Règle documentée dans CLAUDE.md uniquement</strong></td><td>Une règle textuelle dans un fichier de contexte dépend de la bonne lecture de ce fichier par l'agent. Un hook s'exécute systématiquement, indépendamment du contexte chargé.</td></tr><tr><td><strong>Hook bloquant (exit non-zéro)</strong></td><td>Bloquer le <code>Edit</code> jusqu'à création d'un ADR serait trop contraignant : tous les changements ne justifient pas un ADR (correction de typo, reformatage). Le rappel non-bloquant laisse la décision à l'humain.</td></tr><tr><td><strong>Hook sur <code>git commit</code> (pre-commit)</strong></td><td>Un hook git vérifie au moment du commit, trop tard dans le flux : la question pertinente est posée _pendant_ la modification, quand le contexte est encore actif.</td></tr><tr><td><strong>Notification système (OS notification)</strong></td><td>Les notifications OS sont ignorées lors d'un travail dans le terminal. Le <code>additionalContext</code> est injecté directement dans la réponse de Claude — impossible à manquer.</td></tr><tr><td><strong>ADR obligatoire pour chaque changement</strong></td><td>Surcharge documentaire. Un changement de valeur de token primitif de <code>#3B82F6</code> à <code>#3B81F5</code> ne justifie pas un ADR complet. Le rappel filtre par contexte humain.</td></tr></tbody></table>
+<h3>Décision 2 — État signalé par la position du curseur (indicateur non-couleur)</h3>
+<p>Le curseur glisse à gauche (off) / à droite (on). La <strong>position</strong> est un indicateur indépendant de la couleur (WCAG 1.4.1) ; la couleur de la piste (gris → teal) ne fait que renforcer.</p>
+<p><strong>Alternative rejetée :</strong> libellés I/O dans la piste. Écartés pour rester épuré (standard iOS/Android) ; la position suffit comme indicateur non-couleur.</p>
+<p>Le curseur est <strong>blanc avec une ombre portée</strong>, garantissant un contraste ≥ 3:1 avec la piste dans les deux états (WCAG 1.4.11).</p>
 <hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Après chaque <code>Edit</code> ou <code>Write</code> dans une zone critique, Claude pose la question ADR</li></ul>
-<p>  sans que l'utilisateur ait à y penser</p>
-<ul><li>Le hook s'exécute via le harness Claude Code — il ne dépend pas du prompt,</li></ul>
-<p>  du contexte chargé, ni de la mémoire de la session</p>
-<p><strong>Pour les humains :</strong></p>
-<ul><li>La friction documentaire est minimale : une question Oui/Non après chaque changement</li><li>Les ADR oubliés deviennent structurellement impossibles sur les zones couvertes</li><li>Le comportement est transparent et auditable dans <code>.claude/settings.json</code></li></ul>
-<p><strong>Zones couvertes :</strong></p>
-<ul><li><code>tokens/</code> — primitifs, sémantiques, composants</li><li><code>guidelines/</code> — documentation normative des composants et fondations</li><li><code>components/</code> — implémentations Web Components</li></ul>
-<p><strong>Zones non couvertes (volontairement) :</strong></p>
-<ul><li><code>.claude/</code> — configuration interne, pas de décision de design</li><li><code>src/</code> — code applicatif, couvert par d'autres processus de revue</li><li><code>decisions/</code> — les ADR eux-mêmes ne déclenchent pas un rappel récursif</li></ul>
-<p><strong>Coût accepté :</strong></p>
-<ul><li>Le rappel s'affiche même pour des changements mineurs (correction de typo dans un token)</li><li>L'utilisateur doit répondre Non explicitement — légère friction pour les changements évidents</li></ul>
+<h3>Décision 3 — <code>track-off</code> = proxy vers <code>primitive.color.gray.9</code></h3>
+<p>Aucun token sémantique de gris neutre-médium n'existe. <code>track-off</code> référence directement <code>primitive.color.gray.9</code> (#8d8d8d), choisi pour donner ~3.3:1 entre le curseur blanc et la piste (WCAG 1.4.11). C'est un <strong>proxy de composant</strong> (même approche que <code>card.elevated.shadow</code>) jusqu'à la création d'un token sémantique dédié — gouverné par le Design System Lead.</p>
 <hr>
-<h2>Amendement — 2026-05-31 : rappel ADR sur <code>Write</code> uniquement</h2>
-<h3>Problème observé</h3>
-<p>Lors des sessions de développement des composants <code>agtc-badge</code>, <code>agtc-card</code> et des corrections WCAG qui ont suivi, le hook se déclenchait sur <strong>chaque <code>Edit</code></strong> dans les zones critiques — y compris pour des corrections de bugs sans décision architecturale (changement d'un ratio de contraste insuffisant, correction d'une typo dans une story, ajustement d'une couleur qui échoue un test axe).</p>
-<p>Résultat concret : pour corriger les 27 violations WCAG du badge (3 couleurs de texte à remplacer), le hook a interrompu le travail <strong>6 fois</strong> pour poser une question dont la réponse était systématiquement non. La friction documentaire devenait du bruit plutôt qu'une garde-fou utile.</p>
-<h3>Distinction fondamentale</h3>
-<table><thead><tr><th>Type de changement</th><th>Besoin d'ADR</th><th>Exemple</th></tr></thead><tbody><tr><td><strong>Nouveau fichier</strong> (<code>Write</code>)</td><td>Oui — c'est une création, donc une décision</td><td>Ajouter <code>agtc-badge.js</code>, créer un token</td></tr><tr><td><strong>Modification</strong> (<code>Edit</code>)</td><td>Rarement — souvent un bug fix ou un ajustement</td><td>Corriger un contraste, renommer une variable</td></tr></tbody></table>
-<p>La question "faut-il un ADR ?" est pertinente quand on <strong>crée</strong> quelque chose (nouveau composant, nouveau token, nouvelle guideline). Elle est presque toujours non pertinente quand on <strong>modifie</strong> quelque chose qui existe déjà — l'ADR original couvre déjà la décision.</p>
-<h3>Changement appliqué</h3>
-<p>Le hook <code>PostToolUse</code> est maintenant séparé en deux entrées :</p>
-<pre class="code-block"><code class="lang-json">{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "hooks": [{ "type": "command", "command": "...rappel ADR..." }]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [{ "type": "command", "command": "...log construction..." }]
-      }
-    ]
-  }
-}</code></pre>
-<ul><li><strong>Rappel ADR</strong> : <code>Write</code> uniquement — se déclenche à la création d'un fichier</li><li><strong>Log de construction</strong> : <code>Write|Edit</code> — inchangé, capture toutes les modifications</li></ul>
-<h3>Coût accepté de l'amendement</h3>
-<p>Un <code>Edit</code> qui représente réellement une nouvelle décision architecturale ne déclenchera plus automatiquement le rappel. La discipline reste nécessaire : si une modification de token ou de composant encode une décision non triviale, l'humain ou l'agent doit créer l'ADR manuellement. Le hook n'est plus le seul garde-fou pour les modifications.</p>
+<h2>Périmètre v1</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>États off/on/hover/focus/disabled</td><td>Libellés on/off (I/O) dans la piste</td></tr><tr><td>Effet immédiat (<code>agtc-change</code>)</td><td>Taille <code>sm</code>/<code>lg</code></td></tr><tr><td><code>role="switch"</code>, clavier Espace</td><td>État <code>loading</code> (async)</td></tr></tbody></table>
 <hr>
-<h2>Incidents ou déclencheurs (version originale)</h2>
-<p>Constat répété : lors de sessions de travail sur les tokens et les guidelines, des modifications structurantes étaient commitées sans ADR associé. L'historique git conservait le diff mais pas la justification. Ce hook est la réponse procédurale à ce manque de discipline documentaire.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-014.html" class="ds-btn secondary">← ADR-014</a>
-    <a href="adr-016.html" class="ds-btn secondary">ADR-016 →</a>
+<h2>Tokens ajoutés dans <code>component.json</code></h2>
+<table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>--agtc-toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-on</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-toggle-default-track-on-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-toggle-default-knob</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-toggle-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-toggle-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-038.html" class="ds-btn secondary">← ADR-038</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

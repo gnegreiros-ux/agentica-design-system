@@ -152,5 +152,35 @@
       "label":        { "value": "{semantic.color.text.primary}",          "$type": "color" },
       "radius":       { "value": "{semantic.radius.control}",              "$type": "dimension" }
     }
+  },
+  "radio": {
+    "$metadata": {
+      "intent": "Sélection mutuellement exclusive — exactement un choix dans un groupe",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "background":   { "value": "{semantic.color.background.surface}",    "$type": "color" },
+      "border":       { "value": "{semantic.color.border.default}",        "$type": "color" },
+      "border-hover": { "value": "{semantic.color.action.primary}",        "$type": "color" },
+      "border-focus": { "value": "{semantic.color.border.focus}",          "$type": "color" },
+      "fill":         { "value": "{semantic.color.action.primary}",        "$type": "color" },
+      "fill-hover":   { "value": "{semantic.color.action.primary-hover}",  "$type": "color" },
+      "label":        { "value": "{semantic.color.text.primary}",          "$type": "color" }
+    }
+  },
+  "toggle": {
+    "$metadata": {
+      "intent": "Réglage binaire à effet immédiat (on/off) — préférer à la checkbox quand le changement s'applique instantanément",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "track-off":       { "value": "{primitive.color.gray.9}",            "$type": "color" },
+      "track-off-hover": { "value": "{primitive.color.gray.10}",           "$type": "color" },
+      "track-on":        { "value": "{semantic.color.action.primary}",       "$type": "color" },
+      "track-on-hover":  { "value": "{semantic.color.action.primary-hover}", "$type": "color" },
+      "knob":            { "value": "{semantic.color.background.surface}",    "$type": "color" },
+      "border-focus":    { "value": "{semantic.color.border.focus}",          "$type": "color" },
+      "label":           { "value": "{semantic.color.text.primary}",          "$type": "color" }
+    }
   }
 }
