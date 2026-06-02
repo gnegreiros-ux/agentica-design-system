@@ -191,3 +191,5 @@
 | 2026-06-01 19:25 | Composant | `agtc-radio` + `agtc-radio-group` créés — 6 surfaces : tokens `component.radio`, code (role=radiogroup, focus roving, clavier flèches), 2 stories, guideline, ADR-038, site |
 | 2026-06-01 19:25 | Revue UX | `toggle` — patterns NN/g+IxDF approuvés (T1–T7), `role="switch"`, état par position seule (WCAG 1.4.1), track-off proxy gray.9 — ADR-036/039 |
 | 2026-06-01 19:25 | Composant | `agtc-toggle` créé — 6 surfaces : tokens `component.toggle`, code (effet immédiat), story, guideline, ADR-039, site. WCAG 0 violation (57 pages), Storybook OK |
+| 2026-06-01 20:51 | Modifié | `decisions/ADR-038-agtc-radio-implementation.md` |
+| 2026-06-01 20:55 | Ajustement | `agtc-radio-group` — retrait de `Entrée` (garde `Espace` seul) pour coller au pattern WAI-ARIA strict ; 4 surfaces synchronisées (code, guideline, ADR-038, site) ; re-vérifié au navigateur |

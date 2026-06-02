@@ -76,7 +76,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 | `Tab` | Entre/sort du groupe (un seul radio tabbable — focus roving) |
 | `↓` / `→` | Option suivante (sélectionne, boucle) |
 | `↑` / `←` | Option précédente (sélectionne, boucle) |
-| `Espace` / `Entrée` | Sélectionne l'option focalisée |
+| `Espace` | Sélectionne l'option focalisée (`Entrée` réservé à la soumission de formulaire) |
 
 ---
 

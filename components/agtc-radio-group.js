@@ -97,7 +97,9 @@ class AgtcRadioGroup extends LitElement {
       e.preventDefault();
       const idx = curIdx < 0 ? radios.length - 1 : (curIdx - 1 + radios.length) % radios.length;
       this._select(radios[idx].value, true);
-    } else if (e.key === ' ' || e.key === 'Enter') {
+    } else if (e.key === ' ') {
+      // Espace seul sélectionne (pattern WAI-ARIA radio strict ; Entrée est
+      // réservé à la soumission de formulaire — voir ADR-038)
       const focused = radios.find((r) => r === document.activeElement);
       if (focused) { e.preventDefault(); this._select(focused.value, true); }
     }

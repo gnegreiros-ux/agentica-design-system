@@ -81,7 +81,7 @@
 <p><code>border-radius: 9999px</code>. NN/g : le rond est la convention du radio ; le carré signale une checkbox. Pastille centrale <code>fill</code> (teal) animée par <code>transform: scale</code>.</p>
 <hr>
 <h3>Décision 3 — Pattern ARIA radiogroup complet</h3>
-<p>Le groupe implémente le pattern WAI-ARIA : <code>role="radiogroup"</code> + <code>aria-label</code>, enfants <code>role="radio"</code> + <code>aria-checked</code>, focus roving, <code>↓→</code> suivant / <code>↑←</code> précédent (boucle, sélection), <code>Espace</code>/<code>Entrée</code> sélectionne. Cela reproduit fidèlement le comportement d'un groupe natif sans dépendre du groupement natif inopérant en shadow DOM.</p>
+<p>Le groupe implémente le pattern WAI-ARIA : <code>role="radiogroup"</code> + <code>aria-label</code>, enfants <code>role="radio"</code> + <code>aria-checked</code>, focus roving, <code>↓→</code> suivant / <code>↑←</code> précédent (boucle, sélection), <code>Espace</code> sélectionne. <code>Entrée</code> est volontairement <strong>non</strong> géré (réservé à la soumission de formulaire, pattern WAI-ARIA radio strict). Cela reproduit fidèlement le comportement d'un groupe natif sans dépendre du groupement natif inopérant en shadow DOM.</p>
 <hr>
 <h2>Périmètre v1</h2>
 <table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td><code>agtc-radio-group</code> + <code>agtc-radio</code>, ronde</td><td>Orientation horizontale assistée</td></tr><tr><td>États default/hover/focus/selected/disabled</td><td>Description/aide par option</td></tr><tr><td>Focus roving + clavier flèches</td><td>Validation « requis » de groupe</td></tr><tr><td>Événement <code>agtc-change</code></td><td>—</td></tr></tbody></table>

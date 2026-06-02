@@ -67,8 +67,9 @@ checkbox. Pastille centrale `fill` (teal) animée par `transform: scale`.
 
 Le groupe implémente le pattern WAI-ARIA : `role="radiogroup"` + `aria-label`, enfants
 `role="radio"` + `aria-checked`, focus roving, `↓→` suivant / `↑←` précédent (boucle, sélection),
-`Espace`/`Entrée` sélectionne. Cela reproduit fidèlement le comportement d'un groupe natif sans
-dépendre du groupement natif inopérant en shadow DOM.
+`Espace` sélectionne. `Entrée` est volontairement **non** géré (réservé à la soumission de
+formulaire, pattern WAI-ARIA radio strict). Cela reproduit fidèlement le comportement d'un groupe
+natif sans dépendre du groupement natif inopérant en shadow DOM.
 
 ---
 
