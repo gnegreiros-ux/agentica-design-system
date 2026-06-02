@@ -424,6 +424,18 @@
   --agtc-primitive-color-black-11: rgba(0,0,0,0.80);
   --agtc-primitive-color-black-12: rgba(0,0,0,0.90);
 
+  /* ── Primitive spacing — grille 4px ── */
+  --agtc-primitive-space-1: 4px;
+  --agtc-primitive-space-2: 8px;
+  --agtc-primitive-space-3: 12px;
+  --agtc-primitive-space-4: 16px;
+  --agtc-primitive-space-5: 20px;
+  --agtc-primitive-space-6: 24px;
+  --agtc-primitive-space-8: 32px;
+  --agtc-primitive-space-10: 40px;
+  --agtc-primitive-space-12: 48px;
+  --agtc-primitive-space-16: 64px;
+
   /* ── Semantic tokens — UX intentions ── */
   --agtc-semantic-color-action-primary: #12a594;
   --agtc-semantic-color-action-primary-hover: #0d9b8a;

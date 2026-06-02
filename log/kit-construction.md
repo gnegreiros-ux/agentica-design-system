@@ -194,3 +194,4 @@
 | 2026-06-01 20:51 | Modifié | `decisions/ADR-038-agtc-radio-implementation.md` |
 | 2026-06-01 20:55 | Ajustement | `agtc-radio-group` — retrait de `Entrée` (garde `Espace` seul) pour coller au pattern WAI-ARIA strict ; 4 surfaces synchronisées (code, guideline, ADR-038, site) ; re-vérifié au navigateur |
 | 2026-06-02 | Fix a11y | `agtc-checkbox` — ajout du garde `prefers-reduced-motion` (transitions `.box` désactivées) ; homogénéise les 3 contrôles de sélection (checkbox/radio/toggle) |
+| 2026-06-02 | Fix site | `site/build.js` (`tokensCSS`) — émission des espacements primitifs `--agtc-primitive-space-N` manquants dans `tokens.css`. Corrige le padding nul des badges (et card sm/lg) qui référençaient ces vars indéfinies. Vérifié au navigateur (padding 4px/12px) |

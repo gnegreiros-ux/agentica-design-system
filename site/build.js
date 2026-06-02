@@ -204,6 +204,10 @@ function tokensCSS() {
   for (const [scale, steps] of Object.entries(COLOR_SCALES))
     for (const [step, { value }] of Object.entries(steps))
       lines.push(`  --agtc-primitive-color-${scale}-${step}: ${value};`);
+  // Espacements primitifs — référencés par certains tokens composant (badge, card)
+  lines.push('\n  /* ── Primitive spacing — grille 4px ── */');
+  for (const [step, tok] of Object.entries(primitives.primitive?.space || {}))
+    lines.push(`  --agtc-primitive-space-${step}: ${tok.$value};`);
   lines.push('\n  /* ── Semantic tokens — UX intentions ── */');
   for (const [k, v] of Object.entries(SEM)) lines.push(`  --agtc-semantic-${k}: ${v};`);
   lines.push('\n  /* ── Component tokens — UI contracts ── */');
