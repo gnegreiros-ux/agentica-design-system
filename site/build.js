@@ -3312,6 +3312,60 @@ ${violationsSection}
 }
 
 // ─── MAIN BUILD ─────────────────────────────────────────────────────────────
+// ─── VALIDATION : variables CSS fantômes ─────────────────────────────────────
+// Garde-fou anti-régression. Toute `var(--agtc-…)` référencée dans le CSS/HTML
+// généré DOIT avoir une définition (`--agtc-…:`) quelque part dans la sortie.
+// Une référence orpheline échoue SILENCIEUSEMENT en CSS (la propriété est
+// ignorée) — c'est exactement le bug du padding nul des badges (2026-06-02,
+// `--agtc-primitive-space-3` jamais émis). Ce check fait échouer le build.
+function validateCssVars() {
+  const cssFiles = [], htmlFiles = [];
+  (function walk(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const fp = path.join(dir, e.name);
+      if (e.isDirectory()) walk(fp);
+      else if (e.name.endsWith('.css')) cssFiles.push(fp);
+      else if (e.name.endsWith('.html')) htmlFiles.push(fp);
+    }
+  })(DIST);
+
+  // Définitions : uniquement dans les .css (tokens.css, site.css) — c'est là que
+  // vivent toutes les `--agtc-…: …`.
+  const defined = new Set();
+  const defRe = /(--agtc-[a-z0-9-]+)\s*:/gi;
+  for (const fp of cssFiles) {
+    let m; const css = fs.readFileSync(fp, 'utf8');
+    while ((m = defRe.exec(css))) defined.add(m[1]);
+  }
+
+  // Références SANS fallback uniquement : `var(--x)` fermé directement par `)`.
+  // `var(--x, …)` ne panne pas silencieusement (fallback), on l'ignore.
+  const referenced = new Map(); // nom -> fichier exemple
+  const refRe = /var\(\s*(--agtc-[a-z0-9-]+)\s*\)/gi;
+  const collectRefs = (text, fp) => {
+    let m;
+    while ((m = refRe.exec(text))) if (!referenced.has(m[1])) referenced.set(m[1], path.relative(DIST, fp));
+  };
+  for (const fp of cssFiles) collectRefs(fs.readFileSync(fp, 'utf8'), fp);
+  for (const fp of htmlFiles) {
+    // Exclure les exemples de code affichés (<pre>/<code>) — ce n'est pas du style
+    // appliqué mais de la documentation montrant les vrais noms de tokens.
+    const html = fs.readFileSync(fp, 'utf8')
+      .replace(/<pre\b[\s\S]*?<\/pre>/gi, '')
+      .replace(/<code\b[\s\S]*?<\/code>/gi, '');
+    collectRefs(html, fp);
+  }
+
+  const dangling = [...referenced].filter(([name]) => !defined.has(name));
+  if (dangling.length) {
+    console.error(`\n✗ ${dangling.length} variable(s) CSS fantôme(s) — référencées mais jamais définies :`);
+    for (const [name, file] of dangling) console.error(`    ${name}   (ex: ${file})`);
+    console.error('  → Définir ces tokens (souvent dans tokensCSS()) ou corriger la référence.\n');
+    process.exit(1);
+  }
+  console.log(`✓ Variables CSS : ${defined.size} définies · ${referenced.size} référencées · 0 fantôme`);
+}
+
 function build() {
   console.log('\nAgentica — build\n');
   ensureDir(DIST);
@@ -3372,6 +3426,8 @@ function build() {
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
   buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
+
+  validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
   const total = 13 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
