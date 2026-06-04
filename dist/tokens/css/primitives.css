@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 00:14:04 GMT
+ * Generated on Thu, 04 Jun 2026 01:26:37 GMT
  */
 
 :root {
@@ -455,6 +455,7 @@
   --agtc-primitive-radius-sm: 6px;
   --agtc-primitive-radius-md: 10px;
   --agtc-primitive-font-family-base: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --agtc-primitive-font-family-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
   --agtc-primitive-icon-size-sm: 16px;
   --agtc-primitive-icon-size-md: 20px;
   --agtc-primitive-icon-size-lg: 24px;

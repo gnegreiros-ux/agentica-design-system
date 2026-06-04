@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 00:14:04 GMT
+ * Generated on Thu, 04 Jun 2026 01:26:37 GMT
  */
 
 :root {
@@ -34,6 +34,7 @@
   --agtc-semantic-typography-detail-line-height: var(--agtc-primitive-line-height-reading);
   --agtc-semantic-typography-detail-weight: var(--agtc-primitive-font-weight-regular);
   --agtc-semantic-typography-detail-size: var(--agtc-primitive-font-size-xs);
+  --agtc-semantic-typography-mono-family: var(--agtc-primitive-font-family-mono);
   --agtc-semantic-typography-font-family: var(--agtc-primitive-font-family-base);
   --agtc-semantic-radius-card: var(--agtc-primitive-radius-md);
   --agtc-semantic-radius-control: var(--agtc-primitive-radius-sm);

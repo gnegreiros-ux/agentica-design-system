@@ -1,0 +1,166 @@
+import { LitElement, html, css } from 'lit';
+
+// ─── CONTRAT ────────────────────────────────────────────────────────────────
+// Bloc de code en LECTURE SEULE, copiable, sur surface sombre.
+// Le code est fourni via <slot> (HTML déjà échappé par l'auteur).
+//
+//   language="html|json|css|javascript|…"  — indicateur de langue (CD5)
+//   filename="agtc-badge.js"               — en-tête optionnel (CD8)
+//   copy-label / copied-label              — libellés du bouton (défaut FR)
+//
+// HORS PÉRIMÈTRE v1 (porte ouverte — ADR-041) :
+//   coloration syntaxique (CD7) — v1 = texte clair haut-contraste, sans
+//     dépendance (Prism/Shiki) ; numéros de ligne (CD9).
+//
+// Patterns UX de référence appliqués (ADR-036/041, tous approuvés CD1–CD9) :
+//   <pre><code> sémantique + classe de langue — DEV/whitep4nth3r :
+//     https://dev.to/whitep4nth3r/how-to-build-a-copy-code-snippet-button-and-why-it-matters-3en8
+//   Bouton copier + feedback texte — roboleary :
+//     https://www.roboleary.net/2022/01/13/copy-code-to-clipboard-blog
+//   Succès annoncé aux AT via role=status / aria-live — Sara Soueidan :
+//     https://www.sarasoueidan.com/blog/accessible-notifications-with-aria-live-regions-part-1/
+//   Scroll horizontal pour lignes longues — NN/g :
+//     https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Détail : guidelines/components/code-block.md § PATTERNS UX DE RÉFÉRENCE
+// ────────────────────────────────────────────────────────────────────────────
+
+class AgtcCodeBlock extends LitElement {
+  static properties = {
+    language:    { type: String },
+    filename:    { type: String },
+    copyLabel:   { type: String, attribute: 'copy-label' },
+    copiedLabel: { type: String, attribute: 'copied-label' },
+    _copied:     { state: true },
+  };
+
+  constructor() {
+    super();
+    this.copyLabel   = 'Copier';
+    this.copiedLabel = 'Copié !';
+    this._copied     = false;
+  }
+
+  static styles = css`
+    :host {
+      display: block;
+      margin: 18px 0;
+    }
+
+    .block {
+      background: var(--agtc-code-block-default-background);
+      border-radius: var(--agtc-code-block-default-radius);
+      overflow: hidden;
+    }
+
+    /* En-tête : nom de fichier / langue + bouton copier ───────────────────── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px var(--agtc-code-block-default-padding-x);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--agtc-code-block-default-meta-text);
+      font-size: var(--agtc-semantic-typography-detail-size);
+      min-width: 0;
+    }
+    .filename {
+      font-family: var(--agtc-semantic-typography-mono-family, monospace);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .language {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .copy {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--agtc-code-block-default-copy-background);
+      color: var(--agtc-code-block-default-copy-text);
+      border: none;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: var(--agtc-semantic-typography-detail-size);
+      cursor: pointer;
+    }
+    .copy:hover {
+      background: var(--agtc-code-block-default-copy-background-hover);
+    }
+    .copy:focus-visible {
+      outline: 2px solid var(--agtc-code-block-default-border-focus);
+      outline-offset: 2px;
+    }
+
+    pre {
+      margin: 0;
+      padding: var(--agtc-code-block-default-padding-y) var(--agtc-code-block-default-padding-x);
+      overflow-x: auto;
+    }
+    ::slotted(code),
+    code {
+      color: var(--agtc-code-block-default-text);
+      font-family: var(--agtc-semantic-typography-mono-family, monospace);
+      font-size: var(--agtc-code-block-default-font-size);
+      line-height: 1.6;
+      background: none;
+      white-space: pre;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+  `;
+
+  async _copy() {
+    const text = (this.textContent || '').replace(/^\n+|\n+$/g, '');
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      console.warn('[agtc-code-block] clipboard indisponible (contexte non sécurisé ?)');
+      return;
+    }
+    this._copied = true;
+    setTimeout(() => { this._copied = false; }, 1600);
+  }
+
+  render() {
+    const ariaLabel = `${this.copyLabel}${this.language ? ` (${this.language})` : ''}`;
+    return html`
+      <div class="block">
+        <div class="header">
+          <span class="meta">
+            ${this.filename ? html`<span class="filename">${this.filename}</span>` : ''}
+            ${this.language ? html`<span class="language">${this.language}</span>` : ''}
+          </span>
+          <button class="copy" type="button" aria-label="${ariaLabel}" @click="${this._copy}">
+            ${this._copied ? this.copiedLabel : this.copyLabel}
+          </button>
+        </div>
+        <pre><code><slot></slot></code></pre>
+      </div>
+      <span class="visually-hidden" role="status" aria-live="polite">
+        ${this._copied ? this.copiedLabel : ''}
+      </span>
+    `;
+  }
+}
+
+customElements.define('agtc-code-block', AgtcCodeBlock);
+export { AgtcCodeBlock };

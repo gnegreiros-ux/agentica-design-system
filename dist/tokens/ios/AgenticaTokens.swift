@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Thu, 04 Jun 2026 00:14:04 GMT
+// Generated on Thu, 04 Jun 2026 01:26:37 GMT
 
 
 import UIKit
@@ -76,6 +76,17 @@ public class AgenticaTokens {
     public static let checkboxDefaultFillHover = #0d9b8a
     public static let checkboxDefaultLabel = #202020
     public static let checkboxDefaultRadius = 6px
+    public static let codeBlockDefaultBackground = #202020
+    public static let codeBlockDefaultBorderFocus = #12a594
+    public static let codeBlockDefaultCopyBackground = #646464
+    public static let codeBlockDefaultCopyBackgroundHover = #838383
+    public static let codeBlockDefaultCopyText = #fcfcfc
+    public static let codeBlockDefaultFontSize = 0.875rem
+    public static let codeBlockDefaultMetaText = #bbbbbb
+    public static let codeBlockDefaultPaddingX = 20px
+    public static let codeBlockDefaultPaddingY = 16px
+    public static let codeBlockDefaultRadius = 10px
+    public static let codeBlockDefaultText = #e8e8e8
     public static let inputDefaultBackground = #ffffff
     public static let inputDefaultBorder = #e8e8e8
     public static let inputDefaultBorderError = #ce2c31
@@ -513,6 +524,7 @@ public class AgenticaTokens {
     public static let primitiveDensityFactorNormal = 1
     public static let primitiveDensityGridUnit = 4
     public static let primitiveFontFamilyBase = 'Atkinson Hyperlegible', system-ui, sans-serif
+    public static let primitiveFontFamilyMono = 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
     public static let primitiveFontSize2xl = 1.75rem
     public static let primitiveFontSize3xl = 2rem
     public static let primitiveFontSize4xl = 2.5rem
@@ -630,6 +642,7 @@ public class AgenticaTokens {
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500
+    public static let semanticTypographyMonoFamily = 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
     public static let tableDefaultBorder = #e8e8e8
     public static let tableDefaultCaptionText = #646464
     public static let tableDefaultCellText = #202020

@@ -98,6 +98,7 @@ des décisions déjà tranchées.
 | [ADR-038](ADR-038-agtc-radio-implementation.md) | Implémentation de `agtc-radio` + `agtc-radio-group` | 2026-06-01 | ✅ Actif |
 | [ADR-039](ADR-039-agtc-toggle-implementation.md) | Implémentation de `agtc-toggle` | 2026-06-01 | ✅ Actif |
 | [ADR-040](ADR-040-agtc-table-implementation.md) | Implémentation de `agtc-table` | 2026-06-03 | ✅ Actif |
+| [ADR-041](ADR-041-agtc-code-block-implementation.md) | Implémentation de `agtc-code-block` | 2026-06-03 | ✅ Actif |
 
 ---
 

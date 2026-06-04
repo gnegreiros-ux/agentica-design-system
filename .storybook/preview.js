@@ -10,6 +10,7 @@ import '../components/agtc-radio.js';
 import '../components/agtc-radio-group.js';
 import '../components/agtc-toggle.js';
 import '../components/agtc-table.js';
+import '../components/agtc-code-block.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {

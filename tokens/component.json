@@ -202,5 +202,24 @@
     "padding-x":             { "value": "{primitive.space.3}", "$type": "dimension" },
     "padding-y-compact":     { "value": "{primitive.space.2}", "$type": "dimension" },
     "padding-y-comfortable": { "value": "{primitive.space.3}", "$type": "dimension" }
+  },
+  "code-block": {
+    "$metadata": {
+      "intent": "Afficher un extrait de code en lecture seule, copiable, avec indicateur de langue — surface sombre",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "background":            { "value": "{primitive.color.gray.12}",      "$type": "color" },
+      "text":                  { "value": "{primitive.color.gray.4}",       "$type": "color" },
+      "meta-text":             { "value": "{primitive.color.gray.8}",       "$type": "color" },
+      "copy-background":       { "value": "{primitive.color.gray.11}",      "$type": "color" },
+      "copy-background-hover": { "value": "{primitive.color.gray.10}",      "$type": "color" },
+      "copy-text":             { "value": "{primitive.color.gray.1}",       "$type": "color" },
+      "border-focus":          { "value": "{semantic.color.border.focus}",  "$type": "color" },
+      "radius":                { "value": "{semantic.radius.card}",         "$type": "dimension" },
+      "font-size":             { "value": "{semantic.typography.label.size}", "$type": "dimension" },
+      "padding-x":             { "value": "{primitive.space.5}",            "$type": "dimension" },
+      "padding-y":             { "value": "{primitive.space.4}",            "$type": "dimension" }
+    }
   }
 }

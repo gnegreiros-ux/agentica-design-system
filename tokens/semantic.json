@@ -108,6 +108,9 @@
     },
     "typography": {
       "fontFamily": { "value": "{primitive.fontFamily.base}", "$type": "fontFamily", "$intent": "Police système — Atkinson Hyperlegible pour lisibilité maximale (basse vision, WCAG)" },
+      "mono": {
+        "family": { "value": "{primitive.fontFamily.mono}", "$type": "fontFamily", "$intent": "Police monospace — code, tokens, valeurs techniques (ADR-028)" }
+      },
       "detail": {
         "size":        { "value": "{primitive.fontSize.xs}",       "$type": "dimension", "$intent": "12px — Annotations, captions, aide contextuelle" },
         "weight":      { "value": "{primitive.fontWeight.regular}", "$type": "fontWeight" },

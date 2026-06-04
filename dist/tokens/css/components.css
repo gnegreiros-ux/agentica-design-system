@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 00:14:04 GMT
+ * Generated on Thu, 04 Jun 2026 01:26:37 GMT
  */
 
 :root {
@@ -19,6 +19,14 @@
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-code-block-default-padding-y: var(--agtc-primitive-space-4);
+  --agtc-code-block-default-padding-x: var(--agtc-primitive-space-5);
+  --agtc-code-block-default-copy-text: var(--agtc-primitive-color-gray-1);
+  --agtc-code-block-default-copy-background-hover: var(--agtc-primitive-color-gray-10);
+  --agtc-code-block-default-copy-background: var(--agtc-primitive-color-gray-11);
+  --agtc-code-block-default-meta-text: var(--agtc-primitive-color-gray-8);
+  --agtc-code-block-default-text: var(--agtc-primitive-color-gray-4);
+  --agtc-code-block-default-background: var(--agtc-primitive-color-gray-12);
   --agtc-table-padding-y-comfortable: var(--agtc-primitive-space-3);
   --agtc-table-padding-y-compact: var(--agtc-primitive-space-2);
   --agtc-table-padding-x: var(--agtc-primitive-space-3);
@@ -35,6 +43,9 @@
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
   --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
+  --agtc-code-block-default-font-size: var(--agtc-semantic-typography-label-size);
+  --agtc-code-block-default-radius: var(--agtc-semantic-radius-card);
+  --agtc-code-block-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-table-default-font-size: var(--agtc-semantic-typography-label-size);
   --agtc-table-default-radius: var(--agtc-semantic-radius-card);
   --agtc-table-default-caption-text: var(--agtc-semantic-color-text-secondary);

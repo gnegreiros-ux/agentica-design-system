@@ -208,6 +208,17 @@ const COMP = {
   'table-padding-x':                    'var(--agtc-primitive-space-3)',
   'table-padding-y-compact':            'var(--agtc-primitive-space-2)',
   'table-padding-y-comfortable':        'var(--agtc-primitive-space-3)',
+  'code-block-default-background':            'var(--agtc-primitive-color-gray-12)',
+  'code-block-default-text':                  'var(--agtc-primitive-color-gray-4)',
+  'code-block-default-meta-text':             'var(--agtc-primitive-color-gray-8)',
+  'code-block-default-copy-background':       'var(--agtc-primitive-color-gray-11)',
+  'code-block-default-copy-background-hover': 'var(--agtc-primitive-color-gray-10)',
+  'code-block-default-copy-text':             'var(--agtc-primitive-color-gray-1)',
+  'code-block-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
+  'code-block-default-radius':                'var(--agtc-semantic-radius-card)',
+  'code-block-default-font-size':             'var(--agtc-semantic-typography-label-size)',
+  'code-block-default-padding-x':             'var(--agtc-primitive-space-5)',
+  'code-block-default-padding-y':             'var(--agtc-primitive-space-4)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -231,7 +242,7 @@ function tokensCSS() {
 function siteCSS() { return `
 /* Agentica — site.css (uses design system tokens) */
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-:root{--agtc-font-mono:'Atkinson Hyperlegible Mono','JetBrains Mono','Cascadia Code',monospace}
+:root{--agtc-font-mono:var(--agtc-semantic-typography-mono-family)}
 
 /* SC 2.4.11 — Focus Not Obscured : compense le header fixe de 60px */
 html { scroll-padding-top: 72px; }
@@ -377,8 +388,13 @@ h3{font-size:1rem;font-weight:700;margin-top:32px;margin-bottom:12px}
 p{color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px;line-height:1.7}
 
 code{font-family:var(--agtc-font-mono);font-size:.85em;background:var(--agtc-semantic-color-background-subtle);padding:2px 5px;border-radius:4px;color:var(--agtc-semantic-color-text-primary)}
-pre.code-block{background:#1a1e24;border-radius:var(--agtc-semantic-radius-card);padding:22px 26px;overflow-x:auto;margin:18px 0;position:relative}
-pre.code-block code{background:none;color:#c9d1d9;font-size:0.875rem;padding:0;border-radius:0}
+pre.code-block{background:var(--agtc-component-code-block-default-background);border-radius:var(--agtc-component-code-block-default-radius);padding:var(--agtc-component-code-block-default-padding-y) var(--agtc-component-code-block-default-padding-x);overflow-x:auto;margin:18px 0;position:relative}
+pre.code-block code{background:none;color:var(--agtc-component-code-block-default-text);font-family:var(--agtc-semantic-typography-mono-family);font-size:var(--agtc-component-code-block-default-font-size);padding:0;border-radius:0}
+pre.code-block .code-lang{position:absolute;top:12px;left:18px;color:var(--agtc-component-code-block-default-meta-text);font-size:var(--agtc-semantic-typography-detail-size);text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-family:var(--agtc-semantic-typography-mono-family)}
+pre.code-block.has-lang{padding-top:38px}
+.code-copy{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;gap:6px;background:var(--agtc-component-code-block-default-copy-background);color:var(--agtc-component-code-block-default-copy-text);border:none;border-radius:4px;padding:4px 10px;font-size:var(--agtc-semantic-typography-detail-size);font-family:inherit;cursor:pointer}
+.code-copy:hover{background:var(--agtc-component-code-block-default-copy-background-hover)}
+.code-copy:focus-visible{outline:2px solid var(--agtc-component-code-block-default-border-focus);outline-offset:2px}
 
 blockquote{border-left:3px solid var(--agtc-semantic-color-action-primary);padding:14px 20px;margin:20px 0;background:var(--agtc-semantic-color-background-subtle);border-radius:0 var(--agtc-semantic-radius-control) var(--agtc-semantic-radius-control) 0}
 blockquote p{margin:0;font-style:italic;color:var(--agtc-semantic-color-text-primary)}
@@ -837,17 +853,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Copy buttons on code blocks ──────────────────────────
+  // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
+  // Région live unique partagée pour annoncer « Copié ! » aux lecteurs d'écran.
+  let copyLive = document.getElementById('agtc-copy-live');
+  if (!copyLive) {
+    copyLive = document.createElement('span');
+    copyLive.id = 'agtc-copy-live';
+    copyLive.setAttribute('role', 'status');
+    copyLive.setAttribute('aria-live', 'polite');
+    Object.assign(copyLive.style, {position:'absolute',width:'1px',height:'1px',padding:'0',margin:'-1px',overflow:'hidden',clip:'rect(0 0 0 0)',whiteSpace:'nowrap',border:'0'});
+    document.body.appendChild(copyLive);
+  }
+
   document.querySelectorAll('pre.code-block').forEach(pre => {
+    const code = pre.querySelector('code');
+
+    // Label de langue depuis la classe lang-xxx (CD5)
+    const langClass = [...(code?.classList || [])].find(c => c.startsWith('lang-'));
+    const lang = langClass ? langClass.slice(5) : '';
+    if (lang) {
+      const tag = document.createElement('span');
+      tag.className = 'code-lang';
+      tag.setAttribute('aria-hidden', 'true');
+      tag.textContent = lang;
+      pre.classList.add('has-lang');
+      pre.appendChild(tag);
+    }
+
+    // Bouton copier accessible (CD2/CD3/CD4)
     const btn = document.createElement('button');
-    Object.assign(btn.style, {position:'absolute',top:'12px',right:'12px',background:'rgba(255,255,255,.1)',color:'#8b949e',border:'none',padding:'4px 10px',borderRadius:'4px',fontSize:'11px',cursor:'pointer',fontFamily:'inherit'});
+    btn.type = 'button';
+    btn.className = 'code-copy';
     btn.textContent = 'Copier';
-    pre.style.position = 'relative';
+    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(pre.querySelector('code')?.textContent || '');
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\\n+|\\n+$/g, '')); }
+      catch { return; }
       btn.textContent = 'Copié !';
-      setTimeout(() => btn.textContent = 'Copier', 1600);
+      copyLive.textContent = 'Copié !';
+      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
     });
   });
 });
@@ -984,6 +1029,7 @@ function sidebarComponents(base, current) {
     ['radio.html', 'Radio'],
     ['toggle.html', 'Toggle'],
     ['table.html', 'Table'],
+    ['code-block.html', 'Code Block'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1916,6 +1962,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Données en lecture seule, accessible (scope, caption), séparateurs/zébrage, scroll horizontal.</span>
       <span class="lang-en">Read-only data, accessible (scope, caption), dividers/striped, horizontal scroll.</span>
+    </div>
+  </a>
+  <a href="code-block.html" class="nav-card">
+    <span class="nav-card-icon">${icon('code',32)}</span>
+    <div class="nav-card-title">Code Block</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Code en lecture seule, copiable (annonce AT), indicateur de langue, surface sombre tokenisée.</span>
+      <span class="lang-en">Read-only code, copyable (AT announce), language indicator, tokenized dark surface.</span>
     </div>
   </a>
 </div>
@@ -3012,6 +3066,95 @@ function buildTable() {
   }));
 }
 
+// ─── PAGE: CODE BLOCK ────────────────────────────────────────────────────────
+function buildCodeBlock() {
+  const tokenRows = [
+    ['code-block-default-background',            'primitive.color.gray.12', '#202020'],
+    ['code-block-default-text',                  'primitive.color.gray.4',  '#e8e8e8'],
+    ['code-block-default-meta-text',             'primitive.color.gray.8',  '#bbbbbb'],
+    ['code-block-default-copy-background',       'primitive.color.gray.11', '#646464'],
+    ['code-block-default-copy-text',             'primitive.color.gray.1',  '#fcfcfc'],
+    ['code-block-default-border-focus',          'semantic.color.border.focus', SEM['color-border-focus']],
+    ['code-block-default-font-size',             'semantic.typography.label.size', SEM['typography-label-size']],
+    ['code-block-default-padding-x',             'primitive.space.5',       '20px'],
+    ['code-block-default-padding-y',             'primitive.space.4',       '16px'],
+  ];
+
+  const body = `
+<h1>Code Block</h1>
+<p class="page-lead">
+  <span class="lang-fr">Bloc de code en lecture seule, copiable, avec indicateur de langue, sur surface sombre tokenisée. Bouton copier accessible (annonce aux lecteurs d'écran). Présent sur presque chaque page du système.</span>
+  <span class="lang-en">Read-only, copyable code block with a language indicator on a tokenized dark surface. Accessible copy button (announced to screen readers). Present on nearly every page of the system.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<p style="color:var(--agtc-semantic-color-text-secondary)">
+  <span class="lang-fr">Ce bloc ci-dessous est un <code>pre.code-block</code> réel — label de langue en haut à gauche, bouton « Copier » accessible en haut à droite.</span>
+  <span class="lang-en">The block below is a real <code>pre.code-block</code> — language label top-left, accessible "Copy" button top-right.</span>
+</p>
+<pre class="code-block"><code class="lang-html">&lt;agtc-code-block language="html" filename="exemple.html"&gt;
+  &lt;code&gt;&lt;agtc-badge variant="success"&gt;Validé&lt;/agtc-badge&gt;&lt;/code&gt;
+&lt;/agtc-code-block&gt;</code></pre>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>&lt;pre&gt;&lt;code&gt;</code> sémantique réel — jamais des <code>&lt;div&gt;</code></span><span class="lang-en">Real semantic <code>&lt;pre&gt;&lt;code&gt;</code> — never <code>&lt;div&gt;</code>s</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Bouton copier = <code>&lt;button&gt;</code> réel, <code>aria-label</code>, focus visible, succès annoncé (<code>aria-live</code>)</span><span class="lang-en">Copy button = real <code>&lt;button&gt;</code>, <code>aria-label</code>, visible focus, success announced (<code>aria-live</code>)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Lignes longues : scroll horizontal — jamais de wrap qui casse le code</span><span class="lang-en">Long lines: horizontal scroll — never wrap that breaks the code</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur/police codée en dur</span><span class="lang-en">Never hardcoded color/font</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>&lt;pre&gt;&lt;code&gt;</code> sémantique, le code reste sélectionnable</span><span class="lang-en">Semantic <code>&lt;pre&gt;&lt;code&gt;</code>, code stays selectable</span></li>
+  <li><span class="lang-fr">Bouton copier atteignable au clavier, <code>aria-label</code> (langue incluse), <code>:focus-visible</code></span><span class="lang-en">Copy button keyboard-reachable, <code>aria-label</code> (language included), <code>:focus-visible</code></span></li>
+  <li><span class="lang-fr">Copie annoncée aux AT via <code>role="status"</code> + <code>aria-live="polite"</code></span><span class="lang-en">Copy announced to AT via <code>role="status"</code> + <code>aria-live="polite"</code></span></li>
+  <li><span class="lang-fr">Contraste texte gris.4 sur gris.12 ≥ 13:1 ; bouton et langue ≥ 4.5:1</span><span class="lang-en">Contrast gray.4 on gray.12 ≥ 13:1; button and language ≥ 4.5:1</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Composant slotté --&gt;
+&lt;agtc-code-block language="javascript" filename="agtc-badge.js"&gt;
+  &lt;code&gt;import { LitElement } from 'lit';&lt;/code&gt;
+&lt;/agtc-code-block&gt;
+
+&lt;!-- Classe sur HTML statique (site) --&gt;
+&lt;pre class="code-block"&gt;&lt;code class="lang-html"&gt;&amp;lt;agtc-badge&amp;gt;Validé&amp;lt;/agtc-badge&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Indiquer la langue (<code>language</code> ou <code>class="lang-…"</code>)</span><span class="lang-en">Indicate the language (<code>language</code> or <code>class="lang-…"</code>)</span></li>
+      <li><span class="lang-fr">Laisser les lignes longues défiler horizontalement</span><span class="lang-en">Let long lines scroll horizontally</span></li>
+      <li><span class="lang-fr">Garder le code échappé et sélectionnable</span><span class="lang-en">Keep code escaped and selectable</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Un bouton copier sans <code>aria-label</code> ni feedback annoncé</span><span class="lang-en">A copy button without <code>aria-label</code> or announced feedback</span></li>
+      <li><span class="lang-fr">Attendre une coloration syntaxique — différée v1 (porte ouverte)</span><span class="lang-en">Expecting syntax highlighting — deferred v1 (door open)</span></li>
+      <li><span class="lang-fr">Des <code>&lt;div&gt;</code> stylés en code</span><span class="lang-en"><code>&lt;div&gt;</code>s styled as code</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/code-block.html'), layout({
+    title: 'Code Block', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'code-block.html'),
+    body: body + uxPatternsFromMd('code-block') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3593,6 +3736,7 @@ function build() {
   buildRadio();
   buildToggle();
   buildTable();
+  buildCodeBlock();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
@@ -3601,7 +3745,7 @@ function build() {
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 14 + adrs.length;
+  const total = 15 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

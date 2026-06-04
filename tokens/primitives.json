@@ -594,7 +594,8 @@
       "md": { "$value": "10px", "$type": "dimension", "$description": "Rayon moyen — cartes, panneaux" }
     },
     "fontFamily": {
-      "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif", "$type": "fontFamily", "$description": "Police principale — optimisée basse vision, différenciation maximale des caractères ambigus (WCAG)" }
+      "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif", "$type": "fontFamily", "$description": "Police principale — optimisée basse vision, différenciation maximale des caractères ambigus (WCAG)" },
+      "mono": { "$value": "'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace", "$type": "fontFamily", "$description": "Police monospace — code, tokens CSS, valeurs techniques (ADR-028)" }
     },
     "iconSize": {
       "sm": { "$value": "16px", "$type": "dimension", "$description": "Icône petite — inline, labels" },

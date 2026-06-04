@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Choix de Conventional Commits pour les messages de commit — Agentica</title>
+<title>Implémentation de `agtc-code-block` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Conventional Commits pour les messages de commit — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-code-block` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Conventional Commits pour les messages de commit — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-code-block` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,57 +55,50 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 014</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 041</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Tech Lead, Design System Lead</div>
-</div><h1>ADR-014 — Choix de Conventional Commits pour les messages de commit</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Tech Lead, Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-014-conventional-commits.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-012-audit-tokens-script.md</p></blockquote>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-03</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
+</div><h1>ADR-041 — Implémentation de <code>agtc-code-block</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-03 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-041-agtc-code-block-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-028-atkinson-hyperlegible-mono.md, decisions/ADR-040-agtc-table-implementation.md, guidelines/components/code-block.md, tokens/component.json</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
+<blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>CD1–CD9 tous approuvés</strong>. Détail et liens : <code>guidelines/components/code-block.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>CD1</td><td><code>&lt;pre&gt;&lt;code&gt;</code> sémantique + classe de langue</td><td>DEV — copy code button</td></tr><tr><td>CD2</td><td>Bouton copier + feedback texte</td><td>roboleary</td></tr><tr><td>CD3</td><td>Bouton copier accessible (aria-label, focus-visible)</td><td>Sara Soueidan</td></tr><tr><td>CD4</td><td>Succès annoncé aux AT (<code>role="status"</code> / <code>aria-live</code>)</td><td>Sara Soueidan</td></tr><tr><td>CD5</td><td>Indicateur de langue</td><td>DEV</td></tr><tr><td>CD6</td><td>Scroll horizontal des lignes longues</td><td>NN/g</td></tr><tr><td>CD7</td><td>Coloration syntaxique — <strong>différée v1, porte ouverte</strong></td><td>NN/g</td></tr><tr><td>CD8</td><td>En-tête (nom de fichier) optionnel</td><td>DEV</td></tr><tr><td>CD9</td><td>Numéros de ligne — <strong>hors v1</strong></td><td>NN/g</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p>L'historique git est l'une des sources de mémoire décisionnelle du système. Un commit qui dit <code>fix stuff</code> ne transmet aucune information exploitable — ni par un humain qui fait une revue, ni par un agent qui cherche quand un comportement a changé, ni par un pipeline CI qui décide si un changement nécessite une revue de gouvernance.</p>
-<p>Dans un système agentique, les commits ont un rôle supplémentaire : ils sont des événements lisibles par machine. Un commit de type <code>token</code> peut déclencher automatiquement une revue de gouvernance. Un commit de type <code>a11y</code> peut déclencher une re-exécution des tests axe-core en priorité.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment rendre les messages de commit exploitables par les agents et les pipelines CI, tout en restant lisibles et sans friction pour les humains ?</strong></p></blockquote>
+<p>Le site utilise <code>pre.code-block</code> sur quasiment chaque page composant et ADR (71 usages), avec un bouton copier bricolé en JS (<code>site.js</code>) : <strong>FR-only, sans <code>aria-label</code>, sans focus visible, sans annonce aux AT</strong>, et <strong>aucun indicateur de langue</strong>. Couleurs codées en dur (<code>#1a1e24</code> / <code>#c9d1d9</code>).</p>
+<p><code>agtc-code-block</code> formalise ce besoin : bloc de code en <strong>lecture seule</strong>, copiable, accessible, avec langue, sur une surface sombre tokenisée. C'est le 2ᵉ composant de la gap-analysis du 2026-06-03 (catégorie B), après <code>agtc-table</code>.</p>
 <hr>
-<h2>Décision</h2>
-<p>Adoption de la spécification <strong>Conventional Commits</strong> avec un type supplémentaire spécifique au système de design : <code>token</code>.</p>
-<p>Format : <code><a href="[scope]">type</a>: [description courte]</code></p>
-<p>Les types autorisés dans ce projet :</p>
-<table><thead><tr><th>Type</th><th>Usage</th><th>Déclencheur CI</th></tr></thead><tbody><tr><td><code>feat</code></td><td>Nouveau composant ou fonctionnalité</td><td>—</td></tr><tr><td><code>fix</code></td><td>Correction de bug</td><td>—</td></tr><tr><td><code>token</code></td><td>Modification de tokens</td><td><strong>Revue de gouvernance obligatoire</strong></td></tr><tr><td><code>docs</code></td><td>Documentation uniquement</td><td>—</td></tr><tr><td><code>a11y</code></td><td>Amélioration accessibilité</td><td>Re-run axe-core en priorité</td></tr><tr><td><code>style</code></td><td>Changement de style sans impact fonctionnel</td><td>—</td></tr><tr><td><code>refactor</code></td><td>Refactoring sans changement de comportement</td><td>—</td></tr><tr><td><code>test</code></td><td>Ajout ou modification de tests</td><td>—</td></tr><tr><td><code>chore</code></td><td>Maintenance, dépendances</td><td>—</td></tr><tr><td><code>ci</code></td><td>Configuration CI/CD</td><td>—</td></tr></tbody></table>
-<p>Le type <code>token</code> est une extension locale à Conventional Commits. Il signale explicitement qu'une modification de fichier de tokens est incluse — déclenchant une revue de gouvernance et potentiellement un TCR.</p>
+<h2>Décisions</h2>
+<h3>Décision 1 — Architecture « mix » (cohérente avec ADR-040)</h3>
+<p>1. <strong><code>&lt;agtc-code-block&gt;</code></strong> (Lit, shadow DOM) — code via <code>&lt;slot&gt;</code>, langue + bouton copier intégrés.    Pour apps, contextes JS et Storybook. 2. <strong>Classe <code>.code-block</code></strong> sur un <code>&lt;pre&gt;</code> statique — pour le site, qui reste du HTML résilient ;    le bouton copier est ajouté par <code>site.js</code> (mis à niveau pour l'accessibilité).</p>
+<p>Les deux consomment <code>component.code-block.*</code> et <code>semantic.typography.mono</code>.</p>
+<h3>Décision 2 — Surface sombre tokenisée (thème conservé)</h3>
+<p>Le bloc reste <strong>sombre</strong> (convention : distingue le code de la prose). Les couleurs codées en dur sont remplacées par des tokens <code>component.code-block.*</code> référençant des primitives : fond <code>gray.12</code> (#202020), texte <code>gray.4</code> (#e8e8e8, contraste ≥ 13:1), métadonnées <code>gray.8</code>, bouton copier <code>gray.11</code>/<code>gray.10</code> + texte <code>gray.1</code> (≥ 4.5:1). Conforme au précédent des tokens composant référençant des primitives (ex. <code>badge.success.background</code> = <code>primitive.color.green.3</code>).</p>
+<h3>Décision 3 — Coloration syntaxique différée (CD7), sans dépendance</h3>
+<p>La v1 affiche un <strong>texte clair haut-contraste</strong> sans coloration syntaxique. Raison : éviter une dépendance lourde (Prism/Shiki) et garder le « dernier mot » humain sur la palette de couleurs. L'API (slot + <code>language</code>) est conçue pour accueillir un highlighter plus tard sans rupture. Numéros de ligne (CD9) également hors v1.</p>
+<h3>Décision 4 — Accessibilité du bouton copier (corrige une dette)</h3>
+<p><code>&lt;button&gt;</code> réel, <code>aria-label</code> explicite (langue incluse), <code>:focus-visible</code> tokenisé, succès annoncé via une région <code>role="status"</code> <code>aria-live="polite"</code>. Le <code>site.js</code> est mis à niveau pour appliquer ces garanties aux blocs statiques existants.</p>
+<h3>Décision 5 — Ajout du token de police monospace (applique ADR-028)</h3>
+<p>ADR-028 a décidé d'Atkinson Hyperlegible Mono, mais la police n'était <strong>pas</strong> un token : le site hardcodait <code>--agtc-font-mono</code>. Ce composant a besoin de la police mono côté composant <strong>et</strong> site. Ajout de <code>primitive.fontFamily.mono</code> + <code>semantic.typography.mono.family</code> → <code>--agtc-semantic-typography-mono-family</code>. C'est une <strong>application d'ADR-028</strong> (pas une décision nouvelle), donc pas de nouvel ADR de typographie requis.</p>
+<hr>
+<h2>Périmètre v1</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (porte ouverte)</th></tr></thead><tbody><tr><td>Composant slotté + classe <code>.code-block</code></td><td>Coloration syntaxique (Prism/Shiki)</td></tr><tr><td>Bouton copier accessible + annonce AT</td><td>Numéros de ligne</td></tr><tr><td>Indicateur de langue, nom de fichier</td><td>Édition / exécution du code</td></tr><tr><td>Scroll horizontal</td><td>Thème clair</td></tr><tr><td>Surface sombre tokenisée</td><td>Pliage / sélection de plage</td></tr></tbody></table>
 <hr>
 <h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Messages de commit libres</strong></td><td>Non parsables par machine. Un agent qui cherche "quand <code>color.action.primary</code> a-t-il changé ?" doit lire chaque message de commit. Avec Conventional Commits, il filtre par <code>token(semantic)</code>.</td></tr><tr><td><strong>Semantic Versioning dans les commits (ex: v1.2.3)</strong></td><td>Versionner chaque commit individuellement est lourd et duplique l'information portée par les tags git. Conventional Commits + git tags couvrent ce besoin sans verbosité.</td></tr><tr><td><strong>Préfixes maison</strong> (<code>[DS]</code>, <code>[TOKEN]</code>, <code>[FIX]</code>)</td><td>Sans spécification partagée, les préfixes dérivent rapidement : <code>[DS-fix]</code>, <code>[ds fix]</code>, <code>[FixDS]</code>. Conventional Commits est une spécification publique avec des outils de validation (<code>commitlint</code>) — pas besoin d'écrire et maintenir la nôtre.</td></tr><tr><td><strong>Gitmoji</strong></td><td>Expressif visuellement mais difficile à filtrer par machine (<code>🐛</code> pour fix, <code>✨</code> pour feat). L'équipe peut ajouter des emojis en complément mais pas en remplacement du type textuel.</td></tr><tr><td><strong>AngularJS commit convention</strong></td><td>Conventional Commits est directement dérivé de la convention Angular et en est la standardisation publique. Adopter la spécification standard plutôt que la version d'un framework spécifique.</td></tr></tbody></table>
+<ul><li><strong>Coloration syntaxique via Prism/Shiki en v1</strong> : dépendance lourde, couleurs non gouvernées — différé.</li><li><strong>Thème clair</strong> : romprait la convention et la distinction code/prose.</li><li><strong>Garder <code>--agtc-font-mono</code> codé en dur</strong> : dette ; tokenisé proprement (applique ADR-028).</li><li><strong>Bouton copier purement présentationnel (<code>&lt;div&gt;</code>)</strong> : inaccessible au clavier et aux AT.</li></ul>
 <hr>
 <h2>Conséquences</h2>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Un agent qui génère un commit doit choisir le type approprié — <code>token</code> si un fichier</li></ul>
-<p>  <code>tokens/*.json</code> est modifié, <code>a11y</code> si la modification cible l'accessibilité</p>
-<ul><li>Le type <code>token</code> est une règle de gouvernance encodée dans le message de commit :</li></ul>
-<p>  un agent qui écrit <code>token(semantic): ...</code> sait qu'il déclenche une revue humaine</p>
-<ul><li>Les agents peuvent filtrer l'historique git par type pour répondre à des questions :</li></ul>
-<p>  <code>git log --grep="^token" -- tokens/semantic.json</code> → tous les changements de tokens sémantiques</p>
-<p><strong>Pour le CI/CD :</strong></p>
-<ul><li><code>commitlint</code> peut valider le format de chaque commit en pre-commit hook</li><li>Le type <code>token</code> peut déclencher une GitHub Action spécifique : notification</li></ul>
-<p>  au Principal Designer, check de TCR associé, audit de dérive automatique</p>
-<ul><li>Le type <code>docs</code> est exclu des pipelines de test de régression visuelle —</li></ul>
-<p>  pas besoin de faire tourner Chromatic pour un changement de documentation</p>
-<p><strong>Pour les humains :</strong></p>
-<ul><li>La PR est plus facile à comprendre : le titre (<code>token(semantic): ajouter color.feedback.warning</code>)</li></ul>
-<p>  dit immédiatement quelle gouvernance s'applique</p>
-<ul><li>Le changelog généré automatiquement depuis les commits est structuré et lisible</li><li>La recherche dans l'historique est prévisible : <code>git log --grep="^feat(button)"</code></li></ul>
-<p><strong>Pour la mémoire du système (ADR-013) :</strong></p>
-<ul><li>Les commits sont une couche de la mémoire décisionnelle du projet</li><li>Un commit <code>token(semantic): ajouter color.feedback.warning</code> + le TCR associé dans</li></ul>
-<p>  <code>decisions/</code> constituent une trace complète : le quoi (commit), le pourquoi (ADR/TCR)</p>
-<p><strong>Coût accepté :</strong></p>
-<ul><li>Friction légère pour les contributeurs non familiers avec Conventional Commits</li><li>Le linting des commits (<code>commitlint</code>) peut frustrer en cas de typo dans le type</li><li>Le type <code>token</code> est une extension locale — les outils génériques de changelog</li></ul>
-<p>  ne le connaissent pas et peuvent l'ignorer</p>
+<ul><li>Le site peut migrer ses <code>pre.code-block</code> vers le composant lors du *dogfooding* (catégorie A).</li><li>La police mono est désormais un token réutilisable par tout composant/foundation.</li><li>Toute coloration syntaxique future devra créer un ADR (gouvernance).</li></ul>
 <hr>
-<h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Le déclencheur indirect : lors de tests avec des agents génératifs sur l'historique git du projet, les agents ne pouvaient pas répondre à "quand ce token a-t-il été modifié ?" avec des messages de commit libres. Avec Conventional Commits, la même question devient une requête <code>git log</code> structurée.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-013.html" class="ds-btn secondary">← ADR-013</a>
-    <a href="adr-015.html" class="ds-btn secondary">ADR-015 →</a>
+<h2>Tokens ajoutés</h2>
+<h3><code>component.code-block.default.*</code></h3>
+<table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>background</code></td><td><code>primitive.color.gray.12</code></td></tr><tr><td><code>text</code></td><td><code>primitive.color.gray.4</code></td></tr><tr><td><code>meta-text</code></td><td><code>primitive.color.gray.8</code></td></tr><tr><td><code>copy-background</code></td><td><code>primitive.color.gray.11</code></td></tr><tr><td><code>copy-background-hover</code></td><td><code>primitive.color.gray.10</code></td></tr><tr><td><code>copy-text</code></td><td><code>primitive.color.gray.1</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.card</code></td></tr><tr><td><code>font-size</code></td><td><code>semantic.typography.label.size</code></td></tr><tr><td><code>padding-x</code> / <code>padding-y</code></td><td><code>primitive.space.5</code> / <code>primitive.space.4</code></td></tr></tbody></table>
+<h3>Typographie (applique ADR-028)</h3>
+<table><thead><tr><th>Token</th><th>Valeur</th></tr></thead><tbody><tr><td><code>primitive.fontFamily.mono</code></td><td><code>'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace</code></td></tr><tr><td><code>semantic.typography.mono.family</code></td><td><code>{primitive.fontFamily.mono}</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-040.html" class="ds-btn secondary">← ADR-040</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

@@ -124,17 +124,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Copy buttons on code blocks ──────────────────────────
+  // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
+  // Région live unique partagée pour annoncer « Copié ! » aux lecteurs d'écran.
+  let copyLive = document.getElementById('agtc-copy-live');
+  if (!copyLive) {
+    copyLive = document.createElement('span');
+    copyLive.id = 'agtc-copy-live';
+    copyLive.setAttribute('role', 'status');
+    copyLive.setAttribute('aria-live', 'polite');
+    Object.assign(copyLive.style, {position:'absolute',width:'1px',height:'1px',padding:'0',margin:'-1px',overflow:'hidden',clip:'rect(0 0 0 0)',whiteSpace:'nowrap',border:'0'});
+    document.body.appendChild(copyLive);
+  }
+
   document.querySelectorAll('pre.code-block').forEach(pre => {
+    const code = pre.querySelector('code');
+
+    // Label de langue depuis la classe lang-xxx (CD5)
+    const langClass = [...(code?.classList || [])].find(c => c.startsWith('lang-'));
+    const lang = langClass ? langClass.slice(5) : '';
+    if (lang) {
+      const tag = document.createElement('span');
+      tag.className = 'code-lang';
+      tag.setAttribute('aria-hidden', 'true');
+      tag.textContent = lang;
+      pre.classList.add('has-lang');
+      pre.appendChild(tag);
+    }
+
+    // Bouton copier accessible (CD2/CD3/CD4)
     const btn = document.createElement('button');
-    Object.assign(btn.style, {position:'absolute',top:'12px',right:'12px',background:'rgba(255,255,255,.1)',color:'#8b949e',border:'none',padding:'4px 10px',borderRadius:'4px',fontSize:'11px',cursor:'pointer',fontFamily:'inherit'});
+    btn.type = 'button';
+    btn.className = 'code-copy';
     btn.textContent = 'Copier';
-    pre.style.position = 'relative';
+    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(pre.querySelector('code')?.textContent || '');
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\n+|\n+$/g, '')); }
+      catch { return; }
       btn.textContent = 'Copié !';
-      setTimeout(() => btn.textContent = 'Copier', 1600);
+      copyLive.textContent = 'Copié !';
+      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
     });
   });
 });

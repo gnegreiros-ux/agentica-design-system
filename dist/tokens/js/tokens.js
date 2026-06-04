@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 00:14:04 GMT
+ * Generated on Thu, 04 Jun 2026 01:26:37 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -454,6 +454,7 @@ export const PrimitiveLineHeightDisplay = "1.0";
 export const PrimitiveRadiusSm = "6px";
 export const PrimitiveRadiusMd = "10px";
 export const PrimitiveFontFamilyBase = "'Atkinson Hyperlegible', system-ui, sans-serif";
+export const PrimitiveFontFamilyMono = "'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace";
 export const PrimitiveIconSizeSm = "16px";
 export const PrimitiveIconSizeMd = "20px";
 export const PrimitiveIconSizeLg = "24px";
@@ -511,6 +512,7 @@ export const SemanticSpaceComfortableLayoutComponent = "ceil(20px * 1.25 / 4) * 
 export const SemanticRadiusControl = "6px";
 export const SemanticRadiusCard = "10px";
 export const SemanticTypographyFontFamily = "'Atkinson Hyperlegible', system-ui, sans-serif";
+export const SemanticTypographyMonoFamily = "'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace";
 export const SemanticTypographyDetailSize = "0.75rem";
 export const SemanticTypographyDetailWeight = "400";
 export const SemanticTypographyDetailLineHeight = "1.6";
@@ -642,3 +644,14 @@ export const TableDefaultFontSize = "0.875rem";
 export const TablePaddingX = "12px";
 export const TablePaddingYCompact = "8px";
 export const TablePaddingYComfortable = "12px";
+export const CodeBlockDefaultBackground = "#202020";
+export const CodeBlockDefaultText = "#e8e8e8";
+export const CodeBlockDefaultMetaText = "#bbbbbb";
+export const CodeBlockDefaultCopyBackground = "#646464";
+export const CodeBlockDefaultCopyBackgroundHover = "#838383";
+export const CodeBlockDefaultCopyText = "#fcfcfc";
+export const CodeBlockDefaultBorderFocus = "#12a594";
+export const CodeBlockDefaultRadius = "10px";
+export const CodeBlockDefaultFontSize = "0.875rem";
+export const CodeBlockDefaultPaddingX = "20px";
+export const CodeBlockDefaultPaddingY = "16px";
