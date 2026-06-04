@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Hook automatique de rappel ADR sur modifications critiques — Agentica</title>
+<title>Implémentation de `agtc-table` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-table` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-table` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,93 +55,57 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 015</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 040</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-28</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-03</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
-</div><h1>ADR-015 — Hook automatique de rappel ADR sur modifications critiques</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-28 <strong>Dernière révision :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif (amendé) <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-015-hook-rappel-adr.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md <strong>Relations:</strong> .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md</p></blockquote>
+</div><h1>ADR-040 — Implémentation de <code>agtc-table</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-03 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-040-agtc-table-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/table.md, tokens/component.json</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
+<blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>T1–T10 tous approuvés</strong>. Détail et liens : <code>guidelines/components/table.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>T1</td><td>HTML sémantique + <code>scope="col"</code></td><td>Smashing — Table Patterns</td></tr><tr><td>T2</td><td><code>&lt;caption&gt;</code> (masquable)</td><td>Smashing</td></tr><tr><td>T3</td><td>Alignement texte/gauche, numérique/droite</td><td>NN/g — Data Tables</td></tr><tr><td>T4</td><td>Séparateurs de lignes (zébrage en option)</td><td>NN/g</td></tr><tr><td>T5</td><td>Survol de ligne</td><td>NN/g</td></tr><tr><td>T6</td><td>En-tête figé (optionnel)</td><td>NN/g · Smashing</td></tr><tr><td>T7</td><td>Scroll horizontal + indicateur d'overflow</td><td>Smashing</td></tr><tr><td>T8</td><td>1ʳᵉ colonne = identifiant lisible</td><td>NN/g</td></tr><tr><td>T9</td><td>Densité <code>compact</code> par défaut</td><td>Dashboard Design Patterns</td></tr><tr><td>T10</td><td>Tri/filtre/pagination — <strong>porte ouverte, hors v1</strong></td><td>NN/g</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p>Les fichiers <code>tokens/</code>, <code>guidelines/</code>, et <code>components/</code> contiennent les décisions structurantes du système de design : valeurs de tokens, contrats de composants, documentation normative. Toute modification dans ces zones devrait, en principe, être accompagnée d'un ADR ou d'un TCR qui en explique le pourquoi.</p>
-<p>En pratique, la documentation était oubliée. Un agent ou un humain modifiait <code>tokens/semantic.json</code> pour ajouter un token, commitait, et aucun ADR n'était créé. L'historique git conservait le _quoi_ mais perdait le _pourquoi_.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment s'assurer qu'une modification dans une zone critique du système déclenche systématiquement une réflexion sur la nécessité d'un ADR, sans bloquer le flux de travail ni imposer un ADR pour chaque changement mineur ?</strong></p></blockquote>
+<p><code>agtc-table</code> est le composant <strong>le plus utilisé du site généré</strong> : 692 occurrences de <code>token-row</code>/<code>token-table</code> (tables de tokens : token CSS → référence → valeur → intention), plus les tables de comparaison et les tables DOs/DON'Ts. La gap-analysis du 2026-06-03 l'a identifié comme premier composant à construire à partir des besoins réels du site.</p>
+<p>Constat à la création : le HTML d'origine du site <strong>n'a ni <code>scope</code> sur les <code>&lt;th&gt;</code> ni <code>&lt;caption&gt;</code></strong> — un trou d'accessibilité que ce composant comble.</p>
+<p>La table est <strong>en lecture seule</strong> : les tables documentaires n'ont pas besoin d'édition, de tri ni de pagination. On évite la conception spéculative tout en gardant la porte ouverte.</p>
 <hr>
-<h2>Décision</h2>
-<p>Ajout d'un hook <code>PostToolUse</code> dans <code>.claude/settings.json</code> qui s'active après chaque opération <code>Write</code> ou <code>Edit</code> sur un fichier dont le chemin contient <code>/tokens/</code>, <code>/guidelines/</code>, ou <code>/components/</code>.</p>
-<p>Le hook injecte un rappel dans le contexte du modèle via <code>additionalContext</code> :</p>
-<pre class="code-block"><code class="lang-text">RAPPEL ADR : Le fichier modifié est dans une zone critique du système de design.
-Demande immédiatement à l'utilisateur : Souhaitez-vous créer un ADR
-pour documenter ce changement ? (Oui/Non)</code></pre>
-<p>Ce rappel oblige Claude à poser la question à chaque modification critique. L'utilisateur répond Oui ou Non — aucun ADR n'est créé sans décision humaine explicite.</p>
-<h3>Configuration (<code>/.claude/settings.json</code>)</h3>
-<pre class="code-block"><code class="lang-json">{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{...additionalContext...}' \"$f\"; fi",
-            "statusMessage": "Vérification ADR…"
-          }
-        ]
-      }
-    ]
-  }
-}</code></pre>
+<h2>Décisions</h2>
+<h3>Décision 1 — Architecture « mix » : composant piloté par données <strong>+</strong> classe light DOM</h3>
+<p>Deux formes consommant les <strong>mêmes tokens</strong> <code>component.table.*</code> :</p>
+<p>1. <strong><code>&lt;agtc-table&gt;</code></strong> (Lit, shadow DOM) — piloté par <code>.columns</code>/<code>.rows</code>. Pour les apps, les    contextes JS et Storybook. Cohérent avec les autres composants (shadow DOM + <code>static styles</code>). 2. <strong><code>.agtc-table</code></strong> (classe CSS) — appliquée à un <code>&lt;table&gt;</code> réel écrit à la main. Pour le    <strong>site statique</strong>, qui doit rester résilient : afficher une table ne doit <strong>pas dépendre de JS</strong>.</p>
+<p>Pourquoi pas un seul mécanisme ?</p>
+<ul><li>Tout-shadow-DOM piloté par données rendrait le site <strong>JS-dépendant</strong> pour afficher ses tables —</li></ul>
+<p>  régression de résilience (le site est aujourd'hui du HTML statique pur).</p>
+<ul><li>Le *slotting* d'un <code>&lt;table&gt;</code> complet dans un shadow DOM ne permet pas de styler <code>th</code>/<code>td</code></li></ul>
+<p>  (<code>::slotted</code> n'atteint pas les descendants). La classe light DOM contourne cette limite et gère   le <strong>contenu riche</strong> des cellules (ex. <code>&lt;code&gt;</code>), que l'API par données (texte échappé) ne couvre pas.</p>
+<h3>Décision 2 — Lecture seule ; tri/filtre/pagination hors périmètre, mais API extensible</h3>
+<p>La v1 n'implémente <strong>ni tri, ni filtrage, ni pagination</strong> (T10). Besoin réel du site = tables statiques. Mais l'utilisateur a confirmé un besoin futur : l'API <code>columns</code>/<code>rows</code> est choisie <strong>précisément</strong> pour les accueillir sans rupture (futur <code>column.sortable</code>, événement <code>@sort</code>, slot de barre d'outils). Aucune propriété morte n'est livrée en v1 pour éviter une API trompeuse.</p>
+<h3>Décision 3 — Tokens <code>table</code> dans <code>component.json</code>, structure <code>default.*</code> + paddings</h3>
+<p>Les couleurs et le rayon vivent sous <code>table.default.*</code> ; les paddings (horizontal, vertical compact/confortable) sont au niveau <code>table.*</code>. Cette séparation permet de changer la densité sans toucher aux couleurs. Conforme aux trois niveaux (ADR-001) : tous les tokens pointent vers des tokens sémantiques (<code>background.subtle</code>, <code>border.default</code>, <code>background.hover</code>…), aucune valeur brute.</p>
+<h3>Décision 4 — Accessibilité par défaut : <code>scope</code>, <code>&lt;caption&gt;</code>, alignement numérique</h3>
+<p><code>&lt;th scope="col"&gt;</code> systématique ; <code>&lt;caption&gt;</code> recommandé (avertissement console si absent), masquable visuellement via <code>caption-hidden</code> ; colonnes numériques alignées à droite (<code>align="end"</code>) pour le scan vertical. Comble les trous du HTML d'origine.</p>
+<h3>Décision 5 — Séparateurs par défaut, zébrage en option (T4)</h3>
+<p>Décision utilisateur : <strong>séparateurs de lignes</strong> par défaut (sobre, adapté aux tables de tokens denses), <strong>zébrage</strong> disponible via l'attribut <code>striped</code>.</p>
+<h3>Décision 6 — Densité <code>compact</code> par défaut (T9)</h3>
+<p>Les tables de tokens sont denses ; <code>compact</code> est le défaut, <code>comfortable</code> disponible via <code>density</code>.</p>
+<hr>
+<h2>Périmètre v1</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (porte ouverte)</th></tr></thead><tbody><tr><td>Composant piloté par données (<code>columns</code>/<code>rows</code>)</td><td>Tri / filtrage / pagination</td></tr><tr><td>Classe <code>.agtc-table</code> (light DOM, contenu riche)</td><td>Édition de cellule en ligne</td></tr><tr><td><code>caption</code> + <code>caption-hidden</code>, <code>scope="col"</code></td><td>Sélection de lignes / actions de masse</td></tr><tr><td>Alignement par colonne (<code>start</code>/<code>end</code>/<code>center</code>)</td><td>Colonnes redimensionnables / réordonnables</td></tr><tr><td><code>striped</code>, <code>sticky-header</code>, <code>density</code></td><td>En-tête multi-niveaux / colspan</td></tr><tr><td>Scroll horizontal + indicateur d'overflow</td><td>Cellules HTML riches via l'API par données (→ classe)</td></tr></tbody></table>
 <hr>
 <h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Règle documentée dans CLAUDE.md uniquement</strong></td><td>Une règle textuelle dans un fichier de contexte dépend de la bonne lecture de ce fichier par l'agent. Un hook s'exécute systématiquement, indépendamment du contexte chargé.</td></tr><tr><td><strong>Hook bloquant (exit non-zéro)</strong></td><td>Bloquer le <code>Edit</code> jusqu'à création d'un ADR serait trop contraignant : tous les changements ne justifient pas un ADR (correction de typo, reformatage). Le rappel non-bloquant laisse la décision à l'humain.</td></tr><tr><td><strong>Hook sur <code>git commit</code> (pre-commit)</strong></td><td>Un hook git vérifie au moment du commit, trop tard dans le flux : la question pertinente est posée _pendant_ la modification, quand le contexte est encore actif.</td></tr><tr><td><strong>Notification système (OS notification)</strong></td><td>Les notifications OS sont ignorées lors d'un travail dans le terminal. Le <code>additionalContext</code> est injecté directement dans la réponse de Claude — impossible à manquer.</td></tr><tr><td><strong>ADR obligatoire pour chaque changement</strong></td><td>Surcharge documentaire. Un changement de valeur de token primitif de <code>#3B82F6</code> à <code>#3B81F5</code> ne justifie pas un ADR complet. Le rappel filtre par contexte humain.</td></tr></tbody></table>
+<ul><li><strong>Tout-shadow-DOM piloté par données seul</strong> : rend le site JS-dépendant pour ses tables (régression).</li><li><strong>Tout-classe CSS seul</strong> : pas d'API par données pour les apps ; pas de story Storybook propre.</li><li><strong>Slotting d'un <code>&lt;table&gt;</code> dans le shadow DOM</strong> : impossible de styler <code>th</code>/<code>td</code> slottés.</li><li><strong>Livrer un <code>sortable</code> no-op</strong> pour « marquer » T10 : API trompeuse ; préféré documenter l'extensibilité.</li></ul>
 <hr>
 <h2>Conséquences</h2>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Après chaque <code>Edit</code> ou <code>Write</code> dans une zone critique, Claude pose la question ADR</li></ul>
-<p>  sans que l'utilisateur ait à y penser</p>
-<ul><li>Le hook s'exécute via le harness Claude Code — il ne dépend pas du prompt,</li></ul>
-<p>  du contexte chargé, ni de la mémoire de la session</p>
-<p><strong>Pour les humains :</strong></p>
-<ul><li>La friction documentaire est minimale : une question Oui/Non après chaque changement</li><li>Les ADR oubliés deviennent structurellement impossibles sur les zones couvertes</li><li>Le comportement est transparent et auditable dans <code>.claude/settings.json</code></li></ul>
-<p><strong>Zones couvertes :</strong></p>
-<ul><li><code>tokens/</code> — primitifs, sémantiques, composants</li><li><code>guidelines/</code> — documentation normative des composants et fondations</li><li><code>components/</code> — implémentations Web Components</li></ul>
-<p><strong>Zones non couvertes (volontairement) :</strong></p>
-<ul><li><code>.claude/</code> — configuration interne, pas de décision de design</li><li><code>src/</code> — code applicatif, couvert par d'autres processus de revue</li><li><code>decisions/</code> — les ADR eux-mêmes ne déclenchent pas un rappel récursif</li></ul>
-<p><strong>Coût accepté :</strong></p>
-<ul><li>Le rappel s'affiche même pour des changements mineurs (correction de typo dans un token)</li><li>L'utilisateur doit répondre Non explicitement — légère friction pour les changements évidents</li></ul>
+<ul><li>Le site pourra migrer ses <code>token-table</code>/<code>token-row</code> vers <code>.agtc-table</code> lors de l'étape de</li></ul>
+<p>  *dogfooding* (catégorie A de la gap-analysis), sans dépendance JS.</p>
+<ul><li>Tout ajout de tri/filtre/pagination devra créer un nouvel ADR (gouvernance).</li></ul>
 <hr>
-<h2>Amendement — 2026-05-31 : rappel ADR sur <code>Write</code> uniquement</h2>
-<h3>Problème observé</h3>
-<p>Lors des sessions de développement des composants <code>agtc-badge</code>, <code>agtc-card</code> et des corrections WCAG qui ont suivi, le hook se déclenchait sur <strong>chaque <code>Edit</code></strong> dans les zones critiques — y compris pour des corrections de bugs sans décision architecturale (changement d'un ratio de contraste insuffisant, correction d'une typo dans une story, ajustement d'une couleur qui échoue un test axe).</p>
-<p>Résultat concret : pour corriger les 27 violations WCAG du badge (3 couleurs de texte à remplacer), le hook a interrompu le travail <strong>6 fois</strong> pour poser une question dont la réponse était systématiquement non. La friction documentaire devenait du bruit plutôt qu'une garde-fou utile.</p>
-<h3>Distinction fondamentale</h3>
-<table><thead><tr><th>Type de changement</th><th>Besoin d'ADR</th><th>Exemple</th></tr></thead><tbody><tr><td><strong>Nouveau fichier</strong> (<code>Write</code>)</td><td>Oui — c'est une création, donc une décision</td><td>Ajouter <code>agtc-badge.js</code>, créer un token</td></tr><tr><td><strong>Modification</strong> (<code>Edit</code>)</td><td>Rarement — souvent un bug fix ou un ajustement</td><td>Corriger un contraste, renommer une variable</td></tr></tbody></table>
-<p>La question "faut-il un ADR ?" est pertinente quand on <strong>crée</strong> quelque chose (nouveau composant, nouveau token, nouvelle guideline). Elle est presque toujours non pertinente quand on <strong>modifie</strong> quelque chose qui existe déjà — l'ADR original couvre déjà la décision.</p>
-<h3>Changement appliqué</h3>
-<p>Le hook <code>PostToolUse</code> est maintenant séparé en deux entrées :</p>
-<pre class="code-block"><code class="lang-json">{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "hooks": [{ "type": "command", "command": "...rappel ADR..." }]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [{ "type": "command", "command": "...log construction..." }]
-      }
-    ]
-  }
-}</code></pre>
-<ul><li><strong>Rappel ADR</strong> : <code>Write</code> uniquement — se déclenche à la création d'un fichier</li><li><strong>Log de construction</strong> : <code>Write|Edit</code> — inchangé, capture toutes les modifications</li></ul>
-<h3>Coût accepté de l'amendement</h3>
-<p>Un <code>Edit</code> qui représente réellement une nouvelle décision architecturale ne déclenchera plus automatiquement le rappel. La discipline reste nécessaire : si une modification de token ou de composant encode une décision non triviale, l'humain ou l'agent doit créer l'ADR manuellement. Le hook n'est plus le seul garde-fou pour les modifications.</p>
-<hr>
-<h2>Incidents ou déclencheurs (version originale)</h2>
-<p>Constat répété : lors de sessions de travail sur les tokens et les guidelines, des modifications structurantes étaient commitées sans ADR associé. L'historique git conservait le diff mais pas la justification. Ce hook est la réponse procédurale à ce manque de discipline documentaire.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-014.html" class="ds-btn secondary">← ADR-014</a>
-    <a href="adr-016.html" class="ds-btn secondary">ADR-016 →</a>
+<h2>Tokens ajoutés dans <code>component.json</code></h2>
+<table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-table-default-header-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-header-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-cell-text</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-table-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-table-default-row-hover</code></td><td><code>semantic.color.background.hover</code></td></tr><tr><td><code>--agtc-table-default-stripe</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-caption-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-radius</code></td><td><code>semantic.radius.card</code></td></tr><tr><td><code>--agtc-table-default-font-size</code></td><td><code>semantic.typography.label.size</code></td></tr><tr><td><code>--agtc-table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>--agtc-table-padding-y-compact</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>--agtc-table-padding-y-comfortable</code></td><td><code>primitive.space.3</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-039.html" class="ds-btn secondary">← ADR-039</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

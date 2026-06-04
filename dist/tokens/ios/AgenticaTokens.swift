@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Mon, 01 Jun 2026 23:14:44 GMT
+// Generated on Thu, 04 Jun 2026 00:14:04 GMT
 
 
 import UIKit
@@ -630,6 +630,18 @@ public class AgenticaTokens {
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500
+    public static let tableDefaultBorder = #e8e8e8
+    public static let tableDefaultCaptionText = #646464
+    public static let tableDefaultCellText = #202020
+    public static let tableDefaultFontSize = 0.875rem
+    public static let tableDefaultHeaderBackground = #f0f0f0
+    public static let tableDefaultHeaderText = #646464
+    public static let tableDefaultRadius = 10px
+    public static let tableDefaultRowHover = #fafafa
+    public static let tableDefaultStripe = #f0f0f0
+    public static let tablePaddingX = 12px
+    public static let tablePaddingYComfortable = 12px
+    public static let tablePaddingYCompact = 8px
     public static let toggleDefaultBorderFocus = #12a594
     public static let toggleDefaultKnob = #ffffff
     public static let toggleDefaultLabel = #202020

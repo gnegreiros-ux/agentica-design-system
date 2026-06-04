@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 01 Jun 2026 23:14:44 GMT
+ * Generated on Thu, 04 Jun 2026 00:14:04 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -630,3 +630,15 @@ export const ToggleDefaultTrackOnHover = "#0d9b8a";
 export const ToggleDefaultKnob = "#ffffff";
 export const ToggleDefaultBorderFocus = "#12a594";
 export const ToggleDefaultLabel = "#202020";
+export const TableDefaultHeaderBackground = "#f0f0f0";
+export const TableDefaultHeaderText = "#646464";
+export const TableDefaultCellText = "#202020";
+export const TableDefaultBorder = "#e8e8e8";
+export const TableDefaultRowHover = "#fafafa";
+export const TableDefaultStripe = "#f0f0f0";
+export const TableDefaultCaptionText = "#646464";
+export const TableDefaultRadius = "10px";
+export const TableDefaultFontSize = "0.875rem";
+export const TablePaddingX = "12px";
+export const TablePaddingYCompact = "8px";
+export const TablePaddingYComfortable = "12px";

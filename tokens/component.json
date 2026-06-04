@@ -182,5 +182,25 @@
       "border-focus":    { "value": "{semantic.color.border.focus}",          "$type": "color" },
       "label":           { "value": "{semantic.color.text.primary}",          "$type": "color" }
     }
+  },
+  "table": {
+    "$metadata": {
+      "intent": "Présenter des données tabulaires de façon lisible, scannable et accessible — lecture seule",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "header-background": { "value": "{semantic.color.background.subtle}", "$type": "color" },
+      "header-text":       { "value": "{semantic.color.text.secondary}",    "$type": "color" },
+      "cell-text":         { "value": "{semantic.color.text.primary}",      "$type": "color" },
+      "border":            { "value": "{semantic.color.border.default}",    "$type": "color" },
+      "row-hover":         { "value": "{semantic.color.background.hover}",   "$type": "color" },
+      "stripe":            { "value": "{semantic.color.background.subtle}",  "$type": "color" },
+      "caption-text":      { "value": "{semantic.color.text.secondary}",     "$type": "color" },
+      "radius":            { "value": "{semantic.radius.card}",              "$type": "dimension" },
+      "font-size":         { "value": "{semantic.typography.label.size}",    "$type": "dimension" }
+    },
+    "padding-x":             { "value": "{primitive.space.3}", "$type": "dimension" },
+    "padding-y-compact":     { "value": "{primitive.space.2}", "$type": "dimension" },
+    "padding-y-comfortable": { "value": "{primitive.space.3}", "$type": "dimension" }
   }
 }

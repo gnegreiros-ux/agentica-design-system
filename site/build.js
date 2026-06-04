@@ -196,6 +196,18 @@ const COMP = {
   'badge-sm-padding-x':                 'var(--agtc-primitive-space-2)',
   'badge-sm-padding-y':                 '2px',
   'badge-sm-font-size':                 'var(--agtc-semantic-typography-detail-size)',
+  'table-default-header-background':    'var(--agtc-semantic-color-background-subtle)',
+  'table-default-header-text':          'var(--agtc-semantic-color-text-secondary)',
+  'table-default-cell-text':            'var(--agtc-semantic-color-text-primary)',
+  'table-default-border':               'var(--agtc-semantic-color-border-default)',
+  'table-default-row-hover':            'var(--agtc-semantic-color-background-hover)',
+  'table-default-stripe':               'var(--agtc-semantic-color-background-subtle)',
+  'table-default-caption-text':         'var(--agtc-semantic-color-text-secondary)',
+  'table-default-radius':               'var(--agtc-semantic-radius-card)',
+  'table-default-font-size':            'var(--agtc-semantic-typography-label-size)',
+  'table-padding-x':                    'var(--agtc-primitive-space-3)',
+  'table-padding-y-compact':            'var(--agtc-primitive-space-2)',
+  'table-padding-y-comfortable':        'var(--agtc-primitive-space-3)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -460,6 +472,35 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
 .token-table{table-layout:fixed}
 .token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
+
+/* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
+.agtc-table{
+  width:100%;border-collapse:collapse;
+  font-size:var(--agtc-component-table-default-font-size);
+  color:var(--agtc-component-table-default-cell-text);
+}
+.agtc-table caption{
+  text-align:start;color:var(--agtc-component-table-default-caption-text);
+  padding:var(--agtc-component-table-padding-y-compact) var(--agtc-component-table-padding-x);
+}
+.agtc-table caption.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.agtc-table th{
+  text-align:start;font-weight:var(--agtc-semantic-typography-label-weight);
+  color:var(--agtc-component-table-default-header-text);
+  background:var(--agtc-component-table-default-header-background);white-space:nowrap;
+}
+.agtc-table th,.agtc-table td{
+  padding:var(--agtc-component-table-padding-y-compact) var(--agtc-component-table-padding-x);
+  border-bottom:1px solid var(--agtc-component-table-default-border);vertical-align:top;
+}
+.agtc-table th.num,.agtc-table td.num{text-align:end}
+.agtc-table tbody tr:last-child td{border-bottom:none}
+.agtc-table tbody tr:hover{background:var(--agtc-component-table-default-row-hover)}
+.agtc-table.striped tbody tr:nth-child(even){background:var(--agtc-component-table-default-stripe)}
+.agtc-table.striped tbody tr:nth-child(even):hover{background:var(--agtc-component-table-default-row-hover)}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
@@ -942,6 +983,7 @@ function sidebarComponents(base, current) {
     ['checkbox.html', 'Checkbox'],
     ['radio.html', 'Radio'],
     ['toggle.html', 'Toggle'],
+    ['table.html', 'Table'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1866,6 +1908,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Réglage on/off à effet immédiat, role=switch, état par position (WCAG 1.4.1).</span>
       <span class="lang-en">Immediate on/off setting, role=switch, state by position (WCAG 1.4.1).</span>
+    </div>
+  </a>
+  <a href="table.html" class="nav-card">
+    <span class="nav-card-icon">${icon('table',32)}</span>
+    <div class="nav-card-title">Table</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Données en lecture seule, accessible (scope, caption), séparateurs/zébrage, scroll horizontal.</span>
+      <span class="lang-en">Read-only data, accessible (scope, caption), dividers/striped, horizontal scroll.</span>
     </div>
   </a>
 </div>
@@ -2841,6 +2891,127 @@ function buildToggle() {
   }));
 }
 
+// ─── PAGE: TABLE ─────────────────────────────────────────────────────────────
+function buildTable() {
+  const tokenRows = [
+    ['table-default-header-background', 'semantic.color.background.subtle', SEM['color-background-subtle']],
+    ['table-default-header-text',       'semantic.color.text.secondary',    SEM['color-text-secondary']],
+    ['table-default-cell-text',         'semantic.color.text.primary',      SEM['color-text-primary']],
+    ['table-default-border',            'semantic.color.border.default',    SEM['color-border-default']],
+    ['table-default-row-hover',         'semantic.color.background.hover',   SEM['color-background-hover']],
+    ['table-default-stripe',            'semantic.color.background.subtle',  SEM['color-background-subtle']],
+    ['table-default-caption-text',      'semantic.color.text.secondary',     SEM['color-text-secondary']],
+    ['table-default-radius',            'semantic.radius.card',              SEM['radius-card']],
+    ['table-default-font-size',         'semantic.typography.label.size',    SEM['typography-label-size']],
+    ['table-padding-x',                 'primitive.space.3',                 '12px'],
+    ['table-padding-y-compact',         'primitive.space.2',                 '8px'],
+    ['table-padding-y-comfortable',     'primitive.space.3',                 '12px'],
+  ];
+
+  // Démo : vrai <table class="agtc-table"> — côté light DOM du mix, sans JS.
+  const demoTable = (striped) => `
+    <table class="agtc-table${striped ? ' striped' : ''}">
+      <caption class="visually-hidden"><span class="lang-fr">Exemple de tokens d'espacement</span><span class="lang-en">Spacing token example</span></caption>
+      <thead><tr>
+        <th scope="col"><span class="lang-fr">Échelon</span><span class="lang-en">Step</span></th>
+        <th scope="col"><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th>
+        <th scope="col" class="num"><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><code>space-1</code></td><td><span class="lang-fr">Espacement minimal</span><span class="lang-en">Minimal spacing</span></td><td class="num">4px</td></tr>
+        <tr><td><code>space-2</code></td><td><span class="lang-fr">Contrôles denses</span><span class="lang-en">Dense controls</span></td><td class="num">8px</td></tr>
+        <tr><td><code>space-3</code></td><td><span class="lang-fr">Padding standard</span><span class="lang-en">Standard padding</span></td><td class="num">12px</td></tr>
+        <tr><td><code>space-4</code></td><td><span class="lang-fr">Espacement de contrôle</span><span class="lang-en">Control spacing</span></td><td class="num">16px</td></tr>
+      </tbody>
+    </table>`;
+
+  const body = `
+<h1>Table</h1>
+<p class="page-lead">
+  <span class="lang-fr">Table de données en lecture seule, lisible et accessible. Le composant le plus utilisé du système (tables de tokens). Deux formes — composant piloté par données et classe sur un <code>&lt;table&gt;</code> statique — partageant les mêmes tokens.</span>
+  <span class="lang-en">Read-only, scannable, accessible data table. The system's most-used component (token tables). Two forms — data-driven component and a class on a static <code>&lt;table&gt;</code> — sharing the same tokens.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Aperçu — séparateurs (défaut)</span><span class="lang-en">Preview — dividers (default)</span></h2>
+<div class="demo-box">${demoTable(false)}</div>
+
+<h2><span class="lang-fr">Zébrage (option)</span><span class="lang-en">Striped (option)</span></h2>
+<div class="demo-box">${demoTable(true)}</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>&lt;table&gt;</code> sémantique réel — jamais des <code>&lt;div&gt;</code> en grille</span><span class="lang-en">Real semantic <code>&lt;table&gt;</code> — never grid <code>&lt;div&gt;</code>s</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>scope="col"</code> sur chaque <code>&lt;th&gt;</code> + <code>&lt;caption&gt;</code> (visible ou masqué)</span><span class="lang-en"><code>scope="col"</code> on every <code>&lt;th&gt;</code> + <code>&lt;caption&gt;</code> (visible or hidden)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Valeurs numériques alignées à droite</span><span class="lang-en">Numeric values right-aligned</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de table pour faire de la mise en page</span><span class="lang-en">Never a table for layout</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur/espacement codé en dur</span><span class="lang-en">Never hardcoded color/spacing</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Structure <code>&lt;table&gt;</code>/<code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> sémantique réelle</span><span class="lang-en">Real semantic <code>&lt;table&gt;</code>/<code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> structure</span></li>
+  <li><span class="lang-fr"><code>scope="col"</code> — association cellule↔en-tête</span><span class="lang-en"><code>scope="col"</code> — cell↔header association</span></li>
+  <li><span class="lang-fr"><code>&lt;caption&gt;</code> décrit la table (WCAG 1.3.1) — masquable via <code>caption-hidden</code></span><span class="lang-en"><code>&lt;caption&gt;</code> describes the table (WCAG 1.3.1) — hideable via <code>caption-hidden</code></span></li>
+  <li><span class="lang-fr">Conteneur de scroll focalisable au clavier, indicateur d'overflow visible</span><span class="lang-en">Keyboard-focusable scroll container, visible overflow indicator</span></li>
+  <li><span class="lang-fr">Contraste 4.5:1 vérifié (texte gris.12 sur blanc/gris.3)</span><span class="lang-en">4.5:1 contrast verified (gray.12 text on white/gray.3)</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Composant piloté par données --&gt;
+&lt;agtc-table caption="Tokens du badge" caption-hidden&gt;&lt;/agtc-table&gt;
+&lt;script&gt;
+  const t = document.querySelector('agtc-table');
+  t.columns = [
+    { label: 'Token CSS', align: 'start', width: '46%' },
+    { label: 'Référence', align: 'start' },
+    { label: 'Valeur',    align: 'end' },
+  ];
+  t.rows = [
+    ['--agtc-badge-neutral-background', 'semantic.color.background.subtle', '#f0f0f0'],
+  ];
+&lt;/script&gt;
+
+&lt;!-- Classe sur un table statique (light DOM, sans JS) --&gt;
+&lt;table class="agtc-table striped"&gt;
+  &lt;caption class="visually-hidden"&gt;Tokens du badge&lt;/caption&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Valeur&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Toujours une <code>&lt;caption&gt;</code> (masquée si besoin) et <code>scope</code></span><span class="lang-en">Always a <code>&lt;caption&gt;</code> (hidden if needed) and <code>scope</code></span></li>
+      <li><span class="lang-fr">Aligner les valeurs numériques à droite (<code>class="num"</code>)</span><span class="lang-en">Right-align numeric values (<code>class="num"</code>)</span></li>
+      <li><span class="lang-fr">1ʳᵉ colonne = identifiant lisible, colonnes ordonnées par importance</span><span class="lang-en">1st column = readable identifier, columns ordered by importance</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Des <code>&lt;div&gt;</code> simulant une table — inaccessible</span><span class="lang-en"><code>&lt;div&gt;</code>s faking a table — inaccessible</span></li>
+      <li><span class="lang-fr">Une table pour disposer des éléments non tabulaires</span><span class="lang-en">A table to lay out non-tabular elements</span></li>
+      <li><span class="lang-fr">Croire que la v1 trie/filtre — c'est en lecture seule (porte ouverte)</span><span class="lang-en">Expecting v1 to sort/filter — it's read-only (door open)</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/table.html'), layout({
+    title: 'Table', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'table.html'),
+    body: body + uxPatternsFromMd('table') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3421,6 +3592,7 @@ function build() {
   buildCheckbox();
   buildRadio();
   buildToggle();
+  buildTable();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
@@ -3429,7 +3601,7 @@ function build() {
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 13 + adrs.length;
+  const total = 14 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

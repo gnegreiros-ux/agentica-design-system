@@ -196,3 +196,8 @@
 | 2026-06-02 | Fix a11y | `agtc-checkbox` — ajout du garde `prefers-reduced-motion` (transitions `.box` désactivées) ; homogénéise les 3 contrôles de sélection (checkbox/radio/toggle) |
 | 2026-06-02 | Fix site | `site/build.js` (`tokensCSS`) — émission des espacements primitifs `--agtc-primitive-space-N` manquants dans `tokens.css`. Corrige le padding nul des badges (et card sm/lg) qui référençaient ces vars indéfinies. Vérifié au navigateur (padding 4px/12px) |
 | 2026-06-02 | Garde-fou | `site/build.js` (`validateCssVars`) — le build échoue désormais si une `var(--agtc-…)` sans fallback est référencée sans définition (anti-régression du bug ci-dessus). Exclut les exemples `<pre>`/`<code>`. Build : 580 définies · 95 référencées · 0 fantôme |
+| 2026-06-03 19:57 | Créé | `decisions/ADR-040-agtc-table-implementation.md` |
+| 2026-06-03 19:57 | Modifié | `decisions/README.md` |
+| 2026-06-03 | Gap-analysis | UI du site → composants : cat. A (dogfooding : ds-btn→button, cards, badges), cat. B (manquants : table, code-block, banner, link, segmented), cat. C (chrome doc). Démarrage cat. B = `agtc-table` (692 usages `token-row`) |
+| 2026-06-03 | Revue UX | `table` — patterns NN/g (Data Tables) + Smashing + Dashboard approuvés (T1–T10) ; séparateurs par défaut + `striped` option (T4) ; tri/filtre/pagination hors v1 mais **porte ouverte** (T10) — ADR-036/040 |
+| 2026-06-03 | Composant | `agtc-table` créé — 6 surfaces : tokens `component.table`, code (mix : composant piloté par données shadow DOM + classe `.agtc-table` light DOM), story, guideline, ADR-040, site (page + nav + sidebar). Lecture seule, accessible (scope/caption/scroll). Vérifié au navigateur (site + shadow DOM, 0 erreur console). Build : 592 définies · 105 référencées · 0 fantôme |

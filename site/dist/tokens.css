@@ -585,4 +585,16 @@
   --agtc-component-badge-sm-padding-x: var(--agtc-primitive-space-2);
   --agtc-component-badge-sm-padding-y: 2px;
   --agtc-component-badge-sm-font-size: var(--agtc-semantic-typography-detail-size);
+  --agtc-component-table-default-header-background: var(--agtc-semantic-color-background-subtle);
+  --agtc-component-table-default-header-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-table-default-cell-text: var(--agtc-semantic-color-text-primary);
+  --agtc-component-table-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-component-table-default-row-hover: var(--agtc-semantic-color-background-hover);
+  --agtc-component-table-default-stripe: var(--agtc-semantic-color-background-subtle);
+  --agtc-component-table-default-caption-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-table-default-radius: var(--agtc-semantic-radius-card);
+  --agtc-component-table-default-font-size: var(--agtc-semantic-typography-label-size);
+  --agtc-component-table-padding-x: var(--agtc-primitive-space-3);
+  --agtc-component-table-padding-y-compact: var(--agtc-primitive-space-2);
+  --agtc-component-table-padding-y-comfortable: var(--agtc-primitive-space-3);
 }
