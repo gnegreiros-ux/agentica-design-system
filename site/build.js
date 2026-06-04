@@ -219,6 +219,26 @@ const COMP = {
   'code-block-default-font-size':             'var(--agtc-semantic-typography-label-size)',
   'code-block-default-padding-x':             'var(--agtc-primitive-space-5)',
   'code-block-default-padding-y':             'var(--agtc-primitive-space-4)',
+  'banner-neutral-background':          'var(--agtc-semantic-color-background-subtle)',
+  'banner-neutral-accent':              'var(--agtc-semantic-color-text-secondary)',
+  'banner-brand-background':            'var(--agtc-semantic-color-brand-primary-subtle)',
+  'banner-brand-accent':                'var(--agtc-semantic-color-brand-primary)',
+  'banner-info-background':             'var(--agtc-primitive-color-blue-3)',
+  'banner-info-accent':                 'var(--agtc-semantic-color-feedback-info)',
+  'banner-success-background':          'var(--agtc-primitive-color-green-3)',
+  'banner-success-accent':              'var(--agtc-semantic-color-feedback-success)',
+  'banner-warning-background':          'var(--agtc-primitive-color-orange-3)',
+  'banner-warning-accent':              'var(--agtc-primitive-color-orange-11)',
+  'banner-danger-background':           'var(--agtc-semantic-color-feedback-danger-subtle)',
+  'banner-danger-accent':               'var(--agtc-semantic-color-feedback-danger)',
+  'banner-heading-text':                'var(--agtc-semantic-color-text-primary)',
+  'banner-body-text':                   'var(--agtc-semantic-color-text-secondary)',
+  'banner-close-color':                 'var(--agtc-semantic-color-text-secondary)',
+  'banner-close-hover':                 'var(--agtc-semantic-color-text-primary)',
+  'banner-border-focus':                'var(--agtc-semantic-color-border-focus)',
+  'banner-radius':                      'var(--agtc-semantic-radius-card)',
+  'banner-padding-x':                   'var(--agtc-primitive-space-5)',
+  'banner-padding-y':                   'var(--agtc-primitive-space-4)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -517,6 +537,25 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-table tbody tr:hover{background:var(--agtc-component-table-default-row-hover)}
 .agtc-table.striped tbody tr:nth-child(even){background:var(--agtc-component-table-default-stripe)}
 .agtc-table.striped tbody tr:nth-child(even):hover{background:var(--agtc-component-table-default-row-hover)}
+
+/* ── agtc-banner (classe — moitié light DOM du mix, ADR-042) ────────────── */
+.agtc-banner{display:flex;align-items:flex-start;gap:12px;padding:var(--agtc-component-banner-padding-y) var(--agtc-component-banner-padding-x);border:1px solid var(--agtc-semantic-color-border-default);border-left-width:3px;border-radius:0 var(--agtc-component-banner-radius) var(--agtc-component-banner-radius) 0;margin:18px 0}
+.agtc-banner .banner-icon{flex-shrink:0;line-height:0;padding-top:1px}
+.agtc-banner .banner-content{flex:1;min-width:0}
+.agtc-banner .banner-content strong{display:block;color:var(--agtc-component-banner-heading-text);font-weight:var(--agtc-semantic-typography-label-weight);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:3px}
+.agtc-banner .banner-content span{color:var(--agtc-component-banner-body-text);font-size:var(--agtc-semantic-typography-label-size);line-height:1.55}
+.agtc-banner.neutral{background:var(--agtc-component-banner-neutral-background);border-left-color:var(--agtc-component-banner-neutral-accent)}
+.agtc-banner.neutral .banner-icon{color:var(--agtc-component-banner-neutral-accent)}
+.agtc-banner.brand{background:var(--agtc-component-banner-brand-background);border-left-color:var(--agtc-component-banner-brand-accent)}
+.agtc-banner.brand .banner-icon{color:var(--agtc-component-banner-brand-accent)}
+.agtc-banner.info{background:var(--agtc-component-banner-info-background);border-left-color:var(--agtc-component-banner-info-accent)}
+.agtc-banner.info .banner-icon{color:var(--agtc-component-banner-info-accent)}
+.agtc-banner.success{background:var(--agtc-component-banner-success-background);border-left-color:var(--agtc-component-banner-success-accent)}
+.agtc-banner.success .banner-icon{color:var(--agtc-component-banner-success-accent)}
+.agtc-banner.warning{background:var(--agtc-component-banner-warning-background);border-left-color:var(--agtc-component-banner-warning-accent)}
+.agtc-banner.warning .banner-icon{color:var(--agtc-component-banner-warning-accent)}
+.agtc-banner.danger{background:var(--agtc-component-banner-danger-background);border-left-color:var(--agtc-component-banner-danger-accent)}
+.agtc-banner.danger .banner-icon{color:var(--agtc-component-banner-danger-accent)}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
@@ -1030,6 +1069,7 @@ function sidebarComponents(base, current) {
     ['toggle.html', 'Toggle'],
     ['table.html', 'Table'],
     ['code-block.html', 'Code Block'],
+    ['banner.html', 'Banner'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -1970,6 +2010,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Code en lecture seule, copiable (annonce AT), indicateur de langue, surface sombre tokenisée.</span>
       <span class="lang-en">Read-only code, copyable (AT announce), language indicator, tokenized dark surface.</span>
+    </div>
+  </a>
+  <a href="banner.html" class="nav-card">
+    <span class="nav-card-icon">${icon('megaphone',32)}</span>
+    <div class="nav-card-title">Banner</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Message inline (callout/alerte), 6 variantes, statique par défaut, live region en opt-in.</span>
+      <span class="lang-en">Inline message (callout/alert), 6 variants, static by default, opt-in live region.</span>
     </div>
   </a>
 </div>
@@ -3155,6 +3203,108 @@ function buildCodeBlock() {
   }));
 }
 
+// ─── PAGE: BANNER ─────────────────────────────────────────────────────────────
+function buildBanner() {
+  const tokenRows = [
+    ['banner-info-accent',    'semantic.color.feedback.info',          SEM['color-feedback-info']],
+    ['banner-success-accent', 'semantic.color.feedback.success',       SEM['color-feedback-success']],
+    ['banner-warning-accent', 'primitive.color.orange.11',             ''],
+    ['banner-danger-accent',  'semantic.color.feedback.danger',        SEM['color-feedback-danger']],
+    ['banner-brand-accent',   'semantic.color.brand.primary',          SEM['color-brand-primary']],
+    ['banner-heading-text',   'semantic.color.text.primary',           SEM['color-text-primary']],
+    ['banner-body-text',      'semantic.color.text.secondary',         SEM['color-text-secondary']],
+    ['banner-radius',         'semantic.radius.card',                  SEM['radius-card']],
+    ['banner-padding-x',      'primitive.space.5',                     '20px'],
+  ];
+
+  const bannerDemo = (variant, iconName, headFr, headEn, bodyFr, bodyEn) => `
+    <div class="agtc-banner ${variant}">
+      <span class="banner-icon">${icon(iconName, 20)}</span>
+      <div class="banner-content"><strong><span class="lang-fr">${headFr}</span><span class="lang-en">${headEn}</span></strong><span><span class="lang-fr">${bodyFr}</span><span class="lang-en">${bodyEn}</span></span></div>
+    </div>`;
+
+  const body = `
+<h1>Banner</h1>
+<p class="page-lead">
+  <span class="lang-fr">Message inline contextuel (callout / alerte) dans le flux de la page : info, succès, avertissement, erreur. 6 variantes alignées sur le badge. Statique par défaut — région live en opt-in pour les messages dynamiques.</span>
+  <span class="lang-en">Inline contextual message (callout / alert) in the page flow: info, success, warning, error. 6 variants aligned with badge. Static by default — opt-in live region for dynamic messages.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
+<div class="demo-box" style="display:flex;flex-direction:column;gap:4px;background:none;border:none;padding:0">
+  ${bannerDemo('neutral', 'info', 'Neutre', 'Neutral', 'Message neutre informatif.', 'Neutral informational message.')}
+  ${bannerDemo('brand', 'sparkles', 'Agentica', 'Agentica', 'Highlight de marque ou contribution.', 'Brand highlight or contribution.')}
+  ${bannerDemo('info', 'info', 'Information', 'Information', 'Ce composant est en lecture seule.', 'This component is read-only.')}
+  ${bannerDemo('success', 'circle-check', 'Enregistré', 'Saved', 'Vos modifications ont été sauvegardées.', 'Your changes have been saved.')}
+  ${bannerDemo('warning', 'triangle-alert', 'Attention', 'Warning', 'Cette action affectera 3 fichiers liés.', 'This action will affect 3 linked files.')}
+  ${bannerDemo('danger', 'octagon-alert', 'Erreur', 'Error', 'Impossible de contacter le serveur.', 'Could not reach the server.')}
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Sévérité jamais par la couleur seule — icône + texte de sévérité pour les AT</span><span class="lang-en">Severity never by color alone — icon + severity text for AT</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Banner statique : <strong>aucune</strong> région live ; dynamique : <code>live="polite|assertive"</code></span><span class="lang-en">Static banner: <strong>no</strong> live region; dynamic: <code>live="polite|assertive"</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Bouton fermer = <code>&lt;button&gt;</code> réel, <code>aria-label</code>, focus visible</span><span class="lang-en">Close button = real <code>&lt;button&gt;</code>, <code>aria-label</code>, visible focus</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais pour une notification flottante (utiliser un toast)</span><span class="lang-en">Never for a floating notification (use a toast)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais d'auto-dismiss d'une erreur</span><span class="lang-en">Never auto-dismiss an error</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Préfixe de sévérité masqué (« Erreur : ») — l'icône est décorative</span><span class="lang-en">Hidden severity prefix ("Error: ") — the icon is decorative</span></li>
+  <li><span class="lang-fr">Statique : pas de <code>role</code> live ; dynamique : <code>role="status"</code> ou <code>role="alert"</code></span><span class="lang-en">Static: no live <code>role</code>; dynamic: <code>role="status"</code> or <code>role="alert"</code></span></li>
+  <li><span class="lang-fr">Le banner ne capture jamais le focus</span><span class="lang-en">The banner never captures focus</span></li>
+  <li><span class="lang-fr">Contraste texte ≥ 4.5:1 sur fond subtil</span><span class="lang-en">Text contrast ≥ 4.5:1 on subtle background</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-banner variant="warning" heading="Attention"&gt;
+  <span class="lang-fr">Cette action affectera 3 fichiers liés.</span><span class="lang-en">This action will affect 3 linked files.</span>
+&lt;/agtc-banner&gt;
+
+&lt;!-- Avec actions + dismissible --&gt;
+&lt;agtc-banner variant="brand" heading="Contribuer" dismissible&gt;
+  <span class="lang-fr">Ce système est ouvert aux contributions.</span><span class="lang-en">This system welcomes contributions.</span>
+  &lt;span slot="actions"&gt;&lt;a href="…"&gt;<span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span>&lt;/a&gt;&lt;/span&gt;
+&lt;/agtc-banner&gt;
+
+&lt;!-- Notification dynamique (insérée par JS) --&gt;
+&lt;agtc-banner variant="danger" live="assertive" heading="Erreur"&gt;…&lt;/agtc-banner&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Choisir la variante par sévérité (success/warning/danger)</span><span class="lang-en">Choose variant by severity (success/warning/danger)</span></li>
+      <li><span class="lang-fr">Garder les erreurs persistantes (pas d'auto-dismiss)</span><span class="lang-en">Keep errors persistent (no auto-dismiss)</span></li>
+      <li><span class="lang-fr">Mettre <code>live</code> uniquement sur les messages insérés dynamiquement</span><span class="lang-en">Set <code>live</code> only on dynamically inserted messages</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr"><code>role="alert"</code> sur un banner statique de page</span><span class="lang-en"><code>role="alert"</code> on a static page banner</span></li>
+      <li><span class="lang-fr">Un banner pour ce qui devrait être un toast ou une modale</span><span class="lang-en">A banner for what should be a toast or modal</span></li>
+      <li><span class="lang-fr">La sévérité par la couleur seule</span><span class="lang-en">Severity by color alone</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/banner.html'), layout({
+    title: 'Banner', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'banner.html'),
+    body: body + uxPatternsFromMd('banner') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3737,6 +3887,7 @@ function build() {
   buildToggle();
   buildTable();
   buildCodeBlock();
+  buildBanner();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
@@ -3745,7 +3896,7 @@ function build() {
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 15 + adrs.length;
+  const total = 16 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

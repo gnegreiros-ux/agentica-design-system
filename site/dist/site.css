@@ -277,6 +277,25 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-table.striped tbody tr:nth-child(even){background:var(--agtc-component-table-default-stripe)}
 .agtc-table.striped tbody tr:nth-child(even):hover{background:var(--agtc-component-table-default-row-hover)}
 
+/* ── agtc-banner (classe — moitié light DOM du mix, ADR-042) ────────────── */
+.agtc-banner{display:flex;align-items:flex-start;gap:12px;padding:var(--agtc-component-banner-padding-y) var(--agtc-component-banner-padding-x);border:1px solid var(--agtc-semantic-color-border-default);border-left-width:3px;border-radius:0 var(--agtc-component-banner-radius) var(--agtc-component-banner-radius) 0;margin:18px 0}
+.agtc-banner .banner-icon{flex-shrink:0;line-height:0;padding-top:1px}
+.agtc-banner .banner-content{flex:1;min-width:0}
+.agtc-banner .banner-content strong{display:block;color:var(--agtc-component-banner-heading-text);font-weight:var(--agtc-semantic-typography-label-weight);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:3px}
+.agtc-banner .banner-content span{color:var(--agtc-component-banner-body-text);font-size:var(--agtc-semantic-typography-label-size);line-height:1.55}
+.agtc-banner.neutral{background:var(--agtc-component-banner-neutral-background);border-left-color:var(--agtc-component-banner-neutral-accent)}
+.agtc-banner.neutral .banner-icon{color:var(--agtc-component-banner-neutral-accent)}
+.agtc-banner.brand{background:var(--agtc-component-banner-brand-background);border-left-color:var(--agtc-component-banner-brand-accent)}
+.agtc-banner.brand .banner-icon{color:var(--agtc-component-banner-brand-accent)}
+.agtc-banner.info{background:var(--agtc-component-banner-info-background);border-left-color:var(--agtc-component-banner-info-accent)}
+.agtc-banner.info .banner-icon{color:var(--agtc-component-banner-info-accent)}
+.agtc-banner.success{background:var(--agtc-component-banner-success-background);border-left-color:var(--agtc-component-banner-success-accent)}
+.agtc-banner.success .banner-icon{color:var(--agtc-component-banner-success-accent)}
+.agtc-banner.warning{background:var(--agtc-component-banner-warning-background);border-left-color:var(--agtc-component-banner-warning-accent)}
+.agtc-banner.warning .banner-icon{color:var(--agtc-component-banner-warning-accent)}
+.agtc-banner.danger{background:var(--agtc-component-banner-danger-background);border-left-color:var(--agtc-component-banner-danger-accent)}
+.agtc-banner.danger .banner-icon{color:var(--agtc-component-banner-danger-accent)}
+
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:600}

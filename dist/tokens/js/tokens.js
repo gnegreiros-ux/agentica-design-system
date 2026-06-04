@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 01:26:37 GMT
+ * Generated on Thu, 04 Jun 2026 11:55:08 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -644,6 +644,26 @@ export const TableDefaultFontSize = "0.875rem";
 export const TablePaddingX = "12px";
 export const TablePaddingYCompact = "8px";
 export const TablePaddingYComfortable = "12px";
+export const BannerNeutralBackground = "#f0f0f0";
+export const BannerNeutralAccent = "#646464";
+export const BannerBrandBackground = "#e0f8f3";
+export const BannerBrandAccent = "#12a594";
+export const BannerInfoBackground = "#e6f4fe";
+export const BannerInfoAccent = "#0d74ce";
+export const BannerSuccessBackground = "#e6f6eb";
+export const BannerSuccessAccent = "#18794e";
+export const BannerWarningBackground = "#ffefd6";
+export const BannerWarningAccent = "#cc4e00";
+export const BannerDangerBackground = "#feebec";
+export const BannerDangerAccent = "#ce2c31";
+export const BannerHeadingText = "#202020";
+export const BannerBodyText = "#646464";
+export const BannerCloseColor = "#646464";
+export const BannerCloseHover = "#202020";
+export const BannerBorderFocus = "#12a594";
+export const BannerRadius = "10px";
+export const BannerPaddingX = "20px";
+export const BannerPaddingY = "16px";
 export const CodeBlockDefaultBackground = "#202020";
 export const CodeBlockDefaultText = "#e8e8e8";
 export const CodeBlockDefaultMetaText = "#bbbbbb";

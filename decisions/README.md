@@ -99,6 +99,7 @@ des décisions déjà tranchées.
 | [ADR-039](ADR-039-agtc-toggle-implementation.md) | Implémentation de `agtc-toggle` | 2026-06-01 | ✅ Actif |
 | [ADR-040](ADR-040-agtc-table-implementation.md) | Implémentation de `agtc-table` | 2026-06-03 | ✅ Actif |
 | [ADR-041](ADR-041-agtc-code-block-implementation.md) | Implémentation de `agtc-code-block` | 2026-06-03 | ✅ Actif |
+| [ADR-042](ADR-042-agtc-banner-implementation.md) | Implémentation de `agtc-banner` | 2026-06-03 | ✅ Actif |
 
 ---
 

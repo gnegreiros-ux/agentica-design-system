@@ -609,4 +609,24 @@
   --agtc-component-code-block-default-font-size: var(--agtc-semantic-typography-label-size);
   --agtc-component-code-block-default-padding-x: var(--agtc-primitive-space-5);
   --agtc-component-code-block-default-padding-y: var(--agtc-primitive-space-4);
+  --agtc-component-banner-neutral-background: var(--agtc-semantic-color-background-subtle);
+  --agtc-component-banner-neutral-accent: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-banner-brand-background: var(--agtc-semantic-color-brand-primary-subtle);
+  --agtc-component-banner-brand-accent: var(--agtc-semantic-color-brand-primary);
+  --agtc-component-banner-info-background: var(--agtc-primitive-color-blue-3);
+  --agtc-component-banner-info-accent: var(--agtc-semantic-color-feedback-info);
+  --agtc-component-banner-success-background: var(--agtc-primitive-color-green-3);
+  --agtc-component-banner-success-accent: var(--agtc-semantic-color-feedback-success);
+  --agtc-component-banner-warning-background: var(--agtc-primitive-color-orange-3);
+  --agtc-component-banner-warning-accent: var(--agtc-primitive-color-orange-11);
+  --agtc-component-banner-danger-background: var(--agtc-semantic-color-feedback-danger-subtle);
+  --agtc-component-banner-danger-accent: var(--agtc-semantic-color-feedback-danger);
+  --agtc-component-banner-heading-text: var(--agtc-semantic-color-text-primary);
+  --agtc-component-banner-body-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-banner-close-color: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-banner-close-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-component-banner-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-component-banner-radius: var(--agtc-semantic-radius-card);
+  --agtc-component-banner-padding-x: var(--agtc-primitive-space-5);
+  --agtc-component-banner-padding-y: var(--agtc-primitive-space-4);
 }

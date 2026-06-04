@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Implémentation de `agtc-badge` — Agentica</title>
+<title>Implémentation de `agtc-banner` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-badge` — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-banner` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-badge` — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-banner` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,49 +55,46 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 034</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 042</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-31</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-03</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
-</div><h1>ADR-034 — Implémentation de <code>agtc-badge</code></h1>
-<blockquote><p><strong>Date :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-034-agtc-badge-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-033-agtc-input-implementation.md, tokens/component.json</p></blockquote>
+</div><h1>ADR-042 — Implémentation de <code>agtc-banner</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-03 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-042-agtc-banner-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-040-agtc-table-implementation.md, decisions/ADR-041-agtc-code-block-implementation.md, guidelines/components/banner.md, tokens/component.json</p></blockquote>
 <hr>
 <h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. Détail et liens : <code>guidelines/components/badge.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Statut pas encodé uniquement par la couleur (recommandé icône/libellé pour danger/warning)</td><td>NN/g — indicators</td></tr><tr><td><code>role="status"</code> pour annoncer les changements aux AT</td><td>NN/g</td></tr><tr><td>Mapping sémantique cohérent (traffic-light)</td><td>Dashboard — color/semantic</td></tr><tr><td>Badge non interactif — encapsuler si cliquable</td><td>NN/g</td></tr></tbody></table>
+<blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>N1–N9 tous approuvés</strong>. Détail et liens : <code>guidelines/components/banner.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>N1</td><td>Variantes sémantiques (6)</td><td>NN/g</td></tr><tr><td>N2</td><td>Sens jamais par la couleur seule (icône + texte AT)</td><td>NN/g</td></tr><tr><td>N3</td><td>Icône par variante</td><td>NN/g</td></tr><tr><td>N4</td><td>Statique par défaut (pas de live region)</td><td>MDN — status role</td></tr><tr><td>N5</td><td><code>role="alert"</code> assertif avec parcimonie</td><td>A11Y Collective</td></tr><tr><td>N6</td><td>Bouton fermer accessible sans piège de focus</td><td>MDN — alert role</td></tr><tr><td>N7</td><td>Titre + corps + zone d'action</td><td>NN/g</td></tr><tr><td>N8</td><td>Bordure d'accent gauche + fond subtil</td><td>Dashboard</td></tr><tr><td>N9</td><td>Pas d'auto-dismiss du critique</td><td>NN/g</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p><code>agtc-badge</code> est un label non interactif qui encode une information de statut, de catégorie ou de compteur. Il est utilisé dans les cartes, les tableaux, les listes et les en-têtes de composants.</p>
-<p>Trois questions ont guidé les décisions :</p>
-<p>1. <strong>Combien de variantes sémantiques ?</strong> — Les badges portent une intention    (succès, danger, info) qui doit être lisible par les agents comme par les    humains. Une palette de 6 couvre les cas courants sans surcharger le système.</p>
-<p>2. <strong>Forme pill ou rectangle ?</strong> — Le pill (radius 9999px) est la convention    dominante pour les badges d'état. Il différencie visuellement le badge    des boutons et des inputs (radius 6px).</p>
-<p>3. <strong>Rôle ARIA ?</strong> — Un badge statique n'a pas besoin de <code>role</code>. Un badge    dynamique (compteur mis à jour) bénéficie de <code>role="status"</code>. On adopte    <code>role="status"</code> par défaut pour couvrir les deux cas.</p>
+<p>Le site utilise un <code>contribution-banner</code> (16 usages) — un callout info avec bordure d'accent gauche, icône, titre + corps, et une action (« Voir sur GitHub »). C'est un cas particulier d'un besoin plus large : un <strong>message inline contextuel</strong> à plusieurs niveaux de sévérité.</p>
+<p><code>agtc-banner</code> généralise ce besoin. C'est le 3ᵉ composant de la gap-analysis du 2026-06-03 (catégorie B), après <code>agtc-table</code> et <code>agtc-code-block</code>.</p>
 <hr>
 <h2>Décisions</h2>
-<h3>Décision 1 — 6 variantes sémantiques, pas de variante <code>solid</code></h3>
-<p>Les 6 variantes (<code>neutral</code>, <code>brand</code>, <code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>) couvrent tous les états d'une interface : état neutre, identité de marque, retour positif, avertissement, erreur, information.</p>
-<p>La version 1 n'inclut pas de style <code>solid</code> (fond plein + texte blanc). Raison : le style subtil (fond clair + texte foncé) offre un meilleur contraste WCAG dans la majorité des contextes. Le style <code>solid</code> sera ajouté si un besoin concret émerge (éviter la conception spéculative).</p>
-<h3>Décision 2 — Tokens badge dans <code>component.json</code> avec structure plate</h3>
-<p>Les couleurs sont encodées par variante (<code>badge.neutral.*</code>, <code>badge.brand.*</code>…) et les dimensions par taille (<code>badge.md.*</code>, <code>badge.sm.*</code>).</p>
-<p>Cette séparation permet de changer la couleur d'une variante sans affecter les dimensions, et vice versa — conformément au principe des trois niveaux (ADR-001).</p>
-<h3>Décision 3 — Radius pill (9999px) encodé comme token composant</h3>
-<p><code>9999px</code> est une valeur intentionnellement exagérée pour obtenir une forme pill indépendamment de la hauteur du composant. Cette valeur est un token composant (<code>badge.md.radius</code> et <code>badge.sm.radius</code>) — pas une valeur en dur dans le CSS.</p>
-<p>Il n'existe pas de token sémantique <code>radius.pill</code> car le pill est une décision spécifique au badge, pas un contrat partagé entre composants.</p>
-<h3>Décision 4 — <code>role="status"</code> par défaut</h3>
-<p><code>role="status"</code> permet aux lecteurs d'écran d'annoncer les changements de contenu (ex : compteur qui passe de 3 à 4). Pour un badge purement statique, ce rôle est inoffensif. Pour un badge dynamique, il est nécessaire.</p>
-<p>Le contenu du slot est annoncé via le contenu textuel — pas besoin d'<code>aria-live</code> supplémentaire car <code>role="status"</code> implique <code>aria-live="polite"</code>.</p>
-<h3>Décision 5 — Pas d'interactivité</h3>
-<p><code>agtc-badge</code> est un <code>&lt;span&gt;</code> non interactif. Si un badge doit déclencher une action (ex : badge "×" pour supprimer un tag), utiliser <code>agtc-button variant="ghost"</code> avec un badge custom via slot, ou créer un composant <code>agtc-tag</code> dédié.</p>
-<h3>Décision 6 — Correction du script tokens (CJS → <code>.cjs</code>)</h3>
-<p>L'ajout de <code>"type": "module"</code> dans <code>package.json</code> (Phase 3 — Storybook) a cassé le script Style Dictionary qui utilisait <code>require()</code> CommonJS. Résolu en renommant <code>style-dictionary/build.js</code> → <code>style-dictionary/build.cjs</code> et en mettant à jour les scripts <code>package.json</code>. La logique du script est inchangée.</p>
+<h3>Décision 1 — Message inline, pas toast ni modale</h3>
+<p><code>agtc-banner</code> reste <strong>dans le flux</strong> de la page. Les notifications flottantes temporaires (toast) et les interruptions bloquantes (modale / <code>alertdialog</code>) sont des composants distincts ultérieurs. Cette délimitation évite de surcharger un seul composant de responsabilités contradictoires.</p>
+<h3>Décision 2 — 6 variantes alignées sur <code>agtc-badge</code></h3>
+<p><code>neutral, brand, info, success, warning, danger</code> — mêmes intentions sémantiques que le badge, pour qu'un agent comme un humain raisonnent de façon cohérente sur la sévérité à travers le système.</p>
+<h3>Décision 3 — Statique par défaut ; live region en opt-in (N4/N5)</h3>
+<p>Point central d'accessibilité : un banner <strong>présent au chargement</strong> ne doit pas être une live region (sinon il s'annonce, ce qui perturbe). Le défaut est donc <code>live="off"</code> (aucun <code>role</code>). Pour un message <strong>inséré dynamiquement</strong>, le consommateur choisit <code>live="polite"</code> (→ <code>role="status"</code>) ou <code>live="assertive"</code> (→ <code>role="alert"</code>, réservé à l'urgent). La sévérité reste accessible même sans live region grâce à un <strong>préfixe masqué</strong> (« Erreur : », « Attention : »…), l'icône étant décorative.</p>
+<h3>Décision 4 — Architecture « mix » (cohérente avec ADR-040/041)</h3>
+<p>Composant <code>&lt;agtc-banner&gt;</code> (shadow DOM, slots <code>default</code> + <code>actions</code>) pour apps/Storybook <strong>+</strong> classe <code>.agtc-banner</code> pour le HTML statique du site. Les deux consomment <code>component.banner.*</code>. Le <code>contribution-banner</code> sera migré vers <code>.agtc-banner</code> lors du *dogfooding* (catégorie A).</p>
+<h3>Décision 5 — Tokens par variante : <code>background</code> + <code>accent</code></h3>
+<p>Pour limiter le nombre de tokens, chaque variante porte deux tokens (<code>background</code>, <code>accent</code>), l'<code>accent</code> servant à la <strong>fois</strong> la bordure gauche et l'icône. Les textes (titre/corps) sont partagés (<code>heading-text</code> = text.primary, <code>body-text</code> = text.secondary). Conforme au précédent <code>agtc-badge</code> (réutilisation des intentions feedback sémantiques).</p>
 <hr>
 <h2>Périmètre v1</h2>
-<table><thead><tr><th>Inclus</th><th>Exclu (version future)</th></tr></thead><tbody><tr><td>6 variantes subtil</td><td>Style <code>solid</code> (fond plein)</td></tr><tr><td>2 tailles sm / md</td><td>Taille <code>lg</code></td></tr><tr><td>Icône prefix</td><td>Badge "×" removable (→ <code>agtc-tag</code>)</td></tr><tr><td>Icon-only + label WCAG</td><td>Compteur animé</td></tr></tbody></table>
+<table><thead><tr><th>Inclus</th><th>Exclu (composant/évolution future)</th></tr></thead><tbody><tr><td>6 variantes, icône par variante (+ override / <code>no-icon</code>)</td><td>Toast (flottant temporaire)</td></tr><tr><td>Titre, corps, zone d'action (slots)</td><td>Modale / <code>alertdialog</code></td></tr><tr><td><code>dismissible</code> + événement <code>dismiss</code></td><td>Auto-dismiss temporisé</td></tr><tr><td><code>live</code> opt-in (off/polite/assertive)</td><td>Empilement / file de notifications</td></tr><tr><td>Bordure d'accent + fond subtil tokenisés</td><td>Variantes « solid » (fond plein)</td></tr></tbody></table>
 <hr>
-<h2>Tokens ajoutés dans <code>component.json</code></h2>
-<table><thead><tr><th>Token</th><th>Valeur résolue</th></tr></thead><tbody><tr><td><code>--agtc-badge-neutral-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-badge-neutral-text</code></td><td>gray-11 (#646464)</td></tr><tr><td><code>--agtc-badge-brand-background</code></td><td>teal-3 (#e0f8f3)</td></tr><tr><td><code>--agtc-badge-brand-text</code></td><td>teal-11 (#008573)</td></tr><tr><td><code>--agtc-badge-success-background</code></td><td>green-3 (#e6f6eb)</td></tr><tr><td><code>--agtc-badge-success-text</code></td><td>green-11 (#18794e)</td></tr><tr><td><code>--agtc-badge-warning-background</code></td><td>orange-3 (#ffefd6)</td></tr><tr><td><code>--agtc-badge-warning-text</code></td><td>orange-11 (#cc4e00)</td></tr><tr><td><code>--agtc-badge-danger-background</code></td><td>red-3 (feedback-danger-subtle)</td></tr><tr><td><code>--agtc-badge-danger-text</code></td><td>red-11 (feedback-danger)</td></tr><tr><td><code>--agtc-badge-info-background</code></td><td>blue-3 (#e6f4fe)</td></tr><tr><td><code>--agtc-badge-info-text</code></td><td>blue-11 (#0d74ce)</td></tr><tr><td><code>--agtc-badge-md-radius</code></td><td>9999px</td></tr><tr><td><code>--agtc-badge-sm-radius</code></td><td>9999px</td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-033.html" class="ds-btn secondary">← ADR-033</a>
-    <a href="adr-035.html" class="ds-btn secondary">ADR-035 →</a>
+<h2>Alternatives rejetées</h2>
+<ul><li><strong><code>role="alert"</code> par défaut</strong> : annoncerait tout banner statique au chargement — perturbant (N4).</li><li><strong>Sévérité par la couleur seule</strong> : inaccessible — icône + préfixe masqué obligatoires (N2).</li><li><strong>Fusionner toast/modale dans ce composant</strong> : responsabilités contradictoires (flottant vs inline vs bloquant).</li><li><strong>Un token par sous-élément et par variante</strong> : explosion de tokens — <code>accent</code> mutualisé (bordure + icône).</li></ul>
+<hr>
+<h2>Conséquences</h2>
+<ul><li>Le <code>contribution-banner</code> du site pourra migrer vers <code>.agtc-banner variant="brand"</code> au *dogfooding*.</li><li>Toast et modale restent à concevoir (chacun son ADR).</li></ul>
+<hr>
+<h2>Tokens ajoutés — <code>component.banner.*</code></h2>
+<table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-041.html" class="ds-btn secondary">← ADR-041</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

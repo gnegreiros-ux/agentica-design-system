@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Thu, 04 Jun 2026 01:26:37 GMT
+// Generated on Thu, 04 Jun 2026 11:55:08 GMT
 
 
 import UIKit
@@ -36,6 +36,26 @@ public class AgenticaTokens {
     public static let badgeWarningBackground = #ffefd6
     public static let badgeWarningBorder = transparent
     public static let badgeWarningText = #582d1d
+    public static let bannerBodyText = #646464
+    public static let bannerBorderFocus = #12a594
+    public static let bannerBrandAccent = #12a594
+    public static let bannerBrandBackground = #e0f8f3
+    public static let bannerCloseColor = #646464
+    public static let bannerCloseHover = #202020
+    public static let bannerDangerAccent = #ce2c31
+    public static let bannerDangerBackground = #feebec
+    public static let bannerHeadingText = #202020
+    public static let bannerInfoAccent = #0d74ce
+    public static let bannerInfoBackground = #e6f4fe
+    public static let bannerNeutralAccent = #646464
+    public static let bannerNeutralBackground = #f0f0f0
+    public static let bannerPaddingX = 20px
+    public static let bannerPaddingY = 16px
+    public static let bannerRadius = 10px
+    public static let bannerSuccessAccent = #18794e
+    public static let bannerSuccessBackground = #e6f6eb
+    public static let bannerWarningAccent = #cc4e00
+    public static let bannerWarningBackground = #ffefd6
     public static let buttonCriticalBackground = #ce2c31
     public static let buttonCriticalBackgroundHover = #feebec
     public static let buttonCriticalBorder = #ce2c31

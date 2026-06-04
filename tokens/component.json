@@ -203,6 +203,44 @@
     "padding-y-compact":     { "value": "{primitive.space.2}", "$type": "dimension" },
     "padding-y-comfortable": { "value": "{primitive.space.3}", "$type": "dimension" }
   },
+  "banner": {
+    "$metadata": {
+      "intent": "Message inline contextuel (callout/alerte) — info, succès, avertissement, erreur",
+      "owner": "design-system-team"
+    },
+    "neutral": {
+      "background": { "value": "{semantic.color.background.subtle}",  "$type": "color" },
+      "accent":     { "value": "{semantic.color.text.secondary}",     "$type": "color" }
+    },
+    "brand": {
+      "background": { "value": "{semantic.color.brand.primary-subtle}", "$type": "color" },
+      "accent":     { "value": "{semantic.color.brand.primary}",        "$type": "color" }
+    },
+    "info": {
+      "background": { "value": "{primitive.color.blue.3}",           "$type": "color" },
+      "accent":     { "value": "{semantic.color.feedback.info}",     "$type": "color" }
+    },
+    "success": {
+      "background": { "value": "{primitive.color.green.3}",          "$type": "color" },
+      "accent":     { "value": "{semantic.color.feedback.success}",  "$type": "color" }
+    },
+    "warning": {
+      "background": { "value": "{primitive.color.orange.3}",         "$type": "color" },
+      "accent":     { "value": "{primitive.color.orange.11}",        "$type": "color" }
+    },
+    "danger": {
+      "background": { "value": "{semantic.color.feedback.danger-subtle}", "$type": "color" },
+      "accent":     { "value": "{semantic.color.feedback.danger}",        "$type": "color" }
+    },
+    "heading-text": { "value": "{semantic.color.text.primary}",      "$type": "color" },
+    "body-text":    { "value": "{semantic.color.text.secondary}",    "$type": "color" },
+    "close-color":  { "value": "{semantic.color.text.secondary}",    "$type": "color" },
+    "close-hover":  { "value": "{semantic.color.text.primary}",      "$type": "color" },
+    "border-focus": { "value": "{semantic.color.border.focus}",      "$type": "color" },
+    "radius":       { "value": "{semantic.radius.card}",             "$type": "dimension" },
+    "padding-x":    { "value": "{primitive.space.5}",               "$type": "dimension" },
+    "padding-y":    { "value": "{primitive.space.4}",               "$type": "dimension" }
+  },
   "code-block": {
     "$metadata": {
       "intent": "Afficher un extrait de code en lecture seule, copiable, avec indicateur de langue — surface sombre",
