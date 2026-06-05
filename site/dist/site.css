@@ -453,6 +453,11 @@ html[data-lang="en"] .lang-fr{display:none}
 @media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
 .info-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
 .info-card-body{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
+/* ── INFOBOX (callout informationnel de doc — consomme feedback.info-*) ───── */
+.infobox{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;margin:24px 0;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-feedback-info-subtle);border:1px solid var(--agtc-semantic-color-feedback-info-border)}
+.infobox-icon{color:var(--agtc-semantic-color-feedback-info);flex-shrink:0;line-height:0;margin-top:1px}
+.infobox-body{font-size:0.875rem;line-height:1.6;color:var(--agtc-semantic-color-text-primary)}
+.infobox-body a{color:var(--agtc-semantic-color-text-primary);text-decoration:underline;font-weight:600}
 
 /* ── TOOL CARDS ──────────────────────────────────────────── */
 .tool-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px;display:flex;gap:12px;align-items:flex-start}

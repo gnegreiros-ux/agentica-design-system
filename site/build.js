@@ -724,6 +724,11 @@ html[data-lang="en"] .lang-fr{display:none}
 @media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
 .info-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
 .info-card-body{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
+/* ── INFOBOX (callout informationnel de doc — consomme feedback.info-*) ───── */
+.infobox{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;margin:24px 0;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-feedback-info-subtle);border:1px solid var(--agtc-semantic-color-feedback-info-border)}
+.infobox-icon{color:var(--agtc-semantic-color-feedback-info);flex-shrink:0;line-height:0;margin-top:1px}
+.infobox-body{font-size:0.875rem;line-height:1.6;color:var(--agtc-semantic-color-text-primary)}
+.infobox-body a{color:var(--agtc-semantic-color-text-primary);text-decoration:underline;font-weight:600}
 
 /* ── TOOL CARDS ──────────────────────────────────────────── */
 .tool-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px;display:flex;gap:12px;align-items:flex-start}
@@ -1403,6 +1408,13 @@ function buildHome(adrs) {
         <span class="lang-en">Component-specific decisions. Any change requires approval.</span>
       </div>
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
+    </div>
+  </div>
+  <div class="infobox" role="note">
+    <span class="infobox-icon">${icon('info', 20)}</span>
+    <div class="infobox-body">
+      <span class="lang-fr">Règle absolue : un composant ne référence <strong>jamais</strong> un token primitif directement — toujours via un token sémantique. C'est cette indirection qui rend les décisions lisibles par les agents IA. <a href="tokens/index.html">Explorer les trois niveaux →</a></span>
+      <span class="lang-en">Absolute rule: a component <strong>never</strong> references a primitive token directly — always through a semantic token. This indirection is what makes decisions legible to AI agents. <a href="tokens/index.html">Explore the three levels →</a></span>
     </div>
   </div>
 </div>
