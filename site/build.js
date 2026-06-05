@@ -475,7 +475,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .demo-group:last-child{margin-bottom:0}
 .demo-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:12px;display:block}
 
-.ds-btn{
+.agtc-button{
   display:inline-flex;align-items:center;gap:6px;
   padding:var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
   border-radius:var(--agtc-component-button-primary-radius);
@@ -483,17 +483,17 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   border:1.5px solid transparent;transition:background .12s,color .12s,border-color .12s;line-height:1.4;
   text-decoration:none;
 }
-.ds-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.ds-btn:disabled{cursor:not-allowed;opacity:.45}
-.ds-btn.primary{background:var(--agtc-component-button-primary-background);color:var(--agtc-component-button-primary-text);border-color:var(--agtc-component-button-primary-background)}
-.ds-btn.primary:hover:not(:disabled){background:var(--agtc-component-button-primary-background-hover);border-color:var(--agtc-component-button-primary-background-hover)}
-.ds-btn.secondary{background:var(--agtc-component-button-secondary-background);color:var(--agtc-component-button-secondary-text);border-color:var(--agtc-component-button-secondary-border)}
-.ds-btn.secondary:hover:not(:disabled){background:var(--agtc-component-button-secondary-background-hover)}
-.ds-btn.ghost{background:var(--agtc-component-button-ghost-background);color:var(--agtc-component-button-ghost-text);border-color:transparent}
-.ds-btn.ghost:hover:not(:disabled){background:var(--agtc-component-button-ghost-background-hover)}
-.ds-btn.critical{background:var(--agtc-component-button-critical-background);color:var(--agtc-component-button-critical-text);border-color:var(--agtc-component-button-critical-border)}
-.ds-btn.critical:hover:not(:disabled){background:var(--agtc-component-button-critical-background-hover);color:var(--agtc-component-button-critical-border)}
-.ds-btn.icon-only{padding:var(--agtc-component-button-primary-padding-y)}
+.agtc-button:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.agtc-button:disabled{cursor:not-allowed;opacity:.45}
+.agtc-button.primary{background:var(--agtc-component-button-primary-background);color:var(--agtc-component-button-primary-text);border-color:var(--agtc-component-button-primary-background)}
+.agtc-button.primary:hover:not(:disabled){background:var(--agtc-component-button-primary-background-hover);border-color:var(--agtc-component-button-primary-background-hover)}
+.agtc-button.secondary{background:var(--agtc-component-button-secondary-background);color:var(--agtc-component-button-secondary-text);border-color:var(--agtc-component-button-secondary-border)}
+.agtc-button.secondary:hover:not(:disabled){background:var(--agtc-component-button-secondary-background-hover)}
+.agtc-button.ghost{background:var(--agtc-component-button-ghost-background);color:var(--agtc-component-button-ghost-text);border-color:transparent}
+.agtc-button.ghost:hover:not(:disabled){background:var(--agtc-component-button-ghost-background-hover)}
+.agtc-button.critical{background:var(--agtc-component-button-critical-background);color:var(--agtc-component-button-critical-text);border-color:var(--agtc-component-button-critical-border)}
+.agtc-button.critical:hover:not(:disabled){background:var(--agtc-component-button-critical-background-hover);color:var(--agtc-component-button-critical-border)}
+.agtc-button.icon-only{padding:var(--agtc-component-button-primary-padding-y)}
 
 .variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
@@ -1228,15 +1228,15 @@ function buildHome(adrs) {
     <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
   </p>
   <div class="hero-actions">
-    <a href="foundations/color.html" class="ds-btn primary">
+    <a href="foundations/color.html" class="agtc-button primary">
       <span class="lang-fr">Explorer les fondations</span>
       <span class="lang-en">Explore foundations</span>
     </a>
-    <a href="components/index.html" class="ds-btn secondary">
+    <a href="components/index.html" class="agtc-button secondary">
       <span class="lang-fr">Voir les composants</span>
       <span class="lang-en">View components</span>
     </a>
-    <a href="agents/index.html" class="ds-btn ghost">
+    <a href="agents/index.html" class="agtc-button ghost">
       <span class="lang-fr">Documentation agents →</span>
       <span class="lang-en">Agent documentation →</span>
     </a>
@@ -1456,7 +1456,7 @@ function buildHome(adrs) {
       </div>
     </div>
   </div>
-  <p><a href="decisions/index.html" class="ds-btn secondary">
+  <p><a href="decisions/index.html" class="agtc-button secondary">
     <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
     <span class="lang-en">View all ${adrs.length} ADRs →</span>
   </a></p>
@@ -2099,28 +2099,28 @@ function buildButton() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Primary — action principale, 1 maximum par section</span><span class="lang-en">Primary — main action, 1 maximum per section</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
-      <button class="ds-btn primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
+      <button class="agtc-button primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
+      <button class="agtc-button primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Secondary — action alternative</span><span class="lang-en">Secondary — alternative action</span></span>
     <div class="demo-row">
-      <button class="ds-btn secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
-      <button class="ds-btn secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
+      <button class="agtc-button secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
+      <button class="agtc-button secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Ghost — action tertiaire, faible emphase</span><span class="lang-en">Ghost — tertiary action, low emphasis</span></span>
     <div class="demo-row">
-      <button class="ds-btn ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
-      <button class="ds-btn ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
+      <button class="agtc-button ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
+      <button class="agtc-button ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Critical — action irréversible (confirmation obligatoire)</span><span class="lang-en">Critical — irreversible action (confirmation required)</span></span>
     <div class="demo-row">
-      <button class="ds-btn critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
+      <button class="agtc-button critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
     </div>
   </div>
 </div>
@@ -2170,25 +2170,25 @@ function buildButton() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône avant (prefix)</span><span class="lang-en">Leading icon (prefix)</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary">${icon('plus',16)} <span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></button>
-      <button class="ds-btn secondary">${icon('download',16)} <span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></button>
-      <button class="ds-btn ghost">${icon('settings',16)} <span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></button>
+      <button class="agtc-button primary">${icon('plus',16)} <span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></button>
+      <button class="agtc-button secondary">${icon('download',16)} <span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></button>
+      <button class="agtc-button ghost">${icon('settings',16)} <span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône après (suffix)</span><span class="lang-en">Trailing icon (suffix)</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span> ${icon('arrow-right',16)}</button>
-      <button class="ds-btn secondary"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span> ${icon('external-link',16)}</button>
+      <button class="agtc-button primary"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span> ${icon('arrow-right',16)}</button>
+      <button class="agtc-button secondary"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span> ${icon('external-link',16)}</button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icon-only — <code>label</code> obligatoire (WCAG 1.1.1)</span><span class="lang-en">Icon-only — <code>label</code> required (WCAG 1.1.1)</span></span>
     <div class="demo-row">
-      <button class="ds-btn primary icon-only" aria-label="Ajouter">${icon('plus',16)}</button>
-      <button class="ds-btn secondary icon-only" aria-label="Modifier">${icon('pencil',16)}</button>
-      <button class="ds-btn ghost icon-only" aria-label="Paramètres">${icon('settings',16)}</button>
-      <button class="ds-btn critical icon-only" aria-label="Supprimer définitivement">${icon('trash-2',16)}</button>
+      <button class="agtc-button primary icon-only" aria-label="Ajouter">${icon('plus',16)}</button>
+      <button class="agtc-button secondary icon-only" aria-label="Modifier">${icon('pencil',16)}</button>
+      <button class="agtc-button ghost icon-only" aria-label="Paramètres">${icon('settings',16)}</button>
+      <button class="agtc-button critical icon-only" aria-label="Supprimer définitivement">${icon('trash-2',16)}</button>
     </div>
   </div>
 </div>
@@ -3694,8 +3694,8 @@ function buildADR(adr, adrs) {
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
   const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    ${prev ? `<a href="${prev.slug}.html" class="ds-btn secondary">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
-    ${next ? `<a href="${next.slug}.html" class="ds-btn secondary">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
+    ${prev ? `<a href="${prev.slug}.html" class="agtc-button secondary">← ADR-${String(prev.num).padStart(3,'0')}</a>` : '<span></span>'}
+    ${next ? `<a href="${next.slug}.html" class="agtc-button secondary">ADR-${String(next.num).padStart(3,'0')} →</a>` : '<span></span>'}
   </div>`;
 
   const body = meta + content + nav;

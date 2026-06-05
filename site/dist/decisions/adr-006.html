@@ -107,8 +107,8 @@
 <h2>Mise en œuvre</h2>
 <table><thead><tr><th>Date</th><th>Événement</th></tr></thead><tbody><tr><td>2026-05-28</td><td>Décision adoptée (ADR-006)</td></tr><tr><td>2026-06-01</td><td><strong>Activation</strong> — pipeline <code>chromatic.md</code> → Actif, workflow CI <code>.github/workflows/chromatic.yml</code> ajouté</td></tr></tbody></table>
 <p><strong>Gestion du token.</strong> Le <code>CHROMATIC_PROJECT_TOKEN</code> vit exclusivement dans les secrets GitHub — jamais en clair dans le dépôt (ni <code>package.json</code>, ni workflow). Le token initial avait été committé en clair (commit <code>ba30858</code>) ; il a été <strong>régénéré</strong> sur chromatic.com lors de l'activation, révoquant la valeur exposée dans l'historique git. Toute rotation future suit le même protocole : régénérer sur chromatic.com puis mettre à jour le secret GitHub.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-005.html" class="ds-btn secondary">← ADR-005</a>
-    <a href="adr-007.html" class="ds-btn secondary">ADR-007 →</a>
+    <a href="adr-005.html" class="agtc-button secondary">← ADR-005</a>
+    <a href="adr-007.html" class="agtc-button secondary">ADR-007 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
