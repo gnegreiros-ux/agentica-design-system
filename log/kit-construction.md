@@ -214,3 +214,7 @@
 | 2026-06-04 20:41 | Modifié | `decisions/README.md` |
 | 2026-06-04 | Revue UX | `link` — patterns NN/g (Visualizing Links) + WCAG H83 (nouvel onglet) approuvés (LK1–LK8) ; soulignement `always` par défaut (WCAG 1.4.1), externe = noopener + icône + texte AT, état visité hors v1 — ADR-036/043 |
 | 2026-06-04 | Composant | `agtc-link` créé — 6 surfaces : tokens `component.link`, code (mix : composant shadow DOM + classe `.agtc-link`), story, guideline, ADR-043, site (page + nav + sidebar + utilitaire `.visually-hidden`). Lien de navigation, auto-détection externe, avertissement texte générique. Vérifié au navigateur (site + shadow DOM). Build : 627 définies · 148 référencées · 0 fantôme |
+| 2026-06-04 21:02 | Créé | `decisions/ADR-044-agtc-segmented-implementation.md` |
+| 2026-06-04 21:02 | Modifié | `decisions/README.md` |
+| 2026-06-04 | Revue UX | `segmented` — patterns Primer (Segmented Control) + NN/g + WCAG 1.4.1 approuvés (SG1–SG8) ; groupe de boutons + aria-current + effet immédiat (écart assumé vs radiogroup), navigation Tab native — ADR-036/044 |
+| 2026-06-04 | Composant | `agtc-segmented` créé — 6 surfaces : tokens `component.segmented`, code (mix : composant piloté par données shadow DOM + classe `.agtc-segmented`), story, guideline, ADR-044, site (page + nav + sidebar). Mono-sélection effet immédiat, émet `change`. Vérifié au navigateur (site + shadow DOM : clic → aria-current + change émis). **Clôt la catégorie B** de la gap-analysis (table, code-block, banner, link, segmented). Build : 634 définies · 155 référencées · 0 fantôme |

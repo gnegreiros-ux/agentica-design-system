@@ -306,6 +306,13 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-link.underline-hover,.agtc-link.underline-none{text-decoration:none}
 .agtc-link.underline-hover:hover{text-decoration:underline}
 
+/* ── agtc-segmented (classe — moitié light DOM du mix, ADR-044) ─────────── */
+.agtc-segmented{display:inline-flex;gap:2px;padding:2px;background:var(--agtc-component-segmented-default-track-background);border-radius:var(--agtc-component-segmented-default-radius)}
+.agtc-segmented button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:5px 12px;border:none;border-radius:calc(var(--agtc-component-segmented-default-radius) - 2px);background:none;color:var(--agtc-component-segmented-default-text);font-family:inherit;font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);line-height:1.2;white-space:nowrap;cursor:pointer;transition:background .12s,color .12s}
+.agtc-segmented button:hover{color:var(--agtc-component-segmented-default-text-hover)}
+.agtc-segmented button[aria-current="true"]{background:var(--agtc-component-segmented-default-selected-background);color:var(--agtc-component-segmented-default-selected-text);font-weight:700}
+.agtc-segmented button:focus-visible{outline:2px solid var(--agtc-component-segmented-default-border-focus);outline-offset:2px}
+
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:600}

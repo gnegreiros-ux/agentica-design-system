@@ -101,6 +101,7 @@ des décisions déjà tranchées.
 | [ADR-041](ADR-041-agtc-code-block-implementation.md) | Implémentation de `agtc-code-block` | 2026-06-03 | ✅ Actif |
 | [ADR-042](ADR-042-agtc-banner-implementation.md) | Implémentation de `agtc-banner` | 2026-06-03 | ✅ Actif |
 | [ADR-043](ADR-043-agtc-link-implementation.md) | Implémentation de `agtc-link` | 2026-06-04 | ✅ Actif |
+| [ADR-044](ADR-044-agtc-segmented-implementation.md) | Implémentation de `agtc-segmented` | 2026-06-04 | ✅ Actif |
 
 ---
 

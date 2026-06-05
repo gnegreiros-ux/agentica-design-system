@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 05 Jun 2026 00:45:58 GMT
+// Generated on Fri, 05 Jun 2026 01:08:56 GMT
 
 
 import UIKit
@@ -585,6 +585,13 @@ public class AgenticaTokens {
     public static let radioDefaultFill = #12a594
     public static let radioDefaultFillHover = #0d9b8a
     public static let radioDefaultLabel = #202020
+    public static let segmentedDefaultBorderFocus = #12a594
+    public static let segmentedDefaultRadius = 6px
+    public static let segmentedDefaultSelectedBackground = #12a594
+    public static let segmentedDefaultSelectedText = #ffffff
+    public static let segmentedDefaultText = #646464
+    public static let segmentedDefaultTextHover = #202020
+    public static let segmentedDefaultTrackBackground = #f0f0f0
     public static let semanticColorActionPrimary = #12a594
     public static let semanticColorActionPrimaryDisabled = #d9d9d9
     public static let semanticColorActionPrimaryHover = #0d9b8a

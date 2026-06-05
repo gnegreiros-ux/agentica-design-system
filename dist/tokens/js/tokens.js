@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 00:45:58 GMT
+ * Generated on Fri, 05 Jun 2026 01:08:56 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -647,6 +647,13 @@ export const TablePaddingYComfortable = "12px";
 export const LinkDefaultText = "#12a594";
 export const LinkDefaultTextHover = "#0d9b8a";
 export const LinkDefaultBorderFocus = "#12a594";
+export const SegmentedDefaultTrackBackground = "#f0f0f0";
+export const SegmentedDefaultText = "#646464";
+export const SegmentedDefaultTextHover = "#202020";
+export const SegmentedDefaultSelectedBackground = "#12a594";
+export const SegmentedDefaultSelectedText = "#ffffff";
+export const SegmentedDefaultBorderFocus = "#12a594";
+export const SegmentedDefaultRadius = "6px";
 export const BannerNeutralBackground = "#f0f0f0";
 export const BannerNeutralAccent = "#646464";
 export const BannerBrandBackground = "#e0f8f3";

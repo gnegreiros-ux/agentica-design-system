@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 00:45:58 GMT
+ * Generated on Fri, 05 Jun 2026 01:08:56 GMT
  */
 
 :root {
@@ -606,6 +606,13 @@
   --agtc-banner-brand-background: var(--agtc-semantic-color-brand-primary-subtle);
   --agtc-banner-neutral-accent: var(--agtc-semantic-color-text-secondary);
   --agtc-banner-neutral-background: var(--agtc-semantic-color-background-subtle);
+  --agtc-segmented-default-radius: var(--agtc-semantic-radius-control);
+  --agtc-segmented-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-segmented-default-selected-text: var(--agtc-semantic-color-text-on-action);
+  --agtc-segmented-default-selected-background: var(--agtc-semantic-color-action-primary);
+  --agtc-segmented-default-text-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-segmented-default-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-segmented-default-track-background: var(--agtc-semantic-color-background-subtle);
   --agtc-link-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-link-default-text-hover: var(--agtc-semantic-color-action-primary-hover);
   --agtc-link-default-text: var(--agtc-semantic-color-action-primary);

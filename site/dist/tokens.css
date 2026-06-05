@@ -632,4 +632,11 @@
   --agtc-component-link-default-text: var(--agtc-semantic-color-action-primary);
   --agtc-component-link-default-text-hover: var(--agtc-semantic-color-action-primary-hover);
   --agtc-component-link-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-component-segmented-default-track-background: var(--agtc-semantic-color-background-subtle);
+  --agtc-component-segmented-default-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-segmented-default-text-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-component-segmented-default-selected-background: var(--agtc-semantic-color-action-primary);
+  --agtc-component-segmented-default-selected-text: var(--agtc-semantic-color-text-on-action);
+  --agtc-component-segmented-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-component-segmented-default-radius: var(--agtc-semantic-radius-control);
 }

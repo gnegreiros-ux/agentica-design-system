@@ -242,6 +242,13 @@ const COMP = {
   'link-default-text':                  'var(--agtc-semantic-color-action-primary)',
   'link-default-text-hover':            'var(--agtc-semantic-color-action-primary-hover)',
   'link-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
+  'segmented-default-track-background':  'var(--agtc-semantic-color-background-subtle)',
+  'segmented-default-text':              'var(--agtc-semantic-color-text-secondary)',
+  'segmented-default-text-hover':        'var(--agtc-semantic-color-text-primary)',
+  'segmented-default-selected-background':'var(--agtc-semantic-color-action-primary)',
+  'segmented-default-selected-text':     'var(--agtc-semantic-color-text-on-action)',
+  'segmented-default-border-focus':      'var(--agtc-semantic-color-border-focus)',
+  'segmented-default-radius':            'var(--agtc-semantic-radius-control)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -569,6 +576,13 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-link:focus-visible{outline:2px solid var(--agtc-component-link-default-border-focus);outline-offset:2px}
 .agtc-link.underline-hover,.agtc-link.underline-none{text-decoration:none}
 .agtc-link.underline-hover:hover{text-decoration:underline}
+
+/* ── agtc-segmented (classe — moitié light DOM du mix, ADR-044) ─────────── */
+.agtc-segmented{display:inline-flex;gap:2px;padding:2px;background:var(--agtc-component-segmented-default-track-background);border-radius:var(--agtc-component-segmented-default-radius)}
+.agtc-segmented button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:5px 12px;border:none;border-radius:calc(var(--agtc-component-segmented-default-radius) - 2px);background:none;color:var(--agtc-component-segmented-default-text);font-family:inherit;font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);line-height:1.2;white-space:nowrap;cursor:pointer;transition:background .12s,color .12s}
+.agtc-segmented button:hover{color:var(--agtc-component-segmented-default-text-hover)}
+.agtc-segmented button[aria-current="true"]{background:var(--agtc-component-segmented-default-selected-background);color:var(--agtc-component-segmented-default-selected-text);font-weight:700}
+.agtc-segmented button:focus-visible{outline:2px solid var(--agtc-component-segmented-default-border-focus);outline-offset:2px}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
@@ -1084,6 +1098,7 @@ function sidebarComponents(base, current) {
     ['code-block.html', 'Code Block'],
     ['banner.html', 'Banner'],
     ['link.html', 'Link'],
+    ['segmented.html', 'Segmented'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -2040,6 +2055,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Lien de navigation, souligné par défaut (WCAG 1.4.1), liens externes sécurisés et annoncés.</span>
       <span class="lang-en">Navigation link, underlined by default (WCAG 1.4.1), secure & announced external links.</span>
+    </div>
+  </a>
+  <a href="segmented.html" class="nav-card">
+    <span class="nav-card-icon">${icon('rows-3',32)}</span>
+    <div class="nav-card-title">Segmented</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Contrôle segmenté mono-sélection à effet immédiat (FR/EN, densité), boutons + aria-current.</span>
+      <span class="lang-en">Single-select segmented control with immediate effect (FR/EN, density), buttons + aria-current.</span>
     </div>
   </a>
 </div>
@@ -3413,6 +3436,105 @@ function buildLink() {
   }));
 }
 
+// ─── PAGE: SEGMENTED ──────────────────────────────────────────────────────────
+function buildSegmented() {
+  const tokenRows = [
+    ['segmented-default-track-background',   'semantic.color.background.subtle', SEM['color-background-subtle']],
+    ['segmented-default-text',               'semantic.color.text.secondary',    SEM['color-text-secondary']],
+    ['segmented-default-selected-background','semantic.color.action.primary',    SEM['color-action-primary']],
+    ['segmented-default-selected-text',      'semantic.color.text.on-action',    SEM['color-text-on-action']],
+    ['segmented-default-border-focus',       'semantic.color.border.focus',      SEM['color-border-focus']],
+    ['segmented-default-radius',             'semantic.radius.control',          SEM['radius-control']],
+  ];
+
+  // Démo : vrais <div class="agtc-segmented"> — visuel statique (un segment actif).
+  const seg = (label, opts) => `
+    <div class="agtc-segmented" role="group" aria-label="${label}">
+      ${opts.map(([l, sel]) => `<button type="button" aria-current="${sel ? 'true' : 'false'}">${l}</button>`).join('')}
+    </div>`;
+
+  const body = `
+<h1>Segmented</h1>
+<p class="page-lead">
+  <span class="lang-fr">Contrôle segmenté mono-sélection à effet immédiat (2–5 options courtes) : bascule de langue, densité, vue liste/grille. Groupe de boutons natifs + <code>aria-current</code> — distinct du groupe radio (formulaire) et des onglets (panneaux).</span>
+  <span class="lang-en">Single-select segmented control with immediate effect (2–5 short options): language toggle, density, list/grid view. Native button group + <code>aria-current</code> — distinct from radio group (forms) and tabs (panels).</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<div class="demo-box" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+  ${seg('Langue', [['FR', true], ['EN', false]])}
+  ${seg('Densité', [['Compact', false], ['Normal', true], ['Confort', false]])}
+</div>
+
+<h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
+<table class="token-table"><colgroup><col style="width:34%"><col style="width:66%"></colgroup>
+  <thead><tr><th><span class="lang-fr">Composant</span><span class="lang-en">Component</span></th><th><span class="lang-fr">Usage</span><span class="lang-en">Usage</span></th></tr></thead>
+  <tbody>
+    <tr class="token-row"><td><code>agtc-segmented</code></td><td><span class="lang-fr">Réglage à <strong>effet immédiat</strong> (langue, densité, vue) — Tab + aria-current</span><span class="lang-en"><strong>Immediate-effect</strong> setting (language, density, view) — Tab + aria-current</span></td></tr>
+    <tr class="token-row"><td><code>agtc-radio-group</code></td><td><span class="lang-fr">Choix de <strong>formulaire</strong> soumis — radiogroup + flèches</span><span class="lang-en">Submitted <strong>form</strong> choice — radiogroup + arrows</span></td></tr>
+    <tr class="token-row"><td><code>agtc-toggle</code></td><td><span class="lang-fr">Réglage binaire on/off</span><span class="lang-en">Binary on/off setting</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours exactement un segment actif (<code>aria-current="true"</code>)</span><span class="lang-en">Always exactly one active segment (<code>aria-current="true"</code>)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">2 à 5 options, libellés courts ; au-delà → <code>select</code></span><span class="lang-en">2 to 5 options, short labels; beyond → <code>select</code></span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">État sélectionné = fond plein + poids 700 (pas la couleur seule)</span><span class="lang-en">Selected state = solid fill + weight 700 (not color alone)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais <code>role="radiogroup"</code> ni <code>tablist</code> pour un effet immédiat</span><span class="lang-en">Never <code>role="radiogroup"</code> or <code>tablist</code> for immediate effect</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais sans <code>aria-label</code> de groupe</span><span class="lang-en">Never without a group <code>aria-label</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>role="group"</code> + <code>aria-label</code> sur le rail</span><span class="lang-en"><code>role="group"</code> + <code>aria-label</code> on the track</span></li>
+  <li><span class="lang-fr">Segment actif : <code>aria-current="true"</code> ; boutons natifs (Tab, Entrée/Espace)</span><span class="lang-en">Active segment: <code>aria-current="true"</code>; native buttons (Tab, Enter/Space)</span></li>
+  <li><span class="lang-fr"><code>:focus-visible</code> tokenisé par segment</span><span class="lang-en">Tokenized <code>:focus-visible</code> per segment</span></li>
+  <li><span class="lang-fr">Contraste sélectionné (blanc sur teal) ≥ 4.5:1</span><span class="lang-en">Selected contrast (white on teal) ≥ 4.5:1</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-segmented label="Langue" value="fr"&gt;&lt;/agtc-segmented&gt;
+&lt;script&gt;
+  const s = document.querySelector('agtc-segmented');
+  s.options = [{ value: 'fr', label: 'FR' }, { value: 'en', label: 'EN' }];
+  s.addEventListener('change', (e) =&gt; setLanguage(e.detail.value));
+&lt;/script&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Réserver aux réglages à effet immédiat (≤ 5 options)</span><span class="lang-en">Reserve for immediate-effect settings (≤ 5 options)</span></li>
+      <li><span class="lang-fr">Nommer le groupe avec <code>label</code></span><span class="lang-en">Name the group with <code>label</code></span></li>
+      <li><span class="lang-fr">Garder des libellés courts</span><span class="lang-en">Keep labels short</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">L'utiliser pour un choix de formulaire soumis (→ <code>agtc-radio-group</code>)</span><span class="lang-en">Use it for a submitted form choice (→ <code>agtc-radio-group</code>)</span></li>
+      <li><span class="lang-fr">L'utiliser pour changer un panneau de contenu (→ onglets)</span><span class="lang-en">Use it to switch a content panel (→ tabs)</span></li>
+      <li><span class="lang-fr">Plus de 5 options ou des libellés longs</span><span class="lang-en">More than 5 options or long labels</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/segmented.html'), layout({
+    title: 'Segmented', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'segmented.html'),
+    body: body + uxPatternsFromMd('segmented') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3997,6 +4119,7 @@ function build() {
   buildCodeBlock();
   buildBanner();
   buildLink();
+  buildSegmented();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
@@ -4005,7 +4128,7 @@ function build() {
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 17 + adrs.length;
+  const total = 18 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

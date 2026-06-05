@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Atkinson Hyperlegible Mono comme police monospace — Agentica</title>
+<title>Implémentation de `agtc-segmented` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Atkinson Hyperlegible Mono comme police monospace — Agentica">
+<meta property="og:title" content="Implémentation de `agtc-segmented` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Atkinson Hyperlegible Mono comme police monospace — Agentica">
+<meta name="twitter:title" content="Implémentation de `agtc-segmented` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,51 +55,47 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 028</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 044</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-30</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Guilherme Negreiros — Design System Lead</div>
-</div><h1>ADR-028 — Atkinson Hyperlegible Mono comme police monospace</h1>
-<blockquote><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Guilherme Negreiros — Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-028-atkinson-hyperlegible-mono.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> ADR-021-atkinson-hyperlegible.md, tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md</p></blockquote>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-04</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
+</div><h1>ADR-044 — Implémentation de <code>agtc-segmented</code></h1>
+<blockquote><p><strong>Date :</strong> 2026-06-04 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-044-agtc-segmented-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-038-agtc-radio-implementation.md, decisions/ADR-039-agtc-toggle-implementation.md, guidelines/components/segmented.md, tokens/component.json</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
+<blockquote><p>Ajouté le 2026-06-04 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>SG1–SG8 tous approuvés</strong>. Détail et liens : <code>guidelines/components/segmented.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Mono-sélection, toujours un actif</td><td>Primer</td></tr><tr><td>SG2</td><td>Groupe de <code>&lt;button&gt;</code> + <code>aria-current</code> + effet immédiat (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, libellés courts</td><td>NN/g</td></tr><tr><td>SG4</td><td>Sélectionné pas par la couleur seule</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Effet immédiat</td><td>Primer</td></tr><tr><td>SG6</td><td><code>:focus-visible</code> par segment, Tab natif</td><td>Primer</td></tr><tr><td>SG7</td><td>Largeur égale, icône + libellé</td><td>NN/g</td></tr><tr><td>SG8</td><td>API <code>value</code> + événement <code>change</code></td><td>Primer</td></tr></tbody></table>
 <hr>
 <h2>Contexte</h2>
-<p>Depuis ADR-021, la police principale est Atkinson Hyperlegible (sans-serif). Le système utilisait la valeur générique <code>monospace</code> comme police de repli pour les éléments de code (<code>&lt;code&gt;</code>, labels de tokens, numéros ADR).</p>
-<p>Problèmes à résoudre : 1. <code>font-family: monospace</code> est incontrôlable — chaque OS et navigateur rend un résultat différent (Courier New, Menlo, Consolas, DejaVu Sans Mono) 2. Aucune cohérence d'accessibilité entre la police de texte et la police de code 3. Le choix n'était pas tokenisé ni documenté — invisible pour les agents</p>
+<p>Le site utilise une bascule FR/EN (~114 usages <code>lang-btn</code>) : un <code>role="group"</code> contenant deux <code>&lt;button aria-pressed&gt;</code>, à effet immédiat. <code>agtc-segmented</code> formalise ce contrôle segmenté mono-sélection. C'est le <strong>5ᵉ et dernier composant de la catégorie B</strong> de la gap-analysis du 2026-06-03, après table, code-block, banner et link.</p>
 <hr>
-<h2>Décision</h2>
-<h3>Police : Atkinson Hyperlegible Mono</h3>
-<p>Conçue par <strong>Applied Design Works</strong> pour le <strong>Braille Institute of America</strong> — compagnon monospace officiel d'Atkinson Hyperlegible. Même philosophie de conception : différenciation maximale des caractères ambigus, optimisée pour la basse vision.</p>
-<p><strong>Différenciateurs techniques :</strong></p>
-<table><thead><tr><th>Paire ambiguë</th><th>Monospace système</th><th>Atkinson Hyperlegible Mono</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Souvent identiques</td><td>Délibérément distincts</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Souvent identiques</td><td>Délibérément distincts</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Miroirs</td><td>Asymétries intentionnelles</td></tr><tr><td><code>{</code> / <code>(</code> / <code>[</code></td><td>Similaires</td><td>Forme et ouverture distinctes</td></tr></tbody></table>
-<p><strong>Graisses disponibles :</strong> Regular (400) et Bold (700), en romain et italique.</p>
-<h3>Tokenisation</h3>
-<p>La police est exposée via un token CSS custom property dans le build :</p>
-<pre class="code-block"><code class="lang-css">/* :root dans site.css */
---agtc-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;</code></pre>
-<p>La chaîne de fallback garantit un résultat acceptable même sans connexion Internet :</p>
-<ul><li><code>JetBrains Mono</code> — développeur, haute lisibilité</li><li><code>Cascadia Code</code> — Windows/VS Code, modern</li><li><code>monospace</code> — dernier recours système</li></ul>
-<h3>Import Google Fonts</h3>
-<p>Chargé dans le même <code>@import</code> qu'Atkinson Hyperlegible (une seule requête réseau) :</p>
-<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
-<h3>Éléments utilisant <code>--agtc-font-mono</code></h3>
-<table><thead><tr><th>Élément</th><th>Contexte</th></tr></thead><tbody><tr><td><code>code</code></td><td>Toutes les pages — noms de tokens, exemples de code</td></tr><tr><td><code>.adr-num</code></td><td>Pages décisions — numéro <code>ADR-0XX</code></td></tr><tr><td><code>.space-label</code></td><td>Page espacement — labels de scale</td></tr><tr><td><code>.color-name</code>, <code>.color-value</code></td><td>Page couleur — hex, nom du token</td></tr><tr><td><code>.adr-num</code>, <code>.density-card-math</code></td><td>Pages décisions — formules math tokens</td></tr><tr><td>Inline <code>style="font-family:var(--agtc-font-mono)"</code></td><td>Cellules de valeurs dans les tableaux de tokens</td></tr></tbody></table>
+<h2>Décisions</h2>
+<h3>Décision 1 — Pattern ARIA : groupe de boutons + <code>aria-current</code>, PAS un radiogroup (SG2)</h3>
+<p>C'est la décision structurante. Trois patterns étaient candidats :</p>
+<ul><li><strong>radiogroup</strong> (comme <code>agtc-radio-group</code>, ADR-038) : flèches + roving tabindex, sémantique « choix</li></ul>
+<p>  de formulaire » impliquant une soumission ;</p>
+<ul><li><strong>tablist</strong> : change un panneau de contenu ;</li><li><strong>groupe de <code>&lt;button&gt;</code> + <code>aria-current</code></strong> : effet immédiat, Tab natif entre segments.</li></ul>
+<p>Primer (GitHub) déconseille explicitement radiogroup et tablist pour un contrôle segmenté à <strong>effet immédiat</strong>. On retient donc le <strong>groupe de boutons natifs</strong> : chaque segment est un <code>&lt;button&gt;</code> (Tab/Entrée/Espace natifs), le segment actif porte <code>aria-current="true"</code>, la sélection s'applique immédiatement. C'est un <strong>écart assumé</strong> vis-à-vis de <code>agtc-radio-group</code> (radiogroup + flèches), justifié par la différence d'usage (réglage instantané vs choix de formulaire soumis).</p>
+<h3>Décision 2 — Style « rail » (track) tokenisé</h3>
+<p>Rail à fond subtil (<code>background.subtle</code>), segment sélectionné en pastille pleine (<code>action.primary</code> + texte <code>on-action</code>). L'état sélectionné combine <strong>fond plein + poids 700</strong> — jamais la couleur seule (WCAG 1.4.1).</p>
+<h3>Décision 3 — Piloté par données + effet immédiat</h3>
+<p><code>options</code> (<code>{value,label,icon?}</code>) + <code>value</code> ; chaque sélection émet <code>change</code> (<code>detail:{value}</code>). Pas de bouton « appliquer » (SG5). <code>label</code> requis pour nommer le groupe (avertissement console sinon).</p>
+<h3>Décision 4 — Architecture « mix » (cohérente avec ADR-040→043)</h3>
+<p>Composant <code>&lt;agtc-segmented&gt;</code> (shadow DOM, piloté par données) <strong>+</strong> classe <code>.agtc-segmented</code> pour le HTML statique. Les deux consomment <code>component.segmented.*</code>. La bascule de langue du site sera migrée vers ce contrat au *dogfooding* (catégorie A).</p>
 <hr>
-<h2>Argumentaire</h2>
-<p>La cohérence typographique entre la police de texte (Atkinson Hyperlegible) et la police de code (Atkinson Hyperlegible Mono) est un critère de qualité de design system. L'utilisation d'une famille partagée garantit :</p>
-<ul><li>Même ADN d'accessibilité (caractères ambigus traités de la même façon)</li><li>Même rhythm visuel (hauteur x similaire, espace entre-lettres compatible)</li><li>Un seul fournisseur (Google Fonts) pour les deux variantes</li></ul>
+<h2>Périmètre v1</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu (évolution future)</th></tr></thead><tbody><tr><td>Mono-sélection, effet immédiat, <code>aria-current</code></td><td>Multi-sélection</td></tr><tr><td><code>options</code> (value/label/icon), <code>value</code>, <code>change</code></td><td>Onglets de contenu (→ futur <code>tabs</code>)</td></tr><tr><td><code>equal-width</code>, icônes</td><td>Débordement / overflow scrollable</td></tr><tr><td>Rail tokenisé, focus-visible</td><td>Tailles multiples (sm/lg)</td></tr></tbody></table>
 <hr>
 <h2>Alternatives rejetées</h2>
-<table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong><code>monospace</code> (système)</strong></td><td>Incontrôlable cross-plateforme. Aucune garantie d'accessibilité.</td></tr><tr><td><strong>JetBrains Mono</strong></td><td>Excellent choix, mais rupture stylistique avec Atkinson Hyperlegible.</td></tr><tr><td><strong>Source Code Pro</strong></td><td>Même logique — pas de lien avec la police de texte principale.</td></tr><tr><td><strong>Fira Code</strong></td><td>Ligatures potentiellement problématiques pour les agents lisant du code.</td></tr><tr><td><strong>Atkinson Hyperlegible Next Mono</strong></td><td>Pas encore disponible sur Google Fonts en 2026-05. À reconsidérer en v2.</td></tr></tbody></table>
+<ul><li><strong>Pattern radiogroup</strong> (cohérence avec <code>agtc-radio-group</code>) : inadapté à l'effet immédiat (Primer) — rejeté au profit du groupe de boutons.</li><li><strong><code>role="tablist"</code></strong> : réservé au changement de panneau de contenu.</li><li><strong>Style « boutons bordés séparés »</strong> (comme l'actuel <code>lang-btn</code>) : remplacé par le rail à pastille, plus lisible et moderne.</li><li><strong><code>aria-pressed</code> par segment</strong> : <code>aria-current="true"</code> exprime mieux « l'option courante » d'une mono-sélection.</li></ul>
 <hr>
 <h2>Conséquences</h2>
-<p><strong>Pour le système de tokens :</strong></p>
-<ul><li><code>--agtc-font-mono</code> devient la référence obligatoire pour tout élément monospace</li><li><code>font-family: monospace</code> en dur est interdit (détectable par audit ESLint)</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>La police monospace est une décision traçable, pas un défaut système</li><li>Les agents peuvent vérifier qu'un composant utilise <code>var(--agtc-font-mono)</code> plutôt qu'une valeur hardcodée</li></ul>
-<p><strong>Pour les utilisateurs :</strong></p>
-<ul><li>Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision</li><li>Cohérence visuelle renforcée entre le texte courant et les éléments de code</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-027.html" class="ds-btn secondary">← ADR-027</a>
-    <a href="adr-029.html" class="ds-btn secondary">ADR-029 →</a>
+<ul><li>La bascule FR/EN du site pourra migrer vers <code>.agtc-segmented</code> au *dogfooding* (catégorie A).</li><li><strong>Clôt la catégorie B</strong> de la gap-analysis (table, code-block, banner, link, segmented).</li><li>Un futur composant <code>tabs</code> (changement de panneau) reste distinct (son propre ADR).</li></ul>
+<hr>
+<h2>Tokens ajoutés — <code>component.segmented.default.*</code></h2>
+<table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-043.html" class="ds-btn secondary">← ADR-043</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
