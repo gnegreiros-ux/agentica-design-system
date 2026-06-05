@@ -9,8 +9,8 @@
   "semantic": {
     "color": {
       "action": {
-        "primary":          { "value": "{primitive.color.teal.9}",  "$type": "color", "$intent": "Action principale — CTA, bouton primaire (brand teal). Voir ADR-024." },
-        "primary-hover":    { "value": "{primitive.color.teal.10}", "$type": "color", "$intent": "État survol de l'action principale" },
+        "primary":          { "value": "{primitive.color.teal.11}", "$type": "color", "$intent": "Action principale — CTA, bouton primaire. Teal interactif accessible (texte blanc = 4.56:1, WCAG AA). Distinct du teal d'identité brand.primary (teal.9). Voir ADR-048." },
+        "primary-hover":    { "value": "{primitive.color.teal.12}", "$type": "color", "$intent": "État survol de l'action principale — assombrissement (texte blanc = 12:1). Voir ADR-048." },
         "primary-disabled": { "value": "{primitive.color.gray.6}",  "$type": "color", "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)" }
       },
       "feedback": {
@@ -47,7 +47,7 @@
       },
       "border": {
         "default": { "value": "{primitive.color.gray.4}",   "$type": "color", "$intent": "Bordure standard" },
-        "focus":   { "value": "{primitive.color.teal.9}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier (brand teal). Voir ADR-024." },
+        "focus":   { "value": "{primitive.color.teal.11}",  "$type": "color", "$intent": "Bordure focus — accessibilité clavier. Teal interactif accessible, unifié avec action.primary (4.56:1 sur blanc). Voir ADR-048." },
         "danger":  { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Bordure état erreur" },
         "on-inverse": { "value": "{primitive.color.white.12}", "$type": "color", "$intent": "Séparateur sur surface inversée — non textuel (ADR-046)" },
         "swatch":     { "value": "{primitive.color.black.2}",  "$type": "color", "$intent": "Filet de contour des échantillons de couleur sur fond clair — non textuel (ADR-046)" }
