@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 01:08:56 GMT
+ * Generated on Fri, 05 Jun 2026 12:52:27 GMT
  */
 
 :root {
@@ -582,8 +582,16 @@
   --agtc-semantic-color-background-subtle: var(--agtc-primitive-color-gray-3);
   --agtc-semantic-color-background-surface: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-page: var(--agtc-primitive-color-gray-1);
+  --agtc-semantic-color-feedback-info-border: var(--agtc-primitive-color-blue-6);
+  --agtc-semantic-color-feedback-info-subtle: var(--agtc-primitive-color-blue-3);
   --agtc-semantic-color-feedback-info: var(--agtc-primitive-color-blue-11);
+  --agtc-semantic-color-feedback-warning-border: var(--agtc-primitive-color-orange-6);
+  --agtc-semantic-color-feedback-warning-subtle: var(--agtc-primitive-color-orange-3);
+  --agtc-semantic-color-feedback-warning: var(--agtc-primitive-color-orange-11);
+  --agtc-semantic-color-feedback-success-border: var(--agtc-primitive-color-green-6);
+  --agtc-semantic-color-feedback-success-subtle: var(--agtc-primitive-color-green-3);
   --agtc-semantic-color-feedback-success: var(--agtc-primitive-color-green-11);
+  --agtc-semantic-color-feedback-danger-border: var(--agtc-primitive-color-red-6);
   --agtc-semantic-color-feedback-danger-subtle: var(--agtc-primitive-color-red-3);
   --agtc-semantic-color-feedback-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-action-primary-disabled: var(--agtc-primitive-color-gray-6);

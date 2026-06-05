@@ -14,10 +14,18 @@
         "primary-disabled": { "value": "{primitive.color.gray.6}",  "$type": "color", "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)" }
       },
       "feedback": {
-        "danger":        { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
-        "danger-subtle": { "value": "{primitive.color.red.3}",    "$type": "color", "$intent": "Fond subtil pour état danger" },
-        "success":       { "value": "{primitive.color.green.11}", "$type": "color", "$intent": "Confirmation, succès, validation" },
-        "info":          { "value": "{primitive.color.blue.11}",  "$type": "color", "$intent": "Information neutre, aide contextuelle" }
+        "danger":          { "value": "{primitive.color.red.11}",    "$type": "color", "$intent": "Erreur, action destructrice, alerte critique" },
+        "danger-subtle":   { "value": "{primitive.color.red.3}",     "$type": "color", "$intent": "Fond subtil pour état danger" },
+        "danger-border":   { "value": "{primitive.color.red.6}",     "$type": "color", "$intent": "Bordure pour état danger (ADR-045)" },
+        "success":         { "value": "{primitive.color.green.11}",  "$type": "color", "$intent": "Confirmation, succès, validation" },
+        "success-subtle":  { "value": "{primitive.color.green.3}",   "$type": "color", "$intent": "Fond subtil pour état succès (ADR-045)" },
+        "success-border":  { "value": "{primitive.color.green.6}",   "$type": "color", "$intent": "Bordure pour état succès (ADR-045)" },
+        "warning":         { "value": "{primitive.color.orange.11}", "$type": "color", "$intent": "Avertissement, attention requise (ADR-045)" },
+        "warning-subtle":  { "value": "{primitive.color.orange.3}",  "$type": "color", "$intent": "Fond subtil pour état avertissement (ADR-045)" },
+        "warning-border":  { "value": "{primitive.color.orange.6}",  "$type": "color", "$intent": "Bordure pour état avertissement (ADR-045)" },
+        "info":            { "value": "{primitive.color.blue.11}",   "$type": "color", "$intent": "Information neutre, aide contextuelle" },
+        "info-subtle":     { "value": "{primitive.color.blue.3}",    "$type": "color", "$intent": "Fond subtil pour information (ADR-045)" },
+        "info-border":     { "value": "{primitive.color.blue.6}",    "$type": "color", "$intent": "Bordure pour information (ADR-045)" }
       },
       "background": {
         "page":    { "value": "{primitive.color.gray.1}",      "$type": "color", "$intent": "Fond de page principale" },

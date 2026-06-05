@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 01:08:56 GMT
+ * Generated on Fri, 05 Jun 2026 12:52:27 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -467,8 +467,16 @@ export const SemanticColorActionPrimaryHover = "#0d9b8a";
 export const SemanticColorActionPrimaryDisabled = "#d9d9d9";
 export const SemanticColorFeedbackDanger = "#ce2c31";
 export const SemanticColorFeedbackDangerSubtle = "#feebec";
+export const SemanticColorFeedbackDangerBorder = "#fdbdbe";
 export const SemanticColorFeedbackSuccess = "#18794e";
+export const SemanticColorFeedbackSuccessSubtle = "#e6f6eb";
+export const SemanticColorFeedbackSuccessBorder = "#addfc0";
+export const SemanticColorFeedbackWarning = "#cc4e00";
+export const SemanticColorFeedbackWarningSubtle = "#ffefd6";
+export const SemanticColorFeedbackWarningBorder = "#ffc182";
 export const SemanticColorFeedbackInfo = "#0d74ce";
+export const SemanticColorFeedbackInfoSubtle = "#e6f4fe";
+export const SemanticColorFeedbackInfoBorder = "#acd8fa";
 export const SemanticColorBackgroundPage = "#fcfcfc";
 export const SemanticColorBackgroundSurface = "#ffffff";
 export const SemanticColorBackgroundSubtle = "#f0f0f0";

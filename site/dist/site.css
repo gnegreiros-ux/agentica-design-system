@@ -342,8 +342,8 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agent-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
 .rules-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
 .rule-can,.rule-cannot{padding:20px;border-radius:var(--agtc-semantic-radius-card);border:1px solid}
-.rule-can{background:#ecfdf5;border-color:#bbf7d0}
-.rule-cannot{background:#fef2f2;border-color:#fecaca}
+.rule-can{background:var(--agtc-semantic-color-feedback-success-subtle);border-color:var(--agtc-semantic-color-feedback-success-border)}
+.rule-cannot{background:var(--agtc-semantic-color-feedback-danger-subtle);border-color:var(--agtc-semantic-color-feedback-danger-border)}
 .rule-can h3{color:var(--agtc-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
 .rule-cannot h3{color:var(--agtc-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
 .rule-can li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
@@ -391,8 +391,8 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── DO / DON'T ──────────────────────────────────────────── */
 .dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
 .do-section,.dont-section{padding:20px;border-radius:var(--agtc-semantic-radius-card);border:1px solid}
-.do-section{background:#f0fdf4;border-color:#86efac}
-.dont-section{background:#fef2f2;border-color:#fecaca}
+.do-section{background:var(--agtc-semantic-color-feedback-success-subtle);border-color:var(--agtc-semantic-color-feedback-success-border)}
+.dont-section{background:var(--agtc-semantic-color-feedback-danger-subtle);border-color:var(--agtc-semantic-color-feedback-danger-border)}
 .do-section h3{color:var(--agtc-semantic-color-feedback-success);margin-top:0;font-size:0.875rem}
 .dont-section h3{color:var(--agtc-semantic-color-feedback-danger);margin-top:0;font-size:0.875rem}
 .do-section li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
@@ -419,18 +419,18 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── AUDIT PAGE ──────────────────────────────────────────── */
 .audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
 .audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:700;font-size:1rem;margin-bottom:16px}
-.audit-badge.pass{background:#ecfdf5;color:var(--agtc-semantic-color-feedback-success)}
-.audit-badge.fail{background:#fff1f2;color:var(--agtc-semantic-color-feedback-danger)}
+.audit-badge.pass{background:var(--agtc-semantic-color-feedback-success-subtle);color:var(--agtc-semantic-color-feedback-success)}
+.audit-badge.fail{background:var(--agtc-semantic-color-feedback-danger-subtle);color:var(--agtc-semantic-color-feedback-danger)}
 .audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:0.875rem;margin-bottom:6px}
 .audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:0.8rem}
 .audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
 .audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px;text-align:center}
-.audit-card--pass{border-color:#86efac}
-.audit-card--warn{border-color:#fde68a}
-.audit-card--fail{border-color:#fca5a5}
+.audit-card--pass{border-color:var(--agtc-semantic-color-feedback-success-border)}
+.audit-card--warn{border-color:var(--agtc-semantic-color-feedback-warning-border)}
+.audit-card--fail{border-color:var(--agtc-semantic-color-feedback-danger-border)}
 .audit-number{display:block;font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:6px}
 .audit-card--pass .audit-number{color:var(--agtc-semantic-color-feedback-success)}
-.audit-card--warn .audit-number{color:#d97706}
+.audit-card--warn .audit-number{color:var(--agtc-semantic-color-feedback-warning)}
 .audit-card--fail .audit-number{color:var(--agtc-semantic-color-feedback-danger)}
 .audit-section{margin-bottom:48px}
 .audit-section h2{font-size:1.1rem;font-weight:700;margin:0 0 16px;padding-bottom:8px;border-bottom:1px solid var(--agtc-semantic-color-border-default)}

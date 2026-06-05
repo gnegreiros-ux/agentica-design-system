@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 05 Jun 2026 01:08:56 GMT
+// Generated on Fri, 05 Jun 2026 12:52:27 GMT
 
 
 import UIKit
@@ -613,9 +613,17 @@ public class AgenticaTokens {
     public static let semanticColorBrandSecondaryHover = #5f404b
     public static let semanticColorBrandSecondaryText = #432f36
     public static let semanticColorFeedbackDanger = #ce2c31
+    public static let semanticColorFeedbackDangerBorder = #fdbdbe
     public static let semanticColorFeedbackDangerSubtle = #feebec
     public static let semanticColorFeedbackInfo = #0d74ce
+    public static let semanticColorFeedbackInfoBorder = #acd8fa
+    public static let semanticColorFeedbackInfoSubtle = #e6f4fe
     public static let semanticColorFeedbackSuccess = #18794e
+    public static let semanticColorFeedbackSuccessBorder = #addfc0
+    public static let semanticColorFeedbackSuccessSubtle = #e6f6eb
+    public static let semanticColorFeedbackWarning = #cc4e00
+    public static let semanticColorFeedbackWarningBorder = #ffc182
+    public static let semanticColorFeedbackWarningSubtle = #ffefd6
     public static let semanticColorTextDisabled = #767676
     public static let semanticColorTextOnAction = #ffffff
     public static let semanticColorTextOnDanger = #ffffff

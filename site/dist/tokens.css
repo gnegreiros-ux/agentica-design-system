@@ -442,8 +442,16 @@
   --agtc-semantic-color-action-primary-disabled: #d9d9d9;
   --agtc-semantic-color-feedback-danger: #ce2c31;
   --agtc-semantic-color-feedback-danger-subtle: #feebec;
+  --agtc-semantic-color-feedback-danger-border: #fdbdbe;
   --agtc-semantic-color-feedback-success: #18794e;
+  --agtc-semantic-color-feedback-success-subtle: #e6f6eb;
+  --agtc-semantic-color-feedback-success-border: #addfc0;
+  --agtc-semantic-color-feedback-warning: #cc4e00;
+  --agtc-semantic-color-feedback-warning-subtle: #ffefd6;
+  --agtc-semantic-color-feedback-warning-border: #ffc182;
   --agtc-semantic-color-feedback-info: #0d74ce;
+  --agtc-semantic-color-feedback-info-subtle: #e6f4fe;
+  --agtc-semantic-color-feedback-info-border: #acd8fa;
   --agtc-semantic-color-background-page: #fcfcfc;
   --agtc-semantic-color-background-surface: #ffffff;
   --agtc-semantic-color-background-subtle: #f0f0f0;
