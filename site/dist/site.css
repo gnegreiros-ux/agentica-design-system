@@ -363,7 +363,9 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
 *:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-a{color:var(--agtc-semantic-color-action-primary)}
+/* Liens de contenu : consomment le contrat du composant link (component.link.* — ADR-043). */
+a{color:var(--agtc-component-link-default-text)}
+a:hover{color:var(--agtc-component-link-default-text-hover)}
 .skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 
