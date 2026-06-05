@@ -249,6 +249,13 @@ const COMP = {
   'segmented-default-selected-text':     'var(--agtc-semantic-color-text-on-action)',
   'segmented-default-border-focus':      'var(--agtc-semantic-color-border-focus)',
   'segmented-default-radius':            'var(--agtc-semantic-radius-control)',
+  'toggle-default-track-off':           'var(--agtc-primitive-color-gray-9)',
+  'toggle-default-track-off-hover':     'var(--agtc-primitive-color-gray-10)',
+  'toggle-default-track-on':            'var(--agtc-semantic-color-action-primary)',
+  'toggle-default-track-on-hover':      'var(--agtc-semantic-color-action-primary-hover)',
+  'toggle-default-knob':                'var(--agtc-semantic-color-background-surface)',
+  'toggle-default-border-focus':        'var(--agtc-semantic-color-border-focus)',
+  'toggle-default-label':               'var(--agtc-semantic-color-text-primary)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -2981,17 +2988,18 @@ function buildRadio() {
 // ─── PAGE: TOGGLE ────────────────────────────────────────────────────────────
 function buildToggle() {
   function toggle(on, dim) {
-    const track = on ? 'var(--agtc-semantic-color-action-primary)' : '#8d8d8d';
+    const track = on ? 'var(--agtc-component-toggle-default-track-on)' : 'var(--agtc-component-toggle-default-track-off)';
     const x = on ? '18px' : '2px';
-    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:9999px;background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:9999px;background:var(--agtc-semantic-color-background-surface);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
+    // Ombre du curseur en dur : reflète fidèlement le composant agtc-toggle (délimiteur WCAG 1.4.11, non tokenisé dans le contrat).
+    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:9999px;background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:9999px;background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
   }
   function row(on, label, dim) {
     return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
   }
 
   const tokenRows = [
-    ['toggle-default-track-off',       'primitive.color.gray.9 (proxy)',      '#8d8d8d'],
-    ['toggle-default-track-off-hover', 'primitive.color.gray.10 (proxy)',     '#838383'],
+    ['toggle-default-track-off',       'primitive.color.gray.9',              '#8d8d8d'],
+    ['toggle-default-track-off-hover', 'primitive.color.gray.10',             '#838383'],
     ['toggle-default-track-on',        'semantic.color.action.primary',       SEM['color-action-primary']],
     ['toggle-default-track-on-hover',  'semantic.color.action.primary-hover', SEM['color-action-primary-hover']],
     ['toggle-default-knob',            'semantic.color.background.surface',   SEM['color-background-surface']],
