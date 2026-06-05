@@ -315,13 +315,28 @@ body{
   padding:6px 12px;border-radius:var(--agtc-semantic-radius-control);font-weight:500;
   transition:background .12s,color .12s;
 }
-.top-nav a:visited{color:var(--agtc-semantic-color-text-secondary)}
+/* ── Règle système : no-visited-nav ──────────────────────────────────────
+   Les éléments de navigation ne portent jamais d'état :visited distinct
+   (la navigation n'est pas du contenu « lu / non lu »). La couleur visitée
+   est réalignée sur l'état non-visité. Voir .claude/rules/no-visited-nav.md.
+   Déclaré AVANT les règles :hover/.active — spécificité égale, le sélecteur
+   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé. */
+.top-nav a:visited,
+.sidebar a:visited,
+.toc a:visited,
+.nav-card:visited,
+.github-btn:visited,
+.storybook-btn:visited     {color:var(--agtc-semantic-color-text-secondary)}
+.top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
+.footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
+.audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
 .top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
-.top-nav a.active:visited{color:var(--agtc-semantic-color-action-primary)}
-.github-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
-.github-btn:hover,.github-btn:visited{color:var(--agtc-semantic-color-text-secondary)}
-.github-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+/* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
+.top-nav a.nav-cta,.top-nav a.nav-cta.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);font-weight:600}
+.top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
+.github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
+.github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
@@ -529,7 +544,9 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
 .token-table{table-layout:fixed}
-.token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
+.token-table td{overflow-wrap:break-word;word-break:break-word}
+/* En-têtes : jamais de coupure au milieu d'un mot — retour à la ligne aux espaces seulement */
+.token-table th{overflow-wrap:normal;word-break:normal;hyphens:none}
 
 /* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
 .agtc-table{
@@ -988,12 +1005,18 @@ document.addEventListener('DOMContentLoaded', () => {
 `; }
 
 // ─── HTML LAYOUT ───────────────────────────────────────────────────────────
+// Storybook publié par Chromatic (branche main, toujours la dernière baseline).
+// appId = 6a1c1e665ec5fe8fc0540983 ; permalien stable vérifié (HTTP 200).
+const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
+
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
+  // DÉMARRER en tête + traité comme CTA (cta:true) — action primaire d'adoption,
+  // cohérente avec le hero d'accueil et la page get-started.
   const navLinks = [
+    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started', cta: true },
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
-    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started' },
     { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
     { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
     { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
@@ -1001,7 +1024,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     { href: `${base}agents/index.html`,     labelFr: 'Agents',      labelEn: 'Agents' },
   ];
   const nav = navLinks.map(n =>
-    `<a href="${n.href}"><span class="lang-fr">${n.labelFr}</span><span class="lang-en">${n.labelEn}</span></a>`
+    `<a href="${n.href}"${n.cta ? ' class="nav-cta"' : ''}><span class="lang-fr">${n.labelFr}</span><span class="lang-en">${n.labelEn}</span></a>`
   ).join('');
 
   const sidebarHtml = sidebar
@@ -1018,6 +1041,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <span>© ${new Date().getFullYear()}</span>
       <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer">${icon('globe', 15)} Guilherme Negreiros</a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
+      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${icon('book-open', 15)} Storybook</a>
     </div>
     <div class="footer-credit">
       ${icon('bot', 14)}
@@ -1079,6 +1103,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <button type="button" data-lang="fr" aria-current="true">FR</button>
     <button type="button" data-lang="en" aria-current="false">EN</button>
   </div>
+  <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+    ${icon('book-open', 18)}
+  </a>
   <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
     ${icon('github', 18)}
   </a>
@@ -1827,7 +1854,7 @@ function buildTypography() {
   </div>
   <div style="font-family:var(--agtc-font-mono);font-size:13px;line-height:1.7;color:var(--agtc-semantic-color-action-primary);margin-top:12px;border-top:1px solid var(--agtc-semantic-color-border-default);padding-top:12px;word-break:break-all">
     <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Exemple — token CSS</span><span class="lang-en">Example — CSS token</span></span>
-    --agtc-semantic-color-action-primary: #12A594;<br>
+    --agtc-semantic-color-action-primary: #008573;<br>
     --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);
   </div>
   <p style="font-size:12px;color:var(--agtc-semantic-color-text-secondary);margin-top:12px;margin-bottom:0">

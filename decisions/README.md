@@ -104,6 +104,8 @@ des décisions déjà tranchées.
 | [ADR-044](ADR-044-agtc-segmented-implementation.md) | Implémentation de `agtc-segmented` | 2026-06-04 | ✅ Actif |
 | [ADR-045](ADR-045-feedback-color-family-completion.md) | Complétion de la famille de couleurs sémantiques `feedback` | 2026-06-05 | ✅ Actif |
 | [ADR-046](ADR-046-inverse-surfaces-shadows-tokens.md) | Surfaces inversées, ombres et jetons décoratifs | 2026-06-05 | ✅ Actif |
+| [ADR-047](ADR-047-no-visited-nav-rule.md) | Règle système : pas d'état `:visited` sur la navigation | 2026-06-05 | ✅ Actif |
+| [ADR-048](ADR-048-action-teal-wcag-contrast.md) | Teal interactif accessible : `action.primary` teal.9 → teal.11 (WCAG AA) | 2026-06-05 | ✅ Actif |
 
 ---
 

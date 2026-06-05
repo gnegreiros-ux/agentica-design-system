@@ -37,13 +37,28 @@ body{
   padding:6px 12px;border-radius:var(--agtc-semantic-radius-control);font-weight:500;
   transition:background .12s,color .12s;
 }
-.top-nav a:visited{color:var(--agtc-semantic-color-text-secondary)}
+/* ── Règle système : no-visited-nav ──────────────────────────────────────
+   Les éléments de navigation ne portent jamais d'état :visited distinct
+   (la navigation n'est pas du contenu « lu / non lu »). La couleur visitée
+   est réalignée sur l'état non-visité. Voir .claude/rules/no-visited-nav.md.
+   Déclaré AVANT les règles :hover/.active — spécificité égale, le sélecteur
+   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé. */
+.top-nav a:visited,
+.sidebar a:visited,
+.toc a:visited,
+.nav-card:visited,
+.github-btn:visited,
+.storybook-btn:visited     {color:var(--agtc-semantic-color-text-secondary)}
+.top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
+.footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
+.audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
 .top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
-.top-nav a.active:visited{color:var(--agtc-semantic-color-action-primary)}
-.github-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
-.github-btn:hover,.github-btn:visited{color:var(--agtc-semantic-color-text-secondary)}
-.github-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+/* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
+.top-nav a.nav-cta,.top-nav a.nav-cta.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);font-weight:600}
+.top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
+.github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
+.github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
@@ -251,7 +266,9 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
 .token-table{table-layout:fixed}
-.token-table td,.token-table th{overflow-wrap:break-word;word-break:break-word}
+.token-table td{overflow-wrap:break-word;word-break:break-word}
+/* En-têtes : jamais de coupure au milieu d'un mot — retour à la ligne aux espaces seulement */
+.token-table th{overflow-wrap:normal;word-break:normal;hyphens:none}
 
 /* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
 .agtc-table{
