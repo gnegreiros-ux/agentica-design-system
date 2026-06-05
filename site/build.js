@@ -553,7 +553,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-banner .banner-icon{flex-shrink:0;line-height:0;padding-top:1px}
 .agtc-banner .banner-content{flex:1;min-width:0}
 .agtc-banner .banner-content strong{display:block;color:var(--agtc-component-banner-heading-text);font-weight:var(--agtc-semantic-typography-label-weight);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:3px}
-.agtc-banner .banner-content span{color:var(--agtc-component-banner-body-text);font-size:var(--agtc-semantic-typography-label-size);line-height:1.55}
+.agtc-banner .banner-content>span{display:block;color:var(--agtc-component-banner-body-text);font-size:var(--agtc-semantic-typography-label-size);line-height:1.55}
 .agtc-banner.neutral{background:var(--agtc-component-banner-neutral-background);border-left-color:var(--agtc-component-banner-neutral-accent)}
 .agtc-banner.neutral .banner-icon{color:var(--agtc-component-banner-neutral-accent)}
 .agtc-banner.brand{background:var(--agtc-component-banner-brand-background);border-left-color:var(--agtc-component-banner-brand-accent)}
@@ -745,13 +745,8 @@ html[data-lang="en"] .lang-fr{display:none}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
 .grid-auto-220{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px}
 
-/* ── CONTRIBUTION BANNER ─────────────────────────────────── */
-.contribution-banner{display:flex;align-items:center;gap:16px;background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-left:3px solid var(--agtc-semantic-color-action-primary);border-radius:0 var(--agtc-semantic-radius-card) var(--agtc-semantic-radius-card) 0;padding:16px 20px;margin:56px 0 0}
-.contribution-banner .contrib-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0}
-.contribution-banner .contrib-body{flex:1}
-.contribution-banner .contrib-body strong{color:var(--agtc-semantic-color-text-primary);font-size:0.875rem;display:block;margin-bottom:3px}
-.contribution-banner .contrib-body span{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
-@media(max-width:768px){.contribution-banner{flex-direction:column;align-items:flex-start}}
+/* ── BANNER responsive (le contribution-banner consomme .agtc-banner — ADR-042) ── */
+@media(max-width:768px){.agtc-banner{flex-wrap:wrap}}
 
 /* ── AUDIENCE CARDS ──────────────────────────────────────── */
 .audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:28px 0}
@@ -1145,17 +1140,16 @@ function uxPatternsFromMd(comp) {
 }
 
 function contributionBanner() {
+  // Dogfooding (cat. A) : consomme la classe .agtc-banner (ADR-042) + .agtc-link (ADR-043).
   return `
-<div class="contribution-banner">
-  <div class="contrib-icon">${icon('github', 22)}</div>
-  <div class="contrib-body">
+<div class="agtc-banner brand" style="margin-top:56px">
+  <span class="banner-icon">${icon('github', 22)}</span>
+  <div class="banner-content">
     <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
-    <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
-    <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
+    <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
   </div>
-  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn secondary" style="font-size:12px;white-space:nowrap;flex-shrink:0">
-    <span class="lang-fr">Voir sur GitHub →</span>
-    <span class="lang-en">View on GitHub →</span>
+  <a class="agtc-link" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" style="white-space:nowrap;flex-shrink:0;align-self:center">
+    <span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>
   </a>
 </div>`;
 }
