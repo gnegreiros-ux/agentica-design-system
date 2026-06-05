@@ -300,7 +300,7 @@ body{
 }
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
-.logo-name{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:#12A594;line-height:1}
+.logo-name{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:var(--agtc-semantic-color-brand-primary);line-height:1}
 .logo-version{font-size:11px;color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:20px;font-weight:500}
 .top-nav{display:flex;gap:2px;margin-left:auto}
 .top-nav a{
@@ -350,7 +350,7 @@ body{
   text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-on-action);
   background:var(--agtc-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
 }
-.hero-name{font-size:4rem;font-weight:800;line-height:1;letter-spacing:-.04em;color:#12A594;margin-bottom:16px}
+.hero-name{font-size:4rem;font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--agtc-semantic-color-brand-primary);margin-bottom:16px}
 .hero h1{font-size:2.75rem;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--agtc-semantic-color-text-primary)}
 .hero h1 .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
 .hero-tagline{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
@@ -387,8 +387,8 @@ body{
 .nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
-.icon-ok{color:#1a7f37;display:inline-flex;vertical-align:middle;margin-right:4px}
-.icon-no{color:#ce2c31;display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-ok{color:var(--agtc-semantic-color-feedback-success);display:inline-flex;vertical-align:middle;margin-right:4px}
+.icon-no{color:var(--agtc-semantic-color-feedback-danger);display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
 .agtc-badge .icon-ok,.agtc-badge .icon-no{margin-right:0}
 h3 .icon-ok,h3 .icon-no{margin-right:6px}
@@ -690,8 +690,8 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── AUDIT PAGE ──────────────────────────────────────────── */
 .audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
 .audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:700;font-size:1rem;margin-bottom:16px}
-.audit-badge.pass{background:#ecfdf5;color:#18794e}
-.audit-badge.fail{background:#fff1f2;color:#ce2c31}
+.audit-badge.pass{background:#ecfdf5;color:var(--agtc-semantic-color-feedback-success)}
+.audit-badge.fail{background:#fff1f2;color:var(--agtc-semantic-color-feedback-danger)}
 .audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:0.875rem;margin-bottom:6px}
 .audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:0.8rem}
 .audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
@@ -700,17 +700,17 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-card--warn{border-color:#fde68a}
 .audit-card--fail{border-color:#fca5a5}
 .audit-number{display:block;font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:6px}
-.audit-card--pass .audit-number{color:#18794e}
+.audit-card--pass .audit-number{color:var(--agtc-semantic-color-feedback-success)}
 .audit-card--warn .audit-number{color:#d97706}
-.audit-card--fail .audit-number{color:#ce2c31}
+.audit-card--fail .audit-number{color:var(--agtc-semantic-color-feedback-danger)}
 .audit-section{margin-bottom:48px}
 .audit-section h2{font-size:1.1rem;font-weight:700;margin:0 0 16px;padding-bottom:8px;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
 .audit-contrast-table{width:100%;border-collapse:collapse;font-size:0.85rem}
 .audit-contrast-table th{text-align:left;padding:8px 10px;background:var(--agtc-semantic-color-background-subtle);border-bottom:2px solid var(--agtc-semantic-color-border-default);font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:.04em}
 .audit-contrast-table td{padding:8px 10px;border-bottom:1px solid var(--agtc-semantic-color-border-default);vertical-align:middle}
 .audit-contrast-table tr:last-child td{border-bottom:none}
-.audit-contrast-pass{color:#18794e;font-weight:600}
-.audit-contrast-fail{color:#ce2c31;font-weight:600}
+.audit-contrast-pass{color:var(--agtc-semantic-color-feedback-success);font-weight:600}
+.audit-contrast-fail{color:var(--agtc-semantic-color-feedback-danger);font-weight:600}
 .audit-swatch{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;border:1px solid rgba(0,0,0,.1);margin-right:4px}
 .audit-manual-list{list-style:none;padding:0;margin:0}
 .audit-manual-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
