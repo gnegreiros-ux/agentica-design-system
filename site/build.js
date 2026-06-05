@@ -993,6 +993,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   const base = depth > 0 ? '../' : '';
   const navLinks = [
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
+    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started' },
     { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
     { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
     { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
@@ -1254,9 +1255,9 @@ function buildHome(adrs) {
     <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
   </p>
   <div class="hero-actions">
-    <a href="foundations/color.html" class="agtc-button primary">
-      <span class="lang-fr">Explorer les fondations</span>
-      <span class="lang-en">Explore foundations</span>
+    <a href="get-started.html" class="agtc-button primary">
+      <span class="lang-fr">Démarrer</span>
+      <span class="lang-en">Get started</span>
     </a>
     <a href="components/index.html" class="agtc-button secondary">
       <span class="lang-fr">Voir les composants</span>
@@ -3875,6 +3876,162 @@ function loadADRs() {
   }).sort((a,b) => a.num - b.num);
 }
 
+// ─── PAGE: DÉMARRER (Get started) ───────────────────────────────────────────
+// Sert les 3 objectifs du site : promouvoir (chemin d'adoption), documenter
+// (comment consommer les tokens/composants), exemple vivant (bâtie 100 % avec
+// les composants dogfoodés : agtc-banner, code-block, info-card, tables, button).
+function buildGetStarted() {
+  const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
+
+  const cloneCode = esc(`# Aujourd'hui — via le dépôt
+git clone ${REPO}.git
+
+# Les tokens compilés vivent dans dist/tokens/ :
+#   css/  js/  tailwind/  angular/  ios/  android/`);
+
+  const cssCode = esc(`<!-- Importer les variables CSS générées -->
+<link rel="stylesheet" href="dist/tokens/css/all.css">`);
+
+  const cssUseCode = esc(`/* Consommer par INTENTION — jamais de valeur en dur */
+.cta {
+  background: var(--agtc-semantic-color-action-primary);
+  color:      var(--agtc-semantic-color-text-on-action);
+  padding:    var(--agtc-semantic-space-control-padding-y)
+              var(--agtc-semantic-space-control-padding-x);
+  border-radius: var(--agtc-semantic-radius-control);
+}`);
+
+  const wcCode = esc(`<!-- Mode composant : Web Components (Lit) -->
+<script type="module" src="components/agtc-button.js"></script>
+
+<agtc-button variant="primary">Enregistrer</agtc-button>
+<agtc-button variant="critical">Supprimer le dossier</agtc-button>`);
+
+  const platforms = [
+    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties'],
+    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports'],
+    ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension'],
+    ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS'],
+    ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift'],
+    ['android', 'dist/tokens/android/', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)'],
+  ];
+  const platformRows = platforms.map(([p, file, fr, en]) =>
+    `<tr><td><code>${p}</code></td><td><code>${file}</code></td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`
+  ).join('');
+
+  const body = `
+<h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Adopter Agentica, c'est consommer des décisions — pas des valeurs. Trois niveaux de tokens, 14 composants, six plateformes de sortie, le tout auditable WCAG 2.2. Voici comment l'intégrer en quelques minutes.</span>
+  <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable. Here is how to integrate it in minutes.</span>
+</p>
+
+<div class="agtc-banner info" role="note">
+  <span class="banner-icon">${icon('info', 20)}</span>
+  <div class="banner-content">
+    <strong><span class="lang-fr">Pré-version (v0.x)</span><span class="lang-en">Pre-release (v0.x)</span></strong>
+    <span>
+      <span class="lang-fr">Aujourd'hui, Agentica se consomme directement depuis le dépôt (tokens compilés + Web Components). La publication sur <strong>npm est à venir</strong> — les commandes <code>npm</code> ci-dessous décrivent la trajectoire cible.</span>
+      <span class="lang-en">Today, Agentica is consumed directly from the repository (compiled tokens + Web Components). Publishing to <strong>npm is coming</strong> — the <code>npm</code> commands below describe the target path.</span>
+    </span>
+  </div>
+</div>
+
+<h2 class="first"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></h2>
+<div class="grid-3">
+  <div class="info-card">
+    <div class="info-card-icon">${icon('layers', 20)}</div>
+    <div class="info-card-title"><span class="lang-fr">Tokens à 3 niveaux</span><span class="lang-en">3-level tokens</span></div>
+    <div class="info-card-body"><span class="lang-fr">Primitif → sémantique → composant. Les valeurs sont séparées des intentions — lisibles par les humains et les agents.</span><span class="lang-en">Primitive → semantic → component. Values are separated from intentions — readable by humans and agents.</span></div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-icon">${icon('component', 20)}</div>
+    <div class="info-card-title"><span class="lang-fr">14 composants</span><span class="lang-en">14 components</span></div>
+    <div class="info-card-body"><span class="lang-fr">Web Components framework-agnostic (Lit), ou classes CSS. Chaque composant est un contrat, pas une suggestion.</span><span class="lang-en">Framework-agnostic Web Components (Lit), or CSS classes. Each component is a contract, not a suggestion.</span></div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-icon">${icon('share-2', 20)}</div>
+    <div class="info-card-title"><span class="lang-fr">6 plateformes</span><span class="lang-en">6 platforms</span></div>
+    <div class="info-card-body"><span class="lang-fr">CSS, JS, Tailwind, Angular, iOS, Android — une seule source de vérité, compilée partout.</span><span class="lang-en">CSS, JS, Tailwind, Angular, iOS, Android — one source of truth, compiled everywhere.</span></div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></h2>
+
+<h3><span class="lang-fr">1. Récupérer les tokens</span><span class="lang-en">1. Get the tokens</span></h3>
+<p>
+  <span class="lang-fr">Clonez le dépôt. Les tokens sont déjà compilés pour chaque plateforme dans <code>dist/tokens/</code>.</span>
+  <span class="lang-en">Clone the repository. Tokens are pre-compiled for every platform in <code>dist/tokens/</code>.</span>
+</p>
+<pre class="code-block"><code class="lang-bash">${cloneCode}</code></pre>
+
+<h3><span class="lang-fr">2. Importer et consommer les variables CSS</span><span class="lang-en">2. Import and consume the CSS variables</span></h3>
+<p>
+  <span class="lang-fr">Liez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
+  <span class="lang-en">Link the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
+</p>
+<pre class="code-block"><code class="lang-html">${cssCode}</code></pre>
+<pre class="code-block"><code class="lang-css">${cssUseCode}</code></pre>
+
+<h3><span class="lang-fr">3. Utiliser les Web Components</span><span class="lang-en">3. Use the Web Components</span></h3>
+<p>
+  <span class="lang-fr">Pour une intégration applicative, montez les Web Components <code>agtc-*</code> (Lit en dépendance pair). Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
+  <span class="lang-en">For app integration, mount the <code>agtc-*</code> Web Components (Lit as a peer dependency). They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
+</p>
+<pre class="code-block"><code class="lang-html">${wcCode}</code></pre>
+
+<div class="agtc-banner brand" role="note">
+  <span class="banner-icon">${icon('shield-check', 20)}</span>
+  <div class="banner-content">
+    <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
+    <span>
+      <span class="lang-fr">Jamais de valeur en dur. Toujours via un token sémantique. Cette indirection est ce qui rend vos décisions applicables par des agents IA — sans interprétation. <a href="tokens/index.html">Voir les trois niveaux →</a></span>
+      <span class="lang-en">Never a hardcoded value. Always through a semantic token. This indirection is what makes your decisions applicable by AI agents — without interpretation. <a href="tokens/index.html">See the three levels →</a></span>
+    </span>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></h2>
+<p>
+  <span class="lang-fr">Une source JSON, compilée par Style Dictionary vers six cibles. Importez celle de votre stack.</span>
+  <span class="lang-en">One JSON source, compiled by Style Dictionary to six targets. Import the one for your stack.</span>
+</p>
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Plateforme</span><span class="lang-en">Platform</span></th>
+    <th><span class="lang-fr">Dossier</span><span class="lang-en">Folder</span></th>
+    <th><span class="lang-fr">Format</span><span class="lang-en">Format</span></th>
+  </tr></thead>
+  <tbody>${platformRows}</tbody>
+</table>
+
+<h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
+<p>
+  <span class="lang-fr">Agentica n'est pas qu'une bibliothèque visuelle : c'est un jeu de règles lisibles par machine. Un agent lit les contrats de composants, les règles de gouvernance et les ADRs pour appliquer vos décisions sans improviser — et escalade vers un humain quand c'est requis.</span>
+  <span class="lang-en">Agentica is more than a visual library: it is a machine-readable rule set. An agent reads component contracts, governance rules and ADRs to apply your decisions without improvising — and escalates to a human when required.</span>
+</p>
+<div class="hero-actions">
+  <a href="agents/index.html" class="agtc-button primary">
+    <span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span>
+  </a>
+  <a href="components/index.html" class="agtc-button secondary">
+    <span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span>
+  </a>
+  <a href="${REPO}" target="_blank" rel="noopener noreferrer" class="agtc-button ghost">
+    ${icon('github', 16)} <span class="lang-fr">Code source</span><span class="lang-en">Source code</span>
+  </a>
+</div>`;
+
+  write(path.join(DIST, 'get-started.html'), layout({
+    title: 'Démarrer',
+    pageTitle: 'Démarrer avec Agentica',
+    depth: 0,
+    sidebar: null,
+    fullWidth: false,
+    body,
+  }));
+}
+
 // ─── PAGE: AUDIT ────────────────────────────────────────────────────────────
 function buildAudit() {
   const auditFile = path.join(DIST, 'audit.html');
@@ -4132,6 +4289,7 @@ function build() {
 
   const adrs = loadADRs();
   buildHome(adrs);
+  buildGetStarted();
   buildColor();
   buildSpacing();
   buildTypography();
