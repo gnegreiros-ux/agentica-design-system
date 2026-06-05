@@ -388,7 +388,7 @@ body{
 .icon-ok{color:#1a7f37;display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-no{color:#ce2c31;display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
-.badge .icon-ok,.badge .icon-no{margin-right:3px}
+.agtc-badge .icon-ok,.agtc-badge .icon-no{margin-right:0}
 h3 .icon-ok,h3 .icon-no{margin-right:6px}
 
 /* ── TOKEN PIPELINE ─────────────────────────────────────── */
@@ -588,8 +588,15 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:600}
 .adr-title a:hover{text-decoration:underline}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:20px}
-.badge-active{background:#ecfdf5;color:#18794e}
+/* ── agtc-badge (classe — moitié light DOM du mix, ADR-034 ; dogfooding cat. A) ── */
+.agtc-badge{display:inline-flex;align-items:center;gap:4px;font-weight:var(--agtc-semantic-typography-label-weight);line-height:1;white-space:nowrap;border:1px solid transparent;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size)}
+.agtc-badge.sm{padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);font-size:var(--agtc-component-badge-sm-font-size)}
+.agtc-badge.neutral{background:var(--agtc-component-badge-neutral-background);color:var(--agtc-component-badge-neutral-text);border-color:var(--agtc-component-badge-neutral-border)}
+.agtc-badge.brand{background:var(--agtc-component-badge-brand-background);color:var(--agtc-component-badge-brand-text)}
+.agtc-badge.success{background:var(--agtc-component-badge-success-background);color:var(--agtc-component-badge-success-text)}
+.agtc-badge.warning{background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text)}
+.agtc-badge.danger{background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text)}
+.agtc-badge.info{background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text)}
 .adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
 .adr-meta strong{color:var(--agtc-semantic-color-text-primary)}
 
@@ -3639,7 +3646,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
+  <td><span class="agtc-badge success sm"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
   <td>${a.date}</td>
 </tr>`).join('');
 
@@ -3687,7 +3694,7 @@ function buildADR(adr, adrs) {
   const meta = `
 <div class="adr-meta">
   <div class="adr-meta-item"><strong>ADR</strong> ${String(adr.num).padStart(3,'0')}</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="badge badge-active"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="agtc-badge success sm"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> ${adr.date}</div>
   ${adr.deciders ? `<div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> ${esc(adr.deciders)}</div>` : ''}
 </div>`;
