@@ -629,4 +629,7 @@
   --agtc-component-banner-radius: var(--agtc-semantic-radius-card);
   --agtc-component-banner-padding-x: var(--agtc-primitive-space-5);
   --agtc-component-banner-padding-y: var(--agtc-primitive-space-4);
+  --agtc-component-link-default-text: var(--agtc-semantic-color-action-primary);
+  --agtc-component-link-default-text-hover: var(--agtc-semantic-color-action-primary-hover);
+  --agtc-component-link-default-border-focus: var(--agtc-semantic-color-border-focus);
 }

@@ -296,6 +296,16 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-banner.danger{background:var(--agtc-component-banner-danger-background);border-left-color:var(--agtc-component-banner-danger-accent)}
 .agtc-banner.danger .banner-icon{color:var(--agtc-component-banner-danger-accent)}
 
+/* ── Utilitaire d'accessibilité ────────────────────────────────────────── */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ── agtc-link (classe — moitié light DOM du mix, ADR-043) ──────────────── */
+.agtc-link{color:var(--agtc-component-link-default-text);text-decoration:underline;text-underline-offset:2px;border-radius:2px}
+.agtc-link:hover{color:var(--agtc-component-link-default-text-hover)}
+.agtc-link:focus-visible{outline:2px solid var(--agtc-component-link-default-border-focus);outline-offset:2px}
+.agtc-link.underline-hover,.agtc-link.underline-none{text-decoration:none}
+.agtc-link.underline-hover:hover{text-decoration:underline}
+
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:600}

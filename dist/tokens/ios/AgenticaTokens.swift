@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Thu, 04 Jun 2026 11:55:08 GMT
+// Generated on Fri, 05 Jun 2026 00:45:58 GMT
 
 
 import UIKit
@@ -116,6 +116,9 @@ public class AgenticaTokens {
     public static let inputDefaultPlaceholder = #646464
     public static let inputDefaultRadius = 6px
     public static let inputDefaultText = #202020
+    public static let linkDefaultBorderFocus = #12a594
+    public static let linkDefaultText = #12a594
+    public static let linkDefaultTextHover = #0d9b8a
     public static let primitiveColorAccent1 = #f0eded
     public static let primitiveColorAccent10 = #e05f7b
     public static let primitiveColorAccent11 = #a6294c

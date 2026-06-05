@@ -203,6 +203,17 @@
     "padding-y-compact":     { "value": "{primitive.space.2}", "$type": "dimension" },
     "padding-y-comfortable": { "value": "{primitive.space.3}", "$type": "dimension" }
   },
+  "link": {
+    "$metadata": {
+      "intent": "Lien de navigation textuel — inline ou standalone, interne ou externe",
+      "owner": "design-system-team"
+    },
+    "default": {
+      "text":         { "value": "{semantic.color.action.primary}",       "$type": "color" },
+      "text-hover":   { "value": "{semantic.color.action.primary-hover}", "$type": "color" },
+      "border-focus": { "value": "{semantic.color.border.focus}",         "$type": "color" }
+    }
+  },
   "banner": {
     "$metadata": {
       "intent": "Message inline contextuel (callout/alerte) — info, succès, avertissement, erreur",

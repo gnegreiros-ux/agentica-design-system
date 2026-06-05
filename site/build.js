@@ -239,6 +239,9 @@ const COMP = {
   'banner-radius':                      'var(--agtc-semantic-radius-card)',
   'banner-padding-x':                   'var(--agtc-primitive-space-5)',
   'banner-padding-y':                   'var(--agtc-primitive-space-4)',
+  'link-default-text':                  'var(--agtc-semantic-color-action-primary)',
+  'link-default-text-hover':            'var(--agtc-semantic-color-action-primary-hover)',
+  'link-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
 };
 
 // ─── CSS ───────────────────────────────────────────────────────────────────
@@ -556,6 +559,16 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-banner.warning .banner-icon{color:var(--agtc-component-banner-warning-accent)}
 .agtc-banner.danger{background:var(--agtc-component-banner-danger-background);border-left-color:var(--agtc-component-banner-danger-accent)}
 .agtc-banner.danger .banner-icon{color:var(--agtc-component-banner-danger-accent)}
+
+/* ── Utilitaire d'accessibilité ────────────────────────────────────────── */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ── agtc-link (classe — moitié light DOM du mix, ADR-043) ──────────────── */
+.agtc-link{color:var(--agtc-component-link-default-text);text-decoration:underline;text-underline-offset:2px;border-radius:2px}
+.agtc-link:hover{color:var(--agtc-component-link-default-text-hover)}
+.agtc-link:focus-visible{outline:2px solid var(--agtc-component-link-default-border-focus);outline-offset:2px}
+.agtc-link.underline-hover,.agtc-link.underline-none{text-decoration:none}
+.agtc-link.underline-hover:hover{text-decoration:underline}
 
 /* ── DECISIONS ──────────────────────────────────────────── */
 .adr-num{font-family:var(--agtc-font-mono);font-size:12px;color:var(--agtc-semantic-color-text-secondary)}
@@ -1070,6 +1083,7 @@ function sidebarComponents(base, current) {
     ['table.html', 'Table'],
     ['code-block.html', 'Code Block'],
     ['banner.html', 'Banner'],
+    ['link.html', 'Link'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -2018,6 +2032,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Message inline (callout/alerte), 6 variantes, statique par défaut, live region en opt-in.</span>
       <span class="lang-en">Inline message (callout/alert), 6 variants, static by default, opt-in live region.</span>
+    </div>
+  </a>
+  <a href="link.html" class="nav-card">
+    <span class="nav-card-icon">${icon('link',32)}</span>
+    <div class="nav-card-title">Link</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Lien de navigation, souligné par défaut (WCAG 1.4.1), liens externes sécurisés et annoncés.</span>
+      <span class="lang-en">Navigation link, underlined by default (WCAG 1.4.1), secure & announced external links.</span>
     </div>
   </a>
 </div>
@@ -3305,6 +3327,92 @@ function buildBanner() {
   }));
 }
 
+// ─── PAGE: LINK ───────────────────────────────────────────────────────────────
+function buildLink() {
+  const tokenRows = [
+    ['link-default-text',         'semantic.color.action.primary',       SEM['color-action-primary']],
+    ['link-default-text-hover',   'semantic.color.action.primary-hover', SEM['color-action-primary-hover']],
+    ['link-default-border-focus', 'semantic.color.border.focus',         SEM['color-border-focus']],
+  ];
+
+  // Démo : vrais <a class="agtc-link"> — côté light DOM du mix.
+  const extIcon = `<span aria-hidden="true" style="display:inline-block;line-height:0;margin-left:2px;vertical-align:baseline">${icon('arrow-up-right', 14)}</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>`;
+
+  const body = `
+<h1>Link</h1>
+<p class="page-lead">
+  <span class="lang-fr">Lien de navigation textuel — interne ou externe, inline ou nav. Souligné par défaut (WCAG 1.4.1), focus visible, liens externes sécurisés (<code>noopener</code>) et annoncés aux lecteurs d'écran.</span>
+  <span class="lang-en">Textual navigation link — internal or external, inline or nav. Underlined by default (WCAG 1.4.1), visible focus, secure external links (<code>noopener</code>) announced to screen readers.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<div class="demo-box" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Consulter la </span><span class="lang-en">See the </span><a class="agtc-link" href="#guideline"><span class="lang-fr">guideline du composant</span><span class="lang-en">component guideline</span></a><span class="lang-fr"> pour les détails.</span><span class="lang-en"> for details.</span></p>
+  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Lien externe : </span><span class="lang-en">External link: </span><a class="agtc-link" href="https://www.nngroup.com/articles/guidelines-for-visualizing-links/" target="_blank" rel="noopener noreferrer">NN/g — Visualizing Links${extIcon}</a></p>
+  <div style="display:flex;gap:18px"><a class="agtc-link underline-hover" href="#a"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a class="agtc-link underline-hover" href="#b"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a class="agtc-link underline-hover" href="#c">Tokens</a></div>
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Souligné en texte courant — jamais distinguable par la couleur seule (WCAG 1.4.1)</span><span class="lang-en">Underlined in body text — never distinguishable by color alone (WCAG 1.4.1)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Lien externe : <code>rel="noopener noreferrer"</code> + icône + texte masqué « nouvel onglet »</span><span class="lang-en">External link: <code>rel="noopener noreferrer"</code> + icon + hidden "new tab" text</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Texte descriptif, lisible hors contexte</span><span class="lang-en">Descriptive text, readable out of context</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais un lien pour une action — utiliser <code>&lt;agtc-button&gt;</code></span><span class="lang-en">Never a link for an action — use <code>&lt;agtc-button&gt;</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais « cliquez ici »</span><span class="lang-en">Never "click here"</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Soulignement permanent par défaut (au-delà de la couleur) — WCAG 1.4.1</span><span class="lang-en">Permanent underline by default (beyond color) — WCAG 1.4.1</span></li>
+  <li><span class="lang-fr"><code>:focus-visible</code> tokenisé — WCAG 2.4.7</span><span class="lang-en">Tokenized <code>:focus-visible</code> — WCAG 2.4.7</span></li>
+  <li><span class="lang-fr">Externe : icône <strong>+ texte masqué</strong> (l'icône seule ne suffit pas — WCAG H83)</span><span class="lang-en">External: icon <strong>+ hidden text</strong> (icon alone is not enough — WCAG H83)</span></li>
+  <li><span class="lang-fr">Texte de lien descriptif — WCAG 2.4.4</span><span class="lang-en">Descriptive link text — WCAG 2.4.4</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Inline (souligné par défaut) --&gt;
+&lt;agtc-link href="/guidelines/link"&gt;<span class="lang-fr">guideline</span><span class="lang-en">guideline</span>&lt;/agtc-link&gt;
+
+&lt;!-- Externe (nouvel onglet, sécurisé, annoncé) --&gt;
+&lt;agtc-link href="https://lucide.dev" external&gt;Lucide&lt;/agtc-link&gt;
+
+&lt;!-- Nav (soulignement au survol) --&gt;
+&lt;agtc-link href="/components" underline="hover"&gt;<span class="lang-fr">Composants</span><span class="lang-en">Components</span>&lt;/agtc-link&gt;</code></pre>
+
+<h2>DOs et DON'Ts</h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Souligner en texte courant ; <code>hover</code> seulement en nav</span><span class="lang-en">Underline in body text; <code>hover</code> only in nav</span></li>
+      <li><span class="lang-fr">Marquer les liens externes (icône + texte AT)</span><span class="lang-en">Mark external links (icon + AT text)</span></li>
+      <li><span class="lang-fr">Écrire un libellé qui décrit la destination</span><span class="lang-en">Write a label that describes the destination</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Un lien pour déclencher une action JS — utiliser un bouton</span><span class="lang-en">A link to trigger a JS action — use a button</span></li>
+      <li><span class="lang-fr"><code>target="_blank"</code> sans <code>rel="noopener"</code></span><span class="lang-en"><code>target="_blank"</code> without <code>rel="noopener"</code></span></li>
+      <li><span class="lang-fr">« cliquez ici » / « en savoir plus » seul</span><span class="lang-en">"click here" / "read more" alone</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/link.html'), layout({
+    title: 'Link', depth: 1,
+    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'link.html'),
+    body: body + uxPatternsFromMd('link') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -3888,6 +3996,7 @@ function build() {
   buildTable();
   buildCodeBlock();
   buildBanner();
+  buildLink();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
@@ -3896,7 +4005,7 @@ function build() {
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 16 + adrs.length;
+  const total = 17 + adrs.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 

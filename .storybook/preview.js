@@ -12,6 +12,7 @@ import '../components/agtc-toggle.js';
 import '../components/agtc-table.js';
 import '../components/agtc-code-block.js';
 import '../components/agtc-banner.js';
+import '../components/agtc-link.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {

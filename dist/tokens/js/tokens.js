@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Jun 2026 11:55:08 GMT
+ * Generated on Fri, 05 Jun 2026 00:45:58 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -644,6 +644,9 @@ export const TableDefaultFontSize = "0.875rem";
 export const TablePaddingX = "12px";
 export const TablePaddingYCompact = "8px";
 export const TablePaddingYComfortable = "12px";
+export const LinkDefaultText = "#12a594";
+export const LinkDefaultTextHover = "#0d9b8a";
+export const LinkDefaultBorderFocus = "#12a594";
 export const BannerNeutralBackground = "#f0f0f0";
 export const BannerNeutralAccent = "#646464";
 export const BannerBrandBackground = "#e0f8f3";
