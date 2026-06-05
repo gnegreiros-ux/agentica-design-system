@@ -628,10 +628,9 @@ a{color:var(--agtc-semantic-color-action-primary)}
 .skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 
-/* ── LANG TOGGLE ─────────────────────────────────────────── */
-.lang-toggle-group{display:flex;gap:2px;margin-left:8px;flex-shrink:0}
-.lang-btn{padding:3px 9px;font-size:11.5px;font-weight:700;border-radius:4px;border:1.5px solid var(--agtc-semantic-color-border-default);background:none;color:var(--agtc-semantic-color-text-secondary);cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s;letter-spacing:.04em}
-.lang-btn.active{background:var(--agtc-semantic-color-action-primary);color:#fff;border-color:var(--agtc-semantic-color-action-primary)}
+/* ── LANG TOGGLE (consomme .agtc-segmented — ADR-044, dogfooding cat. A) ──── */
+/* Override compact pour le header (le composant n'a pas encore de taille sm). */
+.lang-switch button{padding:3px 9px;font-size:11.5px;letter-spacing:.04em}
 html[data-lang="fr"] .lang-en{display:none}
 html[data-lang="en"] .lang-fr{display:none}
 
@@ -795,8 +794,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    if (btn.dataset.lang === savedLang) btn.classList.add('active');
+  // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
+  // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
+  // ni les démos segmented de la page composant).
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.setAttribute('aria-current', btn.dataset.lang === savedLang ? 'true' : 'false');
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
@@ -804,7 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
     });
   });
 
@@ -1046,9 +1048,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   </a>
   <span class="logo-version">v1.0.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
-  <div class="lang-toggle-group" role="group" aria-label="Language">
-    <button class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
-    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  <div class="agtc-segmented lang-switch" role="group" aria-label="Language" style="margin-left:8px;flex-shrink:0">
+    <button type="button" data-lang="fr" aria-current="true">FR</button>
+    <button type="button" data-lang="en" aria-current="false">EN</button>
   </div>
   <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
     ${icon('github', 18)}

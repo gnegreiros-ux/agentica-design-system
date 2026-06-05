@@ -357,10 +357,9 @@ a{color:var(--agtc-semantic-color-action-primary)}
 .skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 
-/* ── LANG TOGGLE ─────────────────────────────────────────── */
-.lang-toggle-group{display:flex;gap:2px;margin-left:8px;flex-shrink:0}
-.lang-btn{padding:3px 9px;font-size:11.5px;font-weight:700;border-radius:4px;border:1.5px solid var(--agtc-semantic-color-border-default);background:none;color:var(--agtc-semantic-color-text-secondary);cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s;letter-spacing:.04em}
-.lang-btn.active{background:var(--agtc-semantic-color-action-primary);color:#fff;border-color:var(--agtc-semantic-color-action-primary)}
+/* ── LANG TOGGLE (consomme .agtc-segmented — ADR-044, dogfooding cat. A) ──── */
+/* Override compact pour le header (le composant n'a pas encore de taille sm). */
+.lang-switch button{padding:3px 9px;font-size:11.5px;letter-spacing:.04em}
 html[data-lang="fr"] .lang-en{display:none}
 html[data-lang="en"] .lang-fr{display:none}
 

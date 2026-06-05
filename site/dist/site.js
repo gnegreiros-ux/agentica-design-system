@@ -5,8 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    if (btn.dataset.lang === savedLang) btn.classList.add('active');
+  // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
+  // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
+  // ni les démos segmented de la page composant).
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.setAttribute('aria-current', btn.dataset.lang === savedLang ? 'true' : 'false');
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
@@ -14,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
     });
   });
 
