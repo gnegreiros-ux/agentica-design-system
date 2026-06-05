@@ -518,7 +518,9 @@
       "neutral": {
         "0":   { "$value": "#ffffff", "$type": "color", "$description": "Blanc pur — fond de surface, texte sur action/danger" },
         "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol — Tailwind neutral.50 (Radix gray.2 = #f9f9f9)" },
-        "500": { "$value": "#767676", "$type": "color", "$description": "Texte désactivé accessible — 4.54:1 sur blanc (WCAG AA). Non présent dans Radix gray. Voir ADR-017." }
+        "500": { "$value": "#767676", "$type": "color", "$description": "Texte désactivé accessible — 4.54:1 sur blanc (WCAG AA). Non présent dans Radix gray. Voir ADR-017." },
+        "900": { "$value": "#1a1e24", "$type": "color", "$description": "Surface sombre surélevée — tooltips, popovers sur fond inversé. Tailwind neutral.900-ish. Voir ADR-046." },
+        "950": { "$value": "#0f1117", "$type": "color", "$description": "Surface sombre la plus profonde — bandeaux/pied de page inversés. Tailwind neutral.950-ish. Voir ADR-046." }
       },
 
       "white": {

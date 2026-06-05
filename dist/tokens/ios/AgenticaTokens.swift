@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 05 Jun 2026 12:52:27 GMT
+// Generated on Fri, 05 Jun 2026 14:57:54 GMT
 
 
 import UIKit
@@ -338,6 +338,8 @@ public class AgenticaTokens {
     public static let primitiveColorNeutral0 = #ffffff
     public static let primitiveColorNeutral50 = #fafafa
     public static let primitiveColorNeutral500 = #767676
+    public static let primitiveColorNeutral900 = #1a1e24
+    public static let primitiveColorNeutral950 = #0f1117
     public static let primitiveColorOlive1 = #fcfdfc
     public static let primitiveColorOlive10 = #818a7f
     public static let primitiveColorOlive11 = #606b5e
@@ -596,12 +598,16 @@ public class AgenticaTokens {
     public static let semanticColorActionPrimaryDisabled = #d9d9d9
     public static let semanticColorActionPrimaryHover = #0d9b8a
     public static let semanticColorBackgroundHover = #fafafa
+    public static let semanticColorBackgroundInverse = #0f1117
+    public static let semanticColorBackgroundInverseRaised = #1a1e24
     public static let semanticColorBackgroundPage = #fcfcfc
     public static let semanticColorBackgroundSubtle = #f0f0f0
     public static let semanticColorBackgroundSurface = #ffffff
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8
     public static let semanticColorBorderFocus = #12a594
+    public static let semanticColorBorderOnInverse = rgba(255,255,255,0.18)
+    public static let semanticColorBorderSwatch = rgba(0,0,0,0.10)
     public static let semanticColorBrandAccent = #ed6b86
     public static let semanticColorBrandAccentHover = #e05f7b
     public static let semanticColorBrandAccentSubtle = #ebdadc
@@ -627,13 +633,20 @@ public class AgenticaTokens {
     public static let semanticColorTextDisabled = #767676
     public static let semanticColorTextOnAction = #ffffff
     public static let semanticColorTextOnDanger = #ffffff
+    public static let semanticColorTextOnInverse = rgba(255,255,255,1.00)
+    public static let semanticColorTextOnInverseMuted = rgba(255,255,255,0.52)
+    public static let semanticColorTextOnInverseSecondary = rgba(255,255,255,0.75)
     public static let semanticColorTextPrimary = #202020
     public static let semanticColorTextSecondary = #646464
+    public static let semanticColorVizScaleBar = #fdbdbe
     public static let semanticIconSizeControl = 20px
     public static let semanticIconSizeInline = 16px
     public static let semanticIconSizeNav = 24px
     public static let semanticRadiusCard = 10px
     public static let semanticRadiusControl = 6px
+    public static let semanticShadowCardHover = 0 4px 16px rgba(13,116,206,0.10)
+    public static let semanticShadowHeader = 0 2px 24px rgba(0,0,0,0.12)
+    public static let semanticShadowRaised = 0 4px 16px rgba(0,0,0,0.10)
     public static let semanticSpaceComfortableControlGap = ceil(8px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingX = ceil(16px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingY = ceil(8px * 1.25 / 4) * 4

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 12:52:27 GMT
+ * Generated on Fri, 05 Jun 2026 14:57:54 GMT
  */
 
 :root {
@@ -403,6 +403,8 @@
   --agtc-primitive-color-neutral-0: #ffffff;
   --agtc-primitive-color-neutral-50: #fafafa;
   --agtc-primitive-color-neutral-500: #767676;
+  --agtc-primitive-color-neutral-900: #1a1e24;
+  --agtc-primitive-color-neutral-950: #0f1117;
   --agtc-primitive-color-white-1: rgba(255,255,255,1.00);
   --agtc-primitive-color-white-2: rgba(255,255,255,0.97);
   --agtc-primitive-color-white-3: rgba(255,255,255,0.93);

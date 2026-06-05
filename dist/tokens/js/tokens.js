@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 12:52:27 GMT
+ * Generated on Fri, 05 Jun 2026 14:57:54 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -402,6 +402,8 @@ export const PrimitiveColorSecondary12 = "#432f36";
 export const PrimitiveColorNeutral0 = "#ffffff";
 export const PrimitiveColorNeutral50 = "#fafafa";
 export const PrimitiveColorNeutral500 = "#767676";
+export const PrimitiveColorNeutral900 = "#1a1e24";
+export const PrimitiveColorNeutral950 = "#0f1117";
 export const PrimitiveColorWhite1 = "rgba(255,255,255,1.00)";
 export const PrimitiveColorWhite2 = "rgba(255,255,255,0.97)";
 export const PrimitiveColorWhite3 = "rgba(255,255,255,0.93)";
@@ -481,14 +483,22 @@ export const SemanticColorBackgroundPage = "#fcfcfc";
 export const SemanticColorBackgroundSurface = "#ffffff";
 export const SemanticColorBackgroundSubtle = "#f0f0f0";
 export const SemanticColorBackgroundHover = "#fafafa";
+export const SemanticColorBackgroundInverse = "#0f1117";
+export const SemanticColorBackgroundInverseRaised = "#1a1e24";
 export const SemanticColorTextPrimary = "#202020";
 export const SemanticColorTextSecondary = "#646464";
 export const SemanticColorTextDisabled = "#767676";
 export const SemanticColorTextOnAction = "#ffffff";
 export const SemanticColorTextOnDanger = "#ffffff";
+export const SemanticColorTextOnInverse = "rgba(255,255,255,1.00)";
+export const SemanticColorTextOnInverseSecondary = "rgba(255,255,255,0.75)";
+export const SemanticColorTextOnInverseMuted = "rgba(255,255,255,0.52)";
 export const SemanticColorBorderDefault = "#e8e8e8";
 export const SemanticColorBorderFocus = "#12a594";
 export const SemanticColorBorderDanger = "#ce2c31";
+export const SemanticColorBorderOnInverse = "rgba(255,255,255,0.18)";
+export const SemanticColorBorderSwatch = "rgba(0,0,0,0.10)";
+export const SemanticColorVizScaleBar = "#fdbdbe";
 export const SemanticColorBrandPrimary = "#12a594";
 export const SemanticColorBrandPrimaryHover = "#0d9b8a";
 export const SemanticColorBrandPrimarySubtle = "#e0f8f3";
@@ -499,6 +509,9 @@ export const SemanticColorBrandAccentText = "#a6294c";
 export const SemanticColorBrandSecondary = "#463239";
 export const SemanticColorBrandSecondaryHover = "#5f404b";
 export const SemanticColorBrandSecondaryText = "#432f36";
+export const SemanticShadowHeader = "0 2px 24px rgba(0,0,0,0.12)";
+export const SemanticShadowRaised = "0 4px 16px rgba(0,0,0,0.10)";
+export const SemanticShadowCardHover = "0 4px 16px rgba(13,116,206,0.10)";
 export const SemanticSpaceDensityFactorCompact = "0.75";
 export const SemanticSpaceDensityFactorNormal = "1";
 export const SemanticSpaceDensityFactorComfortable = "1.25";

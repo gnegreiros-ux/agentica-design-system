@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<title>Implémentation de `agtc-card` — Agentica</title>
+<title>Surfaces inversées, ombres et jetons décoratifs — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-card` — Agentica">
+<meta property="og:title" content="Surfaces inversées, ombres et jetons décoratifs — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <meta property="og:image:width" content="1076">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-card` — Agentica">
+<meta name="twitter:title" content="Surfaces inversées, ombres et jetons décoratifs — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,48 +55,59 @@
   <aside class="sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a><a href="adr-045.html">ADR-045</a><a href="adr-046.html">ADR-046</a></div></aside>
   <main class="content" role="main">
 <div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> 035</div>
+  <div class="adr-meta-item"><strong>ADR</strong> 046</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="agtc-badge success sm"><span class='icon-ok'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-05-31</div>
+  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> 2026-06-05</div>
   <div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> Design System Lead</div>
-</div><h1>ADR-035 — Implémentation de <code>agtc-card</code></h1>
-<blockquote><p><strong>Date :</strong> 2026-05-31 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-035-agtc-card-implementation.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> decisions/ADR-034-agtc-badge-implementation.md, tokens/component.json</p></blockquote>
-<hr>
-<h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>C1, C3, C4 approuvés ; C2 révisé</strong> (règle de cliquabilité anti-imbrication). Détail et liens : <code>guidelines/components/card.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Clustering du contenu lié</td><td>Dashboard — grouped layout</td></tr><tr><td>Carte cliquable — C2 révisé (1 destination = lien englobant ; actions distinctes = overlay <code>::after</code> ou conteneur non interactif ; jamais d'interactif imbriqué)</td><td>Smashing — clickable cards · NN/g</td></tr><tr><td>Hiérarchie via élévation/ombre, pas couleur seule</td><td>Dashboard — composition</td></tr><tr><td>Détail-on-demand (la carte résume)</td><td>Dashboard — screenspace</td></tr></tbody></table>
+</div><h1>ADR-046 — Surfaces inversées, ombres et jetons décoratifs</h1>
+<blockquote><p><strong>Date :</strong> 2026-06-05 <strong>Statut :</strong> ✅ Actif <strong>Décideurs :</strong> Design System Lead <strong>Type:</strong> contract <strong>Chemin logique:</strong> decisions/ADR-046-inverse-surfaces-shadows-tokens.md <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> tokens/primitives.json, tokens/semantic.json, .claude/rules/feedback_site_dogfooding.md, decisions/ADR-045-feedback-color-family-completion.md, site/build.js</p></blockquote>
 <hr>
 <h2>Contexte</h2>
-<p><code>agtc-card</code> est un conteneur visuel pour regrouper des informations liées. C'est l'un des composants les plus utilisés dans les interfaces — il structure les tableaux de bord, les listes de résultats, les formulaires groupés.</p>
-<p>Deux questions ont guidé les décisions :</p>
-<p>1. <strong>Interactivité</strong> — une carte peut être cliquable (lien vers un détail) ou    purement contenante. Faut-il encoder ce comportement dans le composant ?</p>
-<p>2. <strong>Sections</strong> — header, body, footer sont des patterns récurrents.    Faut-il les imposer structurellement ou les laisser libres via slots ?</p>
+<p>Après la complétion de la famille <code>feedback</code> (ADR-045), il restait dans <code>site/build.js</code> une dette de couleurs en dur sans équivalent sémantique : <strong>surfaces sombres</strong> (bandeau de stats, pied de page, tooltips), <strong>textes/bordures blancs sur fond sombre</strong>, <strong>ombres</strong> (<code>box-shadow</code>) et une <strong>barre décorative</strong> de visualisation d'espacement. Aucune de ces valeurs ne pouvait être routée : le niveau sémantique n'exposait ni surface inversée, ni texte « on-inverse », ni ombre, ni jeton de visualisation.</p>
+<p>Découverte clé : les <strong>échelles d'alpha existaient déjà</strong> au niveau primitif (<code>color.white.*</code> = blanc alpha, <code>color.black.*</code> = noir alpha, façon Radix) mais n'étaient <strong>jamais consommées</strong>. Elles fournissent exactement les valeurs nécessaires aux textes/ombres sur fond sombre.</p>
 <hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — Pas d'interactivité native dans v1</h3>
-<p>Une carte cliquable est un pattern d'accessibilité complexe : l'élément interactif doit être <code>&lt;a&gt;</code> ou <code>&lt;button&gt;</code>, pas un <code>&lt;div&gt;</code> avec <code>onclick</code>.</p>
-<p><strong>Décision :</strong> <code>agtc-card</code> est non interactif. Pour une carte cliquable, le consommateur place un <code>&lt;a&gt;</code> ou <code>&lt;agtc-button&gt;</code> à l'intérieur. Un composant <code>agtc-card-link</code> pourrait être ajouté en v2 si le besoin est récurrent.</p>
-<p><strong>Alternative rejetée :</strong> ajouter un attribut <code>clickable</code> avec <code>tabindex="0"</code> et <code>role="button"</code> — rejeté car un <code>&lt;div role="button"&gt;</code> sans <code>&lt;button&gt;</code> natif est un anti-pattern WCAG 4.1.2 (les éléments interactifs doivent utiliser des éléments HTML sémantiques).</p>
+<h2>Décision</h2>
+<h3>1 — Deux primitifs « presque noirs » (surfaces inversées)</h3>
+<p>Aucun primitif plus sombre que <code>gray.12</code> (#202020) n'existait. Ajout de deux ancres neutres (convention Tailwind neutral-900/950) :</p>
+<table><thead><tr><th>Primitif</th><th>Valeur</th><th>Rôle</th></tr></thead><tbody><tr><td><code>neutral.900</code></td><td><code>#1a1e24</code></td><td>Surface sombre surélevée (tooltip/popover)</td></tr><tr><td><code>neutral.950</code></td><td><code>#0f1117</code></td><td>Surface sombre la plus profonde (bandeau, pied de page)</td></tr></tbody></table>
+<h3>2 — Jetons sémantiques (référencent les primitifs existants)</h3>
+<table><thead><tr><th>Jeton sémantique</th><th>Référence</th><th>Rôle</th></tr></thead><tbody><tr><td><code>color.background.inverse</code></td><td><code>neutral.950</code></td><td>Bandeau de stats, pied de page</td></tr><tr><td><code>color.background.inverse-raised</code></td><td><code>neutral.900</code></td><td>Tooltips de la palette</td></tr><tr><td><code>color.text.on-inverse</code></td><td><code>white.1</code> (#fff)</td><td>Texte fort / lien survolé sur fond sombre</td></tr><tr><td><code>color.text.on-inverse-secondary</code></td><td><code>white.8</code> (.75)</td><td>Liens sur fond sombre — <strong>10.8:1</strong></td></tr><tr><td><code>color.text.on-inverse-muted</code></td><td><code>white.10</code> (.52)</td><td>Texte atténué — <strong>plancher AA, 5.69:1</strong></td></tr><tr><td><code>color.border.on-inverse</code></td><td><code>white.12</code> (.18)</td><td>Séparateur sur fond sombre (non textuel)</td></tr><tr><td><code>color.border.swatch</code></td><td><code>black.2</code> (.10)</td><td>Filet de contour des échantillons (non textuel)</td></tr><tr><td><code>color.viz.scale-bar</code></td><td><code>red.6</code></td><td>Barre décorative de la démo d'espacement (non sémantique)</td></tr><tr><td><code>shadow.header</code></td><td><code>0 2px 24px rgba(0,0,0,.12)</code></td><td>Ombre de l'en-tête fixe</td></tr><tr><td><code>shadow.raised</code></td><td><code>0 4px 16px rgba(0,0,0,.10)</code></td><td>Menus déroulants, nav mobile</td></tr><tr><td><code>shadow.card-hover</code></td><td><code>0 4px 16px rgba(13,116,206,.10)</code></td><td>Lift de carte teinté marque</td></tr></tbody></table>
+<blockquote><p>Les ombres sont des composites <code>$type: "other"</code> portant des <code>rgba</code> littéraux — <strong>même convention que le jeton préexistant <code>component.card.elevated.shadow</code></strong>. La dette résorbée est celle du <strong>consommateur</strong> (le site) : la valeur vit désormais dans une couche nommée.</p></blockquote>
 <hr>
-<h3>Décision 2 — Slots nommés <code>header</code> / <code>footer</code> avec séparateurs automatiques</h3>
-<p>Les slots <code>header</code> et <code>footer</code> sont détectés via <code>slotchange</code> + <code>assignedNodes()</code>. Les séparateurs (border) n'apparaissent que si le slot est réellement utilisé — évite un border orphelin sur une card sans header.</p>
-<p>Le padding des sections header/body/footer est uniforme (même valeur que l'attribut <code>padding</code>) pour que l'espacement soit cohérent visuellement.</p>
-<p><strong>Exception :</strong> <code>has-header</code> et <code>has-footer</code> suppriment le padding-top du body quand un header est présent, et le padding-bottom quand un footer est présent — évite le double espacement aux jointures.</p>
+<h2>Accessibilité (WCAG 2.2) — un correctif au passage</h2>
+<p>Contrastes mesurés sur <code>background.inverse</code> (#0f1117) :</p>
+<table><thead><tr><th>Jeton</th><th>Alpha</th><th>Ratio</th><th>Verdict</th></tr></thead><tbody><tr><td><code>text.on-inverse</code></td><td>1.00</td><td>19.6:1</td><td>✅ AAA</td></tr><tr><td><code>text.on-inverse-secondary</code></td><td>.75</td><td><strong>10.8:1</strong></td><td>✅ AAA</td></tr><tr><td><code>text.on-inverse-muted</code></td><td>.52</td><td><strong>5.69:1</strong></td><td>✅ AA (plancher retenu)</td></tr></tbody></table>
+<p><strong>Correctif :</strong> le pied de page (<code>.footer-credit</code> à blanc .35) et le lien de pied d'audit (<code>.audit-footer-link</code> à blanc .30) <strong>échouaient AA</strong> (~3:1) avant ce travail. Leur tokenisation vers <code>text.on-inverse-muted</code> (.52) les porte à <strong>5.69:1</strong> — conforme. C'est un cas d'<strong>auto-guérison encadrée</strong> : une dérive détectée et corrigée avec approbation humaine.</p>
+<p>Les jetons <code>border.on-inverse</code> (.18) et <code>border.swatch</code> (.10) sont <strong>non textuels</strong> (séparateurs / contours décoratifs) — exemptés du 4.5:1 (WCAG 1.4.3). <code>viz.scale-bar</code> est purement décoratif et ne porte aucune information (la valeur d'espacement est donnée par le libellé adjacent).</p>
 <hr>
-<h3>Décision 3 — 3 variantes : default / elevated / flat</h3>
-<table><thead><tr><th>Variante</th><th>Usage</th><th>Signal visuel</th></tr></thead><tbody><tr><td><code>default</code></td><td>Carte standard</td><td>Bord gris subtil</td></tr><tr><td><code>elevated</code></td><td>Mise en avant, hiérarchie</td><td>Ombre portée douce</td></tr><tr><td><code>flat</code></td><td>Fond groupé, section intégrée</td><td>Fond gris subtil, pas de bord</td></tr></tbody></table>
-<p>La shadow de <code>elevated</code> (<code>0 1px 3px rgba(0,0,0,0.10)</code>) est encodée comme token composant <code>card.elevated.shadow</code>. Il n'existe pas encore de token sémantique d'élévation — ce token est un proxy jusqu'à la création d'un système d'élévation dédié.</p>
+<h2>Périmètre</h2>
+<table><thead><tr><th>Inclus</th><th>Exclu</th></tr></thead><tbody><tr><td>2 primitifs neutres + 11 jetons sémantiques (inverse, on-inverse, swatch, viz, shadow)</td><td>Mode sombre global du site (hors sujet)</td></tr><tr><td>Migration de <code>site/build.js</code> : bandeau stats, pied de page, en-tête, nav mobile, tooltips, nav-card hover, échantillons, barre d'espacement</td><td>Démo <code>toggle</code> (voir résidu ci-dessous)</td></tr></tbody></table>
+<h3>Résidu assumé (hors périmètre, documenté)</h3>
+<p>La <strong>démo illustrative du composant <code>toggle</code></strong> (<code>buildToggle()</code>) utilise encore <code>#8d8d8d</code> (= <code>gray.9</code> exact) pour le rail OFF et <code>rgba(0,0,0,.25)</code> pour l'ombre du bouton — un raccourci <strong>déjà annoté « (proxy) »</strong> dans la table de jetons de la page. C'est une dette de *dogfooding de démo* (la démo devrait consommer le contrat <code>component.toggle.*</code>), distincte du chantier surfaces/ombres. Le site n'émet pas les variables <code>--agtc-component-toggle-*</code> (non consommées ailleurs) : les router exigerait un travail séparé. <strong>Reporté</strong> à une passe de dogfooding des démos de composants.</p>
+<h3>Restent légitimement en dur (exemptés)</h3>
+<p>Logo SVG (<code>#12A594</code>), <strong>affichages de valeurs de jetons</strong> (tables de doc montrant le hex résolu), <strong>exemples de code</strong> (anti-pattern <code>color: #0d74ce</code>), et <code>manifest.json</code> (<code>theme_color</code>).</p>
 <hr>
-<h3>Décision 4 — 4 niveaux de padding : none / sm / md / lg</h3>
-<p><code>none</code> est indispensable pour les cartes avec images pleine largeur. <code>sm</code> (12px) pour les cartes compactes (tableaux, listes denses). <code>md</code> (20px, défaut) pour la majorité des cas. <code>lg</code> (24px) pour les cartes à fort contenu textuel.</p>
+<h2>Alternatives rejetées</h2>
+<ul><li><strong>Préserver les blancs alpha exacts</strong> (.35/.30) en pied de page : reconduit un échec WCAG —</li></ul>
+<p>  rejeté au profit du plancher AA <code>on-inverse-muted</code>.</p>
+<ul><li><strong>Réutiliser <code>brand.secondary</code></strong> (#463239) pour les surfaces sombres : c'est un brun de marque,</li></ul>
+<p>  pas un neutre — inadapté à un pied de page neutre.</p>
+<ul><li><strong>Jetons d'ombre par interpolation de primitifs alpha</strong> : Style Dictionary n'interpole pas</li></ul>
+<p>  proprement les <code>rgba</code> dans une chaîne composite ; on garde la convention <code>$type: other</code> existante.</p>
+<ul><li><strong>Tokeniser la démo toggle dans ce lot</strong> : créerait des variables fantômes ou gonflerait la</li></ul>
+<p>  surface de jetons pour une seule démo — reporté (voir résidu).</p>
 <hr>
-<h2>Périmètre v1</h2>
-<table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>3 variantes</td><td><code>agtc-card-link</code> (carte cliquable)</td></tr><tr><td>4 niveaux de padding</td><td>Skeleton loading state</td></tr><tr><td>Slots header / body / footer</td><td>Card grid layout helper</td></tr><tr><td>Séparateurs automatiques</td><td>Variante <code>outlined-accent</code></td></tr></tbody></table>
-<hr>
-<h2>Tokens ajoutés dans <code>component.json</code></h2>
-<table><thead><tr><th>Token</th><th>Valeur</th></tr></thead><tbody><tr><td><code>--agtc-card-elevated-shadow</code></td><td><code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code></td></tr><tr><td><code>--agtc-card-elevated-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-flat-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-card-flat-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-padding-none</code></td><td><code>0px</code></td></tr><tr><td><code>--agtc-card-padding-sm</code></td><td><code>12px</code></td></tr><tr><td><code>--agtc-card-padding-lg</code></td><td><code>24px</code></td></tr></tbody></table><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-034.html" class="agtc-button secondary">← ADR-034</a>
-    <a href="adr-036.html" class="agtc-button secondary">ADR-036 →</a>
+<h2>Conséquences</h2>
+<ul><li><code>site/build.js</code> ne contient plus aucune surface sombre, ombre ou bordure décorative en dur</li></ul>
+<p>  (hors résidu toggle documenté). Build : <strong>655 défini · 173 référencé · 0 fantôme</strong>.</p>
+<ul><li>Les échelles <code>white.*</code> / <code>black.*</code> (jusqu'ici orphelines) sont désormais **consommées via le</li></ul>
+<p>  sémantique** — fin de leur statut de primitifs morts.</p>
+<ul><li>Le système dispose d'un socle <strong>« surface inversée »</strong> réutilisable (futur mode sombre, bandeaux,</li></ul>
+<p>  tooltips de composants) et d'une <strong>échelle d'ombres</strong> nommée.</p>
+<ul><li>Gouvernance : 2 primitifs (approbation Principal Designer) + 11 sémantiques (Design System Lead).</li></ul>
+<p>  Aucun jeton de composant modifié.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-045.html" class="agtc-button secondary">← ADR-045</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

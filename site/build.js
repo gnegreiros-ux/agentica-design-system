@@ -295,7 +295,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);
   border-top:3px solid var(--agtc-semantic-color-action-primary);
   border-bottom:1px solid var(--agtc-semantic-color-border-default);
-  box-shadow:0 2px 24px rgba(0,0,0,.12);
+  box-shadow:var(--agtc-semantic-shadow-header);
   display:flex;align-items:center;padding:0 24px;gap:20px;
 }
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
@@ -357,16 +357,16 @@ body{
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
 .stat-band{
-  background:#0f1117;
+  background:var(--agtc-semantic-color-background-inverse);
   display:flex;flex-wrap:wrap;
 }
 .stat-item{
   flex:1;min-width:150px;padding:28px 32px;text-align:center;
-  border-right:1px solid rgba(255,255,255,.08);
+  border-right:1px solid var(--agtc-semantic-color-border-on-inverse);
 }
 .stat-item:last-child{border-right:none}
 .stat-num{font-size:2.5rem;font-weight:800;color:var(--agtc-semantic-color-action-primary);display:block;letter-spacing:-.02em}
-.stat-text{font-size:0.875rem;color:rgba(255,255,255,.5);margin-top:4px;display:block}
+.stat-text{font-size:0.875rem;color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
 
 .home-section{padding:64px 72px;max-width:1100px;margin:0 auto}
 .home-section h2{font-size:1.75rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
@@ -383,7 +383,7 @@ body{
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
-.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:0 4px 16px rgba(13,116,206,.1);transform:translateY(-1px)}
+.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px)}
 .nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -402,7 +402,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .pipeline-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
 .pipeline-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .pipeline-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
-.pipeline-example{font-family:var(--agtc-font-mono);font-size:11.5px;color:var(--agtc-semantic-color-action-primary);margin-top:10px;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid var(--agtc-semantic-color-border-default)}
+.pipeline-example{font-family:var(--agtc-font-mono);font-size:11.5px;color:var(--agtc-semantic-color-action-primary);margin-top:10px;background:var(--agtc-semantic-color-background-surface);padding:6px 10px;border-radius:4px;border:1px solid var(--agtc-semantic-color-border-default)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -451,7 +451,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
 .color-token{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:16px;display:flex;align-items:center;gap:14px}
-.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--agtc-semantic-radius-control);border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.color-swatch{width:44px;height:44px;display:inline-block;border-radius:var(--agtc-semantic-radius-control);border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0}
 .color-info{}
 .color-name{font-family:var(--agtc-font-mono);font-size:12px;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:3px}
 .color-value{font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)}
@@ -461,12 +461,12 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .palette-scale-name{font-size:0.875rem;font-weight:700;text-transform:capitalize;color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
 .palette-steps{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
 .palette-step{height:48px;border-radius:4px;cursor:default;position:relative}
-.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1e24;color:#fff;font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--agtc-font-mono);pointer-events:none}
+.palette-step:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--agtc-semantic-color-background-inverse-raised);color:var(--agtc-semantic-color-text-on-inverse);font-size:10px;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:10;font-family:var(--agtc-font-mono);pointer-events:none}
 
 /* ── SPACING ────────────────────────────────────────────── */
 .space-demo{display:flex;flex-direction:column;gap:6px;margin:28px 0}
 .space-item{display:flex;align-items:center;gap:12px}
-.space-bar{background:#fca5a5;border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
+.space-bar{background:var(--agtc-semantic-color-viz-scale-bar);border-radius:3px;height:20px;min-width:4px;flex-shrink:0}
 .space-label{font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary);min-width:72px}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
@@ -639,7 +639,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 /* Liens de contenu : consomment le contrat du composant link (component.link.* — ADR-043). */
 a{color:var(--agtc-component-link-default-text)}
 a:hover{color:var(--agtc-component-link-default-text-hover)}
-.skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:#fff;padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
+.skip-link{position:absolute;top:-40px;left:8px;background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);padding:8px 16px;border-radius:4px;font-size:0.875rem;font-weight:600;text-decoration:none;z-index:1000}
 .skip-link:focus{top:8px}
 
 /* ── LANG TOGGLE (consomme .agtc-segmented — ADR-044, dogfooding cat. A) ──── */
@@ -676,12 +676,12 @@ html[data-lang="en"] .lang-fr{display:none}
 .token-tile-label{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:6px;display:block}
 
 /* ── FOOTER ──────────────────────────────────────────────── */
-.site-footer{background:#0f1117;color:rgba(255,255,255,.55);padding:24px 32px;font-size:0.875rem;margin-top:auto}
+.site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:24px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.footer-links a{color:rgba(255,255,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
-.footer-links a:hover{color:#fff}
-.footer-credit{font-size:0.75rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
+.footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
+.footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px}
 
 /* ── INFO CARDS ──────────────────────────────────────────── */
 .info-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
@@ -711,7 +711,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-contrast-table tr:last-child td{border-bottom:none}
 .audit-contrast-pass{color:var(--agtc-semantic-color-feedback-success);font-weight:600}
 .audit-contrast-fail{color:var(--agtc-semantic-color-feedback-danger);font-weight:600}
-.audit-swatch{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;border:1px solid rgba(0,0,0,.1);margin-right:4px}
+.audit-swatch{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;border:1px solid var(--agtc-semantic-color-border-swatch);margin-right:4px}
 .audit-manual-list{list-style:none;padding:0;margin:0}
 .audit-manual-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
 .audit-manual-item:last-child{border-bottom:none}
@@ -719,8 +719,8 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-manual-body strong{display:block;font-size:0.875rem;margin-bottom:3px}
 .audit-manual-body span{font-size:0.8rem;color:var(--agtc-semantic-color-text-secondary)}
 .audit-method{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:20px 24px;font-size:0.825rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6}
-.audit-footer-link{color:rgba(255,255,255,.3);text-decoration:none;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;transition:color .12s}
-.audit-footer-link:hover{color:rgba(255,255,255,.7)}
+.audit-footer-link{color:var(--agtc-semantic-color-text-on-inverse-muted);text-decoration:none;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;transition:color .12s}
+.audit-footer-link:hover{color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 @media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
 .info-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
 .info-card-body{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
@@ -794,7 +794,7 @@ html[data-lang="en"] .lang-fr{display:none}
 @media(max-width:1200px){.toc{display:none}}
 @media(max-width:768px){
   .menu-toggle{display:flex;align-items:center}
-  .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+  .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:var(--agtc-semantic-shadow-raised)}
   .top-nav.open{display:flex}
   .top-nav a{padding:12px 24px;border-radius:0;font-size:0.875rem}
   .dos-donts{grid-template-columns:1fr}
@@ -1558,7 +1558,7 @@ function buildColor() {
 
   const semRows = semanticColors.map(([key, name, value, intent]) => `
 <tr class="token-row">
-  <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid rgba(0,0,0,.08)" aria-hidden="true"></span></div></td>
+  <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
   <td><code>--agtc-semantic-${key}</code></td>
   <td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td>
   <td>${intent}</td>
@@ -3572,14 +3572,14 @@ function buildTokens() {
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid rgba(0,0,0,.1);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
   // Build a full semantic map with alias info
   const semRows = Object.entries(SEM).map(([k, v]) => {
     const isColor = k.startsWith('color-');
-    const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
+    const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
     const aliasCell = aliasNode ? `<td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
     return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`;
@@ -3588,7 +3588,7 @@ function buildTokens() {
   const compRows = Object.entries(COMP).map(([k, v]) => {
     const resolved = resolveCompValue(v);
     const isColor = k.includes('background') || k.includes('text') || k.includes('border');
-    const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid rgba(0,0,0,.1);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
+    const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
     return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--agtc-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
   }).join('');
 

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 12:52:27 GMT
+ * Generated on Fri, 05 Jun 2026 14:57:54 GMT
  */
 
 :root {
@@ -19,6 +19,9 @@
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
+  --agtc-semantic-shadow-raised: 0 4px 16px rgba(0,0,0,0.10);
+  --agtc-semantic-shadow-header: 0 2px 24px rgba(0,0,0,0.12);
   --agtc-primitive-density-grid-unit: 4;
   --agtc-primitive-density-factor-compact: 0.75;
   --agtc-primitive-density-factor-comfortable: 1.25;
@@ -79,6 +82,8 @@
   --agtc-primitive-color-white-3: rgba(255,255,255,0.93);
   --agtc-primitive-color-white-2: rgba(255,255,255,0.97);
   --agtc-primitive-color-white-1: rgba(255,255,255,1.00);
+  --agtc-primitive-color-neutral-950: #0f1117;
+  --agtc-primitive-color-neutral-900: #1a1e24;
   --agtc-primitive-color-neutral-500: #767676;
   --agtc-primitive-color-neutral-50: #fafafa;
   --agtc-primitive-color-neutral-0: #ffffff;
@@ -570,14 +575,22 @@
   --agtc-semantic-color-brand-primary-subtle: var(--agtc-primitive-color-teal-3);
   --agtc-semantic-color-brand-primary-hover: var(--agtc-primitive-color-teal-10);
   --agtc-semantic-color-brand-primary: var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-viz-scale-bar: var(--agtc-primitive-color-red-6);
+  --agtc-semantic-color-border-swatch: var(--agtc-primitive-color-black-2);
+  --agtc-semantic-color-border-on-inverse: var(--agtc-primitive-color-white-12);
   --agtc-semantic-color-border-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-9);
   --agtc-semantic-color-border-default: var(--agtc-primitive-color-gray-4);
+  --agtc-semantic-color-text-on-inverse-muted: var(--agtc-primitive-color-white-10);
+  --agtc-semantic-color-text-on-inverse-secondary: var(--agtc-primitive-color-white-8);
+  --agtc-semantic-color-text-on-inverse: var(--agtc-primitive-color-white-1);
   --agtc-semantic-color-text-on-danger: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-text-on-action: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-text-disabled: var(--agtc-primitive-color-neutral-500);
   --agtc-semantic-color-text-secondary: var(--agtc-primitive-color-gray-11);
   --agtc-semantic-color-text-primary: var(--agtc-primitive-color-gray-12);
+  --agtc-semantic-color-background-inverse-raised: var(--agtc-primitive-color-neutral-900);
+  --agtc-semantic-color-background-inverse: var(--agtc-primitive-color-neutral-950);
   --agtc-semantic-color-background-hover: var(--agtc-primitive-color-neutral-50);
   --agtc-semantic-color-background-subtle: var(--agtc-primitive-color-gray-3);
   --agtc-semantic-color-background-surface: var(--agtc-primitive-color-neutral-0);

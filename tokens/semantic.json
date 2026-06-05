@@ -31,19 +31,29 @@
         "page":    { "value": "{primitive.color.gray.1}",      "$type": "color", "$intent": "Fond de page principale" },
         "surface": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Fond de carte, panneau, modal" },
         "subtle":  { "value": "{primitive.color.gray.3}",      "$type": "color", "$intent": "Fond secondaire, survol discret" },
-        "hover":   { "value": "{primitive.color.neutral.50}",  "$type": "color", "$intent": "Fond au survol (tableaux, listes)" }
+        "hover":   { "value": "{primitive.color.neutral.50}",  "$type": "color", "$intent": "Fond au survol (tableaux, listes)" },
+        "inverse":        { "value": "{primitive.color.neutral.950}", "$type": "color", "$intent": "Surface sombre inversée — bandeau de stats, pied de page (ADR-046)" },
+        "inverse-raised": { "value": "{primitive.color.neutral.900}", "$type": "color", "$intent": "Surface sombre surélevée sur fond inversé — tooltips, popovers (ADR-046)" }
       },
       "text": {
         "primary":   { "value": "{primitive.color.gray.12}",     "$type": "color", "$intent": "Texte principal, haute lisibilité" },
         "secondary": { "value": "{primitive.color.gray.11}",     "$type": "color", "$intent": "Texte secondaire, labels, métadonnées" },
         "disabled":  { "value": "{primitive.color.neutral.500}", "$type": "color", "$intent": "Texte désactivé — 4.54:1 sur blanc (WCAG 1.4.3 exempte les UI inactives, maintenu accessible par convention)" },
         "on-action": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond d'action (bouton primaire)" },
-        "on-danger": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" }
+        "on-danger": { "value": "{primitive.color.neutral.0}",   "$type": "color", "$intent": "Texte sur fond danger" },
+        "on-inverse":           { "value": "{primitive.color.white.1}",  "$type": "color", "$intent": "Texte fort sur surface inversée — titres, liens survolés (#fff, ADR-046)" },
+        "on-inverse-secondary": { "value": "{primitive.color.white.8}",  "$type": "color", "$intent": "Texte secondaire sur surface inversée — liens (10.8:1 sur neutral.950, ADR-046)" },
+        "on-inverse-muted":     { "value": "{primitive.color.white.10}", "$type": "color", "$intent": "Texte atténué sur surface inversée — plancher AA (5.69:1 sur neutral.950, ADR-046)" }
       },
       "border": {
         "default": { "value": "{primitive.color.gray.4}",   "$type": "color", "$intent": "Bordure standard" },
         "focus":   { "value": "{primitive.color.teal.9}",   "$type": "color", "$intent": "Bordure focus — accessibilité clavier (brand teal). Voir ADR-024." },
-        "danger":  { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Bordure état erreur" }
+        "danger":  { "value": "{primitive.color.red.11}",   "$type": "color", "$intent": "Bordure état erreur" },
+        "on-inverse": { "value": "{primitive.color.white.12}", "$type": "color", "$intent": "Séparateur sur surface inversée — non textuel (ADR-046)" },
+        "swatch":     { "value": "{primitive.color.black.2}",  "$type": "color", "$intent": "Filet de contour des échantillons de couleur sur fond clair — non textuel (ADR-046)" }
+      },
+      "viz": {
+        "scale-bar": { "value": "{primitive.color.red.6}", "$type": "color", "$intent": "Barre décorative de visualisation d'échelle (démo d'espacement) — non sémantique, non porteuse d'information (ADR-046)" }
       },
       "brand": {
         "primary":          { "value": "{primitive.color.teal.9}",       "$type": "color", "$intent": "Couleur de marque primaire — identité, CTA principal" },
@@ -57,6 +67,11 @@
         "secondary-hover":  { "value": "{primitive.color.secondary.10}", "$type": "color", "$intent": "Survol de la couleur secondaire" },
         "secondary-text":   { "value": "{primitive.color.secondary.12}", "$type": "color", "$intent": "Texte secondaire sur fond clair — 13.8:1 WCAG AAA" }
       }
+    },
+    "shadow": {
+      "header":     { "value": "0 2px 24px rgba(0,0,0,0.12)",     "$type": "other", "$intent": "Ombre de l'en-tête fixe — séparation du contenu défilant (ADR-046)" },
+      "raised":     { "value": "0 4px 16px rgba(0,0,0,0.10)",     "$type": "other", "$intent": "Ombre d'élément surélevé — menus déroulants, nav mobile (ADR-046)" },
+      "card-hover": { "value": "0 4px 16px rgba(13,116,206,0.10)", "$type": "other", "$intent": "Ombre de survol de carte — lift teinté marque (action.primary, ADR-046)" }
     },
     "space": {
       "density": {
