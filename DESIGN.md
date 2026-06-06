@@ -54,6 +54,14 @@ Tokens primitifs   →  Tokens sémantiques  →  Tokens de composant
 - Les tokens de composant sont des **contrats institutionnels** — toute modification requiert une approbation.
 - Aucune couleur ou espacement en dur dans le code. **Jamais.**
 
+### Conformité au standard (W3C DTCG)
+Les fichiers `tokens/*.json` suivent le **format Design Tokens** du W3C Community Group (DTCG) —
+source officielle : **https://www.designtokens.org/**. Conventions appliquées : `$value`, `$type`,
+`$description`, alias inter-tokens `{group.token}`, et `$schema` pointant le format DTCG.
+Cela garantit l'interopérabilité avec Style Dictionary, Tokens Studio et tout outil compatible.
+En cas de divergence entre une habitude locale et le standard, **c'est le standard qui fait foi**
+(voir `.claude/rules/tokens-system.md` et ADR-052).
+
 ---
 
 ## 3. Composants — règles générales

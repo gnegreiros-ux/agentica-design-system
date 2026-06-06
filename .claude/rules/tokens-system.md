@@ -9,6 +9,27 @@
 
 ---
 
+## Standard de référence — Design Tokens (W3C DTCG)
+
+> Source officielle du standard des design tokens : **https://www.designtokens.org/**
+> (Design Tokens Community Group du W3C — DTCG).
+
+Ce système suit le **format DTCG** comme standard d'interopérabilité des tokens :
+
+| Convention DTCG | Application dans ce dépôt |
+|-----------------|---------------------------|
+| `$value` | Valeur du token (primitifs) — ex. `"$value": "#fcfcfc"` |
+| `$type` | Type du token — `color`, `dimension`, etc. (obligatoire, cf. `code-style.md`) |
+| `$description` | Description lisible humain + agent |
+| Alias `{group.token}` | Référence inter-tokens — ex. `{primitive.color.teal.11}` |
+| `$schema` | `https://design-tokens.github.io/community-group/format/` |
+
+> Toute évolution du format des fichiers `tokens/*.json` doit rester **conforme au
+> standard DTCG**. En cas de divergence entre une habitude locale et le standard,
+> c'est le standard designtokens.org qui fait foi. Décision : **ADR-052**.
+
+---
+
 ## Les trois niveaux — règle non négociable
 
 ```

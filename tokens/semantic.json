@@ -55,6 +55,13 @@
       "viz": {
         "scale-bar": { "value": "{primitive.color.red.6}", "$type": "color", "$intent": "Barre décorative de visualisation d'échelle (démo d'espacement) — non sémantique, non porteuse d'information (ADR-046)" }
       },
+      "illustration": {
+        "ink":     { "value": "{primitive.color.mauve.12}",   "$type": "color", "$intent": "Illustration « Tactile Tech » — masses sombres, ancrage du contraste (ADR-051)" },
+        "accent":  { "value": "{primitive.color.crimson.9}",  "$type": "color", "$intent": "Illustration — point focal chaud, énergie (ADR-051)" },
+        "brand":   { "value": "{primitive.color.teal.9}",     "$type": "color", "$intent": "Illustration — fil conducteur marque, lien visuel au produit (ADR-051)" },
+        "neutral": { "value": "{primitive.color.slate.9}",    "$type": "color", "$intent": "Illustration — masses secondaires, profondeur par superposition (ADR-051)" },
+        "surface": { "value": "{primitive.color.slate.3}",    "$type": "color", "$intent": "Illustration — respiration, négatif clair (ADR-051)" }
+      },
       "brand": {
         "primary":          { "value": "{primitive.color.teal.9}",       "$type": "color", "$intent": "Couleur de marque primaire — identité, CTA principal" },
         "primary-hover":    { "value": "{primitive.color.teal.10}",      "$type": "color", "$intent": "Survol de la couleur primaire" },

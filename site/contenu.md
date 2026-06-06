@@ -14,6 +14,7 @@ Dans ce modèle, le rôle du designer évolue. Il ne produit plus seulement des 
 - **Agentique par conception** — les agents lisent les règles, détectent les dérives, proposent des corrections. Les humains valident.
 - **Auto-surveillance** — la cohérence entre Figma, les tokens et le code est vérifiée en continu.
 - **Stack agnostique** — React, Vue, Angular, systèmes patrimoniaux. Un seul système, partout.
+- **Standards ouverts** — tokens conformes au format W3C DTCG (designtokens.org), interopérables avec Style Dictionary et Tokens Studio.
 - **Documentation vivante** — elle se met à jour avec le système, automatiquement.
 - **Audit à coût marginal** — la conformité est un livrable du système, pas un projet parallèle.
 - **Souveraineté numérique** — vos données, vos décisions, vos outils. Aucune dépendance imposée.
@@ -34,6 +35,7 @@ In this model, the designer's role shifts. They no longer just produce artifacts
 - **Agentic by design** — agents read rules, detect drift, propose corrections. Humans validate.
 - **Continuous self-monitoring** — consistency between Figma, tokens, and code is verified automatically.
 - **Stack agnostic** — React, Vue, Angular, legacy systems. One system, everywhere.
+- **Open standards** — tokens conform to the W3C DTCG format (designtokens.org), interoperable with Style Dictionary and Tokens Studio.
 - **Living documentation** — it updates with the system, automatically.
 - **Audit at marginal cost** — compliance is a system output, not a side project.
 - **Digital sovereignty** — your data, your decisions, your tools. No imposed vendor lock-in.

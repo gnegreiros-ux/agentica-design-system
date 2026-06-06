@@ -1,4 +1,5 @@
 {
+  "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "tokenSetOrder": ["primitive/color", "primitive/space", "primitive/typography", "primitive/density"]
   },
