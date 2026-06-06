@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 05 Jun 2026 14:57:54 GMT
+// Generated on Sat, 06 Jun 2026 15:15:37 GMT
 
 
 import UIKit
@@ -37,7 +37,7 @@ public class AgenticaTokens {
     public static let badgeWarningBorder = transparent
     public static let badgeWarningText = #582d1d
     public static let bannerBodyText = #646464
-    public static let bannerBorderFocus = #12a594
+    public static let bannerBorderFocus = #007a68
     public static let bannerBrandAccent = #12a594
     public static let bannerBrandBackground = #e0f8f3
     public static let bannerCloseColor = #646464
@@ -63,18 +63,18 @@ public class AgenticaTokens {
     public static let buttonGhostBackground = transparent
     public static let buttonGhostBackgroundHover = #f0f0f0
     public static let buttonGhostBorder = transparent
-    public static let buttonGhostText = #12a594
-    public static let buttonPrimaryBackground = #12a594
+    public static let buttonGhostText = #007a68
+    public static let buttonPrimaryBackground = #007a68
     public static let buttonPrimaryBackgroundDisabled = #d9d9d9
-    public static let buttonPrimaryBackgroundHover = #0d9b8a
+    public static let buttonPrimaryBackgroundHover = #0d3d38
     public static let buttonPrimaryPaddingX = 16px
     public static let buttonPrimaryPaddingY = 8px
     public static let buttonPrimaryRadius = 6px
     public static let buttonPrimaryText = #ffffff
     public static let buttonSecondaryBackground = transparent
     public static let buttonSecondaryBackgroundHover = #f0f0f0
-    public static let buttonSecondaryBorder = #12a594
-    public static let buttonSecondaryText = #12a594
+    public static let buttonSecondaryBorder = #007a68
+    public static let buttonSecondaryText = #007a68
     public static let cardDefaultBackground = #ffffff
     public static let cardDefaultBorder = #e8e8e8
     public static let cardDefaultPadding = 20px
@@ -89,15 +89,15 @@ public class AgenticaTokens {
     public static let cardPaddingSm = 12px
     public static let checkboxDefaultBackground = #ffffff
     public static let checkboxDefaultBorder = #e8e8e8
-    public static let checkboxDefaultBorderFocus = #12a594
-    public static let checkboxDefaultBorderHover = #12a594
+    public static let checkboxDefaultBorderFocus = #007a68
+    public static let checkboxDefaultBorderHover = #007a68
     public static let checkboxDefaultCheck = #ffffff
-    public static let checkboxDefaultFill = #12a594
-    public static let checkboxDefaultFillHover = #0d9b8a
+    public static let checkboxDefaultFill = #007a68
+    public static let checkboxDefaultFillHover = #0d3d38
     public static let checkboxDefaultLabel = #202020
     public static let checkboxDefaultRadius = 6px
     public static let codeBlockDefaultBackground = #202020
-    public static let codeBlockDefaultBorderFocus = #12a594
+    public static let codeBlockDefaultBorderFocus = #007a68
     public static let codeBlockDefaultCopyBackground = #646464
     public static let codeBlockDefaultCopyBackgroundHover = #838383
     public static let codeBlockDefaultCopyText = #fcfcfc
@@ -110,15 +110,15 @@ public class AgenticaTokens {
     public static let inputDefaultBackground = #ffffff
     public static let inputDefaultBorder = #e8e8e8
     public static let inputDefaultBorderError = #ce2c31
-    public static let inputDefaultBorderFocus = #12a594
+    public static let inputDefaultBorderFocus = #007a68
     public static let inputDefaultPaddingX = 16px
     public static let inputDefaultPaddingY = 8px
     public static let inputDefaultPlaceholder = #646464
     public static let inputDefaultRadius = 6px
     public static let inputDefaultText = #202020
-    public static let linkDefaultBorderFocus = #12a594
-    public static let linkDefaultText = #12a594
-    public static let linkDefaultTextHover = #0d9b8a
+    public static let linkDefaultBorderFocus = #007a68
+    public static let linkDefaultText = #007a68
+    public static let linkDefaultTextHover = #0d3d38
     public static let primitiveColorAccent1 = #f0eded
     public static let primitiveColorAccent10 = #e05f7b
     public static let primitiveColorAccent11 = #a6294c
@@ -486,7 +486,7 @@ public class AgenticaTokens {
     public static let primitiveColorSlate9 = #8b9098
     public static let primitiveColorTeal1 = #fafefd
     public static let primitiveColorTeal10 = #0d9b8a
-    public static let primitiveColorTeal11 = #008573
+    public static let primitiveColorTeal11 = #007a68
     public static let primitiveColorTeal12 = #0d3d38
     public static let primitiveColorTeal2 = #f3fbf9
     public static let primitiveColorTeal3 = #e0f8f3
@@ -582,21 +582,21 @@ public class AgenticaTokens {
     public static let primitiveSpace8 = 32px
     public static let radioDefaultBackground = #ffffff
     public static let radioDefaultBorder = #e8e8e8
-    public static let radioDefaultBorderFocus = #12a594
-    public static let radioDefaultBorderHover = #12a594
-    public static let radioDefaultFill = #12a594
-    public static let radioDefaultFillHover = #0d9b8a
+    public static let radioDefaultBorderFocus = #007a68
+    public static let radioDefaultBorderHover = #007a68
+    public static let radioDefaultFill = #007a68
+    public static let radioDefaultFillHover = #0d3d38
     public static let radioDefaultLabel = #202020
-    public static let segmentedDefaultBorderFocus = #12a594
+    public static let segmentedDefaultBorderFocus = #007a68
     public static let segmentedDefaultRadius = 6px
-    public static let segmentedDefaultSelectedBackground = #12a594
+    public static let segmentedDefaultSelectedBackground = #007a68
     public static let segmentedDefaultSelectedText = #ffffff
     public static let segmentedDefaultText = #646464
     public static let segmentedDefaultTextHover = #202020
     public static let segmentedDefaultTrackBackground = #f0f0f0
-    public static let semanticColorActionPrimary = #12a594
+    public static let semanticColorActionPrimary = #007a68
     public static let semanticColorActionPrimaryDisabled = #d9d9d9
-    public static let semanticColorActionPrimaryHover = #0d9b8a
+    public static let semanticColorActionPrimaryHover = #0d3d38
     public static let semanticColorBackgroundHover = #fafafa
     public static let semanticColorBackgroundInverse = #0f1117
     public static let semanticColorBackgroundInverseRaised = #1a1e24
@@ -605,7 +605,7 @@ public class AgenticaTokens {
     public static let semanticColorBackgroundSurface = #ffffff
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8
-    public static let semanticColorBorderFocus = #12a594
+    public static let semanticColorBorderFocus = #007a68
     public static let semanticColorBorderOnInverse = rgba(255,255,255,0.18)
     public static let semanticColorBorderSwatch = rgba(0,0,0,0.10)
     public static let semanticColorBrandAccent = #ed6b86
@@ -644,6 +644,7 @@ public class AgenticaTokens {
     public static let semanticIconSizeNav = 24px
     public static let semanticRadiusCard = 10px
     public static let semanticRadiusControl = 6px
+    public static let semanticShadowCard = 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)
     public static let semanticShadowCardHover = 0 4px 16px rgba(13,116,206,0.10)
     public static let semanticShadowHeader = 0 2px 24px rgba(0,0,0,0.12)
     public static let semanticShadowRaised = 0 4px 16px rgba(0,0,0,0.10)
@@ -706,11 +707,11 @@ public class AgenticaTokens {
     public static let tablePaddingX = 12px
     public static let tablePaddingYComfortable = 12px
     public static let tablePaddingYCompact = 8px
-    public static let toggleDefaultBorderFocus = #12a594
+    public static let toggleDefaultBorderFocus = #007a68
     public static let toggleDefaultKnob = #ffffff
     public static let toggleDefaultLabel = #202020
     public static let toggleDefaultTrackOff = #8d8d8d
     public static let toggleDefaultTrackOffHover = #838383
-    public static let toggleDefaultTrackOn = #12a594
-    public static let toggleDefaultTrackOnHover = #0d9b8a
+    public static let toggleDefaultTrackOn = #007a68
+    public static let toggleDefaultTrackOnHover = #0d3d38
 }

@@ -21,7 +21,7 @@ $agtc-primary-palette: (
   40: #53b9ab,
   30: #12a594,
   20: #0d9b8a,
-  10: #008573,
+  10: #007a68,
   0: #0d3d38,
 );
 
@@ -122,6 +122,7 @@ $agtc-color-brand-secondary-text: var(--agtc-semantic-color-brand-secondary-text
 $agtc-shadow-header: var(--agtc-semantic-shadow-header);
 $agtc-shadow-raised: var(--agtc-semantic-shadow-raised);
 $agtc-shadow-card-hover: var(--agtc-semantic-shadow-card-hover);
+$agtc-shadow-card: var(--agtc-semantic-shadow-card);
 $agtc-space-density-factor-compact: var(--agtc-semantic-space-density-factor-compact);
 $agtc-space-density-factor-normal: var(--agtc-semantic-space-density-factor-normal);
 $agtc-space-density-factor-comfortable: var(--agtc-semantic-space-density-factor-comfortable);

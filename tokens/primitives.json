@@ -291,7 +291,7 @@
         "8":  { "$value": "#53b9ab", "$type": "color", "$description": "Hovered UI element border" },
         "9":  { "$value": "#12a594", "$type": "color", "$description": "Solid background — brand / CTA" },
         "10": { "$value": "#0d9b8a", "$type": "color", "$description": "Hovered solid background" },
-        "11": { "$value": "#008573", "$type": "color", "$description": "Low-contrast text" },
+        "11": { "$value": "#007a68", "$type": "color", "$description": "Texte/action accessible — teal interactif. 5.14:1 sur gray.1 #fcfcfc, WCAG AA. Voir ADR-050 (corrige #008573 = 4.45:1 sur le fond réel)." },
         "12": { "$value": "#0d3d38", "$type": "color", "$description": "High-contrast text" }
       },
 

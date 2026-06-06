@@ -226,7 +226,7 @@
   --agtc-primitive-color-teal-8: #53b9ab;
   --agtc-primitive-color-teal-9: #12a594;
   --agtc-primitive-color-teal-10: #0d9b8a;
-  --agtc-primitive-color-teal-11: #008573;
+  --agtc-primitive-color-teal-11: #007a68;
   --agtc-primitive-color-teal-12: #0d3d38;
   --agtc-primitive-color-jade-1: #fbfefd;
   --agtc-primitive-color-jade-2: #f4fbf7;
@@ -439,7 +439,7 @@
   --agtc-primitive-space-16: 64px;
 
   /* ── Semantic tokens — UX intentions ── */
-  --agtc-semantic-color-action-primary: #008573;
+  --agtc-semantic-color-action-primary: #007a68;
   --agtc-semantic-color-action-primary-hover: #0d3d38;
   --agtc-semantic-color-action-primary-disabled: #d9d9d9;
   --agtc-semantic-color-feedback-danger: #ce2c31;
@@ -469,7 +469,7 @@
   --agtc-semantic-color-text-on-inverse-secondary: rgba(255,255,255,0.75);
   --agtc-semantic-color-text-on-inverse-muted: rgba(255,255,255,0.52);
   --agtc-semantic-color-border-default: #e8e8e8;
-  --agtc-semantic-color-border-focus: #008573;
+  --agtc-semantic-color-border-focus: #007a68;
   --agtc-semantic-color-border-danger: #ce2c31;
   --agtc-semantic-color-border-on-inverse: rgba(255,255,255,0.18);
   --agtc-semantic-color-border-swatch: rgba(0,0,0,0.10);

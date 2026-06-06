@@ -1,12 +1,11 @@
 /**
  * Do not edit directly
- * Generated on Fri, 05 Jun 2026 14:57:54 GMT
+ * Generated on Sat, 06 Jun 2026 15:15:36 GMT
  */
 
 :root {
   --agtc-card-padding-none: 0px;
   --agtc-card-flat-border: transparent;
-  --agtc-card-elevated-shadow: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
   --agtc-card-elevated-border: transparent;
   --agtc-badge-sm-padding-y: 2px;
   --agtc-badge-sm-radius: 9999px;
@@ -19,6 +18,7 @@
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-semantic-shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
   --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
   --agtc-semantic-shadow-raised: 0 4px 16px rgba(0,0,0,0.10);
   --agtc-semantic-shadow-header: 0 2px 24px rgba(0,0,0,0.12);
@@ -256,7 +256,7 @@
   --agtc-primitive-color-jade-2: #f4fbf7;
   --agtc-primitive-color-jade-1: #fbfefd;
   --agtc-primitive-color-teal-12: #0d3d38;
-  --agtc-primitive-color-teal-11: #008573;
+  --agtc-primitive-color-teal-11: #007a68;
   --agtc-primitive-color-teal-10: #0d9b8a;
   --agtc-primitive-color-teal-9: #12a594;
   --agtc-primitive-color-teal-8: #53b9ab;
@@ -504,6 +504,7 @@
   --agtc-toggle-default-track-off: var(--agtc-primitive-color-gray-9);
   --agtc-card-padding-lg: var(--agtc-primitive-space-6);
   --agtc-card-padding-sm: var(--agtc-primitive-space-3);
+  --agtc-card-elevated-shadow: var(--agtc-semantic-shadow-card);
   --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
   --agtc-badge-md-padding-y: var(--agtc-primitive-space-1);
   --agtc-badge-md-padding-x: var(--agtc-primitive-space-3);
@@ -579,7 +580,7 @@
   --agtc-semantic-color-border-swatch: var(--agtc-primitive-color-black-2);
   --agtc-semantic-color-border-on-inverse: var(--agtc-primitive-color-white-12);
   --agtc-semantic-color-border-danger: var(--agtc-primitive-color-red-11);
-  --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-11);
   --agtc-semantic-color-border-default: var(--agtc-primitive-color-gray-4);
   --agtc-semantic-color-text-on-inverse-muted: var(--agtc-primitive-color-white-10);
   --agtc-semantic-color-text-on-inverse-secondary: var(--agtc-primitive-color-white-8);
@@ -608,8 +609,8 @@
   --agtc-semantic-color-feedback-danger-subtle: var(--agtc-primitive-color-red-3);
   --agtc-semantic-color-feedback-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-action-primary-disabled: var(--agtc-primitive-color-gray-6);
-  --agtc-semantic-color-action-primary-hover: var(--agtc-primitive-color-teal-10);
-  --agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-action-primary-hover: var(--agtc-primitive-color-teal-12);
+  --agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-11);
   --agtc-code-block-default-font-size: var(--agtc-semantic-typography-label-size);
   --agtc-code-block-default-radius: var(--agtc-semantic-radius-card);
   --agtc-code-block-default-border-focus: var(--agtc-semantic-color-border-focus);
