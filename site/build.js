@@ -78,6 +78,10 @@ function icon(name, size = 24, color = 'currentColor') {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${children}</svg>`;
 }
 
+function storybookIcon(size = 18) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>`;
+}
+
 // ─── TOKEN DATA ────────────────────────────────────────────────────────────
 const primitives   = readJson(path.join(TOKENS_DIR, 'primitives.json'));
 const semanticData = readJson(path.join(TOKENS_DIR, 'semantic.json'));
@@ -330,8 +334,8 @@ body{
 .top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
 .footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 .audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
-.top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
+.top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary)}
 /* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
 .top-nav a.nav-cta,.top-nav a.nav-cta.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);font-weight:600}
 .top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
@@ -429,6 +433,12 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:12px;overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+
+/* ── DARK ILLUSTRATION SECTIONS ──────────────────────────── */
+.home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26)}
+.home-section-ink .home-section h2{color:var(--agtc-semantic-color-text-on-inverse,#eff1f3);border-top-color:rgba(239,241,243,0.08)}
+.home-section-ink .home-section>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(239,241,243,0.65))}
+.home-section-ink .illus-block{border-radius:0;margin-left:-72px;margin-right:-72px}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -656,6 +666,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
+  .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
@@ -1032,13 +1043,13 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   // DÉMARRER en tête + traité comme CTA (cta:true) — action primaire d'adoption,
   // cohérente avec le hero d'accueil et la page get-started.
   const navLinks = [
-    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started', cta: true },
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
     { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
     { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
     { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
     { href: `${base}decisions/index.html`,  labelFr: 'Décisions',   labelEn: 'Decisions' },
     { href: `${base}agents/index.html`,     labelFr: 'Agents',      labelEn: 'Agents' },
+    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started', cta: true },
   ];
   const nav = navLinks.map(n =>
     `<a href="${n.href}"${n.cta ? ' class="nav-cta"' : ''}><span class="lang-fr">${n.labelFr}</span><span class="lang-en">${n.labelEn}</span></a>`
@@ -1058,7 +1069,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <span>© ${new Date().getFullYear()}</span>
       <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer">${icon('globe', 15)} Guilherme Negreiros</a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
-      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${icon('book-open', 15)} Storybook</a>
+      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
     </div>
     <div class="footer-credit">
       ${icon('bot', 14)}
@@ -1080,6 +1091,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
 <title>${docTitle}</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
@@ -1121,7 +1133,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <button type="button" data-lang="en" aria-current="false">EN</button>
   </div>
   <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
-    ${icon('book-open', 18)}
+    ${storybookIcon(18)}
   </a>
   <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
     ${icon('github', 18)}
@@ -1356,6 +1368,7 @@ function buildHome(adrs) {
   </div>
 </div>
 
+<div class="home-section-ink">
 <div class="home-section">
   <h2>
     <span class="lang-fr">Valeurs non négociables</span>
@@ -1374,6 +1387,7 @@ function buildHome(adrs) {
     </div>`).join('')}
   </div>
   <div class="illus-block">${svgGovernance}</div>
+</div>
 </div>
 
 <div class="stat-band" role="region" aria-label="Statistiques du système">
@@ -1411,6 +1425,7 @@ function buildHome(adrs) {
   </div>
 </div>
 
+<div class="home-section-ink">
 <div class="home-section">
   <h2>
     <span class="lang-fr">Pipeline de tokens</span>
@@ -1475,6 +1490,7 @@ function buildHome(adrs) {
       <span class="lang-en">Absolute rule: a component <strong>never</strong> references a primitive token directly — always through a semantic token. This indirection is what makes decisions legible to AI agents. <a href="tokens/index.html">Explore the three levels →</a></span>
     </div>
   </div>
+</div>
 </div>
 
 <div class="home-section">
@@ -1546,6 +1562,7 @@ function buildHome(adrs) {
   </a></p>
 </div>
 
+<div class="home-section-ink">
 <div class="home-section">
   <h2>
     <span class="lang-fr">Stack technique</span>
@@ -1581,6 +1598,7 @@ function buildHome(adrs) {
       </div>
     </div>`).join('')}
   </div>
+</div>
 </div>
 
 <div class="home-section">

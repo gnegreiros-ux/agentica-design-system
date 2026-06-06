@@ -52,8 +52,8 @@ body{
 .top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
 .footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 .audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
-.top-nav a:hover,.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.top-nav a.active{color:var(--agtc-semantic-color-action-primary)}
+.top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary)}
 /* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
 .top-nav a.nav-cta,.top-nav a.nav-cta.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);font-weight:600}
 .top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
@@ -151,6 +151,12 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:12px;overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+
+/* ── DARK ILLUSTRATION SECTIONS ──────────────────────────── */
+.home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26)}
+.home-section-ink .home-section h2{color:var(--agtc-semantic-color-text-on-inverse,#eff1f3);border-top-color:rgba(239,241,243,0.08)}
+.home-section-ink .home-section>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(239,241,243,0.65))}
+.home-section-ink .illus-block{border-radius:0;margin-left:-72px;margin-right:-72px}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -378,6 +384,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
+  .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
