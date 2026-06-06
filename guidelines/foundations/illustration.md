@@ -73,13 +73,23 @@ sur le pas de primitive le plus proche, le teal étant déjà commun à la marqu
 
 ---
 
-## Pipeline de production (proposé)
+## Illustrations produites (v1 approuvées)
+
+| Fichier | Sujet | Statut |
+|---------|-------|--------|
+| `illustrations/pipeline-tokens.svg` | Architecture 3 niveaux (Primitif → Sémantique → Composant) | ✅ v1 approuvé (2026-06-06) |
+| `illustrations/human-last-word.svg` | Gouvernance humaine — flux d'approbation Agent → Humain → Système | ✅ v1 approuvé (2026-06-06) |
+| `illustrations/multi-platform.svg`  | Style Dictionary multi-plateforme (6 sorties : CSS, Swift, JS, Android, Angular, Tailwind) | ✅ v1 approuvé (2026-06-06) |
+
+Style : **diagramme fonctionnel** sur fond `ink` (#211f26), accents teal, snippets de code réels.
+Chaque prochaine illustration suit le même style avant intégration site.
+
+---
+
+## Pipeline de production
 
 1. ✅ **Spec approuvé** (ce document) — décision humaine (2026-06-06).
 2. ✅ **Palette tokenisée** (`semantic.color.illustration.*`) + ADR-051.
-3. Composition vectorielle (formes géométriques) — brouillons SVG validés un par un. ← *prochaine étape*
-4. Application de la texture (grain/stipple/brush) — étape raster, outil à confirmer.
-5. Intégration site (light/dark), passage gate axe-core, log de construction.
-
-> **Décision en attente :** l'étape 4 (texture raster) se fait via outil IA piloté par l'humain
-> ou par un designer — à trancher. Les étapes 1-3 sont réalisables dans le dépôt.
+3. ✅ **Compositions vectorielles v1** — 3 illustrations diagrammes fonctionnels approuvées (2026-06-06).
+4. **Intégration site** (inline SVG dans `site/build.js`, light/dark, gate axe-core). ← *prochaine étape*
+5. Illustrations supplémentaires selon besoins (section rôles, hero, pipelines vitrine).
