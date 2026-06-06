@@ -9,12 +9,14 @@
     "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.cjs'",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "axe": "node scripts/axe-audit.js"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@chromatic-com/storybook": "^5.2.1",
     "@storybook/addon-a11y": "^10.4.1",
     "@storybook/addon-docs": "^10.4.1",

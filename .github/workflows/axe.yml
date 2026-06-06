@@ -1,0 +1,56 @@
+name: axe-core — Accessibilité WCAG
+
+# Audit d'accessibilité automatisé du site généré (ADR-007).
+# MODE RAPPORT pour l'instant (AXE_BLOCKING=false) : les violations héritées sont
+# rapportées sans bloquer le CI, le temps du burn-down. Retirer la variable
+# AXE_BLOCKING (ou la passer à true) pour activer le blocage dur une fois 0 violation.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'tokens/**'
+      - 'components/**'
+      - 'scripts/axe-audit.js'
+      - 'package.json'
+      - '.github/workflows/axe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  axe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        # npm install (et non npm ci) : aligné sur le workflow Chromatic — le lockfile
+        # racine est multi-plateforme et npm install réconcilie les binaires Linux.
+        run: npm install --no-audit --no-fund
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build site
+        run: node site/build.js
+
+      - name: Audit axe-core (mode rapport)
+        env:
+          AXE_BLOCKING: 'false'
+        run: npm run axe
+
+      - name: Upload axe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-report
+          path: axe-report.json
