@@ -487,6 +487,7 @@
   --agtc-semantic-shadow-header: 0 2px 24px rgba(0,0,0,0.12);
   --agtc-semantic-shadow-raised: 0 4px 16px rgba(0,0,0,0.10);
   --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
+  --agtc-semantic-shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
   --agtc-semantic-space-density-factor-compact: 0.75;
   --agtc-semantic-space-density-factor-normal: 1;
   --agtc-semantic-space-density-factor-comfortable: 1.25;
@@ -575,7 +576,7 @@
   --agtc-component-card-default-padding: var(--agtc-semantic-space-layout-component);
   --agtc-component-card-elevated-background: var(--agtc-semantic-color-background-surface);
   --agtc-component-card-elevated-border: transparent;
-  --agtc-component-card-elevated-shadow: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
+  --agtc-component-card-elevated-shadow: var(--agtc-semantic-shadow-card);
   --agtc-component-card-flat-background: var(--agtc-semantic-color-background-subtle);
   --agtc-component-card-flat-border: transparent;
   --agtc-component-card-padding-none: 0px;

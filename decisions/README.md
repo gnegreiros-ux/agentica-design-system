@@ -106,6 +106,7 @@ des décisions déjà tranchées.
 | [ADR-046](ADR-046-inverse-surfaces-shadows-tokens.md) | Surfaces inversées, ombres et jetons décoratifs | 2026-06-05 | ✅ Actif |
 | [ADR-047](ADR-047-no-visited-nav-rule.md) | Règle système : pas d'état `:visited` sur la navigation | 2026-06-05 | ✅ Actif |
 | [ADR-048](ADR-048-action-teal-wcag-contrast.md) | Teal interactif accessible : `action.primary` teal.9 → teal.11 (WCAG AA) | 2026-06-05 | ✅ Actif |
+| [ADR-049](ADR-049-card-shadow-token.md) | Ombre de carte au repos tokenisée : `semantic.shadow.card` (solde ADR-046) | 2026-06-05 | ✅ Actif |
 
 ---
 

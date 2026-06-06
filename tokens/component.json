@@ -126,7 +126,7 @@
     "elevated": {
       "background": { "value": "{semantic.color.background.surface}",                        "$type": "color" },
       "border":     { "value": "transparent",                                                "$type": "color" },
-      "shadow":     { "value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)",   "$type": "other" }
+      "shadow":     { "value": "{semantic.shadow.card}",                                    "$type": "other" }
     },
     "flat": {
       "background": { "value": "{semantic.color.background.subtle}", "$type": "color" },

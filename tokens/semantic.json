@@ -71,7 +71,8 @@
     "shadow": {
       "header":     { "value": "0 2px 24px rgba(0,0,0,0.12)",     "$type": "other", "$intent": "Ombre de l'en-tête fixe — séparation du contenu défilant (ADR-046)" },
       "raised":     { "value": "0 4px 16px rgba(0,0,0,0.10)",     "$type": "other", "$intent": "Ombre d'élément surélevé — menus déroulants, nav mobile (ADR-046)" },
-      "card-hover": { "value": "0 4px 16px rgba(13,116,206,0.10)", "$type": "other", "$intent": "Ombre de survol de carte — lift teinté marque (action.primary, ADR-046)" }
+      "card-hover": { "value": "0 4px 16px rgba(13,116,206,0.10)", "$type": "other", "$intent": "Ombre de survol de carte — lift teinté marque (action.primary, ADR-046)" },
+      "card":       { "value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)", "$type": "other", "$intent": "Ombre de carte au repos — élévation légère. Solde le résidu d'ADR-046 (consommée par component.card.elevated). Voir ADR-049." }
     },
     "space": {
       "density": {
