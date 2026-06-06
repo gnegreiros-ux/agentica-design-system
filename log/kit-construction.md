@@ -253,3 +253,8 @@
 | 2026-06-06 14:01 | Modifié | `.claude/rules/tokens-system.md` |
 | 2026-06-06 14:13 | Modifié | `decisions/README.md` |
 | 2026-06-06 14:25 | Modifié | `DESIGN.md` |
+| 2026-06-06 | Standards | **Adoption explicite du standard W3C DTCG** (designtokens.org) comme référence du format des design tokens. Propagation multi-surfaces : (1) `.claude/rules/tokens-system.md` — nouvelle section « Standard de référence » + tableau des conventions DTCG (`$value`/`$type`/`$description`/alias/`$schema`), règle « le standard fait foi » ; (2) `DESIGN.md` §2 — sous-section « Conformité au standard (W3C DTCG) » ; (3) `tokens/primitives.json` — ajout `$schema` (alignement avec `semantic.json` + `component.json` qui le portaient déjà → 3/3 fichiers conformes) ; (4) **site** — section d'accueil « Standards ouverts » avec **logo officiel DTCG inline** (fill `currentColor` = `text.primary`, lien externe `noopener` + `aria-label`, SVG `aria-hidden`+`<title>`) déclarant « Agentica suit le standard DTCG » (FR/EN) ; (5) `site/contenu.md` — puce « Standards ouverts » FR + EN (source de vérité copy) ; (6) logo officiel archivé `Brand/standards/dtcg-logo.svg` (versionné hors dossier prototype). Aucune valeur de token modifiée (ajout `$schema` = métadonnée DTCG, pas un changement de contrat). Build : 668 défini · 178 référencé · 0 fantôme · 69 fichiers. Audit axe non lancé en local (navigateurs Playwright absents → tourne en CI) ; combos de tokens employés déjà audités. |
+| 2026-06-06 14:39 | Créé | `decisions/ADR-052-dtcg-standard-conformance.md` |
+| 2026-06-06 14:40 | Modifié | `decisions/README.md` |
+| 2026-06-06 14:40 | Modifié | `.claude/rules/tokens-system.md` |
+| 2026-06-06 14:40 | Modifié | `DESIGN.md` |

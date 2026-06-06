@@ -109,6 +109,7 @@ des décisions déjà tranchées.
 | [ADR-049](ADR-049-card-shadow-token.md) | Ombre de carte au repos tokenisée : `semantic.shadow.card` (solde ADR-046) | 2026-06-05 | ✅ Actif |
 | [ADR-050](ADR-050-action-teal-contrast-real-surface.md) | Teal d'action accessible sur la surface réelle : primitif `teal.11` retuné (axe 76→0) | 2026-06-06 | ✅ Actif |
 | [ADR-051](ADR-051-illustration-style-palette.md) | Style d'illustration « Tactile Tech » + palette sémantique `color.illustration` | 2026-06-06 | ✅ Actif |
+| [ADR-052](ADR-052-dtcg-standard-conformance.md) | Conformité au standard W3C DTCG (designtokens.org) : `$schema` 3/3 fichiers + déclaration site | 2026-06-06 | ✅ Actif |
 
 ---
 
