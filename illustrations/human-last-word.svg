@@ -25,7 +25,7 @@
 
   <!-- Page title -->
   <text x="400" y="28" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="0.32">
+        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     GOUVERNANCE HUMAINE · FLUX D'APPROBATION
   </text>
 
@@ -70,7 +70,7 @@
   <rect x="24" y="182" width="200" height="138" rx="7"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
   <text x="34" y="200" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">Analyse WCAG automatisée</text>
+        fill="#eff1f3" fill-opacity="0.70">Analyse WCAG automatisée</text>
   <line x1="24" y1="208" x2="224" y2="208" stroke="#ffffff" stroke-opacity="0.06"/>
 
   <!-- action.primary row -->
@@ -82,7 +82,7 @@
   <line x1="24" y1="240" x2="224" y2="240" stroke="#ffffff" stroke-opacity="0.05"/>
 
   <text x="34" y="256" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">Suggestion :</text>
+        fill="#eff1f3" fill-opacity="0.70">Suggestion :</text>
   <!-- Before dot (teal.9 = slightly muted) -->
   <circle cx="38" cy="274" r="7" fill="#0f8a7c"/>
   <text x="50" y="278" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -96,7 +96,7 @@
 
   <!-- WCAG improvement -->
   <text x="34" y="301" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">WCAG AA : 3.07:1</text>
+        fill="#eff1f3" fill-opacity="0.70">WCAG AA : 3.07:1</text>
   <text x="130" y="301" font-family="system-ui,sans-serif" font-size="12"
         fill="#12a594" fill-opacity="0.60">→</text>
   <text x="144" y="301" font-family="system-ui,sans-serif" font-size="10"
@@ -147,7 +147,7 @@
   <rect x="294" y="185" width="212" height="155" rx="7"
         fill="#1a1820" stroke="#12a594" stroke-opacity="0.18" stroke-width="1"/>
   <text x="400" y="204" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.40">Modification proposée</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.70">Modification proposée</text>
   <line x1="294" y1="212" x2="506" y2="212" stroke="#12a594" stroke-opacity="0.12"/>
 
   <!-- Token change visual -->
@@ -163,7 +163,7 @@
         fill="#eff1f3">teal.11</text>
 
   <text x="304" y="278" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">Contraste : 3.07:1</text>
+        fill="#eff1f3" fill-opacity="0.70">Contraste : 3.07:1</text>
   <text x="388" y="278" font-family="system-ui,sans-serif" font-size="12" fill="#12a594">→</text>
   <text x="404" y="278" font-family="system-ui,sans-serif" font-size="10" fill="#12a594">4.52:1 ✓</text>
 
@@ -179,7 +179,7 @@
   <!-- Separator + note -->
   <line x1="284" y1="354" x2="516" y2="354" stroke="#12a594" stroke-opacity="0.12"/>
   <text x="400" y="371" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="9.5" fill="#12a594" fill-opacity="0.55">Seul l'humain peut approuver</text>
+        font-size="9.5" fill="#12a594" fill-opacity="0.80">Seul l'humain peut approuver</text>
 
   <!-- ═══════════════════════════════════════════════════════
        ARROW 2 — Humain → Système
@@ -202,9 +202,9 @@
   <rect x="672" y="86" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.70"/>
   <rect x="684" y="86" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.55"/>
   <!-- Grid row 2 -->
-  <rect x="660" y="98" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.40"/>
+  <rect x="660" y="98" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.70"/>
   <rect x="672" y="98" width="8" height="8" rx="1" fill="#12a594" fill-opacity="0.85"/>
-  <rect x="684" y="98" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.40"/>
+  <rect x="684" y="98" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.70"/>
   <!-- Grid row 3 -->
   <rect x="660" y="110" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.30"/>
   <rect x="672" y="110" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.55"/>
@@ -223,7 +223,7 @@
   <rect x="576" y="182" width="200" height="138" rx="7"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
   <text x="586" y="200" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">Après approbation humaine :</text>
+        fill="#eff1f3" fill-opacity="0.70">Après approbation humaine :</text>
   <line x1="576" y1="208" x2="776" y2="208" stroke="#ffffff" stroke-opacity="0.06"/>
 
   <!-- Checkmarks -->
@@ -251,7 +251,7 @@
        CAPTION
        ═══════════════════════════════════════════════════════ -->
   <text x="400" y="400" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" fill="#eff1f3" fill-opacity="0.22">
+        font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Les agents observent, analysent, proposent — les humains approuvent, décident, déploient
   </text>
 </svg>

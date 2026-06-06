@@ -25,7 +25,7 @@
 
   <!-- Page title -->
   <text x="400" y="33" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="0.32">
+        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     ARCHITECTURE DES TOKENS · 3 NIVEAUX
   </text>
 
@@ -45,40 +45,40 @@
   <line x1="22" y1="95" x2="234" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
   <text x="128" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.40">Valeurs physiques</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.70">Valeurs physiques</text>
 
   <!-- Swatch: teal.9 -->
   <circle cx="36" cy="142" r="11" fill="#12a594"/>
   <text x="55" y="138" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">teal.9</text>
   <text x="55" y="153" font-family="'Courier New',monospace,system-ui" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">#12A594</text>
+        fill="#eff1f3" fill-opacity="0.70">#12A594</text>
 
   <!-- Swatch: crimson.9 -->
   <circle cx="36" cy="181" r="11" fill="#e93d82"/>
   <text x="55" y="177" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">crimson.9</text>
   <text x="55" y="192" font-family="'Courier New',monospace,system-ui" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">#E93D82</text>
+        fill="#eff1f3" fill-opacity="0.70">#E93D82</text>
 
   <!-- Swatch: slate.9 -->
   <circle cx="36" cy="220" r="11" fill="#8b9098"/>
   <text x="55" y="216" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">slate.9</text>
   <text x="55" y="231" font-family="'Courier New',monospace,system-ui" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">#8B9098</text>
+        fill="#eff1f3" fill-opacity="0.70">#8B9098</text>
 
   <!-- Swatch: slate.3 (pale, needs border) -->
   <circle cx="36" cy="259" r="11" fill="#eff1f3" fill-opacity="0.92"
           stroke="#ffffff" stroke-opacity="0.15" stroke-width="1"/>
   <text x="55" y="255" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">slate.3</text>
   <text x="55" y="270" font-family="'Courier New',monospace,system-ui" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">#EFF1F3</text>
+        fill="#eff1f3" fill-opacity="0.70">#EFF1F3</text>
 
   <line x1="22" y1="292" x2="234" y2="292" stroke="#ffffff" stroke-opacity="0.06"/>
   <text x="128" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
         font-size="10" fill="#e93d82" fill-opacity="0.75">Jamais utilisé dans un composant</text>
   <text x="128" y="327" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.30">Stable · rarement modifié</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.65">Stable · rarement modifié</text>
   <text x="128" y="343" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.22">4 couleurs · typographie · espacement</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.60">4 couleurs · typographie · espacement</text>
 
   <!-- ═══════════════════════════════════════════════════════
        ARROW 1 · traduction
@@ -103,38 +103,38 @@
   <line x1="298" y1="95" x2="502" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
   <text x="400" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.40">Intentions UX</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.70">Intentions UX</text>
 
   <!-- Token: action.primary -->
   <circle cx="311" cy="142" r="8" fill="#12a594"/>
   <text x="327" y="138" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">action.primary</text>
   <text x="327" y="153" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">← teal.9</text>
+        fill="#eff1f3" fill-opacity="0.70">← teal.9</text>
 
   <!-- Token: feedback.danger -->
   <circle cx="311" cy="181" r="8" fill="#e93d82"/>
   <text x="327" y="177" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">feedback.danger</text>
   <text x="327" y="192" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">← crimson.9</text>
+        fill="#eff1f3" fill-opacity="0.70">← crimson.9</text>
 
   <!-- Token: text.secondary -->
   <circle cx="311" cy="220" r="8" fill="#8b9098"/>
   <text x="327" y="216" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">text.secondary</text>
   <text x="327" y="231" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">← slate.9</text>
+        fill="#eff1f3" fill-opacity="0.70">← slate.9</text>
 
   <!-- Token: background.page -->
   <circle cx="311" cy="259" r="8" fill="#eff1f3" fill-opacity="0.90"
           stroke="#ffffff" stroke-opacity="0.15" stroke-width="1"/>
   <text x="327" y="255" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">background.page</text>
   <text x="327" y="270" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.42">← slate.3</text>
+        fill="#eff1f3" fill-opacity="0.70">← slate.3</text>
 
   <line x1="298" y1="292" x2="502" y2="292" stroke="#ffffff" stroke-opacity="0.06"/>
   <text x="400" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
         font-size="10" fill="#12a594" fill-opacity="0.75">Nommés par fonction · pas par valeur</text>
   <text x="400" y="327" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.30">Peut être recontextualisé par thème</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.65">Peut être recontextualisé par thème</text>
 
   <!-- ═══════════════════════════════════════════════════════
        ARROW 2 · application
@@ -159,7 +159,7 @@
   <line x1="566" y1="95" x2="778" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
   <text x="672" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.40">Contrats institutionnels</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.70">Contrats institutionnels</text>
 
   <!-- Rendered primary button -->
   <rect x="568" y="126" width="202" height="46" rx="8"
@@ -176,25 +176,25 @@
   <!-- Token inheritance chain -->
   <line x1="566" y1="236" x2="778" y2="236" stroke="#ffffff" stroke-opacity="0.06"/>
   <text x="570" y="254" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">Chaîne de référence :</text>
+        fill="#eff1f3" fill-opacity="0.70">Chaîne de référence :</text>
   <text x="570" y="270" font-family="'Courier New',monospace,system-ui" font-size="10"
         fill="#12a594">button.primary.bg</text>
   <text x="570" y="286" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">  → action.primary</text>
+        fill="#eff1f3" fill-opacity="0.70">  → action.primary</text>
   <text x="570" y="301" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.38">  → teal.9 · #12A594</text>
+        fill="#eff1f3" fill-opacity="0.70">  → teal.9 · #12A594</text>
 
   <line x1="566" y1="318" x2="778" y2="318" stroke="#ffffff" stroke-opacity="0.06"/>
   <text x="672" y="337" text-anchor="middle" font-family="system-ui,sans-serif"
         font-size="10" fill="#e93d82" fill-opacity="0.75">Modifier = approbation requise</text>
   <text x="672" y="353" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.28">Contrat institutionnel · auditable</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.65">Contrat institutionnel · auditable</text>
 
   <!-- ═══════════════════════════════════════════════════════
        CAPTION
        ═══════════════════════════════════════════════════════ -->
   <text x="400" y="405" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" fill="#eff1f3" fill-opacity="0.22">
+        font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Les composants ne lisent jamais les primitifs directement — toujours via un token sémantique
   </text>
 </svg>

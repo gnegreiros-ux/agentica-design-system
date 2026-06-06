@@ -21,7 +21,7 @@
 
   <!-- Page title -->
   <text x="400" y="28" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="0.32">
+        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     STYLE DICTIONARY · COMPILATION MULTI-PLATEFORME
   </text>
 
@@ -38,7 +38,7 @@
   <!-- File icon -->
   <rect x="26" y="52" width="14" height="18" rx="2"
         fill="#eff1f3" fill-opacity="0.20"/>
-  <polygon points="35,52 40,52 40,57" fill="#1e1b22" fill-opacity="0.50"/>
+  <polygon points="35,52 40,52 40,57" fill="#1e1b22" fill-opacity="0.70"/>
   <!-- Filename -->
   <text x="46" y="65" font-family="'Courier New',monospace,system-ui" font-size="11"
         font-weight="700" fill="#12a594">tokens.json</text>
@@ -52,55 +52,55 @@
         fill="#eff1f3" fill-opacity="0.85">{</text>
 
   <text x="24" y="116" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">  "primitive": {</text>
+        fill="#eff1f3" fill-opacity="0.70">  "primitive": {</text>
   <text x="24" y="130" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">    "color": {</text>
+        fill="#eff1f3" fill-opacity="0.70">    "color": {</text>
 
   <!-- teal.9 row -->
   <text x="24" y="146" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">      "teal": { "9": {</text>
+        fill="#eff1f3" fill-opacity="0.70">      "teal": { "9": {</text>
   <text x="24" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#8b9098">        "$value":</text>
+        fill="#a8b5be">        "$value":</text>
   <text x="112" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
         fill="#12a594">"#12A594"</text>
   <!-- Teal swatch -->
   <circle cx="200" cy="156" r="7" fill="#12a594"/>
   <text x="24" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#8b9098">        "$type": </text>
+        fill="#a8b5be">        "$type": </text>
   <text x="117" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
         fill="#e93d82">"color"</text>
   <text x="24" y="188" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">      }}</text>
+        fill="#eff1f3" fill-opacity="0.70">      }}</text>
 
   <!-- crimson.9 row -->
   <text x="24" y="204" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">   "crimson": {"9": {</text>
+        fill="#eff1f3" fill-opacity="0.70">   "crimson": {"9": {</text>
   <text x="24" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#8b9098">        "$value":</text>
+        fill="#a8b5be">        "$value":</text>
   <text x="112" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
         fill="#e93d82">"#E93D82"</text>
   <!-- Crimson swatch -->
   <circle cx="200" cy="214" r="7" fill="#e93d82"/>
   <text x="24" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#8b9098">        "$type": </text>
+        fill="#a8b5be">        "$type": </text>
   <text x="117" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
         fill="#e93d82">"color"</text>
   <text x="24" y="246" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">      }}</text>
+        fill="#eff1f3" fill-opacity="0.70">      }}</text>
 
   <text x="24" y="262" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">    }</text>
+        fill="#eff1f3" fill-opacity="0.70">    }</text>
   <text x="24" y="276" font-family="'Courier New',monospace,system-ui" font-size="10.5"
-        fill="#eff1f3" fill-opacity="0.50">  }</text>
+        fill="#eff1f3" fill-opacity="0.70">  }</text>
   <text x="24" y="292" font-family="'Courier New',monospace,system-ui" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.85">}</text>
 
   <!-- Footer note -->
   <line x1="14" y1="308" x2="226" y2="308" stroke="#12a594" stroke-opacity="0.12"/>
   <text x="120" y="325" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.35">Source unique de vérité</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.70">Source unique de vérité</text>
   <text x="120" y="341" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10" fill="#eff1f3" fill-opacity="0.22">Modifiée → propagée partout</text>
+        font-size="10" fill="#eff1f3" fill-opacity="0.65">Modifiée → propagée partout</text>
 
   <!-- ═══════════════════════════════════════════════════════
        FAN LINES — source to platform cards
@@ -109,7 +109,7 @@
 
   <!-- "compile" label in the fan area -->
   <text x="252" y="210" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="9" fill="#12a594" fill-opacity="0.50" writing-mode="tb">compile</text>
+        font-size="9" fill="#12a594" fill-opacity="0.70" writing-mode="tb">compile</text>
 
   <!-- CSS card target: (280, 93) -->
   <line x1="229" y1="210" x2="280" y2="93" stroke="#12a594" stroke-opacity="0.25"
@@ -142,7 +142,7 @@
   <text x="314" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">CSS · Web</text>
   <text x="298" y="89" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">dist/tokens/css/</text>
+        fill="#eff1f3" fill-opacity="0.70">dist/tokens/css/</text>
   <rect x="288" y="100" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="296" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -157,7 +157,7 @@
   <text x="544" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Swift · iOS</text>
   <text x="528" y="89" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">dist/tokens/swift/</text>
+        fill="#eff1f3" fill-opacity="0.70">dist/tokens/swift/</text>
   <rect x="518" y="100" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="526" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -172,7 +172,7 @@
   <text x="314" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Angular · M3</text>
   <text x="298" y="207" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">dist/tokens/scss/</text>
+        fill="#eff1f3" fill-opacity="0.70">dist/tokens/scss/</text>
   <rect x="288" y="218" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="296" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -189,7 +189,7 @@
   <text x="544" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">JavaScript · ESM</text>
   <text x="528" y="207" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">dist/tokens/js/</text>
+        fill="#eff1f3" fill-opacity="0.70">dist/tokens/js/</text>
   <rect x="518" y="218" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="526" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -204,7 +204,7 @@
   <text x="314" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Tailwind CSS</text>
   <text x="298" y="325" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">tailwind.config.js</text>
+        fill="#eff1f3" fill-opacity="0.70">tailwind.config.js</text>
   <rect x="288" y="336" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="296" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -219,7 +219,7 @@
   <text x="544" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Android · XML</text>
   <text x="528" y="325" font-family="system-ui,sans-serif" font-size="10"
-        fill="#eff1f3" fill-opacity="0.35">res/values/colors.xml</text>
+        fill="#eff1f3" fill-opacity="0.70">res/values/colors.xml</text>
   <rect x="518" y="336" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
   <text x="526" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
@@ -231,7 +231,7 @@
        CAPTION
        ═══════════════════════════════════════════════════════ -->
   <text x="400" y="405" text-anchor="middle" font-family="system-ui,sans-serif"
-        font-size="10.5" fill="#eff1f3" fill-opacity="0.22">
+        font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Un token · six plateformes — toujours synchronisés depuis la même source de vérité
   </text>
 </svg>
