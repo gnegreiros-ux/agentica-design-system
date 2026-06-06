@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Illustration : Multi-plateforme — Style Dictionary
+  Style : Diagramme fonctionnel · dark · ADR-051
+  Brouillon v1 — en attente d'approbation humaine
+-->
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="Style Dictionary compile les tokens en 6 plateformes : CSS, Swift, Android, JavaScript, Tailwind, Angular">
+  <title>Multi-plateforme — Style Dictionary</title>
+
+  <defs>
+    <radialGradient id="glow3" cx="20%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#12a594" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#12a594" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="var(--agtc-semantic-color-illustration-ink,#211f26)"/>
+  <rect width="800" height="420" fill="url(#glow3)"/>
+
+  <!-- Page title -->
+  <text x="400" y="28" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="0.32">
+    STYLE DICTIONARY · COMPILATION MULTI-PLATEFORME
+  </text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SOURCE — tokens.json  (x=14, y=44, w=212, h=336)
+       ═══════════════════════════════════════════════════════ -->
+  <rect x="14" y="44" width="212" height="336" rx="10"
+        fill="#1e1b22" stroke="#12a594" stroke-opacity="0.22" stroke-width="1"/>
+
+  <!-- File tab header -->
+  <rect x="14" y="44" width="212" height="38" rx="10"
+        fill="#12a594" fill-opacity="0.14"/>
+  <rect x="14" y="62" width="212" height="20" fill="#12a594" fill-opacity="0.14"/>
+  <!-- File icon -->
+  <rect x="26" y="52" width="14" height="18" rx="2"
+        fill="#eff1f3" fill-opacity="0.20"/>
+  <polygon points="35,52 40,52 40,57" fill="#1e1b22" fill-opacity="0.50"/>
+  <!-- Filename -->
+  <text x="46" y="65" font-family="'Courier New',monospace,system-ui" font-size="11"
+        font-weight="700" fill="#12a594">tokens.json</text>
+  <text x="154" y="65" font-family="system-ui,sans-serif" font-size="9"
+        fill="#12a594" fill-opacity="0.55">W3C DTCG</text>
+
+  <line x1="14" y1="82" x2="226" y2="82" stroke="#12a594" stroke-opacity="0.14"/>
+
+  <!-- JSON content (monospace) -->
+  <text x="24" y="100" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.85">{</text>
+
+  <text x="24" y="116" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">  "primitive": {</text>
+  <text x="24" y="130" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">    "color": {</text>
+
+  <!-- teal.9 row -->
+  <text x="24" y="146" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">      "teal": { "9": {</text>
+  <text x="24" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#8b9098">        "$value":</text>
+  <text x="112" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#12a594">"#12A594"</text>
+  <!-- Teal swatch -->
+  <circle cx="200" cy="156" r="7" fill="#12a594"/>
+  <text x="24" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#8b9098">        "$type": </text>
+  <text x="117" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#e93d82">"color"</text>
+  <text x="24" y="188" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">      }}</text>
+
+  <!-- crimson.9 row -->
+  <text x="24" y="204" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">   "crimson": {"9": {</text>
+  <text x="24" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#8b9098">        "$value":</text>
+  <text x="112" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#e93d82">"#E93D82"</text>
+  <!-- Crimson swatch -->
+  <circle cx="200" cy="214" r="7" fill="#e93d82"/>
+  <text x="24" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#8b9098">        "$type": </text>
+  <text x="117" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#e93d82">"color"</text>
+  <text x="24" y="246" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">      }}</text>
+
+  <text x="24" y="262" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">    }</text>
+  <text x="24" y="276" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.50">  }</text>
+  <text x="24" y="292" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+        fill="#eff1f3" fill-opacity="0.85">}</text>
+
+  <!-- Footer note -->
+  <line x1="14" y1="308" x2="226" y2="308" stroke="#12a594" stroke-opacity="0.12"/>
+  <text x="120" y="325" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="10" fill="#eff1f3" fill-opacity="0.35">Source unique de vérité</text>
+  <text x="120" y="341" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="10" fill="#eff1f3" fill-opacity="0.22">Modifiée → propagée partout</text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FAN LINES — source to platform cards
+       (rendered before cards so they're hidden beneath)
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- "compile" label in the fan area -->
+  <text x="252" y="210" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="9" fill="#12a594" fill-opacity="0.50" writing-mode="tb">compile</text>
+
+  <!-- CSS card target: (280, 93) -->
+  <line x1="229" y1="210" x2="280" y2="93" stroke="#12a594" stroke-opacity="0.25"
+        stroke-width="1" stroke-dasharray="4,4"/>
+  <!-- Swift card target: (510, 93) -->
+  <line x1="229" y1="210" x2="510" y2="93" stroke="#12a594" stroke-opacity="0.18"
+        stroke-width="1" stroke-dasharray="4,4"/>
+  <!-- Angular card target: (280, 211) -->
+  <line x1="229" y1="210" x2="280" y2="211" stroke="#12a594" stroke-opacity="0.28"
+        stroke-width="1.5" stroke-dasharray="5,4"/>
+  <!-- JS card target: (510, 211) -->
+  <line x1="229" y1="210" x2="510" y2="211" stroke="#12a594" stroke-opacity="0.20"
+        stroke-width="1" stroke-dasharray="4,4"/>
+  <!-- Tailwind card target: (280, 329) -->
+  <line x1="229" y1="210" x2="280" y2="329" stroke="#12a594" stroke-opacity="0.18"
+        stroke-width="1" stroke-dasharray="4,4"/>
+  <!-- Android card target: (510, 329) -->
+  <line x1="229" y1="210" x2="510" y2="329" stroke="#12a594" stroke-opacity="0.14"
+        stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PLATFORM CARDS — Col1: x=280 w=215, Col2: x=510 w=215
+       Row1: y=44 h=98, Row2: y=162 h=98, Row3: y=280 h=98
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- ─── CSS / Web  (Col1, Row1) ─── -->
+  <rect x="280" y="44" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <circle cx="298" cy="68" r="8" fill="#1572b6"/>
+  <text x="314" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">CSS · Web</text>
+  <text x="298" y="89" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">dist/tokens/css/</text>
+  <rect x="288" y="100" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="296" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#12a594">--agtc-color-teal-9:</text>
+  <text x="414" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">#12A594;</text>
+
+  <!-- ─── Swift / iOS  (Col2, Row1) ─── -->
+  <rect x="510" y="44" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <circle cx="528" cy="68" r="8" fill="#f05138"/>
+  <text x="544" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">Swift · iOS</text>
+  <text x="528" y="89" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">dist/tokens/swift/</text>
+  <rect x="518" y="100" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="526" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#f05138">Color</text>
+  <text x="554" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">.teal9 = "#12A594"</text>
+
+  <!-- ─── Angular / M3  (Col1, Row2) ─── -->
+  <rect x="280" y="162" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <circle cx="298" cy="186" r="8" fill="#dd0031"/>
+  <text x="314" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">Angular · M3</text>
+  <text x="298" y="207" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">dist/tokens/scss/</text>
+  <rect x="288" y="218" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="296" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#dd0031">$color-teal-9:</text>
+  <text x="386" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">#12A594;</text>
+
+  <!-- ─── JavaScript / ESM  (Col2, Row2) ─── -->
+  <rect x="510" y="162" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <rect x="518" y="178" width="16" height="16" rx="3" fill="#f7df1e"/>
+  <text x="516" y="191" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="10" font-weight="700" fill="#1a1820">JS</text>
+  <text x="544" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">JavaScript · ESM</text>
+  <text x="528" y="207" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">dist/tokens/js/</text>
+  <rect x="518" y="218" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="526" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#f7df1e">export const</text>
+  <text x="614" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">teal9 = "#12A594"</text>
+
+  <!-- ─── Tailwind CSS  (Col1, Row3) ─── -->
+  <rect x="280" y="280" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <circle cx="298" cy="304" r="8" fill="#38bdf8"/>
+  <text x="314" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">Tailwind CSS</text>
+  <text x="298" y="325" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">tailwind.config.js</text>
+  <rect x="288" y="336" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="296" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#38bdf8">teal:</text>
+  <text x="323" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">{ 9: "#12A594" }</text>
+
+  <!-- ─── Android / XML  (Col2, Row3) ─── -->
+  <rect x="510" y="280" width="215" height="98" rx="8"
+        fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
+  <circle cx="528" cy="304" r="8" fill="#3ddc84"/>
+  <text x="544" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#eff1f3">Android · XML</text>
+  <text x="528" y="325" font-family="system-ui,sans-serif" font-size="10"
+        fill="#eff1f3" fill-opacity="0.35">res/values/colors.xml</text>
+  <rect x="518" y="336" width="199" height="30" rx="5"
+        fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
+  <text x="526" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#3ddc84">&lt;color</text>
+  <text x="568" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+        fill="#eff1f3" fill-opacity="0.70">name="teal9"&gt;</text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CAPTION
+       ═══════════════════════════════════════════════════════ -->
+  <text x="400" y="405" text-anchor="middle" font-family="system-ui,sans-serif"
+        font-size="10.5" fill="#eff1f3" fill-opacity="0.22">
+    Un token · six plateformes — toujours synchronisés depuis la même source de vérité
+  </text>
+</svg>
