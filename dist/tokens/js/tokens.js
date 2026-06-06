@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 06 Jun 2026 15:15:36 GMT
+ * Generated on Sat, 06 Jun 2026 18:24:23 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -499,6 +499,11 @@ export const SemanticColorBorderDanger = "#ce2c31";
 export const SemanticColorBorderOnInverse = "rgba(255,255,255,0.18)";
 export const SemanticColorBorderSwatch = "rgba(0,0,0,0.10)";
 export const SemanticColorVizScaleBar = "#fdbdbe";
+export const SemanticColorIllustrationInk = "#211f26";
+export const SemanticColorIllustrationAccent = "#e93d82";
+export const SemanticColorIllustrationBrand = "#12a594";
+export const SemanticColorIllustrationNeutral = "#8b9098";
+export const SemanticColorIllustrationSurface = "#eff1f3";
 export const SemanticColorBrandPrimary = "#12a594";
 export const SemanticColorBrandPrimaryHover = "#0d9b8a";
 export const SemanticColorBrandPrimarySubtle = "#e0f8f3";

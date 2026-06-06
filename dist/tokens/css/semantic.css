@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 06 Jun 2026 15:15:36 GMT
+ * Generated on Sat, 06 Jun 2026 18:24:23 GMT
  */
 
 :root {
@@ -70,6 +70,11 @@
   --agtc-semantic-color-brand-primary-subtle: var(--agtc-primitive-color-teal-3);
   --agtc-semantic-color-brand-primary-hover: var(--agtc-primitive-color-teal-10);
   --agtc-semantic-color-brand-primary: var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-illustration-surface: var(--agtc-primitive-color-slate-3);
+  --agtc-semantic-color-illustration-neutral: var(--agtc-primitive-color-slate-9);
+  --agtc-semantic-color-illustration-brand: var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-illustration-accent: var(--agtc-primitive-color-crimson-9);
+  --agtc-semantic-color-illustration-ink: var(--agtc-primitive-color-mauve-12);
   --agtc-semantic-color-viz-scale-bar: var(--agtc-primitive-color-red-6);
   --agtc-semantic-color-border-swatch: var(--agtc-primitive-color-black-2);
   --agtc-semantic-color-border-on-inverse: var(--agtc-primitive-color-white-12);

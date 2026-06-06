@@ -474,6 +474,11 @@
   --agtc-semantic-color-border-on-inverse: rgba(255,255,255,0.18);
   --agtc-semantic-color-border-swatch: rgba(0,0,0,0.10);
   --agtc-semantic-color-viz-scale-bar: #fdbdbe;
+  --agtc-semantic-color-illustration-ink: #211f26;
+  --agtc-semantic-color-illustration-accent: #e93d82;
+  --agtc-semantic-color-illustration-brand: #12a594;
+  --agtc-semantic-color-illustration-neutral: #8b9098;
+  --agtc-semantic-color-illustration-surface: #eff1f3;
   --agtc-semantic-color-brand-primary: #12a594;
   --agtc-semantic-color-brand-primary-hover: #0d9b8a;
   --agtc-semantic-color-brand-primary-subtle: #e0f8f3;

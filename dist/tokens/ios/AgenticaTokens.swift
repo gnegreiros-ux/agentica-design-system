@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 06 Jun 2026 15:15:37 GMT
+// Generated on Sat, 06 Jun 2026 18:24:23 GMT
 
 
 import UIKit
@@ -630,6 +630,11 @@ public class AgenticaTokens {
     public static let semanticColorFeedbackWarning = #cc4e00
     public static let semanticColorFeedbackWarningBorder = #ffc182
     public static let semanticColorFeedbackWarningSubtle = #ffefd6
+    public static let semanticColorIllustrationAccent = #e93d82
+    public static let semanticColorIllustrationBrand = #12a594
+    public static let semanticColorIllustrationInk = #211f26
+    public static let semanticColorIllustrationNeutral = #8b9098
+    public static let semanticColorIllustrationSurface = #eff1f3
     public static let semanticColorTextDisabled = #767676
     public static let semanticColorTextOnAction = #ffffff
     public static let semanticColorTextOnDanger = #ffffff
