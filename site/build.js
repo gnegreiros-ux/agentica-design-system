@@ -769,6 +769,11 @@ html[data-lang="en"] .lang-fr{display:none}
 .standards-band p{margin:0;font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary)}
 @media (max-width:560px){.standards-band{flex-direction:column;align-items:flex-start}}
 
+/* ── VENDOR LOGOS (frameworks / plateformes / outils) ────── */
+.vendor-logo{height:20px;width:20px;flex-shrink:0;display:inline-block;vertical-align:middle;object-fit:contain}
+.platform-cell{display:flex;align-items:center;gap:8px}
+.tool-card-icon .vendor-logo{height:22px;width:22px}
+
 /* ── STEP CARDS ──────────────────────────────────────────── */
 .step-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px}
 .step-card-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
@@ -1555,7 +1560,7 @@ function buildHome(adrs) {
       [icon('camera',18),'Chromatic','Visual testing','Régressions visuelles, PR previews','Visual regressions, PR previews'],
       [icon('accessibility',18),'axe-core','Accessibility','Audit automatique WCAG','Automatic WCAG audit'],
       [icon('test-tube',18),'Playwright','E2E tests','Parcours complets automatisés','Automated end-to-end flows'],
-      [icon('book-open',18),'Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
+      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
     ].map(([ico,name,role,dFr,dEn]) => `
     <div class="tool-card">
       <div class="tool-card-icon">${ico}</div>
@@ -2300,12 +2305,12 @@ function buildButton() {
 <table class="token-table"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
   <thead><tr><th>Framework</th><th><code>icon="..."</code></th><th><code>slot="prefix"</code></th><th>Figma Code Connect</th></tr></thead>
   <tbody>
-    <tr><td>HTML natif</td><td>✅</td><td>✅</td><td>—</td></tr>
-    <tr><td>React 19</td><td>✅</td><td>✅</td><td>✅</td></tr>
-    <tr><td>React 18</td><td>✅</td><td>⚠️ <span class="lang-fr">via ref</span><span class="lang-en">via ref</span></td><td>✅</td></tr>
-    <tr><td>Angular</td><td>✅</td><td>✅</td><td>✅</td></tr>
-    <tr><td>Vue 3</td><td>✅</td><td>✅</td><td>✅</td></tr>
-    <tr><td>Svelte</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell">${icon('code',18)}HTML natif</span></td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 19</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 18</span></td><td>✅</td><td>⚠️ <span class="lang-fr">via ref</span><span class="lang-en">via ref</span></td><td>✅</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">Angular</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell">${icon('code',18)}Vue 3</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell">${icon('code',18)}Svelte</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
   </tbody>
 </table>
 
@@ -3964,16 +3969,17 @@ git clone ${REPO}.git
 <agtc-button variant="primary">Enregistrer</agtc-button>
 <agtc-button variant="critical">Supprimer le dossier</agtc-button>`);
 
+  // logo : nom de fichier dans integrations/ (couleur de marque), ou icône Lucide pour CSS/JS.
   const platforms = [
-    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties'],
-    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports'],
-    ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension'],
-    ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS'],
-    ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift'],
-    ['android', 'dist/tokens/android/', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)'],
+    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', icon('code',18)],
+    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            icon('code',18)],
+    ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
+    ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
+    ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],
+    ['android', 'dist/tokens/android/', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)','<img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy">'],
   ];
-  const platformRows = platforms.map(([p, file, fr, en]) =>
-    `<tr><td><code>${p}</code></td><td><code>${file}</code></td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`
+  const platformRows = platforms.map(([p, file, fr, en, logo]) =>
+    `<tr><td><span class="platform-cell">${logo}<code>${p}</code></span></td><td><code>${file}</code></td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`
   ).join('');
 
   const body = `
@@ -4343,6 +4349,17 @@ function build() {
   // Logo SVG depuis Brand/logo/
   const logoSrc = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - teal.svg');
   if (fs.existsSync(logoSrc)) fs.copyFileSync(logoSrc, path.join(DIST, 'logo.svg'));
+
+  // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
+  // Affichés dans leurs couleurs de marque officielles → copiés tels quels, servis via <img>.
+  const integrationsSrc = path.join(__dirname, '..', 'Brand', 'integrations');
+  if (fs.existsSync(integrationsSrc)) {
+    const integrationsDst = path.join(DIST, 'integrations');
+    ensureDir(integrationsDst);
+    fs.readdirSync(integrationsSrc)
+      .filter(f => f.endsWith('.svg'))
+      .forEach(f => fs.copyFileSync(path.join(integrationsSrc, f), path.join(integrationsDst, f)));
+  }
 
   const adrs = loadADRs();
   buildHome(adrs);
