@@ -426,6 +426,10 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .pipeline-desc{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
 .pipeline-example{font-family:var(--agtc-font-mono);font-size:11.5px;color:var(--agtc-semantic-color-action-primary);margin-top:10px;background:var(--agtc-semantic-color-background-surface);padding:6px 10px;border-radius:4px;border:1px solid var(--agtc-semantic-color-border-default)}
 
+/* ── ILLUSTRATIONS ───────────────────────────────────────── */
+.illus-block{margin:32px 0 24px;border-radius:12px;overflow:hidden;line-height:0}
+.illus-block svg{display:block;width:100%;height:auto}
+
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
 .principle-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:22px}
@@ -1242,6 +1246,10 @@ function buildHome(adrs) {
   const primCount  = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
+  const svgPipeline   = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
+  const svgGovernance = read(path.join(ROOT, 'illustrations/human-last-word.svg'));
+  const svgMultiPlat  = read(path.join(ROOT, 'illustrations/multi-platform.svg'));
+
   const principles = [
     [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel.','Digital sovereignty','Data, decisions and tools remain under organizational control.'],
     [icon('accessibility',24),'Accessibilité première','WCAG 2.1 AA minimum. Non contournable, non négociable.','Accessibility first','WCAG 2.1 AA minimum. Non-negotiable.'],
@@ -1365,6 +1373,7 @@ function buildHome(adrs) {
       <div class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></div>
     </div>`).join('')}
   </div>
+  <div class="illus-block">${svgGovernance}</div>
 </div>
 
 <div class="stat-band" role="region" aria-label="Statistiques du système">
@@ -1411,6 +1420,7 @@ function buildHome(adrs) {
     <span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span>
     <span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span>
   </p>
+  <div class="illus-block">${svgPipeline}</div>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag">
@@ -1545,6 +1555,7 @@ function buildHome(adrs) {
     <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
     <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
   </p>
+  <div class="illus-block">${svgMultiPlat}</div>
   <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
