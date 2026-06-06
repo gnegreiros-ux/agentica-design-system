@@ -41,8 +41,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const p = window.location.pathname;
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
-    if (h !== 'index.html' && p.includes(h.split('/').pop().replace('.html',''))) a.classList.add('active');
-    if (p.endsWith('index.html') && h === 'index.html') a.classList.add('active');
+    // Strip leading ../ to get the logical path segments
+    const parts = h.split('/').filter(s => s !== '..' && s !== '.');
+    const hFile = parts[parts.length - 1] || '';          // e.g. 'color.html'
+    const hDir  = parts.length > 1 ? parts[parts.length - 2] : ''; // e.g. 'foundations'
+    let active = false;
+    if (hDir) {
+      // Section link (foundations/color.html, components/index.html, …)
+      // Active on any page within that section directory
+      active = p.includes('/' + hDir + '/');
+    } else if (hFile === 'index.html') {
+      // Accueil — only on the root homepage
+      active = p === '/' || p.endsWith('/index.html') && !p.includes('/foundations/') && !p.includes('/components/') && !p.includes('/tokens/') && !p.includes('/decisions/') && !p.includes('/agents/');
+    } else {
+      // Top-level page like get-started.html
+      active = p.endsWith('/' + hFile);
+    }
+    if (active) a.classList.add('active');
   });
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) a.classList.add('active');

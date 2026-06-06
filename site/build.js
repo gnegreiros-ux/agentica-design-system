@@ -330,10 +330,10 @@ body{
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
-.storybook-btn:visited     {color:var(--agtc-semantic-color-text-secondary)}
-.top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
-.footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
-.audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+.top-nav a.nav-cta:visited {color:#ffffff;color:var(--agtc-semantic-color-text-on-action)}
+.footer-links a:visited    {color:rgba(255,255,255,0.75);color:var(--agtc-semantic-color-text-on-inverse-secondary)}
+.audit-footer-link:visited {color:rgba(255,255,255,0.52);color:var(--agtc-semantic-color-text-on-inverse-muted)}
 .top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary)}
 /* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
@@ -435,9 +435,12 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .illus-block svg{display:block;width:100%;height:auto}
 
 /* ── DARK ILLUSTRATION SECTIONS ──────────────────────────── */
-.home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26)}
-.home-section-ink .home-section h2{color:var(--agtc-semantic-color-text-on-inverse,#eff1f3);border-top-color:rgba(239,241,243,0.08)}
-.home-section-ink .home-section>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(239,241,243,0.65))}
+.home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26);overflow-x:hidden}
+.home-section-ink .home-section h2{
+  color:var(--agtc-semantic-color-text-on-inverse,#eff1f3);
+  border-top:none;margin-top:0;padding-top:0;
+}
+.home-section-ink .home-section>p{color:rgba(255,255,255,0.78);color:var(--agtc-semantic-color-text-on-inverse-secondary,rgba(255,255,255,0.75))}
 .home-section-ink .illus-block{border-radius:0;margin-left:-72px;margin-right:-72px}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
@@ -901,8 +904,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const p = window.location.pathname;
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
-    if (h !== 'index.html' && p.includes(h.split('/').pop().replace('.html',''))) a.classList.add('active');
-    if (p.endsWith('index.html') && h === 'index.html') a.classList.add('active');
+    // Strip leading ../ to get the logical path segments
+    const parts = h.split('/').filter(s => s !== '..' && s !== '.');
+    const hFile = parts[parts.length - 1] || '';          // e.g. 'color.html'
+    const hDir  = parts.length > 1 ? parts[parts.length - 2] : ''; // e.g. 'foundations'
+    let active = false;
+    if (hDir) {
+      // Section link (foundations/color.html, components/index.html, …)
+      // Active on any page within that section directory
+      active = p.includes('/' + hDir + '/');
+    } else if (hFile === 'index.html') {
+      // Accueil — only on the root homepage
+      active = p === '/' || p.endsWith('/index.html') && !p.includes('/foundations/') && !p.includes('/components/') && !p.includes('/tokens/') && !p.includes('/decisions/') && !p.includes('/agents/');
+    } else {
+      // Top-level page like get-started.html
+      active = p.endsWith('/' + hFile);
+    }
+    if (active) a.classList.add('active');
   });
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) a.classList.add('active');
