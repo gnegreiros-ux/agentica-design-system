@@ -80,3 +80,19 @@ decisions/                             ← pourquoi les décisions ont été pri
 - ❌ Déployer en production sans validation humaine
 - ❌ Ignorer un rapport de violation d'accessibilité
 - ❌ Contourner les règles de lint
+
+---
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Using the five default canonical labels (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.
