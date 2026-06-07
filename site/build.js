@@ -441,7 +441,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
   border-top:none;margin-top:0;padding-top:0;
 }
 .home-section-ink .home-section>p{color:rgba(255,255,255,0.78);color:var(--agtc-semantic-color-text-on-inverse-secondary,rgba(255,255,255,0.75))}
-.home-section-ink .illus-block{border-radius:0;margin-left:-72px;margin-right:-72px}
+.home-section-ink .illus-block{border-radius:0;margin-left:-72px;margin-right:-72px;margin-top:64px;margin-bottom:48px}
 /* Principle cards : verre sombre sur fond ink */
 .home-section-ink .principle-card{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.10)}
 .home-section-ink .principle-title{color:var(--agtc-semantic-color-text-on-inverse,#eff1f3)}
@@ -680,7 +680,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
-  .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px}
+  .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px;margin-top:64px;margin-bottom:48px}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
@@ -2364,9 +2364,9 @@ function buildButton() {
   <thead><tr><th>Framework</th><th><code>icon="..."</code></th><th><code>slot="prefix"</code></th><th>Figma Code Connect</th></tr></thead>
   <tbody>
     <tr><td><span class="platform-cell">${icon('code',18)}HTML natif</span></td><td>✅</td><td>✅</td><td>—</td></tr>
-    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 19</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
-    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 18</span></td><td>✅</td><td>⚠️ <span class="lang-fr">via ref</span><span class="lang-en">via ref</span></td><td>✅</td></tr>
-    <tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">Angular</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="../integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 19</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="../integrations/react.svg" alt="React" width="20" height="20" loading="lazy">React 18</span></td><td>✅</td><td>⚠️ <span class="lang-fr">via ref</span><span class="lang-en">via ref</span></td><td>✅</td></tr>
+    <tr><td><span class="platform-cell"><img class="vendor-logo" src="../integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">Angular</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
     <tr><td><span class="platform-cell">${icon('code',18)}Vue 3</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
     <tr><td><span class="platform-cell">${icon('code',18)}Svelte</span></td><td>✅</td><td>✅</td><td>✅</td></tr>
   </tbody>
