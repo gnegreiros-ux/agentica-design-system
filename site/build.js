@@ -448,17 +448,11 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .home-section-ink .principle-desc{color:rgba(255,255,255,0.75);color:var(--agtc-semantic-color-text-on-inverse-secondary,rgba(255,255,255,0.75))}
 
 /* ── THÈME LIGHT [data-theme="light"] ────────────────────── */
-[data-theme="light"] .home-section-ink{background:var(--agtc-semantic-color-background-subtle,#f4f4f5)}
-[data-theme="light"] .home-section-ink .home-section h2{color:var(--agtc-semantic-color-text-primary,#1a1820)}
-[data-theme="light"] .home-section-ink .home-section>p{color:var(--agtc-semantic-color-text-secondary,#646464)}
+/* Les sections .home-section-ink restent toujours sombres (illustration-ink).
+   Seules les principle-cards s'adaptent au thème light. */
 [data-theme="light"] .home-section-ink .principle-card{background:var(--agtc-component-card-default-background,#fff);border-color:var(--agtc-component-card-default-border)}
 [data-theme="light"] .home-section-ink .principle-title{color:var(--agtc-semantic-color-text-primary,#1a1820)}
 [data-theme="light"] .home-section-ink .principle-desc{color:var(--agtc-semantic-color-text-secondary,#646464)}
-/* SVG text hérite du text-primary en light (fill attr < CSS fill prop) */
-[data-theme="light"] .home-section-ink .illus-block svg text{fill:var(--agtc-semantic-color-text-primary,#1a1820)}
-/* Restaurer les accents teal + crimson */
-[data-theme="light"] .home-section-ink .illus-block svg text[fill="#12a594"]{fill:#12a594}
-[data-theme="light"] .home-section-ink .illus-block svg text[fill="#e93d82"]{fill:#e93d82}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
