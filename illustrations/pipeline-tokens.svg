@@ -9,6 +9,7 @@
   <title>Pipeline des tokens — trois niveaux</title>
 
   <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Atkinson+Hyperlegible+Mono:wght@400;700&amp;display=swap');</style>
     <radialGradient id="glow" cx="50%" cy="0%" r="65%">
       <stop offset="0%" stop-color="#12a594" stop-opacity="0.10"/>
       <stop offset="100%" stop-color="#12a594" stop-opacity="0"/>
@@ -23,7 +24,7 @@
   <rect width="800" height="200" fill="url(#glow)"/>
 
   <!-- Page title -->
-  <text x="400" y="33" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="33" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     ARCHITECTURE DES TOKENS · 3 NIVEAUX
   </text>
@@ -36,47 +37,47 @@
 
   <!-- Step badge 01 -->
   <circle cx="38" cy="74" r="13" fill="#12a594" fill-opacity="0.14"/>
-  <text x="38" y="79" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="38" y="79" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" fill="#12a594">01</text>
-  <text x="58" y="79" font-family="system-ui,sans-serif"
+  <text x="58" y="79" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" letter-spacing="2" fill="#12a594">PRIMITIF</text>
 
   <line x1="22" y1="95" x2="234" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
-  <text x="128" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="128" y="114" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.70">Valeurs physiques</text>
 
   <!-- Swatch: teal.9 -->
   <circle cx="36" cy="142" r="11" fill="#12a594"/>
-  <text x="55" y="138" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">teal.9</text>
-  <text x="55" y="153" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="55" y="138" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">teal.9</text>
+  <text x="55" y="153" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#12A594</text>
 
   <!-- Swatch: crimson.9 -->
   <circle cx="36" cy="181" r="11" fill="#e93d82"/>
-  <text x="55" y="177" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">crimson.9</text>
-  <text x="55" y="192" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="55" y="177" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">crimson.9</text>
+  <text x="55" y="192" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#E93D82</text>
 
   <!-- Swatch: slate.9 -->
   <circle cx="36" cy="220" r="11" fill="#8b9098"/>
-  <text x="55" y="216" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">slate.9</text>
-  <text x="55" y="231" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="55" y="216" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">slate.9</text>
+  <text x="55" y="231" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#8B9098</text>
 
   <!-- Swatch: slate.3 (pale, needs border) -->
   <circle cx="36" cy="259" r="11" fill="#eff1f3" fill-opacity="0.92"
           stroke="#ffffff" stroke-opacity="0.15" stroke-width="1"/>
-  <text x="55" y="255" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">slate.3</text>
-  <text x="55" y="270" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="55" y="255" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">slate.3</text>
+  <text x="55" y="270" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#EFF1F3</text>
 
   <line x1="22" y1="292" x2="234" y2="292" stroke="#ffffff" stroke-opacity="0.06"/>
-  <text x="128" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="128" y="311" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#e93d82" fill-opacity="0.75">Jamais utilisé dans un composant</text>
-  <text x="128" y="327" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="128" y="327" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.65">Stable · rarement modifié</text>
-  <text x="128" y="343" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="128" y="343" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.60">4 couleurs · typographie · espacement</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -84,7 +85,7 @@
        ═══════════════════════════════════════════════════════ -->
   <line x1="246" y1="214" x2="280" y2="214" stroke="#12a594" stroke-opacity="0.80"
         stroke-width="1.5" marker-end="url(#ah)"/>
-  <text x="263" y="204" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="263" y="204" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9.5" fill="#12a594" fill-opacity="0.65">traduction</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -94,45 +95,45 @@
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
 
   <circle cx="314" cy="74" r="13" fill="#12a594" fill-opacity="0.14"/>
-  <text x="314" y="79" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="314" y="79" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" fill="#12a594">02</text>
-  <text x="334" y="79" font-family="system-ui,sans-serif"
+  <text x="334" y="79" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" letter-spacing="2" fill="#12a594">SÉMANTIQUE</text>
 
   <line x1="298" y1="95" x2="502" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
-  <text x="400" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="114" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.70">Intentions UX</text>
 
   <!-- Token: action.primary -->
   <circle cx="311" cy="142" r="8" fill="#12a594"/>
-  <text x="327" y="138" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">action.primary</text>
-  <text x="327" y="153" font-family="system-ui,sans-serif" font-size="10"
+  <text x="327" y="138" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">action.primary</text>
+  <text x="327" y="153" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">← teal.9</text>
 
   <!-- Token: feedback.danger -->
   <circle cx="311" cy="181" r="8" fill="#e93d82"/>
-  <text x="327" y="177" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">feedback.danger</text>
-  <text x="327" y="192" font-family="system-ui,sans-serif" font-size="10"
+  <text x="327" y="177" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">feedback.danger</text>
+  <text x="327" y="192" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">← crimson.9</text>
 
   <!-- Token: text.secondary -->
   <circle cx="311" cy="220" r="8" fill="#8b9098"/>
-  <text x="327" y="216" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">text.secondary</text>
-  <text x="327" y="231" font-family="system-ui,sans-serif" font-size="10"
+  <text x="327" y="216" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">text.secondary</text>
+  <text x="327" y="231" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">← slate.9</text>
 
   <!-- Token: background.page -->
   <circle cx="311" cy="259" r="8" fill="#eff1f3" fill-opacity="0.90"
           stroke="#ffffff" stroke-opacity="0.15" stroke-width="1"/>
-  <text x="327" y="255" font-family="system-ui,sans-serif" font-size="12" fill="#eff1f3">background.page</text>
-  <text x="327" y="270" font-family="system-ui,sans-serif" font-size="10"
+  <text x="327" y="255" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#eff1f3">background.page</text>
+  <text x="327" y="270" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">← slate.3</text>
 
   <line x1="298" y1="292" x2="502" y2="292" stroke="#ffffff" stroke-opacity="0.06"/>
-  <text x="400" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="311" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#12a594" fill-opacity="0.75">Nommés par fonction · pas par valeur</text>
-  <text x="400" y="327" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="327" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.65">Peut être recontextualisé par thème</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -140,7 +141,7 @@
        ═══════════════════════════════════════════════════════ -->
   <line x1="514" y1="214" x2="548" y2="214" stroke="#12a594" stroke-opacity="0.80"
         stroke-width="1.5" marker-end="url(#ah)"/>
-  <text x="531" y="204" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="531" y="204" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9.5" fill="#12a594" fill-opacity="0.65">application</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -150,49 +151,49 @@
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
 
   <circle cx="582" cy="74" r="13" fill="#12a594" fill-opacity="0.14"/>
-  <text x="582" y="79" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="582" y="79" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" fill="#12a594">03</text>
-  <text x="602" y="79" font-family="system-ui,sans-serif"
+  <text x="602" y="79" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="11" font-weight="700" letter-spacing="2" fill="#12a594">COMPOSANT</text>
 
   <line x1="566" y1="95" x2="778" y2="95" stroke="#ffffff" stroke-opacity="0.07"/>
 
-  <text x="672" y="114" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="672" y="114" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.70">Contrats institutionnels</text>
 
   <!-- Rendered primary button -->
   <rect x="568" y="126" width="202" height="46" rx="8"
-        fill="var(--agtc-semantic-color-illustration-brand,#12a594)"/>
-  <text x="669" y="155" text-anchor="middle" font-family="system-ui,sans-serif"
+        fill="#12a594"/>
+  <text x="669" y="155" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="14" font-weight="600" fill="#eff1f3">Démarrer</text>
 
   <!-- Rendered ghost/secondary button -->
   <rect x="568" y="184" width="202" height="38" rx="8" fill="none"
         stroke="#12a594" stroke-width="1.5" stroke-opacity="0.65"/>
-  <text x="669" y="209" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="669" y="209" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="13" fill="#12a594" fill-opacity="0.80">Annuler</text>
 
   <!-- Token inheritance chain -->
   <line x1="566" y1="236" x2="778" y2="236" stroke="#ffffff" stroke-opacity="0.06"/>
-  <text x="570" y="254" font-family="system-ui,sans-serif" font-size="10"
+  <text x="570" y="254" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">Chaîne de référence :</text>
-  <text x="570" y="270" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="570" y="270" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#12a594">button.primary.bg</text>
-  <text x="570" y="286" font-family="system-ui,sans-serif" font-size="10"
+  <text x="570" y="286" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">  → action.primary</text>
-  <text x="570" y="301" font-family="system-ui,sans-serif" font-size="10"
+  <text x="570" y="301" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">  → teal.9 · #12A594</text>
 
   <line x1="566" y1="318" x2="778" y2="318" stroke="#ffffff" stroke-opacity="0.06"/>
-  <text x="672" y="337" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="672" y="337" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#e93d82" fill-opacity="0.75">Modifier = approbation requise</text>
-  <text x="672" y="353" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="672" y="353" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.65">Contrat institutionnel · auditable</text>
 
   <!-- ═══════════════════════════════════════════════════════
        CAPTION
        ═══════════════════════════════════════════════════════ -->
-  <text x="400" y="405" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="405" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Les composants ne lisent jamais les primitifs directement — toujours via un token sémantique
   </text>

@@ -9,6 +9,7 @@
   <title>Multi-plateforme — Style Dictionary</title>
 
   <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Atkinson+Hyperlegible+Mono:wght@400;700&amp;display=swap');</style>
     <radialGradient id="glow3" cx="20%" cy="50%" r="60%">
       <stop offset="0%" stop-color="#12a594" stop-opacity="0.08"/>
       <stop offset="100%" stop-color="#12a594" stop-opacity="0"/>
@@ -19,7 +20,7 @@
   <rect width="800" height="420" fill="url(#glow3)"/>
 
   <!-- Page title -->
-  <text x="400" y="28" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="28" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     STYLE DICTIONARY · COMPILATION MULTI-PLATEFORME
   </text>
@@ -39,66 +40,66 @@
         fill="#eff1f3" fill-opacity="0.20"/>
   <polygon points="35,52 40,52 40,57" fill="#1e1b22" fill-opacity="0.70"/>
   <!-- Filename -->
-  <text x="46" y="65" font-family="'Courier New',monospace,system-ui" font-size="11"
+  <text x="46" y="65" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="11"
         font-weight="700" fill="#12a594">tokens.json</text>
-  <text x="154" y="65" font-family="system-ui,sans-serif" font-size="9"
+  <text x="154" y="65" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="9"
         fill="#12a594" fill-opacity="0.55">W3C DTCG</text>
 
   <line x1="14" y1="82" x2="226" y2="82" stroke="#12a594" stroke-opacity="0.14"/>
 
   <!-- JSON content (monospace) -->
-  <text x="24" y="100" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="100" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.85">{</text>
 
-  <text x="24" y="116" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="116" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">  "primitive": {</text>
-  <text x="24" y="130" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="130" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">    "color": {</text>
 
   <!-- teal.9 row -->
-  <text x="24" y="146" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="146" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">      "teal": { "9": {</text>
-  <text x="24" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="160" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#a8b5be">        "$value":</text>
-  <text x="112" y="160" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="112" y="160" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#12a594">"#12A594"</text>
   <!-- Teal swatch -->
   <circle cx="200" cy="156" r="7" fill="#12a594"/>
-  <text x="24" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="174" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#a8b5be">        "$type": </text>
-  <text x="117" y="174" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="117" y="174" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#e93d82">"color"</text>
-  <text x="24" y="188" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="188" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">      }}</text>
 
   <!-- crimson.9 row -->
-  <text x="24" y="204" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="204" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">   "crimson": {"9": {</text>
-  <text x="24" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="218" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#a8b5be">        "$value":</text>
-  <text x="112" y="218" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="112" y="218" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#e93d82">"#E93D82"</text>
   <!-- Crimson swatch -->
   <circle cx="200" cy="214" r="7" fill="#e93d82"/>
-  <text x="24" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="232" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#a8b5be">        "$type": </text>
-  <text x="117" y="232" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="117" y="232" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#e93d82">"color"</text>
-  <text x="24" y="246" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="246" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">      }}</text>
 
-  <text x="24" y="262" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="262" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">    }</text>
-  <text x="24" y="276" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="276" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.70">  }</text>
-  <text x="24" y="292" font-family="'Courier New',monospace,system-ui" font-size="10.5"
+  <text x="24" y="292" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10.5"
         fill="#eff1f3" fill-opacity="0.85">}</text>
 
   <!-- Footer note -->
   <line x1="14" y1="308" x2="226" y2="308" stroke="#12a594" stroke-opacity="0.12"/>
-  <text x="120" y="325" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="120" y="325" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.70">Source unique de vérité</text>
-  <text x="120" y="341" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="120" y="341" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.65">Modifiée → propagée partout</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -107,7 +108,7 @@
        ═══════════════════════════════════════════════════════ -->
 
   <!-- "compile" label in the fan area -->
-  <text x="252" y="210" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="252" y="210" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9" fill="#12a594" fill-opacity="0.70" writing-mode="tb">compile</text>
 
   <!-- CSS card target: (280, 93) -->
@@ -138,98 +139,98 @@
   <rect x="280" y="44" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <circle cx="298" cy="68" r="8" fill="#1572b6"/>
-  <text x="314" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="314" y="73" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">CSS · Web</text>
-  <text x="298" y="89" font-family="system-ui,sans-serif" font-size="10"
+  <text x="298" y="89" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">dist/tokens/css/</text>
   <rect x="288" y="100" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="296" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="296" y="120" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#12a594">--agtc-color-teal-9:</text>
-  <text x="414" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="414" y="120" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#12A594;</text>
 
   <!-- ─── Swift / iOS  (Col2, Row1) ─── -->
   <rect x="510" y="44" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <circle cx="528" cy="68" r="8" fill="#f05138"/>
-  <text x="544" y="73" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="544" y="73" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Swift · iOS</text>
-  <text x="528" y="89" font-family="system-ui,sans-serif" font-size="10"
+  <text x="528" y="89" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">dist/tokens/swift/</text>
   <rect x="518" y="100" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="526" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="526" y="120" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#f05138">Color</text>
-  <text x="554" y="120" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="554" y="120" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">.teal9 = "#12A594"</text>
 
   <!-- ─── Angular / M3  (Col1, Row2) ─── -->
   <rect x="280" y="162" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <circle cx="298" cy="186" r="8" fill="#dd0031"/>
-  <text x="314" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="314" y="191" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Angular · M3</text>
-  <text x="298" y="207" font-family="system-ui,sans-serif" font-size="10"
+  <text x="298" y="207" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">dist/tokens/scss/</text>
   <rect x="288" y="218" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="296" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="296" y="238" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#dd0031">$color-teal-9:</text>
-  <text x="386" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="386" y="238" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">#12A594;</text>
 
   <!-- ─── JavaScript / ESM  (Col2, Row2) ─── -->
   <rect x="510" y="162" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <rect x="518" y="178" width="16" height="16" rx="3" fill="#f7df1e"/>
-  <text x="516" y="191" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="516" y="191" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" font-weight="700" fill="#1a1820">JS</text>
-  <text x="544" y="191" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="544" y="191" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">JavaScript · ESM</text>
-  <text x="528" y="207" font-family="system-ui,sans-serif" font-size="10"
+  <text x="528" y="207" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">dist/tokens/js/</text>
   <rect x="518" y="218" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="526" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="526" y="238" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#f7df1e">export const</text>
-  <text x="614" y="238" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="614" y="238" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">teal9 = "#12A594"</text>
 
   <!-- ─── Tailwind CSS  (Col1, Row3) ─── -->
   <rect x="280" y="280" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <circle cx="298" cy="304" r="8" fill="#38bdf8"/>
-  <text x="314" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="314" y="309" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Tailwind CSS</text>
-  <text x="298" y="325" font-family="system-ui,sans-serif" font-size="10"
+  <text x="298" y="325" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">tailwind.config.js</text>
   <rect x="288" y="336" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="296" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="296" y="356" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#38bdf8">teal:</text>
-  <text x="323" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="323" y="356" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">{ 9: "#12A594" }</text>
 
   <!-- ─── Android / XML  (Col2, Row3) ─── -->
   <rect x="510" y="280" width="215" height="98" rx="8"
         fill="#1e1b22" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1"/>
   <circle cx="528" cy="304" r="8" fill="#3ddc84"/>
-  <text x="544" y="309" font-family="system-ui,sans-serif" font-size="12" font-weight="600"
+  <text x="544" y="309" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" font-weight="600"
         fill="#eff1f3">Android · XML</text>
-  <text x="528" y="325" font-family="system-ui,sans-serif" font-size="10"
+  <text x="528" y="325" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">res/values/colors.xml</text>
   <rect x="518" y="336" width="199" height="30" rx="5"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.05"/>
-  <text x="526" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="526" y="356" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#3ddc84">&lt;color</text>
-  <text x="568" y="356" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="568" y="356" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">name="teal9"&gt;</text>
 
   <!-- ═══════════════════════════════════════════════════════
        CAPTION
        ═══════════════════════════════════════════════════════ -->
-  <text x="400" y="405" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="405" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Un token · six plateformes — toujours synchronisés depuis la même source de vérité
   </text>

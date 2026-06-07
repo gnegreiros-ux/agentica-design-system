@@ -9,6 +9,7 @@
   <title>Le dernier mot est humain — gouvernance</title>
 
   <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Atkinson+Hyperlegible+Mono:wght@400;700&amp;display=swap');</style>
     <radialGradient id="glow2" cx="50%" cy="0%" r="65%">
       <stop offset="0%" stop-color="#12a594" stop-opacity="0.08"/>
       <stop offset="100%" stop-color="#12a594" stop-opacity="0"/>
@@ -23,7 +24,7 @@
   <rect width="800" height="200" fill="url(#glow2)"/>
 
   <!-- Page title -->
-  <text x="400" y="28" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="28" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" letter-spacing="2.5" fill="#eff1f3" fill-opacity="1">
     GOUVERNANCE HUMAINE · FLUX D'APPROBATION
   </text>
@@ -57,48 +58,48 @@
   <line x1="124" y1="90"  x2="137" y2="102" stroke="#12a594" stroke-width="0.8" stroke-opacity="0.20"/>
 
   <!-- Card title -->
-  <text x="124" y="143" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="124" y="143" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="15" font-weight="600" fill="#eff1f3">Agent IA</text>
   <!-- Badge "PROPOSE" -->
   <rect x="80" y="151" width="88" height="20" rx="10"
         fill="#8b9098" fill-opacity="0.18" stroke="#8b9098" stroke-opacity="0.30" stroke-width="1"/>
-  <text x="124" y="165" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="124" y="165" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" letter-spacing="1" fill="#8b9098">PROPOSE</text>
 
   <!-- Content: analysis box -->
   <rect x="24" y="182" width="200" height="138" rx="7"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
-  <text x="34" y="200" font-family="system-ui,sans-serif" font-size="10"
+  <text x="34" y="200" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">Analyse WCAG automatisée</text>
   <line x1="24" y1="208" x2="224" y2="208" stroke="#ffffff" stroke-opacity="0.06"/>
 
   <!-- action.primary row -->
   <circle cx="38" cy="225" r="6" fill="#12a594"/>
-  <text x="50" y="229" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">action.primary</text>
-  <text x="200" y="229" text-anchor="end" font-family="'Courier New',monospace,system-ui"
+  <text x="50" y="229" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">action.primary</text>
+  <text x="200" y="229" text-anchor="end" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace"
         font-size="10" fill="#e93d82">3.07:1 ✗</text>
 
   <line x1="24" y1="240" x2="224" y2="240" stroke="#ffffff" stroke-opacity="0.05"/>
 
-  <text x="34" y="256" font-family="system-ui,sans-serif" font-size="10"
+  <text x="34" y="256" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">Suggestion :</text>
   <!-- Before dot (teal.9 = slightly muted) -->
   <circle cx="38" cy="274" r="7" fill="#0f8a7c"/>
-  <text x="50" y="278" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="50" y="278" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.60">teal.9</text>
-  <text x="100" y="278" font-family="system-ui,sans-serif" font-size="12"
+  <text x="100" y="278" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12"
         fill="#12a594" fill-opacity="0.70">→</text>
   <!-- After dot (teal.11 = brighter) -->
   <circle cx="120" cy="274" r="7" fill="#12a594"/>
-  <text x="132" y="278" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="132" y="278" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3">teal.11</text>
 
   <!-- WCAG improvement -->
-  <text x="34" y="301" font-family="system-ui,sans-serif" font-size="10"
+  <text x="34" y="301" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">WCAG AA : 3.07:1</text>
-  <text x="130" y="301" font-family="system-ui,sans-serif" font-size="12"
+  <text x="130" y="301" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12"
         fill="#12a594" fill-opacity="0.60">→</text>
-  <text x="144" y="301" font-family="system-ui,sans-serif" font-size="10"
+  <text x="144" y="301" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#12a594">4.52:1 ✓</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -106,7 +107,7 @@
        ═══════════════════════════════════════════════════════ -->
   <line x1="238" y1="205" x2="274" y2="205" stroke="#12a594" stroke-opacity="0.80"
         stroke-width="1.5" marker-end="url(#ah2)"/>
-  <text x="256" y="195" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="256" y="195" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9" fill="#12a594" fill-opacity="0.60">soumet</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -121,7 +122,7 @@
   <!-- "LE DÉCIDEUR" label at top -->
   <rect x="352" y="30" width="96" height="18" rx="9"
         fill="#12a594" fill-opacity="0.15"/>
-  <text x="400" y="43" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="43" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9.5" letter-spacing="1" fill="#12a594">LE DÉCIDEUR</text>
 
   <!-- Person silhouette icon -->
@@ -133,51 +134,51 @@
         fill="none" stroke="#eff1f3" stroke-width="1.8" stroke-opacity="0.60"/>
 
   <!-- Card title -->
-  <text x="400" y="147" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="147" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="16" font-weight="700" fill="#eff1f3">Humain</text>
 
   <!-- Badge "DERNIER MOT" -->
   <rect x="340" y="155" width="120" height="20" rx="10"
         fill="#12a594" fill-opacity="0.20" stroke="#12a594" stroke-opacity="0.45" stroke-width="1"/>
-  <text x="400" y="169" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="169" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" letter-spacing="1" fill="#12a594">DERNIER MOT</text>
 
   <!-- Decision interface box -->
   <rect x="294" y="185" width="212" height="155" rx="7"
         fill="#1a1820" stroke="#12a594" stroke-opacity="0.18" stroke-width="1"/>
-  <text x="400" y="204" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="204" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" fill="#eff1f3" fill-opacity="0.70">Modification proposée</text>
   <line x1="294" y1="212" x2="506" y2="212" stroke="#12a594" stroke-opacity="0.12"/>
 
   <!-- Token change visual -->
-  <text x="304" y="230" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">action.primary</text>
+  <text x="304" y="230" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">action.primary</text>
   <line x1="294" y1="238" x2="506" y2="238" stroke="#ffffff" stroke-opacity="0.05"/>
   <!-- Before/after color dots -->
   <circle cx="308" cy="256" r="8" fill="#0f8a7c"/>
-  <text x="322" y="260" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="322" y="260" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3" fill-opacity="0.65">teal.9</text>
-  <text x="368" y="260" font-family="system-ui,sans-serif" font-size="14" fill="#12a594">→</text>
+  <text x="368" y="260" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="14" fill="#12a594">→</text>
   <circle cx="392" cy="256" r="8" fill="#12a594"/>
-  <text x="406" y="260" font-family="'Courier New',monospace,system-ui" font-size="10"
+  <text x="406" y="260" font-family="'Atkinson Hyperlegible Mono', 'Courier New', monospace" font-size="10"
         fill="#eff1f3">teal.11</text>
 
-  <text x="304" y="278" font-family="system-ui,sans-serif" font-size="10"
+  <text x="304" y="278" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">Contraste : 3.07:1</text>
-  <text x="388" y="278" font-family="system-ui,sans-serif" font-size="12" fill="#12a594">→</text>
-  <text x="404" y="278" font-family="system-ui,sans-serif" font-size="10" fill="#12a594">4.52:1 ✓</text>
+  <text x="388" y="278" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="12" fill="#12a594">→</text>
+  <text x="404" y="278" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10" fill="#12a594">4.52:1 ✓</text>
 
   <!-- Approve / Reject buttons -->
   <rect x="300" y="288" width="92" height="36" rx="7" fill="#12a594"/>
-  <text x="346" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="346" y="311" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="12" font-weight="600" fill="#eff1f3">✓  Approuver</text>
   <rect x="402" y="288" width="96" height="36" rx="7" fill="none"
         stroke="#e93d82" stroke-width="1.5" stroke-opacity="0.70"/>
-  <text x="450" y="311" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="450" y="311" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="12" fill="#e93d82" fill-opacity="0.80">✗  Rejeter</text>
 
   <!-- Separator + note -->
   <line x1="284" y1="354" x2="516" y2="354" stroke="#12a594" stroke-opacity="0.12"/>
-  <text x="400" y="371" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="371" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9.5" fill="#12a594" fill-opacity="0.80">Seul l'humain peut approuver</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -185,7 +186,7 @@
        ═══════════════════════════════════════════════════════ -->
   <line x1="520" y1="205" x2="556" y2="205" stroke="#12a594" stroke-opacity="0.80"
         stroke-width="1.5" marker-end="url(#ah2)"/>
-  <text x="538" y="195" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="538" y="195" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="9" fill="#12a594" fill-opacity="0.60">approuve</text>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -210,46 +211,46 @@
   <rect x="684" y="110" width="8" height="8" rx="1" fill="#8b9098" fill-opacity="0.30"/>
 
   <!-- Card title -->
-  <text x="676" y="143" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="676" y="143" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="15" font-weight="600" fill="#eff1f3">Système</text>
   <!-- Badge "EXÉCUTE" -->
   <rect x="632" y="151" width="88" height="20" rx="10"
         fill="#12a594" fill-opacity="0.18" stroke="#12a594" stroke-opacity="0.30" stroke-width="1"/>
-  <text x="676" y="165" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="676" y="165" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10" letter-spacing="1" fill="#12a594">EXÉCUTE</text>
 
   <!-- Results box -->
   <rect x="576" y="182" width="200" height="138" rx="7"
         fill="#1a1820" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
-  <text x="586" y="200" font-family="system-ui,sans-serif" font-size="10"
+  <text x="586" y="200" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="10"
         fill="#eff1f3" fill-opacity="0.70">Après approbation humaine :</text>
   <line x1="576" y1="208" x2="776" y2="208" stroke="#ffffff" stroke-opacity="0.06"/>
 
   <!-- Checkmarks -->
-  <text x="590" y="226" font-family="system-ui,sans-serif" font-size="11"
+  <text x="590" y="226" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11"
         fill="#12a594">✓</text>
-  <text x="608" y="226" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">Token mis à jour</text>
+  <text x="608" y="226" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">Token mis à jour</text>
 
-  <text x="590" y="245" font-family="system-ui,sans-serif" font-size="11"
+  <text x="590" y="245" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11"
         fill="#12a594">✓</text>
-  <text x="608" y="245" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">Build Style Dictionary</text>
+  <text x="608" y="245" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">Build Style Dictionary</text>
 
-  <text x="590" y="264" font-family="system-ui,sans-serif" font-size="11"
+  <text x="590" y="264" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11"
         fill="#12a594">✓</text>
-  <text x="608" y="264" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">68 fichiers régénérés</text>
+  <text x="608" y="264" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">68 fichiers régénérés</text>
 
-  <text x="590" y="283" font-family="system-ui,sans-serif" font-size="11"
+  <text x="590" y="283" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11"
         fill="#12a594">✓</text>
-  <text x="608" y="283" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">axe-core : 0 violations</text>
+  <text x="608" y="283" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">axe-core : 0 violations</text>
 
-  <text x="590" y="302" font-family="system-ui,sans-serif" font-size="11"
+  <text x="590" y="302" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11"
         fill="#12a594">✓</text>
-  <text x="608" y="302" font-family="system-ui,sans-serif" font-size="11" fill="#eff1f3">Chromatic : stable</text>
+  <text x="608" y="302" font-family="'Atkinson Hyperlegible', system-ui, sans-serif" font-size="11" fill="#eff1f3">Chromatic : stable</text>
 
   <!-- ═══════════════════════════════════════════════════════
        CAPTION
        ═══════════════════════════════════════════════════════ -->
-  <text x="400" y="400" text-anchor="middle" font-family="system-ui,sans-serif"
+  <text x="400" y="400" text-anchor="middle" font-family="'Atkinson Hyperlegible', system-ui, sans-serif"
         font-size="10.5" fill="#eff1f3" fill-opacity="0.70">
     Les agents observent, analysent, proposent — les humains approuvent, décident, déploient
   </text>
