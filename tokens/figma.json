@@ -1,0 +1,127 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "description": "Tokens composites pour Tokens Studio — génération des Text Styles Figma. Non traité par Style Dictionary."
+  },
+  "typography": {
+    "detail": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Regular",
+        "fontSize": "12",
+        "lineHeight": "160%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "12px · Regular · 1.6 — Annotations, captions, aide contextuelle"
+    },
+    "label": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Regular",
+        "fontSize": "14",
+        "lineHeight": "160%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "14px · Regular · 1.6 — Labels de formulaire, métadonnées (fontWeight.medium=500 arrondi à 400, ADR-021)"
+    },
+    "body": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Regular",
+        "fontSize": "16",
+        "lineHeight": "160%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "16px · Regular · 1.6 — Corps de texte principal"
+    },
+    "heading": {
+      "5": {
+        "$value": {
+          "fontFamily": "Atkinson Hyperlegible",
+          "fontWeight": "Regular",
+          "fontSize": "20",
+          "lineHeight": "110%",
+          "letterSpacing": "0%",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "$type": "typography",
+        "$description": "20px · Regular · 1.1 — H5, sous-titres de section (fontWeight.medium=500 arrondi à 400, ADR-021)"
+      },
+      "4": {
+        "$value": {
+          "fontFamily": "Atkinson Hyperlegible",
+          "fontWeight": "Bold",
+          "fontSize": "24",
+          "lineHeight": "110%",
+          "letterSpacing": "0%",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "$type": "typography",
+        "$description": "24px · Bold · 1.1 — H4"
+      },
+      "3": {
+        "$value": {
+          "fontFamily": "Atkinson Hyperlegible",
+          "fontWeight": "Bold",
+          "fontSize": "28",
+          "lineHeight": "110%",
+          "letterSpacing": "0%",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "$type": "typography",
+        "$description": "28px · Bold · 1.1 — H3"
+      },
+      "2": {
+        "$value": {
+          "fontFamily": "Atkinson Hyperlegible",
+          "fontWeight": "Bold",
+          "fontSize": "32",
+          "lineHeight": "100%",
+          "letterSpacing": "0%",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "$type": "typography",
+        "$description": "32px · Bold · 1.0 — H2"
+      },
+      "1": {
+        "$value": {
+          "fontFamily": "Atkinson Hyperlegible",
+          "fontWeight": "Bold",
+          "fontSize": "40",
+          "lineHeight": "100%",
+          "letterSpacing": "0%",
+          "textCase": "none",
+          "textDecoration": "none"
+        },
+        "$type": "typography",
+        "$description": "40px · Bold · 1.0 — H1 principal"
+      }
+    },
+    "hero": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Bold",
+        "fontSize": "48",
+        "lineHeight": "100%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "48px · Bold · 1.0 — Titre hero, landing page"
+    }
+  }
+}

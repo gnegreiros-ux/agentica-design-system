@@ -121,8 +121,8 @@ function flattenTokens(obj, data, prefix = '') {
   for (const [key, node] of Object.entries(obj)) {
     if (key.startsWith('$') || key === '_readme') continue;
     const k = prefix ? `${prefix}-${key}` : key;
-    if (node && typeof node === 'object' && 'value' in node) {
-      result[k] = resolveValue(node.value, data);
+    if (node && typeof node === 'object' && ('$value' in node || 'value' in node)) {
+      result[k] = resolveValue(node.$value ?? node.value, data);
     } else if (node && typeof node === 'object') {
       Object.assign(result, flattenTokens(node, data, k));
     }
