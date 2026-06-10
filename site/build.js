@@ -361,7 +361,7 @@ body{
   color:var(--agtc-semantic-color-text-secondary);border-radius:0;
   transition:background .1s,color .1s;border-left:2px solid transparent;
 }
-.sidebar a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.sidebar a:hover,.sidebar a:focus-visible{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);outline:none}
 .sidebar a.active{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:600;
@@ -409,7 +409,7 @@ body{
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
-.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px)}
+.nav-card:hover,.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px);outline:none}
 .nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -561,7 +561,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   font-size:0.875rem;background:var(--agtc-semantic-color-background-surface);
   color:var(--agtc-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
 }
-.explorer-search:focus{outline:none;border-color:var(--agtc-semantic-color-border-focus)}
+.explorer-search:focus,.explorer-search:focus-visible{outline:none;border-color:var(--agtc-semantic-color-border-focus);box-shadow:0 0 0 3px var(--agtc-semantic-color-action-focus-ring,rgba(59,130,246,.25))}
 .explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--agtc-semantic-color-border-default);margin-bottom:20px}
 .exp-tab{
   padding:8px 20px;font-size:0.875rem;font-weight:600;color:var(--agtc-semantic-color-text-secondary);
@@ -569,6 +569,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   margin-bottom:-2px;font-family:inherit;transition:color .1s;
 }
 .exp-tab.active{color:var(--agtc-semantic-color-action-primary);border-bottom-color:var(--agtc-semantic-color-action-primary)}
+.exp-tab:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px;border-radius:4px}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
@@ -675,7 +676,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 
 /* ── SIDEBAR DRAWER (mobile) ─────────────────────────────── */
 .sidebar-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px;flex-shrink:0}
-.sidebar-toggle:hover{background:var(--agtc-semantic-color-background-subtle)}
+.sidebar-toggle:hover,.sidebar-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 .sidebar-overlay{display:none;position:fixed;inset:0;top:60px;background:rgba(0,0,0,.40);z-index:89;backdrop-filter:blur(2px)}
 .sidebar-overlay.active{display:block}
 
@@ -727,14 +728,15 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── MOBILE MENU ─────────────────────────────────────────── */
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px}
-.menu-toggle:hover{background:var(--agtc-semantic-color-background-subtle)}
+.menu-toggle:hover,.menu-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 
 /* ── TOC ─────────────────────────────────────────────────── */
 .toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-left:1px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)}
 .toc:empty{display:none;width:0;padding:0;border:none}
 .toc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:10px;display:block}
 .toc a{display:block;font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
-.toc a:hover,.toc a.active{color:var(--agtc-semantic-color-action-primary);border-left-color:var(--agtc-semantic-color-action-primary)}
+.toc a:hover,.toc a.active,.toc a:focus-visible{color:var(--agtc-semantic-color-action-primary);border-left-color:var(--agtc-semantic-color-action-primary);outline:none}
+.toc a:focus-visible{box-shadow:0 0 0 2px var(--agtc-semantic-color-border-focus)}
 
 /* ── DO / DON'T ──────────────────────────────────────────── */
 .dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
@@ -930,6 +932,8 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
+      // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
 
@@ -1140,15 +1144,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
-    btn.textContent = 'Copier';
-    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
+    const copyLabel = () => document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy' : 'Copier';
+    btn.textContent = copyLabel();
+    btn.setAttribute('aria-label', (document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy code' : 'Copier le code') + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
     btn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\\n+|\\n+$/g, '')); }
       catch { return; }
-      btn.textContent = 'Copié !';
-      copyLive.textContent = 'Copié !';
-      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
+      const copiedLabel = document.documentElement.getAttribute('data-lang') === 'en' ? 'Copied!' : 'Copié !';
+      btn.textContent = copiedLabel;
+      copyLive.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
 
@@ -1562,7 +1568,10 @@ function buildHome(adrs) {
 <div class="stat-band" role="region" aria-label="Statistiques du système">
   <div class="stat-item">
     <span class="stat-num" data-count="21">21</span>
-    <span class="stat-text">WCAG 2.1 AA</span>
+    <span class="stat-text">
+      <span class="lang-fr">critères WCAG 2.1 AA couverts</span>
+      <span class="lang-en">WCAG 2.1 AA criteria covered</span>
+    </span>
   </div>
   <div class="stat-item">
     <span class="stat-num" data-count="${adrs.length}">${adrs.length}</span>

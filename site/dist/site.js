@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
+      // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
 
@@ -228,15 +230,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
-    btn.textContent = 'Copier';
-    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
+    const copyLabel = () => document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy' : 'Copier';
+    btn.textContent = copyLabel();
+    btn.setAttribute('aria-label', (document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy code' : 'Copier le code') + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
     btn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\n+|\n+$/g, '')); }
       catch { return; }
-      btn.textContent = 'Copié !';
-      copyLive.textContent = 'Copié !';
-      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
+      const copiedLabel = document.documentElement.getAttribute('data-lang') === 'en' ? 'Copied!' : 'Copié !';
+      btn.textContent = copiedLabel;
+      copyLive.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
 
