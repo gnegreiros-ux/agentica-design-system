@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
+      // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
 
-  // ── Mobile menu ──────────────────────────────────────────
+  // ── Mobile menu (top-nav) ────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
   const topNav = document.querySelector('.top-nav');
   if (menuToggle && topNav) {
@@ -34,6 +36,36 @@ document.addEventListener('DOMContentLoaded', () => {
         topNav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
+    });
+  }
+
+  // ── Sidebar drawer (mobile) ──────────────────────────────
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.getElementById('site-sidebar');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.removeAttribute('hidden');
+    const openDrawer = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay && sidebarOverlay.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeDrawer = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay && sidebarOverlay.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    sidebarOverlay && sidebarOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+    });
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
     });
   }
 
@@ -133,13 +165,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
+  const searchStatus = document.getElementById('token-search-status');
   if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.toLowerCase();
-      document.querySelectorAll('.token-row').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    let debounceTimer;
+    const runFilter = () => {
+      const q = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll('.token-section').forEach(section => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.token-row').forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.style.display = match ? '' : 'none';
+          if (match) sectionVisible++;
+        });
+        totalVisible += sectionVisible;
+        section.style.display = sectionVisible === 0 && q ? 'none' : '';
       });
+      if (searchStatus) {
+        if (!q) {
+          searchStatus.textContent = '';
+        } else {
+          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          searchStatus.textContent = lang === 'fr'
+            ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
+            : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
+        }
+      }
+    };
+    search.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runFilter, 120);
     });
+    search.addEventListener('search', runFilter);
   }
 
   // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
@@ -173,15 +230,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
-    btn.textContent = 'Copier';
-    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
+    const copyLabel = () => document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy' : 'Copier';
+    btn.textContent = copyLabel();
+    btn.setAttribute('aria-label', (document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy code' : 'Copier le code') + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
     btn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\n+|\n+$/g, '')); }
       catch { return; }
-      btn.textContent = 'Copié !';
-      copyLive.textContent = 'Copié !';
-      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
+      const copiedLabel = document.documentElement.getAttribute('data-lang') === 'en' ? 'Copied!' : 'Copié !';
+      btn.textContent = copiedLabel;
+      copyLive.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
 

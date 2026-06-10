@@ -353,7 +353,7 @@ body{
 }
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
-  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  font-size:11px;font-weight:700;
   color:var(--agtc-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
@@ -361,7 +361,7 @@ body{
   color:var(--agtc-semantic-color-text-secondary);border-radius:0;
   transition:background .1s,color .1s;border-left:2px solid transparent;
 }
-.sidebar a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.sidebar a:hover,.sidebar a:focus-visible{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);outline:none}
 .sidebar a.active{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:600;
@@ -409,7 +409,7 @@ body{
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
-.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px)}
+.nav-card:hover,.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px);outline:none}
 .nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
 .nav-card-title{font-size:0.875rem;font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:0.875rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -491,12 +491,12 @@ li code{font-size:.8em}
 /* Tables du site : consomment le contrat du composant table (component.table.* — ADR-040).
    Le site s'aligne sur le composant (dogfooding cat. A) ; il garde sa présentation
    d'en-tête (majuscules, tracking), mais toutes les COULEURS viennent du composant. */
-table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem}
-th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-component-table-default-border)}
-td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:middle}
+table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem;table-layout:auto}
+th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-component-table-default-border);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--agtc-component-table-default-row-hover)}
-td code{color:var(--agtc-semantic-color-action-primary)}
+td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
@@ -553,6 +553,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── TOKEN EXPLORER ─────────────────────────────────────── */
+.token-search-status{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);min-height:1.2em;margin:-8px 0 8px}
 .explorer-search{
   width:100%;max-width:480px;padding:10px 14px;
   border:1.5px solid var(--agtc-semantic-color-border-default);
@@ -560,7 +561,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   font-size:0.875rem;background:var(--agtc-semantic-color-background-surface);
   color:var(--agtc-semantic-color-text-primary);font-family:inherit;margin-bottom:20px;
 }
-.explorer-search:focus{outline:none;border-color:var(--agtc-semantic-color-border-focus)}
+.explorer-search:focus,.explorer-search:focus-visible{outline:none;border-color:var(--agtc-semantic-color-border-focus);box-shadow:0 0 0 3px var(--agtc-semantic-color-action-focus-ring,rgba(59,130,246,.25))}
 .explorer-tabs{display:flex;gap:2px;border-bottom:2px solid var(--agtc-semantic-color-border-default);margin-bottom:20px}
 .exp-tab{
   padding:8px 20px;font-size:0.875rem;font-weight:600;color:var(--agtc-semantic-color-text-secondary);
@@ -568,6 +569,7 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   margin-bottom:-2px;font-family:inherit;transition:color .1s;
 }
 .exp-tab.active{color:var(--agtc-semantic-color-action-primary);border-bottom-color:var(--agtc-semantic-color-action-primary)}
+.exp-tab:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px;border-radius:4px}
 .exp-panel{display:none}
 .exp-panel.active{display:block}
 .token-row td:first-child code{color:var(--agtc-semantic-color-action-primary)}
@@ -575,6 +577,11 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .token-table td{overflow-wrap:break-word;word-break:break-word}
 /* En-têtes : jamais de coupure au milieu d'un mot — retour à la ligne aux espaces seulement */
 .token-table th{overflow-wrap:normal;word-break:normal;hyphens:none}
+
+/* ── UTILITY CLASSES ─────────────────────────────────────── */
+.mono-sm{font-family:var(--agtc-font-mono);font-size:12px}
+.demo-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.prop-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
 .agtc-table{
@@ -654,8 +661,9 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .agtc-badge.warning{background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text)}
 .agtc-badge.danger{background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text)}
 .agtc-badge.info{background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text)}
-.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
-.adr-meta strong{color:var(--agtc-semantic-color-text-primary)}
+.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 24px;font-size:0.875rem}
+.adr-meta-item{display:flex;flex-direction:column;gap:2px}
+.adr-meta-item strong{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
@@ -672,10 +680,27 @@ td code{color:var(--agtc-semantic-color-action-primary)}
 .rule-can li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
 .rule-cannot li{color:var(--agtc-semantic-color-feedback-danger);font-size:0.875rem}
 
+/* ── SIDEBAR DRAWER (mobile) ─────────────────────────────── */
+.sidebar-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px;flex-shrink:0}
+.sidebar-toggle:hover,.sidebar-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.sidebar-overlay{display:none;position:fixed;inset:0;top:60px;background:rgba(0,0,0,.40);z-index:89;backdrop-filter:blur(2px)}
+.sidebar-overlay.active{display:block}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .layout{flex-direction:column}
-  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
+  .sidebar{
+    position:fixed;top:60px;left:0;bottom:0;z-index:90;
+    width:280px;max-width:85vw;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    border-right:1px solid var(--agtc-semantic-color-border-default);
+    box-shadow:var(--agtc-semantic-shadow-raised);
+    overflow-y:auto;
+    height:calc(100vh - 60px);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-toggle{display:flex;align-items:center}
   .content{padding:28px 20px}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
@@ -685,6 +710,12 @@ td code{color:var(--agtc-semantic-color-action-primary)}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .top-nav{display:none}
+  .site-header{padding:0 12px;gap:8px;overflow:hidden}
+  .logo-version{display:none}
+  .storybook-btn{display:none}
+  .github-btn{display:none}
+  .lang-switch{margin-left:auto !important}
+  .menu-toggle{flex-shrink:0}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
@@ -703,14 +734,15 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── MOBILE MENU ─────────────────────────────────────────── */
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px}
-.menu-toggle:hover{background:var(--agtc-semantic-color-background-subtle)}
+.menu-toggle:hover,.menu-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 
 /* ── TOC ─────────────────────────────────────────────────── */
 .toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-left:1px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)}
 .toc:empty{display:none;width:0;padding:0;border:none}
 .toc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-secondary);margin-bottom:10px;display:block}
 .toc a{display:block;font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
-.toc a:hover,.toc a.active{color:var(--agtc-semantic-color-action-primary);border-left-color:var(--agtc-semantic-color-action-primary)}
+.toc a:hover,.toc a.active,.toc a:focus-visible{color:var(--agtc-semantic-color-action-primary);border-left-color:var(--agtc-semantic-color-action-primary);outline:none}
+.toc a:focus-visible{box-shadow:0 0 0 2px var(--agtc-semantic-color-border-focus)}
 
 /* ── DO / DON'T ──────────────────────────────────────────── */
 .dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
@@ -731,8 +763,10 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── FOOTER ──────────────────────────────────────────────── */
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:24px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
+.footer-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.footer-copy{color:var(--agtc-semantic-color-text-on-inverse-muted);font-size:0.8125rem}
+.footer-sep{color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.4}
+.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s;font-size:0.8125rem}
 .footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px}
 
@@ -858,6 +892,13 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
+.changelog-entry{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:28px 32px;margin-bottom:32px}
+.changelog-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.changelog-version{font-size:1.25rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
+.changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
+.changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
+.changelog-entry h2{margin-top:24px;padding-top:20px;font-size:1rem}
+.changelog-entry h2.first{margin-top:8px;padding-top:0;border-top:none}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}
@@ -897,10 +938,12 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
+      // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
 
-  // ── Mobile menu ──────────────────────────────────────────
+  // ── Mobile menu (top-nav) ────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
   const topNav = document.querySelector('.top-nav');
   if (menuToggle && topNav) {
@@ -913,6 +956,36 @@ document.addEventListener('DOMContentLoaded', () => {
         topNav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
+    });
+  }
+
+  // ── Sidebar drawer (mobile) ──────────────────────────────
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.getElementById('site-sidebar');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.removeAttribute('hidden');
+    const openDrawer = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay && sidebarOverlay.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeDrawer = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay && sidebarOverlay.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    sidebarOverlay && sidebarOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+    });
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
     });
   }
 
@@ -1012,13 +1085,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
+  const searchStatus = document.getElementById('token-search-status');
   if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.toLowerCase();
-      document.querySelectorAll('.token-row').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    let debounceTimer;
+    const runFilter = () => {
+      const q = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll('.token-section').forEach(section => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.token-row').forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.style.display = match ? '' : 'none';
+          if (match) sectionVisible++;
+        });
+        totalVisible += sectionVisible;
+        section.style.display = sectionVisible === 0 && q ? 'none' : '';
       });
+      if (searchStatus) {
+        if (!q) {
+          searchStatus.textContent = '';
+        } else {
+          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          searchStatus.textContent = lang === 'fr'
+            ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
+            : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
+        }
+      }
+    };
+    search.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runFilter, 120);
     });
+    search.addEventListener('search', runFilter);
   }
 
   // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
@@ -1052,15 +1150,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
-    btn.textContent = 'Copier';
-    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
+    const copyLabel = () => document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy' : 'Copier';
+    btn.textContent = copyLabel();
+    btn.setAttribute('aria-label', (document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy code' : 'Copier le code') + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
     btn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\\n+|\\n+$/g, '')); }
       catch { return; }
-      btn.textContent = 'Copié !';
-      copyLive.textContent = 'Copié !';
-      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
+      const copiedLabel = document.documentElement.getAttribute('data-lang') === 'en' ? 'Copied!' : 'Copié !';
+      btn.textContent = copiedLabel;
+      copyLive.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
 
@@ -1093,7 +1193,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   // cohérente avec le hero d'accueil et la page get-started.
   const navLinks = [
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
-    { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
+    { href: `${base}foundations/index.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
     { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
     { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
     { href: `${base}decisions/index.html`,  labelFr: 'Décisions',   labelEn: 'Decisions' },
@@ -1105,7 +1205,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   ).join('');
 
   const sidebarHtml = sidebar
-    ? `<aside class="sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
+    ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
     : '';
   const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
   const mainClass = fullWidth ? 'home-layout' : 'layout';
@@ -1115,10 +1215,12 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-links">
-      <span>© ${new Date().getFullYear()}</span>
-      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer">${icon('globe', 15)} Guilherme Negreiros</a>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
+      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
     </div>
     <div class="footer-credit">
       ${icon('bot', 14)}
@@ -1175,7 +1277,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     </svg>
     <span class="logo-name">Agentica</span>
   </a>
-  <span class="logo-version">v1.0.0</span>
+  <span class="logo-version">v0.1.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
   <div class="agtc-segmented lang-switch" role="group" aria-label="Language" style="margin-left:8px;flex-shrink:0">
     <button type="button" data-lang="fr" aria-current="true">FR</button>
@@ -1190,7 +1292,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     ${icon('menu', 22)}
   </button>
+  ${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}</button>` : ''}
 </header>
+${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${mainClass}" id="main-content">
   ${sidebarHtml}
   <main class="${fullWidth ? '' : 'content'}" role="main">${body}</main>
@@ -1208,6 +1312,7 @@ ${footer}
 
 function sidebarFoundations(base, current) {
   const links = [
+    ['index.html',      '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
     ['color.html',      '<span class="lang-fr">Couleur</span><span class="lang-en">Color</span>'],
     ['spacing.html',    '<span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span>'],
     ['typography.html', '<span class="lang-fr">Typographie</span><span class="lang-en">Typography</span>'],
@@ -1336,8 +1441,9 @@ function buildHome(adrs) {
     [icon('book-open',20),   'Documentation',  'Documentation',  'Guidelines'],
     [icon('pen-tool',20),    'Design',         'Design',         'Figma'],
     [icon('code-2',20),      'Code',           'Code',           'Web Components'],
+    [icon('book-open',20),   'Storybook',      'Storybook',      'Chromatic'],
     [icon('check-circle',20),'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),'Audit',          'Audit',          'Chromatic'],
+    [icon('shield-check',20),'Audit visuel',   'Visual audit',   'Chromatic'],
     [icon('rocket',20),      'Déploiement',    'Deploy',         'CI/CD'],
   ];
 
@@ -1357,7 +1463,7 @@ function buildHome(adrs) {
 
   const body = `
 <div class="hero">
-  <div class="hero-badge">v1.0.0</div>
+  <div class="hero-badge">v0.1.0</div>
   <p class="hero-name">Agentica</p>
   <h1>
     <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
@@ -1421,6 +1527,28 @@ function buildHome(adrs) {
   </div>
 </div>
 
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Standards ouverts</span>
+    <span class="lang-en">Open standards</span>
+  </h2>
+  <div class="standards-band">
+    <a class="standards-logo" href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer" aria-label="Design Tokens Community Group (W3C) — designtokens.org">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>DTCG</title><path fill="currentColor" d="M16.1318 0.308289C16.4297 0.327953 16.7242 0.414945 16.9922 0.568054L28.9922 7.4245C29.6152 7.78062 30 8.44422 30 9.1618V22.8395C29.9998 23.557 29.6151 24.2209 28.9922 24.5768L16.9922 31.4333C16.8359 31.5226 16.6698 31.5866 16.5 31.6306V31.6325C16.4458 31.6465 16.3909 31.6563 16.3359 31.6657C16.317 31.6689 16.2983 31.6728 16.2793 31.6755C16.2183 31.6841 16.1571 31.6891 16.0957 31.6921C16.0739 31.6931 16.0521 31.6947 16.0303 31.695C15.9703 31.6959 15.9104 31.6936 15.8506 31.6891C15.8317 31.6877 15.8128 31.6862 15.7939 31.6843C15.7324 31.6779 15.6713 31.6681 15.6104 31.6559C15.591 31.6521 15.5719 31.6477 15.5527 31.6432C15.5353 31.6392 15.5174 31.637 15.5 31.6325V31.6286C15.3723 31.5956 15.2457 31.5545 15.125 31.4958L15.0078 31.4333L3.00781 24.5768C2.38487 24.2209 2.00025 23.557 2 22.8395V9.1618C2 8.89806 2.0528 8.64153 2.14941 8.40497C2.16859 8.35795 2.18927 8.31164 2.21191 8.2663L2.23828 8.21356C2.24243 8.20585 2.24771 8.19876 2.25195 8.1911C2.28326 8.13457 2.31686 8.07933 2.35352 8.02606C2.36319 8.01201 2.37277 7.99788 2.38281 7.98407C2.42195 7.93021 2.4643 7.87865 2.50879 7.8288C2.62122 7.70279 2.74996 7.59016 2.89355 7.49481L3.00781 7.4245L15.0078 0.568054C15.2755 0.415112 15.5696 0.328077 15.8672 0.308289C15.872 0.307815 15.8769 0.306633 15.8818 0.306335H16.1182C16.1228 0.306612 16.1273 0.307859 16.1318 0.308289ZM3 22.8503L7.51465 20.2712C7.75056 20.1364 8.05052 20.2288 8.18555 20.4645C8.32035 20.7007 8.24688 21.0054 8.01074 21.1403L3.51074 23.7126L15.5 30.5622V16.2907L3 9.14813V22.8503ZM16.5 16.2907V30.5622L28.4883 23.7126L23.9873 21.1413C23.751 21.0063 23.6773 20.7007 23.8125 20.4645C23.9478 20.2287 24.2483 20.1364 24.4844 20.2712L28.999 22.8513C28.9991 22.8475 28.9999 22.8433 29 22.8395V9.1618C29 9.15738 28.9991 9.15255 28.999 9.14813L16.5 16.2907ZM8.25781 13.9821C8.33691 13.6787 8.68469 13.5476 8.95703 13.7028L14.248 16.7263C14.4037 16.8152 14.4999 16.9806 14.5 17.1599V23.2536C14.4999 23.5671 14.2138 23.804 13.9111 23.7224C10.506 22.8038 8 19.6952 8 15.9997C8.00002 15.3026 8.08983 14.6266 8.25781 13.9821ZM23.042 13.7028C23.3143 13.5476 23.662 13.6787 23.7412 13.9821C23.9095 14.6266 24 15.3025 24 15.9997C24 19.6952 21.494 22.8038 18.0889 23.7224C17.7862 23.804 17.5001 23.5671 17.5 23.2536V17.1599C17.5001 16.9806 17.5963 16.8152 17.752 16.7263L23.042 13.7028ZM16.5 6.51434C16.4995 6.78566 16.2714 7.00068 16 7.00067C15.7286 7.00066 15.5005 6.78566 15.5 6.51434V1.43817L3.51172 8.28778L16 15.4235L28.4873 8.28778L16.5 1.43817V6.51434ZM16 7.99969C18.2143 7.99969 20.2177 8.90026 21.666 10.3542C21.8875 10.5765 21.8233 10.9436 21.5508 11.0993L16.248 14.1296C16.0943 14.2174 15.9057 14.2174 15.752 14.1296L10.4482 11.0983C10.1757 10.9426 10.1115 10.5766 10.333 10.3542C11.7814 8.90007 13.7854 7.99969 16 7.99969Z" /></svg>
+    </a>
+    <div class="standards-text">
+      <div class="standards-title">
+        <span class="lang-fr">Agentica suit le standard DTCG</span>
+        <span class="lang-en">Agentica follows the DTCG standard</span>
+      </div>
+      <p>
+        <span class="lang-fr">Les tokens d'Agentica sont conformes au format <strong>Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, alias <code>{group.token}</code>. Interopérables avec Style Dictionary, Tokens Studio et tout outil compatible. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
+        <span class="lang-en">Agentica's tokens conform to the W3C Community Group <strong>Design Tokens</strong> format (DTCG) — <code>$value</code>, <code>$type</code>, <code>{group.token}</code> aliases. Interoperable with Style Dictionary, Tokens Studio and any compatible tool. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
+      </p>
+    </div>
+  </div>
+</div>
+
 <div class="home-section-ink">
 <div class="home-section">
   <h2>
@@ -1446,7 +1574,10 @@ function buildHome(adrs) {
 <div class="stat-band" role="region" aria-label="Statistiques du système">
   <div class="stat-item">
     <span class="stat-num" data-count="21">21</span>
-    <span class="stat-text">WCAG 2.1 AA</span>
+    <span class="stat-text">
+      <span class="lang-fr">critères WCAG 2.1 AA couverts</span>
+      <span class="lang-en">WCAG 2.1 AA criteria covered</span>
+    </span>
   </div>
   <div class="stat-item">
     <span class="stat-num" data-count="${adrs.length}">${adrs.length}</span>
@@ -1636,48 +1767,80 @@ function buildHome(adrs) {
   </div>
   <div class="grid-auto-220">
     ${[
-      [icon('layers',18),'Lit (Google)','Web Components','Contrats UI universels, framework-agnostic','Universal UI contracts, framework-agnostic'],
-      [icon('palette',18),'Style Dictionary','Token compilation','JSON → CSS, JS, Swift, Android','JSON → CSS, JS, Swift, Android'],
-      [icon('camera',18),'Chromatic','Visual testing','Régressions visuelles, PR previews','Visual regressions, PR previews'],
-      [icon('accessibility',18),'axe-core','Accessibility','Audit automatique WCAG','Automatic WCAG audit'],
-      [icon('test-tube',18),'Playwright','E2E tests','Parcours complets automatisés','Automated end-to-end flows'],
-      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
+      ['<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 160 160" aria-hidden="true"><path fill="#00ACD7" d="M80 0C35.8 0 0 35.8 0 80s35.8 80 80 80 80-35.8 80-80S124.2 0 80 0zm-.7 32.5h1.4l37.3 21.5v43l-38 21.9L42 97V55l37.3-22.5zm0 8.2L47.6 59.3v37.4l32 18.5 32-18.5V59.3L79.3 40.7zM80 55a25 25 0 1 1 0 50 25 25 0 0 1 0-50z"/></svg>','Lit (Google)','Web Components','<span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span>',''],
+      [icon('palette',18),'Style Dictionary','Token compilation','<span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span>',''],
+      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','<span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span>',''],
+      [icon('shield-check',18),'axe-core','Accessibility','<span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span>',''],
+      [icon('test-tube',18),'Playwright','E2E tests','<span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span>',''],
+      ['<img class="vendor-logo" src="integrations/react.svg" alt="React" width="22" height="22" loading="lazy">','React / Vue / Angular','Web Components','<span class="lang-fr">Compatible tous frameworks</span><span class="lang-en">Works with all frameworks</span>',''],
     ].map(([ico,name,role,dFr,dEn]) => `
     <div class="tool-card">
       <div class="tool-card-icon">${ico}</div>
       <div>
         <div class="tool-card-name">${name} <span class="tool-card-role">— ${role}</span></div>
-        <div class="tool-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+        <div class="tool-card-desc">${dFr}</div>
       </div>
     </div>`).join('')}
   </div>
 </div>
 </div>
 
-<div class="home-section">
-  <h2>
-    <span class="lang-fr">Standards ouverts</span>
-    <span class="lang-en">Open standards</span>
-  </h2>
-  <div class="standards-band">
-    <a class="standards-logo" href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer" aria-label="Design Tokens Community Group (W3C) — designtokens.org">
-      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>DTCG</title><path fill="currentColor" d="M16.1318 0.308289C16.4297 0.327953 16.7242 0.414945 16.9922 0.568054L28.9922 7.4245C29.6152 7.78062 30 8.44422 30 9.1618V22.8395C29.9998 23.557 29.6151 24.2209 28.9922 24.5768L16.9922 31.4333C16.8359 31.5226 16.6698 31.5866 16.5 31.6306V31.6325C16.4458 31.6465 16.3909 31.6563 16.3359 31.6657C16.317 31.6689 16.2983 31.6728 16.2793 31.6755C16.2183 31.6841 16.1571 31.6891 16.0957 31.6921C16.0739 31.6931 16.0521 31.6947 16.0303 31.695C15.9703 31.6959 15.9104 31.6936 15.8506 31.6891C15.8317 31.6877 15.8128 31.6862 15.7939 31.6843C15.7324 31.6779 15.6713 31.6681 15.6104 31.6559C15.591 31.6521 15.5719 31.6477 15.5527 31.6432C15.5353 31.6392 15.5174 31.637 15.5 31.6325V31.6286C15.3723 31.5956 15.2457 31.5545 15.125 31.4958L15.0078 31.4333L3.00781 24.5768C2.38487 24.2209 2.00025 23.557 2 22.8395V9.1618C2 8.89806 2.0528 8.64153 2.14941 8.40497C2.16859 8.35795 2.18927 8.31164 2.21191 8.2663L2.23828 8.21356C2.24243 8.20585 2.24771 8.19876 2.25195 8.1911C2.28326 8.13457 2.31686 8.07933 2.35352 8.02606C2.36319 8.01201 2.37277 7.99788 2.38281 7.98407C2.42195 7.93021 2.4643 7.87865 2.50879 7.8288C2.62122 7.70279 2.74996 7.59016 2.89355 7.49481L3.00781 7.4245L15.0078 0.568054C15.2755 0.415112 15.5696 0.328077 15.8672 0.308289C15.872 0.307815 15.8769 0.306633 15.8818 0.306335H16.1182C16.1228 0.306612 16.1273 0.307859 16.1318 0.308289ZM3 22.8503L7.51465 20.2712C7.75056 20.1364 8.05052 20.2288 8.18555 20.4645C8.32035 20.7007 8.24688 21.0054 8.01074 21.1403L3.51074 23.7126L15.5 30.5622V16.2907L3 9.14813V22.8503ZM16.5 16.2907V30.5622L28.4883 23.7126L23.9873 21.1413C23.751 21.0063 23.6773 20.7007 23.8125 20.4645C23.9478 20.2287 24.2483 20.1364 24.4844 20.2712L28.999 22.8513C28.9991 22.8475 28.9999 22.8433 29 22.8395V9.1618C29 9.15738 28.9991 9.15255 28.999 9.14813L16.5 16.2907ZM8.25781 13.9821C8.33691 13.6787 8.68469 13.5476 8.95703 13.7028L14.248 16.7263C14.4037 16.8152 14.4999 16.9806 14.5 17.1599V23.2536C14.4999 23.5671 14.2138 23.804 13.9111 23.7224C10.506 22.8038 8 19.6952 8 15.9997C8.00002 15.3026 8.08983 14.6266 8.25781 13.9821ZM23.042 13.7028C23.3143 13.5476 23.662 13.6787 23.7412 13.9821C23.9095 14.6266 24 15.3025 24 15.9997C24 19.6952 21.494 22.8038 18.0889 23.7224C17.7862 23.804 17.5001 23.5671 17.5 23.2536V17.1599C17.5001 16.9806 17.5963 16.8152 17.752 16.7263L23.042 13.7028ZM16.5 6.51434C16.4995 6.78566 16.2714 7.00068 16 7.00067C15.7286 7.00066 15.5005 6.78566 15.5 6.51434V1.43817L3.51172 8.28778L16 15.4235L28.4873 8.28778L16.5 1.43817V6.51434ZM16 7.99969C18.2143 7.99969 20.2177 8.90026 21.666 10.3542C21.8875 10.5765 21.8233 10.9436 21.5508 11.0993L16.248 14.1296C16.0943 14.2174 15.9057 14.2174 15.752 14.1296L10.4482 11.0983C10.1757 10.9426 10.1115 10.5766 10.333 10.3542C11.7814 8.90007 13.7854 7.99969 16 7.99969Z" /></svg>
-    </a>
-    <div class="standards-text">
-      <div class="standards-title">
-        <span class="lang-fr">Agentica suit le standard DTCG</span>
-        <span class="lang-en">Agentica follows the DTCG standard</span>
-      </div>
-      <p>
-        <span class="lang-fr">Les tokens d'Agentica sont conformes au format <strong>Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, alias <code>{group.token}</code>. Interopérables avec Style Dictionary, Tokens Studio et tout outil compatible. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-        <span class="lang-en">Agentica's tokens conform to the W3C Community Group <strong>Design Tokens</strong> format (DTCG) — <code>$value</code>, <code>$type</code>, <code>{group.token}</code> aliases. Interoperable with Style Dictionary, Tokens Studio and any compatible tool. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-      </p>
-    </div>
-  </div>
-</div>
 `;
 
   write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, body }));
+}
+
+// ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
+function buildFoundationsIndex() {
+  const body = `
+<h1><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Les fondations définissent les décisions visuelles de base du système : couleur, espacement, typographie et iconographie. Elles servent de socle à tous les composants et tokens sémantiques.</span>
+  <span class="lang-en">Foundations define the system's core visual decisions: color, spacing, typography and iconography. They form the base for all components and semantic tokens.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Catalogue</span><span class="lang-en">Catalog</span></h2>
+<div class="nav-grid">
+  <a href="color.html" class="nav-card">
+    <span class="nav-card-icon">${icon('palette', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Échelles Radix 12 niveaux, tokens sémantiques, modes clair et sombre, contrastes WCAG.</span>
+      <span class="lang-en">Radix 12-step scales, semantic tokens, light and dark modes, WCAG contrast.</span>
+    </div>
+  </a>
+  <a href="spacing.html" class="nav-card">
+    <span class="nav-card-icon">${icon('move-horizontal', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Grille de 4px, densités compact/default/spacious, tokens de contrôle et de mise en page.</span>
+      <span class="lang-en">4px grid, compact/default/spacious densities, control and layout tokens.</span>
+    </div>
+  </a>
+  <a href="typography.html" class="nav-card">
+    <span class="nav-card-icon">${icon('type', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Atkinson Hyperlegible — échelle de taille, poids, interligne, règles d'accessibilité.</span>
+      <span class="lang-en">Atkinson Hyperlegible — size scale, weight, line-height, accessibility rules.</span>
+    </div>
+  </a>
+  <a href="icons.html" class="nav-card">
+    <span class="nav-card-icon">${icon('star', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1 et contrat d'accessibilité.</span>
+      <span class="lang-en">Lucide library — 1,500+ icons, 3 sizes, WCAG 1.1.1 rules and accessibility contract.</span>
+    </div>
+  </a>
+</div>
+`;
+
+  write(path.join(DIST, 'foundations/index.html'), layout({
+    title: 'Fondations', depth: 1,
+    sidebar: sidebarFoundations('../', 'index.html') + sidebarComponents('../', ''),
+    body: body + contributionBanner()
+  }));
 }
 
 // ─── PAGE: COLOR ────────────────────────────────────────────────────────────
@@ -1712,7 +1875,7 @@ function buildColor() {
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
   <td><code>--agtc-semantic-${key}</code></td>
-  <td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td>
+  <td class="mono-sm">${value}</td>
   <td>${intent}</td>
 </tr>`).join('');
 
@@ -2303,42 +2466,6 @@ function buildButton() {
   </div>
 </div>
 
-<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
-<ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
-</ul>
-
-<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
-<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
-  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
-</table>
-
-<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
-<ul>
-  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
-  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
-  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span></li>
-  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
-  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
-  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
-</ul>
-
-<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
-<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
-<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
-  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
-  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
-  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
-  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
-</ol>
-
 <h2><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></h2>
 <p>
   <span class="lang-fr">Approche hybride : propriété (Figma, React, tous frameworks) ou slot (composition avancée). Le contenu slotté a toujours la priorité sur la propriété.</span>
@@ -2382,6 +2509,42 @@ function buildButton() {
   &lt;agtc-icon slot="prefix" name="plus"&gt;&lt;/agtc-icon&gt;
   <span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>
 &lt;/agtc-button&gt;</code></pre>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
+  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span></li>
+  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
+  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
+  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
+<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
+<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
+  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
+  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
+  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
+  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
+</ol>
 
 <h2><span class="lang-fr">Compatibilité frameworks</span><span class="lang-en">Framework compatibility</span></h2>
 <table class="token-table"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
@@ -2439,7 +2602,7 @@ class AgtcButton extends LitElement {
 }
 customElements.define('agtc-button', AgtcButton);</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2511,7 +2674,7 @@ function buildIcon() {
   <tbody>${tokenRows}</tbody>
 </table>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2569,7 +2732,7 @@ function buildInput() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-name" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Nom complet</span><span class="lang-en">Full name</span></label>
         <input id="demo-input-name" type="text" placeholder="Jean Dupont" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
@@ -2579,7 +2742,7 @@ function buildInput() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Erreur</span><span class="lang-en">Error</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-email" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Adresse e-mail</span><span class="lang-en">Email address</span></label>
         <input id="demo-input-email" type="email" value="jean@" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-danger);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
@@ -2589,7 +2752,7 @@ function buildInput() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-code" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-disabled)"><span class="lang-fr">Code d'accès</span><span class="lang-en">Access code</span></label>
         <input id="demo-input-code" type="text" value="••••••" disabled style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-disabled);outline:none;font-family:inherit;cursor:not-allowed">
@@ -2610,7 +2773,7 @@ function buildInput() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Types supportés</span><span class="lang-en">Supported types</span></h2>
@@ -2655,7 +2818,7 @@ function buildInput() {
 &lt;!-- Avec icône --&gt;
 &lt;agtc-input label="<span class="lang-fr">Rechercher</span><span class="lang-en">Search</span>" type="search" icon="search"&gt;&lt;/agtc-input&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2741,7 +2904,7 @@ function buildBadge() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -2770,7 +2933,7 @@ function buildBadge() {
 &lt;!-- Icon-only — label obligatoire --&gt;
 &lt;agtc-badge icon-only icon="check" label="<span class="lang-fr">Approuvé</span><span class="lang-en">Approved</span>" variant="success"&gt;&lt;/agtc-badge&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2861,7 +3024,7 @@ function buildCard() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -2898,7 +3061,7 @@ function buildCard() {
   &lt;/a&gt;
 &lt;/agtc-card&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2969,7 +3132,7 @@ function buildCheckbox() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Default · Checked · Indeterminate</span><span class="lang-en">Default · Checked · Indeterminate</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('default', '<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>')}
       ${row('checked', '<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>')}
       ${row('indeterminate', '<span class="lang-fr">Tout sélectionner (partiel)</span><span class="lang-en">Select all (partial)</span>')}
@@ -2977,7 +3140,7 @@ function buildCheckbox() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('disabled', '<span class="lang-fr">Option indisponible</span><span class="lang-en">Option unavailable</span>', true)}
       ${row('disabled-checked', '<span class="lang-fr">Option verrouillée</span><span class="lang-en">Locked option</span>', true)}
     </div>
@@ -2996,7 +3159,7 @@ function buildCheckbox() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3020,7 +3183,7 @@ function buildCheckbox() {
 &lt;!-- Texte en slot --&gt;
 &lt;agtc-checkbox&gt;<span class="lang-fr">J'accepte les</span><span class="lang-en">I accept the</span> &lt;a href="/cgu"&gt;<span class="lang-fr">conditions</span><span class="lang-en">terms</span>&lt;/a&gt;&lt;/agtc-checkbox&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3082,7 +3245,7 @@ function buildRadio() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Groupe « Formule »</span><span class="lang-en">"Plan" group</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('default', 'Gratuit')}
       ${row('selected', 'Pro')}
       ${row('disabled', '<span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span>', true)}
@@ -3112,7 +3275,7 @@ function buildRadio() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
@@ -3163,14 +3326,14 @@ function buildToggle() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label">Off · On</span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row(false, '<span class="lang-fr">Mode sombre</span><span class="lang-en">Dark mode</span>')}
       ${row(true, '<span class="lang-fr">Notifications par e-mail</span><span class="lang-en">Email notifications</span>')}
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row(false, '<span class="lang-fr">Synchronisation</span><span class="lang-en">Sync</span>', true)}
       ${row(true, '<span class="lang-fr">Sauvegarde auto</span><span class="lang-en">Auto-save</span>', true)}
     </div>
@@ -3198,7 +3361,7 @@ function buildToggle() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
@@ -3272,7 +3435,7 @@ function buildTable() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3306,7 +3469,7 @@ function buildTable() {
   &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3375,7 +3538,7 @@ function buildCodeBlock() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3395,7 +3558,7 @@ function buildCodeBlock() {
 &lt;!-- Classe sur HTML statique (site) --&gt;
 &lt;pre class="code-block"&gt;&lt;code class="lang-html"&gt;&amp;lt;agtc-badge&amp;gt;Validé&amp;lt;/agtc-badge&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3472,7 +3635,7 @@ function buildBanner() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3497,7 +3660,7 @@ function buildBanner() {
 &lt;!-- Notification dynamique (insérée par JS) --&gt;
 &lt;agtc-banner variant="danger" live="assertive" heading="Erreur"&gt;…&lt;/agtc-banner&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3562,7 +3725,7 @@ function buildLink() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3583,7 +3746,7 @@ function buildLink() {
 &lt;!-- Nav (soulignement au survol) --&gt;
 &lt;agtc-link href="/components" underline="hover"&gt;<span class="lang-fr">Composants</span><span class="lang-en">Components</span>&lt;/agtc-link&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3663,7 +3826,7 @@ function buildSegmented() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3682,7 +3845,7 @@ function buildSegmented() {
   s.addEventListener('change', (e) =&gt; setLanguage(e.detail.value));
 &lt;/script&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3725,7 +3888,7 @@ function buildTokens() {
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td class="mono-sm">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
@@ -3735,14 +3898,14 @@ function buildTokens() {
     const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
     const aliasCell = aliasNode ? `<td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`;
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td class="mono-sm">${v}</td></tr>`;
   }).join('');
 
   const compRows = Object.entries(COMP).map(([k, v]) => {
     const resolved = resolveCompValue(v);
     const isColor = k.includes('background') || k.includes('text') || k.includes('border');
     const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--agtc-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
+    return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span class="mono-sm">${resolved}</span></div></td></tr>`;
   }).join('');
 
   const body = `
@@ -3767,28 +3930,35 @@ function buildTokens() {
   </div>
 </div>
 
-<input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens">
+<input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens" autocomplete="off" spellcheck="false">
+<p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
 
+<div class="token-section" id="section-primitifs">
 <h2 id="primitifs" class="first"><span class="lang-fr">Tokens primitifs</span><span class="lang-en">Primitive tokens</span></h2>
 <p>
   <span class="lang-fr">Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></span>
   <span class="lang-en">Physical values from Radix UI. <strong>Never used directly in components.</strong></span>
 </p>
 <table class="token-table"><colgroup><col style="width:52%"><col style="width:16%"><col style="width:32%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th></tr></thead><tbody>${primRows}</tbody></table>
+</div>
 
+<div class="token-section" id="section-semantiques">
 <h2 id="semantiques"><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
   <span class="lang-fr">Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span>
   <span class="lang-en">UX intentions — what agents must use to understand function, not raw values.</span>
 </p>
 <table class="token-table"><colgroup><col style="width:48%"><col style="width:32%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias (référence)</span><span class="lang-en">Alias (reference)</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${semRows}</tbody></table>
+</div>
 
+<div class="token-section" id="section-composants">
 <h2 id="composants"><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <p>
   <span class="lang-fr">Contrats institutionnels. Toute modification requiert une approbation formelle.</span>
   <span class="lang-en">Institutional contracts. Any change requires formal approval.</span>
 </p>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias sémantique</span><span class="lang-en">Semantic alias</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${compRows}</tbody></table>
+</div>
 `;
 
   write(path.join(DIST, 'tokens/index.html'), layout({
@@ -4177,6 +4347,57 @@ git clone ${REPO}.git
   }));
 }
 
+// ─── PAGE: CHANGELOG ────────────────────────────────────────────────────────
+function buildChangelog() {
+  const body = `
+<h1>Changelog</h1>
+<p class="page-lead">
+  <span class="lang-fr">Historique des versions d'Agentica — chaque entrée décrit les changements, décisions et améliorations apportées au système.</span>
+  <span class="lang-en">Agentica version history — each entry describes the changes, decisions, and improvements made to the system.</span>
+</p>
+
+<div class="changelog-entry">
+  <div class="changelog-header">
+    <span class="changelog-version">v0.1.0</span>
+    <span class="changelog-badge unreleased"><span class="lang-fr">Non lancée</span><span class="lang-en">Unreleased</span></span>
+    <span class="changelog-date">2026</span>
+  </div>
+  <h2 class="first"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></h2>
+  <ul>
+    <li><span class="lang-fr">Architecture de tokens 3 niveaux : primitifs → sémantiques → composant (DTCG-conforme)</span><span class="lang-en">3-layer token architecture: primitives → semantic → component (DTCG-compliant)</span></li>
+    <li><span class="lang-fr">Palette de couleurs Radix UI (échelles 12 niveaux), espacement grille 4px, typographie Atkinson Hyperlegible</span><span class="lang-en">Radix UI color palette (12-step scales), 4px spacing grid, Atkinson Hyperlegible typography</span></li>
+    <li><span class="lang-fr">Bibliothèque d'icônes Lucide — 1 500+ icônes, 3 tailles, contrats d'accessibilité WCAG 1.1.1</span><span class="lang-en">Lucide icon library — 1,500+ icons, 3 sizes, WCAG 1.1.1 accessibility contracts</span></li>
+  </ul>
+  <h2><span class="lang-fr">Composants</span><span class="lang-en">Components</span></h2>
+  <ul>
+    <li><span class="lang-fr">14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span><span class="lang-en">14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span></li>
+    <li><span class="lang-fr">Variantes Button : primary, secondary, ghost, critical — avec règles de confirmation pour les actions irréversibles</span><span class="lang-en">Button variants: primary, secondary, ghost, critical — with confirmation rules for irreversible actions</span></li>
+    <li><span class="lang-fr">Tokens de composant institutionnels dans <code>tokens/component.json</code></span><span class="lang-en">Institutional component tokens in <code>tokens/component.json</code></span></li>
+  </ul>
+  <h2><span class="lang-fr">Gouvernance & Agents</span><span class="lang-en">Governance & Agents</span></h2>
+  <ul>
+    <li><span class="lang-fr">52 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées</span><span class="lang-en">52 ADRs (Architecture Decision Records) — all decisions traced and justified</span></li>
+    <li><span class="lang-fr">4 types d'agents IA : Designer, Developer, QA, Documentation</span><span class="lang-en">4 AI agent types: Designer, Developer, QA, Documentation</span></li>
+    <li><span class="lang-fr">Conformité WCAG 2.1 AA — audit intégré, 0 violation critique</span><span class="lang-en">WCAG 2.1 AA compliance — built-in audit, 0 critical violations</span></li>
+    <li><span class="lang-fr">Pipeline qualité complet : tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span><span class="lang-en">Full quality pipeline: tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span></li>
+  </ul>
+  <h2><span class="lang-fr">Site & Documentation</span><span class="lang-en">Site & Documentation</span></h2>
+  <ul>
+    <li><span class="lang-fr">Générateur de site statique sur-mesure (Node.js), bilingue FR/EN</span><span class="lang-en">Custom static site generator (Node.js), bilingual FR/EN</span></li>
+    <li><span class="lang-fr">Storybook publié sur Chromatic — canvas interactif, previews, specs</span><span class="lang-en">Storybook published on Chromatic — interactive canvas, previews, specs</span></li>
+    <li><span class="lang-fr">Sync Figma ↔ JSON via Tokens Studio</span><span class="lang-en">Figma ↔ JSON sync via Tokens Studio</span></li>
+  </ul>
+</div>
+${contributionBanner()}
+`;
+
+  write(path.join(DIST, 'changelog.html'), layout({
+    title: 'Changelog', depth: 0,
+    sidebar: null,
+    body
+  }));
+}
+
 // ─── PAGE: AUDIT ────────────────────────────────────────────────────────────
 function buildAudit() {
   const auditFile = path.join(DIST, 'audit.html');
@@ -4446,6 +4667,8 @@ function build() {
   const adrs = loadADRs();
   buildHome(adrs);
   buildGetStarted();
+  buildChangelog();
+  buildFoundationsIndex();
   buildColor();
   buildSpacing();
   buildTypography();
