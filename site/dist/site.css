@@ -296,6 +296,11 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 /* En-têtes : jamais de coupure au milieu d'un mot — retour à la ligne aux espaces seulement */
 .token-table th{overflow-wrap:normal;word-break:normal;hyphens:none}
 
+/* ── UTILITY CLASSES ─────────────────────────────────────── */
+.mono-sm{font-family:var(--agtc-font-mono);font-size:12px}
+.demo-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.prop-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;color:var(--agtc-semantic-color-text-secondary)}
+
 /* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
 .agtc-table{
   width:100%;border-collapse:collapse;
@@ -374,8 +379,9 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .agtc-badge.warning{background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text)}
 .agtc-badge.danger{background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text)}
 .agtc-badge.info{background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text)}
-.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
-.adr-meta strong{color:var(--agtc-semantic-color-text-primary)}
+.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 24px;font-size:0.875rem}
+.adr-meta-item{display:flex;flex-direction:column;gap:2px}
+.adr-meta-item strong{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}

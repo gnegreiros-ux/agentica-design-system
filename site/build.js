@@ -578,6 +578,11 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 /* En-têtes : jamais de coupure au milieu d'un mot — retour à la ligne aux espaces seulement */
 .token-table th{overflow-wrap:normal;word-break:normal;hyphens:none}
 
+/* ── UTILITY CLASSES ─────────────────────────────────────── */
+.mono-sm{font-family:var(--agtc-font-mono);font-size:12px}
+.demo-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.prop-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;color:var(--agtc-semantic-color-text-secondary)}
+
 /* ── agtc-table (classe — moitié light DOM du mix, ADR-040) ─────────────── */
 .agtc-table{
   width:100%;border-collapse:collapse;
@@ -656,8 +661,9 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .agtc-badge.warning{background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text)}
 .agtc-badge.danger{background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text)}
 .agtc-badge.info{background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text)}
-.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:flex;gap:24px;flex-wrap:wrap;font-size:0.875rem}
-.adr-meta strong{color:var(--agtc-semantic-color-text-primary)}
+.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 24px;font-size:0.875rem}
+.adr-meta-item{display:flex;flex-direction:column;gap:2px}
+.adr-meta-item strong{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
@@ -1869,7 +1875,7 @@ function buildColor() {
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
   <td><code>--agtc-semantic-${key}</code></td>
-  <td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td>
+  <td class="mono-sm">${value}</td>
   <td>${intent}</td>
 </tr>`).join('');
 
@@ -2518,7 +2524,7 @@ function buildButton() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -2596,7 +2602,7 @@ class AgtcButton extends LitElement {
 }
 customElements.define('agtc-button', AgtcButton);</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2668,7 +2674,7 @@ function buildIcon() {
   <tbody>${tokenRows}</tbody>
 </table>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2726,7 +2732,7 @@ function buildInput() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-name" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Nom complet</span><span class="lang-en">Full name</span></label>
         <input id="demo-input-name" type="text" placeholder="Jean Dupont" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
@@ -2736,7 +2742,7 @@ function buildInput() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Erreur</span><span class="lang-en">Error</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-email" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Adresse e-mail</span><span class="lang-en">Email address</span></label>
         <input id="demo-input-email" type="email" value="jean@" style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-danger);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);outline:none;font-family:inherit">
@@ -2746,7 +2752,7 @@ function buildInput() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       <div style="display:flex;flex-direction:column;gap:4px;width:280px">
         <label for="demo-input-code" style="font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-disabled)"><span class="lang-fr">Code d'accès</span><span class="lang-en">Access code</span></label>
         <input id="demo-input-code" type="text" value="••••••" disabled style="padding:var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);border:1.5px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-body-size);background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-disabled);outline:none;font-family:inherit;cursor:not-allowed">
@@ -2767,7 +2773,7 @@ function buildInput() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Types supportés</span><span class="lang-en">Supported types</span></h2>
@@ -2812,7 +2818,7 @@ function buildInput() {
 &lt;!-- Avec icône --&gt;
 &lt;agtc-input label="<span class="lang-fr">Rechercher</span><span class="lang-en">Search</span>" type="search" icon="search"&gt;&lt;/agtc-input&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -2898,7 +2904,7 @@ function buildBadge() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -2927,7 +2933,7 @@ function buildBadge() {
 &lt;!-- Icon-only — label obligatoire --&gt;
 &lt;agtc-badge icon-only icon="check" label="<span class="lang-fr">Approuvé</span><span class="lang-en">Approved</span>" variant="success"&gt;&lt;/agtc-badge&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3018,7 +3024,7 @@ function buildCard() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3055,7 +3061,7 @@ function buildCard() {
   &lt;/a&gt;
 &lt;/agtc-card&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3126,7 +3132,7 @@ function buildCheckbox() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Default · Checked · Indeterminate</span><span class="lang-en">Default · Checked · Indeterminate</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('default', '<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>')}
       ${row('checked', '<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>')}
       ${row('indeterminate', '<span class="lang-fr">Tout sélectionner (partiel)</span><span class="lang-en">Select all (partial)</span>')}
@@ -3134,7 +3140,7 @@ function buildCheckbox() {
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('disabled', '<span class="lang-fr">Option indisponible</span><span class="lang-en">Option unavailable</span>', true)}
       ${row('disabled-checked', '<span class="lang-fr">Option verrouillée</span><span class="lang-en">Locked option</span>', true)}
     </div>
@@ -3153,7 +3159,7 @@ function buildCheckbox() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3177,7 +3183,7 @@ function buildCheckbox() {
 &lt;!-- Texte en slot --&gt;
 &lt;agtc-checkbox&gt;<span class="lang-fr">J'accepte les</span><span class="lang-en">I accept the</span> &lt;a href="/cgu"&gt;<span class="lang-fr">conditions</span><span class="lang-en">terms</span>&lt;/a&gt;&lt;/agtc-checkbox&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3239,7 +3245,7 @@ function buildRadio() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Groupe « Formule »</span><span class="lang-en">"Plan" group</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row('default', 'Gratuit')}
       ${row('selected', 'Pro')}
       ${row('disabled', '<span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span>', true)}
@@ -3269,7 +3275,7 @@ function buildRadio() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
@@ -3320,14 +3326,14 @@ function buildToggle() {
 <div class="demo-box">
   <div class="demo-group">
     <span class="demo-group-label">Off · On</span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row(false, '<span class="lang-fr">Mode sombre</span><span class="lang-en">Dark mode</span>')}
       ${row(true, '<span class="lang-fr">Notifications par e-mail</span><span class="lang-en">Email notifications</span>')}
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
-    <div class="demo-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+    <div class="demo-row demo-col">
       ${row(false, '<span class="lang-fr">Synchronisation</span><span class="lang-en">Sync</span>', true)}
       ${row(true, '<span class="lang-fr">Sauvegarde auto</span><span class="lang-en">Auto-save</span>', true)}
     </div>
@@ -3355,7 +3361,7 @@ function buildToggle() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
@@ -3429,7 +3435,7 @@ function buildTable() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3463,7 +3469,7 @@ function buildTable() {
   &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3532,7 +3538,7 @@ function buildCodeBlock() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3552,7 +3558,7 @@ function buildCodeBlock() {
 &lt;!-- Classe sur HTML statique (site) --&gt;
 &lt;pre class="code-block"&gt;&lt;code class="lang-html"&gt;&amp;lt;agtc-badge&amp;gt;Validé&amp;lt;/agtc-badge&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3629,7 +3635,7 @@ function buildBanner() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3654,7 +3660,7 @@ function buildBanner() {
 &lt;!-- Notification dynamique (insérée par JS) --&gt;
 &lt;agtc-banner variant="danger" live="assertive" heading="Erreur"&gt;…&lt;/agtc-banner&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3719,7 +3725,7 @@ function buildLink() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:42%"><col style="width:36%"><col style="width:22%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3740,7 +3746,7 @@ function buildLink() {
 &lt;!-- Nav (soulignement au survol) --&gt;
 &lt;agtc-link href="/components" underline="hover"&gt;<span class="lang-fr">Composants</span><span class="lang-en">Components</span>&lt;/agtc-link&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3820,7 +3826,7 @@ function buildSegmented() {
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v||'—'}</td></tr>`).join('')}</tbody>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
 </table>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
@@ -3839,7 +3845,7 @@ function buildSegmented() {
   s.addEventListener('change', (e) =&gt; setLanguage(e.detail.value));
 &lt;/script&gt;</code></pre>
 
-<h2>DOs et DON'Ts</h2>
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
   <div class="do-section">
     <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
@@ -3882,7 +3888,7 @@ function buildTokens() {
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td class="mono-sm">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
@@ -3892,14 +3898,14 @@ function buildTokens() {
     const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
     const aliasCell = aliasNode ? `<td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
-    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`;
+    return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td class="mono-sm">${v}</td></tr>`;
   }).join('');
 
   const compRows = Object.entries(COMP).map(([k, v]) => {
     const resolved = resolveCompValue(v);
     const isColor = k.includes('background') || k.includes('text') || k.includes('border');
     const swatch = isColor && resolved.startsWith('#') ? `<span style="width:20px;height:20px;border-radius:3px;background:${resolved};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block;margin-right:6px" aria-hidden="true"></span>` : '';
-    return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span style="font-family:var(--agtc-font-mono);font-size:12px">${resolved}</span></div></td></tr>`;
+    return `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td style="font-family:var(--agtc-font-mono);font-size:11px;color:var(--agtc-semantic-color-text-secondary)">${v}</td><td><div style="display:flex;align-items:center">${swatch}<span class="mono-sm">${resolved}</span></div></td></tr>`;
   }).join('');
 
   const body = `
