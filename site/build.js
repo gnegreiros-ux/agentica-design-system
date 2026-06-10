@@ -858,6 +858,11 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
+.back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
+.back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
+.back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}
+.back-to-top:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+@media(max-width:768px){.back-to-top{bottom:16px;right:16px;padding:8px 12px}}
 @media(max-width:768px){
   .menu-toggle{display:flex;align-items:center}
   .top-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:var(--agtc-semantic-shadow-raised)}
@@ -1058,6 +1063,21 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
     });
   });
+
+  // ── Bouton retour en haut ────────────────────────────────
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const threshold = document.documentElement.scrollHeight * 0.25;
+    const onScroll = () => {
+      const visible = window.scrollY > threshold;
+      backToTop.hidden = !visible;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 });
 `; }
 
@@ -1177,6 +1197,10 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   ${tocHtml}
 </div>
 ${footer}
+<button class="back-to-top" aria-label="Retour en haut" hidden>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
 <script src="${base}site.js"></script>
 </body>
 </html>`;
@@ -3769,7 +3793,7 @@ function buildTokens() {
 
   write(path.join(DIST, 'tokens/index.html'), layout({
     title: 'Tokens', depth: 1,
-    sidebar: sidebarFoundations('../','') + sidebarComponents('../','') + sidebarTokens('../',''),
+    sidebar: sidebarFoundations('../','') + sidebarComponents('../',''),
     body: body + contributionBanner()
   }));
 }
@@ -3975,7 +3999,7 @@ color: var(--agtc-primitive-color-blue-11);</code></pre>
 
   write(path.join(DIST, 'agents/index.html'), layout({
     title: 'Pour les agents IA', depth: 1,
-    sidebar: sidebarAgents('../'),
+    sidebar: null,
     body: body + contributionBanner()
   }));
 }
