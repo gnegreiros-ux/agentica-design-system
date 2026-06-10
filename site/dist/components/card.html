@@ -54,12 +54,11 @@
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
   </button>
-  <button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></button>
 </header>
 <div class="sidebar-overlay" aria-hidden="true"></div>
 <div class="layout" id="main-content">
   <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span><a href="../foundations/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../foundations/color.html"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></a><a href="../foundations/spacing.html"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></a><a href="../foundations/typography.html"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></a><a href="../foundations/icons.html"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></a></div><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span><a href="../components/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../components/button.html">Button</a><a href="../components/icon.html">Icon</a><a href="../components/input.html">Input</a><a href="../components/badge.html">Badge</a><a href="../components/card.html" class="active">Card</a><a href="../components/checkbox.html">Checkbox</a><a href="../components/radio.html">Radio</a><a href="../components/toggle.html">Toggle</a><a href="../components/table.html">Table</a><a href="../components/code-block.html">Code Block</a><a href="../components/banner.html">Banner</a><a href="../components/link.html">Link</a><a href="../components/segmented.html">Segmented</a></div></aside>
-  <main class="content" role="main">
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <h1>Card</h1>
 <p class="page-lead">
   <span class="lang-fr">Conteneur visuel pour regrouper des informations liées. 3 variantes, 4 paddings, slots header/body/footer avec séparateurs automatiques. Non interactif par défaut.</span>
@@ -88,17 +87,17 @@
 </div>
 
 <h2><span class="lang-fr">Slots</span><span class="lang-en">Slots</span></h2>
-<table class="token-table">
+<div class="table-wrap"><table class="token-table">
   <thead><tr><th>Slot</th><th><span class="lang-fr">Comportement</span><span class="lang-en">Behavior</span></th></tr></thead>
   <tbody>
     <tr><td><code>header</code></td><td><span class="lang-fr">Séparateur bas automatique si contenu présent</span><span class="lang-en">Automatic bottom separator if content present</span></td></tr>
     <tr><td><span class="lang-fr">(défaut)</span><span class="lang-en">(default)</span></td><td><span class="lang-fr">Corps de la carte</span><span class="lang-en">Card body</span></td></tr>
     <tr><td><code>footer</code></td><td><span class="lang-fr">Séparateur haut automatique si contenu présent</span><span class="lang-en">Automatic top separator if content present</span></td></tr>
   </tbody>
-</table>
+</table></div>
 
 <h2><span class="lang-fr">Padding</span><span class="lang-en">Padding</span></h2>
-<table class="token-table">
+<div class="table-wrap"><table class="token-table">
   <thead><tr><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Token</span><span class="lang-en">Token</span></th><th><span class="lang-fr">Usage</span><span class="lang-en">Usage</span></th></tr></thead>
   <tbody>
     <tr><td><code>none</code></td><td><code>0px</code></td><td><span class="lang-fr">Médias plein-bord, listes sans padding</span><span class="lang-en">Full-bleed media, lists without padding</span></td></tr>
@@ -106,13 +105,13 @@
     <tr><td><code>md</code></td><td><code>semantic.space.layout.component</code></td><td><span class="lang-fr">Défaut — usage général</span><span class="lang-en">Default — general use</span></td></tr>
     <tr><td><code>lg</code></td><td><code>primitive.space.6</code></td><td><span class="lang-fr">Contenu spacieux, formulaires</span><span class="lang-en">Spacious content, forms</span></td></tr>
   </tbody>
-</table>
+</table></div>
 
 <h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
-<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+<div class="table-wrap"><table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
   <tbody><tr class="token-row"><td><code>--agtc-component-card-default-background</code></td><td><code>semantic.color.background.surface</code></td><td class="mono-sm">#ffffff</td></tr><tr class="token-row"><td><code>--agtc-component-card-default-border</code></td><td><code>semantic.color.border.default</code></td><td class="mono-sm">#e8e8e8</td></tr><tr class="token-row"><td><code>--agtc-component-card-default-radius</code></td><td><code>semantic.radius.card</code></td><td class="mono-sm">10px</td></tr><tr class="token-row"><td><code>--agtc-component-card-default-padding</code></td><td><code>semantic.space.layout.component</code></td><td class="mono-sm">20px</td></tr><tr class="token-row"><td><code>--agtc-component-card-elevated-shadow</code></td><td><code>semantic.shadow.card</code></td><td class="mono-sm">0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</td></tr><tr class="token-row"><td><code>--agtc-component-card-flat-background</code></td><td><code>semantic.color.background.subtle</code></td><td class="mono-sm">#f0f0f0</td></tr><tr class="token-row"><td><code>--agtc-component-card-padding-none</code></td><td><code>—</code></td><td class="mono-sm">0px</td></tr><tr class="token-row"><td><code>--agtc-component-card-padding-sm</code></td><td><code>primitive.space.3</code></td><td class="mono-sm">—</td></tr><tr class="token-row"><td><code>--agtc-component-card-padding-lg</code></td><td><code>primitive.space.6</code></td><td class="mono-sm">—</td></tr></tbody>
-</table>
+</table></div>
 
 <h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
 <ul>
@@ -169,7 +168,7 @@
 </div>
 <h2>PATTERNS UX DE RÉFÉRENCE</h2>
 <blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>C1, C3, C4 approuvés + C2 révisé</strong>.</p></blockquote>
-<table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Groupement visuel clair (clustering) du contenu lié</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — grouped layout</a></td><td>✅</td><td>Intention du composant</td></tr><tr><td><strong>Carte cliquable — règle révisée</strong></td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing — clickable cards</a> · <a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅ (révisé)</td><td>Voir contrat ci-dessous</td></tr><tr><td>Hiérarchie via élévation/ombre, pas via couleur seule</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — composition</a></td><td>✅</td><td>Variante <code>elevated</code></td></tr><tr><td>Détail-on-demand : la carte résume, le détail s'ouvre ailleurs</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — screenspace</a></td><td>✅</td><td>Guideline d'usage : éviter la carte « réceptacle de tout le détail »</td></tr></tbody></table>
+<div class="table-wrap"><table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Groupement visuel clair (clustering) du contenu lié</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — grouped layout</a></td><td>✅</td><td>Intention du composant</td></tr><tr><td><strong>Carte cliquable — règle révisée</strong></td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing — clickable cards</a> · <a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅ (révisé)</td><td>Voir contrat ci-dessous</td></tr><tr><td>Hiérarchie via élévation/ombre, pas via couleur seule</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — composition</a></td><td>✅</td><td>Variante <code>elevated</code></td></tr><tr><td>Détail-on-demand : la carte résume, le détail s'ouvre ailleurs</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — screenspace</a></td><td>✅</td><td>Guideline d'usage : éviter la carte « réceptacle de tout le détail »</td></tr></tbody></table></div>
 <h3>Contrat de cliquabilité (C2 révisé)</h3>
 <ul><li><strong>Carte avec une seule destination</strong> → le lien couvre <strong>toute la surface</strong> (cible de clic</li></ul>
 <p>  englobante, focus visible sur la carte).</p>

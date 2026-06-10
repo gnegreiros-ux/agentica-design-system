@@ -48,7 +48,7 @@ function parseMd(text) {
       const rows = [l]; i += 2;
       while (i < lines.length && /^\|/.test(lines[i])) { rows.push(lines[i]); i++; }
       const pr = (r,t) => r.split('|').filter(c=>c.trim()).map(c=>`<${t}>${inl(c.trim())}</${t}>`).join('');
-      out.push(`<table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table>`);
+      out.push(`<div class="table-wrap"><table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table></div>`);
       continue;
     }
     if (/^[-*] /.test(l)) {
@@ -491,7 +491,8 @@ li code{font-size:.8em}
 /* Tables du site : consomment le contrat du composant table (component.table.* — ADR-040).
    Le site s'aligne sur le composant (dogfooding cat. A) ; il garde sa présentation
    d'en-tête (majuscules, tracking), mais toutes les COULEURS viennent du composant. */
-table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem;table-layout:auto}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px}
+table{width:100%;border-collapse:collapse;margin:0;font-size:0.875rem;table-layout:auto;min-width:420px}
 th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-component-table-default-border);white-space:nowrap}
 td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
 tr:last-child td{border-bottom:none}
@@ -681,8 +682,9 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .rule-cannot li{color:var(--agtc-semantic-color-feedback-danger);font-size:0.875rem}
 
 /* ── SIDEBAR DRAWER (mobile) ─────────────────────────────── */
-.sidebar-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px;flex-shrink:0}
-.sidebar-toggle:hover,.sidebar-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.sidebar-toggle{display:none;align-items:center;gap:6px;background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);cursor:pointer;padding:6px 12px;color:var(--agtc-semantic-color-text-secondary);border-radius:var(--agtc-semantic-radius-control);font-size:0.8125rem;font-weight:500;font-family:inherit;margin-bottom:20px}
+.sidebar-toggle-label{font-size:0.8125rem}
+.sidebar-toggle:hover,.sidebar-toggle:focus-visible{background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 .sidebar-overlay{display:none;position:fixed;inset:0;top:60px;background:rgba(0,0,0,.40);z-index:89;backdrop-filter:blur(2px)}
 .sidebar-overlay.active{display:block}
 
@@ -700,7 +702,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
     height:calc(100vh - 60px);
   }
   .sidebar.open{transform:translateX(0)}
-  .sidebar-toggle{display:flex;align-items:center}
+  .sidebar-toggle{display:flex}
   .content{padding:28px 20px}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
@@ -1292,12 +1294,11 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     ${icon('menu', 22)}
   </button>
-  ${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}</button>` : ''}
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${mainClass}" id="main-content">
   ${sidebarHtml}
-  <main class="${fullWidth ? '' : 'content'}" role="main">${body}</main>
+  <main class="${fullWidth ? '' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
 </div>
 ${footer}
@@ -1307,7 +1308,7 @@ ${footer}
 </button>
 <script src="${base}site.js"></script>
 </body>
-</html>`;
+</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
 }
 
 function sidebarFoundations(base, current) {

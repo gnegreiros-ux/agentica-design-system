@@ -54,12 +54,11 @@
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
   </button>
-  <button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></button>
 </header>
 <div class="sidebar-overlay" aria-hidden="true"></div>
 <div class="layout" id="main-content">
   <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span><a href="../foundations/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../foundations/color.html"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></a><a href="../foundations/spacing.html"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></a><a href="../foundations/typography.html" class="active"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></a><a href="../foundations/icons.html"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></a></div><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span><a href="../components/index.html"><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a><a href="../components/button.html">Button</a><a href="../components/icon.html">Icon</a><a href="../components/input.html">Input</a><a href="../components/badge.html">Badge</a><a href="../components/card.html">Card</a><a href="../components/checkbox.html">Checkbox</a><a href="../components/radio.html">Radio</a><a href="../components/toggle.html">Toggle</a><a href="../components/table.html">Table</a><a href="../components/code-block.html">Code Block</a><a href="../components/banner.html">Banner</a><a href="../components/link.html">Link</a><a href="../components/segmented.html">Segmented</a></div></aside>
-  <main class="content" role="main">
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <h1><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></h1>
 <p class="page-lead">
   <span class="lang-fr">Police principale : <strong>Atkinson Hyperlegible</strong> — conçue pour la basse vision. Échelle <strong>Minor Third</strong> (ratio 1.200, 9 échelons xs→5xl) arrondie au multiple de 4px. Trois modes de line-height : <code>reading</code> (1.6), <code>heading</code> (1.1), <code>display</code> (1.0). Voir <a href="../decisions/index.html">ADR-023</a>.</span>
@@ -157,7 +156,7 @@
     </div></div>
 
 <h2><span class="lang-fr">Tableau — primitifs fontSize</span><span class="lang-en">Table — fontSize primitives</span></h2>
-<table class="token-table"><colgroup><col style="width:12%"><col style="width:18%"><col style="width:18%"><col style="width:12%"><col style="width:40%"></colgroup>
+<div class="table-wrap"><table class="token-table"><colgroup><col style="width:12%"><col style="width:18%"><col style="width:18%"><col style="width:12%"><col style="width:40%"></colgroup>
   <thead><tr>
     <th><span class="lang-fr">Échelon</span><span class="lang-en">Step</span></th>
     <th><span class="lang-fr">Valeur rem (px)</span><span class="lang-en">Value rem (px)</span></th>
@@ -220,7 +219,7 @@
       <td style="font-family:var(--agtc-font-mono)">400</td>
       <td style="color:var(--agtc-semantic-color-text-secondary)">Detail / caption</td>
     </tr></tbody>
-</table>
+</table></div>
 
 <h2><span class="lang-fr">Modes de line-height</span><span class="lang-en">Line-height modes</span></h2>
 <div class="demo-box" style="padding:16px 24px">
