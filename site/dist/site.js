@@ -184,4 +184,19 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
     });
   });
+
+  // ── Bouton retour en haut ────────────────────────────────
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const threshold = document.documentElement.scrollHeight * 0.25;
+    const onScroll = () => {
+      const visible = window.scrollY > threshold;
+      backToTop.hidden = !visible;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 });
