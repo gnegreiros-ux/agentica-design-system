@@ -133,13 +133,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
+  const searchStatus = document.getElementById('token-search-status');
   if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.toLowerCase();
-      document.querySelectorAll('.token-row').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    let debounceTimer;
+    const runFilter = () => {
+      const q = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll('.token-section').forEach(section => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.token-row').forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.style.display = match ? '' : 'none';
+          if (match) sectionVisible++;
+        });
+        totalVisible += sectionVisible;
+        section.style.display = sectionVisible === 0 && q ? 'none' : '';
       });
+      if (searchStatus) {
+        if (!q) {
+          searchStatus.textContent = '';
+        } else {
+          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          searchStatus.textContent = lang === 'fr'
+            ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
+            : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
+        }
+      }
+    };
+    search.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runFilter, 120);
     });
+    search.addEventListener('search', runFilter);
   }
 
   // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────

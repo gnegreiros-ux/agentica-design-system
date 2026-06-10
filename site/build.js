@@ -553,6 +553,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .variant-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── TOKEN EXPLORER ─────────────────────────────────────── */
+.token-search-status{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);min-height:1.2em;margin:-8px 0 8px}
 .explorer-search{
   width:100%;max-width:480px;padding:10px 14px;
   border:1.5px solid var(--agtc-semantic-color-border-default);
@@ -1021,13 +1022,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
+  const searchStatus = document.getElementById('token-search-status');
   if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.toLowerCase();
-      document.querySelectorAll('.token-row').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    let debounceTimer;
+    const runFilter = () => {
+      const q = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll('.token-section').forEach(section => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.token-row').forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.style.display = match ? '' : 'none';
+          if (match) sectionVisible++;
+        });
+        totalVisible += sectionVisible;
+        section.style.display = sectionVisible === 0 && q ? 'none' : '';
       });
+      if (searchStatus) {
+        if (!q) {
+          searchStatus.textContent = '';
+        } else {
+          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          searchStatus.textContent = lang === 'fr'
+            ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
+            : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
+        }
+      }
+    };
+    search.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runFilter, 120);
     });
+    search.addEventListener('search', runFilter);
   }
 
   // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
@@ -3834,28 +3860,35 @@ function buildTokens() {
   </div>
 </div>
 
-<input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens">
+<input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens" autocomplete="off" spellcheck="false">
+<p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
 
+<div class="token-section" id="section-primitifs">
 <h2 id="primitifs" class="first"><span class="lang-fr">Tokens primitifs</span><span class="lang-en">Primitive tokens</span></h2>
 <p>
   <span class="lang-fr">Valeurs physiques issues de Radix UI. <strong>Jamais utilisées directement dans les composants.</strong></span>
   <span class="lang-en">Physical values from Radix UI. <strong>Never used directly in components.</strong></span>
 </p>
 <table class="token-table"><colgroup><col style="width:52%"><col style="width:16%"><col style="width:32%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th></tr></thead><tbody>${primRows}</tbody></table>
+</div>
 
+<div class="token-section" id="section-semantiques">
 <h2 id="semantiques"><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
   <span class="lang-fr">Intentions UX — ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span>
   <span class="lang-en">UX intentions — what agents must use to understand function, not raw values.</span>
 </p>
 <table class="token-table"><colgroup><col style="width:48%"><col style="width:32%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias (référence)</span><span class="lang-en">Alias (reference)</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${semRows}</tbody></table>
+</div>
 
+<div class="token-section" id="section-composants">
 <h2 id="composants"><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
 <p>
   <span class="lang-fr">Contrats institutionnels. Toute modification requiert une approbation formelle.</span>
   <span class="lang-en">Institutional contracts. Any change requires formal approval.</span>
 </p>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup><thead><tr><th>Token CSS</th><th><span class="lang-fr">Alias sémantique</span><span class="lang-en">Semantic alias</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead><tbody>${compRows}</tbody></table>
+</div>
 `;
 
   write(path.join(DIST, 'tokens/index.html'), layout({
