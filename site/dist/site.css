@@ -394,8 +394,8 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .layout{flex-direction:column}
-  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
-  .content{padding:28px 20px}
+  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default);order:2}
+  .content{padding:28px 20px;order:1}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
@@ -404,6 +404,12 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .top-nav{display:none}
+  .site-header{padding:0 12px;gap:8px;overflow:hidden}
+  .logo-version{display:none}
+  .storybook-btn{display:none}
+  .github-btn{display:none}
+  .lang-switch{margin-left:auto !important}
+  .menu-toggle{flex-shrink:0}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
