@@ -673,11 +673,28 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .rule-can li{color:var(--agtc-semantic-color-feedback-success);font-size:0.875rem}
 .rule-cannot li{color:var(--agtc-semantic-color-feedback-danger);font-size:0.875rem}
 
+/* ── SIDEBAR DRAWER (mobile) ─────────────────────────────── */
+.sidebar-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--agtc-semantic-color-text-primary);border-radius:4px;flex-shrink:0}
+.sidebar-toggle:hover{background:var(--agtc-semantic-color-background-subtle)}
+.sidebar-overlay{display:none;position:fixed;inset:0;top:60px;background:rgba(0,0,0,.40);z-index:89;backdrop-filter:blur(2px)}
+.sidebar-overlay.active{display:block}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .layout{flex-direction:column}
-  .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default);order:2}
-  .content{padding:28px 20px;order:1}
+  .sidebar{
+    position:fixed;top:60px;left:0;bottom:0;z-index:90;
+    width:280px;max-width:85vw;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    border-right:1px solid var(--agtc-semantic-color-border-default);
+    box-shadow:var(--agtc-semantic-shadow-raised);
+    overflow-y:auto;
+    height:calc(100vh - 60px);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-toggle{display:flex;align-items:center}
+  .content{padding:28px 20px}
   .hero{padding:40px 20px 32px}
   .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
@@ -916,7 +933,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Mobile menu ──────────────────────────────────────────
+  // ── Mobile menu (top-nav) ────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
   const topNav = document.querySelector('.top-nav');
   if (menuToggle && topNav) {
@@ -929,6 +946,36 @@ document.addEventListener('DOMContentLoaded', () => {
         topNav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
+    });
+  }
+
+  // ── Sidebar drawer (mobile) ──────────────────────────────
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.getElementById('site-sidebar');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.removeAttribute('hidden');
+    const openDrawer = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay && sidebarOverlay.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeDrawer = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay && sidebarOverlay.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    sidebarOverlay && sidebarOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+    });
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
     });
   }
 
@@ -1146,7 +1193,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   ).join('');
 
   const sidebarHtml = sidebar
-    ? `<aside class="sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
+    ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
     : '';
   const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
   const mainClass = fullWidth ? 'home-layout' : 'layout';
@@ -1233,7 +1280,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
     ${icon('menu', 22)}
   </button>
+  ${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}</button>` : ''}
 </header>
+${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${mainClass}" id="main-content">
   ${sidebarHtml}
   <main class="${fullWidth ? '' : 'content'}" role="main">${body}</main>

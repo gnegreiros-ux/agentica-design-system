@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Mobile menu ──────────────────────────────────────────
+  // ── Mobile menu (top-nav) ────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
   const topNav = document.querySelector('.top-nav');
   if (menuToggle && topNav) {
@@ -34,6 +34,36 @@ document.addEventListener('DOMContentLoaded', () => {
         topNav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
+    });
+  }
+
+  // ── Sidebar drawer (mobile) ──────────────────────────────
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.getElementById('site-sidebar');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.removeAttribute('hidden');
+    const openDrawer = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay && sidebarOverlay.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeDrawer = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay && sidebarOverlay.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    sidebarOverlay && sidebarOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+    });
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
     });
   }
 
