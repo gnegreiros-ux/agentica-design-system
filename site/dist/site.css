@@ -578,6 +578,13 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
+.changelog-entry{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:28px 32px;margin-bottom:32px}
+.changelog-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.changelog-version{font-size:1.25rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
+.changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
+.changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
+.changelog-entry h2{margin-top:24px;padding-top:20px;font-size:1rem}
+.changelog-entry h2.first{margin-top:8px;padding-top:0;border-top:none}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}

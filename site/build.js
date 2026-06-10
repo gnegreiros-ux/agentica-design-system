@@ -860,6 +860,13 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
+.changelog-entry{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:28px 32px;margin-bottom:32px}
+.changelog-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.changelog-version{font-size:1.25rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
+.changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
+.changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
+.changelog-entry h2{margin-top:24px;padding-top:20px;font-size:1rem}
+.changelog-entry h2.first{margin-top:8px;padding-top:0;border-top:none}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}
@@ -1119,6 +1126,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <div class="footer-links">
       <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
       <span class="footer-sep" aria-hidden="true">·</span>
+      <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
       <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
@@ -1178,7 +1186,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     </svg>
     <span class="logo-name">Agentica</span>
   </a>
-  <span class="logo-version">v1.0.0</span>
+  <span class="logo-version">v0.1.0</span>
   <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
   <div class="agtc-segmented lang-switch" role="group" aria-label="Language" style="margin-left:8px;flex-shrink:0">
     <button type="button" data-lang="fr" aria-current="true">FR</button>
@@ -1362,7 +1370,7 @@ function buildHome(adrs) {
 
   const body = `
 <div class="hero">
-  <div class="hero-badge">v1.0.0</div>
+  <div class="hero-badge">v0.1.0</div>
   <p class="hero-name">Agentica</p>
   <h1>
     <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
@@ -1423,6 +1431,28 @@ function buildHome(adrs) {
       <span class="kpi-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></span>
       <span class="kpi-source"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span>${url ? ` <a href="${url}" target="_blank" rel="noopener">(${src})</a>` : ''}</span>
     </div>`).join('')}
+  </div>
+</div>
+
+<div class="home-section">
+  <h2>
+    <span class="lang-fr">Standards ouverts</span>
+    <span class="lang-en">Open standards</span>
+  </h2>
+  <div class="standards-band">
+    <a class="standards-logo" href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer" aria-label="Design Tokens Community Group (W3C) — designtokens.org">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>DTCG</title><path fill="currentColor" d="M16.1318 0.308289C16.4297 0.327953 16.7242 0.414945 16.9922 0.568054L28.9922 7.4245C29.6152 7.78062 30 8.44422 30 9.1618V22.8395C29.9998 23.557 29.6151 24.2209 28.9922 24.5768L16.9922 31.4333C16.8359 31.5226 16.6698 31.5866 16.5 31.6306V31.6325C16.4458 31.6465 16.3909 31.6563 16.3359 31.6657C16.317 31.6689 16.2983 31.6728 16.2793 31.6755C16.2183 31.6841 16.1571 31.6891 16.0957 31.6921C16.0739 31.6931 16.0521 31.6947 16.0303 31.695C15.9703 31.6959 15.9104 31.6936 15.8506 31.6891C15.8317 31.6877 15.8128 31.6862 15.7939 31.6843C15.7324 31.6779 15.6713 31.6681 15.6104 31.6559C15.591 31.6521 15.5719 31.6477 15.5527 31.6432C15.5353 31.6392 15.5174 31.637 15.5 31.6325V31.6286C15.3723 31.5956 15.2457 31.5545 15.125 31.4958L15.0078 31.4333L3.00781 24.5768C2.38487 24.2209 2.00025 23.557 2 22.8395V9.1618C2 8.89806 2.0528 8.64153 2.14941 8.40497C2.16859 8.35795 2.18927 8.31164 2.21191 8.2663L2.23828 8.21356C2.24243 8.20585 2.24771 8.19876 2.25195 8.1911C2.28326 8.13457 2.31686 8.07933 2.35352 8.02606C2.36319 8.01201 2.37277 7.99788 2.38281 7.98407C2.42195 7.93021 2.4643 7.87865 2.50879 7.8288C2.62122 7.70279 2.74996 7.59016 2.89355 7.49481L3.00781 7.4245L15.0078 0.568054C15.2755 0.415112 15.5696 0.328077 15.8672 0.308289C15.872 0.307815 15.8769 0.306633 15.8818 0.306335H16.1182C16.1228 0.306612 16.1273 0.307859 16.1318 0.308289ZM3 22.8503L7.51465 20.2712C7.75056 20.1364 8.05052 20.2288 8.18555 20.4645C8.32035 20.7007 8.24688 21.0054 8.01074 21.1403L3.51074 23.7126L15.5 30.5622V16.2907L3 9.14813V22.8503ZM16.5 16.2907V30.5622L28.4883 23.7126L23.9873 21.1413C23.751 21.0063 23.6773 20.7007 23.8125 20.4645C23.9478 20.2287 24.2483 20.1364 24.4844 20.2712L28.999 22.8513C28.9991 22.8475 28.9999 22.8433 29 22.8395V9.1618C29 9.15738 28.9991 9.15255 28.999 9.14813L16.5 16.2907ZM8.25781 13.9821C8.33691 13.6787 8.68469 13.5476 8.95703 13.7028L14.248 16.7263C14.4037 16.8152 14.4999 16.9806 14.5 17.1599V23.2536C14.4999 23.5671 14.2138 23.804 13.9111 23.7224C10.506 22.8038 8 19.6952 8 15.9997C8.00002 15.3026 8.08983 14.6266 8.25781 13.9821ZM23.042 13.7028C23.3143 13.5476 23.662 13.6787 23.7412 13.9821C23.9095 14.6266 24 15.3025 24 15.9997C24 19.6952 21.494 22.8038 18.0889 23.7224C17.7862 23.804 17.5001 23.5671 17.5 23.2536V17.1599C17.5001 16.9806 17.5963 16.8152 17.752 16.7263L23.042 13.7028ZM16.5 6.51434C16.4995 6.78566 16.2714 7.00068 16 7.00067C15.7286 7.00066 15.5005 6.78566 15.5 6.51434V1.43817L3.51172 8.28778L16 15.4235L28.4873 8.28778L16.5 1.43817V6.51434ZM16 7.99969C18.2143 7.99969 20.2177 8.90026 21.666 10.3542C21.8875 10.5765 21.8233 10.9436 21.5508 11.0993L16.248 14.1296C16.0943 14.2174 15.9057 14.2174 15.752 14.1296L10.4482 11.0983C10.1757 10.9426 10.1115 10.5766 10.333 10.3542C11.7814 8.90007 13.7854 7.99969 16 7.99969Z" /></svg>
+    </a>
+    <div class="standards-text">
+      <div class="standards-title">
+        <span class="lang-fr">Agentica suit le standard DTCG</span>
+        <span class="lang-en">Agentica follows the DTCG standard</span>
+      </div>
+      <p>
+        <span class="lang-fr">Les tokens d'Agentica sont conformes au format <strong>Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, alias <code>{group.token}</code>. Interopérables avec Style Dictionary, Tokens Studio et tout outil compatible. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
+        <span class="lang-en">Agentica's tokens conform to the W3C Community Group <strong>Design Tokens</strong> format (DTCG) — <code>$value</code>, <code>$type</code>, <code>{group.token}</code> aliases. Interoperable with Style Dictionary, Tokens Studio and any compatible tool. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -1659,27 +1689,6 @@ function buildHome(adrs) {
 </div>
 </div>
 
-<div class="home-section">
-  <h2>
-    <span class="lang-fr">Standards ouverts</span>
-    <span class="lang-en">Open standards</span>
-  </h2>
-  <div class="standards-band">
-    <a class="standards-logo" href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer" aria-label="Design Tokens Community Group (W3C) — designtokens.org">
-      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>DTCG</title><path fill="currentColor" d="M16.1318 0.308289C16.4297 0.327953 16.7242 0.414945 16.9922 0.568054L28.9922 7.4245C29.6152 7.78062 30 8.44422 30 9.1618V22.8395C29.9998 23.557 29.6151 24.2209 28.9922 24.5768L16.9922 31.4333C16.8359 31.5226 16.6698 31.5866 16.5 31.6306V31.6325C16.4458 31.6465 16.3909 31.6563 16.3359 31.6657C16.317 31.6689 16.2983 31.6728 16.2793 31.6755C16.2183 31.6841 16.1571 31.6891 16.0957 31.6921C16.0739 31.6931 16.0521 31.6947 16.0303 31.695C15.9703 31.6959 15.9104 31.6936 15.8506 31.6891C15.8317 31.6877 15.8128 31.6862 15.7939 31.6843C15.7324 31.6779 15.6713 31.6681 15.6104 31.6559C15.591 31.6521 15.5719 31.6477 15.5527 31.6432C15.5353 31.6392 15.5174 31.637 15.5 31.6325V31.6286C15.3723 31.5956 15.2457 31.5545 15.125 31.4958L15.0078 31.4333L3.00781 24.5768C2.38487 24.2209 2.00025 23.557 2 22.8395V9.1618C2 8.89806 2.0528 8.64153 2.14941 8.40497C2.16859 8.35795 2.18927 8.31164 2.21191 8.2663L2.23828 8.21356C2.24243 8.20585 2.24771 8.19876 2.25195 8.1911C2.28326 8.13457 2.31686 8.07933 2.35352 8.02606C2.36319 8.01201 2.37277 7.99788 2.38281 7.98407C2.42195 7.93021 2.4643 7.87865 2.50879 7.8288C2.62122 7.70279 2.74996 7.59016 2.89355 7.49481L3.00781 7.4245L15.0078 0.568054C15.2755 0.415112 15.5696 0.328077 15.8672 0.308289C15.872 0.307815 15.8769 0.306633 15.8818 0.306335H16.1182C16.1228 0.306612 16.1273 0.307859 16.1318 0.308289ZM3 22.8503L7.51465 20.2712C7.75056 20.1364 8.05052 20.2288 8.18555 20.4645C8.32035 20.7007 8.24688 21.0054 8.01074 21.1403L3.51074 23.7126L15.5 30.5622V16.2907L3 9.14813V22.8503ZM16.5 16.2907V30.5622L28.4883 23.7126L23.9873 21.1413C23.751 21.0063 23.6773 20.7007 23.8125 20.4645C23.9478 20.2287 24.2483 20.1364 24.4844 20.2712L28.999 22.8513C28.9991 22.8475 28.9999 22.8433 29 22.8395V9.1618C29 9.15738 28.9991 9.15255 28.999 9.14813L16.5 16.2907ZM8.25781 13.9821C8.33691 13.6787 8.68469 13.5476 8.95703 13.7028L14.248 16.7263C14.4037 16.8152 14.4999 16.9806 14.5 17.1599V23.2536C14.4999 23.5671 14.2138 23.804 13.9111 23.7224C10.506 22.8038 8 19.6952 8 15.9997C8.00002 15.3026 8.08983 14.6266 8.25781 13.9821ZM23.042 13.7028C23.3143 13.5476 23.662 13.6787 23.7412 13.9821C23.9095 14.6266 24 15.3025 24 15.9997C24 19.6952 21.494 22.8038 18.0889 23.7224C17.7862 23.804 17.5001 23.5671 17.5 23.2536V17.1599C17.5001 16.9806 17.5963 16.8152 17.752 16.7263L23.042 13.7028ZM16.5 6.51434C16.4995 6.78566 16.2714 7.00068 16 7.00067C15.7286 7.00066 15.5005 6.78566 15.5 6.51434V1.43817L3.51172 8.28778L16 15.4235L28.4873 8.28778L16.5 1.43817V6.51434ZM16 7.99969C18.2143 7.99969 20.2177 8.90026 21.666 10.3542C21.8875 10.5765 21.8233 10.9436 21.5508 11.0993L16.248 14.1296C16.0943 14.2174 15.9057 14.2174 15.752 14.1296L10.4482 11.0983C10.1757 10.9426 10.1115 10.5766 10.333 10.3542C11.7814 8.90007 13.7854 7.99969 16 7.99969Z" /></svg>
-    </a>
-    <div class="standards-text">
-      <div class="standards-title">
-        <span class="lang-fr">Agentica suit le standard DTCG</span>
-        <span class="lang-en">Agentica follows the DTCG standard</span>
-      </div>
-      <p>
-        <span class="lang-fr">Les tokens d'Agentica sont conformes au format <strong>Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, alias <code>{group.token}</code>. Interopérables avec Style Dictionary, Tokens Studio et tout outil compatible. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-        <span class="lang-en">Agentica's tokens conform to the W3C Community Group <strong>Design Tokens</strong> format (DTCG) — <code>$value</code>, <code>$type</code>, <code>{group.token}</code> aliases. Interoperable with Style Dictionary, Tokens Studio and any compatible tool. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-      </p>
-    </div>
-  </div>
-</div>
 `;
 
   write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, body }));
@@ -2361,42 +2370,6 @@ function buildButton() {
   </div>
 </div>
 
-<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
-<ul>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
-  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
-  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
-</ul>
-
-<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
-<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
-  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
-  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
-</table>
-
-<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
-<ul>
-  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
-  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
-  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span></li>
-  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
-  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
-  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
-</ul>
-
-<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
-<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
-<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
-  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
-  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
-  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
-  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
-</ol>
-
 <h2><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></h2>
 <p>
   <span class="lang-fr">Approche hybride : propriété (Figma, React, tous frameworks) ou slot (composition avancée). Le contenu slotté a toujours la priorité sur la propriété.</span>
@@ -2440,6 +2413,42 @@ function buildButton() {
   &lt;agtc-icon slot="prefix" name="plus"&gt;&lt;/agtc-icon&gt;
   <span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>
 &lt;/agtc-button&gt;</code></pre>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Maximum 1 bouton <code>primary</code> par section ou formulaire</span><span class="lang-en">Maximum 1 <code>primary</code> button per section or form</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un libellé explicite — jamais "OK" ou "Confirmer" seul</span><span class="lang-en">Always an explicit label — never "OK" or "Confirm" alone</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Le bouton <code>critical</code> DOIT déclencher un pattern de confirmation</span><span class="lang-en">The <code>critical</code> button MUST trigger a confirmation pattern</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>:focus-visible</code> visible — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span><span class="lang-en">Always a visible <code>:focus-visible</code> — <code>outline: 2px solid var(--agtc-semantic-color-border-focus)</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais deux boutons <code>primary</code> côte à côte</span><span class="lang-en">Never two <code>primary</code> buttons side by side</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de couleur ou espacement en dur</span><span class="lang-en">Never hardcoded colors or spacing</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de variante inventée hors de <code>component.json</code></span><span class="lang-en">Never an invented variant outside <code>component.json</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence sémantique</span><span class="lang-en">Semantic reference</span></th><th><span class="lang-fr">Valeur résolue</span><span class="lang-en">Resolved value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td style="font-family:var(--agtc-font-mono);font-size:12px">${v}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr">Contraste minimum 4.5:1 sur fond blanc (WCAG AA)</span><span class="lang-en">Minimum contrast 4.5:1 on white background (WCAG AA)</span></li>
+  <li><span class="lang-fr">Navigation clavier complète — Tab, Enter, Space</span><span class="lang-en">Full keyboard navigation — Tab, Enter, Space</span></li>
+  <li><span class="lang-fr">Focus visible : <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span><span class="lang-en">Visible focus: <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></span></li>
+  <li><span class="lang-fr">Pour les boutons icône seul : <code>aria-label</code> obligatoire</span><span class="lang-en">For icon-only buttons: <code>aria-label</code> required</span></li>
+  <li><span class="lang-fr">État <code>loading</code> : <code>aria-busy="true"</code> + largeur préservée</span><span class="lang-en"><code>loading</code> state: <code>aria-busy="true"</code> + width preserved</span></li>
+  <li><span class="lang-fr">État <code>disabled</code> : <code>aria-disabled="true"</code> ou <code>disabled</code></span><span class="lang-en"><code>disabled</code> state: <code>aria-disabled="true"</code> or <code>disabled</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Règles spéciales — variante critical</span><span class="lang-en">Special rules — critical variant</span></h2>
+<p>Token <code>component.button.critical.$metadata.requires-confirmation</code> = <code>true</code>. <span class="lang-fr">Avant d'utiliser cette variante, vérifier :</span><span class="lang-en">Before using this variant, verify:</span></p>
+<ol style="color:var(--agtc-semantic-color-text-secondary);padding-left:22px">
+  <li><span class="lang-fr">Le pattern de confirmation existe dans l'interface (modale, popconfirm)</span><span class="lang-en">The confirmation pattern exists in the UI (modal, popconfirm)</span></li>
+  <li><span class="lang-fr">Le libellé décrit l'action — ex: "Supprimer définitivement le dossier"</span><span class="lang-en">The label describes the action — e.g. "Delete folder permanently"</span></li>
+  <li><span class="lang-fr">Le contraste est ≥ 4.5:1 sur fond blanc</span><span class="lang-en">Contrast is ≥ 4.5:1 on white background</span></li>
+  <li><span class="lang-fr">L'agent escalade à un humain si le caractère irréversible de l'action n'est pas certain</span><span class="lang-en">The agent escalates to a human if the irreversibility of the action is uncertain</span></li>
+</ol>
 
 <h2><span class="lang-fr">Compatibilité frameworks</span><span class="lang-en">Framework compatibility</span></h2>
 <table class="token-table"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
@@ -4235,6 +4244,57 @@ git clone ${REPO}.git
   }));
 }
 
+// ─── PAGE: CHANGELOG ────────────────────────────────────────────────────────
+function buildChangelog() {
+  const body = `
+<h1>Changelog</h1>
+<p class="page-lead">
+  <span class="lang-fr">Historique des versions d'Agentica — chaque entrée décrit les changements, décisions et améliorations apportées au système.</span>
+  <span class="lang-en">Agentica version history — each entry describes the changes, decisions, and improvements made to the system.</span>
+</p>
+
+<div class="changelog-entry">
+  <div class="changelog-header">
+    <span class="changelog-version">v0.1.0</span>
+    <span class="changelog-badge unreleased"><span class="lang-fr">Non lancée</span><span class="lang-en">Unreleased</span></span>
+    <span class="changelog-date">2026</span>
+  </div>
+  <h2 class="first"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></h2>
+  <ul>
+    <li><span class="lang-fr">Architecture de tokens 3 niveaux : primitifs → sémantiques → composant (DTCG-conforme)</span><span class="lang-en">3-layer token architecture: primitives → semantic → component (DTCG-compliant)</span></li>
+    <li><span class="lang-fr">Palette de couleurs Radix UI (échelles 12 niveaux), espacement grille 4px, typographie Atkinson Hyperlegible</span><span class="lang-en">Radix UI color palette (12-step scales), 4px spacing grid, Atkinson Hyperlegible typography</span></li>
+    <li><span class="lang-fr">Bibliothèque d'icônes Lucide — 1 500+ icônes, 3 tailles, contrats d'accessibilité WCAG 1.1.1</span><span class="lang-en">Lucide icon library — 1,500+ icons, 3 sizes, WCAG 1.1.1 accessibility contracts</span></li>
+  </ul>
+  <h2><span class="lang-fr">Composants</span><span class="lang-en">Components</span></h2>
+  <ul>
+    <li><span class="lang-fr">14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span><span class="lang-en">14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span></li>
+    <li><span class="lang-fr">Variantes Button : primary, secondary, ghost, critical — avec règles de confirmation pour les actions irréversibles</span><span class="lang-en">Button variants: primary, secondary, ghost, critical — with confirmation rules for irreversible actions</span></li>
+    <li><span class="lang-fr">Tokens de composant institutionnels dans <code>tokens/component.json</code></span><span class="lang-en">Institutional component tokens in <code>tokens/component.json</code></span></li>
+  </ul>
+  <h2><span class="lang-fr">Gouvernance & Agents</span><span class="lang-en">Governance & Agents</span></h2>
+  <ul>
+    <li><span class="lang-fr">52 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées</span><span class="lang-en">52 ADRs (Architecture Decision Records) — all decisions traced and justified</span></li>
+    <li><span class="lang-fr">4 types d'agents IA : Designer, Developer, QA, Documentation</span><span class="lang-en">4 AI agent types: Designer, Developer, QA, Documentation</span></li>
+    <li><span class="lang-fr">Conformité WCAG 2.1 AA — audit intégré, 0 violation critique</span><span class="lang-en">WCAG 2.1 AA compliance — built-in audit, 0 critical violations</span></li>
+    <li><span class="lang-fr">Pipeline qualité complet : tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span><span class="lang-en">Full quality pipeline: tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span></li>
+  </ul>
+  <h2><span class="lang-fr">Site & Documentation</span><span class="lang-en">Site & Documentation</span></h2>
+  <ul>
+    <li><span class="lang-fr">Générateur de site statique sur-mesure (Node.js), bilingue FR/EN</span><span class="lang-en">Custom static site generator (Node.js), bilingual FR/EN</span></li>
+    <li><span class="lang-fr">Storybook publié sur Chromatic — canvas interactif, previews, specs</span><span class="lang-en">Storybook published on Chromatic — interactive canvas, previews, specs</span></li>
+    <li><span class="lang-fr">Sync Figma ↔ JSON via Tokens Studio</span><span class="lang-en">Figma ↔ JSON sync via Tokens Studio</span></li>
+  </ul>
+</div>
+${contributionBanner()}
+`;
+
+  write(path.join(DIST, 'changelog.html'), layout({
+    title: 'Changelog', depth: 0,
+    sidebar: null,
+    body
+  }));
+}
+
 // ─── PAGE: AUDIT ────────────────────────────────────────────────────────────
 function buildAudit() {
   const auditFile = path.join(DIST, 'audit.html');
@@ -4504,6 +4564,7 @@ function build() {
   const adrs = loadADRs();
   buildHome(adrs);
   buildGetStarted();
+  buildChangelog();
   buildFoundationsIndex();
   buildColor();
   buildSpacing();
