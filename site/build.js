@@ -1093,7 +1093,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   // cohérente avec le hero d'accueil et la page get-started.
   const navLinks = [
     { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
-    { href: `${base}foundations/color.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
+    { href: `${base}foundations/index.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
     { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
     { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
     { href: `${base}decisions/index.html`,  labelFr: 'Décisions',   labelEn: 'Decisions' },
@@ -1208,6 +1208,7 @@ ${footer}
 
 function sidebarFoundations(base, current) {
   const links = [
+    ['index.html',      '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
     ['color.html',      '<span class="lang-fr">Couleur</span><span class="lang-en">Color</span>'],
     ['spacing.html',    '<span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span>'],
     ['typography.html', '<span class="lang-fr">Typographie</span><span class="lang-en">Typography</span>'],
@@ -1678,6 +1679,59 @@ function buildHome(adrs) {
 `;
 
   write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, body }));
+}
+
+// ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
+function buildFoundationsIndex() {
+  const body = `
+<h1><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Les fondations définissent les décisions visuelles de base du système : couleur, espacement, typographie et iconographie. Elles servent de socle à tous les composants et tokens sémantiques.</span>
+  <span class="lang-en">Foundations define the system's core visual decisions: color, spacing, typography and iconography. They form the base for all components and semantic tokens.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Catalogue</span><span class="lang-en">Catalog</span></h2>
+<div class="nav-grid">
+  <a href="color.html" class="nav-card">
+    <span class="nav-card-icon">${icon('palette', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Échelles Radix 12 niveaux, tokens sémantiques, modes clair et sombre, contrastes WCAG.</span>
+      <span class="lang-en">Radix 12-step scales, semantic tokens, light and dark modes, WCAG contrast.</span>
+    </div>
+  </a>
+  <a href="spacing.html" class="nav-card">
+    <span class="nav-card-icon">${icon('move-horizontal', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Grille de 4px, densités compact/default/spacious, tokens de contrôle et de mise en page.</span>
+      <span class="lang-en">4px grid, compact/default/spacious densities, control and layout tokens.</span>
+    </div>
+  </a>
+  <a href="typography.html" class="nav-card">
+    <span class="nav-card-icon">${icon('type', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Atkinson Hyperlegible — échelle de taille, poids, interligne, règles d'accessibilité.</span>
+      <span class="lang-en">Atkinson Hyperlegible — size scale, weight, line-height, accessibility rules.</span>
+    </div>
+  </a>
+  <a href="icons.html" class="nav-card">
+    <span class="nav-card-icon">${icon('star', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1 et contrat d'accessibilité.</span>
+      <span class="lang-en">Lucide library — 1,500+ icons, 3 sizes, WCAG 1.1.1 rules and accessibility contract.</span>
+    </div>
+  </a>
+</div>
+`;
+
+  write(path.join(DIST, 'foundations/index.html'), layout({
+    title: 'Fondations', depth: 1,
+    sidebar: sidebarFoundations('../', 'index.html') + sidebarComponents('../', ''),
+    body: body + contributionBanner()
+  }));
 }
 
 // ─── PAGE: COLOR ────────────────────────────────────────────────────────────
@@ -4446,6 +4500,7 @@ function build() {
   const adrs = loadADRs();
   buildHome(adrs);
   buildGetStarted();
+  buildFoundationsIndex();
   buildColor();
   buildSpacing();
   buildTypography();
