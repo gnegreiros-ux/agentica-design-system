@@ -491,12 +491,12 @@ li code{font-size:.8em}
 /* Tables du site : consomment le contrat du composant table (component.table.* — ADR-040).
    Le site s'aligne sur le composant (dogfooding cat. A) ; il garde sa présentation
    d'en-tête (majuscules, tracking), mais toutes les COULEURS viennent du composant. */
-table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem}
-th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-component-table-default-border)}
-td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:middle}
+table{width:100%;border-collapse:collapse;margin:16px 0 28px;font-size:0.875rem;table-layout:auto}
+th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--agtc-component-table-default-border);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--agtc-component-table-default-row-hover)}
-td code{color:var(--agtc-semantic-color-action-primary)}
+td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 
 /* ── COLOR SYSTEM ───────────────────────────────────────── */
 .semantic-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
@@ -1337,8 +1337,9 @@ function buildHome(adrs) {
     [icon('book-open',20),   'Documentation',  'Documentation',  'Guidelines'],
     [icon('pen-tool',20),    'Design',         'Design',         'Figma'],
     [icon('code-2',20),      'Code',           'Code',           'Web Components'],
+    [icon('book-open',20),   'Storybook',      'Storybook',      'Chromatic'],
     [icon('check-circle',20),'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),'Audit',          'Audit',          'Chromatic'],
+    [icon('shield-check',20),'Audit visuel',   'Visual audit',   'Chromatic'],
     [icon('rocket',20),      'Déploiement',    'Deploy',         'CI/CD'],
   ];
 
