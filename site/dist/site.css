@@ -71,7 +71,7 @@ body{
 }
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
-  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  font-size:11px;font-weight:700;
   color:var(--agtc-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
@@ -449,8 +449,10 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── FOOTER ──────────────────────────────────────────────── */
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:24px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
+.footer-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.footer-copy{color:var(--agtc-semantic-color-text-on-inverse-muted);font-size:0.8125rem}
+.footer-sep{color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.4}
+.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s;font-size:0.8125rem}
 .footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px}
 

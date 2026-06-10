@@ -353,7 +353,7 @@ body{
 }
 .sidebar-group{margin-bottom:8px}
 .sidebar-label{
-  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  font-size:11px;font-weight:700;
   color:var(--agtc-semantic-color-text-secondary);padding:8px 20px 4px;display:block;
 }
 .sidebar a{
@@ -731,8 +731,10 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── FOOTER ──────────────────────────────────────────────── */
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:24px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s}
+.footer-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.footer-copy{color:var(--agtc-semantic-color-text-on-inverse-muted);font-size:0.8125rem}
+.footer-sep{color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.4}
+.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s;font-size:0.8125rem}
 .footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px}
 
@@ -1115,10 +1117,11 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-links">
-      <span>© ${new Date().getFullYear()}</span>
-      <a href="https://gnegreiros.com" target="_blank" rel="noopener noreferrer">${icon('globe', 15)} Guilherme Negreiros</a>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
+      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
     </div>
     <div class="footer-credit">
       ${icon('bot', 14)}
@@ -1638,18 +1641,18 @@ function buildHome(adrs) {
   </div>
   <div class="grid-auto-220">
     ${[
-      [icon('layers',18),'Lit (Google)','Web Components','Contrats UI universels, framework-agnostic','Universal UI contracts, framework-agnostic'],
-      [icon('palette',18),'Style Dictionary','Token compilation','JSON → CSS, JS, Swift, Android','JSON → CSS, JS, Swift, Android'],
-      [icon('camera',18),'Chromatic','Visual testing','Régressions visuelles, PR previews','Visual regressions, PR previews'],
-      [icon('accessibility',18),'axe-core','Accessibility','Audit automatique WCAG','Automatic WCAG audit'],
-      [icon('test-tube',18),'Playwright','E2E tests','Parcours complets automatisés','Automated end-to-end flows'],
-      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','Canvas + previews + specs','Canvas + previews + specs'],
+      ['<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 160 160" aria-hidden="true"><path fill="#00ACD7" d="M80 0C35.8 0 0 35.8 0 80s35.8 80 80 80 80-35.8 80-80S124.2 0 80 0zm-.7 32.5h1.4l37.3 21.5v43l-38 21.9L42 97V55l37.3-22.5zm0 8.2L47.6 59.3v37.4l32 18.5 32-18.5V59.3L79.3 40.7zM80 55a25 25 0 1 1 0 50 25 25 0 0 1 0-50z"/></svg>','Lit (Google)','Web Components','<span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span>',''],
+      [icon('palette',18),'Style Dictionary','Token compilation','<span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span>',''],
+      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','<span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span>',''],
+      [icon('shield-check',18),'axe-core','Accessibility','<span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span>',''],
+      [icon('test-tube',18),'Playwright','E2E tests','<span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span>',''],
+      ['<img class="vendor-logo" src="integrations/react.svg" alt="React" width="22" height="22" loading="lazy">','React / Vue / Angular','Web Components','<span class="lang-fr">Compatible tous frameworks</span><span class="lang-en">Works with all frameworks</span>',''],
     ].map(([ico,name,role,dFr,dEn]) => `
     <div class="tool-card">
       <div class="tool-card-icon">${ico}</div>
       <div>
         <div class="tool-card-name">${name} <span class="tool-card-role">— ${role}</span></div>
-        <div class="tool-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
+        <div class="tool-card-desc">${dFr}</div>
       </div>
     </div>`).join('')}
   </div>
