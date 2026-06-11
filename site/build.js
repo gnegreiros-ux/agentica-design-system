@@ -1851,7 +1851,7 @@ function buildFoundationsIndex() {
 
   write(path.join(DIST, 'foundations/index.html'), layout({
     title: 'Fondations', depth: 1,
-    sidebar: sidebarFoundations('../', 'index.html') + sidebarComponents('../', ''),
+    sidebar: sidebarFoundations('../','index.html'),
     body: body + contributionBanner()
   }));
 }
@@ -1953,7 +1953,7 @@ function buildColor() {
 
   write(path.join(DIST, 'foundations/color.html'), layout({
     title: 'Couleur', depth: 1,
-    sidebar: sidebarFoundations('../', 'color.html') + sidebarComponents('../', ''),
+    sidebar: sidebarFoundations('../','color.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2063,7 +2063,7 @@ function buildSpacing() {
 
   write(path.join(DIST, 'foundations/spacing.html'), layout({
     title: 'Espacement', depth: 1,
-    sidebar: sidebarFoundations('../', 'spacing.html') + sidebarComponents('../', ''),
+    sidebar: sidebarFoundations('../','spacing.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2208,7 +2208,7 @@ function buildTypography() {
 
   write(path.join(DIST, 'foundations/typography.html'), layout({
     title: 'Typographie', depth: 1,
-    sidebar: sidebarFoundations('../', 'typography.html') + sidebarComponents('../', ''),
+    sidebar: sidebarFoundations('../','typography.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2286,7 +2286,7 @@ function buildIconsFoundation() {
 
   write(path.join(DIST, 'foundations/icons.html'), layout({
     title: 'Icônes', depth: 1,
-    sidebar: sidebarFoundations('../', 'icons.html') + sidebarComponents('../', ''),
+    sidebar: sidebarFoundations('../','icons.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2420,7 +2420,7 @@ function buildComponentsIndex() {
 
   write(path.join(DIST, 'components/index.html'), layout({
     title: 'Composants', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'index.html'),
+    sidebar: sidebarComponents('../','index.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2653,7 +2653,7 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
 
   write(path.join(DIST, 'components/button.html'), layout({
     title: 'Button', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'button.html'),
+    sidebar: sidebarComponents('../','button.html'),
     body: body + uxPatternsFromMd('button') + contributionBanner()
   }));
 }
@@ -2715,7 +2715,7 @@ ${content}
 
   write(path.join(DIST, 'components/icon.html'), layout({
     title: 'Icon', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'icon.html'),
+    sidebar: sidebarComponents('../','icon.html'),
     body: body + contributionBanner()
   }));
 }
@@ -2856,7 +2856,7 @@ function buildInput() {
 
   write(path.join(DIST, 'components/input.html'), layout({
     title: 'Input', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'input.html'),
+    sidebar: sidebarComponents('../','input.html'),
     body: body + uxPatternsFromMd('input') + contributionBanner()
   }));
 }
@@ -2969,7 +2969,7 @@ function buildBadge() {
 
   write(path.join(DIST, 'components/badge.html'), layout({
     title: 'Badge', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'badge.html'),
+    sidebar: sidebarComponents('../','badge.html'),
     body: body + uxPatternsFromMd('badge') + contributionBanner()
   }));
 }
@@ -3097,7 +3097,7 @@ function buildCard() {
 
   write(path.join(DIST, 'components/card.html'), layout({
     title: 'Card', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'card.html'),
+    sidebar: sidebarComponents('../','card.html'),
     body: body + uxPatternsFromMd('card') + contributionBanner()
   }));
 }
@@ -3219,7 +3219,7 @@ function buildCheckbox() {
 
   write(path.join(DIST, 'components/checkbox.html'), layout({
     title: 'Checkbox', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'checkbox.html'),
+    sidebar: sidebarComponents('../','checkbox.html'),
     body: body + uxPatternsFromMd('checkbox') + contributionBanner()
   }));
 }
@@ -3301,7 +3301,7 @@ function buildRadio() {
 
   write(path.join(DIST, 'components/radio.html'), layout({
     title: 'Radio', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'radio.html'),
+    sidebar: sidebarComponents('../','radio.html'),
     body: body + uxPatternsFromMd('radio') + contributionBanner()
   }));
 }
@@ -3384,7 +3384,7 @@ function buildToggle() {
 
   write(path.join(DIST, 'components/toggle.html'), layout({
     title: 'Toggle', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'toggle.html'),
+    sidebar: sidebarComponents('../','toggle.html'),
     body: body + uxPatternsFromMd('toggle') + contributionBanner()
   }));
 }
@@ -3505,7 +3505,7 @@ function buildTable() {
 
   write(path.join(DIST, 'components/table.html'), layout({
     title: 'Table', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'table.html'),
+    sidebar: sidebarComponents('../','table.html'),
     body: body + uxPatternsFromMd('table') + contributionBanner()
   }));
 }
@@ -3594,7 +3594,7 @@ function buildCodeBlock() {
 
   write(path.join(DIST, 'components/code-block.html'), layout({
     title: 'Code Block', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'code-block.html'),
+    sidebar: sidebarComponents('../','code-block.html'),
     body: body + uxPatternsFromMd('code-block') + contributionBanner()
   }));
 }
@@ -3696,7 +3696,7 @@ function buildBanner() {
 
   write(path.join(DIST, 'components/banner.html'), layout({
     title: 'Banner', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'banner.html'),
+    sidebar: sidebarComponents('../','banner.html'),
     body: body + uxPatternsFromMd('banner') + contributionBanner()
   }));
 }
@@ -3782,7 +3782,7 @@ function buildLink() {
 
   write(path.join(DIST, 'components/link.html'), layout({
     title: 'Link', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'link.html'),
+    sidebar: sidebarComponents('../','link.html'),
     body: body + uxPatternsFromMd('link') + contributionBanner()
   }));
 }
@@ -3881,7 +3881,7 @@ function buildSegmented() {
 
   write(path.join(DIST, 'components/segmented.html'), layout({
     title: 'Segmented', depth: 1,
-    sidebar: sidebarFoundations('../', '') + sidebarComponents('../', 'segmented.html'),
+    sidebar: sidebarComponents('../','segmented.html'),
     body: body + uxPatternsFromMd('segmented') + contributionBanner()
   }));
 }
@@ -3976,7 +3976,7 @@ function buildTokens() {
 
   write(path.join(DIST, 'tokens/index.html'), layout({
     title: 'Tokens', depth: 1,
-    sidebar: sidebarFoundations('../','') + sidebarComponents('../',''),
+    sidebar: null,
     body: body + contributionBanner()
   }));
 }
@@ -4038,7 +4038,7 @@ function buildDecisionsIndex(adrs) {
 
   write(path.join(DIST, 'decisions/index.html'), layout({
     title: 'Décisions (ADRs)', depth: 1,
-    sidebar: sidebarDecisionsLocal(adrs) + sidebarAgents('../'),
+    sidebar: sidebarDecisionsLocal(adrs),
     body: body + contributionBanner()
   }));
 }
