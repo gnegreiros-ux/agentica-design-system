@@ -763,14 +763,16 @@ html[data-lang="en"] .lang-fr{display:none}
 .token-tile-label{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:6px;display:block}
 
 /* ── FOOTER ──────────────────────────────────────────────── */
-.site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:24px 32px;font-size:0.875rem;margin-top:auto}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:32px;font-size:0.875rem;margin-top:auto}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start}
+.footer-col{display:flex;flex-direction:column;gap:8px}
+.footer-col-right{align-items:flex-end;text-align:right}
+.footer-name{font-weight:600;color:var(--agtc-semantic-color-text-on-inverse);font-size:0.875rem}
 .footer-copy{color:var(--agtc-semantic-color-text-on-inverse-muted);font-size:0.8125rem}
-.footer-sep{color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.4}
+.footer-links{display:flex;flex-direction:column;gap:8px}
 .footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s;font-size:0.8125rem}
 .footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
-.footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px}
+.footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 
 /* ── INFO CARDS ──────────────────────────────────────────── */
 .info-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
@@ -916,7 +918,8 @@ html[data-lang="en"] .lang-fr{display:none}
   .agent-grid{grid-template-columns:1fr}
   .stack-flow{flex-direction:column}
   .stack-node{border-right:none;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
-  .footer-inner{flex-direction:column;align-items:flex-start}
+  .footer-inner{grid-template-columns:1fr;gap:20px}
+  .footer-col-right{align-items:flex-start;text-align:left}
 }
 `; }
 
@@ -1216,24 +1219,30 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   const footer = `
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
-    <div class="footer-links">
-      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
-      <span class="footer-sep" aria-hidden="true">·</span>
-      <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
-      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
-      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">${icon('linkedin', 15)} LinkedIn</a>
+    <div class="footer-col">
+      <span class="footer-name">Guilherme Negreiros</span>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" class="footer-links">${icon('linkedin', 15)} LinkedIn</a>
     </div>
-    <div class="footer-credit">
-      ${icon('bot', 14)}
-      <span class="lang-fr">Développé avec Claude Code</span>
-      <span class="lang-en">Built with Claude Code</span>
-      <span style="opacity:.3">·</span>
-      <a href="${auditHref}" class="audit-footer-link" aria-label="Rapport d'audit WCAG">
-        ${icon('shield-check', 13)}
-        <span class="lang-fr">Audit</span>
-        <span class="lang-en">Audit</span>
-      </a>
+    <div class="footer-col">
+      <div class="footer-links">
+        <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
+        <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
+        <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
+      </div>
+    </div>
+    <div class="footer-col footer-col-right">
+      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
+      <div class="footer-credit">
+        ${icon('bot', 14)}
+        <span class="lang-fr">Développé avec Claude Code</span>
+        <span class="lang-en">Built with Claude Code</span>
+        <span style="opacity:.3" aria-hidden="true">·</span>
+        <a href="${auditHref}" class="audit-footer-link" aria-label="Rapport d'audit WCAG">
+          ${icon('shield-check', 13)}
+          <span class="lang-fr">Audit</span>
+          <span class="lang-en">Audit</span>
+        </a>
+      </div>
     </div>
   </div>
 </footer>`;
