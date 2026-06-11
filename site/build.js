@@ -763,16 +763,18 @@ html[data-lang="en"] .lang-fr{display:none}
 .token-tile-label{font-size:12.5px;color:var(--agtc-semantic-color-text-secondary);margin-top:6px;display:block}
 
 /* ── FOOTER ──────────────────────────────────────────────── */
-.site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:32px;font-size:0.875rem;margin-top:auto}
-.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start}
-.footer-col{display:flex;flex-direction:column;gap:8px}
+.site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:40px 32px;font-size:0.875rem;margin-top:auto}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:start}
+.footer-col{display:flex;flex-direction:column;gap:10px}
 .footer-col-right{align-items:flex-end;text-align:right}
-.footer-name{font-weight:600;color:var(--agtc-semantic-color-text-on-inverse);font-size:0.875rem}
+.footer-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:4px}
+.footer-logo-name{font-size:1rem;font-weight:700;color:var(--agtc-semantic-color-text-on-inverse)}
+.footer-name{font-size:0.8125rem;color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 .footer-copy{color:var(--agtc-semantic-color-text-on-inverse-muted);font-size:0.8125rem}
 .footer-links{display:flex;flex-direction:column;gap:8px}
-.footer-links a{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .12s;font-size:0.8125rem}
-.footer-links a:hover{color:var(--agtc-semantic-color-text-on-inverse)}
-.footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.footer-links a,.footer-link{color:var(--agtc-semantic-color-text-on-inverse-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .12s;font-size:0.8125rem}
+.footer-links a:hover,.footer-link:hover{color:var(--agtc-semantic-color-text-on-inverse)}
+.footer-credit{font-size:0.75rem;color:var(--agtc-semantic-color-text-on-inverse-muted);display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 
 /* ── INFO CARDS ──────────────────────────────────────────── */
 .info-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
@@ -1220,29 +1222,30 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-col">
+      <a class="footer-logo" href="${base}index.html" aria-label="Agentica — Accueil">
+        <svg class="footer-logo-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
+        </svg>
+        <span class="footer-logo-name">Agentica</span>
+      </a>
       <span class="footer-name">Guilherme Negreiros</span>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" class="footer-links">${icon('linkedin', 15)} LinkedIn</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" class="footer-link">${icon('linkedin', 15)} LinkedIn</a>
     </div>
     <div class="footer-col">
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Footer">
         <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
         <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
         <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
-      </div>
+        <a href="${auditHref}" class="footer-link">${icon('shield-check', 15)} Audit</a>
+      </nav>
     </div>
     <div class="footer-col footer-col-right">
       <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
-      <div class="footer-credit">
+      <span class="footer-credit">
         ${icon('bot', 14)}
         <span class="lang-fr">Développé avec Claude Code</span>
         <span class="lang-en">Built with Claude Code</span>
-        <span style="opacity:.3" aria-hidden="true">·</span>
-        <a href="${auditHref}" class="audit-footer-link" aria-label="Rapport d'audit WCAG">
-          ${icon('shield-check', 13)}
-          <span class="lang-fr">Audit</span>
-          <span class="lang-en">Audit</span>
-        </a>
-      </div>
+      </span>
     </div>
   </div>
 </footer>`;
