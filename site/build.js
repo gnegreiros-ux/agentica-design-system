@@ -1475,11 +1475,6 @@ function buildHome(adrs) {
     [icon('check-circle',20),     'Validation',     'Validation',     'axe-core'],
     [icon('shield-check',20),     'Audit visuel',   'Visual audit',   'Chromatic'],
     [icon('rocket',20),           'Déploiement',    'Deploy',         'CI/CD'],
-    [vendorLogo('css.svg','CSS'),               'CSS',        'CSS',        'Custom Properties'],
-    [vendorLogo('tailwind.svg','Tailwind CSS'), 'Tailwind',   'Tailwind',   'Tailwind CSS'],
-    [vendorLogo('angular.svg','Angular'),       'Angular',    'Angular',    'Angular'],
-    [vendorLogo('swift.svg','Swift'),           'Swift',      'Swift',      'iOS'],
-    [vendorLogo('android.svg','Android'),       'Android',    'Android',    'Android'],
   ];
 
   const audiences = [
@@ -1791,18 +1786,7 @@ function buildHome(adrs) {
     <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
     <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
   </p>
-  <div class="platform-logos-grid">
-    ${[
-      ['css.svg','CSS Custom Properties'],
-      ['tailwind.svg','Tailwind CSS'],
-      ['angular.svg','Angular'],
-      ['swift.svg','Swift (iOS)'],
-      ['android.svg','Android'],
-      ['react.svg','React'],
-      ['vue.svg','Vue'],
-      ['svelte.svg','Svelte'],
-    ].map(([f,label]) => `<div class="platform-logo-item"><img src="integrations/${f}" alt="${label}" width="40" height="40" loading="lazy"><span class="platform-logo-label">${label}</span></div>`).join('')}
-  </div>
+  <div class="illus-block">${svgMultiPlat}</div>
   <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
