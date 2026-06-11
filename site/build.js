@@ -766,7 +766,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:40px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:start}
 .footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-right{align-items:flex-end;text-align:right}
+.footer-col-right{align-items:flex-end;text-align:right;justify-self:end}
 .footer-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:4px}
 .footer-logo-name{font-size:1rem;font-weight:700;color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-name{font-size:0.8125rem;color:var(--agtc-semantic-color-text-on-inverse-secondary)}
@@ -898,13 +898,25 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
-.changelog-entry{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:28px 32px;margin-bottom:32px}
-.changelog-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
-.changelog-version{font-size:1.25rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
+/* ── CHANGELOG TIMELINE ──────────────────────────────────── */
+.changelog-timeline{position:relative;padding-left:28px}
+.changelog-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
+.changelog-item{position:relative;margin-bottom:24px}
+.changelog-item::before{content:'';position:absolute;left:-25px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item.latest::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
+.changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
+.changelog-summary{display:flex;align-items:center;gap:12px;padding:18px 24px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
+.changelog-summary::-webkit-details-marker{display:none}
+.changelog-summary:hover{background:var(--agtc-semantic-color-background-subtle)}
+.changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
+details[open] .changelog-chevron{transform:rotate(180deg)}
+.changelog-version{font-size:1.1rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
 .changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
 .changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
-.changelog-entry h2{margin-top:24px;padding-top:20px;font-size:1rem}
-.changelog-entry h2.first{margin-top:8px;padding-top:0;border-top:none}
+.changelog-body{padding:0 24px 24px;border-top:1px solid var(--agtc-semantic-color-border-default)}
+.changelog-body h2{font-size:0.875rem;font-weight:700;margin:20px 0 8px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:.06em}
+.changelog-body ul{margin:0 0 12px;padding-left:18px}
+.changelog-body li{font-size:0.875rem;margin-bottom:4px;color:var(--agtc-semantic-color-text-primary)}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}
@@ -998,22 +1010,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Active nav links ─────────────────────────────────────
   const p = window.location.pathname;
+  const sections = ['foundations','components','tokens','decisions','agents'];
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
-    // Strip leading ../ to get the logical path segments
     const parts = h.split('/').filter(s => s !== '..' && s !== '.');
-    const hFile = parts[parts.length - 1] || '';          // e.g. 'color.html'
-    const hDir  = parts.length > 1 ? parts[parts.length - 2] : ''; // e.g. 'foundations'
+    const hFile = parts[parts.length - 1] || '';
+    const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
     let active = false;
-    if (hDir) {
-      // Section link (foundations/color.html, components/index.html, …)
-      // Active on any page within that section directory
+    if (hDir && sections.includes(hDir)) {
       active = p.includes('/' + hDir + '/');
-    } else if (hFile === 'index.html') {
-      // Accueil — only on the root homepage
-      active = p === '/' || p.endsWith('/index.html') && !p.includes('/foundations/') && !p.includes('/components/') && !p.includes('/tokens/') && !p.includes('/decisions/') && !p.includes('/agents/');
-    } else {
-      // Top-level page like get-started.html
+    } else if (hFile === 'index.html' && !hDir) {
+      active = p === '/' || (p.endsWith('/index.html') && sections.every(s => !p.includes('/' + s + '/')));
+    } else if (hFile) {
       active = p.endsWith('/' + hFile);
     }
     if (active) a.classList.add('active');
@@ -1446,18 +1454,25 @@ function buildHome(adrs) {
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
+    [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.'],
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.'],
   ];
 
+  const vendorLogo = (src, alt, size=20) => `<img src="integrations/${src}" alt="${alt}" width="${size}" height="${size}" loading="lazy" style="display:block">`;
   const stackNodes = [
-    [icon('file-text',20),   'Décision',       'Decision',       'ADRs'],
-    [icon('book-open',20),   'Documentation',  'Documentation',  'Guidelines'],
-    [icon('pen-tool',20),    'Design',         'Design',         'Figma'],
-    [icon('code-2',20),      'Code',           'Code',           'Web Components'],
-    [icon('book-open',20),   'Storybook',      'Storybook',      'Chromatic'],
-    [icon('check-circle',20),'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),'Audit visuel',   'Visual audit',   'Chromatic'],
-    [icon('rocket',20),      'Déploiement',    'Deploy',         'CI/CD'],
+    [icon('file-text',20),        'Décision',       'Decision',       'ADRs'],
+    [icon('book-open',20),        'Documentation',  'Documentation',  'Guidelines'],
+    [icon('pen-tool',20),         'Design',         'Design',         'Figma'],
+    [icon('code-2',20),           'Code',           'Code',           'Web Components'],
+    [storybookIcon(20),           'Storybook',      'Storybook',      'Chromatic'],
+    [icon('check-circle',20),     'Validation',     'Validation',     'axe-core'],
+    [icon('shield-check',20),     'Audit visuel',   'Visual audit',   'Chromatic'],
+    [icon('rocket',20),           'Déploiement',    'Deploy',         'CI/CD'],
+    [vendorLogo('css.svg','CSS'),               'CSS',        'CSS',        'Custom Properties'],
+    [vendorLogo('tailwind.svg','Tailwind CSS'), 'Tailwind',   'Tailwind',   'Tailwind CSS'],
+    [vendorLogo('angular.svg','Angular'),       'Angular',    'Angular',    'Angular'],
+    [vendorLogo('swift.svg','Swift'),           'Swift',      'Swift',      'iOS'],
+    [vendorLogo('android.svg','Android'),       'Android',    'Android',    'Android'],
   ];
 
   const audiences = [
@@ -3999,10 +4014,10 @@ function getSemanticAlias(flatKey) {
 function buildDecisionsIndex(adrs) {
   const rows = adrs.map(a => `
 <tr>
-  <td class="adr-num">ADR-${String(a.num).padStart(3,'0')}</td>
+  <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
   <td><span class="agtc-badge success sm"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
-  <td>${a.date}</td>
+  <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
 
   const body = `
@@ -4362,51 +4377,83 @@ git clone ${REPO}.git
 
 // ─── PAGE: CHANGELOG ────────────────────────────────────────────────────────
 function buildChangelog() {
+  // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
+  const versions = [
+    {
+      id: 'v0-1-0', ver: 'v0.1.0', date: '2026', badge: {fr:'Non lancée',en:'Unreleased'},
+      sections: [
+        { fr:'Fondations', en:'Foundations', items:[
+          {fr:'Architecture de tokens 3 niveaux : primitifs → sémantiques → composant (DTCG-conforme)',en:'3-layer token architecture: primitives → semantic → component (DTCG-compliant)'},
+          {fr:'Palette de couleurs Radix UI (échelles 12 niveaux), espacement grille 4px, typographie Atkinson Hyperlegible',en:'Radix UI color palette (12-step scales), 4px spacing grid, Atkinson Hyperlegible typography'},
+          {fr:'Bibliothèque d\'icônes Lucide — 1 500+ icônes, 3 tailles, contrats d\'accessibilité WCAG 1.1.1',en:'Lucide icon library — 1,500+ icons, 3 sizes, WCAG 1.1.1 accessibility contracts'},
+        ]},
+        { fr:'Composants', en:'Components', items:[
+          {fr:'14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented',en:'14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented'},
+          {fr:'Variantes Button : primary, secondary, ghost, critical — confirmation obligatoire pour les actions irréversibles',en:'Button variants: primary, secondary, ghost, critical — required confirmation for irreversible actions'},
+          {fr:'Tokens de composant institutionnels dans <code>tokens/component.json</code>',en:'Institutional component tokens in <code>tokens/component.json</code>'},
+        ]},
+        { fr:'Gouvernance & Agents', en:'Governance & Agents', items:[
+          {fr:'55 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées',en:'55 ADRs (Architecture Decision Records) — all decisions traced and justified'},
+          {fr:'4 types d\'agents IA : Designer, Developer, QA, Documentation',en:'4 AI agent types: Designer, Developer, QA, Documentation'},
+          {fr:'Conformité WCAG 2.1 AA — audit intégré, 0 violation critique',en:'WCAG 2.1 AA compliance — built-in audit, 0 critical violations'},
+          {fr:'Pipeline qualité complet : tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild',en:'Full quality pipeline: tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild'},
+        ]},
+        { fr:'Site & Documentation', en:'Site & Documentation', items:[
+          {fr:'Générateur de site statique sur-mesure (Node.js), bilingue FR/EN',en:'Custom static site generator (Node.js), bilingual FR/EN'},
+          {fr:'Storybook publié sur Chromatic — canvas interactif, previews, specs',en:'Storybook published on Chromatic — interactive canvas, previews, specs'},
+          {fr:'Sync Figma ↔ JSON via Tokens Studio',en:'Figma ↔ JSON sync via Tokens Studio'},
+        ]},
+      ]
+    },
+  ];
+
+  const renderVersion = (v, isLatest) => {
+    const sectionsHtml = v.sections.map(s => `
+      <h2><span class="lang-fr">${s.fr}</span><span class="lang-en">${s.en}</span></h2>
+      <ul>${s.items.map(i => `<li><span class="lang-fr">${i.fr}</span><span class="lang-en">${i.en}</span></li>`).join('')}</ul>`).join('');
+    const header = `
+      <span class="changelog-version">${v.ver}</span>
+      ${v.badge ? `<span class="changelog-badge"><span class="lang-fr">${v.badge.fr}</span><span class="lang-en">${v.badge.en}</span></span>` : ''}
+      <span class="changelog-date">${v.date}</span>
+      ${!isLatest ? `<span class="changelog-chevron">${icon('chevron-down',16)}</span>` : ''}`;
+    if (isLatest) {
+      return `
+<div class="changelog-item latest" id="${v.id}">
+  <div class="changelog-accordion">
+    <div class="changelog-summary">${header}</div>
+    <div class="changelog-body">${sectionsHtml}</div>
+  </div>
+</div>`;
+    }
+    return `
+<div class="changelog-item" id="${v.id}">
+  <details class="changelog-accordion">
+    <summary class="changelog-summary">${header}</summary>
+    <div class="changelog-body">${sectionsHtml}</div>
+  </details>
+</div>`;
+  };
+
+  const tocLinks = versions.map(v =>
+    `<a href="#${v.id}">${v.ver}${v.badge ? ` <span style="font-size:10px;opacity:.7">${v.badge.fr}</span>` : ''}</a>`
+  ).join('');
+  const sidebarToc = `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${tocLinks}</div>`;
+
   const body = `
 <h1>Changelog</h1>
 <p class="page-lead">
   <span class="lang-fr">Historique des versions d'Agentica — chaque entrée décrit les changements, décisions et améliorations apportées au système.</span>
   <span class="lang-en">Agentica version history — each entry describes the changes, decisions, and improvements made to the system.</span>
 </p>
-
-<div class="changelog-entry">
-  <div class="changelog-header">
-    <span class="changelog-version">v0.1.0</span>
-    <span class="changelog-badge unreleased"><span class="lang-fr">Non lancée</span><span class="lang-en">Unreleased</span></span>
-    <span class="changelog-date">2026</span>
-  </div>
-  <h2 class="first"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></h2>
-  <ul>
-    <li><span class="lang-fr">Architecture de tokens 3 niveaux : primitifs → sémantiques → composant (DTCG-conforme)</span><span class="lang-en">3-layer token architecture: primitives → semantic → component (DTCG-compliant)</span></li>
-    <li><span class="lang-fr">Palette de couleurs Radix UI (échelles 12 niveaux), espacement grille 4px, typographie Atkinson Hyperlegible</span><span class="lang-en">Radix UI color palette (12-step scales), 4px spacing grid, Atkinson Hyperlegible typography</span></li>
-    <li><span class="lang-fr">Bibliothèque d'icônes Lucide — 1 500+ icônes, 3 tailles, contrats d'accessibilité WCAG 1.1.1</span><span class="lang-en">Lucide icon library — 1,500+ icons, 3 sizes, WCAG 1.1.1 accessibility contracts</span></li>
-  </ul>
-  <h2><span class="lang-fr">Composants</span><span class="lang-en">Components</span></h2>
-  <ul>
-    <li><span class="lang-fr">14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span><span class="lang-en">14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Get Started</span></li>
-    <li><span class="lang-fr">Variantes Button : primary, secondary, ghost, critical — avec règles de confirmation pour les actions irréversibles</span><span class="lang-en">Button variants: primary, secondary, ghost, critical — with confirmation rules for irreversible actions</span></li>
-    <li><span class="lang-fr">Tokens de composant institutionnels dans <code>tokens/component.json</code></span><span class="lang-en">Institutional component tokens in <code>tokens/component.json</code></span></li>
-  </ul>
-  <h2><span class="lang-fr">Gouvernance & Agents</span><span class="lang-en">Governance & Agents</span></h2>
-  <ul>
-    <li><span class="lang-fr">52 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées</span><span class="lang-en">52 ADRs (Architecture Decision Records) — all decisions traced and justified</span></li>
-    <li><span class="lang-fr">4 types d'agents IA : Designer, Developer, QA, Documentation</span><span class="lang-en">4 AI agent types: Designer, Developer, QA, Documentation</span></li>
-    <li><span class="lang-fr">Conformité WCAG 2.1 AA — audit intégré, 0 violation critique</span><span class="lang-en">WCAG 2.1 AA compliance — built-in audit, 0 critical violations</span></li>
-    <li><span class="lang-fr">Pipeline qualité complet : tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span><span class="lang-en">Full quality pipeline: tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild</span></li>
-  </ul>
-  <h2><span class="lang-fr">Site & Documentation</span><span class="lang-en">Site & Documentation</span></h2>
-  <ul>
-    <li><span class="lang-fr">Générateur de site statique sur-mesure (Node.js), bilingue FR/EN</span><span class="lang-en">Custom static site generator (Node.js), bilingual FR/EN</span></li>
-    <li><span class="lang-fr">Storybook publié sur Chromatic — canvas interactif, previews, specs</span><span class="lang-en">Storybook published on Chromatic — interactive canvas, previews, specs</span></li>
-    <li><span class="lang-fr">Sync Figma ↔ JSON via Tokens Studio</span><span class="lang-en">Figma ↔ JSON sync via Tokens Studio</span></li>
-  </ul>
+<div class="changelog-timeline">
+  ${versions.map((v, i) => renderVersion(v, i === 0)).join('\n')}
 </div>
 ${contributionBanner()}
 `;
 
   write(path.join(DIST, 'changelog.html'), layout({
     title: 'Changelog', depth: 0,
-    sidebar: null,
+    sidebar: sidebarToc,
     body
   }));
 }

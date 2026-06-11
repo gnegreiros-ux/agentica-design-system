@@ -71,22 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Active nav links ─────────────────────────────────────
   const p = window.location.pathname;
+  const sections = ['foundations','components','tokens','decisions','agents'];
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
-    // Strip leading ../ to get the logical path segments
     const parts = h.split('/').filter(s => s !== '..' && s !== '.');
-    const hFile = parts[parts.length - 1] || '';          // e.g. 'color.html'
-    const hDir  = parts.length > 1 ? parts[parts.length - 2] : ''; // e.g. 'foundations'
+    const hFile = parts[parts.length - 1] || '';
+    const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
     let active = false;
-    if (hDir) {
-      // Section link (foundations/color.html, components/index.html, …)
-      // Active on any page within that section directory
+    if (hDir && sections.includes(hDir)) {
       active = p.includes('/' + hDir + '/');
-    } else if (hFile === 'index.html') {
-      // Accueil — only on the root homepage
-      active = p === '/' || p.endsWith('/index.html') && !p.includes('/foundations/') && !p.includes('/components/') && !p.includes('/tokens/') && !p.includes('/decisions/') && !p.includes('/agents/');
-    } else {
-      // Top-level page like get-started.html
+    } else if (hFile === 'index.html' && !hDir) {
+      active = p === '/' || (p.endsWith('/index.html') && sections.every(s => !p.includes('/' + s + '/')));
+    } else if (hFile) {
       active = p.endsWith('/' + hFile);
     }
     if (active) a.classList.add('active');
