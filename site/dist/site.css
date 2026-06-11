@@ -484,7 +484,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:40px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:start}
 .footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-right{align-items:flex-end;text-align:right;justify-self:end}
+.footer-col-right{align-items:flex-start;text-align:left}
 .footer-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:4px}
 .footer-logo-name{font-size:1rem;font-weight:700;color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-name{font-size:0.8125rem;color:var(--agtc-semantic-color-text-on-inverse-secondary)}
@@ -559,6 +559,11 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── VENDOR LOGOS (frameworks / plateformes / outils) ────── */
 .vendor-logo{height:20px;width:20px;flex-shrink:0;display:inline-block;vertical-align:middle;object-fit:contain}
 .platform-cell{display:flex;align-items:center;gap:8px}
+.platform-logos-grid{display:flex;flex-wrap:wrap;gap:24px;margin:28px 0;align-items:center;justify-content:center}
+.platform-logo-item{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.85;transition:opacity .15s}
+.platform-logo-item:hover{opacity:1}
+.platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+.platform-logo-label{font-size:10.5px;color:rgba(255,255,255,.6);text-align:center;white-space:nowrap}
 .tool-card-icon .vendor-logo{height:22px;width:22px}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
@@ -617,24 +622,26 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
 /* ── CHANGELOG TIMELINE ──────────────────────────────────── */
-.changelog-timeline{position:relative;padding-left:28px}
-.changelog-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
-.changelog-item{position:relative;margin-bottom:24px}
-.changelog-item::before{content:'';position:absolute;left:-25px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
-.changelog-item.latest::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
+.changelog-timeline{position:relative;padding-left:0}
+.changelog-item{position:relative;margin-bottom:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
+.changelog-item-date{font-size:0.75rem;font-weight:600;color:var(--agtc-semantic-color-text-secondary);padding-top:20px;text-align:right;white-space:nowrap}
+.changelog-item-content{position:relative}
+.changelog-item-content::before{content:'';position:absolute;left:-24px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
+.changelog-timeline-track{position:absolute;left:88px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
 .changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
-.changelog-summary{display:flex;align-items:center;gap:12px;padding:18px 24px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
+.changelog-summary{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
 .changelog-summary::-webkit-details-marker{display:none}
 .changelog-summary:hover{background:var(--agtc-semantic-color-background-subtle)}
 .changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
 details[open] .changelog-chevron{transform:rotate(180deg)}
-.changelog-version{font-size:1.1rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
-.changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
+.changelog-version{font-size:1rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
 .changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
-.changelog-body{padding:0 24px 24px;border-top:1px solid var(--agtc-semantic-color-border-default)}
-.changelog-body h2{font-size:0.875rem;font-weight:700;margin:20px 0 8px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:.06em}
-.changelog-body ul{margin:0 0 12px;padding-left:18px}
+.changelog-body{padding:0 20px 20px;border-top:1px solid var(--agtc-semantic-color-border-default)}
+.changelog-body h2{font-size:0.8125rem;font-weight:700;margin:16px 0 6px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:.06em}
+.changelog-body ul{margin:0 0 10px;padding-left:18px}
 .changelog-body li{font-size:0.875rem;margin-bottom:4px;color:var(--agtc-semantic-color-text-primary)}
+@media(max-width:768px){.changelog-item{grid-template-columns:1fr}.changelog-item-date{padding-top:0;text-align:left}.changelog-timeline-track{display:none}.changelog-item-content::before{display:none}}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}

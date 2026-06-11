@@ -766,7 +766,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .site-footer{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse-muted);padding:40px 32px;font-size:0.875rem;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:start}
 .footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-right{align-items:flex-end;text-align:right;justify-self:end}
+.footer-col-right{align-items:flex-start;text-align:left}
 .footer-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:4px}
 .footer-logo-name{font-size:1rem;font-weight:700;color:var(--agtc-semantic-color-text-on-inverse)}
 .footer-name{font-size:0.8125rem;color:var(--agtc-semantic-color-text-on-inverse-secondary)}
@@ -841,6 +841,11 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── VENDOR LOGOS (frameworks / plateformes / outils) ────── */
 .vendor-logo{height:20px;width:20px;flex-shrink:0;display:inline-block;vertical-align:middle;object-fit:contain}
 .platform-cell{display:flex;align-items:center;gap:8px}
+.platform-logos-grid{display:flex;flex-wrap:wrap;gap:24px;margin:28px 0;align-items:center;justify-content:center}
+.platform-logo-item{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.85;transition:opacity .15s}
+.platform-logo-item:hover{opacity:1}
+.platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+.platform-logo-label{font-size:10.5px;color:rgba(255,255,255,.6);text-align:center;white-space:nowrap}
 .tool-card-icon .vendor-logo{height:22px;width:22px}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
@@ -899,24 +904,26 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
 /* ── CHANGELOG TIMELINE ──────────────────────────────────── */
-.changelog-timeline{position:relative;padding-left:28px}
-.changelog-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
-.changelog-item{position:relative;margin-bottom:24px}
-.changelog-item::before{content:'';position:absolute;left:-25px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
-.changelog-item.latest::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
+.changelog-timeline{position:relative;padding-left:0}
+.changelog-item{position:relative;margin-bottom:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
+.changelog-item-date{font-size:0.75rem;font-weight:600;color:var(--agtc-semantic-color-text-secondary);padding-top:20px;text-align:right;white-space:nowrap}
+.changelog-item-content{position:relative}
+.changelog-item-content::before{content:'';position:absolute;left:-24px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
+.changelog-timeline-track{position:absolute;left:88px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
 .changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
-.changelog-summary{display:flex;align-items:center;gap:12px;padding:18px 24px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
+.changelog-summary{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
 .changelog-summary::-webkit-details-marker{display:none}
 .changelog-summary:hover{background:var(--agtc-semantic-color-background-subtle)}
 .changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
 details[open] .changelog-chevron{transform:rotate(180deg)}
-.changelog-version{font-size:1.1rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
-.changelog-date{font-size:0.8125rem;color:var(--agtc-semantic-color-text-secondary)}
+.changelog-version{font-size:1rem;font-weight:800;color:var(--agtc-semantic-color-text-primary);letter-spacing:-.02em}
 .changelog-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
-.changelog-body{padding:0 24px 24px;border-top:1px solid var(--agtc-semantic-color-border-default)}
-.changelog-body h2{font-size:0.875rem;font-weight:700;margin:20px 0 8px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:.06em}
-.changelog-body ul{margin:0 0 12px;padding-left:18px}
+.changelog-body{padding:0 20px 20px;border-top:1px solid var(--agtc-semantic-color-border-default)}
+.changelog-body h2{font-size:0.8125rem;font-weight:700;margin:16px 0 6px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:.06em}
+.changelog-body ul{margin:0 0 10px;padding-left:18px}
 .changelog-body li{font-size:0.875rem;margin-bottom:4px;color:var(--agtc-semantic-color-text-primary)}
+@media(max-width:768px){.changelog-item{grid-template-columns:1fr}.changelog-item-date{padding-top:0;text-align:left}.changelog-timeline-track{display:none}.changelog-item-content::before{display:none}}
 .back-to-top{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-secondary);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-control);font-size:12.5px;font-weight:500;cursor:pointer;box-shadow:var(--agtc-semantic-shadow-raised);transition:opacity .2s,transform .2s;opacity:0;transform:translateY(8px);pointer-events:none}
 .back-to-top:not([hidden]){opacity:1;transform:translateY(0);pointer-events:auto}
 .back-to-top:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus)}
@@ -1454,8 +1461,8 @@ function buildHome(adrs) {
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
-    [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.'],
-    ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.'],
+    [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
+    ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
   ];
 
   const vendorLogo = (src, alt, size=20) => `<img src="integrations/${src}" alt="${alt}" width="${size}" height="${size}" loading="lazy" style="display:block">`;
@@ -1715,8 +1722,8 @@ function buildHome(adrs) {
     <span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span>
   </p>
   <div class="nav-grid">
-    ${sections.map(([h,ico,fr,en,dFr,dEn]) => `
-    <a href="${h}" class="nav-card">
+    ${sections.map(([h,ico,fr,en,dFr,dEn,ext]) => `
+    <a href="${h}" class="nav-card"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>
       <span class="nav-card-icon">${ico}</span>
       <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
@@ -1784,7 +1791,18 @@ function buildHome(adrs) {
     <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
     <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
   </p>
-  <div class="illus-block">${svgMultiPlat}</div>
+  <div class="platform-logos-grid">
+    ${[
+      ['css.svg','CSS Custom Properties'],
+      ['tailwind.svg','Tailwind CSS'],
+      ['angular.svg','Angular'],
+      ['swift.svg','Swift (iOS)'],
+      ['android.svg','Android'],
+      ['react.svg','React'],
+      ['vue.svg','Vue'],
+      ['svelte.svg','Svelte'],
+    ].map(([f,label]) => `<div class="platform-logo-item"><img src="integrations/${f}" alt="${label}" width="40" height="40" loading="lazy"><span class="platform-logo-label">${label}</span></div>`).join('')}
+  </div>
   <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
@@ -4414,38 +4432,29 @@ function buildChangelog() {
     const header = `
       <span class="changelog-version">${v.ver}</span>
       ${v.badge ? `<span class="changelog-badge"><span class="lang-fr">${v.badge.fr}</span><span class="lang-en">${v.badge.en}</span></span>` : ''}
-      <span class="changelog-date">${v.date}</span>
       ${!isLatest ? `<span class="changelog-chevron">${icon('chevron-down',16)}</span>` : ''}`;
-    if (isLatest) {
-      return `
-<div class="changelog-item latest" id="${v.id}">
-  <div class="changelog-accordion">
-    <div class="changelog-summary">${header}</div>
-    <div class="changelog-body">${sectionsHtml}</div>
-  </div>
-</div>`;
-    }
+    const accordion = isLatest
+      ? `<div class="changelog-accordion"><div class="changelog-summary">${header}</div><div class="changelog-body">${sectionsHtml}</div></div>`
+      : `<details class="changelog-accordion"><summary class="changelog-summary">${header}</summary><div class="changelog-body">${sectionsHtml}</div></details>`;
     return `
-<div class="changelog-item" id="${v.id}">
-  <details class="changelog-accordion">
-    <summary class="changelog-summary">${header}</summary>
-    <div class="changelog-body">${sectionsHtml}</div>
-  </details>
+<div class="changelog-item${isLatest ? ' latest' : ''}" id="${v.id}">
+  <div class="changelog-item-date">${v.date}</div>
+  <div class="changelog-item-content">${accordion}</div>
 </div>`;
   };
 
-  const tocLinks = versions.map(v =>
-    `<a href="#${v.id}">${v.ver}${v.badge ? ` <span style="font-size:10px;opacity:.7">${v.badge.fr}</span>` : ''}</a>`
-  ).join('');
-  const sidebarToc = `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${tocLinks}</div>`;
+  // TOC ancres versions → injectées via script inline dans la page
+  const tocInject = `<script>document.addEventListener('DOMContentLoaded',function(){var t=document.getElementById('page-toc');if(!t)return;t.innerHTML='<span class="toc-title"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${versions.map(v=>`<a href="#${v.id}">${v.ver}${v.badge?`<span class="lang-fr" style="font-size:10px;opacity:.6;margin-left:4px">${v.badge.fr}</span><span class="lang-en" style="font-size:10px;opacity:.6;margin-left:4px">${v.badge.en}</span>`:''}</a>`).join('')}';});<\\/script>`;
 
   const body = `
+${tocInject}
 <h1>Changelog</h1>
 <p class="page-lead">
   <span class="lang-fr">Historique des versions d'Agentica — chaque entrée décrit les changements, décisions et améliorations apportées au système.</span>
   <span class="lang-en">Agentica version history — each entry describes the changes, decisions, and improvements made to the system.</span>
 </p>
-<div class="changelog-timeline">
+<div class="changelog-timeline" style="position:relative">
+  <div class="changelog-timeline-track" aria-hidden="true"></div>
   ${versions.map((v, i) => renderVersion(v, i === 0)).join('\n')}
 </div>
 ${contributionBanner()}
@@ -4453,7 +4462,7 @@ ${contributionBanner()}
 
   write(path.join(DIST, 'changelog.html'), layout({
     title: 'Changelog', depth: 0,
-    sidebar: sidebarToc,
+    sidebar: null,
     body
   }));
 }
