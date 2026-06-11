@@ -4427,11 +4427,15 @@ function buildChangelog() {
 </div>`;
   };
 
-  // TOC ancres versions → injectées via script inline dans la page
-  const tocInject = `<script>document.addEventListener('DOMContentLoaded',function(){var t=document.getElementById('page-toc');if(!t)return;t.innerHTML='<span class="toc-title"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${versions.map(v=>`<a href="#${v.id}">${v.ver}${v.badge?`<span class="lang-fr" style="font-size:10px;opacity:.6;margin-left:4px">${v.badge.fr}</span><span class="lang-en" style="font-size:10px;opacity:.6;margin-left:4px">${v.badge.en}</span>`:''}</a>`).join('')}';});<\\/script>`;
+  const tocLinks = versions.map(v => {
+    const badge = v.badge ? ` <span style="font-size:10px;opacity:.6" class="lang-fr">${v.badge.fr}</span><span style="font-size:10px;opacity:.6" class="lang-en">${v.badge.en}</span>` : '';
+    return `<a href="#${v.id}">${v.ver}${badge}</a>`;
+  }).join('');
+  const tocContent = `<span class="toc-title"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${tocLinks}`;
+  const tocScript = '<script>document.addEventListener(\'DOMContentLoaded\',function(){var t=document.getElementById(\'page-toc\');if(t)t.innerHTML=' + JSON.stringify(tocContent) + ';});<\/script>';
 
   const body = `
-${tocInject}
+${tocScript}
 <h1>Changelog</h1>
 <p class="page-lead">
   <span class="lang-fr">Historique des versions d'Agentica — chaque entrée décrit les changements, décisions et améliorations apportées au système.</span>
