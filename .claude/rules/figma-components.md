@@ -277,7 +277,7 @@ bindV(comp, 'paddingLeft', 'space/control/padding-x');
 
 ```javascript
 // ✅ Ordre obligatoire pour éviter les erreurs Figma API
-t.fontName = {family:"Inter", style:"Regular"}; // 1. font chargée
+t.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")}; // 1. font chargée
 t.fontSize = 14;                                 // 2. taille par défaut
 t.characters = "Label";                          // 3. contenu
 t.textStyleId = TX["typography/label"].id;       // 4. style (override police)
@@ -512,7 +512,7 @@ function mkDosSection(doExample, dontExample) {
 
     // Badge DO / DON'T
     const badge = figma.createText();
-    badge.fontName = {family:"Inter", style:"Semi Bold"};
+    badge.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
     badge.fontSize = 12;
     badge.characters = type === "do" ? "✅  DO" : "❌  DON'T";
     badge.fills = vFill(borderToken, borderFallback); // 6.4:1 sur blanc ✅
@@ -520,7 +520,7 @@ function mkDosSection(doExample, dontExample) {
 
     // Exemple
     const example = figma.createText();
-    example.fontName = {family:"Inter", style:"Regular"};
+    example.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
     example.fontSize = 14;
     example.characters = exampleText;
     example.fills = vFill("color/text/primary", "#1C2024"); // 16.4:1 ✅
@@ -529,7 +529,7 @@ function mkDosSection(doExample, dontExample) {
 
     // Description
     const desc = figma.createText();
-    desc.fontName = {family:"Inter", style:"Regular"};
+    desc.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
     desc.fontSize = 13;
     desc.characters = description;
     desc.fills = vFill("color/text/secondary", "#4A5568"); // 7.5:1 ✅
@@ -551,7 +551,7 @@ function mkDosSection(doExample, dontExample) {
 const sectionDos = mkSection("section-dos-donts", "#FFFFFF");
 
 const dosLabel = figma.createText();
-dosLabel.fontName = {family:"Inter", style:"Semi Bold"};
+dosLabel.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
 dosLabel.fontSize = 14;
 dosLabel.characters = "Bonnes pratiques";
 dosLabel.fills = vFill("color/text/primary", "#1C2024");
@@ -636,7 +636,7 @@ function mkLinksRow(links) {
     pill.strokeAlign = "INSIDE";
 
     const txt = figma.createText();
-    txt.fontName = {family:"Inter", style:"Medium"};
+    txt.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Medium")};
     txt.fontSize = 12;
     txt.characters = `↗  ${link.label}`;
     txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 sur blanc ✅
@@ -790,7 +790,7 @@ function mkHeaderSection(title, description, links) {
 
   const titleNode = figma.createText();
   titleNode.name = "component-title";
-  titleNode.fontName = {family:"Inter", style:"Semi Bold"};
+  titleNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
   titleNode.fontSize = 32;
   titleNode.characters = title;
   titleNode.fills = vFill("color/text/primary", "#1C2024"); // 16.4:1 ✅
@@ -798,7 +798,7 @@ function mkHeaderSection(title, description, links) {
 
   const descNode = figma.createText();
   descNode.name = "description";
-  descNode.fontName = {family:"Inter", style:"Regular"};
+  descNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
   descNode.fontSize = 16;
   descNode.characters = description;
   descNode.fills = vFill("color/text/secondary", "#4A5568"); // 7.5:1 ✅
@@ -872,7 +872,7 @@ function mkHeaderSectionBold(title, description, links) {
   // Titre blanc — color/text/on-primary (5.27:1 min sur #007A68 ✅)
   const titleNode = figma.createText();
   titleNode.name = "component-title";
-  titleNode.fontName = {family:"Inter", style:"Semi Bold"};
+  titleNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
   titleNode.fontSize = 32;
   titleNode.characters = title;
   titleNode.fills = vFill("color/text/on-primary", "#FFFFFF");
@@ -881,7 +881,7 @@ function mkHeaderSectionBold(title, description, links) {
   // Description — couleur légèrement teintée pour hiérarchie visuelle (4.95:1 ✅)
   const descNode = figma.createText();
   descNode.name = "description";
-  descNode.fontName = {family:"Inter", style:"Regular"};
+  descNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
   descNode.fontSize = 16;
   descNode.characters = description;
   descNode.fills = [{type:"SOLID", color:{r:0.941,g:0.980,b:0.973}}]; // #F0FAF8 — fallback color/action/primary-subtle
@@ -914,7 +914,7 @@ function mkLinksRowOnDark(links) {
     pill.cornerRadius = 100;
     pill.fills = vFill("color/background/default", "#FFFFFF"); // fond blanc — token sémantique
     const txt = figma.createText();
-    txt.fontName = {family:"Inter", style:"Medium"};
+    txt.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Medium")};
     txt.fontSize = 12;
     txt.characters = `↗  ${link.label}`;
     txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 sur blanc ✅
@@ -1186,8 +1186,12 @@ async function mkComposantPrincipal(sets) {
   frame.paddingTop = 24; frame.paddingBottom = 24;
   frame.paddingLeft = 24; frame.paddingRight = 24;
   frame.cornerRadius = 8;
-  frame.fills = [{ type: "SOLID", color: hex("#FAFAFA") }];
-  frame.strokes = [{ type: "SOLID", color: hex("#E8E8E8") }];
+  frame.fills = vFill("color/background/hover", "#FAFAFA");
+  frame.strokes = [figma.variables.setBoundVariableForPaint(
+    {type:"SOLID", color:hex("#E8E8E8")},
+    "color",
+    VARS["color/border/default"]
+  )];
   frame.strokeWeight = 1; frame.strokeAlign = "INSIDE";
   frame.x = 1600; frame.y = 0;
 
@@ -1201,16 +1205,16 @@ async function mkComposantPrincipal(sets) {
     section.fills = [];
 
     const titleNode = figma.createText();
-    titleNode.fontName = { family: "Atkinson Hyperlegible", style: "Bold" };
+    titleNode.fontName = { family: "Atkinson Hyperlegible", style: ahStyle("Bold") };
     titleNode.fontSize = 12; titleNode.characters = label;
-    titleNode.fills = [{ type: "SOLID", color: hex("#202020") }];
+    titleNode.fills = vFill("color/text/primary", "#202020");
     titleNode.textAutoResize = "WIDTH_AND_HEIGHT";
     section.appendChild(titleNode);
 
     const varNode = figma.createText();
-    varNode.fontName = { family: "Atkinson Hyperlegible", style: "Regular" };
+    varNode.fontName = { family: "Atkinson Hyperlegible", style: ahStyle("Regular") };
     varNode.fontSize = 10; varNode.characters = variants;
-    varNode.fills = [{ type: "SOLID", color: hex("#646464") }];
+    varNode.fills = vFill("color/text/secondary", "#646464");
     varNode.textAutoResize = "WIDTH_AND_HEIGHT";
     section.appendChild(varNode);
 
