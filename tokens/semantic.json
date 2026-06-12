@@ -348,6 +348,11 @@
           "$value": "{primitive.space.5}",
           "$type": "dimension",
           "$intent": "20px — Espacement entre composants (densité normale)."
+        },
+        "page-gutter": {
+          "$value": "{primitive.space.20}",
+          "$type": "dimension",
+          "$intent": "80px — Gouttière horizontale des sections de page documentation (layout 1440px). Voir ADR-052."
         }
       },
       "compact": {

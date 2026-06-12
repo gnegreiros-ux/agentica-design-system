@@ -64,6 +64,7 @@ DESIGN.md                              ← contrat portable — toujours lire en
 .claude/rules/project-overview.md      ← contexte du projet
 .claude/rules/tokens-system.md         ← règles des tokens
 .claude/rules/ux-patterns-sources.md   ← sources + revue patterns UX (avant tout composant)
+.claude/rules/figma-components.md      ← règles Figma (propriétés, auto-layout, nommage, API)
 .claude/instructions/codebase-context.md ← contexte technique
 .claude/instructions/session-spec.md   ← spec condensée pour cette session
 tokens/semantic.json                   ← source de vérité des intentions UX

@@ -565,7 +565,8 @@
       "8":  { "$value": "32px", "$type": "dimension", "$description": "4px × 8" },
       "10": { "$value": "40px", "$type": "dimension", "$description": "4px × 10" },
       "12": { "$value": "48px", "$type": "dimension", "$description": "4px × 12" },
-      "16": { "$value": "64px", "$type": "dimension", "$description": "4px × 16 — macro espacement" }
+      "16": { "$value": "64px", "$type": "dimension", "$description": "4px × 16 — macro espacement" },
+      "20": { "$value": "80px", "$type": "dimension", "$description": "4px × 20 — gouttière de page layout 1440px" }
     },
     "fontSize": {
       "_readme": {
