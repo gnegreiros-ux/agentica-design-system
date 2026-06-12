@@ -208,6 +208,7 @@ car les ComponentSets restent sous 10 éléments.
 |-----------------|-------------|------------|-------|
 | `color/action/primary` | `#007A68` | teal.11 | Fill principal — bouton, lien |
 | `color/action/primary-hover` | `#0d3d38` | teal.12 | Hover / pressed state |
+| `color/action/primary-subtle` | `#F0FAF8` | teal.2 | Texte description sur fond teal (Approche B header) |
 
 #### Texte
 
@@ -884,7 +885,7 @@ function mkHeaderSectionBold(title, description, links) {
   descNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
   descNode.fontSize = 16;
   descNode.characters = description;
-  descNode.fills = [{type:"SOLID", color:{r:0.941,g:0.980,b:0.973}}]; // #F0FAF8 — fallback color/action/primary-subtle
+  descNode.fills = vFill("color/action/primary-subtle", "#F0FAF8");
   descNode.textAutoResize = "HEIGHT";
   section.appendChild(descNode);
 
