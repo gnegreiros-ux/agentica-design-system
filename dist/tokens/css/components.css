@@ -1,13 +1,12 @@
 /**
  * Do not edit directly
- * Generated on Sun, 07 Jun 2026 21:48:07 GMT
+ * Generated on Fri, 12 Jun 2026 20:06:44 GMT
  */
 
 :root {
   --agtc-card-padding-none: 0px;
   --agtc-card-flat-border: transparent;
   --agtc-card-elevated-border: transparent;
-  --agtc-badge-sm-padding-y: 2px;
   --agtc-badge-sm-radius: 9999px;
   --agtc-badge-md-radius: 9999px;
   --agtc-badge-info-border: transparent;
@@ -40,6 +39,7 @@
   --agtc-card-padding-lg: var(--agtc-primitive-space-6);
   --agtc-card-padding-sm: var(--agtc-primitive-space-3);
   --agtc-card-elevated-shadow: var(--agtc-semantic-shadow-card);
+  --agtc-badge-sm-padding-y: var(--agtc-primitive-space-0);
   --agtc-badge-sm-padding-x: var(--agtc-primitive-space-2);
   --agtc-badge-md-padding-y: var(--agtc-primitive-space-1);
   --agtc-badge-md-padding-x: var(--agtc-primitive-space-3);

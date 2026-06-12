@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 07 Jun 2026 21:48:07 GMT
+ * Generated on Fri, 12 Jun 2026 20:06:44 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -428,6 +428,7 @@ export const PrimitiveColorBlack9 = "rgba(0,0,0,0.70)";
 export const PrimitiveColorBlack10 = "rgba(0,0,0,0.75)";
 export const PrimitiveColorBlack11 = "rgba(0,0,0,0.80)";
 export const PrimitiveColorBlack12 = "rgba(0,0,0,0.90)";
+export const PrimitiveSpace0 = "2px";
 export const PrimitiveSpace1 = "4px";
 export const PrimitiveSpace2 = "8px";
 export const PrimitiveSpace3 = "12px";
@@ -438,6 +439,7 @@ export const PrimitiveSpace8 = "32px";
 export const PrimitiveSpace10 = "40px";
 export const PrimitiveSpace12 = "48px";
 export const PrimitiveSpace16 = "64px";
+export const PrimitiveSpace20 = "80px";
 export const PrimitiveFontSizeXs = "0.75rem";
 export const PrimitiveFontSizeSm = "0.875rem";
 export const PrimitiveFontSizeBase = "1rem";
@@ -526,6 +528,7 @@ export const SemanticSpaceControlPaddingY = "8px";
 export const SemanticSpaceControlGap = "8px";
 export const SemanticSpaceLayoutSection = "32px";
 export const SemanticSpaceLayoutComponent = "20px";
+export const SemanticSpaceLayoutPageGutter = "80px";
 export const SemanticSpaceCompactControlPaddingX = "floor(16px * 0.75 / 4) * 4";
 export const SemanticSpaceCompactControlPaddingY = "floor(8px * 0.75 / 4) * 4";
 export const SemanticSpaceCompactControlGap = "floor(8px * 0.75 / 4) * 4";

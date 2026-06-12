@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sun, 07 Jun 2026 21:48:07 GMT
+// Generated on Fri, 12 Jun 2026 20:06:44 GMT
 
 
 import UIKit
@@ -570,11 +570,13 @@ public class AgenticaTokens {
     public static let primitiveLineHeightReading = 1.6
     public static let primitiveRadiusMd = 10px
     public static let primitiveRadiusSm = 6px
+    public static let primitiveSpace0 = 2px
     public static let primitiveSpace1 = 4px
     public static let primitiveSpace10 = 40px
     public static let primitiveSpace12 = 48px
     public static let primitiveSpace16 = 64px
     public static let primitiveSpace2 = 8px
+    public static let primitiveSpace20 = 80px
     public static let primitiveSpace3 = 12px
     public static let primitiveSpace4 = 16px
     public static let primitiveSpace5 = 20px
@@ -670,6 +672,7 @@ public class AgenticaTokens {
     public static let semanticSpaceDensityFactorCompact = 0.75
     public static let semanticSpaceDensityFactorNormal = 1
     public static let semanticSpaceLayoutComponent = 20px
+    public static let semanticSpaceLayoutPageGutter = 80px
     public static let semanticSpaceLayoutSection = 32px
     public static let semanticTypographyBodyLineHeight = 1.6
     public static let semanticTypographyBodySize = 1rem

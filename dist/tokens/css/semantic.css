@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 07 Jun 2026 21:48:07 GMT
+ * Generated on Fri, 12 Jun 2026 20:06:44 GMT
  */
 
 :root {
@@ -52,6 +52,7 @@
   --agtc-semantic-space-compact-control-gap: floor(var(--agtc-primitive-space-2) * var(--agtc-semantic-space-density-factor-compact) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-compact-control-padding-y: floor(var(--agtc-primitive-space-2) * var(--agtc-semantic-space-density-factor-compact) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-compact-control-padding-x: floor(var(--agtc-primitive-space-4) * var(--agtc-semantic-space-density-factor-compact) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
+  --agtc-semantic-space-layout-page-gutter: var(--agtc-primitive-space-20);
   --agtc-semantic-space-layout-component: var(--agtc-primitive-space-5);
   --agtc-semantic-space-layout-section: var(--agtc-primitive-space-8);
   --agtc-semantic-space-control-gap: var(--agtc-primitive-space-2);

@@ -64,6 +64,7 @@ module.exports = {
     "agtc-space-control-gap": "var(--agtc-semantic-space-control-gap)",
     "agtc-space-layout-section": "var(--agtc-semantic-space-layout-section)",
     "agtc-space-layout-component": "var(--agtc-semantic-space-layout-component)",
+    "agtc-space-layout-page-gutter": "var(--agtc-semantic-space-layout-page-gutter)",
     "agtc-space-compact-control-padding-x": "var(--agtc-semantic-space-compact-control-padding-x)",
     "agtc-space-compact-control-padding-y": "var(--agtc-semantic-space-compact-control-padding-y)",
     "agtc-space-compact-control-gap": "var(--agtc-semantic-space-compact-control-gap)",

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 07 Jun 2026 21:48:07 GMT
+ * Generated on Fri, 12 Jun 2026 20:06:44 GMT
  */
 
 :root {
@@ -429,6 +429,7 @@
   --agtc-primitive-color-black-10: rgba(0,0,0,0.75);
   --agtc-primitive-color-black-11: rgba(0,0,0,0.80);
   --agtc-primitive-color-black-12: rgba(0,0,0,0.90);
+  --agtc-primitive-space-0: 2px;
   --agtc-primitive-space-1: 4px;
   --agtc-primitive-space-2: 8px;
   --agtc-primitive-space-3: 12px;
@@ -439,6 +440,7 @@
   --agtc-primitive-space-10: 40px;
   --agtc-primitive-space-12: 48px;
   --agtc-primitive-space-16: 64px;
+  --agtc-primitive-space-20: 80px;
   --agtc-primitive-font-size-xs: 0.75rem;
   --agtc-primitive-font-size-sm: 0.875rem;
   --agtc-primitive-font-size-base: 1rem;
