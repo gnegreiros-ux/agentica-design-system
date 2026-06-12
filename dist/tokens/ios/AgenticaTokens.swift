@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 12 Jun 2026 20:28:22 GMT
+// Generated on Fri, 12 Jun 2026 20:50:13 GMT
 
 
 import UIKit
@@ -715,6 +715,14 @@ public class AgenticaTokens {
     public static let tablePaddingX = 12px
     public static let tablePaddingYComfortable = 12px
     public static let tablePaddingYCompact = 8px
+    public static let tabsDefaultBorder = #e8e8e8
+    public static let tabsDefaultBorderFocus = #007a68
+    public static let tabsDefaultIndicator = #007a68
+    public static let tabsDefaultPaddingX = 16px
+    public static let tabsDefaultPaddingY = 8px
+    public static let tabsDefaultTabText = #646464
+    public static let tabsDefaultTabTextActive = #007a68
+    public static let tabsDefaultTabTextHover = #202020
     public static let toggleDefaultBorderFocus = #007a68
     public static let toggleDefaultKnob = #ffffff
     public static let toggleDefaultLabel = #202020

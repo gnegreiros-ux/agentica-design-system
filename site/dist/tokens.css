@@ -427,6 +427,7 @@
   --agtc-primitive-color-black-12: rgba(0,0,0,0.90);
 
   /* ── Primitive spacing — grille 4px ── */
+  --agtc-primitive-space-0: 2px;
   --agtc-primitive-space-1: 4px;
   --agtc-primitive-space-2: 8px;
   --agtc-primitive-space-3: 12px;
@@ -437,6 +438,7 @@
   --agtc-primitive-space-10: 40px;
   --agtc-primitive-space-12: 48px;
   --agtc-primitive-space-16: 64px;
+  --agtc-primitive-space-20: 80px;
 
   /* ── Semantic tokens — UX intentions ── */
   --agtc-semantic-color-action-primary: #007a68;
@@ -501,6 +503,7 @@
   --agtc-semantic-space-control-gap: 8px;
   --agtc-semantic-space-layout-section: 32px;
   --agtc-semantic-space-layout-component: 20px;
+  --agtc-semantic-space-layout-page-gutter: 80px;
   --agtc-semantic-space-compact-control-padding-x: floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
   --agtc-semantic-space-compact-control-padding-y: floor({primitive.space.2} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
   --agtc-semantic-space-compact-control-gap: floor({primitive.space.2} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
@@ -666,6 +669,14 @@
   --agtc-component-segmented-default-selected-text: var(--agtc-semantic-color-text-on-action);
   --agtc-component-segmented-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-component-segmented-default-radius: var(--agtc-semantic-radius-control);
+  --agtc-component-tabs-default-tab-text: var(--agtc-semantic-color-text-secondary);
+  --agtc-component-tabs-default-tab-text-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-component-tabs-default-tab-text-active: var(--agtc-semantic-color-action-primary);
+  --agtc-component-tabs-default-indicator: var(--agtc-semantic-color-action-primary);
+  --agtc-component-tabs-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-component-tabs-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-component-tabs-default-padding-x: var(--agtc-semantic-space-control-padding-x);
+  --agtc-component-tabs-default-padding-y: var(--agtc-semantic-space-control-padding-y);
   --agtc-component-toggle-default-track-off: var(--agtc-primitive-color-gray-9);
   --agtc-component-toggle-default-track-off-hover: var(--agtc-primitive-color-gray-10);
   --agtc-component-toggle-default-track-on: var(--agtc-semantic-color-action-primary);

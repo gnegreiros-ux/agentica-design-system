@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 20:28:22 GMT
+ * Generated on Fri, 12 Jun 2026 20:50:13 GMT
  */
 
 :root {
@@ -49,6 +49,14 @@
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
   --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
+  --agtc-tabs-default-padding-y: var(--agtc-semantic-space-control-padding-y);
+  --agtc-tabs-default-padding-x: var(--agtc-semantic-space-control-padding-x);
+  --agtc-tabs-default-border-focus: var(--agtc-semantic-color-border-focus);
+  --agtc-tabs-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-tabs-default-indicator: var(--agtc-semantic-color-action-primary);
+  --agtc-tabs-default-tab-text-active: var(--agtc-semantic-color-action-primary);
+  --agtc-tabs-default-tab-text-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-tabs-default-tab-text: var(--agtc-semantic-color-text-secondary);
   --agtc-code-block-default-font-size: var(--agtc-semantic-typography-label-size);
   --agtc-code-block-default-radius: var(--agtc-semantic-radius-card);
   --agtc-code-block-default-border-focus: var(--agtc-semantic-color-border-focus);

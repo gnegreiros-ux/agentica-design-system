@@ -253,6 +253,14 @@ const COMP = {
   'segmented-default-selected-text':     'var(--agtc-semantic-color-text-on-action)',
   'segmented-default-border-focus':      'var(--agtc-semantic-color-border-focus)',
   'segmented-default-radius':            'var(--agtc-semantic-radius-control)',
+  'tabs-default-tab-text':              'var(--agtc-semantic-color-text-secondary)',
+  'tabs-default-tab-text-hover':        'var(--agtc-semantic-color-text-primary)',
+  'tabs-default-tab-text-active':       'var(--agtc-semantic-color-action-primary)',
+  'tabs-default-indicator':             'var(--agtc-semantic-color-action-primary)',
+  'tabs-default-border':                'var(--agtc-semantic-color-border-default)',
+  'tabs-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
+  'tabs-default-padding-x':            'var(--agtc-semantic-space-control-padding-x)',
+  'tabs-default-padding-y':            'var(--agtc-semantic-space-control-padding-y)',
   'toggle-default-track-off':           'var(--agtc-primitive-color-gray-9)',
   'toggle-default-track-off-hover':     'var(--agtc-primitive-color-gray-10)',
   'toggle-default-track-on':            'var(--agtc-semantic-color-action-primary)',
@@ -1365,6 +1373,7 @@ function sidebarComponents(base, current) {
     ['banner.html', 'Banner'],
     ['link.html', 'Link'],
     ['segmented.html', 'Segmented'],
+    ['tabs.html',      'Tabs'],
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -2430,6 +2439,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Contrôle segmenté mono-sélection à effet immédiat (FR/EN, densité), boutons + aria-current.</span>
       <span class="lang-en">Single-select segmented control with immediate effect (FR/EN, density), buttons + aria-current.</span>
+    </div>
+  </a>
+  <a href="tabs.html" class="nav-card">
+    <span class="nav-card-icon">${icon('panel-top',32)}</span>
+    <div class="nav-card-title">Tabs</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Onglets horizontaux in-page (tablist/tab/tabpanel), activation auto, href optionnel.</span>
+      <span class="lang-en">Horizontal in-page tabs (tablist/tab/tabpanel), auto activation, optional href.</span>
     </div>
   </a>
 </div>
@@ -3903,6 +3920,133 @@ function buildSegmented() {
   }));
 }
 
+// ─── PAGE: TABS ─────────────────────────────────────────────────────────────
+function buildTabs() {
+  const tokenRows = [
+    ['tabs-default-tab-text',        'semantic.color.text.secondary',  SEM['color-text-secondary']],
+    ['tabs-default-tab-text-hover',  'semantic.color.text.primary',    SEM['color-text-primary']],
+    ['tabs-default-tab-text-active', 'semantic.color.action.primary',  SEM['color-action-primary']],
+    ['tabs-default-indicator',       'semantic.color.action.primary',  SEM['color-action-primary']],
+    ['tabs-default-border',          'semantic.color.border.default',  SEM['color-border-default']],
+    ['tabs-default-border-focus',    'semantic.color.border.focus',    SEM['color-border-focus']],
+    ['tabs-default-padding-x',       'semantic.space.control.padding-x', SEM['space-control-padding-x']],
+    ['tabs-default-padding-y',       'semantic.space.control.padding-y', SEM['space-control-padding-y']],
+  ];
+
+  // Démo statique : tablist HTML pur (sans Web Component)
+  const demoTab = (label, active) =>
+    `<button role="tab" class="demo-tab${active ? ' demo-tab--active' : ''}" aria-selected="${active ? 'true' : 'false'}" type="button">${label}</button>`;
+
+  const body = `
+<h1>Tabs</h1>
+<p class="page-lead">
+  <span class="lang-fr">Onglets horizontaux in-page — chaque onglet affiche un panneau de contenu associé. Pattern ARIA <code>tablist/tab/tabpanel</code> conforme W3C APG, activation automatique au focus.</span>
+  <span class="lang-en">Horizontal in-page tabs — each tab reveals an associated content panel. W3C APG-compliant <code>tablist/tab/tabpanel</code> ARIA pattern, automatic activation on focus.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<div class="demo-box">
+  <style>
+    .demo-tablist { display:flex; border-bottom:1px solid var(--agtc-component-tabs-default-border); margin-bottom:16px; }
+    .demo-tab { display:inline-flex; align-items:center; padding:var(--agtc-component-tabs-default-padding-y) var(--agtc-component-tabs-default-padding-x); background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; color:var(--agtc-component-tabs-default-tab-text); font-family:inherit; font-size:var(--agtc-semantic-typography-label-size); font-weight:var(--agtc-semantic-typography-label-weight); cursor:pointer; }
+    .demo-tab--active { color:var(--agtc-component-tabs-default-tab-text-active); font-weight:700; border-bottom-color:var(--agtc-component-tabs-default-indicator); }
+    .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:2px; }
+  </style>
+  <div role="tablist" aria-label="Documentation" class="demo-tablist">
+    ${demoTab('Aperçu', true)}
+    ${demoTab('Tokens', false)}
+    ${demoTab('Accessibilité', false)}
+  </div>
+  <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:14px"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
+</div>
+
+<h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
+<table class="token-table"><colgroup><col style="width:34%"><col style="width:66%"></colgroup>
+  <thead><tr><th><span class="lang-fr">Composant</span><span class="lang-en">Component</span></th><th><span class="lang-fr">Usage</span><span class="lang-en">Usage</span></th></tr></thead>
+  <tbody>
+    <tr class="token-row"><td><code>agtc-tabs</code></td><td><span class="lang-fr">Navigation in-page avec <strong>panneau</strong> — tablist/tab/tabpanel (ARIA)</span><span class="lang-en">In-page navigation with <strong>panel</strong> — tablist/tab/tabpanel (ARIA)</span></td></tr>
+    <tr class="token-row"><td><code>agtc-segmented</code></td><td><span class="lang-fr">Réglage à <strong>effet immédiat</strong> sans panneau (langue, densité, vue)</span><span class="lang-en"><strong>Immediate-effect</strong> setting without panel (language, density, view)</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Toujours un <code>label</code> sur le tablist (pour les AT)</span><span class="lang-en">Always a <code>label</code> on the tablist (for AT)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Minimum 2 onglets — un seul onglet = pas de tabs</span><span class="lang-en">Minimum 2 tabs — a single tab is not tabs</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Tablist positionné <strong>au-dessus</strong> du panneau (jamais à droite)</span><span class="lang-en">Tablist positioned <strong>above</strong> the panel (never to the right)</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Labels en casse naturelle (jamais ALL-CAPS)</span><span class="lang-en">Labels in natural case (never ALL-CAPS)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais pour un réglage sans panneau (→ <code>agtc-segmented</code>)</span><span class="lang-en">Never for a setting without panel (→ <code>agtc-segmented</code>)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de valeur en dur — toujours via <code>var(--agtc-…)</code></span><span class="lang-en">Never hardcoded values — always via <code>var(--agtc-…)</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Clavier</span><span class="lang-en">Keyboard</span></h2>
+<table class="token-table"><colgroup><col style="width:22%"><col style="width:78%"></colgroup>
+  <thead><tr><th><span class="lang-fr">Touche</span><span class="lang-en">Key</span></th><th><span class="lang-fr">Effet</span><span class="lang-en">Effect</span></th></tr></thead>
+  <tbody>
+    <tr class="token-row"><td><kbd>←</kbd> <kbd>→</kbd></td><td><span class="lang-fr">Focus + activation onglet précédent/suivant (circulaire) — mode <code>auto</code></span><span class="lang-en">Focus + activate previous/next tab (circular) — <code>auto</code> mode</span></td></tr>
+    <tr class="token-row"><td><kbd>Home</kbd> <kbd>End</kbd></td><td><span class="lang-fr">Focus premier / dernier onglet</span><span class="lang-en">Focus first / last tab</span></td></tr>
+    <tr class="token-row"><td><kbd>Enter</kbd> <kbd>Space</kbd></td><td><span class="lang-fr">Active l'onglet focusé (toujours, y compris mode <code>manual</code>)</span><span class="lang-en">Activate focused tab (always, including <code>manual</code> mode)</span></td></tr>
+    <tr class="token-row"><td><kbd>Tab</kbd></td><td><span class="lang-fr">Sort du groupe vers le panneau actif</span><span class="lang-en">Exits group to the active panel</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:46%"><col style="width:34%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>role="tablist"</code> + <code>aria-label</code> sur le conteneur</span><span class="lang-en"><code>role="tablist"</code> + <code>aria-label</code> on the container</span></li>
+  <li><span class="lang-fr"><code>role="tab"</code> + <code>aria-selected</code> + <code>aria-controls</code> sur chaque onglet</span><span class="lang-en"><code>role="tab"</code> + <code>aria-selected</code> + <code>aria-controls</code> on each tab</span></li>
+  <li><span class="lang-fr"><code>role="tabpanel"</code> + <code>aria-labelledby</code> sur chaque panneau</span><span class="lang-en"><code>role="tabpanel"</code> + <code>aria-labelledby</code> on each panel</span></li>
+  <li><span class="lang-fr">Roving tabindex : onglet actif <code>tabindex="0"</code>, les autres <code>-1</code></span><span class="lang-en">Roving tabindex: active tab <code>tabindex="0"</code>, others <code>-1</code></span></li>
+  <li><span class="lang-fr"><code>:focus-visible</code> tokenisé · <code>:visited</code> neutralisé (ADR-047)</span><span class="lang-en">Tokenized <code>:focus-visible</code> · neutralized <code>:visited</code> (ADR-047)</span></li>
+  <li><span class="lang-fr">Contraste texte actif (teal sur blanc) : 5.14:1 ✅ WCAG AA</span><span class="lang-en">Active text contrast (teal on white): 5.14:1 ✅ WCAG AA</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-tabs label="Documentation Button" selected="overview"&gt;
+  &lt;div slot="overview"&gt;Contenu Aperçu&lt;/div&gt;
+  &lt;div slot="tokens"&gt;Contenu Tokens&lt;/div&gt;
+&lt;/agtc-tabs&gt;
+&lt;script type="module" src="../components/agtc-tabs.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  document.querySelector('agtc-tabs').tabs = [
+    { value: 'overview', label: 'Aperçu' },
+    { value: 'tokens',   label: 'Tokens' },
+  ];
+&lt;/script&gt;</code></pre>
+
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Nommer le tablist avec <code>label="…"</code></span><span class="lang-en">Name the tablist with <code>label="…"</code></span></li>
+      <li><span class="lang-fr">Positionner le tablist au-dessus du panneau</span><span class="lang-en">Position the tablist above the panel</span></li>
+      <li><span class="lang-fr">Labels concis en casse naturelle</span><span class="lang-en">Concise labels in natural case</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Utiliser pour un réglage sans panneau (→ <code>agtc-segmented</code>)</span><span class="lang-en">Use for a setting without panel (→ <code>agtc-segmented</code>)</span></li>
+      <li><span class="lang-fr">Libellés en MAJUSCULES</span><span class="lang-en">ALL-CAPS labels</span></li>
+      <li><span class="lang-fr">Un seul onglet (pas de tabs)</span><span class="lang-en">A single tab (not tabs)</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/tabs.html'), layout({
+    title: 'Tabs', depth: 1,
+    sidebar: sidebarComponents('../','tabs.html'),
+    body: body + uxPatternsFromMd('tabs') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -4744,6 +4888,7 @@ function build() {
   buildBanner();
   buildLink();
   buildSegmented();
+  buildTabs();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));

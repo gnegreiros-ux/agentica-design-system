@@ -711,5 +711,46 @@
         "$type": "dimension"
       }
     }
+  },
+  "tabs": {
+    "$metadata": {
+      "intent": "Navigation par onglets in-page avec panneau associé",
+      "owner": "design-system-team",
+      "contract": "guidelines/components/tabs.md"
+    },
+    "default": {
+      "tab-text": {
+        "$value": "{semantic.color.text.secondary}",
+        "$type": "color"
+      },
+      "tab-text-hover": {
+        "$value": "{semantic.color.text.primary}",
+        "$type": "color"
+      },
+      "tab-text-active": {
+        "$value": "{semantic.color.action.primary}",
+        "$type": "color"
+      },
+      "indicator": {
+        "$value": "{semantic.color.action.primary}",
+        "$type": "color"
+      },
+      "border": {
+        "$value": "{semantic.color.border.default}",
+        "$type": "color"
+      },
+      "border-focus": {
+        "$value": "{semantic.color.border.focus}",
+        "$type": "color"
+      },
+      "padding-x": {
+        "$value": "{semantic.space.control.padding-x}",
+        "$type": "dimension"
+      },
+      "padding-y": {
+        "$value": "{semantic.space.control.padding-y}",
+        "$type": "dimension"
+      }
+    }
   }
 }

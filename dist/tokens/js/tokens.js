@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 20:28:22 GMT
+ * Generated on Fri, 12 Jun 2026 20:50:13 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -715,3 +715,11 @@ export const CodeBlockDefaultRadius = "10px";
 export const CodeBlockDefaultFontSize = "0.875rem";
 export const CodeBlockDefaultPaddingX = "20px";
 export const CodeBlockDefaultPaddingY = "16px";
+export const TabsDefaultTabText = "#646464";
+export const TabsDefaultTabTextHover = "#202020";
+export const TabsDefaultTabTextActive = "#007a68";
+export const TabsDefaultIndicator = "#007a68";
+export const TabsDefaultBorder = "#e8e8e8";
+export const TabsDefaultBorderFocus = "#007a68";
+export const TabsDefaultPaddingX = "16px";
+export const TabsDefaultPaddingY = "8px";
