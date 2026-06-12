@@ -1,0 +1,79 @@
+# ADR-054 — Tables responsives : wrapper `overflow-x` systématique
+
+> **Date :** 2026-06-10
+> **Statut :** ✅ Actif
+> **Décideurs :** Humain (approbation) · Design System Lead (layout)
+> **Type:** pattern
+> **Chemin logique:** decisions/ADR-054-tables-responsive-wrapper.md
+> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** site/build.js
+
+---
+
+## Contexte
+
+Sur mobile, les tables du site (tokens, composants, ADRs, typographie…) se compressaient dans la
+largeur disponible. Le comportement observé : les cellules `<td>` contenant des noms de tokens CSS
+(`--agtc-semantic-color-action-primary`, etc.) se coupaient **lettre par lettre verticalement**,
+rendant la table illisible.
+
+Cause : `table { width: 100% }` sans largeur minimale ni mécanisme d'overflow — la table s'écrasait
+dans la largeur du viewport plutôt que de scroller.
+
+---
+
+## Décision
+
+### 1. Wrapper `.table-wrap`
+
+Toutes les tables sont enveloppées dans un `<div class="table-wrap">` avec :
+
+```css
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* scroll inertiel iOS */
+  margin: 16px 0 28px;
+}
+table {
+  width: 100%;
+  min-width: 420px; /* empêche la compression sous le seuil lisible */
+  margin: 0;        /* margin portée par .table-wrap */
+}
+```
+
+### 2. Application systématique via post-processing dans `layout()`
+
+Plutôt que d'envelopper chaque table manuellement dans les ~30 fonctions `build*()`, un
+`String.replace()` est appliqué sur le HTML final généré par `layout()` :
+
+- `<table …>` → `<div class="table-wrap"><table …>`
+- `</table>` (non suivi de `</div>`) → `</table></div>`
+
+Les tables déjà enveloppées (ex. celles issues de `parseMd()`) ne sont pas doublées grâce au
+negative lookbehind sur `table-wrap">`
+
+### 3. `parseMd()` enveloppe également ses tables
+
+Les tables générées depuis le Markdown (ADRs, guidelines) passent aussi dans `.table-wrap` depuis
+`parseMd()` — cohérence garantie quelle que soit la source.
+
+---
+
+## Alternatives rejetées
+
+| Alternative | Raison du rejet |
+|-------------|-----------------|
+| `display: block` sur `<table>` en mobile | Casse la sémantique et l'alignement des colonnes |
+| `word-break: break-all` sans overflow | Colonnes lisibles mais tokens illisibles (coupure aléatoire) |
+| Envelopper manuellement chaque table | ~30 appels à modifier — risque d'oubli à chaque nouvelle table |
+
+---
+
+## Conséquences
+
+- Toute nouvelle table dans le site est automatiquement responsive sans action supplémentaire
+- Le scroll horizontal est présent uniquement quand la table est plus large que le viewport
+- La `min-width: 420px` est un seuil arbitraire adapté aux tables de tokens — à revoir si des
+  tables très larges apparaissent (envisager `min-width` par classe de table)
+- **WCAG 1.4.10 (Reflow)** : les tables tabulaires sont exemptées du critère de reflow à 320 px
+  — le scroll horizontal est la solution reconnue pour ce type de contenu

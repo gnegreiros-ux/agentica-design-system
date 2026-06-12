@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
+      // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
 
-  // ── Mobile menu ──────────────────────────────────────────
+  // ── Mobile menu (top-nav) ────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
   const topNav = document.querySelector('.top-nav');
   if (menuToggle && topNav) {
@@ -37,24 +39,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Sidebar drawer (mobile) ──────────────────────────────
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.getElementById('site-sidebar');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.removeAttribute('hidden');
+    const openDrawer = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay && sidebarOverlay.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeDrawer = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay && sidebarOverlay.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    sidebarOverlay && sidebarOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+    });
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
+  }
+
   // ── Active nav links ─────────────────────────────────────
   const p = window.location.pathname;
+  const sections = ['foundations','components','tokens','decisions','agents'];
   document.querySelectorAll('.top-nav a').forEach(a => {
     const h = a.getAttribute('href') || '';
-    // Strip leading ../ to get the logical path segments
     const parts = h.split('/').filter(s => s !== '..' && s !== '.');
-    const hFile = parts[parts.length - 1] || '';          // e.g. 'color.html'
-    const hDir  = parts.length > 1 ? parts[parts.length - 2] : ''; // e.g. 'foundations'
+    const hFile = parts[parts.length - 1] || '';
+    const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
     let active = false;
-    if (hDir) {
-      // Section link (foundations/color.html, components/index.html, …)
-      // Active on any page within that section directory
+    if (hDir && sections.includes(hDir)) {
       active = p.includes('/' + hDir + '/');
-    } else if (hFile === 'index.html') {
-      // Accueil — only on the root homepage
-      active = p === '/' || p.endsWith('/index.html') && !p.includes('/foundations/') && !p.includes('/components/') && !p.includes('/tokens/') && !p.includes('/decisions/') && !p.includes('/agents/');
-    } else {
-      // Top-level page like get-started.html
+    } else if (hFile === 'index.html' && !hDir) {
+      active = p === '/' || (p.endsWith('/index.html') && sections.every(s => !p.includes('/' + s + '/')));
+    } else if (hFile) {
       active = p.endsWith('/' + hFile);
     }
     if (active) a.classList.add('active');
@@ -133,13 +161,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
+  const searchStatus = document.getElementById('token-search-status');
   if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.toLowerCase();
-      document.querySelectorAll('.token-row').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    let debounceTimer;
+    const runFilter = () => {
+      const q = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll('.token-section').forEach(section => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.token-row').forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.style.display = match ? '' : 'none';
+          if (match) sectionVisible++;
+        });
+        totalVisible += sectionVisible;
+        section.style.display = sectionVisible === 0 && q ? 'none' : '';
       });
+      if (searchStatus) {
+        if (!q) {
+          searchStatus.textContent = '';
+        } else {
+          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          searchStatus.textContent = lang === 'fr'
+            ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
+            : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
+        }
+      }
+    };
+    search.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runFilter, 120);
     });
+    search.addEventListener('search', runFilter);
   }
 
   // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
@@ -173,15 +226,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
-    btn.textContent = 'Copier';
-    btn.setAttribute('aria-label', 'Copier le code' + (lang ? ' (' + lang + ')' : ''));
+    const copyLabel = () => document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy' : 'Copier';
+    btn.textContent = copyLabel();
+    btn.setAttribute('aria-label', (document.documentElement.getAttribute('data-lang') === 'en' ? 'Copy code' : 'Copier le code') + (lang ? ' (' + lang + ')' : ''));
     pre.appendChild(btn);
     btn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText((code?.textContent || '').replace(/^\n+|\n+$/g, '')); }
       catch { return; }
-      btn.textContent = 'Copié !';
-      copyLive.textContent = 'Copié !';
-      setTimeout(() => { btn.textContent = 'Copier'; copyLive.textContent = ''; }, 1600);
+      const copiedLabel = document.documentElement.getAttribute('data-lang') === 'en' ? 'Copied!' : 'Copié !';
+      btn.textContent = copiedLabel;
+      copyLive.textContent = copiedLabel;
+      setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
+
+  // ── Bouton retour en haut ────────────────────────────────
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const threshold = document.documentElement.scrollHeight * 0.25;
+    const onScroll = () => {
+      const visible = window.scrollY > threshold;
+      backToTop.hidden = !visible;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 });
