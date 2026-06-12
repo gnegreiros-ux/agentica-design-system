@@ -1,6 +1,7 @@
 # AI Anti-Patterns Gallery: 10 Reasons Your AI Website Looks Generic
 ## [aidesign.guide](https://www.aidesign.guide/guides/ai-anti-patterns-gallery)
 
+
 When generating any page, section, or component, do not produce:
 
 ## When the brief says "premium" or "luxury"
@@ -85,3 +86,5 @@ When generating any page, section, or component, do not produce:
 
 For each, if the generated output contains one of these patterns, STOP and fix it before continuing.
 Do not produce a final output that violates any of these rules without explicitly flagging which rule and why.
+
+# Compare avec nos règles déjà existantes pour trouver des conflits, doublons etc, avant d'intégrer quoi que ce soit.
