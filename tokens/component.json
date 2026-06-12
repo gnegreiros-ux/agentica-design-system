@@ -265,7 +265,7 @@
         "$type": "dimension"
       },
       "padding-y": {
-        "$value": "2px",
+        "$value": "{primitive.space.0}",
         "$type": "dimension"
       },
       "font-size": {

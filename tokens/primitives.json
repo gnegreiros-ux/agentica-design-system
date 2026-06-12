@@ -556,6 +556,7 @@
     },
 
     "space": {
+      "0":  { "$value": "2px",  "$type": "dimension", "$description": "4px × 0.5 — demi-pas sub-grille, réservé aux composants compacts (ex: badge.sm)" },
       "1":  { "$value": "4px",  "$type": "dimension", "$description": "4px × 1 — micro espacement" },
       "2":  { "$value": "8px",  "$type": "dimension", "$description": "4px × 2" },
       "3":  { "$value": "12px", "$type": "dimension", "$description": "4px × 3" },
