@@ -12,8 +12,9 @@
  *
  * Usage :
  *   node scripts/audit-tokens.js
- *   node scripts/audit-tokens.js --fix-report   → génère un rapport JSON
- *   node scripts/audit-tokens.js --ci           → exit 1 si violations critiques
+ *   node scripts/audit-tokens.js --fix-report          → génère un rapport JSON
+ *   node scripts/audit-tokens.js --ci                  → exit 1 si violations critiques
+ *   node scripts/audit-tokens.js --src-dir <chemin>    → analyse un répertoire source spécifique
  */
 
 const fs   = require('fs');
@@ -21,9 +22,17 @@ const path = require('path');
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 
+const TOKEN_PREFIXES = {
+  primitive: '--agtc-primitive-',
+  semantic:  '--agtc-semantic-',
+  component: '--agtc-component-',
+};
+
+const _srcArgIdx = process.argv.indexOf('--src-dir');
+
 const CONFIG = {
   tokensDir:   path.resolve(__dirname, '../tokens'),
-  sourceGlobs: ['../src/**/*.{js,jsx,ts,tsx,css,scss,html}'],
+  sourceDir:   _srcArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_srcArgIdx + 1]) : null,
   outputFile:  path.resolve(__dirname, '../audit-report.json'),
   ciMode:      process.argv.includes('--ci'),
   fixReport:   process.argv.includes('--fix-report'),
@@ -39,7 +48,7 @@ const DRIFT_PATTERNS = [
   { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Valeur hsl() en dur' },
   { name: 'tailwind-arbitrary', regex: /(?:p|m|text|bg|border)-\[[\d.]+(?:px|rem|em)[^\]]*\]/g, severity: 'error', message: 'Tailwind arbitrary value' },
   { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Valeur px inline sans token' },
-  { name: 'primitive-direct',regex: /var\(--agtc-primitive-/g,            severity: 'warning', message: 'Token primitif utilisé directement' },
+  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'warning', message: 'Token primitif utilisé directement' },
 ];
 
 // ─── Utilitaires ──────────────────────────────────────────────────────────────
@@ -106,7 +115,7 @@ function auditOrphanedTokens(componentTokens, sourceFiles) {
 
   for (const tokenKey of allComponentKeys) {
     // Convertir en pattern CSS var : button.primary.background → --agtc-component-button-primary-background
-    const cssVar = '--agtc-component-' + tokenKey.replace(/\./g, '-');
+    const cssVar = TOKEN_PREFIXES.component + tokenKey.replace(/\./g, '-');
     const used = sourceFiles.some(file => {
       const content = fs.readFileSync(file, 'utf8');
       return content.includes(cssVar) || content.includes(tokenKey);
@@ -128,17 +137,17 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   const phantoms = [];
 
   // Chercher toutes les références --agtc-semantic-* dans les sources
-  const semanticVarRegex = /var\(--agtc-semantic-([\w-]+)\)/g;
+  const semanticVarRegex = new RegExp('var\\(' + TOKEN_PREFIXES.semantic + '([\\w-]+)\\)', 'g');
   for (const file of sourceFiles) {
     const content = fs.readFileSync(file, 'utf8');
     let match;
     while ((match = semanticVarRegex.exec(content)) !== null) {
       const usedVar = match[1];
-      // Convertir CSS var → clé token : color-action-primary → semantic.color.action.primary
-      const tokenKey = 'semantic.' + usedVar.replace(/-/g, '.');
-      const isDefined = definedKeys.some(k => k === tokenKey || k.startsWith(tokenKey));
+      // Convertir CSS var → clé token : color-action-primary → color.action.primary
+      const tokenKey = usedVar.replace(/-/g, '.');
+      const isDefined = definedKeys.some(k => k === tokenKey);
       if (!isDefined && !phantoms.find(p => p.cssVar === usedVar)) {
-        phantoms.push({ cssVar: `--agtc-semantic-${usedVar}`, file: path.relative(process.cwd(), file) });
+        phantoms.push({ cssVar: TOKEN_PREFIXES.semantic + usedVar, file: path.relative(process.cwd(), file) });
       }
     }
   }
@@ -214,8 +223,8 @@ function auditTokenStructure(primitives, semantic, component) {
         if (ref) {
           const refKey = ref[1];
           const isDefined = layer === 'semantic'
-            ? primitiveKeys.some(k => k === refKey || refKey.startsWith(k))
-            : semanticKeys.some(k => k === refKey || refKey.startsWith(k)) || refKey === 'transparent';
+            ? primitiveKeys.some(k => k === refKey)
+            : (semanticKeys.some(k => k === refKey) || refKey === 'transparent');
           if (!isDefined) {
             warn(`Référence non résolue dans ${layer} : {${refKey}}`);
             issues.push({ layer, ref: refKey });
@@ -268,10 +277,10 @@ function main() {
   const semantic   = loadTokens('semantic.json');
   const component  = loadTokens('component.json');
 
-  // Récupérer les fichiers source (chercher dans src/ ou à la racine)
-  const srcDir     = path.resolve(__dirname, '../src');
+  // Récupérer les fichiers source — priorité : --src-dir > src/ > racine
+  const srcDir     = CONFIG.sourceDir || path.resolve(__dirname, '../src');
   const rootDir    = path.resolve(__dirname, '..');
-  const sourceFiles = fs.existsSync(srcDir)
+  const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f => !f.includes('node_modules') && !f.includes('dist'));
 

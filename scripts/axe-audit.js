@@ -7,6 +7,13 @@
 // les tokens et les composants (principe de dogfooding) — un défaut de contraste ou
 // d'ARIA y est observable en conditions réelles de rendu. Aurait détecté
 // automatiquement la régression de contraste teal corrigée par ADR-048.
+//
+// CLI :
+//   node scripts/axe-audit.js
+//   node scripts/axe-audit.js --dist <chemin>          → répertoire dist alternatif
+//   node scripts/axe-audit.js --ci                     → bloque sur violation (défaut)
+//   node scripts/axe-audit.js --report-only            → rapport sans blocage
+//   node scripts/axe-audit.js --exclude ".sel1,.sel2"  → sélecteurs supplémentaires à exclure
 
 import { chromium } from 'playwright';
 import axePkg from '@axe-core/playwright';
@@ -16,9 +23,16 @@ import { pathToFileURL } from 'node:url';
 
 const AxeBuilder = axePkg.default || axePkg;
 
-const DIST = join(process.cwd(), 'site', 'dist');
-const BLOCKING = new Set(['critical', 'serious']);
-const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const _distArg      = process.argv.indexOf('--dist');
+const DIST          = _distArg !== -1
+  ? join(process.cwd(), process.argv[_distArg + 1])
+  : join(process.cwd(), 'site', 'dist');
+const BLOCKING      = new Set(['critical', 'serious']);
+const WCAG_TAGS     = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const _excludeArg   = process.argv.indexOf('--exclude');
+const EXTRA_EXCLUDES = _excludeArg !== -1
+  ? process.argv[_excludeArg + 1].split(',').map(s => s.trim())
+  : [];
 
 // Liste récursivement toutes les pages .html du site généré.
 function htmlFiles(dir) {
@@ -48,9 +62,9 @@ for (const file of pages) {
   // .logo et .hero-name exclus : le mot-symbole « Agentica » (en-tête + héros) est
   // un nom de marque / logotype, exempt de contraste par WCAG 1.4.3. Tout le reste
   // est audité.
-  const results = await new AxeBuilder({ page })
-    .exclude('.logo').exclude('.hero-name')
-    .withTags(WCAG_TAGS).analyze();
+  let _builder = new AxeBuilder({ page }).exclude('.logo').exclude('.hero-name');
+  for (const sel of EXTRA_EXCLUDES) _builder = _builder.exclude(sel);
+  const results = await _builder.withTags(WCAG_TAGS).analyze();
   await page.close();
 
   const blocking = results.violations.filter((v) => BLOCKING.has(v.impact));
@@ -87,10 +101,11 @@ writeFileSync(join(process.cwd(), 'axe-report.json'), JSON.stringify(report, nul
 console.log(`\n— ${pages.length} pages · ${blockingTotal} bloquantes (critical/serious) · ${moderateTotal} modérées`);
 console.log('Rapport : axe-report.json');
 
-// Mode : bloquant par défaut (esprit ADR-007). AXE_BLOCKING=false → rapport seul
-// (exit 0) pendant la phase de burn-down des violations héritées. Basculer en
-// bloquant (retirer la variable du workflow) une fois 0 violation atteint.
-const blocking = process.env.AXE_BLOCKING !== 'false';
+// Mode bloquant : --ci force le blocage, --report-only force rapport seul.
+// Rétrocompatibilité : AXE_BLOCKING=false équivaut à --report-only.
+const blocking = process.argv.includes('--report-only')
+  ? false
+  : process.argv.includes('--ci') || process.env.AXE_BLOCKING !== 'false';
 
 if (blockingTotal > 0) {
   if (blocking) {
