@@ -74,7 +74,9 @@ module.exports = {
     "agtc-space-comfortable-control-padding-y": "var(--agtc-semantic-space-comfortable-control-padding-y)",
     "agtc-space-comfortable-control-gap": "var(--agtc-semantic-space-comfortable-control-gap)",
     "agtc-space-comfortable-layout-section": "var(--agtc-semantic-space-comfortable-layout-section)",
-    "agtc-space-comfortable-layout-component": "var(--agtc-semantic-space-comfortable-layout-component)"
+    "agtc-space-comfortable-layout-component": "var(--agtc-semantic-space-comfortable-layout-component)",
+    "agtc-marketing-space-section-breathing": "var(--agtc-semantic-marketing-space-section-breathing)",
+    "agtc-marketing-space-hero-gap": "var(--agtc-semantic-marketing-space-hero-gap)"
   },
   "borderRadius": {
     "agtc-radius-control": "var(--agtc-semantic-radius-control)",

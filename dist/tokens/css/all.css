@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 20:50:13 GMT
+ * Generated on Fri, 12 Jun 2026 23:10:54 GMT
  */
 
 :root {
@@ -38,6 +38,7 @@
   --agtc-primitive-font-weight-bold: 700;
   --agtc-primitive-font-weight-medium: 500;
   --agtc-primitive-font-weight-regular: 400;
+  --agtc-primitive-font-size-6xl: 3.75rem;
   --agtc-primitive-font-size-5xl: 3rem;
   --agtc-primitive-font-size-4xl: 2.5rem;
   --agtc-primitive-font-size-3xl: 2rem;
@@ -47,6 +48,8 @@
   --agtc-primitive-font-size-base: 1rem;
   --agtc-primitive-font-size-sm: 0.875rem;
   --agtc-primitive-font-size-xs: 0.75rem;
+  --agtc-primitive-space-30: 120px;
+  --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-20: 80px;
   --agtc-primitive-space-16: 64px;
   --agtc-primitive-space-12: 48px;
@@ -516,6 +519,13 @@
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
   --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
+  --agtc-semantic-marketing-space-hero-gap: var(--agtc-primitive-space-30);
+  --agtc-semantic-marketing-space-section-breathing: var(--agtc-primitive-space-24);
+  --agtc-semantic-marketing-typography-eyebrow-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-semantic-marketing-typography-eyebrow-size: var(--agtc-primitive-font-size-xs);
+  --agtc-semantic-marketing-typography-display-line-height: var(--agtc-primitive-line-height-display);
+  --agtc-semantic-marketing-typography-display-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-semantic-marketing-typography-display-size: var(--agtc-primitive-font-size-6xl);
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-icon-size-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-icon-size-md);
   --agtc-semantic-icon-size-inline: var(--agtc-primitive-icon-size-sm);

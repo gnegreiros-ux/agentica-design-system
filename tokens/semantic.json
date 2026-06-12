@@ -607,6 +607,52 @@
           "$intent": "Icône de navigation ou d'emphase"
         }
       }
+    },
+    "marketing": {
+      "_readme": {
+        "$value": "Tokens réservés au contexte Marketing Narratif (data-context=marketing). Voir .claude/rules/contexts-utilisation.md et ADR-057.",
+        "$type": "other"
+      },
+      "typography": {
+        "display": {
+          "size": {
+            "$value": "{primitive.fontSize.6xl}",
+            "$type": "dimension",
+            "$intent": "60px — Titre d'accroche marketing : homepage hero, landing page. Jamais dans un contexte Produit."
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight"
+          },
+          "line-height": {
+            "$value": "{primitive.lineHeight.display}",
+            "$type": "number"
+          }
+        },
+        "eyebrow": {
+          "size": {
+            "$value": "{primitive.fontSize.xs}",
+            "$type": "dimension",
+            "$intent": "12px — Étiquette courte au-dessus d'un titre hero. letter-spacing large. Marketing uniquement."
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight"
+          }
+        }
+      },
+      "space": {
+        "section-breathing": {
+          "$value": "{primitive.space.24}",
+          "$type": "dimension",
+          "$intent": "96px — Respiration ample entre sections marketing. Contraste avec la densité Produit (32px)."
+        },
+        "hero-gap": {
+          "$value": "{primitive.space.30}",
+          "$type": "dimension",
+          "$intent": "120px — Espace vertical du bloc hero marketing. Jamais en contexte Produit."
+        }
+      }
     }
   }
 }

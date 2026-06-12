@@ -318,3 +318,7 @@
 | 2026-06-12 16:27 | Créé | `.claude/rules/figma-components.md` |
 | 2026-06-12 16:27 | Modifié | `.claude/instructions/figma-components.md` |
 | 2026-06-12 16:46 | Créé | `decisions/ADR-056-agtc-tabs-implementation.md` |
+| 2026-06-12 19:13 | Créé | `decisions/ADR-057-deux-contextes-utilisation.md` |
+| 2026-06-12 19:14 | Créé | `.claude/rules/contexts-utilisation.md` |
+| 2026-06-12 19:14 | Modifié | `DESIGN.md` |
+| 2026-06-12 19:30 | feat(foundations) | **Deux contextes d'utilisation — Phase complète.** Tokens primitifs : `fontSize.6xl` (60px), `space.24` (96px), `space.30` (120px). Tokens sémantiques : groupe `semantic.marketing.*` (7 tokens — typography.display, typography.eyebrow, space.section-breathing, space.hero-gap). ADR-057. Règle `.claude/rules/contexts-utilisation.md`. DESIGN.md section 7. Guideline `guidelines/foundations/contextes.md`. Site : `foundations/contextes.html`, CSS `[data-context="marketing"]`, `data-context="marketing"` sur home/get-started/agents. Build : 688 définies · 192 référencées · 0 fantôme · 75 fichiers. |

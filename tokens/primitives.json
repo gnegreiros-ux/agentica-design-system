@@ -567,7 +567,9 @@
       "10": { "$value": "40px", "$type": "dimension", "$description": "4px × 10" },
       "12": { "$value": "48px", "$type": "dimension", "$description": "4px × 12" },
       "16": { "$value": "64px", "$type": "dimension", "$description": "4px × 16 — macro espacement" },
-      "20": { "$value": "80px", "$type": "dimension", "$description": "4px × 20 — gouttière de page layout 1440px" }
+      "20": { "$value": "80px",  "$type": "dimension", "$description": "4px × 20 — gouttière de page layout 1440px" },
+      "24": { "$value": "96px",  "$type": "dimension", "$description": "4px × 24 — respiration macro (sections marketing)" },
+      "30": { "$value": "120px", "$type": "dimension", "$description": "4px × 30 — respiration hero marketing" }
     },
     "fontSize": {
       "_readme": {
@@ -582,7 +584,8 @@
       "2xl":  { "$value": "1.75rem",  "$type": "dimension", "$description": "28px — Heading 3 (Minor Third ×3). Line-height: heading (1.1)" },
       "3xl":  { "$value": "2rem",     "$type": "dimension", "$description": "32px — Heading 2 (Minor Third ×4). Line-height: display (1.0)" },
       "4xl":  { "$value": "2.5rem",   "$type": "dimension", "$description": "40px — Heading 1 (Minor Third ×5). Line-height: display (1.0)" },
-      "5xl":  { "$value": "3rem",     "$type": "dimension", "$description": "48px — Hero display. Line-height: display (1.0)" }
+      "5xl":  { "$value": "3rem",     "$type": "dimension", "$description": "48px — Hero display. Line-height: display (1.0)" },
+      "6xl":  { "$value": "3.75rem", "$type": "dimension", "$description": "60px — Display marketing (Minor Third ×7, ×1.2 de 5xl). Réservé au contexte Marketing Narratif." }
     },
     "fontWeight": {
       "regular": { "$value": "400", "$type": "fontWeight", "$description": "Normal — corps de texte" },

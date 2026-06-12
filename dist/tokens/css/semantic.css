@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 20:50:13 GMT
+ * Generated on Fri, 12 Jun 2026 23:10:54 GMT
  */
 
 :root {
@@ -8,6 +8,13 @@
   --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
   --agtc-semantic-shadow-raised: 0 4px 16px rgba(0,0,0,0.10);
   --agtc-semantic-shadow-header: 0 2px 24px rgba(0,0,0,0.12);
+  --agtc-semantic-marketing-space-hero-gap: var(--agtc-primitive-space-30);
+  --agtc-semantic-marketing-space-section-breathing: var(--agtc-primitive-space-24);
+  --agtc-semantic-marketing-typography-eyebrow-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-semantic-marketing-typography-eyebrow-size: var(--agtc-primitive-font-size-xs);
+  --agtc-semantic-marketing-typography-display-line-height: var(--agtc-primitive-line-height-display);
+  --agtc-semantic-marketing-typography-display-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-semantic-marketing-typography-display-size: var(--agtc-primitive-font-size-6xl);
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-icon-size-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-icon-size-md);
   --agtc-semantic-icon-size-inline: var(--agtc-primitive-icon-size-sm);

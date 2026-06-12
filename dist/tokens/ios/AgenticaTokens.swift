@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 12 Jun 2026 20:50:13 GMT
+// Generated on Fri, 12 Jun 2026 23:10:54 GMT
 
 
 import UIKit
@@ -554,6 +554,7 @@ public class AgenticaTokens {
     public static let primitiveFontSize3xl = 2rem
     public static let primitiveFontSize4xl = 2.5rem
     public static let primitiveFontSize5xl = 3rem
+    public static let primitiveFontSize6xl = 3.75rem
     public static let primitiveFontSizeBase = 1rem
     public static let primitiveFontSizeLg = 1.25rem
     public static let primitiveFontSizeSm = 0.875rem
@@ -577,7 +578,9 @@ public class AgenticaTokens {
     public static let primitiveSpace16 = 64px
     public static let primitiveSpace2 = 8px
     public static let primitiveSpace20 = 80px
+    public static let primitiveSpace24 = 96px
     public static let primitiveSpace3 = 12px
+    public static let primitiveSpace30 = 120px
     public static let primitiveSpace4 = 16px
     public static let primitiveSpace5 = 20px
     public static let primitiveSpace6 = 24px
@@ -649,6 +652,13 @@ public class AgenticaTokens {
     public static let semanticIconSizeControl = 20px
     public static let semanticIconSizeInline = 16px
     public static let semanticIconSizeNav = 24px
+    public static let semanticMarketingSpaceHeroGap = 120px
+    public static let semanticMarketingSpaceSectionBreathing = 96px
+    public static let semanticMarketingTypographyDisplayLineHeight = 1.0
+    public static let semanticMarketingTypographyDisplaySize = 3.75rem
+    public static let semanticMarketingTypographyDisplayWeight = 700
+    public static let semanticMarketingTypographyEyebrowSize = 0.75rem
+    public static let semanticMarketingTypographyEyebrowWeight = 700
     public static let semanticRadiusCard = 10px
     public static let semanticRadiusControl = 6px
     public static let semanticShadowCard = 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)

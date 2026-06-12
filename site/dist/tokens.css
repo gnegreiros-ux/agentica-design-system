@@ -439,6 +439,8 @@
   --agtc-primitive-space-12: 48px;
   --agtc-primitive-space-16: 64px;
   --agtc-primitive-space-20: 80px;
+  --agtc-primitive-space-24: 96px;
+  --agtc-primitive-space-30: 120px;
 
   /* ── Semantic tokens — UX intentions ── */
   --agtc-semantic-color-action-primary: #007a68;
@@ -548,6 +550,13 @@
   --agtc-semantic-icon-size-inline: 16px;
   --agtc-semantic-icon-size-control: 20px;
   --agtc-semantic-icon-size-nav: 24px;
+  --agtc-semantic-marketing-typography-display-size: 3.75rem;
+  --agtc-semantic-marketing-typography-display-weight: 700;
+  --agtc-semantic-marketing-typography-display-line-height: 1.0;
+  --agtc-semantic-marketing-typography-eyebrow-size: 0.75rem;
+  --agtc-semantic-marketing-typography-eyebrow-weight: 700;
+  --agtc-semantic-marketing-space-section-breathing: 96px;
+  --agtc-semantic-marketing-space-hero-gap: 120px;
 
   /* ── Component tokens — UI contracts ── */
   --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);

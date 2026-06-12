@@ -106,7 +106,25 @@ Tout changement de token suit ce flux :
 
 ---
 
-## 6. Ce que les agents peuvent faire
+## 6. Contextes d'utilisation
+
+Le système distingue deux modes éditoraux, déclarés via `data-context` sur `<body>` :
+
+| Dimension | Mode Produit (SaaS) | Mode Marketing (Narratif) |
+|-----------|---------------------|--------------------------|
+| Objectif | Permettre d'agir | Communiquer une vision |
+| Espacement | density=normal | `semantic.marketing.space.*` (96-120px) |
+| Typographie max | `heading.1` — 40px | `marketing.typography.display` — 60px |
+| Mise en page | Grille régulière | Asymétrie contrôlée |
+| Variation visuelle | Faible (répétabilité) | Contrôlée (hiérarchie éditoriale) |
+| Attribut | *(absent)* | `data-context="marketing"` |
+
+**Règle de sélection :** si la page convainc ou onboarde → Marketing. Si elle documente → Produit.
+Voir `.claude/rules/contexts-utilisation.md` et `guidelines/foundations/contextes.md`.
+
+---
+
+## 7. Ce que les agents peuvent faire
 
 | Action | Autorisé |
 |--------|----------|

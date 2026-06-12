@@ -660,3 +660,26 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   .footer-inner{grid-template-columns:1fr;gap:20px}
   .footer-col-right{align-items:flex-start;text-align:left}
 }
+
+/* ── MARKETING CONTEXT (data-context="marketing") — ADR-057 ─── */
+/* Activated on pages that convice/onboard: home, get-started, agents.
+   All values reference semantic.marketing.* tokens — no hard-coded values. */
+[data-context="marketing"] .hero-eyebrow{
+  font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);
+  font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--agtc-semantic-color-action-primary);
+}
+[data-context="marketing"] .hero-title{
+  font-size:clamp(2.2rem,5vw,var(--agtc-semantic-marketing-typography-display-size));
+  font-weight:var(--agtc-semantic-marketing-typography-display-weight);
+  line-height:var(--agtc-semantic-marketing-typography-display-line-height);
+}
+[data-context="marketing"] .marketing-section{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing);
+}
+[data-context="marketing"] .marketing-hero{
+  padding-top:var(--agtc-semantic-marketing-space-hero-gap);
+  padding-bottom:var(--agtc-semantic-marketing-space-hero-gap);
+}

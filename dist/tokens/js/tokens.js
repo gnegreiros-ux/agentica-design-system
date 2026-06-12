@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 20:50:13 GMT
+ * Generated on Fri, 12 Jun 2026 23:10:54 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -440,6 +440,8 @@ export const PrimitiveSpace10 = "40px";
 export const PrimitiveSpace12 = "48px";
 export const PrimitiveSpace16 = "64px";
 export const PrimitiveSpace20 = "80px";
+export const PrimitiveSpace24 = "96px";
+export const PrimitiveSpace30 = "120px";
 export const PrimitiveFontSizeXs = "0.75rem";
 export const PrimitiveFontSizeSm = "0.875rem";
 export const PrimitiveFontSizeBase = "1rem";
@@ -449,6 +451,7 @@ export const PrimitiveFontSize2xl = "1.75rem";
 export const PrimitiveFontSize3xl = "2rem";
 export const PrimitiveFontSize4xl = "2.5rem";
 export const PrimitiveFontSize5xl = "3rem";
+export const PrimitiveFontSize6xl = "3.75rem";
 export const PrimitiveFontWeightRegular = "400";
 export const PrimitiveFontWeightMedium = "500";
 export const PrimitiveFontWeightBold = "700";
@@ -573,6 +576,13 @@ export const SemanticTypographyHeroLineHeight = "1.0";
 export const SemanticIconSizeInline = "16px";
 export const SemanticIconSizeControl = "20px";
 export const SemanticIconSizeNav = "24px";
+export const SemanticMarketingTypographyDisplaySize = "3.75rem";
+export const SemanticMarketingTypographyDisplayWeight = "700";
+export const SemanticMarketingTypographyDisplayLineHeight = "1.0";
+export const SemanticMarketingTypographyEyebrowSize = "0.75rem";
+export const SemanticMarketingTypographyEyebrowWeight = "700";
+export const SemanticMarketingSpaceSectionBreathing = "96px";
+export const SemanticMarketingSpaceHeroGap = "120px";
 export const ButtonPrimaryBackground = "#007a68";
 export const ButtonPrimaryBackgroundHover = "#0d3d38";
 export const ButtonPrimaryBackgroundDisabled = "#d9d9d9";

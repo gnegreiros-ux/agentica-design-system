@@ -950,6 +950,29 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   .footer-inner{grid-template-columns:1fr;gap:20px}
   .footer-col-right{align-items:flex-start;text-align:left}
 }
+
+/* ── MARKETING CONTEXT (data-context="marketing") — ADR-057 ─── */
+/* Activated on pages that convice/onboard: home, get-started, agents.
+   All values reference semantic.marketing.* tokens — no hard-coded values. */
+[data-context="marketing"] .hero-eyebrow{
+  font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);
+  font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--agtc-semantic-color-action-primary);
+}
+[data-context="marketing"] .hero-title{
+  font-size:clamp(2.2rem,5vw,var(--agtc-semantic-marketing-typography-display-size));
+  font-weight:var(--agtc-semantic-marketing-typography-display-weight);
+  line-height:var(--agtc-semantic-marketing-typography-display-line-height);
+}
+[data-context="marketing"] .marketing-section{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing);
+}
+[data-context="marketing"] .marketing-hero{
+  padding-top:var(--agtc-semantic-marketing-space-hero-gap);
+  padding-bottom:var(--agtc-semantic-marketing-space-hero-gap);
+}
 `; }
 
 function siteJS() { return `
@@ -1216,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // appId = 6a1c1e665ec5fe8fc0540983 ; permalien stable vérifié (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
 
-function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false }) {
+function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '' }) {
   const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
   // DÉMARRER en tête + traité comme CTA (cta:true) — action primaire d'adoption,
@@ -1302,7 +1325,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 </head>
-<body>
+<body${context ? ` data-context="${context}"` : ''}>
 <a class="skip-link" href="#main-content">
   <span class="lang-fr">Aller au contenu</span>
   <span class="lang-en">Skip to content</span>
@@ -1353,6 +1376,7 @@ function sidebarFoundations(base, current) {
     ['spacing.html',    '<span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span>'],
     ['typography.html', '<span class="lang-fr">Typographie</span><span class="lang-en">Typography</span>'],
     ['icons.html',      '<span class="lang-fr">Icônes</span><span class="lang-en">Icons</span>'],
+    ['contextes.html',  '<span class="lang-fr">Contextes</span><span class="lang-en">Contexts</span>'],
   ].map(([h,l]) => `<a href="${base}foundations/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span>${links}</div>`;
 }
@@ -1826,7 +1850,7 @@ function buildHome(adrs) {
 
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
@@ -1870,6 +1894,14 @@ function buildFoundationsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1 et contrat d'accessibilité.</span>
       <span class="lang-en">Lucide library — 1,500+ icons, 3 sizes, WCAG 1.1.1 rules and accessibility contract.</span>
+    </div>
+  </a>
+  <a href="contextes.html" class="nav-card">
+    <span class="nav-card-icon">${icon('layers', 32)}</span>
+    <div class="nav-card-title"><span class="lang-fr">Contextes d'utilisation</span><span class="lang-en">Usage Contexts</span></div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Mode Produit vs Mode Marketing — tokens dédiés, règles d'espacement et anti-patterns éditoriaux.</span>
+      <span class="lang-en">Product Mode vs Marketing Mode — dedicated tokens, spacing rules and editorial anti-patterns.</span>
     </div>
   </a>
 </div>
@@ -4142,6 +4174,144 @@ function buildTokens() {
   }));
 }
 
+// ─── PAGE: CONTEXTES ────────────────────────────────────────────────────────
+function buildContextes() {
+  const marketingTokens = [
+    ['marketing-typography-display-size',       'semantic.marketing.typography.display.size',       SEM['marketing-typography-display-size'],       '<span class="lang-fr">Titre d\'accroche — hero marketing (60px)</span><span class="lang-en">Display headline — marketing hero (60px)</span>'],
+    ['marketing-typography-display-weight',     'semantic.marketing.typography.display.weight',     SEM['marketing-typography-display-weight'],     '<span class="lang-fr">Graisse du titre display</span><span class="lang-en">Display title weight</span>'],
+    ['marketing-typography-display-line-height','semantic.marketing.typography.display.line-height',SEM['marketing-typography-display-line-height'],'<span class="lang-fr">Interligne display (ratio)</span><span class="lang-en">Display line height (ratio)</span>'],
+    ['marketing-typography-eyebrow-size',       'semantic.marketing.typography.eyebrow.size',       SEM['marketing-typography-eyebrow-size'],       '<span class="lang-fr">Étiquette eyebrow (12px)</span><span class="lang-en">Eyebrow label (12px)</span>'],
+    ['marketing-typography-eyebrow-weight',     'semantic.marketing.typography.eyebrow.weight',     SEM['marketing-typography-eyebrow-weight'],     '<span class="lang-fr">Graisse eyebrow</span><span class="lang-en">Eyebrow weight</span>'],
+    ['marketing-space-section-breathing',       'semantic.marketing.space.section-breathing',       SEM['marketing-space-section-breathing'],       '<span class="lang-fr">Respiration entre sections (96px)</span><span class="lang-en">Section breathing room (96px)</span>'],
+    ['marketing-space-hero-gap',                'semantic.marketing.space.hero-gap',                SEM['marketing-space-hero-gap'],                '<span class="lang-fr">Espace vertical hero (120px)</span><span class="lang-en">Hero vertical gap (120px)</span>'],
+  ];
+  const tokenRows = marketingTokens.map(([k, name, val, desc]) =>
+    `<tr><td><code>--agtc-semantic-${k}</code></td><td>${desc}</td><td><code>${val||'—'}</code></td></tr>`
+  ).join('');
+
+  const body = `
+<h1 class="first"><span class="lang-fr">Contextes d'utilisation</span><span class="lang-en">Usage Contexts</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Le système distingue deux modes éditoriaux : <strong>Mode Produit</strong> pour les pages qui permettent d'agir, et <strong>Mode Marketing</strong> pour les pages qui communiquent une vision.</span>
+  <span class="lang-en">The system defines two editorial modes: <strong>Product Mode</strong> for pages that enable action, and <strong>Marketing Mode</strong> for pages that communicate a vision.</span>
+</p>
+
+<h2><span class="lang-fr">Comparaison des modes</span><span class="lang-en">Mode comparison</span></h2>
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Dimension</span><span class="lang-en">Dimension</span></th>
+    <th><span class="lang-fr">Mode Produit (SaaS)</span><span class="lang-en">Product Mode (SaaS)</span></th>
+    <th><span class="lang-fr">Mode Marketing (Narratif)</span><span class="lang-en">Marketing Mode (Narrative)</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><span class="lang-fr">Objectif</span><span class="lang-en">Goal</span></td><td><span class="lang-fr">Permettre d'agir</span><span class="lang-en">Enable action</span></td><td><span class="lang-fr">Communiquer une vision</span><span class="lang-en">Communicate a vision</span></td></tr>
+    <tr><td><span class="lang-fr">Lecteur</span><span class="lang-en">Reader</span></td><td><span class="lang-fr">Utilisateur qui travaille</span><span class="lang-en">User working</span></td><td><span class="lang-fr">Visiteur qui évalue</span><span class="lang-en">Visitor evaluating</span></td></tr>
+    <tr><td><span class="lang-fr">Espacement sections</span><span class="lang-en">Section spacing</span></td><td><code>semantic.space.layout.section</code> (48px)</td><td><code>semantic.marketing.space.section-breathing</code> (96px)</td></tr>
+    <tr><td><span class="lang-fr">Typographie max</span><span class="lang-en">Max typography</span></td><td><code>typography.heading.1</code> (40px)</td><td><code>marketing.typography.display</code> (60px)</td></tr>
+    <tr><td><span class="lang-fr">Mise en page</span><span class="lang-en">Layout</span></td><td><span class="lang-fr">Grille régulière</span><span class="lang-en">Regular grid</span></td><td><span class="lang-fr">Asymétrie contrôlée</span><span class="lang-en">Controlled asymmetry</span></td></tr>
+    <tr><td><span class="lang-fr">Attribut HTML</span><span class="lang-en">HTML attribute</span></td><td><em><span class="lang-fr">absent</span><span class="lang-en">absent</span></em></td><td><code>data-context="marketing"</code></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Arbre de décision</span><span class="lang-en">Decision tree</span></h2>
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Question</span><span class="lang-en">Question</span></th>
+    <th><span class="lang-fr">Réponse</span><span class="lang-en">Answer</span></th>
+    <th><span class="lang-fr">Mode</span><span class="lang-en">Mode</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><span class="lang-fr">La page convainc ou onboarde un visiteur ?</span><span class="lang-en">Does the page convince or onboard a visitor?</span></td><td><span class="lang-fr">Oui</span><span class="lang-en">Yes</span></td><td><strong>Marketing</strong></td></tr>
+    <tr><td><span class="lang-fr">La page documente un composant ou un token ?</span><span class="lang-en">Does the page document a component or token?</span></td><td><span class="lang-fr">Oui</span><span class="lang-en">Yes</span></td><td><strong>Produit</strong></td></tr>
+    <tr><td><span class="lang-fr">Doute ?</span><span class="lang-en">Unsure?</span></td><td><span class="lang-fr">—</span><span class="lang-en">—</span></td><td><strong>Produit</strong> (<span class="lang-fr">défaut</span><span class="lang-en">default</span>)</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Mapping des pages</span><span class="lang-en">Page mapping</span></h2>
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Page</span><span class="lang-en">Page</span></th>
+    <th><span class="lang-fr">Mode</span><span class="lang-en">Mode</span></th>
+    <th><span class="lang-fr">Justification</span><span class="lang-en">Rationale</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><code>index.html</code></td><td>Marketing</td><td><span class="lang-fr">Présente la vision, onboarde</span><span class="lang-en">Presents the vision, onboards</span></td></tr>
+    <tr><td><code>get-started.html</code></td><td>Marketing</td><td><span class="lang-fr">Convainc et guide l'adoption</span><span class="lang-en">Convinces and guides adoption</span></td></tr>
+    <tr><td><code>agents/index.html</code></td><td>Marketing</td><td><span class="lang-fr">Explique le système agentique</span><span class="lang-en">Explains the agentic system</span></td></tr>
+    <tr><td><code>foundations/*</code></td><td><span class="lang-fr">Produit</span><span class="lang-en">Product</span></td><td><span class="lang-fr">Documentation des fondations</span><span class="lang-en">Foundation documentation</span></td></tr>
+    <tr><td><code>components/*</code></td><td><span class="lang-fr">Produit</span><span class="lang-en">Product</span></td><td><span class="lang-fr">Contrats de composants</span><span class="lang-en">Component contracts</span></td></tr>
+    <tr><td><code>decisions/*</code></td><td><span class="lang-fr">Produit</span><span class="lang-en">Product</span></td><td><span class="lang-fr">Archive des ADRs</span><span class="lang-en">ADR archive</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="lang-fr">Tokens Marketing</span><span class="lang-en">Marketing tokens</span></h2>
+<p>
+  <span class="lang-fr">Ces tokens sont réservés au Mode Marketing. Ne pas utiliser dans les composants ou pages Produit.</span>
+  <span class="lang-en">These tokens are reserved for Marketing Mode. Do not use in components or Product pages.</span>
+</p>
+<table class="token-table">
+  <colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr>
+    <th>Token CSS</th>
+    <th><span class="lang-fr">Description</span><span class="lang-en">Description</span></th>
+    <th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th>
+  </tr></thead>
+  <tbody>${tokenRows}</tbody>
+</table>
+
+<h2><span class="lang-fr">Implémentation CSS</span><span class="lang-en">CSS implementation</span></h2>
+<pre class="code-block"><code class="lang-css">/* Activation du Mode Marketing */
+[data-context="marketing"] .hero-eyebrow {
+  font-size: var(--agtc-semantic-marketing-typography-eyebrow-size);   /* 12px */
+  font-weight: var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+[data-context="marketing"] .hero-title {
+  font-size: var(--agtc-semantic-marketing-typography-display-size);   /* 60px */
+  font-weight: var(--agtc-semantic-marketing-typography-display-weight);
+  line-height: var(--agtc-semantic-marketing-typography-display-line-height);
+}
+[data-context="marketing"] .marketing-section {
+  padding-block: var(--agtc-semantic-marketing-space-section-breathing); /* 96px */
+}
+[data-context="marketing"] .marketing-hero {
+  padding-block: var(--agtc-semantic-marketing-space-hero-gap); /* 120px */
+}</code></pre>
+
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire (Mode Marketing)</span><span class="lang-en">Do (Marketing Mode)</span></h3>
+    <ul>
+      <li><span class="lang-fr">Utiliser <code>semantic.marketing.*</code> pour la typographie et l'espacement hero</span><span class="lang-en">Use <code>semantic.marketing.*</code> for hero typography and spacing</span></li>
+      <li><span class="lang-fr">Déclarer <code>data-context="marketing"</code> sur <code>&lt;body&gt;</code></span><span class="lang-en">Declare <code>data-context="marketing"</code> on <code>&lt;body&gt;</code></span></li>
+      <li><span class="lang-fr">Headlines = assertions, pas des teasers : "Design tokens that work."</span><span class="lang-en">Headlines = statements, not teasers: "Design tokens that work."</span></li>
+      <li><span class="lang-fr">Hero image = UI réelle ou artefact réel (ou texte seul)</span><span class="lang-en">Hero image = real UI or real artifact (or text-only)</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Appliquer <code>data-context="marketing"</code> à une page de documentation</span><span class="lang-en">Apply <code>data-context="marketing"</code> to a documentation page</span></li>
+      <li><span class="lang-fr">Utiliser des valeurs en dur (96px, 120px) — toujours via les tokens</span><span class="lang-en">Use hard-coded values (96px, 120px) — always via tokens</span></li>
+      <li><span class="lang-fr">Plus d'un gradient par page, gradient sur les boutons, glassmorphism</span><span class="lang-en">More than one gradient per page, gradient on buttons, glassmorphism</span></li>
+      <li><span class="lang-fr">Buzzwords : "revolutionize", "seamless", "game-changer", "unlock"</span><span class="lang-en">Buzzwords: "revolutionize", "seamless", "game-changer", "unlock"</span></li>
+    </ul>
+  </div>
+</div>
+
+<p><small><span class="lang-fr">Voir aussi :</span><span class="lang-en">See also:</span> <a href="../decisions/adr-057-deux-contextes-utilisation.html">ADR-057</a></small></p>
+`;
+
+  write(path.join(DIST, 'foundations/contextes.html'), layout({
+    title: 'Contextes',
+    depth: 1,
+    sidebar: sidebarFoundations('../', 'contextes.html'),
+    body: body + contributionBanner()
+  }));
+}
+
 // Helper: returns the raw alias string for a semantic token key by walking semanticData
 function getSemanticAlias(flatKey) {
   const parts = flatKey.split('-');
@@ -4344,6 +4514,7 @@ color: var(--agtc-primitive-color-blue-11);</code></pre>
   write(path.join(DIST, 'agents/index.html'), layout({
     title: 'Pour les agents IA', depth: 1,
     sidebar: null,
+    context: 'marketing',
     body: body + contributionBanner()
   }));
 }
@@ -4517,6 +4688,7 @@ git clone ${REPO}.git
     depth: 0,
     sidebar: null,
     fullWidth: false,
+    context: 'marketing',
     body,
   }));
 }
@@ -4874,6 +5046,7 @@ function build() {
   buildSpacing();
   buildTypography();
   buildIconsFoundation();
+  buildContextes();
   buildComponentsIndex();
   buildButton();
   buildIcon();
