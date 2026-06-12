@@ -61,8 +61,21 @@
     t.fills = [{ type: "SOLID", color: C(color) }];
     return t;
   }
+
+  // ── Variables + vFill ────────────────────────────────────
+  var VARS = {};
+  figma.variables.getLocalVariables().forEach(function (v) { VARS[v.name] = v; });
+
+  function vFill(tok, fb) {
+    var v = VARS[tok];
+    var p = { type: "SOLID", color: C(fb) };
+    if (!v) return [p];
+    try { return [figma.variables.setBoundVariableForPaint(p, "color", v)]; }
+    catch (e) { return [p]; }
+  }
+
   function styleSet(s, x, y) {
-    s.fills = [{ type: "SOLID", color: { r: 0.976, g: 0.976, b: 0.976 } }];
+    s.fills = vFill("color/background/hover", "#FAFAFA");
     s.cornerRadius = 8;
     s.strokes = [{ type: "SOLID", color: C("#e8e8e8") }];
     s.strokeWeight = 1;
@@ -108,7 +121,7 @@
     knob.resize(16, 16);
     knob.x = d.ck === "On" ? 21 : 3;
     knob.y = 3;
-    knob.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+    knob.fills = vFill("color/text/on-action", "#FFFFFF");
     track.appendChild(knob);
     c.appendChild(track);
 
@@ -178,7 +191,7 @@
       var bar = figma.createRectangle();
       bar.resize(10, 2);
       bar.cornerRadius = 1;
-      bar.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+      bar.fills = vFill("color/text/on-action", "#FFFFFF");
       box.appendChild(bar);
     }
 
@@ -233,7 +246,7 @@
       dot.resize(8, 8);
       dot.x = 5;
       dot.y = 5;
-      dot.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+      dot.fills = vFill("color/text/on-action", "#FFFFFF");
       circle.appendChild(dot);
     }
 

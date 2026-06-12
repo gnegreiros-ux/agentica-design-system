@@ -30,9 +30,6 @@
   }
   await figma.setCurrentPageAsync(pg);
 
-  // Fond canevas #535353 (règle §13)
-  pg.backgrounds = [{ type: "SOLID", color: { r: 0.325, g: 0.325, b: 0.325 } }];
-
   // ── 3. Variables & Text Styles ───────────────────────────────────────────
   var VARS = {};
   figma.variables.getLocalVariables().forEach(function (v) { VARS[v.name] = v; });
@@ -48,6 +45,10 @@
       b: parseInt(h.slice(5, 7), 16) / 255
     };
   }
+
+  // Fond canevas #535353 (règle §13)
+  // Exception §0 : page.backgrounds ne supporte pas setBoundVariableForPaint
+  pg.backgrounds = [{ type: "SOLID", color: hex("#535353") }];
 
   // vFill : toujours token sémantique + fallback (règle §0)
   function vFill(tok, fb) {
