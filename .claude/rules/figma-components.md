@@ -1136,6 +1136,96 @@ instRow.layoutSizingHorizontal = "FILL"; // contraindre à la largeur de la sect
 
 ---
 
+## 16. Frame "Composant principal" — règle obligatoire
+
+> **Tout ComponentSet (ou Component isolé) doit vivre dans un frame nommé `Composant principal`,
+> positionné à `x = 1600, y = 0` sur sa page.**
+
+### Structure
+
+```
+Frame "Composant principal"   x=1600, y=0
+  VERTICAL auto-layout · padding 24px · gap 32px
+  fond #FAFAFA · bordure #E8E8E8 1px · cornerRadius 8
+  ├── section "button-/-primary"
+  │   ├── Titre (Bold 12px, #202020)  "Button / Primary"
+  │   ├── Variantes (Regular 10px, #646464)  "Default · Hover · Focus · Disabled · Loading"
+  │   └── ComponentSet  (FIXED sizing — conserve ses dimensions natives)
+  ├── section "button-/-secondary"
+  │   └── ...
+  └── (une section par ComponentSet)
+```
+
+### Règles
+
+```
+✅ x=1600, y=0 sur toutes les pages composant
+✅ Un seul frame "Composant principal" par page (supprimer l'ancien avant de recréer)
+✅ Chaque section : titre gras + liste des états en sous-titre + ComponentSet
+✅ layoutSizingHorizontal = "FIXED" sur chaque ComponentSet (conserve sa largeur native)
+✅ S'applique aussi aux Components isolés (ex : variantes Focus/Disabled de Checkbox)
+❌ Ne jamais laisser un ComponentSet flottant directement sur le canevas
+❌ Ne jamais renommer les ComponentSets en les déplaçant dans le frame
+```
+
+### Pattern de code
+
+```javascript
+async function mkComposantPrincipal(sets) {
+  // sets = [{ node: ComponentSetNode, label: "Button / Primary", variants: "Default · Hover…" }]
+
+  const existing = figma.currentPage.findChildren(n => n.name === "Composant principal");
+  existing.forEach(e => e.remove());
+
+  const frame = figma.createFrame();
+  frame.name = "Composant principal";
+  frame.layoutMode = "VERTICAL";
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.counterAxisSizingMode = "AUTO";
+  frame.itemSpacing = 32;
+  frame.paddingTop = 24; frame.paddingBottom = 24;
+  frame.paddingLeft = 24; frame.paddingRight = 24;
+  frame.cornerRadius = 8;
+  frame.fills = [{ type: "SOLID", color: hex("#FAFAFA") }];
+  frame.strokes = [{ type: "SOLID", color: hex("#E8E8E8") }];
+  frame.strokeWeight = 1; frame.strokeAlign = "INSIDE";
+  frame.x = 1600; frame.y = 0;
+
+  for (const { node, label, variants } of sets) {
+    const section = figma.createFrame();
+    section.name = label.replace(/\s*\/\s*/g, "-").toLowerCase();
+    section.layoutMode = "VERTICAL";
+    section.primaryAxisSizingMode = "AUTO";
+    section.counterAxisSizingMode = "AUTO";
+    section.itemSpacing = 6;
+    section.fills = [];
+
+    const titleNode = figma.createText();
+    titleNode.fontName = { family: "Atkinson Hyperlegible", style: "Bold" };
+    titleNode.fontSize = 12; titleNode.characters = label;
+    titleNode.fills = [{ type: "SOLID", color: hex("#202020") }];
+    titleNode.textAutoResize = "WIDTH_AND_HEIGHT";
+    section.appendChild(titleNode);
+
+    const varNode = figma.createText();
+    varNode.fontName = { family: "Atkinson Hyperlegible", style: "Regular" };
+    varNode.fontSize = 10; varNode.characters = variants;
+    varNode.fills = [{ type: "SOLID", color: hex("#646464") }];
+    varNode.textAutoResize = "WIDTH_AND_HEIGHT";
+    section.appendChild(varNode);
+
+    section.appendChild(node);
+    try { node.layoutSizingHorizontal = "FIXED"; } catch(e) {}
+    try { node.layoutSizingVertical = "FIXED"; } catch(e) {}
+
+    frame.appendChild(section);
+  }
+  return frame;
+}
+```
+
+---
+
 ## Erreurs connues — Plugin API Figma
 
 | Erreur | Cause | Fix |
