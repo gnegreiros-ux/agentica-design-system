@@ -732,6 +732,22 @@
   /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
+  /* Font-weight (primitifs non générés par Style Dictionary) */
+  --agtc-primitive-fontWeight-regular:400;
+  --agtc-primitive-fontWeight-semibold:600;
+  --agtc-primitive-fontWeight-bold:700;
+  --agtc-primitive-fontWeight-extrabold:800;
+  /* Tracking (letter-spacing) — échelle systémique */
+  --agtc-tracking-tighter:-.03em;
+  --agtc-tracking-tight:-.025em;
+  --agtc-tracking-snug:-.02em;
+  --agtc-tracking-heading:-.015em;
+  --agtc-tracking-wide:.04em;
+  --agtc-tracking-wider:.06em;
+  --agtc-tracking-label:.08em;
+  --agtc-tracking-loose:.09em;
+  --agtc-tracking-overline:.1em;
+  --agtc-tracking-eyebrow:.12em;
   color-scheme:light;
 }
 /* ── Dark mode — semantic overrides only ── */
