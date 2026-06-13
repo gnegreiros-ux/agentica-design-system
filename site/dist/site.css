@@ -118,8 +118,8 @@ body{
 }
 .nav-card:hover,.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px);outline:none}
 .nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
-.nav-card-title{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
-.nav-card-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
+.nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.nav-card-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 .icon-ok{color:var(--agtc-semantic-color-feedback-success);display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-no{color:var(--agtc-semantic-color-feedback-danger);display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-ok svg,.icon-no svg{display:inline;vertical-align:middle}
@@ -165,8 +165,8 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
 .principle-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:22px}
 .principle-num{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
-.principle-title{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
-.principle-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
+.principle-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.principle-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 h1:not(.hero h1){font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);line-height:1.0;letter-spacing:var(--agtc-tracking-tight);margin-bottom:10px}
@@ -520,8 +520,8 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-footer-link{color:var(--agtc-semantic-color-text-on-inverse-muted);text-decoration:none;font-size:var(--agtc-semantic-typography-detail-size);display:inline-flex;align-items:center;gap:4px;transition:color .12s}
 .audit-footer-link:hover{color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 @media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
-.info-card-title{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
-.info-card-body{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary)}
+.info-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
+.info-card-body{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary)}
 /* ── INFOBOX (callout informationnel de doc — consomme feedback.info-*) ───── */
 .infobox{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;margin:24px 0;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-feedback-info-subtle);border:1px solid var(--agtc-semantic-color-feedback-info-border)}
 .infobox-icon{color:var(--agtc-semantic-color-feedback-info);flex-shrink:0;line-height:0;margin-top:1px}
@@ -531,9 +531,9 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── TOOL CARDS ──────────────────────────────────────────── */
 .tool-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px;display:flex;gap:12px;align-items:flex-start}
 .tool-card-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
-.tool-card-name{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
-.tool-card-role{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);font-weight:var(--agtc-primitive-fontWeight-regular)}
-.tool-card-desc{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
+.tool-card-name{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
+.tool-card-role{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary);font-weight:var(--agtc-primitive-fontWeight-regular)}
+.tool-card-desc{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
 
 /* ── STANDARDS BAND ──────────────────────────────────────── */
 .standards-band{display:flex;gap:20px;align-items:center;background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:24px}
@@ -556,8 +556,8 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── STEP CARDS ──────────────────────────────────────────── */
 .step-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px}
 .step-card-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-label);color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
-.step-card-title{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
-.step-card-body{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
+.step-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
+.step-card-body{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── DENSITY CARDS ───────────────────────────────────────── */
 .density-grid{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
@@ -587,13 +587,13 @@ html[data-lang="en"] .lang-fr{display:none}
 .audience-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
 .audience-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:10px}
 .audience-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-loose);color:var(--agtc-semantic-color-text-secondary);margin-bottom:4px}
-.audience-title{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
-.audience-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
+.audience-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
+.audience-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── KPI BAND ────────────────────────────────────────────── */
 .kpi-band{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:28px 0}
 .kpi-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px 22px}
-.kpi-num{font-size:2rem;font-weight:var(--agtc-primitive-fontWeight-extrabold);color:var(--agtc-semantic-color-action-primary);letter-spacing:var(--agtc-tracking-snug);display:block;margin-bottom:4px}
+.kpi-num{font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);color:var(--agtc-semantic-color-action-primary);letter-spacing:var(--agtc-tracking-snug);display:block;margin-bottom:4px}
 .kpi-label{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-primary);font-weight:var(--agtc-primitive-fontWeight-semibold);margin-bottom:6px;display:block}
 .kpi-source{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary);font-size:var(--agtc-semantic-typography-detail-size)}
@@ -678,6 +678,34 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .home-section > p{
   font-size:var(--agtc-semantic-typography-body-size);
   line-height:var(--agtc-line-height-text,1.6);
+}
+/* ── CARD TYPOGRAPHY — surcharges contexte Marketing (ADR-057) ── */
+/* Titres de cards génériques → body-size (16px) minimum */
+[data-context="marketing"] .nav-card-title,
+[data-context="marketing"] .info-card-title,
+[data-context="marketing"] .principle-title,
+[data-context="marketing"] .step-card-title,
+[data-context="marketing"] .tool-card-name{
+  font-size:var(--agtc-component-card-typography-marketing-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-title-weight);
+}
+/* Titre de carte prominente (audience/persona) → heading-5 (20px) */
+[data-context="marketing"] .audience-title{
+  font-size:var(--agtc-component-card-typography-marketing-hero-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-hero-title-weight);
+}
+/* Corps de cards → body-size (16px) en marketing */
+[data-context="marketing"] .nav-card-desc,
+[data-context="marketing"] .info-card-body,
+[data-context="marketing"] .principle-desc,
+[data-context="marketing"] .audience-desc{
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+}
+/* Méta/rôle → label-size (14px) en marketing (step-card-body, tool-card-role/desc) */
+[data-context="marketing"] .step-card-body,
+[data-context="marketing"] .tool-card-role,
+[data-context="marketing"] .tool-card-desc{
+  font-size:var(--agtc-component-card-typography-marketing-meta-size);
 }
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */

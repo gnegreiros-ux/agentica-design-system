@@ -49,6 +49,23 @@ class AgtcCard extends LitElement {
   static styles = css`
     :host {
       display: block;
+      /* Typographie exposée via CSS custom properties — override via tokens composant.
+         Les valeurs par défaut correspondent au contexte Produit SaaS (14px/14px/12px).
+         En contexte Marketing (data-context="marketing" sur <body>), le site surcharge
+         ces tokens via --agtc-component-card-typography-marketing-* dans siteCSS(). */
+      --card-title-size:  var(--agtc-component-card-typography-title-size,   var(--agtc-semantic-typography-label-size));
+      --card-title-weight:var(--agtc-component-card-typography-title-weight,  var(--agtc-primitive-fontWeight-bold));
+      --card-body-size:   var(--agtc-component-card-typography-body-size,    var(--agtc-semantic-typography-label-size));
+      --card-meta-size:   var(--agtc-component-card-typography-meta-size,    var(--agtc-semantic-typography-detail-size));
+    }
+
+    /* ── Typographie des éléments slottés directs ──────────────────────────── */
+    ::slotted(h1),::slotted(h2),::slotted(h3),::slotted(h4),::slotted(h5),::slotted(h6){
+      font-size: var(--card-title-size);
+      font-weight: var(--card-title-weight);
+    }
+    ::slotted(p){
+      font-size: var(--card-body-size);
     }
 
     /* ── Base ──────────────────────────────────────────────────────────────── */

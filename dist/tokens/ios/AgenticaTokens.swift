@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 12 Jun 2026 23:10:54 GMT
+// Generated on Sat, 13 Jun 2026 13:28:19 GMT
 
 
 import UIKit
@@ -87,6 +87,20 @@ public class AgenticaTokens {
     public static let cardPaddingLg = 24px
     public static let cardPaddingNone = 0px
     public static let cardPaddingSm = 12px
+    public static let cardTypographyBodyLineHeight = 1.6
+    public static let cardTypographyBodySize = 0.875rem
+    public static let cardTypographyBodyWeight = 500
+    public static let cardTypographyMarketingBodySize = 1rem
+    public static let cardTypographyMarketingHeroTitleSize = 1.25rem
+    public static let cardTypographyMarketingHeroTitleWeight = 700
+    public static let cardTypographyMarketingMetaSize = 0.875rem
+    public static let cardTypographyMarketingTitleSize = 1rem
+    public static let cardTypographyMarketingTitleWeight = 700
+    public static let cardTypographyMetaSize = 0.75rem
+    public static let cardTypographyMetaWeight = 400
+    public static let cardTypographyTitleLineHeight = 1.6
+    public static let cardTypographyTitleSize = 0.875rem
+    public static let cardTypographyTitleWeight = 700
     public static let checkboxDefaultBackground = #ffffff
     public static let checkboxDefaultBorder = #e8e8e8
     public static let checkboxDefaultBorderFocus = #007a68

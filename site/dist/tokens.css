@@ -599,6 +599,17 @@
   --agtc-component-card-padding-none: 0px;
   --agtc-component-card-padding-sm: var(--agtc-primitive-space-3);
   --agtc-component-card-padding-lg: var(--agtc-primitive-space-6);
+  --agtc-component-card-typography-title-size: var(--agtc-semantic-typography-label-size);
+  --agtc-component-card-typography-title-weight: var(--agtc-primitive-fontWeight-bold);
+  --agtc-component-card-typography-body-size: var(--agtc-semantic-typography-label-size);
+  --agtc-component-card-typography-body-weight: var(--agtc-semantic-typography-label-weight);
+  --agtc-component-card-typography-meta-size: var(--agtc-semantic-typography-detail-size);
+  --agtc-component-card-typography-marketing-title-size: var(--agtc-semantic-typography-body-size);
+  --agtc-component-card-typography-marketing-title-weight: var(--agtc-primitive-fontWeight-bold);
+  --agtc-component-card-typography-marketing-hero-title-size: var(--agtc-semantic-typography-heading-5-size);
+  --agtc-component-card-typography-marketing-hero-title-weight: var(--agtc-primitive-fontWeight-bold);
+  --agtc-component-card-typography-marketing-body-size: var(--agtc-semantic-typography-body-size);
+  --agtc-component-card-typography-marketing-meta-size: var(--agtc-semantic-typography-label-size);
   --agtc-component-badge-neutral-background: var(--agtc-semantic-color-background-subtle);
   --agtc-component-badge-neutral-text: var(--agtc-semantic-color-text-secondary);
   --agtc-component-badge-neutral-border: var(--agtc-semantic-color-border-default);

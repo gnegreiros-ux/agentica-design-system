@@ -81,6 +81,21 @@ Les séparateurs sont masqués si le slot est vide (détection via `slotchange`)
 | Padding sm | `component.card.padding-sm` |
 | Padding lg | `component.card.padding-lg` |
 
+### Typographie — dual contexte (ADR-057)
+
+La typographie de la card suit le contexte d'utilisation déclaré par `data-context` sur `<body>`.
+
+| Rôle | Token SaaS/Produit | Token Marketing (`data-context="marketing"`) |
+|------|--------------------|---------------------------------------------|
+| Titre standard | `component.card.typography.title.size` (14px) | `component.card.typography.marketing.title.size` (16px) |
+| Titre prominent (persona, feature) | — | `component.card.typography.marketing.hero-title.size` (20px) |
+| Corps | `component.card.typography.body.size` (14px) | `component.card.typography.marketing.body.size` (16px) |
+| Méta / label secondaire | `component.card.typography.meta.size` (12px) | `component.card.typography.marketing.meta.size` (14px) |
+
+**Règle :** utiliser `component.card.typography.marketing.*` uniquement sur les pages `data-context="marketing"` (`index.html`, `get-started.html`, `agents/index.html`). Ne jamais appliquer ces tokens sur une page de documentation de composant.
+
+Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-title { font-size: var(--agtc-component-card-typography-marketing-title-size) }` dans `siteCSS()` — les tokens cascadent automatiquement sans modification du Web Component.
+
 ---
 
 ## ACCESSIBILITÉ — NON NÉGOCIABLE

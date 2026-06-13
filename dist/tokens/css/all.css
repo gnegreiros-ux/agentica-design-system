@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 23:10:54 GMT
+ * Generated on Sat, 13 Jun 2026 13:28:19 GMT
  */
 
 :root {
@@ -506,6 +506,11 @@
   --agtc-table-padding-x: var(--agtc-primitive-space-3);
   --agtc-toggle-default-track-off-hover: var(--agtc-primitive-color-gray-10);
   --agtc-toggle-default-track-off: var(--agtc-primitive-color-gray-9);
+  --agtc-card-typography-marketing-hero-title-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-card-typography-marketing-title-weight: var(--agtc-primitive-font-weight-bold);
+  --agtc-card-typography-body-line-height: var(--agtc-primitive-line-height-reading);
+  --agtc-card-typography-title-line-height: var(--agtc-primitive-line-height-reading);
+  --agtc-card-typography-title-weight: var(--agtc-primitive-font-weight-bold);
   --agtc-card-padding-lg: var(--agtc-primitive-space-6);
   --agtc-card-padding-sm: var(--agtc-primitive-space-3);
   --agtc-card-elevated-shadow: var(--agtc-semantic-shadow-card);
@@ -694,6 +699,15 @@
   --agtc-checkbox-default-border-hover: var(--agtc-semantic-color-action-primary);
   --agtc-checkbox-default-border: var(--agtc-semantic-color-border-default);
   --agtc-checkbox-default-background: var(--agtc-semantic-color-background-surface);
+  --agtc-card-typography-marketing-meta-size: var(--agtc-semantic-typography-label-size);
+  --agtc-card-typography-marketing-body-size: var(--agtc-semantic-typography-body-size);
+  --agtc-card-typography-marketing-hero-title-size: var(--agtc-semantic-typography-heading-5-size);
+  --agtc-card-typography-marketing-title-size: var(--agtc-semantic-typography-body-size);
+  --agtc-card-typography-meta-weight: var(--agtc-semantic-typography-detail-weight);
+  --agtc-card-typography-meta-size: var(--agtc-semantic-typography-detail-size);
+  --agtc-card-typography-body-weight: var(--agtc-semantic-typography-label-weight);
+  --agtc-card-typography-body-size: var(--agtc-semantic-typography-label-size);
+  --agtc-card-typography-title-size: var(--agtc-semantic-typography-label-size);
   --agtc-card-flat-background: var(--agtc-semantic-color-background-subtle);
   --agtc-card-elevated-background: var(--agtc-semantic-color-background-surface);
   --agtc-card-default-padding: var(--agtc-semantic-space-layout-component);

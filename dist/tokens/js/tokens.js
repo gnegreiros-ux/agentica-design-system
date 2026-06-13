@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 12 Jun 2026 23:10:54 GMT
+ * Generated on Sat, 13 Jun 2026 13:28:19 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -649,6 +649,20 @@ export const CardFlatBorder = "transparent";
 export const CardPaddingNone = "0px";
 export const CardPaddingSm = "12px";
 export const CardPaddingLg = "24px";
+export const CardTypographyTitleSize = "0.875rem";
+export const CardTypographyTitleWeight = "700";
+export const CardTypographyTitleLineHeight = "1.6";
+export const CardTypographyBodySize = "0.875rem";
+export const CardTypographyBodyWeight = "500";
+export const CardTypographyBodyLineHeight = "1.6";
+export const CardTypographyMetaSize = "0.75rem";
+export const CardTypographyMetaWeight = "400";
+export const CardTypographyMarketingTitleSize = "1rem";
+export const CardTypographyMarketingTitleWeight = "700";
+export const CardTypographyMarketingHeroTitleSize = "1.25rem";
+export const CardTypographyMarketingHeroTitleWeight = "700";
+export const CardTypographyMarketingBodySize = "1rem";
+export const CardTypographyMarketingMetaSize = "0.875rem";
 export const CheckboxDefaultBackground = "#ffffff";
 export const CheckboxDefaultBorder = "#e8e8e8";
 export const CheckboxDefaultBorderHover = "#007a68";

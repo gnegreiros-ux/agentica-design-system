@@ -332,6 +332,95 @@
     "padding-lg": {
       "$value": "{primitive.space.6}",
       "$type": "dimension"
+    },
+    "typography": {
+      "$metadata": {
+        "intent": "Typographie systémique de la card — deux contextes : Produit SaaS (défaut) et Marketing (data-context='marketing')"
+      },
+      "title": {
+        "size": {
+          "$value": "{semantic.typography.label.size}",
+          "$type": "dimension",
+          "$intent": "14px — Titre de carte en contexte Produit SaaS"
+        },
+        "weight": {
+          "$value": "{primitive.fontWeight.bold}",
+          "$type": "fontWeight",
+          "$intent": "Bold pour distinguer visuellement le titre"
+        },
+        "line-height": {
+          "$value": "{primitive.lineHeight.reading}",
+          "$type": "number"
+        }
+      },
+      "body": {
+        "size": {
+          "$value": "{semantic.typography.label.size}",
+          "$type": "dimension",
+          "$intent": "14px — Corps de carte en contexte Produit SaaS"
+        },
+        "weight": {
+          "$value": "{semantic.typography.label.weight}",
+          "$type": "fontWeight"
+        },
+        "line-height": {
+          "$value": "{primitive.lineHeight.reading}",
+          "$type": "number"
+        }
+      },
+      "meta": {
+        "size": {
+          "$value": "{semantic.typography.detail.size}",
+          "$type": "dimension",
+          "$intent": "12px — Méta-informations, rôles, labels secondaires"
+        },
+        "weight": {
+          "$value": "{semantic.typography.detail.weight}",
+          "$type": "fontWeight"
+        }
+      },
+      "marketing": {
+        "$metadata": {
+          "intent": "Surcharges typographiques pour data-context='marketing' — jamais utilisées hors marketing"
+        },
+        "title": {
+          "size": {
+            "$value": "{semantic.typography.body.size}",
+            "$type": "dimension",
+            "$intent": "16px — Titre de carte en contexte Marketing (minimum body-size)"
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight",
+            "$intent": "Bold pour impact éditorial"
+          }
+        },
+        "hero-title": {
+          "size": {
+            "$value": "{semantic.typography.heading.5.size}",
+            "$type": "dimension",
+            "$intent": "20px — Titre de carte prominente en contexte Marketing (audience, features)"
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight"
+          }
+        },
+        "body": {
+          "size": {
+            "$value": "{semantic.typography.body.size}",
+            "$type": "dimension",
+            "$intent": "16px — Corps de carte en contexte Marketing"
+          }
+        },
+        "meta": {
+          "size": {
+            "$value": "{semantic.typography.label.size}",
+            "$type": "dimension",
+            "$intent": "14px — Méta de carte en contexte Marketing (labels, rôles)"
+          }
+        }
+      }
     }
   },
   "checkbox": {
