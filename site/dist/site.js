@@ -14,6 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ── Animated counters — stat-band uniquement (fonctionnel, pas décoratif) ──
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const statBand = document.querySelector('.stat-band');
+  if (statBand && 'IntersectionObserver' in window) {
+    const animateCounter = (el, target, duration) => {
+      const suffix = el.dataset.suffix || '';
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      const start = performance.now();
+      const update = now => {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (t < 1) requestAnimationFrame(update);
+      };
+      update(performance.now());
+    };
+    const io = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        statBand.querySelectorAll('[data-count]').forEach(el =>
+          animateCounter(el, parseInt(el.dataset.count, 10), 1200));
+        io.disconnect();
+      }
+    }, { threshold: 0.3 });
+    io.observe(statBand);
+  }
+
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
