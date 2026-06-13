@@ -334,6 +334,8 @@ function tokensCSS() {
   --agtc-semantic-color-feedback-success:#3dd68c;
   --agtc-semantic-color-feedback-success-subtle:#132d21;
   --agtc-semantic-color-feedback-info:#34d3bb;
+  --agtc-semantic-color-feedback-info-subtle:#0f2925;
+  --agtc-semantic-color-feedback-info-border:#1e5e57;
   --agtc-semantic-color-feedback-warning:#ffca16;
   --agtc-semantic-color-brand-primary:#34d3bb;
   --agtc-semantic-color-background-page:#0a0c11;
