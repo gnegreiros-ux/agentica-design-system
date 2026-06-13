@@ -297,8 +297,6 @@ function tokensCSS() {
   --agtc-content-max:1180px;
   --agtc-semantic-radius-pill:999px;
   --agtc-semantic-color-border-strong:var(--agtc-primitive-color-gray-6);
-  --agtc-semantic-color-feedback-success-subtle:var(--agtc-primitive-color-green-3);
-  --agtc-semantic-color-feedback-warning:var(--agtc-primitive-color-amber-11);
   --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
   --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
   --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
@@ -314,10 +312,7 @@ function tokensCSS() {
   --agtc-primitive-color-accent-11:#a6294c;  --agtc-primitive-color-accent-12:#5d1f2e;
   --agtc-primitive-color-accent-8:#c8818c;
   --agtc-primitive-color-secondary-9:#463239; --agtc-primitive-color-secondary-11:#6b4b56;
-  /* Brand semantic tokens */
-  --agtc-semantic-color-background-inverse:#1a1216;
-  --agtc-semantic-color-text-on-inverse:rgba(255,255,255,.92);
-  --agtc-semantic-color-text-on-inverse-muted:rgba(255,255,255,.62);
+  /* Brand semantic tokens (nouveaux — absents de tokens/semantic.json) */
   --agtc-semantic-color-accent:#ed6b86;
   --agtc-semantic-color-secondary:#463239;
   --agtc-semantic-color-tertiary:var(--agtc-primitive-color-slate-9);
@@ -2195,7 +2190,10 @@ function buildColor() {
     ['color-border-default',         'color.border.default',         SEM['color-border-default'],         '<span class="lang-fr">Bordure standard</span><span class="lang-en">Default border</span>'],
     ['color-border-focus',           'color.border.focus',           SEM['color-border-focus'],           '<span class="lang-fr">Bordure focus — accessibilité clavier</span><span class="lang-en">Focus border — keyboard accessibility</span>'],
     ['color-border-danger',          'color.border.danger',          SEM['color-border-danger'],          '<span class="lang-fr">Bordure état erreur</span><span class="lang-en">Error state border</span>'],
-  ];
+    ['color-feedback-warning',       'color.feedback.warning',       SEM['color-feedback-warning'],       '<span class="lang-fr">Avertissement, attention requise</span><span class="lang-en">Warning, attention required</span>'],
+    ['color-background-hover',       'color.background.hover',       SEM['color-background-hover'],       '<span class="lang-fr">Fond au survol</span><span class="lang-en">Hover background</span>'],
+    ['color-text-on-action',         'color.text.on-action',         SEM['color-text-on-action'],         '<span class="lang-fr">Texte sur fond d\'action — boutons</span><span class="lang-en">Text on action background — buttons</span>'],
+  ].filter(([, , v]) => v);
 
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
     const swatches = Object.entries(steps).map(([step, { value, desc }]) =>
@@ -2257,17 +2255,21 @@ function buildColor() {
 
 <h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
-  <span class="lang-fr">Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
-  <span class="lang-en">These 16 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
+  <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement. Utilisez le champ de recherche pour filtrer.</span>
+  <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly. Use the search field to filter.</span>
 </p>
+<input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
+<p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
+<div class="token-section">
 <table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
   <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${semRows}</tbody>
 </table>
+</div>
 
 <blockquote><p>
-  <span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</span>
-  <span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>#0d74ce</code> as an intention — it is just a value.</span>
+  <span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>${SEM['color-action-primary']}</code> comme une intention — c'est juste une valeur.</span>
+  <span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>${SEM['color-action-primary']}</code> as an intention — it is just a value.</span>
 </p></blockquote>
 `;
 

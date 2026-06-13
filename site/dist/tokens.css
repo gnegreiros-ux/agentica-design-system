@@ -704,8 +704,6 @@
   --agtc-content-max:1180px;
   --agtc-semantic-radius-pill:999px;
   --agtc-semantic-color-border-strong:var(--agtc-primitive-color-gray-6);
-  --agtc-semantic-color-feedback-success-subtle:var(--agtc-primitive-color-green-3);
-  --agtc-semantic-color-feedback-warning:var(--agtc-primitive-color-amber-11);
   --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
   --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
   --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
@@ -721,10 +719,7 @@
   --agtc-primitive-color-accent-11:#a6294c;  --agtc-primitive-color-accent-12:#5d1f2e;
   --agtc-primitive-color-accent-8:#c8818c;
   --agtc-primitive-color-secondary-9:#463239; --agtc-primitive-color-secondary-11:#6b4b56;
-  /* Brand semantic tokens */
-  --agtc-semantic-color-background-inverse:#1a1216;
-  --agtc-semantic-color-text-on-inverse:rgba(255,255,255,.92);
-  --agtc-semantic-color-text-on-inverse-muted:rgba(255,255,255,.62);
+  /* Brand semantic tokens (nouveaux — absents de tokens/semantic.json) */
   --agtc-semantic-color-accent:#ed6b86;
   --agtc-semantic-color-secondary:#463239;
   --agtc-semantic-color-tertiary:var(--agtc-primitive-color-slate-9);

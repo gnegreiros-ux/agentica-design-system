@@ -107,9 +107,12 @@
 
 <h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
-  <span class="lang-fr">Ces 16 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
-  <span class="lang-en">These 16 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
+  <span class="lang-fr">Ces 19 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement. Utilisez le champ de recherche pour filtrer.</span>
+  <span class="lang-en">These 19 tokens encode UX intentions. Every component references them — never the primitives directly. Use the search field to filter.</span>
 </p>
+<input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
+<p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
+<div class="token-section">
 <div class="table-wrap"><table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
   <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>
@@ -208,12 +211,31 @@
   <td><code>--agtc-semantic-color-border-danger</code></td>
   <td class="mono-sm">#ce2c31</td>
   <td><span class="lang-fr">Bordure état erreur</span><span class="lang-en">Error state border</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#cc4e00;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-warning</code></td>
+  <td class="mono-sm">#cc4e00</td>
+  <td><span class="lang-fr">Avertissement, attention requise</span><span class="lang-en">Warning, attention required</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#fafafa;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-hover</code></td>
+  <td class="mono-sm">#fafafa</td>
+  <td><span class="lang-fr">Fond au survol</span><span class="lang-en">Hover background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#ffffff;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-action</code></td>
+  <td class="mono-sm">#ffffff</td>
+  <td><span class="lang-fr">Texte sur fond d'action — boutons</span><span class="lang-en">Text on action background — buttons</span></td>
 </tr></tbody>
-</table></div>
+</table>
+</div>
 
 <blockquote><p>
-  <span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#0d74ce</code> comme une intention — c'est juste une valeur.</span>
-  <span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>#0d74ce</code> as an intention — it is just a value.</span>
+  <span class="lang-fr">Les agents comprennent <code>color.action.primary</code> comme une intention. Ils ne comprennent pas <code>#007a68</code> comme une intention — c'est juste une valeur.</span>
+  <span class="lang-en">Agents understand <code>color.action.primary</code> as an intention. They do not understand <code>#007a68</code> as an intention — it is just a value.</span>
 </p></blockquote>
 
 <div class="agtc-banner brand" style="margin-top:56px">
