@@ -1297,30 +1297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) a.classList.add('active');
   });
 
-  // ── Animated counters ────────────────────────────────────
-  function animateCounter(el, target, duration) {
-    const start = performance.now();
-    const suffix = el.dataset.suffix || '';
-    (function update(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      el.textContent = Math.round(ease * target) + suffix;
-      if (t < 1) requestAnimationFrame(update);
-    })(performance.now());
-  }
-  const statBand = document.querySelector('.stat-band');
-  if (statBand) {
-    const io = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        statBand.querySelectorAll('.stat-num[data-count]').forEach(el => {
-          animateCounter(el, parseInt(el.dataset.count), 1400);
-        });
-        io.disconnect();
-      }
-    }, { threshold: 0.3 });
-    io.observe(statBand);
-  }
-
   // ── TOC auto-generation ──────────────────────────────────
   const tocEl = document.getElementById('page-toc');
   if (tocEl) {
