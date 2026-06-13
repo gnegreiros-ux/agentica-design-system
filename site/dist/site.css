@@ -106,7 +106,7 @@ body{
 .home-section > p{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
 
 /* ── NAV CARDS ───────────────────────────────────────────── */
-.nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.nav-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 /* Cartes-grilles : surface (fond/bordure/rayon) via le contrat du composant card
    (component.card.* — ADR-035). Layout interne et hover restent propres au site. */
 .nav-card{
@@ -162,7 +162,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 [data-theme="light"] .home-section-ink .principle-desc{color:var(--agtc-semantic-color-text-secondary,#646464)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
-.principle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0}
+.principle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
 .principle-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:22px}
 .principle-num{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
 .principle-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
@@ -577,13 +577,13 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── GENERIC GRIDS ───────────────────────────────────────── */
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
-.grid-auto-220{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:24px}
+.grid-auto-220{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:24px}
 
 /* ── BANNER responsive (le contribution-banner consomme .agtc-banner — ADR-042) ── */
 @media(max-width:768px){.agtc-banner{flex-wrap:wrap}}
 
 /* ── AUDIENCE CARDS ──────────────────────────────────────── */
-.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:28px 0}
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:28px 0}
 .audience-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
 .audience-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:10px}
 .audience-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-loose);color:var(--agtc-semantic-color-text-secondary);margin-bottom:4px}
@@ -591,7 +591,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .audience-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── KPI BAND ────────────────────────────────────────────── */
-.kpi-band{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:28px 0}
+.kpi-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
 .kpi-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px 22px}
 .kpi-num{font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);color:var(--agtc-semantic-color-action-primary);letter-spacing:var(--agtc-tracking-snug);display:block;margin-bottom:4px}
 .kpi-label{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-primary);font-weight:var(--agtc-primitive-fontWeight-semibold);margin-bottom:6px;display:block}
