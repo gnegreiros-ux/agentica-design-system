@@ -949,10 +949,10 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── TOOL CARDS ──────────────────────────────────────────── */
 .tool-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px;display:flex;gap:12px;align-items:flex-start}
-.tool-card-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
+.tool-card-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0;margin-top:0}
 .tool-card-name{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
 .tool-card-role{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary);font-weight:var(--agtc-primitive-fontWeight-regular)}
-.tool-card-desc{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
+.tool-card-desc{font-size:var(--agtc-component-card-typography-meta-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
 /* ── STANDARDS BAND ──────────────────────────────────────── */
 .standards-band{display:flex;gap:20px;align-items:center;background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:24px}
@@ -971,6 +971,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
 .platform-logo-label{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-on-inverse-muted);text-align:center;white-space:nowrap}
 .tool-card-icon .vendor-logo{height:var(--agtc-semantic-icon-size-nav);width:var(--agtc-semantic-icon-size-nav)}
+.tool-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
 .step-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px}
@@ -1019,11 +1020,11 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── TECH STACK PIPELINE ─────────────────────────────────── */
 .stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
-.stack-node{flex:1;min-width:100px;padding:18px 14px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative}
+.stack-node{flex:1;min-width:100px;padding:16px 12px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative}
 .stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
 .stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
-.stack-node-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
-.stack-node-sub{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
+.stack-node-label{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+.stack-node-sub{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
@@ -1103,8 +1104,7 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .nav-card-title,
 [data-context="marketing"] .info-card-title,
 [data-context="marketing"] .principle-title,
-[data-context="marketing"] .step-card-title,
-[data-context="marketing"] .tool-card-name{
+[data-context="marketing"] .step-card-title{
   font-size:var(--agtc-component-card-typography-marketing-title-size);
   font-weight:var(--agtc-component-card-typography-marketing-title-weight);
 }
