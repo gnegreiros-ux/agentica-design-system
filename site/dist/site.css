@@ -670,6 +670,15 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   padding-top:var(--agtc-semantic-marketing-space-hero-gap);
   padding-bottom:var(--agtc-semantic-marketing-space-hero-gap);
 }
+[data-context="marketing"] .home-section h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+  letter-spacing:-.03em;
+}
+[data-context="marketing"] .home-section > p{
+  font-size:var(--agtc-semantic-typography-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
 html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }

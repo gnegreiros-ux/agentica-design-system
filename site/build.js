@@ -1036,6 +1036,15 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   padding-top:var(--agtc-semantic-marketing-space-hero-gap);
   padding-bottom:var(--agtc-semantic-marketing-space-hero-gap);
 }
+[data-context="marketing"] .home-section h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+  letter-spacing:-.03em;
+}
+[data-context="marketing"] .home-section > p{
+  font-size:var(--agtc-semantic-typography-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
 html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
@@ -1785,7 +1794,7 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2 class="first">
     <span class="lang-fr">Pour chaque membre de l'équipe</span>
     <span class="lang-en">For every team member</span>
@@ -1804,7 +1813,7 @@ function buildHome(adrs) {
   </div>
 </div>
 
-<div class="home-section" style="padding-top:0">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Preuves & chiffres</span>
     <span class="lang-en">Evidence & numbers</span>
@@ -1823,7 +1832,7 @@ function buildHome(adrs) {
   </div>
 </div>
 
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Standards ouverts</span>
     <span class="lang-en">Open standards</span>
@@ -1846,7 +1855,7 @@ function buildHome(adrs) {
 </div>
 
 <div class="home-section-ink">
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Valeurs non négociables</span>
     <span class="lang-en">Non-negotiable values</span>
@@ -1906,7 +1915,7 @@ function buildHome(adrs) {
 </div>
 
 <div class="home-section-ink">
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Pipeline de tokens</span>
     <span class="lang-en">Token pipeline</span>
@@ -1973,7 +1982,7 @@ function buildHome(adrs) {
 </div>
 </div>
 
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Explorer le système</span>
     <span class="lang-en">Explore the system</span>
@@ -1992,7 +2001,7 @@ function buildHome(adrs) {
   </div>
 </div>
 
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Décisions architecturales (ADRs)</span>
     <span class="lang-en">Architecture Decision Records (ADRs)</span>
@@ -2043,7 +2052,7 @@ function buildHome(adrs) {
 </div>
 
 <div class="home-section-ink">
-<div class="home-section">
+<div class="home-section marketing-section">
   <h2>
     <span class="lang-fr">Stack technique</span>
     <span class="lang-en">Technical stack</span>
