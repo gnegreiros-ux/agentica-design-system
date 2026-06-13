@@ -110,6 +110,12 @@ des décisions déjà tranchées.
 | [ADR-050](ADR-050-action-teal-contrast-real-surface.md) | Teal d'action accessible sur la surface réelle : primitif `teal.11` retuné (axe 76→0) | 2026-06-06 | ✅ Actif |
 | [ADR-051](ADR-051-illustration-style-palette.md) | Style d'illustration « Tactile Tech » + palette sémantique `color.illustration` | 2026-06-06 | ✅ Actif |
 | [ADR-052](ADR-052-dtcg-standard-conformance.md) | Conformité au standard W3C DTCG (designtokens.org) : `$schema` 3/3 fichiers + déclaration site | 2026-06-06 | ✅ Actif |
+| [ADR-053](ADR-053-mobile-sidebar-drawer.md) | Navigation mobile : sidebar en drawer coulissant | 2026-06-10 | ✅ Actif |
+| [ADR-054](ADR-054-tables-responsive-wrapper.md) | Tables responsives : wrapper `overflow-x:auto` | 2026-06-10 | ✅ Actif |
+| [ADR-055](ADR-055-focus-visible-i18n-interactive.md) | `:focus-visible` systématique + i18n des éléments interactifs | 2026-06-10 | ✅ Actif |
+| [ADR-056](ADR-056-agtc-tabs-implementation.md) | Implémentation de `agtc-tabs` | 2026-06-12 | ✅ Actif |
+| [ADR-057](ADR-057-deux-contextes-utilisation.md) | Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) | 2026-06-12 | ✅ Actif |
+| [ADR-058](ADR-058-redesign-site-theme-sombre.md) | Redesign du site : thème sombre et tokens d'extension CSS | 2026-06-12 | ✅ Actif |
 
 ---
 
