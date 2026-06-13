@@ -307,6 +307,10 @@ function tokensCSS() {
   --agtc-space-5:24px; --agtc-space-6:32px; --agtc-space-7:48px; --agtc-space-8:64px;
   --agtc-space-9:96px; --agtc-space-10:128px;
   --agtc-header-height:64px;
+  /* Dimensions structurelles du site — tokens site-only */
+  --agtc-site-header-padding-x:24px;
+  --agtc-site-sidebar-width:236px;
+  --agtc-site-toc-width:208px;
   --agtc-content-max:1180px;
   --agtc-semantic-radius-pill:999px;
   --agtc-semantic-color-border-strong:var(--agtc-primitive-color-gray-6);
@@ -433,7 +437,7 @@ body{
   border-top:3px solid var(--agtc-semantic-color-action-primary);
   border-bottom:1px solid var(--agtc-semantic-color-border-default);
   box-shadow:var(--agtc-shadow-sm);
-  display:flex;align-items:center;padding:0 24px;gap:16px;
+  display:flex;align-items:center;padding:0 var(--agtc-site-header-padding-x);gap:16px;
 }
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
@@ -471,7 +475,7 @@ body{
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:var(--agtc-header-height,64px);min-height:calc(100vh - var(--agtc-header-height,64px))}
 .sidebar{
-  width:236px;flex-shrink:0;
+  width:var(--agtc-site-sidebar-width);flex-shrink:0;
   border-right:1px solid var(--agtc-semantic-color-border-default);
   background:var(--agtc-semantic-color-background-surface);
   position:sticky;top:var(--agtc-header-height,64px);height:calc(100vh - var(--agtc-header-height,64px));overflow-y:auto;
@@ -525,7 +529,7 @@ body{
   transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
 }
 .nav-card:hover,.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px);outline:none}
-.nav-card-icon{width:32px;height:32px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:32px;height:32px}
+.nav-card-icon{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav);margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 .nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 .icon-ok{color:var(--agtc-semantic-color-feedback-success);display:inline-flex;vertical-align:middle;margin-right:4px}
@@ -571,7 +575,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
-.principle-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:22px}
+.principle-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:var(--agtc-component-card-default-padding)}
 .principle-num{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
 .principle-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .principle-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -777,9 +781,16 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .agtc-badge.warning{background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text)}
 .agtc-badge.danger{background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text)}
 .agtc-badge.info{background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text)}
-.adr-meta{background:var(--agtc-semantic-color-background-subtle);border-radius:var(--agtc-semantic-radius-card);padding:16px 20px;margin-bottom:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 24px;font-size:var(--agtc-semantic-typography-label-size)}
-.adr-meta-item{display:flex;flex-direction:column;gap:2px}
-.adr-meta-item strong{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-label);color:var(--agtc-semantic-color-text-secondary)}
+/* ── ADR HEADER — redesign scannable (sans doublon) ───────── */
+.adr-header{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--agtc-semantic-color-border-default)}
+.adr-header-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.adr-number{font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-subtle);padding:3px 10px;border-radius:var(--agtc-semantic-radius-pill);border:1px solid var(--agtc-semantic-color-border-default)}
+.adr-type{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:3px 8px;border-radius:var(--agtc-semantic-radius-control)}
+.adr-page-title{font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);letter-spacing:var(--agtc-tracking-heading);margin:0 0 16px;line-height:1.15;color:var(--agtc-semantic-color-text-primary)}
+.adr-meta{display:flex;flex-wrap:wrap;gap:0 32px;margin:0;padding:0}
+.adr-meta-item{display:flex;gap:6px;align-items:baseline;padding:4px 0}
+.adr-meta-item dt{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-label);color:var(--agtc-semantic-color-text-secondary);white-space:nowrap}
+.adr-meta-item dd{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-primary);margin:0}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
@@ -852,7 +863,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .menu-toggle:hover,.menu-toggle:focus-visible{background:var(--agtc-semantic-color-background-subtle);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 
 /* ── TOC ─────────────────────────────────────────────────── */
-.toc{width:208px;flex-shrink:0;padding:20px 16px;position:sticky;top:var(--agtc-header-height,64px);height:calc(100vh - var(--agtc-header-height,64px));overflow-y:auto;border-left:1px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)}
+.toc{width:var(--agtc-site-toc-width);flex-shrink:0;padding:20px 16px;position:sticky;top:var(--agtc-header-height,64px);height:calc(100vh - var(--agtc-header-height,64px));overflow-y:auto;border-left:1px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)}
 .toc:empty{display:none;width:0;padding:0;border:none}
 .toc-title{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-primitive-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);margin-bottom:10px;display:block}
 .toc a{display:block;font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid transparent;margin-left:-2px;line-height:1.4;transition:color .1s,border-color .1s}
@@ -1000,7 +1011,7 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── KPI BAND ────────────────────────────────────────────── */
 .kpi-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
-.kpi-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px 22px}
+.kpi-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:var(--agtc-component-card-default-padding)}
 .kpi-num{font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);color:var(--agtc-semantic-color-action-primary);letter-spacing:var(--agtc-tracking-snug);display:block;margin-bottom:4px}
 .kpi-label{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-primary);font-weight:var(--agtc-primitive-fontWeight-semibold);margin-bottom:6px;display:block}
 .kpi-source{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
@@ -1624,6 +1635,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 </head>
@@ -2160,12 +2173,12 @@ function buildHome(adrs) {
   </div>
   <div class="grid-auto-220">
     ${[
-      ['<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 160 160" aria-hidden="true"><path fill="#00ACD7" d="M80 0C35.8 0 0 35.8 0 80s35.8 80 80 80 80-35.8 80-80S124.2 0 80 0zm-.7 32.5h1.4l37.3 21.5v43l-38 21.9L42 97V55l37.3-22.5zm0 8.2L47.6 59.3v37.4l32 18.5 32-18.5V59.3L79.3 40.7zM80 55a25 25 0 1 1 0 50 25 25 0 0 1 0-50z"/></svg>','Lit (Google)','Web Components','<span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span>',''],
-      [icon('palette',18),'Style Dictionary','Token compilation','<span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span>',''],
-      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="22" height="22" loading="lazy">','Storybook','Documentation','<span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span>',''],
-      [icon('shield-check',18),'axe-core','Accessibility','<span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span>',''],
-      [icon('test-tube',18),'Playwright','E2E tests','<span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span>',''],
-      ['<img class="vendor-logo" src="integrations/react.svg" alt="React" width="22" height="22" loading="lazy">','React / Vue / Angular','Web Components','<span class="lang-fr">Compatible tous frameworks</span><span class="lang-en">Works with all frameworks</span>',''],
+      ['<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 160 160" aria-hidden="true"><path fill="#00ACD7" d="M80 0C35.8 0 0 35.8 0 80s35.8 80 80 80 80-35.8 80-80S124.2 0 80 0zm-.7 32.5h1.4l37.3 21.5v43l-38 21.9L42 97V55l37.3-22.5zm0 8.2L47.6 59.3v37.4l32 18.5 32-18.5V59.3L79.3 40.7zM80 55a25 25 0 1 1 0 50 25 25 0 0 1 0-50z"/></svg>','Lit (Google)','Web Components','<span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span>',''],
+      [icon('palette',20),'Style Dictionary','Token compilation','<span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span>',''],
+      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="24" height="24" loading="lazy">','Storybook','Documentation','<span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span>',''],
+      [icon('shield-check',20),'axe-core','Accessibility','<span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span>',''],
+      [icon('test-tube',20),'Playwright','E2E tests','<span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span>',''],
+      ['<img class="vendor-logo" src="integrations/react.svg" alt="React" width="24" height="24" loading="lazy">','React / Vue / Angular','Web Components','<span class="lang-fr">Compatible tous frameworks</span><span class="lang-en">Works with all frameworks</span>',''],
     ].map(([ico,name,role,dFr,dEn]) => `
     <div class="tool-card">
       <div class="tool-card-icon">${ico}</div>
@@ -2195,7 +2208,7 @@ function buildFoundationsIndex() {
 <h2 class="first"><span class="lang-fr">Catalogue</span><span class="lang-en">Catalog</span></h2>
 <div class="nav-grid">
   <a href="color.html" class="nav-card">
-    <span class="nav-card-icon">${icon('palette', 32)}</span>
+    <span class="nav-card-icon">${icon('palette', 24)}</span>
     <div class="nav-card-title"><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></div>
     <div class="nav-card-desc">
       <span class="lang-fr">Échelles Radix 12 niveaux, tokens sémantiques, modes clair et sombre, contrastes WCAG.</span>
@@ -2203,7 +2216,7 @@ function buildFoundationsIndex() {
     </div>
   </a>
   <a href="spacing.html" class="nav-card">
-    <span class="nav-card-icon">${icon('move-horizontal', 32)}</span>
+    <span class="nav-card-icon">${icon('move-horizontal', 24)}</span>
     <div class="nav-card-title"><span class="lang-fr">Espacement</span><span class="lang-en">Spacing</span></div>
     <div class="nav-card-desc">
       <span class="lang-fr">Grille de 4px, densités compact/default/spacious, tokens de contrôle et de mise en page.</span>
@@ -2211,7 +2224,7 @@ function buildFoundationsIndex() {
     </div>
   </a>
   <a href="typography.html" class="nav-card">
-    <span class="nav-card-icon">${icon('type', 32)}</span>
+    <span class="nav-card-icon">${icon('type', 24)}</span>
     <div class="nav-card-title"><span class="lang-fr">Typographie</span><span class="lang-en">Typography</span></div>
     <div class="nav-card-desc">
       <span class="lang-fr">Atkinson Hyperlegible — échelle de taille, poids, interligne, règles d'accessibilité.</span>
@@ -2219,7 +2232,7 @@ function buildFoundationsIndex() {
     </div>
   </a>
   <a href="icons.html" class="nav-card">
-    <span class="nav-card-icon">${icon('star', 32)}</span>
+    <span class="nav-card-icon">${icon('star', 24)}</span>
     <div class="nav-card-title"><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></div>
     <div class="nav-card-desc">
       <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1 et contrat d'accessibilité.</span>
@@ -2227,7 +2240,7 @@ function buildFoundationsIndex() {
     </div>
   </a>
   <a href="contextes.html" class="nav-card">
-    <span class="nav-card-icon">${icon('layers', 32)}</span>
+    <span class="nav-card-icon">${icon('layers', 24)}</span>
     <div class="nav-card-title"><span class="lang-fr">Contextes d'utilisation</span><span class="lang-en">Usage Contexts</span></div>
     <div class="nav-card-desc">
       <span class="lang-fr">Mode Produit vs Mode Marketing — tokens dédiés, règles d'espacement et anti-patterns éditoriaux.</span>
@@ -2707,7 +2720,7 @@ function buildComponentsIndex() {
 <h2><span class="lang-fr">Catalogue</span><span class="lang-en">Catalog</span></h2>
 <div class="nav-grid">
   <a href="button.html" class="nav-card">
-    <span class="nav-card-icon">${icon('mouse-pointer-click',32)}</span>
+    <span class="nav-card-icon">${icon('mouse-pointer-click',24)}</span>
     <div class="nav-card-title">Button</div>
     <div class="nav-card-desc">
       <span class="lang-fr">4 variantes : primary, secondary, ghost, critical. Règles spéciales pour les actions irréversibles.</span>
@@ -2715,7 +2728,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="icon.html" class="nav-card">
-    <span class="nav-card-icon">${icon('star',32)}</span>
+    <span class="nav-card-icon">${icon('star',24)}</span>
     <div class="nav-card-title">Icon</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Bibliothèque Lucide — 1 500+ icônes, 3 tailles, règles WCAG 1.1.1.</span>
@@ -2723,7 +2736,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="input.html" class="nav-card">
-    <span class="nav-card-icon">${icon('pen-line',32)}</span>
+    <span class="nav-card-icon">${icon('pen-line',24)}</span>
     <div class="nav-card-title">Input</div>
     <div class="nav-card-desc">
       <span class="lang-fr">7 types, label obligatoire, toggle password, icônes hybrides, états complets.</span>
@@ -2731,7 +2744,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="badge.html" class="nav-card">
-    <span class="nav-card-icon">${icon('tag',32)}</span>
+    <span class="nav-card-icon">${icon('tag',24)}</span>
     <div class="nav-card-title">Badge</div>
     <div class="nav-card-desc">
       <span class="lang-fr">6 variantes sémantiques, 2 tailles, icônes, mode icon-only accessible.</span>
@@ -2739,7 +2752,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="card.html" class="nav-card">
-    <span class="nav-card-icon">${icon('layout-template',32)}</span>
+    <span class="nav-card-icon">${icon('layout-template',24)}</span>
     <div class="nav-card-title">Card</div>
     <div class="nav-card-desc">
       <span class="lang-fr">3 variantes, 4 paddings, slots header/body/footer, composition libre.</span>
@@ -2747,7 +2760,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="checkbox.html" class="nav-card">
-    <span class="nav-card-icon">${icon('square-check',32)}</span>
+    <span class="nav-card-icon">${icon('square-check',24)}</span>
     <div class="nav-card-title">Checkbox</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Sélection binaire, forme carrée (NN/g), états complets + indeterminate, label cliquable.</span>
@@ -2755,7 +2768,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="radio.html" class="nav-card">
-    <span class="nav-card-icon">${icon('circle-dot',32)}</span>
+    <span class="nav-card-icon">${icon('circle-dot',24)}</span>
     <div class="nav-card-title">Radio</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Choix exclusif, forme ronde (NN/g), groupe ARIA radiogroup, navigation flèches.</span>
@@ -2763,7 +2776,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="toggle.html" class="nav-card">
-    <span class="nav-card-icon">${icon('toggle-right',32)}</span>
+    <span class="nav-card-icon">${icon('toggle-right',24)}</span>
     <div class="nav-card-title">Toggle</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Réglage on/off à effet immédiat, role=switch, état par position (WCAG 1.4.1).</span>
@@ -2771,7 +2784,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="table.html" class="nav-card">
-    <span class="nav-card-icon">${icon('table',32)}</span>
+    <span class="nav-card-icon">${icon('table',24)}</span>
     <div class="nav-card-title">Table</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Données en lecture seule, accessible (scope, caption), séparateurs/zébrage, scroll horizontal.</span>
@@ -2779,7 +2792,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="code-block.html" class="nav-card">
-    <span class="nav-card-icon">${icon('code',32)}</span>
+    <span class="nav-card-icon">${icon('code',24)}</span>
     <div class="nav-card-title">Code Block</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Code en lecture seule, copiable (annonce AT), indicateur de langue, surface sombre tokenisée.</span>
@@ -2787,7 +2800,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="banner.html" class="nav-card">
-    <span class="nav-card-icon">${icon('megaphone',32)}</span>
+    <span class="nav-card-icon">${icon('megaphone',24)}</span>
     <div class="nav-card-title">Banner</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Message inline (callout/alerte), 6 variantes, statique par défaut, live region en opt-in.</span>
@@ -2795,7 +2808,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="link.html" class="nav-card">
-    <span class="nav-card-icon">${icon('link',32)}</span>
+    <span class="nav-card-icon">${icon('link',24)}</span>
     <div class="nav-card-title">Link</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Lien de navigation, souligné par défaut (WCAG 1.4.1), liens externes sécurisés et annoncés.</span>
@@ -2803,7 +2816,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="segmented.html" class="nav-card">
-    <span class="nav-card-icon">${icon('rows-3',32)}</span>
+    <span class="nav-card-icon">${icon('rows-3',24)}</span>
     <div class="nav-card-title">Segmented</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Contrôle segmenté mono-sélection à effet immédiat (FR/EN, densité), boutons + aria-current.</span>
@@ -2811,7 +2824,7 @@ function buildComponentsIndex() {
     </div>
   </a>
   <a href="tabs.html" class="nav-card">
-    <span class="nav-card-icon">${icon('panel-top',32)}</span>
+    <span class="nav-card-icon">${icon('panel-top',24)}</span>
     <div class="nav-card-title">Tabs</div>
     <div class="nav-card-desc">
       <span class="lang-fr">Onglets horizontaux in-page (tablist/tab/tabpanel), activation auto, href optionnel.</span>
@@ -4713,14 +4726,37 @@ function buildDecisionsIndex(adrs) {
 
 // ─── PAGE: INDIVIDUAL ADR ───────────────────────────────────────────────────
 function buildADR(adr, adrs) {
-  const content = parseMd(adr.content);
+  // Strip the leading H1 and frontmatter blockquote — already rendered in .adr-header
+  const lines = adr.content.split('\n');
+  let start = 0;
+  if (lines[start]?.startsWith('# ')) start++;
+  while (start < lines.length && lines[start].trim() === '') start++;
+  while (start < lines.length && lines[start].startsWith('> ')) start++;
+  while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
+  const content = parseMd(lines.slice(start).join('\n'));
+
+  const statusBadge = `<span class="agtc-badge success sm">${icon('circle-check',14)} <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span>`;
+  const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
   const meta = `
-<div class="adr-meta">
-  <div class="adr-meta-item"><strong>ADR</strong> ${String(adr.num).padStart(3,'0')}</div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Statut</span><span class="lang-en">Status</span></strong> <span class="agtc-badge success sm"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></div>
-  <div class="adr-meta-item"><strong><span class="lang-fr">Date</span><span class="lang-en">Date</span></strong> ${adr.date}</div>
-  ${adr.deciders ? `<div class="adr-meta-item"><strong><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></strong> ${esc(adr.deciders)}</div>` : ''}
+<div class="adr-header">
+  <div class="adr-header-eyebrow">
+    <code class="adr-number">ADR-${String(adr.num).padStart(3,'0')}</code>
+    ${statusBadge}
+    ${typeBadge}
+  </div>
+  <h1 class="adr-page-title">${esc(adr.title)}</h1>
+  <dl class="adr-meta">
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
+      <dd>${esc(adr.date)}</dd>
+    </div>
+    ${adr.deciders ? `<div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>${esc(adr.deciders)}</dd>
+    </div>` : ''}
+  </dl>
 </div>`;
+
   const prev = adrs.find(a => a.num === adr.num - 1);
   const next = adrs.find(a => a.num === adr.num + 1);
   const nav = `<div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
@@ -4867,8 +4903,9 @@ function loadADRs() {
     const title = titleMatch ? titleMatch[1].replace(/^ADR-\d+\s*—?\s*/,'').trim() : f;
     const dateMatch = content.match(/\*\*Date\s*:\*\*\s*(.+)/);
     const decidersMatch = content.match(/\*\*Décideurs\s*:\*\*\s*(.+)/);
+    const typeMatch = content.match(/\*\*Type\s*:\*\*\s*(.+)/);
     const slug = `adr-${String(num).padStart(3,'0')}`;
-    return { num, title, date: dateMatch ? dateMatch[1].trim() : '2026-05-28', deciders: decidersMatch ? decidersMatch[1].trim() : '', slug, content, file: f };
+    return { num, title, date: dateMatch ? dateMatch[1].trim() : '2026-05-28', deciders: decidersMatch ? decidersMatch[1].trim() : '', type: typeMatch ? typeMatch[1].trim() : '', slug, content, file: f };
   }).sort((a,b) => a.num - b.num);
 }
 
