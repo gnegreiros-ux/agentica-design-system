@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:40:49 GMT
+ * Generated on Sat, 13 Jun 2026 13:47:51 GMT
  */
 
 :root {
@@ -15,6 +15,7 @@
   --agtc-semantic-marketing-typography-display-line-height: var(--agtc-primitive-line-height-display);
   --agtc-semantic-marketing-typography-display-weight: var(--agtc-primitive-font-weight-bold);
   --agtc-semantic-marketing-typography-display-size: var(--agtc-primitive-font-size-6xl);
+  --agtc-semantic-icon-size-feature: var(--agtc-primitive-icon-size-xl);
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-icon-size-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-icon-size-md);
   --agtc-semantic-icon-size-inline: var(--agtc-primitive-icon-size-sm);

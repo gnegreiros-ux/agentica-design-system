@@ -492,7 +492,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-primitive-fontWeight-semibold);
 }
-.content{flex:1;padding:52px 64px;max-width:960px}
+.content{flex:1;padding:52px 0;max-width:960px}
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -509,7 +509,7 @@ body{
 .stat-num{font-size:var(--agtc-semantic-typography-heading-1-size);font-weight:var(--agtc-primitive-fontWeight-extrabold);color:var(--agtc-semantic-color-action-primary);display:block;letter-spacing:var(--agtc-tracking-snug)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
 
-.home-section{padding:64px 72px;max-width:1100px;margin:0 auto}
+.home-section{padding:64px 0;max-width:1100px;margin:0 auto}
 .home-section h2{font-size:var(--agtc-semantic-typography-heading-3-size);font-weight:var(--agtc-primitive-fontWeight-bold);letter-spacing:var(--agtc-tracking-snug);margin-bottom:8px}
 .home-section > p{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
 
@@ -818,8 +818,8 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   }
   .sidebar.open{transform:translateX(0)}
   .sidebar-toggle{display:flex}
-  .content{padding:28px 20px}
-  .home-section{padding:40px 20px}
+  .content{padding:28px 0}
+  .home-section{padding:40px 0}
   .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px;margin-top:64px;margin-bottom:0}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
@@ -959,7 +959,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .platform-logo-item:hover{opacity:1}
 .platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
 .platform-logo-label{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-on-inverse-muted);text-align:center;white-space:nowrap}
-.tool-card-icon .vendor-logo{height:22px;width:22px}
+.tool-card-icon .vendor-logo{height:var(--agtc-semantic-icon-size-nav);width:var(--agtc-semantic-icon-size-nav)}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
 .step-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px}
@@ -1123,6 +1123,14 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .tool-card,
 [data-context="marketing"] .audience-card{
   padding:var(--agtc-semantic-space-comfortable-layout-component);
+}
+/* Icônes de card — 32px minimum en contexte Marketing (semantic.icon.size.feature) */
+[data-context="marketing"] .audience-icon svg,
+[data-context="marketing"] .info-card-icon svg,
+[data-context="marketing"] .nav-card-icon svg,
+[data-context="marketing"] .tool-card-icon .vendor-logo{
+  width:var(--agtc-semantic-icon-size-feature);
+  height:var(--agtc-semantic-icon-size-feature);
 }
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
@@ -1647,7 +1655,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     ${icon('github', 18)}
   </a>
   <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
-    ${icon('menu', 22)}
+    ${icon('menu', 24)}
   </button>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
@@ -1744,7 +1752,7 @@ function contributionBanner() {
   // Dogfooding (cat. A) : consomme la classe .agtc-banner (ADR-042) + .agtc-link (ADR-043).
   return `
 <div class="agtc-banner brand" style="margin-top:56px">
-  <span class="banner-icon">${icon('github', 22)}</span>
+  <span class="banner-icon">${icon('github', 24)}</span>
   <div class="banner-content">
     <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
     <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
@@ -1808,10 +1816,10 @@ function buildHome(adrs) {
   ];
 
   const audiences = [
-    [icon('briefcase',22),'Gestionnaires','Managers','Livraisons 2× plus rapides, moins de régressions visuelles, gouvernance documentée et traçable.','2× faster delivery, fewer visual regressions, documented and traceable governance.'],
-    [icon('pen-tool',22),'Designers','Designers','Tokens Figma synchronisés, marque appliquée automatiquement, cohérence garantie à chaque mise à jour.','Synced Figma tokens, auto-applied brand guidelines, consistency guaranteed on every update.'],
-    [icon('code-2',22),'Développeurs','Developers','Web Components framework-agnostic, variables CSS générées, zéro valeur en dur, audit accessibilité intégré.','Framework-agnostic Web Components, generated CSS variables, zero hardcoded values, built-in accessibility audit.'],
-    [icon('clipboard-list',22),'Product Owners','Product Owners','Décisions architecturales traçables, conformité WCAG AA garantie, pipeline qualité automatisé.','Traceable architecture decisions, guaranteed WCAG AA compliance, automated quality pipeline.'],
+    [icon('briefcase',24),'Gestionnaires','Managers','Livraisons 2× plus rapides, moins de régressions visuelles, gouvernance documentée et traçable.','2× faster delivery, fewer visual regressions, documented and traceable governance.'],
+    [icon('pen-tool',24),'Designers','Designers','Tokens Figma synchronisés, marque appliquée automatiquement, cohérence garantie à chaque mise à jour.','Synced Figma tokens, auto-applied brand guidelines, consistency guaranteed on every update.'],
+    [icon('code-2',24),'Développeurs','Developers','Web Components framework-agnostic, variables CSS générées, zéro valeur en dur, audit accessibilité intégré.','Framework-agnostic Web Components, generated CSS variables, zero hardcoded values, built-in accessibility audit.'],
+    [icon('clipboard-list',24),'Product Owners','Product Owners','Décisions architecturales traçables, conformité WCAG AA garantie, pipeline qualité automatisé.','Traceable architecture decisions, guaranteed WCAG AA compliance, automated quality pipeline.'],
   ];
 
   const kpis = [

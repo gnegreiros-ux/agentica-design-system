@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:40:49 GMT
+ * Generated on Sat, 13 Jun 2026 13:47:51 GMT
  */
 
 :root {
@@ -466,6 +466,7 @@
   --agtc-primitive-icon-size-sm: 16px;
   --agtc-primitive-icon-size-md: 20px;
   --agtc-primitive-icon-size-lg: 24px;
+  --agtc-primitive-icon-size-xl: 32px;
   --agtc-primitive-density-factor-normal: 1;
   --agtc-primitive-density-factor-comfortable: 1.25;
   --agtc-primitive-density-factor-compact: 0.75;

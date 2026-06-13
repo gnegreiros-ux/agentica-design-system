@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 13 Jun 2026 13:40:49 GMT
+// Generated on Sat, 13 Jun 2026 13:47:52 GMT
 
 
 import UIKit
@@ -580,6 +580,7 @@ public class AgenticaTokens {
     public static let primitiveIconSizeLg = 24px
     public static let primitiveIconSizeMd = 20px
     public static let primitiveIconSizeSm = 16px
+    public static let primitiveIconSizeXl = 32px
     public static let primitiveLineHeightDisplay = 1.0
     public static let primitiveLineHeightHeading = 1.1
     public static let primitiveLineHeightReading = 1.6
@@ -664,6 +665,7 @@ public class AgenticaTokens {
     public static let semanticColorTextSecondary = #646464
     public static let semanticColorVizScaleBar = #fdbdbe
     public static let semanticIconSizeControl = 20px
+    public static let semanticIconSizeFeature = 32px
     public static let semanticIconSizeInline = 16px
     public static let semanticIconSizeNav = 24px
     public static let semanticMarketingSpaceHeroGap = 120px

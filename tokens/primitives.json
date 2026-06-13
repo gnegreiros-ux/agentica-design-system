@@ -608,7 +608,8 @@
     "iconSize": {
       "sm": { "$value": "16px", "$type": "dimension", "$description": "Icône petite — inline, labels" },
       "md": { "$value": "20px", "$type": "dimension", "$description": "Icône standard — contrôles, boutons" },
-      "lg": { "$value": "24px", "$type": "dimension", "$description": "Icône grande — navigation, emphase" }
+      "lg": { "$value": "24px", "$type": "dimension", "$description": "Icône grande — navigation, emphase" },
+      "xl": { "$value": "32px", "$type": "dimension", "$description": "Icône feature — cards marketing, sections d'accroche (grille 4px : 8×4)" }
     },
     "density": {
       "_readme": {

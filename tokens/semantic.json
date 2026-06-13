@@ -605,6 +605,11 @@
           "$value": "{primitive.iconSize.lg}",
           "$type": "dimension",
           "$intent": "Icône de navigation ou d'emphase"
+        },
+        "feature": {
+          "$value": "{primitive.iconSize.xl}",
+          "$type": "dimension",
+          "$intent": "32px — Icône de card feature, section marketing. Minimum requis en data-context='marketing'. Grille 4px : 8×4."
         }
       }
     },

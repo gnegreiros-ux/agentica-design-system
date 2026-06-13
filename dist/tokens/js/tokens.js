@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:40:49 GMT
+ * Generated on Sat, 13 Jun 2026 13:47:51 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -465,6 +465,7 @@ export const PrimitiveFontFamilyMono = "'Atkinson Hyperlegible Mono', 'JetBrains
 export const PrimitiveIconSizeSm = "16px";
 export const PrimitiveIconSizeMd = "20px";
 export const PrimitiveIconSizeLg = "24px";
+export const PrimitiveIconSizeXl = "32px";
 export const PrimitiveDensityFactorNormal = "1";
 export const PrimitiveDensityFactorComfortable = "1.25";
 export const PrimitiveDensityFactorCompact = "0.75";
@@ -576,6 +577,7 @@ export const SemanticTypographyHeroLineHeight = "1.0";
 export const SemanticIconSizeInline = "16px";
 export const SemanticIconSizeControl = "20px";
 export const SemanticIconSizeNav = "24px";
+export const SemanticIconSizeFeature = "32px";
 export const SemanticMarketingTypographyDisplaySize = "3.75rem";
 export const SemanticMarketingTypographyDisplayWeight = "700";
 export const SemanticMarketingTypographyDisplayLineHeight = "1.0";
