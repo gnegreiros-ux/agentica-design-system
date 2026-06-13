@@ -729,6 +729,9 @@
   --agtc-gradient-text-light:linear-gradient(100deg,var(--agtc-primitive-color-teal-11) 0%,var(--agtc-primitive-color-accent-11) 100%);
   --agtc-gradient-aurora:radial-gradient(60% 50% at 18% 8%,rgba(18,165,148,.26) 0%,transparent 60%),radial-gradient(55% 50% at 88% 22%,rgba(237,107,134,.20) 0%,transparent 62%),radial-gradient(70% 60% at 60% 100%,rgba(70,50,57,.40) 0%,transparent 60%);
   --agtc-surface-grid:rgba(95,227,208,.10);
+  /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
+  --agtc-surface-glass:rgba(255,255,255,.06);
+  --agtc-surface-glass-border:rgba(255,255,255,.10);
   color-scheme:light;
 }
 /* ── Dark mode — semantic overrides only ── */
