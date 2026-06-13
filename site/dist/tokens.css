@@ -604,7 +604,7 @@
   --agtc-component-card-typography-body-size: var(--agtc-semantic-typography-label-size);
   --agtc-component-card-typography-body-weight: var(--agtc-semantic-typography-label-weight);
   --agtc-component-card-typography-meta-size: var(--agtc-semantic-typography-detail-size);
-  --agtc-component-card-typography-marketing-title-size: var(--agtc-semantic-typography-body-size);
+  --agtc-component-card-typography-marketing-title-size: var(--agtc-semantic-typography-heading-5-size);
   --agtc-component-card-typography-marketing-title-weight: var(--agtc-primitive-fontWeight-bold);
   --agtc-component-card-typography-marketing-hero-title-size: var(--agtc-semantic-typography-heading-5-size);
   --agtc-component-card-typography-marketing-hero-title-weight: var(--agtc-primitive-fontWeight-bold);
@@ -744,6 +744,13 @@
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
   --agtc-surface-overlay:rgba(0,0,0,.40);
+  /* Espacement comfortable — valeurs pré-résolues (ceil() non supporté en CSS natif)
+     comfortable = ceil(base × 1.25 / 4) × 4 */
+  --agtc-semantic-space-comfortable-layout-component:28px;
+  --agtc-semantic-space-comfortable-layout-section:40px;
+  --agtc-semantic-space-comfortable-control-padding-x:20px;
+  --agtc-semantic-space-comfortable-control-padding-y:12px;
+  --agtc-semantic-space-comfortable-control-gap:12px;
   /* Font-weight (primitifs non générés par Style Dictionary) */
   --agtc-primitive-fontWeight-regular:400;
   --agtc-primitive-fontWeight-semibold:600;

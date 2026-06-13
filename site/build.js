@@ -181,7 +181,7 @@ const COMP = {
   'card-typography-body-weight':        'var(--agtc-semantic-typography-label-weight)',
   'card-typography-meta-size':          'var(--agtc-semantic-typography-detail-size)',
   /* Typographie — contexte Marketing (data-context="marketing") */
-  'card-typography-marketing-title-size':      'var(--agtc-semantic-typography-body-size)',
+  'card-typography-marketing-title-size':      'var(--agtc-semantic-typography-heading-5-size)',
   'card-typography-marketing-title-weight':    'var(--agtc-primitive-fontWeight-bold)',
   'card-typography-marketing-hero-title-size': 'var(--agtc-semantic-typography-heading-5-size)',
   'card-typography-marketing-hero-title-weight':'var(--agtc-primitive-fontWeight-bold)',
@@ -339,6 +339,13 @@ function tokensCSS() {
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
   --agtc-surface-overlay:rgba(0,0,0,.40);
+  /* Espacement comfortable — valeurs pré-résolues (ceil() non supporté en CSS natif)
+     comfortable = ceil(base × 1.25 / 4) × 4 */
+  --agtc-semantic-space-comfortable-layout-component:28px;
+  --agtc-semantic-space-comfortable-layout-section:40px;
+  --agtc-semantic-space-comfortable-control-padding-x:20px;
+  --agtc-semantic-space-comfortable-control-padding-y:12px;
+  --agtc-semantic-space-comfortable-control-gap:12px;
   /* Font-weight (primitifs non générés par Style Dictionary) */
   --agtc-primitive-fontWeight-regular:400;
   --agtc-primitive-fontWeight-semibold:600;
@@ -1107,6 +1114,15 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .tool-card-role,
 [data-context="marketing"] .tool-card-desc{
   font-size:var(--agtc-component-card-typography-marketing-meta-size);
+}
+/* Espacement comfortable (28px) en contexte marketing pour tous les conteneurs card-like */
+[data-context="marketing"] .principle-card,
+[data-context="marketing"] .step-card,
+[data-context="marketing"] .nav-card,
+[data-context="marketing"] .info-card,
+[data-context="marketing"] .tool-card,
+[data-context="marketing"] .audience-card{
+  padding:var(--agtc-semantic-space-comfortable-layout-component);
 }
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */

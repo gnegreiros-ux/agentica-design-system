@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:28:19 GMT
+ * Generated on Sat, 13 Jun 2026 13:40:49 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -657,7 +657,7 @@ export const CardTypographyBodyWeight = "500";
 export const CardTypographyBodyLineHeight = "1.6";
 export const CardTypographyMetaSize = "0.75rem";
 export const CardTypographyMetaWeight = "400";
-export const CardTypographyMarketingTitleSize = "1rem";
+export const CardTypographyMarketingTitleSize = "1.25rem";
 export const CardTypographyMarketingTitleWeight = "700";
 export const CardTypographyMarketingHeroTitleSize = "1.25rem";
 export const CardTypographyMarketingHeroTitleWeight = "700";

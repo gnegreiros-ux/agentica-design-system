@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 13 Jun 2026 13:28:19 GMT
+// Generated on Sat, 13 Jun 2026 13:40:49 GMT
 
 
 import UIKit
@@ -94,7 +94,7 @@ public class AgenticaTokens {
     public static let cardTypographyMarketingHeroTitleSize = 1.25rem
     public static let cardTypographyMarketingHeroTitleWeight = 700
     public static let cardTypographyMarketingMetaSize = 0.875rem
-    public static let cardTypographyMarketingTitleSize = 1rem
+    public static let cardTypographyMarketingTitleSize = 1.25rem
     public static let cardTypographyMarketingTitleWeight = 700
     public static let cardTypographyMetaSize = 0.75rem
     public static let cardTypographyMetaWeight = 400

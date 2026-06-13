@@ -385,9 +385,9 @@
         },
         "title": {
           "size": {
-            "$value": "{semantic.typography.body.size}",
+            "$value": "{semantic.typography.heading.5.size}",
             "$type": "dimension",
-            "$intent": "16px — Titre de carte en contexte Marketing (minimum body-size)"
+            "$intent": "20px — Titre de carte en contexte Marketing (heading-5)"
           },
           "weight": {
             "$value": "{primitive.fontWeight.bold}",

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:28:19 GMT
+ * Generated on Sat, 13 Jun 2026 13:40:49 GMT
  */
 
 :root {
@@ -702,7 +702,7 @@
   --agtc-card-typography-marketing-meta-size: var(--agtc-semantic-typography-label-size);
   --agtc-card-typography-marketing-body-size: var(--agtc-semantic-typography-body-size);
   --agtc-card-typography-marketing-hero-title-size: var(--agtc-semantic-typography-heading-5-size);
-  --agtc-card-typography-marketing-title-size: var(--agtc-semantic-typography-body-size);
+  --agtc-card-typography-marketing-title-size: var(--agtc-semantic-typography-heading-5-size);
   --agtc-card-typography-meta-weight: var(--agtc-semantic-typography-detail-weight);
   --agtc-card-typography-meta-size: var(--agtc-semantic-typography-detail-size);
   --agtc-card-typography-body-weight: var(--agtc-semantic-typography-label-weight);

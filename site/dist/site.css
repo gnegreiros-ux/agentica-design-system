@@ -707,6 +707,15 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .tool-card-desc{
   font-size:var(--agtc-component-card-typography-marketing-meta-size);
 }
+/* Espacement comfortable (28px) en contexte marketing pour tous les conteneurs card-like */
+[data-context="marketing"] .principle-card,
+[data-context="marketing"] .step-card,
+[data-context="marketing"] .nav-card,
+[data-context="marketing"] .info-card,
+[data-context="marketing"] .tool-card,
+[data-context="marketing"] .audience-card{
+  padding:var(--agtc-semantic-space-comfortable-layout-component);
+}
 
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
 html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
