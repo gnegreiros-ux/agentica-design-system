@@ -732,6 +732,7 @@
   /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
+  --agtc-surface-overlay:rgba(0,0,0,.40);
   /* Font-weight (primitifs non générés par Style Dictionary) */
   --agtc-primitive-fontWeight-regular:400;
   --agtc-primitive-fontWeight-semibold:600;

@@ -325,6 +325,7 @@ function tokensCSS() {
   /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
+  --agtc-surface-overlay:rgba(0,0,0,.40);
   /* Font-weight (primitifs non générés par Style Dictionary) */
   --agtc-primitive-fontWeight-regular:400;
   --agtc-primitive-fontWeight-semibold:600;
@@ -779,7 +780,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .sidebar-toggle{display:none;align-items:center;gap:6px;background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);cursor:pointer;padding:6px 12px;color:var(--agtc-semantic-color-text-secondary);border-radius:var(--agtc-semantic-radius-control);font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);font-family:inherit;margin-bottom:20px}
 .sidebar-toggle-label{font-size:var(--agtc-semantic-typography-detail-size)}
 .sidebar-toggle:hover,.sidebar-toggle:focus-visible{background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-focus);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.sidebar-overlay{display:none;position:fixed;inset:0;top:var(--agtc-header-height,64px);background:rgba(0,0,0,.40);z-index:89;backdrop-filter:blur(2px)}
+.sidebar-overlay{display:none;position:fixed;inset:0;top:var(--agtc-header-height,64px);background:var(--agtc-surface-overlay);z-index:89;backdrop-filter:blur(2px)}
 .sidebar-overlay.active{display:block}
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
@@ -919,7 +920,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .tool-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px;display:flex;gap:12px;align-items:flex-start}
 .tool-card-icon{color:var(--agtc-semantic-color-action-primary);flex-shrink:0;margin-top:2px}
 .tool-card-name{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
-.tool-card-role{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);font-weight:400}
+.tool-card-role{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);font-weight:var(--agtc-primitive-fontWeight-regular)}
 .tool-card-desc{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
 
 /* ── STANDARDS BAND ──────────────────────────────────────── */
@@ -2440,7 +2441,7 @@ function buildTypography() {
 <h2 class="first"><span class="lang-fr">Police — Atkinson Hyperlegible</span><span class="lang-en">Typeface — Atkinson Hyperlegible</span></h2>
 <div class="demo-box" style="padding:24px 28px">
   <p style="font-size:13px;color:var(--agtc-semantic-color-text-secondary);margin-bottom:16px"><code>--agtc-semantic-typography-fontFamily</code></p>
-  <div style="font-size:28px;font-weight:var(--agtc-primitive-fontWeight-bold);letter-spacing:-.01em;line-height:1.3;color:var(--agtc-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div style="font-size:28px;font-weight:var(--agtc-primitive-fontWeight-bold);letter-spacing:var(--agtc-tracking-heading);line-height:1.3;color:var(--agtc-semantic-color-text-primary);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
   <div style="font-size:28px;line-height:1.3;color:var(--agtc-semantic-color-text-secondary);word-break:break-all;margin-top:4px">abcdefghijklmnopqrstuvwxyz</div>
   <div style="font-size:24px;line-height:1.4;color:var(--agtc-semantic-color-text-primary);margin-top:8px;font-weight:var(--agtc-primitive-fontWeight-bold)">0 1 2 3 4 5 6 7 8 9</div>
   <div style="font-size:18px;line-height:1.5;color:var(--agtc-semantic-color-text-secondary);margin-top:8px">! @ # $ % &amp; * ( ) [ ] { } , . ; : ' " - _ / \ ? + = &lt; &gt;</div>
@@ -3562,10 +3563,10 @@ function buildCheckbox() {
 
 // ─── PAGE: RADIO ─────────────────────────────────────────────────────────────
 function buildRadio() {
-  const RING = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:9999px;flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
+  const RING = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:var(--agtc-semantic-radius-pill);flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
   function radio(state) {
     if (state === 'selected')
-      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-surface)"><span style="width:50%;height:50%;border-radius:9999px;background:var(--agtc-semantic-color-action-primary)"></span></span>`;
+      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-surface)"><span style="width:50%;height:50%;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-action-primary)"></span></span>`;
     if (state === 'disabled')
       return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-subtle)"></span>`;
     return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)"></span>`;
@@ -3648,7 +3649,7 @@ function buildToggle() {
     const track = on ? 'var(--agtc-component-toggle-default-track-on)' : 'var(--agtc-component-toggle-default-track-off)';
     const x = on ? '18px' : '2px';
     // Ombre du curseur en dur : reflète fidèlement le composant agtc-toggle (délimiteur WCAG 1.4.11, non tokenisé dans le contrat).
-    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:9999px;background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:9999px;background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
+    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:var(--agtc-semantic-radius-pill);background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
   }
   function row(on, label, dim) {
     return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
@@ -4364,14 +4365,14 @@ function buildTokens() {
 
   const primRows = Object.entries(COLOR_SCALES).flatMap(([scale, steps]) =>
     Object.entries(steps).map(([step, { value, desc }]) =>
-      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:6px;background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td class="mono-sm">${value}</td><td>${desc}</td></tr>`
+      `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:var(--agtc-semantic-radius-control);background:${value};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0" aria-hidden="true"></span><code>--agtc-primitive-color-${scale}-${step}</code></div></td><td class="mono-sm">${value}</td><td>${desc}</td></tr>`
     )
   ).join('');
 
   // Build a full semantic map with alias info
   const semRows = Object.entries(SEM).map(([k, v]) => {
     const isColor = k.startsWith('color-');
-    const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:6px;background:${v};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
+    const swatch = isColor ? `<span style="width:40px;height:40px;border-radius:var(--agtc-semantic-radius-control);background:${v};border:1px solid var(--agtc-semantic-color-border-swatch);flex-shrink:0;display:inline-block" aria-hidden="true"></span>` : '';
     const aliasNode = getSemanticAlias(k);
     const aliasCell = aliasNode ? `<td style="font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">${aliasNode}</td>` : '<td>—</td>';
     return `<tr class="token-row"><td><div style="display:flex;align-items:center;gap:10px">${swatch}<code>--agtc-semantic-${k}</code></div></td>${aliasCell}<td class="mono-sm">${v}</td></tr>`;
