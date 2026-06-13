@@ -1,6 +1,19 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ── Theme toggle ─────────────────────────────────────────
+  const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('agtc-theme', next);
+      btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
+    });
+  });
+
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';

@@ -694,3 +694,81 @@
   --agtc-component-toggle-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-component-toggle-default-label: var(--agtc-semantic-color-text-primary);
 }
+
+/* ── Extension tokens : layout + gradients + shadows ── */
+:root {
+  --agtc-space-1:4px;  --agtc-space-2:8px;  --agtc-space-3:12px; --agtc-space-4:16px;
+  --agtc-space-5:24px; --agtc-space-6:32px; --agtc-space-7:48px; --agtc-space-8:64px;
+  --agtc-space-9:96px; --agtc-space-10:128px;
+  --agtc-header-height:64px;
+  --agtc-content-max:1180px;
+  --agtc-semantic-radius-pill:999px;
+  --agtc-semantic-color-border-strong:var(--agtc-primitive-color-gray-6);
+  --agtc-semantic-color-feedback-success-subtle:var(--agtc-primitive-color-green-3);
+  --agtc-semantic-color-feedback-warning:var(--agtc-primitive-color-amber-11);
+  --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
+  --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
+  --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
+  --agtc-shadow-glow:0 0 0 1px rgba(13,155,138,.20),0 12px 32px -8px rgba(13,155,138,.30);
+  --agtc-font-size-detail:.75rem;   --agtc-font-size-label:.875rem;
+  --agtc-font-size-body:1rem;       --agtc-font-size-h5:1.25rem;
+  --agtc-font-size-h4:1.5rem;       --agtc-font-size-h3:1.75rem;
+  --agtc-font-size-h2:2rem;         --agtc-font-size-h1:2.5rem;
+  --agtc-font-size-display:clamp(2.5rem,5vw,3.5rem);
+  --agtc-line-height-text:1.6;      --agtc-line-height-heading:1.05;
+  /* Accent (rose) and secondary (prune) brand primitives */
+  --agtc-primitive-color-accent-9:#ed6b86;   --agtc-primitive-color-accent-10:#e05f7b;
+  --agtc-primitive-color-accent-11:#a6294c;  --agtc-primitive-color-accent-12:#5d1f2e;
+  --agtc-primitive-color-accent-8:#c8818c;
+  --agtc-primitive-color-secondary-9:#463239; --agtc-primitive-color-secondary-11:#6b4b56;
+  /* Brand semantic tokens */
+  --agtc-semantic-color-background-inverse:#1a1216;
+  --agtc-semantic-color-text-on-inverse:rgba(255,255,255,.92);
+  --agtc-semantic-color-text-on-inverse-muted:rgba(255,255,255,.62);
+  --agtc-semantic-color-accent:#ed6b86;
+  --agtc-semantic-color-secondary:#463239;
+  --agtc-semantic-color-tertiary:var(--agtc-primitive-color-slate-9);
+  /* Brand gradients (teal → accent rose) */
+  --agtc-gradient-brand:linear-gradient(115deg,var(--agtc-primitive-color-teal-11) 0%,var(--agtc-primitive-color-teal-9) 38%,var(--agtc-primitive-color-accent-9) 78%,var(--agtc-primitive-color-accent-10) 100%);
+  --agtc-gradient-text:linear-gradient(100deg,var(--agtc-primitive-color-teal-8) 0%,var(--agtc-primitive-color-accent-8) 100%);
+  --agtc-gradient-text-light:linear-gradient(100deg,var(--agtc-primitive-color-teal-11) 0%,var(--agtc-primitive-color-accent-11) 100%);
+  --agtc-gradient-aurora:radial-gradient(60% 50% at 18% 8%,rgba(18,165,148,.26) 0%,transparent 60%),radial-gradient(55% 50% at 88% 22%,rgba(237,107,134,.20) 0%,transparent 62%),radial-gradient(70% 60% at 60% 100%,rgba(70,50,57,.40) 0%,transparent 60%);
+  --agtc-surface-grid:rgba(95,227,208,.10);
+  color-scheme:light;
+}
+/* ── Dark mode — semantic overrides only ── */
+:root[data-theme="dark"] {
+  --agtc-semantic-color-action-primary:#34d3bb;
+  --agtc-semantic-color-action-primary-hover:#5fe0cd;
+  --agtc-semantic-color-action-primary-disabled:#33373d;
+  --agtc-semantic-color-feedback-danger:#ff9592;
+  --agtc-semantic-color-feedback-danger-subtle:#291415;
+  --agtc-semantic-color-feedback-success:#3dd68c;
+  --agtc-semantic-color-feedback-success-subtle:#132d21;
+  --agtc-semantic-color-feedback-info:#34d3bb;
+  --agtc-semantic-color-feedback-warning:#ffca16;
+  --agtc-semantic-color-brand-primary:#34d3bb;
+  --agtc-semantic-color-background-page:#0a0c11;
+  --agtc-semantic-color-background-surface:#13161d;
+  --agtc-semantic-color-background-subtle:#1b1f27;
+  --agtc-semantic-color-background-hover:#232833;
+  --agtc-semantic-color-background-inverse:#120c0f;
+  --agtc-semantic-color-text-primary:#edeef0;
+  --agtc-semantic-color-text-secondary:#a4abb8;
+  --agtc-semantic-color-text-disabled:#6b7280;
+  --agtc-semantic-color-text-on-action:#04201c;
+  --agtc-semantic-color-text-on-inverse:rgba(255,255,255,.92);
+  --agtc-semantic-color-text-on-inverse-muted:rgba(255,255,255,.62);
+  --agtc-semantic-color-border-default:#272c36;
+  --agtc-semantic-color-border-strong:#363c48;
+  --agtc-semantic-color-border-focus:#34d3bb;
+  --agtc-semantic-color-border-danger:#ff9592;
+  --agtc-semantic-color-accent:#ff8aa1;
+  --agtc-semantic-color-secondary:#6b4b56;
+  --agtc-semantic-color-tertiary:#6b7280;
+  --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
+  --agtc-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);
+  --agtc-shadow-glow:0 0 0 1px rgba(52,211,187,.28),0 14px 36px -8px rgba(52,211,187,.22);
+  color-scheme:dark;
+}
