@@ -1023,6 +1023,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .stack-node{flex:1;min-width:100px;padding:16px 12px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative}
 .stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
 .stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
+.stack-node-icon svg{width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control)}
 .stack-node-label{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
 .stack-node-sub{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
@@ -1136,11 +1137,11 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .kpi-card{
   padding:var(--agtc-semantic-space-comfortable-layout-component);
 }
-/* Icônes de card — 32px minimum en contexte Marketing (semantic.icon.size.feature) */
+/* Icônes de card — 32px en contexte Marketing (semantic.icon.size.feature) */
+/* tool-card-icon exclus : cartes compactes horizontales → icon-size-nav (24px) dans tous contextes */
 [data-context="marketing"] .audience-icon svg,
 [data-context="marketing"] .info-card-icon svg,
-[data-context="marketing"] .nav-card-icon svg,
-[data-context="marketing"] .tool-card-icon .vendor-logo{
+[data-context="marketing"] .nav-card-icon svg{
   width:var(--agtc-semantic-icon-size-feature);
   height:var(--agtc-semantic-icon-size-feature);
 }
