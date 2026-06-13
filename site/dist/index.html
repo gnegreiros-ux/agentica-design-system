@@ -63,32 +63,56 @@
 <div class="home-layout" id="main-content">
   
   <main class="" role="main">
-<div class="hero">
-  <div class="hero-badge">v0.1.0</div>
-  <p class="hero-name">Agentica</p>
-  <h1>
-    <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
-    <span class="lang-en">Humans <em class="verb">decide</em><br><span>Agents <em class="verb">execute</em><br>The system <em class="verb">ensures</em></span></span>
-  </h1>
-  <p class="hero-tagline">
-    <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
-    <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
-  </p>
-  <div class="hero-actions">
-    <a href="get-started.html" class="agtc-button primary">
-      <span class="lang-fr">Démarrer</span>
-      <span class="lang-en">Get started</span>
-    </a>
-    <a href="components/index.html" class="agtc-button secondary">
-      <span class="lang-fr">Voir les composants</span>
-      <span class="lang-en">View components</span>
-    </a>
-    <a href="agents/index.html" class="agtc-button ghost">
-      <span class="lang-fr">Documentation agents →</span>
-      <span class="lang-en">Agent documentation →</span>
-    </a>
+<section class="hero marketing-hero">
+  <div class="hero-inner hero-grid">
+    <div>
+      <span class="hero-badge">
+        <span class="pulse" aria-hidden="true"></span>
+        <span class="lang-fr">Agentica · v0.1.0</span>
+        <span class="lang-en">Agentica · v0.1.0</span>
+      </span>
+      <h1 class="hero-title">
+        <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
+        <span class="lang-en">Humans <em class="verb">decide</em><br><span>Agents <em class="verb">execute</em><br>The system <em class="verb">ensures</em></span></span>
+      </h1>
+      <p class="hero-tagline">
+        <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
+        <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="get-started.html" class="agtc-button primary">
+          <span class="lang-fr">Démarrer</span>
+          <span class="lang-en">Get started</span>
+        </a>
+        <a href="components/index.html" class="agtc-button secondary">
+          <span class="lang-fr">Voir les composants</span>
+          <span class="lang-en">View components</span>
+        </a>
+        <a href="agents/index.html" class="agtc-button ghost">
+          <span class="lang-fr">Documentation agents →</span>
+          <span class="lang-en">Agent documentation →</span>
+        </a>
+      </div>
+    </div>
+    <div class="layer-stack" aria-hidden="true">
+      <div class="layer-plane l1">
+        <span class="pl-tag"><span class="lang-fr">Niveau 1 · Primitif</span><span class="lang-en">Level 1 · Primitive</span></span>
+        <span class="pl-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></span>
+        <span class="pl-code">primitive.color.teal.11 → #007a68</span>
+      </div>
+      <div class="layer-plane l2">
+        <span class="pl-tag"><span class="lang-fr">Niveau 2 · Sémantique</span><span class="lang-en">Level 2 · Semantic</span></span>
+        <span class="pl-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></span>
+        <span class="pl-code">color.action.primary → {teal.11}</span>
+      </div>
+      <div class="layer-plane l3">
+        <span class="pl-tag"><span class="lang-fr">Niveau 3 · Composant</span><span class="lang-en">Level 3 · Component</span></span>
+        <span class="pl-title"><span class="lang-fr">Contrats UI</span><span class="lang-en">UI contracts</span></span>
+        <span class="pl-code">button.primary.background → {action.primary}</span>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <div class="home-section">
   <h2 class="first">

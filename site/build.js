@@ -457,19 +457,8 @@ body{
 }
 .content{flex:1;padding:52px 64px;max-width:960px}
 
-/* ── HOME HERO ──────────────────────────────────────────── */
+/* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
-.hero{padding:80px 72px 56px;max-width:1100px;margin:0 auto}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:400;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--agtc-semantic-color-text-on-action);
-  background:var(--agtc-semantic-color-action-primary);padding:4px 14px;border-radius:20px;margin-bottom:24px;
-}
-.hero-name{font-size:4rem;font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--agtc-semantic-color-brand-primary);margin-bottom:16px}
-.hero h1{font-size:2.75rem;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--agtc-semantic-color-text-primary)}
-.hero h1 .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
-.hero-tagline{font-size:1.25rem;color:var(--agtc-semantic-color-text-secondary);line-height:1.6;max-width:580px;margin-bottom:40px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
 .stat-band{
   background:var(--agtc-semantic-color-background-inverse);
@@ -793,8 +782,6 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .sidebar.open{transform:translateX(0)}
   .sidebar-toggle{display:flex}
   .content{padding:28px 20px}
-  .hero{padding:40px 20px 32px}
-  .hero h1{font-size:2rem}
   .home-section{padding:40px 20px}
   .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px;margin-top:64px;margin-bottom:0}
   .pipeline{flex-direction:column}
@@ -1123,6 +1110,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   background:var(--agtc-gradient-text);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
+.hero-title .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
 .hero-tagline{
   font-size:var(--agtc-font-size-h5,1.25rem);
   color:var(--agtc-semantic-color-text-secondary);
@@ -1156,75 +1144,6 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 .pl-title{font-size:var(--agtc-font-size-label,.875rem);font-weight:600;color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-1,4px)}
 .pl-code{font-size:var(--agtc-font-size-detail,.75rem);font-family:var(--agtc-font-mono,monospace);color:var(--agtc-semantic-color-text-secondary)}
 
-/* ── CARD SURFACES ────────────────────────────────────────── */
-.card-surface{
-  background:var(--agtc-semantic-color-background-surface);
-  border:1px solid var(--agtc-semantic-color-border-default);
-  border-radius:var(--agtc-semantic-radius-md,8px);
-  box-shadow:var(--agtc-shadow-sm);
-  padding:var(--agtc-space-6,32px);
-  transition:box-shadow .15s,border-color .15s;
-}
-.card-surface.card-hover:hover{box-shadow:var(--agtc-shadow-md);border-color:var(--agtc-semantic-color-border-strong)}
-.audience-card{
-  background:var(--agtc-semantic-color-background-subtle);
-  border:1px solid var(--agtc-semantic-color-border-default);
-  border-radius:var(--agtc-semantic-radius-md,8px);
-  padding:var(--agtc-space-6,32px);
-}
-.kpi-card{
-  display:flex;flex-direction:column;align-items:flex-start;gap:var(--agtc-space-2,8px);
-  padding:var(--agtc-space-6,32px) var(--agtc-space-5,24px);
-}
-.kpi-value{
-  font-size:var(--agtc-font-size-display,clamp(2.5rem,5vw,3.5rem));
-  font-weight:800;letter-spacing:-.03em;
-  background:var(--agtc-gradient-text);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  line-height:1;
-}
-.kpi-label{font-size:var(--agtc-font-size-label,.875rem);color:var(--agtc-semantic-color-text-secondary)}
-.principle-card .principle-title{font-size:var(--agtc-font-size-h5,1.25rem);font-weight:700;color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2,8px)}
-.principle-card .principle-desc{font-size:var(--agtc-font-size-body,1rem);color:var(--agtc-semantic-color-text-secondary);line-height:var(--agtc-line-height-text,1.6)}
-
-/* ── STAT BAND ────────────────────────────────────────────── */
-.stat-band{
-  padding:var(--agtc-space-8,64px) var(--agtc-space-6,32px);
-  background:var(--agtc-semantic-color-background-subtle);
-  border-top:1px solid var(--agtc-semantic-color-border-default);
-  border-bottom:1px solid var(--agtc-semantic-color-border-default);
-}
-.stat-band-inner{
-  max-width:var(--agtc-content-max,1180px);margin:0 auto;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--agtc-space-6,32px);
-}
-@media(max-width:720px){.stat-band-inner{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:420px){.stat-band-inner{grid-template-columns:1fr}}
-
-/* ── PRIMARY BUTTON — no glow (AI anti-pattern §shadow) ──── */
-.ds-btn{
-  display:inline-flex;align-items:center;gap:var(--agtc-space-2,8px);
-  padding:var(--agtc-space-3,12px) var(--agtc-space-5,24px);
-  border-radius:var(--agtc-semantic-radius-control,6px);
-  font-size:var(--agtc-font-size-body,1rem);font-weight:600;
-  cursor:pointer;text-decoration:none;border:none;
-  transition:background .15s,color .15s,opacity .15s;
-}
-.ds-btn.primary{
-  background:var(--agtc-semantic-color-action-primary);
-  color:var(--agtc-semantic-color-text-on-action);
-  box-shadow:none; /* no glow — AI anti-pattern */
-}
-.ds-btn.primary:hover{background:var(--agtc-semantic-color-action-primary-hover)}
-.ds-btn.primary:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.ds-btn.secondary{
-  background:transparent;
-  color:var(--agtc-semantic-color-text-primary);
-  border:1px solid var(--agtc-semantic-color-border-default);
-}
-.ds-btn.secondary:hover{background:var(--agtc-semantic-color-background-hover)}
-.ds-btn.secondary:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-
 /* ── ANIMATIONS ───────────────────────────────────────────── */
 @keyframes auroraDrift{
   0%,100%{transform:translate(0,0) scale(1)}
@@ -1242,7 +1161,12 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 /* ── REDUCED MOTION ───────────────────────────────────────── */
 @media(prefers-reduced-motion:reduce){
   .hero::before,.layer-plane,.hero-badge .pulse{animation:none!important}
-  .ds-btn,.card-surface{transition:none}
+}
+
+/* ── HERO — responsive ───────────────────────────────────── */
+@media(max-width:768px){
+  .hero{padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));padding-bottom:var(--agtc-space-7,48px)}
+  .layer-stack{display:none}
 }
 `; }
 
@@ -1839,32 +1763,56 @@ function buildHome(adrs) {
   ];
 
   const body = `
-<div class="hero">
-  <div class="hero-badge">v0.1.0</div>
-  <p class="hero-name">Agentica</p>
-  <h1>
-    <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
-    <span class="lang-en">Humans <em class="verb">decide</em><br><span>Agents <em class="verb">execute</em><br>The system <em class="verb">ensures</em></span></span>
-  </h1>
-  <p class="hero-tagline">
-    <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
-    <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
-  </p>
-  <div class="hero-actions">
-    <a href="get-started.html" class="agtc-button primary">
-      <span class="lang-fr">Démarrer</span>
-      <span class="lang-en">Get started</span>
-    </a>
-    <a href="components/index.html" class="agtc-button secondary">
-      <span class="lang-fr">Voir les composants</span>
-      <span class="lang-en">View components</span>
-    </a>
-    <a href="agents/index.html" class="agtc-button ghost">
-      <span class="lang-fr">Documentation agents →</span>
-      <span class="lang-en">Agent documentation →</span>
-    </a>
+<section class="hero marketing-hero">
+  <div class="hero-inner hero-grid">
+    <div>
+      <span class="hero-badge">
+        <span class="pulse" aria-hidden="true"></span>
+        <span class="lang-fr">Agentica · v0.1.0</span>
+        <span class="lang-en">Agentica · v0.1.0</span>
+      </span>
+      <h1 class="hero-title">
+        <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
+        <span class="lang-en">Humans <em class="verb">decide</em><br><span>Agents <em class="verb">execute</em><br>The system <em class="verb">ensures</em></span></span>
+      </h1>
+      <p class="hero-tagline">
+        <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
+        <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="get-started.html" class="agtc-button primary">
+          <span class="lang-fr">Démarrer</span>
+          <span class="lang-en">Get started</span>
+        </a>
+        <a href="components/index.html" class="agtc-button secondary">
+          <span class="lang-fr">Voir les composants</span>
+          <span class="lang-en">View components</span>
+        </a>
+        <a href="agents/index.html" class="agtc-button ghost">
+          <span class="lang-fr">Documentation agents →</span>
+          <span class="lang-en">Agent documentation →</span>
+        </a>
+      </div>
+    </div>
+    <div class="layer-stack" aria-hidden="true">
+      <div class="layer-plane l1">
+        <span class="pl-tag"><span class="lang-fr">Niveau 1 · Primitif</span><span class="lang-en">Level 1 · Primitive</span></span>
+        <span class="pl-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></span>
+        <span class="pl-code">primitive.color.teal.11 → #007a68</span>
+      </div>
+      <div class="layer-plane l2">
+        <span class="pl-tag"><span class="lang-fr">Niveau 2 · Sémantique</span><span class="lang-en">Level 2 · Semantic</span></span>
+        <span class="pl-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></span>
+        <span class="pl-code">color.action.primary → {teal.11}</span>
+      </div>
+      <div class="layer-plane l3">
+        <span class="pl-tag"><span class="lang-fr">Niveau 3 · Composant</span><span class="lang-en">Level 3 · Component</span></span>
+        <span class="pl-title"><span class="lang-fr">Contrats UI</span><span class="lang-en">UI contracts</span></span>
+        <span class="pl-code">button.primary.background → {action.primary}</span>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <div class="home-section">
   <h2 class="first">
