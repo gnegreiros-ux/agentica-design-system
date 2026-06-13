@@ -492,7 +492,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-primitive-fontWeight-semibold);
 }
-.content{flex:1;padding:52px 0;max-width:960px}
+.content{flex:1;padding:52px 64px;max-width:960px}
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -818,8 +818,8 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   }
   .sidebar.open{transform:translateX(0)}
   .sidebar-toggle{display:flex}
-  .content{padding:28px 0}
-  .home-section{padding:40px 0}
+  .content{padding:28px 20px}
+  .home-section{padding:40px 20px}
   .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px;margin-top:64px;margin-bottom:0}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
@@ -1121,7 +1121,8 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .nav-card,
 [data-context="marketing"] .info-card,
 [data-context="marketing"] .tool-card,
-[data-context="marketing"] .audience-card{
+[data-context="marketing"] .audience-card,
+[data-context="marketing"] .kpi-card{
   padding:var(--agtc-semantic-space-comfortable-layout-component);
 }
 /* Icônes de card — 32px minimum en contexte Marketing (semantic.icon.size.feature) */
