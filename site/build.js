@@ -968,8 +968,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .platform-logo-item:hover{opacity:1}
 .platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
 .platform-logo-label{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-on-inverse-muted);text-align:center;white-space:nowrap}
-.tool-card-icon .vendor-logo{height:var(--agtc-semantic-icon-size-nav);width:var(--agtc-semantic-icon-size-nav)}
-.tool-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
+.tool-card-icon :is(svg,img){width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 
 /* ── STEP CARDS ──────────────────────────────────────────── */
 .step-card{background:var(--agtc-component-card-default-background);border:1px solid var(--agtc-component-card-default-border);border-radius:var(--agtc-component-card-default-radius);padding:16px}
@@ -1021,7 +1020,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .stack-node{flex:1;min-width:100px;padding:16px 12px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative;font-size:var(--agtc-semantic-typography-label-size)}
 .stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
 .stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
-.stack-node-icon svg{width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control)}
+.stack-node-icon :is(svg,img){width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control)}
 .stack-node-title{font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
 .stack-node-sub{color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
