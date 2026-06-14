@@ -1024,7 +1024,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
 .stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
 .stack-node-icon svg{width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control)}
-.stack-node-label{font-weight:var(--agtc-primitive-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+.stack-node-title{font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
 .stack-node-sub{color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
@@ -2168,7 +2168,7 @@ function buildHome(adrs) {
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
       <div class="stack-node-icon">${ico}</div>
-      <div class="stack-node-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="stack-node-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="stack-node-sub">${sub}</div>
     </div>`).join('')}
   </div>
