@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Afficher un statut, une catégorie ou un compteur de manière compacte et non interactive.
@@ -23,7 +23,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## VARIANTES
+## Variantes
 
 | Variante | Sémantique | Usage typique |
 |----------|-----------|---------------|
@@ -36,7 +36,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## TAILLES
+## Tailles
 
 | Taille | Usage |
 |--------|-------|
@@ -45,7 +45,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -57,7 +57,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Variante | Token background | Token text | Token border |
 |----------|-----------------|-----------|--------------|
@@ -81,7 +81,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -93,7 +93,7 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 Le badge est **non interactif** par défaut.
 
@@ -103,7 +103,7 @@ Le badge est **non interactif** par défaut.
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -128,7 +128,7 @@ Le badge est **non interactif** par défaut.
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Web Component (Lit)
 ```html
@@ -153,7 +153,7 @@ Le badge est **non interactif** par défaut.
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Afficher un **message inline contextuel** (callout / alerte) dans le flux de la page : information,
@@ -24,7 +24,7 @@ succès, avertissement ou erreur. Généralise le `contribution-banner` du site.
 
 ---
 
-## VARIANTES
+## Variantes
 
 | Variante | Sémantique | Usage typique |
 |----------|-----------|---------------|
@@ -37,7 +37,7 @@ succès, avertissement ou erreur. Généralise le `contribution-banner` du site.
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -52,7 +52,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Rôle | Token |
 |------|-------|
@@ -66,7 +66,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -78,7 +78,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - **Inline** : le banner reste dans le flux, ne flotte pas, ne capture pas le focus.
 - **Dismiss** : clic → émet `dismiss` (annulable via `preventDefault`) puis se masque.
@@ -86,7 +86,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -116,7 +116,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Composant (Lit)
 ```html
@@ -145,7 +145,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

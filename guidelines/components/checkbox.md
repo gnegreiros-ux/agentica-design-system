@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Permettre une sélection binaire **indépendante** — cocher/décocher une option, accepter une
@@ -24,7 +24,7 @@ condition, ou marquer une tâche comme faite.
 
 ---
 
-## FORME — DÉCISION
+## Forme — décision
 
 **Carré uniquement.** NN/g recommande explicitement le carré pour une case à cocher ; le rond
 signale conventionnellement un bouton radio. La référence ToDo (cercles) a été écartée au profit
@@ -32,7 +32,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -46,7 +46,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## ÉVÉNEMENTS
+## Événements
 
 | Événement | Détail | Déclenchement |
 |-----------|--------|---------------|
@@ -54,7 +54,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Propriété | Token composant |
 |-----------|-----------------|
@@ -73,7 +73,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -86,7 +86,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## COMPORTEMENTS ET ÉTATS
+## Comportements et états
 
 | État | Comportement |
 |------|-------------|
@@ -99,7 +99,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -129,7 +129,7 @@ de la convention d'usabilité. Voir ADR-037.
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Web Component (Lit)
 ```html
@@ -159,7 +159,7 @@ document.querySelector('agtc-checkbox')
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

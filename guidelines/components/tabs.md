@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Afficher plusieurs sections de contenu dans un même espace, accessibles par onglets horizontaux.
@@ -24,7 +24,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## DISTINCTION AVEC `agtc-segmented`
+## Distinction avec `agtc-segmented`
 
 | | `agtc-tabs` | `agtc-segmented` |
 |---|-------------|------------------|
@@ -35,7 +35,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut / Propriété | Type | Défaut | Description |
 |----------------------|------|--------|-------------|
@@ -69,7 +69,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## ÉTATS
+## États
 
 | État | Comportement |
 |------|-------------|
@@ -81,7 +81,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## CLAVIER
+## Clavier
 
 | Touche | Effet |
 |--------|-------|
@@ -94,7 +94,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## ACCESSIBILITÉ
+## Accessibilité
 
 - `role="tablist"` + `aria-label` sur le conteneur
 - `role="tab"` + `aria-selected` + `aria-controls` sur chaque onglet
@@ -106,7 +106,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## RÈGLES ABSOLUES
+## Règles absolues
 
 ```
 ✅ Toujours un label sur le tablist (attribut label="…")
@@ -120,7 +120,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## TOKENS DE COMPOSANT
+## Tokens de composant
 
 | Token CSS | Référence sémantique |
 |-----------|---------------------|

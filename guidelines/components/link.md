@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Un lien de **navigation** textuel, interne ou externe, inline ou standalone. Formalise les ~2700
@@ -23,7 +23,7 @@ Un lien de **navigation** textuel, interne ou externe, inline ou standalone. For
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -35,7 +35,7 @@ Texte via le **slot**.
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Rôle | Token |
 |------|-------|
@@ -45,7 +45,7 @@ Texte via le **slot**.
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -57,7 +57,7 @@ Texte via le **slot**.
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - `underline="always"` (défaut) : souligné en permanence — recommandé en **texte courant**.
 - `underline="hover"` : souligné au survol uniquement — pour la **nav** (où le contexte distingue déjà le lien).
@@ -66,7 +66,7 @@ Texte via le **slot**.
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -95,7 +95,7 @@ Texte via le **slot**.
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Composant (Lit)
 ```html
@@ -119,7 +119,7 @@ Consulter la <agtc-link href="/guidelines/link">guideline</agtc-link>.
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

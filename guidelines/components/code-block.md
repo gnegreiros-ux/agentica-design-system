@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Afficher un extrait de code en **lecture seule**, copiable, avec indicateur de langue, sur une
@@ -24,7 +24,7 @@ surface sombre. Présent sur quasiment chaque page composant et ADR du site (71 
 
 ---
 
-## ARCHITECTURE — le « mix » (ADR-041)
+## Architecture — le « mix » (ADR-041)
 
 | Forme | Usage | Rendu |
 |-------|-------|-------|
@@ -35,7 +35,7 @@ surface sombre. Présent sur quasiment chaque page composant et ADR du site (71 
 
 ---
 
-## PROPRIÉTÉS (composant `<agtc-code-block>`)
+## Propriétés (composant `<agtc-code-block>`)
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -48,7 +48,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Rôle | Token |
 |------|-------|
@@ -66,7 +66,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -79,7 +79,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - **Lecture seule** — le code n'est pas éditable.
 - **Copie** : clic → `navigator.clipboard.writeText()` → libellé « Copié ! » 1,6 s → annonce AT.
@@ -87,7 +87,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -117,7 +117,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Composant (Lit, slotté)
 ```html
@@ -133,7 +133,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

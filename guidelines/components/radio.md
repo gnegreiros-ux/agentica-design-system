@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Permettre de choisir **exactement une** option dans un ensemble mutuellement exclusif.
@@ -23,7 +23,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## DEUX COMPOSANTS
+## Deux composants
 
 | Élément | Rôle |
 |---------|------|
@@ -35,13 +35,13 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## FORME — DÉCISION
+## Forme — décision
 
 **Ronde.** NN/g : le rond est la convention du bouton radio ; le carré signale une checkbox.
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 ### `<agtc-radio-group>`
 | Attribut | Type | Défaut | Description |
@@ -61,7 +61,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## ÉVÉNEMENTS
+## Événements
 
 | Événement | Émis par | Détail | Déclenchement |
 |-----------|----------|--------|---------------|
@@ -69,7 +69,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## NAVIGATION CLAVIER
+## Navigation clavier
 
 | Touche | Action |
 |--------|--------|
@@ -80,7 +80,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Propriété | Token composant |
 |-----------|-----------------|
@@ -95,7 +95,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -108,7 +108,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -138,7 +138,7 @@ Permettre de choisir **exactement une** option dans un ensemble mutuellement exc
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ```html
 <!-- Groupe avec défaut sélectionné -->
@@ -162,7 +162,7 @@ document.querySelector('agtc-radio-group')
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

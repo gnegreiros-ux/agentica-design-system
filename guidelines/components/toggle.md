@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Activer/désactiver un réglage binaire avec **effet immédiat** — le changement s'applique
@@ -23,7 +23,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## CHECKBOX vs TOGGLE — la règle
+## Checkbox vs Toggle — la règle
 
 | | Checkbox | Toggle |
 |--|----------|--------|
@@ -36,7 +36,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -48,7 +48,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## ÉVÉNEMENTS
+## Événements
 
 | Événement | Détail | Déclenchement |
 |-----------|--------|---------------|
@@ -56,7 +56,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Propriété | Token composant |
 |-----------|-----------------|
@@ -74,7 +74,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -87,7 +87,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## COMPORTEMENTS ET ÉTATS
+## Comportements et états
 
 | État | Comportement |
 |------|-------------|
@@ -99,7 +99,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -128,7 +128,7 @@ instantanément, sans bouton « Enregistrer ».
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ```html
 <!-- Basique -->
@@ -151,7 +151,7 @@ document.querySelector('agtc-toggle')
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

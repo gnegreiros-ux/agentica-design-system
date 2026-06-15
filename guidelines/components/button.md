@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Permettre à l'utilisateur de déclencher une action dans l'interface.
@@ -23,7 +23,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## VARIANTES AUTORISÉES
+## Variantes autorisées
 
 | Variante | Usage | Quand utiliser |
 |----------|-------|----------------|
@@ -36,7 +36,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Propriété | Token sémantique |
 |-----------|-----------------|
@@ -51,7 +51,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -63,7 +63,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## COMPORTEMENTS ET ÉTATS
+## Comportements et états
 
 | État | Comportement |
 |------|-------------|
@@ -84,7 +84,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -111,7 +111,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|
@@ -122,7 +122,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Web Component (Lit)
 ```html

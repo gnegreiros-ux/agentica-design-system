@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Regrouper des informations visuellement liées dans un conteneur délimité, avec support d'en-tête et de pied de page optionnels.
@@ -23,7 +23,7 @@ Regrouper des informations visuellement liées dans un conteneur délimité, ave
 
 ---
 
-## VARIANTES
+## Variantes
 
 | Variante | Effet visuel | Usage |
 |----------|-------------|-------|
@@ -33,7 +33,7 @@ Regrouper des informations visuellement liées dans un conteneur délimité, ave
 
 ---
 
-## PADDING
+## Padding
 
 | Valeur | Taille | Usage |
 |--------|--------|-------|
@@ -44,7 +44,7 @@ Regrouper des informations visuellement liées dans un conteneur délimité, ave
 
 ---
 
-## SLOTS
+## Slots
 
 | Slot | Comportement |
 |------|-------------|
@@ -56,7 +56,7 @@ Les séparateurs sont masqués si le slot est vide (détection via `slotchange`)
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -65,7 +65,7 @@ Les séparateurs sont masqués si le slot est vide (détection via `slotchange`)
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Variante | Token background | Token border | Token shadow |
 |----------|-----------------|-------------|--------------|
@@ -98,7 +98,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -109,7 +109,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - `overflow: hidden` — le contenu ne déborde jamais du rayon
 - Le padding du body est ajusté automatiquement si header/footer présents (pas de double espacement)
@@ -117,7 +117,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## COMPOSITION
+## Composition
 
 ```html
 <!-- Carte cliquable — <a> à l'intérieur -->
@@ -141,7 +141,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -178,7 +178,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Web Component (Lit)
 ```html
@@ -217,7 +217,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

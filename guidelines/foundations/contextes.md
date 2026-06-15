@@ -140,7 +140,7 @@ Ces erreurs s'appliquent spécifiquement au Mode Marketing :
 
 ---
 
-## DO / DON'T
+## Do / Don't
 
 ### DO — Asymétrie contrôlée (page home)
 

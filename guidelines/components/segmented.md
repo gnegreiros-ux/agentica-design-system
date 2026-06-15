@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Choisir **une** option parmi 2 à 5, avec **effet immédiat**, dans un contrôle compact (segments
@@ -25,7 +25,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## DISTINCTION AVEC `agtc-radio-group`
+## Distinction avec `agtc-radio-group`
 
 | | `agtc-segmented` | `agtc-radio-group` |
 |---|------------------|--------------------|
@@ -38,7 +38,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut / Propriété | Type | Défaut | Description |
 |----------------------|------|--------|-------------|
@@ -51,7 +51,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Rôle | Token |
 |------|-------|
@@ -65,7 +65,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -77,7 +77,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - **Effet immédiat** — la sélection s'applique au clic/activation (émet `change`).
 - **Toujours un actif** — pas d'état vide.
@@ -85,7 +85,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -114,7 +114,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Composant (Lit, piloté par données)
 ```html
@@ -136,7 +136,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Fournir la navigation principale horizontale du produit sous forme de liens inter-pages.
@@ -25,7 +25,7 @@ correct : `<nav>` + `<a>` + `aria-current="page"`, pas `role="tablist"`.
 
 ---
 
-## DISTINCTION AVEC `agtc-tabs`
+## Distinction avec `agtc-tabs`
 
 | | `agtc-top-nav` | `agtc-tabs` |
 |---|----------------|-------------|
@@ -37,7 +37,7 @@ correct : `<nav>` + `<a>` + `aria-current="page"`, pas `role="tablist"`.
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Propriété / Attribut | Type | Défaut | Description |
 |----------------------|------|--------|-------------|
@@ -74,7 +74,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## USAGE
+## Usage
 
 ```html
 <agtc-top-nav nav-label="Navigation principale"></agtc-top-nav>
@@ -94,7 +94,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## VARIANTS
+## Variants
 
 | Variant | Description |
 |---------|-------------|
@@ -103,7 +103,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## TOKENS
+## Tokens
 
 ### Tokens de composant (source de vérité)
 
@@ -130,7 +130,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## ÉTATS
+## États
 
 | État | Sélecteur CSS | Comportement |
 |------|---------------|--------------|
@@ -143,7 +143,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## ACCESSIBILITÉ
+## Accessibilité
 
 - `<nav aria-label="...">` — landmark obligatoire, nommé via `nav-label`
 - `aria-current="page"` — appliqué automatiquement sur le lien actif
@@ -168,7 +168,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## RÈGLES POUR LES AGENTS
+## Règles pour les agents
 
 ```
 ✅ Toujours fournir nav-label — l'aria-label est obligatoire pour les AT

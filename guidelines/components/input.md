@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Permettre à l'utilisateur de saisir des données textuelles ou structurées dans un formulaire.
@@ -23,7 +23,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## TYPES SUPPORTÉS
+## Types supportés
 
 | Type | Usage |
 |------|-------|
@@ -37,7 +37,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## PROPRIÉTÉS
+## Propriétés
 
 | Attribut | Type | Défaut | Description |
 |----------|------|--------|-------------|
@@ -59,7 +59,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## ÉVÉNEMENTS
+## Événements
 
 | Événement | Détail | Déclenchement |
 |-----------|--------|---------------|
@@ -68,7 +68,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Propriété | Token composant |
 |-----------|-----------------|
@@ -84,7 +84,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -98,7 +98,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## COMPORTEMENTS ET ÉTATS
+## Comportements et états
 
 | État | Comportement |
 |------|-------------|
@@ -111,7 +111,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -145,7 +145,7 @@ chaque frappe tant que le champ est en état d'erreur. Ne jamais valider à la p
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Web Component (Lit)
 ```html
@@ -189,7 +189,7 @@ chaque frappe tant que le champ est en état d'erreur. Ne jamais valider à la p
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|

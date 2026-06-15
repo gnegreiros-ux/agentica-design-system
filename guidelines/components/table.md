@@ -11,7 +11,7 @@
 
 ---
 
-## INTENTION
+## Intention
 
 **Pourquoi ce composant existe :**
 Présenter des données tabulaires de façon lisible, scannable et accessible, en **lecture seule**.
@@ -24,7 +24,7 @@ C'est le composant le plus utilisé du site (tables de tokens : token → réfé
 
 ---
 
-## ARCHITECTURE — le « mix » (ADR-040)
+## Architecture — le « mix » (ADR-040)
 
 Deux formes consommant **les mêmes tokens** `component.table.*` :
 
@@ -38,7 +38,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## PROPRIÉTÉS (composant `<agtc-table>`)
+## Propriétés (composant `<agtc-table>`)
 
 | Attribut / Propriété | Type | Défaut | Description |
 |----------------------|------|--------|-------------|
@@ -52,7 +52,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## TOKENS UTILISÉS
+## Tokens utilisés
 
 | Rôle | Token |
 |------|-------|
@@ -71,7 +71,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## ACCESSIBILITÉ — NON NÉGOCIABLE
+## Accessibilité — non négociable
 
 | Règle | Valeur |
 |-------|--------|
@@ -84,7 +84,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## COMPORTEMENTS
+## Comportements
 
 - **Lecture seule** — aucune interaction de cellule par défaut.
 - **Survol** de ligne (`row-hover`) pour garder sa ligne à l'œil sur des tables larges.
@@ -93,7 +93,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## ANTI-PATTERNS
+## Anti-patterns
 
 | À éviter | Raison |
 |----------|--------|
@@ -125,7 +125,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## IMPLÉMENTATION
+## Implémentation
 
 ### Composant (Lit, piloté par données)
 ```html
@@ -159,7 +159,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## GOUVERNANCE
+## Gouvernance
 
 | Action | Approbation requise |
 |--------|-------------------|
