@@ -155,7 +155,7 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **C1, C3, C4 approuvés + C2 révisé**.
 

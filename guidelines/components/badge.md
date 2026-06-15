@@ -115,7 +115,7 @@ Le badge est **non interactif** par défaut.
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
 

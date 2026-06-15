@@ -123,7 +123,7 @@ Permettre à l'utilisateur de saisir des données textuelles ou structurées dan
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
 > (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.

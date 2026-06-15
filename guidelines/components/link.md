@@ -78,7 +78,7 @@ Texte via le **slot**.
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/043). Décision : **LK1–LK8 tous approuvés**.
 

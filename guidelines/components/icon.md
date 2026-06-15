@@ -108,7 +108,7 @@ Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icôn
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
 > Pas de story Storybook pour ce composant → propagation sur 5 surfaces.

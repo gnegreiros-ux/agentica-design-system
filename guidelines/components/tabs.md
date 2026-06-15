@@ -135,7 +135,7 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 | Pattern | Source (lien) | Appliqué | Justification |
 |---------|---------------|----------|---------------|

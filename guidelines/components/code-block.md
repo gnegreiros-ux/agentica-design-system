@@ -99,7 +99,7 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/041). Décision : **CD1–CD9 tous approuvés**.
 

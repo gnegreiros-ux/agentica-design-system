@@ -97,7 +97,7 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
 

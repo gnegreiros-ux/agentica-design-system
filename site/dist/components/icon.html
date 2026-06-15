@@ -161,7 +161,7 @@
 ❌ &lt;agtc-icon name="check" style="width: 18px;"&gt;
    → Taille en dur — utiliser size="inline" ou size="control"</code></pre>
 <hr>
-<h2>PATTERNS UX DE RÉFÉRENCE</h2>
+<h2>Patterns UX de référence</h2>
 <blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. Pas de story Storybook pour ce composant → propagation sur 5 surfaces.</p></blockquote>
 <div class="table-wrap"><table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Icône + texte quand le sens n'est pas universel (ne pas se fier à l'icône seule)</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — icon usability</a></td><td>✅</td><td><code>decorative</code> accompagne un texte ; sinon <code>label</code> requis</td></tr><tr><td>Label accessible obligatoire si l'icône porte l'information</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td>Règle absolue — <code>label</code> → <code>aria-label</code></td></tr><tr><td>Icônes décoratives masquées aux AT (<code>aria-hidden</code>)</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Signification cohérente et non trompeuse (même icône = même sens partout)</td><td><a href="https://catalogue.projectsbyif.com/">IF — transparence</a></td><td>✅</td><td>Cohérence sémantique imposée par la bibliothèque Lucide unique (ADR-022)</td></tr></tbody></table></div>
 <hr>

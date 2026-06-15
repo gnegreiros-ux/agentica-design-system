@@ -97,7 +97,7 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/044). Décision : **SG1–SG8 tous approuvés**.
 

@@ -106,7 +106,7 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/040). Décision : **T1–T10 tous approuvés**.
 

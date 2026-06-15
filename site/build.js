@@ -5013,10 +5013,10 @@ git clone ${REPO}.git
 <agtc-button variant="primary">Enregistrer</agtc-button>
 <agtc-button variant="critical">Supprimer le dossier</agtc-button>`);
 
-  // logo : nom de fichier dans integrations/ (couleur de marque), ou icône Lucide pour CSS/JS.
+  // logo : nom de fichier dans integrations/ (couleur de marque)
   const platforms = [
-    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', icon('code',18)],
-    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            icon('code',18)],
+    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
+    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/js.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
     ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
     ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
     ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],

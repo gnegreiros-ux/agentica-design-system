@@ -154,7 +154,7 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 | Pattern | Source | Appliqué | Justification |
 |---------|--------|----------|---------------|

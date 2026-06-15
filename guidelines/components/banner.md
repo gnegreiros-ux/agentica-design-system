@@ -98,7 +98,7 @@ Corps via le **slot** par défaut · actions via **`slot="actions"`**.
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## Patterns UX de référence
 
 > Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/042). Décision : **N1–N9 tous approuvés**.
 
