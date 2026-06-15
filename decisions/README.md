@@ -119,6 +119,7 @@ des décisions déjà tranchées.
 | [ADR-059](ADR-059-semantic-tokens-hierarchy-completion.md) | Fermeture de la hiérarchie 3 niveaux : 18 tokens sémantiques intermédiaires | 2026-06-15 | ✅ Actif |
 | [ADR-060](ADR-060-agtc-top-nav-implementation.md) | Implémentation de `agtc-top-nav` — tabs visuels full-height, nav inter-pages | 2026-06-15 | ✅ Actif |
 | [ADR-061](ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md) | `agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site | 2026-06-15 | ✅ Actif |
+| [ADR-062](ADR-062-bundle-unique-wc-dogfooding-phase1.md) | Bundle unique `agtc.js` + dogfooding Web Components Phase 1 | 2026-06-15 | ✅ Actif |
 
 ---
 

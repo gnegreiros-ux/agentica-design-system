@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../site.css">
-<script src="../components/agtc-top-nav.js" defer></script>
+<script src="../components/agtc.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">
@@ -78,28 +78,28 @@
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Primary — action principale, 1 maximum par section</span><span class="lang-en">Primary — main action, 1 maximum per section</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
-      <button class="agtc-button primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
+      <agtc-button variant="primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></agtc-button>
+      <agtc-button variant="primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Secondary — action alternative</span><span class="lang-en">Secondary — alternative action</span></span>
     <div class="demo-row">
-      <button class="agtc-button secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
-      <button class="agtc-button secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
+      <agtc-button variant="secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></agtc-button>
+      <agtc-button variant="secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Ghost — action tertiaire, faible emphase</span><span class="lang-en">Ghost — tertiary action, low emphasis</span></span>
     <div class="demo-row">
-      <button class="agtc-button ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
-      <button class="agtc-button ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
+      <agtc-button variant="ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></agtc-button>
+      <agtc-button variant="ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Critical — action irréversible (confirmation obligatoire)</span><span class="lang-en">Critical — irreversible action (confirmation required)</span></span>
     <div class="demo-row">
-      <button class="agtc-button critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
+      <agtc-button variant="critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></agtc-button>
     </div>
   </div>
 </div>
@@ -113,25 +113,25 @@
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône avant (prefix)</span><span class="lang-en">Leading icon (prefix)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> <span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></button>
-      <button class="agtc-button secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg> <span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></button>
-      <button class="agtc-button ghost"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> <span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></button>
+      <agtc-button variant="primary" icon="plus"><span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></agtc-button>
+      <agtc-button variant="secondary" icon="download"><span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></agtc-button>
+      <agtc-button variant="ghost" icon="settings"><span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône après (suffix)</span><span class="lang-en">Trailing icon (suffix)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
-      <button class="agtc-button secondary"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></button>
+      <agtc-button variant="primary" icon-suffix="arrow-right"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span></agtc-button>
+      <agtc-button variant="secondary" icon-suffix="external-link"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icon-only — <code>label</code> obligatoire (WCAG 1.1.1)</span><span class="lang-en">Icon-only — <code>label</code> required (WCAG 1.1.1)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary icon-only" aria-label="Ajouter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-      <button class="agtc-button secondary icon-only" aria-label="Modifier"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></button>
-      <button class="agtc-button ghost icon-only" aria-label="Paramètres"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
-      <button class="agtc-button critical icon-only" aria-label="Supprimer définitivement"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
+      <agtc-button variant="primary" icon="plus" icon-only label="Ajouter"></agtc-button>
+      <agtc-button variant="secondary" icon="pencil" icon-only label="Modifier"></agtc-button>
+      <agtc-button variant="ghost" icon="settings" icon-only label="Paramètres"></agtc-button>
+      <agtc-button variant="critical" icon="trash-2" icon-only label="Supprimer définitivement"></agtc-button>
     </div>
   </div>
 </div>
@@ -277,16 +277,11 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
 <h2>PATTERNS UX DE RÉFÉRENCE</h2>
 <blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>.</p></blockquote>
 <div class="table-wrap"><table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Une seule action primaire claire par contexte</td><td><a href="https://ixdf.org/literature/topics/ui-design-patterns">IxDF — clear primary action</a></td><td>✅</td><td>Hiérarchie d'action lisible</td></tr><tr><td>Confirmation explicite pour action destructrice (<code>critical</code>)</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — error prevention</a></td><td>✅</td><td><code>requires-confirmation</code></td></tr><tr><td>Largeur préservée pendant le <code>loading</code></td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing</a></td><td>✅</td><td>Pas de saut de layout</td></tr><tr><td><strong>Ne jamais désactiver sans indiquer la raison</strong> (préférer <code>disabled</code> motivé plutôt que masquer l'action)</td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing — hidden vs disabled</a></td><td>✅</td><td>Un <code>disabled</code> muet est un anti-pattern d'accessibilité — fournir texte d'aide/tooltip expliquant le blocage</td></tr><tr><td>Libellé décrivant la conséquence, pas « OK »</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td>Libellé explicite</td></tr></tbody></table></div>
-<div class="agtc-banner brand" style="margin-top:56px">
-  <span class="banner-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></span>
-  <div class="banner-content">
-    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
-    <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
-  </div>
-  <a class="agtc-link" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" style="white-space:nowrap;flex-shrink:0;align-self:center">
-    <span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>
-  </a>
-</div></main>
+<agtc-banner variant="brand" icon="github" style="margin-top:56px">
+  <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+  <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
+  <agtc-link slot="actions" href="https://github.com/gnegreiros-ux/agentic-design-system" external><span class="lang-fr">Voir sur GitHub</span><span class="lang-en">View on GitHub</span></agtc-link>
+</agtc-banner></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
 

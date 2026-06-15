@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../site.css">
-<script src="../components/agtc-top-nav.js" defer></script>
+<script src="../components/agtc.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">
@@ -79,48 +79,48 @@
     <div class="demo-group">
       <span class="demo-group-label">neutral</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-neutral-background);color:var(--agtc-component-badge-neutral-text);border:1px solid var(--agtc-component-badge-neutral-border)"><span class="lang-fr">Neutre</span><span class="lang-en">Neutral</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-neutral-background);color:var(--agtc-component-badge-neutral-text);border:1px solid var(--agtc-component-badge-neutral-border)"><span class="lang-fr">Neutre (sm)</span><span class="lang-en">Neutral (sm)</span></span>
+        <agtc-badge variant="neutral"><span class="lang-fr">Neutre</span><span class="lang-en">Neutral</span></agtc-badge>
+        <agtc-badge variant="neutral" size="sm"><span class="lang-fr">Neutre (sm)</span><span class="lang-en">Neutral (sm)</span></agtc-badge>
       </div>
     </div>
   
     <div class="demo-group">
       <span class="demo-group-label">brand</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-brand-background);color:var(--agtc-component-badge-brand-text);border:1px solid var(--agtc-component-badge-brand-border)"><span class="lang-fr">Beta</span><span class="lang-en">Beta</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-brand-background);color:var(--agtc-component-badge-brand-text);border:1px solid var(--agtc-component-badge-brand-border)"><span class="lang-fr">Beta (sm)</span><span class="lang-en">Beta (sm)</span></span>
+        <agtc-badge variant="brand"><span class="lang-fr">Beta</span><span class="lang-en">Beta</span></agtc-badge>
+        <agtc-badge variant="brand" size="sm"><span class="lang-fr">Beta (sm)</span><span class="lang-en">Beta (sm)</span></agtc-badge>
       </div>
     </div>
   
     <div class="demo-group">
       <span class="demo-group-label">success</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-success-background);color:var(--agtc-component-badge-success-text);border:1px solid var(--agtc-component-badge-success-border)"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-success-background);color:var(--agtc-component-badge-success-text);border:1px solid var(--agtc-component-badge-success-border)"><span class="lang-fr">Actif (sm)</span><span class="lang-en">Active (sm)</span></span>
+        <agtc-badge variant="success"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
+        <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif (sm)</span><span class="lang-en">Active (sm)</span></agtc-badge>
       </div>
     </div>
   
     <div class="demo-group">
       <span class="demo-group-label">warning</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text);border:1px solid var(--agtc-component-badge-warning-border)"><span class="lang-fr">En attente</span><span class="lang-en">Pending</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-warning-background);color:var(--agtc-component-badge-warning-text);border:1px solid var(--agtc-component-badge-warning-border)"><span class="lang-fr">En attente (sm)</span><span class="lang-en">Pending (sm)</span></span>
+        <agtc-badge variant="warning"><span class="lang-fr">En attente</span><span class="lang-en">Pending</span></agtc-badge>
+        <agtc-badge variant="warning" size="sm"><span class="lang-fr">En attente (sm)</span><span class="lang-en">Pending (sm)</span></agtc-badge>
       </div>
     </div>
   
     <div class="demo-group">
       <span class="demo-group-label">danger</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text);border:1px solid var(--agtc-component-badge-danger-border)"><span class="lang-fr">Rejeté</span><span class="lang-en">Rejected</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-danger-background);color:var(--agtc-component-badge-danger-text);border:1px solid var(--agtc-component-badge-danger-border)"><span class="lang-fr">Rejeté (sm)</span><span class="lang-en">Rejected (sm)</span></span>
+        <agtc-badge variant="danger"><span class="lang-fr">Rejeté</span><span class="lang-en">Rejected</span></agtc-badge>
+        <agtc-badge variant="danger" size="sm"><span class="lang-fr">Rejeté (sm)</span><span class="lang-en">Rejected (sm)</span></agtc-badge>
       </div>
     </div>
   
     <div class="demo-group">
       <span class="demo-group-label">info</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text);border:1px solid var(--agtc-component-badge-info-border)"><span class="lang-fr">En cours</span><span class="lang-en">In progress</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-info-background);color:var(--agtc-component-badge-info-text);border:1px solid var(--agtc-component-badge-info-border)"><span class="lang-fr">En cours (sm)</span><span class="lang-en">In progress (sm)</span></span>
+        <agtc-badge variant="info"><span class="lang-fr">En cours</span><span class="lang-en">In progress</span></agtc-badge>
+        <agtc-badge variant="info" size="sm"><span class="lang-fr">En cours (sm)</span><span class="lang-en">In progress (sm)</span></agtc-badge>
       </div>
     </div>
 </div>
@@ -188,16 +188,11 @@
 <h2>PATTERNS UX DE RÉFÉRENCE</h2>
 <blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>.</p></blockquote>
 <div class="table-wrap"><table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Statut pas encodé uniquement par la couleur</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — indicators</a></td><td>✅</td><td><strong>Recommandé</strong> : pour les statuts critiques (<code>danger</code>/<code>warning</code>), ajouter une icône ou un libellé distinctif (non imposé, mais bonne pratique)</td></tr><tr><td><code>role="status"</code> pour annoncer les changements aux AT</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td>Déjà en place</td></tr><tr><td>Mapping sémantique cohérent (traffic-light)</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard — color/semantic</a></td><td>✅</td><td>Variantes success/warning/danger</td></tr><tr><td>Badge non interactif — encapsuler si cliquable</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td>Anti-pattern existant</td></tr></tbody></table></div>
-<div class="agtc-banner brand" style="margin-top:56px">
-  <span class="banner-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></span>
-  <div class="banner-content">
-    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
-    <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
-  </div>
-  <a class="agtc-link" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" style="white-space:nowrap;flex-shrink:0;align-self:center">
-    <span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>
-  </a>
-</div></main>
+<agtc-banner variant="brand" icon="github" style="margin-top:56px">
+  <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+  <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
+  <agtc-link slot="actions" href="https://github.com/gnegreiros-ux/agentic-design-system" external><span class="lang-fr">Voir sur GitHub</span><span class="lang-en">View on GitHub</span></agtc-link>
+</agtc-banner></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
 

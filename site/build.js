@@ -19,17 +19,13 @@ const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: t
 // Bundle chaque Web Component Lit avec ses dépendances (esbuild, IIFE).
 // Le site charge les bundles via <script defer> — pas de bundler côté site.
 function bundleComponents() {
-  const compDist   = path.join(DIST, 'components');
   const esbuildBin = path.join(ROOT, 'node_modules', '.bin', 'esbuild');
-  ensureDir(compDist);
-  const components = [
-    { entry: path.join(ROOT, 'components', 'agtc-top-nav.js'), out: path.join(compDist, 'agtc-top-nav.js') },
-  ];
-  for (const { entry, out } of components) {
-    if (fs.existsSync(entry)) {
-      execSync(`"${esbuildBin}" "${entry}" --bundle --format=iife --outfile="${out}" --minify`, { cwd: ROOT });
-      console.log(`  bundled: site/dist/components/${path.basename(out)}`);
-    }
+  const entry = path.join(ROOT, 'components', 'index.js');
+  const out   = path.join(DIST, 'components', 'agtc.js');
+  ensureDir(path.dirname(out));
+  if (fs.existsSync(entry)) {
+    execSync(`"${esbuildBin}" "${entry}" --bundle --format=iife --outfile="${out}" --minify`, { cwd: ROOT });
+    console.log('  bundled: site/dist/components/agtc.js');
   }
 }
 const write = (fp, c) => { ensureDir(path.dirname(fp)); fs.writeFileSync(fp, c, 'utf8'); };
@@ -1656,7 +1652,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
-<script src="${base}components/agtc-top-nav.js" defer></script>
+<script src="${base}components/agtc.js" defer></script>
 </head>
 <body${context ? ` data-context="${context}"` : ''}>
 <a class="skip-link" href="#main-content">
@@ -1784,16 +1780,11 @@ function uxPatternsFromMd(comp) {
 function contributionBanner() {
   // Dogfooding (cat. A) : consomme la classe .agtc-banner (ADR-042) + .agtc-link (ADR-043).
   return `
-<div class="agtc-banner brand" style="margin-top:56px">
-  <span class="banner-icon">${icon('github', 24)}</span>
-  <div class="banner-content">
-    <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
-    <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
-  </div>
-  <a class="agtc-link" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" style="white-space:nowrap;flex-shrink:0;align-self:center">
-    <span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>
-  </a>
-</div>`;
+<agtc-banner variant="brand" icon="github" style="margin-top:56px">
+  <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
+  <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
+  <agtc-link slot="actions" href="https://github.com/gnegreiros-ux/agentic-design-system" external><span class="lang-fr">Voir sur GitHub</span><span class="lang-en">View on GitHub</span></agtc-link>
+</agtc-banner>`;
 }
 
 // ─── PAGE: HOME ────────────────────────────────────────────────────────────
@@ -2888,28 +2879,28 @@ function buildButton() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Primary — action principale, 1 maximum par section</span><span class="lang-en">Primary — main action, 1 maximum per section</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></button>
-      <button class="agtc-button primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></button>
+      <agtc-button variant="primary"><span class="lang-fr">Enregistrer les modifications</span><span class="lang-en">Save changes</span></agtc-button>
+      <agtc-button variant="primary" disabled><span class="lang-fr">Enregistrer (désactivé)</span><span class="lang-en">Save (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Secondary — action alternative</span><span class="lang-en">Secondary — alternative action</span></span>
     <div class="demo-row">
-      <button class="agtc-button secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></button>
-      <button class="agtc-button secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></button>
+      <agtc-button variant="secondary"><span class="lang-fr">Annuler</span><span class="lang-en">Cancel</span></agtc-button>
+      <agtc-button variant="secondary" disabled><span class="lang-fr">Annuler (désactivé)</span><span class="lang-en">Cancel (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Ghost — action tertiaire, faible emphase</span><span class="lang-en">Ghost — tertiary action, low emphasis</span></span>
     <div class="demo-row">
-      <button class="agtc-button ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></button>
-      <button class="agtc-button ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></button>
+      <agtc-button variant="ghost"><span class="lang-fr">En savoir plus</span><span class="lang-en">Learn more</span></agtc-button>
+      <agtc-button variant="ghost" disabled><span class="lang-fr">En savoir plus (désactivé)</span><span class="lang-en">Learn more (disabled)</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Critical — action irréversible (confirmation obligatoire)</span><span class="lang-en">Critical — irreversible action (confirmation required)</span></span>
     <div class="demo-row">
-      <button class="agtc-button critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></button>
+      <agtc-button variant="critical"><span class="lang-fr">Supprimer définitivement</span><span class="lang-en">Delete permanently</span></agtc-button>
     </div>
   </div>
 </div>
@@ -2923,25 +2914,25 @@ function buildButton() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône avant (prefix)</span><span class="lang-en">Leading icon (prefix)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary">${icon('plus',16)} <span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></button>
-      <button class="agtc-button secondary">${icon('download',16)} <span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></button>
-      <button class="agtc-button ghost">${icon('settings',16)} <span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></button>
+      <agtc-button variant="primary" icon="plus"><span class="lang-fr">Ajouter</span><span class="lang-en">Add</span></agtc-button>
+      <agtc-button variant="secondary" icon="download"><span class="lang-fr">Télécharger</span><span class="lang-en">Download</span></agtc-button>
+      <agtc-button variant="ghost" icon="settings"><span class="lang-fr">Paramètres</span><span class="lang-en">Settings</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icône après (suffix)</span><span class="lang-en">Trailing icon (suffix)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span> ${icon('arrow-right',16)}</button>
-      <button class="agtc-button secondary"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span> ${icon('external-link',16)}</button>
+      <agtc-button variant="primary" icon-suffix="arrow-right"><span class="lang-fr">Continuer</span><span class="lang-en">Continue</span></agtc-button>
+      <agtc-button variant="secondary" icon-suffix="external-link"><span class="lang-fr">Exporter</span><span class="lang-en">Export</span></agtc-button>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icon-only — <code>label</code> obligatoire (WCAG 1.1.1)</span><span class="lang-en">Icon-only — <code>label</code> required (WCAG 1.1.1)</span></span>
     <div class="demo-row">
-      <button class="agtc-button primary icon-only" aria-label="Ajouter">${icon('plus',16)}</button>
-      <button class="agtc-button secondary icon-only" aria-label="Modifier">${icon('pencil',16)}</button>
-      <button class="agtc-button ghost icon-only" aria-label="Paramètres">${icon('settings',16)}</button>
-      <button class="agtc-button critical icon-only" aria-label="Supprimer définitivement">${icon('trash-2',16)}</button>
+      <agtc-button variant="primary" icon="plus" icon-only label="Ajouter"></agtc-button>
+      <agtc-button variant="secondary" icon="pencil" icon-only label="Modifier"></agtc-button>
+      <agtc-button variant="ghost" icon="settings" icon-only label="Paramètres"></agtc-button>
+      <agtc-button variant="critical" icon="trash-2" icon-only label="Supprimer définitivement"></agtc-button>
     </div>
   </div>
 </div>
@@ -3318,8 +3309,8 @@ function buildBadge() {
     <div class="demo-group">
       <span class="demo-group-label">${variant}</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-${variant}-background);color:var(--agtc-component-badge-${variant}-text);border:1px solid var(--agtc-component-badge-${variant}-border)"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
-        <span style="display:inline-flex;align-items:center;padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);border-radius:var(--agtc-component-badge-sm-radius);font-size:var(--agtc-component-badge-sm-font-size);font-weight:var(--agtc-semantic-typography-label-weight);background:var(--agtc-component-badge-${variant}-background);color:var(--agtc-component-badge-${variant}-text);border:1px solid var(--agtc-component-badge-${variant}-border)"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></span>
+        <agtc-badge variant="${variant}"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></agtc-badge>
+        <agtc-badge variant="${variant}" size="sm"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></agtc-badge>
       </div>
     </div>`;
 
@@ -4048,11 +4039,11 @@ function buildBanner() {
     ['banner-padding-x',      'primitive.space.5',                     '20px'],
   ];
 
-  const bannerDemo = (variant, iconName, headFr, headEn, bodyFr, bodyEn) => `
-    <div class="agtc-banner ${variant}">
-      <span class="banner-icon">${icon(iconName, 20)}</span>
-      <div class="banner-content"><strong><span class="lang-fr">${headFr}</span><span class="lang-en">${headEn}</span></strong><span><span class="lang-fr">${bodyFr}</span><span class="lang-en">${bodyEn}</span></span></div>
-    </div>`;
+  const bannerDemo = (variant, headFr, headEn, bodyFr, bodyEn) => `
+    <agtc-banner variant="${variant}">
+      <strong><span class="lang-fr">${headFr}</span><span class="lang-en">${headEn}</span></strong>
+      <span><span class="lang-fr">${bodyFr}</span><span class="lang-en">${bodyEn}</span></span>
+    </agtc-banner>`;
 
   const body = `
 <h1>Banner</h1>
@@ -4063,12 +4054,12 @@ function buildBanner() {
 
 <h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
 <div class="demo-box" style="display:flex;flex-direction:column;gap:4px;background:none;border:none;padding:0">
-  ${bannerDemo('neutral', 'info', 'Neutre', 'Neutral', 'Message neutre informatif.', 'Neutral informational message.')}
-  ${bannerDemo('brand', 'sparkles', 'Agentica', 'Agentica', 'Highlight de marque ou contribution.', 'Brand highlight or contribution.')}
-  ${bannerDemo('info', 'info', 'Information', 'Information', 'Ce composant est en lecture seule.', 'This component is read-only.')}
-  ${bannerDemo('success', 'circle-check', 'Enregistré', 'Saved', 'Vos modifications ont été sauvegardées.', 'Your changes have been saved.')}
-  ${bannerDemo('warning', 'triangle-alert', 'Attention', 'Warning', 'Cette action affectera 3 fichiers liés.', 'This action will affect 3 linked files.')}
-  ${bannerDemo('danger', 'octagon-alert', 'Erreur', 'Error', 'Impossible de contacter le serveur.', 'Could not reach the server.')}
+  ${bannerDemo('neutral', 'Neutre', 'Neutral', 'Message neutre informatif.', 'Neutral informational message.')}
+  ${bannerDemo('brand', 'Agentica', 'Agentica', 'Highlight de marque ou contribution.', 'Brand highlight or contribution.')}
+  ${bannerDemo('info', 'Information', 'Information', 'Ce composant est en lecture seule.', 'This component is read-only.')}
+  ${bannerDemo('success', 'Enregistré', 'Saved', 'Vos modifications ont été sauvegardées.', 'Your changes have been saved.')}
+  ${bannerDemo('warning', 'Attention', 'Warning', 'Cette action affectera 3 fichiers liés.', 'This action will affect 3 linked files.')}
+  ${bannerDemo('danger', 'Erreur', 'Error', 'Impossible de contacter le serveur.', 'Could not reach the server.')}
 </div>
 
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
@@ -4144,8 +4135,7 @@ function buildLink() {
     ['link-default-border-focus', 'semantic.color.border.focus',         SEM['color-border-focus']],
   ];
 
-  // Démo : vrais <a class="agtc-link"> — côté light DOM du mix.
-  const extIcon = `<span aria-hidden="true" style="display:inline-block;line-height:0;margin-left:2px;vertical-align:baseline">${icon('arrow-up-right', 14)}</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>`;
+  // Démo : vrais <agtc-link> — shadow DOM, external gère l'icône et le visually-hidden automatiquement.
 
   const body = `
 <h1>Link</h1>
@@ -4156,9 +4146,9 @@ function buildLink() {
 
 <h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
 <div class="demo-box" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
-  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Consulter la </span><span class="lang-en">See the </span><a class="agtc-link" href="#guideline"><span class="lang-fr">guideline du composant</span><span class="lang-en">component guideline</span></a><span class="lang-fr"> pour les détails.</span><span class="lang-en"> for details.</span></p>
-  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Lien externe : </span><span class="lang-en">External link: </span><a class="agtc-link" href="https://www.nngroup.com/articles/guidelines-for-visualizing-links/" target="_blank" rel="noopener noreferrer">NN/g — Visualizing Links${extIcon}</a></p>
-  <div style="display:flex;gap:18px"><a class="agtc-link underline-hover" href="#a"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a><a class="agtc-link underline-hover" href="#b"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a class="agtc-link underline-hover" href="#c">Tokens</a></div>
+  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Consulter la </span><span class="lang-en">See the </span><agtc-link href="#guideline"><span class="lang-fr">guideline du composant</span><span class="lang-en">component guideline</span></agtc-link><span class="lang-fr"> pour les détails.</span><span class="lang-en"> for details.</span></p>
+  <p style="margin:0;color:var(--agtc-semantic-color-text-primary)"><span class="lang-fr">Lien externe : </span><span class="lang-en">External link: </span><agtc-link href="https://www.nngroup.com/articles/guidelines-for-visualizing-links/" external>NN/g — Visualizing Links</agtc-link></p>
+  <div style="display:flex;gap:18px"><agtc-link href="#a" underline="hover"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></agtc-link><agtc-link href="#b" underline="hover"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></agtc-link><agtc-link href="#c" underline="hover">Tokens</agtc-link></div>
 </div>
 
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
@@ -4233,11 +4223,11 @@ function buildSegmented() {
     ['segmented-default-radius',             'semantic.radius.control',          SEM['radius-control']],
   ];
 
-  // Démo : vrais <div class="agtc-segmented"> — visuel statique (un segment actif).
-  const seg = (label, opts) => `
-    <div class="agtc-segmented" role="group" aria-label="${label}">
-      ${opts.map(([l, sel]) => `<button type="button" aria-current="${sel ? 'true' : 'false'}">${l}</button>`).join('')}
-    </div>`;
+  // Démo : vrais <agtc-segmented> — options via attribut JSON (Lit Array converter).
+  const seg = (label, opts, val) => {
+    const options = JSON.stringify(opts.map(l => ({ value: l.toLowerCase(), label: l })));
+    return `<agtc-segmented label="${label}" options='${options}' value="${val}"></agtc-segmented>`;
+  };
 
   const body = `
 <h1>Segmented</h1>
@@ -4248,8 +4238,8 @@ function buildSegmented() {
 
 <h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
 <div class="demo-box" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
-  ${seg('Langue', [['FR', true], ['EN', false]])}
-  ${seg('Densité', [['Compact', false], ['Normal', true], ['Confort', false]])}
+  ${seg('Langue', ['FR', 'EN'], 'fr')}
+  ${seg('Densité', ['Compact', 'Normal', 'Confort'], 'normal')}
 </div>
 
 <h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
@@ -4701,7 +4691,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><span class="agtc-badge success sm"><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
+  <td><agtc-badge variant="success" size="sm" icon="circle-check"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
 
@@ -4754,7 +4744,7 @@ function buildADR(adr, adrs) {
   while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
   const content = parseMd(lines.slice(start).join('\n'));
 
-  const statusBadge = `<span class="agtc-badge success sm">${icon('circle-check',14)} <span class="lang-fr">Actif</span><span class="lang-en">Active</span></span>`;
+  const statusBadge = `<agtc-badge variant="success" size="sm" icon="circle-check"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
   const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
   const meta = `
 <div class="adr-header">
@@ -4979,16 +4969,13 @@ git clone ${REPO}.git
   <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable. Here is how to integrate it in minutes.</span>
 </p>
 
-<div class="agtc-banner info" role="note">
-  <span class="banner-icon">${icon('info', 20)}</span>
-  <div class="banner-content">
-    <strong><span class="lang-fr">Pré-version (v0.x)</span><span class="lang-en">Pre-release (v0.x)</span></strong>
-    <span>
-      <span class="lang-fr">Aujourd'hui, Agentica se consomme directement depuis le dépôt (tokens compilés + Web Components). La publication sur <strong>npm est à venir</strong> — les commandes <code>npm</code> ci-dessous décrivent la trajectoire cible.</span>
-      <span class="lang-en">Today, Agentica is consumed directly from the repository (compiled tokens + Web Components). Publishing to <strong>npm is coming</strong> — the <code>npm</code> commands below describe the target path.</span>
-    </span>
-  </div>
-</div>
+<agtc-banner variant="info">
+  <strong><span class="lang-fr">Pré-version (v0.x)</span><span class="lang-en">Pre-release (v0.x)</span></strong>
+  <span>
+    <span class="lang-fr">Aujourd'hui, Agentica se consomme directement depuis le dépôt (tokens compilés + Web Components). La publication sur <strong>npm est à venir</strong> — les commandes <code>npm</code> ci-dessous décrivent la trajectoire cible.</span>
+    <span class="lang-en">Today, Agentica is consumed directly from the repository (compiled tokens + Web Components). Publishing to <strong>npm is coming</strong> — the <code>npm</code> commands below describe the target path.</span>
+  </span>
+</agtc-banner>
 
 <h2 class="first"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></h2>
 <div class="grid-3">
@@ -5033,16 +5020,13 @@ git clone ${REPO}.git
 </p>
 <pre class="code-block"><code class="lang-html">${wcCode}</code></pre>
 
-<div class="agtc-banner brand" role="note">
-  <span class="banner-icon">${icon('shield-check', 20)}</span>
-  <div class="banner-content">
-    <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
-    <span>
-      <span class="lang-fr">Jamais de valeur en dur. Toujours via un token sémantique. Cette indirection est ce qui rend vos décisions applicables par des agents IA — sans interprétation. <a href="tokens/index.html">Voir les trois niveaux →</a></span>
-      <span class="lang-en">Never a hardcoded value. Always through a semantic token. This indirection is what makes your decisions applicable by AI agents — without interpretation. <a href="tokens/index.html">See the three levels →</a></span>
-    </span>
-  </div>
-</div>
+<agtc-banner variant="brand" icon="shield-check">
+  <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
+  <span>
+    <span class="lang-fr">Jamais de valeur en dur. Toujours via un token sémantique. Cette indirection est ce qui rend vos décisions applicables par des agents IA — sans interprétation. <a href="tokens/index.html">Voir les trois niveaux →</a></span>
+    <span class="lang-en">Never a hardcoded value. Always through a semantic token. This indirection is what makes your decisions applicable by AI agents — without interpretation. <a href="tokens/index.html">See the three levels →</a></span>
+  </span>
+</agtc-banner>
 
 <h2><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></h2>
 <p>
