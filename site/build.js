@@ -2357,7 +2357,7 @@ function buildColor() {
 
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
     const swatches = Object.entries(steps).map(([step, { value, desc }]) =>
-      `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="Étape ${step}: ${value}"></div>`
+      `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="${scale} étape ${step}: ${value}"></div>`
     ).join('');
     return `<div class="palette-section"><div class="palette-scale-name">${scale}</div><div class="palette-steps">${swatches}</div></div>`;
   }).join('');
@@ -2411,7 +2411,7 @@ function buildColor() {
   <span class="lang-en"><strong>Why Radix UI?</strong> Each palette is tested to guarantee WCAG AA contrast at steps 11–12, and designed to work in light and dark mode without token overhead. Steps are perceptually uniform — the visual jump between two consecutive steps is constant regardless of hue.</span>
 </p></blockquote>
 
-<div class="palette-section">${palette}</div>
+<div class="palette-grid">${palette}</div>
 
 <h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
 <p>
