@@ -4,22 +4,28 @@ import { LitElement, html, css, nothing } from 'lit';
 // Navigation principale horizontale — pattern tabs visuels full-height header.
 // Sémantique : role=navigation (pas role=tablist) + aria-current="page".
 //
-//   items = [{ label, href, cta? }]
-//     label  — texte du lien (gérer la langue côté consommateur)
-//     href   — URL de destination
-//     cta    — true → bouton d'adoption (Démarrer), sort du pattern tab
+//   items = [{ label?, labelFr?, labelEn?, href, cta? }]
+//     label    — texte unique (langue neutre)
+//     labelFr  — texte français (prioritaire si data-lang="fr")
+//     labelEn  — texte anglais (prioritaire si data-lang="en")
+//     href     — URL de destination
+//     cta      — true → bouton d'adoption (Démarrer), sort du pattern tab
 //
 //   current   — pathname actif pour la détection automatique (défaut: window.location.pathname)
 //   nav-label — aria-label de l'élément <nav> (requis pour les AT)
+//
+// Bilinguisme : le composant observe document.documentElement[data-lang]
+//   et re-render automatiquement quand la langue change.
+//
+// Mobile : le composant gère son propre état responsive.
+//   Ajouter la classe CSS .open (ou l'attribut open) sur l'hôte pour ouvrir.
+//   Le site contrôle l'ouverture via : topNavEl.classList.toggle('open')
 //
 // DISTINCTION CRITIQUE avec agtc-tabs :
 //   agtc-tabs    → role=tablist, navigation in-page, panneau de contenu associé
 //   agtc-top-nav → role=navigation, navigation inter-pages, aria-current="page"
 //
 // Règle no-visited-nav (ADR-047) : :visited neutralisé sur tous les liens.
-//   Exception Safari (ADR-059) : la valeur résolue est fournie via CSS custom
-//   property car var() est ignoré dans :visited sur WebKit.
-//
 // Patterns UX de référence appliqués (ADR-060) :
 //   Nav principale = landmark navigation — W3C WAI https://www.w3.org/WAI/ARIA/apg/
 //   aria-current="page" sur le lien actif — WCAG 2.4.4 + 4.1.2
@@ -35,6 +41,7 @@ class AgtcTopNav extends LitElement {
     items:    { type: Array },
     current:  { type: String },
     navLabel: { type: String, attribute: 'nav-label' },
+    _lang:    { type: String, state: true },
   };
 
   constructor() {
@@ -42,6 +49,8 @@ class AgtcTopNav extends LitElement {
     this.items    = [];
     this.current  = '';
     this.navLabel = 'Navigation principale';
+    this._lang    = 'fr';
+    this._observer = null;
   }
 
   connectedCallback() {
@@ -49,6 +58,26 @@ class AgtcTopNav extends LitElement {
     if (!this.current && typeof window !== 'undefined') {
       this.current = window.location.pathname;
     }
+    if (typeof document !== 'undefined') {
+      this._lang = document.documentElement.dataset.lang || 'fr';
+      this._observer = new MutationObserver(() => {
+        this._lang = document.documentElement.dataset.lang || 'fr';
+      });
+      this._observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+  }
+
+  _label(item) {
+    if (this._lang === 'en') return item.labelEn || item.label || '';
+    return item.labelFr || item.label || '';
   }
 
   _isActive(href) {
@@ -145,18 +174,65 @@ class AgtcTopNav extends LitElement {
       background: var(--agtc-component-top-nav-cta-background);
       border-bottom: none;
     }
+
+    /* ── Mobile : drawer vertical ─────────────────────────── */
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        position: fixed;
+        top: var(--agtc-header-height, 64px);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--agtc-semantic-color-background-surface);
+        border-bottom: 1px solid var(--agtc-semantic-color-border-default);
+        padding: 8px 0;
+        z-index: 99;
+        box-shadow: var(--agtc-shadow-md);
+        margin-left: 0;
+        align-self: auto;
+      }
+
+      /* Ouverture via classe .open sur l'hôte */
+      :host(.open) nav {
+        display: flex;
+      }
+
+      a {
+        padding: 12px 24px;
+        border-bottom: none;
+        border-radius: 0;
+        font-size: var(--agtc-semantic-typography-label-size);
+      }
+
+      a[aria-current="page"] {
+        border-bottom: none;
+        border-left: 3px solid var(--agtc-component-top-nav-tab-indicator-color);
+        padding-left: 21px;
+        border-bottom-color: transparent;
+      }
+
+      a.cta {
+        height: auto;
+        align-self: unset;
+        margin: 4px 16px;
+        border-radius: var(--agtc-semantic-radius-control);
+        border-bottom: none;
+        padding: 10px 14px;
+      }
+    }
   `;
 
   render() {
     return html`
-      <nav aria-label="${this.navLabel}">
+      <nav part="nav" aria-label="${this.navLabel}">
         ${this.items.map(item => {
           const active = this._isActive(item.href);
           return html`<a
             href="${item.href}"
             class="${item.cta ? 'cta' : ''}"
             aria-current="${active ? 'page' : nothing}"
-          >${item.label}</a>`;
+          >${this._label(item)}</a>`;
         })}
       </nav>
     `;

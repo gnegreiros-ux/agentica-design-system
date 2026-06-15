@@ -41,7 +41,7 @@ correct : `<nav>` + `<a>` + `aria-current="page"`, pas `role="tablist"`.
 
 | Propriété / Attribut | Type | Défaut | Description |
 |----------------------|------|--------|-------------|
-| `items` | Array | `[]` | `[{ label, href, cta? }]` — liste des liens |
+| `items` | Array | `[]` | `[{ label?, labelFr?, labelEn?, href, cta? }]` — liste des liens |
 | `current` | String | `window.location.pathname` | Pathname pour détection du lien actif |
 | `nav-label` | String | `"Navigation principale"` | `aria-label` de l'élément `<nav>` (**requis** pour les AT) |
 
@@ -49,10 +49,27 @@ correct : `<nav>` + `<a>` + `aria-current="page"`, pas `role="tablist"`.
 
 ```javascript
 {
-  label: 'Tokens',          // texte visible (gérer la langue côté consommateur)
-  href:  '../tokens/',      // URL de destination
-  cta:   false,             // true → bouton CTA d'adoption (Démarrer)
+  labelFr: 'Tokens',        // texte français (affiché quand data-lang="fr")
+  labelEn: 'Tokens',        // texte anglais (affiché quand data-lang="en")
+  label:   'Tokens',        // fallback langue neutre (si labelFr/labelEn absents)
+  href:    '../tokens/',    // URL de destination
+  cta:     false,           // true → bouton CTA d'adoption (Démarrer)
 }
+```
+
+### Bilinguisme
+
+Le composant observe `document.documentElement[data-lang]` via `MutationObserver`
+et re-render automatiquement quand la langue change. Il n'est pas nécessaire de
+re-assigner `.items` lors d'un changement de langue.
+
+### Mobile — état ouvert
+
+Ajouter la classe CSS `.open` sur l'hôte `<agtc-top-nav>` pour ouvrir le drawer mobile.
+Le composant gère son propre CSS responsive via `@media (max-width: 768px)` en shadow DOM.
+
+```javascript
+document.querySelector('agtc-top-nav').classList.toggle('open');
 ```
 
 ---

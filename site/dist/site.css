@@ -31,59 +31,23 @@ body{
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
 .logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
-.top-nav{display:flex;align-self:stretch;align-items:stretch;gap:0;margin-left:auto}
-.top-nav a{
-  display:flex;align-items:center;
-  text-decoration:none;
-  color:var(--agtc-component-top-nav-tab-color);
-  font-size:var(--agtc-component-top-nav-tab-font-size);
-  font-weight:var(--agtc-component-top-nav-tab-font-weight);
-  padding:0 var(--agtc-component-top-nav-tab-padding-x);
-  border-radius:0;
-  border-bottom:var(--agtc-component-top-nav-tab-indicator-width) solid transparent;
-  white-space:nowrap;
-  transition:background .12s,color .12s,border-color .12s;
-}
-/* ── Règle système : no-visited-nav ──────────────────────────────────────
-   Les éléments de navigation ne portent jamais d'état :visited distinct
-   (la navigation n'est pas du contenu « lu / non lu »). La couleur visitée
-   est réalignée sur l'état non-visité. Voir .claude/rules/no-visited-nav.md.
-   Déclaré AVANT les règles :hover/.active — spécificité égale, le sélecteur
-   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé.
-   IMPORTANT : Safari bloque var() dans :visited (history-sniffing protection).
-   On fournit la valeur hex littérale résolue AVANT le var() : Safari applique
-   le hex, Chrome/Firefox appliquent var() — résultat identique. */
-.top-nav a:visited,
+/* ── Règle système : no-visited-nav (ADR-047) ───────────────────────────
+   Les éléments de navigation ne portent jamais d'état :visited distinct.
+   Exception Safari : valeur hex avant var() (ADR-059).
+   agtc-top-nav gère :visited dans son shadow DOM (ADR-060). */
 .sidebar a:visited,
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
 .storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
-.top-nav a.nav-cta:visited {color:#ffffff;color:var(--agtc-semantic-color-text-on-action)}
 .footer-links a:visited    {color:rgba(255,255,255,.75);color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 .audit-footer-link:visited {color:rgba(255,255,255,.52);color:var(--agtc-semantic-color-text-on-inverse-muted)}
 /* Dark mode — valeurs résolues pour Safari (var() ignoré dans :visited) */
-[data-theme="dark"] .top-nav a:visited,
 [data-theme="dark"] .sidebar a:visited,
 [data-theme="dark"] .toc a:visited,
 [data-theme="dark"] .nav-card:visited,
 [data-theme="dark"] .github-btn:visited,
 [data-theme="dark"] .storybook-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
-[data-theme="dark"] .top-nav a.nav-cta:visited {color:#04201c;color:var(--agtc-semantic-color-text-on-action)}
-.top-nav a:hover{background:var(--agtc-component-top-nav-tab-background-hover);color:var(--agtc-component-top-nav-tab-color-hover)}
-.top-nav a:active{background:var(--agtc-component-top-nav-tab-background-hover);color:var(--agtc-component-top-nav-tab-color-hover)}
-.top-nav a:focus-visible{outline:2px solid var(--agtc-component-top-nav-tab-focus-ring);outline-offset:2px}
-.top-nav a.active{background:transparent;color:var(--agtc-component-top-nav-tab-color-active);font-weight:var(--agtc-component-top-nav-tab-font-weight-active);border-bottom-color:var(--agtc-component-top-nav-tab-indicator-color)}
-/* DÉMARRER = bouton CTA — sort du pattern tab, reste un bouton */
-.top-nav a.nav-cta,.top-nav a.nav-cta.active{
-  height:auto;align-self:center;
-  padding:var(--agtc-component-top-nav-cta-padding-y) var(--agtc-component-top-nav-cta-padding-x);
-  border-radius:var(--agtc-component-top-nav-cta-radius);border-bottom:none;
-  background:var(--agtc-component-top-nav-cta-background);color:var(--agtc-component-top-nav-cta-color);
-  font-weight:var(--agtc-component-top-nav-tab-font-weight);margin-left:var(--agtc-component-top-nav-cta-gap);
-}
-.top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-component-top-nav-cta-background-hover);color:var(--agtc-component-top-nav-cta-color)}
-.top-nav a.nav-cta:active{background:var(--agtc-component-top-nav-cta-background-hover);color:var(--agtc-component-top-nav-cta-color)}
 .github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
 .github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .github-btn:active,.storybook-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
@@ -456,7 +420,6 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
-  .top-nav{display:none}
   .site-header{padding:0 12px;gap:8px;overflow:hidden}
   .logo-version{display:none}
   .storybook-btn{display:none}
@@ -680,11 +643,6 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 @media(max-width:768px){.back-to-top{bottom:16px;right:16px;padding:8px 12px}}
 @media(max-width:768px){
   .menu-toggle{display:flex;align-items:center}
-  .top-nav{display:none;position:fixed;top:var(--agtc-header-height,64px);left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:var(--agtc-shadow-md)}
-  .top-nav.open{display:flex}
-  .top-nav a{padding:12px 24px;border-bottom:none;font-size:var(--agtc-semantic-typography-label-size)}
-  .top-nav a.active{border-bottom:none;border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:21px}
-  .top-nav a.nav-cta{height:auto;align-self:unset;margin:4px 16px;border-radius:var(--agtc-semantic-radius-control);border-bottom:none;padding:10px 14px}
   .dos-donts{grid-template-columns:1fr}
   .token-tiles{grid-template-columns:1fr}
   .agent-grid{grid-template-columns:1fr}

@@ -10,9 +10,28 @@ const DIST       = path.join(__dirname, 'dist');
 const TOKENS_DIR = path.join(ROOT, 'tokens');
 const DEC_DIR    = path.join(ROOT, 'decisions');
 
+const { execSync }               = require('child_process');
 const { runAudit, MANUAL_CHECKS } = require('./audit-lib');
 
 const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); };
+
+// ─── COMPOSANTS WEB ────────────────────────────────────────────────────────
+// Bundle chaque Web Component Lit avec ses dépendances (esbuild, IIFE).
+// Le site charge les bundles via <script defer> — pas de bundler côté site.
+function bundleComponents() {
+  const compDist   = path.join(DIST, 'components');
+  const esbuildBin = path.join(ROOT, 'node_modules', '.bin', 'esbuild');
+  ensureDir(compDist);
+  const components = [
+    { entry: path.join(ROOT, 'components', 'agtc-top-nav.js'), out: path.join(compDist, 'agtc-top-nav.js') },
+  ];
+  for (const { entry, out } of components) {
+    if (fs.existsSync(entry)) {
+      execSync(`"${esbuildBin}" "${entry}" --bundle --format=iife --outfile="${out}" --minify`, { cwd: ROOT });
+      console.log(`  bundled: site/dist/components/${path.basename(out)}`);
+    }
+  }
+}
 const write = (fp, c) => { ensureDir(path.dirname(fp)); fs.writeFileSync(fp, c, 'utf8'); };
 const read  = (fp) => { try { return fs.readFileSync(fp, 'utf8'); } catch { return ''; } };
 const readJson = (fp) => { try { return JSON.parse(fs.readFileSync(fp, 'utf8')); } catch { return {}; } };
@@ -460,59 +479,23 @@ body{
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
 .logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
-.top-nav{display:flex;align-self:stretch;align-items:stretch;gap:0;margin-left:auto}
-.top-nav a{
-  display:flex;align-items:center;
-  text-decoration:none;
-  color:var(--agtc-component-top-nav-tab-color);
-  font-size:var(--agtc-component-top-nav-tab-font-size);
-  font-weight:var(--agtc-component-top-nav-tab-font-weight);
-  padding:0 var(--agtc-component-top-nav-tab-padding-x);
-  border-radius:0;
-  border-bottom:var(--agtc-component-top-nav-tab-indicator-width) solid transparent;
-  white-space:nowrap;
-  transition:background .12s,color .12s,border-color .12s;
-}
-/* ── Règle système : no-visited-nav ──────────────────────────────────────
-   Les éléments de navigation ne portent jamais d'état :visited distinct
-   (la navigation n'est pas du contenu « lu / non lu »). La couleur visitée
-   est réalignée sur l'état non-visité. Voir .claude/rules/no-visited-nav.md.
-   Déclaré AVANT les règles :hover/.active — spécificité égale, le sélecteur
-   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé.
-   IMPORTANT : Safari bloque var() dans :visited (history-sniffing protection).
-   On fournit la valeur hex littérale résolue AVANT le var() : Safari applique
-   le hex, Chrome/Firefox appliquent var() — résultat identique. */
-.top-nav a:visited,
+/* ── Règle système : no-visited-nav (ADR-047) ───────────────────────────
+   Les éléments de navigation ne portent jamais d'état :visited distinct.
+   Exception Safari : valeur hex avant var() (ADR-059).
+   agtc-top-nav gère :visited dans son shadow DOM (ADR-060). */
 .sidebar a:visited,
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
 .storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
-.top-nav a.nav-cta:visited {color:#ffffff;color:var(--agtc-semantic-color-text-on-action)}
 .footer-links a:visited    {color:rgba(255,255,255,.75);color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 .audit-footer-link:visited {color:rgba(255,255,255,.52);color:var(--agtc-semantic-color-text-on-inverse-muted)}
 /* Dark mode — valeurs résolues pour Safari (var() ignoré dans :visited) */
-[data-theme="dark"] .top-nav a:visited,
 [data-theme="dark"] .sidebar a:visited,
 [data-theme="dark"] .toc a:visited,
 [data-theme="dark"] .nav-card:visited,
 [data-theme="dark"] .github-btn:visited,
 [data-theme="dark"] .storybook-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
-[data-theme="dark"] .top-nav a.nav-cta:visited {color:#04201c;color:var(--agtc-semantic-color-text-on-action)}
-.top-nav a:hover{background:var(--agtc-component-top-nav-tab-background-hover);color:var(--agtc-component-top-nav-tab-color-hover)}
-.top-nav a:active{background:var(--agtc-component-top-nav-tab-background-hover);color:var(--agtc-component-top-nav-tab-color-hover)}
-.top-nav a:focus-visible{outline:2px solid var(--agtc-component-top-nav-tab-focus-ring);outline-offset:2px}
-.top-nav a.active{background:transparent;color:var(--agtc-component-top-nav-tab-color-active);font-weight:var(--agtc-component-top-nav-tab-font-weight-active);border-bottom-color:var(--agtc-component-top-nav-tab-indicator-color)}
-/* DÉMARRER = bouton CTA — sort du pattern tab, reste un bouton */
-.top-nav a.nav-cta,.top-nav a.nav-cta.active{
-  height:auto;align-self:center;
-  padding:var(--agtc-component-top-nav-cta-padding-y) var(--agtc-component-top-nav-cta-padding-x);
-  border-radius:var(--agtc-component-top-nav-cta-radius);border-bottom:none;
-  background:var(--agtc-component-top-nav-cta-background);color:var(--agtc-component-top-nav-cta-color);
-  font-weight:var(--agtc-component-top-nav-tab-font-weight);margin-left:var(--agtc-component-top-nav-cta-gap);
-}
-.top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-component-top-nav-cta-background-hover);color:var(--agtc-component-top-nav-cta-color)}
-.top-nav a.nav-cta:active{background:var(--agtc-component-top-nav-cta-background-hover);color:var(--agtc-component-top-nav-cta-color)}
 .github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
 .github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .github-btn:active,.storybook-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
@@ -885,7 +868,6 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
-  .top-nav{display:none}
   .site-header{padding:0 12px;gap:8px;overflow:hidden}
   .logo-version{display:none}
   .storybook-btn{display:none}
@@ -1109,11 +1091,6 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 @media(max-width:768px){.back-to-top{bottom:16px;right:16px;padding:8px 12px}}
 @media(max-width:768px){
   .menu-toggle{display:flex;align-items:center}
-  .top-nav{display:none;position:fixed;top:var(--agtc-header-height,64px);left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:var(--agtc-shadow-md)}
-  .top-nav.open{display:flex}
-  .top-nav a{padding:12px 24px;border-bottom:none;font-size:var(--agtc-semantic-typography-label-size)}
-  .top-nav a.active{border-bottom:none;border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:21px}
-  .top-nav a.nav-cta{height:auto;align-self:unset;margin:4px 16px;border-radius:var(--agtc-semantic-radius-control);border-bottom:none;padding:10px 14px}
   .dos-donts{grid-template-columns:1fr}
   .token-tiles{grid-template-columns:1fr}
   .agent-grid{grid-template-columns:1fr}
@@ -1392,13 +1369,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Mobile menu (top-nav) ────────────────────────────────
+  // ── Mobile menu (agtc-top-nav) ───────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
-  const topNav = document.querySelector('.top-nav');
+  const topNav = document.querySelector('agtc-top-nav');
   if (menuToggle && topNav) {
     menuToggle.addEventListener('click', () => {
       const isOpen = topNav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
     document.addEventListener('click', e => {
       if (!menuToggle.contains(e.target) && !topNav.contains(e.target)) {
@@ -1438,24 +1415,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Active nav links ─────────────────────────────────────
+  // ── Active sidebar links ──────────────────────────────────
+  // Note : agtc-top-nav gère aria-current="page" en interne (ADR-060).
   const p = window.location.pathname;
-  const sections = ['foundations','components','tokens','decisions','agents'];
-  document.querySelectorAll('.top-nav a').forEach(a => {
-    const h = a.getAttribute('href') || '';
-    const parts = h.split('/').filter(s => s !== '..' && s !== '.');
-    const hFile = parts[parts.length - 1] || '';
-    const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
-    let active = false;
-    if (hDir && sections.includes(hDir)) {
-      active = p.includes('/' + hDir + '/');
-    } else if (hFile === 'index.html' && !hDir) {
-      active = p === '/' || (p.endsWith('/index.html') && sections.every(s => !p.includes('/' + s + '/')));
-    } else if (hFile) {
-      active = p.endsWith('/' + hFile);
-    }
-    if (active) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
-  });
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) {
       a.classList.add('active');
@@ -1613,20 +1575,17 @@ const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '' }) {
   const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
-  // DÉMARRER en tête + traité comme CTA (cta:true) — action primaire d'adoption,
-  // cohérente avec le hero d'accueil et la page get-started.
-  const navLinks = [
-    { href: `${base}index.html`,            labelFr: 'Accueil',     labelEn: 'Home' },
-    { href: `${base}foundations/index.html`,labelFr: 'Fondations',  labelEn: 'Foundations' },
-    { href: `${base}components/index.html`, labelFr: 'Composants',  labelEn: 'Components' },
-    { href: `${base}tokens/index.html`,     labelFr: 'Tokens',      labelEn: 'Tokens' },
-    { href: `${base}decisions/index.html`,  labelFr: 'Décisions',   labelEn: 'Decisions' },
-    { href: `${base}agents/index.html`,     labelFr: 'Agents',      labelEn: 'Agents' },
-    { href: `${base}get-started.html`,      labelFr: 'Démarrer',    labelEn: 'Get started', cta: true },
-  ];
-  const nav = navLinks.map(n =>
-    `<a href="${n.href}"${n.cta ? ' class="nav-cta"' : ''}><span class="lang-fr">${n.labelFr}</span><span class="lang-en">${n.labelEn}</span></a>`
-  ).join('');
+  // DÉMARRER = CTA (cta:true) — action primaire d'adoption (ADR-060).
+  // Items définis ici, passés au composant agtc-top-nav via script inline.
+  const navItems = JSON.stringify([
+    { labelFr:'Accueil',    labelEn:'Home',         href:`${base}index.html` },
+    { labelFr:'Fondations', labelEn:'Foundations',  href:`${base}foundations/index.html` },
+    { labelFr:'Composants', labelEn:'Components',   href:`${base}components/index.html` },
+    { labelFr:'Tokens',     labelEn:'Tokens',       href:`${base}tokens/index.html` },
+    { labelFr:'Décisions',  labelEn:'Decisions',    href:`${base}decisions/index.html` },
+    { labelFr:'Agents',     labelEn:'Agents',       href:`${base}agents/index.html` },
+    { labelFr:'Démarrer',   labelEn:'Get started',  href:`${base}get-started.html`, cta:true },
+  ]);
 
   const sidebarHtml = sidebar
     ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
@@ -1697,6 +1656,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
+<script src="${base}components/agtc-top-nav.js" defer></script>
 </head>
 <body${context ? ` data-context="${context}"` : ''}>
 <a class="skip-link" href="#main-content">
@@ -1711,7 +1671,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <span class="logo-name">Agentica</span>
   </a>
   <span class="logo-version">v0.1.0</span>
-  <nav class="top-nav" aria-label="Navigation principale">${nav}</nav>
+  <agtc-top-nav id="site-top-nav" nav-label="Navigation principale"></agtc-top-nav>
+  <script>(function(){var items=${navItems};function init(){var n=document.getElementById('site-top-nav');if(!n)return;n.items=items;n.current=window.location.pathname;}if(customElements.get('agtc-top-nav')){init();}else{customElements.whenDefined('agtc-top-nav').then(init);}})()</script>
   <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
     <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
     <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -1726,7 +1687,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
     ${icon('github', 18)}
   </a>
-  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-top-nav">
     ${icon('menu', 24)}
   </button>
 </header>
@@ -5430,6 +5391,7 @@ function build() {
   write(path.join(DIST, 'tokens.css'), tokensCSS());
   write(path.join(DIST, 'site.css'), siteCSS());
   write(path.join(DIST, 'site.js'), siteJS());
+  bundleComponents();
 
   // Copie de l'image sociale (OG image)
   const socialSrc = path.join(__dirname, '..', 'Brand', 'Agentica social image.jpg');

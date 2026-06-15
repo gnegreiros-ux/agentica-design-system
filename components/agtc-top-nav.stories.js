@@ -41,12 +41,12 @@ export default {
 };
 
 const ITEMS = [
-  { label: 'Tokens',      href: '/tokens/' },
-  { label: 'Composants',  href: '/components/' },
-  { label: 'Fondations',  href: '/foundations/' },
-  { label: 'Agents',      href: '/agents/' },
-  { label: 'Décisions',   href: '/decisions/' },
-  { label: 'Démarrer',    href: '/get-started.html', cta: true },
+  { labelFr: 'Tokens',      labelEn: 'Tokens',       href: '/tokens/' },
+  { labelFr: 'Composants',  labelEn: 'Components',   href: '/components/' },
+  { labelFr: 'Fondations',  labelEn: 'Foundations',  href: '/foundations/' },
+  { labelFr: 'Agents',      labelEn: 'Agents',       href: '/agents/' },
+  { labelFr: 'Décisions',   labelEn: 'Decisions',    href: '/decisions/' },
+  { labelFr: 'Démarrer',    labelEn: 'Get started',  href: '/get-started.html', cta: true },
 ];
 
 /** Histoire principale — lien Tokens actif */

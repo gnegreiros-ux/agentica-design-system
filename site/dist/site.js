@@ -62,13 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Mobile menu (top-nav) ────────────────────────────────
+  // ── Mobile menu (agtc-top-nav) ───────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
-  const topNav = document.querySelector('.top-nav');
+  const topNav = document.querySelector('agtc-top-nav');
   if (menuToggle && topNav) {
     menuToggle.addEventListener('click', () => {
       const isOpen = topNav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
     document.addEventListener('click', e => {
       if (!menuToggle.contains(e.target) && !topNav.contains(e.target)) {
@@ -108,24 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Active nav links ─────────────────────────────────────
+  // ── Active sidebar links ──────────────────────────────────
+  // Note : agtc-top-nav gère aria-current="page" en interne (ADR-060).
   const p = window.location.pathname;
-  const sections = ['foundations','components','tokens','decisions','agents'];
-  document.querySelectorAll('.top-nav a').forEach(a => {
-    const h = a.getAttribute('href') || '';
-    const parts = h.split('/').filter(s => s !== '..' && s !== '.');
-    const hFile = parts[parts.length - 1] || '';
-    const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
-    let active = false;
-    if (hDir && sections.includes(hDir)) {
-      active = p.includes('/' + hDir + '/');
-    } else if (hFile === 'index.html' && !hDir) {
-      active = p === '/' || (p.endsWith('/index.html') && sections.every(s => !p.includes('/' + s + '/')));
-    } else if (hFile) {
-      active = p.endsWith('/' + hFile);
-    }
-    if (active) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
-  });
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) {
       a.classList.add('active');
