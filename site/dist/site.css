@@ -31,11 +31,13 @@ body{
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
 .logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
-.top-nav{display:flex;gap:2px;margin-left:auto}
+.top-nav{display:flex;align-self:stretch;align-items:stretch;gap:0;margin-left:auto}
 .top-nav a{
+  display:flex;align-items:center;
   text-decoration:none;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size);
-  padding:6px 12px;border-radius:var(--agtc-semantic-radius-control);font-weight:var(--agtc-semantic-typography-label-weight);
-  transition:background .12s,color .12s;
+  padding:0 14px;border-radius:0;font-weight:var(--agtc-semantic-typography-label-weight);
+  border-bottom:2px solid transparent;white-space:nowrap;
+  transition:background .12s,color .12s,border-color .12s;
 }
 /* ── Règle système : no-visited-nav ──────────────────────────────────────
    Les éléments de navigation ne portent jamais d'état :visited distinct
@@ -66,9 +68,14 @@ body{
 .top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.top-nav a.active{background:transparent;color:var(--agtc-semantic-color-action-primary);font-weight:var(--agtc-semantic-fontWeight-bold);border-bottom:2px solid var(--agtc-semantic-color-action-primary)}
-/* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
-.top-nav a.nav-cta,.top-nav a.nav-cta.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);font-weight:var(--agtc-semantic-typography-label-weight)}
+.top-nav a.active{background:transparent;color:var(--agtc-semantic-color-action-primary);font-weight:var(--agtc-semantic-fontWeight-bold);border-bottom-color:var(--agtc-semantic-color-action-primary)}
+/* DÉMARRER = bouton CTA — sort du pattern tab, reste un bouton */
+.top-nav a.nav-cta,.top-nav a.nav-cta.active{
+  height:auto;align-self:center;
+  padding:6px 14px;border-radius:var(--agtc-semantic-radius-control);border-bottom:none;
+  background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);
+  font-weight:var(--agtc-semantic-typography-label-weight);margin-left:8px;
+}
 .top-nav a.nav-cta:hover,.top-nav a.nav-cta.active:hover{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
 .top-nav a.nav-cta:active{background:var(--agtc-semantic-color-action-primary-hover);color:var(--agtc-semantic-color-text-on-action)}
 .github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
@@ -669,8 +676,9 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   .menu-toggle{display:flex;align-items:center}
   .top-nav{display:none;position:fixed;top:var(--agtc-header-height,64px);left:0;right:0;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);flex-direction:column;padding:8px 0;z-index:99;box-shadow:var(--agtc-shadow-md)}
   .top-nav.open{display:flex}
-  .top-nav a{padding:12px 24px;border-radius:0;font-size:var(--agtc-semantic-typography-label-size)}
+  .top-nav a{padding:12px 24px;border-bottom:none;font-size:var(--agtc-semantic-typography-label-size)}
   .top-nav a.active{border-bottom:none;border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:21px}
+  .top-nav a.nav-cta{height:auto;align-self:unset;margin:4px 16px;border-radius:var(--agtc-semantic-radius-control);border-bottom:none;padding:10px 14px}
   .dos-donts{grid-template-columns:1fr}
   .token-tiles{grid-template-columns:1fr}
   .agent-grid{grid-template-columns:1fr}
