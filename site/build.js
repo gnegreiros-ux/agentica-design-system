@@ -387,6 +387,9 @@ function tokensCSS() {
   /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
+  --agtc-surface-glass-strong:rgba(255,255,255,.22);
+  --agtc-surface-glass-hover:rgba(255,255,255,.12);
+  --agtc-surface-glass-ghost-text:rgba(255,255,255,.85);
   --agtc-surface-overlay:rgba(0,0,0,.40);
   /* Espacement comfortable — valeurs pré-résolues (ceil() non supporté en CSS natif)
      comfortable = ceil(base × 1.25 / 4) × 4 */
@@ -548,7 +551,7 @@ body{
   border-right:1px solid var(--agtc-semantic-color-border-on-inverse);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:var(--agtc-semantic-typography-heading-1-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-action-primary);display:block;letter-spacing:var(--agtc-tracking-snug)}
+.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);background:var(--agtc-gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
 
 .home-section{padding:64px 0;max-width:1100px;margin:0 auto}
@@ -1309,6 +1312,141 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 @media(max-width:768px){
   .hero{padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));padding-bottom:var(--agtc-space-7,48px)}
   .layer-stack{display:none}
+}
+
+/* ══ REDESIGN PHASE 1 — classes issues de Redesign/site.css ══════════════════
+   Ajout pur (aucune suppression). Toutes les valeurs passent par les tokens.
+   Animations floatUp/particules non incluses (cf. handoff 2026-06-15).        */
+
+/* Base */
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{overflow-x:hidden}
+
+/* ── Header tools ────────────────────────────────────────── */
+.header-tools{display:flex;align-items:center;gap:var(--agtc-space-2);flex-shrink:0}
+.lang-toggle-group{display:flex;gap:2px}
+.lang-btn{
+  font-family:inherit;cursor:pointer;
+  border-radius:var(--agtc-semantic-radius-control);
+  border:1.5px solid var(--agtc-semantic-color-border-strong);
+  background:transparent;color:var(--agtc-semantic-color-text-secondary);
+  transition:background .14s,color .14s,border-color .14s;
+  padding:5px 10px;font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);
+  letter-spacing:var(--agtc-tracking-wide);min-width:38px;min-height:34px;
+}
+.lang-btn.active{background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);border-color:var(--agtc-semantic-color-action-primary)}
+.lang-btn:hover:not(.active){background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.lang-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.theme-btn{
+  font-family:inherit;cursor:pointer;
+  border-radius:var(--agtc-semantic-radius-control);
+  border:1.5px solid var(--agtc-semantic-color-border-strong);
+  background:transparent;color:var(--agtc-semantic-color-text-secondary);
+  transition:background .14s,color .14s,border-color .14s;
+  width:38px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.theme-btn:hover{color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-text-secondary)}
+.theme-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.theme-btn .icon-sun{display:none}
+:root[data-theme="dark"] .theme-btn .icon-sun{display:block}
+:root[data-theme="dark"] .theme-btn .icon-moon{display:none}
+
+/* ── Marketing buttons (.ds-btn) ────────────────────────── */
+.ds-btn{
+  display:inline-flex;align-items:center;gap:var(--agtc-space-2);
+  padding:11px var(--agtc-space-5);border-radius:var(--agtc-semantic-radius-control);
+  font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);
+  font-family:inherit;cursor:pointer;text-decoration:none;
+  border:1.5px solid transparent;line-height:1.3;min-height:44px;
+  transition:transform .12s,background .14s,color .14s,border-color .14s;
+}
+.ds-btn:active{transform:translateY(1px)}
+.ds-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.ds-btn.primary{background:var(--agtc-component-button-primary-background);color:var(--agtc-component-button-primary-text);border-color:var(--agtc-component-button-primary-background)}
+.ds-btn.primary:hover{background:var(--agtc-component-button-primary-background-hover);border-color:var(--agtc-component-button-primary-background-hover)}
+.ds-btn.secondary{background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-strong)}
+.ds-btn.secondary:hover{background:var(--agtc-semantic-color-background-subtle)}
+.ds-btn.ghost{background:transparent;color:var(--agtc-component-button-ghost-text)}
+.ds-btn.ghost:hover{background:var(--agtc-component-button-ghost-background-hover)}
+/* Variantes on-dark — contexte hero sombre (token surface-glass documenté) */
+.ds-btn.on-dark.primary{color:var(--agtc-semantic-color-text-on-inverse)}
+.ds-btn.on-dark.secondary{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-strong);color:var(--agtc-semantic-color-text-on-inverse)}
+.ds-btn.on-dark.secondary:hover{background:var(--agtc-surface-glass-hover)}
+.ds-btn.on-dark.ghost{color:var(--agtc-surface-glass-ghost-text)}
+.ds-btn.on-dark.ghost:hover{background:var(--agtc-surface-glass)}
+
+/* ── Card utilities ──────────────────────────────────────── */
+.card-surface{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-shadow-sm);transition:transform .18s,box-shadow .18s,border-color .18s}
+.card-hover:hover{transform:translateY(-4px);box-shadow:var(--agtc-shadow-lg);border-color:var(--agtc-semantic-color-border-strong)}
+
+/* ── Section inverse (sections sombres marketing) ────────── */
+.section-inverse{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse);padding:var(--agtc-space-9) var(--agtc-space-5);position:relative;overflow:hidden}
+.section-inverse .si-inner{max-width:var(--agtc-content-max);margin:0 auto;position:relative}
+.section-inverse h2{color:var(--agtc-semantic-color-text-on-inverse)}
+.section-inverse .si-inner > p{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* ── Eyebrow label ───────────────────────────────────────── */
+.eyebrow{display:inline-block;font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-eyebrow);color:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-3)}
+
+/* ── Audience section ────────────────────────────────────── */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
+.audience-card{padding:var(--agtc-space-6)}
+.audience-icon{width:46px;height:46px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-subtle);margin-bottom:var(--agtc-space-4)}
+.audience-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2)}
+.audience-desc{font-size:var(--agtc-font-size-label);color:var(--agtc-semantic-color-text-secondary);line-height:1.6}
+
+/* ── KPI cards ───────────────────────────────────────────── */
+.kpi-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
+.kpi-card{padding:var(--agtc-space-6)}
+.kpi-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-tighter);display:block;margin-bottom:var(--agtc-space-1);background:var(--agtc-gradient-text-light);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi-label{font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-text-primary);font-weight:var(--agtc-semantic-fontWeight-bold);margin-bottom:var(--agtc-space-2);display:block}
+.kpi-source{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
+.kpi-source a{color:var(--agtc-semantic-color-action-primary)}
+
+/* ── Principle card hover accent (update additive) ───────── */
+.principle-card{position:relative;overflow:hidden}
+.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-gradient-brand);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.principle-card:hover::after{transform:scaleX(1)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-gradient-brand);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+
+/* ── Mini cards ──────────────────────────────────────────── */
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
+.mini-card{padding:var(--agtc-space-5)}
+.mini-card .mc-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-3);display:flex}
+.mini-card .mc-title{font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-1)}
+.mini-card .mc-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
+
+/* ── Stack nodes ─────────────────────────────────────────── */
+.stack-node{flex:1;min-width:110px;padding:var(--agtc-space-5) var(--agtc-space-3);text-align:center;background:var(--agtc-semantic-color-background-surface);border-right:1px solid var(--agtc-semantic-color-border-default)}
+.stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
+.stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-2);display:flex;justify-content:center}
+.stack-node-label{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+.stack-node-sub{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);margin-top:3px}
+
+/* ── CTA final ───────────────────────────────────────────── */
+.cta-final{text-align:center}
+.cta-final .cta-actions{display:flex;gap:var(--agtc-space-3);justify-content:center;flex-wrap:wrap;margin-top:var(--agtc-space-6)}
+
+/* ── Brand band ──────────────────────────────────────────── */
+.brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse);border-block:1px solid var(--agtc-semantic-color-border-default)}
+.brand-band svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.brand-band .shape-plum{fill:var(--agtc-semantic-color-secondary)}
+.brand-band .shape-accent{fill:var(--agtc-semantic-color-accent)}
+.brand-band .shape-slate{fill:var(--agtc-semantic-color-tertiary)}
+.brand-band .shape-surface{fill:var(--agtc-semantic-color-background-page)}
+.brand-band .shape-teal{fill:var(--agtc-semantic-color-brand-primary)}
+.brand-band .shape{opacity:.96;transition:transform .9s cubic-bezier(.22,1,.36,1)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .brand-band:hover .drift-a{transform:translateX(14px)}
+  .brand-band:hover .drift-b{transform:translateX(-18px)}
+  .brand-band:hover .drift-c{transform:translateY(-10px)}
+}
+@media(max-width:768px){.brand-band{height:110px}}
+
+/* ── Mobile — header tools ───────────────────────────────── */
+@media(max-width:768px){
+  .header-tools{margin-left:auto}
 }
 `; }
 

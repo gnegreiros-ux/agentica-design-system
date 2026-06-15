@@ -785,6 +785,9 @@
   /* Surfaces semi-transparentes pour fonds sombres (home-section-ink) */
   --agtc-surface-glass:rgba(255,255,255,.06);
   --agtc-surface-glass-border:rgba(255,255,255,.10);
+  --agtc-surface-glass-strong:rgba(255,255,255,.22);
+  --agtc-surface-glass-hover:rgba(255,255,255,.12);
+  --agtc-surface-glass-ghost-text:rgba(255,255,255,.85);
   --agtc-surface-overlay:rgba(0,0,0,.40);
   /* Espacement comfortable — valeurs pré-résolues (ceil() non supporté en CSS natif)
      comfortable = ceil(base × 1.25 / 4) × 4 */
