@@ -124,10 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (hFile) {
       active = p.endsWith('/' + hFile);
     }
-    if (active) a.classList.add('active');
+    if (active) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
   });
   document.querySelectorAll('.sidebar a').forEach(a => {
-    if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) a.classList.add('active');
+    if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) {
+      a.classList.add('active');
+      a.setAttribute('aria-current', 'page');
+    }
   });
 
   // ── TOC auto-generation ──────────────────────────────────

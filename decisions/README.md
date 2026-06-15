@@ -117,6 +117,7 @@ des décisions déjà tranchées.
 | [ADR-057](ADR-057-deux-contextes-utilisation.md) | Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) | 2026-06-12 | ✅ Actif |
 | [ADR-058](ADR-058-redesign-site-theme-sombre.md) | Redesign du site : thème sombre et tokens d'extension CSS | 2026-06-12 | ✅ Actif |
 | [ADR-059](ADR-059-semantic-tokens-hierarchy-completion.md) | Fermeture de la hiérarchie 3 niveaux : 18 tokens sémantiques intermédiaires | 2026-06-15 | ✅ Actif |
+| [ADR-060](ADR-060-agtc-top-nav-implementation.md) | Implémentation de `agtc-top-nav` — tabs visuels full-height, nav inter-pages | 2026-06-15 | ✅ Actif |
 
 ---
 

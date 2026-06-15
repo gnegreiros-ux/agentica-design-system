@@ -841,5 +841,106 @@
         "$type": "dimension"
       }
     }
+  },
+  "top-nav": {
+    "$metadata": {
+      "intent": "Navigation principale horizontale — pattern tabs visuels full-height, liens inter-pages. Visuellement similaire aux tabs mais sémantiquement role=navigation + aria-current=page.",
+      "owner": "design-system-team",
+      "contract": "guidelines/components/top-nav.md"
+    },
+    "tab": {
+      "color": {
+        "$value": "{semantic.color.text.secondary}",
+        "$type": "color",
+        "$intent": "Couleur du lien de navigation au repos"
+      },
+      "color-hover": {
+        "$value": "{semantic.color.text.primary}",
+        "$type": "color",
+        "$intent": "Couleur au survol — renforcement sans fond pill"
+      },
+      "background-hover": {
+        "$value": "{semantic.color.background.subtle}",
+        "$type": "color",
+        "$intent": "Fond au survol — feedback de zone, pas d'effet bouton"
+      },
+      "color-active": {
+        "$value": "{semantic.color.action.primary}",
+        "$type": "color",
+        "$intent": "Couleur du lien correspondant à la page courante (aria-current=page)"
+      },
+      "indicator-color": {
+        "$value": "{semantic.color.action.primary}",
+        "$type": "color",
+        "$intent": "Couleur de l'indicateur border-bottom de la page active"
+      },
+      "indicator-width": {
+        "$value": "2px",
+        "$type": "dimension",
+        "$intent": "Épaisseur de l'indicateur — positionnée au bas du header pleine hauteur"
+      },
+      "padding-x": {
+        "$value": "14px",
+        "$type": "dimension",
+        "$intent": "Espacement horizontal des liens — zone de clic confortable (différent du control-padding-x standard)"
+      },
+      "font-size": {
+        "$value": "{semantic.typography.label.size}",
+        "$type": "dimension",
+        "$intent": "Taille de corps des liens de navigation"
+      },
+      "font-weight": {
+        "$value": "{semantic.typography.label.weight}",
+        "$type": "fontWeight",
+        "$intent": "Graisse par défaut des liens"
+      },
+      "font-weight-active": {
+        "$value": "{semantic.fontWeight.bold}",
+        "$type": "fontWeight",
+        "$intent": "Graisse de la page active — renforce la lisibilité sans fond rempli"
+      },
+      "focus-ring": {
+        "$value": "{semantic.color.border.focus}",
+        "$type": "color",
+        "$intent": "Couleur du ring de focus clavier (WCAG 2.4.7)"
+      }
+    },
+    "cta": {
+      "gap": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$intent": "Séparation visuelle entre les tabs de navigation et le bouton CTA d'adoption"
+      },
+      "background": {
+        "$value": "{semantic.color.action.primary}",
+        "$type": "color",
+        "$intent": "Fond du bouton CTA — reste un bouton, distinct du pattern tab"
+      },
+      "background-hover": {
+        "$value": "{semantic.color.action.primary-hover}",
+        "$type": "color",
+        "$intent": "Fond du bouton CTA au survol"
+      },
+      "color": {
+        "$value": "{semantic.color.text.on-action}",
+        "$type": "color",
+        "$intent": "Texte du bouton CTA sur fond action-primary"
+      },
+      "padding-x": {
+        "$value": "{semantic.space.control.padding-x}",
+        "$type": "dimension",
+        "$intent": "Espacement horizontal du CTA — aligné sur le standard control"
+      },
+      "padding-y": {
+        "$value": "{semantic.space.control.padding-y}",
+        "$type": "dimension",
+        "$intent": "Espacement vertical du CTA"
+      },
+      "radius": {
+        "$value": "{semantic.radius.control}",
+        "$type": "dimension",
+        "$intent": "Arrondi du CTA — marque sa nature de bouton vs les tabs plats"
+      }
+    }
   }
 }
