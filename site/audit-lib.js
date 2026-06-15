@@ -209,8 +209,11 @@ function auditPage(html, file, SITE_CSS) {
     }
   });
 
-  // IDs uniques
-  const idMatches = [...html.matchAll(/\bid="([^"]*)"/gi)].map(m => m[1]);
+  // IDs uniques — strip <pre>/<code> pour éviter les faux positifs dans les exemples de code
+  const htmlForIds = html
+    .replace(/<pre[\s\S]*?<\/pre>/gi, '<pre></pre>')
+    .replace(/<code[\s\S]*?<\/code>/gi, '<code></code>');
+  const idMatches = [...htmlForIds.matchAll(/\bid="([^"]*)"/gi)].map(m => m[1]);
   const idCounts = {};
   idMatches.forEach(id => { idCounts[id] = (idCounts[id] || 0) + 1; });
   Object.entries(idCounts).forEach(([id, count]) => {

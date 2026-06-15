@@ -5242,9 +5242,11 @@ function buildAudit() {
   // ── Violations (si présentes) ─────────────────────────────────────────────
   let violationsSection = '';
   if (r.allViolations.length > 0) {
+    // escMsg : les guillemets des messages (ex: id="x") → &quot; pour éviter les faux positifs dans audit-lib
+    const escMsg = s => esc(s).replace(/"/g, '&quot;');
     const rows = r.allViolations.map(v =>
       `<li style="padding:8px 0;border-bottom:1px solid var(--agtc-semantic-color-border-default);font-size:0.85rem">
-        <strong>SC ${v.criterion}</strong> — ${esc(v.msg)}
+        <strong>SC ${v.criterion}</strong> — ${escMsg(v.msg)}
         <span style="color:var(--agtc-semantic-color-text-secondary);margin-left:8px;font-size:var(--agtc-semantic-typography-detail-size)">${v.file}</span>
       </li>`
     ).join('');
