@@ -9,6 +9,7 @@
     "dev": "node build.js --watch"
   },
   "dependencies": {
+    "lit": "^3.0.0",
     "lucide": "^0.511.0"
   },
   "devDependencies": {

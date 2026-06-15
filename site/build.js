@@ -27,7 +27,15 @@ function bundleComponents() {
   const out   = path.join(DIST, 'components', 'agtc.js');
   ensureDir(path.dirname(out));
   if (fs.existsSync(entry)) {
-    execSync(`"${esbuildBin}" "${entry}" --bundle --format=iife --outfile="${out}" --minify`, { cwd: ROOT });
+    // NODE_PATH: dit à esbuild où chercher lit/lucide — site/node_modules en priorité (CI), root/node_modules en fallback (dev)
+    const nodePath = [
+      path.join(__dirname, 'node_modules'),
+      path.join(ROOT, 'node_modules'),
+    ].filter(p => fs.existsSync(p)).join(path.delimiter);
+    execSync(`"${esbuildBin}" "${entry}" --bundle --format=iife --outfile="${out}" --minify`, {
+      cwd: ROOT,
+      env: { ...process.env, NODE_PATH: nodePath },
+    });
     console.log('  bundled: site/dist/components/agtc.js');
   }
 }
