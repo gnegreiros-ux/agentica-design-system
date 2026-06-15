@@ -1448,6 +1448,11 @@ body{overflow-x:hidden}
 @media(max-width:768px){
   .header-tools{margin-left:auto}
 }
+
+/* ── Reveal au défilement ────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 `; }
 
 function siteJS() { return `
@@ -1457,12 +1462,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
-  document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+  document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
+      if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
   });
 
@@ -1510,6 +1516,27 @@ document.addEventListener('DOMContentLoaded', () => {
       history.replaceState({}, '', url.toString());
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
       // Update copy button labels when language switches
+      document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+    });
+  });
+
+  // ── Language toggle .lang-btn (Redesign/site.css) ───────────────────────
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    const on = btn.dataset.lang === savedLang;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      document.documentElement.setAttribute('data-lang', lang);
+      localStorage.setItem('agtc-lang', lang);
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      history.replaceState({}, '', url.toString());
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        const a = b.dataset.lang === lang;
+        b.classList.toggle('active', a);
+        b.setAttribute('aria-pressed', a ? 'true' : 'false');
+      });
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
     });
   });
@@ -1694,6 +1721,19 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { btn.textContent = copyLabel(); copyLive.textContent = ''; }, 1600);
     });
   });
+
+  // ── Reveal au défilement ─────────────────────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length) {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(el => revealObs.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('in'));
+    }
+  }
 
   // ── Bouton retour en haut ────────────────────────────────
   const backToTop = document.querySelector('.back-to-top');
