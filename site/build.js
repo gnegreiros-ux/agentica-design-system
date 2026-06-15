@@ -19,7 +19,10 @@ const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: t
 // Bundle chaque Web Component Lit avec ses dépendances (esbuild, IIFE).
 // Le site charge les bundles via <script defer> — pas de bundler côté site.
 function bundleComponents() {
-  const esbuildBin = path.join(ROOT, 'node_modules', '.bin', 'esbuild');
+  // site/node_modules (CI: npm ci in site/) takes priority over root node_modules (dev: transitive via Storybook)
+  const esbuildBin = fs.existsSync(path.join(__dirname, 'node_modules', '.bin', 'esbuild'))
+    ? path.join(__dirname, 'node_modules', '.bin', 'esbuild')
+    : path.join(ROOT, 'node_modules', '.bin', 'esbuild');
   const entry = path.join(ROOT, 'components', 'index.js');
   const out   = path.join(DIST, 'components', 'agtc.js');
   ensureDir(path.dirname(out));
