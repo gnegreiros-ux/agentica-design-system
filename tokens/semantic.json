@@ -85,6 +85,16 @@
           "$value": "{primitive.color.blue.6}",
           "$type": "color",
           "$intent": "Bordure pour information (ADR-045)"
+        },
+        "info-text": {
+          "$value": "{primitive.color.blue.12}",
+          "$type": "color",
+          "$intent": "Texte information sur fond subtil clair (badge info, banner info)"
+        },
+        "warning-text": {
+          "$value": "{primitive.color.orange.12}",
+          "$type": "color",
+          "$intent": "Texte avertissement sur fond subtil clair (badge warning, banner warning)"
         }
       },
       "background": {
@@ -117,6 +127,21 @@
           "$value": "{primitive.color.neutral.900}",
           "$type": "color",
           "$intent": "Surface sombre surélevée sur fond inversé — tooltips, popovers (ADR-046)"
+        },
+        "code": {
+          "$value": "{primitive.color.gray.12}",
+          "$type": "color",
+          "$intent": "Fond de bloc de code — surface sombre dédiée au code source"
+        },
+        "code-raised": {
+          "$value": "{primitive.color.gray.11}",
+          "$type": "color",
+          "$intent": "Fond surélevé sur surface code — bouton copier au repos"
+        },
+        "code-raised-hover": {
+          "$value": "{primitive.color.gray.10}",
+          "$type": "color",
+          "$intent": "Fond surélevé sur surface code au survol — bouton copier hover"
         }
       },
       "text": {
@@ -159,6 +184,21 @@
           "$value": "{primitive.color.white.10}",
           "$type": "color",
           "$intent": "Texte atténué sur surface inversée — plancher AA (5.69:1 sur neutral.950, ADR-046)"
+        },
+        "on-code": {
+          "$value": "{primitive.color.gray.4}",
+          "$type": "color",
+          "$intent": "Texte sur surface code sombre — corps du code source"
+        },
+        "on-code-muted": {
+          "$value": "{primitive.color.gray.8}",
+          "$type": "color",
+          "$intent": "Texte secondaire sur surface code — métadonnées (langue, numéro de ligne)"
+        },
+        "on-code-strong": {
+          "$value": "{primitive.color.gray.1}",
+          "$type": "color",
+          "$intent": "Texte fort sur surface code — bouton copier (contraste maximal)"
         }
       },
       "border": {
@@ -193,6 +233,18 @@
           "$value": "{primitive.color.red.6}",
           "$type": "color",
           "$intent": "Barre décorative de visualisation d'échelle (démo d'espacement) — non sémantique, non porteuse d'information (ADR-046)"
+        }
+      },
+      "control": {
+        "track-off": {
+          "$value": "{primitive.color.gray.9}",
+          "$type": "color",
+          "$intent": "Piste de toggle à l'état inactif (off)"
+        },
+        "track-off-hover": {
+          "$value": "{primitive.color.gray.10}",
+          "$type": "color",
+          "$intent": "Piste de toggle inactive au survol"
         }
       },
       "illustration": {
@@ -232,6 +284,11 @@
           "$value": "{primitive.color.teal.10}",
           "$type": "color",
           "$intent": "Survol de la couleur primaire"
+        },
+        "primary-text": {
+          "$value": "{primitive.color.teal.12}",
+          "$type": "color",
+          "$intent": "Texte marque sur fond subtil clair (badge brand, label) — 12:1 sur fond blanc"
         },
         "primary-subtle": {
           "$value": "{primitive.color.teal.3}",
@@ -319,6 +376,43 @@
             "$type": "number",
             "$intent": "1.25 — scaling vers le haut, ceil() pour alignement grille"
           }
+        }
+      },
+      "component": {
+        "padding-2xs": {
+          "$value": "{primitive.space.0}",
+          "$type": "dimension",
+          "$intent": "2px — Micro-espacement sub-grille : badge.sm padding vertical (réservé aux éléments ultra-compacts)"
+        },
+        "padding-xs": {
+          "$value": "{primitive.space.1}",
+          "$type": "dimension",
+          "$intent": "4px — Espacement minimal : badge standard padding vertical"
+        },
+        "padding-sm": {
+          "$value": "{primitive.space.2}",
+          "$type": "dimension",
+          "$intent": "8px — Espacement compact : badge.sm padding horizontal, cellules tableau compact"
+        },
+        "padding-md": {
+          "$value": "{primitive.space.3}",
+          "$type": "dimension",
+          "$intent": "12px — Espacement standard composant : cellules tableau, badge standard padding horizontal, card compacte"
+        },
+        "padding-lg": {
+          "$value": "{primitive.space.4}",
+          "$type": "dimension",
+          "$intent": "16px — Espacement généreux : padding vertical blocs code et bannières"
+        },
+        "padding-xl": {
+          "$value": "{primitive.space.5}",
+          "$type": "dimension",
+          "$intent": "20px — Espacement horizontal large : padding-x blocs code et bannières"
+        },
+        "padding-2xl": {
+          "$value": "{primitive.space.6}",
+          "$type": "dimension",
+          "$intent": "24px — Grande carte : card-padding-lg"
         }
       },
       "control": {

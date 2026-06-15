@@ -172,8 +172,8 @@ const COMP = {
   'card-flat-background':               'var(--agtc-semantic-color-background-subtle)',
   'card-flat-border':                   'transparent',
   'card-padding-none':                  '0px',
-  'card-padding-sm':                    'var(--agtc-primitive-space-3)',
-  'card-padding-lg':                    'var(--agtc-primitive-space-6)',
+  'card-padding-sm':                    'var(--agtc-semantic-space-component-padding-md)',
+  'card-padding-lg':                    'var(--agtc-semantic-space-component-padding-2xl)',
   /* Typographie — contexte Produit SaaS (défaut) */
   'card-typography-title-size':         'var(--agtc-semantic-typography-label-size)',
   'card-typography-title-weight':       'var(--agtc-semantic-fontWeight-bold)',
@@ -191,27 +191,27 @@ const COMP = {
   'badge-neutral-text':                 'var(--agtc-semantic-color-text-secondary)',
   'badge-neutral-border':               'var(--agtc-semantic-color-border-default)',
   'badge-brand-background':             'var(--agtc-semantic-color-brand-primary-subtle)',
-  'badge-brand-text':                   'var(--agtc-primitive-color-teal-12)',
+  'badge-brand-text':                   'var(--agtc-semantic-color-brand-primary-text)',
   'badge-brand-border':                 'transparent',
-  'badge-success-background':           'var(--agtc-primitive-color-green-3)',
+  'badge-success-background':           'var(--agtc-semantic-color-feedback-success-subtle)',
   'badge-success-text':                 'var(--agtc-semantic-color-feedback-success)',
   'badge-success-border':               'transparent',
-  'badge-warning-background':           'var(--agtc-primitive-color-orange-3)',
-  'badge-warning-text':                 'var(--agtc-primitive-color-orange-12)',
+  'badge-warning-background':           'var(--agtc-semantic-color-feedback-warning-subtle)',
+  'badge-warning-text':                 'var(--agtc-semantic-color-feedback-warning-text)',
   'badge-warning-border':               'transparent',
   'badge-danger-background':            'var(--agtc-semantic-color-feedback-danger-subtle)',
   'badge-danger-text':                  'var(--agtc-semantic-color-feedback-danger)',
   'badge-danger-border':                'transparent',
-  'badge-info-background':              'var(--agtc-primitive-color-blue-3)',
-  'badge-info-text':                    'var(--agtc-primitive-color-blue-12)',
+  'badge-info-background':              'var(--agtc-semantic-color-feedback-info-subtle)',
+  'badge-info-text':                    'var(--agtc-semantic-color-feedback-info-text)',
   'badge-info-border':                  'transparent',
   'badge-md-radius':                    '9999px',
-  'badge-md-padding-x':                 'var(--agtc-primitive-space-3)',
-  'badge-md-padding-y':                 'var(--agtc-primitive-space-1)',
+  'badge-md-padding-x':                 'var(--agtc-semantic-space-component-padding-md)',
+  'badge-md-padding-y':                 'var(--agtc-semantic-space-component-padding-xs)',
   'badge-md-font-size':                 'var(--agtc-semantic-typography-label-size)',
   'badge-sm-radius':                    '9999px',
-  'badge-sm-padding-x':                 'var(--agtc-primitive-space-2)',
-  'badge-sm-padding-y':                 '2px',
+  'badge-sm-padding-x':                 'var(--agtc-semantic-space-component-padding-sm)',
+  'badge-sm-padding-y':                 'var(--agtc-semantic-space-component-padding-2xs)',
   'badge-sm-font-size':                 'var(--agtc-semantic-typography-detail-size)',
   'table-default-header-background':    'var(--agtc-semantic-color-background-subtle)',
   'table-default-header-text':          'var(--agtc-semantic-color-text-secondary)',
@@ -222,30 +222,30 @@ const COMP = {
   'table-default-caption-text':         'var(--agtc-semantic-color-text-secondary)',
   'table-default-radius':               'var(--agtc-semantic-radius-card)',
   'table-default-font-size':            'var(--agtc-semantic-typography-label-size)',
-  'table-padding-x':                    'var(--agtc-primitive-space-3)',
-  'table-padding-y-compact':            'var(--agtc-primitive-space-2)',
-  'table-padding-y-comfortable':        'var(--agtc-primitive-space-3)',
-  'code-block-default-background':            'var(--agtc-primitive-color-gray-12)',
-  'code-block-default-text':                  'var(--agtc-primitive-color-gray-4)',
-  'code-block-default-meta-text':             'var(--agtc-primitive-color-gray-8)',
-  'code-block-default-copy-background':       'var(--agtc-primitive-color-gray-11)',
-  'code-block-default-copy-background-hover': 'var(--agtc-primitive-color-gray-10)',
-  'code-block-default-copy-text':             'var(--agtc-primitive-color-gray-1)',
+  'table-padding-x':                    'var(--agtc-semantic-space-component-padding-md)',
+  'table-padding-y-compact':            'var(--agtc-semantic-space-component-padding-sm)',
+  'table-padding-y-comfortable':        'var(--agtc-semantic-space-component-padding-md)',
+  'code-block-default-background':            'var(--agtc-semantic-color-background-code)',
+  'code-block-default-text':                  'var(--agtc-semantic-color-text-on-code)',
+  'code-block-default-meta-text':             'var(--agtc-semantic-color-text-on-code-muted)',
+  'code-block-default-copy-background':       'var(--agtc-semantic-color-background-code-raised)',
+  'code-block-default-copy-background-hover': 'var(--agtc-semantic-color-background-code-raised-hover)',
+  'code-block-default-copy-text':             'var(--agtc-semantic-color-text-on-code-strong)',
   'code-block-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
   'code-block-default-radius':                'var(--agtc-semantic-radius-card)',
   'code-block-default-font-size':             'var(--agtc-semantic-typography-label-size)',
-  'code-block-default-padding-x':             'var(--agtc-primitive-space-5)',
-  'code-block-default-padding-y':             'var(--agtc-primitive-space-4)',
+  'code-block-default-padding-x':             'var(--agtc-semantic-space-component-padding-xl)',
+  'code-block-default-padding-y':             'var(--agtc-semantic-space-component-padding-lg)',
   'banner-neutral-background':          'var(--agtc-semantic-color-background-subtle)',
   'banner-neutral-accent':              'var(--agtc-semantic-color-text-secondary)',
   'banner-brand-background':            'var(--agtc-semantic-color-brand-primary-subtle)',
   'banner-brand-accent':                'var(--agtc-semantic-color-brand-primary)',
-  'banner-info-background':             'var(--agtc-primitive-color-blue-3)',
+  'banner-info-background':             'var(--agtc-semantic-color-feedback-info-subtle)',
   'banner-info-accent':                 'var(--agtc-semantic-color-feedback-info)',
-  'banner-success-background':          'var(--agtc-primitive-color-green-3)',
+  'banner-success-background':          'var(--agtc-semantic-color-feedback-success-subtle)',
   'banner-success-accent':              'var(--agtc-semantic-color-feedback-success)',
-  'banner-warning-background':          'var(--agtc-primitive-color-orange-3)',
-  'banner-warning-accent':              'var(--agtc-primitive-color-orange-11)',
+  'banner-warning-background':          'var(--agtc-semantic-color-feedback-warning-subtle)',
+  'banner-warning-accent':              'var(--agtc-semantic-color-feedback-warning)',
   'banner-danger-background':           'var(--agtc-semantic-color-feedback-danger-subtle)',
   'banner-danger-accent':               'var(--agtc-semantic-color-feedback-danger)',
   'banner-heading-text':                'var(--agtc-semantic-color-text-primary)',
@@ -254,8 +254,8 @@ const COMP = {
   'banner-close-hover':                 'var(--agtc-semantic-color-text-primary)',
   'banner-border-focus':                'var(--agtc-semantic-color-border-focus)',
   'banner-radius':                      'var(--agtc-semantic-radius-card)',
-  'banner-padding-x':                   'var(--agtc-primitive-space-5)',
-  'banner-padding-y':                   'var(--agtc-primitive-space-4)',
+  'banner-padding-x':                   'var(--agtc-semantic-space-component-padding-xl)',
+  'banner-padding-y':                   'var(--agtc-semantic-space-component-padding-lg)',
   'link-default-text':                  'var(--agtc-semantic-color-action-primary)',
   'link-default-text-hover':            'var(--agtc-semantic-color-action-primary-hover)',
   'link-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
@@ -274,8 +274,8 @@ const COMP = {
   'tabs-default-border-focus':          'var(--agtc-semantic-color-border-focus)',
   'tabs-default-padding-x':            'var(--agtc-semantic-space-control-padding-x)',
   'tabs-default-padding-y':            'var(--agtc-semantic-space-control-padding-y)',
-  'toggle-default-track-off':           'var(--agtc-primitive-color-gray-9)',
-  'toggle-default-track-off-hover':     'var(--agtc-primitive-color-gray-10)',
+  'toggle-default-track-off':           'var(--agtc-semantic-color-control-track-off)',
+  'toggle-default-track-off-hover':     'var(--agtc-semantic-color-control-track-off-hover)',
   'toggle-default-track-on':            'var(--agtc-semantic-color-action-primary)',
   'toggle-default-track-on-hover':      'var(--agtc-semantic-color-action-primary-hover)',
   'toggle-default-knob':                'var(--agtc-semantic-color-background-surface)',
@@ -318,6 +318,7 @@ function tokensCSS() {
   --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
   --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
   --agtc-shadow-glow:0 0 0 1px rgba(13,155,138,.20),0 12px 32px -8px rgba(13,155,138,.30);
+  --agtc-drop-shadow-sm:0 1px 2px rgba(0,0,0,.3);
   --agtc-font-size-detail:.75rem;   --agtc-font-size-label:.875rem;
   --agtc-font-size-body:1rem;       --agtc-font-size-h5:1.25rem;
   --agtc-font-size-h4:1.5rem;       --agtc-font-size-h3:1.75rem;
@@ -458,10 +459,10 @@ body{
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
-.storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
-.top-nav a.nav-cta:visited {color:#ffffff;color:var(--agtc-semantic-color-text-on-action)}
-.footer-links a:visited    {color:rgba(255,255,255,0.75);color:var(--agtc-semantic-color-text-on-inverse-secondary)}
-.audit-footer-link:visited {color:rgba(255,255,255,0.52);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.storybook-btn:visited     {color:var(--agtc-semantic-color-text-secondary)}
+.top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
+.footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
+.audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
 .top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary)}
 /* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */
@@ -567,9 +568,9 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── THÈME LIGHT [data-theme="light"] ────────────────────── */
 /* Les sections .home-section-ink restent toujours sombres (illustration-ink).
    Seules les principle-cards s'adaptent au thème light. */
-[data-theme="light"] .home-section-ink .principle-card{background:var(--agtc-component-card-default-background,#fff);border-color:var(--agtc-component-card-default-border)}
-[data-theme="light"] .home-section-ink .principle-title{color:var(--agtc-semantic-color-text-primary,#1a1820)}
-[data-theme="light"] .home-section-ink .principle-desc{color:var(--agtc-semantic-color-text-secondary,#646464)}
+[data-theme="light"] .home-section-ink .principle-card{background:var(--agtc-component-card-default-background);border-color:var(--agtc-component-card-default-border)}
+[data-theme="light"] .home-section-ink .principle-title{color:var(--agtc-semantic-color-text-primary)}
+[data-theme="light"] .home-section-ink .principle-desc{color:var(--agtc-semantic-color-text-secondary)}
 
 /* ── PRINCIPLE CARDS ─────────────────────────────────────── */
 .principle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
@@ -920,7 +921,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-card--fail .audit-number{color:var(--agtc-semantic-color-feedback-danger)}
 .audit-section{margin-bottom:48px}
 .audit-section h2{font-size:var(--agtc-semantic-typography-heading-5-size);font-weight:var(--agtc-semantic-fontWeight-bold);margin:0 0 16px;padding-bottom:8px;border-bottom:1px solid var(--agtc-semantic-color-border-default)}
-.audit-contrast-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.audit-contrast-table{width:100%;border-collapse:collapse;font-size:var(--agtc-semantic-typography-label-size)}
 .audit-contrast-table th{text-align:left;padding:8px 10px;background:var(--agtc-semantic-color-background-subtle);border-bottom:2px solid var(--agtc-semantic-color-border-default);font-weight:var(--agtc-semantic-typography-label-weight);font-size:var(--agtc-semantic-typography-detail-size);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wide)}
 .audit-contrast-table td{padding:8px 10px;border-bottom:1px solid var(--agtc-semantic-color-border-default);vertical-align:middle}
 .audit-contrast-table tr:last-child td{border-bottom:none}
@@ -966,7 +967,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .platform-logos-grid{display:flex;flex-wrap:wrap;gap:24px;margin:28px 0;align-items:center;justify-content:center}
 .platform-logo-item{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.85;transition:opacity .15s}
 .platform-logo-item:hover{opacity:1}
-.platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+.platform-logo-item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(var(--agtc-drop-shadow-sm))}
 .platform-logo-label{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-on-inverse-muted);text-align:center;white-space:nowrap}
 .tool-card-icon :is(svg,img){width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 
