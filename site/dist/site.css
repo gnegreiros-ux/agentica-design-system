@@ -42,16 +42,27 @@ body{
    (la navigation n'est pas du contenu « lu / non lu »). La couleur visitée
    est réalignée sur l'état non-visité. Voir .claude/rules/no-visited-nav.md.
    Déclaré AVANT les règles :hover/.active — spécificité égale, le sélecteur
-   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé. */
+   plus tardif (hover/actif) gagne donc sur un lien visité ET survolé.
+   IMPORTANT : Safari bloque var() dans :visited (history-sniffing protection).
+   On fournit la valeur hex littérale résolue AVANT le var() : Safari applique
+   le hex, Chrome/Firefox appliquent var() — résultat identique. */
 .top-nav a:visited,
 .sidebar a:visited,
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
-.storybook-btn:visited     {color:var(--agtc-semantic-color-text-secondary)}
-.top-nav a.nav-cta:visited {color:var(--agtc-semantic-color-text-on-action)}
-.footer-links a:visited    {color:var(--agtc-semantic-color-text-on-inverse-secondary)}
-.audit-footer-link:visited {color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+.top-nav a.nav-cta:visited {color:#ffffff;color:var(--agtc-semantic-color-text-on-action)}
+.footer-links a:visited    {color:rgba(255,255,255,.75);color:var(--agtc-semantic-color-text-on-inverse-secondary)}
+.audit-footer-link:visited {color:rgba(255,255,255,.52);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+/* Dark mode — valeurs résolues pour Safari (var() ignoré dans :visited) */
+[data-theme="dark"] .top-nav a:visited,
+[data-theme="dark"] .sidebar a:visited,
+[data-theme="dark"] .toc a:visited,
+[data-theme="dark"] .nav-card:visited,
+[data-theme="dark"] .github-btn:visited,
+[data-theme="dark"] .storybook-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
+[data-theme="dark"] .top-nav a.nav-cta:visited {color:#04201c;color:var(--agtc-semantic-color-text-on-action)}
 .top-nav a:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
 .top-nav a.active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary)}
 /* DÉMARRER = CTA d'adoption : rempli action-primary, prioritaire même en état actif */

@@ -54,11 +54,16 @@ Conséquence : changer la couleur de « fond code sombre » nécessitait de cher
 occurrences de `gray.12` dans le COMP, au lieu de modifier un seul token sémantique
 `background.code` qui se propagait partout. L'intention (`fond de code`) était invisible.
 
-L'audit a également identifié **4 violations CSS immédiates** non liées aux tokens :
-- Fallbacks hex/rgba IE11 obsolètes dans les règles `:visited` (pattern `color:#646464;color:var(...)`)
-- Hex fallbacks dans des `var(,fallback)` (ex. `var(--agtc-...,#646464)`)
+L'audit a également identifié **3 violations CSS immédiates** non liées aux tokens :
+- Hex fallbacks dans des `var(,fallback)` (ex. `var(--agtc-...,#646464)`) dans `[data-theme="light"]`
 - `font-size:0.85rem` hors token sur `.audit-contrast-table`
 - `filter:drop-shadow(rgba...)` hors token sur `.platform-logo-item img`
+
+> **Note post-incident 2026-06-15 :** l'audit avait initialement classé les `color:#hex;color:var(...)` 
+> dans les règles `:visited` comme "fallbacks IE11 obsolètes" — c'était une erreur. Ces valeurs 
+> littérales sont une nécessité de compatibilité Safari : WebKit bloque la résolution de `var()` 
+> dans `:visited` pour prévenir le history sniffing. Elles ont été supprimées puis restaurées le 
+> même jour. Voir `no-visited-nav.md` §Exception Safari et ADR-047.
 
 ---
 
@@ -117,7 +122,6 @@ Créer les tokens intermédiaires manquants dans `tokens/semantic.json`, regroup
 
 | Ligne | Violation | Correction |
 |-------|-----------|------------|
-| `:visited` (4 règles) | `color:#646464;color:var(...)` — fallback IE11 | Token seul, hex supprimé |
 | `[data-theme="light"]` (3 règles) | `var(--agtc-...,#646464)` — fallback dans var() | Fallback hex retiré |
 | `.audit-contrast-table` | `font-size:0.85rem` hors token | `var(--agtc-semantic-typography-label-size)` |
 | `.platform-logo-item img` | `filter:drop-shadow(rgba...)` hors token | Nouveau `--agtc-drop-shadow-sm` dans `:root` |
