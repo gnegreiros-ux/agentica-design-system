@@ -1017,12 +1017,12 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── TECH STACK PIPELINE ─────────────────────────────────── */
 .stack-flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow-x:auto;border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
-.stack-node{flex:1;min-width:100px;padding:16px 12px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative;font-size:var(--agtc-semantic-typography-label-size)}
+.stack-node{flex:1;min-width:100px;padding:16px 12px;background:var(--agtc-semantic-color-background-surface);text-align:center;border-right:1px solid var(--agtc-semantic-color-border-default);position:relative}
 .stack-node:last-child{border-right:none;background:var(--agtc-semantic-color-background-subtle)}
 .stack-node-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px;display:flex;justify-content:center}
 .stack-node-icon :is(svg,img){width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control)}
-.stack-node-title{font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
-.stack-node-sub{color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
+.stack-node-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary)}
+.stack-node-sub{font-size:var(--agtc-component-card-typography-title-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
 
 /* ── RESPONSIVE (additions) ──────────────────────────────── */
 @media(max-width:1200px){.toc{display:none}}
