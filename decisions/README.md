@@ -116,6 +116,7 @@ des décisions déjà tranchées.
 | [ADR-056](ADR-056-agtc-tabs-implementation.md) | Implémentation de `agtc-tabs` | 2026-06-12 | ✅ Actif |
 | [ADR-057](ADR-057-deux-contextes-utilisation.md) | Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) | 2026-06-12 | ✅ Actif |
 | [ADR-058](ADR-058-redesign-site-theme-sombre.md) | Redesign du site : thème sombre et tokens d'extension CSS | 2026-06-12 | ✅ Actif |
+| [ADR-059](ADR-059-semantic-tokens-hierarchy-completion.md) | Fermeture de la hiérarchie 3 niveaux : 18 tokens sémantiques intermédiaires | 2026-06-15 | ✅ Actif |
 
 ---
 
