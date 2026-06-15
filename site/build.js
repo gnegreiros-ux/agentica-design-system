@@ -390,6 +390,7 @@ function tokensCSS() {
   --agtc-surface-glass-strong:rgba(255,255,255,.22);
   --agtc-surface-glass-hover:rgba(255,255,255,.12);
   --agtc-surface-glass-ghost-text:rgba(255,255,255,.85);
+  --agtc-surface-accent-border:rgba(237,107,134,.45);
   --agtc-surface-overlay:rgba(0,0,0,.40);
   /* Espacement comfortable — valeurs pré-résolues (ceil() non supporté en CSS natif)
      comfortable = ceil(base × 1.25 / 4) × 4 */
@@ -554,7 +555,7 @@ body{
 .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);background:var(--agtc-gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
 
-.home-section{padding:64px 0;max-width:1100px;margin:0 auto}
+.home-section{padding:var(--agtc-space-9,96px) var(--agtc-space-5,24px);max-width:var(--agtc-content-max,1180px);margin:0 auto}
 .home-section h2{font-size:var(--agtc-semantic-typography-heading-3-size);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-snug);margin-bottom:8px}
 .home-section > p{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-bottom:32px;line-height:1.7}
 
@@ -873,7 +874,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .sidebar.open{transform:translateX(0)}
   .sidebar-toggle{display:flex}
   .content{padding:28px 20px}
-  .home-section{padding:40px 20px}
+  .home-section{padding:var(--agtc-space-7,48px) var(--agtc-space-4,16px)}
   .home-section-ink .illus-block{margin-left:-20px;margin-right:-20px;margin-top:64px;margin-bottom:0}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
@@ -1209,6 +1210,9 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   position:relative;overflow:hidden;
   padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-9,96px));
   padding-bottom:var(--agtc-space-9,96px);
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+  isolation:isolate;
 }
 .hero::before{
   content:"";position:absolute;inset:0;z-index:0;
@@ -1226,16 +1230,16 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 .hero-badge{
   display:inline-flex;align-items:center;gap:var(--agtc-space-2,8px);
   padding:var(--agtc-space-1,4px) var(--agtc-space-3,12px);
-  border:1px solid var(--agtc-semantic-color-border-default);
+  border:1px solid var(--agtc-surface-glass-border);
   border-radius:var(--agtc-semantic-radius-pill);
   font-size:var(--agtc-font-size-label,.875rem);
-  color:var(--agtc-semantic-color-text-secondary);
-  background:var(--agtc-semantic-color-background-subtle);
+  color:var(--agtc-semantic-color-text-on-inverse-muted);
+  background:var(--agtc-surface-glass);
   margin-bottom:var(--agtc-space-5,24px);
 }
 .hero-badge .pulse{
   width:8px;height:8px;border-radius:50%;
-  background:var(--agtc-semantic-color-action-primary);
+  background:var(--agtc-semantic-color-accent);
   animation:pulse 2s ease-in-out infinite;
 }
 .hero-eyebrow{
@@ -1248,7 +1252,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   font-size:var(--agtc-font-size-display,clamp(2.5rem,5vw,3.5rem));
   font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-tighter);
   line-height:var(--agtc-line-height-heading,1.05);
-  color:var(--agtc-semantic-color-text-primary);
+  color:var(--agtc-semantic-color-text-on-inverse);
   margin:0 0 var(--agtc-space-5,24px);
 }
 .hero-title .grad{
@@ -1258,7 +1262,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 .hero-title .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
 .hero-tagline{
   font-size:var(--agtc-font-size-h5,1.25rem);
-  color:var(--agtc-semantic-color-text-secondary);
+  color:var(--agtc-semantic-color-text-on-inverse-muted);
   line-height:var(--agtc-line-height-text,1.6);
   max-width:580px;margin-bottom:var(--agtc-space-7,48px);
 }
@@ -1269,25 +1273,27 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 }
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
 
-/* ── LAYER STACK — 3D token layers (no orbs, no blobs) ────── */
+/* ── LAYER STACK — 3D isometric token layers ─────────────── */
 .layer-stack{
   perspective:1400px;position:relative;
-  display:flex;flex-direction:column;gap:var(--agtc-space-4,16px);
+  height:420px;display:block;
 }
 .layer-plane{
-  background:var(--agtc-semantic-color-background-surface);
-  border:1px solid var(--agtc-semantic-color-border-default);
+  position:absolute;left:50%;top:50%;width:330px;
+  background:var(--agtc-surface-glass-hover);
+  border:1px solid var(--agtc-surface-glass-border);
   border-radius:var(--agtc-semantic-radius-md,8px);
   padding:var(--agtc-space-4,16px) var(--agtc-space-5,24px);
-  box-shadow:var(--agtc-shadow-md);
-  transform:perspective(600px) rotateX(12deg) rotateY(-8deg);
+  /* rgba(0,0,0,.6) : ombre décorative 3D sur fond sombre — pas de token équivalent */
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
-.layer-plane.l1{animation:planeFloat 7s ease-in-out infinite}
-.layer-plane.l2{animation:planeFloat 7s ease-in-out infinite .8s}
-.layer-plane.l3{animation:planeFloat 7s ease-in-out infinite 1.6s}
-.pl-tag{font-size:var(--agtc-font-size-detail,.75rem);font-weight:var(--agtc-semantic-typography-label-weight);letter-spacing:var(--agtc-tracking-overline);text-transform:uppercase;color:var(--agtc-semantic-color-text-secondary);margin-bottom:var(--agtc-space-1,4px)}
-.pl-title{font-size:var(--agtc-font-size-label,.875rem);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-1,4px)}
-.pl-code{font-size:var(--agtc-font-size-detail,.75rem);font-family:var(--agtc-font-mono,monospace);color:var(--agtc-semantic-color-text-secondary)}
+.layer-plane.l1{transform:translate(-50%,-50%) translate(-86px,96px) rotateX(52deg) rotateZ(-32deg)}
+.layer-plane.l2{transform:translate(-50%,-50%) rotateX(52deg) rotateZ(-32deg)}
+.layer-plane.l3{transform:translate(-50%,-50%) translate(86px,-96px) rotateX(52deg) rotateZ(-32deg);border-color:var(--agtc-surface-accent-border)}
+.pl-tag{font-size:var(--agtc-font-size-detail,.75rem);font-weight:var(--agtc-semantic-typography-label-weight);letter-spacing:var(--agtc-tracking-overline);text-transform:uppercase;color:var(--agtc-semantic-color-text-on-inverse-muted);margin-bottom:var(--agtc-space-1,4px)}
+.pl-title{font-size:var(--agtc-font-size-label,.875rem);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-on-inverse);margin-bottom:var(--agtc-space-1,4px)}
+.pl-code{font-size:var(--agtc-font-size-detail,.75rem);font-family:var(--agtc-font-mono,monospace);color:var(--agtc-semantic-color-text-on-inverse-muted)}
 
 /* ── ANIMATIONS ───────────────────────────────────────────── */
 @keyframes auroraDrift{
@@ -1453,6 +1459,14 @@ body{overflow-x:hidden}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ══ REDESIGN PHASE 3 — hero 3D + home layout ═══════════════════════════════ */
+/* ── Layer link (connector entre les planes) ─────────────────────────────── */
+.layer-link{position:absolute;left:50%;top:50%;width:2px;height:120px;background:linear-gradient(var(--agtc-semantic-color-brand-primary),transparent);transform:translate(-50%,-50%) rotate(34deg);z-index:-1;opacity:.5}
+/* ── CTA final paragraph max-width ──────────────────────────────────────── */
+.cta-final > p{max-width:560px;margin:0 auto}
+/* ── Home section h2 top margin reset ───────────────────────────────────── */
+.home-section h2{margin-top:0}
 `; }
 
 function siteJS() { return `
@@ -1995,14 +2009,10 @@ function buildHome(adrs) {
   const primCount  = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
-  const svgPipeline   = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
-  const svgGovernance = read(path.join(ROOT, 'illustrations/human-last-word.svg'));
-  const svgMultiPlat  = read(path.join(ROOT, 'illustrations/multi-platform.svg'));
-
   const principles = [
-    [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel.','Digital sovereignty','Data, decisions and tools remain under organizational control.'],
-    [icon('accessibility',24),'Accessibilité première','WCAG 2.1 AA minimum. Non contournable, non négociable.','Accessibility first','WCAG 2.1 AA minimum. Non-negotiable.'],
-    [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée.','Full auditability','Every decision is traceable, versioned, and justified.'],
+    [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
+    [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée. Un script d\'audit valide chaque token.','Full auditability','Every decision is traceable, versioned, and justified. An audit script validates every token.'],
+    [icon('rotate-ccw',24),'Auto-guérison','Les dérives détectées sont signalées et corrigées automatiquement — sous supervision humaine.','Self-healing','Detected drifts are flagged and auto-corrected — under human supervision.'],
     [icon('user-check',24),'Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.','Humans decide','Agents propose. Humans decide. Always.'],
   ];
 
@@ -2016,15 +2026,13 @@ function buildHome(adrs) {
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
   ];
 
-  const vendorLogo = (src, alt, size=20) => `<img src="integrations/${src}" alt="${alt}" width="${size}" height="${size}" loading="lazy" style="display:block">`;
   const stackNodes = [
     [icon('file-text',20),        'Décision',       'Decision',       'ADRs'],
-    [icon('book-open',20),        'Documentation',  'Documentation',  'Guidelines'],
+    [icon('book-open',20),        'Documentation',  'Documentation',  'Storybook'],
     [icon('pen-tool',20),         'Design',         'Design',         'Figma'],
-    [icon('code-2',20),           'Code',           'Code',           'Web Components'],
-    [storybookIcon(20),           'Storybook',      'Storybook',      'Chromatic'],
+    [icon('code-2',20),           'Code',           'Code',           'Lit / Web Components'],
     [icon('check-circle',20),     'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),     'Audit visuel',   'Visual audit',   'Chromatic'],
+    [icon('shield-check',20),     'Audit',          'Audit',          'Chromatic'],
     [icon('rocket',20),           'Déploiement',    'Deploy',         'CI/CD'],
   ];
 
@@ -2043,7 +2051,7 @@ function buildHome(adrs) {
   ];
 
   const body = `
-<section class="hero marketing-hero">
+<section class="hero">
   <div class="hero-inner hero-grid">
     <div>
       <span class="hero-badge">
@@ -2052,29 +2060,21 @@ function buildHome(adrs) {
         <span class="lang-en">Agentica · v0.1.0</span>
       </span>
       <h1 class="hero-title">
-        <span class="lang-fr">Les humains <em class="verb">décident</em><br><span>Les agents <em class="verb">exécutent</em><br>Le système <em class="verb">garantit</em></span></span>
-        <span class="lang-en">Humans <em class="verb">decide</em><br><span>Agents <em class="verb">execute</em><br>The system <em class="verb">ensures</em></span></span>
+        <span class="lang-fr">Un système de design <span class="grad">compris par les humains et les agents IA.</span></span>
+        <span class="lang-en">A design system <span class="grad">understood by humans and AI agents.</span></span>
       </h1>
       <p class="hero-tagline">
-        <span class="lang-fr">Agentica transforme votre système de design en infrastructure opérationnelle. Les décisions sont encodées, les dérives détectées automatiquement, la documentation se maintient elle-même. Stack agnostique, souverain, auditable.</span>
-        <span class="lang-en">Agentica turns your design system into operational infrastructure. Decisions are encoded, drift is detected automatically, documentation maintains itself. Stack agnostic, sovereign, auditable.</span>
+        <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
+        <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. Built for teams that move fast — and the agents that assist them.</span>
       </p>
       <div class="hero-actions">
-        <a href="get-started.html" class="agtc-button primary">
-          <span class="lang-fr">Démarrer</span>
-          <span class="lang-en">Get started</span>
-        </a>
-        <a href="components/index.html" class="agtc-button secondary">
-          <span class="lang-fr">Voir les composants</span>
-          <span class="lang-en">View components</span>
-        </a>
-        <a href="agents/index.html" class="agtc-button ghost">
-          <span class="lang-fr">Documentation agents →</span>
-          <span class="lang-en">Agent documentation →</span>
-        </a>
+        <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
+        <a href="components/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Voir les composants</span><span class="lang-en">View components</span></a>
+        <a href="agents/index.html" class="ds-btn ghost on-dark"><span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span></a>
       </div>
     </div>
     <div class="layer-stack" aria-hidden="true">
+      <div class="layer-link"></div>
       <div class="layer-plane l1">
         <span class="pl-tag"><span class="lang-fr">Niveau 1 · Primitif</span><span class="lang-en">Level 1 · Primitive</span></span>
         <span class="pl-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></span>
@@ -2094,301 +2094,176 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<div class="home-section marketing-section">
-  <h2 class="first">
-    <span class="lang-fr">Pour chaque membre de l'équipe</span>
-    <span class="lang-en">For every team member</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Un système de design unifié parle à tous — gestionnaires, designers, développeurs et POs — avec une valeur concrète pour chacun.</span>
-    <span class="lang-en">A unified design system speaks to everyone — managers, designers, developers, and POs — with concrete value for each.</span>
-  </p>
+
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Une valeur pour chaque rôle</span><span class="lang-en">Value for every role</span></span>
+  <h2><span class="lang-fr">Pour chaque membre de l'équipe</span><span class="lang-en">For every team member</span></h2>
+  <p><span class="lang-fr">Un système de design unifié parle à tous — gestionnaires, designers, développeurs et POs — avec une valeur concrète pour chacun.</span><span class="lang-en">A unified design system speaks to everyone — managers, designers, developers, and POs — with concrete value for each.</span></p>
   <div class="audience-grid">
     ${audiences.map(([ico,fr,en,dFr,dEn]) => `
-    <div class="audience-card">
+    <article class="audience-card card-surface card-hover">
       <div class="audience-icon">${ico}</div>
-      <div class="audience-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="audience-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
-    </div>`).join('')}
+      <h3 class="audience-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
+      <p class="audience-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></p>
+    </article>`).join('')}
   </div>
+</section>
+
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
 </div>
 
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Preuves & chiffres</span>
-    <span class="lang-en">Evidence & numbers</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span>
-    <span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span>
-  </p>
+<section class="home-section reveal" style="padding-top:0">
+  <span class="eyebrow"><span class="lang-fr">Mesurable &amp; vérifiable</span><span class="lang-en">Measurable &amp; verifiable</span></span>
+  <h2><span class="lang-fr">Preuves &amp; chiffres</span><span class="lang-en">Evidence &amp; numbers</span></h2>
+  <p><span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span><span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span></p>
   <div class="kpi-band">
     ${kpis.map(([num,fr,en,dFr,dEn,url,src]) => `
-    <div class="kpi-card">
+    <article class="kpi-card card-surface">
       <span class="kpi-num">${num}</span>
       <span class="kpi-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></span>
       <span class="kpi-source"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span>${url ? ` <a href="${url}" target="_blank" rel="noopener">(${src})</a>` : ''}</span>
-    </div>`).join('')}
+    </article>`).join('')}
   </div>
-</div>
+</section>
 
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Standards ouverts</span>
-    <span class="lang-en">Open standards</span>
-  </h2>
-  <div class="standards-band">
-    <a class="standards-logo" href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer" aria-label="Design Tokens Community Group (W3C) — designtokens.org">
-      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>DTCG</title><path fill="currentColor" d="M16.1318 0.308289C16.4297 0.327953 16.7242 0.414945 16.9922 0.568054L28.9922 7.4245C29.6152 7.78062 30 8.44422 30 9.1618V22.8395C29.9998 23.557 29.6151 24.2209 28.9922 24.5768L16.9922 31.4333C16.8359 31.5226 16.6698 31.5866 16.5 31.6306V31.6325C16.4458 31.6465 16.3909 31.6563 16.3359 31.6657C16.317 31.6689 16.2983 31.6728 16.2793 31.6755C16.2183 31.6841 16.1571 31.6891 16.0957 31.6921C16.0739 31.6931 16.0521 31.6947 16.0303 31.695C15.9703 31.6959 15.9104 31.6936 15.8506 31.6891C15.8317 31.6877 15.8128 31.6862 15.7939 31.6843C15.7324 31.6779 15.6713 31.6681 15.6104 31.6559C15.591 31.6521 15.5719 31.6477 15.5527 31.6432C15.5353 31.6392 15.5174 31.637 15.5 31.6325V31.6286C15.3723 31.5956 15.2457 31.5545 15.125 31.4958L15.0078 31.4333L3.00781 24.5768C2.38487 24.2209 2.00025 23.557 2 22.8395V9.1618C2 8.89806 2.0528 8.64153 2.14941 8.40497C2.16859 8.35795 2.18927 8.31164 2.21191 8.2663L2.23828 8.21356C2.24243 8.20585 2.24771 8.19876 2.25195 8.1911C2.28326 8.13457 2.31686 8.07933 2.35352 8.02606C2.36319 8.01201 2.37277 7.99788 2.38281 7.98407C2.42195 7.93021 2.4643 7.87865 2.50879 7.8288C2.62122 7.70279 2.74996 7.59016 2.89355 7.49481L3.00781 7.4245L15.0078 0.568054C15.2755 0.415112 15.5696 0.328077 15.8672 0.308289C15.872 0.307815 15.8769 0.306633 15.8818 0.306335H16.1182C16.1228 0.306612 16.1273 0.307859 16.1318 0.308289ZM3 22.8503L7.51465 20.2712C7.75056 20.1364 8.05052 20.2288 8.18555 20.4645C8.32035 20.7007 8.24688 21.0054 8.01074 21.1403L3.51074 23.7126L15.5 30.5622V16.2907L3 9.14813V22.8503ZM16.5 16.2907V30.5622L28.4883 23.7126L23.9873 21.1413C23.751 21.0063 23.6773 20.7007 23.8125 20.4645C23.9478 20.2287 24.2483 20.1364 24.4844 20.2712L28.999 22.8513C28.9991 22.8475 28.9999 22.8433 29 22.8395V9.1618C29 9.15738 28.9991 9.15255 28.999 9.14813L16.5 16.2907ZM8.25781 13.9821C8.33691 13.6787 8.68469 13.5476 8.95703 13.7028L14.248 16.7263C14.4037 16.8152 14.4999 16.9806 14.5 17.1599V23.2536C14.4999 23.5671 14.2138 23.804 13.9111 23.7224C10.506 22.8038 8 19.6952 8 15.9997C8.00002 15.3026 8.08983 14.6266 8.25781 13.9821ZM23.042 13.7028C23.3143 13.5476 23.662 13.6787 23.7412 13.9821C23.9095 14.6266 24 15.3025 24 15.9997C24 19.6952 21.494 22.8038 18.0889 23.7224C17.7862 23.804 17.5001 23.5671 17.5 23.2536V17.1599C17.5001 16.9806 17.5963 16.8152 17.752 16.7263L23.042 13.7028ZM16.5 6.51434C16.4995 6.78566 16.2714 7.00068 16 7.00067C15.7286 7.00066 15.5005 6.78566 15.5 6.51434V1.43817L3.51172 8.28778L16 15.4235L28.4873 8.28778L16.5 1.43817V6.51434ZM16 7.99969C18.2143 7.99969 20.2177 8.90026 21.666 10.3542C21.8875 10.5765 21.8233 10.9436 21.5508 11.0993L16.248 14.1296C16.0943 14.2174 15.9057 14.2174 15.752 14.1296L10.4482 11.0983C10.1757 10.9426 10.1115 10.5766 10.333 10.3542C11.7814 8.90007 13.7854 7.99969 16 7.99969Z" /></svg>
-    </a>
-    <div class="standards-text">
-      <div class="standards-title">
-        <span class="lang-fr">Agentica suit le standard DTCG</span>
-        <span class="lang-en">Agentica follows the DTCG standard</span>
-      </div>
-      <p>
-        <span class="lang-fr">Les tokens d'Agentica sont conformes au format <strong>Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, alias <code>{group.token}</code>. Interopérables avec Style Dictionary, Tokens Studio et tout outil compatible. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-        <span class="lang-en">Agentica's tokens conform to the W3C Community Group <strong>Design Tokens</strong> format (DTCG) — <code>$value</code>, <code>$type</code>, <code>{group.token}</code> aliases. Interoperable with Style Dictionary, Tokens Studio and any compatible tool. <a href="https://www.designtokens.org/" target="_blank" rel="noopener noreferrer">designtokens.org →</a></span>
-      </p>
-    </div>
-  </div>
-</div>
 
-<div class="home-section-ink">
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Valeurs non négociables</span>
-    <span class="lang-en">Non-negotiable values</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span>
-    <span class="lang-en">These four principles guide every system decision and every agent action.</span>
-  </p>
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Principes fondateurs</span><span class="lang-en">Founding principles</span></span>
+  <h2><span class="lang-fr">Valeurs non négociables</span><span class="lang-en">Non-negotiable values</span></h2>
+  <p><span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span><span class="lang-en">These four principles guide every system decision and every agent action.</span></p>
   <div class="principle-grid">
     ${principles.map(([ico,fr,descFr,en,descEn]) => `
-    <div class="principle-card">
-      <div style="color:var(--agtc-semantic-color-action-primary);margin-bottom:12px">${ico}</div>
-      <div class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></div>
-    </div>`).join('')}
+    <article class="principle-card card-surface">
+      <div class="principle-icon">${ico}</div>
+      <h3 class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
+      <p class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></p>
+    </article>`).join('')}
   </div>
-  <div class="illus-block">${svgGovernance}</div>
-</div>
-</div>
+</section>
 
-<div class="stat-band" role="region" aria-label="Statistiques du système">
-  <div class="stat-item">
-    <span class="stat-num" data-count="21">21</span>
-    <span class="stat-text">
-      <span class="lang-fr">critères WCAG 2.1 AA couverts</span>
-      <span class="lang-en">WCAG 2.1 AA criteria covered</span>
-    </span>
+<section class="section-inverse">
+  <div class="si-inner">
+    <div class="stat-band" role="region" aria-label="Statistiques du système">
+      <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
+      <div class="stat-item"><span class="stat-num" data-count="${adrs.length}">${adrs.length}</span><span class="stat-text"><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture decisions</span></span></div>
+      <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-text"><span class="lang-fr">Niveaux de tokens</span><span class="lang-en">Token levels</span></span></div>
+      <div class="stat-item"><span class="stat-num" data-count="${totalTokens}">${totalTokens}</span><span class="stat-text"><span class="lang-fr">Tokens au total</span><span class="lang-en">Tokens total</span></span></div>
+      <div class="stat-item"><span class="stat-num" data-count="${colorCount}">${colorCount}</span><span class="stat-text"><span class="lang-fr">Échelles de couleur</span><span class="lang-en">Color scales</span></span></div>
+    </div>
   </div>
-  <div class="stat-item">
-    <span class="stat-num" data-count="${adrs.length}">${adrs.length}</span>
-    <span class="stat-text">
-      <span class="lang-fr">Décisions architecturales</span>
-      <span class="lang-en">Architecture decisions</span>
-    </span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-count="3">3</span>
-    <span class="stat-text">
-      <span class="lang-fr">Niveaux de tokens</span>
-      <span class="lang-en">Token levels</span>
-    </span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-count="${totalTokens}">${totalTokens}</span>
-    <span class="stat-text">
-      <span class="lang-fr">Tokens au total</span>
-      <span class="lang-en">Tokens total</span>
-    </span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-count="${colorCount}">${colorCount}</span>
-    <span class="stat-text">
-      <span class="lang-fr">Échelles de couleur</span>
-      <span class="lang-en">Color scales</span>
-    </span>
-  </div>
-</div>
+</section>
 
-<div class="home-section-ink">
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Pipeline de tokens</span>
-    <span class="lang-en">Token pipeline</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span>
-    <span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span>
-  </p>
-  <div class="illus-block">${svgPipeline}</div>
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
+  <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
+  <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
-      <div class="pipeline-tag">
-        <span class="lang-fr">Niveau 1 — Primitif</span>
-        <span class="lang-en">Level 1 — Primitive</span>
-      </div>
-      <div class="pipeline-title">
-        <span class="lang-fr">Valeurs physiques</span>
-        <span class="lang-en">Physical values</span>
-      </div>
-      <div class="pipeline-desc">
-        <span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span>
-        <span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span>
-      </div>
+      <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
+      <div class="pipeline-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></div>
+      <div class="pipeline-desc"><span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span><span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span></div>
       <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">
-        <span class="lang-fr">Niveau 2 — Sémantique</span>
-        <span class="lang-en">Level 2 — Semantic</span>
-      </div>
-      <div class="pipeline-title">
-        <span class="lang-fr">Intentions UX</span>
-        <span class="lang-en">UX intentions</span>
-      </div>
-      <div class="pipeline-desc">
-        <span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span>
-        <span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span>
-      </div>
+      <div class="pipeline-tag"><span class="lang-fr">Niveau 2 — Sémantique</span><span class="lang-en">Level 2 — Semantic</span></div>
+      <div class="pipeline-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></div>
+      <div class="pipeline-desc"><span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span><span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span></div>
       <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
     </div>
     <div class="pipeline-step">
-      <div class="pipeline-tag">
-        <span class="lang-fr">Niveau 3 — Composant</span>
-        <span class="lang-en">Level 3 — Component</span>
-      </div>
-      <div class="pipeline-title">
-        <span class="lang-fr">Contrats institutionnels</span>
-        <span class="lang-en">Institutional contracts</span>
-      </div>
-      <div class="pipeline-desc">
-        <span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span>
-        <span class="lang-en">Component-specific decisions. Any change requires approval.</span>
-      </div>
+      <div class="pipeline-tag"><span class="lang-fr">Niveau 3 — Composant</span><span class="lang-en">Level 3 — Component</span></div>
+      <div class="pipeline-title"><span class="lang-fr">Contrats institutionnels</span><span class="lang-en">Institutional contracts</span></div>
+      <div class="pipeline-desc"><span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span><span class="lang-en">Component-specific decisions. Any change requires approval.</span></div>
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
     </div>
   </div>
-  <div class="infobox" role="note">
-    <span class="infobox-icon">${icon('info', 20)}</span>
-    <div class="infobox-body">
-      <span class="lang-fr">Règle absolue : un composant ne référence <strong>jamais</strong> un token primitif directement — toujours via un token sémantique. C'est cette indirection qui rend les décisions lisibles par les agents IA. <a href="tokens/index.html">Explorer les trois niveaux →</a></span>
-      <span class="lang-en">Absolute rule: a component <strong>never</strong> references a primitive token directly — always through a semantic token. This indirection is what makes decisions legible to AI agents. <a href="tokens/index.html">Explore the three levels →</a></span>
-    </div>
-  </div>
-</div>
+</section>
+
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
 </div>
 
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Explorer le système</span>
-    <span class="lang-en">Explore the system</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span>
-    <span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span>
-  </p>
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span>
+  <h2><span class="lang-fr">Explorer le système</span><span class="lang-en">Explore the system</span></h2>
+  <p><span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span><span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span></p>
   <div class="nav-grid">
     ${sections.map(([h,ico,fr,en,dFr,dEn,ext]) => `
-    <a href="${h}" class="nav-card"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>
+    <a href="${h}" class="nav-card card-surface card-hover"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>
       <span class="nav-card-icon">${ico}</span>
       <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
     </a>`).join('')}
   </div>
-</div>
+</section>
 
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Décisions architecturales (ADRs)</span>
-    <span class="lang-en">Architecture Decision Records (ADRs)</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Un design system accumule des décisions invisibles : pourquoi ce token est nommé ainsi, pourquoi cette variante a été rejetée. Les ADRs rendent ces décisions visibles, traçables et auditables par les humains comme par les agents.</span>
-    <span class="lang-en">A design system accumulates invisible decisions: why this token is named this way, why this variant was rejected. ADRs make these decisions visible, traceable and auditable by both humans and agents.</span>
-  </p>
-  <div class="grid-3">
-    <div class="info-card">
-      <div class="info-card-icon">${icon('file-text',20)}</div>
-      <div class="info-card-title">
-        <span class="lang-fr">Format Markdown</span>
-        <span class="lang-en">Markdown format</span>
-      </div>
-      <div class="info-card-body">
-        <span class="lang-fr">Chaque décision est un fichier .md versionné dans le dépôt — lisible par Git, GitHub et les agents.</span>
-        <span class="lang-en">Each decision is a versioned .md file in the repo — readable by Git, GitHub and agents.</span>
-      </div>
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Mémoire du système</span><span class="lang-en">System memory</span></span>
+  <h2><span class="lang-fr">Décisions architecturales (ADRs)</span><span class="lang-en">Architecture Decision Records</span></h2>
+  <p><span class="lang-fr">Un design system accumule des décisions invisibles. Les ADRs les rendent visibles, traçables et auditables par les humains comme par les agents.</span><span class="lang-en">A design system accumulates invisible decisions. ADRs make them visible, traceable and auditable by both humans and agents.</span></p>
+  <div class="mini-grid">
+    <div class="mini-card card-surface">
+      <div class="mc-icon">${icon('file-text',20)}</div>
+      <div class="mc-title"><span class="lang-fr">Format Markdown</span><span class="lang-en">Markdown format</span></div>
+      <div class="mc-desc"><span class="lang-fr">Chaque décision est un fichier .md versionné — lisible par Git, GitHub et les agents.</span><span class="lang-en">Each decision is a versioned .md file — readable by Git, GitHub and agents.</span></div>
     </div>
-    <div class="info-card">
-      <div class="info-card-icon">${icon('git-branch',20)}</div>
-      <div class="info-card-title">
-        <span class="lang-fr">Immutabilité</span>
-        <span class="lang-en">Immutability</span>
-      </div>
-      <div class="info-card-body">
-        <span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span>
-        <span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span>
-      </div>
+    <div class="mini-card card-surface">
+      <div class="mc-icon">${icon('git-branch',20)}</div>
+      <div class="mc-title"><span class="lang-fr">Immutabilité</span><span class="lang-en">Immutability</span></div>
+      <div class="mc-desc"><span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span><span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span></div>
     </div>
-    <div class="info-card">
-      <div class="info-card-icon">${icon('bot',20)}</div>
-      <div class="info-card-title">
-        <span class="lang-fr">Lisible par les agents</span>
-        <span class="lang-en">Agent-readable</span>
-      </div>
-      <div class="info-card-body">
-        <span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span>
-        <span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span>
-      </div>
+    <div class="mini-card card-surface">
+      <div class="mc-icon">${icon('bot',20)}</div>
+      <div class="mc-title"><span class="lang-fr">Lisible par les agents</span><span class="lang-en">Agent-readable</span></div>
+      <div class="mc-desc"><span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span><span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span></div>
     </div>
   </div>
-  <p><a href="decisions/index.html" class="agtc-button secondary">
-    <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
-    <span class="lang-en">View all ${adrs.length} ADRs →</span>
-  </a></p>
-</div>
+  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
+</section>
 
-<div class="home-section-ink">
-<div class="home-section marketing-section">
-  <h2>
-    <span class="lang-fr">Stack technique</span>
-    <span class="lang-en">Technical stack</span>
-  </h2>
-  <p>
-    <span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework (React, Vue, Angular, ou aucun).</span>
-    <span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework (React, Vue, Angular, or none).</span>
-  </p>
-  <div class="illus-block">${svgMultiPlat}</div>
-  <div class="stack-flow" role="img" aria-label="Pipeline du système de design">
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
+  <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
+  <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
+  <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
       <div class="stack-node-icon">${ico}</div>
-      <div class="stack-node-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
+      <div class="stack-node-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="stack-node-sub">${sub}</div>
     </div>`).join('')}
   </div>
-  <div class="grid-auto-220">
-    ${[
-      ['<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 160 160" aria-hidden="true"><path fill="#00ACD7" d="M80 0C35.8 0 0 35.8 0 80s35.8 80 80 80 80-35.8 80-80S124.2 0 80 0zm-.7 32.5h1.4l37.3 21.5v43l-38 21.9L42 97V55l37.3-22.5zm0 8.2L47.6 59.3v37.4l32 18.5 32-18.5V59.3L79.3 40.7zM80 55a25 25 0 1 1 0 50 25 25 0 0 1 0-50z"/></svg>','Lit (Google)','Web Components','<span class="lang-fr">Contrats UI universels, framework-agnostic</span><span class="lang-en">Universal UI contracts, framework-agnostic</span>',''],
-      [icon('palette',20),'Style Dictionary','Token compilation','<span class="lang-fr">JSON → CSS, JS, Swift, Android</span><span class="lang-en">JSON → CSS, JS, Swift, Android</span>',''],
-      ['<img class="vendor-logo" src="integrations/storybook.svg" alt="Storybook" width="24" height="24" loading="lazy">','Storybook','Documentation','<span class="lang-fr">Canvas + previews + specs</span><span class="lang-en">Canvas + previews + specs</span>',''],
-      [icon('shield-check',20),'axe-core','Accessibility','<span class="lang-fr">Audit automatique WCAG</span><span class="lang-en">Automatic WCAG audit</span>',''],
-      [icon('test-tube',20),'Playwright','E2E tests','<span class="lang-fr">Parcours complets automatisés</span><span class="lang-en">Automated end-to-end flows</span>',''],
-      ['<img class="vendor-logo" src="integrations/react.svg" alt="React" width="24" height="24" loading="lazy">','React / Vue / Angular','Web Components','<span class="lang-fr">Compatible tous frameworks</span><span class="lang-en">Works with all frameworks</span>',''],
-    ].map(([ico,name,role,dFr,dEn]) => `
-    <div class="tool-card">
-      <div class="tool-card-icon">${ico}</div>
-      <div>
-        <div class="tool-card-name">${name} <span class="tool-card-role">— ${role}</span></div>
-        <div class="tool-card-desc">${dFr}</div>
-      </div>
-    </div>`).join('')}
+</section>
+
+<section class="section-inverse">
+  <div class="si-inner cta-final">
+    <h2><span class="lang-fr">Prêt à explorer le système ?</span><span class="lang-en">Ready to explore the system?</span></h2>
+    <p><span class="lang-fr">Commencez par les fondations, ou plongez dans la documentation conçue pour les agents IA.</span><span class="lang-en">Start with the foundations, or dive into the documentation built for AI agents.</span></p>
+    <div class="cta-actions">
+      <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
+      <a href="agents/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Documentation agents</span><span class="lang-en">Agent documentation</span></a>
+    </div>
   </div>
-</div>
-</div>
+</section>
 
 `;
 
