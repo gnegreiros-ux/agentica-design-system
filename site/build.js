@@ -596,6 +596,8 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+.illus-dark-row{background:var(--agtc-semantic-color-illustration-ink,#211f26);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:0;line-height:0}
+.illus-dark-row .illus-block{margin:0;border-radius:0;max-width:var(--agtc-content-max,1180px);margin-left:auto;margin-right:auto}
 
 /* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
 .contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
@@ -2179,10 +2181,10 @@ function buildHome(adrs) {
 
 
 <section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Gouvernance</span><span class="lang-en">Governance</span></span>
-  <h2><span class="lang-fr">Le dernier mot est toujours humain.</span><span class="lang-en">Humans always have the final say.</span></h2>
-  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Ce n'est pas une contrainte — c'est la garantie que le système reste sous contrôle organisationnel.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. This is not a constraint — it is the guarantee that the system stays under organizational control.</span></p>
-  <div class="illus-block">${svgGovernance}</div>
+  <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
+  <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
+  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
+  <div class="illus-dark-row"><div class="illus-block">${svgGovernance}</div></div>
   <div class="contexts-grid">
     <div class="context-card card-surface">
       <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
@@ -2230,7 +2232,7 @@ function buildHome(adrs) {
   <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
   <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
   <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
-  <div class="illus-block">${svgPipeline}</div>
+  <div class="illus-dark-row"><div class="illus-block">${svgPipeline}</div></div>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
@@ -2308,7 +2310,7 @@ function buildHome(adrs) {
   <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
   <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
   <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
-  <div class="illus-block">${svgMultiPlat}</div>
+  <div class="illus-dark-row"><div class="illus-block">${svgMultiPlat}</div></div>
   <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
