@@ -597,6 +597,19 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
 
+/* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
+.contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
+.context-card{padding:28px;border-radius:var(--agtc-semantic-radius-card);display:flex;flex-direction:column;gap:12px;border:1px solid var(--agtc-semantic-color-border-default)}
+.context-badge{display:inline-block;font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);padding:3px 10px;border-radius:var(--agtc-semantic-radius-control);background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);width:fit-content}
+.context-badge-accent{color:var(--agtc-semantic-color-brand-accent-text);background:var(--agtc-semantic-color-brand-accent-subtle);border-color:var(--agtc-semantic-color-brand-accent)}
+.context-title{font-size:var(--agtc-semantic-typography-heading-4-size,18px);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-brand-secondary-text);line-height:1.3}
+.context-desc{font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.6}
+.context-attr{display:inline-block;font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);padding:4px 10px;border-radius:var(--agtc-semantic-radius-control);background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
+.context-attr em{color:var(--agtc-semantic-color-text-tertiary,var(--agtc-semantic-color-text-secondary));font-style:italic}
+.context-card-accent{border-color:var(--agtc-semantic-color-brand-accent);background:var(--agtc-semantic-color-brand-accent-subtle,var(--agtc-semantic-color-background-subtle))}
+.context-card-accent .context-title{color:var(--agtc-semantic-color-brand-accent-text)}
+.context-card-accent .context-attr{background:var(--agtc-semantic-color-background-default,var(--agtc-semantic-color-background-surface));border-color:var(--agtc-semantic-color-brand-accent);color:var(--agtc-semantic-color-brand-accent-text)}
+
 /* ── DARK ILLUSTRATION SECTIONS ──────────────────────────── */
 .home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26);overflow-x:hidden}
 .home-section-ink .home-section h2{
@@ -2029,6 +2042,10 @@ function buildHome(adrs) {
   const primCount  = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
+  const svgPipeline   = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
+  const svgGovernance = read(path.join(ROOT, 'illustrations/human-last-word.svg'));
+  const svgMultiPlat  = read(path.join(ROOT, 'illustrations/multi-platform.svg'));
+
   const principles = [
     [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
     [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée. Un script d\'audit valide chaque token.','Full auditability','Every decision is traceable, versioned, and justified. An audit script validates every token.'],
@@ -2042,6 +2059,7 @@ function buildHome(adrs) {
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
+    ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
     [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
   ];
@@ -2190,6 +2208,7 @@ function buildHome(adrs) {
   <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
   <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
   <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
+  <div class="illus-block">${svgPipeline}</div>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
@@ -2264,9 +2283,32 @@ function buildHome(adrs) {
 </section>
 
 <section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Gouvernance</span><span class="lang-en">Governance</span></span>
+  <h2><span class="lang-fr">Le dernier mot est toujours humain.</span><span class="lang-en">Humans always have the final say.</span></h2>
+  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Ce n'est pas une contrainte — c'est la garantie que le système reste sous contrôle organisationnel.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. This is not a constraint — it is the guarantee that the system stays under organizational control.</span></p>
+  <div class="illus-block">${svgGovernance}</div>
+  <div class="contexts-grid">
+    <div class="context-card card-surface">
+      <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
+      <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
+      <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
+      <code class="context-attr">data-context <em>(absent)</em></code>
+    </div>
+    <div class="context-card card-surface context-card-accent">
+      <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
+      <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
+      <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
+      <code class="context-attr">data-context="marketing"</code>
+    </div>
+  </div>
+  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
+</section>
+
+<section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
   <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
   <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
+  <div class="illus-block">${svgMultiPlat}</div>
   <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
