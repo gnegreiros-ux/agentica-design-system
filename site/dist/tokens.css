@@ -844,6 +844,8 @@
   --agtc-semantic-color-border-danger:#ff9592;
   --agtc-semantic-color-accent:#ff8aa1;
   --agtc-semantic-color-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary-text:#edd9df;
   --agtc-semantic-color-tertiary:#6b7280;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);

@@ -446,6 +446,8 @@ function tokensCSS() {
   --agtc-semantic-color-border-danger:#ff9592;
   --agtc-semantic-color-accent:#ff8aa1;
   --agtc-semantic-color-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary-text:#edd9df;
   --agtc-semantic-color-tertiary:#6b7280;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
@@ -596,8 +598,26 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
-.illus-dark-row{background:var(--agtc-semantic-color-illustration-ink,#211f26);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:0;line-height:0}
+.illus-dark-row{background:var(--agtc-semantic-color-brand-secondary,#463239);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--agtc-space-8,64px) 0;line-height:0}
 .illus-dark-row .illus-block{margin:0;border-radius:0;max-width:var(--agtc-content-max,1180px);margin-left:auto;margin-right:auto}
+
+/* ── SECTION FOND SECONDAIRE (bordeaux) ───────────────────── */
+.section-secondary{background:var(--agtc-semantic-color-brand-secondary,#463239);padding:var(--agtc-space-9) var(--agtc-space-5);position:relative;overflow:hidden}
+.section-secondary .si-inner{max-width:var(--agtc-content-max,1180px);margin:0 auto;position:relative}
+.section-secondary h2{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92));border-top:none;padding-top:0;margin-top:0}
+.section-secondary .eyebrow{color:rgba(255,255,255,.55)}
+.section-secondary .si-inner>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(255,255,255,.62))}
+.section-secondary .illus-block{border-radius:0;margin:var(--agtc-space-8,64px) calc(-1 * var(--agtc-space-5,24px));width:calc(100% + 2*var(--agtc-space-5,24px));max-width:none}
+.section-secondary .context-card{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.12)}
+.section-secondary .context-card-accent{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.22)}
+.section-secondary .context-title{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .context-desc{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(255,255,255,.62))}
+.section-secondary .context-badge{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
+.section-secondary .context-badge-accent{color:rgba(255,255,255,.9)}
+.section-secondary .context-attr{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
+.section-secondary .context-attr em{color:rgba(255,255,255,.45)}
+.section-secondary .ds-btn{border-color:rgba(255,255,255,.3);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .ds-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
 
 /* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
 .contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
@@ -2060,8 +2080,8 @@ function buildHome(adrs) {
     ['components/index.html',   icon('puzzle',32),            'Composants',           'Components',            'Contrats UI exécutables : variantes, états, tokens, accessibilité, code.','Executable UI contracts: variants, states, tokens, accessibility, code.'],
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
-    ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
     ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
+    ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
     [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
   ];
@@ -2180,26 +2200,28 @@ function buildHome(adrs) {
 </section>
 
 
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
-  <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
-  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
-  <div class="illus-dark-row"><div class="illus-block">${svgGovernance}</div></div>
-  <div class="contexts-grid">
-    <div class="context-card card-surface">
-      <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
-      <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
-      <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
-      <code class="context-attr">data-context <em>(absent)</em></code>
+<section class="section-secondary reveal">
+  <div class="si-inner">
+    <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
+    <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
+    <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
+    <div class="illus-block">${svgGovernance}</div>
+    <div class="contexts-grid">
+      <div class="context-card">
+        <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
+        <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
+        <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
+        <code class="context-attr">data-context <em>(absent)</em></code>
+      </div>
+      <div class="context-card context-card-accent">
+        <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
+        <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
+        <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
+        <code class="context-attr">data-context="marketing"</code>
+      </div>
     </div>
-    <div class="context-card card-surface context-card-accent">
-      <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
-      <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
-      <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
-      <code class="context-attr">data-context="marketing"</code>
-    </div>
+    <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
   </div>
-  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
 </section>
 
 <section class="home-section reveal">
