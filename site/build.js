@@ -341,6 +341,12 @@ function tokensCSS() {
   for (const [k, v] of Object.entries(SEM)) lines.push(`  --agtc-semantic-${k}: ${v};`);
   lines.push('\n  /* ── Component tokens — UI contracts ── */');
   for (const [k, v] of Object.entries(COMP)) lines.push(`  --agtc-component-${k}: ${v};`);
+  // Aliases courts pour les Web Components (Shadow DOM hérite les custom properties)
+  // ex: --agtc-badge-neutral-background = var(--agtc-component-badge-neutral-background)
+  lines.push('\n  /* ── Aliases WC (Shadow DOM) ── */');
+  for (const k of Object.keys(COMP).filter(k => k.startsWith('badge-'))) {
+    lines.push(`  --agtc-${k}: var(--agtc-component-${k});`);
+  }
   lines.push('}');
 
   // Extension tokens (layout, gradients, shadows, dark mode) — from Redesign/tokens.css
@@ -3397,8 +3403,8 @@ function buildBadge() {
     <div class="demo-group">
       <span class="demo-group-label">${variant}</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <span class="agtc-badge ${variant}"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
-        <span class="agtc-badge ${variant} sm"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></span>
+        <agtc-badge variant="${variant}"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></agtc-badge>
+        <agtc-badge variant="${variant}" size="sm"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></agtc-badge>
       </div>
     </div>`;
 
@@ -4779,7 +4785,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><span class="agtc-badge success sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
+  <td><agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
 
@@ -4832,7 +4838,7 @@ function buildADR(adr, adrs) {
   while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
   const content = parseMd(lines.slice(start).join('\n'));
 
-  const statusBadge = `<span class="agtc-badge success sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></span>`;
+  const statusBadge = `<agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
   const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
   const meta = `
 <div class="adr-header">

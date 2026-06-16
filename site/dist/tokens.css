@@ -741,6 +741,34 @@
   --agtc-component-toggle-default-knob: var(--agtc-semantic-color-background-surface);
   --agtc-component-toggle-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-component-toggle-default-label: var(--agtc-semantic-color-text-primary);
+
+  /* ── Aliases WC (Shadow DOM) ── */
+  --agtc-badge-neutral-background: var(--agtc-component-badge-neutral-background);
+  --agtc-badge-neutral-text: var(--agtc-component-badge-neutral-text);
+  --agtc-badge-neutral-border: var(--agtc-component-badge-neutral-border);
+  --agtc-badge-brand-background: var(--agtc-component-badge-brand-background);
+  --agtc-badge-brand-text: var(--agtc-component-badge-brand-text);
+  --agtc-badge-brand-border: var(--agtc-component-badge-brand-border);
+  --agtc-badge-success-background: var(--agtc-component-badge-success-background);
+  --agtc-badge-success-text: var(--agtc-component-badge-success-text);
+  --agtc-badge-success-border: var(--agtc-component-badge-success-border);
+  --agtc-badge-warning-background: var(--agtc-component-badge-warning-background);
+  --agtc-badge-warning-text: var(--agtc-component-badge-warning-text);
+  --agtc-badge-warning-border: var(--agtc-component-badge-warning-border);
+  --agtc-badge-danger-background: var(--agtc-component-badge-danger-background);
+  --agtc-badge-danger-text: var(--agtc-component-badge-danger-text);
+  --agtc-badge-danger-border: var(--agtc-component-badge-danger-border);
+  --agtc-badge-info-background: var(--agtc-component-badge-info-background);
+  --agtc-badge-info-text: var(--agtc-component-badge-info-text);
+  --agtc-badge-info-border: var(--agtc-component-badge-info-border);
+  --agtc-badge-md-radius: var(--agtc-component-badge-md-radius);
+  --agtc-badge-md-padding-x: var(--agtc-component-badge-md-padding-x);
+  --agtc-badge-md-padding-y: var(--agtc-component-badge-md-padding-y);
+  --agtc-badge-md-font-size: var(--agtc-component-badge-md-font-size);
+  --agtc-badge-sm-radius: var(--agtc-component-badge-sm-radius);
+  --agtc-badge-sm-padding-x: var(--agtc-component-badge-sm-padding-x);
+  --agtc-badge-sm-padding-y: var(--agtc-component-badge-sm-padding-y);
+  --agtc-badge-sm-font-size: var(--agtc-component-badge-sm-font-size);
 }
 
 /* ── Extension tokens : layout + gradients + shadows ── */
