@@ -3397,8 +3397,8 @@ function buildBadge() {
     <div class="demo-group">
       <span class="demo-group-label">${variant}</span>
       <div class="demo-row" style="gap:8px;flex-wrap:wrap">
-        <agtc-badge variant="${variant}"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></agtc-badge>
-        <agtc-badge variant="${variant}" size="sm"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></agtc-badge>
+        <span class="agtc-badge ${variant}"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
+        <span class="agtc-badge ${variant} sm"><span class="lang-fr">${labelFr} (sm)</span><span class="lang-en">${labelEn} (sm)</span></span>
       </div>
     </div>`;
 
@@ -4779,7 +4779,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
+  <td><span class="agtc-badge success sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></span></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
 
@@ -4832,7 +4832,7 @@ function buildADR(adr, adrs) {
   while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
   const content = parseMd(lines.slice(start).join('\n'));
 
-  const statusBadge = `<agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
+  const statusBadge = `<span class="agtc-badge success sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></span>`;
   const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
   const meta = `
 <div class="adr-header">
