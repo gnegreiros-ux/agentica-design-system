@@ -341,12 +341,6 @@ function tokensCSS() {
   for (const [k, v] of Object.entries(SEM)) lines.push(`  --agtc-semantic-${k}: ${v};`);
   lines.push('\n  /* ── Component tokens — UI contracts ── */');
   for (const [k, v] of Object.entries(COMP)) lines.push(`  --agtc-component-${k}: ${v};`);
-  // Aliases courts pour les Web Components (Shadow DOM hérite les custom properties)
-  // ex: --agtc-badge-neutral-background = var(--agtc-component-badge-neutral-background)
-  lines.push('\n  /* ── Aliases WC (Shadow DOM) ── */');
-  for (const k of Object.keys(COMP).filter(k => k.startsWith('badge-'))) {
-    lines.push(`  --agtc-${k}: var(--agtc-component-${k});`);
-  }
   lines.push('}');
 
   // Extension tokens (layout, gradients, shadows, dark mode) — from Redesign/tokens.css

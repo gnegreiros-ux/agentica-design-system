@@ -251,68 +251,68 @@
 
     /* ── Taille md (défaut) ────────────────────────────────────────────────── */
     .badge.md {
-      padding: var(--agtc-badge-md-padding-y) var(--agtc-badge-md-padding-x);
-      border-radius: var(--agtc-badge-md-radius);
-      font-size: var(--agtc-badge-md-font-size);
+      padding: var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);
+      border-radius: var(--agtc-component-badge-md-radius);
+      font-size: var(--agtc-component-badge-md-font-size);
     }
     .badge.md.icon-only {
-      padding: var(--agtc-badge-md-padding-y);
+      padding: var(--agtc-component-badge-md-padding-y);
       aspect-ratio: 1;
       justify-content: center;
     }
 
     /* ── Taille sm ─────────────────────────────────────────────────────────── */
     .badge.sm {
-      padding: var(--agtc-badge-sm-padding-y) var(--agtc-badge-sm-padding-x);
-      border-radius: var(--agtc-badge-sm-radius);
-      font-size: var(--agtc-badge-sm-font-size);
+      padding: var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);
+      border-radius: var(--agtc-component-badge-sm-radius);
+      font-size: var(--agtc-component-badge-sm-font-size);
     }
     .badge.sm.icon-only {
-      padding: var(--agtc-badge-sm-padding-y);
+      padding: var(--agtc-component-badge-sm-padding-y);
       aspect-ratio: 1;
       justify-content: center;
     }
 
     /* ── Variante neutral ──────────────────────────────────────────────────── */
     .badge.neutral {
-      background: var(--agtc-badge-neutral-background);
-      color:      var(--agtc-badge-neutral-text);
-      border-color: var(--agtc-badge-neutral-border);
+      background: var(--agtc-component-badge-neutral-background);
+      color:      var(--agtc-component-badge-neutral-text);
+      border-color: var(--agtc-component-badge-neutral-border);
     }
 
     /* ── Variante brand ────────────────────────────────────────────────────── */
     .badge.brand {
-      background: var(--agtc-badge-brand-background);
-      color:      var(--agtc-badge-brand-text);
-      border-color: var(--agtc-badge-brand-border);
+      background: var(--agtc-component-badge-brand-background);
+      color:      var(--agtc-component-badge-brand-text);
+      border-color: var(--agtc-component-badge-brand-border);
     }
 
     /* ── Variante success ──────────────────────────────────────────────────── */
     .badge.success {
-      background: var(--agtc-badge-success-background);
-      color:      var(--agtc-badge-success-text);
-      border-color: var(--agtc-badge-success-border);
+      background: var(--agtc-component-badge-success-background);
+      color:      var(--agtc-component-badge-success-text);
+      border-color: var(--agtc-component-badge-success-border);
     }
 
     /* ── Variante warning ──────────────────────────────────────────────────── */
     .badge.warning {
-      background: var(--agtc-badge-warning-background);
-      color:      var(--agtc-badge-warning-text);
-      border-color: var(--agtc-badge-warning-border);
+      background: var(--agtc-component-badge-warning-background);
+      color:      var(--agtc-component-badge-warning-text);
+      border-color: var(--agtc-component-badge-warning-border);
     }
 
     /* ── Variante danger ───────────────────────────────────────────────────── */
     .badge.danger {
-      background: var(--agtc-badge-danger-background);
-      color:      var(--agtc-badge-danger-text);
-      border-color: var(--agtc-badge-danger-border);
+      background: var(--agtc-component-badge-danger-background);
+      color:      var(--agtc-component-badge-danger-text);
+      border-color: var(--agtc-component-badge-danger-border);
     }
 
     /* ── Variante info ─────────────────────────────────────────────────────── */
     .badge.info {
-      background: var(--agtc-badge-info-background);
-      color:      var(--agtc-badge-info-text);
-      border-color: var(--agtc-badge-info-border);
+      background: var(--agtc-component-badge-info-background);
+      color:      var(--agtc-component-badge-info-text);
+      border-color: var(--agtc-component-badge-info-border);
     }
   `;render(){let a=["badge",this.size||"md",this.variant||"neutral",this.iconOnly?"icon-only":""].filter(Boolean).join(" "),t=(this.size==="sm","inline");return l`
       <span
