@@ -606,12 +606,12 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .section-secondary .si-inner{max-width:var(--agtc-content-max,1180px);margin:0 auto;position:relative}
 .section-secondary h2{font-size:var(--agtc-semantic-typography-heading-3-size);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92));border-top:none;padding-top:0;margin-top:0}
 .section-secondary .eyebrow{color:rgba(255,255,255,.55)}
-.section-secondary .si-inner>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(255,255,255,.62))}
+.section-secondary .si-inner>p{color:rgba(255,255,255,.75)}
 .section-secondary .illus-block{border-radius:0;margin:var(--agtc-space-8,64px) calc(-1 * var(--agtc-space-5,24px));width:calc(100% + 2*var(--agtc-space-5,24px));max-width:none}
 .section-secondary .context-card{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.12)}
 .section-secondary .context-card-accent{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.22)}
 .section-secondary .context-title{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
-.section-secondary .context-desc{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(255,255,255,.62))}
+.section-secondary .context-desc{color:rgba(255,255,255,.75)}
 .section-secondary .context-badge{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
 .section-secondary .context-badge-accent{color:rgba(255,255,255,.9)}
 .section-secondary .context-attr{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
@@ -623,15 +623,15 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .section-secondary .pipeline-step+.pipeline-step{border-left-color:rgba(255,255,255,.12)}
 .section-secondary .pipeline-step:first-child{background:rgba(0,0,0,.28)}
 .section-secondary .pipeline-step:last-child{border-left:3px solid var(--agtc-semantic-color-brand-primary)}
-.section-secondary .pipeline-tag{color:rgba(255,255,255,.55)}
-.section-secondary .pipeline-title{color:rgba(255,255,255,.92)}
-.section-secondary .pipeline-desc{color:rgba(255,255,255,.62)}
-.section-secondary .pipeline-example{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.12);color:var(--agtc-semantic-color-brand-primary)}
-.section-secondary .stack-flow{border-color:rgba(255,255,255,.1);overflow:hidden}
-.section-secondary .stack-node{background:rgba(0,0,0,.15);border-right-color:rgba(255,255,255,.08)}
-.section-secondary .stack-node-label{color:rgba(255,255,255,.9)}
-.section-secondary .stack-node-sub{color:rgba(255,255,255,.5)}
-.section-secondary .stack-node-icon{color:var(--agtc-semantic-color-brand-primary)}
+.section-secondary .pipeline-tag{color:rgba(255,255,255,.7)}
+.section-secondary .pipeline-title{color:rgba(255,255,255,.95)}
+.section-secondary .pipeline-desc{color:rgba(255,255,255,.75)}
+.section-secondary .pipeline-example{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.15);color:var(--agtc-semantic-color-brand-primary)}
+/* Stack — spécificité renforcée pour override les règles de base */
+.section-secondary .stack-flow .stack-node,.section-secondary .stack-flow .stack-node:last-child{background:rgba(0,0,0,.18)!important;border-right-color:rgba(255,255,255,.1)!important}
+.section-secondary .stack-flow .stack-node-icon{color:var(--agtc-semantic-color-brand-primary)!important}
+.section-secondary .stack-flow .stack-node-label{color:rgba(255,255,255,.92)!important}
+.section-secondary .stack-flow .stack-node-sub{color:rgba(255,255,255,.72)!important}
 
 /* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
 .contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
@@ -1485,7 +1485,7 @@ body{overflow-x:hidden}
 .cta-final .cta-actions{display:flex;gap:var(--agtc-space-3);justify-content:center;flex-wrap:wrap;margin-top:var(--agtc-space-6)}
 
 /* ── Brand band ──────────────────────────────────────────── */
-.brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse);border-block:1px solid var(--agtc-semantic-color-border-default)}
+.brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse)}
 .brand-band svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .brand-band .shape-plum{fill:var(--agtc-semantic-color-secondary)}
 .brand-band .shape-accent{fill:var(--agtc-semantic-color-accent)}
