@@ -1243,6 +1243,21 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   height:var(--agtc-semantic-icon-size-feature);
 }
 
+/* ── SECTION-SECONDARY en contexte Marketing — uniformisation des niveaux ── */
+/* heading-1-size pour tous les h2, même espacement que home-section */
+[data-context="marketing"] .section-secondary h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+  letter-spacing:var(--agtc-tracking-tighter);
+}
+[data-context="marketing"] .section-secondary{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing,96px);
+}
+[data-context="marketing"] .home-section{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing,96px);
+}
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
 html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 
@@ -1955,7 +1970,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   </button>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
-<div class="${mainClass}" id="main-content">
+<div class="${mainClass}" id="main-content"${fullWidth ? ' data-context="marketing"' : ''}>
   ${sidebarHtml}
   <main class="${fullWidth ? '' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
