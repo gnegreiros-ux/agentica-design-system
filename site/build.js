@@ -604,7 +604,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── SECTION FOND SECONDAIRE (bordeaux) ───────────────────── */
 .section-secondary{background:var(--agtc-semantic-color-brand-secondary,#463239);padding:var(--agtc-space-9) var(--agtc-space-5);position:relative;overflow:hidden}
 .section-secondary .si-inner{max-width:var(--agtc-content-max,1180px);margin:0 auto;position:relative}
-.section-secondary h2{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92));border-top:none;padding-top:0;margin-top:0}
+.section-secondary h2{font-size:var(--agtc-semantic-typography-heading-3-size);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92));border-top:none;padding-top:0;margin-top:0}
 .section-secondary .eyebrow{color:rgba(255,255,255,.55)}
 .section-secondary .si-inner>p{color:var(--agtc-semantic-color-text-on-inverse-muted,rgba(255,255,255,.62))}
 .section-secondary .illus-block{border-radius:0;margin:var(--agtc-space-8,64px) calc(-1 * var(--agtc-space-5,24px));width:calc(100% + 2*var(--agtc-space-5,24px));max-width:none}
@@ -618,6 +618,20 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .section-secondary .context-attr em{color:rgba(255,255,255,.45)}
 .section-secondary .ds-btn{border-color:rgba(255,255,255,.3);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
 .section-secondary .ds-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.section-secondary .pipeline{border-color:rgba(255,255,255,.12)}
+.section-secondary .pipeline-step{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.1)}
+.section-secondary .pipeline-step+.pipeline-step{border-left-color:rgba(255,255,255,.12)}
+.section-secondary .pipeline-step:first-child{background:rgba(0,0,0,.28)}
+.section-secondary .pipeline-step:last-child{border-left:3px solid var(--agtc-semantic-color-brand-primary)}
+.section-secondary .pipeline-tag{color:rgba(255,255,255,.55)}
+.section-secondary .pipeline-title{color:rgba(255,255,255,.92)}
+.section-secondary .pipeline-desc{color:rgba(255,255,255,.62)}
+.section-secondary .pipeline-example{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.12);color:var(--agtc-semantic-color-brand-primary)}
+.section-secondary .stack-flow{border-color:rgba(255,255,255,.1);overflow:hidden}
+.section-secondary .stack-node{background:rgba(0,0,0,.15);border-right-color:rgba(255,255,255,.08)}
+.section-secondary .stack-node-label{color:rgba(255,255,255,.9)}
+.section-secondary .stack-node-sub{color:rgba(255,255,255,.5)}
+.section-secondary .stack-node-icon{color:var(--agtc-semantic-color-brand-primary)}
 
 /* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
 .contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
@@ -2250,11 +2264,25 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<section class="home-section reveal">
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
+</div>
+
+<section class="section-secondary reveal">
+  <div class="si-inner">
   <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
   <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
   <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
-  <div class="illus-dark-row"><div class="illus-block">${svgPipeline}</div></div>
+  <div class="illus-block">${svgPipeline}</div>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
@@ -2275,20 +2303,8 @@ function buildHome(adrs) {
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
     </div>
   </div>
+  </div>
 </section>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
 
 <section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span>
@@ -2328,11 +2344,12 @@ function buildHome(adrs) {
   <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
 </section>
 
-<section class="home-section reveal">
+<section class="section-secondary reveal">
+  <div class="si-inner">
   <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
   <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
   <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
-  <div class="illus-dark-row"><div class="illus-block">${svgMultiPlat}</div></div>
+  <div class="illus-block">${svgMultiPlat}</div>
   <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
@@ -2341,7 +2358,21 @@ function buildHome(adrs) {
       <div class="stack-node-sub">${sub}</div>
     </div>`).join('')}
   </div>
+  </div>
 </section>
+
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
+</div>
 
 <section class="section-inverse">
   <div class="si-inner cta-final">
