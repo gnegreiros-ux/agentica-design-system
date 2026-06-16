@@ -2179,6 +2179,28 @@ function buildHome(adrs) {
 
 
 <section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Gouvernance</span><span class="lang-en">Governance</span></span>
+  <h2><span class="lang-fr">Le dernier mot est toujours humain.</span><span class="lang-en">Humans always have the final say.</span></h2>
+  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Ce n'est pas une contrainte — c'est la garantie que le système reste sous contrôle organisationnel.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. This is not a constraint — it is the guarantee that the system stays under organizational control.</span></p>
+  <div class="illus-block">${svgGovernance}</div>
+  <div class="contexts-grid">
+    <div class="context-card card-surface">
+      <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
+      <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
+      <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
+      <code class="context-attr">data-context <em>(absent)</em></code>
+    </div>
+    <div class="context-card card-surface context-card-accent">
+      <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
+      <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
+      <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
+      <code class="context-attr">data-context="marketing"</code>
+    </div>
+  </div>
+  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
+</section>
+
+<section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Principes fondateurs</span><span class="lang-en">Founding principles</span></span>
   <h2><span class="lang-fr">Valeurs non négociables</span><span class="lang-en">Non-negotiable values</span></h2>
   <p><span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span><span class="lang-en">These four principles guide every system decision and every agent action.</span></p>
@@ -2280,28 +2302,6 @@ function buildHome(adrs) {
     </div>
   </div>
   <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Gouvernance</span><span class="lang-en">Governance</span></span>
-  <h2><span class="lang-fr">Le dernier mot est toujours humain.</span><span class="lang-en">Humans always have the final say.</span></h2>
-  <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Ce n'est pas une contrainte — c'est la garantie que le système reste sous contrôle organisationnel.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. This is not a constraint — it is the guarantee that the system stays under organizational control.</span></p>
-  <div class="illus-block">${svgGovernance}</div>
-  <div class="contexts-grid">
-    <div class="context-card card-surface">
-      <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
-      <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
-      <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
-      <code class="context-attr">data-context <em>(absent)</em></code>
-    </div>
-    <div class="context-card card-surface context-card-accent">
-      <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
-      <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
-      <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
-      <code class="context-attr">data-context="marketing"</code>
-    </div>
-  </div>
-  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
 </section>
 
 <section class="home-section reveal">
