@@ -2379,6 +2379,20 @@ function buildColor() {
     ['color-text-on-action',         'color.text.on-action',         SEM['color-text-on-action'],         '<span class="lang-fr">Texte sur fond d\'action — boutons</span><span class="lang-en">Text on action background — buttons</span>'],
   ].filter(([, , v]) => v);
 
+  const brandColors = [
+    ['color-brand-primary',         'color.brand.primary',         SEM['color-brand-primary'],         '<span class="lang-fr">Couleur principale de la marque — Teal</span><span class="lang-en">Primary brand color — Teal</span>'],
+    ['color-brand-primary-hover',   'color.brand.primary-hover',   SEM['color-brand-primary-hover'],   '<span class="lang-fr">Survol de la couleur principale</span><span class="lang-en">Primary brand hover</span>'],
+    ['color-brand-primary-subtle',  'color.brand.primary-subtle',  SEM['color-brand-primary-subtle'],  '<span class="lang-fr">Fond subtil teal — badges, chips</span><span class="lang-en">Subtle teal background — badges, chips</span>'],
+    ['color-brand-primary-text',    'color.brand.primary-text',    SEM['color-brand-primary-text'],    '<span class="lang-fr">Texte teal sur fond clair — WCAG AA</span><span class="lang-en">Teal text on light background — WCAG AA</span>'],
+    ['color-brand-accent',          'color.brand.accent',          SEM['color-brand-accent'],          '<span class="lang-fr">Couleur accent — Rose-corail (CTA secondaire, highlights)</span><span class="lang-en">Accent color — Rose-coral (secondary CTA, highlights)</span>'],
+    ['color-brand-accent-hover',    'color.brand.accent-hover',    SEM['color-brand-accent-hover'],    '<span class="lang-fr">Survol de l\'accent</span><span class="lang-en">Accent hover</span>'],
+    ['color-brand-accent-subtle',   'color.brand.accent-subtle',   SEM['color-brand-accent-subtle'],   '<span class="lang-fr">Fond subtil accent — badges version</span><span class="lang-en">Subtle accent background — version badges</span>'],
+    ['color-brand-accent-text',     'color.brand.accent-text',     SEM['color-brand-accent-text'],     '<span class="lang-fr">Texte accent — 7.1:1 WCAG AA+</span><span class="lang-en">Accent text — 7.1:1 WCAG AA+</span>'],
+    ['color-brand-secondary',       'color.brand.secondary',       SEM['color-brand-secondary'],       '<span class="lang-fr">Couleur secondaire — Bordeaux (tags éditoriaux, type ADR)</span><span class="lang-en">Secondary brand color — Bordeaux (editorial tags, ADR type)</span>'],
+    ['color-brand-secondary-hover', 'color.brand.secondary-hover', SEM['color-brand-secondary-hover'], '<span class="lang-fr">Survol de la couleur secondaire</span><span class="lang-en">Secondary brand hover</span>'],
+    ['color-brand-secondary-text',  'color.brand.secondary-text',  SEM['color-brand-secondary-text'],  '<span class="lang-fr">Texte secondaire bordeaux — haute lisibilité</span><span class="lang-en">Bordeaux secondary text — high readability</span>'],
+  ].filter(([, , v]) => v);
+
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
     const swatches = Object.entries(steps).map(([step, { value, desc }]) =>
       `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="${scale} étape ${step}: ${value}"></div>`
@@ -2437,10 +2451,28 @@ function buildColor() {
 
 <div class="palette-grid">${palette}</div>
 
-<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<h2><span class="lang-fr">Couleurs de marque</span><span class="lang-en">Brand colors</span></h2>
 <p>
-  <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement. Utilisez le champ de recherche pour filtrer.</span>
-  <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly. Use the search field to filter.</span>
+  <span class="lang-fr">Trois palettes de marque — Teal (primaire), Rose-corail (accent), Bordeaux (secondaire). Toujours consommées via les tokens sémantiques <code>color.brand.*</code>, jamais en valeur brute.</span>
+  <span class="lang-en">Three brand palettes — Teal (primary), Rose-coral (accent), Bordeaux (secondary). Always consumed via <code>color.brand.*</code> semantic tokens, never as raw values.</span>
+</p>
+<div class="token-section">
+<table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
+  <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
+  <tbody>${brandColors.map(([key, name, value, intent]) => `
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-${key}</code></td>
+  <td class="mono-sm">${value}</td>
+  <td>${intent}</td>
+</tr>`).join('')}</tbody>
+</table>
+</div>
+
+<h2><span class="lang-fr">Tokens sémantiques UI</span><span class="lang-en">UI semantic tokens</span></h2>
+<p>
+  <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
+  <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly.</span>
 </p>
 <input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
 <p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
