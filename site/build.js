@@ -73,8 +73,8 @@ function parseMd(text) {
     if (/^\|/.test(l) && i+1 < lines.length && /^\|[-| ]+\|/.test(lines[i+1])) {
       const rows = [l]; i += 2;
       while (i < lines.length && /^\|/.test(lines[i])) { rows.push(lines[i]); i++; }
-      const pr = (r,t) => r.split('|').filter(c=>c.trim()).map(c=>`<${t}>${inl(c.trim())}</${t}>`).join('');
-      out.push(`<div class="table-wrap"><table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table></div>`);
+      const pr = (r,t) => r.replace(/\\\|/g,'\x00').split('|').filter(c=>c.trim()).map(c=>`<${t}>${inl(c.trim().replace(/\x00/g,'|'))}</${t}>`).join('');
+      out.push(`<div class="table-wrap" tabindex="0"><table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table></div>`);
       continue;
     }
     if (/^[-*] /.test(l)) {
@@ -627,6 +627,10 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .section-secondary .pipeline-title{color:rgba(255,255,255,.95)}
 .section-secondary .pipeline-desc{color:rgba(255,255,255,.75)}
 .section-secondary .pipeline-example{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.15);color:var(--agtc-semantic-color-brand-primary)}
+/* Stat-band & CTA sur fond secondaire */
+.section-secondary .stat-text{color:rgba(255,255,255,.72)}
+.section-secondary .cta-final h2{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .cta-final p{color:rgba(255,255,255,.75)}
 /* Stack — spécificité renforcée pour override les règles de base */
 .section-secondary .stack-flow .stack-node,.section-secondary .stack-flow .stack-node:last-child{background:rgba(0,0,0,.18)!important;border-right-color:rgba(255,255,255,.1)!important}
 .section-secondary .stack-flow .stack-node-icon{color:var(--agtc-semantic-color-brand-primary)!important}
@@ -703,7 +707,7 @@ li code{font-size:.8em}
 /* Tables du site : consomment le contrat du composant table (component.table.* — ADR-040).
    Le site s'aligne sur le composant (dogfooding cat. A) ; il garde sa présentation
    d'en-tête (majuscules, tracking), mais toutes les COULEURS viennent du composant. */
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px;outline-offset:2px}.table-wrap:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus)}
 table{width:100%;border-collapse:collapse;margin:0;font-size:var(--agtc-semantic-typography-label-size);table-layout:auto;min-width:420px}
 th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wider);border-bottom:1px solid var(--agtc-component-table-default-border);white-space:nowrap}
 td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
@@ -1140,7 +1144,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
 details[open] .changelog-chevron{transform:rotate(180deg)}
 .changelog-version{font-size:var(--agtc-semantic-typography-body-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-brand-accent-text);letter-spacing:var(--agtc-tracking-snug)}
-.changelog-badge{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
+.changelog-badge{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-feedback-warning-subtle,#ffefd6);color:var(--agtc-semantic-color-feedback-warning-text,#582d1d)}
 .changelog-body{padding:0 20px 20px;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .changelog-body h2{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);margin:16px 0 6px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wider)}
 .changelog-body ul{margin:0 0 10px;padding-left:18px}
@@ -1963,7 +1967,7 @@ ${footer}
 </button>
 <script src="${base}site.js"></script>
 </body>
-</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
+</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap" tabindex="0"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
 }
 
 function sidebarFoundations(base, current) {
@@ -2254,7 +2258,7 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<section class="section-inverse">
+<section class="section-secondary">
   <div class="si-inner">
     <div class="stat-band" role="region" aria-label="Statistiques du système">
       <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
@@ -2376,7 +2380,7 @@ function buildHome(adrs) {
   </svg>
 </div>
 
-<section class="section-inverse">
+<section class="section-secondary">
   <div class="si-inner cta-final">
     <h2><span class="lang-fr">Prêt à explorer le système ?</span><span class="lang-en">Ready to explore the system?</span></h2>
     <p><span class="lang-fr">Commencez par les fondations, ou plongez dans la documentation conçue pour les agents IA.</span><span class="lang-en">Start with the foundations, or dive into the documentation built for AI agents.</span></p>
@@ -5339,7 +5343,7 @@ function buildChangelog() {
   };
 
   const tocLinks = versions.map(v => {
-    const badge = v.badge ? ` <span style="font-size:var(--agtc-semantic-typography-detail-size);opacity:.6" class="lang-fr">${v.badge.fr}</span><span style="font-size:var(--agtc-semantic-typography-detail-size);opacity:.6" class="lang-en">${v.badge.en}</span>` : '';
+    const badge = v.badge ? ` <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)" class="lang-fr">${v.badge.fr}</span><span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)" class="lang-en">${v.badge.en}</span>` : '';
     return `<a href="#${v.id}">${v.ver}${badge}</a>`;
   }).join('');
   const tocContent = `<span class="toc-title"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${tocLinks}`;
