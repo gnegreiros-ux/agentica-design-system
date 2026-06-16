@@ -801,6 +801,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hero-title .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
+.hero-formula{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.85;margin-bottom:var(--agtc-space-3);letter-spacing:.01em}
 .hero-tagline{
   font-size:var(--agtc-font-size-h5,1.25rem);
   color:var(--agtc-semantic-color-text-on-inverse-muted);
@@ -953,9 +954,9 @@ body{overflow-x:hidden}
 
 /* ── Principle card hover accent (update additive) ───────── */
 .principle-card{position:relative;overflow:hidden}
-.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-gradient-brand);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-semantic-color-action-primary);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .principle-card:hover::after{transform:scaleX(1)}
-.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-gradient-brand);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
@@ -990,6 +991,14 @@ body{overflow-x:hidden}
   .brand-band:hover .drift-c{transform:translateY(-10px)}
 }
 @media(max-width:768px){.brand-band{height:110px}}
+
+/* ── Contribution banner ─────────────────────────────────── */
+.contrib-banner{display:flex;align-items:center;gap:var(--agtc-space-6);background:var(--agtc-semantic-color-brand-primary-subtle);border:1px solid var(--agtc-semantic-color-brand-primary);border-radius:var(--agtc-semantic-radius-card);padding:var(--agtc-space-7) var(--agtc-space-7);margin-top:var(--agtc-space-7);flex-wrap:wrap}
+.contrib-banner-icon{flex-shrink:0;color:var(--agtc-semantic-color-text-primary);display:flex;align-items:center;justify-content:center}
+.contrib-banner-content{flex:1;min-width:200px}
+.contrib-banner-title{display:block;font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2)}
+.contrib-banner-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55;margin:0}
+@media(max-width:640px){.contrib-banner{flex-direction:column;align-items:flex-start}}
 
 /* ── Mobile — header tools ───────────────────────────────── */
 @media(max-width:768px){

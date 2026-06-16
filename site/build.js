@@ -1260,6 +1260,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hero-title .verb{color:var(--agtc-semantic-color-action-primary);font-style:normal}
+.hero-formula{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:.85;margin-bottom:var(--agtc-space-3);letter-spacing:.01em}
 .hero-tagline{
   font-size:var(--agtc-font-size-h5,1.25rem);
   color:var(--agtc-semantic-color-text-on-inverse-muted);
@@ -1412,9 +1413,9 @@ body{overflow-x:hidden}
 
 /* ── Principle card hover accent (update additive) ───────── */
 .principle-card{position:relative;overflow:hidden}
-.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-gradient-brand);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-semantic-color-action-primary);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .principle-card:hover::after{transform:scaleX(1)}
-.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-gradient-brand);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
@@ -1449,6 +1450,14 @@ body{overflow-x:hidden}
   .brand-band:hover .drift-c{transform:translateY(-10px)}
 }
 @media(max-width:768px){.brand-band{height:110px}}
+
+/* ── Contribution banner ─────────────────────────────────── */
+.contrib-banner{display:flex;align-items:center;gap:var(--agtc-space-6);background:var(--agtc-semantic-color-brand-primary-subtle);border:1px solid var(--agtc-semantic-color-brand-primary);border-radius:var(--agtc-semantic-radius-card);padding:var(--agtc-space-7) var(--agtc-space-7);margin-top:var(--agtc-space-7);flex-wrap:wrap}
+.contrib-banner-icon{flex-shrink:0;color:var(--agtc-semantic-color-text-primary);display:flex;align-items:center;justify-content:center}
+.contrib-banner-content{flex:1;min-width:200px}
+.contrib-banner-title{display:block;font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2)}
+.contrib-banner-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55;margin:0}
+@media(max-width:640px){.contrib-banner{flex-direction:column;align-items:flex-start}}
 
 /* ── Mobile — header tools ───────────────────────────────── */
 @media(max-width:768px){
@@ -1981,13 +1990,24 @@ function uxPatternsFromMd(comp) {
 }
 
 function contributionBanner() {
-  // Dogfooding (cat. A) : consomme la classe .agtc-banner (ADR-042) + .agtc-link (ADR-043).
   return `
-<agtc-banner variant="brand" icon="github" style="margin-top:56px">
-  <strong><span class="lang-fr">Contribuer à ce projet</span><span class="lang-en">Contribute to this project</span></strong>
-  <span><span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span><span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span></span>
-  <agtc-link slot="actions" href="https://github.com/gnegreiros-ux/agentic-design-system" external><span class="lang-fr">Voir sur GitHub</span><span class="lang-en">View on GitHub</span></agtc-link>
-</agtc-banner>`;
+<div class="contrib-banner">
+  <div class="contrib-banner-icon" aria-hidden="true">${icon('github', 40)}</div>
+  <div class="contrib-banner-content">
+    <strong class="contrib-banner-title">
+      <span class="lang-fr">Contribuer à ce projet</span>
+      <span class="lang-en">Contribute to this project</span>
+    </strong>
+    <p class="contrib-banner-desc">
+      <span class="lang-fr">Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.</span>
+      <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
+    </p>
+  </div>
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn primary">
+    <span class="lang-fr">Voir sur GitHub</span>
+    <span class="lang-en">View on GitHub</span>
+  </a>
+</div>`;
 }
 
 // ─── PAGE: HOME ────────────────────────────────────────────────────────────
@@ -2063,6 +2083,10 @@ function buildHome(adrs) {
         <span class="lang-fr">Un système de design <span class="grad">compris par les humains et les agents IA.</span></span>
         <span class="lang-en">A design system <span class="grad">understood by humans and AI agents.</span></span>
       </h1>
+      <p class="hero-formula">
+        <span class="lang-fr">Les humains décident, l'IA exécute, le système garantit.</span>
+        <span class="lang-en">Humans decide, AI executes, the system guarantees.</span>
+      </p>
       <p class="hero-tagline">
         <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
         <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. Built for teams that move fast — and the agents that assist them.</span>
@@ -2122,9 +2146,9 @@ function buildHome(adrs) {
   </svg>
 </div>
 
-<section class="home-section reveal" style="padding-top:0">
-  <span class="eyebrow"><span class="lang-fr">Mesurable &amp; vérifiable</span><span class="lang-en">Measurable &amp; verifiable</span></span>
-  <h2><span class="lang-fr">Preuves &amp; chiffres</span><span class="lang-en">Evidence &amp; numbers</span></h2>
+<section class="home-section reveal" style="padding-top:var(--agtc-space-8)">
+  <span class="eyebrow"><span class="lang-fr">Mesurable et vérifiable</span><span class="lang-en">Measurable &amp; verifiable</span></span>
+  <h2><span class="lang-fr">Preuves et chiffres</span><span class="lang-en">Evidence &amp; numbers</span></h2>
   <p><span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span><span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span></p>
   <div class="kpi-band">
     ${kpis.map(([num,fr,en,dFr,dEn,url,src]) => `
@@ -4755,7 +4779,7 @@ function buildDecisionsIndex(adrs) {
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
   <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
-  <td><agtc-badge variant="success" size="sm" icon="circle-check"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
+  <td><agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
 
@@ -4808,7 +4832,7 @@ function buildADR(adr, adrs) {
   while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
   const content = parseMd(lines.slice(start).join('\n'));
 
-  const statusBadge = `<agtc-badge variant="success" size="sm" icon="circle-check"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
+  const statusBadge = `<agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
   const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
   const meta = `
 <div class="adr-header">
