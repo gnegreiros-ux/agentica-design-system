@@ -2067,7 +2067,6 @@ function buildHome(adrs) {
     ['2×','Livraisons plus rapides','Faster delivery','Les équipes avec un design system mature livrent jusqu\'à 2× plus fréquemment — Sparkbox Design Systems Survey 2024','Teams with a mature design system ship up to 2× more frequently — Sparkbox Design Systems Survey 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
     ['80%','Moins de violations a11y','Fewer a11y violations','Réduction des violations d\'accessibilité grâce aux composants WCAG AA natifs — IBM Carbon Case Study','Reduction in accessibility violations through native WCAG AA components — IBM Carbon Case Study','https://carbondesignsystem.com','IBM Carbon'],
     ['34%','Délais respectés','Deadlines met','Les équipes utilisant un design system respectent davantage leurs délais de livraison — Sparkbox DSS 2024','Teams using a design system are more likely to meet delivery deadlines — Sparkbox DSS 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-    ['3 niveaux','Architecture token','Token architecture','Primitif → Sémantique → Composant : une architecture qui sépare les valeurs des intentions — compréhensible par les humains ET les agents IA.','Primitive → Semantic → Component: an architecture separating values from intentions — understandable by humans AND AI agents.','',''],
   ];
 
   const body = `
