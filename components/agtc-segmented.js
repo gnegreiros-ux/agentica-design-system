@@ -61,8 +61,8 @@ class AgtcSegmented extends LitElement {
       display: inline-flex;
       gap: 2px;
       padding: 2px;
-      background: var(--agtc-segmented-default-track-background);
-      border-radius: var(--agtc-segmented-default-radius);
+      background: var(--agtc-component-segmented-default-track-background);
+      border-radius: var(--agtc-component-segmented-default-radius);
     }
     :host([equal-width]) .track { display: flex; }
 
@@ -74,9 +74,9 @@ class AgtcSegmented extends LitElement {
       gap: 6px;
       padding: 5px 12px;
       border: none;
-      border-radius: calc(var(--agtc-segmented-default-radius) - 2px);
+      border-radius: calc(var(--agtc-component-segmented-default-radius) - 2px);
       background: none;
-      color: var(--agtc-segmented-default-text);
+      color: var(--agtc-component-segmented-default-text);
       font-family: inherit;
       font-size: var(--agtc-semantic-typography-label-size);
       font-weight: var(--agtc-semantic-typography-label-weight);
@@ -85,17 +85,17 @@ class AgtcSegmented extends LitElement {
       cursor: pointer;
       transition: background .12s, color .12s;
     }
-    button:hover { color: var(--agtc-segmented-default-text-hover); }
+    button:hover { color: var(--agtc-component-segmented-default-text-hover); }
 
     /* État sélectionné : fond plein + texte contrasté (pas la couleur seule, SG4) */
     button[aria-current="true"] {
-      background: var(--agtc-segmented-default-selected-background);
-      color: var(--agtc-segmented-default-selected-text);
+      background: var(--agtc-component-segmented-default-selected-background);
+      color: var(--agtc-component-segmented-default-selected-text);
       font-weight: 700;
     }
 
     button:focus-visible {
-      outline: 2px solid var(--agtc-segmented-default-border-focus);
+      outline: 2px solid var(--agtc-component-segmented-default-border-focus);
       outline-offset: 2px;
     }
   `;

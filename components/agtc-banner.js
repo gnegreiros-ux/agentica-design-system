@@ -74,38 +74,38 @@ class AgtcBanner extends LitElement {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      padding: var(--agtc-banner-padding-y) var(--agtc-banner-padding-x);
+      padding: var(--agtc-component-banner-padding-y) var(--agtc-component-banner-padding-x);
       border: 1px solid var(--agtc-semantic-color-border-default);
       border-left-width: 3px;
-      border-radius: 0 var(--agtc-banner-radius) var(--agtc-banner-radius) 0;
+      border-radius: 0 var(--agtc-component-banner-radius) var(--agtc-component-banner-radius) 0;
     }
 
     /* Variantes : fond + accent (bordure gauche + icône) ───────────────────── */
-    .banner.neutral { background: var(--agtc-banner-neutral-background); border-left-color: var(--agtc-banner-neutral-accent); }
-    .banner.brand   { background: var(--agtc-banner-brand-background);   border-left-color: var(--agtc-banner-brand-accent); }
-    .banner.info    { background: var(--agtc-banner-info-background);    border-left-color: var(--agtc-banner-info-accent); }
-    .banner.success { background: var(--agtc-banner-success-background); border-left-color: var(--agtc-banner-success-accent); }
-    .banner.warning { background: var(--agtc-banner-warning-background); border-left-color: var(--agtc-banner-warning-accent); }
-    .banner.danger  { background: var(--agtc-banner-danger-background);  border-left-color: var(--agtc-banner-danger-accent); }
+    .banner.neutral { background: var(--agtc-component-banner-neutral-background); border-left-color: var(--agtc-component-banner-neutral-accent); }
+    .banner.brand   { background: var(--agtc-component-banner-brand-background);   border-left-color: var(--agtc-component-banner-brand-accent); }
+    .banner.info    { background: var(--agtc-component-banner-info-background);    border-left-color: var(--agtc-component-banner-info-accent); }
+    .banner.success { background: var(--agtc-component-banner-success-background); border-left-color: var(--agtc-component-banner-success-accent); }
+    .banner.warning { background: var(--agtc-component-banner-warning-background); border-left-color: var(--agtc-component-banner-warning-accent); }
+    .banner.danger  { background: var(--agtc-component-banner-danger-background);  border-left-color: var(--agtc-component-banner-danger-accent); }
 
     .icon { flex-shrink: 0; line-height: 0; padding-top: 1px; }
-    .banner.neutral .icon { color: var(--agtc-banner-neutral-accent); }
-    .banner.brand   .icon { color: var(--agtc-banner-brand-accent); }
-    .banner.info    .icon { color: var(--agtc-banner-info-accent); }
-    .banner.success .icon { color: var(--agtc-banner-success-accent); }
-    .banner.warning .icon { color: var(--agtc-banner-warning-accent); }
-    .banner.danger  .icon { color: var(--agtc-banner-danger-accent); }
+    .banner.neutral .icon { color: var(--agtc-component-banner-neutral-accent); }
+    .banner.brand   .icon { color: var(--agtc-component-banner-brand-accent); }
+    .banner.info    .icon { color: var(--agtc-component-banner-info-accent); }
+    .banner.success .icon { color: var(--agtc-component-banner-success-accent); }
+    .banner.warning .icon { color: var(--agtc-component-banner-warning-accent); }
+    .banner.danger  .icon { color: var(--agtc-component-banner-danger-accent); }
 
     .content { flex: 1; min-width: 0; }
     .heading {
       display: block;
-      color: var(--agtc-banner-heading-text);
+      color: var(--agtc-component-banner-heading-text);
       font-weight: var(--agtc-semantic-typography-label-weight);
       font-size: var(--agtc-semantic-typography-label-size);
       margin-bottom: 3px;
     }
     .body {
-      color: var(--agtc-banner-body-text);
+      color: var(--agtc-component-banner-body-text);
       font-size: var(--agtc-semantic-typography-label-size);
       line-height: 1.55;
     }
@@ -122,13 +122,13 @@ class AgtcBanner extends LitElement {
       background: none;
       border: none;
       border-radius: var(--agtc-semantic-radius-control);
-      color: var(--agtc-banner-close-color);
+      color: var(--agtc-component-banner-close-color);
       cursor: pointer;
       line-height: 0;
     }
-    .close:hover { color: var(--agtc-banner-close-hover); }
+    .close:hover { color: var(--agtc-component-banner-close-hover); }
     .close:focus-visible {
-      outline: 2px solid var(--agtc-banner-border-focus);
+      outline: 2px solid var(--agtc-component-banner-border-focus);
       outline-offset: 2px;
     }
 

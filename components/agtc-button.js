@@ -124,8 +124,8 @@ class AgtcButton extends LitElement {
       gap: var(--agtc-semantic-space-control-gap);
       position: relative;
 
-      padding: var(--agtc-button-primary-padding-y) var(--agtc-button-primary-padding-x);
-      border-radius: var(--agtc-button-primary-radius);
+      padding: var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
+      border-radius: var(--agtc-component-button-primary-radius);
 
       font-family: inherit;
       font-size: var(--agtc-semantic-typography-label-size);
@@ -150,7 +150,7 @@ class AgtcButton extends LitElement {
 
     /* ── Icon-only — padding carré ─────────────────────────────────────────── */
     button.icon-only {
-      padding: var(--agtc-button-primary-padding-y);
+      padding: var(--agtc-component-button-primary-padding-y);
     }
 
     /* ── Focus — non négociable ────────────────────────────────────────────── */
@@ -164,54 +164,54 @@ class AgtcButton extends LitElement {
 
     /* ── Primary ───────────────────────────────────────────────────────────── */
     button.primary {
-      background: var(--agtc-button-primary-background);
-      color: var(--agtc-button-primary-text);
+      background: var(--agtc-component-button-primary-background);
+      color: var(--agtc-component-button-primary-text);
     }
     button.primary:not(:disabled):hover {
-      background: var(--agtc-button-primary-background-hover);
+      background: var(--agtc-component-button-primary-background-hover);
     }
 
     /* ── Secondary ─────────────────────────────────────────────────────────── */
     button.secondary {
-      background: var(--agtc-button-secondary-background);
-      color: var(--agtc-button-secondary-text);
-      border-color: var(--agtc-button-secondary-border);
+      background: var(--agtc-component-button-secondary-background);
+      color: var(--agtc-component-button-secondary-text);
+      border-color: var(--agtc-component-button-secondary-border);
     }
     button.secondary:not(:disabled):hover {
-      background: var(--agtc-button-secondary-background-hover);
+      background: var(--agtc-component-button-secondary-background-hover);
     }
 
     /* ── Ghost ─────────────────────────────────────────────────────────────── */
     button.ghost {
-      background: var(--agtc-button-ghost-background);
-      color: var(--agtc-button-ghost-text);
+      background: var(--agtc-component-button-ghost-background);
+      color: var(--agtc-component-button-ghost-text);
     }
     button.ghost:not(:disabled):hover {
-      background: var(--agtc-button-ghost-background-hover);
+      background: var(--agtc-component-button-ghost-background-hover);
     }
 
     /* ── Critical ──────────────────────────────────────────────────────────── */
     button.critical {
-      background: var(--agtc-button-critical-background);
-      color: var(--agtc-button-critical-text);
-      border-color: var(--agtc-button-critical-border);
+      background: var(--agtc-component-button-critical-background);
+      color: var(--agtc-component-button-critical-text);
+      border-color: var(--agtc-component-button-critical-border);
     }
     button.critical:not(:disabled):hover {
-      background: var(--agtc-button-critical-background-hover);
-      color: var(--agtc-button-critical-background);
+      background: var(--agtc-component-button-critical-background-hover);
+      color: var(--agtc-component-button-critical-background);
     }
     button.critical.confirming,
     button.critical.confirming:not(:disabled):hover {
-      background: var(--agtc-button-critical-background);
-      color: var(--agtc-button-critical-text);
-      border-color: var(--agtc-button-critical-border);
+      background: var(--agtc-component-button-critical-background);
+      color: var(--agtc-component-button-critical-text);
+      border-color: var(--agtc-component-button-critical-border);
       animation: pulse 0.25s ease-out;
     }
 
     /* ── Disabled ──────────────────────────────────────────────────────────── */
     button.primary:disabled,
     button.critical:disabled {
-      background: var(--agtc-button-primary-background-disabled);
+      background: var(--agtc-component-button-primary-background-disabled);
       color: var(--agtc-semantic-color-text-disabled);
       border-color: transparent;
       cursor: not-allowed;

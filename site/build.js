@@ -448,6 +448,16 @@ function tokensCSS() {
   --agtc-semantic-color-secondary:#6b4b56;
   --agtc-semantic-color-brand-secondary:#6b4b56;
   --agtc-semantic-color-brand-secondary-text:#edd9df;
+  /* Subtle + text — manquants en dark, provoquent des échecs de contraste */
+  --agtc-semantic-color-brand-primary-subtle:#0d2924;
+  --agtc-semantic-color-brand-primary-text:#34d3bb;
+  --agtc-semantic-color-brand-accent-subtle:#2a1520;
+  --agtc-semantic-color-brand-accent-text:#ed6b86;
+  --agtc-semantic-color-feedback-warning-subtle:#241800;
+  --agtc-semantic-color-feedback-warning-text:#ffca16;
+  --agtc-semantic-color-feedback-info-text:#34d3bb;
+  /* text-on-danger : fond danger est rose clair en dark (#ff9592) → texte doit être foncé */
+  --agtc-semantic-color-text-on-danger:#3d0f0f;
   --agtc-semantic-color-tertiary:#6b7280;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
@@ -3978,7 +3988,7 @@ function buildToggle() {
     return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:var(--agtc-semantic-radius-pill);background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
   }
   function row(on, label, dim) {
-    return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
+    return `<span${dim?' aria-disabled="true"':''} style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
   }
 
   const tokenRows = [

@@ -82,20 +82,20 @@ class AgtcRadio extends LitElement {
       box-sizing: border-box;
       inline-size: var(--agtc-semantic-icon-size-control);
       block-size: var(--agtc-semantic-icon-size-control);
-      border: 1.5px solid var(--agtc-radio-default-border);
+      border: 1.5px solid var(--agtc-component-radio-default-border);
       border-radius: 9999px;       /* rond — convention radio */
-      background: var(--agtc-radio-default-background);
+      background: var(--agtc-component-radio-default-background);
       transition: border-color 0.12s;
     }
     :host(:hover:not([disabled])) .control {
-      border-color: var(--agtc-radio-default-border-hover);
+      border-color: var(--agtc-component-radio-default-border-hover);
     }
     :host(:focus-visible) .control {
-      outline: 2.5px solid var(--agtc-radio-default-border-focus);
+      outline: 2.5px solid var(--agtc-component-radio-default-border-focus);
       outline-offset: 2px;
     }
     :host([checked]) .control {
-      border-color: var(--agtc-radio-default-fill);
+      border-color: var(--agtc-component-radio-default-fill);
     }
 
     .dot {
@@ -105,7 +105,7 @@ class AgtcRadio extends LitElement {
       width: 50%;
       height: 50%;
       border-radius: 9999px;
-      background: var(--agtc-radio-default-fill);
+      background: var(--agtc-component-radio-default-fill);
       transform: scale(0);
       transition: transform 0.12s;
     }
@@ -114,7 +114,7 @@ class AgtcRadio extends LitElement {
     .label-text {
       font-size: var(--agtc-semantic-typography-body-size);
       line-height: var(--agtc-semantic-typography-body-line-height);
-      color: var(--agtc-radio-default-label);
+      color: var(--agtc-component-radio-default-label);
     }
     .label-text:empty { display: none; }
 

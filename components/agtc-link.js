@@ -57,7 +57,7 @@ class AgtcLink extends LitElement {
     :host { display: inline; }
 
     a {
-      color: var(--agtc-link-default-text);
+      color: var(--agtc-component-link-default-text);
       text-decoration: underline;
       text-underline-offset: 2px;
       border-radius: 2px;
@@ -67,10 +67,10 @@ class AgtcLink extends LitElement {
     :host([underline="none"]) a { text-decoration: none; }
     :host([underline="hover"]) a:hover { text-decoration: underline; }
 
-    a:hover { color: var(--agtc-link-default-text-hover); }
+    a:hover { color: var(--agtc-component-link-default-text-hover); }
 
     a:focus-visible {
-      outline: 2px solid var(--agtc-link-default-border-focus);
+      outline: 2px solid var(--agtc-component-link-default-border-focus);
       outline-offset: 2px;
     }
 

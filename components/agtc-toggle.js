@@ -88,10 +88,10 @@ class AgtcToggle extends LitElement {
       inline-size: 40px;
       block-size: 24px;
       border-radius: 9999px;
-      background: var(--agtc-toggle-default-track-off);
+      background: var(--agtc-component-toggle-default-track-off);
       transition: background-color 0.15s;
     }
-    .root:hover .track { background: var(--agtc-toggle-default-track-off-hover); }
+    .root:hover .track { background: var(--agtc-component-toggle-default-track-off-hover); }
 
     .knob {
       position: absolute;
@@ -100,24 +100,24 @@ class AgtcToggle extends LitElement {
       width: 20px;
       height: 20px;
       border-radius: 9999px;
-      background: var(--agtc-toggle-default-knob);
+      background: var(--agtc-component-toggle-default-knob);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* délimite le curseur (WCAG 1.4.11) */
       transition: transform 0.15s;
     }
 
-    :host([checked]) .track { background: var(--agtc-toggle-default-track-on); }
-    :host([checked]) .root:hover .track { background: var(--agtc-toggle-default-track-on-hover); }
+    :host([checked]) .track { background: var(--agtc-component-toggle-default-track-on); }
+    :host([checked]) .root:hover .track { background: var(--agtc-component-toggle-default-track-on-hover); }
     :host([checked]) .knob { transform: translateX(16px); }
 
     .native:focus-visible + .track {
-      outline: 2.5px solid var(--agtc-toggle-default-border-focus);
+      outline: 2.5px solid var(--agtc-component-toggle-default-border-focus);
       outline-offset: 2px;
     }
 
     .label-text {
       font-size: var(--agtc-semantic-typography-body-size);
       line-height: var(--agtc-semantic-typography-body-line-height);
-      color: var(--agtc-toggle-default-label);
+      color: var(--agtc-component-toggle-default-label);
     }
     .label-text:empty { display: none; }
 
