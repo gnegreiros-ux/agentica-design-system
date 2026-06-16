@@ -928,12 +928,14 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
-  .site-header{padding:0 12px;gap:8px;overflow:hidden}
+  .site-header{padding:0 12px;gap:8px}
   .logo-version{display:none}
+  .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}
   .lang-switch{margin-left:auto !important}
   .menu-toggle{flex-shrink:0}
+  .nav-grid{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
