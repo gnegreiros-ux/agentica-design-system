@@ -111,30 +111,91 @@
 </section>
 
 <section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></span>
-  <h2><span class="lang-fr">Humains, IA et système — trois rôles, un contrat</span><span class="lang-en">Humans, AI, and system — three roles, one contract</span></h2>
-  <div class="concept-grid">
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <span class="concept-role"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></span>
-      <span class="concept-verb"><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les équipes définissent les règles, approuvent les décisions et gardent le dernier mot.</span><span class="lang-en">Teams define rules, approve decisions, and always have the final say.</span></p>
-    </article>
-    <div class="concept-arrow" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
-      <span class="concept-role"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span>
-      <span class="concept-verb"><span class="lang-fr">Exécutent</span><span class="lang-en">Execute</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les agents appliquent les règles, génèrent du code et proposent — sans improviser.</span><span class="lang-en">Agents apply rules, generate code, and propose — without improvising.</span></p>
-    </article>
-    <div class="concept-arrow" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
-      <span class="concept-role"><span class="lang-fr">Le système</span><span class="lang-en">The system</span></span>
-      <span class="concept-verb"><span class="lang-fr">Garantit</span><span class="lang-en">Guarantees</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les tokens, règles et audits encodent les décisions — le système se vérifie lui-même.</span><span class="lang-en">Tokens, rules and audits encode decisions — the system verifies itself.</span></p>
-    </article>
-  </div>
+  <h2><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></h2>
+  <svg class="pf-diagram" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avant / Before – Aujourd'hui / Today">
+    <defs>
+      <marker id="pf-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke-width="1.5" stroke-linecap="round" style="stroke:var(--pf-arrow)"/>
+      </marker>
+    </defs>
+
+    <!-- ── AVANT ─────────────────────────────── -->
+    <text x="100" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-fr" style="fill:var(--pf-section)">Avant</text>
+    <text x="100" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-en" style="fill:var(--pf-section)">Before</text>
+
+    <rect x="20" y="34" width="160" height="54" rx="8" style="fill:var(--pf-blue-fill);stroke:var(--pf-blue-stroke);stroke-width:1.5"/>
+    <text x="100" y="57" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-blue-text)">Système de design</text>
+    <text x="100" y="74" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Règles, composants, doc</text>
+    <text x="100" y="74" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Rules, components, docs</text>
+
+    <line x1="100" y1="88" x2="100" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="20" y="110" width="160" height="80" rx="8" style="fill:var(--pf-purple-fill);stroke:var(--pf-purple-stroke);stroke-width:1.5"/>
+    <text x="100" y="133" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-purple-text)">Humains</text>
+    <text x="100" y="150" text-anchor="middle" font-size="11" style="fill:var(--pf-label)">Designers, dev, CX</text>
+    <text x="100" y="166" text-anchor="middle" font-size="10" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Interprètent et adaptent</text>
+    <text x="100" y="166" text-anchor="middle" font-size="10" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Interpret and adapt</text>
+
+    <line x1="100" y1="190" x2="100" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="20" y="212" width="160" height="54" rx="8" style="fill:var(--pf-grey-fill);stroke:var(--pf-grey-stroke);stroke-width:1.5"/>
+    <text x="100" y="234" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-grey-text)">Production</text>
+    <text x="100" y="252" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Interfaces, code, contenu</text>
+    <text x="100" y="252" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Interfaces, code, content</text>
+
+    <rect x="20" y="282" width="160" height="46" rx="6" fill="none" style="stroke:var(--pf-grey-stroke);stroke-width:1;stroke-dasharray:4,3"/>
+    <text x="100" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Règles implicites :</text>
+    <text x="100" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">les humains comblent</text>
+    <text x="100" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Implicit rules:</text>
+    <text x="100" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">humans fill the gaps</text>
+
+    <!-- ── SÉPARATEUR ─────────────────────────── -->
+    <line x1="240" y1="10" x2="240" y2="345" style="stroke:var(--pf-divider);stroke-width:1;stroke-dasharray:4,3"/>
+
+    <!-- ── AUJOURD'HUI ────────────────────────── -->
+    <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-fr" style="fill:var(--pf-section)">Aujourd'hui</text>
+    <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-en" style="fill:var(--pf-section)">Today</text>
+
+    <rect x="265" y="34" width="185" height="54" rx="8" style="fill:var(--pf-blue-fill);stroke:var(--pf-blue-stroke);stroke-width:1.5"/>
+    <text x="358" y="54" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-blue-text)">Système de design</text>
+    <text x="358" y="72" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Règles explicites et structurées</text>
+    <text x="358" y="72" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Explicit and structured rules</text>
+
+    <line x1="323" y1="88" x2="308" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+    <line x1="393" y1="88" x2="408" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="265" y="110" width="78" height="80" rx="8" style="fill:var(--pf-purple-fill);stroke:var(--pf-purple-stroke);stroke-width:1.5"/>
+    <text x="304" y="133" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--pf-purple-text)">Humains</text>
+    <text x="304" y="149" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">Décident,</text>
+    <text x="304" y="162" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">gouvernent,</text>
+    <text x="304" y="175" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">valident</text>
+    <text x="304" y="149" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">Decide,</text>
+    <text x="304" y="162" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">govern,</text>
+    <text x="304" y="175" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">validate</text>
+
+    <rect x="372" y="110" width="78" height="80" rx="8" style="fill:var(--pf-teal-fill);stroke:var(--pf-teal-stroke);stroke-width:1.5"/>
+    <text x="411" y="133" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--pf-teal-text)">Agents</text>
+    <text x="411" y="149" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">Génèrent,</text>
+    <text x="411" y="162" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">assemblent,</text>
+    <text x="411" y="175" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">vérifient</text>
+    <text x="411" y="149" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">Generate,</text>
+    <text x="411" y="162" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">assemble,</text>
+    <text x="411" y="175" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">verify</text>
+
+    <line x1="304" y1="190" x2="325" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+    <line x1="411" y1="190" x2="390" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="265" y="212" width="185" height="54" rx="8" style="fill:var(--pf-grey-fill);stroke:var(--pf-grey-stroke);stroke-width:1.5"/>
+    <text x="358" y="234" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-grey-text)">Production</text>
+    <text x="358" y="252" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Interfaces, code, contenu</text>
+    <text x="358" y="252" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Interfaces, code, content</text>
+
+    <rect x="265" y="282" width="185" height="46" rx="6" fill="none" style="stroke:var(--pf-teal-stroke);stroke-width:1;stroke-dasharray:4,3"/>
+    <text x="358" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Règles explicites requises :</text>
+    <text x="358" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">les agents n'interprètent pas</text>
+    <text x="358" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Explicit rules required:</text>
+    <text x="358" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">agents don't interpret</text>
+  </svg>
 </section>
 
 <section class="home-section reveal">

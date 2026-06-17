@@ -557,16 +557,17 @@ body{
 .home-layout{margin-top:var(--agtc-header-height,64px)}
 
 .stat-band{
-  background:var(--agtc-semantic-color-background-inverse);
   display:flex;flex-wrap:wrap;
+  border-top:1px solid var(--agtc-semantic-color-border-default);
+  border-bottom:1px solid var(--agtc-semantic-color-border-default);
 }
 .stat-item{
   flex:1;min-width:150px;padding:28px 32px;text-align:center;
-  border-right:1px solid var(--agtc-semantic-color-border-on-inverse);
+  border-right:1px solid var(--agtc-semantic-color-border-default);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-accent)}
-.stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
+.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
+.stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px;display:block}
 
 .home-section{padding:var(--agtc-space-9,96px) var(--agtc-space-5,24px);max-width:var(--agtc-content-max,1180px);margin:0 auto}
 .home-section h2{font-size:var(--agtc-semantic-typography-heading-3-size);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-snug);margin-bottom:8px}
@@ -583,9 +584,7 @@ body{
   padding:24px;text-decoration:none;color:inherit;
   transition:border-color .18s;display:block;
 }
-.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
 .nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.nav-card:active{border-color:var(--agtc-semantic-color-action-primary)}
 .nav-card-icon{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav);margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 .nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-brand-secondary-text);margin-bottom:6px}
 .nav-card-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -1145,9 +1144,9 @@ html[data-lang="en"] .lang-fr{display:none}
 .changelog-item{position:relative;margin-bottom:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
 .changelog-item-date{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-secondary);padding-top:20px;text-align:right;white-space:nowrap}
 .changelog-item-content{position:relative}
-.changelog-item-content::before{content:'';position:absolute;left:-20px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-strong);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item-content::before{content:'';position:absolute;left:-13px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-strong);border:2px solid var(--agtc-semantic-color-background-surface)}
 .changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-background-surface)}
-.changelog-timeline-track{position:absolute;left:76px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
+.changelog-timeline-track{position:absolute;left:88px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
 .changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
 .changelog-summary{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
 .changelog-summary::-webkit-details-marker{display:none}
@@ -1504,15 +1503,24 @@ body{overflow-x:hidden}
 .mini-card .mc-title{font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-1)}
 .mini-card .mc-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
-/* ── Principe fondamental (3-step pipeline) ──────────────── */
-.concept-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
-.concept-card{padding:var(--agtc-space-6);text-align:center}
-.concept-icon{width:48px;height:48px;border-radius:50%;background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);display:flex;align-items:center;justify-content:center;margin:0 auto var(--agtc-space-3)}
-.concept-role{display:block;font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);margin-bottom:var(--agtc-space-1)}
-.concept-verb{display:block;font-size:var(--agtc-semantic-typography-heading-4-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2)}
-.concept-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55;margin:0}
-.concept-arrow{color:var(--agtc-semantic-color-border-strong);display:flex;align-items:center}
-@media(max-width:768px){.concept-grid{grid-template-columns:1fr}.concept-arrow{display:none}}
+/* ── Principe fondamental — diagramme SVG ─────────────────── */
+.pf-diagram{
+  width:100%;max-width:720px;margin:var(--agtc-space-7) auto 0;display:block;overflow:visible;
+  --pf-blue-fill:rgba(43,127,255,.07);--pf-blue-stroke:rgba(43,127,255,.5);--pf-blue-text:#1d5cbf;
+  --pf-purple-fill:rgba(155,127,255,.07);--pf-purple-stroke:rgba(155,127,255,.5);--pf-purple-text:#6d28d9;
+  --pf-teal-fill:rgba(20,184,166,.07);--pf-teal-stroke:rgba(20,184,166,.5);--pf-teal-text:#0f766e;
+  --pf-grey-fill:rgba(0,0,0,.03);--pf-grey-stroke:rgba(0,0,0,.15);--pf-grey-text:#374151;
+  --pf-label:#6b7280;--pf-italic:#9ca3af;--pf-section:#1f2937;
+  --pf-divider:rgba(0,0,0,.1);--pf-arrow:rgba(100,116,139,.55)
+}
+[data-theme="dark"] .pf-diagram{
+  --pf-blue-fill:rgba(43,127,255,.12);--pf-blue-stroke:rgba(43,127,255,.4);--pf-blue-text:#7eb8ff;
+  --pf-purple-fill:rgba(155,127,255,.1);--pf-purple-stroke:rgba(155,127,255,.4);--pf-purple-text:#c4b5fd;
+  --pf-teal-fill:rgba(20,217,200,.1);--pf-teal-stroke:rgba(20,217,200,.4);--pf-teal-text:#5eead4;
+  --pf-grey-fill:rgba(255,255,255,.04);--pf-grey-stroke:rgba(255,255,255,.18);--pf-grey-text:#e5e7eb;
+  --pf-label:rgba(180,200,230,.9);--pf-italic:rgba(180,200,220,.7);--pf-section:rgba(220,230,245,.9);
+  --pf-divider:rgba(255,255,255,.1);--pf-arrow:rgba(120,160,220,.5)
+}
 
 /* ── Stack nodes ─────────────────────────────────────────── */
 .stack-node{flex:1;min-width:110px;padding:var(--agtc-space-5) var(--agtc-space-3);text-align:center;background:var(--agtc-semantic-color-background-surface);border-right:1px solid var(--agtc-semantic-color-border-default)}
@@ -2208,30 +2216,91 @@ function buildHome(adrs) {
 </section>
 
 <section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></span>
-  <h2><span class="lang-fr">Humains, IA et système — trois rôles, un contrat</span><span class="lang-en">Humans, AI, and system — three roles, one contract</span></h2>
-  <div class="concept-grid">
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true">${icon('user',22)}</div>
-      <span class="concept-role"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></span>
-      <span class="concept-verb"><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les équipes définissent les règles, approuvent les décisions et gardent le dernier mot.</span><span class="lang-en">Teams define rules, approve decisions, and always have the final say.</span></p>
-    </article>
-    <div class="concept-arrow" aria-hidden="true">${icon('arrow-right',24)}</div>
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true">${icon('bot',22)}</div>
-      <span class="concept-role"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span>
-      <span class="concept-verb"><span class="lang-fr">Exécutent</span><span class="lang-en">Execute</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les agents appliquent les règles, génèrent du code et proposent — sans improviser.</span><span class="lang-en">Agents apply rules, generate code, and propose — without improvising.</span></p>
-    </article>
-    <div class="concept-arrow" aria-hidden="true">${icon('arrow-right',24)}</div>
-    <article class="concept-card card-surface">
-      <div class="concept-icon" aria-hidden="true">${icon('shield-check',22)}</div>
-      <span class="concept-role"><span class="lang-fr">Le système</span><span class="lang-en">The system</span></span>
-      <span class="concept-verb"><span class="lang-fr">Garantit</span><span class="lang-en">Guarantees</span></span>
-      <p class="concept-desc"><span class="lang-fr">Les tokens, règles et audits encodent les décisions — le système se vérifie lui-même.</span><span class="lang-en">Tokens, rules and audits encode decisions — the system verifies itself.</span></p>
-    </article>
-  </div>
+  <h2><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></h2>
+  <svg class="pf-diagram" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avant / Before – Aujourd'hui / Today">
+    <defs>
+      <marker id="pf-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke-width="1.5" stroke-linecap="round" style="stroke:var(--pf-arrow)"/>
+      </marker>
+    </defs>
+
+    <!-- ── AVANT ─────────────────────────────── -->
+    <text x="100" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-fr" style="fill:var(--pf-section)">Avant</text>
+    <text x="100" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-en" style="fill:var(--pf-section)">Before</text>
+
+    <rect x="20" y="34" width="160" height="54" rx="8" style="fill:var(--pf-blue-fill);stroke:var(--pf-blue-stroke);stroke-width:1.5"/>
+    <text x="100" y="57" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-blue-text)">Système de design</text>
+    <text x="100" y="74" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Règles, composants, doc</text>
+    <text x="100" y="74" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Rules, components, docs</text>
+
+    <line x1="100" y1="88" x2="100" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="20" y="110" width="160" height="80" rx="8" style="fill:var(--pf-purple-fill);stroke:var(--pf-purple-stroke);stroke-width:1.5"/>
+    <text x="100" y="133" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-purple-text)">Humains</text>
+    <text x="100" y="150" text-anchor="middle" font-size="11" style="fill:var(--pf-label)">Designers, dev, CX</text>
+    <text x="100" y="166" text-anchor="middle" font-size="10" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Interprètent et adaptent</text>
+    <text x="100" y="166" text-anchor="middle" font-size="10" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Interpret and adapt</text>
+
+    <line x1="100" y1="190" x2="100" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="20" y="212" width="160" height="54" rx="8" style="fill:var(--pf-grey-fill);stroke:var(--pf-grey-stroke);stroke-width:1.5"/>
+    <text x="100" y="234" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-grey-text)">Production</text>
+    <text x="100" y="252" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Interfaces, code, contenu</text>
+    <text x="100" y="252" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Interfaces, code, content</text>
+
+    <rect x="20" y="282" width="160" height="46" rx="6" fill="none" style="stroke:var(--pf-grey-stroke);stroke-width:1;stroke-dasharray:4,3"/>
+    <text x="100" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Règles implicites :</text>
+    <text x="100" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">les humains comblent</text>
+    <text x="100" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Implicit rules:</text>
+    <text x="100" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">humans fill the gaps</text>
+
+    <!-- ── SÉPARATEUR ─────────────────────────── -->
+    <line x1="240" y1="10" x2="240" y2="345" style="stroke:var(--pf-divider);stroke-width:1;stroke-dasharray:4,3"/>
+
+    <!-- ── AUJOURD'HUI ────────────────────────── -->
+    <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-fr" style="fill:var(--pf-section)">Aujourd'hui</text>
+    <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" class="lang-en" style="fill:var(--pf-section)">Today</text>
+
+    <rect x="265" y="34" width="185" height="54" rx="8" style="fill:var(--pf-blue-fill);stroke:var(--pf-blue-stroke);stroke-width:1.5"/>
+    <text x="358" y="54" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-blue-text)">Système de design</text>
+    <text x="358" y="72" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Règles explicites et structurées</text>
+    <text x="358" y="72" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Explicit and structured rules</text>
+
+    <line x1="323" y1="88" x2="308" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+    <line x1="393" y1="88" x2="408" y2="108" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="265" y="110" width="78" height="80" rx="8" style="fill:var(--pf-purple-fill);stroke:var(--pf-purple-stroke);stroke-width:1.5"/>
+    <text x="304" y="133" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--pf-purple-text)">Humains</text>
+    <text x="304" y="149" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">Décident,</text>
+    <text x="304" y="162" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">gouvernent,</text>
+    <text x="304" y="175" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-label)">valident</text>
+    <text x="304" y="149" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">Decide,</text>
+    <text x="304" y="162" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">govern,</text>
+    <text x="304" y="175" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-label)">validate</text>
+
+    <rect x="372" y="110" width="78" height="80" rx="8" style="fill:var(--pf-teal-fill);stroke:var(--pf-teal-stroke);stroke-width:1.5"/>
+    <text x="411" y="133" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--pf-teal-text)">Agents</text>
+    <text x="411" y="149" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">Génèrent,</text>
+    <text x="411" y="162" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">assemblent,</text>
+    <text x="411" y="175" text-anchor="middle" font-size="10" class="lang-fr" style="fill:var(--pf-teal-text)">vérifient</text>
+    <text x="411" y="149" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">Generate,</text>
+    <text x="411" y="162" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">assemble,</text>
+    <text x="411" y="175" text-anchor="middle" font-size="10" class="lang-en" style="fill:var(--pf-teal-text)">verify</text>
+
+    <line x1="304" y1="190" x2="325" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+    <line x1="411" y1="190" x2="390" y2="210" style="stroke:var(--pf-arrow);stroke-width:1.5" marker-end="url(#pf-arr)"/>
+
+    <rect x="265" y="212" width="185" height="54" rx="8" style="fill:var(--pf-grey-fill);stroke:var(--pf-grey-stroke);stroke-width:1.5"/>
+    <text x="358" y="234" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--pf-grey-text)">Production</text>
+    <text x="358" y="252" text-anchor="middle" font-size="11" class="lang-fr" style="fill:var(--pf-label)">Interfaces, code, contenu</text>
+    <text x="358" y="252" text-anchor="middle" font-size="11" class="lang-en" style="fill:var(--pf-label)">Interfaces, code, content</text>
+
+    <rect x="265" y="282" width="185" height="46" rx="6" fill="none" style="stroke:var(--pf-teal-stroke);stroke-width:1;stroke-dasharray:4,3"/>
+    <text x="358" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">Règles explicites requises :</text>
+    <text x="358" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-fr" style="fill:var(--pf-italic)">les agents n'interprètent pas</text>
+    <text x="358" y="300" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">Explicit rules required:</text>
+    <text x="358" y="314" text-anchor="middle" font-size="11" font-style="italic" class="lang-en" style="fill:var(--pf-italic)">agents don't interpret</text>
+  </svg>
 </section>
 
 <section class="home-section reveal">
