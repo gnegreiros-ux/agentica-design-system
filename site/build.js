@@ -1440,6 +1440,21 @@ body{overflow-x:hidden}
 :root[data-theme="dark"] .theme-btn .icon-sun{display:block}
 :root[data-theme="dark"] .theme-btn .icon-moon{display:none}
 
+/* ── Principe fondamental — dark mode (effet contraire : îlot clair sur page sombre) */
+[data-theme="dark"] .pf-section{background:#f4faf8}
+[data-theme="dark"] .pf-section h2{color:#0d1815}
+[data-theme="dark"] .pf-fcell:not(:last-child)::after{color:rgba(13,24,21,.4)}
+[data-theme="dark"] .pf-cell-human{background:rgba(99,63,70,.12)}
+[data-theme="dark"] .pf-cell-agent{background:rgba(13,155,138,.1)}
+[data-theme="dark"] .pf-cell-system{background:rgba(24,121,78,.12)}
+[data-theme="dark"] .pf-fi{color:#0d1815}
+[data-theme="dark"] .pf-fr{color:rgba(13,24,21,.65)}
+[data-theme="dark"] .pf-fv-white{color:#0d1815}
+[data-theme="dark"] .pf-fv-teal{color:#0a7a6b}
+[data-theme="dark"] .pf-fv-green{color:#1a7a4a}
+[data-theme="dark"] .pf-fd{color:rgba(13,24,21,.65)}
+[data-theme="dark"] .pf-tagline{color:rgba(13,24,21,.6)}
+
 /* ── Marketing buttons (.ds-btn) ────────────────────────── */
 .ds-btn{
   display:inline-flex;align-items:center;gap:var(--agtc-space-2);
