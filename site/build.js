@@ -568,11 +568,11 @@ body{
   border:1px solid var(--agtc-component-card-default-border);
   border-radius:var(--agtc-component-card-default-radius);
   padding:24px;text-decoration:none;color:inherit;
-  transition:border-color .15s,box-shadow .15s,transform .1s;display:block;
+  transition:border-color .18s;display:block;
 }
-.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:translateY(-1px)}
-.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.nav-card:active{border-color:var(--agtc-semantic-color-action-primary);box-shadow:var(--agtc-semantic-shadow-card-hover);transform:none}
+.nav-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.nav-card:active{border-color:var(--agtc-semantic-color-action-primary)}
 .nav-card-icon{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav);margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
 .nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
 .nav-card-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
@@ -1384,8 +1384,9 @@ body{overflow-x:hidden}
 .ds-btn.on-dark.ghost:hover{background:var(--agtc-surface-glass)}
 
 /* ── Card utilities ──────────────────────────────────────── */
-.card-surface{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-shadow-sm);transition:transform .18s,box-shadow .18s,border-color .18s}
-.card-hover:hover{transform:translateY(-4px);box-shadow:var(--agtc-shadow-lg);border-color:var(--agtc-semantic-color-border-strong)}
+.card-surface{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);position:relative;overflow:hidden;transition:border-color .18s}
+.card-surface::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-semantic-color-action-primary);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.card-surface:hover::after{transform:scaleX(1)}
 
 /* ── Section inverse (sections sombres marketing) ────────── */
 .section-inverse{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse);padding:var(--agtc-space-9) var(--agtc-space-5);position:relative;overflow:hidden}
@@ -1411,10 +1412,7 @@ body{overflow-x:hidden}
 .kpi-source{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary)}
 
-/* ── Principle card hover accent (update additive) ───────── */
-.principle-card{position:relative;overflow:hidden}
-.principle-card::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--agtc-semantic-color-action-primary);transform:scaleX(0);transform-origin:left;transition:transform .25s}
-.principle-card:hover::after{transform:scaleX(1)}
+/* ── Principle card ──────────────────────────────────────── */
 .principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
@@ -5040,7 +5038,7 @@ git clone ${REPO}.git
   // logo : nom de fichier dans integrations/ (couleur de marque)
   const platforms = [
     ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
-    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/js.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
+    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
     ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
     ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
     ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],
