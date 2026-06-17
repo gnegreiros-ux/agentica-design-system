@@ -1509,15 +1509,21 @@ body{overflow-x:hidden}
 .pf-section h2{color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-6)}
 .pf-frow{display:flex;align-items:stretch;width:100%}
 .pf-fcell{flex:1;padding:clamp(18px,2.2vw,32px);display:flex;flex-direction:column;align-items:flex-start;gap:8px;position:relative}
-.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:rgba(255,255,255,.55);padding:4px;z-index:2}
+.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:rgba(10,12,17,.4);padding:4px;z-index:2}
 .pf-cell-human{background:var(--agtc-semantic-color-brand-primary)}
 .pf-cell-agent{background:var(--agtc-semantic-color-brand-accent)}
 .pf-cell-system{background:var(--agtc-semantic-color-brand-secondary)}
-.pf-fi{line-height:1;color:#fff;margin-bottom:4px}.pf-fi svg{width:40px;height:40px}
-.pf-fr{font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+/* Défaut : texte foncé (teal + rose) */
+.pf-fi{line-height:1;color:#0a0c11;margin-bottom:4px}.pf-fi svg{width:40px;height:40px}
+.pf-fr{font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(10,12,17,.85)}
 .pf-fv{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:700;line-height:1.1}
-.pf-fv-white{color:#fff}.pf-fv-teal{color:#fff}.pf-fv-green{color:#fff}
-.pf-fd{font-size:clamp(.95rem,1.1vw,1rem);line-height:1.55;max-width:21ch;color:rgba(255,255,255,.68)}
+.pf-fv-white{color:#0a0c11}.pf-fv-teal{color:#0a0c11}.pf-fv-green{color:#0a0c11}
+.pf-fd{font-size:clamp(.95rem,1.1vw,1rem);line-height:1.55;max-width:21ch;color:rgba(10,12,17,.85)}
+/* Override bordeaux : texte blanc (11.83:1) */
+.pf-cell-system .pf-fi{color:#fff}
+.pf-cell-system .pf-fr{color:rgba(255,255,255,.75)}
+.pf-cell-system .pf-fv{color:#fff}
+.pf-cell-system .pf-fd{color:rgba(255,255,255,.7)}
 .pf-tagline{margin-top:1.6em;font-size:1.1rem;color:var(--agtc-semantic-color-text-secondary)}
 @media(max-width:768px){
   .pf-frow{flex-direction:column}
