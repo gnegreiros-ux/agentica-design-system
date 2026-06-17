@@ -70,57 +70,57 @@ class AgtcCard extends LitElement {
 
     /* ── Base ──────────────────────────────────────────────────────────────── */
     .card {
-      border-radius: var(--agtc-card-default-radius);
+      border-radius: var(--agtc-component-card-default-radius);
       overflow: hidden;
     }
 
     /* ── Variante default ──────────────────────────────────────────────────── */
     .card.default {
-      background: var(--agtc-card-default-background);
-      border: 1px solid var(--agtc-card-default-border);
+      background: var(--agtc-component-card-default-background);
+      border: 1px solid var(--agtc-component-card-default-border);
     }
 
     /* ── Variante elevated ─────────────────────────────────────────────────── */
     .card.elevated {
-      background: var(--agtc-card-elevated-background);
-      border: 1px solid var(--agtc-card-elevated-border);
-      box-shadow: var(--agtc-card-elevated-shadow);
+      background: var(--agtc-component-card-elevated-background);
+      border: 1px solid var(--agtc-component-card-elevated-border);
+      box-shadow: var(--agtc-component-card-elevated-shadow);
     }
 
     /* ── Variante flat ─────────────────────────────────────────────────────── */
     .card.flat {
-      background: var(--agtc-card-flat-background);
-      border: 1px solid var(--agtc-card-flat-border);
+      background: var(--agtc-component-card-flat-background);
+      border: 1px solid var(--agtc-component-card-flat-border);
     }
 
     /* ── Padding ───────────────────────────────────────────────────────────── */
     .card.padding-none .header,
     .card.padding-none .body,
     .card.padding-none .footer {
-      padding: var(--agtc-card-padding-none);
+      padding: var(--agtc-component-card-padding-none);
     }
     .card.padding-sm .header,
     .card.padding-sm .body,
     .card.padding-sm .footer {
-      padding: var(--agtc-card-padding-sm);
+      padding: var(--agtc-component-card-padding-sm);
     }
     .card.padding-md .header,
     .card.padding-md .body,
     .card.padding-md .footer {
-      padding: var(--agtc-card-default-padding);
+      padding: var(--agtc-component-card-default-padding);
     }
     .card.padding-lg .header,
     .card.padding-lg .body,
     .card.padding-lg .footer {
-      padding: var(--agtc-card-padding-lg);
+      padding: var(--agtc-component-card-padding-lg);
     }
 
     /* ── Sections ──────────────────────────────────────────────────────────── */
     .header {
-      border-bottom: 1px solid var(--agtc-card-default-border);
+      border-bottom: 1px solid var(--agtc-component-card-default-border);
     }
     .footer {
-      border-top: 1px solid var(--agtc-card-default-border);
+      border-top: 1px solid var(--agtc-component-card-default-border);
     }
 
     /* Pas de séparateur sur flat et elevated */

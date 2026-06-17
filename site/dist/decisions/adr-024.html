@@ -91,7 +91,7 @@
 <hr>
 <h2>Décision</h2>
 <h3>Trois palettes de marque</h3>
-<div class="table-wrap"><table><thead><tr><th>Rôle</th><th>Palette source</th><th>Step principal</th><th>Valeur hex</th></tr></thead><tbody><tr><td><strong>Primary</strong></td><td>Radix Teal</td><td>9 (solid CTA)</td><td><code>#12a594</code></td></tr><tr><td><strong>Accent</strong></td><td>Custom</td><td>9 (solid CTA)</td><td><code>#ed6b86</code></td></tr><tr><td><strong>Secondary</strong></td><td>Custom</td><td>9 (solid dark)</td><td><code>#463239</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Rôle</th><th>Palette source</th><th>Step principal</th><th>Valeur hex</th></tr></thead><tbody><tr><td><strong>Primary</strong></td><td>Radix Teal</td><td>9 (solid CTA)</td><td><code>#12a594</code></td></tr><tr><td><strong>Accent</strong></td><td>Custom</td><td>9 (solid CTA)</td><td><code>#ed6b86</code></td></tr><tr><td><strong>Secondary</strong></td><td>Custom</td><td>9 (solid dark)</td><td><code>#463239</code></td></tr></tbody></table></div>
 <h3>Primary : Teal (Radix existant)</h3>
 <p>La palette Teal est déjà présente dans les primitives (ADR-008). Le step 9 (<code>#12a594</code>) est la teinte solide CTA selon la convention Radix.</p>
 <ul><li><code>semantic.color.action.primary</code> → <code>{primitive.color.teal.9}</code></li><li><code>semantic.color.action.primary-hover</code> → <code>{primitive.color.teal.10}</code></li><li><code>semantic.color.border.focus</code> → <code>{primitive.color.teal.9}</code></li></ul>
@@ -134,7 +134,7 @@ secondary.12 = #432f36  → texte haute lisibilité sur fond clair</code></pre>
 <p><code>action.primary</code> passe de blue.11 à teal.9. Ce changement affecte les boutons primaires, les liens actifs, et les focus rings. Les tests de contraste sont maintenus (teal.9 = 4.6:1 sur blanc en corps de texte).</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<div class="table-wrap"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Garder Blue comme primary</strong></td><td>Trop générique — pas d'identité de marque</td></tr><tr><td><strong>Utiliser Radix Pink comme accent</strong></td><td>Trop froid, différent de la charte identitaire</td></tr><tr><td><strong>secondary.11 comme CTA</strong></td><td>Contraste insuffisant pour un fond solide avec texte blanc (3.8:1)</td></tr><tr><td><strong>Intégrer les custom palettes comme Radix forks</strong></td><td>Maintenance complexe — mieux vaut les nommer explicitement comme custom</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Garder Blue comme primary</strong></td><td>Trop générique — pas d'identité de marque</td></tr><tr><td><strong>Utiliser Radix Pink comme accent</strong></td><td>Trop froid, différent de la charte identitaire</td></tr><tr><td><strong>secondary.11 comme CTA</strong></td><td>Contraste insuffisant pour un fond solide avec texte blanc (3.8:1)</td></tr><tr><td><strong>Intégrer les custom palettes comme Radix forks</strong></td><td>Maintenance complexe — mieux vaut les nommer explicitement comme custom</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
 <p><strong>Pour les tokens :</strong></p>

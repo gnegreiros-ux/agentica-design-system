@@ -104,32 +104,32 @@ class AgtcCheckbox extends LitElement {
       flex-shrink: 0;
       inline-size: var(--agtc-semantic-icon-size-control);
       block-size: var(--agtc-semantic-icon-size-control);
-      border: 1.5px solid var(--agtc-checkbox-default-border);
-      border-radius: var(--agtc-checkbox-default-radius);
-      background: var(--agtc-checkbox-default-background);
+      border: 1.5px solid var(--agtc-component-checkbox-default-border);
+      border-radius: var(--agtc-component-checkbox-default-radius);
+      background: var(--agtc-component-checkbox-default-background);
       transition: background-color 0.12s, border-color 0.12s;
     }
 
     .root:hover .box {
-      border-color: var(--agtc-checkbox-default-border-hover);
+      border-color: var(--agtc-component-checkbox-default-border-hover);
     }
 
     /* Focus clavier → anneau visible sur la case */
     .native:focus-visible + .box {
-      outline: 2.5px solid var(--agtc-checkbox-default-border-focus);
+      outline: 2.5px solid var(--agtc-component-checkbox-default-border-focus);
       outline-offset: 2px;
     }
 
     /* Coché ou indéterminé → remplissage primaire */
     :host([checked]) .box,
     :host([indeterminate]) .box {
-      background: var(--agtc-checkbox-default-fill);
-      border-color: var(--agtc-checkbox-default-fill);
+      background: var(--agtc-component-checkbox-default-fill);
+      border-color: var(--agtc-component-checkbox-default-fill);
     }
     :host([checked]) .root:hover .box,
     :host([indeterminate]) .root:hover .box {
-      background: var(--agtc-checkbox-default-fill-hover);
-      border-color: var(--agtc-checkbox-default-fill-hover);
+      background: var(--agtc-component-checkbox-default-fill-hover);
+      border-color: var(--agtc-component-checkbox-default-fill-hover);
     }
 
     /* Glyphes — coche et tiret (indéterminé) */
@@ -140,7 +140,7 @@ class AgtcCheckbox extends LitElement {
       margin: auto;
       width: 78%;
       height: 78%;
-      stroke: var(--agtc-checkbox-default-check);
+      stroke: var(--agtc-component-checkbox-default-check);
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -154,7 +154,7 @@ class AgtcCheckbox extends LitElement {
     .label-text {
       font-size: var(--agtc-semantic-typography-body-size);
       line-height: var(--agtc-semantic-typography-body-line-height);
-      color: var(--agtc-checkbox-default-label);
+      color: var(--agtc-component-checkbox-default-label);
     }
     .label-text:empty { display: none; }
 

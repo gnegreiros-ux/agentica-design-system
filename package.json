@@ -10,7 +10,12 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "axe": "node scripts/axe-audit.js"
+    "axe": "node scripts/axe-audit.js",
+    "axe:mobile": "node scripts/axe-audit.js --mobile",
+    "axe:dark": "node scripts/axe-audit.js --dark",
+    "axe:all": "node scripts/axe-audit.js",
+    "smoke": "node scripts/smoke-test.js",
+    "test": "npm run smoke && npm run axe:all"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

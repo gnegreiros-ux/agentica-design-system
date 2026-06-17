@@ -64,28 +64,28 @@ class AgtcTable extends LitElement {
     /* Conteneur scroll horizontal + indicateur d'overflow (T7) ─────────────── */
     .scroll {
       overflow-x: auto;
-      border: 1px solid var(--agtc-table-default-border);
-      border-radius: var(--agtc-table-default-radius);
+      border: 1px solid var(--agtc-component-table-default-border);
+      border-radius: var(--agtc-component-table-default-radius);
       /* Ombres de bord : apparaissent quand il reste du contenu à scroller. */
       background:
-        linear-gradient(to right, var(--agtc-table-default-header-background), rgba(255,255,255,0)) left / 24px 100% no-repeat,
-        linear-gradient(to left,  var(--agtc-table-default-header-background), rgba(255,255,255,0)) right / 24px 100% no-repeat;
+        linear-gradient(to right, var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) left / 24px 100% no-repeat,
+        linear-gradient(to left,  var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) right / 24px 100% no-repeat;
       background-attachment: local, local;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: var(--agtc-table-default-font-size);
-      color: var(--agtc-table-default-cell-text);
+      font-size: var(--agtc-component-table-default-font-size);
+      color: var(--agtc-component-table-default-cell-text);
       background: var(--agtc-semantic-color-background-surface);
     }
 
     caption {
       text-align: start;
-      color: var(--agtc-table-default-caption-text);
-      padding: var(--agtc-table-padding-y-compact) var(--agtc-table-padding-x);
-      font-size: var(--agtc-table-default-font-size);
+      color: var(--agtc-component-table-default-caption-text);
+      padding: var(--agtc-component-table-padding-y-compact) var(--agtc-component-table-padding-x);
+      font-size: var(--agtc-component-table-default-font-size);
     }
     caption.visually-hidden {
       position: absolute;
@@ -98,29 +98,29 @@ class AgtcTable extends LitElement {
     th {
       text-align: start;
       font-weight: var(--agtc-semantic-typography-label-weight);
-      color: var(--agtc-table-default-header-text);
-      background: var(--agtc-table-default-header-background);
+      color: var(--agtc-component-table-default-header-text);
+      background: var(--agtc-component-table-default-header-background);
       white-space: nowrap;
     }
 
     th, td {
-      padding: var(--agtc-table-padding-y-compact) var(--agtc-table-padding-x);
-      border-bottom: 1px solid var(--agtc-table-default-border);
+      padding: var(--agtc-component-table-padding-y-compact) var(--agtc-component-table-padding-x);
+      border-bottom: 1px solid var(--agtc-component-table-default-border);
       vertical-align: top;
     }
     :host([density="comfortable"]) th,
     :host([density="comfortable"]) td {
-      padding: var(--agtc-table-padding-y-comfortable) var(--agtc-table-padding-x);
+      padding: var(--agtc-component-table-padding-y-comfortable) var(--agtc-component-table-padding-x);
     }
 
     tbody tr:last-child td { border-bottom: none; }
 
     /* Hover de ligne (T5) ──────────────────────────────────────────────────── */
-    tbody tr:hover { background: var(--agtc-table-default-row-hover); }
+    tbody tr:hover { background: var(--agtc-component-table-default-row-hover); }
 
     /* Zébrage optionnel (T4) ───────────────────────────────────────────────── */
-    :host([striped]) tbody tr:nth-child(even) { background: var(--agtc-table-default-stripe); }
-    :host([striped]) tbody tr:nth-child(even):hover { background: var(--agtc-table-default-row-hover); }
+    :host([striped]) tbody tr:nth-child(even) { background: var(--agtc-component-table-default-stripe); }
+    :host([striped]) tbody tr:nth-child(even):hover { background: var(--agtc-component-table-default-row-hover); }
 
     /* En-tête figé optionnel (T6) ──────────────────────────────────────────── */
     :host([sticky-header]) thead th {

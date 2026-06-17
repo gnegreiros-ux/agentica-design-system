@@ -138,25 +138,25 @@ class AgtcInput extends LitElement {
       display: flex;
       align-items: center;
 
-      background: var(--agtc-input-default-background);
-      border: 1.5px solid var(--agtc-input-default-border);
-      border-radius: var(--agtc-input-default-radius);
+      background: var(--agtc-component-input-default-background);
+      border: 1.5px solid var(--agtc-component-input-default-border);
+      border-radius: var(--agtc-component-input-default-radius);
       transition: border-color 0.12s;
     }
 
     /* Focus ring sur le wrapper — visible pour clavier et pointeur */
     .control:focus-within {
-      border-color: var(--agtc-input-default-border-focus);
-      outline: 2.5px solid var(--agtc-input-default-border-focus);
+      border-color: var(--agtc-component-input-default-border-focus);
+      outline: 2.5px solid var(--agtc-component-input-default-border-focus);
       outline-offset: 2px;
     }
 
     :host([invalid]) .control {
-      border-color: var(--agtc-input-default-border-error);
+      border-color: var(--agtc-component-input-default-border-error);
     }
     :host([invalid]) .control:focus-within {
-      border-color: var(--agtc-input-default-border-error);
-      outline-color: var(--agtc-input-default-border-error);
+      border-color: var(--agtc-component-input-default-border-error);
+      outline-color: var(--agtc-component-input-default-border-error);
     }
 
     :host([disabled]) .control {
@@ -179,14 +179,14 @@ class AgtcInput extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-inline-start: var(--agtc-input-default-padding-x);
+      padding-inline-start: var(--agtc-component-input-default-padding-x);
       padding-inline-end: 0;
       color: var(--agtc-semantic-color-text-secondary);
       flex-shrink: 0;
     }
     .icon-suffix {
       padding-inline-start: 0;
-      padding-inline-end: var(--agtc-input-default-padding-x);
+      padding-inline-end: var(--agtc-component-input-default-padding-x);
     }
 
     /* ── Input natif ───────────────────────────────────────────────────────── */
@@ -194,14 +194,14 @@ class AgtcInput extends LitElement {
       flex: 1;
       min-width: 0;
 
-      padding: var(--agtc-input-default-padding-y) var(--agtc-input-default-padding-x);
+      padding: var(--agtc-component-input-default-padding-y) var(--agtc-component-input-default-padding-x);
 
       font-family: inherit;
       font-size: var(--agtc-semantic-typography-body-size);
       font-weight: var(--agtc-semantic-typography-body-weight);
       line-height: var(--agtc-semantic-typography-body-line-height);
 
-      color: var(--agtc-input-default-text);
+      color: var(--agtc-component-input-default-text);
       background: transparent;
       border: none;
       outline: none;
@@ -210,7 +210,7 @@ class AgtcInput extends LitElement {
       appearance: none;
     }
     input::placeholder {
-      color: var(--agtc-input-default-placeholder);
+      color: var(--agtc-component-input-default-placeholder);
     }
     input:disabled {
       color: var(--agtc-semantic-color-text-disabled);
@@ -228,7 +228,7 @@ class AgtcInput extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 var(--agtc-input-default-padding-x);
+      padding: 0 var(--agtc-component-input-default-padding-x);
       background: none;
       border: none;
       cursor: pointer;

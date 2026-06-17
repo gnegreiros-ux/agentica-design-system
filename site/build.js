@@ -73,8 +73,8 @@ function parseMd(text) {
     if (/^\|/.test(l) && i+1 < lines.length && /^\|[-| ]+\|/.test(lines[i+1])) {
       const rows = [l]; i += 2;
       while (i < lines.length && /^\|/.test(lines[i])) { rows.push(lines[i]); i++; }
-      const pr = (r,t) => r.split('|').filter(c=>c.trim()).map(c=>`<${t}>${inl(c.trim())}</${t}>`).join('');
-      out.push(`<div class="table-wrap"><table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table></div>`);
+      const pr = (r,t) => r.replace(/\\\|/g,'\x00').split('|').filter(c=>c.trim()).map(c=>`<${t}>${inl(c.trim().replace(/\x00/g,'|'))}</${t}>`).join('');
+      out.push(`<div class="table-wrap" tabindex="0"><table><thead><tr>${pr(rows[0],'th')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${pr(r,'td')}</tr>`).join('')}</tbody></table></div>`);
       continue;
     }
     if (/^[-*] /.test(l)) {
@@ -446,6 +446,18 @@ function tokensCSS() {
   --agtc-semantic-color-border-danger:#ff9592;
   --agtc-semantic-color-accent:#ff8aa1;
   --agtc-semantic-color-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary:#6b4b56;
+  --agtc-semantic-color-brand-secondary-text:#edd9df;
+  /* Subtle + text — manquants en dark, provoquent des échecs de contraste */
+  --agtc-semantic-color-brand-primary-subtle:#0d2924;
+  --agtc-semantic-color-brand-primary-text:#34d3bb;
+  --agtc-semantic-color-brand-accent-subtle:#2a1520;
+  --agtc-semantic-color-brand-accent-text:#ed6b86;
+  --agtc-semantic-color-feedback-warning-subtle:#241800;
+  --agtc-semantic-color-feedback-warning-text:#ffca16;
+  --agtc-semantic-color-feedback-info-text:#34d3bb;
+  /* text-on-danger : fond danger est rose clair en dark (#ff9592) → texte doit être foncé */
+  --agtc-semantic-color-text-on-danger:#3d0f0f;
   --agtc-semantic-color-tertiary:#6b7280;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
@@ -489,7 +501,7 @@ body{
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
-.logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
+.logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-brand-accent-text);background:var(--agtc-semantic-color-brand-accent-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
 /* ── Règle système : no-visited-nav (ADR-047) ───────────────────────────
    Les éléments de navigation ne portent jamais d'état :visited distinct.
    Exception Safari : valeur hex avant var() (ADR-059).
@@ -552,7 +564,7 @@ body{
   border-right:1px solid var(--agtc-semantic-color-border-on-inverse);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);background:var(--agtc-gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-accent)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:4px;display:block}
 
 .home-section{padding:var(--agtc-space-9,96px) var(--agtc-space-5,24px);max-width:var(--agtc-content-max,1180px);margin:0 auto}
@@ -574,7 +586,7 @@ body{
 .nav-card:focus-visible{border-color:var(--agtc-semantic-color-action-primary);outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 .nav-card:active{border-color:var(--agtc-semantic-color-action-primary)}
 .nav-card-icon{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav);margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-action-primary)}.nav-card-icon svg{width:var(--agtc-semantic-icon-size-nav);height:var(--agtc-semantic-icon-size-nav)}
-.nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:6px}
+.nav-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-brand-secondary-text);margin-bottom:6px}
 .nav-card-desc{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 .icon-ok{color:var(--agtc-semantic-color-feedback-success);display:inline-flex;vertical-align:middle;margin-right:4px}
 .icon-no{color:var(--agtc-semantic-color-feedback-danger);display:inline-flex;vertical-align:middle;margin-right:4px}
@@ -596,6 +608,57 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+.illus-dark-row{background:var(--agtc-semantic-color-brand-secondary,#463239);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--agtc-space-8,64px) 0;line-height:0}
+.illus-dark-row .illus-block{margin:0;border-radius:0;max-width:var(--agtc-content-max,1180px);margin-left:auto;margin-right:auto}
+
+/* ── SECTION FOND SECONDAIRE (bordeaux) ───────────────────── */
+.section-secondary{background:var(--agtc-semantic-color-brand-secondary,#463239);padding:var(--agtc-space-9) var(--agtc-space-5);position:relative;overflow:hidden}
+.section-secondary .si-inner{max-width:var(--agtc-content-max,1180px);margin:0 auto;position:relative}
+.section-secondary h2{font-size:var(--agtc-semantic-typography-heading-3-size);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92));border-top:none;padding-top:0;margin-top:0}
+.section-secondary .eyebrow{color:rgba(255,255,255,.55)}
+.section-secondary .si-inner>p{color:rgba(255,255,255,.75)}
+.section-secondary .illus-block{border-radius:0;margin:var(--agtc-space-8,64px) calc(-1 * var(--agtc-space-5,24px));width:calc(100% + 2*var(--agtc-space-5,24px));max-width:none}
+.section-secondary .context-card{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.12)}
+.section-secondary .context-card-accent{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.22)}
+.section-secondary .context-title{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .context-desc{color:rgba(255,255,255,.75)}
+.section-secondary .context-badge{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
+.section-secondary .context-badge-accent{color:rgba(255,255,255,.9)}
+.section-secondary .context-attr{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
+.section-secondary .context-attr em{color:rgba(255,255,255,.45)}
+.section-secondary .ds-btn{border-color:rgba(255,255,255,.3);color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .ds-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.section-secondary .pipeline{border-color:rgba(255,255,255,.12)}
+.section-secondary .pipeline-step{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.1)}
+.section-secondary .pipeline-step+.pipeline-step{border-left-color:rgba(255,255,255,.12)}
+.section-secondary .pipeline-step:first-child{background:rgba(0,0,0,.28)}
+.section-secondary .pipeline-step:last-child{border-left:3px solid var(--agtc-semantic-color-brand-primary)}
+.section-secondary .pipeline-tag{color:rgba(255,255,255,.7)}
+.section-secondary .pipeline-title{color:rgba(255,255,255,.95)}
+.section-secondary .pipeline-desc{color:rgba(255,255,255,.75)}
+.section-secondary .pipeline-example{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.15);color:var(--agtc-semantic-color-brand-primary)}
+/* Stat-band & CTA sur fond secondaire */
+.section-secondary .stat-text{color:rgba(255,255,255,.72)}
+.section-secondary .cta-final h2{color:var(--agtc-semantic-color-text-on-inverse,rgba(255,255,255,.92))}
+.section-secondary .cta-final p{color:rgba(255,255,255,.75)}
+/* Stack — spécificité renforcée pour override les règles de base */
+.section-secondary .stack-flow .stack-node,.section-secondary .stack-flow .stack-node:last-child{background:rgba(0,0,0,.18)!important;border-right-color:rgba(255,255,255,.1)!important}
+.section-secondary .stack-flow .stack-node-icon{color:var(--agtc-semantic-color-brand-primary)!important}
+.section-secondary .stack-flow .stack-node-label{color:rgba(255,255,255,.92)!important}
+.section-secondary .stack-flow .stack-node-sub{color:rgba(255,255,255,.72)!important}
+
+/* ── DEUX CONTEXTES CARDS ─────────────────────────────────── */
+.contexts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:24px 0 32px}
+.context-card{padding:28px;border-radius:var(--agtc-semantic-radius-card);display:flex;flex-direction:column;gap:12px;border:1px solid var(--agtc-semantic-color-border-default)}
+.context-badge{display:inline-block;font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);padding:3px 10px;border-radius:var(--agtc-semantic-radius-control);background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);width:fit-content}
+.context-badge-accent{color:var(--agtc-semantic-color-brand-accent-text);background:var(--agtc-semantic-color-brand-accent-subtle);border-color:var(--agtc-semantic-color-brand-accent)}
+.context-title{font-size:var(--agtc-semantic-typography-heading-4-size,18px);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-brand-secondary-text);line-height:1.3}
+.context-desc{font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.6}
+.context-attr{display:inline-block;font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);padding:4px 10px;border-radius:var(--agtc-semantic-radius-control);background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);color:var(--agtc-semantic-color-text-secondary);margin-top:4px}
+.context-attr em{color:var(--agtc-semantic-color-text-tertiary,var(--agtc-semantic-color-text-secondary));font-style:italic}
+.context-card-accent{border-color:var(--agtc-semantic-color-brand-accent);background:var(--agtc-semantic-color-brand-accent-subtle,var(--agtc-semantic-color-background-subtle))}
+.context-card-accent .context-title{color:var(--agtc-semantic-color-brand-accent-text)}
+.context-card-accent .context-attr{background:var(--agtc-semantic-color-background-default,var(--agtc-semantic-color-background-surface));border-color:var(--agtc-semantic-color-brand-accent);color:var(--agtc-semantic-color-brand-accent-text)}
 
 /* ── DARK ILLUSTRATION SECTIONS ──────────────────────────── */
 .home-section-ink{background:var(--agtc-semantic-color-illustration-ink,#211f26);overflow-x:hidden}
@@ -654,7 +717,7 @@ li code{font-size:.8em}
 /* Tables du site : consomment le contrat du composant table (component.table.* — ADR-040).
    Le site s'aligne sur le composant (dogfooding cat. A) ; il garde sa présentation
    d'en-tête (majuscules, tracking), mais toutes les COULEURS viennent du composant. */
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px;outline-offset:2px}.table-wrap:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus)}
 table{width:100%;border-collapse:collapse;margin:0;font-size:var(--agtc-semantic-typography-label-size);table-layout:auto;min-width:420px}
 th{text-align:left;padding:10px 16px;background:var(--agtc-component-table-default-header-background);color:var(--agtc-component-table-default-header-text);font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wider);border-bottom:1px solid var(--agtc-component-table-default-border);white-space:nowrap}
 td{padding:12px 16px;border-bottom:1px solid var(--agtc-component-table-default-border);color:var(--agtc-component-table-default-cell-text);vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
@@ -829,7 +892,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .adr-header{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--agtc-semantic-color-border-default)}
 .adr-header-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .adr-number{font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-subtle);padding:3px 10px;border-radius:var(--agtc-semantic-radius-pill);border:1px solid var(--agtc-semantic-color-border-default)}
-.adr-type{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);background:var(--agtc-semantic-color-background-subtle);padding:3px 8px;border-radius:var(--agtc-semantic-radius-control)}
+.adr-type{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-on-inverse);background:var(--agtc-semantic-color-brand-secondary);padding:3px 8px;border-radius:var(--agtc-semantic-radius-control)}
 .adr-page-title{font-size:var(--agtc-semantic-typography-heading-2-size);font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-heading);margin:0 0 16px;line-height:1.15;color:var(--agtc-semantic-color-text-primary)}
 .adr-meta{display:flex;flex-wrap:wrap;gap:0 32px;margin:0;padding:0}
 .adr-meta-item{display:flex;gap:6px;align-items:baseline;padding:4px 0}
@@ -879,12 +942,14 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline{flex-direction:column}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
-  .site-header{padding:0 12px;gap:8px;overflow:hidden}
+  .site-header{padding:0 12px;gap:8px}
   .logo-version{display:none}
+  .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}
   .lang-switch{margin-left:auto !important}
   .menu-toggle{flex-shrink:0}
+  .nav-grid{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ── ACCESSIBILITY ───────────────────────────────────────── */
@@ -985,7 +1050,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-footer-link{color:var(--agtc-semantic-color-text-on-inverse-muted);text-decoration:none;font-size:var(--agtc-semantic-typography-detail-size);display:inline-flex;align-items:center;gap:4px;transition:color .12s}
 .audit-footer-link:hover,.audit-footer-link:active{color:var(--agtc-semantic-color-text-on-inverse-secondary)}
 @media(max-width:640px){.audit-cards{grid-template-columns:1fr 1fr}}
-.info-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}
+.info-card-title{font-size:var(--agtc-component-card-typography-title-size);font-weight:var(--agtc-component-card-typography-title-weight);color:var(--agtc-semantic-color-brand-secondary-text);margin-bottom:4px}
 .info-card-body{font-size:var(--agtc-component-card-typography-body-size);color:var(--agtc-semantic-color-text-secondary)}
 /* ── INFOBOX (callout informationnel de doc — consomme feedback.info-*) ───── */
 .infobox{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;margin:24px 0;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-feedback-info-subtle);border:1px solid var(--agtc-semantic-color-feedback-info-border)}
@@ -1077,9 +1142,9 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── CHANGELOG TIMELINE ──────────────────────────────────── */
 .changelog-timeline{position:relative;padding-left:0}
 .changelog-item{position:relative;margin-bottom:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
-.changelog-item-date{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-secondary);padding-top:20px;text-align:right;white-space:nowrap}
+.changelog-item-date{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-brand-accent-text);padding-top:20px;text-align:right;white-space:nowrap}
 .changelog-item-content{position:relative}
-.changelog-item-content::before{content:'';position:absolute;left:-24px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-default);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item-content::before{content:'';position:absolute;left:-24px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-brand-accent);border:2px solid var(--agtc-semantic-color-background-surface)}
 .changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
 .changelog-timeline-track{position:absolute;left:88px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
 .changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
@@ -1088,8 +1153,8 @@ html[data-lang="en"] .lang-fr{display:none}
 .changelog-summary:hover{background:var(--agtc-semantic-color-background-subtle)}
 .changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
 details[open] .changelog-chevron{transform:rotate(180deg)}
-.changelog-version{font-size:var(--agtc-semantic-typography-body-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-text-primary);letter-spacing:var(--agtc-tracking-snug)}
-.changelog-badge{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-feedback-warning-subtle,#fff3cd);color:var(--agtc-semantic-color-feedback-warning,#b45309)}
+.changelog-version{font-size:var(--agtc-semantic-typography-body-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-brand-accent-text);letter-spacing:var(--agtc-tracking-snug)}
+.changelog-badge{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-feedback-warning-subtle,#ffefd6);color:var(--agtc-semantic-color-feedback-warning-text,#582d1d)}
 .changelog-body{padding:0 20px 20px;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .changelog-body h2{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);margin:16px 0 6px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wider)}
 .changelog-body ul{margin:0 0 10px;padding-left:18px}
@@ -1188,6 +1253,21 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   height:var(--agtc-semantic-icon-size-feature);
 }
 
+/* ── SECTION-SECONDARY en contexte Marketing — uniformisation des niveaux ── */
+/* heading-1-size pour tous les h2, même espacement que home-section */
+[data-context="marketing"] .section-secondary h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+  letter-spacing:var(--agtc-tracking-tighter);
+}
+[data-context="marketing"] .section-secondary{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing,96px);
+}
+[data-context="marketing"] .home-section{
+  padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  padding-bottom:var(--agtc-semantic-marketing-space-section-breathing,96px);
+}
 /* ── SCROLL PADDING — compense header fixe (ADR-057) ─────── */
 html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 
@@ -1407,8 +1487,8 @@ body{overflow-x:hidden}
 /* ── KPI cards ───────────────────────────────────────────── */
 .kpi-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
 .kpi-card{padding:var(--agtc-space-6)}
-.kpi-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-tighter);display:block;margin-bottom:var(--agtc-space-1);background:var(--agtc-gradient-text-light);-webkit-background-clip:text;background-clip:text;color:transparent}
-.kpi-label{font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-text-primary);font-weight:var(--agtc-semantic-fontWeight-bold);margin-bottom:var(--agtc-space-2);display:block}
+.kpi-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-tighter);display:block;margin-bottom:var(--agtc-space-1);color:var(--agtc-semantic-color-brand-accent);white-space:nowrap}
+.kpi-label{font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-brand-secondary-text);font-weight:var(--agtc-semantic-fontWeight-bold);margin-bottom:var(--agtc-space-2);display:block}
 .kpi-source{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary)}
 
@@ -1434,7 +1514,7 @@ body{overflow-x:hidden}
 .cta-final .cta-actions{display:flex;gap:var(--agtc-space-3);justify-content:center;flex-wrap:wrap;margin-top:var(--agtc-space-6)}
 
 /* ── Brand band ──────────────────────────────────────────── */
-.brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse);border-block:1px solid var(--agtc-semantic-color-border-default)}
+.brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse)}
 .brand-band svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .brand-band .shape-plum{fill:var(--agtc-semantic-color-secondary)}
 .brand-band .shape-accent{fill:var(--agtc-semantic-color-accent)}
@@ -1898,7 +1978,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   </button>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
-<div class="${mainClass}" id="main-content">
+<div class="${mainClass}" id="main-content"${fullWidth ? ' data-context="marketing"' : ''}>
   ${sidebarHtml}
   <main class="${fullWidth ? '' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
@@ -1910,7 +1990,7 @@ ${footer}
 </button>
 <script src="${base}site.js"></script>
 </body>
-</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
+</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap" tabindex="0"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
 }
 
 function sidebarFoundations(base, current) {
@@ -2027,6 +2107,10 @@ function buildHome(adrs) {
   const primCount  = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
+  const svgPipeline   = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
+  const svgGovernance = read(path.join(ROOT, 'illustrations/human-last-word.svg'));
+  const svgMultiPlat  = read(path.join(ROOT, 'illustrations/multi-platform.svg'));
+
   const principles = [
     [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
     [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée. Un script d\'audit valide chaque token.','Full auditability','Every decision is traceable, versioned, and justified. An audit script validates every token.'],
@@ -2039,6 +2123,7 @@ function buildHome(adrs) {
     ['components/index.html',   icon('puzzle',32),            'Composants',           'Components',            'Contrats UI exécutables : variantes, états, tokens, accessibilité, code.','Executable UI contracts: variants, states, tokens, accessibility, code.'],
     ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
+    ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
     [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
@@ -2065,7 +2150,6 @@ function buildHome(adrs) {
     ['2×','Livraisons plus rapides','Faster delivery','Les équipes avec un design system mature livrent jusqu\'à 2× plus fréquemment — Sparkbox Design Systems Survey 2024','Teams with a mature design system ship up to 2× more frequently — Sparkbox Design Systems Survey 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
     ['80%','Moins de violations a11y','Fewer a11y violations','Réduction des violations d\'accessibilité grâce aux composants WCAG AA natifs — IBM Carbon Case Study','Reduction in accessibility violations through native WCAG AA components — IBM Carbon Case Study','https://carbondesignsystem.com','IBM Carbon'],
     ['34%','Délais respectés','Deadlines met','Les équipes utilisant un design system respectent davantage leurs délais de livraison — Sparkbox DSS 2024','Teams using a design system are more likely to meet delivery deadlines — Sparkbox DSS 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-    ['3 niveaux','Architecture token','Token architecture','Primitif → Sémantique → Composant : une architecture qui sépare les valeurs des intentions — compréhensible par les humains ET les agents IA.','Primitive → Semantic → Component: an architecture separating values from intentions — understandable by humans AND AI agents.','',''],
   ];
 
   const body = `
@@ -2159,6 +2243,30 @@ function buildHome(adrs) {
 </section>
 
 
+<section class="section-secondary reveal">
+  <div class="si-inner">
+    <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
+    <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
+    <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
+    <div class="illus-block">${svgGovernance}</div>
+    <div class="contexts-grid">
+      <div class="context-card">
+        <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
+        <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
+        <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
+        <code class="context-attr">data-context <em>(absent)</em></code>
+      </div>
+      <div class="context-card context-card-accent">
+        <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
+        <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
+        <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
+        <code class="context-attr">data-context="marketing"</code>
+      </div>
+    </div>
+    <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
+  </div>
+</section>
+
 <section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Principes fondateurs</span><span class="lang-en">Founding principles</span></span>
   <h2><span class="lang-fr">Valeurs non négociables</span><span class="lang-en">Non-negotiable values</span></h2>
@@ -2173,7 +2281,7 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<section class="section-inverse">
+<section class="section-secondary">
   <div class="si-inner">
     <div class="stat-band" role="region" aria-label="Statistiques du système">
       <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
@@ -2185,10 +2293,25 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<section class="home-section reveal">
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
+</div>
+
+<section class="section-secondary reveal">
+  <div class="si-inner">
   <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
   <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
   <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
+  <div class="illus-block">${svgPipeline}</div>
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
@@ -2209,20 +2332,8 @@ function buildHome(adrs) {
       <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
     </div>
   </div>
+  </div>
 </section>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
 
 <section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span>
@@ -2262,10 +2373,12 @@ function buildHome(adrs) {
   <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
 </section>
 
-<section class="home-section reveal">
+<section class="section-secondary reveal">
+  <div class="si-inner">
   <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
   <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
   <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
+  <div class="illus-block">${svgMultiPlat}</div>
   <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
@@ -2274,9 +2387,23 @@ function buildHome(adrs) {
       <div class="stack-node-sub">${sub}</div>
     </div>`).join('')}
   </div>
+  </div>
 </section>
 
-<section class="section-inverse">
+<div class="brand-band" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="160" class="shape-surface"/>
+    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
+    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
+    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
+    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
+    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
+    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
+    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
+  </svg>
+</div>
+
+<section class="section-secondary">
   <div class="si-inner cta-final">
     <h2><span class="lang-fr">Prêt à explorer le système ?</span><span class="lang-en">Ready to explore the system?</span></h2>
     <p><span class="lang-fr">Commencez par les fondations, ou plongez dans la documentation conçue pour les agents IA.</span><span class="lang-en">Start with the foundations, or dive into the documentation built for AI agents.</span></p>
@@ -2377,6 +2504,20 @@ function buildColor() {
     ['color-text-on-action',         'color.text.on-action',         SEM['color-text-on-action'],         '<span class="lang-fr">Texte sur fond d\'action — boutons</span><span class="lang-en">Text on action background — buttons</span>'],
   ].filter(([, , v]) => v);
 
+  const brandColors = [
+    ['color-brand-primary',         'color.brand.primary',         SEM['color-brand-primary'],         '<span class="lang-fr">Couleur principale de la marque — Teal</span><span class="lang-en">Primary brand color — Teal</span>'],
+    ['color-brand-primary-hover',   'color.brand.primary-hover',   SEM['color-brand-primary-hover'],   '<span class="lang-fr">Survol de la couleur principale</span><span class="lang-en">Primary brand hover</span>'],
+    ['color-brand-primary-subtle',  'color.brand.primary-subtle',  SEM['color-brand-primary-subtle'],  '<span class="lang-fr">Fond subtil teal — badges, chips</span><span class="lang-en">Subtle teal background — badges, chips</span>'],
+    ['color-brand-primary-text',    'color.brand.primary-text',    SEM['color-brand-primary-text'],    '<span class="lang-fr">Texte teal sur fond clair — WCAG AA</span><span class="lang-en">Teal text on light background — WCAG AA</span>'],
+    ['color-brand-accent',          'color.brand.accent',          SEM['color-brand-accent'],          '<span class="lang-fr">Couleur accent — Rose-corail (CTA secondaire, highlights)</span><span class="lang-en">Accent color — Rose-coral (secondary CTA, highlights)</span>'],
+    ['color-brand-accent-hover',    'color.brand.accent-hover',    SEM['color-brand-accent-hover'],    '<span class="lang-fr">Survol de l\'accent</span><span class="lang-en">Accent hover</span>'],
+    ['color-brand-accent-subtle',   'color.brand.accent-subtle',   SEM['color-brand-accent-subtle'],   '<span class="lang-fr">Fond subtil accent — badges version</span><span class="lang-en">Subtle accent background — version badges</span>'],
+    ['color-brand-accent-text',     'color.brand.accent-text',     SEM['color-brand-accent-text'],     '<span class="lang-fr">Texte accent — 7.1:1 WCAG AA+</span><span class="lang-en">Accent text — 7.1:1 WCAG AA+</span>'],
+    ['color-brand-secondary',       'color.brand.secondary',       SEM['color-brand-secondary'],       '<span class="lang-fr">Couleur secondaire — Bordeaux (tags éditoriaux, type ADR)</span><span class="lang-en">Secondary brand color — Bordeaux (editorial tags, ADR type)</span>'],
+    ['color-brand-secondary-hover', 'color.brand.secondary-hover', SEM['color-brand-secondary-hover'], '<span class="lang-fr">Survol de la couleur secondaire</span><span class="lang-en">Secondary brand hover</span>'],
+    ['color-brand-secondary-text',  'color.brand.secondary-text',  SEM['color-brand-secondary-text'],  '<span class="lang-fr">Texte secondaire bordeaux — haute lisibilité</span><span class="lang-en">Bordeaux secondary text — high readability</span>'],
+  ].filter(([, , v]) => v);
+
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
     const swatches = Object.entries(steps).map(([step, { value, desc }]) =>
       `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="${scale} étape ${step}: ${value}"></div>`
@@ -2435,10 +2576,28 @@ function buildColor() {
 
 <div class="palette-grid">${palette}</div>
 
-<h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
+<h2><span class="lang-fr">Couleurs de marque</span><span class="lang-en">Brand colors</span></h2>
 <p>
-  <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement. Utilisez le champ de recherche pour filtrer.</span>
-  <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly. Use the search field to filter.</span>
+  <span class="lang-fr">Trois palettes de marque — Teal (primaire), Rose-corail (accent), Bordeaux (secondaire). Toujours consommées via les tokens sémantiques <code>color.brand.*</code>, jamais en valeur brute.</span>
+  <span class="lang-en">Three brand palettes — Teal (primary), Rose-coral (accent), Bordeaux (secondary). Always consumed via <code>color.brand.*</code> semantic tokens, never as raw values.</span>
+</p>
+<div class="token-section">
+<table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
+  <thead><tr><th><span class="lang-fr">Couleur</span><span class="lang-en">Color</span></th><th>Token CSS</th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
+  <tbody>${brandColors.map(([key, name, value, intent]) => `
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:${value};border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-${key}</code></td>
+  <td class="mono-sm">${value}</td>
+  <td>${intent}</td>
+</tr>`).join('')}</tbody>
+</table>
+</div>
+
+<h2><span class="lang-fr">Tokens sémantiques UI</span><span class="lang-en">UI semantic tokens</span></h2>
+<p>
+  <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
+  <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly.</span>
 </p>
 <input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
 <p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
@@ -3827,7 +3986,7 @@ function buildToggle() {
     return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:var(--agtc-semantic-radius-pill);background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
   }
   function row(on, label, dim) {
-    return `<span style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
+    return `<span${dim?' aria-disabled="true"':''} style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
   }
 
   const tokenRows = [
@@ -5207,7 +5366,7 @@ function buildChangelog() {
   };
 
   const tocLinks = versions.map(v => {
-    const badge = v.badge ? ` <span style="font-size:var(--agtc-semantic-typography-detail-size);opacity:.6" class="lang-fr">${v.badge.fr}</span><span style="font-size:var(--agtc-semantic-typography-detail-size);opacity:.6" class="lang-en">${v.badge.en}</span>` : '';
+    const badge = v.badge ? ` <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)" class="lang-fr">${v.badge.fr}</span><span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)" class="lang-en">${v.badge.en}</span>` : '';
     return `<a href="#${v.id}">${v.ver}${badge}</a>`;
   }).join('');
   const tocContent = `<span class="toc-title"><span class="lang-fr">Versions</span><span class="lang-en">Versions</span></span>${tocLinks}`;

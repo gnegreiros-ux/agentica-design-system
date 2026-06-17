@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-06-16T17:49:45.754Z",
+  "results": [
+    {
+      "label": "agtc-button primary — background non-transparent",
+      "pass": true,
+      "value": "rgb(0, 122, 104)",
+      "page": "components/button.html"
+    },
+    {
+      "label": "agtc-button primary — couleur de texte non-vide",
+      "pass": true,
+      "value": "rgb(255, 255, 255)",
+      "page": "components/button.html"
+    },
+    {
+      "label": "agtc-button secondary — border non-transparent",
+      "pass": true,
+      "value": "rgb(0, 122, 104)",
+      "page": "components/button.html"
+    },
+    {
+      "label": "agtc-button critical — background non-transparent",
+      "pass": true,
+      "value": "rgb(206, 44, 49)",
+      "page": "components/button.html"
+    },
+    {
+      "label": "agtc-badge success — background non-transparent",
+      "pass": true,
+      "value": "rgb(230, 246, 235)",
+      "page": "components/badge.html"
+    },
+    {
+      "label": "agtc-banner info — background non-transparent",
+      "pass": true,
+      "value": "rgb(230, 244, 254)",
+      "page": "components/banner.html"
+    },
+    {
+      "label": "agtc-top-nav — nav display flex (desktop)",
+      "pass": true,
+      "value": "flex",
+      "page": "index.html"
+    }
+  ],
+  "failures": 0
+}

@@ -47,8 +47,8 @@ class AgtcCodeBlock extends LitElement {
     }
 
     .block {
-      background: var(--agtc-code-block-default-background);
-      border-radius: var(--agtc-code-block-default-radius);
+      background: var(--agtc-component-code-block-default-background);
+      border-radius: var(--agtc-component-code-block-default-radius);
       overflow: hidden;
     }
 
@@ -58,14 +58,14 @@ class AgtcCodeBlock extends LitElement {
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 8px var(--agtc-code-block-default-padding-x);
+      padding: 8px var(--agtc-component-code-block-default-padding-x);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .meta {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: var(--agtc-code-block-default-meta-text);
+      color: var(--agtc-component-code-block-default-meta-text);
       font-size: var(--agtc-semantic-typography-detail-size);
       min-width: 0;
     }
@@ -87,8 +87,8 @@ class AgtcCodeBlock extends LitElement {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--agtc-code-block-default-copy-background);
-      color: var(--agtc-code-block-default-copy-text);
+      background: var(--agtc-component-code-block-default-copy-background);
+      color: var(--agtc-component-code-block-default-copy-text);
       border: none;
       border-radius: 4px;
       padding: 4px 10px;
@@ -97,23 +97,23 @@ class AgtcCodeBlock extends LitElement {
       cursor: pointer;
     }
     .copy:hover {
-      background: var(--agtc-code-block-default-copy-background-hover);
+      background: var(--agtc-component-code-block-default-copy-background-hover);
     }
     .copy:focus-visible {
-      outline: 2px solid var(--agtc-code-block-default-border-focus);
+      outline: 2px solid var(--agtc-component-code-block-default-border-focus);
       outline-offset: 2px;
     }
 
     pre {
       margin: 0;
-      padding: var(--agtc-code-block-default-padding-y) var(--agtc-code-block-default-padding-x);
+      padding: var(--agtc-component-code-block-default-padding-y) var(--agtc-component-code-block-default-padding-x);
       overflow-x: auto;
     }
     ::slotted(code),
     code {
-      color: var(--agtc-code-block-default-text);
+      color: var(--agtc-component-code-block-default-text);
       font-family: var(--agtc-semantic-typography-mono-family, monospace);
-      font-size: var(--agtc-code-block-default-font-size);
+      font-size: var(--agtc-component-code-block-default-font-size);
       line-height: 1.6;
       background: none;
       white-space: pre;

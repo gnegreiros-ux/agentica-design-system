@@ -45,7 +45,7 @@ tous les Custom Elements enregistrés d'un coup, aucun risque de chargement part
 | `button.html` | `<button class="agtc-button">` (12 occurrences) | `<agtc-button variant="...">` |
 | `banner.html` | `<div class="agtc-banner">` (demo) | `<agtc-banner variant="...">` |
 | `badge.html` | `<span>` inline style (demo) | `<agtc-badge variant="..." size="...">` |
-| `link.html` | `<a class="agtc-link">` (3 demo) | `<agtc-link href="..." [external|underline]>` |
+| `link.html` | `<a class="agtc-link">` (3 demo) | `<agtc-link href="..." [external\|underline]>` |
 | `segmented.html` | `<div class="agtc-segmented">` (demo) | `<agtc-segmented label="..." options='...' value="...">` |
 | Toutes pages | `contributionBanner()` | `<agtc-banner variant="brand" icon="github">` |
 | `get-started.html` | 2 × `<div class="agtc-banner">` | `<agtc-banner variant="info/brand">` |
