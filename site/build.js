@@ -1504,24 +1504,22 @@ body{overflow-x:hidden}
 .mini-card .mc-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
 
 /* ── Principe fondamental ─────────────────────────────────── */
-.pf-section h2{margin-bottom:var(--agtc-space-6)}
+.pf-section{background:#0d1815;padding:var(--agtc-space-9) var(--agtc-space-5)}
+.pf-section h2{color:#fff;margin-bottom:var(--agtc-space-6)}
 .pf-frow{display:flex;align-items:stretch;width:100%}
 .pf-fcell{flex:1;padding:clamp(18px,2.2vw,32px);display:flex;flex-direction:column;align-items:flex-start;gap:8px;position:relative}
-.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-1px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:var(--agtc-semantic-color-border-strong);padding:4px;z-index:1}
-.pf-cell-human{background:rgba(59,43,50,.4);border-radius:16px 0 0 16px;border:1px solid rgba(13,155,138,.18);border-right:none}
-.pf-cell-agent{background:rgba(13,155,138,.2);border:1px solid rgba(95,227,208,.22);border-left:none;border-right:none}
-.pf-cell-system{background:rgba(24,121,78,.2);border-radius:0 16px 16px 0;border:1px solid rgba(24,121,78,.3);border-left:none}
-.pf-fi{line-height:1;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}.pf-fi svg{width:40px;height:40px}
-.pf-fr{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:.08em;text-transform:uppercase;color:var(--agtc-semantic-color-text-secondary)}
-.pf-fv{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:var(--agtc-semantic-fontWeight-display);line-height:1.1}
-.pf-fv-white{color:var(--agtc-semantic-color-text-primary)}.pf-fv-teal{color:var(--agtc-semantic-color-action-primary)}.pf-fv-green{color:var(--agtc-semantic-color-feedback-success)}
-.pf-fd{font-size:var(--agtc-semantic-typography-label-size);line-height:1.55;max-width:21ch;color:var(--agtc-semantic-color-text-secondary)}
-.pf-tagline{margin-top:1.6em;font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary)}
+.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-1px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:rgba(255,255,255,.55);padding:4px;z-index:1}
+.pf-cell-human{background:rgba(59,43,50,.5)}
+.pf-cell-agent{background:rgba(13,155,138,.22)}
+.pf-cell-system{background:rgba(24,121,78,.28)}
+.pf-fi{line-height:1;color:#fff;margin-bottom:4px}.pf-fi svg{width:40px;height:40px}
+.pf-fr{font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.pf-fv{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:700;line-height:1.1}
+.pf-fv-white{color:#fff}.pf-fv-teal{color:#5fe3d0}.pf-fv-green{color:#6ee7b7}
+.pf-fd{font-size:clamp(.95rem,1.1vw,1rem);line-height:1.55;max-width:21ch;color:rgba(255,255,255,.7)}
+.pf-tagline{margin-top:1.6em;font-size:1.1rem;color:rgba(255,255,255,.7)}
 @media(max-width:768px){
   .pf-frow{flex-direction:column}
-  .pf-cell-human{border-radius:16px 16px 0 0;border-right:1px solid rgba(13,155,138,.18);border-bottom:none}
-  .pf-cell-agent{border-left:1px solid rgba(95,227,208,.22);border-right:1px solid rgba(95,227,208,.22);border-top:none;border-bottom:none}
-  .pf-cell-system{border-radius:0 0 16px 16px;border-top:none;border-left:1px solid rgba(24,121,78,.3)}
   .pf-fcell:not(:last-child)::after{display:none}
 }
 
