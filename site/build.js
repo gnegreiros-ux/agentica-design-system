@@ -1508,9 +1508,9 @@ body{overflow-x:hidden}
 .pf-frow{display:flex;align-items:stretch;width:100%}
 .pf-fcell{flex:1;padding:clamp(18px,2.2vw,32px);display:flex;flex-direction:column;align-items:flex-start;gap:8px;position:relative}
 .pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-1px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:var(--agtc-semantic-color-border-strong);padding:4px;z-index:1}
-.pf-cell-human{background:rgba(139,92,246,.06);border-radius:16px 0 0 16px;border:1px solid rgba(139,92,246,.2);border-right:none}
-.pf-cell-agent{background:rgba(20,184,166,.07);border:1px solid rgba(20,184,166,.28);border-left:none;border-right:none}
-.pf-cell-system{background:rgba(22,163,74,.07);border-radius:0 16px 16px 0;border:1px solid rgba(22,163,74,.28);border-left:none}
+.pf-cell-human{background:rgba(59,43,50,.4);border-radius:16px 0 0 16px;border:1px solid rgba(13,155,138,.18);border-right:none}
+.pf-cell-agent{background:rgba(13,155,138,.2);border:1px solid rgba(95,227,208,.22);border-left:none;border-right:none}
+.pf-cell-system{background:rgba(24,121,78,.2);border-radius:0 16px 16px 0;border:1px solid rgba(24,121,78,.3);border-left:none}
 .pf-fi{line-height:1;color:var(--agtc-semantic-color-text-primary);margin-bottom:4px}.pf-fi svg{width:40px;height:40px}
 .pf-fr{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:.08em;text-transform:uppercase;color:var(--agtc-semantic-color-text-secondary)}
 .pf-fv{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:var(--agtc-semantic-fontWeight-display);line-height:1.1}
@@ -1519,9 +1519,9 @@ body{overflow-x:hidden}
 .pf-tagline{margin-top:1.6em;font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary)}
 @media(max-width:768px){
   .pf-frow{flex-direction:column}
-  .pf-cell-human{border-radius:16px 16px 0 0;border-right:1px solid rgba(139,92,246,.2);border-bottom:none}
-  .pf-cell-agent{border-left:1px solid rgba(20,184,166,.28);border-right:1px solid rgba(20,184,166,.28);border-top:none;border-bottom:none}
-  .pf-cell-system{border-radius:0 0 16px 16px;border-top:none;border-left:1px solid rgba(22,163,74,.28)}
+  .pf-cell-human{border-radius:16px 16px 0 0;border-right:1px solid rgba(13,155,138,.18);border-bottom:none}
+  .pf-cell-agent{border-left:1px solid rgba(95,227,208,.22);border-right:1px solid rgba(95,227,208,.22);border-top:none;border-bottom:none}
+  .pf-cell-system{border-radius:0 0 16px 16px;border-top:none;border-left:1px solid rgba(24,121,78,.3)}
   .pf-fcell:not(:last-child)::after{display:none}
 }
 
