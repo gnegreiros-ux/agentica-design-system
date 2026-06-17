@@ -221,7 +221,7 @@ const COMP = {
   'badge-brand-border':                 'transparent',
   'badge-success-background':           'var(--agtc-semantic-color-feedback-success-subtle)',
   'badge-success-text':                 'var(--agtc-semantic-color-feedback-success)',
-  'badge-success-border':               'transparent',
+  'badge-success-border':               'var(--agtc-semantic-color-feedback-success-border)',
   'badge-warning-background':           'var(--agtc-semantic-color-feedback-warning-subtle)',
   'badge-warning-text':                 'var(--agtc-semantic-color-feedback-warning-text)',
   'badge-warning-border':               'transparent',
@@ -459,6 +459,7 @@ function tokensCSS() {
   /* text-on-danger : fond danger est rose clair en dark (#ff9592) → texte doit être foncé */
   --agtc-semantic-color-text-on-danger:#3d0f0f;
   --agtc-semantic-color-tertiary:#6b7280;
+  --agtc-semantic-color-illustration-ink:#14121a;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
   --agtc-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);
@@ -901,7 +902,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 
 /* ── AGENTS ──────────────────────────────────────────────── */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-.agent-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px}
+.agent-card{padding:var(--agtc-space-5)}
 .agent-type{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);margin-bottom:6px}
 .agent-name{font-size:var(--agtc-semantic-typography-label-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:8px}
 .agent-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.5}
@@ -1023,7 +1024,7 @@ html[data-lang="en"] .lang-fr{display:none}
 .audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:6px}
 .audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)}
 .audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
-.audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);padding:20px;text-align:center}
+.audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);padding:var(--agtc-space-6);text-align:center}
 .audit-card--pass{border-color:var(--agtc-semantic-color-feedback-success-border)}
 .audit-card--warn{border-color:var(--agtc-semantic-color-feedback-warning-border)}
 .audit-card--fail{border-color:var(--agtc-semantic-color-feedback-danger-border)}
@@ -1142,18 +1143,19 @@ html[data-lang="en"] .lang-fr{display:none}
 /* ── CHANGELOG TIMELINE ──────────────────────────────────── */
 .changelog-timeline{position:relative;padding-left:0}
 .changelog-item{position:relative;margin-bottom:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
-.changelog-item-date{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-brand-accent-text);padding-top:20px;text-align:right;white-space:nowrap}
+.changelog-item-date{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-typography-label-weight);color:var(--agtc-semantic-color-text-secondary);padding-top:20px;text-align:right;white-space:nowrap}
 .changelog-item-content{position:relative}
-.changelog-item-content::before{content:'';position:absolute;left:-24px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-brand-accent);border:2px solid var(--agtc-semantic-color-background-surface)}
-.changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-action-primary)}
-.changelog-timeline-track{position:absolute;left:88px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
+.changelog-item-content::before{content:'';position:absolute;left:-20px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--agtc-semantic-color-border-strong);border:2px solid var(--agtc-semantic-color-background-surface)}
+.changelog-item.latest .changelog-item-content::before{background:var(--agtc-semantic-color-action-primary);border-color:var(--agtc-semantic-color-background-surface)}
+.changelog-timeline-track{position:absolute;left:76px;top:8px;bottom:8px;width:2px;background:var(--agtc-semantic-color-border-default)}
 .changelog-accordion{border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);overflow:hidden}
 .changelog-summary{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;list-style:none;background:var(--agtc-semantic-color-background-surface);user-select:none}
 .changelog-summary::-webkit-details-marker{display:none}
 .changelog-summary:hover{background:var(--agtc-semantic-color-background-subtle)}
 .changelog-chevron{margin-left:auto;color:var(--agtc-semantic-color-text-secondary);transition:transform .2s}
 details[open] .changelog-chevron{transform:rotate(180deg)}
-.changelog-version{font-size:var(--agtc-semantic-typography-body-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-brand-accent-text);letter-spacing:var(--agtc-tracking-snug)}
+.changelog-version{font-size:var(--agtc-semantic-typography-body-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-text-primary);letter-spacing:var(--agtc-tracking-snug)}
+.changelog-item.latest .changelog-version{color:var(--agtc-semantic-color-action-primary)}
 .changelog-badge{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-feedback-warning-subtle,#ffefd6);color:var(--agtc-semantic-color-feedback-warning-text,#582d1d)}
 .changelog-body{padding:0 20px 20px;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .changelog-body h2{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);margin:16px 0 6px;color:var(--agtc-semantic-color-text-secondary);text-transform:uppercase;letter-spacing:var(--agtc-tracking-wider)}
@@ -1288,8 +1290,8 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 /* ── HERO — aurora background ────────────────────────────── */
 .hero{
   position:relative;overflow:hidden;
-  padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-9,96px));
-  padding-bottom:var(--agtc-space-9,96px);
+  padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-6,32px));
+  padding-bottom:var(--agtc-space-7,48px);
   background:var(--agtc-semantic-color-background-inverse);
   color:var(--agtc-semantic-color-text-on-inverse);
   isolation:isolate;
@@ -1501,6 +1503,16 @@ body{overflow-x:hidden}
 .mini-card .mc-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-3);display:flex}
 .mini-card .mc-title{font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-font-size-body);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-1)}
 .mini-card .mc-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary);line-height:1.55}
+
+/* ── Principe fondamental (3-step pipeline) ──────────────── */
+.concept-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
+.concept-card{padding:var(--agtc-space-6);text-align:center}
+.concept-icon{width:48px;height:48px;border-radius:50%;background:var(--agtc-semantic-color-action-primary);color:var(--agtc-semantic-color-text-on-action);display:flex;align-items:center;justify-content:center;margin:0 auto var(--agtc-space-3)}
+.concept-role{display:block;font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);margin-bottom:var(--agtc-space-1)}
+.concept-verb{display:block;font-size:var(--agtc-semantic-typography-heading-4-size);font-weight:var(--agtc-semantic-fontWeight-display);color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-2)}
+.concept-desc{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);line-height:1.55;margin:0}
+.concept-arrow{color:var(--agtc-semantic-color-border-strong);display:flex;align-items:center}
+@media(max-width:768px){.concept-grid{grid-template-columns:1fr}.concept-arrow{display:none}}
 
 /* ── Stack nodes ─────────────────────────────────────────── */
 .stack-node{flex:1;min-width:110px;padding:var(--agtc-space-5) var(--agtc-space-3);text-align:center;background:var(--agtc-semantic-color-background-surface);border-right:1px solid var(--agtc-semantic-color-border-default)}
@@ -1839,9 +1851,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Bouton retour en haut ────────────────────────────────
   const backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
-    const threshold = document.documentElement.scrollHeight * 0.25;
     const onScroll = () => {
-      const visible = window.scrollY > threshold;
+      const visible = window.scrollY > 200;
       backToTop.hidden = !visible;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -2165,10 +2176,6 @@ function buildHome(adrs) {
         <span class="lang-fr">Un système de design <span class="grad">compris par les humains et les agents IA.</span></span>
         <span class="lang-en">A design system <span class="grad">understood by humans and AI agents.</span></span>
       </h1>
-      <p class="hero-formula">
-        <span class="lang-fr">Les humains décident, l'IA exécute, le système garantit.</span>
-        <span class="lang-en">Humans decide, AI executes, the system guarantees.</span>
-      </p>
       <p class="hero-tagline">
         <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
         <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. Built for teams that move fast — and the agents that assist them.</span>
@@ -2200,6 +2207,32 @@ function buildHome(adrs) {
   </div>
 </section>
 
+<section class="home-section reveal">
+  <span class="eyebrow"><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></span>
+  <h2><span class="lang-fr">Humains, IA et système — trois rôles, un contrat</span><span class="lang-en">Humans, AI, and system — three roles, one contract</span></h2>
+  <div class="concept-grid">
+    <article class="concept-card card-surface">
+      <div class="concept-icon" aria-hidden="true">${icon('user',22)}</div>
+      <span class="concept-role"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></span>
+      <span class="concept-verb"><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></span>
+      <p class="concept-desc"><span class="lang-fr">Les équipes définissent les règles, approuvent les décisions et gardent le dernier mot.</span><span class="lang-en">Teams define rules, approve decisions, and always have the final say.</span></p>
+    </article>
+    <div class="concept-arrow" aria-hidden="true">${icon('arrow-right',24)}</div>
+    <article class="concept-card card-surface">
+      <div class="concept-icon" aria-hidden="true">${icon('bot',22)}</div>
+      <span class="concept-role"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></span>
+      <span class="concept-verb"><span class="lang-fr">Exécutent</span><span class="lang-en">Execute</span></span>
+      <p class="concept-desc"><span class="lang-fr">Les agents appliquent les règles, génèrent du code et proposent — sans improviser.</span><span class="lang-en">Agents apply rules, generate code, and propose — without improvising.</span></p>
+    </article>
+    <div class="concept-arrow" aria-hidden="true">${icon('arrow-right',24)}</div>
+    <article class="concept-card card-surface">
+      <div class="concept-icon" aria-hidden="true">${icon('shield-check',22)}</div>
+      <span class="concept-role"><span class="lang-fr">Le système</span><span class="lang-en">The system</span></span>
+      <span class="concept-verb"><span class="lang-fr">Garantit</span><span class="lang-en">Guarantees</span></span>
+      <p class="concept-desc"><span class="lang-fr">Les tokens, règles et audits encodent les décisions — le système se vérifie lui-même.</span><span class="lang-en">Tokens, rules and audits encode decisions — the system verifies itself.</span></p>
+    </article>
+  </div>
+</section>
 
 <section class="home-section reveal">
   <span class="eyebrow"><span class="lang-fr">Une valeur pour chaque rôle</span><span class="lang-en">Value for every role</span></span>
@@ -5066,7 +5099,7 @@ function buildAgents() {
 </p>
 <div class="agent-grid">
 ${agentTypes.map(([name, type, desc], i) => `
-<div class="agent-card">
+<div class="agent-card card-surface">
   <div style="color:var(--agtc-semantic-color-action-primary);margin-bottom:10px">${agentIcons[i]}</div>
   <div class="agent-type">Agent ${type}</div>
   <div class="agent-name">${name}</div>
@@ -5399,13 +5432,15 @@ function buildAudit() {
   // On exclut audit.html lui-même de l'analyse (il n'existe pas encore à ce stade)
   const r = runAudit({ excludeFile: auditFile });
 
-  const dateStr = r.timestamp.toLocaleDateString('fr-FR', {
+  const dateStr = r.timestamp.toLocaleDateString('fr-CA', {
     year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
+    hour: '2-digit', minute: '2-digit',
+    timeZone: 'America/Toronto'
   });
   const dateStrEn = r.timestamp.toLocaleDateString('en-CA', {
     year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
+    hour: '2-digit', minute: '2-digit',
+    timeZone: 'America/Toronto'
   });
 
   const passing = r.totalViolations === 0;
@@ -5502,19 +5537,20 @@ function buildAudit() {
   </li>`).join('');
 
   const body = `
+<h1>
+  <span class="lang-fr">Rapport d'accessibilité WCAG 2.2</span>
+  <span class="lang-en">WCAG 2.2 Accessibility Report</span>
+</h1>
+
 <div class="audit-hero">
   <div class="audit-badge ${badgeCls}">
     ${icon(badgeIconName, 20)}
     <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
     <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
   </div>
-  <p class="audit-meta">
-    <span class="lang-fr">${r.pageCount} pages · ${r.totalPassed} vérifications réussies · analyse statique</span>
-    <span class="lang-en">${r.pageCount} pages · ${r.totalPassed} checks passed · static analysis</span>
-  </p>
   <p class="audit-date">
-    <span class="lang-fr">Généré le ${dateStr}</span>
-    <span class="lang-en">Generated on ${dateStrEn}</span>
+    <span class="lang-fr">Généré le ${dateStr} (heure de Montréal)</span>
+    <span class="lang-en">Generated on ${dateStrEn} (Montréal time)</span>
   </p>
 </div>
 

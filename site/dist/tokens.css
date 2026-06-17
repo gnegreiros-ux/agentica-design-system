@@ -637,7 +637,7 @@
   --agtc-component-badge-brand-border: transparent;
   --agtc-component-badge-success-background: var(--agtc-semantic-color-feedback-success-subtle);
   --agtc-component-badge-success-text: var(--agtc-semantic-color-feedback-success);
-  --agtc-component-badge-success-border: transparent;
+  --agtc-component-badge-success-border: var(--agtc-semantic-color-feedback-success-border);
   --agtc-component-badge-warning-background: var(--agtc-semantic-color-feedback-warning-subtle);
   --agtc-component-badge-warning-text: var(--agtc-semantic-color-feedback-warning-text);
   --agtc-component-badge-warning-border: transparent;
@@ -857,6 +857,7 @@
   /* text-on-danger : fond danger est rose clair en dark (#ff9592) → texte doit être foncé */
   --agtc-semantic-color-text-on-danger:#3d0f0f;
   --agtc-semantic-color-tertiary:#6b7280;
+  --agtc-semantic-color-illustration-ink:#14121a;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
   --agtc-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);

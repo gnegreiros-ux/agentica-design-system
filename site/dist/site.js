@@ -281,9 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Bouton retour en haut ────────────────────────────────
   const backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
-    const threshold = document.documentElement.scrollHeight * 0.25;
     const onScroll = () => {
-      const visible = window.scrollY > threshold;
+      const visible = window.scrollY > 200;
       backToTop.hidden = !visible;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
