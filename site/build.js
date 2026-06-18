@@ -1509,7 +1509,7 @@ body{overflow-x:hidden}
 .pf-section h2{color:var(--agtc-semantic-color-text-primary);margin-bottom:var(--agtc-space-6)}
 .pf-frow{display:flex;align-items:stretch;width:100%}
 .pf-fcell{flex:1;padding:clamp(18px,2.2vw,32px);display:flex;flex-direction:column;align-items:flex-start;gap:8px;position:relative}
-.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:rgba(10,12,17,.4);padding:4px;z-index:2}
+.pf-fcell:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:#fff;padding:4px;z-index:2}
 .pf-cell-human{background:var(--agtc-semantic-color-brand-primary)}
 .pf-cell-agent{background:var(--agtc-semantic-color-brand-accent)}
 .pf-cell-system{background:var(--agtc-semantic-color-brand-secondary)}
