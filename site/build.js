@@ -558,16 +558,18 @@ body{
 
 .stat-band{
   display:flex;flex-wrap:wrap;
-  border-top:1px solid var(--agtc-semantic-color-border-default);
-  border-bottom:1px solid var(--agtc-semantic-color-border-default);
+  background:var(--agtc-semantic-color-brand-secondary);
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
 }
 .stat-item{
   flex:1;min-width:150px;padding:28px 32px;text-align:center;
-  border-right:1px solid var(--agtc-semantic-color-border-default);
+  border-right:1px solid rgba(255,255,255,.12);
 }
 .stat-item:last-child{border-right:none}
 .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px;display:block}
+.stat-band .stat-text{color:rgba(255,255,255,.72)}
 
 .home-section{padding:var(--agtc-space-9,96px) var(--agtc-space-5,24px);max-width:var(--agtc-content-max,1180px);margin:0 auto}
 .home-section h2{font-size:var(--agtc-semantic-typography-heading-3-size);font-weight:var(--agtc-semantic-fontWeight-bold);letter-spacing:var(--agtc-tracking-snug);margin-bottom:8px}
@@ -2328,17 +2330,13 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<section class="section-secondary">
-  <div class="si-inner">
-    <div class="stat-band" role="region" aria-label="Statistiques du système">
-      <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
-      <div class="stat-item"><span class="stat-num" data-count="${adrs.length}">${adrs.length}</span><span class="stat-text"><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture decisions</span></span></div>
-      <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-text"><span class="lang-fr">Niveaux de tokens</span><span class="lang-en">Token levels</span></span></div>
-      <div class="stat-item"><span class="stat-num" data-count="${totalTokens}">${totalTokens}</span><span class="stat-text"><span class="lang-fr">Tokens au total</span><span class="lang-en">Tokens total</span></span></div>
-      <div class="stat-item"><span class="stat-num" data-count="${colorCount}">${colorCount}</span><span class="stat-text"><span class="lang-fr">Échelles de couleur</span><span class="lang-en">Color scales</span></span></div>
-    </div>
-  </div>
-</section>
+<div class="stat-band" role="region" aria-label="Statistiques du système">
+  <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
+  <div class="stat-item"><span class="stat-num" data-count="${adrs.length}">${adrs.length}</span><span class="stat-text"><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture decisions</span></span></div>
+  <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-text"><span class="lang-fr">Niveaux de tokens</span><span class="lang-en">Token levels</span></span></div>
+  <div class="stat-item"><span class="stat-num" data-count="${totalTokens}">${totalTokens}</span><span class="stat-text"><span class="lang-fr">Tokens au total</span><span class="lang-en">Tokens total</span></span></div>
+  <div class="stat-item"><span class="stat-num" data-count="${colorCount}">${colorCount}</span><span class="stat-text"><span class="lang-fr">Échelles de couleur</span><span class="lang-en">Color scales</span></span></div>
+</div>
 
 <div class="brand-band" role="presentation" aria-hidden="true">
   <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
