@@ -912,7 +912,7 @@
         "$intent": "Graisse par défaut des liens"
       },
       "font-weight-active": {
-        "$value": "{semantic.fontWeight.bold}",
+        "$value": "{primitive.fontWeight.bold}",
         "$type": "fontWeight",
         "$intent": "Graisse de la page active — renforce la lisibilité sans fond rempli"
       },

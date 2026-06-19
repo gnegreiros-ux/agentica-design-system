@@ -189,8 +189,8 @@
 
 <h2><span class="lang-fr">Tokens sémantiques UI</span><span class="lang-en">UI semantic tokens</span></h2>
 <p>
-  <span class="lang-fr">Ces 19 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
-  <span class="lang-en">These 19 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
+  <span class="lang-fr">Ces 38 tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
+  <span class="lang-en">These 38 tokens encode UX intentions. Every component references them — never the primitives directly.</span>
 </p>
 <input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
 <p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
@@ -259,6 +259,36 @@
   <td><span class="lang-fr">Fond secondaire, survol discret</span><span class="lang-en">Secondary background, subtle hover</span></td>
 </tr>
 <tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#fafafa;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-hover</code></td>
+  <td class="mono-sm">#fafafa</td>
+  <td><span class="lang-fr">Fond au survol</span><span class="lang-en">Hover background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#0f1117;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-inverse</code></td>
+  <td class="mono-sm">#0f1117</td>
+  <td><span class="lang-fr">Fond sombre inversé — hero, footer, sections dark</span><span class="lang-en">Dark inverse background — hero, footer, dark sections</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#1a1e24;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-inverse-raised</code></td>
+  <td class="mono-sm">#1a1e24</td>
+  <td><span class="lang-fr">Fond sombre élevé — tooltips, popovers sur fond inverse</span><span class="lang-en">Raised dark surface — tooltips, popovers on inverse bg</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#202020;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-code</code></td>
+  <td class="mono-sm">#202020</td>
+  <td><span class="lang-fr">Fond des blocs de code</span><span class="lang-en">Code block background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#646464;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-background-code-raised</code></td>
+  <td class="mono-sm">#646464</td>
+  <td><span class="lang-fr">Fond code élevé — inline code sur surface</span><span class="lang-en">Raised code background — inline code on surface</span></td>
+</tr>
+<tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#202020;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
   <td><code>--agtc-semantic-color-text-primary</code></td>
   <td class="mono-sm">#202020</td>
@@ -275,6 +305,48 @@
   <td><code>--agtc-semantic-color-text-disabled</code></td>
   <td class="mono-sm">#767676</td>
   <td><span class="lang-fr">Texte désactivé</span><span class="lang-en">Disabled text</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#ffffff;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-action</code></td>
+  <td class="mono-sm">#ffffff</td>
+  <td><span class="lang-fr">Texte sur fond d'action — boutons</span><span class="lang-en">Text on action background — buttons</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:rgba(255,255,255,1.00);border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-inverse</code></td>
+  <td class="mono-sm">rgba(255,255,255,1.00)</td>
+  <td><span class="lang-fr">Texte principal sur fond inversé (hero, footer)</span><span class="lang-en">Primary text on inverse background (hero, footer)</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:rgba(255,255,255,0.52);border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-inverse-muted</code></td>
+  <td class="mono-sm">rgba(255,255,255,0.52)</td>
+  <td><span class="lang-fr">Texte atténué sur fond inversé — métadonnées sombres</span><span class="lang-en">Muted text on inverse background — dark metadata</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:rgba(255,255,255,0.75);border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-inverse-secondary</code></td>
+  <td class="mono-sm">rgba(255,255,255,0.75)</td>
+  <td><span class="lang-fr">Texte secondaire sur fond inversé</span><span class="lang-en">Secondary text on inverse background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#ffffff;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-danger</code></td>
+  <td class="mono-sm">#ffffff</td>
+  <td><span class="lang-fr">Texte sur fond danger</span><span class="lang-en">Text on danger background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#e8e8e8;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-code</code></td>
+  <td class="mono-sm">#e8e8e8</td>
+  <td><span class="lang-fr">Texte sur fond code</span><span class="lang-en">Text on code background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#bbbbbb;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-text-on-code-muted</code></td>
+  <td class="mono-sm">#bbbbbb</td>
+  <td><span class="lang-fr">Texte atténué sur fond code</span><span class="lang-en">Muted text on code background</span></td>
 </tr>
 <tr class="token-row">
   <td><div class="color-chip"><span class="color-swatch" style="background:#e8e8e8;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
@@ -301,16 +373,58 @@
   <td><span class="lang-fr">Avertissement, attention requise</span><span class="lang-en">Warning, attention required</span></td>
 </tr>
 <tr class="token-row">
-  <td><div class="color-chip"><span class="color-swatch" style="background:#fafafa;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
-  <td><code>--agtc-semantic-color-background-hover</code></td>
-  <td class="mono-sm">#fafafa</td>
-  <td><span class="lang-fr">Fond au survol</span><span class="lang-en">Hover background</span></td>
+  <td><div class="color-chip"><span class="color-swatch" style="background:#ffefd6;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-warning-subtle</code></td>
+  <td class="mono-sm">#ffefd6</td>
+  <td><span class="lang-fr">Fond subtil avertissement</span><span class="lang-en">Subtle warning background</span></td>
 </tr>
 <tr class="token-row">
-  <td><div class="color-chip"><span class="color-swatch" style="background:#ffffff;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
-  <td><code>--agtc-semantic-color-text-on-action</code></td>
-  <td class="mono-sm">#ffffff</td>
-  <td><span class="lang-fr">Texte sur fond d'action — boutons</span><span class="lang-en">Text on action background — buttons</span></td>
+  <td><div class="color-chip"><span class="color-swatch" style="background:#582d1d;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-warning-text</code></td>
+  <td class="mono-sm">#582d1d</td>
+  <td><span class="lang-fr">Texte avertissement accessible</span><span class="lang-en">Accessible warning text</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#e6f4fe;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-info-subtle</code></td>
+  <td class="mono-sm">#e6f4fe</td>
+  <td><span class="lang-fr">Fond subtil information</span><span class="lang-en">Subtle info background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#acd8fa;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-info-border</code></td>
+  <td class="mono-sm">#acd8fa</td>
+  <td><span class="lang-fr">Bordure état info</span><span class="lang-en">Info state border</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#113264;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-info-text</code></td>
+  <td class="mono-sm">#113264</td>
+  <td><span class="lang-fr">Texte info accessible</span><span class="lang-en">Accessible info text</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#e6f6eb;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-success-subtle</code></td>
+  <td class="mono-sm">#e6f6eb</td>
+  <td><span class="lang-fr">Fond subtil succès</span><span class="lang-en">Subtle success background</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#addfc0;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-success-border</code></td>
+  <td class="mono-sm">#addfc0</td>
+  <td><span class="lang-fr">Bordure état succès</span><span class="lang-en">Success state border</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#fdbdbe;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-feedback-danger-border</code></td>
+  <td class="mono-sm">#fdbdbe</td>
+  <td><span class="lang-fr">Bordure état danger</span><span class="lang-en">Danger state border</span></td>
+</tr>
+<tr class="token-row">
+  <td><div class="color-chip"><span class="color-swatch" style="background:#211f26;border:1px solid var(--agtc-semantic-color-border-swatch)" aria-hidden="true"></span></div></td>
+  <td><code>--agtc-semantic-color-illustration-ink</code></td>
+  <td class="mono-sm">#211f26</td>
+  <td><span class="lang-fr">Encre illustration — tracés et icons decoratifs</span><span class="lang-en">Illustration ink — decorative strokes and icons</span></td>
 </tr></tbody>
 </table>
 </div>
