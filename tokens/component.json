@@ -4,7 +4,8 @@
     "level": "component",
     "description": "Contrats UI exécutables. Encodage des décisions UI et comportementales. Base des contrats institutionnels.",
     "version": "1.0.0",
-    "rule": "Toute modification requiert une approbation formelle (TCR). Ces tokens sont des contrats organisationnels."
+    "rule": "Toute modification requiert une approbation formelle (TCR). Ces tokens sont des contrats organisationnels.",
+    "_extensions-convention": "Les champs $extensions['com.agentica.usage'] sont des métadonnées agent-ready (DTCG W3C). Champs : role, doNotUse (contre-indications croisées entre variantes), decision (ADR). Ces champs sont ignorés par Style Dictionary à la compilation — comportement attendu. Voir ADR-052."
   },
   "button": {
     "$metadata": {
@@ -13,6 +14,14 @@
       "contract": "guidelines/components/button.md"
     },
     "primary": {
+      "$description": "Bouton d'action principale — maximum 1 par section ou formulaire. Jamais pour actions destructrices.",
+      "$extensions": {
+        "com.agentica.usage": {
+          "role": "button-primary",
+          "doNotUse": "Actions destructrices ou irréversibles — utiliser button.critical. Jamais deux Button[primary] dans la même section (hiérarchie cassée). Ne jamais styler des boutons d'action positive (ex: 'Enregistrer') avec la couleur danger.",
+          "decision": "ADR-005"
+        }
+      },
       "background": {
         "$value": "{semantic.color.action.primary}",
         "$type": "color"
@@ -43,6 +52,14 @@
       }
     },
     "critical": {
+      "$description": "Bouton d'action critique/destructrice — rouge danger. Requiert une confirmation obligatoire avant exécution. Ne jamais utiliser pour des actions réversibles.",
+      "$extensions": {
+        "com.agentica.usage": {
+          "role": "button-critical",
+          "doNotUse": "Actions normales non-destructrices — utiliser button.primary. Ne jamais appliquer à un bouton sans pattern de confirmation affiché. Ne jamais styler des boutons critiques avec les tokens button.primary (mélange de sémantiques).",
+          "decision": "ADR-005"
+        }
+      },
       "$metadata": {
         "requires-confirmation": true,
         "prevents-double-click": true,
