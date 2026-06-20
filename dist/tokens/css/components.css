@@ -1,9 +1,12 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:47:51 GMT
+ * Generated on Fri, 19 Jun 2026 15:52:10 GMT
  */
 
 :root {
+  --agtc-top-nav-cta-gap: 8px;
+  --agtc-top-nav-tab-padding-x: 14px;
+  --agtc-top-nav-tab-indicator-width: 2px;
   --agtc-card-padding-none: 0px;
   --agtc-card-flat-border: transparent;
   --agtc-card-elevated-border: transparent;
@@ -17,6 +20,7 @@
   --agtc-button-ghost-border: transparent;
   --agtc-button-ghost-background: transparent;
   --agtc-button-secondary-background: transparent;
+  --agtc-top-nav-tab-font-weight-active: var(--agtc-primitive-font-weight-bold);
   --agtc-code-block-default-padding-y: var(--agtc-primitive-space-4);
   --agtc-code-block-default-padding-x: var(--agtc-primitive-space-5);
   --agtc-code-block-default-copy-text: var(--agtc-primitive-color-gray-1);
@@ -54,6 +58,20 @@
   --agtc-badge-warning-background: var(--agtc-primitive-color-orange-3);
   --agtc-badge-success-background: var(--agtc-primitive-color-green-3);
   --agtc-badge-brand-text: var(--agtc-primitive-color-teal-12);
+  --agtc-top-nav-cta-radius: var(--agtc-semantic-radius-control);
+  --agtc-top-nav-cta-padding-y: var(--agtc-semantic-space-control-padding-y);
+  --agtc-top-nav-cta-padding-x: var(--agtc-semantic-space-control-padding-x);
+  --agtc-top-nav-cta-color: var(--agtc-semantic-color-text-on-action);
+  --agtc-top-nav-cta-background-hover: var(--agtc-semantic-color-action-primary-hover);
+  --agtc-top-nav-cta-background: var(--agtc-semantic-color-action-primary);
+  --agtc-top-nav-tab-focus-ring: var(--agtc-semantic-color-border-focus);
+  --agtc-top-nav-tab-font-weight: var(--agtc-semantic-typography-label-weight);
+  --agtc-top-nav-tab-font-size: var(--agtc-semantic-typography-label-size);
+  --agtc-top-nav-tab-indicator-color: var(--agtc-semantic-color-action-primary);
+  --agtc-top-nav-tab-color-active: var(--agtc-semantic-color-action-primary);
+  --agtc-top-nav-tab-background-hover: var(--agtc-semantic-color-background-subtle);
+  --agtc-top-nav-tab-color-hover: var(--agtc-semantic-color-text-primary);
+  --agtc-top-nav-tab-color: var(--agtc-semantic-color-text-secondary);
   --agtc-tabs-default-padding-y: var(--agtc-semantic-space-control-padding-y);
   --agtc-tabs-default-padding-x: var(--agtc-semantic-space-control-padding-x);
   --agtc-tabs-default-border-focus: var(--agtc-semantic-color-border-focus);

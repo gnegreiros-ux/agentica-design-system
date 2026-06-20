@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 13 Jun 2026 13:47:52 GMT
+// Generated on Fri, 19 Jun 2026 15:52:10 GMT
 
 
 import UIKit
@@ -617,6 +617,9 @@ public class AgenticaTokens {
     public static let semanticColorActionPrimary = #007a68
     public static let semanticColorActionPrimaryDisabled = #d9d9d9
     public static let semanticColorActionPrimaryHover = #0d3d38
+    public static let semanticColorBackgroundCode = #202020
+    public static let semanticColorBackgroundCodeRaised = #646464
+    public static let semanticColorBackgroundCodeRaisedHover = #838383
     public static let semanticColorBackgroundHover = #fafafa
     public static let semanticColorBackgroundInverse = #0f1117
     public static let semanticColorBackgroundInverseRaised = #1a1e24
@@ -635,21 +638,26 @@ public class AgenticaTokens {
     public static let semanticColorBrandPrimary = #12a594
     public static let semanticColorBrandPrimaryHover = #0d9b8a
     public static let semanticColorBrandPrimarySubtle = #e0f8f3
+    public static let semanticColorBrandPrimaryText = #0d3d38
     public static let semanticColorBrandSecondary = #463239
     public static let semanticColorBrandSecondaryHover = #5f404b
     public static let semanticColorBrandSecondaryText = #432f36
+    public static let semanticColorControlTrackOff = #8d8d8d
+    public static let semanticColorControlTrackOffHover = #838383
     public static let semanticColorFeedbackDanger = #ce2c31
     public static let semanticColorFeedbackDangerBorder = #fdbdbe
     public static let semanticColorFeedbackDangerSubtle = #feebec
     public static let semanticColorFeedbackInfo = #0d74ce
     public static let semanticColorFeedbackInfoBorder = #acd8fa
     public static let semanticColorFeedbackInfoSubtle = #e6f4fe
+    public static let semanticColorFeedbackInfoText = #113264
     public static let semanticColorFeedbackSuccess = #18794e
     public static let semanticColorFeedbackSuccessBorder = #addfc0
     public static let semanticColorFeedbackSuccessSubtle = #e6f6eb
     public static let semanticColorFeedbackWarning = #cc4e00
     public static let semanticColorFeedbackWarningBorder = #ffc182
     public static let semanticColorFeedbackWarningSubtle = #ffefd6
+    public static let semanticColorFeedbackWarningText = #582d1d
     public static let semanticColorIllustrationAccent = #e93d82
     public static let semanticColorIllustrationBrand = #12a594
     public static let semanticColorIllustrationInk = #211f26
@@ -657,6 +665,9 @@ public class AgenticaTokens {
     public static let semanticColorIllustrationSurface = #eff1f3
     public static let semanticColorTextDisabled = #767676
     public static let semanticColorTextOnAction = #ffffff
+    public static let semanticColorTextOnCode = #e8e8e8
+    public static let semanticColorTextOnCodeMuted = #bbbbbb
+    public static let semanticColorTextOnCodeStrong = #fcfcfc
     public static let semanticColorTextOnDanger = #ffffff
     public static let semanticColorTextOnInverse = rgba(255,255,255,1.00)
     public static let semanticColorTextOnInverseMuted = rgba(255,255,255,0.52)
@@ -691,6 +702,13 @@ public class AgenticaTokens {
     public static let semanticSpaceCompactControlPaddingY = floor(8px * 0.75 / 4) * 4
     public static let semanticSpaceCompactLayoutComponent = floor(20px * 0.75 / 4) * 4
     public static let semanticSpaceCompactLayoutSection = floor(32px * 0.75 / 4) * 4
+    public static let semanticSpaceComponentPadding2xl = 24px
+    public static let semanticSpaceComponentPadding2xs = 2px
+    public static let semanticSpaceComponentPaddingLg = 16px
+    public static let semanticSpaceComponentPaddingMd = 12px
+    public static let semanticSpaceComponentPaddingSm = 8px
+    public static let semanticSpaceComponentPaddingXl = 20px
+    public static let semanticSpaceComponentPaddingXs = 4px
     public static let semanticSpaceControlGap = 8px
     public static let semanticSpaceControlPaddingX = 16px
     public static let semanticSpaceControlPaddingY = 8px
@@ -756,4 +774,22 @@ public class AgenticaTokens {
     public static let toggleDefaultTrackOffHover = #838383
     public static let toggleDefaultTrackOn = #007a68
     public static let toggleDefaultTrackOnHover = #0d3d38
+    public static let topNavCtaBackground = #007a68
+    public static let topNavCtaBackgroundHover = #0d3d38
+    public static let topNavCtaColor = #ffffff
+    public static let topNavCtaGap = 8px
+    public static let topNavCtaPaddingX = 16px
+    public static let topNavCtaPaddingY = 8px
+    public static let topNavCtaRadius = 6px
+    public static let topNavTabBackgroundHover = #f0f0f0
+    public static let topNavTabColor = #646464
+    public static let topNavTabColorActive = #007a68
+    public static let topNavTabColorHover = #202020
+    public static let topNavTabFocusRing = #007a68
+    public static let topNavTabFontSize = 0.875rem
+    public static let topNavTabFontWeight = 500
+    public static let topNavTabFontWeightActive = 700
+    public static let topNavTabIndicatorColor = #007a68
+    public static let topNavTabIndicatorWidth = 2px
+    public static let topNavTabPaddingX = 14px
 }

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 13 Jun 2026 13:47:51 GMT
+ * Generated on Fri, 19 Jun 2026 15:52:10 GMT
  */
 
 :root {
@@ -66,6 +66,13 @@
   --agtc-semantic-space-control-gap: var(--agtc-primitive-space-2);
   --agtc-semantic-space-control-padding-y: var(--agtc-primitive-space-2);
   --agtc-semantic-space-control-padding-x: var(--agtc-primitive-space-4);
+  --agtc-semantic-space-component-padding-2xl: var(--agtc-primitive-space-6);
+  --agtc-semantic-space-component-padding-xl: var(--agtc-primitive-space-5);
+  --agtc-semantic-space-component-padding-lg: var(--agtc-primitive-space-4);
+  --agtc-semantic-space-component-padding-md: var(--agtc-primitive-space-3);
+  --agtc-semantic-space-component-padding-sm: var(--agtc-primitive-space-2);
+  --agtc-semantic-space-component-padding-xs: var(--agtc-primitive-space-1);
+  --agtc-semantic-space-component-padding-2xs: var(--agtc-primitive-space-0);
   --agtc-semantic-space-density-factor-comfortable: var(--agtc-primitive-density-factor-comfortable);
   --agtc-semantic-space-density-factor-normal: var(--agtc-primitive-density-factor-normal);
   --agtc-semantic-space-density-factor-compact: var(--agtc-primitive-density-factor-compact);
@@ -77,6 +84,7 @@
   --agtc-semantic-color-brand-accent-hover: var(--agtc-primitive-color-accent-10);
   --agtc-semantic-color-brand-accent: var(--agtc-primitive-color-accent-9);
   --agtc-semantic-color-brand-primary-subtle: var(--agtc-primitive-color-teal-3);
+  --agtc-semantic-color-brand-primary-text: var(--agtc-primitive-color-teal-12);
   --agtc-semantic-color-brand-primary-hover: var(--agtc-primitive-color-teal-10);
   --agtc-semantic-color-brand-primary: var(--agtc-primitive-color-teal-9);
   --agtc-semantic-color-illustration-surface: var(--agtc-primitive-color-slate-3);
@@ -84,12 +92,17 @@
   --agtc-semantic-color-illustration-brand: var(--agtc-primitive-color-teal-9);
   --agtc-semantic-color-illustration-accent: var(--agtc-primitive-color-crimson-9);
   --agtc-semantic-color-illustration-ink: var(--agtc-primitive-color-mauve-12);
+  --agtc-semantic-color-control-track-off-hover: var(--agtc-primitive-color-gray-10);
+  --agtc-semantic-color-control-track-off: var(--agtc-primitive-color-gray-9);
   --agtc-semantic-color-viz-scale-bar: var(--agtc-primitive-color-red-6);
   --agtc-semantic-color-border-swatch: var(--agtc-primitive-color-black-2);
   --agtc-semantic-color-border-on-inverse: var(--agtc-primitive-color-white-12);
   --agtc-semantic-color-border-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-11);
   --agtc-semantic-color-border-default: var(--agtc-primitive-color-gray-4);
+  --agtc-semantic-color-text-on-code-strong: var(--agtc-primitive-color-gray-1);
+  --agtc-semantic-color-text-on-code-muted: var(--agtc-primitive-color-gray-8);
+  --agtc-semantic-color-text-on-code: var(--agtc-primitive-color-gray-4);
   --agtc-semantic-color-text-on-inverse-muted: var(--agtc-primitive-color-white-10);
   --agtc-semantic-color-text-on-inverse-secondary: var(--agtc-primitive-color-white-8);
   --agtc-semantic-color-text-on-inverse: var(--agtc-primitive-color-white-1);
@@ -98,12 +111,17 @@
   --agtc-semantic-color-text-disabled: var(--agtc-primitive-color-neutral-500);
   --agtc-semantic-color-text-secondary: var(--agtc-primitive-color-gray-11);
   --agtc-semantic-color-text-primary: var(--agtc-primitive-color-gray-12);
+  --agtc-semantic-color-background-code-raised-hover: var(--agtc-primitive-color-gray-10);
+  --agtc-semantic-color-background-code-raised: var(--agtc-primitive-color-gray-11);
+  --agtc-semantic-color-background-code: var(--agtc-primitive-color-gray-12);
   --agtc-semantic-color-background-inverse-raised: var(--agtc-primitive-color-neutral-900);
   --agtc-semantic-color-background-inverse: var(--agtc-primitive-color-neutral-950);
   --agtc-semantic-color-background-hover: var(--agtc-primitive-color-neutral-50);
   --agtc-semantic-color-background-subtle: var(--agtc-primitive-color-gray-3);
   --agtc-semantic-color-background-surface: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-page: var(--agtc-primitive-color-gray-1);
+  --agtc-semantic-color-feedback-warning-text: var(--agtc-primitive-color-orange-12);
+  --agtc-semantic-color-feedback-info-text: var(--agtc-primitive-color-blue-12);
   --agtc-semantic-color-feedback-info-border: var(--agtc-primitive-color-blue-6);
   --agtc-semantic-color-feedback-info-subtle: var(--agtc-primitive-color-blue-3);
   --agtc-semantic-color-feedback-info: var(--agtc-primitive-color-blue-11);
