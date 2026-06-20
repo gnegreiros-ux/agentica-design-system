@@ -800,7 +800,6 @@ body{
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
-.logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-brand-accent-text);background:var(--agtc-semantic-color-brand-accent-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
 /* ── Règle système : no-visited-nav (ADR-047) ───────────────────────────
    Les éléments de navigation ne portent jamais d'état :visited distinct.
    Exception Safari : valeur hex avant var() (ADR-059).
@@ -1243,7 +1242,6 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .site-header{padding:0 12px;gap:8px}
-  .logo-version{display:none}
   .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}
@@ -2184,6 +2182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Storybook publié par Chromatic (branche main, toujours la dernière baseline).
 // appId = 6a1c1e665ec5fe8fc0540983 ; permalien stable vérifié (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
+const SITE_URL      = 'https://designsystem.gnegreiros.com';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '' }) {
   const docTitle = pageTitle || `${title} — Agentica`;
@@ -2284,7 +2283,6 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     </svg>
     <span class="logo-name">Agentica</span>
   </a>
-  <span class="logo-version">v0.1.0</span>
   <agtc-top-nav id="site-top-nav" nav-label="Navigation principale"></agtc-top-nav>
   <script>(function(){var items=${navItems};function init(){var n=document.getElementById('site-top-nav');if(!n)return;n.items=items;n.current=window.location.pathname;}if(customElements.get('agtc-top-nav')){init();}else{customElements.whenDefined('agtc-top-nav').then(init);}})()</script>
   <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
@@ -5661,6 +5659,77 @@ ${commandBlock}
   }));
 }
 
+// ─── ROBOTS.TXT + SITEMAP.XML ────────────────────────────────────────────────
+function buildRobotsAndSitemap(adrs) {
+  // robots.txt
+  write(path.join(DIST, 'robots.txt'), [
+    'User-agent: *',
+    'Allow: /',
+    '',
+    '# Pages internes — non indexées',
+    'Disallow: /audit.html',
+    '',
+    `Sitemap: ${SITE_URL}/sitemap.xml`,
+    '',
+  ].join('\n'));
+
+  // sitemap.xml — toutes les pages publiques
+  const today = new Date().toISOString().split('T')[0];
+
+  // Pages statiques (fréquence + priorité)
+  const staticPages = [
+    ['',                          'weekly',  '1.0'],
+    ['get-started.html',          'monthly', '0.9'],
+    ['foundations/index.html',    'monthly', '0.8'],
+    ['foundations/color.html',    'monthly', '0.8'],
+    ['foundations/spacing.html',  'monthly', '0.8'],
+    ['foundations/typography.html','monthly','0.8'],
+    ['foundations/icons.html',    'monthly', '0.7'],
+    ['foundations/contextes.html','monthly', '0.7'],
+    ['components/index.html',     'monthly', '0.9'],
+    ['components/button.html',    'monthly', '0.7'],
+    ['components/input.html',     'monthly', '0.7'],
+    ['components/badge.html',     'monthly', '0.7'],
+    ['components/card.html',      'monthly', '0.7'],
+    ['components/checkbox.html',  'monthly', '0.7'],
+    ['components/radio.html',     'monthly', '0.7'],
+    ['components/toggle.html',    'monthly', '0.7'],
+    ['components/table.html',     'monthly', '0.7'],
+    ['components/code-block.html','monthly', '0.7'],
+    ['components/banner.html',    'monthly', '0.7'],
+    ['components/link.html',      'monthly', '0.7'],
+    ['components/segmented.html', 'monthly', '0.7'],
+    ['components/tabs.html',      'monthly', '0.7'],
+    ['components/icon.html',      'monthly', '0.7'],
+    ['tokens/index.html',         'monthly', '0.8'],
+    ['decisions/index.html',      'monthly', '0.8'],
+    ['agents/index.html',         'monthly', '0.8'],
+    ['pipelines/index.html',      'monthly', '0.8'],
+    ['changelog.html',            'monthly', '0.6'],
+  ];
+
+  // Pages ADR
+  const adrPages = adrs.map(a => [`decisions/${a.slug}.html`, 'monthly', '0.5']);
+
+  // Pages pipeline
+  const pipelinePages = PIPELINES.map(p => [`pipelines/${p.id}.html`, 'monthly', '0.6']);
+
+  const allPages = [...staticPages, ...adrPages, ...pipelinePages];
+
+  const urls = allPages.map(([path, freq, prio]) => {
+    const url = path ? `${SITE_URL}/${path}` : SITE_URL;
+    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
+  }).join('\n');
+
+  write(path.join(DIST, 'sitemap.xml'), [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    urls,
+    '</urlset>',
+    '',
+  ].join('\n'));
+}
+
 // ─── LOAD ADRS ──────────────────────────────────────────────────────────────
 function loadADRs() {
   const files = fs.readdirSync(DEC_DIR).filter(f => f.match(/^ADR-\d+.*\.md$/i) && f !== 'README.md');
@@ -6212,6 +6281,7 @@ function build() {
   buildAgents();
   buildPipelinesIndex();
   PIPELINES.forEach(p => buildPipelinePage(p));
+  buildRobotsAndSitemap(adrs);
   buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie

@@ -30,7 +30,6 @@ body{
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .logo-mark{height:26px;width:26px;flex-shrink:0;display:block}
 .logo-name{font-size:1.05rem;font-weight:var(--agtc-semantic-fontWeight-display);letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-brand-primary);line-height:1}
-.logo-version{font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-brand-accent-text);background:var(--agtc-semantic-color-brand-accent-subtle);padding:2px 8px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-typography-label-weight)}
 /* ── Règle système : no-visited-nav (ADR-047) ───────────────────────────
    Les éléments de navigation ne portent jamais d'état :visited distinct.
    Exception Safari : valeur hex avant var() (ADR-059).
@@ -473,7 +472,6 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .pipeline-step+.pipeline-step{border-left:none;border-top:1px solid var(--agtc-semantic-color-border-default)}
   .rules-split{grid-template-columns:1fr}
   .site-header{padding:0 12px;gap:8px}
-  .logo-version{display:none}
   .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}

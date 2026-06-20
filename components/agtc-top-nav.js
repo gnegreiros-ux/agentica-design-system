@@ -34,7 +34,7 @@ import { LitElement, html, css, nothing } from 'lit';
 //   Détail : guidelines/components/top-nav.md § PATTERNS UX DE RÉFÉRENCE
 // ────────────────────────────────────────────────────────────────────────────
 
-const SECTIONS = ['tokens', 'components', 'foundations', 'decisions', 'agents', 'guidelines'];
+const SECTIONS = ['tokens', 'components', 'foundations', 'decisions', 'agents', 'guidelines', 'pipelines'];
 
 class AgtcTopNav extends LitElement {
   static properties = {

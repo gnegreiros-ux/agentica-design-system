@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Pages internes — non indexées
+Disallow: /audit.html
+
+Sitemap: https://designsystem.gnegreiros.com/sitemap.xml
