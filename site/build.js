@@ -365,8 +365,8 @@ const PIPELINES = [
       { role_fr:'02 · Contrôles', role_en:'02 · Checks', title_fr:'6 vérifications automatisées', title_en:'6 automated checks', desc_fr:'Valeurs hex · Tailles px · font-family en dur · Références fantômes · Tokens orphelins · Grille 4px · Échelle Minor Third · Gouvernance composants', desc_en:'Hex values · px sizes · hardcoded font-family · Phantom refs · Orphaned tokens · 4px grid · Minor Third scale · Component governance' },
       { role_fr:'03 · Résultat', role_en:'03 · Outcome', title_fr:'Commit bloqué ou validé', title_en:'Commit blocked or cleared', desc_fr:'exit 1 sur violation critique → commit bloqué. exit 0 → commit autorisé. Tokens orphelins signalés sans blocage.', desc_en:'exit 1 on critical violation → commit blocked. exit 0 → commit cleared. Orphaned tokens flagged without blocking.' },
     ],
-    checks_fr: ['Aucune valeur hex (#RRGGBB) dans components/ ou site/build.js','Aucun font-size en px codé en dur dans site/build.js','Aucun font-family en dur (hors var())','Toutes les références {primitive.X.Y} résolues dans primitives.json','Tous les var(--agtc-semantic-X) résolus dans semantic.json','Tout token d\'espacement = multiple de 4px (ADR-020)','Font-sizes sur l\'échelle Minor Third uniquement (ADR-023)','Toute modification de component.json → approbation Principal Designer'],
-    checks_en: ['No hex value (#RRGGBB) in components/ or site/build.js','No hardcoded font-size in px in site/build.js','No hardcoded font-family (outside var())','All {primitive.X.Y} references resolved in primitives.json','All var(--agtc-semantic-X) resolved in semantic.json','Every spacing token = multiple of 4px (ADR-020)','Font-sizes on Minor Third scale only (ADR-023)','Any component.json change → Principal Designer approval required'],
+    checks_fr: ['Aucune valeur hex (#RRGGBB) dans components/ ou site/build.js','Aucun font-size en px codé en dur dans site/build.js','Aucun font-family en dur (hors var())','Toutes les références {primitive.X.Y} résolues dans primitives.json','Tous les var(--agtc-semantic-…) résolus dans semantic.json','Tout token d\'espacement = multiple de 4px (ADR-020)','Font-sizes sur l\'échelle Minor Third uniquement (ADR-023)','Toute modification de component.json → approbation Principal Designer'],
+    checks_en: ['No hex value (#RRGGBB) in components/ or site/build.js','No hardcoded font-size in px in site/build.js','No hardcoded font-family (outside var())','All {primitive.X.Y} references resolved in primitives.json','All var(--agtc-semantic-…) resolved in semantic.json','Every spacing token = multiple of 4px (ADR-020)','Font-sizes on Minor Third scale only (ADR-023)','Any component.json change → Principal Designer approval required'],
     trigger_table_fr: [['tokens/primitives.json','Oui — vérification complète'],['tokens/semantic.json','Oui — vérification complète'],['tokens/component.json','Oui — approbation Principal Designer requise'],['site/build.js','Oui — vérification valeurs hardcodées'],['components/*.js','Oui — vérification tokens de composant']],
     trigger_table_en: [['tokens/primitives.json','Yes — full check'],['tokens/semantic.json','Yes — full check'],['tokens/component.json','Yes — Principal Designer approval required'],['site/build.js','Yes — check for hardcoded values'],['components/*.js','Yes — check component tokens']],
     command: 'node scripts/audit-tokens.js --ci\n# exit 1 si violations critiques\n# exit 0 si propre (warnings tolérés)',
@@ -2252,7 +2252,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="og:site_name" content="Agentica">
 <meta property="og:title" content="${docTitle}">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<meta property="og:image" content="https://designsystem.gnegreiros.com/social.jpg">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
 <meta property="og:url" content="https://designsystem.gnegreiros.com/">
@@ -2261,7 +2261,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
 <meta name="twitter:title" content="${docTitle}">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
-<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.jpg">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -2461,6 +2461,7 @@ function buildHome(adrs) {
     ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
     ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
     ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
+    ['pipelines/index.html',    icon('shield-check',32),      'Pipelines qualité',    'Quality pipelines',     '10 gates automatisés actifs — tokens, WCAG, commits, régressions visuelles — avant chaque commit.','10 automated gates active — tokens, WCAG, commits, visual regressions — before every commit.'],
     [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
     ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
   ];
@@ -2698,6 +2699,25 @@ function buildHome(adrs) {
       <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
       <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
     </a>`).join('')}
+  </div>
+</section>
+
+<section class="section-secondary reveal">
+  <div class="si-inner">
+    <span class="eyebrow"><span class="lang-fr">Qualité garantie</span><span class="lang-en">Quality guaranteed</span></span>
+    <h2><span class="lang-fr">10 pipelines de qualité actifs</span><span class="lang-en">10 active quality pipelines</span></h2>
+    <p><span class="lang-fr">Avant chaque commit, un orchestrateur évalue automatiquement chaque changement contre les gates de qualité actifs. Tokens, accessibilité, commits, régressions visuelles — rien n'atteint le dépôt sans avoir passé le contrôle.</span><span class="lang-en">Before every commit, an orchestrator automatically evaluates each change against the active quality gates. Tokens, accessibility, commits, visual regressions — nothing reaches the repository without passing inspection.</span></p>
+    <div class="mini-grid">
+      ${['wcag','tokens-audit','chromatic','commit'].map(id => {
+        const p = PIPELINES.find(x => x.id === id);
+        return p ? `<div class="mini-card card-surface">
+        <div class="mc-icon">${icon(p.icon, 20)}</div>
+        <div class="mc-title"><span class="lang-fr">${p.title_fr}</span><span class="lang-en">${p.title_en}</span></div>
+        <div class="mc-desc"><span class="lang-fr">${p.marketing_fr}</span><span class="lang-en">${p.marketing_en}</span></div>
+      </div>` : '';
+      }).join('')}
+    </div>
+    <p style="margin-top:var(--agtc-space-6)"><a href="pipelines/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${PIPELINES.length} pipelines →</span><span class="lang-en">View all ${PIPELINES.length} pipelines →</span></a></p>
   </div>
 </section>
 
@@ -5518,6 +5538,129 @@ color: var(--agtc-primitive-color-blue-11);</code></pre>
   }));
 }
 
+// ─── PAGE: PIPELINES (index) ─────────────────────────────────────────────────
+function buildPipelinesIndex() {
+  const activePipelines   = PIPELINES.filter(p => p.status === 'active').sort((a,b) => a.order - b.order);
+  const plannedPipelines  = PIPELINES.filter(p => p.status === 'planned').sort((a,b) => a.order - b.order);
+  const orchestrator      = PIPELINES.find(p  => p.status === 'orchestrator');
+
+  function pipelineCard(p) {
+    const badgeVariant = p.status === 'active' ? 'success' : p.status === 'planned' ? 'warning' : 'info';
+    const badgeFr = p.status === 'active' ? 'Actif' : p.status === 'planned' ? 'Planifié' : 'Orchestrateur';
+    const badgeEn = p.status === 'active' ? 'Active' : p.status === 'planned' ? 'Planned' : 'Orchestrator';
+    const blockingBadge = p.status === 'active' && !p.blocking
+      ? `<agtc-badge variant="neutral" size="sm" style="margin-left:4px"><span class="lang-fr">Transition bloquant</span><span class="lang-en">Transitioning to blocking</span></agtc-badge>`
+      : p.status === 'planned'
+        ? `<agtc-badge variant="neutral" size="sm" style="margin-left:4px"><span class="lang-fr">Non bloquant</span><span class="lang-en">Non-blocking</span></agtc-badge>`
+        : '';
+    return `<a href="pipelines/${p.id}.html" class="nav-card card-surface card-hover">
+  <span class="nav-card-icon">${icon(p.icon, 24)}</span>
+  <div style="margin-bottom:8px"><agtc-badge variant="${badgeVariant}" size="sm"><span class="lang-fr">${badgeFr}</span><span class="lang-en">${badgeEn}</span></agtc-badge>${blockingBadge}</div>
+  <div class="nav-card-title"><span class="lang-fr">${p.title_fr}</span><span class="lang-en">${p.title_en}</span></div>
+  <div class="nav-card-desc"><span class="lang-fr">${p.desc_short_fr}</span><span class="lang-en">${p.desc_short_en}</span></div>
+  <div style="margin-top:10px;font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Déclencheur : ${esc(p.trigger_fr)}</span><span class="lang-en">Trigger: ${esc(p.trigger_en)}</span></div>
+</a>`;
+  }
+
+  const body = `
+<h1><span class="lang-fr">Pipelines &amp; Workflows</span><span class="lang-en">Pipelines &amp; Workflows</span></h1>
+<p class="page-lead"><span class="lang-fr">Avant chaque commit, l'orchestrateur évalue automatiquement chaque changement contre les gates de qualité actifs. Tokens, accessibilité, régressions visuelles, commits — rien n'atteint le dépôt sans contrôle.</span><span class="lang-en">Before every commit, the orchestrator automatically evaluates each change against the active quality gates. Tokens, accessibility, visual regressions, commits — nothing reaches the repository without inspection.</span></p>
+
+<blockquote><p><span class="lang-fr">La qualité n'est pas une étape finale. C'est une garantie structurelle, intégrée à chaque commit.</span><span class="lang-en">Quality is not a final step. It is a structural guarantee, built into every commit.</span></p></blockquote>
+
+<div class="stat-band" role="region" aria-label="Statistiques des pipelines">
+  <div class="stat-item"><span class="stat-num">10</span><span class="stat-text"><span class="lang-fr">Pipelines actifs</span><span class="lang-en">Active pipelines</span></span></div>
+  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text"><span class="lang-fr">En préparation</span><span class="lang-en">In progress</span></span></div>
+  <div class="stat-item"><span class="stat-num">${PIPELINES.length}</span><span class="stat-text"><span class="lang-fr">Pipelines au total</span><span class="lang-en">Total pipelines</span></span></div>
+</div>
+
+<h2 class="first"><span class="lang-fr">Pipelines actifs — bloquants</span><span class="lang-en">Active pipelines — blocking</span></h2>
+<p><span class="lang-fr">Ces 10 pipelines bloquent le commit s'ils détectent une violation. Ils s'exécutent dans l'ordre défini par l'orchestrateur <code>quality-gate</code>.</span><span class="lang-en">These 10 pipelines block the commit if they detect a violation. They run in the order defined by the <code>quality-gate</code> orchestrator.</span></p>
+<div class="nav-grid">
+  ${activePipelines.map(pipelineCard).join('')}
+</div>
+
+<h2><span class="lang-fr">Pipelines planifiés</span><span class="lang-en">Planned pipelines</span></h2>
+<p><span class="lang-fr">Ces 3 pipelines sont définis et documentés. Ils ne bloquent pas encore les commits — activation prévue au prochain jalon.</span><span class="lang-en">These 3 pipelines are defined and documented. They do not yet block commits — activation planned for the next milestone.</span></p>
+<div class="nav-grid">
+  ${plannedPipelines.map(pipelineCard).join('')}
+</div>
+
+<h2><span class="lang-fr">Orchestrateur</span><span class="lang-en">Orchestrator</span></h2>
+<p><span class="lang-fr">Le <strong>quality-gate</strong> coordonne l'exécution de tous les pipelines, génère le rapport d'impact et attend l'approbation humaine avant tout commit.</span><span class="lang-en">The <strong>quality-gate</strong> coordinates the execution of all pipelines, generates the impact report, and awaits human approval before any commit.</span></p>
+<div class="nav-grid" style="max-width:420px">
+  ${orchestrator ? pipelineCard(orchestrator) : ''}
+</div>
+`;
+  write(path.join(DIST, 'pipelines/index.html'), layout({
+    title: 'Pipelines & Workflows', depth: 1,
+    sidebar: sidebarPipelines('../', 'index.html'),
+    body: body + contributionBanner(),
+  }));
+}
+
+// ─── PAGE: PIPELINE DETAIL ───────────────────────────────────────────────────
+function buildPipelinePage(p) {
+  const badgeVariant = p.status === 'active' ? 'success' : p.status === 'planned' ? 'warning' : 'info';
+  const badgeFr = p.status === 'active' ? 'Actif' : p.status === 'planned' ? 'Planifié' : 'Orchestrateur';
+  const badgeEn = p.status === 'active' ? 'Active' : p.status === 'planned' ? 'Planned' : 'Orchestrator';
+  const blockBadge = p.blocking
+    ? `<agtc-badge variant="danger" size="sm"><span class="lang-fr">Bloquant</span><span class="lang-en">Blocking</span></agtc-badge>`
+    : `<agtc-badge variant="neutral" size="sm"><span class="lang-fr">Non bloquant</span><span class="lang-en">Non-blocking</span></agtc-badge>`;
+
+  const illustration = `<div class="pipeline" role="region" aria-label="Pipeline : ${esc(p.title_en)}">
+${p.steps.map(s => `  <div class="pipeline-step">
+    <div class="pipeline-tag"><span class="lang-fr">${esc(s.role_fr)}</span><span class="lang-en">${esc(s.role_en)}</span></div>
+    <div class="pipeline-title"><span class="lang-fr">${esc(s.title_fr)}</span><span class="lang-en">${esc(s.title_en)}</span></div>
+    <div class="pipeline-desc"><span class="lang-fr">${esc(s.desc_fr)}</span><span class="lang-en">${esc(s.desc_en)}</span></div>
+  </div>`).join('\n')}
+</div>`;
+
+  const triggerTable = p.trigger_table_fr && p.trigger_table_fr.length ? `
+<h2><span class="lang-fr">Matrice de déclenchement</span><span class="lang-en">Trigger matrix</span></h2>
+<div class="table-wrap" tabindex="0"><table>
+  <thead><tr><th><span class="lang-fr">Fichier modifié</span><span class="lang-en">Changed file</span></th><th><span class="lang-fr">Action</span><span class="lang-en">Action</span></th></tr></thead>
+  <tbody>
+${p.trigger_table_fr.map((row, i) => `    <tr><td><code>${esc(row[0])}</code></td><td><span class="lang-fr">${esc(row[1])}</span><span class="lang-en">${esc(p.trigger_table_en[i][1])}</span></td></tr>`).join('\n')}
+  </tbody>
+</table></div>` : '';
+
+  const checksList = p.checks_fr && p.checks_fr.length ? `
+<h2><span class="lang-fr">Contrôles</span><span class="lang-en">Checks</span></h2>
+<ol>
+${p.checks_fr.map((c, i) => `  <li><span class="lang-fr">${esc(c)}</span><span class="lang-en">${esc(p.checks_en[i])}</span></li>`).join('\n')}
+</ol>` : '';
+
+  const commandBlock = p.command ? `
+<h2><span class="lang-fr">Commande</span><span class="lang-en">Command</span></h2>
+<pre class="code-block"><code class="lang-bash">${esc(p.command)}</code></pre>` : '';
+
+  const body = `
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--agtc-space-4)">
+  <agtc-badge variant="${badgeVariant}" size="sm"><span class="lang-fr">${badgeFr}</span><span class="lang-en">${badgeEn}</span></agtc-badge>
+  ${blockBadge}
+</div>
+
+<h1><span class="lang-fr">${esc(p.title_fr)}</span><span class="lang-en">${esc(p.title_en)}</span></h1>
+<p class="page-lead"><span class="lang-fr">${esc(p.objective_fr)}</span><span class="lang-en">${esc(p.objective_en)}</span></p>
+
+<h2 class="first"><span class="lang-fr">Flux du pipeline</span><span class="lang-en">Pipeline flow</span></h2>
+${illustration}
+
+<h2><span class="lang-fr">Valeur métier</span><span class="lang-en">Business value</span></h2>
+<p><span class="lang-fr">${esc(p.marketing_fr)}</span><span class="lang-en">${esc(p.marketing_en)}</span></p>
+${triggerTable}
+${checksList}
+${commandBlock}
+`;
+
+  write(path.join(DIST, `pipelines/${p.id}.html`), layout({
+    title: p.title_fr, depth: 1,
+    sidebar: sidebarPipelines('../', p.id + '.html'),
+    body: body + contributionBanner(),
+  }));
+}
+
 // ─── LOAD ADRS ──────────────────────────────────────────────────────────────
 function loadADRs() {
   const files = fs.readdirSync(DEC_DIR).filter(f => f.match(/^ADR-\d+.*\.md$/i) && f !== 'README.md');
@@ -5993,6 +6136,7 @@ function build() {
   ensureDir(path.join(DIST, 'tokens'));
   ensureDir(path.join(DIST, 'decisions'));
   ensureDir(path.join(DIST, 'agents'));
+  ensureDir(path.join(DIST, 'pipelines'));
 
   write(path.join(DIST, 'tokens.css'), tokensCSS());
   write(path.join(DIST, 'site.css'), siteCSS());
@@ -6000,8 +6144,8 @@ function build() {
   bundleComponents();
 
   // Copie de l'image sociale (OG image)
-  const socialSrc = path.join(__dirname, '..', 'Brand', 'Agentica social image.jpg');
-  const socialDst = path.join(DIST, 'social.jpg');
+  const socialSrc = path.join(__dirname, '..', 'Brand', 'agentica-social-image.png');
+  const socialDst = path.join(DIST, 'social.png');
   if (fs.existsSync(socialSrc)) fs.copyFileSync(socialSrc, socialDst);
 
   // Favicons depuis Brand/Favicon/
@@ -6066,11 +6210,13 @@ function build() {
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
   buildAgents();
+  buildPipelinesIndex();
+  PIPELINES.forEach(p => buildPipelinePage(p));
   buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 18 + adrs.length;
+  const total = 18 + adrs.length + 1 + PIPELINES.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 
