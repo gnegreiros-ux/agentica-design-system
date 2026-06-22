@@ -770,7 +770,7 @@ function tokensCSS() {
 
 function siteCSS() { return `
 /* Agentica — site.css (uses design system tokens) */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* Google Fonts chargé via <link> dans <head> (non bloquant) — pas d'@import */
 :root{--agtc-font-mono:var(--agtc-semantic-typography-mono-family)}
 
 
@@ -907,6 +907,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+.illus-lazy[data-svg]{aspect-ratio:800/420;width:100%;background:var(--agtc-semantic-color-background-subtle);display:block}
 .illus-dark-row{background:var(--agtc-semantic-color-brand-secondary,#463239);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--agtc-space-8,64px) 0;line-height:0}
 .illus-dark-row .illus-block{margin:0;border-radius:0;max-width:var(--agtc-content-max,1180px);margin-left:auto;margin-right:auto}
 
@@ -2175,6 +2176,24 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
+  // Les SVG sont chargés et injectés inline → CSS custom properties (dark mode) conservées.
+  const lazyIllusEls = document.querySelectorAll('.illus-lazy[data-svg]');
+  if (lazyIllusEls.length && 'IntersectionObserver' in window) {
+    const illusObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        fetch(el.dataset.svg)
+          .then(r => r.ok ? r.text() : '')
+          .then(svg => { if (svg) { el.innerHTML = svg; el.removeAttribute('data-svg'); } })
+          .catch(() => {});
+        illusObs.unobserve(el);
+      });
+    }, { rootMargin: '400px' });
+    lazyIllusEls.forEach(el => illusObs.observe(el));
+  }
 });
 `; }
 
@@ -2267,6 +2286,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <script src="${base}components/agtc.js" defer></script>
@@ -2441,9 +2461,10 @@ function buildHome(adrs) {
   const primCount  = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
-  const svgPipeline   = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
-  const svgGovernance = read(path.join(ROOT, 'illustrations/human-last-word.svg'));
-  const svgMultiPlat  = read(path.join(ROOT, 'illustrations/multi-platform.svg'));
+  // Illustrations chargées lazily (IntersectionObserver dans siteJS) — hors du HTML initial.
+  const illusGovernance = `<div class="illus-block illus-lazy" data-svg="img/human-last-word.svg"></div>`;
+  const illusPipeline   = `<div class="illus-block illus-lazy" data-svg="img/pipeline-tokens.svg"></div>`;
+  const illusMultiPlat  = `<div class="illus-block illus-lazy" data-svg="img/multi-platform.svg"></div>`;
 
   const principles = [
     [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
@@ -2603,7 +2624,7 @@ function buildHome(adrs) {
     <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
     <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
     <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
-    <div class="illus-block">${svgGovernance}</div>
+    ${illusGovernance}
     <div class="contexts-grid">
       <div class="context-card">
         <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
@@ -2662,7 +2683,7 @@ function buildHome(adrs) {
   <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
   <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
   <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
-  <div class="illus-block">${svgPipeline}</div>
+  ${illusPipeline}
   <div class="pipeline" role="region" aria-label="Pipeline des tokens">
     <div class="pipeline-step">
       <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
@@ -2748,7 +2769,7 @@ function buildHome(adrs) {
   <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
   <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
   <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
-  <div class="illus-block">${svgMultiPlat}</div>
+  ${illusMultiPlat}
   <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
     ${stackNodes.map(([ico,fr,en,sub]) => `
     <div class="stack-node">
@@ -6238,6 +6259,13 @@ function build() {
   // Logo SVG depuis Brand/logo/
   const logoSrc = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - teal.svg');
   if (fs.existsSync(logoSrc)) fs.copyFileSync(logoSrc, path.join(DIST, 'logo.svg'));
+
+  // Illustrations SVG — copiées dans dist/img/ et chargées lazily (P1 perf)
+  ensureDir(path.join(DIST, 'img'));
+  ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
+    const src = path.join(ROOT, 'illustrations', f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
+  });
 
   // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
   // Affichés dans leurs couleurs de marque officielles → copiés tels quels, servis via <img>.

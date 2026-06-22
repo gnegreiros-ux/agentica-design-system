@@ -1,6 +1,6 @@
 
 /* Agentica — site.css (uses design system tokens) */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* Google Fonts chargé via <link> dans <head> (non bloquant) — pas d'@import */
 :root{--agtc-font-mono:var(--agtc-semantic-typography-mono-family)}
 
 
@@ -137,6 +137,7 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 /* ── ILLUSTRATIONS ───────────────────────────────────────── */
 .illus-block{margin:32px 0 24px;border-radius:var(--agtc-semantic-radius-card);overflow:hidden;line-height:0}
 .illus-block svg{display:block;width:100%;height:auto}
+.illus-lazy[data-svg]{aspect-ratio:800/420;width:100%;background:var(--agtc-semantic-color-background-subtle);display:block}
 .illus-dark-row{background:var(--agtc-semantic-color-brand-secondary,#463239);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--agtc-space-8,64px) 0;line-height:0}
 .illus-dark-row .illus-block{margin:0;border-radius:0;max-width:var(--agtc-content-max,1180px);margin-left:auto;margin-right:auto}
 

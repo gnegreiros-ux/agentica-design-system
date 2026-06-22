@@ -291,4 +291,22 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
+  // Les SVG sont chargés et injectés inline → CSS custom properties (dark mode) conservées.
+  const lazyIllusEls = document.querySelectorAll('.illus-lazy[data-svg]');
+  if (lazyIllusEls.length && 'IntersectionObserver' in window) {
+    const illusObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        fetch(el.dataset.svg)
+          .then(r => r.ok ? r.text() : '')
+          .then(svg => { if (svg) { el.innerHTML = svg; el.removeAttribute('data-svg'); } })
+          .catch(() => {});
+        illusObs.unobserve(el);
+      });
+    }, { rootMargin: '400px' });
+    lazyIllusEls.forEach(el => illusObs.observe(el));
+  }
 });
