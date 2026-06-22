@@ -1881,6 +1881,80 @@ body{overflow-x:hidden}
 .cta-final > p{max-width:560px;margin:0 auto}
 /* ── Home section h2 top margin reset ───────────────────────────────────── */
 .home-section h2{margin-top:0}
+
+/* ══ REDESIGN — sections narratives (feature/redesign) ══════════════════════
+   Classes préfixées rd- dédiées à la refonte narrative.
+   Toutes passent par les tokens sémantiques existants.                       */
+
+.rd-section{width:100%;overflow:hidden}
+.rd-section-dark{background:var(--agtc-semantic-color-background-inverse);color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-light{background:var(--agtc-semantic-color-background-page);color:var(--agtc-semantic-color-text-primary)}
+.rd-inner{max-width:1280px;margin:0 auto;padding:6rem clamp(1.5rem,5vw,5rem)}
+.rd-hero-wrap{padding-top:calc(var(--agtc-header-height,64px) + 4rem);padding-bottom:5rem}
+.rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
+@media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
+
+.rd-eyebrow{display:block;font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-eyebrow);color:var(--agtc-semantic-color-action-primary);margin-bottom:1rem}
+.rd-h1{font-size:clamp(2.5rem,5vw,3.75rem);font-weight:var(--agtc-semantic-fontWeight-display);line-height:1.05;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.5rem}
+.rd-h2{font-size:clamp(1.875rem,4vw,3rem);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.1;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.5rem}
+.rd-lead{font-size:1.125rem;line-height:1.65;opacity:.85;max-width:52ch;margin-bottom:1.5rem}
+.rd-lead-dark{color:var(--agtc-semantic-color-text-on-inverse-muted);opacity:1}
+
+/* Hero stats */
+.rd-hero-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--agtc-surface-glass-border)}
+.rd-stat-num{display:block;font-size:var(--agtc-font-size-h3,1.75rem);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);line-height:1}
+.rd-stat-label{display:block;font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:.25rem}
+.rd-hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:2rem}
+
+/* Illustrations */
+.rd-illus{display:flex;align-items:center;justify-content:center}
+.rd-illus img{width:100%;max-width:520px;height:auto;display:block}
+
+/* Problem list */
+.rd-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;gap:.75rem}
+.rd-list li{display:flex;align-items:baseline;gap:.75rem;font-size:1rem}
+.rd-list.dash li::before{content:"—";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.check li::before{content:"✓";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.arrow li::before{content:"→";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.dot li::before{content:"◆";color:var(--agtc-semantic-color-action-primary);font-size:.5rem;flex-shrink:0;align-self:center}
+.rd-list li.no::before{content:"✗";color:var(--agtc-semantic-color-feedback-danger);font-weight:700;flex-shrink:0}
+
+/* Human/AI dual-column cards */
+.rd-dual{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2rem 0}
+.rd-dual-card{padding:1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-surface-glass);border:1px solid var(--agtc-surface-glass-border)}
+.rd-dual-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-on-inverse);margin-bottom:1rem}
+.rd-dual-title.light{color:var(--agtc-semantic-color-text-primary)}
+.rd-dual-card.light{background:var(--agtc-semantic-color-background-subtle);border-color:var(--agtc-semantic-color-border-default)}
+.rd-quote{font-size:1.0625rem;font-style:italic;color:var(--agtc-semantic-color-text-on-inverse-muted);border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:1.5rem;margin:2rem 0 0;max-width:52ch}
+
+/* Stacked cards (section source unique de vérité) */
+.rd-stack{display:grid;gap:1rem}
+.rd-stack-card{padding:1.25rem 1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-surface-glass);border:1px solid var(--agtc-surface-glass-border);display:grid;grid-template-columns:auto 1fr;gap:.75rem 1rem;align-items:start;transition:border-color .18s}
+.rd-stack-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-stack-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);grid-row:1/3;padding-top:.15rem}
+.rd-stack-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-stack-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* Role cards */
+.rd-role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;margin-top:2rem}
+.rd-role-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-role-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-role-name{font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.rd-role-name::before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:var(--agtc-semantic-color-action-primary);flex-shrink:0}
+.rd-role-items{list-style:none;padding:0;margin:0;display:grid;gap:.375rem}
+.rd-role-items li{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+/* Statement block */
+.rd-statement{font-size:1rem;font-style:italic;color:var(--agtc-semantic-color-text-on-inverse-muted);border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:1.5rem;margin-top:2rem}
+.rd-statement.light{color:var(--agtc-semantic-color-text-secondary)}
+
+/* Final CTA */
+.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
+.rd-cta-inner .rd-lead{margin:0 auto 2rem}
+.rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:640px){.rd-dual{grid-template-columns:1fr}.rd-hero-stats{gap:1.25rem}}
 `; }
 
 function siteJS() { return `
@@ -2209,14 +2283,13 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   // DÉMARRER = CTA (cta:true) — action primaire d'adoption (ADR-060).
   // Items définis ici, passés au composant agtc-top-nav via script inline.
   const navItems = JSON.stringify([
-    { labelFr:'Accueil',    labelEn:'Home',         href:`${base}index.html` },
-    { labelFr:'Fondations', labelEn:'Foundations',  href:`${base}foundations/index.html` },
-    { labelFr:'Composants', labelEn:'Components',   href:`${base}components/index.html` },
-    { labelFr:'Tokens',     labelEn:'Tokens',       href:`${base}tokens/index.html` },
-    { labelFr:'Décisions',  labelEn:'Decisions',    href:`${base}decisions/index.html` },
-    { labelFr:'Agents',     labelEn:'Agents',       href:`${base}agents/index.html` },
-    { labelFr:'Pipelines',  labelEn:'Pipelines',    href:`${base}pipelines/index.html` },
-    { labelFr:'Démarrer',   labelEn:'Get started',  href:`${base}get-started.html`, cta:true },
+    { labelFr:'Accueil',        labelEn:'Home',           href:`${base}index.html` },
+    { labelFr:'Pourquoi',       labelEn:'Why',            href:`${base}index.html#pourquoi` },
+    { labelFr:'Architecture',   labelEn:'Architecture',   href:`${base}index.html#architecture` },
+    { labelFr:'Qualité',        labelEn:'Quality',        href:`${base}index.html#qualite` },
+    { labelFr:'IA',             labelEn:'AI',             href:`${base}index.html#ia` },
+    { labelFr:'Documentation',  labelEn:'Documentation',  href:`${base}foundations/index.html` },
+    { labelFr:'Démarrer',       labelEn:'Get started',    href:`${base}get-started.html`, cta:true },
   ]);
 
   const sidebarHtml = sidebar
@@ -2454,360 +2527,384 @@ function countAllTokens(obj) {
 }
 
 function buildHome(adrs) {
-  const colorCount = Object.keys(COLOR_SCALES).length;
-  const scaleSteps = Object.values(COLOR_SCALES).reduce((a, s) => a + Object.keys(s).length, 0);
-  const semCount   = Object.keys(SEM).length;
-  const compCount  = Object.keys(COMP).length;
-  const primCount  = countAllTokens(primitives.primitive || primitives);
+  const semCount    = Object.keys(SEM).length;
+  const compCount   = Object.keys(COMP).length;
+  const primCount   = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
-  // Illustrations chargées lazily (IntersectionObserver dans siteJS) — hors du HTML initial.
-  const illusGovernance = `<div class="illus-block illus-lazy" data-svg="img/human-last-word.svg"></div>`;
-  const illusPipeline   = `<div class="illus-block illus-lazy" data-svg="img/pipeline-tokens.svg"></div>`;
-  const illusMultiPlat  = `<div class="illus-block illus-lazy" data-svg="img/multi-platform.svg"></div>`;
+  // — Redesign : illustrations PNG servies directement (pas de SVG inline — cf. perf.md)
 
-  const principles = [
-    [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
-    [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée. Un script d\'audit valide chaque token.','Full auditability','Every decision is traceable, versioned, and justified. An audit script validates every token.'],
-    [icon('rotate-ccw',24),'Auto-guérison','Les dérives détectées sont signalées et corrigées automatiquement — sous supervision humaine.','Self-healing','Detected drifts are flagged and auto-corrected — under human supervision.'],
-    [icon('user-check',24),'Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.','Humans decide','Agents propose. Humans decide. Always.'],
-  ];
-
-  const sections = [
-    ['foundations/color.html',  icon('palette',32),          'Fondations',           'Foundations',           'Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.','Color, spacing, typography — primitives and their semantic intentions.'],
-    ['components/index.html',   icon('puzzle',32),            'Composants',           'Components',            'Contrats UI exécutables : variantes, états, tokens, accessibilité, code.','Executable UI contracts: variants, states, tokens, accessibility, code.'],
-    ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
-    ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
-    ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
-    ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
-    ['pipelines/index.html',    icon('shield-check',32),      'Pipelines qualité',    'Quality pipelines',     '10 gates automatisés actifs — tokens, WCAG, commits, régressions visuelles — avant chaque commit.','10 automated gates active — tokens, WCAG, commits, visual regressions — before every commit.'],
-    [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
-    ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
-  ];
-
-  const stackNodes = [
-    [icon('file-text',20),        'Décision',       'Decision',       'ADRs'],
-    [icon('book-open',20),        'Documentation',  'Documentation',  'Storybook'],
-    [icon('pen-tool',20),         'Design',         'Design',         'Figma'],
-    [icon('code-2',20),           'Code',           'Code',           'Lit / Web Components'],
-    [icon('check-circle',20),     'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),     'Audit',          'Audit',          'Chromatic'],
-    [icon('rocket',20),           'Déploiement',    'Deploy',         'CI/CD'],
-  ];
-
-  const audiences = [
-    [icon('briefcase',24),'Gestionnaires','Managers','Livraisons 2× plus rapides, moins de régressions visuelles, gouvernance documentée et traçable.','2× faster delivery, fewer visual regressions, documented and traceable governance.'],
-    [icon('pen-tool',24),'Designers','Designers','Tokens Figma synchronisés, marque appliquée automatiquement, cohérence garantie à chaque mise à jour.','Synced Figma tokens, auto-applied brand guidelines, consistency guaranteed on every update.'],
-    [icon('code-2',24),'Développeurs','Developers','Web Components framework-agnostic, variables CSS générées, zéro valeur en dur, audit accessibilité intégré.','Framework-agnostic Web Components, generated CSS variables, zero hardcoded values, built-in accessibility audit.'],
-    [icon('clipboard-list',24),'Product Owners','Product Owners','Décisions architecturales traçables, conformité WCAG AA garantie, pipeline qualité automatisé.','Traceable architecture decisions, guaranteed WCAG AA compliance, automated quality pipeline.'],
-  ];
-
-  const kpis = [
-    ['2×','Livraisons plus rapides','Faster delivery','Les équipes avec un design system mature livrent jusqu\'à 2× plus fréquemment — Sparkbox Design Systems Survey 2024','Teams with a mature design system ship up to 2× more frequently — Sparkbox Design Systems Survey 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-    ['80%','Moins de violations a11y','Fewer a11y violations','Réduction des violations d\'accessibilité grâce aux composants WCAG AA natifs — IBM Carbon Case Study','Reduction in accessibility violations through native WCAG AA components — IBM Carbon Case Study','https://carbondesignsystem.com','IBM Carbon'],
-    ['34%','Délais respectés','Deadlines met','Les équipes utilisant un design system respectent davantage leurs délais de livraison — Sparkbox DSS 2024','Teams using a design system are more likely to meet delivery deadlines — Sparkbox DSS 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-  ];
 
   const body = `
-<section class="hero">
-  <div class="hero-inner hero-grid">
-    <div>
-      <span class="hero-badge">
-        <span class="pulse" aria-hidden="true"></span>
-        <span class="lang-fr">Agentica · v0.1.0</span>
-        <span class="lang-en">Agentica · v0.1.0</span>
-      </span>
-      <h1 class="hero-title">
-        <span class="lang-fr">Un système de design <span class="grad">compris par les humains et les agents IA.</span></span>
-        <span class="lang-en">A design system <span class="grad">understood by humans and AI agents.</span></span>
-      </h1>
-      <p class="hero-tagline">
-        <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
-        <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. Built for teams that move fast — and the agents that assist them.</span>
+<!-- ═══ S1 — HERO ═══════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-dark" id="accueil" aria-label="Agentica">
+  <div class="rd-inner rd-hero-wrap">
+    <div class="rd-grid">
+      <div>
+        <span class="rd-eyebrow">Agentica</span>
+        <h1 class="rd-h1">
+          <span class="lang-fr">Le système de décisions pour les humains et les agents IA</span>
+          <span class="lang-en">The decision system for humans and AI agents</span>
+        </h1>
+        <p class="rd-lead rd-lead-dark">
+          <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica les transforme en contrats structurés, compréhensibles par les humains et les agents IA — en gardant les humains aux commandes.</span>
+          <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica transforms those decisions into structured contracts understandable by both humans and AI agents, while keeping humans in control.</span>
+        </p>
+        <div class="rd-hero-actions">
+          <a href="get-started.html" class="ds-btn primary">
+            <span class="lang-fr">Découvrir la vision</span>
+            <span class="lang-en">Discover the vision</span>
+          </a>
+          <a href="foundations/index.html" class="ds-btn ghost on-dark">
+            <span class="lang-fr">Explorer la documentation →</span>
+            <span class="lang-en">Explore documentation →</span>
+          </a>
+        </div>
+        <div class="rd-hero-stats" role="list" aria-label="Statistiques du système">
+          <div role="listitem"><span class="rd-stat-num">${totalTokens}+</span><span class="rd-stat-label"><span class="lang-fr">tokens</span><span class="lang-en">tokens</span></span></div>
+          <div role="listitem"><span class="rd-stat-num">${adrs.length}</span><span class="rd-stat-label">ADRs</span></div>
+          <div role="listitem"><span class="rd-stat-num">${compCount}</span><span class="rd-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+          <div role="listitem"><span class="rd-stat-num">10</span><span class="rd-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
+        </div>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-HERO-SYSTEM.png" alt="" width="560" height="460" loading="eager" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S2 — LE PROBLÈME ════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-light reveal" id="pourquoi">
+  <div class="rd-inner">
+    <div class="rd-grid rd-grid-rev">
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
+          <span class="lang-en">Teams accumulate invisible decisions</span>
+        </h2>
+        <p class="rd-lead">
+          <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. Personne ne sait plus pourquoi les choses sont comme elles sont.</span>
+          <span class="lang-en">Decisions become scattered across Figma, GitHub, Storybook, Slack and Confluence. Nobody knows anymore why things are the way they are.</span>
+        </p>
+        <ul class="rd-list dash">
+          <li><span class="lang-fr">Dette UX accumulée en silence</span><span class="lang-en">Silent UX debt accumulation</span></li>
+          <li><span class="lang-fr">Dépendance aux experts non documentée</span><span class="lang-en">Undocumented dependency on experts</span></li>
+          <li><span class="lang-fr">Documentation obsolète dès la publication</span><span class="lang-en">Documentation outdated at publish time</span></li>
+          <li><span class="lang-fr">Impossibilité d'intégrer l'IA sans risque</span><span class="lang-en">Inability to integrate AI safely</span></li>
+        </ul>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-CONTEXT.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S3 — HUMAN FIRST, AI READY ════════════════════════════════════════ -->
+<section class="rd-section rd-section-dark reveal">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div>
+        <span class="rd-eyebrow">Human First, AI Ready</span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Conçu pour les humains. Prêt pour les agents IA.</span>
+          <span class="lang-en">Designed for humans. Ready for AI agents.</span>
+        </h2>
+        <div class="rd-dual">
+          <div class="rd-dual-card">
+            <div class="rd-dual-title"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></div>
+            <ul class="rd-list check" style="margin:0">
+              <li><span class="lang-fr">Comprennent</span><span class="lang-en">Understand</span></li>
+              <li><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></li>
+              <li><span class="lang-fr">Approuvent</span><span class="lang-en">Approve</span></li>
+              <li><span class="lang-fr">Gouvernent</span><span class="lang-en">Govern</span></li>
+            </ul>
+          </div>
+          <div class="rd-dual-card">
+            <div class="rd-dual-title"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></div>
+            <ul class="rd-list check" style="margin:0">
+              <li><span class="lang-fr">Détectent</span><span class="lang-en">Detect</span></li>
+              <li><span class="lang-fr">Analysent</span><span class="lang-en">Analyze</span></li>
+              <li><span class="lang-fr">Proposent</span><span class="lang-en">Propose</span></li>
+              <li><span class="lang-fr">Automatisent</span><span class="lang-en">Automate</span></li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="rd-quote">
+          <span class="lang-fr">« Le dernier mot reste toujours humain. »</span>
+          <span class="lang-en">"The final word always remains human."</span>
+        </blockquote>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-HUMANS-AI_EN.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S4 — CONNAISSANCES COMME ACTIF ════════════════════════════════════ -->
+<section class="rd-section rd-section-light reveal">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Les connaissances sont un actif stratégique</span>
+          <span class="lang-en">Knowledge is a strategic asset</span>
+        </h2>
+        <p class="rd-lead">
+          <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les connaissances doivent survivre aux technologies.</span>
+          <span class="lang-en">Frameworks evolve. Tools change. Knowledge must survive technologies.</span>
+        </p>
+        <ul class="rd-list arrow">
+          <li><span class="lang-fr">Indépendance des frameworks</span><span class="lang-en">Framework independence</span></li>
+          <li><span class="lang-fr">Décisions versionnées et auditables</span><span class="lang-en">Versioned and auditable decisions</span></li>
+          <li><span class="lang-fr">Compréhensible par les humains et les agents</span><span class="lang-en">Understandable by humans and agents</span></li>
+        </ul>
+        <p class="rd-lead">
+          <span class="lang-fr">Agentica transforme les décisions en actifs durables.</span>
+          <span class="lang-en">Agentica transforms decisions into durable assets.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S5 — SOURCE UNIQUE DE VÉRITÉ ══════════════════════════════════════ -->
+<section class="rd-section rd-section-dark reveal" id="architecture">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Une seule source de vérité</span>
+          <span class="lang-en">One source of truth</span>
+        </h2>
+        <p class="rd-lead rd-lead-dark">
+          <span class="lang-fr">Une même source alimente plusieurs destinations. Quatre niveaux ordonnés, chacun avec un rôle précis.</span>
+          <span class="lang-en">One source feeds multiple destinations. Four ordered levels, each with a precise role.</span>
+        </p>
+        <div class="rd-stack">
+          <div class="rd-stack-card"><span class="rd-stack-num">01</span><div><div class="rd-stack-title"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></div><div class="rd-stack-desc"><span class="lang-fr">Couleur, typographie, espacement.</span><span class="lang-en">Color, typography, spacing.</span></div></div></div>
+          <div class="rd-stack-card"><span class="rd-stack-num">02</span><div><div class="rd-stack-title"><span class="lang-fr">Contrats sémantiques</span><span class="lang-en">Semantic contracts</span></div><div class="rd-stack-desc"><span class="lang-fr">L'intention, pas la valeur brute.</span><span class="lang-en">Intent instead of raw values.</span></div></div></div>
+          <div class="rd-stack-card"><span class="rd-stack-num">03</span><div><div class="rd-stack-title"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></div><div class="rd-stack-desc"><span class="lang-fr">Contrats comportementaux.</span><span class="lang-en">Behavioral contracts.</span></div></div></div>
+          <div class="rd-stack-card"><span class="rd-stack-num">04</span><div><div class="rd-stack-title"><span class="lang-fr">Applications</span><span class="lang-en">Applications</span></div><div class="rd-stack-desc"><span class="lang-fr">Multiples plateformes.</span><span class="lang-en">Multiple platforms.</span></div></div></div>
+        </div>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-SINGLE-SOURCE.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S6 — VALEUR PAR RÔLE ══════════════════════════════════════════════ -->
+<section class="rd-section rd-section-light reveal">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-MULTIPLIER.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Une valeur différente pour chaque rôle</span>
+          <span class="lang-en">Different value for every role</span>
+        </h2>
+        <p class="rd-lead">
+          <span class="lang-fr">Les bénéfices sont concrets et mesurables, quelle que soit la position dans l'équipe.</span>
+          <span class="lang-en">The benefits are concrete and measurable, whatever your position in the team.</span>
+        </p>
+      </div>
+    </div>
+    <div class="rd-role-grid">
+      <div class="rd-role-card"><div class="rd-role-name"><span class="lang-fr">Organisation</span><span class="lang-en">Organization</span></div><ul class="rd-role-items"><li><span class="lang-fr">Réduire la dette</span><span class="lang-en">Reduce debt</span></li><li><span class="lang-fr">Préserver les connaissances</span><span class="lang-en">Preserve knowledge</span></li><li><span class="lang-fr">Préparer l'IA</span><span class="lang-en">Prepare for AI</span></li></ul></div>
+      <div class="rd-role-card"><div class="rd-role-name"><span class="lang-fr">Gestionnaires</span><span class="lang-en">Managers</span></div><ul class="rd-role-items"><li><span class="lang-fr">Gouvernance documentée</span><span class="lang-en">Documented governance</span></li><li><span class="lang-fr">Onboarding accéléré</span><span class="lang-en">Faster onboarding</span></li><li><span class="lang-fr">Réduction des risques</span><span class="lang-en">Risk reduction</span></li></ul></div>
+      <div class="rd-role-card"><div class="rd-role-name">Product Owners</div><ul class="rd-role-items"><li><span class="lang-fr">Décisions explicites</span><span class="lang-en">Explicit decisions</span></li><li><span class="lang-fr">Cohérence garantie</span><span class="lang-en">Consistency guaranteed</span></li></ul></div>
+      <div class="rd-role-card"><div class="rd-role-name"><span class="lang-fr">Designers</span><span class="lang-en">Designers</span></div><ul class="rd-role-items"><li><span class="lang-fr">Source unique Figma</span><span class="lang-en">Single Figma source</span></li><li><span class="lang-fr">Collaboration fluide</span><span class="lang-en">Fluid collaboration</span></li></ul></div>
+      <div class="rd-role-card"><div class="rd-role-name"><span class="lang-fr">Développeurs</span><span class="lang-en">Developers</span></div><ul class="rd-role-items"><li>Web Components</li><li><span class="lang-fr">Multi-framework</span><span class="lang-en">Multi-framework</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S7 — QUALITÉ INTÉGRÉE ═════════════════════════════════════════════ -->
+<section class="rd-section rd-section-dark reveal" id="qualite">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">La qualité est une propriété du système</span>
+          <span class="lang-en">Quality is built into the system</span>
+        </h2>
+        <p class="rd-lead rd-lead-dark">
+          <span class="lang-fr">Avant chaque changement, Agentica vérifie automatiquement :</span>
+          <span class="lang-en">Before every change, Agentica automatically verifies:</span>
+        </p>
+        <ul class="rd-list check">
+          <li><span class="lang-fr">Accessibilité WCAG 2.2 AA</span><span class="lang-en">WCAG 2.2 AA accessibility</span></li>
+          <li><span class="lang-fr">Régressions visuelles (Chromatic)</span><span class="lang-en">Visual regressions (Chromatic)</span></li>
+          <li><span class="lang-fr">Documentation complète</span><span class="lang-en">Complete documentation</span></li>
+          <li><span class="lang-fr">Cohérence des ADRs</span><span class="lang-en">ADR consistency</span></li>
+          <li><span class="lang-fr">Cohérence des tokens</span><span class="lang-en">Token consistency</span></li>
+        </ul>
+        <p class="rd-statement">
+          <span class="lang-fr">Rien n'entre dans le système sans contrôle.</span>
+          <span class="lang-en">Nothing enters the system without control.</span>
+        </p>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-BUILDER.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S8 — MÉMOIRE DES DÉCISIONS ═══════════════════════════════════════ -->
+<section class="rd-section rd-section-light reveal">
+  <div class="rd-inner">
+    <div class="rd-grid rd-grid-rev">
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Chaque décision possède une mémoire</span>
+          <span class="lang-en">Every decision has memory</span>
+        </h2>
+        <p class="rd-lead">
+          <span class="lang-fr">Chaque décision architecturale enregistre :</span>
+          <span class="lang-en">Each architectural decision records:</span>
+        </p>
+        <ul class="rd-list arrow">
+          <li><span class="lang-fr">Le contexte</span><span class="lang-en">Context</span></li>
+          <li><span class="lang-fr">La décision</span><span class="lang-en">Decision</span></li>
+          <li><span class="lang-fr">Les alternatives rejetées</span><span class="lang-en">Rejected alternatives</span></li>
+          <li><span class="lang-fr">Les conséquences</span><span class="lang-en">Consequences</span></li>
+          <li><span class="lang-fr">Les coûts acceptés</span><span class="lang-en">Accepted costs</span></li>
+        </ul>
+        <p class="rd-statement light">
+          <span class="lang-fr">Traçabilité et préservation des connaissances à long terme.</span>
+          <span class="lang-en">Traceability and long-term knowledge preservation.</span>
+        </p>
+        <p style="margin-top:2rem"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-CONTRACTS.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S9 — HUMAN-IN-THE-LOOP ════════════════════════════════════════════ -->
+<section class="rd-section rd-section-dark reveal" id="ia">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-HUMAN-LOOP.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Automatisation sans perdre le contrôle</span>
+          <span class="lang-en">Automation without losing control</span>
+        </h2>
+        <div class="rd-dual">
+          <div class="rd-dual-card">
+            <div class="rd-dual-title"><span class="lang-fr">Les agents peuvent :</span><span class="lang-en">AI agents can:</span></div>
+            <ul class="rd-list check" style="margin:0">
+              <li><span class="lang-fr">Générer</span><span class="lang-en">Generate</span></li>
+              <li><span class="lang-fr">Détecter</span><span class="lang-en">Detect</span></li>
+              <li><span class="lang-fr">Documenter</span><span class="lang-en">Document</span></li>
+              <li><span class="lang-fr">Proposer</span><span class="lang-en">Propose</span></li>
+            </ul>
+          </div>
+          <div class="rd-dual-card">
+            <div class="rd-dual-title"><span class="lang-fr">Les agents ne peuvent pas :</span><span class="lang-en">AI agents cannot:</span></div>
+            <ul class="rd-list" style="margin:0">
+              <li class="no"><span class="lang-fr">Approuver</span><span class="lang-en">Approve</span></li>
+              <li class="no"><span class="lang-fr">Déployer</span><span class="lang-en">Deploy</span></li>
+              <li class="no"><span class="lang-fr">Contourner la gouvernance</span><span class="lang-en">Bypass governance</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S10 — CONSTRUIRE POUR DEMAIN ══════════════════════════════════════ -->
+<section class="rd-section rd-section-light reveal">
+  <div class="rd-inner">
+    <div class="rd-grid">
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
+      </div>
+      <div>
+        <span class="rd-eyebrow"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></span>
+        <h2 class="rd-h2">
+          <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
+          <span class="lang-en">Build for today. Preserve for tomorrow.</span>
+        </h2>
+        <p class="rd-lead">
+          <span class="lang-fr">Agentica favorise :</span>
+          <span class="lang-en">Agentica favors:</span>
+        </p>
+        <ul class="rd-list dot">
+          <li><span class="lang-fr">Standards ouverts W3C DTCG</span><span class="lang-en">W3C DTCG open standards</span></li>
+          <li>Web Components</li>
+          <li><span class="lang-fr">Contrats explicites</span><span class="lang-en">Explicit contracts</span></li>
+          <li><span class="lang-fr">Indépendance des frameworks</span><span class="lang-en">Framework independence</span></li>
+          <li><span class="lang-fr">Portabilité totale</span><span class="lang-en">Full portability</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ══════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-dark">
+  <div class="rd-inner">
+    <div class="rd-cta-inner">
+      <span class="rd-eyebrow">Agentica</span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Prêt à explorer Agentica ?</span>
+        <span class="lang-en">Ready to explore Agentica?</span>
+      </h2>
+      <p class="rd-lead rd-lead-dark">
+        <span class="lang-fr">Transformez les décisions en connaissances durables, compréhensibles par les humains et les agents IA.</span>
+        <span class="lang-en">Transform decisions into durable knowledge understandable by humans and AI agents.</span>
       </p>
-      <div class="hero-actions">
-        <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
-        <a href="components/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Voir les composants</span><span class="lang-en">View components</span></a>
-        <a href="agents/index.html" class="ds-btn ghost on-dark"><span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span></a>
-      </div>
-    </div>
-    <div class="layer-stack" aria-hidden="true">
-      <div class="layer-link"></div>
-      <div class="layer-plane l1">
-        <span class="pl-tag"><span class="lang-fr">Niveau 1 · Primitif</span><span class="lang-en">Level 1 · Primitive</span></span>
-        <span class="pl-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></span>
-        <span class="pl-code">primitive.color.teal.11 → #007a68</span>
-      </div>
-      <div class="layer-plane l2">
-        <span class="pl-tag"><span class="lang-fr">Niveau 2 · Sémantique</span><span class="lang-en">Level 2 · Semantic</span></span>
-        <span class="pl-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></span>
-        <span class="pl-code">color.action.primary → {teal.11}</span>
-      </div>
-      <div class="layer-plane l3">
-        <span class="pl-tag"><span class="lang-fr">Niveau 3 · Composant</span><span class="lang-en">Level 3 · Component</span></span>
-        <span class="pl-title"><span class="lang-fr">Contrats UI</span><span class="lang-en">UI contracts</span></span>
-        <span class="pl-code">button.primary.background → {action.primary}</span>
+      <div class="rd-cta-actions">
+        <a href="get-started.html" class="ds-btn primary"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+        <a href="components/index.html" class="ds-btn ghost on-dark"><span class="lang-fr">Voir les composants →</span><span class="lang-en">View components →</span></a>
+        <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn ghost on-dark">GitHub →</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="home-section pf-section reveal">
-  <h2><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></h2>
-  <div class="pf-frow">
-    <div class="pf-fcell pf-cell-human">
-      <div class="pf-fi" aria-hidden="true">${icon('brain',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></div>
-      <div class="pf-fv pf-fv-white"><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></div>
-      <div class="pf-fd"><span class="lang-fr">L'intention, les valeurs, les règles, les exceptions</span><span class="lang-en">Intent, values, rules, exceptions</span></div>
-    </div>
-    <div class="pf-fcell pf-cell-agent">
-      <div class="pf-fi" aria-hidden="true">${icon('bot',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></div>
-      <div class="pf-fv pf-fv-teal"><span class="lang-fr">Exécutent</span><span class="lang-en">Execute</span></div>
-      <div class="pf-fd"><span class="lang-fr">Les tâches répétitives, les vérifications, la documentation</span><span class="lang-en">Repetitive tasks, checks, documentation</span></div>
-    </div>
-    <div class="pf-fcell pf-cell-system">
-      <div class="pf-fi" aria-hidden="true">${icon('shield',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Le système</span><span class="lang-en">The system</span></div>
-      <div class="pf-fv pf-fv-green"><span class="lang-fr">Garantit</span><span class="lang-en">Guarantees</span></div>
-      <div class="pf-fd"><span class="lang-fr">La cohérence, la conformité, la traçabilité</span><span class="lang-en">Consistency, compliance, traceability</span></div>
-    </div>
-  </div>
-  <p class="pf-tagline"><span class="lang-fr">L'IA amplifie l'expertise humaine. Elle ne la remplace pas.</span><span class="lang-en">AI amplifies human expertise. It does not replace it.</span></p>
+<!-- ═══ DOCUMENTATION (ancienne nav — conservée pour les agents) ═══════════ -->
+<section class="rd-section rd-section-dark reveal" style="display:none" aria-hidden="true" id="documentation-anchor">
 </section>
 
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Une valeur pour chaque rôle</span><span class="lang-en">Value for every role</span></span>
-  <h2><span class="lang-fr">Pour chaque membre de l'équipe</span><span class="lang-en">For every team member</span></h2>
-  <p><span class="lang-fr">Un système de design unifié parle à tous — gestionnaires, designers, développeurs et POs — avec une valeur concrète pour chacun.</span><span class="lang-en">A unified design system speaks to everyone — managers, designers, developers, and POs — with concrete value for each.</span></p>
-  <div class="audience-grid">
-    ${audiences.map(([ico,fr,en,dFr,dEn]) => `
-    <article class="audience-card card-surface card-hover">
-      <div class="audience-icon">${ico}</div>
-      <h3 class="audience-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
-      <p class="audience-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></p>
-    </article>`).join('')}
-  </div>
-</section>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
+<div class="rd-inner" style="padding-block:4rem;border-top:1px solid var(--agtc-semantic-color-border-default)">
+  <p style="text-align:center;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)">
+    <a href="foundations/index.html" style="color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a> ·
+    <a href="components/index.html" style="color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a> ·
+    <a href="tokens/index.html" style="color:var(--agtc-semantic-color-text-secondary)">Tokens</a> ·
+    <a href="decisions/index.html" style="color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a> ·
+    <a href="agents/index.html" style="color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a> ·
+    <a href="pipelines/index.html" style="color:var(--agtc-semantic-color-text-secondary)">Pipelines</a>
+  </p>
 </div>
-
-<section class="home-section reveal" style="padding-top:var(--agtc-space-8)">
-  <span class="eyebrow"><span class="lang-fr">Mesurable et vérifiable</span><span class="lang-en">Measurable &amp; verifiable</span></span>
-  <h2><span class="lang-fr">Preuves et chiffres</span><span class="lang-en">Evidence &amp; numbers</span></h2>
-  <p><span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span><span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span></p>
-  <div class="kpi-band">
-    ${kpis.map(([num,fr,en,dFr,dEn,url,src]) => `
-    <article class="kpi-card card-surface">
-      <span class="kpi-num">${num}</span>
-      <span class="kpi-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></span>
-      <span class="kpi-source"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span>${url ? ` <a href="${url}" target="_blank" rel="noopener">(${src})</a>` : ''}</span>
-    </article>`).join('')}
-  </div>
-</section>
-
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-    <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
-    <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
-    <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
-    ${illusGovernance}
-    <div class="contexts-grid">
-      <div class="context-card">
-        <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
-        <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
-        <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
-        <code class="context-attr">data-context <em>(absent)</em></code>
-      </div>
-      <div class="context-card context-card-accent">
-        <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
-        <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
-        <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
-        <code class="context-attr">data-context="marketing"</code>
-      </div>
-    </div>
-    <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
-  </div>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Principes fondateurs</span><span class="lang-en">Founding principles</span></span>
-  <h2><span class="lang-fr">Valeurs non négociables</span><span class="lang-en">Non-negotiable values</span></h2>
-  <p><span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span><span class="lang-en">These four principles guide every system decision and every agent action.</span></p>
-  <div class="principle-grid">
-    ${principles.map(([ico,fr,descFr,en,descEn]) => `
-    <article class="principle-card card-surface">
-      <div class="principle-icon">${ico}</div>
-      <h3 class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
-      <p class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></p>
-    </article>`).join('')}
-  </div>
-</section>
-
-<div class="stat-band" role="region" aria-label="Statistiques du système">
-  <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${adrs.length}">${adrs.length}</span><span class="stat-text"><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture decisions</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-text"><span class="lang-fr">Niveaux de tokens</span><span class="lang-en">Token levels</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${totalTokens}">${totalTokens}</span><span class="stat-text"><span class="lang-fr">Tokens au total</span><span class="lang-en">Tokens total</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${colorCount}">${colorCount}</span><span class="stat-text"><span class="lang-fr">Échelles de couleur</span><span class="lang-en">Color scales</span></span></div>
-</div>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-  <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
-  <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
-  <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
-  ${illusPipeline}
-  <div class="pipeline" role="region" aria-label="Pipeline des tokens">
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span><span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span></div>
-      <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 2 — Sémantique</span><span class="lang-en">Level 2 — Semantic</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span><span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span></div>
-      <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 3 — Composant</span><span class="lang-en">Level 3 — Component</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Contrats institutionnels</span><span class="lang-en">Institutional contracts</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span><span class="lang-en">Component-specific decisions. Any change requires approval.</span></div>
-      <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span>
-  <h2><span class="lang-fr">Explorer le système</span><span class="lang-en">Explore the system</span></h2>
-  <p><span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span><span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span></p>
-  <div class="nav-grid">
-    ${sections.map(([h,ico,fr,en,dFr,dEn,ext]) => `
-    <a href="${h}" class="nav-card card-surface card-hover"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>
-      <span class="nav-card-icon">${ico}</span>
-      <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
-    </a>`).join('')}
-  </div>
-</section>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-    <span class="eyebrow"><span class="lang-fr">Qualité garantie</span><span class="lang-en">Quality guaranteed</span></span>
-    <h2><span class="lang-fr">10 pipelines de qualité actifs</span><span class="lang-en">10 active quality pipelines</span></h2>
-    <p><span class="lang-fr">Avant chaque commit, un orchestrateur évalue automatiquement chaque changement contre les gates de qualité actifs. Tokens, accessibilité, commits, régressions visuelles — rien n'atteint le dépôt sans avoir passé le contrôle.</span><span class="lang-en">Before every commit, an orchestrator automatically evaluates each change against the active quality gates. Tokens, accessibility, commits, visual regressions — nothing reaches the repository without passing inspection.</span></p>
-    <div class="mini-grid">
-      ${['wcag','tokens-audit','chromatic','commit'].map(id => {
-        const p = PIPELINES.find(x => x.id === id);
-        return p ? `<div class="mini-card card-surface">
-        <div class="mc-icon">${icon(p.icon, 20)}</div>
-        <div class="mc-title"><span class="lang-fr">${p.title_fr}</span><span class="lang-en">${p.title_en}</span></div>
-        <div class="mc-desc"><span class="lang-fr">${p.marketing_fr}</span><span class="lang-en">${p.marketing_en}</span></div>
-      </div>` : '';
-      }).join('')}
-    </div>
-    <p style="margin-top:var(--agtc-space-6)"><a href="pipelines/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${PIPELINES.length} pipelines →</span><span class="lang-en">View all ${PIPELINES.length} pipelines →</span></a></p>
-  </div>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Mémoire du système</span><span class="lang-en">System memory</span></span>
-  <h2><span class="lang-fr">Décisions architecturales (ADRs)</span><span class="lang-en">Architecture Decision Records</span></h2>
-  <p><span class="lang-fr">Un design system accumule des décisions invisibles. Les ADRs les rendent visibles, traçables et auditables par les humains comme par les agents.</span><span class="lang-en">A design system accumulates invisible decisions. ADRs make them visible, traceable and auditable by both humans and agents.</span></p>
-  <div class="mini-grid">
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('file-text',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Format Markdown</span><span class="lang-en">Markdown format</span></div>
-      <div class="mc-desc"><span class="lang-fr">Chaque décision est un fichier .md versionné — lisible par Git, GitHub et les agents.</span><span class="lang-en">Each decision is a versioned .md file — readable by Git, GitHub and agents.</span></div>
-    </div>
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('git-branch',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Immutabilité</span><span class="lang-en">Immutability</span></div>
-      <div class="mc-desc"><span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span><span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span></div>
-    </div>
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('bot',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Lisible par les agents</span><span class="lang-en">Agent-readable</span></div>
-      <div class="mc-desc"><span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span><span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span></div>
-    </div>
-  </div>
-  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
-</section>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-  <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
-  <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
-  <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
-  ${illusMultiPlat}
-  <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
-    ${stackNodes.map(([ico,fr,en,sub]) => `
-    <div class="stack-node">
-      <div class="stack-node-icon">${ico}</div>
-      <div class="stack-node-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="stack-node-sub">${sub}</div>
-    </div>`).join('')}
-  </div>
-  </div>
-</section>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
-
-<section class="section-secondary">
-  <div class="si-inner cta-final">
-    <h2><span class="lang-fr">Prêt à explorer le système ?</span><span class="lang-en">Ready to explore the system?</span></h2>
-    <p><span class="lang-fr">Commencez par les fondations, ou plongez dans la documentation conçue pour les agents IA.</span><span class="lang-en">Start with the foundations, or dive into the documentation built for AI agents.</span></p>
-    <div class="cta-actions">
-      <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
-      <a href="agents/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Documentation agents</span><span class="lang-en">Agent documentation</span></a>
-    </div>
-  </div>
-</section>
 
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
@@ -6266,6 +6363,14 @@ function build() {
     const src = path.join(ROOT, 'illustrations', f);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
   });
+
+  // Illustrations PNG (redesign narratif) — source : Brand/illustrations/
+  const illusSrc = path.join(__dirname, '..', 'Brand', 'illustrations');
+  if (fs.existsSync(illusSrc)) {
+    fs.readdirSync(illusSrc)
+      .filter(f => f.endsWith('.png'))
+      .forEach(f => fs.copyFileSync(path.join(illusSrc, f), path.join(DIST, 'img', f)));
+  }
 
   // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
   // Affichés dans leurs couleurs de marque officielles → copiés tels quels, servis via <img>.
