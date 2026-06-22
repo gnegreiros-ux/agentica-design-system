@@ -1915,9 +1915,32 @@ body{overflow-x:hidden}
 
 /* ── PHASE 2.1 — sections continues · bleed · fondu images ──────────────────
    "Les images doivent toujours se fondre avec le fond de la section."
-   Toutes les illustrations rd-* fondent dans leur fond via mask-image radial.
-   sections continues = pas de border-top = une seule histoire, pas des boîtes.
-   bleed = l'illustration déborde de sa colonne, composition architecturale. */
+   Solution : TOUTES les sections rd-* passent sur fond inverse (dark).
+   Le token remapping via CSS custom properties cascade automatiquement dans
+   tous les enfants (cartes, textes, bordures, Web Components). ADR-057, ADR-058.
+
+   Ambiance continue : une seule atmosphère sombre sur l'ensemble de la page.
+   Les illustrations (fond sombre isométrique) se fondent dans le fond de section. */
+
+/* ── Toutes sections rd-* = fond inverse. Token remapping en cascade. ─── */
+[data-context="marketing"] .rd-section,
+[data-context="marketing"] .rd-section-alt{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+  /* Remap tokens sémantiques — enfants (cartes, textes, boutons) héritent automatiquement */
+  --agtc-semantic-color-text-primary:var(--agtc-semantic-color-text-on-inverse);
+  --agtc-semantic-color-text-secondary:var(--agtc-semantic-color-text-on-inverse-muted);
+  --agtc-semantic-color-background-surface:var(--agtc-surface-glass);
+  --agtc-semantic-color-background-subtle:var(--agtc-surface-glass);
+  --agtc-semantic-color-border-default:var(--agtc-surface-glass-border);
+}
+/* rd-section-alt : légère variation via glass overlay */
+[data-context="marketing"] .rd-section-alt{
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 94%,white 6%);
+}
+@supports not (color:color-mix(in srgb,black 0%,white 0%)){
+  [data-context="marketing"] .rd-section-alt{background:var(--agtc-semantic-color-background-inverse)}
+}
 
 /* Fondu universel — illustrations fondues dans leur fond de section */
 .rd-illus img,.rd-illus-center img{
