@@ -1184,3 +1184,86 @@ body{overflow-x:hidden}
 .rd-doc-nav a:hover{color:var(--agtc-semantic-color-action-primary)}
 
 @media(max-width:640px){.rd-dual{grid-template-columns:1fr}.rd-hero-stats{gap:1.25rem}}
+
+/* ── PHASE 2 — rythme, compositions dynamiques, halos de profondeur ─────────
+   Sections wow (fond inverse), asymétriques, centrées. Halos via rgba()
+   — profondeur atmosphérique, pas gradient de marque. ADR-057, ADR-058.
+   Un seul aurora (hero) conforme règle 1 gradient/page. */
+
+/* Hero pleine hauteur sur pages marketing */
+[data-context="marketing"] .hero{min-height:90svh;display:flex;align-items:center}
+[data-context="marketing"] .hero .hero-inner{width:100%;padding-top:2rem;padding-bottom:2rem}
+
+/* Sections monumentales — ×2 section-breathing (≈ 192px) */
+.rd-section-monument>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+}
+
+/* Section "wow" — fond inverse, PAS d'aurora (quota 1 gradient = hero) */
+.rd-section-wow{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+}
+.rd-section-wow .rd-h2{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-eyebrow{color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-lead{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-narrative{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-dual-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-dual-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-list li{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-statement{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-quote{color:var(--agtc-semantic-color-text-on-inverse-muted);border-left-color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-token-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-token-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-token-desc{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* Grilles asymétriques 40/60 et 60/40 */
+.rd-grid-40-60{display:grid;grid-template-columns:2fr 3fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-60-40{display:grid;grid-template-columns:3fr 2fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media(max-width:860px){.rd-grid-40-60,.rd-grid-60-40{grid-template-columns:1fr}}
+
+/* Section centrée — pauses narratives */
+.rd-center{text-align:center}
+.rd-center .rd-h2{max-width:22ch;margin-left:auto;margin-right:auto}
+.rd-center .rd-lead{margin-left:auto;margin-right:auto;max-width:56ch}
+.rd-center .rd-eyebrow{display:flex;justify-content:center}
+.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.25rem,2.5vw,2rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold)}
+
+/* Illustration pleine largeur (S5) */
+.rd-illus-full{width:100%;margin:3rem 0}
+.rd-illus-full img{width:100%;height:auto;display:block;border-radius:var(--agtc-semantic-radius-card)}
+
+/* Illustration centrée (S3) */
+.rd-illus-center{display:flex;justify-content:center;margin-bottom:3.5rem}
+.rd-illus-center img{width:100%;max-width:700px;height:auto;display:block}
+
+/* Halos de profondeur — rgba() uniquement, pas de token gradient de marque */
+.rd-halo{position:relative}
+.rd-halo::before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(18,165,148,.18) 0%,transparent 70%);pointer-events:none;z-index:0}
+.rd-halo>*{position:relative;z-index:1}
+.rd-halo-pink::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(237,107,134,.14) 0%,transparent 70%)}
+.rd-halo-violet::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(120,80,200,.12) 0%,transparent 70%)}
+
+/* Texte narratif — plus grand que body standard */
+.rd-narrative{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.75;color:var(--agtc-semantic-color-text-primary);max-width:62ch}
+
+/* Token flow — 4 cartes horizontales sous illustration S5 */
+.rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+@media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.rd-token-flow{grid-template-columns:1fr}}
+.rd-token-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-token-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-token-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);margin-bottom:.5rem}
+.rd-token-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.375rem}
+.rd-token-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+/* Placeholder dans sections sombres (S7) */
+.rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-inverse)}
+
+/* Centrage du CTA interne hero */
+.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
+
+/* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
+.rd-illus img{width:100%;height:auto;display:block}
