@@ -1912,6 +1912,50 @@ body{overflow-x:hidden}
 
 .rd-illus{display:flex;align-items:center;justify-content:center}
 .rd-illus img{width:100%;max-width:520px;height:auto;display:block}
+
+/* ── PHASE 2.1 — sections continues · bleed · fondu images ──────────────────
+   "Les images doivent toujours se fondre avec le fond de la section."
+   Toutes les illustrations rd-* fondent dans leur fond via mask-image radial.
+   sections continues = pas de border-top = une seule histoire, pas des boîtes.
+   bleed = l'illustration déborde de sa colonne, composition architecturale. */
+
+/* Fondu universel — illustrations fondues dans leur fond de section */
+.rd-illus img,.rd-illus-center img{
+  -webkit-mask-image:radial-gradient(ellipse 88% 85% at 50% 50%,black 28%,transparent 100%);
+  mask-image:radial-gradient(ellipse 88% 85% at 50% 50%,black 28%,transparent 100%);
+}
+
+/* Full-width S5 : fondu horizontal + vertical, centre conservé */
+.rd-illus-full img{
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 42%,transparent 100%);
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 42%,transparent 100%);
+}
+
+/* Hero illustration fond dans le fond sombre */
+.hero .rd-illus img{
+  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
+  mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
+  max-width:600px !important;
+}
+
+/* Hero plus asymétrique — illustration légèrement dominante */
+[data-context="marketing"] .hero-grid{grid-template-columns:10fr 11fr}
+
+/* Une seule histoire — sections sans bordures, flux naturel */
+.rd-section{overflow:visible;border-top:none}
+
+/* Protection contre le scroll horizontal du bleed */
+.rd-wrap{overflow-x:hidden}
+
+/* Bleed architectural : illustration sort de sa colonne */
+.rd-illus-bleed-r img{width:115%;max-width:none !important}
+.rd-illus-bleed-l img{width:115%;max-width:none !important;margin-left:-15%}
+
+/* Séparation entre zones : très légère via .rd-section-alt uniquement */
+.rd-section-alt{position:relative}
+
+/* La section wow et alt n'ont pas besoin de border non plus */
+.rd-section-wow{border-top:none}
 .rd-illus-placeholder{aspect-ratio:4/3;width:100%;max-width:520px;background:var(--agtc-semantic-color-background-subtle);border:2px dashed var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail);text-align:center;padding:1.5rem}
 .rd-illus-placeholder strong{display:block;font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
 
@@ -2618,6 +2662,7 @@ function buildHome(adrs) {
 
 
   const body = `
+<div class="rd-wrap">
 <!-- ═══════════════════════════════════════════════════════════════════════════
      S1 — HERO
      Aurora existante + auroraDrift. min-height 90svh via [data-context="marketing"].
@@ -2684,7 +2729,7 @@ function buildHome(adrs) {
           <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
         </p>
       </div>
-      <div class="rd-illus rd-halo-pink rd-halo" aria-hidden="true">
+      <div class="rd-illus rd-illus-bleed-r rd-halo-pink rd-halo" aria-hidden="true">
         <img src="img/IMG-CONTEXT.png" alt="" width="600" height="500" loading="lazy">
       </div>
     </div>
@@ -2761,7 +2806,7 @@ function buildHome(adrs) {
           <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
         </p>
       </div>
-      <div class="rd-illus" aria-hidden="true">
+      <div class="rd-illus rd-illus-bleed-r" aria-hidden="true">
         <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="560" height="460" loading="lazy">
       </div>
     </div>
@@ -2935,7 +2980,7 @@ function buildHome(adrs) {
         </p>
         <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
       </div>
-      <div class="rd-illus" aria-hidden="true">
+      <div class="rd-illus rd-illus-bleed-r" aria-hidden="true">
         <img src="img/IMG-CONTRACTS.png" alt="" width="520" height="430" loading="lazy">
       </div>
     </div>
@@ -2990,8 +3035,8 @@ function buildHome(adrs) {
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section">
   <div class="rd-inner">
-    <div class="rd-grid-40-60">
-      <div class="rd-illus" aria-hidden="true">
+    <div class="rd-grid-60-40">
+      <div class="rd-illus rd-illus-bleed-l rd-halo" aria-hidden="true">
         <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
       </div>
       <div>
@@ -3036,6 +3081,8 @@ function buildHome(adrs) {
     </div>
   </div>
 </section>
+
+</div><!-- /rd-wrap -->
 
 <!-- Navigation documentation — conservée pour le SEO et les agents -->
 <nav class="rd-doc-nav" aria-label="Documentation">
