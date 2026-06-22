@@ -1954,6 +1954,89 @@ body{overflow-x:hidden}
 .rd-doc-nav a:hover{color:var(--agtc-semantic-color-action-primary)}
 
 @media(max-width:640px){.rd-dual{grid-template-columns:1fr}.rd-hero-stats{gap:1.25rem}}
+
+/* ── PHASE 2 — rythme, compositions dynamiques, halos de profondeur ─────────
+   Sections wow (fond inverse), asymétriques, centrées. Halos via rgba()
+   — profondeur atmosphérique, pas gradient de marque. ADR-057, ADR-058.
+   Un seul aurora (hero) conforme règle 1 gradient/page. */
+
+/* Hero pleine hauteur sur pages marketing */
+[data-context="marketing"] .hero{min-height:90svh;display:flex;align-items:center}
+[data-context="marketing"] .hero .hero-inner{width:100%;padding-top:2rem;padding-bottom:2rem}
+
+/* Sections monumentales — ×2 section-breathing (≈ 192px) */
+.rd-section-monument>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+}
+
+/* Section "wow" — fond inverse, PAS d'aurora (quota 1 gradient = hero) */
+.rd-section-wow{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+}
+.rd-section-wow .rd-h2{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-eyebrow{color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-lead{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-narrative{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-dual-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-dual-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-list li{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-statement{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-quote{color:var(--agtc-semantic-color-text-on-inverse-muted);border-left-color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-token-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-token-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-token-desc{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* Grilles asymétriques 40/60 et 60/40 */
+.rd-grid-40-60{display:grid;grid-template-columns:2fr 3fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-60-40{display:grid;grid-template-columns:3fr 2fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media(max-width:860px){.rd-grid-40-60,.rd-grid-60-40{grid-template-columns:1fr}}
+
+/* Section centrée — pauses narratives */
+.rd-center{text-align:center}
+.rd-center .rd-h2{max-width:22ch;margin-left:auto;margin-right:auto}
+.rd-center .rd-lead{margin-left:auto;margin-right:auto;max-width:56ch}
+.rd-center .rd-eyebrow{display:flex;justify-content:center}
+.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.25rem,2.5vw,2rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold)}
+
+/* Illustration pleine largeur (S5) */
+.rd-illus-full{width:100%;margin:3rem 0}
+.rd-illus-full img{width:100%;height:auto;display:block;border-radius:var(--agtc-semantic-radius-card)}
+
+/* Illustration centrée (S3) */
+.rd-illus-center{display:flex;justify-content:center;margin-bottom:3.5rem}
+.rd-illus-center img{width:100%;max-width:700px;height:auto;display:block}
+
+/* Halos de profondeur — rgba() uniquement, pas de token gradient de marque */
+.rd-halo{position:relative}
+.rd-halo::before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(18,165,148,.18) 0%,transparent 70%);pointer-events:none;z-index:0}
+.rd-halo>*{position:relative;z-index:1}
+.rd-halo-pink::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(237,107,134,.14) 0%,transparent 70%)}
+.rd-halo-violet::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(120,80,200,.12) 0%,transparent 70%)}
+
+/* Texte narratif — plus grand que body standard */
+.rd-narrative{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.75;color:var(--agtc-semantic-color-text-primary);max-width:62ch}
+
+/* Token flow — 4 cartes horizontales sous illustration S5 */
+.rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+@media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.rd-token-flow{grid-template-columns:1fr}}
+.rd-token-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-token-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-token-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);margin-bottom:.5rem}
+.rd-token-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.375rem}
+.rd-token-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+/* Placeholder dans sections sombres (S7) */
+.rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-inverse)}
+
+/* Centrage du CTA interne hero */
+.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
+
+/* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
+.rd-illus img{width:100%;height:auto;display:block}
 `; }
 
 function siteJS() { return `
@@ -2535,7 +2618,12 @@ function buildHome(adrs) {
 
 
   const body = `
-<!-- ═══ S1 — HERO (.hero = aurora + auroraDrift + tokens on-inverse) ════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S1 — HERO
+     Aurora existante + auroraDrift. min-height 90svh via [data-context="marketing"].
+     Typographie : hero-title (60px max via token marketing).
+     Boutons : agtc-button (dogfooding ADR-058, ADR-062).
+════════════════════════════════════════════════════════════════════════════ -->
 <section class="hero" id="accueil" aria-label="Agentica">
   <div class="hero-inner">
     <div class="hero-grid">
@@ -2545,8 +2633,8 @@ function buildHome(adrs) {
           Human First, AI Ready
         </div>
         <h1 class="hero-title">
-          <span class="lang-fr">Le système de décisions pour les humains et les agents IA</span>
-          <span class="lang-en">The decision system for humans and AI agents</span>
+          <span class="lang-fr">Le système de décisions<br>pour les humains<br>et les agents IA</span>
+          <span class="lang-en">The decision system<br>for humans<br>and AI agents</span>
         </h1>
         <p class="hero-tagline">
           <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica les transforme en contrats structurés — compréhensibles par les humains et les agents IA, avec les humains aux commandes.</span>
@@ -2569,187 +2657,186 @@ function buildHome(adrs) {
           <div role="listitem"><span class="rd-stat-num">10</span><span class="rd-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
         </div>
       </div>
-      <div class="rd-illus" aria-hidden="true">
+      <div class="rd-illus rd-halo" aria-hidden="true">
         <img src="img/IMG-HERO-SYSTEM.png" alt="" width="560" height="460" loading="eager" fetchpriority="high">
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ S2 — LE PROBLÈME ════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S2 — LE PROBLÈME
+     Asymétrique 40/60 : peu de texte, illustration dominante.
+     Texte narratif — pas de liste à puces.
+     Ton lourd, déclaratif.
+════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section rd-section-alt" id="pourquoi">
   <div class="rd-inner">
-    <div class="rd-grid rd-grid-rev">
+    <div class="rd-grid-40-60">
       <div>
         <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
         <h2 class="rd-h2">
           <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
           <span class="lang-en">Teams accumulate invisible decisions</span>
         </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. Personne ne sait plus pourquoi les choses sont comme elles sont.</span>
-          <span class="lang-en">Decisions become scattered across Figma, GitHub, Storybook, Slack and Confluence. Nobody knows anymore why things are the way they are.</span>
+        <p class="rd-narrative">
+          <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
+          <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
         </p>
-        <ul class="rd-list dash">
-          <li><span class="lang-fr">Dette UX accumulée en silence</span><span class="lang-en">Silent UX debt accumulation</span></li>
-          <li><span class="lang-fr">Dépendance aux experts non documentée</span><span class="lang-en">Undocumented dependency on experts</span></li>
-          <li><span class="lang-fr">Documentation obsolète dès la publication</span><span class="lang-en">Documentation outdated at publish time</span></li>
-          <li><span class="lang-fr">Impossibilité d'intégrer l'IA sans risque</span><span class="lang-en">Inability to integrate AI safely</span></li>
+      </div>
+      <div class="rd-illus rd-halo-pink rd-halo" aria-hidden="true">
+        <img src="img/IMG-CONTEXT.png" alt="" width="600" height="500" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S3 — HUMAN FIRST, AI READY — WOW 1
+     Section sombre (fond inverse). Illustration centrée large + halo teal.
+     Deux cartes (Humains / Agents IA) sous l'illustration.
+     Citation finale centrée comme déclaration de principe.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-wow rd-section-monument">
+  <div class="rd-inner">
+    <div class="rd-center">
+      <span class="rd-eyebrow">Human First, AI Ready</span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Conçu pour les humains. Prêt pour les agents IA.</span>
+        <span class="lang-en">Designed for humans. Ready for AI agents.</span>
+      </h2>
+      <p class="rd-lead">
+        <span class="lang-fr">Deux consommateurs. Une seule source de vérité. Zéro compromis.</span>
+        <span class="lang-en">Two consumers. One single source of truth. Zero compromise.</span>
+      </p>
+    </div>
+    <div class="rd-illus-center rd-halo" aria-hidden="true">
+      <img src="img/IMG-HUMANS-AI_EN.png" alt="" width="700" height="580" loading="lazy">
+    </div>
+    <div class="rd-dual">
+      <div class="rd-dual-card">
+        <div class="rd-dual-title"><span class="lang-fr">Les humains</span><span class="lang-en">Humans</span></div>
+        <ul class="rd-list check">
+          <li><span class="lang-fr">Comprennent</span><span class="lang-en">Understand</span></li>
+          <li><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></li>
+          <li><span class="lang-fr">Approuvent</span><span class="lang-en">Approve</span></li>
+          <li><span class="lang-fr">Gouvernent</span><span class="lang-en">Govern</span></li>
         </ul>
       </div>
-      <div class="rd-illus" aria-hidden="true">
-        <img src="img/IMG-CONTEXT.png" alt="" width="520" height="430" loading="lazy">
+      <div class="rd-dual-card">
+        <div class="rd-dual-title"><span class="lang-fr">Les agents IA</span><span class="lang-en">AI agents</span></div>
+        <ul class="rd-list check">
+          <li><span class="lang-fr">Détectent</span><span class="lang-en">Detect</span></li>
+          <li><span class="lang-fr">Analysent</span><span class="lang-en">Analyze</span></li>
+          <li><span class="lang-fr">Proposent</span><span class="lang-en">Propose</span></li>
+          <li><span class="lang-fr">Automatisent</span><span class="lang-en">Automate</span></li>
+        </ul>
       </div>
+    </div>
+    <div class="rd-center">
+      <blockquote class="rd-quote">
+        <span class="lang-fr">« Le dernier mot reste toujours humain. »</span>
+        <span class="lang-en">"The final word always remains human."</span>
+      </blockquote>
     </div>
   </div>
 </section>
 
-<!-- ═══ S3 — HUMAN FIRST, AI READY ════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S4 — CONNAISSANCES — MOMENT CALME
+     Centré, minimal. Juste le titre et une courte déclaration narrative.
+     Pas de liste. L'illustration est là pour respirer, pas pour expliquer.
+════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section">
   <div class="rd-inner">
-    <div class="rd-grid">
-      <div>
-        <span class="rd-eyebrow">Human First, AI Ready</span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Conçu pour les humains. Prêt pour les agents IA.</span>
-          <span class="lang-en">Designed for humans. Ready for AI agents.</span>
-        </h2>
-        <div class="rd-dual">
-          <div class="rd-dual-card">
-            <div class="rd-dual-title"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></div>
-            <ul class="rd-list check">
-              <li><span class="lang-fr">Comprennent</span><span class="lang-en">Understand</span></li>
-              <li><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></li>
-              <li><span class="lang-fr">Approuvent</span><span class="lang-en">Approve</span></li>
-              <li><span class="lang-fr">Gouvernent</span><span class="lang-en">Govern</span></li>
-            </ul>
-          </div>
-          <div class="rd-dual-card">
-            <div class="rd-dual-title"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></div>
-            <ul class="rd-list check">
-              <li><span class="lang-fr">Détectent</span><span class="lang-en">Detect</span></li>
-              <li><span class="lang-fr">Analysent</span><span class="lang-en">Analyze</span></li>
-              <li><span class="lang-fr">Proposent</span><span class="lang-en">Propose</span></li>
-              <li><span class="lang-fr">Automatisent</span><span class="lang-en">Automate</span></li>
-            </ul>
-          </div>
-        </div>
-        <blockquote class="rd-quote">
-          <span class="lang-fr">« Le dernier mot reste toujours humain. »</span>
-          <span class="lang-en">"The final word always remains human."</span>
-        </blockquote>
-      </div>
-      <div class="rd-illus" aria-hidden="true">
-        <img src="img/IMG-HUMANS-AI_EN.png" alt="" width="520" height="430" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ S4 — CONNAISSANCES COMME ACTIF ════════════════════════════════════ -->
-<section class="rd-section rd-section-alt">
-  <div class="rd-inner">
-    <div class="rd-grid">
-      <div class="rd-illus" aria-hidden="true">
-        <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="520" height="430" loading="lazy">
-      </div>
+    <div class="rd-grid-40-60">
       <div>
         <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
         <h2 class="rd-h2">
           <span class="lang-fr">Les connaissances sont un actif stratégique</span>
           <span class="lang-en">Knowledge is a strategic asset</span>
         </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les connaissances doivent survivre aux technologies.</span>
-          <span class="lang-en">Frameworks evolve. Tools change. Knowledge must survive technologies.</span>
+        <p class="rd-narrative">
+          <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances, elles, doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
+          <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
         </p>
-        <ul class="rd-list arrow">
-          <li><span class="lang-fr">Indépendance des frameworks</span><span class="lang-en">Framework independence</span></li>
-          <li><span class="lang-fr">Décisions versionnées et auditables</span><span class="lang-en">Versioned and auditable decisions</span></li>
-          <li><span class="lang-fr">Compréhensible par les humains et les agents</span><span class="lang-en">Understandable by humans and agents</span></li>
-        </ul>
-        <p class="rd-lead">
-          <span class="lang-fr">Agentica transforme les décisions en actifs durables.</span>
-          <span class="lang-en">Agentica transforms decisions into durable assets.</span>
-        </p>
+      </div>
+      <div class="rd-illus" aria-hidden="true">
+        <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="560" height="460" loading="lazy">
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ S5 — SOURCE UNIQUE DE VÉRITÉ ══════════════════════════════════════ -->
-<section class="rd-section" id="architecture">
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S5 — SOURCE UNIQUE DE VÉRITÉ — WOW 2
+     Section monumentale centrée. Illustration pleine largeur avec halo.
+     4 cartes token-flow en rang horizontal sous l'image.
+     La plus grande section de la page.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-alt rd-section-monument" id="architecture">
   <div class="rd-inner">
-    <div class="rd-grid">
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Une seule source de vérité</span>
-          <span class="lang-en">One source of truth</span>
-        </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Une même source alimente plusieurs destinations. Quatre niveaux ordonnés, chacun avec un rôle précis.</span>
-          <span class="lang-en">One source feeds multiple destinations. Four ordered levels, each with a precise role.</span>
-        </p>
-        <div class="rd-stack">
-          <div class="rd-stack-card">
-            <span class="rd-stack-num">01</span>
-            <div>
-              <div class="rd-stack-title"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></div>
-              <div class="rd-stack-desc"><span class="lang-fr">Couleur, typographie, espacement.</span><span class="lang-en">Colors, typography, spacing.</span></div>
-            </div>
-          </div>
-          <div class="rd-stack-card">
-            <span class="rd-stack-num">02</span>
-            <div>
-              <div class="rd-stack-title"><span class="lang-fr">Contrats sémantiques</span><span class="lang-en">Semantic contracts</span></div>
-              <div class="rd-stack-desc"><span class="lang-fr">L'intention, pas la valeur brute.</span><span class="lang-en">Intent instead of raw values.</span></div>
-            </div>
-          </div>
-          <div class="rd-stack-card">
-            <span class="rd-stack-num">03</span>
-            <div>
-              <div class="rd-stack-title"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></div>
-              <div class="rd-stack-desc"><span class="lang-fr">Contrats comportementaux.</span><span class="lang-en">Behavioral contracts.</span></div>
-            </div>
-          </div>
-          <div class="rd-stack-card">
-            <span class="rd-stack-num">04</span>
-            <div>
-              <div class="rd-stack-title"><span class="lang-fr">Applications</span><span class="lang-en">Applications</span></div>
-              <div class="rd-stack-desc"><span class="lang-fr">Multiples plateformes.</span><span class="lang-en">Multiple platforms.</span></div>
-            </div>
-          </div>
-        </div>
+    <div class="rd-center">
+      <span class="rd-eyebrow"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Une seule source de vérité</span>
+        <span class="lang-en">One source of truth</span>
+      </h2>
+      <p class="rd-lead">
+        <span class="lang-fr">Une même source alimente plusieurs destinations. Quatre niveaux. Une seule chaîne de décisions.</span>
+        <span class="lang-en">One source feeds multiple destinations. Four levels. One decision chain.</span>
+      </p>
+    </div>
+    <div class="rd-illus-full rd-halo-violet rd-halo" aria-hidden="true">
+      <img src="img/IMG-SINGLE-SOURCE.png" alt="" width="1200" height="630" loading="lazy">
+    </div>
+    <div class="rd-token-flow">
+      <div class="rd-token-card">
+        <div class="rd-token-num">01</div>
+        <div class="rd-token-title"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></div>
+        <div class="rd-token-desc"><span class="lang-fr">Couleur, typographie, espacement.</span><span class="lang-en">Color, typography, spacing.</span></div>
       </div>
-      <div class="rd-illus" aria-hidden="true">
-        <img src="img/IMG-SINGLE-SOURCE.png" alt="" width="520" height="430" loading="lazy">
+      <div class="rd-token-card">
+        <div class="rd-token-num">02</div>
+        <div class="rd-token-title"><span class="lang-fr">Contrats sémantiques</span><span class="lang-en">Semantic contracts</span></div>
+        <div class="rd-token-desc"><span class="lang-fr">L'intention, pas la valeur brute.</span><span class="lang-en">Intent, not raw values.</span></div>
+      </div>
+      <div class="rd-token-card">
+        <div class="rd-token-num">03</div>
+        <div class="rd-token-title"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></div>
+        <div class="rd-token-desc"><span class="lang-fr">Contrats comportementaux.</span><span class="lang-en">Behavioral contracts.</span></div>
+      </div>
+      <div class="rd-token-card">
+        <div class="rd-token-num">04</div>
+        <div class="rd-token-title"><span class="lang-fr">Applications</span><span class="lang-en">Applications</span></div>
+        <div class="rd-token-desc"><span class="lang-fr">Multiples plateformes.</span><span class="lang-en">Multiple platforms.</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ S6 — VALEUR PAR RÔLE ══════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt">
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S6 — VALEUR PAR RÔLE
+     Section plus calme. Illustration placeholder + grille de rôles.
+     Placeholder IMG-PERSONAS en attente de l'illustration.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section">
   <div class="rd-inner">
-    <div class="rd-grid">
-      <div class="rd-illus" aria-hidden="true">
-        <!-- IMG-PERSONAS — illustration à créer (placeholder temporaire) -->
-        <div class="rd-illus-placeholder">
-          <strong>IMG-PERSONAS</strong>
-          <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
-        </div>
-      </div>
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Une valeur différente pour chaque rôle</span>
-          <span class="lang-en">Different value for every role</span>
-        </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Les bénéfices sont concrets et mesurables, quelle que soit la position dans l'équipe.</span>
-          <span class="lang-en">The benefits are concrete and measurable, whatever your position in the team.</span>
-        </p>
+    <div class="rd-center">
+      <span class="rd-eyebrow"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Une valeur différente pour chaque rôle</span>
+        <span class="lang-en">Different value for every role</span>
+      </h2>
+      <p class="rd-lead">
+        <span class="lang-fr">Les bénéfices sont concrets. Quelle que soit votre position dans l'équipe.</span>
+        <span class="lang-en">The benefits are concrete. Whatever your position in the team.</span>
+      </p>
+    </div>
+    <div class="rd-illus-center" aria-hidden="true">
+      <div class="rd-illus-placeholder">
+        <strong>IMG-PERSONAS</strong>
+        <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
       </div>
     </div>
     <div class="rd-role-grid">
@@ -2794,67 +2881,57 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<!-- ═══ S7 — QUALITÉ INTÉGRÉE ═════════════════════════════════════════════ -->
-<section class="rd-section" id="qualite">
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S7 — QUALITÉ — WOW 3
+     Section sombre. Illustration (placeholder IMG-QUALITY-GATES) côté gauche
+     avec halo violet. Texte narratif à droite. Pas de liste à puces.
+     La déclaration finale doit être mémorable.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-wow" id="qualite">
   <div class="rd-inner">
-    <div class="rd-grid">
+    <div class="rd-grid-60-40">
+      <div class="rd-halo-violet rd-halo" aria-hidden="true">
+        <div class="rd-illus-placeholder">
+          <strong>IMG-QUALITY-GATES</strong>
+          <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
+        </div>
+      </div>
       <div>
         <span class="rd-eyebrow"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></span>
         <h2 class="rd-h2">
           <span class="lang-fr">La qualité est une propriété du système</span>
           <span class="lang-en">Quality is built into the system</span>
         </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Avant chaque changement, Agentica vérifie automatiquement :</span>
-          <span class="lang-en">Before every change, Agentica automatically verifies:</span>
+        <p class="rd-narrative">
+          <span class="lang-fr">Avant chaque changement, Agentica vérifie automatiquement l'accessibilité, les régressions visuelles, la documentation, la cohérence des ADRs et l'intégrité des tokens. La qualité n'est pas une étape finale. Elle est structurelle.</span>
+          <span class="lang-en">Before every change, Agentica automatically verifies accessibility, visual regressions, documentation, ADR consistency and token integrity. Quality is not a final step. It is structural.</span>
         </p>
-        <ul class="rd-list check">
-          <li><span class="lang-fr">Accessibilité WCAG 2.2 AA</span><span class="lang-en">WCAG 2.2 AA accessibility</span></li>
-          <li><span class="lang-fr">Régressions visuelles (Chromatic)</span><span class="lang-en">Visual regressions (Chromatic)</span></li>
-          <li><span class="lang-fr">Documentation complète</span><span class="lang-en">Complete documentation</span></li>
-          <li><span class="lang-fr">Cohérence des ADRs</span><span class="lang-en">ADR consistency</span></li>
-          <li><span class="lang-fr">Cohérence des tokens</span><span class="lang-en">Token consistency</span></li>
-        </ul>
         <p class="rd-statement">
           <span class="lang-fr">Rien n'entre dans le système sans contrôle.</span>
           <span class="lang-en">Nothing enters the system without control.</span>
         </p>
       </div>
-      <div class="rd-illus" aria-hidden="true">
-        <!-- IMG-QUALITY-GATES — illustration à créer (placeholder temporaire) -->
-        <div class="rd-illus-placeholder">
-          <strong>IMG-QUALITY-GATES</strong>
-          <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
-        </div>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ S8 — MÉMOIRE DES DÉCISIONS ═══════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S8 — MÉMOIRE DES DÉCISIONS — MOMENT CALME
+     Centré, narratif. Pas de liste — une seule déclaration forte.
+     Lien vers les ADRs comme invitation à explorer.
+════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section rd-section-alt">
   <div class="rd-inner">
-    <div class="rd-grid rd-grid-rev">
+    <div class="rd-grid-40-60">
       <div>
         <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
         <h2 class="rd-h2">
           <span class="lang-fr">Chaque décision possède une mémoire</span>
           <span class="lang-en">Every decision has memory</span>
         </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Chaque décision architecturale enregistre :</span>
-          <span class="lang-en">Each architectural decision records:</span>
-        </p>
-        <ul class="rd-list arrow">
-          <li><span class="lang-fr">Le contexte</span><span class="lang-en">Context</span></li>
-          <li><span class="lang-fr">La décision</span><span class="lang-en">Decision</span></li>
-          <li><span class="lang-fr">Les alternatives rejetées</span><span class="lang-en">Rejected alternatives</span></li>
-          <li><span class="lang-fr">Les conséquences</span><span class="lang-en">Consequences</span></li>
-          <li><span class="lang-fr">Les coûts acceptés</span><span class="lang-en">Accepted costs</span></li>
-        </ul>
-        <p class="rd-statement">
-          <span class="lang-fr">Traçabilité et préservation des connaissances à long terme.</span>
-          <span class="lang-en">Traceability and long-term knowledge preservation.</span>
+        <p class="rd-narrative">
+          <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives explorées, les compromis acceptés — afin que personne ne soit jamais contraint de réinventer ce qui a déjà été résolu.</span>
+          <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves the context, the explored alternatives, the accepted trade-offs — so nobody is ever forced to reinvent what has already been resolved.</span>
         </p>
         <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
       </div>
@@ -2865,11 +2942,15 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<!-- ═══ S9 — HUMAN-IN-THE-LOOP ════════════════════════════════════════════ -->
-<section class="rd-section" id="ia">
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S9 — HUMAN-IN-THE-LOOP — IA
+     Section sombre. Layout préservé : illustration à gauche, deux cartes à droite.
+     La structure peut/ne peut pas est la seule liste conservée — elle est essentielle.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section rd-section-wow" id="ia">
   <div class="rd-inner">
     <div class="rd-grid">
-      <div class="rd-illus" aria-hidden="true">
+      <div class="rd-illus rd-halo" aria-hidden="true">
         <img src="img/IMG-HUMAN-LOOP.png" alt="" width="520" height="430" loading="lazy">
       </div>
       <div>
@@ -2902,10 +2983,14 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<!-- ═══ S10 — CONSTRUIRE POUR DEMAIN ══════════════════════════════════════ -->
-<section class="rd-section rd-section-alt">
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     S10 — DURABILITÉ — CLÔTURE NARRATIVE
+     Centré, narratif, calme. Invitation à la réflexion avant le CTA.
+     Pas de liste — une déclaration de principes en texte continu.
+════════════════════════════════════════════════════════════════════════════ -->
+<section class="rd-section">
   <div class="rd-inner">
-    <div class="rd-grid">
+    <div class="rd-grid-40-60">
       <div class="rd-illus" aria-hidden="true">
         <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
       </div>
@@ -2915,38 +3000,34 @@ function buildHome(adrs) {
           <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
           <span class="lang-en">Build for today. Preserve for tomorrow.</span>
         </h2>
-        <p class="rd-lead">
-          <span class="lang-fr">Agentica favorise :</span>
-          <span class="lang-en">Agentica favors:</span>
+        <p class="rd-narrative">
+          <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils. Ses connaissances restent accessibles, quelle que soit la technologie de demain.</span>
+          <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools. Its knowledge remains accessible, whatever tomorrow's technology brings.</span>
         </p>
-        <ul class="rd-list dot">
-          <li><span class="lang-fr">Standards ouverts W3C DTCG</span><span class="lang-en">W3C DTCG open standards</span></li>
-          <li>Web Components</li>
-          <li><span class="lang-fr">Contrats explicites</span><span class="lang-en">Explicit contracts</span></li>
-          <li><span class="lang-fr">Indépendance des frameworks</span><span class="lang-en">Framework independence</span></li>
-          <li><span class="lang-fr">Portabilité totale</span><span class="lang-en">Full portability</span></li>
-        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CTA FINAL — meme atmosphere que le hero (background-inverse) ══════ -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     CTA FINAL — même atmosphère que le hero
+     IMG-AGENTICA centré. Invitation à démarrer.
+════════════════════════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
     <div class="rd-cta-inner">
-      <span class="rd-eyebrow" style="color:var(--agtc-semantic-color-action-primary)">Agentica</span>
-      <h2 class="hero-title" style="color:var(--agtc-semantic-color-text-on-inverse)">
+      <span class="rd-eyebrow">Agentica</span>
+      <h2 class="hero-title">
         <span class="lang-fr">Prêt à explorer Agentica ?</span>
         <span class="lang-en">Ready to explore Agentica?</span>
       </h2>
-      <p class="rd-lead" style="color:var(--agtc-semantic-color-text-on-inverse-muted);max-width:56ch;margin:0 auto 2rem">
-        <span class="lang-fr">Transformez les décisions en connaissances durables, compréhensibles par les humains et les agents IA.</span>
+      <div class="rd-illus-center" aria-hidden="true">
+        <img src="img/IMG-AGENTICA.png" alt="" width="400" height="300" loading="lazy">
+      </div>
+      <p class="rd-lead">
+        <span class="lang-fr">Transformez les décisions en connaissances durables — compréhensibles par les humains et les agents IA.</span>
         <span class="lang-en">Transform decisions into durable knowledge understandable by humans and AI agents.</span>
       </p>
-      <div class="rd-illus" aria-hidden="true" style="margin-bottom:2.5rem">
-        <img src="img/IMG-AGENTICA.png" alt="" width="320" height="240" loading="lazy">
-      </div>
       <div class="rd-cta-actions">
         <a href="get-started.html" class="agtc-button primary"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
         <a href="components/index.html" class="agtc-button ghost"><span class="lang-fr">Voir les composants →</span><span class="lang-en">View components →</span></a>
@@ -2956,7 +3037,7 @@ function buildHome(adrs) {
   </div>
 </section>
 
-<!-- Documentation — nav secondaire conservée pour les agents et le SEO -->
+<!-- Navigation documentation — conservée pour le SEO et les agents -->
 <nav class="rd-doc-nav" aria-label="Documentation">
   <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a> ·
   <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a> ·
