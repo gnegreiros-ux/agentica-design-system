@@ -1329,6 +1329,52 @@ body{overflow-x:hidden}
 /* Texte narratif — plus grand que body standard */
 .rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
 
+/* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
+   Remplace rd-inner+rd-grid pour les sections avec illustration de bord.
+   La colonne texte reste en max-width ; la colonne illus touche le bord de la section. */
+.rd-split{display:grid;align-items:center;width:100%}
+.rd-split-text-l{grid-template-columns:5fr 7fr}
+.rd-split-text-r{grid-template-columns:7fr 5fr}
+
+/* Texte — centré dans sa colonne, max-width pour la lisibilité */
+.rd-split-body{
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:560px;
+  padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) clamp(2rem,4vw,4rem);
+}
+.rd-split-text-l .rd-split-body{margin-left:auto}
+.rd-split-text-r .rd-split-body{margin-right:auto}
+
+/* Illustration — remplit toute sa colonne jusqu'au bord sans contrainte */
+.rd-split-illus{
+  position:relative;
+  align-self:stretch;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:480px;
+}
+/* L'image déborde légèrement sa colonne — clipping naturel par overflow:hidden */
+.rd-split-illus img{
+  width:115%;
+  height:auto;
+  display:block;
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  max-width:none !important;
+}
+/* Halo dans le split — fonctionne malgré overflow:hidden car il est en inset */
+.rd-split-illus.rd-halo::before{inset:-10%}
+
+@media(max-width:860px){
+  .rd-split-text-l,.rd-split-text-r{grid-template-columns:1fr}
+  .rd-split-text-r .rd-split-illus{order:-1}
+  .rd-split-illus{min-height:280px}
+  .rd-split-body{max-width:none;margin:0;padding:2.5rem clamp(1.5rem,5vw,2.5rem)}
+}
+
 /* Token flow — 4 cartes horizontales sous illustration S5 */
 .rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
 @media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}

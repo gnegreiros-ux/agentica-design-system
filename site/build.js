@@ -2099,6 +2099,52 @@ body{overflow-x:hidden}
 /* Texte narratif — plus grand que body standard */
 .rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
 
+/* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
+   Remplace rd-inner+rd-grid pour les sections avec illustration de bord.
+   La colonne texte reste en max-width ; la colonne illus touche le bord de la section. */
+.rd-split{display:grid;align-items:center;width:100%}
+.rd-split-text-l{grid-template-columns:5fr 7fr}
+.rd-split-text-r{grid-template-columns:7fr 5fr}
+
+/* Texte — centré dans sa colonne, max-width pour la lisibilité */
+.rd-split-body{
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:560px;
+  padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) clamp(2rem,4vw,4rem);
+}
+.rd-split-text-l .rd-split-body{margin-left:auto}
+.rd-split-text-r .rd-split-body{margin-right:auto}
+
+/* Illustration — remplit toute sa colonne jusqu'au bord sans contrainte */
+.rd-split-illus{
+  position:relative;
+  align-self:stretch;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:480px;
+}
+/* L'image déborde légèrement sa colonne — clipping naturel par overflow:hidden */
+.rd-split-illus img{
+  width:115%;
+  height:auto;
+  display:block;
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  max-width:none !important;
+}
+/* Halo dans le split — fonctionne malgré overflow:hidden car il est en inset */
+.rd-split-illus.rd-halo::before{inset:-10%}
+
+@media(max-width:860px){
+  .rd-split-text-l,.rd-split-text-r{grid-template-columns:1fr}
+  .rd-split-text-r .rd-split-illus{order:-1}
+  .rd-split-illus{min-height:280px}
+  .rd-split-body{max-width:none;margin:0;padding:2.5rem clamp(1.5rem,5vw,2.5rem)}
+}
+
 /* Token flow — 4 cartes horizontales sous illustration S5 */
 .rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
 @media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}
@@ -2753,22 +2799,20 @@ function buildHome(adrs) {
      Ton lourd, déclaratif.
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section rd-section-alt" id="pourquoi">
-  <div class="rd-inner">
-    <div class="rd-grid-40-60">
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
-          <span class="lang-en">Teams accumulate invisible decisions</span>
-        </h2>
-        <p class="rd-narrative">
-          <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
-          <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
-        </p>
-      </div>
-      <div class="rd-illus rd-illus-bleed-r rd-halo-pink rd-halo" aria-hidden="true">
-        <img src="img/IMG-CONTEXT.png" alt="" width="600" height="500" loading="lazy">
-      </div>
+  <div class="rd-split rd-split-text-l">
+    <div class="rd-split-body">
+      <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
+        <span class="lang-en">Teams accumulate invisible decisions</span>
+      </h2>
+      <p class="rd-narrative">
+        <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
+        <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
+      </p>
+    </div>
+    <div class="rd-split-illus rd-halo rd-halo-pink" aria-hidden="true">
+      <img src="img/IMG-CONTEXT.png" alt="" width="600" height="500" loading="lazy">
     </div>
   </div>
 </section>
@@ -2830,22 +2874,20 @@ function buildHome(adrs) {
      Pas de liste. L'illustration est là pour respirer, pas pour expliquer.
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section">
-  <div class="rd-inner">
-    <div class="rd-grid-40-60">
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Les connaissances sont un actif stratégique</span>
-          <span class="lang-en">Knowledge is a strategic asset</span>
-        </h2>
-        <p class="rd-narrative">
-          <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances, elles, doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
-          <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
-        </p>
-      </div>
-      <div class="rd-illus rd-illus-bleed-r rd-halo rd-halo-pink" aria-hidden="true">
-        <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="560" height="460" loading="lazy">
-      </div>
+  <div class="rd-split rd-split-text-l">
+    <div class="rd-split-body">
+      <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Les connaissances sont un actif stratégique</span>
+        <span class="lang-en">Knowledge is a strategic asset</span>
+      </h2>
+      <p class="rd-narrative">
+        <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances, elles, doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
+        <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
+      </p>
+    </div>
+    <div class="rd-split-illus rd-halo rd-halo-pink" aria-hidden="true">
+      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="560" height="460" loading="lazy">
     </div>
   </div>
 </section>
@@ -3003,23 +3045,21 @@ function buildHome(adrs) {
      Lien vers les ADRs comme invitation à explorer.
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section rd-section-alt">
-  <div class="rd-inner">
-    <div class="rd-grid-40-60">
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Chaque décision possède une mémoire</span>
-          <span class="lang-en">Every decision has memory</span>
-        </h2>
-        <p class="rd-narrative">
-          <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives explorées, les compromis acceptés — afin que personne ne soit jamais contraint de réinventer ce qui a déjà été résolu.</span>
-          <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves the context, the explored alternatives, the accepted trade-offs — so nobody is ever forced to reinvent what has already been resolved.</span>
-        </p>
-        <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
-      </div>
-      <div class="rd-illus rd-illus-bleed-r rd-halo rd-halo-violet" aria-hidden="true">
-        <img src="img/IMG-CONTRACTS.png" alt="" width="520" height="430" loading="lazy">
-      </div>
+  <div class="rd-split rd-split-text-l">
+    <div class="rd-split-body">
+      <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Chaque décision possède une mémoire</span>
+        <span class="lang-en">Every decision has memory</span>
+      </h2>
+      <p class="rd-narrative">
+        <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives explorées, les compromis acceptés — afin que personne ne soit jamais contraint de réinventer ce qui a déjà été résolu.</span>
+        <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves the context, the explored alternatives, the accepted trade-offs — so nobody is ever forced to reinvent what has already been resolved.</span>
+      </p>
+      <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
+    </div>
+    <div class="rd-split-illus rd-halo rd-halo-violet" aria-hidden="true">
+      <img src="img/IMG-CONTRACTS.png" alt="" width="520" height="430" loading="lazy">
     </div>
   </div>
 </section>
@@ -3030,35 +3070,33 @@ function buildHome(adrs) {
      La structure peut/ne peut pas est la seule liste conservée — elle est essentielle.
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section rd-section-wow" id="ia">
-  <div class="rd-inner">
-    <div class="rd-grid">
-      <div class="rd-illus rd-illus-bleed-l rd-halo" aria-hidden="true">
-        <img src="img/IMG-HUMAN-LOOP.png" alt="" width="520" height="430" loading="lazy">
-      </div>
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Automatisation sans perdre le contrôle</span>
-          <span class="lang-en">Automation without losing control</span>
-        </h2>
-        <div class="rd-dual">
-          <div class="rd-dual-card">
-            <div class="rd-dual-title"><span class="lang-fr">Les agents peuvent :</span><span class="lang-en">AI agents can:</span></div>
-            <ul class="rd-list check">
-              <li><span class="lang-fr">Générer</span><span class="lang-en">Generate</span></li>
-              <li><span class="lang-fr">Détecter</span><span class="lang-en">Detect</span></li>
-              <li><span class="lang-fr">Documenter</span><span class="lang-en">Document</span></li>
-              <li><span class="lang-fr">Proposer</span><span class="lang-en">Propose</span></li>
-            </ul>
-          </div>
-          <div class="rd-dual-card">
-            <div class="rd-dual-title"><span class="lang-fr">Les agents ne peuvent pas :</span><span class="lang-en">AI agents cannot:</span></div>
-            <ul class="rd-list">
-              <li class="no"><span class="lang-fr">Approuver</span><span class="lang-en">Approve</span></li>
-              <li class="no"><span class="lang-fr">Déployer</span><span class="lang-en">Deploy</span></li>
-              <li class="no"><span class="lang-fr">Contourner la gouvernance</span><span class="lang-en">Bypass governance</span></li>
-            </ul>
-          </div>
+  <div class="rd-split rd-split-text-r">
+    <div class="rd-split-illus rd-halo" aria-hidden="true">
+      <img src="img/IMG-HUMAN-LOOP.png" alt="" width="520" height="430" loading="lazy">
+    </div>
+    <div class="rd-split-body">
+      <span class="rd-eyebrow"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Automatisation sans perdre le contrôle</span>
+        <span class="lang-en">Automation without losing control</span>
+      </h2>
+      <div class="rd-dual">
+        <div class="rd-dual-card">
+          <div class="rd-dual-title"><span class="lang-fr">Les agents peuvent :</span><span class="lang-en">AI agents can:</span></div>
+          <ul class="rd-list check">
+            <li><span class="lang-fr">Générer</span><span class="lang-en">Generate</span></li>
+            <li><span class="lang-fr">Détecter</span><span class="lang-en">Detect</span></li>
+            <li><span class="lang-fr">Documenter</span><span class="lang-en">Document</span></li>
+            <li><span class="lang-fr">Proposer</span><span class="lang-en">Propose</span></li>
+          </ul>
+        </div>
+        <div class="rd-dual-card">
+          <div class="rd-dual-title"><span class="lang-fr">Les agents ne peuvent pas :</span><span class="lang-en">AI agents cannot:</span></div>
+          <ul class="rd-list">
+            <li class="no"><span class="lang-fr">Approuver</span><span class="lang-en">Approve</span></li>
+            <li class="no"><span class="lang-fr">Déployer</span><span class="lang-en">Deploy</span></li>
+            <li class="no"><span class="lang-fr">Contourner la gouvernance</span><span class="lang-en">Bypass governance</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -3071,22 +3109,20 @@ function buildHome(adrs) {
      Pas de liste — une déclaration de principes en texte continu.
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="rd-section">
-  <div class="rd-inner">
-    <div class="rd-grid-60-40">
-      <div class="rd-illus rd-illus-bleed-l rd-halo" aria-hidden="true">
-        <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
-      </div>
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
-          <span class="lang-en">Build for today. Preserve for tomorrow.</span>
-        </h2>
-        <p class="rd-narrative">
-          <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils. Ses connaissances restent accessibles, quelle que soit la technologie de demain.</span>
-          <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools. Its knowledge remains accessible, whatever tomorrow's technology brings.</span>
-        </p>
-      </div>
+  <div class="rd-split rd-split-text-r">
+    <div class="rd-split-illus rd-halo" aria-hidden="true">
+      <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
+    </div>
+    <div class="rd-split-body">
+      <span class="rd-eyebrow"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></span>
+      <h2 class="rd-h2">
+        <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
+        <span class="lang-en">Build for today. Preserve for tomorrow.</span>
+      </h2>
+      <p class="rd-narrative">
+        <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils. Ses connaissances restent accessibles, quelle que soit la technologie de demain.</span>
+        <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools. Its knowledge remains accessible, whatever tomorrow's technology brings.</span>
+      </p>
     </div>
   </div>
 </section>
