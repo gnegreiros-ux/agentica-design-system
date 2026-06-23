@@ -2099,6 +2099,29 @@ body{overflow-x:hidden}
 /* Texte narratif — plus grand que body standard */
 .rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
 
+/* ── rd-cinematic : illustration absolue collée au bord — pattern VP ─────────
+   L'image flotte en position:absolute (droite ou gauche).
+   Un gradient bg-fade couvre côté texte → transparent côté image.
+   Inspiré de gnegreiros-ux.github.io/depot/index-vp.html */
+.rd-cinematic{position:relative;overflow:hidden;min-height:72vh;display:flex;align-items:center}
+.rd-bg-wrap{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center}
+.rd-bg-r{justify-content:flex-end}
+.rd-bg-l{justify-content:flex-start}
+.rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.88;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
+.rd-bg-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--agtc-semantic-color-background-inverse) 0%,rgba(15,17,23,.90) 28%,rgba(15,17,23,.52) 50%,rgba(15,17,23,.18) 68%,transparent 88%)}
+.rd-bg-fade.rd-bg-fade-l{background:linear-gradient(to left,var(--agtc-semantic-color-background-inverse) 0%,rgba(15,17,23,.90) 28%,rgba(15,17,23,.52) 50%,rgba(15,17,23,.18) 68%,transparent 88%)}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(2rem,5vw,5rem);display:flex}
+.rd-cinematic-body{width:46%;max-width:580px;padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) 0}
+.rd-cinematic-body-r{margin-left:auto}
+@media(max-width:860px){
+  .rd-cinematic{min-height:auto;flex-direction:column}
+  .rd-bg-wrap{position:relative;inset:auto;height:260px;width:100%;flex-shrink:0}
+  .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
+  .rd-bg-fade{display:none}
+  .rd-cinematic-inner{display:block;padding:0 clamp(1.5rem,5vw,2.5rem)}
+  .rd-cinematic-body,.rd-cinematic-body-r{width:100%;max-width:none;margin:0;padding:2.5rem 0}
+}
+
 /* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
    Remplace rd-inner+rd-grid pour les sections avec illustration de bord.
    La colonne texte reste en max-width ; la colonne illus touche le bord de la section. */
@@ -3046,9 +3069,13 @@ function buildHome(adrs) {
      Centré, narratif. Pas de liste — une seule déclaration forte.
      Lien vers les ADRs comme invitation à explorer.
 ════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt">
-  <div class="rd-split rd-split-text-l">
-    <div class="rd-split-body">
+<section class="rd-section rd-section-alt rd-cinematic">
+  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
+    <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy">
+    <div class="rd-bg-fade"></div>
+  </div>
+  <div class="rd-cinematic-inner">
+    <div class="rd-cinematic-body">
       <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
       <h2 class="rd-h2">
         <span class="lang-fr">Chaque décision possède une mémoire</span>
@@ -3060,9 +3087,6 @@ function buildHome(adrs) {
       </p>
       <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
     </div>
-    <div class="rd-split-illus rd-halo rd-halo-violet" aria-hidden="true">
-      <img src="img/IMG-CONTRACTS.png" alt="" width="520" height="430" loading="lazy">
-    </div>
   </div>
 </section>
 
@@ -3071,12 +3095,13 @@ function buildHome(adrs) {
      Section sombre. Layout préservé : illustration à gauche, deux cartes à droite.
      La structure peut/ne peut pas est la seule liste conservée — elle est essentielle.
 ════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-wow" id="ia">
-  <div class="rd-split rd-split-text-r">
-    <div class="rd-split-illus rd-halo" aria-hidden="true">
-      <img src="img/IMG-HUMAN-LOOP.png" alt="" width="520" height="430" loading="lazy">
-    </div>
-    <div class="rd-split-body">
+<section class="rd-section rd-section-wow rd-cinematic" id="ia">
+  <div class="rd-bg-wrap rd-bg-l" aria-hidden="true">
+    <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy">
+    <div class="rd-bg-fade rd-bg-fade-l"></div>
+  </div>
+  <div class="rd-cinematic-inner">
+    <div class="rd-cinematic-body rd-cinematic-body-r">
       <span class="rd-eyebrow"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></span>
       <h2 class="rd-h2">
         <span class="lang-fr">Automatisation sans perdre le contrôle</span>
@@ -3110,12 +3135,13 @@ function buildHome(adrs) {
      Centré, narratif, calme. Invitation à la réflexion avant le CTA.
      Pas de liste — une déclaration de principes en texte continu.
 ════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section">
-  <div class="rd-split rd-split-text-r">
-    <div class="rd-split-illus rd-halo" aria-hidden="true">
-      <img src="img/IMG-DURABILITY.png" alt="" width="520" height="430" loading="lazy">
-    </div>
-    <div class="rd-split-body">
+<section class="rd-section rd-cinematic">
+  <div class="rd-bg-wrap rd-bg-l" aria-hidden="true">
+    <img src="img/IMG-DURABILITY.png" alt="" loading="lazy">
+    <div class="rd-bg-fade rd-bg-fade-l"></div>
+  </div>
+  <div class="rd-cinematic-inner">
+    <div class="rd-cinematic-body rd-cinematic-body-r">
       <span class="rd-eyebrow"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></span>
       <h2 class="rd-h2">
         <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
