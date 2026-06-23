@@ -1347,36 +1347,41 @@ body{overflow-x:hidden}
 
 /* ── rd-cinematic : illustration absolue collée au bord — pattern VP ─────────
    L'image flotte en position:absolute (droite ou gauche).
-   Un gradient bg-fade couvre côté texte → transparent côté image.
+   La lisibilité est assurée par le glassmorphism du container texte seul.
    Inspiré de gnegreiros-ux.github.io/depot/index-vp.html */
 .rd-cinematic{position:relative;overflow:hidden;min-height:72vh;display:flex;align-items:center}
 .rd-bg-wrap{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center}
 .rd-bg-r{justify-content:flex-end}
 .rd-bg-l{justify-content:flex-start}
-.rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.88;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
-/* Gradient bg-fade — tokens overlay.* remplacent les rgba hardcodés */
+.rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.92;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
+/* bg-fade : vignette douce aux seuls bords latéraux de l'image.
+   N'est plus un scrim plein — ne couvre pas la zone de texte.
+   Laisse l'image visible à travers le glassmorphism du container. */
 .rd-bg-fade{
   position:absolute;inset:0;
   background:linear-gradient(to right,
     var(--agtc-semantic-color-background-inverse) 0%,
-    var(--agtc-semantic-color-overlay-dark) 28%,
-    var(--agtc-semantic-color-overlay-medium) 52%,
-    var(--agtc-semantic-color-overlay-subtle) 70%,
-    transparent 90%
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
 .rd-bg-fade.rd-bg-fade-l{
   background:linear-gradient(to left,
     var(--agtc-semantic-color-background-inverse) 0%,
-    var(--agtc-semantic-color-overlay-dark) 28%,
-    var(--agtc-semantic-color-overlay-medium) 52%,
-    var(--agtc-semantic-color-overlay-subtle) 70%,
-    transparent 90%
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
 .rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
 /* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
-   token overlay.scrim garantit la lisibilité WCAG AA du texte blanc sur illustration. */
+   overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
+   backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
 .rd-cinematic-body{
   width:46%;max-width:580px;
   padding:clamp(2rem,4vw,3.5rem) clamp(1.5rem,2.5vw,2.5rem);
