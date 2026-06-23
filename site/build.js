@@ -1959,16 +1959,24 @@ body{overflow-x:hidden}
   mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
 }
 
-/* Hero illustration : screen blend vers le fond sombre du hero */
-.hero .rd-illus img{
-  mix-blend-mode:screen;
-  -webkit-mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
-  mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
-  max-width:none;
+/* Hero cinematic — marketing context
+   Illustration sortie du flux, position absolute bord droit.
+   Texte contraint à 46% gauche (hero-content-w), z-index au-dessus de l'image. */
+[data-context="marketing"] .hero{
+  min-height:88vh;display:flex;align-items:center;
 }
-
-/* Hero plus asymétrique — illustration légèrement dominante */
-[data-context="marketing"] .hero-grid{grid-template-columns:9fr 13fr}
+[data-context="marketing"] .hero-inner{width:100%;padding-top:0;padding-bottom:0}
+[data-context="marketing"] .hero-content-w{width:46%;max-width:560px}
+/* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
+[data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
+[data-context="marketing"] .hero-inner{position:relative;z-index:2}
+@media(max-width:860px){
+  [data-context="marketing"] .hero{min-height:auto;flex-direction:column;align-items:stretch;padding-top:calc(var(--agtc-header-height,64px) + 2rem)}
+  [data-context="marketing"] .hero .hero-illus-wrap{position:relative;inset:auto;height:260px;flex-shrink:0;justify-content:center}
+  [data-context="marketing"] .hero .hero-illus-wrap img{height:100%;width:auto;mask-image:none;-webkit-mask-image:none}
+  [data-context="marketing"] .hero .rd-bg-fade{display:none}
+  [data-context="marketing"] .hero-content-w{width:100%;max-width:none}
+}
 
 /* Une seule histoire — sections sans bordures, flux naturel */
 .rd-section{overflow:visible;border-top:none}
@@ -2776,40 +2784,40 @@ function buildHome(adrs) {
      Boutons : agtc-button (dogfooding ADR-058, ADR-062).
 ════════════════════════════════════════════════════════════════════════════ -->
 <section class="hero" id="accueil" aria-label="Agentica">
+  <!-- Illustration cinematic — position absolute, collée au bord droit -->
+  <div class="rd-bg-wrap rd-bg-r hero-illus-wrap" aria-hidden="true">
+    <img src="img/IMG-HERO-SYSTEM.png" alt="" loading="eager" fetchpriority="high">
+    <div class="rd-bg-fade"></div>
+  </div>
   <div class="hero-inner">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-badge" aria-hidden="true">
-          <span class="pulse"></span>
-          Human First, AI Ready
-        </div>
-        <h1 class="hero-title">
-          <span class="lang-fr">Le système de décisions<br>pour les humains<br>et les agents IA</span>
-          <span class="lang-en">The decision system<br>for humans<br>and AI agents</span>
-        </h1>
-        <p class="hero-tagline">
-          <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica les transforme en contrats structurés — compréhensibles par les humains et les agents IA, avec les humains aux commandes.</span>
-          <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica transforms those decisions into structured contracts understandable by both humans and AI agents, while keeping humans in control.</span>
-        </p>
-        <div class="hero-actions">
-          <a href="get-started.html" class="agtc-button primary">
-            <span class="lang-fr">Découvrir la vision</span>
-            <span class="lang-en">Discover the vision</span>
-          </a>
-          <a href="foundations/index.html" class="agtc-button ghost">
-            <span class="lang-fr">Explorer la documentation →</span>
-            <span class="lang-en">Explore documentation →</span>
-          </a>
-        </div>
-        <div class="rd-hero-stats" role="list" aria-label="Statistiques du système">
-          <div role="listitem"><span class="rd-stat-num">${totalTokens}+</span><span class="rd-stat-label"><span class="lang-fr">tokens</span><span class="lang-en">tokens</span></span></div>
-          <div role="listitem"><span class="rd-stat-num">${adrs.length}</span><span class="rd-stat-label">ADRs</span></div>
-          <div role="listitem"><span class="rd-stat-num">${compCount}</span><span class="rd-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
-          <div role="listitem"><span class="rd-stat-num">10</span><span class="rd-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
-        </div>
+    <div class="hero-content-w">
+      <div class="hero-badge" aria-hidden="true">
+        <span class="pulse"></span>
+        Human First, AI Ready
       </div>
-      <div class="rd-illus rd-halo" aria-hidden="true">
-        <img src="img/IMG-HERO-SYSTEM.png" alt="" width="560" height="460" loading="eager" fetchpriority="high">
+      <h1 class="hero-title">
+        <span class="lang-fr">Le système de décisions<br>pour les humains<br>et les agents IA</span>
+        <span class="lang-en">The decision system<br>for humans<br>and AI agents</span>
+      </h1>
+      <p class="hero-tagline">
+        <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica les transforme en contrats structurés — compréhensibles par les humains et les agents IA, avec les humains aux commandes.</span>
+        <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica transforms those decisions into structured contracts understandable by both humans and AI agents, while keeping humans in control.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="get-started.html" class="agtc-button primary">
+          <span class="lang-fr">Découvrir la vision</span>
+          <span class="lang-en">Discover the vision</span>
+        </a>
+        <a href="foundations/index.html" class="agtc-button ghost">
+          <span class="lang-fr">Explorer la documentation →</span>
+          <span class="lang-en">Explore documentation →</span>
+        </a>
+      </div>
+      <div class="rd-hero-stats" role="list" aria-label="Statistiques du système">
+        <div role="listitem"><span class="rd-stat-num">${totalTokens}+</span><span class="rd-stat-label"><span class="lang-fr">tokens</span><span class="lang-en">tokens</span></span></div>
+        <div role="listitem"><span class="rd-stat-num">${adrs.length}</span><span class="rd-stat-label">ADRs</span></div>
+        <div role="listitem"><span class="rd-stat-num">${compCount}</span><span class="rd-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+        <div role="listitem"><span class="rd-stat-num">10</span><span class="rd-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
   </div>

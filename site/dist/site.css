@@ -1189,16 +1189,24 @@ body{overflow-x:hidden}
   mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
 }
 
-/* Hero illustration : screen blend vers le fond sombre du hero */
-.hero .rd-illus img{
-  mix-blend-mode:screen;
-  -webkit-mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
-  mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
-  max-width:none;
+/* Hero cinematic — marketing context
+   Illustration sortie du flux, position absolute bord droit.
+   Texte contraint à 46% gauche (hero-content-w), z-index au-dessus de l'image. */
+[data-context="marketing"] .hero{
+  min-height:88vh;display:flex;align-items:center;
 }
-
-/* Hero plus asymétrique — illustration légèrement dominante */
-[data-context="marketing"] .hero-grid{grid-template-columns:9fr 13fr}
+[data-context="marketing"] .hero-inner{width:100%;padding-top:0;padding-bottom:0}
+[data-context="marketing"] .hero-content-w{width:46%;max-width:560px}
+/* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
+[data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
+[data-context="marketing"] .hero-inner{position:relative;z-index:2}
+@media(max-width:860px){
+  [data-context="marketing"] .hero{min-height:auto;flex-direction:column;align-items:stretch;padding-top:calc(var(--agtc-header-height,64px) + 2rem)}
+  [data-context="marketing"] .hero .hero-illus-wrap{position:relative;inset:auto;height:260px;flex-shrink:0;justify-content:center}
+  [data-context="marketing"] .hero .hero-illus-wrap img{height:100%;width:auto;mask-image:none;-webkit-mask-image:none}
+  [data-context="marketing"] .hero .rd-bg-fade{display:none}
+  [data-context="marketing"] .hero-content-w{width:100%;max-width:none}
+}
 
 /* Une seule histoire — sections sans bordures, flux naturel */
 .rd-section{overflow:visible;border-top:none}
