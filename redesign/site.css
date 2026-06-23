@@ -1140,8 +1140,8 @@ body{overflow-x:hidden}
 .hero .agtc-button.ghost{color:var(--agtc-surface-glass-ghost-text);border-color:var(--agtc-surface-glass-border)}
 .hero .agtc-button.ghost:hover:not(:disabled){background:var(--agtc-surface-glass)}
 
-.rd-illus{display:flex;align-items:center;justify-content:center}
-.rd-illus img{width:100%;max-width:520px;height:auto;display:block}
+.rd-illus{display:flex;align-items:center;justify-content:center;overflow:visible}
+.rd-illus img{width:100%;max-width:660px;height:auto;display:block}
 
 /* ── PHASE 2.1 — sections continues · bleed · fondu images ──────────────────
    "Les images doivent toujours se fondre avec le fond de la section."
@@ -1188,11 +1188,11 @@ body{overflow-x:hidden}
 .hero .rd-illus img{
   -webkit-mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
   mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
-  max-width:600px !important;
+  max-width:none;
 }
 
 /* Hero plus asymétrique — illustration légèrement dominante */
-[data-context="marketing"] .hero-grid{grid-template-columns:10fr 11fr}
+[data-context="marketing"] .hero-grid{grid-template-columns:9fr 13fr}
 
 /* Une seule histoire — sections sans bordures, flux naturel */
 .rd-section{overflow:visible;border-top:none}
@@ -1201,8 +1201,8 @@ body{overflow-x:hidden}
 .rd-wrap{overflow-x:hidden}
 
 /* Bleed architectural : illustration sort de sa colonne */
-.rd-illus-bleed-r img{width:115%;max-width:none !important}
-.rd-illus-bleed-l img{width:115%;max-width:none !important;margin-left:-15%}
+.rd-illus-bleed-r img{width:135%;max-width:none !important}
+.rd-illus-bleed-l img{width:135%;max-width:none !important;margin-left:-35%}
 
 /* Séparation entre zones : très légère via .rd-section-alt uniquement */
 .rd-section-alt{position:relative}
@@ -1299,18 +1299,18 @@ body{overflow-x:hidden}
 
 /* Illustration pleine largeur (S5) */
 .rd-illus-full{width:100%;margin:3rem 0}
-.rd-illus-full img{width:100%;height:auto;display:block;border-radius:var(--agtc-semantic-radius-card)}
+.rd-illus-full img{width:100%;height:auto;display:block}
 
 /* Illustration centrée (S3) */
-.rd-illus-center{display:flex;justify-content:center;margin-bottom:3.5rem}
-.rd-illus-center img{width:100%;max-width:700px;height:auto;display:block}
+.rd-illus-center{display:flex;justify-content:center;margin-bottom:5rem;overflow:visible}
+.rd-illus-center img{width:100%;max-width:920px;height:auto;display:block}
 
 /* Halos de profondeur — rgba() uniquement, pas de token gradient de marque */
 .rd-halo{position:relative}
-.rd-halo::before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(18,165,148,.18) 0%,transparent 70%);pointer-events:none;z-index:0}
+.rd-halo::before{content:"";position:absolute;inset:-35%;background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(18,165,148,.30) 0%,transparent 70%);pointer-events:none;z-index:0}
 .rd-halo>*{position:relative;z-index:1}
-.rd-halo-pink::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(237,107,134,.14) 0%,transparent 70%)}
-.rd-halo-violet::before{background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(120,80,200,.12) 0%,transparent 70%)}
+.rd-halo-pink::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(237,107,134,.24) 0%,transparent 70%)}
+.rd-halo-violet::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(120,80,200,.22) 0%,transparent 70%)}
 
 /* Texte narratif — plus grand que body standard */
 .rd-narrative{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.75;color:var(--agtc-semantic-color-text-primary);max-width:62ch}
