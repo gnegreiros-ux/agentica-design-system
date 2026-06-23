@@ -2798,9 +2798,13 @@ function buildHome(adrs) {
      Texte narratif — pas de liste à puces.
      Ton lourd, déclaratif.
 ════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt" id="pourquoi">
-  <div class="rd-split rd-split-text-l">
-    <div class="rd-split-body">
+<section class="rd-section rd-section-alt rd-cinematic" id="pourquoi">
+  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
+    <img src="img/IMG-CONTEXT.png" alt="" loading="lazy">
+    <div class="rd-bg-fade"></div>
+  </div>
+  <div class="rd-cinematic-inner">
+    <div class="rd-cinematic-body">
       <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
       <h2 class="rd-h2">
         <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
@@ -2810,9 +2814,6 @@ function buildHome(adrs) {
         <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
         <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
       </p>
-    </div>
-    <div class="rd-split-illus rd-halo rd-halo-pink" aria-hidden="true">
-      <img src="img/IMG-CONTEXT.png" alt="" width="600" height="500" loading="lazy">
     </div>
   </div>
 </section>
@@ -2873,9 +2874,13 @@ function buildHome(adrs) {
      Centré, minimal. Juste le titre et une courte déclaration narrative.
      Pas de liste. L'illustration est là pour respirer, pas pour expliquer.
 ════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section">
-  <div class="rd-split rd-split-text-l">
-    <div class="rd-split-body">
+<section class="rd-section rd-cinematic">
+  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
+    <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy">
+    <div class="rd-bg-fade"></div>
+  </div>
+  <div class="rd-cinematic-inner">
+    <div class="rd-cinematic-body">
       <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
       <h2 class="rd-h2">
         <span class="lang-fr">Les connaissances sont un actif stratégique</span>
@@ -2885,9 +2890,6 @@ function buildHome(adrs) {
         <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances, elles, doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
         <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
       </p>
-    </div>
-    <div class="rd-split-illus rd-halo rd-halo-pink" aria-hidden="true">
-      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" width="560" height="460" loading="lazy">
     </div>
   </div>
 </section>
