@@ -222,6 +222,39 @@
           "$intent": "Fond surélevé sur surface code au survol — bouton copier hover"
         }
       },
+      "overlay": {
+        "scrim": {
+          "$value": "rgba(15, 17, 23, 0.82)",
+          "$type": "color",
+          "$intent": "Fond sombre semi-transparent — container de texte sur illustration (glassmorphism). Garantit la lisibilité WCAG AA du texte blanc sur image.",
+          "$description": "Utilisé comme background du container .rd-cinematic-body et .hero-content-w dans le pattern cinematic. Base : background.inverse (#0f1117) à 82% d'opacité. Associer à backdrop-filter:blur(10px) pour l'effet verre dépoli.",
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "overlay-scrim",
+              "use": ["rd-cinematic-body", "hero-content-w"],
+              "doNotUse": "Fond de section entière — utiliser background.inverse. Fond sans backdrop-filter — l'effet dépoli est essentiel à l'intention."
+            }
+          }
+        },
+        "dark": {
+          "$value": "rgba(15, 17, 23, 0.88)",
+          "$type": "color",
+          "$intent": "Scrim fort — gradient cinematic côté texte (zone de 0% à 28%).",
+          "$description": "Valeur initiale du gradient rd-bg-fade. Le texte en blanc sur ce fond atteint un ratio ≥ 7:1 (WCAG AAA)."
+        },
+        "medium": {
+          "$value": "rgba(15, 17, 23, 0.50)",
+          "$type": "color",
+          "$intent": "Scrim moyen — zone de transition du gradient cinematic (50%).",
+          "$description": "Valeur centrale du gradient rd-bg-fade — assure la continuité visuelle entre la zone texte et l'illustration."
+        },
+        "subtle": {
+          "$value": "rgba(15, 17, 23, 0.18)",
+          "$type": "color",
+          "$intent": "Scrim léger — bord du gradient cinematic (68%), laisse l'illustration transparaître.",
+          "$description": "Valeur finale du gradient rd-bg-fade avant la zone entièrement transparente."
+        }
+      },
       "text": {
         "primary": {
           "$value": "{primitive.color.gray.12}",

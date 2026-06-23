@@ -1196,7 +1196,15 @@ body{overflow-x:hidden}
   min-height:88vh;display:flex;align-items:center;
 }
 [data-context="marketing"] .hero-inner{width:100%;padding-top:0;padding-bottom:0}
-[data-context="marketing"] .hero-content-w{width:46%;max-width:560px}
+/* Container texte hero — même glassmorphism que rd-cinematic-body */
+[data-context="marketing"] .hero-content-w{
+  width:46%;max-width:560px;
+  padding:clamp(2rem,4vw,3rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
 /* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
 [data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
 [data-context="marketing"] .hero-inner{position:relative;z-index:2}
@@ -1346,18 +1354,45 @@ body{overflow-x:hidden}
 .rd-bg-r{justify-content:flex-end}
 .rd-bg-l{justify-content:flex-start}
 .rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.88;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
-.rd-bg-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--agtc-semantic-color-background-inverse) 0%,rgba(15,17,23,.90) 28%,rgba(15,17,23,.52) 50%,rgba(15,17,23,.18) 68%,transparent 88%)}
-.rd-bg-fade.rd-bg-fade-l{background:linear-gradient(to left,var(--agtc-semantic-color-background-inverse) 0%,rgba(15,17,23,.90) 28%,rgba(15,17,23,.52) 50%,rgba(15,17,23,.18) 68%,transparent 88%)}
-.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(2rem,5vw,5rem);display:flex}
-.rd-cinematic-body{width:46%;max-width:580px;padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) 0}
+/* Gradient bg-fade — tokens overlay.* remplacent les rgba hardcodés */
+.rd-bg-fade{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-overlay-dark) 28%,
+    var(--agtc-semantic-color-overlay-medium) 52%,
+    var(--agtc-semantic-color-overlay-subtle) 70%,
+    transparent 90%
+  );
+}
+.rd-bg-fade.rd-bg-fade-l{
+  background:linear-gradient(to left,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-overlay-dark) 28%,
+    var(--agtc-semantic-color-overlay-medium) 52%,
+    var(--agtc-semantic-color-overlay-subtle) 70%,
+    transparent 90%
+  );
+}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+/* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
+   token overlay.scrim garantit la lisibilité WCAG AA du texte blanc sur illustration. */
+.rd-cinematic-body{
+  width:46%;max-width:580px;
+  padding:clamp(2rem,4vw,3.5rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
 .rd-cinematic-body-r{margin-left:auto}
 @media(max-width:860px){
   .rd-cinematic{min-height:auto;flex-direction:column}
   .rd-bg-wrap{position:relative;inset:auto;height:260px;width:100%;flex-shrink:0}
   .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
   .rd-bg-fade{display:none}
-  .rd-cinematic-inner{display:block;padding:0 clamp(1.5rem,5vw,2.5rem)}
-  .rd-cinematic-body,.rd-cinematic-body-r{width:100%;max-width:none;margin:0;padding:2.5rem 0}
+  .rd-cinematic-inner{display:block;padding:0 clamp(1rem,5vw,2rem)}
+  .rd-cinematic-body,.rd-cinematic-body-r{width:100%;max-width:none;margin:0;border-radius:12px}
 }
 
 /* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
