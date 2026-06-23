@@ -2025,6 +2025,8 @@ body{overflow-x:hidden}
 .rd-stack-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
 
 .rd-role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;margin-top:2rem}
+.rd-role-grid-compact{grid-template-columns:repeat(2,1fr);margin-top:1.25rem}
+@media(max-width:600px){.rd-role-grid-compact{grid-template-columns:1fr}}
 .rd-role-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
 .rd-role-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
 .rd-role-name{font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
@@ -2161,13 +2163,16 @@ body{overflow-x:hidden}
   border-radius:16px;
 }
 .rd-cinematic-body-r{margin-left:auto}
+.rd-cinematic-tall{min-height:85vh}
+.rd-cinematic-body-wide{width:52%;max-width:640px}
 @media(max-width:860px){
   .rd-cinematic{min-height:auto;flex-direction:column}
+  .rd-cinematic-tall{min-height:auto}
   .rd-bg-wrap{position:relative;inset:auto;height:260px;width:100%;flex-shrink:0}
   .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
   .rd-bg-fade{display:none}
   .rd-cinematic-inner{display:block;padding:0 clamp(1rem,5vw,2rem)}
-  .rd-cinematic-body,.rd-cinematic-body-r{width:100%;max-width:none;margin:0;border-radius:12px}
+  .rd-cinematic-body,.rd-cinematic-body-r,.rd-cinematic-body-wide{width:100%;max-width:none;margin:0;border-radius:12px}
 }
 
 /* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
@@ -2235,6 +2240,375 @@ body{overflow-x:hidden}
 
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
+
+/* ═══════════════════════════════════════════════════════════
+   REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
+   Namespace : .v2-* — ne pas modifier sans approbation
+   ═══════════════════════════════════════════════════════ */
+
+/* Variables V2 — dans :root pour accessibilité globale */
+:root {
+  --v2-bg: var(--agtc-semantic-color-background-page);
+  --v2-bg-soft: var(--agtc-semantic-color-background-surface);
+  --v2-surface: color-mix(in srgb, var(--agtc-semantic-color-background-surface) 74%, transparent);
+  --v2-surface-strong: color-mix(in srgb, var(--agtc-semantic-color-background-inverse) 86%, transparent);
+  --v2-line: var(--agtc-surface-glass-border);
+  --v2-text: var(--agtc-semantic-color-text-on-inverse);
+  --v2-muted: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-faint: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-teal: var(--agtc-semantic-color-action-primary);
+  --v2-rose: var(--agtc-semantic-color-accent);
+  --v2-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --v2-radius: var(--agtc-semantic-radius-card, 16px);
+  --v2-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
+}
+
+html{scroll-behavior:smooth;overflow-x:hidden}
+
+body.v2-page{
+  color-scheme:dark;
+  min-height:100vh;
+  background:var(--agtc-gradient-aurora),var(--agtc-semantic-color-background-inverse);
+  color:var(--v2-text);
+  overflow-x:hidden;
+}
+.v2-page main{overflow:hidden}
+
+/* Header V2 */
+.v2-header{
+  position:fixed;inset:0 0 auto;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:var(--agtc-header-height,64px);
+  padding:0 max(var(--agtc-site-header-padding-x,24px),calc((100vw - var(--agtc-content-max,1180px)) / 2));
+  border-bottom:1px solid var(--v2-line);
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 78%,transparent);
+  backdrop-filter:blur(18px) saturate(140%);
+}
+.v2-brand{
+  display:inline-flex;align-items:center;gap:var(--agtc-space-2,.5rem);
+  color:var(--v2-text);font-weight:var(--agtc-semantic-fontWeight-display,700);text-decoration:none;
+  flex-shrink:0;
+}
+.v2-brand-mark{width:28px;height:28px;display:block;flex-shrink:0}
+
+/* Navigation V2 */
+.v2-nav{display:flex;align-items:center;gap:var(--agtc-component-top-nav-cta-gap,8px)}
+.v2-nav a,.v2-docs-trigger,.v2-menu-button{
+  border:0;border-radius:0;background:transparent;
+  color:var(--v2-muted);font:inherit;text-decoration:none;cursor:pointer;
+}
+.v2-nav a,.v2-docs-trigger{
+  position:relative;
+  padding:var(--agtc-component-top-nav-cta-padding-y,8px) var(--agtc-component-top-nav-tab-padding-x,14px);
+  font-size:var(--agtc-component-top-nav-tab-font-size);
+  font-weight:var(--agtc-component-top-nav-tab-font-weight);
+}
+.v2-nav a:hover,.v2-docs-trigger:hover,.v2-nav a:focus-visible,.v2-docs-trigger:focus-visible{color:var(--v2-text);outline:none}
+.v2-nav a::after,.v2-docs-trigger::after{
+  content:"";position:absolute;inset:auto .82rem -.35rem;
+  height:var(--agtc-component-top-nav-tab-indicator-width,2px);
+  background:var(--agtc-component-top-nav-tab-indicator-color,var(--agtc-semantic-color-action-primary));
+  transform:scaleX(0);transform-origin:left;transition:transform .16s ease;
+}
+.v2-nav a:hover::after,.v2-nav a:focus-visible::after,.v2-nav a[aria-current="page"]::after,
+.v2-docs-trigger:hover::after,.v2-docs-trigger:focus-visible::after,.v2-docs-trigger[aria-expanded="true"]::after{transform:scaleX(1)}
+.v2-nav a[aria-current="page"],.v2-docs-trigger[aria-expanded="true"]{color:var(--v2-text)}
+
+/* Neutralisation :visited sur nav (ADR-047, rule no-visited-nav) */
+.v2-nav a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-docs-panel a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+.v2-nav .v2-nav-action{
+  margin-left:var(--agtc-component-top-nav-cta-gap,8px);
+  padding-inline:var(--agtc-component-top-nav-cta-padding-x,16px);
+  padding-block:var(--agtc-component-top-nav-cta-padding-y,8px);
+  border-radius:var(--agtc-component-top-nav-cta-radius,var(--agtc-semantic-radius-control,8px));
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background,var(--agtc-semantic-color-action-primary));
+  font-weight:700;
+}
+.v2-nav .v2-nav-action:hover,.v2-nav .v2-nav-action:focus-visible{
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background-hover,var(--agtc-semantic-color-action-primary-hover));
+}
+.v2-nav .v2-nav-action::after{display:none}
+
+.v2-header-tools{
+  display:flex;align-items:center;gap:var(--agtc-space-2,8px);
+  margin-left:var(--agtc-space-3,12px);flex-shrink:0;
+}
+.v2-lang-switch{min-height:34px}
+.v2-lang-switch button{padding:3px 9px;font-size:var(--agtc-semantic-typography-detail-size);letter-spacing:var(--agtc-tracking-wide)}
+
+/* Megapanel Documentation */
+.v2-docs{position:relative}
+.v2-docs-panel{
+  position:absolute;top:calc(100% + 16px);right:-148px;
+  display:grid;width:min(880px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;padding:1px;border:1px solid var(--v2-line);border-radius:18px;
+  background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
+  box-shadow:var(--agtc-shadow-lg);
+  opacity:0;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.v2-docs-panel.is-open{opacity:1;transform:translateY(0);pointer-events:auto}
+.v2-docs-panel > div{
+  min-height:230px;padding:1.35rem;
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 94%,transparent);
+}
+.v2-docs-panel > div:first-child{border-radius:17px 0 0 17px}
+.v2-docs-panel > div:last-child{border-radius:0 17px 17px 0}
+.v2-docs-panel h2{margin:0 0 .9rem;font-size:.86rem;color:var(--v2-text)}
+.v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
+.v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
+
+.v2-menu-button{display:none;padding:.7rem .8rem;border:1px solid var(--v2-line)}
+
+/* Sections V2 */
+.v2-section{position:relative;padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-section::before{
+  content:"";position:absolute;inset:12% auto auto 50%;
+  width:min(52vw,620px);aspect-ratio:1;border-radius:999px;
+  background:radial-gradient(circle,color-mix(in srgb,var(--agtc-semantic-color-action-primary) 24%,transparent),transparent 66%);
+  filter:blur(6px);transform:translateX(-50%);pointer-events:none;
+}
+.v2-shell{position:relative;width:var(--v2-shell);margin-inline:auto}
+
+.v2-hero{
+  min-height:100svh;display:grid;align-items:center;
+  padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-semantic-marketing-space-hero-gap,120px));
+  padding-bottom:var(--agtc-semantic-marketing-space-hero-gap,120px);
+}
+.v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid{
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);
+  align-items:center;gap:clamp(2rem,5vw,5rem);
+}
+.v2-copy{max-width:660px}
+.v2-copy-narrow{max-width:550px}
+.v2-kicker{
+  margin:0 0 1rem;
+  color:color-mix(in srgb,var(--v2-teal) 72%,white);
+  font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);
+  font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing:var(--agtc-tracking-eyebrow);text-transform:uppercase;
+}
+.v2-page .v2-copy h1,.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  margin:0;max-width:780px;color:var(--v2-text);
+  font-weight:var(--agtc-semantic-marketing-typography-display-weight);
+  letter-spacing:var(--agtc-tracking-tighter);
+  line-height:var(--agtc-semantic-marketing-typography-display-line-height);
+}
+.v2-page .v2-copy h1{font-size:clamp(var(--agtc-semantic-typography-hero-size),5vw,var(--agtc-semantic-marketing-typography-display-size))}
+.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+}
+.v2-copy p,.v2-section-heading p{
+  margin:1.35rem 0 0;color:var(--v2-muted);
+  font-size:var(--agtc-font-size-h5,1.25rem);line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+
+/* Boutons V2 */
+.v2-button{
+  display:inline-flex;align-items:center;min-height:44px;
+  padding:var(--agtc-component-button-primary-padding-y,11px) var(--agtc-component-button-primary-padding-x,24px);
+  border:1.5px solid transparent;
+  border-radius:var(--agtc-component-button-primary-radius,var(--agtc-semantic-radius-control,8px));
+  font-size:var(--agtc-font-size-body,1rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);
+  line-height:1.3;text-decoration:none;
+  transition:transform .12s ease,border-color .14s ease,background .14s ease,color .14s ease;
+}
+.v2-button:hover,.v2-button:focus-visible{outline:none}
+.v2-button:active{transform:translateY(1px)}
+.v2-button:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.v2-button-primary{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background);
+  background:var(--agtc-component-button-primary-background);
+}
+.v2-button-primary:hover,.v2-button-primary:focus-visible{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background-hover);
+  background:var(--agtc-component-button-primary-background-hover);
+}
+.v2-button-secondary{
+  color:var(--agtc-semantic-color-text-on-inverse);
+  border-color:var(--agtc-surface-glass-strong,rgba(255,255,255,.22));
+  background:var(--agtc-surface-glass,rgba(255,255,255,.08));
+}
+.v2-button-secondary:hover,.v2-button-secondary:focus-visible{background:var(--agtc-surface-glass-hover,rgba(255,255,255,.12))}
+.v2-button-ghost{
+  color:var(--agtc-surface-glass-ghost-text,var(--agtc-semantic-color-text-on-inverse-secondary));
+  border-color:transparent;background:transparent;
+}
+.v2-button-ghost:hover,.v2-button-ghost:focus-visible{background:var(--agtc-surface-glass,rgba(255,255,255,.08))}
+
+/* Illustrations V2 */
+.v2-art{position:relative;margin:0;line-height:0}
+.v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+.v2-art-hero{width:min(100%,720px);justify-self:end}
+.v2-overlap,.v2-overlap-reverse{
+  display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
+}
+.v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
+.v2-art-wide{width:min(100%,740px)}
+.v2-immersive{
+  padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
+}
+.v2-art-float{width:min(100%,720px);justify-self:end;animation:v2-float 8s ease-in-out infinite}
+.v2-split{
+  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,.74fr);
+  align-items:center;gap:clamp(2rem,6vw,6rem);
+}
+.v2-section-heading{max-width:760px;margin-bottom:3rem}
+
+/* Cards rôles */
+.v2-role-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:1px;border:1px solid var(--v2-line);background:var(--v2-line);
+}
+.v2-role-card{
+  position:relative;min-height:235px;padding:1.5rem;
+  background:rgba(12,15,25,.78);overflow:hidden;
+}
+.v2-role-card::after{
+  content:"";position:absolute;inset:auto 0 0;height:3px;
+  background:linear-gradient(90deg,var(--v2-teal),var(--v2-rose),var(--v2-violet));
+  transform:scaleX(.16);transform-origin:left;transition:transform .28s ease;
+}
+.v2-role-card:hover::after,.v2-role-card:focus-within::after{transform:scaleX(1)}
+.v2-role-card h3{
+  margin:0 0 .75rem;color:var(--v2-text);
+  font-size:var(--agtc-component-card-typography-marketing-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-title-weight);
+}
+.v2-role-card p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+
+/* Section qualité */
+.v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
+.v2-signal-stack{display:grid;gap:.9rem}
+.v2-signal-stack span{
+  display:block;padding:1.1rem 1.25rem;border:1px solid var(--v2-line);border-radius:var(--v2-radius);
+  background:linear-gradient(90deg,rgba(0,162,199,.12),transparent 48%),rgba(255,255,255,.055);
+  color:var(--v2-text);
+}
+.v2-human-control{overflow:hidden}
+.v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
+.v2-single-art{max-width:760px;margin-inline:auto}
+
+/* Section finale */
+.v2-final{
+  min-height:92svh;display:grid;align-items:center;
+  background:radial-gradient(circle at 18% 28%,rgba(0,162,199,.22),transparent 30rem),
+             radial-gradient(circle at 82% 62%,rgba(214,64,159,.2),transparent 30rem);
+}
+.v2-art-final{width:min(100%,680px);justify-self:end}
+
+/* Reveal scrolling */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].is-visible{opacity:1;transform:translateY(0)}
+@keyframes v2-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+/* Pages secondaires */
+.v2-simple{padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px))}
+.v2-simple-hero{padding-block:var(--agtc-semantic-marketing-space-hero-gap,120px)}
+.v2-editorial-grid,.v2-doc-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;border:1px solid var(--v2-line);background:var(--v2-line);
+}
+.v2-editorial-block,.v2-doc-block{
+  padding:var(--agtc-semantic-space-comfortable-layout-component,28px);background:var(--v2-surface);
+}
+.v2-editorial-block h2,.v2-doc-block h2{
+  margin:0 0 .8rem;color:var(--v2-text);
+  font-size:var(--agtc-component-card-typography-marketing-hero-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-hero-title-weight);
+  line-height:var(--agtc-semantic-typography-heading-5-line-height);
+}
+.v2-editorial-block p,.v2-doc-block p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-doc-block ul{display:grid;gap:.55rem;margin:1.1rem 0 0;padding:0;list-style:none}
+.v2-doc-block a{color:var(--v2-text);text-decoration-color:rgba(255,255,255,.25);text-underline-offset:.18em}
+.v2-anchor{display:block;position:relative;top:-96px;height:0}
+
+/* Footer V2 */
+.v2-footer{
+  margin-top:0;border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.12),transparent 28rem),
+             var(--agtc-semantic-color-background-inverse);
+}
+.v2-footer-inner{max-width:var(--v2-shell);grid-template-columns:1.15fr .9fr 1fr .9fr}
+.v2-footer .v2-brand-mark{width:24px;height:24px}
+.v2-footer-heading{margin-bottom:.25rem;color:var(--agtc-semantic-color-text-on-inverse);font-size:var(--agtc-semantic-typography-detail-size)}
+
+/* Back-to-top V2 */
+.v2-back-to-top{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.v2-back-to-top.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+
+/* Stats hero (réutilisées depuis rd-*) */
+.v2-hero-stats{
+  display:flex;flex-wrap:wrap;gap:2rem;margin-top:2.5rem;
+  padding-top:2rem;border-top:1px solid var(--v2-line);
+}
+.v2-stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--v2-text)}
+.v2-stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--v2-muted);margin-top:.25rem}
+
+/* Responsive */
+@media(max-width:980px){
+  :root{--v2-shell:min(100vw - 32px,760px)}
+  .v2-menu-button{display:inline-flex;align-items:center}
+  .v2-header-tools{margin-left:auto}
+  .v2-header-tools .github-btn,.v2-header-tools .storybook-btn{display:none}
+  .v2-nav{
+    position:fixed;
+    inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
+    display:none;flex-direction:column;align-items:stretch;padding:.6rem;
+    border:1px solid var(--v2-line);border-radius:var(--agtc-semantic-radius-card,16px);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 96%,transparent);
+    box-shadow:var(--agtc-shadow-lg);
+  }
+  .v2-nav.is-open{display:flex}
+  .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
+  .v2-nav a::after,.v2-docs-trigger::after{inset:auto .82rem .35rem}
+  .v2-nav .v2-nav-action{margin-left:0}
+  .v2-docs-panel{
+    position:static;width:100%;grid-template-columns:1fr;
+    margin-top:.5rem;transform:none;
+  }
+  .v2-docs-panel > div,.v2-docs-panel > div:first-child,.v2-docs-panel > div:last-child{
+    min-height:auto;border-radius:0;
+  }
+  .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid,
+  .v2-overlap,.v2-overlap-reverse,.v2-split{grid-template-columns:1fr}
+  .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
+    width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
+  }
+  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-footer-inner,.v2-single-art,.v2-dual-art{
+    grid-template-columns:1fr;
+  }
+  .v2-role-card{min-height:170px}
+}
+@media(max-width:560px){
+  .v2-header{padding-inline:16px}
+  .v2-section{padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+  .v2-hero{
+    padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));
+    padding-bottom:var(--agtc-space-7,48px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  [data-reveal]{opacity:1;transform:none}
+}
 `; }
 
 function siteJS() { return `
@@ -2517,18 +2891,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── Bouton retour en haut ────────────────────────────────
-  const backToTop = document.querySelector('.back-to-top');
+  // ── Bouton retour en haut (V2 — threshold 600px, classe is-visible) ─────────
+  const backToTop = document.querySelector('[data-back-to-top]');
   if (backToTop) {
-    const onScroll = () => {
-      const visible = window.scrollY > 200;
-      backToTop.hidden = !visible;
+    const setBackToTopState = () => {
+      const visible = window.scrollY > 600;
+      backToTop.classList.toggle('is-visible', visible);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', setBackToTopState, { passive: true });
+    setBackToTopState();
+  }
+
+  // ── Megapanel Documentation (V2) ─────────────────────────────────────────
+  const docsTrigger = document.querySelector('[data-docs-trigger]');
+  const docsPanel   = document.querySelector('[data-docs-panel]');
+  if (docsTrigger && docsPanel) {
+    const closeDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'false');
+      docsPanel.classList.remove('is-open');
+      docsPanel.hidden = true;
+    };
+    const openDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'true');
+      docsPanel.hidden = false;
+      requestAnimationFrame(() => docsPanel.classList.add('is-open'));
+    };
+    docsTrigger.addEventListener('click', e => {
+      if (docsTrigger.getAttribute('aria-expanded') !== 'true') e.preventDefault();
+      docsTrigger.getAttribute('aria-expanded') === 'true' ? closeDocs() : openDocs();
     });
+    docsTrigger.addEventListener('mouseenter', openDocs);
+    docsPanel.addEventListener('mouseenter', openDocs);
+    document.addEventListener('pointerdown', e => {
+      if (!docsPanel.contains(e.target) && !docsTrigger.contains(e.target)) closeDocs();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeDocs(); docsTrigger.focus(); }
+    });
+  }
+
+  // ── Menu mobile V2 ────────────────────────────────────────────────────────
+  const v2MenuToggle = document.querySelector('[data-menu-toggle]');
+  const v2MainNav    = document.querySelector('[data-main-nav]');
+  if (v2MenuToggle && v2MainNav) {
+    v2MenuToggle.addEventListener('click', () => {
+      const isOpen = v2MenuToggle.getAttribute('aria-expanded') === 'true';
+      v2MenuToggle.setAttribute('aria-expanded', String(!isOpen));
+      v2MainNav.classList.toggle('is-open', !isOpen);
+    });
+    v2MainNav.addEventListener('click', e => {
+      if (e.target.closest('a')) {
+        v2MenuToggle.setAttribute('aria-expanded', 'false');
+        v2MainNav.classList.remove('is-open');
+      }
+    });
+  }
+
+  // ── Scroll reveal V2 ([data-reveal] → .is-visible) ───────────────────────
+  const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+  if (revealItems.length) {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.16 });
+      revealItems.forEach(el => revealObs.observe(el));
+    } else {
+      revealItems.forEach(el => el.classList.add('is-visible'));
+    }
   }
 
   // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
@@ -2612,7 +3044,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </footer>`;
 
   return `<!DOCTYPE html>
-<html lang="fr" data-lang="fr" data-theme="light">
+<html lang="fr" data-lang="fr" data-theme="${context === 'marketing' ? 'dark' : 'light'}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -2644,37 +3076,81 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="stylesheet" href="${base}site.css">
 <script src="${base}components/agtc.js" defer></script>
 </head>
-<body${context ? ` data-context="${context}"` : ''}>
+<body${context === 'marketing' ? ' class="v2-page"' : ''}${context ? ` data-context="${context}"` : ''}>
 <a class="skip-link" href="#main-content">
   <span class="lang-fr">Aller au contenu</span>
   <span class="lang-en">Skip to content</span>
 </a>
-<header class="site-header" role="banner">
-  <a class="logo" href="${base}index.html" aria-label="Agentica — Accueil">
-    <svg class="logo-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil">
+    <svg class="v2-brand-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
     </svg>
-    <span class="logo-name">Agentica</span>
+    <span>Agentica</span>
   </a>
-  <agtc-top-nav id="site-top-nav" nav-label="Navigation principale"></agtc-top-nav>
-  <script>(function(){var items=${navItems};function init(){var n=document.getElementById('site-top-nav');if(!n)return;n.items=items;n.current=window.location.pathname;}if(customElements.get('agtc-top-nav')){init();}else{customElements.whenDefined('agtc-top-nav').then(init);}})()</script>
-  <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
-    <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav">
+    <span class="lang-fr">Menu</span><span class="lang-en">Menu</span>
   </button>
-  <div class="agtc-segmented lang-switch" role="group" aria-label="Language" style="margin-left:8px;flex-shrink:0">
-    <button type="button" data-lang="fr" aria-current="true">FR</button>
-    <button type="button" data-lang="en" aria-current="false">EN</button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="${base}index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="${base}ia.html">IA</a>
+    <div class="v2-docs">
+      <button class="v2-docs-trigger" type="button" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </button>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="${base}pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="${base}ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="${base}architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Construire</span><span class="lang-en">Build</span></h2>
+          <a href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+          <a href="${base}foundations/index.html"><span class="lang-fr">Guides</span><span class="lang-en">Guides</span></a>
+          <a href="${base}components/index.html"><span class="lang-fr">Exemples</span><span class="lang-en">Examples</span></a>
+          <a href="${base}changelog.html"><span class="lang-fr">Changelog</span><span class="lang-en">Changelog</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="${base}components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="${base}tokens/index.html">Tokens</a>
+          <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="${base}agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="${base}pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="${base}audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      ${storybookIcon(18)}
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      ${icon('github', 18)}
+    </a>
   </div>
-  <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
-    ${storybookIcon(18)}
-  </a>
-  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
-    ${icon('github', 18)}
-  </a>
-  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-top-nav">
-    ${icon('menu', 24)}
-  </button>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${mainClass}" id="main-content"${fullWidth ? ' data-context="marketing"' : ''}>
@@ -2683,7 +3159,7 @@ ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
   ${tocHtml}
 </div>
 ${footer}
-<button class="back-to-top" aria-label="Retour en haut" hidden>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
   <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
 </button>
@@ -2812,440 +3288,579 @@ function buildHome(adrs) {
   const primCount   = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
-  // — Redesign : illustrations PNG servies directement (pas de SVG inline — cf. perf.md)
-
-
   const body = `
-<div class="rd-wrap">
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S1 — HERO
-     Aurora existante + auroraDrift. min-height 90svh via [data-context="marketing"].
-     Typographie : hero-title (60px max via token marketing).
-     Boutons : agtc-button (dogfooding ADR-058, ADR-062).
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="hero" id="accueil" aria-label="Agentica">
-  <!-- Illustration cinematic — position absolute, collée au bord droit -->
-  <div class="rd-bg-wrap rd-bg-r hero-illus-wrap" aria-hidden="true">
-    <img src="img/IMG-HERO-SYSTEM.png" alt="" loading="eager" fetchpriority="high">
-    <div class="rd-bg-fade"></div>
-  </div>
-  <div class="hero-inner">
-    <div class="hero-content-w">
-      <div class="hero-badge" aria-hidden="true">
-        <span class="pulse"></span>
-        Human First, AI Ready
-      </div>
-      <h1 class="hero-title">
-        <span class="lang-fr">Le système de décisions<br>pour les humains<br>et les agents IA</span>
-        <span class="lang-en">The decision system<br>for humans<br>and AI agents</span>
+<!-- S1 — HERO -->
+<section class="v2-section v2-hero" id="accueil">
+  <div class="v2-shell v2-hero-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Système de décisions</span><span class="lang-en">Decision system</span></p>
+      <h1>
+        <span class="lang-fr">Le système de décisions pour les humains et les agents IA</span>
+        <span class="lang-en">The decision system for humans and AI agents</span>
       </h1>
-      <p class="hero-tagline">
-        <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica les transforme en contrats structurés — compréhensibles par les humains et les agents IA, avec les humains aux commandes.</span>
-        <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica transforms those decisions into structured contracts understandable by both humans and AI agents, while keeping humans in control.</span>
+      <p>
+        <span class="lang-fr">Agentica transforme les décisions UX, UI, accessibilité, architecture et gouvernance en connaissances structurées, durables et compréhensibles par les humains comme par les agents IA.</span>
+        <span class="lang-en">Agentica turns UX, UI, accessibility, architecture and governance decisions into structured, durable knowledge that humans and AI agents can understand.</span>
       </p>
-      <div class="hero-actions">
-        <a href="get-started.html" class="agtc-button primary">
+      <div class="v2-actions">
+        <a class="v2-button v2-button-primary" href="pourquoi.html">
           <span class="lang-fr">Découvrir la vision</span>
           <span class="lang-en">Discover the vision</span>
         </a>
-        <a href="foundations/index.html" class="agtc-button ghost">
-          <span class="lang-fr">Explorer la documentation →</span>
-          <span class="lang-en">Explore documentation →</span>
+        <a class="v2-button v2-button-secondary" href="documentation.html">
+          <span class="lang-fr">Explorer la documentation</span>
+          <span class="lang-en">Explore the documentation</span>
         </a>
       </div>
-      <div class="rd-hero-stats" role="list" aria-label="Statistiques du système">
-        <div role="listitem"><span class="rd-stat-num">${totalTokens}+</span><span class="rd-stat-label"><span class="lang-fr">tokens</span><span class="lang-en">tokens</span></span></div>
-        <div role="listitem"><span class="rd-stat-num">${adrs.length}</span><span class="rd-stat-label">ADRs</span></div>
-        <div role="listitem"><span class="rd-stat-num">${compCount}</span><span class="rd-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
-        <div role="listitem"><span class="rd-stat-num">10</span><span class="rd-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
+      <div class="v2-hero-stats" role="list" aria-label="Statistiques du système">
+        <div role="listitem"><span class="v2-stat-num">${totalTokens}+</span><span class="v2-stat-label">tokens</span></div>
+        <div role="listitem"><span class="v2-stat-num">${adrs.length}</span><span class="v2-stat-label">ADRs</span></div>
+        <div role="listitem"><span class="v2-stat-num">${compCount}</span><span class="v2-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+        <div role="listitem"><span class="v2-stat-num">10</span><span class="v2-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
+    <figure class="v2-art v2-art-hero" aria-hidden="true">
+      <img src="img/IMG-HERO-SYSTEM.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S2 — LE PROBLÈME
-     Asymétrique 40/60 : peu de texte, illustration dominante.
-     Texte narratif — pas de liste à puces.
-     Ton lourd, déclaratif.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt rd-cinematic" id="pourquoi">
-  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
-    <img src="img/IMG-CONTEXT.png" alt="" loading="lazy">
-    <div class="rd-bg-fade"></div>
-  </div>
-  <div class="rd-cinematic-inner">
-    <div class="rd-cinematic-body">
-      <span class="rd-eyebrow"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></span>
-      <h2 class="rd-h2">
+<!-- S2 — LE PROBLÈME -->
+<section class="v2-section v2-problem" id="pourquoi" data-reveal>
+  <div class="v2-shell v2-overlap">
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></p>
+      <h2>
         <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
         <span class="lang-en">Teams accumulate invisible decisions</span>
       </h2>
-      <p class="rd-narrative">
+      <p>
         <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
         <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
       </p>
     </div>
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-CONTEXT.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S3 — HUMAN FIRST, AI READY — WOW 1
-     Section sombre (fond inverse). Illustration centrée large + halo teal.
-     Deux cartes (Humains / Agents IA) sous l'illustration.
-     Citation finale centrée comme déclaration de principe.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-wow rd-section-monument">
-  <div class="rd-inner">
-    <div class="rd-center">
-      <span class="rd-eyebrow">Human First, AI Ready</span>
-      <h2 class="rd-h2">
+<!-- S3 — HUMAINS ET AGENTS IA -->
+<section class="v2-section v2-immersive" data-reveal>
+  <div class="v2-shell v2-immersive-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Humains et agents IA</span><span class="lang-en">Humans and AI agents</span></p>
+      <h2>
         <span class="lang-fr">Conçu pour les humains. Prêt pour les agents IA.</span>
         <span class="lang-en">Designed for humans. Ready for AI agents.</span>
       </h2>
-      <p class="rd-lead">
-        <span class="lang-fr">Deux consommateurs. Une seule source de vérité. Zéro compromis.</span>
-        <span class="lang-en">Two consumers. One single source of truth. Zero compromise.</span>
+      <p>
+        <span class="lang-fr">Les humains comprennent, décident, approuvent et gouvernent. Les agents détectent, analysent, proposent et automatisent. Le dernier mot reste toujours humain.</span>
+        <span class="lang-en">Humans understand, decide, approve and govern. Agents detect, analyze, propose and automate. Humans always keep the final word.</span>
       </p>
     </div>
-    <div class="rd-illus-center rd-halo" aria-hidden="true">
-      <img src="img/IMG-HUMANS-AI_EN.png" alt="" width="700" height="580" loading="lazy">
-    </div>
-    <div class="rd-dual">
-      <div class="rd-dual-card">
-        <div class="rd-dual-title"><span class="lang-fr">Les humains</span><span class="lang-en">Humans</span></div>
-        <ul class="rd-list check">
-          <li><span class="lang-fr">Comprennent</span><span class="lang-en">Understand</span></li>
-          <li><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></li>
-          <li><span class="lang-fr">Approuvent</span><span class="lang-en">Approve</span></li>
-          <li><span class="lang-fr">Gouvernent</span><span class="lang-en">Govern</span></li>
-        </ul>
-      </div>
-      <div class="rd-dual-card">
-        <div class="rd-dual-title"><span class="lang-fr">Les agents IA</span><span class="lang-en">AI agents</span></div>
-        <ul class="rd-list check">
-          <li><span class="lang-fr">Détectent</span><span class="lang-en">Detect</span></li>
-          <li><span class="lang-fr">Analysent</span><span class="lang-en">Analyze</span></li>
-          <li><span class="lang-fr">Proposent</span><span class="lang-en">Propose</span></li>
-          <li><span class="lang-fr">Automatisent</span><span class="lang-en">Automate</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="rd-center">
-      <blockquote class="rd-quote">
-        <span class="lang-fr">« Le dernier mot reste toujours humain. »</span>
-        <span class="lang-en">"The final word always remains human."</span>
-      </blockquote>
-    </div>
+    <figure class="v2-art v2-art-float" aria-hidden="true">
+      <img src="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S4 — CONNAISSANCES — MOMENT CALME
-     Centré, minimal. Juste le titre et une courte déclaration narrative.
-     Pas de liste. L'illustration est là pour respirer, pas pour expliquer.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-cinematic">
-  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
-    <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy">
-    <div class="rd-bg-fade"></div>
-  </div>
-  <div class="rd-cinematic-inner">
-    <div class="rd-cinematic-body">
-      <span class="rd-eyebrow"><span class="lang-fr">Connaissances</span><span class="lang-en">Knowledge</span></span>
-      <h2 class="rd-h2">
+<!-- S4 — LES CONNAISSANCES -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell v2-split">
+    <figure class="v2-art" aria-hidden="true">
+      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Les connaissances</span><span class="lang-en">Knowledge</span></p>
+      <h2>
         <span class="lang-fr">Les connaissances sont un actif stratégique</span>
         <span class="lang-en">Knowledge is a strategic asset</span>
       </h2>
-      <p class="rd-narrative">
-        <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances, elles, doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
+      <p>
+        <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
         <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
       </p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S5 — SOURCE UNIQUE DE VÉRITÉ — WOW 2
-     Section monumentale centrée. Illustration pleine largeur avec halo.
-     4 cartes token-flow en rang horizontal sous l'image.
-     La plus grande section de la page.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt rd-section-monument" id="architecture">
-  <div class="rd-inner">
-    <div class="rd-center">
-      <span class="rd-eyebrow"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></span>
-      <h2 class="rd-h2">
+<!-- S5 — SOURCE UNIQUE DE VÉRITÉ -->
+<section class="v2-section v2-single-source" id="architecture" data-reveal>
+  <div class="v2-shell v2-overlap v2-overlap-reverse">
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
+      <h2>
         <span class="lang-fr">Une seule source de vérité</span>
-        <span class="lang-en">One source of truth</span>
+        <span class="lang-en">One single source of truth</span>
       </h2>
-      <p class="rd-lead">
-        <span class="lang-fr">Une même source alimente plusieurs destinations. Quatre niveaux. Une seule chaîne de décisions.</span>
-        <span class="lang-en">One source feeds multiple destinations. Four levels. One decision chain.</span>
+      <p>
+        <span class="lang-fr">Une même source alimente les fondations, les contrats sémantiques, les composants et les applications. Quatre niveaux. Une seule chaîne de décisions.</span>
+        <span class="lang-en">One source feeds foundations, semantic contracts, components and applications. Four levels. One decision chain.</span>
       </p>
     </div>
-    <div class="rd-illus-full rd-halo-violet rd-halo" aria-hidden="true">
-      <img src="img/IMG-SINGLE-SOURCE.png" alt="" width="1200" height="630" loading="lazy">
-    </div>
-    <div class="rd-token-flow">
-      <div class="rd-token-card">
-        <div class="rd-token-num">01</div>
-        <div class="rd-token-title"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></div>
-        <div class="rd-token-desc"><span class="lang-fr">Couleur, typographie, espacement.</span><span class="lang-en">Color, typography, spacing.</span></div>
-      </div>
-      <div class="rd-token-card">
-        <div class="rd-token-num">02</div>
-        <div class="rd-token-title"><span class="lang-fr">Contrats sémantiques</span><span class="lang-en">Semantic contracts</span></div>
-        <div class="rd-token-desc"><span class="lang-fr">L'intention, pas la valeur brute.</span><span class="lang-en">Intent, not raw values.</span></div>
-      </div>
-      <div class="rd-token-card">
-        <div class="rd-token-num">03</div>
-        <div class="rd-token-title"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></div>
-        <div class="rd-token-desc"><span class="lang-fr">Contrats comportementaux.</span><span class="lang-en">Behavioral contracts.</span></div>
-      </div>
-      <div class="rd-token-card">
-        <div class="rd-token-num">04</div>
-        <div class="rd-token-title"><span class="lang-fr">Applications</span><span class="lang-en">Applications</span></div>
-        <div class="rd-token-desc"><span class="lang-fr">Multiples plateformes.</span><span class="lang-en">Multiple platforms.</span></div>
-      </div>
-    </div>
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S6 — VALEUR PAR RÔLE
-     Section plus calme. Illustration placeholder + grille de rôles.
-     Placeholder IMG-PERSONAS en attente de l'illustration.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section">
-  <div class="rd-inner">
-    <div class="rd-center">
-      <span class="rd-eyebrow"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></span>
-      <h2 class="rd-h2">
+<!-- S6 — VALEUR PAR RÔLE -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-section-heading">
+      <p class="v2-kicker"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></p>
+      <h2>
         <span class="lang-fr">Une valeur différente pour chaque rôle</span>
         <span class="lang-en">Different value for every role</span>
       </h2>
-      <p class="rd-lead">
-        <span class="lang-fr">Les bénéfices sont concrets. Quelle que soit votre position dans l'équipe.</span>
-        <span class="lang-en">The benefits are concrete. Whatever your position in the team.</span>
+    </div>
+    <div class="v2-role-grid">
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Organisation</span><span class="lang-en">Organization</span></h3>
+        <p><span class="lang-fr">Une mémoire commune des décisions, lisible et gouvernable.</span><span class="lang-en">A shared decision memory, readable and governable.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Gestionnaires</span><span class="lang-en">Managers</span></h3>
+        <p><span class="lang-fr">Des arbitrages visibles, traçables et reliés à la valeur.</span><span class="lang-en">Visible trade-offs, traceable and tied to value.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Responsables produit</span><span class="lang-en">Product leads</span></h3>
+        <p><span class="lang-fr">Des choix produit connectés aux preuves et aux contraintes.</span><span class="lang-en">Product choices connected to evidence and constraints.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Designers</span><span class="lang-en">Designers</span></h3>
+        <p><span class="lang-fr">Des intentions de design préservées au-delà des écrans.</span><span class="lang-en">Design intentions preserved beyond the screens.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Développeurs</span><span class="lang-en">Developers</span></h3>
+        <p><span class="lang-fr">Des contrats explicites pour construire sans interpréter au hasard.</span><span class="lang-en">Explicit contracts to build without guessing.</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- S7 — QUALITÉ -->
+<section class="v2-section v2-quality" id="qualite" data-reveal>
+  <div class="v2-shell v2-quality-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
+      <h2>
+        <span class="lang-fr">La qualité est une propriété du système</span>
+        <span class="lang-en">Quality is built into the system</span>
+      </h2>
+      <p>
+        <span class="lang-fr">L'accessibilité, les régressions visuelles, la documentation, les ADRs et la cohérence ne sont pas ajoutées après coup. Elles font partie du système. Rien n'entre sans contrôle.</span>
+        <span class="lang-en">Accessibility, visual regressions, documentation, ADRs and consistency are not added after the fact. They are part of the system. Nothing enters without control.</span>
       </p>
     </div>
-    <div class="rd-illus-center" aria-hidden="true">
-      <div class="rd-illus-placeholder">
-        <strong>IMG-PERSONAS</strong>
-        <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
-      </div>
-    </div>
-    <div class="rd-role-grid">
-      <div class="rd-role-card">
-        <div class="rd-role-name"><span class="lang-fr">Organisation</span><span class="lang-en">Organization</span></div>
-        <ul class="rd-role-items">
-          <li><span class="lang-fr">Réduire la dette</span><span class="lang-en">Reduce debt</span></li>
-          <li><span class="lang-fr">Préserver les connaissances</span><span class="lang-en">Preserve knowledge</span></li>
-          <li><span class="lang-fr">Préparer l'IA</span><span class="lang-en">Prepare for AI</span></li>
-        </ul>
-      </div>
-      <div class="rd-role-card">
-        <div class="rd-role-name"><span class="lang-fr">Gestionnaires</span><span class="lang-en">Managers</span></div>
-        <ul class="rd-role-items">
-          <li><span class="lang-fr">Gouvernance documentée</span><span class="lang-en">Documented governance</span></li>
-          <li><span class="lang-fr">Onboarding accéléré</span><span class="lang-en">Faster onboarding</span></li>
-          <li><span class="lang-fr">Réduction des risques</span><span class="lang-en">Risk reduction</span></li>
-        </ul>
-      </div>
-      <div class="rd-role-card">
-        <div class="rd-role-name">Product Owners</div>
-        <ul class="rd-role-items">
-          <li><span class="lang-fr">Décisions explicites</span><span class="lang-en">Explicit decisions</span></li>
-          <li><span class="lang-fr">Cohérence garantie</span><span class="lang-en">Consistency guaranteed</span></li>
-        </ul>
-      </div>
-      <div class="rd-role-card">
-        <div class="rd-role-name"><span class="lang-fr">Designers</span><span class="lang-en">Designers</span></div>
-        <ul class="rd-role-items">
-          <li><span class="lang-fr">Source unique Figma</span><span class="lang-en">Single Figma source</span></li>
-          <li><span class="lang-fr">Collaboration fluide</span><span class="lang-en">Fluid collaboration</span></li>
-        </ul>
-      </div>
-      <div class="rd-role-card">
-        <div class="rd-role-name"><span class="lang-fr">Développeurs</span><span class="lang-en">Developers</span></div>
-        <ul class="rd-role-items">
-          <li>Web Components</li>
-          <li><span class="lang-fr">Multi-framework</span><span class="lang-en">Multi-framework</span></li>
-        </ul>
-      </div>
+    <div class="v2-signal-stack" aria-hidden="true">
+      <span><span class="lang-fr">Accessibilité WCAG 2.1</span><span class="lang-en">WCAG 2.1 Accessibility</span></span>
+      <span><span class="lang-fr">Régressions visuelles</span><span class="lang-en">Visual regressions</span></span>
+      <span><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></span>
+      <span>ADRs</span>
+      <span><span class="lang-fr">Cohérence tokens</span><span class="lang-en">Token consistency</span></span>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S7 — QUALITÉ — WOW 3
-     Section sombre. Illustration (placeholder IMG-QUALITY-GATES) côté gauche
-     avec halo violet. Texte narratif à droite. Pas de liste à puces.
-     La déclaration finale doit être mémorable.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-wow" id="qualite">
-  <div class="rd-inner">
-    <div class="rd-grid-60-40">
-      <div class="rd-halo-violet rd-halo" aria-hidden="true">
-        <div class="rd-illus-placeholder">
-          <strong>IMG-QUALITY-GATES</strong>
-          <span><span class="lang-fr">Illustration à venir</span><span class="lang-en">Illustration coming soon</span></span>
-        </div>
-      </div>
-      <div>
-        <span class="rd-eyebrow"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></span>
-        <h2 class="rd-h2">
-          <span class="lang-fr">La qualité est une propriété du système</span>
-          <span class="lang-en">Quality is built into the system</span>
-        </h2>
-        <p class="rd-narrative">
-          <span class="lang-fr">Avant chaque changement, Agentica vérifie automatiquement l'accessibilité, les régressions visuelles, la documentation, la cohérence des ADRs et l'intégrité des tokens. La qualité n'est pas une étape finale. Elle est structurelle.</span>
-          <span class="lang-en">Before every change, Agentica automatically verifies accessibility, visual regressions, documentation, ADR consistency and token integrity. Quality is not a final step. It is structural.</span>
-        </p>
-        <p class="rd-statement">
-          <span class="lang-fr">Rien n'entre dans le système sans contrôle.</span>
-          <span class="lang-en">Nothing enters the system without control.</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S8 — MÉMOIRE DES DÉCISIONS — MOMENT CALME
-     Centré, narratif. Pas de liste — une seule déclaration forte.
-     Lien vers les ADRs comme invitation à explorer.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-alt rd-cinematic">
-  <div class="rd-bg-wrap rd-bg-r" aria-hidden="true">
-    <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy">
-    <div class="rd-bg-fade"></div>
-  </div>
-  <div class="rd-cinematic-inner">
-    <div class="rd-cinematic-body">
-      <span class="rd-eyebrow"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></span>
-      <h2 class="rd-h2">
+<!-- S8 — MÉMOIRE DES DÉCISIONS -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell v2-split">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></p>
+      <h2>
         <span class="lang-fr">Chaque décision possède une mémoire</span>
-        <span class="lang-en">Every decision has memory</span>
+        <span class="lang-en">Every decision has a memory</span>
       </h2>
-      <p class="rd-narrative">
-        <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives explorées, les compromis acceptés — afin que personne ne soit jamais contraint de réinventer ce qui a déjà été résolu.</span>
-        <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves the context, the explored alternatives, the accepted trade-offs — so nobody is ever forced to reinvent what has already been resolved.</span>
+      <p>
+        <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives et les compromis — afin que personne ne réinvente ce qui a déjà été résolu.</span>
+        <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves its context, alternatives and trade-offs — so nobody reinvents what has already been resolved.</span>
       </p>
-      <p><a href="decisions/index.html" class="agtc-button secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S9 — HUMAN-IN-THE-LOOP — IA
-     Section sombre. Layout préservé : illustration à gauche, deux cartes à droite.
-     La structure peut/ne peut pas est la seule liste conservée — elle est essentielle.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-section-wow rd-cinematic" id="ia">
-  <div class="rd-bg-wrap rd-bg-l" aria-hidden="true">
-    <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy">
-    <div class="rd-bg-fade rd-bg-fade-l"></div>
-  </div>
-  <div class="rd-cinematic-inner">
-    <div class="rd-cinematic-body rd-cinematic-body-r">
-      <span class="rd-eyebrow"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></span>
-      <h2 class="rd-h2">
-        <span class="lang-fr">Automatisation sans perdre le contrôle</span>
-        <span class="lang-en">Automation without losing control</span>
-      </h2>
-      <div class="rd-dual">
-        <div class="rd-dual-card">
-          <div class="rd-dual-title"><span class="lang-fr">Les agents peuvent :</span><span class="lang-en">AI agents can:</span></div>
-          <ul class="rd-list check">
-            <li><span class="lang-fr">Générer</span><span class="lang-en">Generate</span></li>
-            <li><span class="lang-fr">Détecter</span><span class="lang-en">Detect</span></li>
-            <li><span class="lang-fr">Documenter</span><span class="lang-en">Document</span></li>
-            <li><span class="lang-fr">Proposer</span><span class="lang-en">Propose</span></li>
-          </ul>
-        </div>
-        <div class="rd-dual-card">
-          <div class="rd-dual-title"><span class="lang-fr">Les agents ne peuvent pas :</span><span class="lang-en">AI agents cannot:</span></div>
-          <ul class="rd-list">
-            <li class="no"><span class="lang-fr">Approuver</span><span class="lang-en">Approve</span></li>
-            <li class="no"><span class="lang-fr">Déployer</span><span class="lang-en">Deploy</span></li>
-            <li class="no"><span class="lang-fr">Contourner la gouvernance</span><span class="lang-en">Bypass governance</span></li>
-          </ul>
-        </div>
+      <div class="v2-actions">
+        <a class="v2-button v2-button-secondary" href="decisions/index.html">
+          <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
+          <span class="lang-en">View all ${adrs.length} ADRs →</span>
+        </a>
       </div>
     </div>
+    <figure class="v2-art" aria-hidden="true">
+      <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     S10 — DURABILITÉ — CLÔTURE NARRATIVE
-     Centré, narratif, calme. Invitation à la réflexion avant le CTA.
-     Pas de liste — une déclaration de principes en texte continu.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="rd-section rd-cinematic">
-  <div class="rd-bg-wrap rd-bg-l" aria-hidden="true">
-    <img src="img/IMG-DURABILITY.png" alt="" loading="lazy">
-    <div class="rd-bg-fade rd-bg-fade-l"></div>
+<!-- S9 — CONTRÔLE HUMAIN -->
+<section class="v2-section v2-human-control" id="ia" data-reveal>
+  <div class="v2-shell v2-overlap">
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+      <h2>
+        <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
+        <span class="lang-en">Automate without giving up control</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Les agents peuvent générer, détecter, documenter et proposer. Ils ne peuvent pas approuver, déployer ou contourner la gouvernance.</span>
+        <span class="lang-en">Agents can generate, detect, document and propose. They cannot approve, deploy or bypass governance.</span>
+      </p>
+    </div>
   </div>
-  <div class="rd-cinematic-inner">
-    <div class="rd-cinematic-body rd-cinematic-body-r">
-      <span class="rd-eyebrow"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></span>
-      <h2 class="rd-h2">
+</section>
+
+<!-- S10 — DURABILITÉ -->
+<section class="v2-section v2-durability" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-section-heading">
+      <p class="v2-kicker"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></p>
+      <h2>
         <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
         <span class="lang-en">Build for today. Preserve for tomorrow.</span>
       </h2>
-      <p class="rd-narrative">
-        <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils. Ses connaissances restent accessibles, quelle que soit la technologie de demain.</span>
-        <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools. Its knowledge remains accessible, whatever tomorrow's technology brings.</span>
+      <p>
+        <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils.</span>
+        <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
       </p>
+    </div>
+    <div class="v2-single-art">
+      <figure class="v2-art" aria-hidden="true">
+        <img src="img/IMG-FUTURE.png" alt="" loading="lazy" width="760" height="500">
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     CTA FINAL — même atmosphère que le hero
-     IMG-AGENTICA centré. Invitation à démarrer.
-════════════════════════════════════════════════════════════════════════════ -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="rd-cta-inner">
-      <span class="rd-eyebrow">Agentica</span>
-      <h2 class="hero-title">
+<!-- S11 — APPEL FINAL -->
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell v2-final-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker">Agentica</p>
+      <h2>
         <span class="lang-fr">Prêt à explorer Agentica ?</span>
         <span class="lang-en">Ready to explore Agentica?</span>
       </h2>
-      <div class="rd-illus-center" aria-hidden="true">
-        <img src="img/IMG-AGENTICA.png" alt="" width="400" height="300" loading="lazy">
-      </div>
-      <p class="rd-lead">
-        <span class="lang-fr">Transformez les décisions en connaissances durables — compréhensibles par les humains et les agents IA.</span>
-        <span class="lang-en">Transform decisions into durable knowledge understandable by humans and AI agents.</span>
+      <p>
+        <span class="lang-fr">Transformez les décisions en connaissances durables, lisibles par les humains et les agents IA.</span>
+        <span class="lang-en">Turn decisions into durable knowledge that humans and AI agents can read.</span>
       </p>
-      <div class="rd-cta-actions">
-        <a href="get-started.html" class="agtc-button primary"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
-        <a href="components/index.html" class="agtc-button ghost"><span class="lang-fr">Voir les composants →</span><span class="lang-en">View components →</span></a>
-        <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="agtc-button ghost">GitHub →</a>
+      <div class="v2-actions">
+        <a class="v2-button v2-button-primary" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+        <a class="v2-button v2-button-secondary" href="components/index.html"><span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span></a>
+        <a class="v2-button v2-button-ghost" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub →</a>
       </div>
     </div>
+    <figure class="v2-art v2-art-final" aria-hidden="true">
+      <img src="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
   </div>
 </section>
 
-</div><!-- /rd-wrap -->
-
-<!-- Navigation documentation — conservée pour le SEO et les agents -->
-<nav class="rd-doc-nav" aria-label="Documentation">
-  <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a> ·
-  <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a> ·
-  <a href="tokens/index.html">Tokens</a> ·
-  <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a> ·
-  <a href="agents/index.html"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a> ·
+<!-- Navigation documentation — SEO et agents -->
+<nav class="v2-doc-nav" aria-label="Documentation" style="display:none" aria-hidden="true">
+  <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+  <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+  <a href="tokens/index.html">Tokens</a>
+  <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+  <a href="agents/index.html"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a>
   <a href="pipelines/index.html">Pipelines</a>
 </nav>
 
 `;
 
   write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+// ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
+
+function buildPourquoi() {
+  const body = `
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Notre vision</span><span class="lang-en">Our vision</span></p>
+      <h1>
+        <span class="lang-fr">Pourquoi Agentica existe</span>
+        <span class="lang-en">Why Agentica exists</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica rend ces décisions explicites, durables et lisibles — par les humains comme par les agents IA.</span>
+        <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica makes those decisions explicit, durable and readable — by humans and AI agents alike.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Les connaissances se perdent</span><span class="lang-en">Knowledge gets lost</span></h2>
+        <p><span class="lang-fr">Les décisions de design, d'architecture et d'accessibilité se dispersent dans Figma, GitHub, Slack et la mémoire des experts. Lorsque les équipes changent, les décisions disparaissent.</span><span class="lang-en">Design, architecture and accessibility decisions scatter across Figma, GitHub, Slack and expert memory. When teams change, decisions disappear.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Les agents IA improvise</span><span class="lang-en">AI agents improvise</span></h2>
+        <p><span class="lang-fr">Sans source structurée, les agents IA inventent, réinventent et contredisent. Ils ne peuvent pas appliquer des décisions qu'ils ne comprennent pas. Agentica leur donne une source de vérité.</span><span class="lang-en">Without a structured source, AI agents invent, reinvent and contradict. They cannot apply decisions they don't understand. Agentica gives them a source of truth.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Le contrôle reste humain</span><span class="lang-en">Control stays human</span></h2>
+        <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains décident, approuvent et gouvernent. Ce n'est pas un système autonome. C'est un système de gouvernance augmentée.</span><span class="lang-en">Agents observe, analyze and propose. Humans decide, approve and govern. This is not an autonomous system. It is an augmented governance system.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">La qualité est structurelle</span><span class="lang-en">Quality is structural</span></h2>
+        <p><span class="lang-fr">Accessibilité, régressions visuelles, cohérence des tokens et des ADRs — ces vérifications ne sont pas optionnelles. Elles font partie du système, déclenchées automatiquement à chaque changement.</span><span class="lang-en">Accessibility, visual regressions, token and ADR consistency — these checks are not optional. They are part of the system, triggered automatically with every change.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker"><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></p>
+    <h2><span class="lang-fr">Commencer avec Agentica</span><span class="lang-en">Get started with Agentica</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a class="v2-button v2-button-secondary" href="architecture.html"><span class="lang-fr">Architecture →</span><span class="lang-en">Architecture →</span></a>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildArchitecture() {
+  const body = `
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
+      <h1>
+        <span class="lang-fr">Une seule source de vérité</span>
+        <span class="lang-en">One single source of truth</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Un même système de tokens en trois niveaux alimente les composants, la documentation, Figma, Storybook et les agents IA. Aucune divergence. Aucune interprétation libre.</span>
+        <span class="lang-en">One three-level token system feeds components, documentation, Figma, Storybook and AI agents. No divergence. No free interpretation.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Niveau 1 — Primitifs</span><span class="lang-en">Level 1 — Primitives</span></h2>
+        <p><span class="lang-fr">Les valeurs physiques brutes : couleurs, espacements, rayons, tailles de police. Jamais utilisés directement dans les composants. Toujours via un token sémantique.</span><span class="lang-en">Raw physical values: colors, spacings, radius, font sizes. Never used directly in components. Always through a semantic token.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Niveau 2 — Sémantiques</span><span class="lang-en">Level 2 — Semantic</span></h2>
+        <p><span class="lang-fr">Les intentions UX : <code>color.action.primary</code>, <code>space.control.padding</code>. Ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span><span class="lang-en">UX intentions: <code>color.action.primary</code>, <code>space.control.padding</code>. What agents must use to understand function, not raw value.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Niveau 3 — Composants</span><span class="lang-en">Level 3 — Components</span></h2>
+        <p><span class="lang-fr">Les contrats institutionnels : décisions comportementales spécifiques à chaque composant. Toute modification requiert une approbation humaine explicite.</span><span class="lang-en">Institutional contracts: behavioral decisions specific to each component. Every change requires explicit human approval.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">ADRs — Mémoire des décisions</span><span class="lang-en">ADRs — Decision memory</span></h2>
+        <p><span class="lang-fr">Chaque décision d'architecture est documentée dans un ADR (Architecture Decision Record) : contexte, alternatives explorées, compromis acceptés. Rien ne disparaît.</span><span class="lang-en">Every architecture decision is documented in an ADR (Architecture Decision Record): context, alternatives explored, trade-offs accepted. Nothing disappears.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker">Tokens</p>
+    <h2><span class="lang-fr">Explorer le système de tokens</span><span class="lang-en">Explore the token system</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="tokens/index.html">Tokens</a>
+      <a class="v2-button v2-button-secondary" href="decisions/index.html"><span class="lang-fr">Voir les ADRs →</span><span class="lang-en">View ADRs →</span></a>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildQualite() {
+  const body = `
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
+      <h1>
+        <span class="lang-fr">La qualité est une propriété du système</span>
+        <span class="lang-en">Quality is a system property</span>
+      </h1>
+      <p>
+        <span class="lang-fr">L'accessibilité, la cohérence visuelle, la documentation et la gouvernance des ADRs ne sont pas ajoutées après coup. Elles font partie du flux de travail. Rien n'entre sans contrôle.</span>
+        <span class="lang-en">Accessibility, visual consistency, documentation and ADR governance are not added after the fact. They are part of the workflow. Nothing enters without control.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Accessibilité WCAG 2.1 AA</span><span class="lang-en">WCAG 2.1 AA Accessibility</span></h2>
+        <p><span class="lang-fr">Chaque composant est testé automatiquement avec axe-core avant chaque commit. Ratio de contraste, navigation clavier, attributs ARIA — non contournables.</span><span class="lang-en">Every component is automatically tested with axe-core before each commit. Contrast ratio, keyboard navigation, ARIA attributes — non-negotiable.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Régressions visuelles</span><span class="lang-en">Visual regressions</span></h2>
+        <p><span class="lang-fr">Chromatic capture l'apparence de chaque composant dans chaque état. Toute déviation visuelle non approuvée bloque le déploiement.</span><span class="lang-en">Chromatic captures every component's appearance in every state. Any unapproved visual deviation blocks deployment.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Cohérence des tokens</span><span class="lang-en">Token consistency</span></h2>
+        <p><span class="lang-fr">Aucune valeur codée en dur dans les composants. Chaque couleur, espacement et rayon passe par un token sémantique. Les variables fantômes sont détectées automatiquement.</span><span class="lang-en">No hardcoded values in components. Every color, spacing and radius goes through a semantic token. Ghost variables are automatically detected.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Documentation obligatoire</span><span class="lang-en">Mandatory documentation</span></h2>
+        <p><span class="lang-fr">Aucun composant ne peut être publié sans sa guideline, sa Storybook story et ses patterns UX approuvés. La documentation est un gate, pas un bonus.</span><span class="lang-en">No component can be published without its guideline, Storybook story and approved UX patterns. Documentation is a gate, not a bonus.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker">Audit</p>
+    <h2><span class="lang-fr">Voir l'audit du système</span><span class="lang-en">View the system audit</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="audit.html">Audit</a>
+      <a class="v2-button v2-button-secondary" href="components/index.html"><span class="lang-fr">Composants →</span><span class="lang-en">Components →</span></a>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildIA() {
+  const body = `
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+      <h1>
+        <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
+        <span class="lang-en">Automate without giving up control</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Les agents IA peuvent générer, détecter, documenter et proposer. Ils ne peuvent pas approuver, déployer ou contourner la gouvernance. Le dernier mot reste toujours humain.</span>
+        <span class="lang-en">AI agents can generate, detect, document and propose. They cannot approve, deploy or bypass governance. The final word always remains human.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Ce que les agents peuvent faire</span><span class="lang-en">What agents can do</span></h2>
+        <p><span class="lang-fr">Générer des composants depuis les tokens, détecter les violations d'accessibilité, documenter les décisions, proposer des corrections, analyser la cohérence du système.</span><span class="lang-en">Generate components from tokens, detect accessibility violations, document decisions, propose fixes, analyze system consistency.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Ce que les agents ne peuvent pas faire</span><span class="lang-en">What agents cannot do</span></h2>
+        <p><span class="lang-fr">Approuver une PR, déployer en production, modifier un token de composant, créer un ADR — toutes ces actions nécessitent une approbation humaine explicite.</span><span class="lang-en">Approve a PR, deploy to production, modify a component token, create an ADR — all these actions require explicit human approval.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Les agents comprennent l'intention</span><span class="lang-en">Agents understand intent</span></h2>
+        <p><span class="lang-fr">Un agent comprend <code>color.action.primary</code> comme une intention UX. Il ne comprend pas <code>#3B82F6</code> comme une intention — c'est juste une valeur. Les tokens sémantiques rendent le système lisible par machine.</span><span class="lang-en">An agent understands <code>color.action.primary</code> as a UX intent. It doesn't understand <code>#3B82F6</code> as an intent — it's just a value. Semantic tokens make the system machine-readable.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
+        <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></p>
+    <h2><span class="lang-fr">Explorer les agents IA</span><span class="lang-en">Explore AI agents</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="agents/index.html"><span class="lang-fr">Documentation agents</span><span class="lang-en">Agent documentation</span></a>
+      <a class="v2-button v2-button-secondary" href="pipelines/index.html">Pipelines →</a>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildDocumentation() {
+  const body = `
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></p>
+      <h1>
+        <span class="lang-fr">Explorer Agentica</span>
+        <span class="lang-en">Explore Agentica</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Tout ce que vous devez savoir pour comprendre, construire avec et contribuer au système de design agentique.</span>
+        <span class="lang-en">Everything you need to understand, build with and contribute to the agentic design system.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-doc-grid">
+      <div class="v2-doc-block">
+        <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+        <p><span class="lang-fr">Les fondements conceptuels du système.</span><span class="lang-en">The conceptual foundations of the system.</span></p>
+        <ul>
+          <li><a href="pourquoi.html"><span class="lang-fr">Pourquoi Agentica</span><span class="lang-en">Why Agentica</span></a></li>
+          <li><a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a></li>
+          <li><a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a></li>
+          <li><a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <h2><span class="lang-fr">Construire</span><span class="lang-en">Build</span></h2>
+        <p><span class="lang-fr">Guides pratiques pour démarrer et contribuer.</span><span class="lang-en">Practical guides to get started and contribute.</span></p>
+        <ul>
+          <li><a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a></li>
+          <li><a href="foundations/index.html"><span class="lang-fr">Guides de fondations</span><span class="lang-en">Foundation guides</span></a></li>
+          <li><a href="components/index.html"><span class="lang-fr">Exemples de composants</span><span class="lang-en">Component examples</span></a></li>
+          <li><a href="changelog.html"><span class="lang-fr">Changelog</span><span class="lang-en">Changelog</span></a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+        <p><span class="lang-fr">La documentation complète du système.</span><span class="lang-en">Complete system reference.</span></p>
+        <ul>
+          <li><a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a></li>
+          <li><a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a></li>
+          <li><a href="tokens/index.html">Tokens</a></li>
+          <li><a href="decisions/index.html"><span class="lang-fr">Décisions (ADRs)</span><span class="lang-en">Decisions (ADRs)</span></a></li>
+          <li><a href="agents/index.html"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a></li>
+          <li><a href="pipelines/index.html">Pipelines</a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+        <p><span class="lang-fr">Les outils et ressources du système.</span><span class="lang-en">System tools and resources.</span></p>
+        <ul>
+          <li><a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a></li>
+          <li><a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="audit.html">Audit</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
@@ -6726,6 +7341,11 @@ function build() {
 
   const adrs = loadADRs();
   buildHome(adrs);
+  buildPourquoi();
+  buildArchitecture();
+  buildQualite();
+  buildIA();
+  buildDocumentation();
   buildGetStarted();
   buildChangelog();
   buildFoundationsIndex();
