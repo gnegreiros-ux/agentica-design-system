@@ -1942,22 +1942,28 @@ body{overflow-x:hidden}
   [data-context="marketing"] .rd-section-alt{background:var(--agtc-semantic-color-background-inverse)}
 }
 
-/* Fondu universel — illustrations fondues dans leur fond de section */
+/* Blend architectural — illustrations fusionnées comme background-image.
+   mix-blend-mode:screen → pixels sombres du PNG disparaissent dans le fond sombre.
+   Seul le contenu lumineux (teal, circuits, highlights) reste visible.
+   mask-image conserve le fondu de bord. */
 .rd-illus img,.rd-illus-center img{
-  -webkit-mask-image:radial-gradient(ellipse 88% 85% at 50% 50%,black 28%,transparent 100%);
-  mask-image:radial-gradient(ellipse 88% 85% at 50% 50%,black 28%,transparent 100%);
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
 }
 
-/* Full-width S5 : fondu horizontal + vertical, centre conservé */
+/* Full-width S5 : screen blend + fondu de bord */
 .rd-illus-full img{
-  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 42%,transparent 100%);
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 42%,transparent 100%);
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
+  mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
 }
 
-/* Hero illustration fond dans le fond sombre */
+/* Hero illustration : screen blend vers le fond sombre du hero */
 .hero .rd-illus img{
-  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
-  mask-image:radial-gradient(ellipse 85% 80% at 55% 45%,black 32%,transparent 100%);
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
+  mask-image:radial-gradient(ellipse 82% 78% at 55% 45%,black 45%,transparent 90%);
   max-width:none;
 }
 
