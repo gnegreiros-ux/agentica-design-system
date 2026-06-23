@@ -440,6 +440,32 @@
           "$value": "{primitive.color.secondary.12}",
           "$type": "color",
           "$intent": "Texte secondaire sur fond clair — 13.8:1 WCAG AAA"
+        },
+        "logo-black": {
+          "$value": "{primitive.color.brand.black}",
+          "$type": "color",
+          "$intent": "Noir du logo Agentica — version monochrome / fond clair. Réservé aux éléments d'identité de marque (logo, wordmark).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "brand-logo-black",
+              "use": ["logo", "wordmark", "icône de marque sur fond clair"],
+              "doNotUse": "Texte courant (utiliser text.primary), fond de page. Jamais pour un composant UI générique.",
+              "decision": "identité-logo"
+            }
+          }
+        },
+        "logo-gray": {
+          "$value": "{primitive.color.brand.gray}",
+          "$type": "color",
+          "$intent": "Gris du logo Agentica (#6B7280) — version atténuée, baseline marque. Réservé aux éléments d'identité (logo dégradé, picto secondaire).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "brand-logo-gray",
+              "use": ["logo variante grise", "icône de marque atténuée", "élément graphique brand secondaire"],
+              "doNotUse": "Texte secondaire (utiliser text.secondary), bordures. Jamais pour un composant UI générique.",
+              "decision": "identité-logo"
+            }
+          }
         }
       }
     },

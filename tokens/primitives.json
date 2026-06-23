@@ -516,6 +516,16 @@
         "12": { "$value": "#432f36", "$type": "color", "$description": "High-contrast text — 13.8:1 sur blanc (WCAG AAA)" }
       },
 
+      "brand": {
+        "_readme": {
+          "$value": "Couleurs logo Agentica — valeurs fixes de marque, ne pas modifier sans approbation Design.",
+          "$type": "other",
+          "$description": "Les trois couleurs du logo Agentica. Seuls ces tokens brand sont autorisés à référencer directement #000000 et #6B7280."
+        },
+        "black": { "$value": "#000000", "$type": "color", "$description": "Noir logo Agentica" },
+        "gray":  { "$value": "#6B7280", "$type": "color", "$description": "Gris logo Agentica (Tailwind gray-500-ish)" }
+      },
+
       "neutral": {
         "0":   { "$value": "#ffffff", "$type": "color", "$description": "Blanc pur — fond de surface, texte sur action/danger" },
         "50":  { "$value": "#fafafa", "$type": "color", "$description": "Fond au survol — Tailwind neutral.50 (Radix gray.2 = #f9f9f9)" },
