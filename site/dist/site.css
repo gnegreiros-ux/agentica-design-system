@@ -716,7 +716,7 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   color:var(--agtc-semantic-color-action-primary);
 }
 [data-context="marketing"] .hero-title{
-  font-size:clamp(2.2rem,5vw,var(--agtc-semantic-marketing-typography-display-size));
+  font-size:clamp(2.625rem,6.5vw,var(--agtc-semantic-marketing-typography-display-size));
   font-weight:var(--agtc-semantic-marketing-typography-display-weight);
   line-height:var(--agtc-semantic-marketing-typography-display-line-height);
 }
@@ -1128,8 +1128,8 @@ body{overflow-x:hidden}
 @media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
 
 .rd-eyebrow{display:block;font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);text-transform:uppercase;letter-spacing:var(--agtc-tracking-eyebrow);color:var(--agtc-semantic-color-action-primary);margin-bottom:1rem}
-.rd-h2{font-size:clamp(1.875rem,4vw,var(--agtc-semantic-typography-heading-1-size));font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.1;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.5rem;color:var(--agtc-semantic-color-text-primary)}
-.rd-lead{font-size:var(--agtc-semantic-typography-body-size);line-height:1.65;color:var(--agtc-semantic-color-text-secondary);max-width:52ch;margin-bottom:1.5rem}
+.rd-h2{font-size:clamp(2.25rem,5vw,3.5rem);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.05;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.75rem;color:var(--agtc-semantic-color-text-primary)}
+.rd-lead{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.7;color:var(--agtc-semantic-color-text-secondary);max-width:52ch;margin-bottom:2rem}
 
 /* Hero stats — inside dark .hero section, donc tokens on-inverse */
 .rd-hero-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--agtc-surface-glass-border)}
@@ -1240,7 +1240,7 @@ body{overflow-x:hidden}
 .rd-role-items{list-style:none;padding:0;margin:0;display:grid;gap:.375rem}
 .rd-role-items li{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
 
-.rd-statement{font-size:var(--agtc-semantic-typography-body-size);font-style:italic;color:var(--agtc-semantic-color-text-secondary);border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:1.5rem;margin-top:2rem}
+.rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
 .rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
 .rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-inverse-muted)}
@@ -1261,7 +1261,15 @@ body{overflow-x:hidden}
 [data-context="marketing"] .hero{min-height:90svh;display:flex;align-items:center}
 [data-context="marketing"] .hero .hero-inner{width:100%;padding-top:2rem;padding-bottom:2rem}
 
-/* Sections monumentales — ×2 section-breathing (≈ 192px) */
+/* Sections marketing : 96px → 144px (×1.5) — plus d'air éditorial */
+[data-context="marketing"] .rd-section>.rd-inner,
+[data-context="marketing"] .rd-section-alt>.rd-inner,
+[data-context="marketing"] .rd-section-wow>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+}
+
+/* Sections monumentales — ×2 section-breathing (≈ 192px) — override la règle ×1.5 ci-dessus */
 .rd-section-monument>.rd-inner{
   padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
   padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
@@ -1295,7 +1303,7 @@ body{overflow-x:hidden}
 .rd-center .rd-h2{max-width:22ch;margin-left:auto;margin-right:auto}
 .rd-center .rd-lead{margin-left:auto;margin-right:auto;max-width:56ch}
 .rd-center .rd-eyebrow{display:flex;justify-content:center}
-.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.25rem,2.5vw,2rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold)}
+.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.5rem,3vw,2.5rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;max-width:28ch}
 
 /* Illustration pleine largeur (S5) */
 .rd-illus-full{width:100%;margin:3rem 0}
@@ -1313,7 +1321,7 @@ body{overflow-x:hidden}
 .rd-halo-violet::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(120,80,200,.22) 0%,transparent 70%)}
 
 /* Texte narratif — plus grand que body standard */
-.rd-narrative{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.75;color:var(--agtc-semantic-color-text-primary);max-width:62ch}
+.rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
 
 /* Token flow — 4 cartes horizontales sous illustration S5 */
 .rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
