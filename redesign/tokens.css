@@ -471,6 +471,10 @@
   --agtc-semantic-color-background-code: #202020;
   --agtc-semantic-color-background-code-raised: #646464;
   --agtc-semantic-color-background-code-raised-hover: #838383;
+  --agtc-semantic-color-overlay-scrim: rgba(15, 17, 23, 0.82);
+  --agtc-semantic-color-overlay-dark: rgba(15, 17, 23, 0.88);
+  --agtc-semantic-color-overlay-medium: rgba(15, 17, 23, 0.50);
+  --agtc-semantic-color-overlay-subtle: rgba(15, 17, 23, 0.18);
   --agtc-semantic-color-text-primary: #202020;
   --agtc-semantic-color-text-secondary: #646464;
   --agtc-semantic-color-text-disabled: #767676;
