@@ -224,10 +224,10 @@
       },
       "overlay": {
         "scrim": {
-          "$value": "rgba(15, 17, 23, 0.82)",
+          "$value": "rgba(15, 17, 23, 0.65)",
           "$type": "color",
-          "$intent": "Fond sombre semi-transparent — container de texte sur illustration (glassmorphism). Garantit la lisibilité WCAG AA du texte blanc sur image.",
-          "$description": "Utilisé comme background du container .rd-cinematic-body et .hero-content-w dans le pattern cinematic. Base : background.inverse (#0f1117) à 82% d'opacité. Associer à backdrop-filter:blur(10px) pour l'effet verre dépoli.",
+          "$intent": "Fond sombre semi-transparent — container de texte sur illustration (glassmorphism). L'image reste visible à 35% à travers le verre dépoli.",
+          "$description": "Utilisé comme background du container .rd-cinematic-body et .hero-content-w dans le pattern cinematic. Base : background.inverse (#0f1117) à 65% d'opacité. Associer à backdrop-filter:blur(10px) pour l'effet verre dépoli. Ratio 65% : image visible, texte blanc lisible (WCAG AA garanti par le blur qui uniformise le fond).",
           "$extensions": {
             "com.agentica.usage": {
               "role": "overlay-scrim",
