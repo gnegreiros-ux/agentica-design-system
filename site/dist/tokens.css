@@ -396,6 +396,8 @@
   --agtc-primitive-color-secondary-10: #5f404b;
   --agtc-primitive-color-secondary-11: #6b4b56;
   --agtc-primitive-color-secondary-12: #432f36;
+  --agtc-primitive-color-brand-black: #000000;
+  --agtc-primitive-color-brand-gray: #6B7280;
   --agtc-primitive-color-neutral-0: #ffffff;
   --agtc-primitive-color-neutral-50: #fafafa;
   --agtc-primitive-color-neutral-500: #767676;
@@ -504,6 +506,8 @@
   --agtc-semantic-color-brand-secondary: #463239;
   --agtc-semantic-color-brand-secondary-hover: #5f404b;
   --agtc-semantic-color-brand-secondary-text: #432f36;
+  --agtc-semantic-color-brand-logo-black: #000000;
+  --agtc-semantic-color-brand-logo-gray: #6B7280;
   --agtc-semantic-shadow-header: 0 2px 24px rgba(0,0,0,0.12);
   --agtc-semantic-shadow-raised: 0 4px 16px rgba(0,0,0,0.10);
   --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
