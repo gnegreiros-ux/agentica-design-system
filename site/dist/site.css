@@ -1728,13 +1728,13 @@ body.v2-page{
 
 /* Section qualité */
 .v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
-.v2-signal-stack{display:grid;gap:0}
+.v2-signal-stack{display:grid;gap:.6rem}
 .v2-signal-stack span{
-  display:flex;align-items:center;padding:.8rem 0 .8rem 1.1rem;
-  border-bottom:1px solid var(--v2-line);border-left:3px solid var(--v2-teal);
+  display:flex;align-items:center;padding:.9rem 1.1rem;
+  background:var(--v2-surface);border:1px solid var(--v2-line);
+  border-radius:var(--agtc-semantic-radius-card,16px);
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
-.v2-signal-stack span:last-child{border-bottom:none}
 .v2-human-control{overflow:hidden}
 .v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
 .v2-single-art{max-width:760px;margin-inline:auto}
@@ -1855,9 +1855,6 @@ body.v2-page{
 
 /* Section qualité — gradient semi-transparent inversé */
 [data-theme="light"] .v2-quality{background:linear-gradient(180deg,rgba(0,0,0,.015),transparent)}
-[data-theme="light"] .v2-signal-stack span{
-  color:var(--agtc-semantic-color-text-primary);
-}
 
 /* Section immersive — dégradé light */
 [data-theme="light"] .v2-immersive{
