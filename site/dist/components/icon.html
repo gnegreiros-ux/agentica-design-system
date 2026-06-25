@@ -146,74 +146,77 @@
 </div>
 
 <h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
-<h1>Composant — Icône (<code>agtc-icon</code>)</h1>
-<blockquote><p>Contrat du composant icône — règles d'usage, accessibilité et anti-patterns. <strong>Type:</strong> guideline <strong>Chemin logique:</strong> guidelines/components/icon.md > <strong>Lecture avant:</strong> AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md <strong>Relations:</strong> components/agtc-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md</p></blockquote>
-<hr>
-<h2>Bibliothèque — Lucide Icons</h2>
-<p>Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></p>
-<hr>
-<h2>API du composant</h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Icône sémantique (avec label obligatoire) --&gt;
-&lt;agtc-icon name="trash-2" size="control" label="Supprimer le fichier"&gt;&lt;/agtc-icon&gt;
 
-&lt;!-- Icône décorative (aria masquée) --&gt;
+<h3><span class="lang-fr">Bibliothèque — Lucide Icons</span><span class="lang-en">Library — Lucide Icons</span></h3>
+<p>
+  <span class="lang-fr">Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></span>
+  <span class="lang-en">Lucide (MIT) is the official icon library of the system. 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>). Canonical reference: <strong>lucide.dev</strong></span>
+</p>
+
+<h3><span class="lang-fr">API du composant</span><span class="lang-en">Component API</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Semantic icon (label required) --&gt;
+&lt;agtc-icon name="trash-2" size="control" label="Delete file"&gt;&lt;/agtc-icon&gt;
+
+&lt;!-- Decorative icon (aria-hidden) --&gt;
 &lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;
 
-&lt;!-- Icône de navigation --&gt;
-&lt;agtc-icon name="settings" size="nav" label="Paramètres"&gt;&lt;/agtc-icon&gt;</code></pre>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Prop</th><th>Type</th><th>Valeurs</th><th>Défaut</th><th>Requis</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Nom Lucide (ex: <code>trash-2</code>)</td><td>—</td><td>✅</td></tr><tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr><tr><td><code>label</code></td><td>String</td><td>Texte accessible</td><td>—</td><td>Si non décoratif</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Icône purement ornementale</td><td><code>false</code></td><td>—</td></tr></tbody></table></div>
-<hr>
-<h2>Tailles et tokens</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th><code>size</code></th><th>Token sémantique</th><th>Valeur</th><th>Contexte</th></tr></thead><tbody><tr><td><code>inline</code></td><td><code>semantic.icon.size.inline</code></td><td>16px</td><td>Dans un texte courant, un label</td></tr><tr><td><code>control</code></td><td><code>semantic.icon.size.control</code></td><td>20px</td><td>Dans un bouton, un input, un badge</td></tr><tr><td><code>nav</code></td><td><code>semantic.icon.size.nav</code></td><td>24px</td><td>Navigation, en-tête, emphase</td></tr></tbody></table></div>
-<hr>
-<h2>Règles absolues</h2>
-<pre class="code-block"><code class="lang-text">✅ Toujours un label si l'icône est la seule information (ex: bouton icône seul)
-✅ decorative si l'icône accompagne un texte qui la décrit déjà
-✅ size correspond au contexte (control dans un bouton, inline dans un texte)
-✅ Nom d'icône exact selon lucide.dev (kebab-case)
+&lt;!-- Navigation icon --&gt;
+&lt;agtc-icon name="settings" size="nav" label="Settings"&gt;&lt;/agtc-icon&gt;</code></pre>
 
-❌ Jamais d'icône sémantique sans label : &lt;agtc-icon name="trash-2"&gt;
-❌ Jamais de taille en dur : style="width: 20px"
-❌ Jamais de variante inventée hors inline/control/nav
-❌ Jamais d'icône hors bibliothèque Lucide sans approbation</code></pre>
-<hr>
-<h2>Usage avec agtc-button</h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Bouton avec icône décorative + texte --&gt;
+<div class="table-wrap" tabindex="0"><table class="token-table">
+  <thead><tr>
+    <th>Prop</th><th>Type</th>
+    <th><span class="lang-fr">Valeurs</span><span class="lang-en">Values</span></th>
+    <th><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></th>
+    <th><span class="lang-fr">Requis</span><span class="lang-en">Required</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><code>name</code></td><td>String</td><td><span class="lang-fr">Nom Lucide (ex : <code>trash-2</code>)</span><span class="lang-en">Lucide name (e.g. <code>trash-2</code>)</span></td><td>—</td><td>✅</td></tr>
+    <tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr>
+    <tr><td><code>label</code></td><td>String</td><td><span class="lang-fr">Texte accessible</span><span class="lang-en">Accessible text</span></td><td>—</td><td><span class="lang-fr">Si non décoratif</span><span class="lang-en">If not decorative</span></td></tr>
+    <tr><td><code>decorative</code></td><td>Boolean</td><td><span class="lang-fr">Icône purement ornementale</span><span class="lang-en">Purely decorative icon</span></td><td><code>false</code></td><td>—</td></tr>
+  </tbody>
+</table></div>
+
+<h3><span class="lang-fr">Usage avec agtc-button</span><span class="lang-en">Usage with agtc-button</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Button with decorative icon + text --&gt;
 &lt;agtc-button variant="critical"&gt;
   &lt;agtc-icon name="trash-2" size="control" decorative&gt;&lt;/agtc-icon&gt;
-  Supprimer définitivement
+  Delete permanently
 &lt;/agtc-button&gt;
 
-&lt;!-- Bouton icône seul — label obligatoire sur agtc-icon --&gt;
-&lt;agtc-button variant="ghost" aria-label="Fermer"&gt;
-  &lt;agtc-icon name="x" size="control" label="Fermer"&gt;&lt;/agtc-icon&gt;
+&lt;!-- Icon-only button — label required on agtc-icon --&gt;
+&lt;agtc-button variant="ghost" aria-label="Close"&gt;
+  &lt;agtc-icon name="x" size="control" label="Close"&gt;&lt;/agtc-icon&gt;
 &lt;/agtc-button&gt;</code></pre>
-<hr>
-<h2>Accessibilité — WCAG 1.1.1</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Scénario</th><th>Implémentation</th></tr></thead><tbody><tr><td>Icône seule (bouton, lien)</td><td><code>label="Action décrite"</code> → <code>aria-label</code> injecté</td></tr><tr><td>Icône + texte adjacent</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Icône dans un champ</td><td><code>label</code> sur le champ parent (<code>aria-describedby</code>)</td></tr></tbody></table></div>
-<hr>
-<h2>Anti-patterns à détecter</h2>
-<pre class="code-block"><code class="lang-html">❌ &lt;agtc-icon name="trash-2"&gt;&lt;/agtc-icon&gt;
-   → Icône sémantique sans label — escalader
 
-❌ &lt;agtc-icon name="danger" size="control"&gt;
-   → Nom "danger" inexistant dans Lucide — utiliser "alert-triangle" ou "x-circle"
+<h3><span class="lang-fr">Accessibilité — WCAG 1.1.1</span><span class="lang-en">Accessibility — WCAG 1.1.1</span></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table>
+  <thead><tr>
+    <th><span class="lang-fr">Scénario</span><span class="lang-en">Scenario</span></th>
+    <th><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="lang-fr">Icône seule (bouton, lien)</span><span class="lang-en">Icon only (button, link)</span></td>
+      <td><code>label="…"</code> → <code>aria-label</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône + texte adjacent</span><span class="lang-en">Icon + adjacent text</span></td>
+      <td><code>decorative</code> → <code>aria-hidden="true"</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône dans un champ</span><span class="lang-en">Icon in a field</span></td>
+      <td><span class="lang-fr"><code>label</code> sur le champ parent (<code>aria-describedby</code>)</span><span class="lang-en"><code>label</code> on the parent field (<code>aria-describedby</code>)</span></td>
+    </tr>
+  </tbody>
+</table></div>
 
-❌ &lt;svg&gt;...&lt;/svg&gt;  (SVG inline hors agtc-icon)
-   → Dérive — pas de contrat d'accessibilité ni de token
-
-❌ &lt;agtc-icon name="check" style="width: 18px;"&gt;
-   → Taille en dur — utiliser size="inline" ou size="control"</code></pre>
-<hr>
-<h2>Patterns UX de référence</h2>
-<blockquote><p>Patterns approuvés via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. Pas de story Storybook pour ce composant → propagation sur 5 surfaces.</p></blockquote>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th><th>Appliqué</th><th>Justification</th></tr></thead><tbody><tr><td>Icône + texte quand le sens n'est pas universel (ne pas se fier à l'icône seule)</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — icon usability</a></td><td>✅</td><td><code>decorative</code> accompagne un texte ; sinon <code>label</code> requis</td></tr><tr><td>Label accessible obligatoire si l'icône porte l'information</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td>Règle absolue — <code>label</code> → <code>aria-label</code></td></tr><tr><td>Icônes décoratives masquées aux AT (<code>aria-hidden</code>)</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g</a></td><td>✅</td><td><code>decorative</code> → <code>aria-hidden="true"</code></td></tr><tr><td>Signification cohérente et non trompeuse (même icône = même sens partout)</td><td><a href="https://catalogue.projectsbyif.com/">IF — transparence</a></td><td>✅</td><td>Cohérence sémantique imposée par la bibliothèque Lucide unique (ADR-022)</td></tr></tbody></table></div>
-<hr>
-<h2>Installation</h2>
-<pre class="code-block"><code class="lang-bash"># npm (recommandé pour les projets avec bundler)
+<h3><span class="lang-fr">Installation</span><span class="lang-en">Installation</span></h3>
+<pre class="code-block"><code class="lang-bash"># npm (recommended for bundler projects)
 npm install lucide
 
-# CDN (projets statiques)
+# CDN (static projects)
 &lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</code></pre>
 
 <div class="contrib-banner">

@@ -4395,7 +4395,7 @@ function buildSpacing() {
       <div class="density-card-desc"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
       <div class="density-card-formula">
         <div class="density-card-bar" style="width:16px"></div>
-        <span class="density-card-math">16px (valeur primitive directe)</span>
+        <span class="density-card-math">16px (<span class="lang-fr">valeur primitive directe</span><span class="lang-en">direct primitive value</span>)</span>
       </div>
     </div>
     <div class="density-card">
@@ -5033,12 +5033,6 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
 
 // ─── PAGE: ICON ─────────────────────────────────────────────────────────────
 function buildIcon() {
-  const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
-  let rawMd = read(mdPath)
-    .replace(/\*\*Auteur:\*\*[^\n]*\n/g, '')
-    .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '');
-  const content = parseMd(rawMd);
-
   const tokenRows = [
     ['icon-size-inline',  'semantic.icon.size.inline',  SEM['icon-size-inline']],
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
@@ -5083,7 +5077,78 @@ function buildIcon() {
 </div>
 
 <h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
-${content}
+
+<h3><span class="lang-fr">Bibliothèque — Lucide Icons</span><span class="lang-en">Library — Lucide Icons</span></h3>
+<p>
+  <span class="lang-fr">Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></span>
+  <span class="lang-en">Lucide (MIT) is the official icon library of the system. 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>). Canonical reference: <strong>lucide.dev</strong></span>
+</p>
+
+<h3><span class="lang-fr">API du composant</span><span class="lang-en">Component API</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Semantic icon (label required) --&gt;
+&lt;agtc-icon name="trash-2" size="control" label="Delete file"&gt;&lt;/agtc-icon&gt;
+
+&lt;!-- Decorative icon (aria-hidden) --&gt;
+&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;
+
+&lt;!-- Navigation icon --&gt;
+&lt;agtc-icon name="settings" size="nav" label="Settings"&gt;&lt;/agtc-icon&gt;</code></pre>
+
+<table class="token-table">
+  <thead><tr>
+    <th>Prop</th><th>Type</th>
+    <th><span class="lang-fr">Valeurs</span><span class="lang-en">Values</span></th>
+    <th><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></th>
+    <th><span class="lang-fr">Requis</span><span class="lang-en">Required</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><code>name</code></td><td>String</td><td><span class="lang-fr">Nom Lucide (ex : <code>trash-2</code>)</span><span class="lang-en">Lucide name (e.g. <code>trash-2</code>)</span></td><td>—</td><td>✅</td></tr>
+    <tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr>
+    <tr><td><code>label</code></td><td>String</td><td><span class="lang-fr">Texte accessible</span><span class="lang-en">Accessible text</span></td><td>—</td><td><span class="lang-fr">Si non décoratif</span><span class="lang-en">If not decorative</span></td></tr>
+    <tr><td><code>decorative</code></td><td>Boolean</td><td><span class="lang-fr">Icône purement ornementale</span><span class="lang-en">Purely decorative icon</span></td><td><code>false</code></td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="lang-fr">Usage avec agtc-button</span><span class="lang-en">Usage with agtc-button</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Button with decorative icon + text --&gt;
+&lt;agtc-button variant="critical"&gt;
+  &lt;agtc-icon name="trash-2" size="control" decorative&gt;&lt;/agtc-icon&gt;
+  Delete permanently
+&lt;/agtc-button&gt;
+
+&lt;!-- Icon-only button — label required on agtc-icon --&gt;
+&lt;agtc-button variant="ghost" aria-label="Close"&gt;
+  &lt;agtc-icon name="x" size="control" label="Close"&gt;&lt;/agtc-icon&gt;
+&lt;/agtc-button&gt;</code></pre>
+
+<h3><span class="lang-fr">Accessibilité — WCAG 1.1.1</span><span class="lang-en">Accessibility — WCAG 1.1.1</span></h3>
+<div class="table-wrap" tabindex="0"><table>
+  <thead><tr>
+    <th><span class="lang-fr">Scénario</span><span class="lang-en">Scenario</span></th>
+    <th><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="lang-fr">Icône seule (bouton, lien)</span><span class="lang-en">Icon only (button, link)</span></td>
+      <td><code>label="…"</code> → <code>aria-label</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône + texte adjacent</span><span class="lang-en">Icon + adjacent text</span></td>
+      <td><code>decorative</code> → <code>aria-hidden="true"</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône dans un champ</span><span class="lang-en">Icon in a field</span></td>
+      <td><span class="lang-fr"><code>label</code> sur le champ parent (<code>aria-describedby</code>)</span><span class="lang-en"><code>label</code> on the parent field (<code>aria-describedby</code>)</span></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<h3><span class="lang-fr">Installation</span><span class="lang-en">Installation</span></h3>
+<pre class="code-block"><code class="lang-bash"># npm (recommended for bundler projects)
+npm install lucide
+
+# CDN (static projects)
+&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</code></pre>
 `;
 
   write(path.join(DIST, 'components/icon.html'), layout({
@@ -5851,7 +5916,7 @@ function buildTable() {
 &lt;!-- Classe sur un table statique (light DOM, sans JS) --&gt;
 &lt;table class="agtc-table striped"&gt;
   &lt;caption class="visually-hidden"&gt;Tokens du badge&lt;/caption&gt;
-  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Valeur&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Value&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
   &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
 
@@ -6291,9 +6356,9 @@ function buildTabs() {
     .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:2px; }
   </style>
   <div role="tablist" aria-label="Documentation" class="demo-tablist">
-    ${demoTab('Aperçu', true)}
+    ${demoTab('<span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span>', true)}
     ${demoTab('Tokens', false)}
-    ${demoTab('Accessibilité', false)}
+    ${demoTab('<span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span>', false)}
   </div>
   <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:14px"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
 </div>
@@ -6346,13 +6411,13 @@ function buildTabs() {
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
 <pre class="code-block"><code class="lang-html">&lt;agtc-tabs label="Documentation Button" selected="overview"&gt;
-  &lt;div slot="overview"&gt;Contenu Aperçu&lt;/div&gt;
-  &lt;div slot="tokens"&gt;Contenu Tokens&lt;/div&gt;
+  &lt;div slot="overview"&gt;Overview content&lt;/div&gt;
+  &lt;div slot="tokens"&gt;Tokens content&lt;/div&gt;
 &lt;/agtc-tabs&gt;
 &lt;script type="module" src="../components/agtc-tabs.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   document.querySelector('agtc-tabs').tabs = [
-    { value: 'overview', label: 'Aperçu' },
+    { value: 'overview', label: 'Overview' },
     { value: 'tokens',   label: 'Tokens' },
   ];
 &lt;/script&gt;</code></pre>
@@ -7066,16 +7131,16 @@ function loadADRs() {
 function buildGetStarted() {
   const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
 
-  const cloneCode = esc(`# Aujourd'hui — via le dépôt
+  const cloneCode = esc(`# Today — via the repository
 git clone ${REPO}.git
 
-# Les tokens compilés vivent dans dist/tokens/ :
+# Compiled tokens live in dist/tokens/:
 #   css/  js/  tailwind/  angular/  ios/  android/`);
 
   const cssCode = esc(`<!-- Importer les variables CSS générées -->
 <link rel="stylesheet" href="dist/tokens/css/all.css">`);
 
-  const cssUseCode = esc(`/* Consommer par INTENTION — jamais de valeur en dur */
+  const cssUseCode = esc(`/* Consume by INTENT — never hardcode values */
 .cta {
   background: var(--agtc-semantic-color-action-primary);
   color:      var(--agtc-semantic-color-text-on-action);
@@ -7084,11 +7149,11 @@ git clone ${REPO}.git
   border-radius: var(--agtc-semantic-radius-control);
 }`);
 
-  const wcCode = esc(`<!-- Mode composant : Web Components (Lit) -->
+  const wcCode = esc(`<!-- Component mode: Web Components (Lit) -->
 <script type="module" src="components/agtc-button.js"></script>
 
-<agtc-button variant="primary">Enregistrer</agtc-button>
-<agtc-button variant="critical">Supprimer le dossier</agtc-button>`);
+<agtc-button variant="primary">Save</agtc-button>
+<agtc-button variant="critical">Delete folder</agtc-button>`);
 
   // logo : nom de fichier dans integrations/ (couleur de marque)
   const platforms = [

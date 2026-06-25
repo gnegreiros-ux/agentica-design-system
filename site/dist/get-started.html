@@ -151,10 +151,10 @@
   <span class="lang-fr">Clonez le dépôt. Les tokens sont déjà compilés pour chaque plateforme dans <code>dist/tokens/</code>.</span>
   <span class="lang-en">Clone the repository. Tokens are pre-compiled for every platform in <code>dist/tokens/</code>.</span>
 </p>
-<pre class="code-block"><code class="lang-bash"># Aujourd'hui — via le dépôt
+<pre class="code-block"><code class="lang-bash"># Today — via the repository
 git clone https://github.com/gnegreiros-ux/agentic-design-system.git
 
-# Les tokens compilés vivent dans dist/tokens/ :
+# Compiled tokens live in dist/tokens/:
 #   css/  js/  tailwind/  angular/  ios/  android/</code></pre>
 
 <h3><span class="lang-fr">2. Importer et consommer les variables CSS</span><span class="lang-en">2. Import and consume the CSS variables</span></h3>
@@ -164,7 +164,7 @@ git clone https://github.com/gnegreiros-ux/agentic-design-system.git
 </p>
 <pre class="code-block"><code class="lang-html">&lt;!-- Importer les variables CSS générées --&gt;
 &lt;link rel="stylesheet" href="dist/tokens/css/all.css"&gt;</code></pre>
-<pre class="code-block"><code class="lang-css">/* Consommer par INTENTION — jamais de valeur en dur */
+<pre class="code-block"><code class="lang-css">/* Consume by INTENT — never hardcode values */
 .cta {
   background: var(--agtc-semantic-color-action-primary);
   color:      var(--agtc-semantic-color-text-on-action);
@@ -178,11 +178,11 @@ git clone https://github.com/gnegreiros-ux/agentic-design-system.git
   <span class="lang-fr">Pour une intégration applicative, montez les Web Components <code>agtc-*</code> (Lit en dépendance pair). Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
   <span class="lang-en">For app integration, mount the <code>agtc-*</code> Web Components (Lit as a peer dependency). They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
 </p>
-<pre class="code-block"><code class="lang-html">&lt;!-- Mode composant : Web Components (Lit) --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Component mode: Web Components (Lit) --&gt;
 &lt;script type="module" src="components/agtc-button.js"&gt;&lt;/script&gt;
 
-&lt;agtc-button variant="primary"&gt;Enregistrer&lt;/agtc-button&gt;
-&lt;agtc-button variant="critical"&gt;Supprimer le dossier&lt;/agtc-button&gt;</code></pre>
+&lt;agtc-button variant="primary"&gt;Save&lt;/agtc-button&gt;
+&lt;agtc-button variant="critical"&gt;Delete folder&lt;/agtc-button&gt;</code></pre>
 
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
