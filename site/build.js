@@ -2343,7 +2343,7 @@ body.v2-page{
 .v2-docs{position:relative}
 .v2-docs-panel{
   position:absolute;top:calc(100% + 16px);right:-148px;
-  display:grid;width:min(880px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr));
+  display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1px;padding:1px;border:1px solid var(--v2-line);border-radius:18px;
   background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
   box-shadow:var(--agtc-shadow-lg);
@@ -2356,8 +2356,8 @@ body.v2-page{
   background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 94%,transparent);
 }
 .v2-docs-panel > div:first-child{border-radius:17px 0 0 17px}
-.v2-docs-panel > div:last-child{border-radius:0 17px 17px 0}
-.v2-docs-panel h2{margin:0 0 .9rem;font-size:.86rem;color:var(--v2-text)}
+.v2-docs-panel > div:nth-child(3){border-radius:0 17px 17px 0}
+.v2-docs-panel h2{margin:0 0 .9rem;font-size:.86rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
 .v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
 .v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
 
@@ -2493,9 +2493,10 @@ body.v2-page{
 .v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
 .v2-signal-stack{display:grid;gap:.9rem}
 .v2-signal-stack span{
-  display:block;padding:1.1rem 1.25rem;border:1px solid var(--v2-line);border-radius:var(--v2-radius);
-  background:linear-gradient(90deg,rgba(0,162,199,.12),transparent 48%),rgba(255,255,255,.055);
-  color:var(--v2-text);
+  display:flex;align-items:center;padding:.9rem 1.25rem;
+  border:1px solid var(--v2-line);border-left:3px solid var(--v2-teal);border-radius:var(--v2-radius);
+  background:rgba(255,255,255,.04);
+  color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
 .v2-human-control{overflow:hidden}
 .v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
@@ -2519,13 +2520,17 @@ body.v2-page{
 .v2-simple-hero{padding-block:var(--agtc-semantic-marketing-space-hero-gap,120px)}
 .v2-editorial-grid,.v2-doc-grid{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:1px;border:1px solid var(--v2-line);background:var(--v2-line);
+  gap:1.25rem;border:none;background:transparent;
 }
 .v2-editorial-block,.v2-doc-block{
-  padding:var(--agtc-semantic-space-comfortable-layout-component,28px);background:var(--v2-surface);
+  padding:var(--agtc-semantic-space-comfortable-layout-component,28px);
+  background:var(--v2-surface);
+  border:1px solid var(--v2-line);
+  border-radius:var(--v2-radius);
 }
 .v2-editorial-block h2,.v2-doc-block h2{
   margin:0 0 .8rem;color:var(--v2-text);
+  border-top:none;padding-top:0;margin-top:0;
   font-size:var(--agtc-component-card-typography-marketing-hero-title-size);
   font-weight:var(--agtc-component-card-typography-marketing-hero-title-weight);
   line-height:var(--agtc-semantic-typography-heading-5-line-height);
@@ -2538,6 +2543,7 @@ body.v2-page{
 .v2-doc-block ul{display:grid;gap:.55rem;margin:1.1rem 0 0;padding:0;list-style:none}
 .v2-doc-block a{color:var(--v2-text);text-decoration-color:rgba(255,255,255,.25);text-underline-offset:.18em}
 .v2-anchor{display:block;position:relative;top:-96px;height:0}
+
 
 /* Footer V2 */
 .v2-footer{
@@ -2679,6 +2685,7 @@ body[data-context="marketing"] .v2-role-card::after{
 .v2-footer-col{display:flex;flex-direction:column;gap:.55rem}
 .v2-footer-col a{color:var(--v2-muted);text-decoration:none;font-size:.9rem;line-height:1.5}
 .v2-footer-col a:hover,.v2-footer-col a:focus-visible{color:var(--v2-text)}
+.v2-footer-linkedin:hover,.v2-footer-linkedin:focus-visible{color:var(--v2-text)!important}
 .v2-footer-col a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
 .v2-footer-col span{color:var(--v2-muted);font-size:.85rem;line-height:1.5}
 .v2-footer-heading{color:var(--v2-text)!important;font-weight:700;font-size:.9rem!important;margin-bottom:.5rem}
@@ -2690,12 +2697,12 @@ body[data-context="marketing"] .v2-role-card::after{
   background:rgba(18,165,148,.12);color:var(--v2-teal);
   margin-bottom:1rem;flex-shrink:0;
 }
-.v2-editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--v2-text)}
+.v2-editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
 
 /* Sidebar latérale V2 pour sous-pages */
 .v2-with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
-.v2-sidebar{position:sticky;top:var(--agtc-header-height,64px);align-self:start;height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto;padding:2rem 0;border-right:1px solid var(--v2-line)}
-.v2-sidebar nav{display:flex;flex-direction:column;padding:0 1.25rem;gap:.2rem}
+.v2-sidebar{align-self:stretch;overflow:visible;border-right:1px solid var(--v2-line)}
+.v2-sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
 .v2-sidebar-heading{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--v2-muted);padding:.5rem 0;margin-top:1rem}
 .v2-sidebar-heading:first-child{margin-top:0}
 .v2-sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
@@ -3051,7 +3058,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const backToTop = document.querySelector('[data-back-to-top]');
   if (backToTop) {
     const setBackToTopState = () => {
-      const visible = window.scrollY > 600;
+      const visible = window.scrollY > window.innerHeight;
       backToTop.classList.toggle('is-visible', visible);
     };
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -3172,15 +3179,17 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <div class="v2-footer-grid">
     <div class="v2-footer-col">
       <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
-        <svg viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <svg viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
           <path d="M160.624 115.771C161.174 115.459 161.826 115.385 162.432 115.565C163.037 115.746 163.544 116.165 163.835 116.728C170.756 130.124 177.932 143.424 184.538 156.982C186.793 161.72 187.681 166.848 185.836 171.311L185.643 171.755C183.616 176.168 179.937 178.646 175.71 179.584C171.75 180.462 167.325 180.013 163.01 179.005C154.337 176.98 144.063 172.192 134.29 166.869C124.922 161.767 115.792 156.169 106.878 150.306C106.189 149.853 105.762 149.089 105.786 148.255C105.809 147.438 106.256 146.691 106.965 146.288L160.624 115.771Z" fill="#FF8AA1"/>
           <path d="M138.269 72.5524C138.819 72.24 139.471 72.1653 140.076 72.3454C140.681 72.5256 141.188 72.9454 141.479 73.508C146.406 83.0229 151.632 93.1241 156.681 102.89C157.259 104.006 156.853 105.382 155.764 106.002L28.0215 178.653C27.537 178.929 26.9698 179.02 26.4237 178.912C23.0335 178.238 19.5354 177.261 16.499 175.558C15.0327 174.735 13.7122 173.67 12.8521 172.209C10.1175 167.566 11.0764 162.267 13.1671 158.328C16.7663 151.547 20.1113 144.57 23.9277 137.911C24.1329 137.58 24.4178 137.304 24.7577 137.11L138.269 72.5524Z" fill="#6B7280"/>
           <path d="M117.103 26.6947C115.197 23.8762 111.986 22.4022 109.5 21.5954C103.425 19.6234 96.2834 19.4369 90.1249 21.1358C87.2882 21.9185 83.7875 23.4372 81.7087 26.541C81.2721 27.1676 80.9407 27.8678 80.6031 28.5519C79.2794 31.2338 77.9794 34.2318 76.3261 36.7235C63.1107 62.0222 50.1418 87.3726 37.0675 112.637C36.5924 113.556 36.7747 114.678 37.5158 115.397C38.2571 116.116 39.381 116.259 40.2775 115.749L133.396 62.7905C134.486 62.1702 134.892 60.7937 134.313 59.6771C125.821 43.2911 119.242 30.6202 117.785 27.8679C117.684 27.6523 117.564 27.4385 117.441 27.2341L117.103 26.6947Z" fill="#12A594"/>
         </svg>
         <span>Agentica</span>
       </a>
-      <span>Guilherme Negreiros</span>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
     </div>
     <div class="v2-footer-col">
       <span class="v2-footer-heading">Navigation</span>
@@ -3278,13 +3287,6 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
           <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
           <a href="${base}ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
           <a href="${base}architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
-        </div>
-        <div>
-          <h2><span class="lang-fr">Construire</span><span class="lang-en">Build</span></h2>
-          <a href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
-          <a href="${base}foundations/index.html"><span class="lang-fr">Guides</span><span class="lang-en">Guides</span></a>
-          <a href="${base}components/index.html"><span class="lang-fr">Exemples</span><span class="lang-en">Examples</span></a>
-          <a href="${base}changelog.html"><span class="lang-fr">Changelog</span><span class="lang-en">Changelog</span></a>
         </div>
         <div>
           <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
@@ -3750,9 +3752,9 @@ function v2Sidebar(base, current) {
     ['architecture.html', '<span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span>'],
     ['qualite.html', '<span class="lang-fr">Qualité</span><span class="lang-en">Quality</span>'],
     ['ia.html', 'IA'],
-    ['documentation.html', 'Documentation'],
   ];
   const docLinks = [
+    ['documentation.html', 'Documentation'],
     ['foundations/index.html', '<span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span>'],
     ['components/index.html', '<span class="lang-fr">Composants</span><span class="lang-en">Components</span>'],
     ['tokens/index.html', 'Tokens'],
@@ -4032,6 +4034,7 @@ function buildDocumentation() {
   <div class="v2-shell">
     <div class="v2-doc-grid">
       <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('book-open', 20)}</div>
         <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
         <p><span class="lang-fr">Les fondements conceptuels du système.</span><span class="lang-en">The conceptual foundations of the system.</span></p>
         <ul>
@@ -4042,6 +4045,7 @@ function buildDocumentation() {
         </ul>
       </div>
       <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('hammer', 20)}</div>
         <h2><span class="lang-fr">Construire</span><span class="lang-en">Build</span></h2>
         <p><span class="lang-fr">Guides pratiques pour démarrer et contribuer.</span><span class="lang-en">Practical guides to get started and contribute.</span></p>
         <ul>
@@ -4052,6 +4056,7 @@ function buildDocumentation() {
         </ul>
       </div>
       <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('file-text', 20)}</div>
         <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
         <p><span class="lang-fr">La documentation complète du système.</span><span class="lang-en">Complete system reference.</span></p>
         <ul>
@@ -4064,6 +4069,7 @@ function buildDocumentation() {
         </ul>
       </div>
       <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('compass', 20)}</div>
         <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
         <p><span class="lang-fr">Les outils et ressources du système.</span><span class="lang-en">System tools and resources.</span></p>
         <ul>
