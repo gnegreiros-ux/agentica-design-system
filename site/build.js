@@ -2304,7 +2304,7 @@ body.v2-page{
 }
 .v2-nav a:hover,.v2-docs-trigger:hover,.v2-nav a:focus-visible,.v2-docs-trigger:focus-visible{color:var(--v2-text);outline:none}
 .v2-nav a::after,.v2-docs-trigger::after{
-  content:"";position:absolute;inset:auto .82rem -.35rem;
+  content:"";position:absolute;inset:auto 0 -.35rem;
   height:var(--agtc-component-top-nav-tab-indicator-width,2px);
   background:var(--agtc-component-top-nav-tab-indicator-color,var(--agtc-semantic-color-action-primary));
   transform:scaleX(0);transform-origin:left;transition:transform .16s ease;
@@ -2734,7 +2734,7 @@ body[data-context="marketing"] .v2-role-card::after{
   }
   .v2-nav.is-open{display:flex}
   .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
-  .v2-nav a::after,.v2-docs-trigger::after{inset:auto .82rem .35rem}
+  .v2-nav a::after,.v2-docs-trigger::after{inset:auto 0 .35rem}
   .v2-nav .v2-nav-action{margin-left:0}
   .v2-docs-panel{
     position:static;width:100%;grid-template-columns:1fr;
@@ -2812,7 +2812,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -2822,7 +2822,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -2840,7 +2840,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -3239,6 +3239,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <script src="${base}components/agtc.js" defer></script>

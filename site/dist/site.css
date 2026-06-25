@@ -1534,7 +1534,7 @@ body.v2-page{
 }
 .v2-nav a:hover,.v2-docs-trigger:hover,.v2-nav a:focus-visible,.v2-docs-trigger:focus-visible{color:var(--v2-text);outline:none}
 .v2-nav a::after,.v2-docs-trigger::after{
-  content:"";position:absolute;inset:auto .82rem -.35rem;
+  content:"";position:absolute;inset:auto 0 -.35rem;
   height:var(--agtc-component-top-nav-tab-indicator-width,2px);
   background:var(--agtc-component-top-nav-tab-indicator-color,var(--agtc-semantic-color-action-primary));
   transform:scaleX(0);transform-origin:left;transition:transform .16s ease;
@@ -1964,7 +1964,7 @@ body[data-context="marketing"] .v2-role-card::after{
   }
   .v2-nav.is-open{display:flex}
   .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
-  .v2-nav a::after,.v2-docs-trigger::after{inset:auto .82rem .35rem}
+  .v2-nav a::after,.v2-docs-trigger::after{inset:auto 0 .35rem}
   .v2-nav .v2-nav-action{margin-left:0}
   .v2-docs-panel{
     position:static;width:100%;grid-template-columns:1fr;
