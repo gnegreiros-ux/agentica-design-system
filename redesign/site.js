@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
