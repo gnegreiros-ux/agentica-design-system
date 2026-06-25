@@ -1590,7 +1590,15 @@ body.v2-page{
 .v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
 .v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
 
-.v2-menu-button{display:none;padding:.7rem .8rem;border:1px solid var(--v2-line)}
+/* Hamburger / close icons */
+.v2-icon-hamburger,.v2-icon-close{display:block}
+.v2-menu-button[aria-expanded="true"] .v2-icon-hamburger{display:none}
+.v2-menu-button[aria-expanded="false"] .v2-icon-close{display:none}
+/* Logo dark/light swap */
+.v2-logo-light{display:none}
+[data-theme="light"] .v2-logo-dark{display:none}
+[data-theme="light"] .v2-logo-light{display:block}
+.v2-menu-button{display:none;padding:.6rem;border:1px solid var(--v2-line)}
 
 /* Sections V2 */
 .v2-section{position:relative;padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}

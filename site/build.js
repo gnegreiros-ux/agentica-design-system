@@ -2360,7 +2360,15 @@ body.v2-page{
 .v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
 .v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
 
-.v2-menu-button{display:none;padding:.7rem .8rem;border:1px solid var(--v2-line)}
+/* Hamburger / close icons */
+.v2-icon-hamburger,.v2-icon-close{display:block}
+.v2-menu-button[aria-expanded="true"] .v2-icon-hamburger{display:none}
+.v2-menu-button[aria-expanded="false"] .v2-icon-close{display:none}
+/* Logo dark/light swap */
+.v2-logo-light{display:none}
+[data-theme="light"] .v2-logo-dark{display:none}
+[data-theme="light"] .v2-logo-light{display:block}
+.v2-menu-button{display:none;padding:.6rem;border:1px solid var(--v2-line)}
 
 /* Sections V2 */
 .v2-section{position:relative;padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
@@ -3179,7 +3187,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <div class="v2-footer-grid">
     <div class="v2-footer-col">
       <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
-        <img src="${base}img/logo-color-white.svg" alt="Agentica" height="40" width="180" loading="lazy" style="display:block">
+        <img src="${base}img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
       </a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -3255,10 +3264,19 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </a>
 <header class="v2-header" role="banner" data-v2-header>
   <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil">
-    <img src="${base}img/logo-color-white.svg" alt="Agentica" height="34" width="152" style="display:block" fetchpriority="high">
+    <img src="${base}img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
   </a>
-  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav">
-    <span class="lang-fr">Menu</span><span class="lang-en">Menu</span>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
   </button>
   <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
     <a href="${base}index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
@@ -7531,6 +7549,9 @@ function build() {
   // Logo complet color white (symbol + wordmark) pour header et footer
   const logoColorWhite = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color white.svg');
   if (fs.existsSync(logoColorWhite)) fs.copyFileSync(logoColorWhite, path.join(DIST, 'img', 'logo-color-white.svg'));
+
+  const logoColor = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color.svg');
+  if (fs.existsSync(logoColor)) fs.copyFileSync(logoColor, path.join(DIST, 'img', 'logo-color.svg'));
 
   ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
     const src = path.join(ROOT, 'illustrations', f);
