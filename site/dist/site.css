@@ -1963,7 +1963,8 @@ body[data-context="marketing"] .v2-role-card::after{
 @media(max-width:980px){
   :root{--v2-shell:min(100vw - 32px,760px)}
   .v2-menu-button{display:inline-flex;align-items:center}
-  .v2-header-tools{margin-left:auto}
+  .v2-header-tools{order:2;margin-left:auto}
+  .v2-menu-button{order:3}
   .v2-header-tools .github-btn,.v2-header-tools .storybook-btn{display:none}
   .v2-nav{
     position:fixed;
