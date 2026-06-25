@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-toggle` — Agentica</title>
+<title>Composant `agtc-feature-card` : carte éditoriale V2 — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-toggle` — Agentica">
+<meta property="og:title" content="Composant `agtc-feature-card` : carte éditoriale V2 — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-toggle` — Agentica">
+<meta name="twitter:title" content="Composant `agtc-feature-card` : carte éditoriale V2 — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -115,49 +115,47 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-039</code>
+    <code class="adr-number">ADR-063</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-toggle`</h1>
+  <h1 class="adr-page-title">Composant `agtc-feature-card` : carte éditoriale V2</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-01</dd>
+      <dd>2026-06-25</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros (Principal Designer)</dd>
     </div>
   </dl>
-</div><h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>T1–T7 approuvés</strong>, indicateur d'état par <strong>position du curseur seule</strong>. Détail et liens : <code>guidelines/components/toggle.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td><code>role="switch"</code> + <code>aria-checked</code></td><td>NN/g — toggle switch</td></tr><tr><td>Effet immédiat (pas de submit)</td><td>NN/g</td></tr><tr><td>État par position du curseur (pas couleur seule)</td><td>NN/g · WCAG 1.4.1</td></tr><tr><td>Curseur délimité, contraste ≥ 3:1</td><td>NN/g · WCAG 1.4.11</td></tr><tr><td>Label concis frontload décrivant l'état « on »</td><td>NN/g</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Binaire uniquement</td><td>NN/g</td></tr></tbody></table></div>
+</div><p><strong>Date :</strong> 2026-06-25 <strong>Statut :</strong> Accepté <strong>Décideurs :</strong> Guilherme Negreiros (Principal Designer) <strong>Tags :</strong> composant, v2, marketing, accessibilité</p>
 <hr>
 <h2>Contexte</h2>
-<p>Le toggle complète checkbox/radio : c'est le contrôle des réglages à <strong>effet immédiat</strong>. Trois questions ont guidé les décisions :</p>
-<p>1. <strong>Sémantique</strong> — <code>role="switch"</code> vs simple checkbox. 2. <strong>Indicateur d'état</strong> — position seule vs ajout de libellés on/off (I/O). 3. <strong>Couleur de la piste « off »</strong> — aucun token sémantique neutre-médium n'existe.</p>
+<p>Le redesign V2 introduit une section "Valeur par rôle" sur la home et des blocs éditoriaux sur les pages secondaires marketing. Ces éléments nécessitent un composant réutilisable avec :</p>
+<ul><li>Une icône fonctionnelle (signal avant la lecture du titre)</li><li>Un heading court</li><li>Un corps de texte</li><li>Une affordance d'interactivité visuelle (border-bottom animé au hover)</li></ul>
+<p>La classe CSS <code>.v2-role-card</code> existait déjà dans <code>site/build.js</code> mais sans encapsulation composant. La revue UX a confirmé le besoin d'un Web Component formel.</p>
 <hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — <code>&lt;input type="checkbox" role="switch"&gt;</code> natif masqué</h3>
-<p>L'élément accessible est un checkbox natif promu en <code>switch</code> via <code>role</code>. Il fournit le rôle, l'état coché, la gestion clavier (Espace) et le nom accessible (via le <code>&lt;label&gt;</code> englobant). La piste et le curseur stylés sont <strong>décoratifs</strong> (<code>aria-hidden</code>).</p>
-<p><strong>Alternative rejetée :</strong> <code>&lt;div role="switch"&gt;</code> avec gestion clavier manuelle — fragile et inutile puisque le natif fournit tout (anti-pattern WCAG 4.1.2).</p>
+<h2>Décision</h2>
+<p>Créer <code>agtc-feature-card</code> (Lit) avec :</p>
+<ul><li>Attribut <code>heading</code> (titre)</li><li>Attribut <code>heading-level</code> 1-6, défaut 3 (P5 — flexibilité hiérarchique)</li><li>Attribut <code>variant</code> : <code>"default"</code> | <code>"marketing"</code> (P6 — variante contextuelle)</li><li>Slot <code>icon</code> nommé pour SVG 20×20 (P1 — duo icône + titre)</li><li>Slot défaut pour le corps</li><li><code>prefers-reduced-motion</code> dans le shadow CSS (P7 — prioritaire)</li><li><code>role="heading"</code> + <code>aria-level</code> dynamique (P8 — accessibilité SR)</li></ul>
 <hr>
-<h3>Décision 2 — État signalé par la position du curseur (indicateur non-couleur)</h3>
-<p>Le curseur glisse à gauche (off) / à droite (on). La <strong>position</strong> est un indicateur indépendant de la couleur (WCAG 1.4.1) ; la couleur de la piste (gris → teal) ne fait que renforcer.</p>
-<p><strong>Alternative rejetée :</strong> libellés I/O dans la piste. Écartés pour rester épuré (standard iOS/Android) ; la position suffit comme indicateur non-couleur.</p>
-<p>Le curseur est <strong>blanc avec une ombre portée</strong>, garantissant un contraste ≥ 3:1 avec la piste dans les deux états (WCAG 1.4.11).</p>
+<h2>Patterns UX appliqués (revue 2026-06-25)</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th><th>Décision</th></tr></thead><tbody><tr><td>P1</td><td>Icône + titre en duo</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — Icons & Indicators</a></td><td>✅ Appliqué</td></tr><tr><td>P2</td><td>Affordance d'interactivité contrôlée</td><td><a href="https://ixdf.org/literature/topics/ui-design-patterns">IxDF — UI Patterns</a></td><td>✅ Appliqué</td></tr><tr><td>P3</td><td>Non-interactivité par défaut</td><td><a href="https://www.smashingmagazine.com/category/design-patterns/">Smashing — Card patterns</a></td><td>✅ Appliqué</td></tr><tr><td>P4</td><td>Cibles tactiles ≥ 24×24px (WCAG 2.5.8)</td><td><a href="https://ixdf.org/literature/topics/ui-design-patterns">IxDF — Touch Targets</a></td><td>✅ Conforme</td></tr><tr><td>P5</td><td>Heading niveau flexible</td><td><a href="https://www.nngroup.com/articles/design-pattern-guidelines/">NN/g — Visual Hierarchy</a></td><td>✅ Attribut <code>heading-level</code></td></tr><tr><td>P6</td><td>Variante contextuelle</td><td><a href="https://dashboarddesignpatterns.github.io/patterns.html">Dashboard Design Patterns</a></td><td>✅ default / marketing</td></tr><tr><td>P7</td><td><code>prefers-reduced-motion</code></td><td><a href="https://ixdf.org/literature/topics/ui-design-patterns">IxDF — Accessibilité</a></td><td>✅ Prioritaire — border visible dès le départ</td></tr><tr><td>P8</td><td>Markup accessible</td><td><a href="https://catalogue.projectsbyif.com/">IF — Data Patterns</a></td><td>✅ role + aria-level</td></tr></tbody></table></div>
 <hr>
-<h3>Décision 3 — <code>track-off</code> = proxy vers <code>primitive.color.gray.9</code></h3>
-<p>Aucun token sémantique de gris neutre-médium n'existe. <code>track-off</code> référence directement <code>primitive.color.gray.9</code> (#8d8d8d), choisi pour donner ~3.3:1 entre le curseur blanc et la piste (WCAG 1.4.11). C'est un <strong>proxy de composant</strong> (même approche que <code>card.elevated.shadow</code>) jusqu'à la création d'un token sémantique dédié — gouverné par le Design System Lead.</p>
+<h2>Alternatives considérées</h2>
+<p><strong>Option A — CSS pur (classe <code>.v2-role-card</code>)</strong> : rejetée. Pas d'encapsulation, pas de contrat attribut, pas de garantie d'usage correct par les agents ou les équipes.</p>
+<p><strong>Option B — Lit avec heading natif <code>&lt;h3&gt;</code></strong> : rejetée. Niveau de heading hardcodé — saut potentiel selon le contexte de la page (P5).</p>
+<p><strong>Option C — Lit avec <code>heading-level</code> flexible</strong> (choisie) : <code>role="heading"</code> + <code>aria-level</code> dynamique. Compatible avec tout contexte de page.</p>
 <hr>
-<h2>Périmètre v1</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>États off/on/hover/focus/disabled</td><td>Libellés on/off (I/O) dans la piste</td></tr><tr><td>Effet immédiat (<code>agtc-change</code>)</td><td>Taille <code>sm</code>/<code>lg</code></td></tr><tr><td><code>role="switch"</code>, clavier Espace</td><td>État <code>loading</code> (async)</td></tr></tbody></table></div>
+<h2>Conséquences</h2>
+<ul><li><code>agtc-feature-card</code> est enregistré dans <code>components/index.js</code> et bundlé dans <code>agtc.js</code></li><li>La guideline est à <code>guidelines/components/feature-card.md</code></li><li>La Storybook story est à <code>components/agtc-feature-card.stories.js</code></li><li>La classe <code>.v2-role-card</code> dans <code>site/build.js</code> reste pour la home (HTML statique) — migration vers <code>&lt;agtc-feature-card&gt;</code> à planifier lors d'un chantier dédié</li><li>Toute modification de variante ou de comportement requiert une nouvelle revue UX</li></ul>
 <hr>
-<h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>--agtc-toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-on</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-toggle-default-track-on-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-toggle-default-knob</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-toggle-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-toggle-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-038.html" class="agtc-button secondary">← ADR-038</a>
-    <a href="adr-040.html" class="agtc-button secondary">ADR-040 →</a>
+<h2>Fichiers impactés</h2>
+<ul><li><code>components/agtc-feature-card.js</code> — nouveau</li><li><code>components/agtc-feature-card.stories.js</code> — nouveau</li><li><code>components/index.js</code> — import ajouté</li><li><code>guidelines/components/feature-card.md</code> — nouvelle guideline</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-062.html" class="agtc-button secondary">← ADR-062</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

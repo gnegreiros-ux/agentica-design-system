@@ -2554,6 +2554,70 @@ body.v2-page{
 .v2-back-to-top{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
 .v2-back-to-top.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 
+/* Dark mode — teal-9 comme couleur principale (plus lisible sur fond foncé) */
+[data-theme="dark"]{
+  --agtc-semantic-color-action-primary:#12a594;
+  --agtc-semantic-color-action-primary-hover:#0d9b8a;
+  --agtc-component-button-primary-background:#12a594;
+  --agtc-component-button-primary-background-hover:#0d9b8a;
+  --agtc-component-top-nav-tab-indicator-color:#12a594;
+}
+
+/* Theme toggle — sans border */
+.theme-toggle{border:none!important;box-shadow:none!important;background:transparent!important}
+
+/* Cards rôles — hauteur uniforme */
+.v2-role-grid{align-items:stretch}
+.v2-role-card{display:flex;flex-direction:column;justify-content:flex-start}
+
+/* Border-bottom animation cards — couleur principale */
+.v2-role-card::after{background:var(--agtc-semantic-color-action-primary)}
+body[data-context="marketing"] .v2-role-card::after{
+  background:linear-gradient(90deg,var(--agtc-semantic-color-action-primary),var(--agtc-semantic-color-accent,#e35d6a))
+}
+
+/* Footer V2 — 4 colonnes */
+.v2-footer{
+  border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.12),transparent 28rem),
+             var(--agtc-semantic-color-background-inverse);
+  padding:4rem max(24px,calc((100vw - var(--agtc-content-max,1180px))/2));
+}
+.v2-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2.5rem;max-width:var(--v2-shell);margin:0 auto}
+.v2-footer-col{display:flex;flex-direction:column;gap:.55rem}
+.v2-footer-col a{color:var(--v2-muted);text-decoration:none;font-size:.9rem;line-height:1.5}
+.v2-footer-col a:hover,.v2-footer-col a:focus-visible{color:var(--v2-text)}
+.v2-footer-col a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-footer-col span{color:var(--v2-muted);font-size:.85rem;line-height:1.5}
+.v2-footer-heading{color:var(--v2-text)!important;font-weight:700;font-size:.9rem!important;margin-bottom:.5rem}
+
+/* Icônes dans les blocs éditoriaux des sous-pages */
+.v2-editorial-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:2.5rem;height:2.5rem;border-radius:10px;
+  background:rgba(18,165,148,.12);color:var(--v2-teal);
+  margin-bottom:1rem;flex-shrink:0;
+}
+.v2-editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--v2-text)}
+
+/* Sidebar latérale V2 pour sous-pages */
+.v2-with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
+.v2-sidebar{position:sticky;top:var(--agtc-header-height,64px);align-self:start;height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto;padding:2rem 0;border-right:1px solid var(--v2-line)}
+.v2-sidebar nav{display:flex;flex-direction:column;padding:0 1.25rem;gap:.2rem}
+.v2-sidebar-heading{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--v2-muted);padding:.5rem 0;margin-top:1rem}
+.v2-sidebar-heading:first-child{margin-top:0}
+.v2-sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
+.v2-sidebar a:hover,.v2-sidebar a:focus-visible{color:var(--v2-text);background:rgba(255,255,255,.07);outline:none}
+.v2-sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-sidebar a[aria-current="page"]{color:var(--v2-teal);background:rgba(18,165,148,.1)}
+.v2-page-content{overflow:hidden}
+.v2-page-content .v2-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-page-content .v2-simple-hero{padding-top:3rem}
+@media(max-width:860px){
+  .v2-with-sidebar{grid-template-columns:1fr}
+  .v2-sidebar{display:none}
+}
+
 /* Stats hero (réutilisées depuis rd-*) */
 .v2-hero-stats{
   display:flex;flex-wrap:wrap;gap:2rem;margin-top:2.5rem;
@@ -3012,39 +3076,50 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 
   const auditHref = (depth > 0 ? '../'.repeat(depth) : '') + 'audit.html';
   const footer = `
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <a class="footer-logo" href="${base}index.html" aria-label="Agentica — Accueil">
-        <svg class="footer-logo-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <svg viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+          <path d="M160.624 115.771C161.174 115.459 161.826 115.385 162.432 115.565C163.037 115.746 163.544 116.165 163.835 116.728C170.756 130.124 177.932 143.424 184.538 156.982C186.793 161.72 187.681 166.848 185.836 171.311L185.643 171.755C183.616 176.168 179.937 178.646 175.71 179.584C171.75 180.462 167.325 180.013 163.01 179.005C154.337 176.98 144.063 172.192 134.29 166.869C124.922 161.767 115.792 156.169 106.878 150.306C106.189 149.853 105.762 149.089 105.786 148.255C105.809 147.438 106.256 146.691 106.965 146.288L160.624 115.771Z" fill="#FF8AA1"/>
+          <path d="M138.269 72.5524C138.819 72.24 139.471 72.1653 140.076 72.3454C140.681 72.5256 141.188 72.9454 141.479 73.508C146.406 83.0229 151.632 93.1241 156.681 102.89C157.259 104.006 156.853 105.382 155.764 106.002L28.0215 178.653C27.537 178.929 26.9698 179.02 26.4237 178.912C23.0335 178.238 19.5354 177.261 16.499 175.558C15.0327 174.735 13.7122 173.67 12.8521 172.209C10.1175 167.566 11.0764 162.267 13.1671 158.328C16.7663 151.547 20.1113 144.57 23.9277 137.911C24.1329 137.58 24.4178 137.304 24.7577 137.11L138.269 72.5524Z" fill="#6B7280"/>
+          <path d="M117.103 26.6947C115.197 23.8762 111.986 22.4022 109.5 21.5954C103.425 19.6234 96.2834 19.4369 90.1249 21.1358C87.2882 21.9185 83.7875 23.4372 81.7087 26.541C81.2721 27.1676 80.9407 27.8678 80.6031 28.5519C79.2794 31.2338 77.9794 34.2318 76.3261 36.7235C63.1107 62.0222 50.1418 87.3726 37.0675 112.637C36.5924 113.556 36.7747 114.678 37.5158 115.397C38.2571 116.116 39.381 116.259 40.2775 115.749L133.396 62.7905C134.486 62.1702 134.892 60.7937 134.313 59.6771C125.821 43.2911 119.242 30.6202 117.785 27.8679C117.684 27.6523 117.564 27.4385 117.441 27.2341L117.103 26.6947Z" fill="#12A594"/>
         </svg>
-        <span class="footer-logo-name">Agentica</span>
+        <span>Agentica</span>
       </a>
-      <span class="footer-name">Guilherme Negreiros</span>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" class="footer-link">${icon('linkedin', 15)} LinkedIn</a>
+      <span>Guilherme Negreiros</span>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
-    <div class="footer-col">
-      <nav class="footer-links" aria-label="Footer">
-        <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
-        <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
-        <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
-        <a href="${auditHref}" class="footer-link">${icon('shield-check', 15)} Audit</a>
-      </nav>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="${base}index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="${base}ia.html">IA</a>
     </div>
-    <div class="footer-col footer-col-right">
-      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
-      <span class="footer-credit">
-        ${icon('bot', 14)}
-        <span class="lang-fr">Développé avec Claude Code</span>
-        <span class="lang-en">Built with Claude Code</span>
-      </span>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="${base}pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="${base}components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="${base}tokens/index.html">Tokens</a>
+      <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="${base}audit.html">Audit</a>
+      <span style="margin-top:.8rem">© 2026 Guilherme Negreiros</span>
+      <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
     </div>
   </div>
 </footer>`;
 
   return `<!DOCTYPE html>
-<html lang="fr" data-lang="fr" data-theme="${context === 'marketing' ? 'dark' : 'light'}">
+<html lang="fr" data-lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -3084,7 +3159,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <header class="v2-header" role="banner" data-v2-header>
   <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil">
     <svg class="v2-brand-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
+      <path d="M160.624 115.771C161.174 115.459 161.826 115.385 162.432 115.565C163.037 115.746 163.544 116.165 163.835 116.728C170.756 130.124 177.932 143.424 184.538 156.982C186.793 161.72 187.681 166.848 185.836 171.311L185.643 171.755C183.616 176.168 179.937 178.646 175.71 179.584C171.75 180.462 167.325 180.013 163.01 179.005C154.337 176.98 144.063 172.192 134.29 166.869C124.922 161.767 115.792 156.169 106.878 150.306C106.189 149.853 105.762 149.089 105.786 148.255C105.809 147.438 106.256 146.691 106.965 146.288L160.624 115.771Z" fill="#FF8AA1"/>
+      <path d="M138.269 72.5524C138.819 72.24 139.471 72.1653 140.076 72.3454C140.681 72.5256 141.188 72.9454 141.479 73.508C146.406 83.0229 151.632 93.1241 156.681 102.89C157.259 104.006 156.853 105.382 155.764 106.002L28.0215 178.653C27.537 178.929 26.9698 179.02 26.4237 178.912C23.0335 178.238 19.5354 177.261 16.499 175.558C15.0327 174.735 13.7122 173.67 12.8521 172.209C10.1175 167.566 11.0764 162.267 13.1671 158.328C16.7663 151.547 20.1113 144.57 23.9277 137.911C24.1329 137.58 24.4178 137.304 24.7577 137.11L138.269 72.5524Z" fill="#6B7280"/>
+      <path d="M117.103 26.6947C115.197 23.8762 111.986 22.4022 109.5 21.5954C103.425 19.6234 96.2834 19.4369 90.1249 21.1358C87.2882 21.9185 83.7875 23.4372 81.7087 26.541C81.2721 27.1676 80.9407 27.8678 80.6031 28.5519C79.2794 31.2338 77.9794 34.2318 76.3261 36.7235C63.1107 62.0222 50.1418 87.3726 37.0675 112.637C36.5924 113.556 36.7747 114.678 37.5158 115.397C38.2571 116.116 39.381 116.259 40.2775 115.749L133.396 62.7905C134.486 62.1702 134.892 60.7937 134.313 59.6771C125.821 43.2911 119.242 30.6202 117.785 27.8679C117.684 27.6523 117.564 27.4385 117.441 27.2341L117.103 26.6947Z" fill="#12A594"/>
     </svg>
     <span>Agentica</span>
   </a>
@@ -3574,8 +3651,34 @@ function buildHome(adrs) {
 
 // ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
 
+function v2Sidebar(base, current) {
+  const links = [
+    ['pourquoi.html', '<span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span>'],
+    ['architecture.html', '<span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span>'],
+    ['qualite.html', '<span class="lang-fr">Qualité</span><span class="lang-en">Quality</span>'],
+    ['ia.html', 'IA'],
+    ['documentation.html', 'Documentation'],
+  ];
+  const docLinks = [
+    ['foundations/index.html', '<span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span>'],
+    ['components/index.html', '<span class="lang-fr">Composants</span><span class="lang-en">Components</span>'],
+    ['tokens/index.html', 'Tokens'],
+    ['decisions/index.html', '<span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span>'],
+    ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
+  ];
+  return `<aside class="v2-sidebar" aria-label="Navigation secondaire">
+  <nav>
+    <span class="v2-sidebar-heading">Agentica</span>
+    ${links.map(([href, label]) => `<a href="${base}${href}"${current === href ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
+    <span class="v2-sidebar-heading">Documentation</span>
+    ${docLinks.map(([href, label]) => `<a href="${base}${href}">${label}</a>`).join('\n    ')}
+  </nav>
+</aside>`;
+}
+
 function buildPourquoi() {
-  const body = `
+  const sidebar = v2Sidebar('', 'pourquoi.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
 <section class="v2-section v2-simple-hero">
   <div class="v2-shell">
     <div class="v2-copy" style="max-width:700px">
@@ -3596,18 +3699,22 @@ function buildPourquoi() {
   <div class="v2-shell">
     <div class="v2-editorial-grid">
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('book-open', 20)}</div>
         <h2><span class="lang-fr">Les connaissances se perdent</span><span class="lang-en">Knowledge gets lost</span></h2>
         <p><span class="lang-fr">Les décisions de design, d'architecture et d'accessibilité se dispersent dans Figma, GitHub, Slack et la mémoire des experts. Lorsque les équipes changent, les décisions disparaissent.</span><span class="lang-en">Design, architecture and accessibility decisions scatter across Figma, GitHub, Slack and expert memory. When teams change, decisions disappear.</span></p>
       </div>
       <div class="v2-editorial-block">
-        <h2><span class="lang-fr">Les agents IA improvise</span><span class="lang-en">AI agents improvise</span></h2>
+        <div class="v2-editorial-icon">${icon('bot', 20)}</div>
+        <h2><span class="lang-fr">Les agents IA improvisent</span><span class="lang-en">AI agents improvise</span></h2>
         <p><span class="lang-fr">Sans source structurée, les agents IA inventent, réinventent et contredisent. Ils ne peuvent pas appliquer des décisions qu'ils ne comprennent pas. Agentica leur donne une source de vérité.</span><span class="lang-en">Without a structured source, AI agents invent, reinvent and contradict. They cannot apply decisions they don't understand. Agentica gives them a source of truth.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('users', 20)}</div>
         <h2><span class="lang-fr">Le contrôle reste humain</span><span class="lang-en">Control stays human</span></h2>
         <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains décident, approuvent et gouvernent. Ce n'est pas un système autonome. C'est un système de gouvernance augmentée.</span><span class="lang-en">Agents observe, analyze and propose. Humans decide, approve and govern. This is not an autonomous system. It is an augmented governance system.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('shield-check', 20)}</div>
         <h2><span class="lang-fr">La qualité est structurelle</span><span class="lang-en">Quality is structural</span></h2>
         <p><span class="lang-fr">Accessibilité, régressions visuelles, cohérence des tokens et des ADRs — ces vérifications ne sont pas optionnelles. Elles font partie du système, déclenchées automatiquement à chaque changement.</span><span class="lang-en">Accessibility, visual regressions, token and ADR consistency — these checks are not optional. They are part of the system, triggered automatically with every change.</span></p>
       </div>
@@ -3625,12 +3732,13 @@ function buildPourquoi() {
     </div>
   </div>
 </section>
-`;
+</div></div>`;
   write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 function buildArchitecture() {
-  const body = `
+  const sidebar = v2Sidebar('', 'architecture.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
 <section class="v2-section v2-simple-hero">
   <div class="v2-shell">
     <div class="v2-copy" style="max-width:700px">
@@ -3651,18 +3759,22 @@ function buildArchitecture() {
   <div class="v2-shell">
     <div class="v2-editorial-grid">
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('layers', 20)}</div>
         <h2><span class="lang-fr">Niveau 1 — Primitifs</span><span class="lang-en">Level 1 — Primitives</span></h2>
         <p><span class="lang-fr">Les valeurs physiques brutes : couleurs, espacements, rayons, tailles de police. Jamais utilisés directement dans les composants. Toujours via un token sémantique.</span><span class="lang-en">Raw physical values: colors, spacings, radius, font sizes. Never used directly in components. Always through a semantic token.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('code', 20)}</div>
         <h2><span class="lang-fr">Niveau 2 — Sémantiques</span><span class="lang-en">Level 2 — Semantic</span></h2>
         <p><span class="lang-fr">Les intentions UX : <code>color.action.primary</code>, <code>space.control.padding</code>. Ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span><span class="lang-en">UX intentions: <code>color.action.primary</code>, <code>space.control.padding</code>. What agents must use to understand function, not raw value.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('settings', 20)}</div>
         <h2><span class="lang-fr">Niveau 3 — Composants</span><span class="lang-en">Level 3 — Components</span></h2>
         <p><span class="lang-fr">Les contrats institutionnels : décisions comportementales spécifiques à chaque composant. Toute modification requiert une approbation humaine explicite.</span><span class="lang-en">Institutional contracts: behavioral decisions specific to each component. Every change requires explicit human approval.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('git-branch', 20)}</div>
         <h2><span class="lang-fr">ADRs — Mémoire des décisions</span><span class="lang-en">ADRs — Decision memory</span></h2>
         <p><span class="lang-fr">Chaque décision d'architecture est documentée dans un ADR (Architecture Decision Record) : contexte, alternatives explorées, compromis acceptés. Rien ne disparaît.</span><span class="lang-en">Every architecture decision is documented in an ADR (Architecture Decision Record): context, alternatives explored, trade-offs accepted. Nothing disappears.</span></p>
       </div>
@@ -3680,12 +3792,13 @@ function buildArchitecture() {
     </div>
   </div>
 </section>
-`;
+</div></div>`;
   write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 function buildQualite() {
-  const body = `
+  const sidebar = v2Sidebar('', 'qualite.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
 <section class="v2-section v2-simple-hero">
   <div class="v2-shell">
     <div class="v2-copy" style="max-width:700px">
@@ -3706,18 +3819,22 @@ function buildQualite() {
   <div class="v2-shell">
     <div class="v2-editorial-grid">
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('shield-check', 20)}</div>
         <h2><span class="lang-fr">Accessibilité WCAG 2.1 AA</span><span class="lang-en">WCAG 2.1 AA Accessibility</span></h2>
         <p><span class="lang-fr">Chaque composant est testé automatiquement avec axe-core avant chaque commit. Ratio de contraste, navigation clavier, attributs ARIA — non contournables.</span><span class="lang-en">Every component is automatically tested with axe-core before each commit. Contrast ratio, keyboard navigation, ARIA attributes — non-negotiable.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('eye', 20)}</div>
         <h2><span class="lang-fr">Régressions visuelles</span><span class="lang-en">Visual regressions</span></h2>
         <p><span class="lang-fr">Chromatic capture l'apparence de chaque composant dans chaque état. Toute déviation visuelle non approuvée bloque le déploiement.</span><span class="lang-en">Chromatic captures every component's appearance in every state. Any unapproved visual deviation blocks deployment.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('layers', 20)}</div>
         <h2><span class="lang-fr">Cohérence des tokens</span><span class="lang-en">Token consistency</span></h2>
         <p><span class="lang-fr">Aucune valeur codée en dur dans les composants. Chaque couleur, espacement et rayon passe par un token sémantique. Les variables fantômes sont détectées automatiquement.</span><span class="lang-en">No hardcoded values in components. Every color, spacing and radius goes through a semantic token. Ghost variables are automatically detected.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('file-text', 20)}</div>
         <h2><span class="lang-fr">Documentation obligatoire</span><span class="lang-en">Mandatory documentation</span></h2>
         <p><span class="lang-fr">Aucun composant ne peut être publié sans sa guideline, sa Storybook story et ses patterns UX approuvés. La documentation est un gate, pas un bonus.</span><span class="lang-en">No component can be published without its guideline, Storybook story and approved UX patterns. Documentation is a gate, not a bonus.</span></p>
       </div>
@@ -3735,12 +3852,13 @@ function buildQualite() {
     </div>
   </div>
 </section>
-`;
+</div></div>`;
   write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 function buildIA() {
-  const body = `
+  const sidebar = v2Sidebar('', 'ia.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
 <section class="v2-section v2-simple-hero">
   <div class="v2-shell">
     <div class="v2-copy" style="max-width:700px">
@@ -3761,18 +3879,22 @@ function buildIA() {
   <div class="v2-shell">
     <div class="v2-editorial-grid">
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('zap', 20)}</div>
         <h2><span class="lang-fr">Ce que les agents peuvent faire</span><span class="lang-en">What agents can do</span></h2>
         <p><span class="lang-fr">Générer des composants depuis les tokens, détecter les violations d'accessibilité, documenter les décisions, proposer des corrections, analyser la cohérence du système.</span><span class="lang-en">Generate components from tokens, detect accessibility violations, document decisions, propose fixes, analyze system consistency.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('lock', 20)}</div>
         <h2><span class="lang-fr">Ce que les agents ne peuvent pas faire</span><span class="lang-en">What agents cannot do</span></h2>
         <p><span class="lang-fr">Approuver une PR, déployer en production, modifier un token de composant, créer un ADR — toutes ces actions nécessitent une approbation humaine explicite.</span><span class="lang-en">Approve a PR, deploy to production, modify a component token, create an ADR — all these actions require explicit human approval.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('brain', 20)}</div>
         <h2><span class="lang-fr">Les agents comprennent l'intention</span><span class="lang-en">Agents understand intent</span></h2>
         <p><span class="lang-fr">Un agent comprend <code>color.action.primary</code> comme une intention UX. Il ne comprend pas <code>#3B82F6</code> comme une intention — c'est juste une valeur. Les tokens sémantiques rendent le système lisible par machine.</span><span class="lang-en">An agent understands <code>color.action.primary</code> as a UX intent. It doesn't understand <code>#3B82F6</code> as an intent — it's just a value. Semantic tokens make the system machine-readable.</span></p>
       </div>
       <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('network', 20)}</div>
         <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
         <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
       </div>
@@ -3790,12 +3912,13 @@ function buildIA() {
     </div>
   </div>
 </section>
-`;
+</div></div>`;
   write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 function buildDocumentation() {
-  const body = `
+  const sidebar = v2Sidebar('', 'documentation.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
 <section class="v2-section v2-simple-hero">
   <div class="v2-shell">
     <div class="v2-copy" style="max-width:700px">
@@ -3859,7 +3982,7 @@ function buildDocumentation() {
     </div>
   </div>
 </section>
-`;
+</div></div>`;
   write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
