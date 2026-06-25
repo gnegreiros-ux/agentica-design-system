@@ -2288,7 +2288,6 @@ body.v2-page{
   color:var(--v2-text);font-weight:var(--agtc-semantic-fontWeight-display,700);text-decoration:none;
   flex-shrink:0;
 }
-.v2-brand-mark{width:28px;height:28px;display:block;flex-shrink:0}
 
 /* Navigation V2 */
 .v2-nav{display:flex;align-items:center;gap:var(--agtc-component-top-nav-cta-gap,8px)}
@@ -2552,7 +2551,6 @@ body.v2-page{
              var(--agtc-semantic-color-background-page);
 }
 .v2-footer-inner{max-width:var(--v2-shell);grid-template-columns:1.15fr .9fr 1fr .9fr}
-.v2-footer .v2-brand-mark{width:24px;height:24px}
 .v2-footer-heading{margin-bottom:.25rem;color:var(--agtc-semantic-color-text-on-inverse);font-size:var(--agtc-semantic-typography-detail-size)}
 
 /* Back-to-top V2 */
@@ -3179,12 +3177,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <div class="v2-footer-grid">
     <div class="v2-footer-col">
       <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
-        <svg viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
-          <path d="M160.624 115.771C161.174 115.459 161.826 115.385 162.432 115.565C163.037 115.746 163.544 116.165 163.835 116.728C170.756 130.124 177.932 143.424 184.538 156.982C186.793 161.72 187.681 166.848 185.836 171.311L185.643 171.755C183.616 176.168 179.937 178.646 175.71 179.584C171.75 180.462 167.325 180.013 163.01 179.005C154.337 176.98 144.063 172.192 134.29 166.869C124.922 161.767 115.792 156.169 106.878 150.306C106.189 149.853 105.762 149.089 105.786 148.255C105.809 147.438 106.256 146.691 106.965 146.288L160.624 115.771Z" fill="#FF8AA1"/>
-          <path d="M138.269 72.5524C138.819 72.24 139.471 72.1653 140.076 72.3454C140.681 72.5256 141.188 72.9454 141.479 73.508C146.406 83.0229 151.632 93.1241 156.681 102.89C157.259 104.006 156.853 105.382 155.764 106.002L28.0215 178.653C27.537 178.929 26.9698 179.02 26.4237 178.912C23.0335 178.238 19.5354 177.261 16.499 175.558C15.0327 174.735 13.7122 173.67 12.8521 172.209C10.1175 167.566 11.0764 162.267 13.1671 158.328C16.7663 151.547 20.1113 144.57 23.9277 137.911C24.1329 137.58 24.4178 137.304 24.7577 137.11L138.269 72.5524Z" fill="#6B7280"/>
-          <path d="M117.103 26.6947C115.197 23.8762 111.986 22.4022 109.5 21.5954C103.425 19.6234 96.2834 19.4369 90.1249 21.1358C87.2882 21.9185 83.7875 23.4372 81.7087 26.541C81.2721 27.1676 80.9407 27.8678 80.6031 28.5519C79.2794 31.2338 77.9794 34.2318 76.3261 36.7235C63.1107 62.0222 50.1418 87.3726 37.0675 112.637C36.5924 113.556 36.7747 114.678 37.5158 115.397C38.2571 116.116 39.381 116.259 40.2775 115.749L133.396 62.7905C134.486 62.1702 134.892 60.7937 134.313 59.6771C125.821 43.2911 119.242 30.6202 117.785 27.8679C117.684 27.6523 117.564 27.4385 117.441 27.2341L117.103 26.6947Z" fill="#12A594"/>
-        </svg>
-        <span>Agentica</span>
+        <img src="${base}img/logo-color-white.svg" alt="Agentica" height="40" width="180" loading="lazy" style="display:block">
       </a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -3260,12 +3253,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </a>
 <header class="v2-header" role="banner" data-v2-header>
   <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil">
-    <svg class="v2-brand-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-      <path d="M160.624 115.771C161.174 115.459 161.826 115.385 162.432 115.565C163.037 115.746 163.544 116.165 163.835 116.728C170.756 130.124 177.932 143.424 184.538 156.982C186.793 161.72 187.681 166.848 185.836 171.311L185.643 171.755C183.616 176.168 179.937 178.646 175.71 179.584C171.75 180.462 167.325 180.013 163.01 179.005C154.337 176.98 144.063 172.192 134.29 166.869C124.922 161.767 115.792 156.169 106.878 150.306C106.189 149.853 105.762 149.089 105.786 148.255C105.809 147.438 106.256 146.691 106.965 146.288L160.624 115.771Z" fill="#FF8AA1"/>
-      <path d="M138.269 72.5524C138.819 72.24 139.471 72.1653 140.076 72.3454C140.681 72.5256 141.188 72.9454 141.479 73.508C146.406 83.0229 151.632 93.1241 156.681 102.89C157.259 104.006 156.853 105.382 155.764 106.002L28.0215 178.653C27.537 178.929 26.9698 179.02 26.4237 178.912C23.0335 178.238 19.5354 177.261 16.499 175.558C15.0327 174.735 13.7122 173.67 12.8521 172.209C10.1175 167.566 11.0764 162.267 13.1671 158.328C16.7663 151.547 20.1113 144.57 23.9277 137.911C24.1329 137.58 24.4178 137.304 24.7577 137.11L138.269 72.5524Z" fill="#6B7280"/>
-      <path d="M117.103 26.6947C115.197 23.8762 111.986 22.4022 109.5 21.5954C103.425 19.6234 96.2834 19.4369 90.1249 21.1358C87.2882 21.9185 83.7875 23.4372 81.7087 26.541C81.2721 27.1676 80.9407 27.8678 80.6031 28.5519C79.2794 31.2338 77.9794 34.2318 76.3261 36.7235C63.1107 62.0222 50.1418 87.3726 37.0675 112.637C36.5924 113.556 36.7747 114.678 37.5158 115.397C38.2571 116.116 39.381 116.259 40.2775 115.749L133.396 62.7905C134.486 62.1702 134.892 60.7937 134.313 59.6771C125.821 43.2911 119.242 30.6202 117.785 27.8679C117.684 27.6523 117.564 27.4385 117.441 27.2341L117.103 26.6947Z" fill="#12A594"/>
-    </svg>
-    <span>Agentica</span>
+    <img src="${base}img/logo-color-white.svg" alt="Agentica" height="34" width="152" style="display:block" fetchpriority="high">
   </a>
   <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav">
     <span class="lang-fr">Menu</span><span class="lang-en">Menu</span>
@@ -7537,6 +7525,11 @@ function build() {
 
   // Illustrations SVG — copiées dans dist/img/ et chargées lazily (P1 perf)
   ensureDir(path.join(DIST, 'img'));
+
+  // Logo complet color white (symbol + wordmark) pour header et footer
+  const logoColorWhite = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color white.svg');
+  if (fs.existsSync(logoColorWhite)) fs.copyFileSync(logoColorWhite, path.join(DIST, 'img', 'logo-color-white.svg'));
+
   ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
     const src = path.join(ROOT, 'illustrations', f);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
