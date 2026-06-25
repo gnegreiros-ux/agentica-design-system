@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const backToTop = document.querySelector('[data-back-to-top]');
   if (backToTop) {
     const setBackToTopState = () => {
-      const visible = window.scrollY > 600;
+      const visible = window.scrollY > window.innerHeight;
       backToTop.classList.toggle('is-visible', visible);
     };
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
