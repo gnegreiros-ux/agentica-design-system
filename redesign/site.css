@@ -1969,12 +1969,22 @@ body[data-context="marketing"] .v2-role-card::after{
   .v2-nav{
     position:fixed;
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
-    display:none;flex-direction:column;align-items:stretch;padding:.6rem;
+    display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
     border:1px solid var(--v2-line);border-radius:var(--agtc-semantic-radius-card,16px);
     background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
     box-shadow:var(--agtc-shadow-lg);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
+    pointer-events:none;
   }
-  .v2-nav.is-open{display:flex}
+  .v2-nav.is-open{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear 0s;
+    pointer-events:auto;
+  }
+  @media(prefers-reduced-motion:reduce){
+    .v2-nav,.v2-nav.is-open{transition:none}
+  }
   .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
   .v2-nav a::after,.v2-docs-trigger::after{inset:auto 0 .35rem}
   .v2-nav .v2-nav-action{margin-left:0}
