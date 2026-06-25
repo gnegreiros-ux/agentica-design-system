@@ -126,9 +126,9 @@
     .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:2px; }
   </style>
   <div role="tablist" aria-label="Documentation" class="demo-tablist">
-    <button role="tab" class="demo-tab demo-tab--active" aria-selected="true" type="button">Aperçu</button>
+    <button role="tab" class="demo-tab demo-tab--active" aria-selected="true" type="button"><span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span></button>
     <button role="tab" class="demo-tab" aria-selected="false" type="button">Tokens</button>
-    <button role="tab" class="demo-tab" aria-selected="false" type="button">Accessibilité</button>
+    <button role="tab" class="demo-tab" aria-selected="false" type="button"><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></button>
   </div>
   <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:14px"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
 </div>
@@ -181,13 +181,13 @@
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
 <pre class="code-block"><code class="lang-html">&lt;agtc-tabs label="Documentation Button" selected="overview"&gt;
-  &lt;div slot="overview"&gt;Contenu Aperçu&lt;/div&gt;
-  &lt;div slot="tokens"&gt;Contenu Tokens&lt;/div&gt;
+  &lt;div slot="overview"&gt;Overview content&lt;/div&gt;
+  &lt;div slot="tokens"&gt;Tokens content&lt;/div&gt;
 &lt;/agtc-tabs&gt;
 &lt;script type="module" src="../components/agtc-tabs.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   document.querySelector('agtc-tabs').tabs = [
-    { value: 'overview', label: 'Aperçu' },
+    { value: 'overview', label: 'Overview' },
     { value: 'tokens',   label: 'Tokens' },
   ];
 &lt;/script&gt;</code></pre>
