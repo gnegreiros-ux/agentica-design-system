@@ -2499,7 +2499,7 @@ body.v2-page{
 /* Section qualité */
 .v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
 .v2-signal-stack{display:grid;gap:.6rem}
-.v2-signal-stack span{
+.v2-signal-stack > span{
   display:flex;align-items:center;padding:.9rem 1.1rem;
   background:var(--v2-surface);border:1px solid var(--v2-line);
   border-radius:var(--agtc-semantic-radius-card,16px);
