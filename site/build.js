@@ -2490,13 +2490,13 @@ body.v2-page{
 
 /* Section qualité */
 .v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
-.v2-signal-stack{display:grid;gap:.9rem}
+.v2-signal-stack{display:grid;gap:0}
 .v2-signal-stack span{
-  display:flex;align-items:center;padding:.9rem 1.25rem;
-  border:1px solid var(--v2-line);border-left:3px solid var(--v2-teal);border-radius:var(--v2-radius);
-  background:rgba(255,255,255,.04);
+  display:flex;align-items:center;padding:.8rem 0 .8rem 1.1rem;
+  border-bottom:1px solid var(--v2-line);border-left:3px solid var(--v2-teal);
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
+.v2-signal-stack span:last-child{border-bottom:none}
 .v2-human-control{overflow:hidden}
 .v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
 .v2-single-art{max-width:760px;margin-inline:auto}
@@ -2618,8 +2618,6 @@ body.v2-page{
 /* Section qualité — gradient semi-transparent inversé */
 [data-theme="light"] .v2-quality{background:linear-gradient(180deg,rgba(0,0,0,.015),transparent)}
 [data-theme="light"] .v2-signal-stack span{
-  background:var(--agtc-semantic-color-background-subtle);
-  border-color:var(--agtc-semantic-color-border-default);
   color:var(--agtc-semantic-color-text-primary);
 }
 
@@ -2753,13 +2751,17 @@ body[data-context="marketing"] .v2-role-card::after{
   .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
     width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
   }
-  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-footer-inner,.v2-single-art,.v2-dual-art{
+  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-single-art,.v2-dual-art{
     grid-template-columns:1fr;
   }
+  .v2-footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .v2-editorial-block,.v2-doc-block{background:var(--agtc-semantic-color-background-surface)}
+  .v2-editorial-icon{background:color-mix(in srgb,var(--v2-teal) 20%,var(--agtc-semantic-color-background-surface))}
   .v2-role-card{min-height:170px}
 }
 @media(max-width:560px){
   .v2-header{padding-inline:16px}
+  .v2-footer-grid{grid-template-columns:1fr;gap:2rem}
   .v2-section{padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
   .v2-hero{
     padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));
