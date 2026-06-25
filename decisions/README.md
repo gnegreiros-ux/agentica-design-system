@@ -120,6 +120,8 @@ des décisions déjà tranchées.
 | [ADR-060](ADR-060-agtc-top-nav-implementation.md) | Implémentation de `agtc-top-nav` — tabs visuels full-height, nav inter-pages | 2026-06-15 | ✅ Actif |
 | [ADR-061](ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md) | `agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site | 2026-06-15 | ✅ Actif |
 | [ADR-062](ADR-062-bundle-unique-wc-dogfooding-phase1.md) | Bundle unique `agtc.js` + dogfooding Web Components Phase 1 | 2026-06-15 | ✅ Actif |
+| [ADR-063](ADR-063-agtc-feature-card.md) | Composant `agtc-feature-card` : architecture, variantes, revue UX | 2026-06-25 | ✅ Actif |
+| [ADR-064](ADR-064-v2-light-mode-implementation.md) | Mode clair V2 : implémentation et correction du découplage dark/light (amende ADR-058) | 2026-06-25 | ✅ Actif |
 
 ---
 
