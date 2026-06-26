@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 19 Jun 2026 15:52:10 GMT
+ * Generated on Fri, 26 Jun 2026 19:34:17 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -399,6 +399,8 @@ export const PrimitiveColorSecondary9 = "#463239";
 export const PrimitiveColorSecondary10 = "#5f404b";
 export const PrimitiveColorSecondary11 = "#6b4b56";
 export const PrimitiveColorSecondary12 = "#432f36";
+export const PrimitiveColorBrandBlack = "#000000";
+export const PrimitiveColorBrandGray = "#6B7280";
 export const PrimitiveColorNeutral0 = "#ffffff";
 export const PrimitiveColorNeutral50 = "#fafafa";
 export const PrimitiveColorNeutral500 = "#767676";
@@ -496,6 +498,10 @@ export const SemanticColorBackgroundInverseRaised = "#1a1e24";
 export const SemanticColorBackgroundCode = "#202020";
 export const SemanticColorBackgroundCodeRaised = "#646464";
 export const SemanticColorBackgroundCodeRaisedHover = "#838383";
+export const SemanticColorOverlayScrim = "rgba(15, 17, 23, 0.65)";
+export const SemanticColorOverlayDark = "rgba(15, 17, 23, 0.88)";
+export const SemanticColorOverlayMedium = "rgba(15, 17, 23, 0.50)";
+export const SemanticColorOverlaySubtle = "rgba(15, 17, 23, 0.18)";
 export const SemanticColorTextPrimary = "#202020";
 export const SemanticColorTextSecondary = "#646464";
 export const SemanticColorTextDisabled = "#767676";
@@ -531,6 +537,8 @@ export const SemanticColorBrandAccentText = "#a6294c";
 export const SemanticColorBrandSecondary = "#463239";
 export const SemanticColorBrandSecondaryHover = "#5f404b";
 export const SemanticColorBrandSecondaryText = "#432f36";
+export const SemanticColorBrandLogoBlack = "#000000";
+export const SemanticColorBrandLogoGray = "#6B7280";
 export const SemanticShadowHeader = "0 2px 24px rgba(0,0,0,0.12)";
 export const SemanticShadowRaised = "0 4px 16px rgba(0,0,0,0.10)";
 export const SemanticShadowCardHover = "0 4px 16px rgba(13,116,206,0.10)";

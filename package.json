@@ -7,8 +7,8 @@
   "scripts": {
     "tokens": "node style-dictionary/build.cjs",
     "tokens:watch": "nodemon --watch tokens/ --ext json --exec 'node style-dictionary/build.cjs'",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "storybook": "npm run tokens && storybook dev -p 6006",
+    "build-storybook": "npm run tokens && storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
     "axe": "node scripts/axe-audit.js",
     "axe:mobile": "node scripts/axe-audit.js --mobile",

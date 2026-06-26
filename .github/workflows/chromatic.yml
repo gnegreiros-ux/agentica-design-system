@@ -39,6 +39,11 @@ jobs:
         # les binaires natifs Linux requis par le build Storybook.
         run: npm install --no-audit --no-fund
 
+      - name: Build tokens (Style Dictionary)
+        # Génère dist/tokens/css/all.css avec les --agtc-component-* requis par les Web Components.
+        # Sans cette étape, les composants Storybook apparaissent sans styles (tokens non résolus).
+        run: npm run tokens
+
       - name: Publier sur Chromatic
         uses: chromaui/action@latest
         with:
