@@ -2680,9 +2680,9 @@ body[data-context="marketing"] .v2-role-card::after{
   border-top:1px solid var(--v2-line);
   background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.08),transparent 28rem),
              var(--agtc-semantic-color-background-page);
-  padding:4rem max(24px,calc((100vw - var(--agtc-content-max,1180px))/2));
+  padding:4rem var(--agtc-site-header-padding-x,24px);
 }
-.v2-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2.5rem;max-width:var(--v2-shell);margin:0 auto}
+.v2-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2.5rem}
 .v2-footer-col{display:flex;flex-direction:column;gap:.55rem}
 .v2-footer-col a{color:var(--v2-muted);text-decoration:none;font-size:.9rem;line-height:1.5}
 .v2-footer-col a:hover,.v2-footer-col a:focus-visible{color:var(--v2-text)}
