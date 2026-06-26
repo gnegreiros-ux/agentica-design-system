@@ -26,7 +26,7 @@ function cr(a, b) {
 }
 
 const CONTRAST_PAIRS = [
-  ['#ffffff', '#0d74ce', 'Button primary — texte sur fond',                  4.5],
+  ['#ffffff', '#007a68', 'Button primary — texte sur fond (action.primary)',  4.5],
   ['#202020', '#fcfcfc', 'Corps de texte sur fond de page',                  4.5],
   ['#202020', '#ffffff', 'Corps de texte sur surface',                       4.5],
   ['#646464', '#ffffff', 'Texte secondaire sur surface',                     4.5],

@@ -116,19 +116,25 @@
   <span class="lang-en">WCAG 2.2 Accessibility Report</span>
 </h1>
 
-<div class="audit-hero">
-  <div class="audit-badge pass">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-    <span class="lang-fr">Conforme WCAG 2.2 AA</span>
-    <span class="lang-en">WCAG 2.2 AA Compliant</span>
+<div class="audit-results">
+  <div class="audit-hero">
+    <div class="audit-badge pass">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+      <span class="lang-fr">Conforme WCAG 2.2 AA</span>
+      <span class="lang-en">WCAG 2.2 AA Compliant</span>
+    </div>
+    <p class="audit-date-row">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>
+        <span class="audit-date-main lang-fr">26 juin 2026 à 10 h 37</span>
+        <span class="audit-date-main lang-en">June 26, 2026 at 10:37 a.m.</span>
+        <span class="audit-date-detail lang-fr">heure de Montréal</span>
+        <span class="audit-date-detail lang-en">Montréal time</span>
+      </span>
+    </p>
   </div>
-  <p class="audit-date">
-    <span class="lang-fr">Généré le 26 juin 2026 à 10 h 17 (heure de Montréal)</span>
-    <span class="lang-en">Generated on June 26, 2026 at 10:17 a.m. (Montréal time)</span>
-  </p>
-</div>
-
-
+  <div class="audit-cards-wrap">
+    
 <div class="audit-cards">
   <div class="audit-card">
     <span class="audit-number">111</span>
@@ -151,8 +157,9 @@
     <span class="lang-en">Violations</span>
   </div>
 </div>
-
-
+    
+  </div>
+</div>
 
 <div class="audit-section">
   <h2><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg> <span class="lang-fr">Ratios de contraste — SC 1.4.3 / 1.4.11</span><span class="lang-en">Contrast ratios — SC 1.4.3 / 1.4.11</span></h2>
@@ -176,10 +183,10 @@
   </thead>
   <tbody><tr>
       <td><span class="audit-swatch" style="background:#ffffff"></span><code>#ffffff</code></td>
-      <td><span class="audit-swatch" style="background:#0d74ce"></span><code>#0d74ce</code></td>
-      <td class="audit-contrast-pass"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 4.77:1</td>
+      <td><span class="audit-swatch" style="background:#007a68"></span><code>#007a68</code></td>
+      <td class="audit-contrast-pass"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 5.27:1</td>
       <td style="color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)">≥ 4.5:1</td>
-      <td style="font-size:var(--agtc-semantic-typography-detail-size)">Button primary — texte sur fond</td>
+      <td style="font-size:var(--agtc-semantic-typography-detail-size)">Button primary — texte sur fond (action.primary)</td>
     </tr><tr>
       <td><span class="audit-swatch" style="background:#202020"></span><code>#202020</code></td>
       <td><span class="audit-swatch" style="background:#fcfcfc"></span><code>#fcfcfc</code></td>

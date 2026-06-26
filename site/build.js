@@ -1315,13 +1315,17 @@ html[data-lang="en"] .lang-fr{display:none}
 .info-card-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
 
 /* ── AUDIT PAGE ──────────────────────────────────────────── */
-.audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
-.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size);margin-bottom:16px}
+.audit-hero{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:32px 32px 28px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:28px}
+.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size)}
 .audit-badge.pass{background:var(--agtc-semantic-color-feedback-success-subtle);color:var(--agtc-semantic-color-feedback-success)}
 .audit-badge.fail{background:var(--agtc-semantic-color-feedback-danger-subtle);color:var(--agtc-semantic-color-feedback-danger)}
-.audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:6px}
-.audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)}
-.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.audit-date-row{display:inline-flex;align-items:center;gap:10px;margin:0;color:var(--agtc-semantic-color-text-primary)}
+.audit-date-row svg{color:var(--agtc-semantic-color-text-secondary);flex-shrink:0}
+.audit-date-main{display:block;font-size:var(--agtc-semantic-typography-heading-4-size);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;margin-bottom:4px}
+.audit-date-detail{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
+.audit-results{background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);margin-bottom:48px;overflow:hidden}
+.audit-cards-wrap{padding:28px 32px 32px}
+.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:0}
 .audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);padding:var(--agtc-space-6);text-align:center}
 .audit-card--pass{border-color:var(--agtc-semantic-color-feedback-success-border)}
 .audit-card--warn{border-color:var(--agtc-semantic-color-feedback-warning-border)}
@@ -7471,21 +7475,28 @@ function buildAudit() {
   <span class="lang-en">WCAG 2.2 Accessibility Report</span>
 </h1>
 
-<div class="audit-hero">
-  <div class="audit-badge ${badgeCls}">
-    ${icon(badgeIconName, 20)}
-    <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
-    <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
+<div class="audit-results">
+  <div class="audit-hero">
+    <div class="audit-badge ${badgeCls}">
+      ${icon(badgeIconName, 20)}
+      <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
+      <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
+    </div>
+    <p class="audit-date-row">
+      ${icon('clock', 16)}
+      <span>
+        <span class="audit-date-main lang-fr">${dateStr}</span>
+        <span class="audit-date-main lang-en">${dateStrEn}</span>
+        <span class="audit-date-detail lang-fr">heure de Montréal</span>
+        <span class="audit-date-detail lang-en">Montréal time</span>
+      </span>
+    </p>
   </div>
-  <p class="audit-date">
-    <span class="lang-fr">Généré le ${dateStr} (heure de Montréal)</span>
-    <span class="lang-en">Generated on ${dateStrEn} (Montréal time)</span>
-  </p>
+  <div class="audit-cards-wrap">
+    ${cards}
+    ${violationsSection ? `<div style="margin-top:24px">${violationsSection}</div>` : ''}
+  </div>
 </div>
-
-${cards}
-
-${violationsSection}
 
 <div class="audit-section">
   <h2>${icon('droplets', 16)} <span class="lang-fr">Ratios de contraste — SC 1.4.3 / 1.4.11</span><span class="lang-en">Contrast ratios — SC 1.4.3 / 1.4.11</span></h2>
