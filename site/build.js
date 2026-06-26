@@ -2382,7 +2382,7 @@ body.v2-page{
 
 .v2-hero{
   min-height:100svh;display:grid;align-items:center;
-  padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-semantic-marketing-space-hero-gap,120px));
+  padding-top:calc(var(--agtc-header-height,64px) + 3rem);
   padding-bottom:var(--agtc-semantic-marketing-space-hero-gap,120px);
 }
 .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid{
