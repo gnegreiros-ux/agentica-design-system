@@ -2007,6 +2007,7 @@ body[data-context="marketing"] .v2-role-card::after{
 }
 @media(max-width:560px){
   .v2-header{padding-inline:16px}
+  .v2-footer{padding-inline:16px}
   .v2-footer-grid{grid-template-columns:1fr;gap:2rem}
   .v2-section{padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
   .v2-hero{
