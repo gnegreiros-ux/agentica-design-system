@@ -2278,7 +2278,7 @@ body.v2-page{
   position:fixed;inset:0 0 auto;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   min-height:var(--agtc-header-height,64px);
-  padding:0 max(var(--agtc-site-header-padding-x,24px),calc((100vw - var(--agtc-content-max,1180px)) / 2));
+  padding:0 var(--agtc-site-header-padding-x,24px);
   border-bottom:1px solid var(--v2-line);
   background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 85%,transparent);
   backdrop-filter:blur(18px) saturate(140%);
