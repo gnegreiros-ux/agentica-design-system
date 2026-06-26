@@ -5,11 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyThemeImages(theme) {
+    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
+      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
+    });
+  }
+  applyThemeImages(savedTheme);
+
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
+      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });

@@ -2802,11 +2802,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyThemeImages(theme) {
+    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
+      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
+    });
+  }
+  applyThemeImages(savedTheme);
+
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
+      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
@@ -3513,7 +3522,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="v2-art v2-art-hero" aria-hidden="true">
-      <img src="img/IMG-HERO-SYSTEM.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
+      <img src="img/IMG-HERO-SYSTEM-on-dark.png" class="img-theme-aware" data-src-dark="img/IMG-HERO-SYSTEM-on-dark.png" data-src-light="img/IMG-HERO-SYSTEM-on-light.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
     </figure>
   </div>
 </section>
@@ -3533,7 +3542,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="v2-art v2-art-wide" aria-hidden="true">
-      <img src="img/IMG-CONTEXT.png" alt="" loading="lazy" width="740" height="560">
+      <img src="img/IMG-CONTEXT-on-dark.png" class="img-theme-aware" data-src-dark="img/IMG-CONTEXT-on-dark.png" data-src-light="img/IMG-CONTEXT.png" alt="" loading="lazy" width="740" height="560">
     </figure>
   </div>
 </section>
@@ -3687,7 +3696,7 @@ function buildHome(adrs) {
 <section class="v2-section v2-human-control" id="ia" data-reveal>
   <div class="v2-shell v2-overlap">
     <figure class="v2-art v2-art-wide" aria-hidden="true">
-      <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy" width="740" height="560">
+      <img src="img/IMG-HUMAN-LOOP.png" class="img-theme-aware" data-src-dark="img/IMG-HUMAN-LOOP.png" data-src-light="img/IMG-HUMAN-LOOP-on-light.png" alt="" loading="lazy" width="740" height="560">
     </figure>
     <div class="v2-copy v2-copy-narrow">
       <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
@@ -3719,7 +3728,7 @@ function buildHome(adrs) {
     </div>
     <div class="v2-single-art">
       <figure class="v2-art" aria-hidden="true">
-        <img src="img/IMG-FUTURE.png" alt="" loading="lazy" width="760" height="500">
+        <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
       </figure>
     </div>
   </div>
@@ -7644,11 +7653,18 @@ function build() {
   });
 
   // Illustrations PNG (redesign narratif) — source : Brand/illustrations/
+  // Seuls les fichiers IMG-*.png vont vers dist/img (les affiches de marque restent dans Brand/).
   const illusSrc = path.join(__dirname, '..', 'Brand', 'illustrations');
   if (fs.existsSync(illusSrc)) {
-    fs.readdirSync(illusSrc)
-      .filter(f => f.endsWith('.png'))
-      .forEach(f => fs.copyFileSync(path.join(illusSrc, f), path.join(DIST, 'img', f)));
+    const brandPngs = new Set(
+      fs.readdirSync(illusSrc).filter(f => f.startsWith('IMG-') && f.endsWith('.png'))
+    );
+    // Copier les nouvelles illustrations
+    brandPngs.forEach(f => fs.copyFileSync(path.join(illusSrc, f), path.join(DIST, 'img', f)));
+    // Supprimer les orphelins (IMG-*.png dans dist qui n'existent plus dans Brand/illustrations)
+    fs.readdirSync(path.join(DIST, 'img'))
+      .filter(f => f.startsWith('IMG-') && f.endsWith('.png') && !brandPngs.has(f))
+      .forEach(f => fs.rmSync(path.join(DIST, 'img', f)));
   }
 
   // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
