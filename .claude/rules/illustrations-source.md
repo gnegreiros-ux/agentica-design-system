@@ -37,6 +37,12 @@
 Les affiches et infographiques de marque (`Agentica *.png`) restent dans `Brand/illustrations/`
 uniquement — elles sont destinées aux présentations et à la communication, pas au site web.
 
+> Un fichier `IMG-*.png` peut exister dans `Brand/illustrations/` **sans être référencé dans le site** —
+> il est alors destiné aux présentations uniquement. Il sera copié dans `site/dist/img/` par le build
+> (comportement normal), mais aucune page HTML ne l'inclut. Ce n'est pas une erreur.
+>
+> Exemple : `IMG-FUTURE.png` — slide 16 des présentations, pas utilisé sur le site.
+
 ---
 
 ## Variantes thème (dark / light)
@@ -73,6 +79,15 @@ Pour ajouter une variante thème à une image existante :
 > Tous les projets de ce dépôt consomment `Brand/illustrations/` comme source.
 > Ne jamais dupliquer les fichiers dans un dossier `assets/` local d'un sous-projet.
 
+### Fichiers présentation uniquement (non référencés sur le site)
+
+Ces fichiers `IMG-*.png` sont dans `Brand/illustrations/` pour les présentations.
+Ils sont copiés dans `site/dist/img/` par le build mais aucune page HTML du site ne les inclut.
+
+| Fichier | Usage |
+|---------|-------|
+| `IMG-FUTURE.png` | Slide 16 des présentations |
+
 ---
 
 ## Pipeline build — comportement automatique
@@ -92,7 +107,10 @@ Aucune action manuelle requise après ajout/suppression dans `Brand/illustration
 ✅ Référencer les nouvelles illustrations dans build.js après les avoir ajoutées dans Brand/illustrations/
 ✅ Utiliser data-src-dark / data-src-light pour les variantes thème
 ✅ Vérifier que IMG-*.png référencés dans build.js existent dans Brand/illustrations/
+✅ Un IMG-*.png sans référence dans le site est normal s'il est destiné aux présentations
+   → l'ajouter au tableau "Fichiers présentation uniquement" ci-dessus
 ❌ Créer ou modifier des PNG directement dans site/dist/img/
 ❌ Utiliser des affiches de marque (Agentica *.png) comme illustrations de page web
 ❌ Dupliquer les illustrations dans un autre dossier du projet
+❌ Supprimer un IMG-*.png de Brand/illustrations/ sans vérifier s'il est utilisé en présentation
 ```
