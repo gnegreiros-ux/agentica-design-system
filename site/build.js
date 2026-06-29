@@ -7152,7 +7152,10 @@ git clone ${REPO}.git
 #   css/  js/  tailwind/  angular/  ios/  android/`);
 
   const cssCode = esc(`<!-- Importer les variables CSS générées -->
-<link rel="stylesheet" href="dist/tokens/css/all.css">`);
+<link rel="stylesheet" href="dist/tokens/css/all.css">
+
+<!-- Ajouter dark.css pour le support du mode sombre -->
+<link rel="stylesheet" href="dist/tokens/css/dark.css">`);
 
   const cssUseCode = esc(`/* Consume by INTENT — never hardcode values */
 .cta {
@@ -7161,6 +7164,31 @@ git clone ${REPO}.git
   padding:    var(--agtc-semantic-space-control-padding-y)
               var(--agtc-semantic-space-control-padding-x);
   border-radius: var(--agtc-semantic-radius-control);
+}`);
+
+  const darkHtmlCode = esc(`<!-- Mode sombre actif par défaut — toggle JS ou préférence système -->
+<html data-theme="dark">
+
+<!-- Mode clair actif par défaut -->
+<html data-theme="light">`);
+
+  const darkJsCode = esc(`// Lire la préférence stockée ou la préférence système
+const stored = localStorage.getItem('agtc-theme');
+const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+document.documentElement.setAttribute('data-theme', stored ?? preferred);
+
+// Basculer au clic
+toggleBtn.addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('agtc-theme', next);
+});`);
+
+  const darkOnDarkCode = esc(`/* Composant à fond toujours sombre (glassmorphism, overlay) :
+   utiliser text.on-dark, PAS text.primary */
+.card-glass .title {
+  color: var(--agtc-semantic-color-text-on-dark);          /* ✅ */
+  /* color: var(--agtc-semantic-color-text-primary); */    /* ❌ contraste insuffisant */
 }`);
 
   const wcCode = esc(`<!-- Component mode: Web Components (Lit) -->
@@ -7232,6 +7260,22 @@ git clone ${REPO}.git
 </p>
 <pre class="code-block"><code class="lang-html">${cssCode}</code></pre>
 <pre class="code-block"><code class="lang-css">${cssUseCode}</code></pre>
+
+<h3 id="dark-mode"><span class="lang-fr">2b. Mode sombre (dark mode)</span><span class="lang-en">2b. Dark mode</span></h3>
+<p>
+  <span class="lang-fr">Chargez <code>dark.css</code> après <code>all.css</code>. Ce fichier contient les 38 tokens qui changent de valeur en mode sombre, sous le sélecteur <code>[data-theme="dark"]</code>. Ajoutez ensuite l'attribut sur <code>&lt;html&gt;</code> et pilotez-le avec un toggle JS.</span>
+  <span class="lang-en">Load <code>dark.css</code> after <code>all.css</code>. This file contains the 38 tokens that change value in dark mode, under the <code>[data-theme="dark"]</code> selector. Then add the attribute on <code>&lt;html&gt;</code> and drive it with a JS toggle.</span>
+</p>
+<pre class="code-block"><code class="lang-html">${darkHtmlCode}</code></pre>
+<pre class="code-block"><code class="lang-js">${darkJsCode}</code></pre>
+<agtc-banner variant="info" icon="lightbulb">
+  <strong><span class="lang-fr">Composants à fond toujours sombre</span><span class="lang-en">Always-dark background components</span></strong>
+  <span>
+    <span class="lang-fr">Les composants glassmorphism ou overlay qui restent sombres quel que soit le thème de la page (ex: cartes hero, modales sombres) doivent utiliser <code>text.on-dark</code> — et <strong>jamais</strong> <code>text.primary</code>. <code>text.primary</code> est adaptatif (sombre en light, clair en dark) : sur un fond fixement sombre, le contraste peut tomber à 1.12:1.</span>
+    <span class="lang-en">Glassmorphism or overlay components that stay dark regardless of page theme (e.g. hero cards, dark modals) must use <code>text.on-dark</code> — <strong>never</strong> <code>text.primary</code>. <code>text.primary</code> is adaptive (dark in light mode, light in dark mode): on a fixed dark background, contrast can drop to 1.12:1.</span>
+  </span>
+</agtc-banner>
+<pre class="code-block"><code class="lang-css">${darkOnDarkCode}</code></pre>
 
 <h3><span class="lang-fr">3. Utiliser les Web Components</span><span class="lang-en">3. Use the Web Components</span></h3>
 <p>
