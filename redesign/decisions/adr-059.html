@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<script src="../components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="../index.html" aria-label="Agentica — Accueil">
+    <img src="../img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="../ia.html">IA</a>
+    <div class="v2-docs">
+      <button class="v2-docs-trigger" type="button" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </button>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="../pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="../architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="../tokens/index.html">Tokens</a>
+          <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="../pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="layout" id="main-content">
+  <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a><a href="adr-045.html">ADR-045</a><a href="adr-046.html">ADR-046</a><a href="adr-047.html">ADR-047</a><a href="adr-048.html">ADR-048</a><a href="adr-049.html">ADR-049</a><a href="adr-050.html">ADR-050</a><a href="adr-051.html">ADR-051</a><a href="adr-052.html">ADR-052</a><a href="adr-053.html">ADR-053</a><a href="adr-054.html">ADR-054</a><a href="adr-055.html">ADR-055</a><a href="adr-056.html">ADR-056</a><a href="adr-057.html">ADR-057</a><a href="adr-058.html">ADR-058</a><a href="adr-059.html">ADR-059</a><a href="adr-060.html">ADR-060</a><a href="adr-061.html">ADR-061</a><a href="adr-062.html">ADR-062</a><a href="adr-063.html">ADR-063</a><a href="adr-064.html">ADR-064</a></div></aside>
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
+<div class="adr-header">
+  <div class="adr-header-eyebrow">
+    <code class="adr-number">ADR-059</code>
+    <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
+    <span class="adr-type">governance</span>
+  </div>
+  <h1 class="adr-page-title">Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires</h1>
+  <dl class="adr-meta">
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
+      <dd>2026-06-15</dd>
+    </div>
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>Design System Lead</dd>
+    </div>
+  </dl>
+</div><h2>Contexte</h2>
+<p>L'ADR-001 pose la règle fondamentale :</p>
+<pre class="code-block"><code class="lang-text">Tokens primitifs → Tokens sémantiques → Tokens de composant</code></pre>
+<p>Un audit systématique du COMP object dans <code>site/build.js</code> a révélé que <strong>~20 tokens de composant</strong> référençaient directement des primitifs, sautant le niveau sémantique :</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token de composant</th><th>Primitif référencé (violation)</th></tr></thead><tbody><tr><td><code>badge-brand-text</code></td><td><code>primitive.color.teal.12</code></td></tr><tr><td><code>badge-success-background</code></td><td><code>primitive.color.green.3</code></td></tr><tr><td><code>badge-warning-background</code></td><td><code>primitive.color.orange.3</code></td></tr><tr><td><code>badge-warning-text</code></td><td><code>primitive.color.orange.12</code></td></tr><tr><td><code>badge-info-background</code></td><td><code>primitive.color.blue.3</code></td></tr><tr><td><code>badge-info-text</code></td><td><code>primitive.color.blue.12</code></td></tr><tr><td><code>banner-info-background</code></td><td><code>primitive.color.blue.3</code></td></tr><tr><td><code>banner-success-background</code></td><td><code>primitive.color.green.3</code></td></tr><tr><td><code>banner-warning-background</code></td><td><code>primitive.color.orange.3</code></td></tr><tr><td><code>banner-warning-accent</code></td><td><code>primitive.color.orange.11</code></td></tr><tr><td><code>code-block-default-background</code></td><td><code>primitive.color.gray.12</code></td></tr><tr><td><code>code-block-default-text</code></td><td><code>primitive.color.gray.4</code></td></tr><tr><td><code>code-block-default-meta-text</code></td><td><code>primitive.color.gray.8</code></td></tr><tr><td><code>code-block-default-copy-background</code></td><td><code>primitive.color.gray.11</code></td></tr><tr><td><code>code-block-default-copy-background-hover</code></td><td><code>primitive.color.gray.10</code></td></tr><tr><td><code>code-block-default-copy-text</code></td><td><code>primitive.color.gray.1</code></td></tr><tr><td><code>toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code></td></tr><tr><td><code>toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code></td></tr><tr><td><code>card-padding-sm</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>card-padding-lg</code></td><td><code>primitive.space.6</code></td></tr><tr><td><code>badge-md-padding-x</code>, <code>table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>badge-md-padding-y</code></td><td><code>primitive.space.1</code></td></tr><tr><td><code>badge-sm-padding-x</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>badge-sm-padding-y</code></td><td><code>"2px"</code> (en dur)</td></tr><tr><td><code>code-block-default-padding-x</code>, <code>banner-padding-x</code></td><td><code>primitive.space.5</code></td></tr><tr><td><code>code-block-default-padding-y</code>, <code>banner-padding-y</code></td><td><code>primitive.space.4</code></td></tr></tbody></table></div>
+<p>Conséquence : changer la couleur de « fond code sombre » nécessitait de chercher toutes les occurrences de <code>gray.12</code> dans le COMP, au lieu de modifier un seul token sémantique <code>background.code</code> qui se propagait partout. L'intention (<code>fond de code</code>) était invisible.</p>
+<p>L'audit a également identifié <strong>3 violations CSS immédiates</strong> non liées aux tokens :</p>
+<ul><li>Hex fallbacks dans des <code>var(,fallback)</code> (ex. <code>var(--agtc-...,#646464)</code>) dans <code>[data-theme="light"]</code></li><li><code>font-size:0.85rem</code> hors token sur <code>.audit-contrast-table</code></li><li><code>filter:drop-shadow(rgba...)</code> hors token sur <code>.platform-logo-item img</code></li></ul>
+<blockquote><p><strong>Note post-incident 2026-06-15 :</strong> l'audit avait initialement classé les <code>color:#hex;color:var(...)</code>  dans les règles <code>:visited</code> comme "fallbacks IE11 obsolètes" — c'était une erreur. Ces valeurs  littérales sont une nécessité de compatibilité Safari : WebKit bloque la résolution de <code>var()</code>  dans <code>:visited</code> pour prévenir le history sniffing. Elles ont été supprimées puis restaurées le  même jour. Voir <code>no-visited-nav.md</code> §Exception Safari et ADR-047.</p></blockquote>
+<hr>
+<h2>Décision</h2>
+<h3>Partie 1 — 18 nouveaux tokens sémantiques</h3>
+<p>Créer les tokens intermédiaires manquants dans <code>tokens/semantic.json</code>, regroupés par famille :</p>
+<h4>Couleur marque</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Intention</th></tr></thead><tbody><tr><td><code>color.brand.primary-text</code></td><td><code>teal.12</code></td><td>Texte marque sur fond subtil clair (badge brand) — 12:1 sur fond blanc</td></tr></tbody></table></div>
+<h4>Couleur feedback (texte sur fond subtil)</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Intention</th></tr></thead><tbody><tr><td><code>color.feedback.info-text</code></td><td><code>blue.12</code></td><td>Texte information sur fond subtil (badge/banner info)</td></tr><tr><td><code>color.feedback.warning-text</code></td><td><code>orange.12</code></td><td>Texte avertissement sur fond subtil (badge/banner warning)</td></tr></tbody></table></div>
+<blockquote><p><code>feedback.success-subtle</code>, <code>feedback.warning-subtle</code>, <code>feedback.warning</code>, <code>feedback.info-subtle</code> existaient déjà (ADR-045) — le COMP ne les utilisait pas.</p></blockquote>
+<h4>Surface code</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Intention</th></tr></thead><tbody><tr><td><code>color.background.code</code></td><td><code>gray.12</code></td><td>Fond de bloc de code — surface sombre dédiée au code source</td></tr><tr><td><code>color.background.code-raised</code></td><td><code>gray.11</code></td><td>Fond surélevé sur surface code (bouton copier au repos)</td></tr><tr><td><code>color.background.code-raised-hover</code></td><td><code>gray.10</code></td><td>Fond surélevé sur surface code au survol</td></tr></tbody></table></div>
+<h4>Texte sur surface code</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Intention</th></tr></thead><tbody><tr><td><code>color.text.on-code</code></td><td><code>gray.4</code></td><td>Corps du code source sur surface sombre</td></tr><tr><td><code>color.text.on-code-muted</code></td><td><code>gray.8</code></td><td>Métadonnées sur surface code (langue, numéro de ligne)</td></tr><tr><td><code>color.text.on-code-strong</code></td><td><code>gray.1</code></td><td>Bouton copier — contraste maximal sur surface code</td></tr></tbody></table></div>
+<h4>Contrôle toggle</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Intention</th></tr></thead><tbody><tr><td><code>color.control.track-off</code></td><td><code>gray.9</code></td><td>Piste de toggle à l'état inactif (off)</td></tr><tr><td><code>color.control.track-off-hover</code></td><td><code>gray.10</code></td><td>Piste de toggle inactive au survol</td></tr></tbody></table></div>
+<h4>Espacement composant (scale 2px → 24px)</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Primitif</th><th>Valeur</th><th>Consommateurs</th></tr></thead><tbody><tr><td><code>space.component.padding-2xs</code></td><td><code>space.0</code></td><td>2px</td><td><code>badge.sm</code> padding vertical</td></tr><tr><td><code>space.component.padding-xs</code></td><td><code>space.1</code></td><td>4px</td><td><code>badge.md</code> padding vertical</td></tr><tr><td><code>space.component.padding-sm</code></td><td><code>space.2</code></td><td>8px</td><td><code>badge.sm</code> padding horizontal, cellules tableau compact</td></tr><tr><td><code>space.component.padding-md</code></td><td><code>space.3</code></td><td>12px</td><td><code>badge.md</code> padding horizontal, cellules tableau, <code>card</code> compact</td></tr><tr><td><code>space.component.padding-lg</code></td><td><code>space.4</code></td><td>16px</td><td>padding vertical blocs code/bannières</td></tr><tr><td><code>space.component.padding-xl</code></td><td><code>space.5</code></td><td>20px</td><td>padding horizontal blocs code/bannières</td></tr><tr><td><code>space.component.padding-2xl</code></td><td><code>space.6</code></td><td>24px</td><td><code>card-padding-lg</code></td></tr></tbody></table></div>
+<h3>Partie 2 — 4 corrections CSS</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Ligne</th><th>Violation</th><th>Correction</th></tr></thead><tbody><tr><td><code>[data-theme="light"]</code> (3 règles)</td><td><code>var(--agtc-...,#646464)</code> — fallback dans var()</td><td>Fallback hex retiré</td></tr><tr><td><code>.audit-contrast-table</code></td><td><code>font-size:0.85rem</code> hors token</td><td><code>var(--agtc-semantic-typography-label-size)</code></td></tr><tr><td><code>.platform-logo-item img</code></td><td><code>filter:drop-shadow(rgba...)</code> hors token</td><td>Nouveau <code>--agtc-drop-shadow-sm</code> dans <code>:root</code></td></tr></tbody></table></div>
+<hr>
+<h2>Alternatives rejetées</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Garder les primitives dans COMP</strong></td><td>Viole ADR-001 (hiérarchie non négociable) — les agents ne voient pas l'intention</td></tr><tr><td><strong>Créer des alias directs dans COMP sans sémantique</strong> (<code>code-bg: primitive.gray.12</code>)</td><td>L'intention reste cachée ; un second composant consommant le même fond n'a pas de token partagé</td></tr><tr><td><strong>Réutiliser <code>background.inverse</code></strong> pour le fond code</td><td><code>background.inverse</code> = <code>neutral.950</code> (surfaces sombres génériques : stats, footer). <code>background.code</code> = <code>gray.12</code> (surface dédiée au code) — valeurs proches mais intention différente</td></tr><tr><td><strong>Nommer les espaces par valeur</strong> (<code>padding-12</code>, <code>padding-16</code>)</td><td>Nomme la valeur, pas la fonction. <code>space.component.padding-md</code> exprime la densité relative, pas la valeur absolue</td></tr><tr><td><strong>Corriger seulement les violations les plus visibles</strong></td><td>L'audit était systématique ; corriger sélectivement aurait laissé une dette invisible dans le COMP</td></tr></tbody></table></div>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les agents :</strong> tout token de composant est désormais traçable jusqu'à une intention sémantique. Pour modifier la couleur de tous les fonds de code, il suffit de changer <code>background.code</code> dans <code>semantic.json</code>. Pour ajuster l'espacement compact des composants, <code>space.component.padding-md</code>.</p>
+<p><strong>Pour le système :</strong> le COMP object dans <code>site/build.js</code> ne contient plus aucune référence directe à <code>--agtc-primitive-*</code>. Validé par grep : 0 occurrence après correction.</p>
+<p><strong>Métriques build :</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Avant</th><th>Après</th></tr></thead><tbody><tr><td>756 tokens définis</td><td>774 tokens définis (+18)</td></tr><tr><td>~20 violations hiérarchie</td><td>0 violations hiérarchie</td></tr><tr><td>4 violations CSS</td><td>0 violations CSS</td></tr><tr><td>0 fantôme</td><td>0 fantôme</td></tr></tbody></table></div>
+<p><strong>Gouvernance :</strong> ajout de tokens sémantiques → approbation <strong>Design System Lead</strong>, conforme à <code>tokens-system.md</code>. Aucun token primitif ni de composant modifié (les tokens de composant pointent vers les nouveaux sémantiques, mais leurs valeurs résolues sont identiques — 0 changement visuel).</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Audit systématique déclenché par la règle <code>tokens-system.md</code> :</p>
+<blockquote><p>*« Niveau 1 — Primitifs : Jamais utilisés directement dans les composants. Toujours via un token sémantique. »*</p></blockquote>
+<p>La violation était connue depuis la construction du COMP object (commentaire dans <code>tokensCSS()</code> : *« Espacements primitifs — référencés par certains tokens composant »*) mais aucun token sémantique intermédiaire n'avait encore été créé pour ces concepts.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-058.html" class="agtc-button secondary">← ADR-058</a>
+    <a href="adr-060.html" class="agtc-button secondary">ADR-060 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="../index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="../img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="../ia.html">IA</a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="../pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="../tokens/index.html">Tokens</a>
+      <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="../audit.html">Audit</a>
+      <span style="margin-top:.8rem">© 2026 Guilherme Negreiros</span>
+      <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+    </div>
+  </div>
+</footer>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="../site.js"></script>
+</body>
+</html>
