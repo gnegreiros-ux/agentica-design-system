@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 29 Jun 2026 13:52:39 GMT
+ * Generated on Mon, 29 Jun 2026 17:38:40 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
