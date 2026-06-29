@@ -33,6 +33,10 @@ module.exports = {
     "agtc-color-background-code": "var(--agtc-semantic-color-background-code)",
     "agtc-color-background-code-raised": "var(--agtc-semantic-color-background-code-raised)",
     "agtc-color-background-code-raised-hover": "var(--agtc-semantic-color-background-code-raised-hover)",
+    "agtc-color-overlay-scrim": "var(--agtc-semantic-color-overlay-scrim)",
+    "agtc-color-overlay-dark": "var(--agtc-semantic-color-overlay-dark)",
+    "agtc-color-overlay-medium": "var(--agtc-semantic-color-overlay-medium)",
+    "agtc-color-overlay-subtle": "var(--agtc-semantic-color-overlay-subtle)",
     "agtc-color-text-primary": "var(--agtc-semantic-color-text-primary)",
     "agtc-color-text-secondary": "var(--agtc-semantic-color-text-secondary)",
     "agtc-color-text-disabled": "var(--agtc-semantic-color-text-disabled)",
@@ -67,7 +71,9 @@ module.exports = {
     "agtc-color-brand-accent-text": "var(--agtc-semantic-color-brand-accent-text)",
     "agtc-color-brand-secondary": "var(--agtc-semantic-color-brand-secondary)",
     "agtc-color-brand-secondary-hover": "var(--agtc-semantic-color-brand-secondary-hover)",
-    "agtc-color-brand-secondary-text": "var(--agtc-semantic-color-brand-secondary-text)"
+    "agtc-color-brand-secondary-text": "var(--agtc-semantic-color-brand-secondary-text)",
+    "agtc-color-brand-logo-black": "var(--agtc-semantic-color-brand-logo-black)",
+    "agtc-color-brand-logo-gray": "var(--agtc-semantic-color-brand-logo-gray)"
   },
   "spacing": {
     "agtc-space-component-padding-2xs": "var(--agtc-semantic-space-component-padding-2xs)",
