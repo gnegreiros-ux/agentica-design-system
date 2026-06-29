@@ -2317,7 +2317,8 @@ body.v2-page{
 .v2-nav a[aria-current="page"],.v2-docs-trigger[aria-expanded="true"]{color:var(--v2-text)}
 
 /* Neutralisation :visited sur nav (ADR-047, rule no-visited-nav) */
-.v2-nav a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
+/* :not(.v2-nav-action) — le bouton CTA ne doit jamais hériter de la couleur :visited */
+.v2-nav a:not(.v2-nav-action):visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .v2-docs-panel a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
 
 .v2-nav .v2-nav-action{
@@ -2385,8 +2386,9 @@ body.v2-page{
 .v2-shell{position:relative;width:var(--v2-shell);margin-inline:auto}
 
 .v2-hero{
+  position:relative;overflow:hidden;
   min-height:100svh;display:grid;align-items:center;
-  padding-top:calc(var(--agtc-header-height,64px) + 3rem);
+  padding-top:calc(var(--agtc-header-height,64px) + 1rem);
   padding-bottom:var(--agtc-semantic-marketing-space-hero-gap,120px);
 }
 .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid{
@@ -2457,7 +2459,12 @@ body.v2-page{
 /* Illustrations V2 */
 .v2-art{position:relative;margin:0;line-height:0}
 .v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
-.v2-art-hero{width:min(100%,720px);justify-self:end}
+.v2-art-hero{position:absolute;right:0;top:0;width:50%;height:100%;max-width:none;overflow:hidden;margin:0}
+.v2-art-hero img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:none}
+/* Texte limité à la moitié gauche — figure abs n'est plus dans le flux */
+.v2-hero .v2-shell{position:static}
+.v2-hero .v2-hero-grid{grid-template-columns:1fr}
+.v2-hero .v2-copy{max-width:min(560px,50vw - 2rem)}
 .v2-overlap,.v2-overlap-reverse{
   display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
 }
@@ -2603,10 +2610,12 @@ body.v2-page{
 [data-theme="light"] .v2-kicker{color:var(--agtc-semantic-color-action-primary)}
 
 /* Navigation links — visited harmonisé light (ADR-047, ADR-059 : hex avant var()) */
-[data-theme="light"] .v2-nav a:visited,
+[data-theme="light"] .v2-nav a:not(.v2-nav-action):visited,
 [data-theme="light"] .v2-docs-panel a:visited,
 [data-theme="light"] .v2-sidebar a:visited,
 [data-theme="light"] .v2-footer-col a:visited{color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+/* CTA nav — forcer la couleur on-action même sur lien visité (bouton, pas un lien éditorial) */
+[data-theme="light"] .v2-nav .v2-nav-action:visited{color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action))}
 
 /* Sidebar hover — rgba inverse pour fond clair */
 [data-theme="light"] .v2-sidebar a:hover,
@@ -2623,6 +2632,13 @@ body.v2-page{
 
 /* Role cards — fond surface + ombre légère en light mode */
 [data-theme="light"] .v2-role-card{
+  background:var(--agtc-semantic-color-background-surface);
+  box-shadow:var(--agtc-semantic-shadow-card);
+}
+
+/* Doc/editorial blocks — contraste sur fond page light (#f0f0f0 sur #fcfcfc = ΔL minime) */
+[data-theme="light"] .v2-doc-block,
+[data-theme="light"] .v2-editorial-block{
   background:var(--agtc-semantic-color-background-surface);
   box-shadow:var(--agtc-semantic-shadow-card);
 }
@@ -2694,6 +2710,13 @@ body[data-context="marketing"] .v2-role-card::after{
 .v2-footer-col a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .v2-footer-col span{color:var(--v2-muted);font-size:.85rem;line-height:1.5}
 .v2-footer-heading{color:var(--v2-text)!important;font-weight:700;font-size:.9rem!important;margin-bottom:.5rem}
+.v2-footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;
+  margin-top:2rem;padding-top:1.25rem;
+  border-top:1px solid var(--v2-line);
+  color:var(--v2-muted);font-size:.85rem;line-height:1.5;
+}
+@media(max-width:560px){.v2-footer-bottom{flex-direction:column;align-items:flex-start}}
 
 /* Icônes dans les blocs éditoriaux des sous-pages */
 .v2-editorial-icon{
@@ -2771,6 +2794,11 @@ body[data-context="marketing"] .v2-role-card::after{
   .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
     width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
   }
+  /* Hero — remettre l'image dans le flux en mobile */
+  .v2-hero .v2-shell{position:relative}
+  .v2-hero .v2-copy{max-width:100%}
+  .v2-art-hero{position:static;width:min(100%,760px);height:auto;overflow:visible;margin-inline:auto}
+  .v2-art-hero img{height:auto;object-fit:contain;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
   .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-single-art,.v2-dual-art{
     grid-template-columns:1fr;
   }
@@ -3110,9 +3138,8 @@ document.addEventListener('DOMContentLoaded', () => {
       docsPanel.hidden = false;
       requestAnimationFrame(() => docsPanel.classList.add('is-open'));
     };
-    docsTrigger.addEventListener('click', e => {
-      if (docsTrigger.getAttribute('aria-expanded') !== 'true') e.preventDefault();
-      docsTrigger.getAttribute('aria-expanded') === 'true' ? closeDocs() : openDocs();
+    docsTrigger.addEventListener('click', () => {
+      closeDocs(); // ferme le panel et laisse le href naviguer vers documentation.html
     });
     docsTrigger.addEventListener('mouseenter', openDocs);
     docsPanel.addEventListener('mouseenter', openDocs);
@@ -3239,9 +3266,11 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
       <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
-      <span style="margin-top:.8rem">© 2026 Guilherme Negreiros</span>
-      <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
     </div>
+  </div>
+  <div class="v2-footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
   </div>
 </footer>`;
 
@@ -3307,9 +3336,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
     <a href="${base}ia.html">IA</a>
     <div class="v2-docs">
-      <button class="v2-docs-trigger" type="button" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+      <a href="${base}documentation.html" class="v2-docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
         <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
-      </button>
+      </a>
       <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
         <div>
           <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>

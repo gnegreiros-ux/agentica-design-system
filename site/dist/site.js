@@ -313,9 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
       docsPanel.hidden = false;
       requestAnimationFrame(() => docsPanel.classList.add('is-open'));
     };
-    docsTrigger.addEventListener('click', e => {
-      if (docsTrigger.getAttribute('aria-expanded') !== 'true') e.preventDefault();
-      docsTrigger.getAttribute('aria-expanded') === 'true' ? closeDocs() : openDocs();
+    docsTrigger.addEventListener('click', () => {
+      closeDocs(); // ferme le panel et laisse le href naviguer vers documentation.html
     });
     docsTrigger.addEventListener('mouseenter', openDocs);
     docsPanel.addEventListener('mouseenter', openDocs);
