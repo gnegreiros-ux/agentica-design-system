@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "level": "semantic",
-    "description": "Overrides dark mode — tokens dont la valeur change sous [data-theme='dark']. Contient UNIQUEMENT les deltas vs semantic.json (mode clair). Source de référence : site/build.js :root[data-theme='dark']. Voir ADR-072."
+    "description": "Overrides dark mode — tokens dont la valeur change sous [data-theme='dark']. Contient UNIQUEMENT les deltas vs semantic.json (mode clair). Source de référence : site/build.js :root[data-theme='dark']. Voir ADR-065."
   },
   "semantic": {
     "color": {
