@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 26 Jun 2026 19:34:17 GMT
+ * Generated on Mon, 29 Jun 2026 13:52:39 GMT
  */
 
 :root {
@@ -102,16 +102,16 @@
   --agtc-semantic-color-control-track-off: var(--agtc-primitive-color-gray-9);
   --agtc-semantic-color-viz-scale-bar: var(--agtc-primitive-color-red-6);
   --agtc-semantic-color-border-swatch: var(--agtc-primitive-color-black-2);
-  --agtc-semantic-color-border-on-inverse: var(--agtc-primitive-color-white-12);
+  --agtc-semantic-color-border-on-dark: var(--agtc-primitive-color-white-12);
   --agtc-semantic-color-border-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-11);
   --agtc-semantic-color-border-default: var(--agtc-primitive-color-gray-4);
   --agtc-semantic-color-text-on-code-strong: var(--agtc-primitive-color-gray-1);
   --agtc-semantic-color-text-on-code-muted: var(--agtc-primitive-color-gray-8);
   --agtc-semantic-color-text-on-code: var(--agtc-primitive-color-gray-4);
-  --agtc-semantic-color-text-on-inverse-muted: var(--agtc-primitive-color-white-10);
-  --agtc-semantic-color-text-on-inverse-secondary: var(--agtc-primitive-color-white-8);
-  --agtc-semantic-color-text-on-inverse: var(--agtc-primitive-color-white-1);
+  --agtc-semantic-color-text-on-dark-muted: var(--agtc-primitive-color-white-10);
+  --agtc-semantic-color-text-on-dark-secondary: var(--agtc-primitive-color-white-8);
+  --agtc-semantic-color-text-on-dark: var(--agtc-primitive-color-white-1);
   --agtc-semantic-color-text-on-danger: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-text-on-action: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-text-disabled: var(--agtc-primitive-color-neutral-500);

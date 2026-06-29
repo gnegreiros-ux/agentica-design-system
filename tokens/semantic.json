@@ -266,7 +266,7 @@
             "com.agentica.usage": {
               "role": "text-primary",
               "use": ["body-text", "headings", "form-labels", "table-cell-text"],
-              "doNotUse": "Texte sur fond sombre (surface inverse) — contraste insuffisant. Sur background.inverse, utiliser text.on-inverse. Jamais pour texte désactivé — utiliser text.disabled.",
+              "doNotUse": "Texte sur fond sombre (surface inverse) — contraste insuffisant. Sur background.inverse, utiliser text.on-dark. Jamais pour texte désactivé — utiliser text.disabled.",
               "components": ["tous les composants avec texte principal"],
               "decision": "ADR-008"
             }
@@ -303,17 +303,17 @@
           "$type": "color",
           "$intent": "Texte sur fond danger"
         },
-        "on-inverse": {
+        "on-dark": {
           "$value": "{primitive.color.white.1}",
           "$type": "color",
           "$intent": "Texte fort sur surface inversée — titres, liens survolés (#fff, ADR-046)"
         },
-        "on-inverse-secondary": {
+        "on-dark-secondary": {
           "$value": "{primitive.color.white.8}",
           "$type": "color",
           "$intent": "Texte secondaire sur surface inversée — liens (10.8:1 sur neutral.950, ADR-046)"
         },
-        "on-inverse-muted": {
+        "on-dark-muted": {
           "$value": "{primitive.color.white.10}",
           "$type": "color",
           "$intent": "Texte atténué sur surface inversée — plancher AA (5.69:1 sur neutral.950, ADR-046)"
@@ -361,7 +361,7 @@
           "$type": "color",
           "$intent": "Bordure état erreur"
         },
-        "on-inverse": {
+        "on-dark": {
           "$value": "{primitive.color.white.12}",
           "$type": "color",
           "$intent": "Séparateur sur surface inversée — non textuel (ADR-046)"

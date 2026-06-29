@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 26 Jun 2026 19:34:17 GMT
+// Generated on Mon, 29 Jun 2026 13:52:40 GMT
 
 
 import UIKit
@@ -631,7 +631,7 @@ public class AgenticaTokens {
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8
     public static let semanticColorBorderFocus = #007a68
-    public static let semanticColorBorderOnInverse = rgba(255,255,255,0.18)
+    public static let semanticColorBorderOnDark = rgba(255,255,255,0.18)
     public static let semanticColorBorderSwatch = rgba(0,0,0,0.10)
     public static let semanticColorBrandAccent = #ed6b86
     public static let semanticColorBrandAccentHover = #e05f7b
@@ -677,9 +677,9 @@ public class AgenticaTokens {
     public static let semanticColorTextOnCodeMuted = #bbbbbb
     public static let semanticColorTextOnCodeStrong = #fcfcfc
     public static let semanticColorTextOnDanger = #ffffff
-    public static let semanticColorTextOnInverse = rgba(255,255,255,1.00)
-    public static let semanticColorTextOnInverseMuted = rgba(255,255,255,0.52)
-    public static let semanticColorTextOnInverseSecondary = rgba(255,255,255,0.75)
+    public static let semanticColorTextOnDark = rgba(255,255,255,1.00)
+    public static let semanticColorTextOnDarkMuted = rgba(255,255,255,0.52)
+    public static let semanticColorTextOnDarkSecondary = rgba(255,255,255,0.75)
     public static let semanticColorTextPrimary = #202020
     public static let semanticColorTextSecondary = #646464
     public static let semanticColorVizScaleBar = #fdbdbe
