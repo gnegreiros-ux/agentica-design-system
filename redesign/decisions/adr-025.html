@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<script src="../components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="../index.html" aria-label="Agentica — Accueil">
+    <img src="../img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="../ia.html">IA</a>
+    <div class="v2-docs">
+      <button class="v2-docs-trigger" type="button" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </button>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="../pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="../architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="../tokens/index.html">Tokens</a>
+          <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="../pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="layout" id="main-content">
+  <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a><a href="adr-045.html">ADR-045</a><a href="adr-046.html">ADR-046</a><a href="adr-047.html">ADR-047</a><a href="adr-048.html">ADR-048</a><a href="adr-049.html">ADR-049</a><a href="adr-050.html">ADR-050</a><a href="adr-051.html">ADR-051</a><a href="adr-052.html">ADR-052</a><a href="adr-053.html">ADR-053</a><a href="adr-054.html">ADR-054</a><a href="adr-055.html">ADR-055</a><a href="adr-056.html">ADR-056</a><a href="adr-057.html">ADR-057</a><a href="adr-058.html">ADR-058</a><a href="adr-059.html">ADR-059</a><a href="adr-060.html">ADR-060</a><a href="adr-061.html">ADR-061</a><a href="adr-062.html">ADR-062</a><a href="adr-063.html">ADR-063</a><a href="adr-064.html">ADR-064</a><a href="adr-065.html">ADR-065</a></div></aside>
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
+<div class="adr-header">
+  <div class="adr-header-eyebrow">
+    <code class="adr-number">ADR-025</code>
+    <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
+    <span class="adr-type">contract</span>
+  </div>
+  <h1 class="adr-page-title">Densité d'espacement : floor/ceil sur grille 4px via math tokens</h1>
+  <dl class="adr-meta">
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
+      <dd>2026-05-29</dd>
+    </div>
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
+    </div>
+  </dl>
+</div><h2>Contexte</h2>
+<p>Un même composant doit s'adapter à des contextes d'usage radicalement différents :</p>
+<ul><li><strong>Marketing / Onboarding</strong> : interfaces aérées, visuellement généreuses</li><li><strong>SaaS courant</strong> : densité normale, équilibre entre confort et efficacité</li><li><strong>SaaS data-dense</strong> : dashboards, tableaux, workflows — chaque pixel compte</li></ul>
+<p>Les tokens d'espacement précédents avaient des valeurs fixes. Les équipes contournaient ce système en créant des valeurs locales, produisant de la dérive.</p>
+<h3>Correction v2 — problème de la v1</h3>
+<p>La v1 utilisait un facteur unique swappable : <code>{primitive.space.4} * {semantic.space.density.factor}</code>. Ce pattern a un défaut structurel : avec un seul token de facteur, il est impossible d'encoder la direction d'arrondi (floor pour compact, ceil pour comfortable). Certains résultats atterrissaient hors de la grille 4px :</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Compact (×0.75)</th><th>Comfortable (×1.25)</th></tr></thead><tbody><tr><td><code>space.2</code> (8px)</td><td><strong>6px</strong> ✗ hors grille</td><td><strong>10px</strong> ✗ hors grille</td></tr><tr><td><code>space.5</code> (20px)</td><td><strong>15px</strong> ✗ hors grille</td><td><strong>25px</strong> ✗ hors grille</td></tr></tbody></table></div>
+<p>Source de la correction : _Sam's fancy math equations in Tokens Studio_ (Sami Am Designs, 2024) — section « Scales that round to a (4)pixel grid ».</p>
+<hr>
+<h2>Décision</h2>
+<h3>Trois niveaux de densité</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Mode</th><th>Facteur</th><th>Arrondi</th><th>Contexte type</th></tr></thead><tbody><tr><td><code>compact</code></td><td>0.75</td><td><code>floor()</code></td><td>Dashboards, tableaux, outils data-dense</td></tr><tr><td><code>normal</code></td><td>1.0</td><td>aucun</td><td>Usage courant — formulaires, settings, profil</td></tr><tr><td><code>comfortable</code></td><td>1.25</td><td><code>ceil()</code></td><td>Marketing, onboarding, pages de lecture</td></tr></tbody></table></div>
+<h3>Technique : floor/ceil + grid-unit</h3>
+<p><strong>Formule générale :</strong></p>
+<pre class="code-block"><code class="lang-text">compact    → floor(valeur × facteur / grid-unit) × grid-unit
+comfortable → ceil(valeur × facteur / grid-unit) × grid-unit</code></pre>
+<p>Avec <code>primitive.density.grid-unit = 4</code>.</p>
+<p>Cette technique, issue de _Sam's math equations_, garantit que <strong>100% des valeurs calculées sont des multiples de 4px</strong>, quelle que soit la valeur de base.</p>
+<h3>Implémentation dans les tokens</h3>
+<p><strong>Niveau primitif</strong> :</p>
+<pre class="code-block"><code class="lang-json">"primitive.density.factor.normal"      = 1
+"primitive.density.factor.comfortable" = 1.25
+"primitive.density.factor.compact"     = 0.75
+"primitive.density.grid-unit"          = 4</code></pre>
+<p><strong>Niveau sémantique</strong> — trois groupes explicites :</p>
+<pre class="code-block"><code class="lang-json">"semantic.space.control.padding-x"            = {primitive.space.4}            // 16px (normal)
+"semantic.space.compact.control.padding-x"    = floor(space.4 × 0.75 / 4) × 4  // 12px
+"semantic.space.comfortable.control.padding-x"= ceil(space.4 × 1.25 / 4) × 4   // 20px</code></pre>
+<p>Syntaxe Tokens Studio réelle :</p>
+<pre class="code-block"><code class="lang-json">"value": "floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}"</code></pre>
+<h3>Résultats par mode — toutes valeurs sur grille 4px</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token sémantique</th><th>Base</th><th>Normal</th><th>Compact</th><th>Comfortable</th></tr></thead><tbody><tr><td><code>*.control.padding-x</code></td><td>space.4 (16px)</td><td><strong>16px</strong></td><td><strong>12px</strong></td><td><strong>20px</strong></td></tr><tr><td><code>*.control.padding-y</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong> ¹</td><td><strong>12px</strong> ²</td></tr><tr><td><code>*.control.gap</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong></td><td><strong>12px</strong></td></tr><tr><td><code>*.layout.section</code></td><td>space.8 (32px)</td><td><strong>32px</strong></td><td><strong>24px</strong></td><td><strong>40px</strong></td></tr><tr><td><code>*.layout.component</code></td><td>space.5 (20px)</td><td><strong>20px</strong></td><td><strong>12px</strong> ³</td><td><strong>28px</strong> ⁴</td></tr></tbody></table></div>
+<p>Toutes les valeurs sont des multiples de 4. Zéro exception.</p>
+<blockquote><p>¹ 8 × 0.75 = 6 → floor(6/4)×4 = <strong>4px</strong> ² 8 × 1.25 = 10 → ceil(10/4)×4 = <strong>12px</strong> ³ 20 × 0.75 = 15 → floor(15/4)×4 = <strong>12px</strong> ⁴ 20 × 1.25 = 25 → ceil(25/4)×4 = <strong>28px</strong></p></blockquote>
+<h3>Groupes de tokens et compatibilité</h3>
+<p><code>semantic.space.control.*</code> et <code>semantic.space.layout.*</code> restent les <strong>alias normaux</strong> (densité par défaut). <code>component.json</code> continue de les référencer sans changement.</p>
+<p>Pour utiliser une densité différente, on référence explicitement le groupe :</p>
+<ul><li><code>{semantic.space.compact.control.padding-x}</code> → compact</li><li><code>{semantic.space.comfortable.layout.section}</code> → comfortable</li></ul>
+<hr>
+<h2>Argumentaire</h2>
+<h3>Pourquoi floor pour compact et ceil pour comfortable ?</h3>
+<ul><li><code>floor()</code> arrondit <strong>vers le bas</strong> — adapté quand on réduit l'espace (compact) : on ne veut jamais dépasser la valeur cible par excès.</li><li><code>ceil()</code> arrondit <strong>vers le haut</strong> — adapté quand on augmente l'espace (comfortable) : on ne veut jamais tombe en-dessous de la valeur cible.</li><li><code>round()</code> seul (sans direction) donne des résultats imprévisibles selon la position de la valeur calculée par rapport au step de grille.</li></ul>
+<h3>Pourquoi des groupes explicites plutôt qu'un facteur unique swappable ?</h3>
+<p>La v1 utilisait un facteur unique. Son problème : le même token ne peut pas encoder <code>floor()</code> pour compact et <code>ceil()</code> pour comfortable — la formule doit connaître la direction d'arrondi à l'avance.</p>
+<p>Trois groupes explicites :</p>
+<ul><li>Encodent la direction dans la formule elle-même (floor ou ceil)</li><li>Garantissent l'alignement grille sans exception</li><li>Restent lisibles : <code>space.compact.control.padding-x</code> exprime clairement son contexte</li><li>Sont compatibles avec les theme sets Tokens Studio (chaque groupe = un theme)</li></ul>
+<h3>Pourquoi les facteurs 0.75 / 1.0 / 1.25 ?</h3>
+<p>Mémorisables (−25%, ±0%, +25%), perceptuellement significatifs (Nielsen : 25% de changement = perceptible mais non perturbant), et ils produisent des multiples de 4 après floor/ceil dans tous les cas de notre échelle.</p>
+<h3>Pourquoi des math tokens et pas des CSS variables ?</h3>
+<p>Les math tokens sont résolus à la compilation (Style Dictionary), produisant du CSS statique portable (iOS, Android, emails). Les CSS variables nécessitent un mécanisme runtime supplémentaire.</p>
+<hr>
+<h2>Alternatives rejetées</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Facteur unique swappable (v1)</strong></td><td>Impossible d'encoder floor/ceil directionnels dans une seule formule — valeurs hors grille garanties</td></tr><tr><td><strong><code>round()</code> seul sans floor/ceil</strong></td><td>Résultats imprévisibles selon la position sur la grille (ex: <code>round(6/4)*4 = 8px</code> ≠ réduit)</td></tr><tr><td><strong>CSS custom property <code>--density</code></strong></td><td>Non portable (iOS/Android/email), nécessite infra CSS runtime</td></tr><tr><td><strong>Classes utilitaires (<code>density-compact</code>)</strong></td><td>Sort du système de gouvernance token</td></tr><tr><td><strong>Valeurs fixes pré-calculées (sans math)</strong></td><td>Perd la traçabilité entre base et densité — un changement de base ne se propage plus</td></tr></tbody></table></div>
+<hr>
+<h2>Conséquences</h2>
+<p><strong>Pour les tokens :</strong></p>
+<ul><li><code>primitive.density.grid-unit = 4</code> ajouté (diviseur de grille)</li><li><code>primitive.density.factor.*</code> conservés (0.75 / 1.0 / 1.25)</li><li><code>semantic.space.control.*</code> et <code>semantic.space.layout.*</code> = densité normale (références directes, sans math)</li><li><code>semantic.space.compact.*</code> et <code>semantic.space.comfortable.*</code> ajoutés avec formules floor/ceil</li><li><code>semantic.space.density.factor.*</code> = aliases de documentation vers les primitifs</li></ul>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Pour une interface dense : référencer <code>semantic.space.compact.*</code></li><li>Pour une page marketing : référencer <code>semantic.space.comfortable.*</code></li><li>Pour l'usage standard : <code>semantic.space.control.*</code> (défaut, inchangé)</li></ul>
+<p><strong>Pour les équipes :</strong></p>
+<ul><li><code>component.json</code> et le code existant ne changent pas (backward-compatible)</li><li>Ajouter un nouveau token de spacing : définir les trois variantes (normal + compact + comfortable) en même temps</li></ul>
+<p><strong>Pour Tokens Studio :</strong></p>
+<ul><li><code>floor()</code> et <code>ceil()</code> sont des fonctions math natives supportées</li><li>Chaque groupe de densité peut devenir un theme set distinct</li><li>Référence technique : https://docs.tokens.studio/manage-tokens/token-values/math</li></ul>
+<p><strong>Risques :</strong></p>
+<ul><li>Style Dictionary < 4.x ne supporte pas <code>floor()</code>/<code>ceil()</code> nativement — une transform custom peut être nécessaire (voir ADR-019)</li><li><code>padding-y</code> compact = 4px : valeur très serrée, à valider avec un test utilisateur sur les composants réels avant déploiement</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-024.html" class="agtc-button secondary">← ADR-024</a>
+    <a href="adr-026.html" class="agtc-button secondary">ADR-026 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="../index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="../img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="../ia.html">IA</a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="../pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="../tokens/index.html">Tokens</a>
+      <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="../audit.html">Audit</a>
+      <span style="margin-top:.8rem">© 2026 Guilherme Negreiros</span>
+      <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+    </div>
+  </div>
+</footer>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="../site.js"></script>
+</body>
+</html>
