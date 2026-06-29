@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Architecture — Source unique de vérité</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Architecture — Source unique de vérité">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="Architecture — Source unique de vérité">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<script src="components/agtc.js" defer></script>
+</head>
+<body class="v2-page" data-context="marketing">
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="index.html" aria-label="Agentica — Accueil">
+    <img src="img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="ia.html">IA</a>
+    <div class="v2-docs">
+      <a href="documentation.html" class="v2-docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="tokens/index.html">Tokens</a>
+          <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+
+<div class="home-layout" id="main-content" data-context="marketing">
+  
+  <main class="" role="main"><div class="v2-with-sidebar"><aside class="v2-sidebar" aria-label="Navigation secondaire">
+  <nav>
+    <span class="v2-sidebar-heading">Agentica</span>
+    <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="architecture.html" aria-current="page"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="ia.html">IA</a>
+    <span class="v2-sidebar-heading">Documentation</span>
+    <a href="documentation.html">Documentation</a>
+    <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+    <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+    <a href="tokens/index.html">Tokens</a>
+    <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    <a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+  </nav>
+</aside><div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
+      <h1>
+        <span class="lang-fr">Une seule source de vérité</span>
+        <span class="lang-en">One single source of truth</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Un même système de tokens en trois niveaux alimente les composants, la documentation, Figma, Storybook et les agents IA. Aucune divergence. Aucune interprétation libre.</span>
+        <span class="lang-en">One three-level token system feeds components, documentation, Figma, Storybook and AI agents. No divergence. No free interpretation.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></div>
+        <h2><span class="lang-fr">Niveau 1 — Primitifs</span><span class="lang-en">Level 1 — Primitives</span></h2>
+        <p><span class="lang-fr">Les valeurs physiques brutes : couleurs, espacements, rayons, tailles de police. Jamais utilisés directement dans les composants. Toujours via un token sémantique.</span><span class="lang-en">Raw physical values: colors, spacings, radius, font sizes. Never used directly in components. Always through a semantic token.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></div>
+        <h2><span class="lang-fr">Niveau 2 — Sémantiques</span><span class="lang-en">Level 2 — Semantic</span></h2>
+        <p><span class="lang-fr">Les intentions UX : <code>color.action.primary</code>, <code>space.control.padding</code>. Ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span><span class="lang-en">UX intentions: <code>color.action.primary</code>, <code>space.control.padding</code>. What agents must use to understand function, not raw value.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h2><span class="lang-fr">Niveau 3 — Composants</span><span class="lang-en">Level 3 — Components</span></h2>
+        <p><span class="lang-fr">Les contrats institutionnels : décisions comportementales spécifiques à chaque composant. Toute modification requiert une approbation humaine explicite.</span><span class="lang-en">Institutional contracts: behavioral decisions specific to each component. Every change requires explicit human approval.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+        <h2><span class="lang-fr">ADRs — Mémoire des décisions</span><span class="lang-en">ADRs — Decision memory</span></h2>
+        <p><span class="lang-fr">Chaque décision d'architecture est documentée dans un ADR (Architecture Decision Record) : contexte, alternatives explorées, compromis acceptés. Rien ne disparaît.</span><span class="lang-en">Every architecture decision is documented in an ADR (Architecture Decision Record): context, alternatives explored, trade-offs accepted. Nothing disappears.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker">Tokens</p>
+    <h2><span class="lang-fr">Explorer le système de tokens</span><span class="lang-en">Explore the token system</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="tokens/index.html">Tokens</a>
+      <a class="v2-button v2-button-secondary" href="decisions/index.html"><span class="lang-fr">Voir les ADRs →</span><span class="lang-en">View ADRs →</span></a>
+    </div>
+  </div>
+</section>
+</div></div></main>
+  
+</div>
+
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="ia.html">IA</a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="tokens/index.html">Tokens</a>
+      <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="audit.html">Audit</a>
+    </div>
+  </div>
+  <div class="v2-footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="site.js"></script>
+</body>
+</html>
