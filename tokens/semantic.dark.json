@@ -1,0 +1,210 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "level": "semantic",
+    "description": "Overrides dark mode — tokens dont la valeur change sous [data-theme='dark']. Contient UNIQUEMENT les deltas vs semantic.json (mode clair). Source de référence : site/build.js :root[data-theme='dark']. Voir ADR-072."
+  },
+  "semantic": {
+    "color": {
+      "action": {
+        "primary": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Action principale dark — teal clair accessible sur fond sombre (≥4.5:1)"
+        },
+        "primary-hover": {
+          "$value": "#5fe0cd",
+          "$type": "color",
+          "$intent": "Survol action principale dark"
+        },
+        "primary-disabled": {
+          "$value": "#33373d",
+          "$type": "color",
+          "$intent": "Action désactivée dark — WCAG 1.4.3 exempte les états inactifs"
+        }
+      },
+      "feedback": {
+        "danger": {
+          "$value": "#ff9592",
+          "$type": "color",
+          "$intent": "Danger dark — rouge clair accessible sur fond sombre"
+        },
+        "danger-subtle": {
+          "$value": "#291415",
+          "$type": "color",
+          "$intent": "Fond subtil danger dark"
+        },
+        "success": {
+          "$value": "#3dd68c",
+          "$type": "color",
+          "$intent": "Succès dark — vert clair accessible"
+        },
+        "success-subtle": {
+          "$value": "#132d21",
+          "$type": "color",
+          "$intent": "Fond subtil succès dark"
+        },
+        "info": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Info dark — teal clair (même teinte que action.primary dark)"
+        },
+        "info-subtle": {
+          "$value": "#0f2925",
+          "$type": "color",
+          "$intent": "Fond subtil info dark"
+        },
+        "info-border": {
+          "$value": "#1e5e57",
+          "$type": "color",
+          "$intent": "Bordure info dark"
+        },
+        "info-text": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Texte info dark — lisible sur fond info-subtle"
+        },
+        "warning": {
+          "$value": "#ffca16",
+          "$type": "color",
+          "$intent": "Avertissement dark — jaune lumineux accessible sur fond sombre"
+        },
+        "warning-subtle": {
+          "$value": "#241800",
+          "$type": "color",
+          "$intent": "Fond subtil avertissement dark"
+        },
+        "warning-text": {
+          "$value": "#ffca16",
+          "$type": "color",
+          "$intent": "Texte avertissement dark — lisible sur fond warning-subtle"
+        }
+      },
+      "brand": {
+        "primary": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Marque primaire dark — teal clair identité"
+        },
+        "primary-subtle": {
+          "$value": "#0d2924",
+          "$type": "color",
+          "$intent": "Fond subtil marque primaire dark"
+        },
+        "primary-text": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Texte marque primaire dark — sur fond subtle"
+        },
+        "accent-subtle": {
+          "$value": "#2a1520",
+          "$type": "color",
+          "$intent": "Fond subtil accent dark"
+        },
+        "accent-text": {
+          "$value": "#ed6b86",
+          "$type": "color",
+          "$intent": "Texte accent dark"
+        },
+        "secondary": {
+          "$value": "#6b4b56",
+          "$type": "color",
+          "$intent": "Couleur secondaire de marque dark"
+        },
+        "secondary-text": {
+          "$value": "#edd9df",
+          "$type": "color",
+          "$intent": "Texte secondaire de marque dark"
+        }
+      },
+      "background": {
+        "page": {
+          "$value": "#0a0c11",
+          "$type": "color",
+          "$intent": "Fond de page dark — base la plus sombre"
+        },
+        "surface": {
+          "$value": "#13161d",
+          "$type": "color",
+          "$intent": "Surface élevée dark — cartes, panneaux"
+        },
+        "subtle": {
+          "$value": "#1b1f27",
+          "$type": "color",
+          "$intent": "Fond subtil dark — sections en retrait, zèbre tableau"
+        },
+        "hover": {
+          "$value": "#232833",
+          "$type": "color",
+          "$intent": "Fond survol dark — retour interactif"
+        },
+        "inverse": {
+          "$value": "#120c0f",
+          "$type": "color",
+          "$intent": "Surface inversée dark — footer, sections accent"
+        }
+      },
+      "text": {
+        "primary": {
+          "$value": "#edeef0",
+          "$type": "color",
+          "$intent": "Texte principal dark — quasi-blanc, fort contraste sur fond page (≥12:1)"
+        },
+        "secondary": {
+          "$value": "#a4abb8",
+          "$type": "color",
+          "$intent": "Texte secondaire dark — gris moyen, ≥4.5:1 sur fond page"
+        },
+        "disabled": {
+          "$value": "#6b7280",
+          "$type": "color",
+          "$intent": "Texte désactivé dark — WCAG 1.4.3 exempte"
+        },
+        "on-action": {
+          "$value": "#04201c",
+          "$type": "color",
+          "$intent": "Texte sur bouton primaire dark — vert très sombre pour contraste maximal sur teal clair"
+        },
+        "on-dark": {
+          "$value": "rgba(255,255,255,0.92)",
+          "$type": "color",
+          "$intent": "Texte fort sur surface sombre dark — légèrement transparent (0.92 vs 1.00 en light)"
+        },
+        "on-dark-muted": {
+          "$value": "rgba(255,255,255,0.62)",
+          "$type": "color",
+          "$intent": "Texte atténué sur surface sombre dark"
+        },
+        "on-danger": {
+          "$value": "#3d0f0f",
+          "$type": "color",
+          "$intent": "Texte sur fond danger dark — fond danger est rose clair (#ff9592), texte doit être foncé"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "#272c36",
+          "$type": "color",
+          "$intent": "Bordure standard dark — séparateurs, contours de champ"
+        },
+        "focus": {
+          "$value": "#34d3bb",
+          "$type": "color",
+          "$intent": "Bordure focus dark — teal clair pour accessibilité clavier"
+        },
+        "danger": {
+          "$value": "#ff9592",
+          "$type": "color",
+          "$intent": "Bordure erreur dark"
+        }
+      },
+      "illustration": {
+        "ink": {
+          "$value": "#14121a",
+          "$type": "color",
+          "$intent": "Masses sombres des illustrations dark — ancrage du contraste"
+        }
+      }
+    }
+  }
+}
