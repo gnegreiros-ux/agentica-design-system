@@ -45,9 +45,25 @@ StyleDictionary.registerTransform({
 // Tokens whose last path segment starts with '_' are documentation stubs, not tokens.
 const isReadme = t => t.path.some(p => String(p).startsWith('_'));
 
+// ─── TRANSFORM: component-level tokens get --agtc-component-* prefix ───────
+// Standard name/cti/kebab generates --agtc-button-primary-background but components
+// expect --agtc-component-button-primary-background. This transform corrects that.
+StyleDictionary.registerTransform({
+  name: 'name/agtc/prefixed',
+  type: 'name',
+  transformer: (token, options) => {
+    const prefix = options?.prefix || '';
+    const base = token.path.join('-');
+    if (token.attributes?.level === 'component') {
+      return prefix ? `${prefix}-component-${base}` : `component-${base}`;
+    }
+    return prefix ? `${prefix}-${base}` : base;
+  },
+});
+
 StyleDictionary.registerTransformGroup({
   name: 'css/agtc',
-  transforms: ['attribute/level', 'attribute/cti', 'name/cti/kebab', 'time/seconds', 'content/icon', 'size/rem', 'color/css'],
+  transforms: ['attribute/level', 'attribute/cti', 'name/agtc/prefixed', 'time/seconds', 'content/icon', 'size/rem', 'color/css'],
 });
 
 // ─── FORMAT: Tailwind CSS config extension ──────────────────────────────────

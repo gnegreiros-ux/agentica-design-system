@@ -1315,13 +1315,17 @@ html[data-lang="en"] .lang-fr{display:none}
 .info-card-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
 
 /* ── AUDIT PAGE ──────────────────────────────────────────── */
-.audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
-.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size);margin-bottom:16px}
+.audit-hero{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:32px 32px 28px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:28px}
+.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size)}
 .audit-badge.pass{background:var(--agtc-semantic-color-feedback-success-subtle);color:var(--agtc-semantic-color-feedback-success)}
 .audit-badge.fail{background:var(--agtc-semantic-color-feedback-danger-subtle);color:var(--agtc-semantic-color-feedback-danger)}
-.audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:6px}
-.audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)}
-.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.audit-date-row{display:inline-flex;align-items:center;gap:10px;margin:0;color:var(--agtc-semantic-color-text-primary)}
+.audit-date-row svg{color:var(--agtc-semantic-color-text-secondary);flex-shrink:0}
+.audit-date-main{display:block;font-size:var(--agtc-semantic-typography-heading-4-size);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;margin-bottom:4px}
+.audit-date-detail{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
+.audit-results{background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);margin-bottom:48px;overflow:hidden}
+.audit-cards-wrap{padding:28px 32px 32px}
+.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:0}
 .audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);padding:var(--agtc-space-6);text-align:center}
 .audit-card--pass{border-color:var(--agtc-semantic-color-feedback-success-border)}
 .audit-card--warn{border-color:var(--agtc-semantic-color-feedback-warning-border)}
@@ -1486,7 +1490,7 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   color:var(--agtc-semantic-color-action-primary);
 }
 [data-context="marketing"] .hero-title{
-  font-size:clamp(2.2rem,5vw,var(--agtc-semantic-marketing-typography-display-size));
+  font-size:clamp(2.625rem,6.5vw,var(--agtc-semantic-marketing-typography-display-size));
   font-weight:var(--agtc-semantic-marketing-typography-display-weight);
   line-height:var(--agtc-semantic-marketing-typography-display-line-height);
 }
@@ -1881,6 +1885,914 @@ body{overflow-x:hidden}
 .cta-final > p{max-width:560px;margin:0 auto}
 /* ── Home section h2 top margin reset ───────────────────────────────────── */
 .home-section h2{margin-top:0}
+
+/* ══ REDESIGN — sections narratives (feature/redesign) ══════════════════════
+   Classes préfixées rd- dédiées à la refonte narrative.
+   Toutes passent par les tokens sémantiques existants.                       */
+
+/* ── REDESIGN — ambiance continue (prompt.md : "une seule atmosphère") ──────
+   Pas d'alternance dark/light. Sections séparées par un border discret +
+   surfaces subtiles. Tous les tokens passent par semantic.marketing.* ou
+   semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
+.rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
+.rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
+.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
+@media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
+
+.rd-eyebrow{display:block;font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);text-transform:uppercase;letter-spacing:var(--agtc-tracking-eyebrow);color:var(--agtc-semantic-color-action-primary);margin-bottom:1rem}
+.rd-h2{font-size:clamp(2.25rem,5vw,3.5rem);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.05;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.75rem;color:var(--agtc-semantic-color-text-primary)}
+.rd-lead{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.7;color:var(--agtc-semantic-color-text-secondary);max-width:52ch;margin-bottom:2rem}
+
+/* Hero stats — inside dark .hero section, donc tokens on-inverse */
+.rd-hero-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--agtc-surface-glass-border)}
+.rd-stat-num{display:block;font-size:var(--agtc-font-size-h3,1.75rem);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);line-height:1}
+.rd-stat-label{display:block;font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:.25rem}
+
+/* agtc-button.ghost sur fond .hero sombre — token glass, meme logique que ds-btn.on-dark */
+.hero .agtc-button.ghost{color:var(--agtc-surface-glass-ghost-text);border-color:var(--agtc-surface-glass-border)}
+.hero .agtc-button.ghost:hover:not(:disabled){background:var(--agtc-surface-glass)}
+
+.rd-illus{display:flex;align-items:center;justify-content:center;overflow:visible}
+.rd-illus img{width:100%;max-width:660px;height:auto;display:block}
+
+/* ── PHASE 2.1 — sections continues · bleed · fondu images ──────────────────
+   "Les images doivent toujours se fondre avec le fond de la section."
+   Solution : TOUTES les sections rd-* passent sur fond inverse (dark).
+   Le token remapping via CSS custom properties cascade automatiquement dans
+   tous les enfants (cartes, textes, bordures, Web Components). ADR-057, ADR-058.
+
+   Ambiance continue : une seule atmosphère sombre sur l'ensemble de la page.
+   Les illustrations (fond sombre isométrique) se fondent dans le fond de section. */
+
+/* ── Toutes sections rd-* = fond inverse. Token remapping en cascade. ─── */
+[data-context="marketing"] .rd-section,
+[data-context="marketing"] .rd-section-alt{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+  /* Remap tokens sémantiques — enfants (cartes, textes, boutons) héritent automatiquement */
+  --agtc-semantic-color-text-primary:var(--agtc-semantic-color-text-on-inverse);
+  --agtc-semantic-color-text-secondary:var(--agtc-semantic-color-text-on-inverse-muted);
+  --agtc-semantic-color-background-surface:var(--agtc-surface-glass);
+  --agtc-semantic-color-background-subtle:var(--agtc-surface-glass);
+  --agtc-semantic-color-border-default:var(--agtc-surface-glass-border);
+}
+/* rd-section-alt : légère variation via glass overlay */
+[data-context="marketing"] .rd-section-alt{
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 94%,white 6%);
+}
+@supports not (color:color-mix(in srgb,black 0%,white 0%)){
+  [data-context="marketing"] .rd-section-alt{background:var(--agtc-semantic-color-background-inverse)}
+}
+
+/* Blend architectural — illustrations fusionnées comme background-image.
+   mix-blend-mode:screen → pixels sombres du PNG disparaissent dans le fond sombre.
+   Seul le contenu lumineux (teal, circuits, highlights) reste visible.
+   mask-image conserve le fondu de bord. */
+.rd-illus img,.rd-illus-center img{
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
+}
+
+/* Full-width S5 : screen blend + fondu de bord */
+.rd-illus-full img{
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
+  mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
+}
+
+/* Hero cinematic — marketing context
+   Illustration sortie du flux, position absolute bord droit.
+   Texte contraint à 46% gauche (hero-content-w), z-index au-dessus de l'image. */
+[data-context="marketing"] .hero{
+  min-height:88vh;display:flex;align-items:center;
+}
+[data-context="marketing"] .hero-inner{width:100%;padding-top:0;padding-bottom:0}
+/* Container texte hero — même glassmorphism que rd-cinematic-body */
+[data-context="marketing"] .hero-content-w{
+  width:46%;max-width:560px;
+  padding:clamp(2rem,4vw,3rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
+/* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
+[data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
+[data-context="marketing"] .hero-inner{position:relative;z-index:2}
+@media(max-width:860px){
+  [data-context="marketing"] .hero{min-height:auto;flex-direction:column;align-items:stretch;padding-top:calc(var(--agtc-header-height,64px) + 2rem)}
+  [data-context="marketing"] .hero .hero-illus-wrap{position:relative;inset:auto;height:260px;flex-shrink:0;justify-content:center}
+  [data-context="marketing"] .hero .hero-illus-wrap img{height:100%;width:auto;mask-image:none;-webkit-mask-image:none}
+  [data-context="marketing"] .hero .rd-bg-fade{display:none}
+  [data-context="marketing"] .hero-content-w{width:100%;max-width:none}
+}
+
+/* Une seule histoire — sections sans bordures, flux naturel */
+.rd-section{overflow:visible;border-top:none}
+
+/* Protection contre le scroll horizontal du bleed */
+.rd-wrap{overflow-x:hidden}
+
+/* Bleed architectural : illustration sort de sa colonne */
+.rd-illus-bleed-r img{width:135%;max-width:none !important}
+.rd-illus-bleed-l img{width:135%;max-width:none !important;margin-left:-35%}
+
+/* Séparation entre zones : très légère via .rd-section-alt uniquement */
+.rd-section-alt{position:relative}
+
+/* La section wow et alt n'ont pas besoin de border non plus */
+.rd-section-wow{border-top:none}
+.rd-illus-placeholder{aspect-ratio:4/3;width:100%;max-width:520px;background:var(--agtc-semantic-color-background-subtle);border:2px dashed var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail);text-align:center;padding:1.5rem}
+.rd-illus-placeholder strong{display:block;font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+
+.rd-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;gap:.75rem}
+.rd-list li{display:flex;align-items:baseline;gap:.75rem;font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-primary)}
+.rd-list.dash li::before{content:"—";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.check li::before{content:"✓";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.arrow li::before{content:"→";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.dot li::before{content:"◆";color:var(--agtc-semantic-color-action-primary);font-size:.5rem;flex-shrink:0;align-self:center}
+.rd-list li.no::before{content:"✗";color:var(--agtc-semantic-color-feedback-danger);font-weight:700;flex-shrink:0}
+
+.rd-dual{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2rem 0}
+.rd-dual-card{padding:1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default)}
+.rd-dual-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:1rem}
+.rd-quote{font-size:var(--agtc-font-size-body);font-style:italic;color:var(--agtc-semantic-color-text-secondary);border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:1.5rem;margin:2rem 0 0;max-width:52ch}
+
+.rd-stack{display:grid;gap:1rem}
+.rd-stack-card{padding:1.25rem 1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);display:grid;grid-template-columns:auto 1fr;gap:.75rem 1rem;align-items:start;transition:border-color .18s}
+.rd-stack-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-stack-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);grid-row:1/3;padding-top:.15rem}
+.rd-stack-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+.rd-stack-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+.rd-role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;margin-top:2rem}
+.rd-role-grid-compact{grid-template-columns:repeat(2,1fr);margin-top:1.25rem}
+@media(max-width:600px){.rd-role-grid-compact{grid-template-columns:1fr}}
+.rd-role-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-role-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-role-name{font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.rd-role-name::before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:var(--agtc-semantic-color-action-primary);flex-shrink:0}
+.rd-role-items{list-style:none;padding:0;margin:0;display:grid;gap:.375rem}
+.rd-role-items li{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+.rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
+
+.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
+.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
+.rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
+.rd-doc-nav a:visited{color:var(--agtc-semantic-color-text-secondary)}
+.rd-doc-nav a:hover{color:var(--agtc-semantic-color-action-primary)}
+
+@media(max-width:640px){.rd-dual{grid-template-columns:1fr}.rd-hero-stats{gap:1.25rem}}
+
+/* ── PHASE 2 — rythme, compositions dynamiques, halos de profondeur ─────────
+   Sections wow (fond inverse), asymétriques, centrées. Halos via rgba()
+   — profondeur atmosphérique, pas gradient de marque. ADR-057, ADR-058.
+   Un seul aurora (hero) conforme règle 1 gradient/page. */
+
+/* Hero pleine hauteur sur pages marketing */
+[data-context="marketing"] .hero{min-height:90svh;display:flex;align-items:center}
+[data-context="marketing"] .hero .hero-inner{width:100%;padding-top:2rem;padding-bottom:2rem}
+
+/* Sections marketing : 96px → 144px (×1.5) — plus d'air éditorial */
+[data-context="marketing"] .rd-section>.rd-inner,
+[data-context="marketing"] .rd-section-alt>.rd-inner,
+[data-context="marketing"] .rd-section-wow>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+}
+
+/* Sections monumentales — ×2 section-breathing (≈ 192px) — override la règle ×1.5 ci-dessus */
+.rd-section-monument>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+}
+
+/* Section "wow" — fond inverse, PAS d'aurora (quota 1 gradient = hero) */
+.rd-section-wow{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+}
+.rd-section-wow .rd-h2{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-eyebrow{color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-lead{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-narrative{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-dual-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-dual-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-list li{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-statement{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-quote{color:var(--agtc-semantic-color-text-on-inverse-muted);border-left-color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-token-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-token-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-token-desc{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* Grilles asymétriques 40/60 et 60/40 */
+.rd-grid-40-60{display:grid;grid-template-columns:2fr 3fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-60-40{display:grid;grid-template-columns:3fr 2fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media(max-width:860px){.rd-grid-40-60,.rd-grid-60-40{grid-template-columns:1fr}}
+
+/* Section centrée — pauses narratives */
+.rd-center{text-align:center}
+.rd-center .rd-h2{max-width:22ch;margin-left:auto;margin-right:auto}
+.rd-center .rd-lead{margin-left:auto;margin-right:auto;max-width:56ch}
+.rd-center .rd-eyebrow{display:flex;justify-content:center}
+.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.5rem,3vw,2.5rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;max-width:28ch}
+
+/* Illustration pleine largeur (S5) */
+.rd-illus-full{width:100%;margin:3rem 0}
+.rd-illus-full img{width:100%;height:auto;display:block}
+
+/* Illustration centrée (S3) */
+.rd-illus-center{display:flex;justify-content:center;margin-bottom:5rem;overflow:visible}
+.rd-illus-center img{width:100%;max-width:920px;height:auto;display:block}
+
+/* Halos de profondeur — rgba() uniquement, pas de token gradient de marque */
+.rd-halo{position:relative}
+.rd-halo::before{content:"";position:absolute;inset:-35%;background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(18,165,148,.30) 0%,transparent 70%);pointer-events:none;z-index:0}
+.rd-halo>*{position:relative;z-index:1}
+.rd-halo-pink::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(237,107,134,.24) 0%,transparent 70%)}
+.rd-halo-violet::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(120,80,200,.22) 0%,transparent 70%)}
+
+/* Texte narratif — plus grand que body standard */
+.rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
+
+/* ── rd-cinematic : illustration absolue collée au bord — pattern VP ─────────
+   L'image flotte en position:absolute (droite ou gauche).
+   La lisibilité est assurée par le glassmorphism du container texte seul.
+   Inspiré de gnegreiros-ux.github.io/depot/index-vp.html */
+.rd-cinematic{position:relative;overflow:hidden;min-height:72vh;display:flex;align-items:center}
+.rd-bg-wrap{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center}
+.rd-bg-r{justify-content:flex-end}
+.rd-bg-l{justify-content:flex-start}
+.rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.92;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
+/* bg-fade : vignette douce aux seuls bords latéraux de l'image.
+   N'est plus un scrim plein — ne couvre pas la zone de texte.
+   Laisse l'image visible à travers le glassmorphism du container. */
+.rd-bg-fade{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
+  );
+}
+.rd-bg-fade.rd-bg-fade-l{
+  background:linear-gradient(to left,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
+  );
+}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+/* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
+   overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
+   backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
+.rd-cinematic-body{
+  width:46%;max-width:580px;
+  padding:clamp(2rem,4vw,3.5rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
+.rd-cinematic-body-r{margin-left:auto}
+.rd-cinematic-tall{min-height:85vh}
+.rd-cinematic-body-wide{width:52%;max-width:640px}
+@media(max-width:860px){
+  .rd-cinematic{min-height:auto;flex-direction:column}
+  .rd-cinematic-tall{min-height:auto}
+  .rd-bg-wrap{position:relative;inset:auto;height:260px;width:100%;flex-shrink:0}
+  .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
+  .rd-bg-fade{display:none}
+  .rd-cinematic-inner{display:block;padding:0 clamp(1rem,5vw,2rem)}
+  .rd-cinematic-body,.rd-cinematic-body-r,.rd-cinematic-body-wide{width:100%;max-width:none;margin:0;border-radius:12px}
+}
+
+/* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
+   Remplace rd-inner+rd-grid pour les sections avec illustration de bord.
+   La colonne texte reste en max-width ; la colonne illus touche le bord de la section. */
+.rd-split{display:grid;align-items:center;width:100%}
+.rd-split-text-l{grid-template-columns:5fr 7fr}
+.rd-split-text-r{grid-template-columns:7fr 5fr}
+
+/* Texte — centré dans sa colonne, max-width pour la lisibilité */
+.rd-split-body{
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:560px;
+  padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) clamp(2rem,4vw,4rem);
+}
+.rd-split-text-l .rd-split-body{margin-left:auto}
+.rd-split-text-r .rd-split-body{margin-right:auto}
+
+/* Illustration — remplit toute sa colonne jusqu'au bord sans contrainte */
+.rd-split-illus{
+  position:relative;
+  align-self:stretch;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:480px;
+}
+/* L'image déborde légèrement sa colonne — clipping naturel par overflow:hidden */
+.rd-split-illus img{
+  width:115%;
+  height:auto;
+  display:block;
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  max-width:none !important;
+}
+/* Halo dans le split — fonctionne malgré overflow:hidden car il est en inset */
+.rd-split-illus.rd-halo::before{inset:-10%}
+
+@media(max-width:860px){
+  .rd-split-text-l,.rd-split-text-r{grid-template-columns:1fr}
+  .rd-split-text-r .rd-split-illus{order:-1}
+  .rd-split-illus{min-height:280px}
+  .rd-split-body{max-width:none;margin:0;padding:2.5rem clamp(1.5rem,5vw,2.5rem)}
+}
+
+/* Token flow — 4 cartes horizontales sous illustration S5 */
+.rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+@media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.rd-token-flow{grid-template-columns:1fr}}
+.rd-token-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-token-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-token-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);margin-bottom:.5rem}
+.rd-token-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.375rem}
+.rd-token-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+/* Placeholder dans sections sombres (S7) */
+.rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-inverse)}
+
+/* Centrage du CTA interne hero */
+.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
+
+/* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
+.rd-illus img{width:100%;height:auto;display:block}
+
+/* ═══════════════════════════════════════════════════════════
+   REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
+   Namespace : .v2-* — ne pas modifier sans approbation
+   ═══════════════════════════════════════════════════════ */
+
+/* Variables V2 — dans :root pour accessibilité globale */
+:root {
+  --v2-bg: var(--agtc-semantic-color-background-page);
+  --v2-bg-soft: var(--agtc-semantic-color-background-surface);
+  --v2-surface: color-mix(in srgb, var(--agtc-semantic-color-background-surface) 74%, transparent);
+  --v2-surface-strong: color-mix(in srgb, var(--agtc-semantic-color-background-inverse) 86%, transparent);
+  --v2-line: var(--agtc-surface-glass-border);
+  --v2-text: var(--agtc-semantic-color-text-on-inverse);
+  --v2-muted: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-faint: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-teal: var(--agtc-semantic-color-action-primary);
+  --v2-rose: var(--agtc-semantic-color-accent);
+  --v2-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --v2-radius: var(--agtc-semantic-radius-card, 16px);
+  --v2-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
+}
+
+html{scroll-behavior:smooth;overflow-x:hidden}
+
+body.v2-page{
+  min-height:100vh;
+  background:var(--agtc-gradient-aurora),var(--agtc-semantic-color-background-page);
+  color:var(--v2-text);
+  overflow-x:hidden;
+}
+.v2-page main{overflow:hidden}
+
+/* Header V2 */
+.v2-header{
+  position:fixed;inset:0 0 auto;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:var(--agtc-header-height,64px);
+  padding:0 var(--agtc-site-header-padding-x,24px);
+  border-bottom:1px solid var(--v2-line);
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 85%,transparent);
+  backdrop-filter:blur(18px) saturate(140%);
+}
+.v2-brand{
+  display:inline-flex;align-items:center;gap:var(--agtc-space-2,.5rem);
+  color:var(--v2-text);font-weight:var(--agtc-semantic-fontWeight-display,700);text-decoration:none;
+  flex-shrink:0;
+}
+
+/* Navigation V2 */
+.v2-nav{display:flex;align-items:center;gap:var(--agtc-component-top-nav-cta-gap,8px)}
+.v2-nav a,.v2-docs-trigger,.v2-menu-button{
+  border:0;border-radius:0;background:transparent;
+  color:var(--v2-muted);font:inherit;text-decoration:none;cursor:pointer;
+}
+.v2-nav a,.v2-docs-trigger{
+  position:relative;
+  padding:var(--agtc-component-top-nav-cta-padding-y,8px) var(--agtc-component-top-nav-tab-padding-x,14px);
+  font-size:var(--agtc-component-top-nav-tab-font-size);
+  font-weight:var(--agtc-component-top-nav-tab-font-weight);
+}
+.v2-nav a:hover,.v2-docs-trigger:hover,.v2-nav a:focus-visible,.v2-docs-trigger:focus-visible{color:var(--v2-text);outline:none}
+.v2-nav a::after,.v2-docs-trigger::after{
+  content:"";position:absolute;inset:auto 0 -.35rem;
+  height:var(--agtc-component-top-nav-tab-indicator-width,2px);
+  background:var(--agtc-component-top-nav-tab-indicator-color,var(--agtc-semantic-color-action-primary));
+  transform:scaleX(0);transform-origin:left;transition:transform .16s ease;
+}
+.v2-nav a:hover::after,.v2-nav a:focus-visible::after,.v2-nav a[aria-current="page"]::after,
+.v2-docs-trigger:hover::after,.v2-docs-trigger:focus-visible::after,.v2-docs-trigger[aria-expanded="true"]::after{transform:scaleX(1)}
+.v2-nav a[aria-current="page"],.v2-docs-trigger[aria-expanded="true"]{color:var(--v2-text)}
+
+/* Neutralisation :visited sur nav (ADR-047, rule no-visited-nav) */
+.v2-nav a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-docs-panel a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+.v2-nav .v2-nav-action{
+  margin-left:var(--agtc-component-top-nav-cta-gap,8px);
+  padding-inline:var(--agtc-component-top-nav-cta-padding-x,16px);
+  padding-block:var(--agtc-component-top-nav-cta-padding-y,8px);
+  border-radius:var(--agtc-component-top-nav-cta-radius,var(--agtc-semantic-radius-control,8px));
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background,var(--agtc-semantic-color-action-primary));
+  font-weight:700;
+}
+.v2-nav .v2-nav-action:hover,.v2-nav .v2-nav-action:focus-visible{
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background-hover,var(--agtc-semantic-color-action-primary-hover));
+}
+.v2-nav .v2-nav-action::after{display:none}
+
+.v2-header-tools{
+  display:flex;align-items:center;gap:var(--agtc-space-2,8px);
+  margin-left:var(--agtc-space-3,12px);flex-shrink:0;
+}
+.v2-lang-switch{min-height:34px}
+.v2-lang-switch button{padding:3px 9px;font-size:var(--agtc-semantic-typography-detail-size);letter-spacing:var(--agtc-tracking-wide)}
+
+/* Megapanel Documentation */
+.v2-docs{position:relative}
+.v2-docs-panel{
+  position:absolute;top:calc(100% + 16px);right:-148px;
+  display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;padding:1px;border:1px solid var(--v2-line);border-radius:18px;
+  background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
+  box-shadow:var(--agtc-shadow-lg);
+  opacity:0;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.v2-docs-panel.is-open{opacity:1;transform:translateY(0);pointer-events:auto}
+.v2-docs-panel > div{
+  min-height:230px;padding:1.35rem;
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 94%,transparent);
+}
+.v2-docs-panel > div:first-child{border-radius:17px 0 0 17px}
+.v2-docs-panel > div:nth-child(3){border-radius:0 17px 17px 0}
+.v2-docs-panel h2{margin:0 0 .9rem;font-size:.86rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
+.v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
+.v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
+
+/* Hamburger / close icons */
+.v2-icon-hamburger,.v2-icon-close{display:block}
+.v2-menu-button[aria-expanded="true"] .v2-icon-hamburger{display:none}
+.v2-menu-button[aria-expanded="false"] .v2-icon-close{display:none}
+/* Logo dark/light swap */
+.v2-logo-light{display:none}
+[data-theme="light"] .v2-logo-dark{display:none}
+[data-theme="light"] .v2-logo-light{display:block}
+.v2-menu-button{display:none;padding:.6rem;border:1px solid var(--v2-line)}
+
+/* Sections V2 */
+.v2-section{position:relative;padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-section::before{
+  content:"";position:absolute;inset:12% auto auto 50%;
+  width:min(52vw,620px);aspect-ratio:1;border-radius:999px;
+  background:radial-gradient(circle,color-mix(in srgb,var(--agtc-semantic-color-action-primary) 24%,transparent),transparent 66%);
+  filter:blur(6px);transform:translateX(-50%);pointer-events:none;
+}
+.v2-shell{position:relative;width:var(--v2-shell);margin-inline:auto}
+
+.v2-hero{
+  min-height:100svh;display:grid;align-items:center;
+  padding-top:calc(var(--agtc-header-height,64px) + 3rem);
+  padding-bottom:var(--agtc-semantic-marketing-space-hero-gap,120px);
+}
+.v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid{
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);
+  align-items:center;gap:clamp(2rem,5vw,5rem);
+}
+.v2-copy{max-width:660px}
+.v2-copy-narrow{max-width:550px}
+.v2-kicker{
+  margin:0 0 1rem;
+  color:color-mix(in srgb,var(--v2-teal) 72%,white);
+  font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);
+  font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing:var(--agtc-tracking-eyebrow);text-transform:uppercase;
+}
+.v2-page .v2-copy h1,.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  margin:0;max-width:780px;color:var(--v2-text);
+  font-weight:var(--agtc-semantic-marketing-typography-display-weight);
+  letter-spacing:var(--agtc-tracking-tighter);
+  line-height:var(--agtc-semantic-marketing-typography-display-line-height);
+}
+.v2-page .v2-copy h1{font-size:clamp(var(--agtc-semantic-typography-hero-size),5vw,var(--agtc-semantic-marketing-typography-display-size))}
+.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+}
+.v2-copy p,.v2-section-heading p{
+  margin:1.35rem 0 0;color:var(--v2-muted);
+  font-size:var(--agtc-font-size-h5,1.25rem);line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+
+/* Boutons V2 */
+.v2-button{
+  display:inline-flex;align-items:center;min-height:44px;
+  padding:var(--agtc-component-button-primary-padding-y,11px) var(--agtc-component-button-primary-padding-x,24px);
+  border:1.5px solid transparent;
+  border-radius:var(--agtc-component-button-primary-radius,var(--agtc-semantic-radius-control,8px));
+  font-size:var(--agtc-font-size-body,1rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);
+  line-height:1.3;text-decoration:none;
+  transition:transform .12s ease,border-color .14s ease,background .14s ease,color .14s ease;
+}
+.v2-button:hover,.v2-button:focus-visible{outline:none}
+.v2-button:active{transform:translateY(1px)}
+.v2-button:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.v2-button-primary{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background);
+  background:var(--agtc-component-button-primary-background);
+}
+.v2-button-primary:hover,.v2-button-primary:focus-visible{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background-hover);
+  background:var(--agtc-component-button-primary-background-hover);
+}
+.v2-button-secondary{
+  color:var(--agtc-semantic-color-text-on-inverse);
+  border-color:var(--agtc-surface-glass-strong,rgba(255,255,255,.22));
+  background:var(--agtc-surface-glass,rgba(255,255,255,.08));
+}
+.v2-button-secondary:hover,.v2-button-secondary:focus-visible{background:var(--agtc-surface-glass-hover,rgba(255,255,255,.12))}
+.v2-button-ghost{
+  color:var(--agtc-surface-glass-ghost-text,var(--agtc-semantic-color-text-on-inverse-secondary));
+  border-color:transparent;background:transparent;
+}
+.v2-button-ghost:hover,.v2-button-ghost:focus-visible{background:var(--agtc-surface-glass,rgba(255,255,255,.08))}
+
+/* Illustrations V2 */
+.v2-art{position:relative;margin:0;line-height:0}
+.v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+.v2-art-hero{width:min(100%,720px);justify-self:end}
+.v2-overlap,.v2-overlap-reverse{
+  display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
+}
+.v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
+.v2-art-wide{width:min(100%,740px)}
+.v2-immersive{
+  padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
+}
+.v2-art-float{width:min(100%,720px);justify-self:end;animation:v2-float 8s ease-in-out infinite}
+.v2-split{
+  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,.74fr);
+  align-items:center;gap:clamp(2rem,6vw,6rem);
+}
+.v2-section-heading{max-width:760px;margin-bottom:3rem}
+
+/* Cards rôles */
+.v2-role-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:1px;border:1px solid var(--v2-line);background:var(--v2-line);
+}
+.v2-role-card{
+  position:relative;min-height:235px;padding:1.5rem;
+  background:rgba(12,15,25,.78);overflow:hidden;
+}
+.v2-role-card::after{
+  content:"";position:absolute;inset:auto 0 0;height:3px;
+  background:linear-gradient(90deg,var(--v2-teal),var(--v2-rose),var(--v2-violet));
+  transform:scaleX(.16);transform-origin:left;transition:transform .28s ease;
+}
+.v2-role-card:hover::after,.v2-role-card:focus-within::after{transform:scaleX(1)}
+.v2-role-card h3{
+  margin:0 0 .75rem;color:var(--v2-text);
+  font-size:var(--agtc-component-card-typography-marketing-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-title-weight);
+}
+.v2-role-card p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+
+/* Section qualité */
+.v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
+.v2-signal-stack{display:grid;gap:.6rem}
+.v2-signal-stack > span{
+  display:flex;align-items:center;padding:.9rem 1.1rem;
+  background:var(--v2-surface);border:1px solid var(--v2-line);
+  border-radius:var(--agtc-semantic-radius-card,16px);
+  color:var(--v2-text);font-size:.95rem;font-weight:500;
+}
+.v2-human-control{overflow:hidden}
+.v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
+.v2-single-art{max-width:760px;margin-inline:auto}
+
+/* Section finale */
+.v2-final{
+  min-height:92svh;display:grid;align-items:center;
+  background:radial-gradient(circle at 18% 28%,rgba(0,162,199,.22),transparent 30rem),
+             radial-gradient(circle at 82% 62%,rgba(214,64,159,.2),transparent 30rem);
+}
+.v2-art-final{width:min(100%,680px);justify-self:end}
+
+/* Reveal scrolling */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].is-visible{opacity:1;transform:translateY(0)}
+@keyframes v2-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+/* Pages secondaires */
+.v2-simple{padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px))}
+.v2-simple-hero{padding-block:var(--agtc-semantic-marketing-space-hero-gap,120px)}
+.v2-editorial-grid,.v2-doc-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1.25rem;border:none;background:transparent;
+}
+.v2-editorial-block,.v2-doc-block{
+  padding:var(--agtc-semantic-space-comfortable-layout-component,28px);
+  background:var(--v2-surface);
+  border:1px solid var(--v2-line);
+  border-radius:var(--v2-radius);
+}
+.v2-editorial-block h2,.v2-doc-block h2{
+  margin:0 0 .8rem;color:var(--v2-text);
+  border-top:none;padding-top:0;margin-top:0;
+  font-size:var(--agtc-component-card-typography-marketing-hero-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-hero-title-weight);
+  line-height:var(--agtc-semantic-typography-heading-5-line-height);
+}
+.v2-editorial-block p,.v2-doc-block p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-doc-block ul{display:grid;gap:.55rem;margin:1.1rem 0 0;padding:0;list-style:none}
+.v2-doc-block a{color:var(--v2-text);text-decoration-color:rgba(255,255,255,.25);text-underline-offset:.18em}
+.v2-anchor{display:block;position:relative;top:-96px;height:0}
+
+
+/* Footer V2 */
+.v2-footer{
+  margin-top:0;border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.12),transparent 28rem),
+             var(--agtc-semantic-color-background-page);
+}
+.v2-footer-inner{max-width:var(--v2-shell);grid-template-columns:1.15fr .9fr 1fr .9fr}
+.v2-footer-heading{margin-bottom:.25rem;color:var(--agtc-semantic-color-text-on-inverse);font-size:var(--agtc-semantic-typography-detail-size)}
+
+/* Back-to-top V2 */
+.v2-back-to-top{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.v2-back-to-top.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+
+/* Dark mode — couleur brand principale cohérente avec les composants */
+[data-theme="dark"]{
+  --agtc-semantic-color-action-primary:#12a594;
+  --agtc-semantic-color-action-primary-hover:#0d9b8a;
+  --agtc-component-button-primary-background:#12a594;
+  --agtc-component-button-primary-background-hover:#0d9b8a;
+  --agtc-component-top-nav-tab-indicator-color:#12a594;
+}
+
+/* ── LIGHT MODE — surcharges v2 ────────────────────────────────────────────
+   Les variables --v2-* sont définies dans :root avec les valeurs dark (défaut).
+   Ce bloc les réassigne aux équivalents sémantiques light mode.
+   ──────────────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --v2-text: var(--agtc-semantic-color-text-primary);
+  --v2-muted: var(--agtc-semantic-color-text-secondary);
+  --v2-faint: var(--agtc-semantic-color-text-disabled);
+  --v2-surface: var(--agtc-semantic-color-background-subtle);
+  --v2-surface-strong: var(--agtc-semantic-color-background-surface);
+  --v2-line: var(--agtc-semantic-color-border-default);
+}
+
+/* Aurora light — dégradé doux sur fond clair (sans brun foncé du mode dark) */
+[data-theme="light"] body.v2-page{
+  background:
+    radial-gradient(60% 50% at 18% 8%,rgba(18,165,148,.07) 0%,transparent 60%),
+    radial-gradient(55% 50% at 88% 22%,rgba(237,107,134,.06) 0%,transparent 62%),
+    var(--agtc-semantic-color-background-page);
+}
+
+/* Kicker — action-primary direct pour lisibilité sur fond clair (contraste ≥ 4.5:1) */
+[data-theme="light"] .v2-kicker{color:var(--agtc-semantic-color-action-primary)}
+
+/* Navigation links — visited harmonisé light (ADR-047, ADR-059 : hex avant var()) */
+[data-theme="light"] .v2-nav a:visited,
+[data-theme="light"] .v2-docs-panel a:visited,
+[data-theme="light"] .v2-sidebar a:visited,
+[data-theme="light"] .v2-footer-col a:visited{color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+
+/* Sidebar hover — rgba inverse pour fond clair */
+[data-theme="light"] .v2-sidebar a:hover,
+[data-theme="light"] .v2-sidebar a:focus-visible{background:rgba(0,0,0,.05);color:var(--agtc-semantic-color-text-primary)}
+
+/* Docs megapanel — fond opaque en light mode (surface-glass transparente sur blanc = invisible) */
+[data-theme="light"] .v2-docs-panel{
+  background:var(--agtc-semantic-color-background-surface);
+  box-shadow:var(--agtc-semantic-shadow-raised);
+}
+[data-theme="light"] .v2-docs-panel > div{
+  background:var(--agtc-semantic-color-background-surface);
+}
+
+/* Role cards — fond surface + ombre légère en light mode */
+[data-theme="light"] .v2-role-card{
+  background:var(--agtc-semantic-color-background-surface);
+  box-shadow:var(--agtc-semantic-shadow-card);
+}
+
+/* Section qualité — gradient semi-transparent inversé */
+[data-theme="light"] .v2-quality{background:linear-gradient(180deg,rgba(0,0,0,.015),transparent)}
+
+/* Section immersive — dégradé light */
+[data-theme="light"] .v2-immersive{
+  background:
+    radial-gradient(circle at 78% 48%,rgba(18,165,148,.08),transparent 30rem),
+    radial-gradient(circle at 30% 20%,rgba(237,107,134,.06),transparent 20rem);
+}
+
+/* Section finale — dégradé subtil */
+[data-theme="light"] .v2-final{
+  background:linear-gradient(180deg,var(--agtc-semantic-color-background-subtle),var(--agtc-semantic-color-background-page));
+}
+
+/* Bouton secondaire — variante light */
+[data-theme="light"] .v2-button-secondary{
+  color:var(--agtc-semantic-color-text-primary);
+  border-color:var(--agtc-semantic-color-border-default);
+  background:var(--agtc-semantic-color-background-surface);
+}
+[data-theme="light"] .v2-button-secondary:hover,
+[data-theme="light"] .v2-button-secondary:focus-visible{background:var(--agtc-semantic-color-background-subtle)}
+
+/* Bouton ghost — variante light */
+[data-theme="light"] .v2-button-ghost{color:var(--agtc-semantic-color-text-secondary)}
+[data-theme="light"] .v2-button-ghost:hover,
+[data-theme="light"] .v2-button-ghost:focus-visible{background:var(--agtc-semantic-color-background-subtle)}
+
+/* Lien doc-block — underline visible sur fond clair */
+[data-theme="light"] .v2-doc-block a{text-decoration-color:rgba(0,0,0,.15)}
+
+/* Mobile nav — fond page au lieu de background-inverse */
+@media(max-width:980px){
+  [data-theme="light"] .v2-nav.is-open{
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-surface) 96%,transparent);
+  }
+}
+
+/* Theme toggle — sans border */
+.theme-toggle{border:none!important;box-shadow:none!important;background:transparent!important}
+
+/* Cards rôles — hauteur uniforme */
+.v2-role-grid{align-items:stretch}
+.v2-role-card{display:flex;flex-direction:column;justify-content:flex-start}
+
+/* Border-bottom animation cards — couleur principale */
+.v2-role-card::after{background:var(--agtc-semantic-color-action-primary)}
+body[data-context="marketing"] .v2-role-card::after{
+  background:linear-gradient(90deg,var(--agtc-semantic-color-action-primary),var(--agtc-semantic-color-accent,#e35d6a))
+}
+
+/* Footer V2 — 4 colonnes */
+.v2-footer{
+  border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.08),transparent 28rem),
+             var(--agtc-semantic-color-background-page);
+  padding:4rem var(--agtc-site-header-padding-x,24px);
+}
+.v2-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2.5rem}
+.v2-footer-col{display:flex;flex-direction:column;gap:.55rem}
+.v2-footer-col a{color:var(--v2-muted);text-decoration:none;font-size:.9rem;line-height:1.5}
+.v2-footer-col a:hover,.v2-footer-col a:focus-visible{color:var(--v2-text)}
+.v2-footer-linkedin:hover,.v2-footer-linkedin:focus-visible{color:var(--v2-text)!important}
+.v2-footer-col a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-footer-col span{color:var(--v2-muted);font-size:.85rem;line-height:1.5}
+.v2-footer-heading{color:var(--v2-text)!important;font-weight:700;font-size:.9rem!important;margin-bottom:.5rem}
+
+/* Icônes dans les blocs éditoriaux des sous-pages */
+.v2-editorial-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:2.5rem;height:2.5rem;border-radius:10px;
+  background:rgba(18,165,148,.12);color:var(--v2-teal);
+  margin-bottom:1rem;flex-shrink:0;
+}
+.v2-editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
+
+/* Sidebar latérale V2 pour sous-pages */
+.v2-with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
+.v2-sidebar{align-self:stretch;overflow:visible;border-right:1px solid var(--v2-line)}
+.v2-sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
+.v2-sidebar-heading{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--v2-muted);padding:.5rem 0;margin-top:1rem}
+.v2-sidebar-heading:first-child{margin-top:0}
+.v2-sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
+.v2-sidebar a:hover,.v2-sidebar a:focus-visible{color:var(--v2-text);background:rgba(255,255,255,.07);outline:none}
+.v2-sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-sidebar a[aria-current="page"]{color:var(--v2-teal);background:rgba(18,165,148,.1)}
+.v2-page-content{overflow:hidden}
+.v2-page-content .v2-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-page-content .v2-simple-hero{padding-top:3rem}
+@media(max-width:860px){
+  .v2-with-sidebar{grid-template-columns:1fr}
+  .v2-sidebar{display:none}
+}
+
+/* Stats hero (réutilisées depuis rd-*) */
+.v2-hero-stats{
+  display:flex;flex-wrap:wrap;gap:2rem;margin-top:2.5rem;
+  padding-top:2rem;border-top:1px solid var(--v2-line);
+}
+.v2-stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--v2-text)}
+.v2-stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--v2-muted);margin-top:.25rem}
+
+/* Responsive */
+@media(max-width:980px){
+  :root{--v2-shell:min(100vw - 32px,760px)}
+  .v2-menu-button{display:inline-flex;align-items:center}
+  .v2-header-tools{order:2;margin-left:auto}
+  .v2-menu-button{order:3}
+  .v2-header-tools .github-btn,.v2-header-tools .storybook-btn{display:none}
+  .v2-nav{
+    position:fixed;
+    inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
+    display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
+    border:1px solid var(--v2-line);border-radius:var(--agtc-semantic-radius-card,16px);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
+    box-shadow:var(--agtc-shadow-lg);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
+    pointer-events:none;
+  }
+  .v2-nav.is-open{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear 0s;
+    pointer-events:auto;
+  }
+  @media(prefers-reduced-motion:reduce){
+    .v2-nav,.v2-nav.is-open{transition:none}
+  }
+  .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
+  .v2-nav a::after,.v2-docs-trigger::after{inset:auto 0 .35rem}
+  .v2-nav .v2-nav-action{margin-left:0}
+  .v2-docs-panel{
+    position:static;width:100%;grid-template-columns:1fr;
+    margin-top:.5rem;transform:none;
+  }
+  .v2-docs-panel > div,.v2-docs-panel > div:first-child,.v2-docs-panel > div:last-child{
+    min-height:auto;border-radius:0;
+  }
+  .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid,
+  .v2-overlap,.v2-overlap-reverse,.v2-split{grid-template-columns:1fr}
+  .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
+    width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
+  }
+  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-single-art,.v2-dual-art{
+    grid-template-columns:1fr;
+  }
+  .v2-footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .v2-editorial-block,.v2-doc-block{background:var(--agtc-semantic-color-background-surface)}
+  .v2-editorial-icon{background:color-mix(in srgb,var(--v2-teal) 20%,var(--agtc-semantic-color-background-surface))}
+  .v2-role-card{min-height:170px}
+}
+@media(max-width:560px){
+  .v2-header{padding-inline:16px}
+  .v2-footer{padding-inline:16px}
+  .v2-footer-grid{grid-template-columns:1fr;gap:2rem}
+  .v2-section{padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+  .v2-hero{
+    padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));
+    padding-bottom:var(--agtc-space-7,48px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  [data-reveal]{opacity:1;transform:none}
+}
 `; }
 
 function siteJS() { return `
@@ -1890,11 +2802,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyThemeImages(theme) {
+    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
+      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
+    });
+  }
+  applyThemeImages(savedTheme);
+
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
+      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
@@ -1928,7 +2849,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -1938,7 +2859,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -1956,7 +2877,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -2163,18 +3084,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── Bouton retour en haut ────────────────────────────────
-  const backToTop = document.querySelector('.back-to-top');
+  // ── Bouton retour en haut (V2 — threshold 600px, classe is-visible) ─────────
+  const backToTop = document.querySelector('[data-back-to-top]');
   if (backToTop) {
-    const onScroll = () => {
-      const visible = window.scrollY > 200;
-      backToTop.hidden = !visible;
+    const setBackToTopState = () => {
+      const visible = window.scrollY > window.innerHeight;
+      backToTop.classList.toggle('is-visible', visible);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', setBackToTopState, { passive: true });
+    setBackToTopState();
+  }
+
+  // ── Megapanel Documentation (V2) ─────────────────────────────────────────
+  const docsTrigger = document.querySelector('[data-docs-trigger]');
+  const docsPanel   = document.querySelector('[data-docs-panel]');
+  if (docsTrigger && docsPanel) {
+    const closeDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'false');
+      docsPanel.classList.remove('is-open');
+      docsPanel.hidden = true;
+    };
+    const openDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'true');
+      docsPanel.hidden = false;
+      requestAnimationFrame(() => docsPanel.classList.add('is-open'));
+    };
+    docsTrigger.addEventListener('click', e => {
+      if (docsTrigger.getAttribute('aria-expanded') !== 'true') e.preventDefault();
+      docsTrigger.getAttribute('aria-expanded') === 'true' ? closeDocs() : openDocs();
     });
+    docsTrigger.addEventListener('mouseenter', openDocs);
+    docsPanel.addEventListener('mouseenter', openDocs);
+    document.addEventListener('pointerdown', e => {
+      if (!docsPanel.contains(e.target) && !docsTrigger.contains(e.target)) closeDocs();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeDocs(); docsTrigger.focus(); }
+    });
+  }
+
+  // ── Menu mobile V2 ────────────────────────────────────────────────────────
+  const v2MenuToggle = document.querySelector('[data-menu-toggle]');
+  const v2MainNav    = document.querySelector('[data-main-nav]');
+  if (v2MenuToggle && v2MainNav) {
+    v2MenuToggle.addEventListener('click', () => {
+      const isOpen = v2MenuToggle.getAttribute('aria-expanded') === 'true';
+      v2MenuToggle.setAttribute('aria-expanded', String(!isOpen));
+      v2MainNav.classList.toggle('is-open', !isOpen);
+    });
+    v2MainNav.addEventListener('click', e => {
+      if (e.target.closest('a')) {
+        v2MenuToggle.setAttribute('aria-expanded', 'false');
+        v2MainNav.classList.remove('is-open');
+      }
+    });
+  }
+
+  // ── Scroll reveal V2 ([data-reveal] → .is-visible) ───────────────────────
+  const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+  if (revealItems.length) {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.16 });
+      revealItems.forEach(el => revealObs.observe(el));
+    } else {
+      revealItems.forEach(el => el.classList.add('is-visible'));
+    }
   }
 
   // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
@@ -2209,14 +3188,13 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   // DÉMARRER = CTA (cta:true) — action primaire d'adoption (ADR-060).
   // Items définis ici, passés au composant agtc-top-nav via script inline.
   const navItems = JSON.stringify([
-    { labelFr:'Accueil',    labelEn:'Home',         href:`${base}index.html` },
-    { labelFr:'Fondations', labelEn:'Foundations',  href:`${base}foundations/index.html` },
-    { labelFr:'Composants', labelEn:'Components',   href:`${base}components/index.html` },
-    { labelFr:'Tokens',     labelEn:'Tokens',       href:`${base}tokens/index.html` },
-    { labelFr:'Décisions',  labelEn:'Decisions',    href:`${base}decisions/index.html` },
-    { labelFr:'Agents',     labelEn:'Agents',       href:`${base}agents/index.html` },
-    { labelFr:'Pipelines',  labelEn:'Pipelines',    href:`${base}pipelines/index.html` },
-    { labelFr:'Démarrer',   labelEn:'Get started',  href:`${base}get-started.html`, cta:true },
+    { labelFr:'Accueil',        labelEn:'Home',           href:`${base}index.html` },
+    { labelFr:'Pourquoi',       labelEn:'Why',            href:`${base}index.html#pourquoi` },
+    { labelFr:'Architecture',   labelEn:'Architecture',   href:`${base}index.html#architecture` },
+    { labelFr:'Qualité',        labelEn:'Quality',        href:`${base}index.html#qualite` },
+    { labelFr:'IA',             labelEn:'AI',             href:`${base}index.html#ia` },
+    { labelFr:'Documentation',  labelEn:'Documentation',  href:`${base}foundations/index.html` },
+    { labelFr:'Démarrer',       labelEn:'Get started',    href:`${base}get-started.html`, cta:true },
   ]);
 
   const sidebarHtml = sidebar
@@ -2227,39 +3205,48 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 
   const auditHref = (depth > 0 ? '../'.repeat(depth) : '') + 'audit.html';
   const footer = `
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <a class="footer-logo" href="${base}index.html" aria-label="Agentica — Accueil">
-        <svg class="footer-logo-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
-        </svg>
-        <span class="footer-logo-name">Agentica</span>
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="${base}img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
       </a>
-      <span class="footer-name">Guilherme Negreiros</span>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" class="footer-link">${icon('linkedin', 15)} LinkedIn</a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
     </div>
-    <div class="footer-col">
-      <nav class="footer-links" aria-label="Footer">
-        <a href="${base}changelog.html">${icon('clock', 15)} Changelog</a>
-        <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">${storybookIcon(15)} Storybook</a>
-        <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">${icon('github', 15)} GitHub</a>
-        <a href="${auditHref}" class="footer-link">${icon('shield-check', 15)} Audit</a>
-      </nav>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="${base}index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="${base}ia.html">IA</a>
     </div>
-    <div class="footer-col footer-col-right">
-      <span class="footer-copy">© ${new Date().getFullYear()} Guilherme Negreiros</span>
-      <span class="footer-credit">
-        ${icon('bot', 14)}
-        <span class="lang-fr">Développé avec Claude Code</span>
-        <span class="lang-en">Built with Claude Code</span>
-      </span>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="${base}pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="${base}components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="${base}tokens/index.html">Tokens</a>
+      <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="${base}audit.html">Audit</a>
+      <span style="margin-top:.8rem">© 2026 Guilherme Negreiros</span>
+      <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
     </div>
   </div>
 </footer>`;
 
   return `<!DOCTYPE html>
-<html lang="fr" data-lang="fr" data-theme="light">
+<html lang="fr" data-lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -2287,41 +3274,85 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
 <link rel="stylesheet" href="${base}tokens.css">
 <link rel="stylesheet" href="${base}site.css">
 <script src="${base}components/agtc.js" defer></script>
 </head>
-<body${context ? ` data-context="${context}"` : ''}>
+<body${context === 'marketing' ? ' class="v2-page"' : ''}${context ? ` data-context="${context}"` : ''}>
 <a class="skip-link" href="#main-content">
   <span class="lang-fr">Aller au contenu</span>
   <span class="lang-en">Skip to content</span>
 </a>
-<header class="site-header" role="banner">
-  <a class="logo" href="${base}index.html" aria-label="Agentica — Accueil">
-    <svg class="logo-mark" viewBox="0 0 198 198" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M178 0C189.046 0 198 8.95431 198 20V178C198 189.046 189.046 198 178 198H20C8.95431 198 0 189.046 0 178V20C0 8.95431 8.95431 0 20 0H178ZM162.432 114.077C161.826 113.896 161.174 113.97 160.624 114.283L106.965 144.868C106.256 145.272 105.81 146.02 105.786 146.84C105.762 147.676 106.19 148.441 106.878 148.895C115.792 154.77 124.922 160.382 134.29 165.495C144.063 170.83 154.337 175.629 163.01 177.658C167.325 178.668 171.75 179.119 175.71 178.238C179.937 177.299 183.616 174.815 185.644 170.392L185.836 169.946C187.68 165.474 186.793 160.335 184.538 155.586C177.933 141.999 170.755 128.668 163.835 115.242C163.544 114.678 163.037 114.258 162.432 114.077ZM140.076 70.7607C139.471 70.5803 138.819 70.6549 138.27 70.9678L24.7578 135.67C24.418 135.864 24.1329 136.14 23.9277 136.473C20.1113 143.146 16.7662 150.139 13.167 156.935C11.0764 160.883 10.117 166.194 12.8516 170.848C13.7117 172.311 15.0327 173.379 16.499 174.203C19.5354 175.91 23.0337 176.889 26.4238 177.564C26.9699 177.673 27.537 177.582 28.0215 177.306L155.764 104.492C156.853 103.871 157.258 102.492 156.681 101.373C151.631 91.5855 146.406 81.4618 141.479 71.9258C141.188 71.362 140.681 70.9413 140.076 70.7607ZM109.5 19.8975C103.425 17.9211 96.2835 17.7348 90.125 19.4375C87.2883 20.2219 83.7877 21.7439 81.709 24.8545C81.2725 25.4824 80.941 26.1837 80.6035 26.8691C79.2798 29.557 77.9795 32.5623 76.3262 35.0596C63.1108 60.4146 50.1416 85.8216 37.0674 111.143C36.5925 112.063 36.7747 113.188 37.5156 113.908C38.2568 114.628 39.3809 114.772 40.2773 114.262L133.396 61.1846C134.487 60.5629 134.892 59.1835 134.313 58.0645C125.822 41.6425 119.242 28.9434 117.784 26.1846C117.683 25.9685 117.564 25.7537 117.441 25.5488L117.103 25.0078C115.197 22.1834 111.985 20.706 109.5 19.8975Z" fill="#12A594"/>
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="${base}index.html" aria-label="Agentica — Accueil">
+    <img src="${base}img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
     </svg>
-    <span class="logo-name">Agentica</span>
-  </a>
-  <agtc-top-nav id="site-top-nav" nav-label="Navigation principale"></agtc-top-nav>
-  <script>(function(){var items=${navItems};function init(){var n=document.getElementById('site-top-nav');if(!n)return;n.items=items;n.current=window.location.pathname;}if(customElements.get('agtc-top-nav')){init();}else{customElements.whenDefined('agtc-top-nav').then(init);}})()</script>
-  <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
-    <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
   </button>
-  <div class="agtc-segmented lang-switch" role="group" aria-label="Language" style="margin-left:8px;flex-shrink:0">
-    <button type="button" data-lang="fr" aria-current="true">FR</button>
-    <button type="button" data-lang="en" aria-current="false">EN</button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="${base}index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="${base}ia.html">IA</a>
+    <div class="v2-docs">
+      <button class="v2-docs-trigger" type="button" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </button>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="${base}pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="${base}ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="${base}architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="${base}foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="${base}components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="${base}tokens/index.html">Tokens</a>
+          <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="${base}agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="${base}pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="${base}audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="${base}get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      ${storybookIcon(18)}
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      ${icon('github', 18)}
+    </a>
   </div>
-  <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
-    ${storybookIcon(18)}
-  </a>
-  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
-    ${icon('github', 18)}
-  </a>
-  <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-top-nav">
-    ${icon('menu', 24)}
-  </button>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${mainClass}" id="main-content"${fullWidth ? ' data-context="marketing"' : ''}>
@@ -2330,7 +3361,7 @@ ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
   ${tocHtml}
 </div>
 ${footer}
-<button class="back-to-top" aria-label="Retour en haut" hidden>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
   <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
 </button>
@@ -2454,360 +3485,634 @@ function countAllTokens(obj) {
 }
 
 function buildHome(adrs) {
-  const colorCount = Object.keys(COLOR_SCALES).length;
-  const scaleSteps = Object.values(COLOR_SCALES).reduce((a, s) => a + Object.keys(s).length, 0);
-  const semCount   = Object.keys(SEM).length;
-  const compCount  = Object.keys(COMP).length;
-  const primCount  = countAllTokens(primitives.primitive || primitives);
+  const semCount    = Object.keys(SEM).length;
+  const compCount   = Object.keys(COMP).length;
+  const primCount   = countAllTokens(primitives.primitive || primitives);
   const totalTokens = primCount + semCount + compCount;
 
-  // Illustrations chargées lazily (IntersectionObserver dans siteJS) — hors du HTML initial.
-  const illusGovernance = `<div class="illus-block illus-lazy" data-svg="img/human-last-word.svg"></div>`;
-  const illusPipeline   = `<div class="illus-block illus-lazy" data-svg="img/pipeline-tokens.svg"></div>`;
-  const illusMultiPlat  = `<div class="illus-block illus-lazy" data-svg="img/multi-platform.svg"></div>`;
-
-  const principles = [
-    [icon('shield',24),'Souveraineté numérique','Les données, décisions et outils restent sous contrôle organisationnel. Aucun verrouillage fournisseur.','Digital sovereignty','Data, decisions and tools remain under organizational control. No vendor lock-in.'],
-    [icon('git-branch',24),'Auditabilité totale','Toute décision est traçable, versionnée, justifiée. Un script d\'audit valide chaque token.','Full auditability','Every decision is traceable, versioned, and justified. An audit script validates every token.'],
-    [icon('rotate-ccw',24),'Auto-guérison','Les dérives détectées sont signalées et corrigées automatiquement — sous supervision humaine.','Self-healing','Detected drifts are flagged and auto-corrected — under human supervision.'],
-    [icon('user-check',24),'Le dernier mot est humain','Les agents proposent. Les humains décident. Toujours.','Humans decide','Agents propose. Humans decide. Always.'],
-  ];
-
-  const sections = [
-    ['foundations/color.html',  icon('palette',32),          'Fondations',           'Foundations',           'Couleur, espacement, typographie — les primitives et leurs intentions sémantiques.','Color, spacing, typography — primitives and their semantic intentions.'],
-    ['components/index.html',   icon('puzzle',32),            'Composants',           'Components',            'Contrats UI exécutables : variantes, états, tokens, accessibilité, code.','Executable UI contracts: variants, states, tokens, accessibility, code.'],
-    ['tokens/index.html',       icon('zap',32),               'Tokens',               'Tokens',                'Naviguez dans les 3 niveaux : primitif → sémantique → composant.','Navigate the 3 levels: primitive → semantic → component.'],
-    ['decisions/index.html',    icon('clipboard-list',32),    'Décisions (ADRs)',      'Decisions (ADRs)',       `Pourquoi chaque décision existe — ${adrs.length} ADRs actifs avec contexte et alternatives.`,`Why each decision was made — ${adrs.length} active ADRs with context and alternatives.`],
-    ['foundations/contextes.html', icon('layers',32),         'Deux contextes',       'Two contexts',          'Mode Produit SaaS vs Mode Marketing Narratif — deux langages visuels, un seul système.','SaaS Product mode vs Marketing Narrative mode — two visual languages, one system.'],
-    ['agents/index.html',       icon('bot',32),               'Pour les agents IA',   'For AI agents',         'Règles, routage et contraintes pour les agents qui travaillent avec ce système.','Rules, routing and constraints for agents working with this system.'],
-    ['pipelines/index.html',    icon('shield-check',32),      'Pipelines qualité',    'Quality pipelines',     '10 gates automatisés actifs — tokens, WCAG, commits, régressions visuelles — avant chaque commit.','10 automated gates active — tokens, WCAG, commits, visual regressions — before every commit.'],
-    [STORYBOOK_URL, storybookIcon(32), 'Storybook', 'Storybook', 'Catalogue interactif des composants — canvas, previews, specs, tests visuels.','Interactive component catalog — canvas, previews, specs, visual tests.', true],
-    ['https://github.com/gnegreiros-ux/agentic-design-system', icon('github',32), 'Code source', 'Source code', 'Tokens JSON, scripts d\'audit, configuration Style Dictionary.','JSON tokens, audit scripts, Style Dictionary configuration.', true],
-  ];
-
-  const stackNodes = [
-    [icon('file-text',20),        'Décision',       'Decision',       'ADRs'],
-    [icon('book-open',20),        'Documentation',  'Documentation',  'Storybook'],
-    [icon('pen-tool',20),         'Design',         'Design',         'Figma'],
-    [icon('code-2',20),           'Code',           'Code',           'Lit / Web Components'],
-    [icon('check-circle',20),     'Validation',     'Validation',     'axe-core'],
-    [icon('shield-check',20),     'Audit',          'Audit',          'Chromatic'],
-    [icon('rocket',20),           'Déploiement',    'Deploy',         'CI/CD'],
-  ];
-
-  const audiences = [
-    [icon('briefcase',24),'Gestionnaires','Managers','Livraisons 2× plus rapides, moins de régressions visuelles, gouvernance documentée et traçable.','2× faster delivery, fewer visual regressions, documented and traceable governance.'],
-    [icon('pen-tool',24),'Designers','Designers','Tokens Figma synchronisés, marque appliquée automatiquement, cohérence garantie à chaque mise à jour.','Synced Figma tokens, auto-applied brand guidelines, consistency guaranteed on every update.'],
-    [icon('code-2',24),'Développeurs','Developers','Web Components framework-agnostic, variables CSS générées, zéro valeur en dur, audit accessibilité intégré.','Framework-agnostic Web Components, generated CSS variables, zero hardcoded values, built-in accessibility audit.'],
-    [icon('clipboard-list',24),'Product Owners','Product Owners','Décisions architecturales traçables, conformité WCAG AA garantie, pipeline qualité automatisé.','Traceable architecture decisions, guaranteed WCAG AA compliance, automated quality pipeline.'],
-  ];
-
-  const kpis = [
-    ['2×','Livraisons plus rapides','Faster delivery','Les équipes avec un design system mature livrent jusqu\'à 2× plus fréquemment — Sparkbox Design Systems Survey 2024','Teams with a mature design system ship up to 2× more frequently — Sparkbox Design Systems Survey 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-    ['80%','Moins de violations a11y','Fewer a11y violations','Réduction des violations d\'accessibilité grâce aux composants WCAG AA natifs — IBM Carbon Case Study','Reduction in accessibility violations through native WCAG AA components — IBM Carbon Case Study','https://carbondesignsystem.com','IBM Carbon'],
-    ['34%','Délais respectés','Deadlines met','Les équipes utilisant un design system respectent davantage leurs délais de livraison — Sparkbox DSS 2024','Teams using a design system are more likely to meet delivery deadlines — Sparkbox DSS 2024','https://sparkbox.com/foundry/2024_design_systems_survey','Sparkbox, 2024'],
-  ];
-
   const body = `
-<section class="hero">
-  <div class="hero-inner hero-grid">
-    <div>
-      <span class="hero-badge">
-        <span class="pulse" aria-hidden="true"></span>
-        <span class="lang-fr">Agentica · v0.1.0</span>
-        <span class="lang-en">Agentica · v0.1.0</span>
-      </span>
-      <h1 class="hero-title">
-        <span class="lang-fr">Un système de design <span class="grad">compris par les humains et les agents IA.</span></span>
-        <span class="lang-en">A design system <span class="grad">understood by humans and AI agents.</span></span>
+<!-- S1 — HERO -->
+<section class="v2-section v2-hero" id="accueil">
+  <div class="v2-shell v2-hero-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Système de décisions</span><span class="lang-en">Decision system</span></p>
+      <h1>
+        <span class="lang-fr">Le système de décisions pour les humains et les agents IA</span>
+        <span class="lang-en">The decision system for humans and AI agents</span>
       </h1>
-      <p class="hero-tagline">
-        <span class="lang-fr">Livrez plus vite, éliminez les incohérences visuelles, et permettez à vos agents IA de contribuer sans risque. Conçu pour les équipes qui bougent — et pour les agents qui les assistent.</span>
-        <span class="lang-en">Ship faster, eliminate visual inconsistencies, and let AI agents contribute safely. Built for teams that move fast — and the agents that assist them.</span>
+      <p>
+        <span class="lang-fr">Agentica transforme les décisions UX, UI, accessibilité, architecture et gouvernance en connaissances structurées, durables et compréhensibles par les humains comme par les agents IA.</span>
+        <span class="lang-en">Agentica turns UX, UI, accessibility, architecture and governance decisions into structured, durable knowledge that humans and AI agents can understand.</span>
       </p>
-      <div class="hero-actions">
-        <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
-        <a href="components/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Voir les composants</span><span class="lang-en">View components</span></a>
-        <a href="agents/index.html" class="ds-btn ghost on-dark"><span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span></a>
+      <div class="v2-actions">
+        <a class="v2-button v2-button-primary" href="pourquoi.html">
+          <span class="lang-fr">Découvrir la vision</span>
+          <span class="lang-en">Discover the vision</span>
+        </a>
+        <a class="v2-button v2-button-secondary" href="documentation.html">
+          <span class="lang-fr">Explorer la documentation</span>
+          <span class="lang-en">Explore the documentation</span>
+        </a>
+      </div>
+      <div class="v2-hero-stats" role="list" aria-label="Statistiques du système">
+        <div role="listitem"><span class="v2-stat-num">${totalTokens}+</span><span class="v2-stat-label">tokens</span></div>
+        <div role="listitem"><span class="v2-stat-num">${adrs.length}</span><span class="v2-stat-label">ADRs</span></div>
+        <div role="listitem"><span class="v2-stat-num">${compCount}</span><span class="v2-stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+        <div role="listitem"><span class="v2-stat-num">10</span><span class="v2-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
-    <div class="layer-stack" aria-hidden="true">
-      <div class="layer-link"></div>
-      <div class="layer-plane l1">
-        <span class="pl-tag"><span class="lang-fr">Niveau 1 · Primitif</span><span class="lang-en">Level 1 · Primitive</span></span>
-        <span class="pl-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></span>
-        <span class="pl-code">primitive.color.teal.11 → #007a68</span>
+    <figure class="v2-art v2-art-hero" aria-hidden="true">
+      <img src="img/IMG-HERO-SYSTEM-on-dark.png" class="img-theme-aware" data-src-dark="img/IMG-HERO-SYSTEM-on-dark.png" data-src-light="img/IMG-HERO-SYSTEM-on-light.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
+    </figure>
+  </div>
+</section>
+
+<!-- S2 — LE PROBLÈME -->
+<section class="v2-section v2-problem" id="pourquoi" data-reveal>
+  <div class="v2-shell v2-overlap">
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></p>
+      <h2>
+        <span class="lang-fr">Les équipes accumulent des décisions invisibles</span>
+        <span class="lang-en">Teams accumulate invisible decisions</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Les décisions se dispersent entre Figma, GitHub, Storybook, Slack et Confluence. La dette UX s'accumule en silence. La documentation devient obsolète. Les experts deviennent indispensables. L'IA reste inaccessible.</span>
+        <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
+      </p>
+    </div>
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-CONTEXT-on-dark.png" class="img-theme-aware" data-src-dark="img/IMG-CONTEXT-on-dark.png" data-src-light="img/IMG-CONTEXT.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
+  </div>
+</section>
+
+<!-- S3 — HUMAINS ET AGENTS IA -->
+<section class="v2-section v2-immersive" data-reveal>
+  <div class="v2-shell v2-immersive-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Humains et agents IA</span><span class="lang-en">Humans and AI agents</span></p>
+      <h2>
+        <span class="lang-fr">Conçu pour les humains. Prêt pour les agents IA.</span>
+        <span class="lang-en">Designed for humans. Ready for AI agents.</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Les humains comprennent, décident, approuvent et gouvernent. Les agents détectent, analysent, proposent et automatisent. Le dernier mot reste toujours humain.</span>
+        <span class="lang-en">Humans understand, decide, approve and govern. Agents detect, analyze, propose and automate. Humans always keep the final word.</span>
+      </p>
+    </div>
+    <figure class="v2-art v2-art-float" aria-hidden="true">
+      <img src="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
+    </figure>
+  </div>
+</section>
+
+<!-- S4 — LES CONNAISSANCES -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell v2-split">
+    <figure class="v2-art" aria-hidden="true">
+      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Les connaissances</span><span class="lang-en">Knowledge</span></p>
+      <h2>
+        <span class="lang-fr">Les connaissances sont un actif stratégique</span>
+        <span class="lang-en">Knowledge is a strategic asset</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Les frameworks évoluent. Les outils changent. Les technologies disparaissent. Les connaissances doivent survivre. Agentica les structure pour qu'elles restent lisibles demain — par les humains et les agents IA.</span>
+        <span class="lang-en">Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- S5 — SOURCE UNIQUE DE VÉRITÉ -->
+<section class="v2-section v2-single-source" id="architecture" data-reveal>
+  <div class="v2-shell v2-overlap v2-overlap-reverse">
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
+      <h2>
+        <span class="lang-fr">Une seule source de vérité</span>
+        <span class="lang-en">One single source of truth</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Une même source alimente les fondations, les contrats sémantiques, les composants et les applications. Quatre niveaux. Une seule chaîne de décisions.</span>
+        <span class="lang-en">One source feeds foundations, semantic contracts, components and applications. Four levels. One decision chain.</span>
+      </p>
+    </div>
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
+  </div>
+</section>
+
+<!-- S6 — VALEUR PAR RÔLE -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-section-heading">
+      <p class="v2-kicker"><span class="lang-fr">Pour chaque rôle</span><span class="lang-en">For every role</span></p>
+      <h2>
+        <span class="lang-fr">Une valeur différente pour chaque rôle</span>
+        <span class="lang-en">Different value for every role</span>
+      </h2>
+    </div>
+    <div class="v2-role-grid">
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Organisation</span><span class="lang-en">Organization</span></h3>
+        <p><span class="lang-fr">Une mémoire commune des décisions, lisible et gouvernable.</span><span class="lang-en">A shared decision memory, readable and governable.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Gestionnaires</span><span class="lang-en">Managers</span></h3>
+        <p><span class="lang-fr">Des arbitrages visibles, traçables et reliés à la valeur.</span><span class="lang-en">Visible trade-offs, traceable and tied to value.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Responsables produit</span><span class="lang-en">Product leads</span></h3>
+        <p><span class="lang-fr">Des choix produit connectés aux preuves et aux contraintes.</span><span class="lang-en">Product choices connected to evidence and constraints.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Designers</span><span class="lang-en">Designers</span></h3>
+        <p><span class="lang-fr">Des intentions de design préservées au-delà des écrans.</span><span class="lang-en">Design intentions preserved beyond the screens.</span></p>
+      </article>
+      <article class="v2-role-card">
+        <h3><span class="lang-fr">Développeurs</span><span class="lang-en">Developers</span></h3>
+        <p><span class="lang-fr">Des contrats explicites pour construire sans interpréter au hasard.</span><span class="lang-en">Explicit contracts to build without guessing.</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- S7 — QUALITÉ -->
+<section class="v2-section v2-quality" id="qualite" data-reveal>
+  <div class="v2-shell v2-quality-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
+      <h2>
+        <span class="lang-fr">La qualité est une propriété du système</span>
+        <span class="lang-en">Quality is built into the system</span>
+      </h2>
+      <p>
+        <span class="lang-fr">L'accessibilité, les régressions visuelles, la documentation, les ADRs et la cohérence ne sont pas ajoutées après coup. Elles font partie du système. Rien n'entre sans contrôle.</span>
+        <span class="lang-en">Accessibility, visual regressions, documentation, ADRs and consistency are not added after the fact. They are part of the system. Nothing enters without control.</span>
+      </p>
+    </div>
+    <div class="v2-signal-stack" aria-hidden="true">
+      <span><span class="lang-fr">Accessibilité WCAG 2.1</span><span class="lang-en">WCAG 2.1 Accessibility</span></span>
+      <span><span class="lang-fr">Régressions visuelles</span><span class="lang-en">Visual regressions</span></span>
+      <span><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></span>
+      <span>ADRs</span>
+      <span><span class="lang-fr">Cohérence tokens</span><span class="lang-en">Token consistency</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- S8 — MÉMOIRE DES DÉCISIONS -->
+<section class="v2-section" data-reveal>
+  <div class="v2-shell v2-split">
+    <div class="v2-copy">
+      <p class="v2-kicker"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></p>
+      <h2>
+        <span class="lang-fr">Chaque décision possède une mémoire</span>
+        <span class="lang-en">Every decision has a memory</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Derrière chaque bouton, chaque couleur, chaque règle d'accessibilité se cache une décision. Agentica en préserve le contexte, les alternatives et les compromis — afin que personne ne réinvente ce qui a déjà été résolu.</span>
+        <span class="lang-en">Behind every button, every color, every accessibility rule lies a decision. Agentica preserves its context, alternatives and trade-offs — so nobody reinvents what has already been resolved.</span>
+      </p>
+      <div class="v2-actions">
+        <a class="v2-button v2-button-secondary" href="decisions/index.html">
+          <span class="lang-fr">Voir les ${adrs.length} ADRs →</span>
+          <span class="lang-en">View all ${adrs.length} ADRs →</span>
+        </a>
       </div>
-      <div class="layer-plane l2">
-        <span class="pl-tag"><span class="lang-fr">Niveau 2 · Sémantique</span><span class="lang-en">Level 2 · Semantic</span></span>
-        <span class="pl-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></span>
-        <span class="pl-code">color.action.primary → {teal.11}</span>
-      </div>
-      <div class="layer-plane l3">
-        <span class="pl-tag"><span class="lang-fr">Niveau 3 · Composant</span><span class="lang-en">Level 3 · Component</span></span>
-        <span class="pl-title"><span class="lang-fr">Contrats UI</span><span class="lang-en">UI contracts</span></span>
-        <span class="pl-code">button.primary.background → {action.primary}</span>
-      </div>
+    </div>
+    <figure class="v2-art" aria-hidden="true">
+      <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
+  </div>
+</section>
+
+<!-- S9 — CONTRÔLE HUMAIN -->
+<section class="v2-section v2-human-control" id="ia" data-reveal>
+  <div class="v2-shell v2-overlap">
+    <figure class="v2-art v2-art-wide" aria-hidden="true">
+      <img src="img/IMG-HUMAN-LOOP.png" class="img-theme-aware" data-src-dark="img/IMG-HUMAN-LOOP.png" data-src-light="img/IMG-HUMAN-LOOP-on-light.png" alt="" loading="lazy" width="740" height="560">
+    </figure>
+    <div class="v2-copy v2-copy-narrow">
+      <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+      <h2>
+        <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
+        <span class="lang-en">Automate without giving up control</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Les agents peuvent générer, détecter, documenter et proposer. Ils ne peuvent pas approuver, déployer ou contourner la gouvernance.</span>
+        <span class="lang-en">Agents can generate, detect, document and propose. They cannot approve, deploy or bypass governance.</span>
+      </p>
     </div>
   </div>
 </section>
 
-<section class="home-section pf-section reveal">
-  <h2><span class="lang-fr">Principe fondamental</span><span class="lang-en">Fundamental principle</span></h2>
-  <div class="pf-frow">
-    <div class="pf-fcell pf-cell-human">
-      <div class="pf-fi" aria-hidden="true">${icon('brain',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Humains</span><span class="lang-en">Humans</span></div>
-      <div class="pf-fv pf-fv-white"><span class="lang-fr">Décident</span><span class="lang-en">Decide</span></div>
-      <div class="pf-fd"><span class="lang-fr">L'intention, les valeurs, les règles, les exceptions</span><span class="lang-en">Intent, values, rules, exceptions</span></div>
+<!-- S10 — DURABILITÉ -->
+<section class="v2-section v2-durability" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-section-heading">
+      <p class="v2-kicker"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></p>
+      <h2>
+        <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
+        <span class="lang-en">Build for today. Preserve for tomorrow.</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils.</span>
+        <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
+      </p>
     </div>
-    <div class="pf-fcell pf-cell-agent">
-      <div class="pf-fi" aria-hidden="true">${icon('bot',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></div>
-      <div class="pf-fv pf-fv-teal"><span class="lang-fr">Exécutent</span><span class="lang-en">Execute</span></div>
-      <div class="pf-fd"><span class="lang-fr">Les tâches répétitives, les vérifications, la documentation</span><span class="lang-en">Repetitive tasks, checks, documentation</span></div>
+    <div class="v2-single-art">
+      <figure class="v2-art" aria-hidden="true">
+        <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
+      </figure>
     </div>
-    <div class="pf-fcell pf-cell-system">
-      <div class="pf-fi" aria-hidden="true">${icon('shield',40)}</div>
-      <div class="pf-fr"><span class="lang-fr">Le système</span><span class="lang-en">The system</span></div>
-      <div class="pf-fv pf-fv-green"><span class="lang-fr">Garantit</span><span class="lang-en">Guarantees</span></div>
-      <div class="pf-fd"><span class="lang-fr">La cohérence, la conformité, la traçabilité</span><span class="lang-en">Consistency, compliance, traceability</span></div>
-    </div>
-  </div>
-  <p class="pf-tagline"><span class="lang-fr">L'IA amplifie l'expertise humaine. Elle ne la remplace pas.</span><span class="lang-en">AI amplifies human expertise. It does not replace it.</span></p>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Une valeur pour chaque rôle</span><span class="lang-en">Value for every role</span></span>
-  <h2><span class="lang-fr">Pour chaque membre de l'équipe</span><span class="lang-en">For every team member</span></h2>
-  <p><span class="lang-fr">Un système de design unifié parle à tous — gestionnaires, designers, développeurs et POs — avec une valeur concrète pour chacun.</span><span class="lang-en">A unified design system speaks to everyone — managers, designers, developers, and POs — with concrete value for each.</span></p>
-  <div class="audience-grid">
-    ${audiences.map(([ico,fr,en,dFr,dEn]) => `
-    <article class="audience-card card-surface card-hover">
-      <div class="audience-icon">${ico}</div>
-      <h3 class="audience-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
-      <p class="audience-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></p>
-    </article>`).join('')}
   </div>
 </section>
 
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
-
-<section class="home-section reveal" style="padding-top:var(--agtc-space-8)">
-  <span class="eyebrow"><span class="lang-fr">Mesurable et vérifiable</span><span class="lang-en">Measurable &amp; verifiable</span></span>
-  <h2><span class="lang-fr">Preuves et chiffres</span><span class="lang-en">Evidence &amp; numbers</span></h2>
-  <p><span class="lang-fr">Les bénéfices des systèmes de design sont mesurables. Sources publiques et vérifiables.</span><span class="lang-en">The benefits of design systems are measurable. Public and verifiable sources.</span></p>
-  <div class="kpi-band">
-    ${kpis.map(([num,fr,en,dFr,dEn,url,src]) => `
-    <article class="kpi-card card-surface">
-      <span class="kpi-num">${num}</span>
-      <span class="kpi-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></span>
-      <span class="kpi-source"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span>${url ? ` <a href="${url}" target="_blank" rel="noopener">(${src})</a>` : ''}</span>
-    </article>`).join('')}
-  </div>
-</section>
-
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-    <span class="eyebrow"><span class="lang-fr">Gouvernance &amp; Contextes</span><span class="lang-en">Governance &amp; Contexts</span></span>
-    <h2><span class="lang-fr">Un système. Deux contextes. Zéro compromis.</span><span class="lang-en">One system. Two contexts. Zero compromise.</span></h2>
-    <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains approuvent, décident et déploient. Et selon la finalité de la page — convaincre ou documenter — le système bascule entre deux langages visuels distincts, toujours gouvernés par les mêmes tokens.</span><span class="lang-en">Agents observe, analyze and propose. Humans approve, decide and deploy. And depending on the page's purpose — converting or documenting — the system switches between two distinct visual languages, always governed by the same tokens.</span></p>
-    ${illusGovernance}
-    <div class="contexts-grid">
-      <div class="context-card">
-        <div class="context-badge"><span class="lang-fr">Mode Produit SaaS</span><span class="lang-en">SaaS Product mode</span></div>
-        <div class="context-title"><span class="lang-fr">Densité. Répétabilité. Cohérence.</span><span class="lang-en">Density. Repeatability. Consistency.</span></div>
-        <div class="context-desc"><span class="lang-fr">Le mode par défaut : grille régulière, espacement normal, typographie calibrée pour la documentation et les interfaces fonctionnelles.</span><span class="lang-en">The default mode: regular grid, normal spacing, typography calibrated for documentation and functional interfaces.</span></div>
-        <code class="context-attr">data-context <em>(absent)</em></code>
-      </div>
-      <div class="context-card context-card-accent">
-        <div class="context-badge context-badge-accent"><span class="lang-fr">Mode Marketing Narratif</span><span class="lang-en">Marketing Narrative mode</span></div>
-        <div class="context-title"><span class="lang-fr">Hiérarchie. Asymétrie. Impact.</span><span class="lang-en">Hierarchy. Asymmetry. Impact.</span></div>
-        <div class="context-desc"><span class="lang-fr">Sections respirantes à 96px, hero display 60px, mise en page éditoriale. Activé sur les pages de conversion et d'onboarding.</span><span class="lang-en">96px breathing sections, 60px hero display, editorial layout. Active on conversion and onboarding pages.</span></div>
-        <code class="context-attr">data-context="marketing"</code>
+<!-- S11 — APPEL FINAL -->
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell v2-final-grid">
+    <div class="v2-copy">
+      <p class="v2-kicker">Agentica</p>
+      <h2>
+        <span class="lang-fr">Prêt à explorer Agentica ?</span>
+        <span class="lang-en">Ready to explore Agentica?</span>
+      </h2>
+      <p>
+        <span class="lang-fr">Transformez les décisions en connaissances durables, lisibles par les humains et les agents IA.</span>
+        <span class="lang-en">Turn decisions into durable knowledge that humans and AI agents can read.</span>
+      </p>
+      <div class="v2-actions">
+        <a class="v2-button v2-button-primary" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+        <a class="v2-button v2-button-secondary" href="components/index.html"><span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span></a>
+        <a class="v2-button v2-button-ghost" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub →</a>
       </div>
     </div>
-    <p style="margin-top:var(--agtc-space-6)"><a href="decisions/adr-057.html" class="ds-btn secondary"><span class="lang-fr">Voir ADR-057 — Deux contextes →</span><span class="lang-en">See ADR-057 — Two contexts →</span></a></p>
+    <figure class="v2-art v2-art-final" aria-hidden="true">
+      <img src="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
+    </figure>
   </div>
 </section>
 
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Principes fondateurs</span><span class="lang-en">Founding principles</span></span>
-  <h2><span class="lang-fr">Valeurs non négociables</span><span class="lang-en">Non-negotiable values</span></h2>
-  <p><span class="lang-fr">Ces quatre principes guident chaque décision du système et chaque action des agents.</span><span class="lang-en">These four principles guide every system decision and every agent action.</span></p>
-  <div class="principle-grid">
-    ${principles.map(([ico,fr,descFr,en,descEn]) => `
-    <article class="principle-card card-surface">
-      <div class="principle-icon">${ico}</div>
-      <h3 class="principle-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></h3>
-      <p class="principle-desc"><span class="lang-fr">${descFr}</span><span class="lang-en">${descEn}</span></p>
-    </article>`).join('')}
-  </div>
-</section>
-
-<div class="stat-band" role="region" aria-label="Statistiques du système">
-  <div class="stat-item"><span class="stat-num" data-count="21">21</span><span class="stat-text">WCAG 2.2 AA</span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${adrs.length}">${adrs.length}</span><span class="stat-text"><span class="lang-fr">Décisions architecturales</span><span class="lang-en">Architecture decisions</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-text"><span class="lang-fr">Niveaux de tokens</span><span class="lang-en">Token levels</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${totalTokens}">${totalTokens}</span><span class="stat-text"><span class="lang-fr">Tokens au total</span><span class="lang-en">Tokens total</span></span></div>
-  <div class="stat-item"><span class="stat-num" data-count="${colorCount}">${colorCount}</span><span class="stat-text"><span class="lang-fr">Échelles de couleur</span><span class="lang-en">Color scales</span></span></div>
-</div>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-  <span class="eyebrow"><span class="lang-fr">Architecture en couches</span><span class="lang-en">Layered architecture</span></span>
-  <h2><span class="lang-fr">Pipeline de tokens</span><span class="lang-en">Token pipeline</span></h2>
-  <p><span class="lang-fr">Trois niveaux ordonnés, chacun avec un rôle précis. Les agents comprennent la fonction, pas la valeur brute.</span><span class="lang-en">Three ordered levels, each with a precise role. Agents understand function, not raw values.</span></p>
-  ${illusPipeline}
-  <div class="pipeline" role="region" aria-label="Pipeline des tokens">
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 1 — Primitif</span><span class="lang-en">Level 1 — Primitive</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Valeurs physiques</span><span class="lang-en">Physical values</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Couleurs, espacements, rayons. Très stables. Jamais utilisées directement dans les composants.</span><span class="lang-en">Colors, spacing, radii. Very stable. Never used directly in components.</span></div>
-      <div class="pipeline-example">primitive.color.blue.11<br>→ #0d74ce</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 2 — Sémantique</span><span class="lang-en">Level 2 — Semantic</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Intentions UX</span><span class="lang-en">UX intentions</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Traduit les primitives en langage métier. Ce que les agents utilisent pour comprendre l'intention.</span><span class="lang-en">Translates primitives into business language. What agents use to understand intent.</span></div>
-      <div class="pipeline-example">color.action.primary<br>→ primitive.color.blue.11</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="pipeline-tag"><span class="lang-fr">Niveau 3 — Composant</span><span class="lang-en">Level 3 — Component</span></div>
-      <div class="pipeline-title"><span class="lang-fr">Contrats institutionnels</span><span class="lang-en">Institutional contracts</span></div>
-      <div class="pipeline-desc"><span class="lang-fr">Décisions spécifiques à chaque composant. Toute modification requiert approbation.</span><span class="lang-en">Component-specific decisions. Any change requires approval.</span></div>
-      <div class="pipeline-example">button.primary.background<br>→ color.action.primary</div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span>
-  <h2><span class="lang-fr">Explorer le système</span><span class="lang-en">Explore the system</span></h2>
-  <p><span class="lang-fr">Chaque section encode une dimension du système — accessible aux humains et lisible par les agents.</span><span class="lang-en">Each section encodes a dimension of the system — human-readable and machine-parseable.</span></p>
-  <div class="nav-grid">
-    ${sections.map(([h,ico,fr,en,dFr,dEn,ext]) => `
-    <a href="${h}" class="nav-card card-surface card-hover"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>
-      <span class="nav-card-icon">${ico}</span>
-      <div class="nav-card-title"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="nav-card-desc"><span class="lang-fr">${dFr}</span><span class="lang-en">${dEn}</span></div>
-    </a>`).join('')}
-  </div>
-</section>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-    <span class="eyebrow"><span class="lang-fr">Qualité garantie</span><span class="lang-en">Quality guaranteed</span></span>
-    <h2><span class="lang-fr">10 pipelines de qualité actifs</span><span class="lang-en">10 active quality pipelines</span></h2>
-    <p><span class="lang-fr">Avant chaque commit, un orchestrateur évalue automatiquement chaque changement contre les gates de qualité actifs. Tokens, accessibilité, commits, régressions visuelles — rien n'atteint le dépôt sans avoir passé le contrôle.</span><span class="lang-en">Before every commit, an orchestrator automatically evaluates each change against the active quality gates. Tokens, accessibility, commits, visual regressions — nothing reaches the repository without passing inspection.</span></p>
-    <div class="mini-grid">
-      ${['wcag','tokens-audit','chromatic','commit'].map(id => {
-        const p = PIPELINES.find(x => x.id === id);
-        return p ? `<div class="mini-card card-surface">
-        <div class="mc-icon">${icon(p.icon, 20)}</div>
-        <div class="mc-title"><span class="lang-fr">${p.title_fr}</span><span class="lang-en">${p.title_en}</span></div>
-        <div class="mc-desc"><span class="lang-fr">${p.marketing_fr}</span><span class="lang-en">${p.marketing_en}</span></div>
-      </div>` : '';
-      }).join('')}
-    </div>
-    <p style="margin-top:var(--agtc-space-6)"><a href="pipelines/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${PIPELINES.length} pipelines →</span><span class="lang-en">View all ${PIPELINES.length} pipelines →</span></a></p>
-  </div>
-</section>
-
-<section class="home-section reveal">
-  <span class="eyebrow"><span class="lang-fr">Mémoire du système</span><span class="lang-en">System memory</span></span>
-  <h2><span class="lang-fr">Décisions architecturales (ADRs)</span><span class="lang-en">Architecture Decision Records</span></h2>
-  <p><span class="lang-fr">Un design system accumule des décisions invisibles. Les ADRs les rendent visibles, traçables et auditables par les humains comme par les agents.</span><span class="lang-en">A design system accumulates invisible decisions. ADRs make them visible, traceable and auditable by both humans and agents.</span></p>
-  <div class="mini-grid">
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('file-text',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Format Markdown</span><span class="lang-en">Markdown format</span></div>
-      <div class="mc-desc"><span class="lang-fr">Chaque décision est un fichier .md versionné — lisible par Git, GitHub et les agents.</span><span class="lang-en">Each decision is a versioned .md file — readable by Git, GitHub and agents.</span></div>
-    </div>
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('git-branch',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Immutabilité</span><span class="lang-en">Immutability</span></div>
-      <div class="mc-desc"><span class="lang-fr">Un ADR ne se supprime jamais. On le marque remplacé ou déprécié. L'historique est inaltérable.</span><span class="lang-en">An ADR is never deleted. It is marked superseded or deprecated. History is immutable.</span></div>
-    </div>
-    <div class="mini-card card-surface">
-      <div class="mc-icon">${icon('bot',20)}</div>
-      <div class="mc-title"><span class="lang-fr">Lisible par les agents</span><span class="lang-en">Agent-readable</span></div>
-      <div class="mc-desc"><span class="lang-fr">Les agents lisent les ADRs pour comprendre les <em>pourquoi</em>, pas seulement les <em>quoi</em>.</span><span class="lang-en">Agents read ADRs to understand the <em>why</em>, not just the <em>what</em>.</span></div>
-    </div>
-  </div>
-  <p style="margin-top:var(--agtc-space-6)"><a href="decisions/index.html" class="ds-btn secondary"><span class="lang-fr">Voir les ${adrs.length} ADRs →</span><span class="lang-en">View all ${adrs.length} ADRs →</span></a></p>
-</section>
-
-<section class="section-secondary reveal">
-  <div class="si-inner">
-  <span class="eyebrow"><span class="lang-fr">Outillage</span><span class="lang-en">Tooling</span></span>
-  <h2><span class="lang-fr">Stack technique</span><span class="lang-en">Technical stack</span></h2>
-  <p><span class="lang-fr">Chaque couche du pipeline est outillée. Les Web Components garantissent la portabilité — un même composant fonctionne dans n'importe quel framework.</span><span class="lang-en">Every layer of the pipeline is tooled. Web Components guarantee portability — the same component works in any framework.</span></p>
-  ${illusMultiPlat}
-  <div class="stack-flow" role="img" aria-label="Pipeline : décision, documentation, design, code, validation, audit, déploiement">
-    ${stackNodes.map(([ico,fr,en,sub]) => `
-    <div class="stack-node">
-      <div class="stack-node-icon">${ico}</div>
-      <div class="stack-node-label"><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></div>
-      <div class="stack-node-sub">${sub}</div>
-    </div>`).join('')}
-  </div>
-  </div>
-</section>
-
-<div class="brand-band" role="presentation" aria-hidden="true">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <rect width="720" height="160" class="shape-surface"/>
-    <polygon class="shape shape-slate drift-a" points="0,0 250,0 90,160 0,160"/>
-    <polygon class="shape shape-plum drift-b" points="150,0 360,0 250,160 60,160"/>
-    <polygon class="shape shape-accent drift-c" points="330,0 470,0 410,160 270,160"/>
-    <path class="shape shape-slate drift-a" d="M470,0 H720 V160 H560 C560,90 510,40 470,30 Z"/>
-    <path class="shape shape-plum drift-c" d="M720,40 V160 H600 C620,110 660,70 720,40 Z"/>
-    <path class="shape shape-accent drift-b" d="M360,160 C380,110 430,90 470,150 L470,160 Z"/>
-    <circle class="shape shape-teal drift-c" cx="540" cy="20" r="42" opacity="0.9"/>
-  </svg>
-</div>
-
-<section class="section-secondary">
-  <div class="si-inner cta-final">
-    <h2><span class="lang-fr">Prêt à explorer le système ?</span><span class="lang-en">Ready to explore the system?</span></h2>
-    <p><span class="lang-fr">Commencez par les fondations, ou plongez dans la documentation conçue pour les agents IA.</span><span class="lang-en">Start with the foundations, or dive into the documentation built for AI agents.</span></p>
-    <div class="cta-actions">
-      <a href="foundations/color.html" class="ds-btn primary"><span class="lang-fr">Explorer les fondations</span><span class="lang-en">Explore foundations</span></a>
-      <a href="agents/index.html" class="ds-btn secondary on-dark"><span class="lang-fr">Documentation agents</span><span class="lang-en">Agent documentation</span></a>
-    </div>
-  </div>
-</section>
+<!-- Navigation documentation — SEO et agents -->
+<nav class="v2-doc-nav" aria-label="Documentation" style="display:none" aria-hidden="true">
+  <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+  <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+  <a href="tokens/index.html">Tokens</a>
+  <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+  <a href="agents/index.html"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a>
+  <a href="pipelines/index.html">Pipelines</a>
+</nav>
 
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Système de design pour humains et agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+// ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
+
+function v2Sidebar(base, current) {
+  const links = [
+    ['pourquoi.html', '<span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span>'],
+    ['architecture.html', '<span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span>'],
+    ['qualite.html', '<span class="lang-fr">Qualité</span><span class="lang-en">Quality</span>'],
+    ['ia.html', 'IA'],
+  ];
+  const docLinks = [
+    ['documentation.html', 'Documentation'],
+    ['foundations/index.html', '<span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span>'],
+    ['components/index.html', '<span class="lang-fr">Composants</span><span class="lang-en">Components</span>'],
+    ['tokens/index.html', 'Tokens'],
+    ['decisions/index.html', '<span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span>'],
+    ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
+  ];
+  return `<aside class="v2-sidebar" aria-label="Navigation secondaire">
+  <nav>
+    <span class="v2-sidebar-heading">Agentica</span>
+    ${links.map(([href, label]) => `<a href="${base}${href}"${current === href ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
+    <span class="v2-sidebar-heading">Documentation</span>
+    ${docLinks.map(([href, label]) => `<a href="${base}${href}">${label}</a>`).join('\n    ')}
+  </nav>
+</aside>`;
+}
+
+function buildPourquoi() {
+  const sidebar = v2Sidebar('', 'pourquoi.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Notre vision</span><span class="lang-en">Our vision</span></p>
+      <h1>
+        <span class="lang-fr">Pourquoi Agentica existe</span>
+        <span class="lang-en">Why Agentica exists</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Les produits numériques accumulent des milliers de décisions invisibles. Agentica rend ces décisions explicites, durables et lisibles — par les humains comme par les agents IA.</span>
+        <span class="lang-en">Digital products accumulate thousands of invisible decisions. Agentica makes those decisions explicit, durable and readable — by humans and AI agents alike.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('book-open', 20)}</div>
+        <h2><span class="lang-fr">Les connaissances se perdent</span><span class="lang-en">Knowledge gets lost</span></h2>
+        <p><span class="lang-fr">Les décisions de design, d'architecture et d'accessibilité se dispersent dans Figma, GitHub, Slack et la mémoire des experts. Lorsque les équipes changent, les décisions disparaissent.</span><span class="lang-en">Design, architecture and accessibility decisions scatter across Figma, GitHub, Slack and expert memory. When teams change, decisions disappear.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('bot', 20)}</div>
+        <h2><span class="lang-fr">Les agents IA improvisent</span><span class="lang-en">AI agents improvise</span></h2>
+        <p><span class="lang-fr">Sans source structurée, les agents IA inventent, réinventent et contredisent. Ils ne peuvent pas appliquer des décisions qu'ils ne comprennent pas. Agentica leur donne une source de vérité.</span><span class="lang-en">Without a structured source, AI agents invent, reinvent and contradict. They cannot apply decisions they don't understand. Agentica gives them a source of truth.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('users', 20)}</div>
+        <h2><span class="lang-fr">Le contrôle reste humain</span><span class="lang-en">Control stays human</span></h2>
+        <p><span class="lang-fr">Les agents observent, analysent et proposent. Les humains décident, approuvent et gouvernent. Ce n'est pas un système autonome. C'est un système de gouvernance augmentée.</span><span class="lang-en">Agents observe, analyze and propose. Humans decide, approve and govern. This is not an autonomous system. It is an augmented governance system.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('shield-check', 20)}</div>
+        <h2><span class="lang-fr">La qualité est structurelle</span><span class="lang-en">Quality is structural</span></h2>
+        <p><span class="lang-fr">Accessibilité, régressions visuelles, cohérence des tokens et des ADRs — ces vérifications ne sont pas optionnelles. Elles font partie du système, déclenchées automatiquement à chaque changement.</span><span class="lang-en">Accessibility, visual regressions, token and ADR consistency — these checks are not optional. They are part of the system, triggered automatically with every change.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker"><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></p>
+    <h2><span class="lang-fr">Commencer avec Agentica</span><span class="lang-en">Get started with Agentica</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a class="v2-button v2-button-secondary" href="architecture.html"><span class="lang-fr">Architecture →</span><span class="lang-en">Architecture →</span></a>
+    </div>
+  </div>
+</section>
+</div></div>`;
+  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildArchitecture() {
+  const sidebar = v2Sidebar('', 'architecture.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
+      <h1>
+        <span class="lang-fr">Une seule source de vérité</span>
+        <span class="lang-en">One single source of truth</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Un même système de tokens en trois niveaux alimente les composants, la documentation, Figma, Storybook et les agents IA. Aucune divergence. Aucune interprétation libre.</span>
+        <span class="lang-en">One three-level token system feeds components, documentation, Figma, Storybook and AI agents. No divergence. No free interpretation.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('layers', 20)}</div>
+        <h2><span class="lang-fr">Niveau 1 — Primitifs</span><span class="lang-en">Level 1 — Primitives</span></h2>
+        <p><span class="lang-fr">Les valeurs physiques brutes : couleurs, espacements, rayons, tailles de police. Jamais utilisés directement dans les composants. Toujours via un token sémantique.</span><span class="lang-en">Raw physical values: colors, spacings, radius, font sizes. Never used directly in components. Always through a semantic token.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('code', 20)}</div>
+        <h2><span class="lang-fr">Niveau 2 — Sémantiques</span><span class="lang-en">Level 2 — Semantic</span></h2>
+        <p><span class="lang-fr">Les intentions UX : <code>color.action.primary</code>, <code>space.control.padding</code>. Ce que les agents doivent utiliser pour comprendre la fonction, pas la valeur brute.</span><span class="lang-en">UX intentions: <code>color.action.primary</code>, <code>space.control.padding</code>. What agents must use to understand function, not raw value.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('settings', 20)}</div>
+        <h2><span class="lang-fr">Niveau 3 — Composants</span><span class="lang-en">Level 3 — Components</span></h2>
+        <p><span class="lang-fr">Les contrats institutionnels : décisions comportementales spécifiques à chaque composant. Toute modification requiert une approbation humaine explicite.</span><span class="lang-en">Institutional contracts: behavioral decisions specific to each component. Every change requires explicit human approval.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('git-branch', 20)}</div>
+        <h2><span class="lang-fr">ADRs — Mémoire des décisions</span><span class="lang-en">ADRs — Decision memory</span></h2>
+        <p><span class="lang-fr">Chaque décision d'architecture est documentée dans un ADR (Architecture Decision Record) : contexte, alternatives explorées, compromis acceptés. Rien ne disparaît.</span><span class="lang-en">Every architecture decision is documented in an ADR (Architecture Decision Record): context, alternatives explored, trade-offs accepted. Nothing disappears.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker">Tokens</p>
+    <h2><span class="lang-fr">Explorer le système de tokens</span><span class="lang-en">Explore the token system</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="tokens/index.html">Tokens</a>
+      <a class="v2-button v2-button-secondary" href="decisions/index.html"><span class="lang-fr">Voir les ADRs →</span><span class="lang-en">View ADRs →</span></a>
+    </div>
+  </div>
+</section>
+</div></div>`;
+  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildQualite() {
+  const sidebar = v2Sidebar('', 'qualite.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
+      <h1>
+        <span class="lang-fr">La qualité est une propriété du système</span>
+        <span class="lang-en">Quality is a system property</span>
+      </h1>
+      <p>
+        <span class="lang-fr">L'accessibilité, la cohérence visuelle, la documentation et la gouvernance des ADRs ne sont pas ajoutées après coup. Elles font partie du flux de travail. Rien n'entre sans contrôle.</span>
+        <span class="lang-en">Accessibility, visual consistency, documentation and ADR governance are not added after the fact. They are part of the workflow. Nothing enters without control.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('shield-check', 20)}</div>
+        <h2><span class="lang-fr">Accessibilité WCAG 2.1 AA</span><span class="lang-en">WCAG 2.1 AA Accessibility</span></h2>
+        <p><span class="lang-fr">Chaque composant est testé automatiquement avec axe-core avant chaque commit. Ratio de contraste, navigation clavier, attributs ARIA — non contournables.</span><span class="lang-en">Every component is automatically tested with axe-core before each commit. Contrast ratio, keyboard navigation, ARIA attributes — non-negotiable.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('eye', 20)}</div>
+        <h2><span class="lang-fr">Régressions visuelles</span><span class="lang-en">Visual regressions</span></h2>
+        <p><span class="lang-fr">Chromatic capture l'apparence de chaque composant dans chaque état. Toute déviation visuelle non approuvée bloque le déploiement.</span><span class="lang-en">Chromatic captures every component's appearance in every state. Any unapproved visual deviation blocks deployment.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('layers', 20)}</div>
+        <h2><span class="lang-fr">Cohérence des tokens</span><span class="lang-en">Token consistency</span></h2>
+        <p><span class="lang-fr">Aucune valeur codée en dur dans les composants. Chaque couleur, espacement et rayon passe par un token sémantique. Les variables fantômes sont détectées automatiquement.</span><span class="lang-en">No hardcoded values in components. Every color, spacing and radius goes through a semantic token. Ghost variables are automatically detected.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('file-text', 20)}</div>
+        <h2><span class="lang-fr">Documentation obligatoire</span><span class="lang-en">Mandatory documentation</span></h2>
+        <p><span class="lang-fr">Aucun composant ne peut être publié sans sa guideline, sa Storybook story et ses patterns UX approuvés. La documentation est un gate, pas un bonus.</span><span class="lang-en">No component can be published without its guideline, Storybook story and approved UX patterns. Documentation is a gate, not a bonus.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker">Audit</p>
+    <h2><span class="lang-fr">Voir l'audit du système</span><span class="lang-en">View the system audit</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="audit.html">Audit</a>
+      <a class="v2-button v2-button-secondary" href="components/index.html"><span class="lang-fr">Composants →</span><span class="lang-en">Components →</span></a>
+    </div>
+  </div>
+</section>
+</div></div>`;
+  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildIA() {
+  const sidebar = v2Sidebar('', 'ia.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+      <h1>
+        <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
+        <span class="lang-en">Automate without giving up control</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Les agents IA peuvent générer, détecter, documenter et proposer. Ils ne peuvent pas approuver, déployer ou contourner la gouvernance. Le dernier mot reste toujours humain.</span>
+        <span class="lang-en">AI agents can generate, detect, document and propose. They cannot approve, deploy or bypass governance. The final word always remains human.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-editorial-grid">
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('zap', 20)}</div>
+        <h2><span class="lang-fr">Ce que les agents peuvent faire</span><span class="lang-en">What agents can do</span></h2>
+        <p><span class="lang-fr">Générer des composants depuis les tokens, détecter les violations d'accessibilité, documenter les décisions, proposer des corrections, analyser la cohérence du système.</span><span class="lang-en">Generate components from tokens, detect accessibility violations, document decisions, propose fixes, analyze system consistency.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('lock', 20)}</div>
+        <h2><span class="lang-fr">Ce que les agents ne peuvent pas faire</span><span class="lang-en">What agents cannot do</span></h2>
+        <p><span class="lang-fr">Approuver une PR, déployer en production, modifier un token de composant, créer un ADR — toutes ces actions nécessitent une approbation humaine explicite.</span><span class="lang-en">Approve a PR, deploy to production, modify a component token, create an ADR — all these actions require explicit human approval.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('brain', 20)}</div>
+        <h2><span class="lang-fr">Les agents comprennent l'intention</span><span class="lang-en">Agents understand intent</span></h2>
+        <p><span class="lang-fr">Un agent comprend <code>color.action.primary</code> comme une intention UX. Il ne comprend pas <code>#3B82F6</code> comme une intention — c'est juste une valeur. Les tokens sémantiques rendent le système lisible par machine.</span><span class="lang-en">An agent understands <code>color.action.primary</code> as a UX intent. It doesn't understand <code>#3B82F6</code> as an intent — it's just a value. Semantic tokens make the system machine-readable.</span></p>
+      </div>
+      <div class="v2-editorial-block">
+        <div class="v2-editorial-icon">${icon('network', 20)}</div>
+        <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
+        <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section v2-final" data-reveal>
+  <div class="v2-shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="v2-kicker"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></p>
+    <h2><span class="lang-fr">Explorer les agents IA</span><span class="lang-en">Explore AI agents</span></h2>
+    <div class="v2-actions" style="justify-content:center;margin-top:2rem">
+      <a class="v2-button v2-button-primary" href="agents/index.html"><span class="lang-fr">Documentation agents</span><span class="lang-en">Agent documentation</span></a>
+      <a class="v2-button v2-button-secondary" href="pipelines/index.html">Pipelines →</a>
+    </div>
+  </div>
+</section>
+</div></div>`;
+  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
+}
+
+function buildDocumentation() {
+  const sidebar = v2Sidebar('', 'documentation.html');
+  const body = `<div class="v2-with-sidebar">${sidebar}<div class="v2-page-content">
+<section class="v2-section v2-simple-hero">
+  <div class="v2-shell">
+    <div class="v2-copy" style="max-width:700px">
+      <p class="v2-kicker"><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></p>
+      <h1>
+        <span class="lang-fr">Explorer Agentica</span>
+        <span class="lang-en">Explore Agentica</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Tout ce que vous devez savoir pour comprendre, construire avec et contribuer au système de design agentique.</span>
+        <span class="lang-en">Everything you need to understand, build with and contribute to the agentic design system.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="v2-section" data-reveal>
+  <div class="v2-shell">
+    <div class="v2-doc-grid">
+      <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('book-open', 20)}</div>
+        <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+        <p><span class="lang-fr">Les fondements conceptuels du système.</span><span class="lang-en">The conceptual foundations of the system.</span></p>
+        <ul>
+          <li><a href="pourquoi.html"><span class="lang-fr">Pourquoi Agentica</span><span class="lang-en">Why Agentica</span></a></li>
+          <li><a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a></li>
+          <li><a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a></li>
+          <li><a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('hammer', 20)}</div>
+        <h2><span class="lang-fr">Construire</span><span class="lang-en">Build</span></h2>
+        <p><span class="lang-fr">Guides pratiques pour démarrer et contribuer.</span><span class="lang-en">Practical guides to get started and contribute.</span></p>
+        <ul>
+          <li><a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a></li>
+          <li><a href="foundations/index.html"><span class="lang-fr">Guides de fondations</span><span class="lang-en">Foundation guides</span></a></li>
+          <li><a href="components/index.html"><span class="lang-fr">Exemples de composants</span><span class="lang-en">Component examples</span></a></li>
+          <li><a href="changelog.html"><span class="lang-fr">Changelog</span><span class="lang-en">Changelog</span></a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('file-text', 20)}</div>
+        <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+        <p><span class="lang-fr">La documentation complète du système.</span><span class="lang-en">Complete system reference.</span></p>
+        <ul>
+          <li><a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a></li>
+          <li><a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a></li>
+          <li><a href="tokens/index.html">Tokens</a></li>
+          <li><a href="decisions/index.html"><span class="lang-fr">Décisions (ADRs)</span><span class="lang-en">Decisions (ADRs)</span></a></li>
+          <li><a href="agents/index.html"><span class="lang-fr">Agents IA</span><span class="lang-en">AI Agents</span></a></li>
+          <li><a href="pipelines/index.html">Pipelines</a></li>
+        </ul>
+      </div>
+      <div class="v2-doc-block">
+        <div class="v2-editorial-icon">${icon('compass', 20)}</div>
+        <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+        <p><span class="lang-fr">Les outils et ressources du système.</span><span class="lang-en">System tools and resources.</span></p>
+        <ul>
+          <li><a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a></li>
+          <li><a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="audit.html">Audit</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</div></div>`;
+  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
@@ -3104,7 +4409,7 @@ function buildSpacing() {
       <div class="density-card-desc"><span class="lang-fr">Formulaires, settings, SaaS quotidien</span><span class="lang-en">Forms, settings, everyday SaaS</span></div>
       <div class="density-card-formula">
         <div class="density-card-bar" style="width:16px"></div>
-        <span class="density-card-math">16px (valeur primitive directe)</span>
+        <span class="density-card-math">16px (<span class="lang-fr">valeur primitive directe</span><span class="lang-en">direct primitive value</span>)</span>
       </div>
     </div>
     <div class="density-card">
@@ -3742,12 +5047,6 @@ customElements.define('agtc-button', AgtcButton);</code></pre>
 
 // ─── PAGE: ICON ─────────────────────────────────────────────────────────────
 function buildIcon() {
-  const mdPath = path.join(ROOT, 'guidelines/components/icon.md');
-  let rawMd = read(mdPath)
-    .replace(/\*\*Auteur:\*\*[^\n]*\n/g, '')
-    .replace(/\*\*Auteur :\*\*[^\n]*\n/g, '');
-  const content = parseMd(rawMd);
-
   const tokenRows = [
     ['icon-size-inline',  'semantic.icon.size.inline',  SEM['icon-size-inline']],
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
@@ -3792,7 +5091,78 @@ function buildIcon() {
 </div>
 
 <h2><span class="lang-fr">Référence complète</span><span class="lang-en">Full reference</span></h2>
-${content}
+
+<h3><span class="lang-fr">Bibliothèque — Lucide Icons</span><span class="lang-en">Library — Lucide Icons</span></h3>
+<p>
+  <span class="lang-fr">Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></span>
+  <span class="lang-en">Lucide (MIT) is the official icon library of the system. 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>). Canonical reference: <strong>lucide.dev</strong></span>
+</p>
+
+<h3><span class="lang-fr">API du composant</span><span class="lang-en">Component API</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Semantic icon (label required) --&gt;
+&lt;agtc-icon name="trash-2" size="control" label="Delete file"&gt;&lt;/agtc-icon&gt;
+
+&lt;!-- Decorative icon (aria-hidden) --&gt;
+&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;
+
+&lt;!-- Navigation icon --&gt;
+&lt;agtc-icon name="settings" size="nav" label="Settings"&gt;&lt;/agtc-icon&gt;</code></pre>
+
+<table class="token-table">
+  <thead><tr>
+    <th>Prop</th><th>Type</th>
+    <th><span class="lang-fr">Valeurs</span><span class="lang-en">Values</span></th>
+    <th><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></th>
+    <th><span class="lang-fr">Requis</span><span class="lang-en">Required</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td><code>name</code></td><td>String</td><td><span class="lang-fr">Nom Lucide (ex : <code>trash-2</code>)</span><span class="lang-en">Lucide name (e.g. <code>trash-2</code>)</span></td><td>—</td><td>✅</td></tr>
+    <tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr>
+    <tr><td><code>label</code></td><td>String</td><td><span class="lang-fr">Texte accessible</span><span class="lang-en">Accessible text</span></td><td>—</td><td><span class="lang-fr">Si non décoratif</span><span class="lang-en">If not decorative</span></td></tr>
+    <tr><td><code>decorative</code></td><td>Boolean</td><td><span class="lang-fr">Icône purement ornementale</span><span class="lang-en">Purely decorative icon</span></td><td><code>false</code></td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="lang-fr">Usage avec agtc-button</span><span class="lang-en">Usage with agtc-button</span></h3>
+<pre class="code-block"><code class="lang-html">&lt;!-- Button with decorative icon + text --&gt;
+&lt;agtc-button variant="critical"&gt;
+  &lt;agtc-icon name="trash-2" size="control" decorative&gt;&lt;/agtc-icon&gt;
+  Delete permanently
+&lt;/agtc-button&gt;
+
+&lt;!-- Icon-only button — label required on agtc-icon --&gt;
+&lt;agtc-button variant="ghost" aria-label="Close"&gt;
+  &lt;agtc-icon name="x" size="control" label="Close"&gt;&lt;/agtc-icon&gt;
+&lt;/agtc-button&gt;</code></pre>
+
+<h3><span class="lang-fr">Accessibilité — WCAG 1.1.1</span><span class="lang-en">Accessibility — WCAG 1.1.1</span></h3>
+<div class="table-wrap" tabindex="0"><table>
+  <thead><tr>
+    <th><span class="lang-fr">Scénario</span><span class="lang-en">Scenario</span></th>
+    <th><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="lang-fr">Icône seule (bouton, lien)</span><span class="lang-en">Icon only (button, link)</span></td>
+      <td><code>label="…"</code> → <code>aria-label</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône + texte adjacent</span><span class="lang-en">Icon + adjacent text</span></td>
+      <td><code>decorative</code> → <code>aria-hidden="true"</code></td>
+    </tr>
+    <tr>
+      <td><span class="lang-fr">Icône dans un champ</span><span class="lang-en">Icon in a field</span></td>
+      <td><span class="lang-fr"><code>label</code> sur le champ parent (<code>aria-describedby</code>)</span><span class="lang-en"><code>label</code> on the parent field (<code>aria-describedby</code>)</span></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<h3><span class="lang-fr">Installation</span><span class="lang-en">Installation</span></h3>
+<pre class="code-block"><code class="lang-bash"># npm (recommended for bundler projects)
+npm install lucide
+
+# CDN (static projects)
+&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</code></pre>
 `;
 
   write(path.join(DIST, 'components/icon.html'), layout({
@@ -4560,7 +5930,7 @@ function buildTable() {
 &lt;!-- Classe sur un table statique (light DOM, sans JS) --&gt;
 &lt;table class="agtc-table striped"&gt;
   &lt;caption class="visually-hidden"&gt;Tokens du badge&lt;/caption&gt;
-  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Valeur&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Value&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
   &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
 
@@ -5000,9 +6370,9 @@ function buildTabs() {
     .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:2px; }
   </style>
   <div role="tablist" aria-label="Documentation" class="demo-tablist">
-    ${demoTab('Aperçu', true)}
+    ${demoTab('<span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span>', true)}
     ${demoTab('Tokens', false)}
-    ${demoTab('Accessibilité', false)}
+    ${demoTab('<span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span>', false)}
   </div>
   <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:14px"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
 </div>
@@ -5055,13 +6425,13 @@ function buildTabs() {
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
 <pre class="code-block"><code class="lang-html">&lt;agtc-tabs label="Documentation Button" selected="overview"&gt;
-  &lt;div slot="overview"&gt;Contenu Aperçu&lt;/div&gt;
-  &lt;div slot="tokens"&gt;Contenu Tokens&lt;/div&gt;
+  &lt;div slot="overview"&gt;Overview content&lt;/div&gt;
+  &lt;div slot="tokens"&gt;Tokens content&lt;/div&gt;
 &lt;/agtc-tabs&gt;
 &lt;script type="module" src="../components/agtc-tabs.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   document.querySelector('agtc-tabs').tabs = [
-    { value: 'overview', label: 'Aperçu' },
+    { value: 'overview', label: 'Overview' },
     { value: 'tokens',   label: 'Tokens' },
   ];
 &lt;/script&gt;</code></pre>
@@ -5775,16 +7145,16 @@ function loadADRs() {
 function buildGetStarted() {
   const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
 
-  const cloneCode = esc(`# Aujourd'hui — via le dépôt
+  const cloneCode = esc(`# Today — via the repository
 git clone ${REPO}.git
 
-# Les tokens compilés vivent dans dist/tokens/ :
+# Compiled tokens live in dist/tokens/:
 #   css/  js/  tailwind/  angular/  ios/  android/`);
 
   const cssCode = esc(`<!-- Importer les variables CSS générées -->
 <link rel="stylesheet" href="dist/tokens/css/all.css">`);
 
-  const cssUseCode = esc(`/* Consommer par INTENTION — jamais de valeur en dur */
+  const cssUseCode = esc(`/* Consume by INTENT — never hardcode values */
 .cta {
   background: var(--agtc-semantic-color-action-primary);
   color:      var(--agtc-semantic-color-text-on-action);
@@ -5793,11 +7163,11 @@ git clone ${REPO}.git
   border-radius: var(--agtc-semantic-radius-control);
 }`);
 
-  const wcCode = esc(`<!-- Mode composant : Web Components (Lit) -->
+  const wcCode = esc(`<!-- Component mode: Web Components (Lit) -->
 <script type="module" src="components/agtc-button.js"></script>
 
-<agtc-button variant="primary">Enregistrer</agtc-button>
-<agtc-button variant="critical">Supprimer le dossier</agtc-button>`);
+<agtc-button variant="primary">Save</agtc-button>
+<agtc-button variant="critical">Delete folder</agtc-button>`);
 
   // logo : nom de fichier dans integrations/ (couleur de marque)
   const platforms = [
@@ -6114,21 +7484,28 @@ function buildAudit() {
   <span class="lang-en">WCAG 2.2 Accessibility Report</span>
 </h1>
 
-<div class="audit-hero">
-  <div class="audit-badge ${badgeCls}">
-    ${icon(badgeIconName, 20)}
-    <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
-    <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
+<div class="audit-results">
+  <div class="audit-hero">
+    <div class="audit-badge ${badgeCls}">
+      ${icon(badgeIconName, 20)}
+      <span class="lang-fr">${passing ? 'Conforme WCAG 2.2 AA' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} détectée${r.totalViolations > 1 ? 's' : ''}`}</span>
+      <span class="lang-en">${passing ? 'WCAG 2.2 AA Compliant' : `${r.totalViolations} violation${r.totalViolations > 1 ? 's' : ''} detected`}</span>
+    </div>
+    <p class="audit-date-row">
+      ${icon('clock', 16)}
+      <span>
+        <span class="audit-date-main lang-fr">${dateStr}</span>
+        <span class="audit-date-main lang-en">${dateStrEn}</span>
+        <span class="audit-date-detail lang-fr">heure de Montréal</span>
+        <span class="audit-date-detail lang-en">Montréal time</span>
+      </span>
+    </p>
   </div>
-  <p class="audit-date">
-    <span class="lang-fr">Généré le ${dateStr} (heure de Montréal)</span>
-    <span class="lang-en">Generated on ${dateStrEn} (Montréal time)</span>
-  </p>
+  <div class="audit-cards-wrap">
+    ${cards}
+    ${violationsSection ? `<div style="margin-top:24px">${violationsSection}</div>` : ''}
+  </div>
 </div>
-
-${cards}
-
-${violationsSection}
 
 <div class="audit-section">
   <h2>${icon('droplets', 16)} <span class="lang-fr">Ratios de contraste — SC 1.4.3 / 1.4.11</span><span class="lang-en">Contrast ratios — SC 1.4.3 / 1.4.11</span></h2>
@@ -6262,10 +7639,33 @@ function build() {
 
   // Illustrations SVG — copiées dans dist/img/ et chargées lazily (P1 perf)
   ensureDir(path.join(DIST, 'img'));
+
+  // Logo complet color white (symbol + wordmark) pour header et footer
+  const logoColorWhite = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color white.svg');
+  if (fs.existsSync(logoColorWhite)) fs.copyFileSync(logoColorWhite, path.join(DIST, 'img', 'logo-color-white.svg'));
+
+  const logoColor = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color.svg');
+  if (fs.existsSync(logoColor)) fs.copyFileSync(logoColor, path.join(DIST, 'img', 'logo-color.svg'));
+
   ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
     const src = path.join(ROOT, 'illustrations', f);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
   });
+
+  // Illustrations PNG (redesign narratif) — source : Brand/illustrations/
+  // Seuls les fichiers IMG-*.png vont vers dist/img (les affiches de marque restent dans Brand/).
+  const illusSrc = path.join(__dirname, '..', 'Brand', 'illustrations');
+  if (fs.existsSync(illusSrc)) {
+    const brandPngs = new Set(
+      fs.readdirSync(illusSrc).filter(f => f.startsWith('IMG-') && f.endsWith('.png'))
+    );
+    // Copier les nouvelles illustrations
+    brandPngs.forEach(f => fs.copyFileSync(path.join(illusSrc, f), path.join(DIST, 'img', f)));
+    // Supprimer les orphelins (IMG-*.png dans dist qui n'existent plus dans Brand/illustrations)
+    fs.readdirSync(path.join(DIST, 'img'))
+      .filter(f => f.startsWith('IMG-') && f.endsWith('.png') && !brandPngs.has(f))
+      .forEach(f => fs.rmSync(path.join(DIST, 'img', f)));
+  }
 
   // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
   // Affichés dans leurs couleurs de marque officielles → copiés tels quels, servis via <img>.
@@ -6280,6 +7680,11 @@ function build() {
 
   const adrs = loadADRs();
   buildHome(adrs);
+  buildPourquoi();
+  buildArchitecture();
+  buildQualite();
+  buildIA();
+  buildDocumentation();
   buildGetStarted();
   buildChangelog();
   buildFoundationsIndex();

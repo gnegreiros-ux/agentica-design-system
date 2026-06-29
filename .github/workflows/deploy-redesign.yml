@@ -1,0 +1,40 @@
+name: Deploy — Redesign Preview
+
+on:
+  push:
+    branches: [feature/redesign]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-redesign
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build redesign
+        working-directory: site
+        run: node build.js
+
+      - name: Deploy to /redesign subpath
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: site/dist
+          publish_branch: gh-pages
+          destination_dir: redesign
+          keep_files: true

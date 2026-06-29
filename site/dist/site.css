@@ -545,13 +545,17 @@ html[data-lang="en"] .lang-fr{display:none}
 .info-card-icon{color:var(--agtc-semantic-color-action-primary);margin-bottom:8px}
 
 /* ── AUDIT PAGE ──────────────────────────────────────────── */
-.audit-hero{text-align:center;padding:48px 0 32px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:40px}
-.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size);margin-bottom:16px}
+.audit-hero{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:32px 32px 28px;border-bottom:1px solid var(--agtc-semantic-color-border-default);margin-bottom:28px}
+.audit-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--agtc-semantic-radius-pill);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:var(--agtc-semantic-typography-body-size)}
 .audit-badge.pass{background:var(--agtc-semantic-color-feedback-success-subtle);color:var(--agtc-semantic-color-feedback-success)}
 .audit-badge.fail{background:var(--agtc-semantic-color-feedback-danger-subtle);color:var(--agtc-semantic-color-feedback-danger)}
-.audit-meta{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size);margin-bottom:6px}
-.audit-date{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)}
-.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.audit-date-row{display:inline-flex;align-items:center;gap:10px;margin:0;color:var(--agtc-semantic-color-text-primary)}
+.audit-date-row svg{color:var(--agtc-semantic-color-text-secondary);flex-shrink:0}
+.audit-date-main{display:block;font-size:var(--agtc-semantic-typography-heading-4-size);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;margin-bottom:4px}
+.audit-date-detail{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
+.audit-results{background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);margin-bottom:48px;overflow:hidden}
+.audit-cards-wrap{padding:28px 32px 32px}
+.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:0}
 .audit-card{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);padding:var(--agtc-space-6);text-align:center}
 .audit-card--pass{border-color:var(--agtc-semantic-color-feedback-success-border)}
 .audit-card--warn{border-color:var(--agtc-semantic-color-feedback-warning-border)}
@@ -716,7 +720,7 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
   color:var(--agtc-semantic-color-action-primary);
 }
 [data-context="marketing"] .hero-title{
-  font-size:clamp(2.2rem,5vw,var(--agtc-semantic-marketing-typography-display-size));
+  font-size:clamp(2.625rem,6.5vw,var(--agtc-semantic-marketing-typography-display-size));
   font-weight:var(--agtc-semantic-marketing-typography-display-weight);
   line-height:var(--agtc-semantic-marketing-typography-display-line-height);
 }
@@ -1111,3 +1115,911 @@ body{overflow-x:hidden}
 .cta-final > p{max-width:560px;margin:0 auto}
 /* ── Home section h2 top margin reset ───────────────────────────────────── */
 .home-section h2{margin-top:0}
+
+/* ══ REDESIGN — sections narratives (feature/redesign) ══════════════════════
+   Classes préfixées rd- dédiées à la refonte narrative.
+   Toutes passent par les tokens sémantiques existants.                       */
+
+/* ── REDESIGN — ambiance continue (prompt.md : "une seule atmosphère") ──────
+   Pas d'alternance dark/light. Sections séparées par un border discret +
+   surfaces subtiles. Tous les tokens passent par semantic.marketing.* ou
+   semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
+.rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
+.rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
+.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
+@media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
+
+.rd-eyebrow{display:block;font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);text-transform:uppercase;letter-spacing:var(--agtc-tracking-eyebrow);color:var(--agtc-semantic-color-action-primary);margin-bottom:1rem}
+.rd-h2{font-size:clamp(2.25rem,5vw,3.5rem);font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.05;letter-spacing:var(--agtc-tracking-tighter);margin:0 0 1.75rem;color:var(--agtc-semantic-color-text-primary)}
+.rd-lead{font-size:clamp(1.0625rem,1.8vw,1.25rem);line-height:1.7;color:var(--agtc-semantic-color-text-secondary);max-width:52ch;margin-bottom:2rem}
+
+/* Hero stats — inside dark .hero section, donc tokens on-inverse */
+.rd-hero-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--agtc-surface-glass-border)}
+.rd-stat-num{display:block;font-size:var(--agtc-font-size-h3,1.75rem);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);line-height:1}
+.rd-stat-label{display:block;font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-on-inverse-muted);margin-top:.25rem}
+
+/* agtc-button.ghost sur fond .hero sombre — token glass, meme logique que ds-btn.on-dark */
+.hero .agtc-button.ghost{color:var(--agtc-surface-glass-ghost-text);border-color:var(--agtc-surface-glass-border)}
+.hero .agtc-button.ghost:hover:not(:disabled){background:var(--agtc-surface-glass)}
+
+.rd-illus{display:flex;align-items:center;justify-content:center;overflow:visible}
+.rd-illus img{width:100%;max-width:660px;height:auto;display:block}
+
+/* ── PHASE 2.1 — sections continues · bleed · fondu images ──────────────────
+   "Les images doivent toujours se fondre avec le fond de la section."
+   Solution : TOUTES les sections rd-* passent sur fond inverse (dark).
+   Le token remapping via CSS custom properties cascade automatiquement dans
+   tous les enfants (cartes, textes, bordures, Web Components). ADR-057, ADR-058.
+
+   Ambiance continue : une seule atmosphère sombre sur l'ensemble de la page.
+   Les illustrations (fond sombre isométrique) se fondent dans le fond de section. */
+
+/* ── Toutes sections rd-* = fond inverse. Token remapping en cascade. ─── */
+[data-context="marketing"] .rd-section,
+[data-context="marketing"] .rd-section-alt{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+  /* Remap tokens sémantiques — enfants (cartes, textes, boutons) héritent automatiquement */
+  --agtc-semantic-color-text-primary:var(--agtc-semantic-color-text-on-inverse);
+  --agtc-semantic-color-text-secondary:var(--agtc-semantic-color-text-on-inverse-muted);
+  --agtc-semantic-color-background-surface:var(--agtc-surface-glass);
+  --agtc-semantic-color-background-subtle:var(--agtc-surface-glass);
+  --agtc-semantic-color-border-default:var(--agtc-surface-glass-border);
+}
+/* rd-section-alt : légère variation via glass overlay */
+[data-context="marketing"] .rd-section-alt{
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-inverse) 94%,white 6%);
+}
+@supports not (color:color-mix(in srgb,black 0%,white 0%)){
+  [data-context="marketing"] .rd-section-alt{background:var(--agtc-semantic-color-background-inverse)}
+}
+
+/* Blend architectural — illustrations fusionnées comme background-image.
+   mix-blend-mode:screen → pixels sombres du PNG disparaissent dans le fond sombre.
+   Seul le contenu lumineux (teal, circuits, highlights) reste visible.
+   mask-image conserve le fondu de bord. */
+.rd-illus img,.rd-illus-center img{
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 45%,transparent 90%);
+}
+
+/* Full-width S5 : screen blend + fondu de bord */
+.rd-illus-full img{
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
+  mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,black 48%,transparent 90%);
+}
+
+/* Hero cinematic — marketing context
+   Illustration sortie du flux, position absolute bord droit.
+   Texte contraint à 46% gauche (hero-content-w), z-index au-dessus de l'image. */
+[data-context="marketing"] .hero{
+  min-height:88vh;display:flex;align-items:center;
+}
+[data-context="marketing"] .hero-inner{width:100%;padding-top:0;padding-bottom:0}
+/* Container texte hero — même glassmorphism que rd-cinematic-body */
+[data-context="marketing"] .hero-content-w{
+  width:46%;max-width:560px;
+  padding:clamp(2rem,4vw,3rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
+/* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
+[data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
+[data-context="marketing"] .hero-inner{position:relative;z-index:2}
+@media(max-width:860px){
+  [data-context="marketing"] .hero{min-height:auto;flex-direction:column;align-items:stretch;padding-top:calc(var(--agtc-header-height,64px) + 2rem)}
+  [data-context="marketing"] .hero .hero-illus-wrap{position:relative;inset:auto;height:260px;flex-shrink:0;justify-content:center}
+  [data-context="marketing"] .hero .hero-illus-wrap img{height:100%;width:auto;mask-image:none;-webkit-mask-image:none}
+  [data-context="marketing"] .hero .rd-bg-fade{display:none}
+  [data-context="marketing"] .hero-content-w{width:100%;max-width:none}
+}
+
+/* Une seule histoire — sections sans bordures, flux naturel */
+.rd-section{overflow:visible;border-top:none}
+
+/* Protection contre le scroll horizontal du bleed */
+.rd-wrap{overflow-x:hidden}
+
+/* Bleed architectural : illustration sort de sa colonne */
+.rd-illus-bleed-r img{width:135%;max-width:none !important}
+.rd-illus-bleed-l img{width:135%;max-width:none !important;margin-left:-35%}
+
+/* Séparation entre zones : très légère via .rd-section-alt uniquement */
+.rd-section-alt{position:relative}
+
+/* La section wow et alt n'ont pas besoin de border non plus */
+.rd-section-wow{border-top:none}
+.rd-illus-placeholder{aspect-ratio:4/3;width:100%;max-width:520px;background:var(--agtc-semantic-color-background-subtle);border:2px dashed var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail);text-align:center;padding:1.5rem}
+.rd-illus-placeholder strong{display:block;font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+
+.rd-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;gap:.75rem}
+.rd-list li{display:flex;align-items:baseline;gap:.75rem;font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-primary)}
+.rd-list.dash li::before{content:"—";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.check li::before{content:"✓";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.arrow li::before{content:"→";color:var(--agtc-semantic-color-action-primary);font-weight:700;flex-shrink:0}
+.rd-list.dot li::before{content:"◆";color:var(--agtc-semantic-color-action-primary);font-size:.5rem;flex-shrink:0;align-self:center}
+.rd-list li.no::before{content:"✗";color:var(--agtc-semantic-color-feedback-danger);font-weight:700;flex-shrink:0}
+
+.rd-dual{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2rem 0}
+.rd-dual-card{padding:1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default)}
+.rd-dual-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:1rem}
+.rd-quote{font-size:var(--agtc-font-size-body);font-style:italic;color:var(--agtc-semantic-color-text-secondary);border-left:3px solid var(--agtc-semantic-color-action-primary);padding-left:1.5rem;margin:2rem 0 0;max-width:52ch}
+
+.rd-stack{display:grid;gap:1rem}
+.rd-stack-card{padding:1.25rem 1.5rem;border-radius:var(--agtc-semantic-radius-card);background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);display:grid;grid-template-columns:auto 1fr;gap:.75rem 1rem;align-items:start;transition:border-color .18s}
+.rd-stack-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-stack-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);grid-row:1/3;padding-top:.15rem}
+.rd-stack-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary)}
+.rd-stack-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+.rd-role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;margin-top:2rem}
+.rd-role-grid-compact{grid-template-columns:repeat(2,1fr);margin-top:1.25rem}
+@media(max-width:600px){.rd-role-grid-compact{grid-template-columns:1fr}}
+.rd-role-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-role-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-role-name{font-size:var(--agtc-font-size-label);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.rd-role-name::before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:var(--agtc-semantic-color-action-primary);flex-shrink:0}
+.rd-role-items{list-style:none;padding:0;margin:0;display:grid;gap:.375rem}
+.rd-role-items li{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+.rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
+
+.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
+.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
+.rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
+.rd-doc-nav a:visited{color:var(--agtc-semantic-color-text-secondary)}
+.rd-doc-nav a:hover{color:var(--agtc-semantic-color-action-primary)}
+
+@media(max-width:640px){.rd-dual{grid-template-columns:1fr}.rd-hero-stats{gap:1.25rem}}
+
+/* ── PHASE 2 — rythme, compositions dynamiques, halos de profondeur ─────────
+   Sections wow (fond inverse), asymétriques, centrées. Halos via rgba()
+   — profondeur atmosphérique, pas gradient de marque. ADR-057, ADR-058.
+   Un seul aurora (hero) conforme règle 1 gradient/page. */
+
+/* Hero pleine hauteur sur pages marketing */
+[data-context="marketing"] .hero{min-height:90svh;display:flex;align-items:center}
+[data-context="marketing"] .hero .hero-inner{width:100%;padding-top:2rem;padding-bottom:2rem}
+
+/* Sections marketing : 96px → 144px (×1.5) — plus d'air éditorial */
+[data-context="marketing"] .rd-section>.rd-inner,
+[data-context="marketing"] .rd-section-alt>.rd-inner,
+[data-context="marketing"] .rd-section-wow>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5);
+}
+
+/* Sections monumentales — ×2 section-breathing (≈ 192px) — override la règle ×1.5 ci-dessus */
+.rd-section-monument>.rd-inner{
+  padding-top:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+  padding-bottom:calc(var(--agtc-semantic-marketing-space-section-breathing)*2);
+}
+
+/* Section "wow" — fond inverse, PAS d'aurora (quota 1 gradient = hero) */
+.rd-section-wow{
+  background:var(--agtc-semantic-color-background-inverse);
+  color:var(--agtc-semantic-color-text-on-inverse);
+}
+.rd-section-wow .rd-h2{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-eyebrow{color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-lead{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-narrative{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-dual-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-dual-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-list li{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-statement{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-quote{color:var(--agtc-semantic-color-text-on-inverse-muted);border-left-color:var(--agtc-semantic-color-action-primary)}
+.rd-section-wow .rd-token-card{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border)}
+.rd-section-wow .rd-token-title{color:var(--agtc-semantic-color-text-on-inverse)}
+.rd-section-wow .rd-token-desc{color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+/* Grilles asymétriques 40/60 et 60/40 */
+.rd-grid-40-60{display:grid;grid-template-columns:2fr 3fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.rd-grid-60-40{display:grid;grid-template-columns:3fr 2fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media(max-width:860px){.rd-grid-40-60,.rd-grid-60-40{grid-template-columns:1fr}}
+
+/* Section centrée — pauses narratives */
+.rd-center{text-align:center}
+.rd-center .rd-h2{max-width:22ch;margin-left:auto;margin-right:auto}
+.rd-center .rd-lead{margin-left:auto;margin-right:auto;max-width:56ch}
+.rd-center .rd-eyebrow{display:flex;justify-content:center}
+.rd-center .rd-quote{text-align:center;border-left:none;padding-left:0;margin-left:auto;margin-right:auto;font-size:clamp(1.5rem,3vw,2.5rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);line-height:1.2;max-width:28ch}
+
+/* Illustration pleine largeur (S5) */
+.rd-illus-full{width:100%;margin:3rem 0}
+.rd-illus-full img{width:100%;height:auto;display:block}
+
+/* Illustration centrée (S3) */
+.rd-illus-center{display:flex;justify-content:center;margin-bottom:5rem;overflow:visible}
+.rd-illus-center img{width:100%;max-width:920px;height:auto;display:block}
+
+/* Halos de profondeur — rgba() uniquement, pas de token gradient de marque */
+.rd-halo{position:relative}
+.rd-halo::before{content:"";position:absolute;inset:-35%;background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(18,165,148,.30) 0%,transparent 70%);pointer-events:none;z-index:0}
+.rd-halo>*{position:relative;z-index:1}
+.rd-halo-pink::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(237,107,134,.24) 0%,transparent 70%)}
+.rd-halo-violet::before{background:radial-gradient(ellipse 82% 82% at 50% 50%,rgba(120,80,200,.22) 0%,transparent 70%)}
+
+/* Texte narratif — plus grand que body standard */
+.rd-narrative{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.8;color:var(--agtc-semantic-color-text-primary);max-width:60ch}
+
+/* ── rd-cinematic : illustration absolue collée au bord — pattern VP ─────────
+   L'image flotte en position:absolute (droite ou gauche).
+   La lisibilité est assurée par le glassmorphism du container texte seul.
+   Inspiré de gnegreiros-ux.github.io/depot/index-vp.html */
+.rd-cinematic{position:relative;overflow:hidden;min-height:72vh;display:flex;align-items:center}
+.rd-bg-wrap{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center}
+.rd-bg-r{justify-content:flex-end}
+.rd-bg-l{justify-content:flex-start}
+.rd-bg-wrap img{height:82%;width:auto;max-height:82vh;display:block;mix-blend-mode:screen;opacity:.92;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 94%,transparent 100%)}
+/* bg-fade : vignette douce aux seuls bords latéraux de l'image.
+   N'est plus un scrim plein — ne couvre pas la zone de texte.
+   Laisse l'image visible à travers le glassmorphism du container. */
+.rd-bg-fade{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
+  );
+}
+.rd-bg-fade.rd-bg-fade-l{
+  background:linear-gradient(to left,
+    var(--agtc-semantic-color-background-inverse) 0%,
+    var(--agtc-semantic-color-background-inverse) 2%,
+    transparent 30%,
+    transparent 62%,
+    var(--agtc-semantic-color-overlay-subtle) 82%,
+    var(--agtc-semantic-color-overlay-medium) 100%
+  );
+}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+/* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
+   overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
+   backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
+.rd-cinematic-body{
+  width:46%;max-width:580px;
+  padding:clamp(2rem,4vw,3.5rem) clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--agtc-semantic-color-overlay-scrim);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+}
+.rd-cinematic-body-r{margin-left:auto}
+.rd-cinematic-tall{min-height:85vh}
+.rd-cinematic-body-wide{width:52%;max-width:640px}
+@media(max-width:860px){
+  .rd-cinematic{min-height:auto;flex-direction:column}
+  .rd-cinematic-tall{min-height:auto}
+  .rd-bg-wrap{position:relative;inset:auto;height:260px;width:100%;flex-shrink:0}
+  .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
+  .rd-bg-fade{display:none}
+  .rd-cinematic-inner{display:block;padding:0 clamp(1rem,5vw,2rem)}
+  .rd-cinematic-body,.rd-cinematic-body-r,.rd-cinematic-body-wide{width:100%;max-width:none;margin:0;border-radius:12px}
+}
+
+/* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
+   Remplace rd-inner+rd-grid pour les sections avec illustration de bord.
+   La colonne texte reste en max-width ; la colonne illus touche le bord de la section. */
+.rd-split{display:grid;align-items:center;width:100%}
+.rd-split-text-l{grid-template-columns:5fr 7fr}
+.rd-split-text-r{grid-template-columns:7fr 5fr}
+
+/* Texte — centré dans sa colonne, max-width pour la lisibilité */
+.rd-split-body{
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:560px;
+  padding:calc(var(--agtc-semantic-marketing-space-section-breathing)*1.5) clamp(2rem,4vw,4rem);
+}
+.rd-split-text-l .rd-split-body{margin-left:auto}
+.rd-split-text-r .rd-split-body{margin-right:auto}
+
+/* Illustration — remplit toute sa colonne jusqu'au bord sans contrainte */
+.rd-split-illus{
+  position:relative;
+  align-self:stretch;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:480px;
+}
+/* L'image déborde légèrement sa colonne — clipping naturel par overflow:hidden */
+.rd-split-illus img{
+  width:115%;
+  height:auto;
+  display:block;
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 42%,transparent 88%);
+  max-width:none !important;
+}
+/* Halo dans le split — fonctionne malgré overflow:hidden car il est en inset */
+.rd-split-illus.rd-halo::before{inset:-10%}
+
+@media(max-width:860px){
+  .rd-split-text-l,.rd-split-text-r{grid-template-columns:1fr}
+  .rd-split-text-r .rd-split-illus{order:-1}
+  .rd-split-illus{min-height:280px}
+  .rd-split-body{max-width:none;margin:0;padding:2.5rem clamp(1.5rem,5vw,2.5rem)}
+}
+
+/* Token flow — 4 cartes horizontales sous illustration S5 */
+.rd-token-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+@media(max-width:900px){.rd-token-flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.rd-token-flow{grid-template-columns:1fr}}
+.rd-token-card{padding:1.5rem;background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);transition:border-color .18s}
+.rd-token-card:hover{border-color:var(--agtc-semantic-color-action-primary)}
+.rd-token-num{font-size:var(--agtc-font-size-detail);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);margin-bottom:.5rem}
+.rd-token-title{font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-primary);margin-bottom:.375rem}
+.rd-token-desc{font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-secondary)}
+
+/* Placeholder dans sections sombres (S7) */
+.rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-inverse)}
+
+/* Centrage du CTA interne hero */
+.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
+
+/* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
+.rd-illus img{width:100%;height:auto;display:block}
+
+/* ═══════════════════════════════════════════════════════════
+   REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
+   Namespace : .v2-* — ne pas modifier sans approbation
+   ═══════════════════════════════════════════════════════ */
+
+/* Variables V2 — dans :root pour accessibilité globale */
+:root {
+  --v2-bg: var(--agtc-semantic-color-background-page);
+  --v2-bg-soft: var(--agtc-semantic-color-background-surface);
+  --v2-surface: color-mix(in srgb, var(--agtc-semantic-color-background-surface) 74%, transparent);
+  --v2-surface-strong: color-mix(in srgb, var(--agtc-semantic-color-background-inverse) 86%, transparent);
+  --v2-line: var(--agtc-surface-glass-border);
+  --v2-text: var(--agtc-semantic-color-text-on-inverse);
+  --v2-muted: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-faint: var(--agtc-semantic-color-text-on-inverse-muted);
+  --v2-teal: var(--agtc-semantic-color-action-primary);
+  --v2-rose: var(--agtc-semantic-color-accent);
+  --v2-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --v2-radius: var(--agtc-semantic-radius-card, 16px);
+  --v2-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
+}
+
+html{scroll-behavior:smooth;overflow-x:hidden}
+
+body.v2-page{
+  min-height:100vh;
+  background:var(--agtc-gradient-aurora),var(--agtc-semantic-color-background-page);
+  color:var(--v2-text);
+  overflow-x:hidden;
+}
+.v2-page main{overflow:hidden}
+
+/* Header V2 */
+.v2-header{
+  position:fixed;inset:0 0 auto;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:var(--agtc-header-height,64px);
+  padding:0 var(--agtc-site-header-padding-x,24px);
+  border-bottom:1px solid var(--v2-line);
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 85%,transparent);
+  backdrop-filter:blur(18px) saturate(140%);
+}
+.v2-brand{
+  display:inline-flex;align-items:center;gap:var(--agtc-space-2,.5rem);
+  color:var(--v2-text);font-weight:var(--agtc-semantic-fontWeight-display,700);text-decoration:none;
+  flex-shrink:0;
+}
+
+/* Navigation V2 */
+.v2-nav{display:flex;align-items:center;gap:var(--agtc-component-top-nav-cta-gap,8px)}
+.v2-nav a,.v2-docs-trigger,.v2-menu-button{
+  border:0;border-radius:0;background:transparent;
+  color:var(--v2-muted);font:inherit;text-decoration:none;cursor:pointer;
+}
+.v2-nav a,.v2-docs-trigger{
+  position:relative;
+  padding:var(--agtc-component-top-nav-cta-padding-y,8px) var(--agtc-component-top-nav-tab-padding-x,14px);
+  font-size:var(--agtc-component-top-nav-tab-font-size);
+  font-weight:var(--agtc-component-top-nav-tab-font-weight);
+}
+.v2-nav a:hover,.v2-docs-trigger:hover,.v2-nav a:focus-visible,.v2-docs-trigger:focus-visible{color:var(--v2-text);outline:none}
+.v2-nav a::after,.v2-docs-trigger::after{
+  content:"";position:absolute;inset:auto 0 -.35rem;
+  height:var(--agtc-component-top-nav-tab-indicator-width,2px);
+  background:var(--agtc-component-top-nav-tab-indicator-color,var(--agtc-semantic-color-action-primary));
+  transform:scaleX(0);transform-origin:left;transition:transform .16s ease;
+}
+.v2-nav a:hover::after,.v2-nav a:focus-visible::after,.v2-nav a[aria-current="page"]::after,
+.v2-docs-trigger:hover::after,.v2-docs-trigger:focus-visible::after,.v2-docs-trigger[aria-expanded="true"]::after{transform:scaleX(1)}
+.v2-nav a[aria-current="page"],.v2-docs-trigger[aria-expanded="true"]{color:var(--v2-text)}
+
+/* Neutralisation :visited sur nav (ADR-047, rule no-visited-nav) */
+.v2-nav a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-docs-panel a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+
+.v2-nav .v2-nav-action{
+  margin-left:var(--agtc-component-top-nav-cta-gap,8px);
+  padding-inline:var(--agtc-component-top-nav-cta-padding-x,16px);
+  padding-block:var(--agtc-component-top-nav-cta-padding-y,8px);
+  border-radius:var(--agtc-component-top-nav-cta-radius,var(--agtc-semantic-radius-control,8px));
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background,var(--agtc-semantic-color-action-primary));
+  font-weight:700;
+}
+.v2-nav .v2-nav-action:hover,.v2-nav .v2-nav-action:focus-visible{
+  color:var(--agtc-component-top-nav-cta-color,var(--agtc-semantic-color-text-on-action));
+  background:var(--agtc-component-top-nav-cta-background-hover,var(--agtc-semantic-color-action-primary-hover));
+}
+.v2-nav .v2-nav-action::after{display:none}
+
+.v2-header-tools{
+  display:flex;align-items:center;gap:var(--agtc-space-2,8px);
+  margin-left:var(--agtc-space-3,12px);flex-shrink:0;
+}
+.v2-lang-switch{min-height:34px}
+.v2-lang-switch button{padding:3px 9px;font-size:var(--agtc-semantic-typography-detail-size);letter-spacing:var(--agtc-tracking-wide)}
+
+/* Megapanel Documentation */
+.v2-docs{position:relative}
+.v2-docs-panel{
+  position:absolute;top:calc(100% + 16px);right:-148px;
+  display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;padding:1px;border:1px solid var(--v2-line);border-radius:18px;
+  background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
+  box-shadow:var(--agtc-shadow-lg);
+  opacity:0;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.v2-docs-panel.is-open{opacity:1;transform:translateY(0);pointer-events:auto}
+.v2-docs-panel > div{
+  min-height:230px;padding:1.35rem;
+  background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 94%,transparent);
+}
+.v2-docs-panel > div:first-child{border-radius:17px 0 0 17px}
+.v2-docs-panel > div:nth-child(3){border-radius:0 17px 17px 0}
+.v2-docs-panel h2{margin:0 0 .9rem;font-size:.86rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
+.v2-docs-panel a{display:block;margin:.2rem 0;padding:.45rem .1rem;color:var(--v2-muted)}
+.v2-docs-panel a:hover,.v2-docs-panel a:focus-visible{color:var(--v2-text);outline:none}
+
+/* Hamburger / close icons */
+.v2-icon-hamburger,.v2-icon-close{display:block}
+.v2-menu-button[aria-expanded="true"] .v2-icon-hamburger{display:none}
+.v2-menu-button[aria-expanded="false"] .v2-icon-close{display:none}
+/* Logo dark/light swap */
+.v2-logo-light{display:none}
+[data-theme="light"] .v2-logo-dark{display:none}
+[data-theme="light"] .v2-logo-light{display:block}
+.v2-menu-button{display:none;padding:.6rem;border:1px solid var(--v2-line)}
+
+/* Sections V2 */
+.v2-section{position:relative;padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-section::before{
+  content:"";position:absolute;inset:12% auto auto 50%;
+  width:min(52vw,620px);aspect-ratio:1;border-radius:999px;
+  background:radial-gradient(circle,color-mix(in srgb,var(--agtc-semantic-color-action-primary) 24%,transparent),transparent 66%);
+  filter:blur(6px);transform:translateX(-50%);pointer-events:none;
+}
+.v2-shell{position:relative;width:var(--v2-shell);margin-inline:auto}
+
+.v2-hero{
+  min-height:100svh;display:grid;align-items:center;
+  padding-top:calc(var(--agtc-header-height,64px) + 3rem);
+  padding-bottom:var(--agtc-semantic-marketing-space-hero-gap,120px);
+}
+.v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid{
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);
+  align-items:center;gap:clamp(2rem,5vw,5rem);
+}
+.v2-copy{max-width:660px}
+.v2-copy-narrow{max-width:550px}
+.v2-kicker{
+  margin:0 0 1rem;
+  color:color-mix(in srgb,var(--v2-teal) 72%,white);
+  font-size:var(--agtc-semantic-marketing-typography-eyebrow-size);
+  font-weight:var(--agtc-semantic-marketing-typography-eyebrow-weight);
+  letter-spacing:var(--agtc-tracking-eyebrow);text-transform:uppercase;
+}
+.v2-page .v2-copy h1,.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  margin:0;max-width:780px;color:var(--v2-text);
+  font-weight:var(--agtc-semantic-marketing-typography-display-weight);
+  letter-spacing:var(--agtc-tracking-tighter);
+  line-height:var(--agtc-semantic-marketing-typography-display-line-height);
+}
+.v2-page .v2-copy h1{font-size:clamp(var(--agtc-semantic-typography-hero-size),5vw,var(--agtc-semantic-marketing-typography-display-size))}
+.v2-page .v2-copy h2,.v2-page .v2-section-heading h2{
+  font-size:var(--agtc-semantic-typography-heading-1-size);
+  line-height:var(--agtc-semantic-typography-heading-1-line-height);
+}
+.v2-copy p,.v2-section-heading p{
+  margin:1.35rem 0 0;color:var(--v2-muted);
+  font-size:var(--agtc-font-size-h5,1.25rem);line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+
+/* Boutons V2 */
+.v2-button{
+  display:inline-flex;align-items:center;min-height:44px;
+  padding:var(--agtc-component-button-primary-padding-y,11px) var(--agtc-component-button-primary-padding-x,24px);
+  border:1.5px solid transparent;
+  border-radius:var(--agtc-component-button-primary-radius,var(--agtc-semantic-radius-control,8px));
+  font-size:var(--agtc-font-size-body,1rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);
+  line-height:1.3;text-decoration:none;
+  transition:transform .12s ease,border-color .14s ease,background .14s ease,color .14s ease;
+}
+.v2-button:hover,.v2-button:focus-visible{outline:none}
+.v2-button:active{transform:translateY(1px)}
+.v2-button:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+.v2-button-primary{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background);
+  background:var(--agtc-component-button-primary-background);
+}
+.v2-button-primary:hover,.v2-button-primary:focus-visible{
+  color:var(--agtc-component-button-primary-text);
+  border-color:var(--agtc-component-button-primary-background-hover);
+  background:var(--agtc-component-button-primary-background-hover);
+}
+.v2-button-secondary{
+  color:var(--agtc-semantic-color-text-on-inverse);
+  border-color:var(--agtc-surface-glass-strong,rgba(255,255,255,.22));
+  background:var(--agtc-surface-glass,rgba(255,255,255,.08));
+}
+.v2-button-secondary:hover,.v2-button-secondary:focus-visible{background:var(--agtc-surface-glass-hover,rgba(255,255,255,.12))}
+.v2-button-ghost{
+  color:var(--agtc-surface-glass-ghost-text,var(--agtc-semantic-color-text-on-inverse-secondary));
+  border-color:transparent;background:transparent;
+}
+.v2-button-ghost:hover,.v2-button-ghost:focus-visible{background:var(--agtc-surface-glass,rgba(255,255,255,.08))}
+
+/* Illustrations V2 */
+.v2-art{position:relative;margin:0;line-height:0}
+.v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+.v2-art-hero{width:min(100%,720px);justify-self:end}
+.v2-overlap,.v2-overlap-reverse{
+  display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
+}
+.v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
+.v2-art-wide{width:min(100%,740px)}
+.v2-immersive{
+  padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
+  background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
+}
+.v2-art-float{width:min(100%,720px);justify-self:end;animation:v2-float 8s ease-in-out infinite}
+.v2-split{
+  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,.74fr);
+  align-items:center;gap:clamp(2rem,6vw,6rem);
+}
+.v2-section-heading{max-width:760px;margin-bottom:3rem}
+
+/* Cards rôles */
+.v2-role-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:1px;border:1px solid var(--v2-line);background:var(--v2-line);
+}
+.v2-role-card{
+  position:relative;min-height:235px;padding:1.5rem;
+  background:rgba(12,15,25,.78);overflow:hidden;
+}
+.v2-role-card::after{
+  content:"";position:absolute;inset:auto 0 0;height:3px;
+  background:linear-gradient(90deg,var(--v2-teal),var(--v2-rose),var(--v2-violet));
+  transform:scaleX(.16);transform-origin:left;transition:transform .28s ease;
+}
+.v2-role-card:hover::after,.v2-role-card:focus-within::after{transform:scaleX(1)}
+.v2-role-card h3{
+  margin:0 0 .75rem;color:var(--v2-text);
+  font-size:var(--agtc-component-card-typography-marketing-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-title-weight);
+}
+.v2-role-card p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+
+/* Section qualité */
+.v2-quality{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
+.v2-signal-stack{display:grid;gap:.6rem}
+.v2-signal-stack > span{
+  display:flex;align-items:center;padding:.9rem 1.1rem;
+  background:var(--v2-surface);border:1px solid var(--v2-line);
+  border-radius:var(--agtc-semantic-radius-card,16px);
+  color:var(--v2-text);font-size:.95rem;font-weight:500;
+}
+.v2-human-control{overflow:hidden}
+.v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
+.v2-single-art{max-width:760px;margin-inline:auto}
+
+/* Section finale */
+.v2-final{
+  min-height:92svh;display:grid;align-items:center;
+  background:radial-gradient(circle at 18% 28%,rgba(0,162,199,.22),transparent 30rem),
+             radial-gradient(circle at 82% 62%,rgba(214,64,159,.2),transparent 30rem);
+}
+.v2-art-final{width:min(100%,680px);justify-self:end}
+
+/* Reveal scrolling */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].is-visible{opacity:1;transform:translateY(0)}
+@keyframes v2-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+/* Pages secondaires */
+.v2-simple{padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px))}
+.v2-simple-hero{padding-block:var(--agtc-semantic-marketing-space-hero-gap,120px)}
+.v2-editorial-grid,.v2-doc-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1.25rem;border:none;background:transparent;
+}
+.v2-editorial-block,.v2-doc-block{
+  padding:var(--agtc-semantic-space-comfortable-layout-component,28px);
+  background:var(--v2-surface);
+  border:1px solid var(--v2-line);
+  border-radius:var(--v2-radius);
+}
+.v2-editorial-block h2,.v2-doc-block h2{
+  margin:0 0 .8rem;color:var(--v2-text);
+  border-top:none;padding-top:0;margin-top:0;
+  font-size:var(--agtc-component-card-typography-marketing-hero-title-size);
+  font-weight:var(--agtc-component-card-typography-marketing-hero-title-weight);
+  line-height:var(--agtc-semantic-typography-heading-5-line-height);
+}
+.v2-editorial-block p,.v2-doc-block p{
+  margin:0;color:var(--v2-muted);
+  font-size:var(--agtc-component-card-typography-marketing-body-size);
+  line-height:var(--agtc-line-height-text,1.6);
+}
+.v2-doc-block ul{display:grid;gap:.55rem;margin:1.1rem 0 0;padding:0;list-style:none}
+.v2-doc-block a{color:var(--v2-text);text-decoration-color:rgba(255,255,255,.25);text-underline-offset:.18em}
+.v2-anchor{display:block;position:relative;top:-96px;height:0}
+
+
+/* Footer V2 */
+.v2-footer{
+  margin-top:0;border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.12),transparent 28rem),
+             var(--agtc-semantic-color-background-page);
+}
+.v2-footer-inner{max-width:var(--v2-shell);grid-template-columns:1.15fr .9fr 1fr .9fr}
+.v2-footer-heading{margin-bottom:.25rem;color:var(--agtc-semantic-color-text-on-inverse);font-size:var(--agtc-semantic-typography-detail-size)}
+
+/* Back-to-top V2 */
+.v2-back-to-top{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.v2-back-to-top.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+
+/* Dark mode — couleur brand principale cohérente avec les composants */
+[data-theme="dark"]{
+  --agtc-semantic-color-action-primary:#12a594;
+  --agtc-semantic-color-action-primary-hover:#0d9b8a;
+  --agtc-component-button-primary-background:#12a594;
+  --agtc-component-button-primary-background-hover:#0d9b8a;
+  --agtc-component-top-nav-tab-indicator-color:#12a594;
+}
+
+/* ── LIGHT MODE — surcharges v2 ────────────────────────────────────────────
+   Les variables --v2-* sont définies dans :root avec les valeurs dark (défaut).
+   Ce bloc les réassigne aux équivalents sémantiques light mode.
+   ──────────────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --v2-text: var(--agtc-semantic-color-text-primary);
+  --v2-muted: var(--agtc-semantic-color-text-secondary);
+  --v2-faint: var(--agtc-semantic-color-text-disabled);
+  --v2-surface: var(--agtc-semantic-color-background-subtle);
+  --v2-surface-strong: var(--agtc-semantic-color-background-surface);
+  --v2-line: var(--agtc-semantic-color-border-default);
+}
+
+/* Aurora light — dégradé doux sur fond clair (sans brun foncé du mode dark) */
+[data-theme="light"] body.v2-page{
+  background:
+    radial-gradient(60% 50% at 18% 8%,rgba(18,165,148,.07) 0%,transparent 60%),
+    radial-gradient(55% 50% at 88% 22%,rgba(237,107,134,.06) 0%,transparent 62%),
+    var(--agtc-semantic-color-background-page);
+}
+
+/* Kicker — action-primary direct pour lisibilité sur fond clair (contraste ≥ 4.5:1) */
+[data-theme="light"] .v2-kicker{color:var(--agtc-semantic-color-action-primary)}
+
+/* Navigation links — visited harmonisé light (ADR-047, ADR-059 : hex avant var()) */
+[data-theme="light"] .v2-nav a:visited,
+[data-theme="light"] .v2-docs-panel a:visited,
+[data-theme="light"] .v2-sidebar a:visited,
+[data-theme="light"] .v2-footer-col a:visited{color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+
+/* Sidebar hover — rgba inverse pour fond clair */
+[data-theme="light"] .v2-sidebar a:hover,
+[data-theme="light"] .v2-sidebar a:focus-visible{background:rgba(0,0,0,.05);color:var(--agtc-semantic-color-text-primary)}
+
+/* Docs megapanel — fond opaque en light mode (surface-glass transparente sur blanc = invisible) */
+[data-theme="light"] .v2-docs-panel{
+  background:var(--agtc-semantic-color-background-surface);
+  box-shadow:var(--agtc-semantic-shadow-raised);
+}
+[data-theme="light"] .v2-docs-panel > div{
+  background:var(--agtc-semantic-color-background-surface);
+}
+
+/* Role cards — fond surface + ombre légère en light mode */
+[data-theme="light"] .v2-role-card{
+  background:var(--agtc-semantic-color-background-surface);
+  box-shadow:var(--agtc-semantic-shadow-card);
+}
+
+/* Section qualité — gradient semi-transparent inversé */
+[data-theme="light"] .v2-quality{background:linear-gradient(180deg,rgba(0,0,0,.015),transparent)}
+
+/* Section immersive — dégradé light */
+[data-theme="light"] .v2-immersive{
+  background:
+    radial-gradient(circle at 78% 48%,rgba(18,165,148,.08),transparent 30rem),
+    radial-gradient(circle at 30% 20%,rgba(237,107,134,.06),transparent 20rem);
+}
+
+/* Section finale — dégradé subtil */
+[data-theme="light"] .v2-final{
+  background:linear-gradient(180deg,var(--agtc-semantic-color-background-subtle),var(--agtc-semantic-color-background-page));
+}
+
+/* Bouton secondaire — variante light */
+[data-theme="light"] .v2-button-secondary{
+  color:var(--agtc-semantic-color-text-primary);
+  border-color:var(--agtc-semantic-color-border-default);
+  background:var(--agtc-semantic-color-background-surface);
+}
+[data-theme="light"] .v2-button-secondary:hover,
+[data-theme="light"] .v2-button-secondary:focus-visible{background:var(--agtc-semantic-color-background-subtle)}
+
+/* Bouton ghost — variante light */
+[data-theme="light"] .v2-button-ghost{color:var(--agtc-semantic-color-text-secondary)}
+[data-theme="light"] .v2-button-ghost:hover,
+[data-theme="light"] .v2-button-ghost:focus-visible{background:var(--agtc-semantic-color-background-subtle)}
+
+/* Lien doc-block — underline visible sur fond clair */
+[data-theme="light"] .v2-doc-block a{text-decoration-color:rgba(0,0,0,.15)}
+
+/* Mobile nav — fond page au lieu de background-inverse */
+@media(max-width:980px){
+  [data-theme="light"] .v2-nav.is-open{
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-surface) 96%,transparent);
+  }
+}
+
+/* Theme toggle — sans border */
+.theme-toggle{border:none!important;box-shadow:none!important;background:transparent!important}
+
+/* Cards rôles — hauteur uniforme */
+.v2-role-grid{align-items:stretch}
+.v2-role-card{display:flex;flex-direction:column;justify-content:flex-start}
+
+/* Border-bottom animation cards — couleur principale */
+.v2-role-card::after{background:var(--agtc-semantic-color-action-primary)}
+body[data-context="marketing"] .v2-role-card::after{
+  background:linear-gradient(90deg,var(--agtc-semantic-color-action-primary),var(--agtc-semantic-color-accent,#e35d6a))
+}
+
+/* Footer V2 — 4 colonnes */
+.v2-footer{
+  border-top:1px solid var(--v2-line);
+  background:radial-gradient(circle at 18% 0%,rgba(18,165,148,.08),transparent 28rem),
+             var(--agtc-semantic-color-background-page);
+  padding:4rem var(--agtc-site-header-padding-x,24px);
+}
+.v2-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2.5rem}
+.v2-footer-col{display:flex;flex-direction:column;gap:.55rem}
+.v2-footer-col a{color:var(--v2-muted);text-decoration:none;font-size:.9rem;line-height:1.5}
+.v2-footer-col a:hover,.v2-footer-col a:focus-visible{color:var(--v2-text)}
+.v2-footer-linkedin:hover,.v2-footer-linkedin:focus-visible{color:var(--v2-text)!important}
+.v2-footer-col a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-footer-col span{color:var(--v2-muted);font-size:.85rem;line-height:1.5}
+.v2-footer-heading{color:var(--v2-text)!important;font-weight:700;font-size:.9rem!important;margin-bottom:.5rem}
+
+/* Icônes dans les blocs éditoriaux des sous-pages */
+.v2-editorial-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:2.5rem;height:2.5rem;border-radius:10px;
+  background:rgba(18,165,148,.12);color:var(--v2-teal);
+  margin-bottom:1rem;flex-shrink:0;
+}
+.v2-editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--v2-text);border-top:none;padding-top:0;margin-top:0}
+
+/* Sidebar latérale V2 pour sous-pages */
+.v2-with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
+.v2-sidebar{align-self:stretch;overflow:visible;border-right:1px solid var(--v2-line)}
+.v2-sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
+.v2-sidebar-heading{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--v2-muted);padding:.5rem 0;margin-top:1rem}
+.v2-sidebar-heading:first-child{margin-top:0}
+.v2-sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
+.v2-sidebar a:hover,.v2-sidebar a:focus-visible{color:var(--v2-text);background:rgba(255,255,255,.07);outline:none}
+.v2-sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-inverse-muted)}
+.v2-sidebar a[aria-current="page"]{color:var(--v2-teal);background:rgba(18,165,148,.1)}
+.v2-page-content{overflow:hidden}
+.v2-page-content .v2-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+.v2-page-content .v2-simple-hero{padding-top:3rem}
+@media(max-width:860px){
+  .v2-with-sidebar{grid-template-columns:1fr}
+  .v2-sidebar{display:none}
+}
+
+/* Stats hero (réutilisées depuis rd-*) */
+.v2-hero-stats{
+  display:flex;flex-wrap:wrap;gap:2rem;margin-top:2.5rem;
+  padding-top:2rem;border-top:1px solid var(--v2-line);
+}
+.v2-stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--v2-text)}
+.v2-stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--v2-muted);margin-top:.25rem}
+
+/* Responsive */
+@media(max-width:980px){
+  :root{--v2-shell:min(100vw - 32px,760px)}
+  .v2-menu-button{display:inline-flex;align-items:center}
+  .v2-header-tools{order:2;margin-left:auto}
+  .v2-menu-button{order:3}
+  .v2-header-tools .github-btn,.v2-header-tools .storybook-btn{display:none}
+  .v2-nav{
+    position:fixed;
+    inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
+    display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
+    border:1px solid var(--v2-line);border-radius:var(--agtc-semantic-radius-card,16px);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
+    box-shadow:var(--agtc-shadow-lg);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
+    pointer-events:none;
+  }
+  .v2-nav.is-open{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear 0s;
+    pointer-events:auto;
+  }
+  @media(prefers-reduced-motion:reduce){
+    .v2-nav,.v2-nav.is-open{transition:none}
+  }
+  .v2-nav a,.v2-docs-trigger{width:100%;text-align:left}
+  .v2-nav a::after,.v2-docs-trigger::after{inset:auto 0 .35rem}
+  .v2-nav .v2-nav-action{margin-left:0}
+  .v2-docs-panel{
+    position:static;width:100%;grid-template-columns:1fr;
+    margin-top:.5rem;transform:none;
+  }
+  .v2-docs-panel > div,.v2-docs-panel > div:first-child,.v2-docs-panel > div:last-child{
+    min-height:auto;border-radius:0;
+  }
+  .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid,
+  .v2-overlap,.v2-overlap-reverse,.v2-split{grid-template-columns:1fr}
+  .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
+    width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
+  }
+  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-single-art,.v2-dual-art{
+    grid-template-columns:1fr;
+  }
+  .v2-footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .v2-editorial-block,.v2-doc-block{background:var(--agtc-semantic-color-background-surface)}
+  .v2-editorial-icon{background:color-mix(in srgb,var(--v2-teal) 20%,var(--agtc-semantic-color-background-surface))}
+  .v2-role-card{min-height:170px}
+}
+@media(max-width:560px){
+  .v2-header{padding-inline:16px}
+  .v2-footer{padding-inline:16px}
+  .v2-footer-grid{grid-template-columns:1fr;gap:2rem}
+  .v2-section{padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px)}
+  .v2-hero{
+    padding-top:calc(var(--agtc-header-height,64px) + var(--agtc-space-7,48px));
+    padding-bottom:var(--agtc-space-7,48px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  [data-reveal]{opacity:1;transform:none}
+}

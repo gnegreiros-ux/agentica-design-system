@@ -16,3 +16,4 @@ import './agtc-card.js';
 import './agtc-tabs.js';
 import './agtc-code-block.js';
 import './agtc-top-nav.js';
+import './agtc-feature-card.js';
