@@ -5,11 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyThemeImages(theme) {
+    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
+      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
+    });
+  }
+  applyThemeImages(savedTheme);
+
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
+      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
@@ -43,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || localStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -53,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -71,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       document.documentElement.setAttribute('data-lang', lang);
-      localStorage.setItem('agtc-lang', lang);
+      sessionStorage.setItem('agtc-lang', lang);
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       history.replaceState({}, '', url.toString());
@@ -278,18 +287,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── Bouton retour en haut ────────────────────────────────
-  const backToTop = document.querySelector('.back-to-top');
+  // ── Bouton retour en haut (V2 — threshold 600px, classe is-visible) ─────────
+  const backToTop = document.querySelector('[data-back-to-top]');
   if (backToTop) {
-    const onScroll = () => {
-      const visible = window.scrollY > 200;
-      backToTop.hidden = !visible;
+    const setBackToTopState = () => {
+      const visible = window.scrollY > window.innerHeight;
+      backToTop.classList.toggle('is-visible', visible);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', setBackToTopState, { passive: true });
+    setBackToTopState();
+  }
+
+  // ── Megapanel Documentation (V2) ─────────────────────────────────────────
+  const docsTrigger = document.querySelector('[data-docs-trigger]');
+  const docsPanel   = document.querySelector('[data-docs-panel]');
+  if (docsTrigger && docsPanel) {
+    const closeDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'false');
+      docsPanel.classList.remove('is-open');
+      docsPanel.hidden = true;
+    };
+    const openDocs = () => {
+      docsTrigger.setAttribute('aria-expanded', 'true');
+      docsPanel.hidden = false;
+      requestAnimationFrame(() => docsPanel.classList.add('is-open'));
+    };
+    docsTrigger.addEventListener('click', e => {
+      if (docsTrigger.getAttribute('aria-expanded') !== 'true') e.preventDefault();
+      docsTrigger.getAttribute('aria-expanded') === 'true' ? closeDocs() : openDocs();
     });
+    docsTrigger.addEventListener('mouseenter', openDocs);
+    docsPanel.addEventListener('mouseenter', openDocs);
+    document.addEventListener('pointerdown', e => {
+      if (!docsPanel.contains(e.target) && !docsTrigger.contains(e.target)) closeDocs();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeDocs(); docsTrigger.focus(); }
+    });
+  }
+
+  // ── Menu mobile V2 ────────────────────────────────────────────────────────
+  const v2MenuToggle = document.querySelector('[data-menu-toggle]');
+  const v2MainNav    = document.querySelector('[data-main-nav]');
+  if (v2MenuToggle && v2MainNav) {
+    v2MenuToggle.addEventListener('click', () => {
+      const isOpen = v2MenuToggle.getAttribute('aria-expanded') === 'true';
+      v2MenuToggle.setAttribute('aria-expanded', String(!isOpen));
+      v2MainNav.classList.toggle('is-open', !isOpen);
+    });
+    v2MainNav.addEventListener('click', e => {
+      if (e.target.closest('a')) {
+        v2MenuToggle.setAttribute('aria-expanded', 'false');
+        v2MainNav.classList.remove('is-open');
+      }
+    });
+  }
+
+  // ── Scroll reveal V2 ([data-reveal] → .is-visible) ───────────────────────
+  const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+  if (revealItems.length) {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.16 });
+      revealItems.forEach(el => revealObs.observe(el));
+    } else {
+      revealItems.forEach(el => el.classList.add('is-visible'));
+    }
   }
 
   // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
