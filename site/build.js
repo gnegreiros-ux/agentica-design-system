@@ -7339,7 +7339,37 @@ function buildChangelog() {
   // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
   const versions = [
     {
-      id: 'v0-1-0', ver: 'v0.1.0', date: '2026', badge: {fr:'Non lancée',en:'Unreleased'},
+      id: 'v0-2-0', ver: 'v0.2.0', date: '2026-06-29', badge: {fr:'Non lancée',en:'Unreleased'},
+      sections: [
+        { fr:'Tokens — Dark mode dual-mode', en:'Tokens — Dark mode dual-mode', items:[
+          {fr:'<code>tokens/semantic.dark.json</code> — 38 tokens delta (valeurs qui changent entre light et dark), DTCG-conforme, pattern "deux fichiers, un seul build CSS" (ADR-065)',en:'<code>tokens/semantic.dark.json</code> — 38 delta tokens (values that change between light and dark), DTCG-compliant, "two files, one CSS build" pattern (ADR-065)'},
+          {fr:'Style Dictionary : second run → <code>dist/tokens/css/dark.css</code> sous sélecteur <code>[data-theme="dark"] { … color-scheme: dark; }</code>',en:'Style Dictionary: second run → <code>dist/tokens/css/dark.css</code> under <code>[data-theme="dark"] { … color-scheme: dark; }</code> selector'},
+          {fr:'Convention <code>text.on-dark</code> — renommage de <code>on-inverse</code> → <code>on-dark</code> sur tous les tokens (plus explicite pour les équipes produit)',en:'<code>text.on-dark</code> convention — renamed <code>on-inverse</code> → <code>on-dark</code> across all tokens (clearer for product teams)'},
+        ]},
+        { fr:'Composants', en:'Components', items:[
+          {fr:'<code>agtc-feature-card</code> — nouveau Web Component (glassmorphism, variantes default/marketing, niveaux de titre 1–6, revue UX P1–P8 approuvée, ADR-063)',en:'<code>agtc-feature-card</code> — new Web Component (glassmorphism, default/marketing variants, heading levels 1–6, UX review P1–P8 approved, ADR-063)'},
+          {fr:'Correction contraste <code>agtc-feature-card</code> : 10 violations Chromatic (ratio 1.12) → 0. Cause : <code>text.primary</code> sur fond glassmorphism toujours sombre → remplacé par <code>text.on-dark</code>',en:'<code>agtc-feature-card</code> contrast fix: 10 Chromatic violations (ratio 1.12) → 0. Root cause: <code>text.primary</code> on always-dark glassmorphism background → replaced with <code>text.on-dark</code>'},
+        ]},
+        { fr:'Storybook & Chromatic', en:'Storybook & Chromatic', items:[
+          {fr:'<code>@storybook/addon-themes</code> — toggle dark/light dans la toolbar Storybook (<code>withThemeByDataAttribute</code>, <code>data-theme</code> sur <code>&lt;html&gt;</code>)',en:'<code>@storybook/addon-themes</code> — dark/light toggle in Storybook toolbar (<code>withThemeByDataAttribute</code>, <code>data-theme</code> on <code>&lt;html&gt;</code>)'},
+          {fr:'Chromatic Story Modes — 2 snapshots par story (light #fcfcfc / dark #0a0c11), baselines séparées. Résout les régressions visuelles dark/light non détectées',en:'Chromatic Story Modes — 2 snapshots per story (light #fcfcfc / dark #0a0c11), separate baselines. Resolves undetected dark/light visual regressions'},
+        ]},
+        { fr:'Performance', en:'Performance', items:[
+          {fr:'Home page 1 453 KB → 65 KB (−95 %) : illustrations SVG chargées en lazy-load via <code>IntersectionObserver</code>, jamais inlinées dans le HTML',en:'Home page 1,453 KB → 65 KB (−95%): SVG illustrations lazy-loaded via <code>IntersectionObserver</code>, never inlined in HTML'},
+          {fr:'Google Fonts non-bloquant : <code>@import</code> supprimé de <code>site.css</code> → <code>&lt;link&gt;</code> dans <code>&lt;head&gt;</code> avec <code>preconnect</code> — élimine 2 allers-retours réseau',en:'Non-blocking Google Fonts: <code>@import</code> removed from <code>site.css</code> → <code>&lt;link&gt;</code> in <code>&lt;head&gt;</code> with <code>preconnect</code> — eliminates 2 network round trips'},
+        ]},
+        { fr:'Site & Redesign V2', en:'Site & Redesign V2', items:[
+          {fr:'Redesign site V2 complet : mode sombre par défaut (<code>data-theme="dark"</code>), glassmorphism, aurora hero, footer 4 colonnes, sidebar gauche pages agents, logo 3 couleurs',en:'Full site V2 redesign: dark mode by default (<code>data-theme="dark"</code>), glassmorphism, aurora hero, 4-column footer, left sidebar for agent pages, 3-colour logo'},
+          {fr:'Mode clair V2 fonctionnel : token adaptatifs <code>background-page</code>, bloc <code>[data-theme="light"]</code>, 4 combinaisons dark/light × marketing/produit (ADR-064)',en:'Working V2 light mode: adaptive <code>background-page</code> tokens, <code>[data-theme="light"]</code> block, 4 dark/light × marketing/product combinations (ADR-064)'},
+          {fr:'Documentation dark mode sur la page Démarrer : snippets HTML/JS/CSS, règle <code>text.on-dark</code> documentée',en:'Dark mode documentation on Get started page: HTML/JS/CSS snippets, <code>text.on-dark</code> rule documented'},
+        ]},
+        { fr:'Gouvernance', en:'Governance', items:[
+          {fr:'ADR-063 (<code>agtc-feature-card</code>), ADR-064 (mode clair V2), ADR-065 (dark mode dual-mode) — 65 ADRs au total',en:'ADR-063 (<code>agtc-feature-card</code>), ADR-064 (V2 light mode), ADR-065 (dark mode dual-mode) — 65 ADRs total'},
+        ]},
+      ]
+    },
+    {
+      id: 'v0-1-0', ver: 'v0.1.0', date: '2026-06-19', badge: null,
       sections: [
         { fr:'Fondations', en:'Foundations', items:[
           {fr:'Architecture de tokens 3 niveaux : primitifs → sémantiques → composant (DTCG-conforme)',en:'3-layer token architecture: primitives → semantic → component (DTCG-compliant)'},
@@ -7347,12 +7377,12 @@ function buildChangelog() {
           {fr:'Bibliothèque d\'icônes Lucide — 1 500+ icônes, 3 tailles, contrats d\'accessibilité WCAG 1.1.1',en:'Lucide icon library — 1,500+ icons, 3 sizes, WCAG 1.1.1 accessibility contracts'},
         ]},
         { fr:'Composants', en:'Components', items:[
-          {fr:'14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented',en:'14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented'},
+          {fr:'14 Web Components (Lit) : Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Top Nav',en:'14 Web Components (Lit): Button, Input, Badge, Card, Checkbox, Radio, Toggle, Table, Code Block, Banner, Link, Icon, Segmented, Top Nav'},
           {fr:'Variantes Button : primary, secondary, ghost, critical — confirmation obligatoire pour les actions irréversibles',en:'Button variants: primary, secondary, ghost, critical — required confirmation for irreversible actions'},
           {fr:'Tokens de composant institutionnels dans <code>tokens/component.json</code>',en:'Institutional component tokens in <code>tokens/component.json</code>'},
         ]},
         { fr:'Gouvernance & Agents', en:'Governance & Agents', items:[
-          {fr:'55 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées',en:'55 ADRs (Architecture Decision Records) — all decisions traced and justified'},
+          {fr:'62 ADRs (Architecture Decision Records) — toutes les décisions tracées et justifiées',en:'62 ADRs (Architecture Decision Records) — all decisions traced and justified'},
           {fr:'4 types d\'agents IA : Designer, Developer, QA, Documentation',en:'4 AI agent types: Designer, Developer, QA, Documentation'},
           {fr:'Conformité WCAG 2.1 AA — audit intégré, 0 violation critique',en:'WCAG 2.1 AA compliance — built-in audit, 0 critical violations'},
           {fr:'Pipeline qualité complet : tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild',en:'Full quality pipeline: tokens-audit, WCAG, UX patterns, ADR, docs, site rebuild'},
