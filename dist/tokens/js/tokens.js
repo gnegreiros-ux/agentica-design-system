@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 26 Jun 2026 19:34:17 GMT
+ * Generated on Mon, 29 Jun 2026 13:52:39 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -507,16 +507,16 @@ export const SemanticColorTextSecondary = "#646464";
 export const SemanticColorTextDisabled = "#767676";
 export const SemanticColorTextOnAction = "#ffffff";
 export const SemanticColorTextOnDanger = "#ffffff";
-export const SemanticColorTextOnInverse = "rgba(255,255,255,1.00)";
-export const SemanticColorTextOnInverseSecondary = "rgba(255,255,255,0.75)";
-export const SemanticColorTextOnInverseMuted = "rgba(255,255,255,0.52)";
+export const SemanticColorTextOnDark = "rgba(255,255,255,1.00)";
+export const SemanticColorTextOnDarkSecondary = "rgba(255,255,255,0.75)";
+export const SemanticColorTextOnDarkMuted = "rgba(255,255,255,0.52)";
 export const SemanticColorTextOnCode = "#e8e8e8";
 export const SemanticColorTextOnCodeMuted = "#bbbbbb";
 export const SemanticColorTextOnCodeStrong = "#fcfcfc";
 export const SemanticColorBorderDefault = "#e8e8e8";
 export const SemanticColorBorderFocus = "#007a68";
 export const SemanticColorBorderDanger = "#ce2c31";
-export const SemanticColorBorderOnInverse = "rgba(255,255,255,0.18)";
+export const SemanticColorBorderOnDark = "rgba(255,255,255,0.18)";
 export const SemanticColorBorderSwatch = "rgba(0,0,0,0.10)";
 export const SemanticColorVizScaleBar = "#fdbdbe";
 export const SemanticColorControlTrackOff = "#8d8d8d";
