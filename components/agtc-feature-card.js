@@ -108,14 +108,14 @@ class AgtcFeatureCard extends LitElement {
     .heading {
       font-size: .95rem;
       font-weight: 700;
-      color: var(--agtc-semantic-color-text-primary, #f1f5f9);
+      color: var(--agtc-semantic-color-text-on-inverse, rgba(255,255,255,1.00));
       margin: 0 0 .5rem;
       line-height: 1.3;
     }
 
     .body {
       font-size: .875rem;
-      color: var(--agtc-semantic-color-text-secondary, #94a3b8);
+      color: var(--agtc-semantic-color-text-on-inverse-secondary, rgba(255,255,255,0.75));
       line-height: 1.6;
       flex: 1;
     }
