@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 19 Jun 2026 15:52:10 GMT
+ * Generated on Fri, 26 Jun 2026 19:34:17 GMT
  */
 
 :root {
@@ -400,6 +400,8 @@
   --agtc-primitive-color-secondary-10: #5f404b;
   --agtc-primitive-color-secondary-11: #6b4b56;
   --agtc-primitive-color-secondary-12: #432f36;
+  --agtc-primitive-color-brand-black: #000000;
+  --agtc-primitive-color-brand-gray: #6B7280;
   --agtc-primitive-color-neutral-0: #ffffff;
   --agtc-primitive-color-neutral-50: #fafafa;
   --agtc-primitive-color-neutral-500: #767676;
@@ -443,30 +445,30 @@
   --agtc-primitive-space-20: 80px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-30: 120px;
-  --agtc-primitive-font-size-xs: 0.75rem;
-  --agtc-primitive-font-size-sm: 0.875rem;
-  --agtc-primitive-font-size-base: 1rem;
-  --agtc-primitive-font-size-lg: 1.25rem;
-  --agtc-primitive-font-size-xl: 1.5rem;
-  --agtc-primitive-font-size-2xl: 1.75rem;
-  --agtc-primitive-font-size-3xl: 2rem;
-  --agtc-primitive-font-size-4xl: 2.5rem;
-  --agtc-primitive-font-size-5xl: 3rem;
-  --agtc-primitive-font-size-6xl: 3.75rem;
-  --agtc-primitive-font-weight-regular: 400;
-  --agtc-primitive-font-weight-medium: 500;
-  --agtc-primitive-font-weight-bold: 700;
-  --agtc-primitive-line-height-reading: 1.6;
-  --agtc-primitive-line-height-heading: 1.1;
-  --agtc-primitive-line-height-display: 1.0;
+  --agtc-primitive-fontSize-xs: 0.75rem;
+  --agtc-primitive-fontSize-sm: 0.875rem;
+  --agtc-primitive-fontSize-base: 1rem;
+  --agtc-primitive-fontSize-lg: 1.25rem;
+  --agtc-primitive-fontSize-xl: 1.5rem;
+  --agtc-primitive-fontSize-2xl: 1.75rem;
+  --agtc-primitive-fontSize-3xl: 2rem;
+  --agtc-primitive-fontSize-4xl: 2.5rem;
+  --agtc-primitive-fontSize-5xl: 3rem;
+  --agtc-primitive-fontSize-6xl: 3.75rem;
+  --agtc-primitive-fontWeight-regular: 400;
+  --agtc-primitive-fontWeight-medium: 500;
+  --agtc-primitive-fontWeight-bold: 700;
+  --agtc-primitive-lineHeight-reading: 1.6;
+  --agtc-primitive-lineHeight-heading: 1.1;
+  --agtc-primitive-lineHeight-display: 1.0;
   --agtc-primitive-radius-sm: 6px;
   --agtc-primitive-radius-md: 10px;
-  --agtc-primitive-font-family-base: 'Atkinson Hyperlegible', system-ui, sans-serif;
-  --agtc-primitive-font-family-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
-  --agtc-primitive-icon-size-sm: 16px;
-  --agtc-primitive-icon-size-md: 20px;
-  --agtc-primitive-icon-size-lg: 24px;
-  --agtc-primitive-icon-size-xl: 32px;
+  --agtc-primitive-fontFamily-base: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --agtc-primitive-fontFamily-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
+  --agtc-primitive-iconSize-sm: 16px;
+  --agtc-primitive-iconSize-md: 20px;
+  --agtc-primitive-iconSize-lg: 24px;
+  --agtc-primitive-iconSize-xl: 32px;
   --agtc-primitive-density-factor-normal: 1;
   --agtc-primitive-density-factor-comfortable: 1.25;
   --agtc-primitive-density-factor-compact: 0.75;

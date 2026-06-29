@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Fri, 19 Jun 2026 15:52:10 GMT
+// Generated on Fri, 26 Jun 2026 19:34:17 GMT
 
 
 import UIKit
@@ -181,6 +181,8 @@ public class AgenticaTokens {
     public static let primitiveColorBlue7 = #8ec8f6
     public static let primitiveColorBlue8 = #5eb1ef
     public static let primitiveColorBlue9 = #0090ff
+    public static let primitiveColorBrandBlack = #000000
+    public static let primitiveColorBrandGray = #6B7280
     public static let primitiveColorBronze1 = #fdfcfc
     public static let primitiveColorBronze10 = #957468
     public static let primitiveColorBronze11 = #7d5e54
@@ -635,6 +637,8 @@ public class AgenticaTokens {
     public static let semanticColorBrandAccentHover = #e05f7b
     public static let semanticColorBrandAccentSubtle = #ebdadc
     public static let semanticColorBrandAccentText = #a6294c
+    public static let semanticColorBrandLogoBlack = #000000
+    public static let semanticColorBrandLogoGray = #6B7280
     public static let semanticColorBrandPrimary = #12a594
     public static let semanticColorBrandPrimaryHover = #0d9b8a
     public static let semanticColorBrandPrimarySubtle = #e0f8f3
@@ -663,6 +667,10 @@ public class AgenticaTokens {
     public static let semanticColorIllustrationInk = #211f26
     public static let semanticColorIllustrationNeutral = #8b9098
     public static let semanticColorIllustrationSurface = #eff1f3
+    public static let semanticColorOverlayDark = rgba(15, 17, 23, 0.88)
+    public static let semanticColorOverlayMedium = rgba(15, 17, 23, 0.50)
+    public static let semanticColorOverlayScrim = rgba(15, 17, 23, 0.65)
+    public static let semanticColorOverlaySubtle = rgba(15, 17, 23, 0.18)
     public static let semanticColorTextDisabled = #767676
     public static let semanticColorTextOnAction = #ffffff
     public static let semanticColorTextOnCode = #e8e8e8
