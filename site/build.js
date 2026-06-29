@@ -2459,12 +2459,16 @@ body.v2-page{
 /* Illustrations V2 */
 .v2-art{position:relative;margin:0;line-height:0}
 .v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
-.v2-art-hero{position:absolute;right:0;top:0;width:50%;height:100%;max-width:none;overflow:hidden;margin:0}
-.v2-art-hero img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:none}
+.v2-art-hero{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:58%;height:auto;max-width:none;overflow:visible;margin:0;
+  z-index:0;
+}
+.v2-art-hero img{width:100%;height:auto;object-fit:contain;filter:none}
 /* Texte limité à la moitié gauche — figure abs n'est plus dans le flux */
 .v2-hero .v2-shell{position:static}
 .v2-hero .v2-hero-grid{grid-template-columns:1fr}
-.v2-hero .v2-copy{max-width:min(560px,50vw - 2rem)}
+.v2-hero .v2-copy{position:relative;z-index:1;max-width:min(560px,50vw - 2rem)}
 .v2-overlap,.v2-overlap-reverse{
   display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
 }
@@ -2684,6 +2688,8 @@ body.v2-page{
 
 /* Theme toggle — sans border */
 .theme-toggle{border:none!important;box-shadow:none!important;background:transparent!important}
+/* Page d'accueil — dark mode uniquement, toggle masqué */
+[data-page="home"] .theme-toggle{display:none!important}
 
 /* Cards rôles — hauteur uniforme */
 .v2-role-grid{align-items:stretch}
@@ -2829,7 +2835,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Theme toggle ─────────────────────────────────────────
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  // Page d'accueil — toujours en dark mode (toggle masqué)
+  const isHome = document.documentElement.dataset.page === 'home';
+  document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
   function applyThemeImages(theme) {
     document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
@@ -3209,7 +3217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
 const SITE_URL      = 'https://designsystem.gnegreiros.com';
 
-function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '' }) {
+function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
   // DÉMARRER = CTA (cta:true) — action primaire d'adoption (ADR-060).
@@ -3275,7 +3283,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </footer>`;
 
   return `<!DOCTYPE html>
-<html lang="fr" data-lang="fr" data-theme="dark">
+<html lang="fr" data-lang="fr" data-theme="dark"${homePage ? ' data-page="home"' : ''}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -3800,7 +3808,7 @@ function buildHome(adrs) {
 
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', homePage: true, body }));
 }
 
 // ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
