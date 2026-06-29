@@ -3591,7 +3591,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="v2-art v2-art-float" aria-hidden="true">
-      <img src="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
+      <img src="img/IMG-HUMANS-AI.png" class="img-theme-aware" data-src-dark="img/IMG-HUMANS-AI.png" data-src-light="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
     </figure>
   </div>
 </section>
@@ -3600,7 +3600,7 @@ function buildHome(adrs) {
 <section class="v2-section" data-reveal>
   <div class="v2-shell v2-split">
     <figure class="v2-art" aria-hidden="true">
-      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
+      <img src="img/IMG-KNOWLEDGE-ASSETS.png" class="img-theme-aware" data-src-dark="img/IMG-KNOWLEDGE-ASSETS.png" data-src-light="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
     </figure>
     <div class="v2-copy">
       <p class="v2-kicker"><span class="lang-fr">Les connaissances</span><span class="lang-en">Knowledge</span></p>
@@ -3631,7 +3631,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="v2-art v2-art-wide" aria-hidden="true">
-      <img src="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
+      <img src="img/IMG-SINGLE-SOURCE.png" class="img-theme-aware" data-src-dark="img/IMG-SINGLE-SOURCE.png" data-src-light="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
     </figure>
   </div>
 </section>
@@ -3716,7 +3716,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="v2-art" aria-hidden="true">
-      <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
+      <img src="img/IMG-CONTRACTS.png" class="img-theme-aware" data-src-dark="img/IMG-CONTRACTS.png" data-src-light="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
     </figure>
   </div>
 </section>
@@ -3757,7 +3757,7 @@ function buildHome(adrs) {
     </div>
     <div class="v2-single-art">
       <figure class="v2-art" aria-hidden="true">
-        <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
+        <img src="img/IMG-DURABILITY.png" class="img-theme-aware" data-src-dark="img/IMG-DURABILITY.png" data-src-light="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
       </figure>
     </div>
   </div>
@@ -3783,7 +3783,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="v2-art v2-art-final" aria-hidden="true">
-      <img src="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
+      <img src="img/IMG-AGENTICA.png" class="img-theme-aware" data-src-dark="img/IMG-AGENTICA.png" data-src-light="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
     </figure>
   </div>
 </section>
