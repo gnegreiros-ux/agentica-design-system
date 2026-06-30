@@ -1763,7 +1763,7 @@ body.v2-page{
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
 /* Fond très sombre pour matcher le background quasi-noir des images de section */
-.v2-human-control{overflow-x:clip;background:#070910}
+.human-control{overflow-x:clip;background:#070910}
 .illus-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
 .illus-centered{max-width:760px;margin-inline:auto}
 
