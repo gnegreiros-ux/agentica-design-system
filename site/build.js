@@ -3764,7 +3764,7 @@ function buildHome(adrs) {
 
 <!-- S8 — MÉMOIRE DES DÉCISIONS -->
 <section class="site-section" data-reveal>
-  <div class="shell split">
+  <div class="shell overlap overlap-reverse">
     <div class="copy">
       <p class="kicker"><span class="lang-fr">Traçabilité</span><span class="lang-en">Traceability</span></p>
       <h2>
