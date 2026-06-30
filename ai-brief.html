@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Agentica AI Brief — Contexte structuré pour les agents IA</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Agentica AI Brief — Contexte structuré pour les agents IA">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="Agentica AI Brief — Contexte structuré pour les agents IA">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<script src="components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="v2-header" role="banner" data-v2-header>
+  <a class="v2-brand" href="index.html" aria-label="Agentica — Accueil">
+    <img src="img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="v2-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="v2-main-nav" aria-label="Navigation">
+    <svg class="v2-icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="v2-icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="v2-nav" id="v2-main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="ia.html">IA</a>
+    <div class="v2-docs">
+      <a href="documentation.html" class="v2-docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="v2-docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="v2-docs-panel" id="v2-docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="tokens/index.html">Tokens</a>
+          <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="pipelines/index.html">Pipelines</a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="v2-nav-action" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="v2-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented v2-lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+
+<div class="layout" id="main-content">
+  
+  <main class="content" role="main">
+<div class="content v2-ai-brief">
+
+  <!-- Hero -->
+  <div class="v2-ai-hero">
+    <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+    <h1>
+      <span class="lang-fr">Brief IA d'Agentica</span>
+      <span class="lang-en">Agentica AI Brief</span>
+    </h1>
+    <p class="v2-ai-lead">
+      <span class="lang-fr">Un document de contexte structuré qui permet à n'importe quelle IA (Copilot, ChatGPT, Gemini, Claude…) de répondre avec précision aux questions sur le système de design, ses règles, ses tokens et ses décisions.</span>
+      <span class="lang-en">A structured context document that enables any AI (Copilot, ChatGPT, Gemini, Claude…) to answer questions about the design system, its rules, tokens and decisions with precision.</span>
+    </p>
+  </div>
+
+  <!-- Mode d'emploi -->
+  <section class="v2-ai-steps" aria-labelledby="how-title">
+    <h2 id="how-title">
+      <span class="lang-fr">Comment utiliser ce brief</span>
+      <span class="lang-en">How to use this brief</span>
+    </h2>
+    <ol class="v2-ai-step-list">
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">1</span>
+        <div>
+          <strong><span class="lang-fr">Copiez le contexte</span><span class="lang-en">Copy the context</span></strong>
+          <p><span class="lang-fr">Cliquez sur « Copier » ci-dessous — l'intégralité du brief est dans votre presse-papier.</span><span class="lang-en">Click "Copy" below — the full brief is in your clipboard.</span></p>
+        </div>
+      </li>
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">2</span>
+        <div>
+          <strong><span class="lang-fr">Collez dans votre IA</span><span class="lang-en">Paste into your AI</span></strong>
+          <p><span class="lang-fr">Ouvrez Microsoft Copilot, ChatGPT ou tout autre assistant IA accessible. Collez le brief comme premier message.</span><span class="lang-en">Open Microsoft Copilot, ChatGPT, or any accessible AI assistant. Paste the brief as your first message.</span></p>
+        </div>
+      </li>
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">3</span>
+        <div>
+          <strong><span class="lang-fr">Posez vos questions</span><span class="lang-en">Ask your questions</span></strong>
+          <p><span class="lang-fr">L'IA connaît maintenant les règles, tokens, composants et décisions d'Agentica. Les réponses sont précises et traçables.</span><span class="lang-en">The AI now knows Agentica's rules, tokens, components and decisions. Answers are precise and traceable.</span></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Exemples de précision -->
+  <section class="v2-ai-examples" aria-labelledby="examples-title">
+    <h2 id="examples-title">
+      <span class="lang-fr">Exemples de précision</span>
+      <span class="lang-en">Precision examples</span>
+    </h2>
+    <p class="v2-ai-examples-intro">
+      <span class="lang-fr">Ces réponses sont générées depuis le brief ci-dessous — aucune approximation, tout est traçable jusqu'au token ou à l'ADR source.</span>
+      <span class="lang-en">These answers are generated from the brief below — no approximation, everything traces back to a token or source ADR.</span>
+    </p>
+    <div class="v2-ai-qa-grid">
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Quel token CSS utiliser pour la couleur d'un bouton primaire ?</span><span class="lang-en">Which CSS token should I use for a primary button color?</span></p>
+        <div class="v2-ai-a">
+          <p><code>--agtc-component-button-primary-background</code></p>
+          <p><span class="lang-fr">Ce token résout vers <code>--agtc-semantic-color-action-primary</code>, qui vaut <code>#007a68</code> en mode clair et <code>#34d3bb</code> en mode sombre. Ratio de contraste vérifié ≥ 4.5:1. Source : <code>tokens/component.json</code> + ADR-050.</span><span class="lang-en">This token resolves to <code>--agtc-semantic-color-action-primary</code>, which equals <code>#007a68</code> in light mode and <code>#34d3bb</code> in dark mode. Contrast ratio verified ≥ 4.5:1. Source: <code>tokens/component.json</code> + ADR-050.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Puis-je modifier le token <code>button.critical.requiresConfirmation</code> ?</span><span class="lang-en">Can I modify the <code>button.critical.requiresConfirmation</code> token?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">Non. Les tokens de composant sont des contrats institutionnels (ADR-004, règle tokens-system.md). Toute modification exige l'approbation du Principal Designer via une TCR (Token Change Request). Un agent ne peut pas faire ce changement seul.</span><span class="lang-en">No. Component tokens are institutional contracts (ADR-004, tokens-system.md rule). Any modification requires Principal Designer approval via a TCR (Token Change Request). An agent cannot make this change alone.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Comment nommer un nouveau token pour l'état d'erreur d'un champ de saisie ?</span><span class="lang-en">How should I name a new token for the error state of an input field?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">Format : <code>color.feedback.danger</code> (catégorie.rôle.variante) → CSS : <code>--agtc-semantic-color-feedback-danger</code>. Interdit : <code>red</code>, <code>errorColor</code>, <code>#ef4444</code>. Les tokens encodent l'intention, pas la valeur. Source : règle code-style.md + tokens-system.md.</span><span class="lang-en">Format: <code>color.feedback.danger</code> (category.role.variant) → CSS: <code>--agtc-semantic-color-feedback-danger</code>. Forbidden: <code>red</code>, <code>errorColor</code>, <code>#ef4444</code>. Tokens encode intent, not values. Source: code-style.md + tokens-system.md.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Pourquoi les liens de navigation n'ont-ils pas d'état <code>:visited</code> distinct ?</span><span class="lang-en">Why don't navigation links have a distinct <code>:visited</code> state?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">ADR-047 (2026-06-05) : la navigation n'est pas du contenu « lu/non lu ». L'état violet du navigateur casse la hiérarchie visuelle. La couleur <code>:visited</code> est réalignée sur la couleur non-visitée via un token sémantique. Exception Safari : WebKit bloque <code>var()</code> dans <code>:visited</code> → valeur hex littérale obligatoire en premier (ADR-059).</span><span class="lang-en">ADR-047 (2026-06-05): navigation is not "read/unread" content. The browser's violet state breaks visual hierarchy. The <code>:visited</code> color is realigned to the unvisited color via a semantic token. Safari exception: WebKit blocks <code>var()</code> in <code>:visited</code> → literal hex value required first (ADR-059).</span></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Le brief complet -->
+  <section class="v2-ai-brief-section" aria-labelledby="brief-title">
+    <div class="v2-ai-brief-header">
+      <h2 id="brief-title">
+        <span class="lang-fr">Le brief complet</span>
+        <span class="lang-en">The full brief</span>
+      </h2>
+      <a class="v2-button v2-button-secondary" href="context.md" download="agentica-context.md">
+        <span class="lang-fr">Télécharger context.md</span>
+        <span class="lang-en">Download context.md</span>
+      </a>
+    </div>
+    <p class="v2-ai-brief-note">
+      <span class="lang-fr">Ce document est généré automatiquement depuis les sources versionnées. Il est toujours synchronisé avec l'état réel du système.</span>
+      <span class="lang-en">This document is auto-generated from versioned sources. It is always in sync with the actual state of the system.</span>
+    </p>
+    <div id="v2-brief-block">
+      <agtc-code-block language="markdown" id="brief-codeblock">
+        <pre slot="code" style="display:none"></pre>
+      </agtc-code-block>
+    </div>
+    <script>
+      (function(){
+        const raw = "# Agentica — AI Brief\n> Système de design agentique. Version 1.0.0. Site : https://designsystem.gnegreiros.com\n> Mis à jour : 2026-06-30. Auteur : Guilherme Negreiros.\n\n## Comment utiliser ce brief\n\nCopiez l'intégralité de ce fichier et collez-le comme premier message dans votre IA (Claude, Copilot, ChatGPT, Gemini…). Toutes les questions suivantes sur Agentica recevront des réponses précises et conformes aux décisions versionnées.\n\n---\n\n## 1. Identité et mission\n\n**Nom :** Agentica (préfixe technique : agtc)\n**Organisation :** GNegreiros.com\n**Site :** https://designsystem.gnegreiros.com\n\n**Mission :** Encoder les décisions d'interface dans un format lisible par les humains et les agents IA — pour garantir cohérence, accessibilité et souveraineté numérique.\n\n**Principes directeurs :**\n1. Le dernier mot est humain. Les agents proposent, les humains approuvent.\n2. Si ce n'est pas un token, ce n'est pas une décision — toute valeur locale est une dette.\n3. La documentation instruit les machines, pas seulement les humains.\n4. Souveraineté numérique : outils, données et décisions restent sous contrôle organisationnel.\n\n---\n\n## 2. Architecture des tokens (3 niveaux — règle absolue)\n\n```\nPrimitifs → Sémantiques → Composant\n(valeurs brutes)  (intention UX)  (contrats UI)\n```\n\n| Niveau | Fichier source | Exemple |\n|--------|---------------|---------|\n| Primitif | tokens/primitives.json | color.teal.9 = #34d3bb |\n| Sémantique | tokens/semantic.json | color.action.primary → teal.9 |\n| Composant | tokens/component.json | button.critical.requiresConfirmation = true |\n\n**Règles absolues (violations = dette immédiate) :**\n- JAMAIS de valeur en dur (couleur, espacement, radius) dans le code\n- Les tokens primitifs ne s'utilisent JAMAIS directement dans un composant\n- Les tokens sémantiques encodent l'INTENTION (ex: `color.action.primary`), pas la valeur (ex: `teal`)\n- Les tokens de composant sont des contrats — toute modification exige une approbation humaine\n\n**Convention de nommage CSS :**\n```\n--agtc-[niveau]-[catégorie]-[composant]-[variante]-[propriété]\n\n--agtc-primitive-color-teal-9: #34d3bb\n--agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9)\n--agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary)\n```\n\n**Standard :** Format W3C DTCG (Design Tokens Community Group) — https://www.designtokens.org/\n\n---\n\n## 3. Composants disponibles (17 Web Components Lit)\n\n| Composant | Usage principal |\n|-----------|----------------|\n| agtc-button | Action principale, secondaire, critique, fantôme |\n| agtc-input | Champ de saisie texte, email, password |\n| agtc-badge | Étiquette statut (success/warning/danger/info/neutral/brand) |\n| agtc-banner | Message informatif inline (6 variantes, dismissible) |\n| agtc-card | Conteneur composable pour contenu structuré |\n| agtc-feature-card | Carte marketing glassmorphism avec icône et titre |\n| agtc-checkbox | Case à cocher avec états indeterminate |\n| agtc-radio / agtc-radio-group | Sélection exclusive dans un groupe |\n| agtc-toggle | Interrupteur binaire avec retour visuel immédiat |\n| agtc-table | Tableau de données lisible en lecture seule |\n| agtc-code-block | Bloc de code avec copie accessible (aria-live) |\n| agtc-tabs | Navigation par onglets avec aria-selected |\n| agtc-segmented | Contrôle segmenté mono-sélection (ex: langue, densité) |\n| agtc-link | Lien avec détection automatique externe (noopener + icône) |\n| agtc-icon | Icône Lucide tokenisée |\n| agtc-top-nav | Navigation principale, tabs visuels full-height |\n\n### Règles critiques — agtc-button\n\n- Maximum 1 bouton `primary` par section ou formulaire\n- La variante `critical` EXIGE un pattern de confirmation (token requiresConfirmation: true)\n- Libellé explicite obligatoire — jamais \"OK\" ou \"Confirmer\" seul sur une action critique\n- Largeur préservée pendant les états async (loading)\n- Variantes autorisées : `primary` | `secondary` | `critical` | `ghost`\n- INTERDIT : inventer une variante (`danger`, `destructive`) — escalader à un humain\n\n---\n\n## 4. Accessibilité — WCAG 2.1 AA (non négociable)\n\n| Règle | Standard | Token |\n|-------|----------|-------|\n| Contraste texte normal | 4.5:1 minimum | color.text.primary sur color.background.page |\n| Contraste texte large | 3.0:1 minimum | — |\n| Focus visible | Obligatoire sur tous les interactifs | color.border.focus |\n| Navigation clavier | 100% des interactions | — |\n| ARIA | Obligatoire sur tous les composants | aria-label, aria-describedby, aria-expanded |\n| Cibles tactiles | ≥ 24×24px (WCAG 2.5.8) | — |\n\nTests automatisés : axe-core (CI bloquant) + Playwright (E2E).\n\n---\n\n## 5. Gouvernance des tokens (Token Change Request)\n\n| Type de changement | Qui peut le faire | Approbation requise |\n|---|---|---|\n| Valeur d'un token primitif | Dev ou agent | Principal Designer |\n| Ajout d'un token sémantique | Dev ou agent (via PR) | Design System Lead |\n| Modification d'un token de composant | Humain seulement | Principal Designer |\n| Suppression de token | Humain seulement | Principal Designer + audit d'impact |\n\nFlux TCR : identifier → documenter → évaluer l'impact → approuver → modifier → compiler → tester → communiquer.\n\n---\n\n## 6. Contextes éditoriaux\n\n**Mode Produit** (défaut, sans attribut) :\n- Espacement normal, typographie max heading.1 (40px), grille régulière\n- Usage : documentation de composants, tokens, décisions\n\n**Mode Marketing** (`data-context=\"marketing\"`) :\n- Espacement sections 96px, gap hero 120px, typographie display (60px)\n- Usage : pages de conviction et d'onboarding\n\nPages marketing : index.html, get-started.html, agents/index.html\nToutes les autres pages sont en mode Produit.\n\n---\n\n## 7. Décisions architecturales clés — 65 ADRs (au 2026-06-30)\n\n| ADR | Décision | Impact |\n|-----|----------|--------|\n| ADR-001 | Architecture 3 niveaux de tokens | Non négociable — fondation du système |\n| ADR-004 | Gouvernance humaine — le dernier mot est toujours humain | Tous les agents |\n| ADR-005 | Variante `critical` remplace `danger` pour les actions irréversibles | agtc-button |\n| ADR-021 | Atkinson Hyperlegible comme police principale | Typographie |\n| ADR-047 | Jamais d'état :visited sur les éléments de navigation | CSS global |\n| ADR-052 | Conformité W3C DTCG — standard de facto pour les tokens | tokens/*.json |\n| ADR-057 | Deux contextes éditoriaux : Produit vs Marketing | Layout site |\n| ADR-059 | Fermeture de la hiérarchie 3 niveaux (18 tokens sémantiques ajoutés) | Tokens |\n| ADR-065 | Dark mode dual-mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |\n\n---\n\n## 8. Ce qu'un agent peut et ne peut pas faire\n\n| ✅ Autorisé | ❌ Interdit sans approbation |\n|---|---|\n| Lire et appliquer les contrats de composants | Modifier tokens/component.json |\n| Générer du code depuis les tokens sémantiques | Utiliser des valeurs en dur |\n| Détecter les dérives et proposer des corrections | Merger sur main ou develop |\n| Créer des branches fix/ docs/ feature/ | Pusher directement sur main |\n| Ouvrir une PR avec description complète | Déployer en production seul |\n| Ajouter ou modifier un token sémantique (via PR) | Supprimer un token |\n\n---\n\n## 9. Pile technologique\n\n| Couche | Technologie |\n|--------|-------------|\n| Web Components | Lit (Google) |\n| Compilation tokens | Style Dictionary (W3C DTCG) |\n| Tests visuels | Chromatic (Storybook) |\n| Tests accessibilité | axe-core (CI bloquant) |\n| Tests E2E | Playwright |\n| Documentation | Storybook |\n| Sync Figma | Tokens Studio |\n| Générateur site | Node.js custom (site/build.js) |\n| CI/CD | GitHub Actions |\n\n---\n\n*Ce brief est généré automatiquement depuis les sources versionnées d'Agentica.*\n*Toute modification passe par le dépôt : https://github.com/gnegreiros-ux/agentic-design-system*\n";
+        const cb = document.getElementById('brief-codeblock');
+        if(cb){
+          const pre = cb.querySelector('pre[slot="code"]');
+          if(pre){ pre.textContent = raw; pre.style.display = ''; }
+        }
+      })();
+    </script>
+  </section>
+
+</div>
+</main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="v2-footer site-footer" role="contentinfo">
+  <div class="v2-footer-grid">
+    <div class="v2-footer-col">
+      <a class="v2-brand" href="index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="img/logo-color-white.svg" alt="Agentica" class="v2-logo-dark" height="40" width="180" loading="lazy">
+        <img src="img/logo-color.svg" alt="" aria-hidden="true" class="v2-logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--v2-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="v2-footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Navigation</span>
+      <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="ia.html">IA</a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Documentation</span>
+      <a href="pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="tokens/index.html">Tokens</a>
+      <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+    </div>
+    <div class="v2-footer-col">
+      <span class="v2-footer-heading">Explorer</span>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="audit.html">Audit</a>
+    </div>
+  </div>
+  <div class="v2-footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top v2-back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="site.js"></script>
+</body>
+</html>
