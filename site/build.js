@@ -864,7 +864,7 @@ body{
   border-right:1px solid rgba(255,255,255,.12);
 }
 .stat-item:last-child{border-right:none}
-.stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
+.stat-band .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px;display:block}
 .stat-band .stat-text{color:rgba(255,255,255,.72)}
 
@@ -926,8 +926,8 @@ h3 .icon-ok,h3 .icon-no{margin-right:6px}
 .section-secondary .context-badge-accent{color:rgba(255,255,255,.9)}
 .section-secondary .context-attr{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
 .section-secondary .context-attr em{color:rgba(255,255,255,.45)}
-.section-secondary .ds-btn{border-color:rgba(255,255,255,.3);color:var(--agtc-semantic-color-text-on-dark,rgba(255,255,255,.92))}
-.section-secondary .ds-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.section-secondary .cta-btn{border-color:rgba(255,255,255,.3);color:var(--agtc-semantic-color-text-on-dark,rgba(255,255,255,.92))}
+.section-secondary .cta-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
 .section-secondary .pipeline{border-color:rgba(255,255,255,.12)}
 .section-secondary .pipeline-step{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.1)}
 .section-secondary .pipeline-step+.pipeline-step{border-left-color:rgba(255,255,255,.12)}
@@ -1651,13 +1651,6 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
   line-height:var(--agtc-line-height-text,1.6);
   max-width:580px;margin-bottom:var(--agtc-space-7,48px);
 }
-.hero-actions{display:flex;gap:var(--agtc-space-3,12px);flex-wrap:wrap;align-items:center}
-.hero-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:var(--agtc-space-8,64px);
-  align-items:center;
-}
-@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
-
 /* ── LAYER STACK — 3D isometric token layers ─────────────── */
 .layer-stack{
   perspective:1400px;position:relative;
@@ -1744,29 +1737,6 @@ body{overflow-x:hidden}
 :root[data-theme="dark"] .theme-btn .icon-moon{display:none}
 
 
-/* ── Marketing buttons (.ds-btn) ────────────────────────── */
-.ds-btn{
-  display:inline-flex;align-items:center;gap:var(--agtc-space-2);
-  padding:11px var(--agtc-space-5);border-radius:var(--agtc-semantic-radius-control);
-  font-size:var(--agtc-font-size-body);font-weight:var(--agtc-semantic-fontWeight-bold);
-  font-family:inherit;cursor:pointer;text-decoration:none;
-  border:1.5px solid transparent;line-height:1.3;min-height:44px;
-  transition:transform .12s,background .14s,color .14s,border-color .14s;
-}
-.ds-btn:active{transform:translateY(1px)}
-.ds-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
-.ds-btn.primary{background:var(--agtc-component-button-primary-background);color:var(--agtc-component-button-primary-text);border-color:var(--agtc-component-button-primary-background)}
-.ds-btn.primary:hover{background:var(--agtc-component-button-primary-background-hover);border-color:var(--agtc-component-button-primary-background-hover)}
-.ds-btn.secondary{background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-text-primary);border-color:var(--agtc-semantic-color-border-strong)}
-.ds-btn.secondary:hover{background:var(--agtc-semantic-color-background-subtle)}
-.ds-btn.ghost{background:transparent;color:var(--agtc-component-button-ghost-text)}
-.ds-btn.ghost:hover{background:var(--agtc-component-button-ghost-background-hover)}
-/* Variantes on-dark — contexte hero sombre (token surface-glass documenté) */
-.ds-btn.on-dark.primary{color:var(--agtc-semantic-color-text-on-dark)}
-.ds-btn.on-dark.secondary{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-strong);color:var(--agtc-semantic-color-text-on-dark)}
-.ds-btn.on-dark.secondary:hover{background:var(--agtc-surface-glass-hover)}
-.ds-btn.on-dark.ghost{color:var(--agtc-surface-glass-ghost-text)}
-.ds-btn.on-dark.ghost:hover{background:var(--agtc-surface-glass)}
 
 /* ── Card utilities ──────────────────────────────────────── */
 .card-surface{background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card);box-shadow:var(--agtc-semantic-shadow-card);position:relative;overflow:hidden;transition:border-color .18s}
@@ -1910,7 +1880,7 @@ body{overflow-x:hidden}
 .rd-stat-num{display:block;font-size:var(--agtc-font-size-h3,1.75rem);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);line-height:1}
 .rd-stat-label{display:block;font-size:var(--agtc-font-size-detail);color:var(--agtc-semantic-color-text-on-dark-muted);margin-top:.25rem}
 
-/* agtc-button.ghost sur fond .hero sombre — token glass, meme logique que ds-btn.on-dark */
+/* agtc-button.ghost sur fond .hero sombre — token glass, même logique que .cta-btn-secondary */
 .hero .agtc-button.ghost{color:var(--agtc-surface-glass-ghost-text);border-color:var(--agtc-surface-glass-border)}
 .hero .agtc-button.ghost:hover:not(:disabled){background:var(--agtc-surface-glass)}
 
@@ -2419,7 +2389,7 @@ body.page{
   margin:1.35rem 0 0;color:var(--site-muted);
   font-size:var(--agtc-font-size-h5,1.25rem);line-height:var(--agtc-line-height-text,1.6);
 }
-.hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem;align-items:center}
 
 /* Boutons V2 */
 .cta-btn{
@@ -2535,8 +2505,6 @@ body.page{
 }
 /* Fond très sombre pour matcher le background quasi-noir des images de section */
 .human-control{overflow-x:clip;background:#070910}
-.illus-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
-.illus-centered{max-width:760px;margin-inline:auto}
 
 /* Section finale */
 .section-final{
@@ -2789,8 +2757,6 @@ body[data-context="marketing"] .role-card::after{
 .with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
 .sidebar{align-self:stretch;overflow:visible;border-right:1px solid var(--site-line)}
 .sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
-.sidebar-heading{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--site-muted);padding:.5rem 0;margin-top:1rem}
-.sidebar-heading:first-child{margin-top:0}
 .sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
 .sidebar a:hover,.sidebar a:focus-visible{color:var(--site-text);background:rgba(255,255,255,.07);outline:none}
 .sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
@@ -2863,7 +2829,7 @@ body[data-context="marketing"] .role-card::after{
   .hero .copy{max-width:100%}
   .illus-hero{position:static;width:min(100%,760px);height:auto;overflow:visible;margin-inline:auto}
   .illus-hero img{height:auto;object-fit:contain;filter:none}
-  .role-grid,.editorial-grid,.doc-grid,.illus-centered,.illus-split{
+  .role-grid,.editorial-grid,.doc-grid{
     grid-template-columns:1fr;
   }
   .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -3457,7 +3423,7 @@ ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
   ${tocHtml}
 </div>
 ${footer}
-<button class="back-to-top back-to-top" aria-label="Retour en haut" data-back-to-top>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
   <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
 </button>
@@ -3562,7 +3528,7 @@ function contributionBanner() {
       <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
     </p>
   </div>
-  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="ds-btn primary">
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
     <span class="lang-fr">Voir sur GitHub</span>
     <span class="lang-en">View on GitHub</span>
   </a>
@@ -3625,7 +3591,7 @@ function buildHome(adrs) {
 
 <!-- S2 — LE PROBLÈME -->
 <section class="site-section problem" id="pourquoi" data-reveal>
-  <div class="shell overlap">
+  <div class="shell overlap overlap-reverse">
     <div class="copy copy-narrow">
       <p class="kicker"><span class="lang-fr">Le problème</span><span class="lang-en">The problem</span></p>
       <h2>
@@ -3887,9 +3853,9 @@ function v2Sidebar(base, current) {
   ];
   return `<aside class="sidebar" aria-label="Navigation secondaire">
   <nav>
-    <span class="sidebar-heading">Agentica</span>
+    <span class="sidebar-label">Agentica</span>
     ${links.map(([href, label]) => `<a href="${base}${href}"${current === href ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
-    <span class="sidebar-heading">Documentation</span>
+    <span class="sidebar-label">Documentation</span>
     ${docLinks.map(([href, label]) => `<a href="${base}${href}">${label}</a>`).join('\n    ')}
   </nav>
 </aside>`;
