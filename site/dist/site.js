@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Theme toggle ─────────────────────────────────────────
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  // Page d'accueil — toujours en dark mode (toggle masqué)
+  const isHome = document.documentElement.dataset.page === 'home';
+  document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
   function applyThemeImages(theme) {
     document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {

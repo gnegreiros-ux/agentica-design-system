@@ -2457,14 +2457,14 @@ body.v2-page{
 .v2-button-ghost:hover,.v2-button-ghost:focus-visible{background:var(--agtc-surface-glass,rgba(255,255,255,.08))}
 
 /* Illustrations V2 */
-.v2-art{position:relative;margin:0;line-height:0}
-.v2-art img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
-.v2-art-hero{
+.illus{position:relative;margin:0;line-height:0}
+.illus img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+.illus-hero{
   position:absolute;right:0;top:50%;transform:translateY(-50%);
   width:58%;height:auto;max-width:none;overflow:visible;margin:0;
   z-index:0;
 }
-.v2-art-hero img{width:100%;height:auto;object-fit:contain;filter:none}
+.illus-hero img{width:100%;height:auto;object-fit:contain;filter:none}
 /* Texte limité à la moitié gauche — figure abs n'est plus dans le flux */
 .v2-hero .v2-shell{position:static}
 .v2-hero .v2-hero-grid{grid-template-columns:1fr}
@@ -2473,12 +2473,12 @@ body.v2-page{
   display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
 }
 .v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
-.v2-art-wide{width:min(100%,740px)}
+.illus-feature{width:min(100%,740px)}
 .v2-immersive{
   padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
   background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
 }
-.v2-art-float{width:min(100%,720px);justify-self:end;animation:v2-float 8s ease-in-out infinite}
+.illus-ambient{width:min(100%,720px);justify-self:end;animation:v2-float 8s ease-in-out infinite}
 .v2-split{
   display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,.74fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
@@ -2521,8 +2521,8 @@ body.v2-page{
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
 .v2-human-control{overflow:hidden}
-.v2-dual-art{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
-.v2-single-art{max-width:760px;margin-inline:auto}
+.illus-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
+.illus-centered{max-width:760px;margin-inline:auto}
 
 /* Section finale */
 .v2-final{
@@ -2530,7 +2530,7 @@ body.v2-page{
   background:radial-gradient(circle at 18% 28%,rgba(0,162,199,.22),transparent 30rem),
              radial-gradient(circle at 82% 62%,rgba(214,64,159,.2),transparent 30rem);
 }
-.v2-art-final{width:min(100%,680px);justify-self:end}
+.illus-brand{width:min(100%,680px);justify-self:end}
 
 /* Reveal scrolling */
 [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
@@ -2797,15 +2797,15 @@ body[data-context="marketing"] .v2-role-card::after{
   }
   .v2-hero-grid,.v2-final-grid,.v2-immersive-grid,.v2-quality-grid,
   .v2-overlap,.v2-overlap-reverse,.v2-split{grid-template-columns:1fr}
-  .v2-art,.v2-art-hero,.v2-art-wide,.v2-art-float,.v2-art-final{
+  .illus,.illus-hero,.illus-feature,.illus-ambient,.illus-brand{
     width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
   }
   /* Hero — remettre l'image dans le flux en mobile */
   .v2-hero .v2-shell{position:relative}
   .v2-hero .v2-copy{max-width:100%}
-  .v2-art-hero{position:static;width:min(100%,760px);height:auto;overflow:visible;margin-inline:auto}
-  .v2-art-hero img{height:auto;object-fit:contain;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
-  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.v2-single-art,.v2-dual-art{
+  .illus-hero{position:static;width:min(100%,760px);height:auto;overflow:visible;margin-inline:auto}
+  .illus-hero img{height:auto;object-fit:contain;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+  .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.illus-centered,.illus-split{
     grid-template-columns:1fr;
   }
   .v2-footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -3558,7 +3558,7 @@ function buildHome(adrs) {
         <div role="listitem"><span class="v2-stat-num">10</span><span class="v2-stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
-    <figure class="v2-art v2-art-hero" aria-hidden="true">
+    <figure class="illus illus-hero" aria-hidden="true">
       <img src="img/IMG-HERO-SYSTEM.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
     </figure>
   </div>
@@ -3578,7 +3578,7 @@ function buildHome(adrs) {
         <span class="lang-en">Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.</span>
       </p>
     </div>
-    <figure class="v2-art v2-art-wide" aria-hidden="true">
+    <figure class="illus illus-feature" aria-hidden="true">
       <img src="img/IMG-CONTEXT-on-dark.png" alt="" loading="lazy" width="740" height="560">
     </figure>
   </div>
@@ -3598,7 +3598,7 @@ function buildHome(adrs) {
         <span class="lang-en">Humans understand, decide, approve and govern. Agents detect, analyze, propose and automate. Humans always keep the final word.</span>
       </p>
     </div>
-    <figure class="v2-art v2-art-float" aria-hidden="true">
+    <figure class="illus illus-ambient" aria-hidden="true">
       <img src="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
     </figure>
   </div>
@@ -3607,7 +3607,7 @@ function buildHome(adrs) {
 <!-- S4 — LES CONNAISSANCES -->
 <section class="v2-section" data-reveal>
   <div class="v2-shell v2-split">
-    <figure class="v2-art" aria-hidden="true">
+    <figure class="illus" aria-hidden="true">
       <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
     </figure>
     <div class="v2-copy">
@@ -3638,7 +3638,7 @@ function buildHome(adrs) {
         <span class="lang-en">One source feeds foundations, semantic contracts, components and applications. Four levels. One decision chain.</span>
       </p>
     </div>
-    <figure class="v2-art v2-art-wide" aria-hidden="true">
+    <figure class="illus illus-feature" aria-hidden="true">
       <img src="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
     </figure>
   </div>
@@ -3723,7 +3723,7 @@ function buildHome(adrs) {
         </a>
       </div>
     </div>
-    <figure class="v2-art" aria-hidden="true">
+    <figure class="illus" aria-hidden="true">
       <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
     </figure>
   </div>
@@ -3732,7 +3732,7 @@ function buildHome(adrs) {
 <!-- S9 — CONTRÔLE HUMAIN -->
 <section class="v2-section v2-human-control" id="ia" data-reveal>
   <div class="v2-shell v2-overlap">
-    <figure class="v2-art v2-art-wide" aria-hidden="true">
+    <figure class="illus illus-feature" aria-hidden="true">
       <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy" width="740" height="560">
     </figure>
     <div class="v2-copy v2-copy-narrow">
@@ -3763,8 +3763,8 @@ function buildHome(adrs) {
         <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
       </p>
     </div>
-    <div class="v2-single-art">
-      <figure class="v2-art" aria-hidden="true">
+    <div class="illus-centered">
+      <figure class="illus" aria-hidden="true">
         <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
       </figure>
     </div>
@@ -3790,7 +3790,7 @@ function buildHome(adrs) {
         <a class="v2-button v2-button-ghost" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub →</a>
       </div>
     </div>
-    <figure class="v2-art v2-art-final" aria-hidden="true">
+    <figure class="illus illus-brand" aria-hidden="true">
       <img src="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
     </figure>
   </div>
