@@ -2695,6 +2695,37 @@ body.v2-page{
 
 /* Theme toggle — sans border */
 .theme-toggle{border:none!important;box-shadow:none!important;background:transparent!important}
+
+/* ── Page AI Brief ────────────────────────────────────────────────────────── */
+.v2-ai-brief{max-width:900px;margin-inline:auto}
+.v2-ai-hero{padding-block:clamp(2rem,6vw,4rem) clamp(1.5rem,4vw,3rem);border-bottom:1px solid var(--v2-line)}
+.v2-ai-hero h1{margin:.5rem 0 1rem;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--v2-text);line-height:1.15}
+.v2-ai-lead{margin:0;font-size:1.05rem;color:var(--v2-muted);max-width:680px;line-height:1.7}
+.v2-ai-steps{padding-block:2.5rem}
+.v2-ai-steps h2,.v2-ai-examples h2,.v2-ai-brief-section h2{font-size:1.3rem;font-weight:600;color:var(--v2-text);margin:0 0 1.5rem}
+.v2-ai-step-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1.25rem}
+.v2-ai-step{display:flex;align-items:flex-start;gap:1.25rem;padding:1.25rem 1.5rem;background:var(--v2-surface);border:1px solid var(--v2-line);border-radius:var(--v2-radius)}
+.v2-ai-step-num{flex-shrink:0;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--v2-teal) 20%,var(--v2-surface));color:var(--v2-teal);font-weight:700;font-size:.9rem}
+.v2-ai-step strong{display:block;margin-bottom:.35rem;color:var(--v2-text);font-weight:600}
+.v2-ai-step p{margin:0;color:var(--v2-muted);font-size:.9rem;line-height:1.55}
+.v2-ai-examples{padding-block:2.5rem;border-top:1px solid var(--v2-line)}
+.v2-ai-examples-intro{margin:0 0 1.5rem;color:var(--v2-muted);font-size:.95rem;line-height:1.6}
+.v2-ai-qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.v2-ai-qa{padding:1.25rem 1.5rem;background:var(--v2-surface);border:1px solid var(--v2-line);border-radius:var(--v2-radius)}
+.v2-ai-q{margin:0 0 .75rem;font-weight:600;color:var(--v2-text);font-size:.9rem;line-height:1.45}
+.v2-ai-q::before{content:"Q — ";color:var(--v2-teal);font-weight:700}
+.v2-ai-a{margin:0}
+.v2-ai-a p{margin:0 0 .5rem;color:var(--v2-muted);font-size:.875rem;line-height:1.55}
+.v2-ai-a p:last-child{margin-bottom:0}
+.v2-ai-a code{background:rgba(52,211,187,.12);color:var(--v2-teal);padding:.1em .35em;border-radius:4px;font-size:.8rem}
+.v2-ai-brief-section{padding-block:2.5rem;border-top:1px solid var(--v2-line)}
+.v2-ai-brief-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:.75rem}
+.v2-ai-brief-header h2{margin:0}
+.v2-ai-brief-note{margin:0 0 1.5rem;color:var(--v2-muted);font-size:.875rem}
+@media(max-width:720px){
+  .v2-ai-qa-grid{grid-template-columns:1fr}
+  .v2-ai-brief-header{flex-direction:column;align-items:flex-start}
+}
 /* Page d'accueil — dark mode uniquement, toggle masqué */
 [data-page="home"] .theme-toggle{display:none!important}
 
@@ -7719,6 +7750,335 @@ function validateCssVars() {
   console.log(`✓ Variables CSS : ${defined.size} définies · ${referenced.size} référencées · 0 fantôme`);
 }
 
+// ── AI Brief ──────────────────────────────────────────────────────────────────
+function aiBriefContent() {
+  return `# Agentica — AI Brief
+> Système de design agentique. Version 1.0.0. Site : https://designsystem.gnegreiros.com
+> Mis à jour : 2026-06-30. Auteur : Guilherme Negreiros.
+
+## Comment utiliser ce brief
+
+Copiez l'intégralité de ce fichier et collez-le comme premier message dans votre IA (Claude, Copilot, ChatGPT, Gemini…). Toutes les questions suivantes sur Agentica recevront des réponses précises et conformes aux décisions versionnées.
+
+---
+
+## 1. Identité et mission
+
+**Nom :** Agentica (préfixe technique : agtc)
+**Organisation :** GNegreiros.com
+**Site :** https://designsystem.gnegreiros.com
+
+**Mission :** Encoder les décisions d'interface dans un format lisible par les humains et les agents IA — pour garantir cohérence, accessibilité et souveraineté numérique.
+
+**Principes directeurs :**
+1. Le dernier mot est humain. Les agents proposent, les humains approuvent.
+2. Si ce n'est pas un token, ce n'est pas une décision — toute valeur locale est une dette.
+3. La documentation instruit les machines, pas seulement les humains.
+4. Souveraineté numérique : outils, données et décisions restent sous contrôle organisationnel.
+
+---
+
+## 2. Architecture des tokens (3 niveaux — règle absolue)
+
+\`\`\`
+Primitifs → Sémantiques → Composant
+(valeurs brutes)  (intention UX)  (contrats UI)
+\`\`\`
+
+| Niveau | Fichier source | Exemple |
+|--------|---------------|---------|
+| Primitif | tokens/primitives.json | color.teal.9 = #34d3bb |
+| Sémantique | tokens/semantic.json | color.action.primary → teal.9 |
+| Composant | tokens/component.json | button.critical.requiresConfirmation = true |
+
+**Règles absolues (violations = dette immédiate) :**
+- JAMAIS de valeur en dur (couleur, espacement, radius) dans le code
+- Les tokens primitifs ne s'utilisent JAMAIS directement dans un composant
+- Les tokens sémantiques encodent l'INTENTION (ex: \`color.action.primary\`), pas la valeur (ex: \`teal\`)
+- Les tokens de composant sont des contrats — toute modification exige une approbation humaine
+
+**Convention de nommage CSS :**
+\`\`\`
+--agtc-[niveau]-[catégorie]-[composant]-[variante]-[propriété]
+
+--agtc-primitive-color-teal-9: #34d3bb
+--agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9)
+--agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary)
+\`\`\`
+
+**Standard :** Format W3C DTCG (Design Tokens Community Group) — https://www.designtokens.org/
+
+---
+
+## 3. Composants disponibles (17 Web Components Lit)
+
+| Composant | Usage principal |
+|-----------|----------------|
+| agtc-button | Action principale, secondaire, critique, fantôme |
+| agtc-input | Champ de saisie texte, email, password |
+| agtc-badge | Étiquette statut (success/warning/danger/info/neutral/brand) |
+| agtc-banner | Message informatif inline (6 variantes, dismissible) |
+| agtc-card | Conteneur composable pour contenu structuré |
+| agtc-feature-card | Carte marketing glassmorphism avec icône et titre |
+| agtc-checkbox | Case à cocher avec états indeterminate |
+| agtc-radio / agtc-radio-group | Sélection exclusive dans un groupe |
+| agtc-toggle | Interrupteur binaire avec retour visuel immédiat |
+| agtc-table | Tableau de données lisible en lecture seule |
+| agtc-code-block | Bloc de code avec copie accessible (aria-live) |
+| agtc-tabs | Navigation par onglets avec aria-selected |
+| agtc-segmented | Contrôle segmenté mono-sélection (ex: langue, densité) |
+| agtc-link | Lien avec détection automatique externe (noopener + icône) |
+| agtc-icon | Icône Lucide tokenisée |
+| agtc-top-nav | Navigation principale, tabs visuels full-height |
+
+### Règles critiques — agtc-button
+
+- Maximum 1 bouton \`primary\` par section ou formulaire
+- La variante \`critical\` EXIGE un pattern de confirmation (token requiresConfirmation: true)
+- Libellé explicite obligatoire — jamais "OK" ou "Confirmer" seul sur une action critique
+- Largeur préservée pendant les états async (loading)
+- Variantes autorisées : \`primary\` | \`secondary\` | \`critical\` | \`ghost\`
+- INTERDIT : inventer une variante (\`danger\`, \`destructive\`) — escalader à un humain
+
+---
+
+## 4. Accessibilité — WCAG 2.1 AA (non négociable)
+
+| Règle | Standard | Token |
+|-------|----------|-------|
+| Contraste texte normal | 4.5:1 minimum | color.text.primary sur color.background.page |
+| Contraste texte large | 3.0:1 minimum | — |
+| Focus visible | Obligatoire sur tous les interactifs | color.border.focus |
+| Navigation clavier | 100% des interactions | — |
+| ARIA | Obligatoire sur tous les composants | aria-label, aria-describedby, aria-expanded |
+| Cibles tactiles | ≥ 24×24px (WCAG 2.5.8) | — |
+
+Tests automatisés : axe-core (CI bloquant) + Playwright (E2E).
+
+---
+
+## 5. Gouvernance des tokens (Token Change Request)
+
+| Type de changement | Qui peut le faire | Approbation requise |
+|---|---|---|
+| Valeur d'un token primitif | Dev ou agent | Principal Designer |
+| Ajout d'un token sémantique | Dev ou agent (via PR) | Design System Lead |
+| Modification d'un token de composant | Humain seulement | Principal Designer |
+| Suppression de token | Humain seulement | Principal Designer + audit d'impact |
+
+Flux TCR : identifier → documenter → évaluer l'impact → approuver → modifier → compiler → tester → communiquer.
+
+---
+
+## 6. Contextes éditoriaux
+
+**Mode Produit** (défaut, sans attribut) :
+- Espacement normal, typographie max heading.1 (40px), grille régulière
+- Usage : documentation de composants, tokens, décisions
+
+**Mode Marketing** (\`data-context="marketing"\`) :
+- Espacement sections 96px, gap hero 120px, typographie display (60px)
+- Usage : pages de conviction et d'onboarding
+
+Pages marketing : index.html, get-started.html, agents/index.html
+Toutes les autres pages sont en mode Produit.
+
+---
+
+## 7. Décisions architecturales clés — 65 ADRs (au 2026-06-30)
+
+| ADR | Décision | Impact |
+|-----|----------|--------|
+| ADR-001 | Architecture 3 niveaux de tokens | Non négociable — fondation du système |
+| ADR-004 | Gouvernance humaine — le dernier mot est toujours humain | Tous les agents |
+| ADR-005 | Variante \`critical\` remplace \`danger\` pour les actions irréversibles | agtc-button |
+| ADR-021 | Atkinson Hyperlegible comme police principale | Typographie |
+| ADR-047 | Jamais d'état :visited sur les éléments de navigation | CSS global |
+| ADR-052 | Conformité W3C DTCG — standard de facto pour les tokens | tokens/*.json |
+| ADR-057 | Deux contextes éditoriaux : Produit vs Marketing | Layout site |
+| ADR-059 | Fermeture de la hiérarchie 3 niveaux (18 tokens sémantiques ajoutés) | Tokens |
+| ADR-065 | Dark mode dual-mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |
+
+---
+
+## 8. Ce qu'un agent peut et ne peut pas faire
+
+| ✅ Autorisé | ❌ Interdit sans approbation |
+|---|---|
+| Lire et appliquer les contrats de composants | Modifier tokens/component.json |
+| Générer du code depuis les tokens sémantiques | Utiliser des valeurs en dur |
+| Détecter les dérives et proposer des corrections | Merger sur main ou develop |
+| Créer des branches fix/ docs/ feature/ | Pusher directement sur main |
+| Ouvrir une PR avec description complète | Déployer en production seul |
+| Ajouter ou modifier un token sémantique (via PR) | Supprimer un token |
+
+---
+
+## 9. Pile technologique
+
+| Couche | Technologie |
+|--------|-------------|
+| Web Components | Lit (Google) |
+| Compilation tokens | Style Dictionary (W3C DTCG) |
+| Tests visuels | Chromatic (Storybook) |
+| Tests accessibilité | axe-core (CI bloquant) |
+| Tests E2E | Playwright |
+| Documentation | Storybook |
+| Sync Figma | Tokens Studio |
+| Générateur site | Node.js custom (site/build.js) |
+| CI/CD | GitHub Actions |
+
+---
+
+*Ce brief est généré automatiquement depuis les sources versionnées d'Agentica.*
+*Toute modification passe par le dépôt : https://github.com/gnegreiros-ux/agentic-design-system*
+`;
+}
+
+function buildAiBrief() {
+  const brief = aiBriefContent();
+
+  // Génère context.md comme fichier statique téléchargeable
+  write(path.join(DIST, 'context.md'), brief);
+
+  // Échappe pour l'injecter en JSON dans la page
+  const briefEscaped = JSON.stringify(brief);
+
+  const body = `
+<div class="content v2-ai-brief">
+
+  <!-- Hero -->
+  <div class="v2-ai-hero">
+    <p class="v2-kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
+    <h1>
+      <span class="lang-fr">Brief IA d'Agentica</span>
+      <span class="lang-en">Agentica AI Brief</span>
+    </h1>
+    <p class="v2-ai-lead">
+      <span class="lang-fr">Un document de contexte structuré qui permet à n'importe quelle IA (Copilot, ChatGPT, Gemini, Claude…) de répondre avec précision aux questions sur le système de design, ses règles, ses tokens et ses décisions.</span>
+      <span class="lang-en">A structured context document that enables any AI (Copilot, ChatGPT, Gemini, Claude…) to answer questions about the design system, its rules, tokens and decisions with precision.</span>
+    </p>
+  </div>
+
+  <!-- Mode d'emploi -->
+  <section class="v2-ai-steps" aria-labelledby="how-title">
+    <h2 id="how-title">
+      <span class="lang-fr">Comment utiliser ce brief</span>
+      <span class="lang-en">How to use this brief</span>
+    </h2>
+    <ol class="v2-ai-step-list">
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">1</span>
+        <div>
+          <strong><span class="lang-fr">Copiez le contexte</span><span class="lang-en">Copy the context</span></strong>
+          <p><span class="lang-fr">Cliquez sur « Copier » ci-dessous — l'intégralité du brief est dans votre presse-papier.</span><span class="lang-en">Click "Copy" below — the full brief is in your clipboard.</span></p>
+        </div>
+      </li>
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">2</span>
+        <div>
+          <strong><span class="lang-fr">Collez dans votre IA</span><span class="lang-en">Paste into your AI</span></strong>
+          <p><span class="lang-fr">Ouvrez Microsoft Copilot, ChatGPT ou tout autre assistant IA accessible. Collez le brief comme premier message.</span><span class="lang-en">Open Microsoft Copilot, ChatGPT, or any accessible AI assistant. Paste the brief as your first message.</span></p>
+        </div>
+      </li>
+      <li class="v2-ai-step">
+        <span class="v2-ai-step-num">3</span>
+        <div>
+          <strong><span class="lang-fr">Posez vos questions</span><span class="lang-en">Ask your questions</span></strong>
+          <p><span class="lang-fr">L'IA connaît maintenant les règles, tokens, composants et décisions d'Agentica. Les réponses sont précises et traçables.</span><span class="lang-en">The AI now knows Agentica's rules, tokens, components and decisions. Answers are precise and traceable.</span></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Exemples de précision -->
+  <section class="v2-ai-examples" aria-labelledby="examples-title">
+    <h2 id="examples-title">
+      <span class="lang-fr">Exemples de précision</span>
+      <span class="lang-en">Precision examples</span>
+    </h2>
+    <p class="v2-ai-examples-intro">
+      <span class="lang-fr">Ces réponses sont générées depuis le brief ci-dessous — aucune approximation, tout est traçable jusqu'au token ou à l'ADR source.</span>
+      <span class="lang-en">These answers are generated from the brief below — no approximation, everything traces back to a token or source ADR.</span>
+    </p>
+    <div class="v2-ai-qa-grid">
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Quel token CSS utiliser pour la couleur d'un bouton primaire ?</span><span class="lang-en">Which CSS token should I use for a primary button color?</span></p>
+        <div class="v2-ai-a">
+          <p><code>--agtc-component-button-primary-background</code></p>
+          <p><span class="lang-fr">Ce token résout vers <code>--agtc-semantic-color-action-primary</code>, qui vaut <code>#007a68</code> en mode clair et <code>#34d3bb</code> en mode sombre. Ratio de contraste vérifié ≥ 4.5:1. Source : <code>tokens/component.json</code> + ADR-050.</span><span class="lang-en">This token resolves to <code>--agtc-semantic-color-action-primary</code>, which equals <code>#007a68</code> in light mode and <code>#34d3bb</code> in dark mode. Contrast ratio verified ≥ 4.5:1. Source: <code>tokens/component.json</code> + ADR-050.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Puis-je modifier le token <code>button.critical.requiresConfirmation</code> ?</span><span class="lang-en">Can I modify the <code>button.critical.requiresConfirmation</code> token?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">Non. Les tokens de composant sont des contrats institutionnels (ADR-004, règle tokens-system.md). Toute modification exige l'approbation du Principal Designer via une TCR (Token Change Request). Un agent ne peut pas faire ce changement seul.</span><span class="lang-en">No. Component tokens are institutional contracts (ADR-004, tokens-system.md rule). Any modification requires Principal Designer approval via a TCR (Token Change Request). An agent cannot make this change alone.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Comment nommer un nouveau token pour l'état d'erreur d'un champ de saisie ?</span><span class="lang-en">How should I name a new token for the error state of an input field?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">Format : <code>color.feedback.danger</code> (catégorie.rôle.variante) → CSS : <code>--agtc-semantic-color-feedback-danger</code>. Interdit : <code>red</code>, <code>errorColor</code>, <code>#ef4444</code>. Les tokens encodent l'intention, pas la valeur. Source : règle code-style.md + tokens-system.md.</span><span class="lang-en">Format: <code>color.feedback.danger</code> (category.role.variant) → CSS: <code>--agtc-semantic-color-feedback-danger</code>. Forbidden: <code>red</code>, <code>errorColor</code>, <code>#ef4444</code>. Tokens encode intent, not values. Source: code-style.md + tokens-system.md.</span></p>
+        </div>
+      </div>
+
+      <div class="v2-ai-qa">
+        <p class="v2-ai-q"><span class="lang-fr">Pourquoi les liens de navigation n'ont-ils pas d'état <code>:visited</code> distinct ?</span><span class="lang-en">Why don't navigation links have a distinct <code>:visited</code> state?</span></p>
+        <div class="v2-ai-a">
+          <p><span class="lang-fr">ADR-047 (2026-06-05) : la navigation n'est pas du contenu « lu/non lu ». L'état violet du navigateur casse la hiérarchie visuelle. La couleur <code>:visited</code> est réalignée sur la couleur non-visitée via un token sémantique. Exception Safari : WebKit bloque <code>var()</code> dans <code>:visited</code> → valeur hex littérale obligatoire en premier (ADR-059).</span><span class="lang-en">ADR-047 (2026-06-05): navigation is not "read/unread" content. The browser's violet state breaks visual hierarchy. The <code>:visited</code> color is realigned to the unvisited color via a semantic token. Safari exception: WebKit blocks <code>var()</code> in <code>:visited</code> → literal hex value required first (ADR-059).</span></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Le brief complet -->
+  <section class="v2-ai-brief-section" aria-labelledby="brief-title">
+    <div class="v2-ai-brief-header">
+      <h2 id="brief-title">
+        <span class="lang-fr">Le brief complet</span>
+        <span class="lang-en">The full brief</span>
+      </h2>
+      <a class="v2-button v2-button-secondary" href="context.md" download="agentica-context.md">
+        <span class="lang-fr">Télécharger context.md</span>
+        <span class="lang-en">Download context.md</span>
+      </a>
+    </div>
+    <p class="v2-ai-brief-note">
+      <span class="lang-fr">Ce document est généré automatiquement depuis les sources versionnées. Il est toujours synchronisé avec l'état réel du système.</span>
+      <span class="lang-en">This document is auto-generated from versioned sources. It is always in sync with the actual state of the system.</span>
+    </p>
+    <div id="v2-brief-block">
+      <agtc-code-block language="markdown" id="brief-codeblock">
+        <pre slot="code" style="display:none"></pre>
+      </agtc-code-block>
+    </div>
+    <script>
+      (function(){
+        const raw = ${briefEscaped};
+        const cb = document.getElementById('brief-codeblock');
+        if(cb){
+          const pre = cb.querySelector('pre[slot="code"]');
+          if(pre){ pre.textContent = raw; pre.style.display = ''; }
+        }
+      })();
+    </script>
+  </section>
+
+</div>
+`;
+
+  write(path.join(DIST, 'ai-brief.html'), layout({
+    title: 'AI Brief',
+    pageTitle: 'Agentica AI Brief — Contexte structuré pour les agents IA',
+    depth: 0,
+    body
+  }));
+}
+
 function build() {
   console.log('\nAgentica — build\n');
   ensureDir(DIST);
@@ -7838,12 +8198,13 @@ function build() {
   buildAgents();
   buildPipelinesIndex();
   PIPELINES.forEach(p => buildPipelinePage(p));
+  buildAiBrief();
   buildRobotsAndSitemap(adrs);
   buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 
-  const total = 18 + adrs.length + 1 + PIPELINES.length;
+  const total = 19 + adrs.length + 1 + PIPELINES.length;
   console.log(`\n✓ ${total} fichiers générés dans site/dist/\n`);
 }
 
