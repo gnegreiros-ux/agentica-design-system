@@ -1704,13 +1704,18 @@ body.v2-page{
 }
 .v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
 .illus-feature{width:min(100%,740px)}
-/* Bleed — images du côté droit : du centre vers le bord droit */
+/* Bleed — images du côté droit : bord droit viewport, sans déborder dans la colonne texte */
 .v2-overlap > figure:last-child,
 .v2-immersive-grid > figure:last-child,
-.v2-final-grid > figure:last-child{width:50vw;max-width:none;margin-right:calc(-1 * (100vw - var(--v2-shell)) / 2)}
-/* Bleed — images du côté gauche : du bord gauche vers le centre */
+.v2-final-grid > figure:last-child{max-width:none;margin-right:calc(-1 * (100vw - var(--v2-shell)) / 2)}
+/* Bleed — images du côté gauche : bord gauche viewport, sans déborder dans la colonne texte */
 .v2-split > figure:first-child,
-.v2-overlap > figure:first-child{width:50vw;max-width:none;margin-left:calc(-1 * (100vw - var(--v2-shell)) / 2)}
+.v2-overlap > figure:first-child{max-width:none;margin-left:calc(-1 * (100vw - var(--v2-shell)) / 2)}
+/* Le texte reste toujours au-dessus des figures qui bleed */
+.v2-overlap > .v2-copy,
+.v2-split > .v2-copy,
+.v2-immersive-grid > .v2-copy,
+.v2-final-grid > .v2-copy{position:relative;z-index:1}
 .v2-immersive{
   padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
   background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
@@ -1757,7 +1762,8 @@ body.v2-page{
   border-radius:var(--agtc-semantic-radius-card,16px);
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
-.v2-human-control{overflow-x:clip}
+/* Fond très sombre pour matcher le background quasi-noir des images de section */
+.v2-human-control{overflow-x:clip;background:#070910}
 .illus-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
 .illus-centered{max-width:760px;margin-inline:auto}
 
@@ -1952,6 +1958,13 @@ body.v2-page{
 .v2-ai-brief-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:.75rem}
 .v2-ai-brief-header h2{margin:0}
 .v2-ai-brief-note{margin:0 0 1.5rem;color:var(--v2-muted);font-size:.875rem}
+/* Bloc pre natif — remplacement de agtc-code-block (non injectible via slot JS) */
+.v2-brief-block{border-radius:12px;overflow:hidden;background:#111318;border:1px solid rgba(255,255,255,.08)}
+.v2-brief-block-header{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:#1a1d26;border-bottom:1px solid rgba(255,255,255,.07)}
+.v2-brief-block-lang{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:#a4abb8;text-transform:uppercase}
+.v2-brief-copy-btn{padding:.35rem .8rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#d0d5e0;font-size:.8rem;cursor:pointer;transition:background .15s}
+.v2-brief-copy-btn:hover{background:rgba(255,255,255,.12)}
+.v2-brief-pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;font-family:var(--agtc-semantic-typography-mono-family,"ui-monospace",monospace);font-size:.82rem;line-height:1.65;color:#d0d5e0;white-space:pre-wrap;word-break:break-word;max-height:520px;overflow-y:auto}
 @media(max-width:720px){
   .v2-ai-qa-grid{grid-template-columns:1fr}
   .v2-ai-brief-header{flex-direction:column;align-items:flex-start}
