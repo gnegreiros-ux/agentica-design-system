@@ -1688,7 +1688,7 @@ body.v2-page{
 
 /* Illustrations V2 */
 .illus{position:relative;margin:0;line-height:0}
-.illus img{display:block;width:100%;height:auto;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+.illus img{display:block;width:100%;height:auto;filter:none}
 .illus-hero{
   position:absolute;right:0;top:50%;transform:translateY(-50%);
   width:58%;height:auto;max-width:none;overflow:visible;margin:0;
@@ -1704,6 +1704,13 @@ body.v2-page{
 }
 .v2-overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
 .illus-feature{width:min(100%,740px)}
+/* Bleed — images du côté droit : du centre vers le bord droit */
+.v2-overlap > figure:last-child,
+.v2-immersive-grid > figure:last-child,
+.v2-final-grid > figure:last-child{width:50vw;max-width:none;margin-right:calc(-1 * (100vw - var(--v2-shell)) / 2)}
+/* Bleed — images du côté gauche : du bord gauche vers le centre */
+.v2-split > figure:first-child,
+.v2-overlap > figure:first-child{width:50vw;max-width:none;margin-left:calc(-1 * (100vw - var(--v2-shell)) / 2)}
 .v2-immersive{
   padding-block:var(--agtc-semantic-marketing-space-section-breathing,96px);
   background:radial-gradient(circle at 78% 48%,rgba(214,64,159,.2),transparent 30rem),linear-gradient(135deg,rgba(255,255,255,.04),transparent);
@@ -1750,7 +1757,7 @@ body.v2-page{
   border-radius:var(--agtc-semantic-radius-card,16px);
   color:var(--v2-text);font-size:.95rem;font-weight:500;
 }
-.v2-human-control{overflow:hidden}
+.v2-human-control{overflow-x:clip}
 .illus-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(1rem,4vw,4rem)}
 .illus-centered{max-width:760px;margin-inline:auto}
 
@@ -2030,11 +2037,17 @@ body[data-context="marketing"] .v2-role-card::after{
   .illus,.illus-hero,.illus-feature,.illus-ambient,.illus-brand{
     width:min(100%,760px);margin-left:0;margin-right:0;justify-self:center;
   }
+  /* Annuler le bleed sur mobile — sélecteurs contextuels */
+  .v2-overlap > figure:last-child,
+  .v2-immersive-grid > figure:last-child,
+  .v2-final-grid > figure:last-child,
+  .v2-split > figure:first-child,
+  .v2-overlap > figure:first-child{width:min(100%,760px);max-width:initial;margin-right:0;margin-left:0}
   /* Hero — remettre l'image dans le flux en mobile */
   .v2-hero .v2-shell{position:relative}
   .v2-hero .v2-copy{max-width:100%}
   .illus-hero{position:static;width:min(100%,760px);height:auto;overflow:visible;margin-inline:auto}
-  .illus-hero img{height:auto;object-fit:contain;filter:drop-shadow(0 38px 80px rgba(0,0,0,.44))}
+  .illus-hero img{height:auto;object-fit:contain;filter:none}
   .v2-role-grid,.v2-editorial-grid,.v2-doc-grid,.illus-centered,.illus-split{
     grid-template-columns:1fr;
   }
