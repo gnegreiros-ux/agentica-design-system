@@ -2474,14 +2474,14 @@ body.page{
 }
 .overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
 .illus-feature{width:min(100%,740px)}
-/* Bleed — images du côté droit : bord droit viewport, sans déborder dans la colonne texte */
+/* Bleed — images du côté droit : du centre vers le bord droit du viewport */
 .overlap > figure:last-child,
 .immersive-grid > figure:last-child,
-.final-grid > figure:last-child{max-width:none;margin-right:calc(-1 * (100vw - var(--site-shell)) / 2)}
-/* Bleed — images du côté gauche : bord gauche viewport, sans déborder dans la colonne texte */
+.final-grid > figure:last-child{width:50vw;max-width:none;margin-right:calc(-1 * (100vw - var(--site-shell)) / 2)}
+/* Bleed — images du côté gauche : du bord gauche du viewport vers le centre */
 .split > figure:first-child,
-.overlap > figure:first-child{max-width:none;margin-left:calc(-1 * (100vw - var(--site-shell)) / 2)}
-/* Le texte reste toujours au-dessus des figures qui bleed */
+.overlap > figure:first-child{width:50vw;max-width:none;margin-left:calc(-1 * (100vw - var(--site-shell)) / 2)}
+/* Le texte reste toujours au-dessus — z-index compense le léger débordement dans la colonne */
 .overlap > .copy,
 .split > .copy,
 .immersive-grid > .copy,
