@@ -2461,18 +2461,19 @@ body.page{
 .illus img{display:block;width:100%;height:auto;filter:none}
 .illus-hero{
   position:absolute;right:0;top:50%;transform:translateY(-50%);
-  width:58%;height:auto;max-width:none;overflow:visible;margin:0;
+  width:55%;height:auto;max-width:none;overflow:visible;margin:0;
   z-index:0;
 }
 .illus-hero img{width:100%;height:auto;object-fit:contain;filter:none}
-/* Texte limité à la moitié gauche — figure abs n'est plus dans le flux */
+/* Texte limité à 40% du shell — image part de 45vw vers la droite */
 .hero .shell{position:static}
 .hero .hero-grid{grid-template-columns:1fr}
-.hero .copy{position:relative;z-index:1;max-width:min(560px,50vw - 2rem)}
+.hero .copy{position:relative;z-index:1;max-width:min(460px,40%)}
+/* Texte-40% / Image-60% + bleed vers le bord */
 .overlap,.overlap-reverse{
-  display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,.72fr);align-items:center;gap:2rem;
+  display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);align-items:center;gap:2rem;
 }
-.overlap-reverse{grid-template-columns:minmax(0,.62fr) minmax(0,.74fr)}
+.overlap-reverse{grid-template-columns:minmax(0,.4fr) minmax(0,.6fr)}
 .illus-feature{width:min(100%,740px)}
 /* Bleed — images du côté droit : du centre vers le bord droit du viewport */
 .overlap > figure:last-child,
@@ -2492,7 +2493,7 @@ body.page{
 }
 .illus-ambient{width:min(100%,720px);justify-self:end;animation:float-illus 8s ease-in-out infinite}
 .split{
-  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,.74fr);
+  display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
 .section-heading{max-width:760px;margin-bottom:3rem}
@@ -3809,8 +3810,8 @@ function buildHome(adrs) {
 
 <!-- S10 — DURABILITÉ -->
 <section class="site-section durability" data-reveal>
-  <div class="shell">
-    <div class="section-heading">
+  <div class="shell overlap overlap-reverse">
+    <div class="copy">
       <p class="kicker"><span class="lang-fr">Durabilité</span><span class="lang-en">Durability</span></p>
       <h2>
         <span class="lang-fr">Construire pour aujourd'hui. Préserver pour demain.</span>
@@ -3821,11 +3822,9 @@ function buildHome(adrs) {
         <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
       </p>
     </div>
-    <div class="illus-centered">
-      <figure class="illus" aria-hidden="true">
-        <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
-      </figure>
-    </div>
+    <figure class="illus" aria-hidden="true">
+      <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
+    </figure>
   </div>
 </section>
 
