@@ -2755,12 +2755,16 @@ body[data-context="marketing"] .role-card::after{
 /* Sidebar latérale V2 pour sous-pages */
 .with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100svh;padding-top:var(--agtc-header-height,64px)}
 .sidebar{align-self:stretch;overflow:visible;border-right:1px solid var(--site-line)}
+/* Dans le grid .with-sidebar, la sidebar doit s'étirer sur toute la hauteur de la page.
+   Les règles de ligne 827 (position:sticky, height:calc(100vh-…)) sont pour le layout flex
+   des pages composant — on les annule ici pour le contexte grid. */
+.with-sidebar>.sidebar{height:auto;position:static}
 .sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
 .sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
 .sidebar a:hover,.sidebar a:focus-visible{color:var(--site-text);background:rgba(255,255,255,.07);outline:none}
 .sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .sidebar a[aria-current="page"]{color:var(--site-teal);background:rgba(18,165,148,.1)}
-.page-content{overflow:hidden}
+.page-content{overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
 @media(max-width:860px){
