@@ -1793,11 +1793,11 @@ body.page{
 
 /* Dark mode — couleur brand principale cohérente avec les composants */
 [data-theme="dark"]{
-  --agtc-semantic-color-action-primary:#12a594;
-  --agtc-semantic-color-action-primary-hover:#0d9b8a;
-  --agtc-component-button-primary-background:#12a594;
-  --agtc-component-button-primary-background-hover:#0d9b8a;
-  --agtc-component-top-nav-tab-indicator-color:#12a594;
+  --agtc-semantic-color-action-primary:var(--agtc-primitive-color-teal-9);
+  --agtc-semantic-color-action-primary-hover:var(--agtc-primitive-color-teal-10);
+  --agtc-component-button-primary-background:var(--agtc-primitive-color-teal-9);
+  --agtc-component-button-primary-background-hover:var(--agtc-primitive-color-teal-10);
+  --agtc-component-top-nav-tab-indicator-color:var(--agtc-primitive-color-teal-9);
 }
 
 /* ── LIGHT MODE — surcharges v2 ────────────────────────────────────────────
