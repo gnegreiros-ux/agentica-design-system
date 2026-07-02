@@ -27,6 +27,11 @@ En cas de doute : si la page contient de la documentation de composant ou de tok
 | `index.html` | Marketing | `data-context="marketing"` |
 | `get-started.html` | Marketing | `data-context="marketing"` |
 | `agents/index.html` | Marketing | `data-context="marketing"` |
+| `pourquoi.html` | Marketing | `data-context="marketing"` |
+| `architecture.html` | Marketing | `data-context="marketing"` |
+| `qualite.html` | Marketing | `data-context="marketing"` |
+| `ia.html` | Marketing | `data-context="marketing"` |
+| `documentation.html` | Marketing | `data-context="marketing"` |
 | Toutes les autres | Produit | *(absent)* |
 
 ---
