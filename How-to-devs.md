@@ -19,18 +19,16 @@ cd agentic-design-system
 npm install
 ```
 
-### Activer le lint DS
-```bash
-# Ajouter .eslintrc-ds.json au pipeline ESLint existant
-cp .eslintrc-ds.json .eslintrc.json
-# ou étendre depuis votre config existante :
-# "extends": ["./.eslintrc-ds.json"]
-```
-
 ### Compiler les tokens
 ```bash
 npx style-dictionary build --config style-dictionary/config.json
-# Génère : dist/css/, dist/js/, dist/ios/, dist/android/
+# Génère : dist/tokens/css/, dist/tokens/js/, dist/tokens/ios/, dist/tokens/android/, …
+```
+
+### Générer le site
+```bash
+node site/build.js
+# Génère site/dist/ (99 fichiers HTML + site.css + agtc.js)
 ```
 
 ---
@@ -42,34 +40,37 @@ npx style-dictionary build --config style-dictionary/config.json
 **Règle :** tout changement de token sémantique ou composant = TCR.
 
 ```
-1. Créer une branche : tcr/[token-name]-[description]
+1. Créer une branche : token/[nom-court]  (convention git-workflow.md)
 2. Modifier le fichier JSON concerné (semantic.json ou component.json)
-3. Mettre à jour session-spec.md si le token est dans le tableau de référence rapide
-4. Soumettre PR → review Principal Designer obligatoire
-5. Après merge : compiler + communiquer aux équipes
+3. Soumettre PR → review Principal Designer obligatoire
+4. Après merge : compiler les tokens + rebuilder le site + communiquer aux équipes
 ```
 
 ### Ajouter un composant
 
 ```
 1. Créer le contrat : guidelines/components/[nom].md
-2. Ajouter les tokens : tokens/component.json
-3. Implémenter le Web Component (Lit)
+2. Ajouter les tokens : tokens/component.json  (TCR requis)
+3. Implémenter le Web Component (Lit) : components/agtc-[nom].js
 4. Ajouter les métadonnées : .claude/skills/ai-component-metadata.md
 5. Mettre à jour guidelines/components/overview.md
-6. Mettre à jour session-spec.md (tableau composants)
+6. Rebuilder le site : node site/build.js
 ```
 
 ### Vérifier les dérives avant une PR
 ```bash
-# Lint anti-dérive IA
-npx eslint . --ext .js,.jsx,.ts,.tsx
+# Accessibilité WCAG — pipeline CI actif (axe-core)
+# Se déclenche automatiquement sur chaque push ; vérifier les runs GitHub Actions
 
-# Tests accessibilité
-npx playwright test --grep a11y
+# Régressions visuelles — Chromatic
+# Idem : automatique sur push, approval manuel si changement visuel détecté
 
-# Tokens orphelins (à scripter selon votre setup)
-npx style-dictionary build && node scripts/audit-tokens.js
+# Tokens orphelins / variables CSS fantômes
+node site/build.js   # validateCssVars() s'exécute dans le build, signale les fantômes
+
+# Nommage CSS — règle absolue (ADR-2026-06-30)
+# Zéro préfixe de version (v2-, ds-), zéro valeur en dur
+# Voir .claude/rules/code-style.md
 ```
 
 ---
@@ -80,8 +81,9 @@ npx style-dictionary build && node scripts/audit-tokens.js
 |---------|------|-------------------|
 | `tokens/semantic.json` | Source de vérité des intentions UX | Via TCR uniquement |
 | `tokens/component.json` | Contrats UI | Via TCR + approbation |
-| `.eslintrc-ds.json` | Lint anti-dérive IA | Si nouveau pattern à détecter |
-| `.claude/instructions/session-spec.md` | Contexte rechargé chaque session IA | À chaque changement de token clé |
+| `site/build.js` | Générateur du site statique (CSS, HTML, JS) | À chaque changement de layout ou composant site |
+| `.claude/rules/code-style.md` | Conventions CSS/HTML — règles de nommage | Si nouvelle règle de style décidée |
+| `.claude/rules/` | Règles et contraintes pour les agents IA | Si nouvelle décision de gouvernance |
 | `AGENTS.md` | Routeur d'agents | Si nouveau type d'agent ajouté |
 
 ---
@@ -91,5 +93,7 @@ npx style-dictionary build && node scripts/audit-tokens.js
 - ❌ Jamais de valeur hex ou px en dur dans le code
 - ❌ Jamais de token primitif dans un composant
 - ❌ Jamais de token inventé (non défini dans semantic.json)
+- ❌ Jamais de préfixe de version dans les noms de classes CSS (`v2-`, `ds-`) — voir `code-style.md`
 - ✅ Tout changement de token sémantique = TCR
-- ✅ session-spec.md toujours à jour = agents fiables
+- ✅ `node site/build.js` avant chaque commit touchant le site
+- ✅ Les règles agents sont dans `.claude/rules/` — les lire avant de modifier l'architecture

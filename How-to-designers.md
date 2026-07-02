@@ -71,7 +71,7 @@ Quand une dérive est détectée : documenter → ouvrir un ticket → proposer 
 | `tokens/semantic.json` | Intentions UX — nommer avec sens | Via TCR uniquement |
 | `tokens/component.json` | Décisions visuelles par composant | Via TCR + approbation |
 | `guidelines/components/[nom].md` | Contrat du composant | À chaque changement de règle |
-| `.claude/instructions/session-spec.md` | Ce que l'IA "voit" au démarrage | Après chaque TCR majeur |
+| `.claude/rules/` | Ce que les agents IA lisent au démarrage | Après chaque TCR majeur ou nouvelle règle |
 | `DESIGN.md` | Principes et gouvernance | Révision trimestrielle |
 
 ---
@@ -83,4 +83,4 @@ Quand une dérive est détectée : documenter → ouvrir un ticket → proposer 
 - ❌ Jamais de modification de token sans TCR
 - ✅ Nommer les tokens par **intention**, pas par valeur (`color.feedback.danger`, pas `color.red`)
 - ✅ Tout composant a un contrat `.md` avant d'être livré
-- ✅ session-spec.md à jour = agents IA fiables pour toute l'équipe
+- ✅ `.claude/rules/` à jour = agents IA fiables pour toute l'équipe
