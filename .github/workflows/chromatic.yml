@@ -4,16 +4,18 @@ name: Chromatic — Régression visuelle
 # Le token vit dans le secret GitHub CHROMATIC_PROJECT_TOKEN — jamais en clair dans le dépôt.
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    paths:
-      - 'components/**'
-      - 'tokens/**'
-      - '.storybook/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/chromatic.yml'
+  # Push désactivé — limite mensuelle de snapshots gratuits atteinte (2026-07-02).
+  # Relancer manuellement avant chaque release ou revue visuelle importante.
+  # push:
+  #   branches: [main, develop]
+  # pull_request:
+  #   paths:
+  #     - 'components/**'
+  #     - 'tokens/**'
+  #     - '.storybook/**'
+  #     - 'package.json'
+  #     - 'package-lock.json'
+  #     - '.github/workflows/chromatic.yml'
   workflow_dispatch:
 
 permissions:
