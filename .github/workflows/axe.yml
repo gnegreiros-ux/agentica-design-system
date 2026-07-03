@@ -1,21 +1,17 @@
-name: axe-core — Accessibilité WCAG
+name: axe-core — Audit complet (manuel)
 
-# Audit d'accessibilité automatisé du site généré (ADR-007).
-# MODE RAPPORT pour l'instant (AXE_BLOCKING=false) : les violations héritées sont
-# rapportées sans bloquer le CI, le temps du burn-down. Retirer la variable
-# AXE_BLOCKING (ou la passer à true) pour activer le blocage dur une fois 0 violation.
+# DÉPRÉCIÉ pour le CI automatique — l'audit axe-core est désormais intégré dans
+# playwright.yml via tests/functional/accessibility.spec.js (ADR-066).
+#
+# Ce workflow reste disponible pour les sessions de burn-down manuelles :
+#   - Audit exhaustif de TOUTES les pages (pas seulement les pages critiques)
+#   - 3 contextes : desktop-light, mobile-light, desktop-dark
+#   - Rapport JSON complet dans axe-report.json
+#
+# Pour l'audit de base (pages critiques × 2 thèmes → rapport HTML Playwright),
+# voir playwright.yml qui s'exécute à chaque push sur main.
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    paths:
-      - 'site/**'
-      - 'tokens/**'
-      - 'components/**'
-      - 'scripts/axe-audit.js'
-      - 'package.json'
-      - '.github/workflows/axe.yml'
   workflow_dispatch:
 
 permissions:

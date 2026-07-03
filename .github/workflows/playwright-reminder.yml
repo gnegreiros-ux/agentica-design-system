@@ -1,0 +1,125 @@
+name: Playwright — Rappel révision visuelle
+
+# Crée automatiquement une GitHub Issue étiquetée `visual-review` quand des fichiers
+# de composants (`components/`) sont modifiés sur main.
+# Objectif : alerter les designers qu'une révision visuelle Playwright est disponible
+# (artifact `playwright-report-chromium`) avant d'approuver le changement visuel.
+#
+# Le workflow Playwright (playwright.yml) doit s'être exécuté sur le même push pour
+# que l'artifact soit disponible. Grâce à `needs` (optionnel ici), l'issue est créée
+# après le job playwright — pas avant.
+#
+# Configuration requise : l'action `actions/github-script` utilise le token GITHUB_TOKEN
+# (disponible automatiquement). Aucun secret supplémentaire nécessaire.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'components/**'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-visual-review-issue:
+    name: Créer issue révision visuelle
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: Lister les composants modifiés
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- components/ | sed 's|components/||' | sort -u | tr '\n' ', ' | sed 's/,$//')
+          echo "components=${CHANGED}" >> $GITHUB_OUTPUT
+
+      - name: S'assurer que le label visual-review existe
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'visual-review',
+                color: '7057ff',
+                description: 'Révision visuelle Playwright requise avant approbation',
+              });
+            } catch (e) {
+              // Label existe déjà — c'est OK
+              if (!e.message.includes('already_exists') && e.status !== 422) throw e;
+            }
+
+      - name: Créer l'issue de révision visuelle
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const commit = context.sha.substring(0, 7);
+            const components = '${{ steps.changes.outputs.components }}';
+            const report_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            const body = [
+              `## Révision visuelle requise`,
+              ``,
+              `Le commit \`${commit}\` a modifié des composants : **${components || 'voir ci-dessous'}**`,
+              ``,
+              `Le workflow Playwright a généré un rapport de comparaison visuelle.`,
+              ``,
+              `### Étapes pour les designers`,
+              ``,
+              `1. Ouvrir le [rapport Playwright](${report_url})`,
+              `2. Télécharger l'artifact \`playwright-report-chromium\``,
+              `3. Ouvrir \`index.html\` dans un navigateur`,
+              `4. Comparer les captures « actual » vs « expected » dans la section visuelle`,
+              `5. Si le changement est intentionnel → fermer cette issue et demander \`update_snapshots\``,
+              `6. Si c'est une régression → commenter et notifier l'équipe DS`,
+              ``,
+              `### Mettre à jour les snapshots de référence`,
+              ``,
+              `\`\`\``,
+              `# Via GitHub Actions (approbation humaine requise — ADR-066)`,
+              `Actions → Playwright → workflow_dispatch → update_snapshots: true`,
+              ``,
+              `# En local`,
+              `npm run playwright:update`,
+              `git add tests/visual/snapshots/`,
+              `git commit -m "test(visual): met à jour les snapshots de référence"`,
+              `\`\`\``,
+              ``,
+              `---`,
+              `*Issue créée automatiquement par \`.github/workflows/playwright-reminder.yml\`*`,
+            ].join('\n');
+
+            // Vérifier si une issue `visual-review` ouverte existe déjà pour ce commit
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'visual-review',
+              state: 'open',
+            });
+
+            if (existing.data.length > 0) {
+              // Ajouter un commentaire sur l'issue existante plutôt que d'en créer une nouvelle
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.data[0].number,
+                body: `**Nouveau changement composant — commit \`${commit}\`**\n\nComposants modifiés : ${components || 'voir diff'}\n\n[Rapport Playwright →](${report_url})`,
+              });
+              console.log(`Commentaire ajouté sur l'issue #${existing.data[0].number}`);
+            } else {
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🎨 Révision visuelle — ${components || 'composants'} (${commit})`,
+                body,
+                labels: ['visual-review'],
+              });
+              console.log(`Issue #${issue.data.number} créée : ${issue.data.html_url}`);
+            }
