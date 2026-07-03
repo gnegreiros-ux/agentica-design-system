@@ -1,0 +1,90 @@
+name: Playwright — Tests visuels et fonctionnels
+
+# Tests de régression visuelle et fonctionnels du site (ADR-066).
+# Périmètre : pages site/dist/ — pas les stories Storybook.
+# Les snapshots PNG de référence sont committés dans tests/visual/snapshots/.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'tokens/**'
+      - 'components/**'
+      - 'tests/**'
+      - 'playwright.config.js'
+      - 'package.json'
+      - '.github/workflows/playwright.yml'
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        type: boolean
+        default: false
+        description: >
+          Régénérer les snapshots de référence.
+          APPROBATION HUMAINE REQUISE — ne jamais activer automatiquement (ADR-066, ADR-004).
+
+permissions:
+  contents: read
+
+jobs:
+  playwright:
+    name: Playwright (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+
+    # Image Docker Microsoft — diffs déterministes entre CI Linux et macOS local.
+    # Sans cette image, les différences typographiques entre OS génèrent des faux positifs.
+    container:
+      image: mcr.microsoft.com/playwright:v1.50.1-jammy
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        # npm install (non npm ci) : aligné sur les autres workflows — lockfile multi-plateforme
+        run: npm install --no-audit --no-fund
+
+      - name: Build tokens
+        # Requis pour les custom properties CSS utilisées par les composants agtc-*
+        run: npm run tokens
+
+      - name: Build site
+        run: node site/build.js
+
+      - name: Run Playwright tests
+        env:
+          # HOME doit pointer vers un répertoire inscriptible dans le container Docker
+          HOME: /root
+        run: |
+          if [ "${{ inputs.update_snapshots }}" = "true" ]; then
+            echo "⚠️  Mode mise à jour des snapshots — approbation humaine requise avant de committer"
+            npx playwright test --project=${{ matrix.browser }} --update-snapshots
+          else
+            npx playwright test --project=${{ matrix.browser }}
+          fi
+
+      - name: Upload rapport Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Upload snapshots mis à jour
+        if: ${{ inputs.update_snapshots == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshots-updated-${{ matrix.browser }}
+          path: tests/visual/snapshots/
+          retention-days: 7

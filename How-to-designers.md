@@ -62,6 +62,26 @@ Signaux à surveiller dans les fichiers Figma des équipes produit :
 
 Quand une dérive est détectée : documenter → ouvrir un ticket → proposer la correction (jamais corriger sans en aviser l'équipe produit).
 
+### Approuver une régression visuelle (Playwright)
+
+Depuis 2026-07-02, les régressions visuelles sont détectées par Playwright (remplace Chromatic, ADR-066).
+Quand un test échoue, le CI produit un rapport HTML visible dans les artifacts GitHub Actions.
+
+**Processus de revue :**
+
+```
+1. CI échoue → Actions → télécharger l'artifact "playwright-report"
+2. Ouvrir playwright-report/index.html dans le navigateur
+3. Comparer le screenshot "actual" vs "expected" dans le rapport
+4. Si le changement est intentionnel :
+   → demander à un dev de lancer update_snapshots via workflow_dispatch
+   → valider les nouveaux PNG dans la PR
+5. Si c'est une vraie régression → ouvrir un ticket (ne pas approuver)
+```
+
+> Le rapport HTML Playwright joue le même rôle que l'interface Chromatic — sans envoyer
+> les captures hors de l'infrastructure de l'équipe.
+
 ---
 
 ## 3. Fichiers à connaître

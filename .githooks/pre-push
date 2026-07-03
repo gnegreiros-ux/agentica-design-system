@@ -1,0 +1,40 @@
+#!/bin/sh
+# Hook pre-push — rappel mise à jour snapshots Playwright (ADR-066)
+#
+# Détecte si des fichiers dans components/ ou tokens/ ont changé depuis
+# le dernier push et affiche un rappel si c'est le cas.
+#
+# Activer avec : git config core.hooksPath .githooks
+
+REMOTE="$1"
+URL="$2"
+
+# Fichiers modifiés depuis le dernier commit poussé sur la branche courante
+CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null)
+
+COMPONENTS_CHANGED=$(echo "$CHANGED" | grep -E '^(components|tokens)/' | head -1)
+
+if [ -n "$COMPONENTS_CHANGED" ]; then
+  echo ""
+  echo "╔══════════════════════════════════════════════════════════╗"
+  echo "║  ⚠️   Rappel — snapshots Playwright                      ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  Des fichiers dans components/ ou tokens/ ont changé.   ║"
+  echo "║                                                          ║"
+  echo "║  Si le changement est intentionnel, pensez à vérifier   ║"
+  echo "║  que les tests visuels Playwright restent valides :     ║"
+  echo "║                                                          ║"
+  echo "║    node site/build.js                                   ║"
+  echo "║    npx playwright test --project=chromium               ║"
+  echo "║                                                          ║"
+  echo "║  Si des snapshots doivent être mis à jour :             ║"
+  echo "║    npx playwright test --update-snapshots               ║"
+  echo "║    git add tests/visual/snapshots/                      ║"
+  echo "║    git commit -m 'test(visual): update snapshots'       ║"
+  echo "║                                                          ║"
+  echo "║  ADR-066 — dernier mot toujours humain.                 ║"
+  echo "╚══════════════════════════════════════════════════════════╝"
+  echo ""
+fi
+
+exit 0

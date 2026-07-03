@@ -5,6 +5,9 @@ node_modules/
 *storybook.log
 storybook-static
 
-# Rapport généré par l'audit axe-core (artefact CI, non versionné)
+# Rapports et artefacts CI (non versionnés)
 axe-report.json
+smoke-report.json
+playwright-report/
+test-results/
 Temp/

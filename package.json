@@ -14,6 +14,9 @@
     "axe:mobile": "node scripts/axe-audit.js --mobile",
     "axe:dark": "node scripts/axe-audit.js --dark",
     "axe:all": "node scripts/axe-audit.js",
+    "playwright": "npx playwright test",
+    "playwright:update": "npx playwright test --update-snapshots",
+    "playwright:report": "npx playwright show-report",
     "smoke": "node scripts/smoke-test.js",
     "test": "npm run smoke && npm run axe:all"
   },
@@ -23,6 +26,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "@chromatic-com/storybook": "^5.2.1",
+    "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.4.1",
     "@storybook/addon-docs": "^10.4.1",
     "@storybook/addon-themes": "^10.4.6",

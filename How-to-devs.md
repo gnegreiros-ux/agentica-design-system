@@ -59,14 +59,15 @@ node site/build.js
 
 ### Vérifier les dérives avant une PR
 ```bash
+# Tokens orphelins / variables CSS fantômes
+node site/build.js   # validateCssVars() s'exécute dans le build, signale les fantômes
+
 # Accessibilité WCAG — pipeline CI actif (axe-core)
 # Se déclenche automatiquement sur chaque push ; vérifier les runs GitHub Actions
 
-# Régressions visuelles — Chromatic
-# Idem : automatique sur push, approval manuel si changement visuel détecté
-
-# Tokens orphelins / variables CSS fantômes
-node site/build.js   # validateCssVars() s'exécute dans le build, signale les fantômes
+# Régressions visuelles — Playwright (remplace Chromatic, ADR-066)
+# Lance les tests visuels localement avant de pousser :
+npx playwright test --project=chromium
 
 # Nommage CSS — règle absolue (ADR-2026-06-30)
 # Zéro préfixe de version (v2-, ds-), zéro valeur en dur
@@ -75,7 +76,69 @@ node site/build.js   # validateCssVars() s'exécute dans le build, signale les f
 
 ---
 
-## 3. Fichiers à connaître
+## 3. Tests visuels et fonctionnels (Playwright)
+
+> Deux périmètres distincts — voir ADR-066.
+
+### Périmètre 1 : tests DS (ce dépôt)
+
+Ces tests valident les pages du site et les composants `agtc-*`. Ils tournent en CI sur chaque
+push sur `main` via `.github/workflows/playwright.yml`.
+
+```bash
+# Prérequis : site généré
+node site/build.js
+
+# Lancer tous les tests
+npx playwright test
+
+# Lancer un seul fichier
+npx playwright test tests/visual/home.spec.js
+
+# Browser uniquement (plus rapide en local)
+npx playwright test --project=chromium
+
+# Voir le rapport HTML après échec
+npx playwright show-report
+```
+
+### Mettre à jour les snapshots de référence
+
+Quand un changement visuel est **intentionnel** (nouveau token, refonte) :
+
+```bash
+# 1. Vérifier que le changement est attendu
+npx playwright test --project=chromium
+
+# 2. Régénérer les snapshots (approbation humaine obligatoire — ADR-066)
+npx playwright test --update-snapshots --project=chromium
+
+# 3. Vérifier les PNG mis à jour dans tests/visual/snapshots/
+git diff tests/visual/snapshots/
+
+# 4. Committer les nouveaux snapshots avec le changement qui les explique
+git add tests/visual/snapshots/
+```
+
+> ❌ Ne jamais committer des snapshots mis à jour sans avoir inspecté visuellement les diffs.
+
+### Hook pre-push — rappel automatique
+
+Activer le hook après clonage (une seule fois) :
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Le hook affiche un message si `components/` ou `tokens/` ont changé depuis le dernier commit.
+
+### Périmètre 2 : tests produit (vos dépôts consommateurs)
+
+Voir `guidelines/foundations/testing.md` — kit de démarrage pour tester votre produit avec le DS.
+
+---
+
+## 4. Fichiers à connaître
 
 | Fichier | Rôle | Quand le modifier |
 |---------|------|-------------------|
@@ -88,7 +151,7 @@ node site/build.js   # validateCssVars() s'exécute dans le build, signale les f
 
 ---
 
-## 4. Règles non négociables
+## 5. Règles non négociables
 
 - ❌ Jamais de valeur hex ou px en dur dans le code
 - ❌ Jamais de token primitif dans un composant
