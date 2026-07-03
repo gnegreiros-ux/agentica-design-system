@@ -2758,15 +2758,15 @@ body[data-context="marketing"] .role-card::after{
 .editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--site-text);border-top:none;padding-top:0;margin-top:0}
 
 /* Sidebar latérale V2 pour sous-pages */
-.with-sidebar{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:calc(100svh - var(--agtc-header-height,64px))}
-/* Pattern 2 : sidebar dans .with-sidebar — pas de position/height sur l'élément,
-   le fond s'étire automatiquement (align-self:stretch via Pattern 1 + height:auto ici). */
+.with-sidebar{display:grid;grid-template-columns:var(--agtc-site-sidebar-width,236px) 1fr;gap:0;min-height:calc(100svh - var(--agtc-header-height,64px))}
+/* Pattern 2 : sidebar dans .with-sidebar — scoped .with-sidebar .sidebar pour ne pas
+   écraser les règles Pattern 1 (.sidebar>nav, .sidebar a) via la cascade. */
 .with-sidebar>.sidebar{background:var(--agtc-semantic-color-background-surface);border-right:1px solid var(--site-line)}
-.sidebar nav{display:flex;flex-direction:column;padding:2rem 1.25rem;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
-.sidebar a{display:block;padding:.48rem .7rem;border-radius:8px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
-.sidebar a:hover,.sidebar a:focus-visible{color:var(--site-text);background:rgba(255,255,255,.07);outline:none}
-.sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
-.sidebar a[aria-current="page"]{color:var(--site-teal);background:rgba(18,165,148,.1)}
+.with-sidebar .sidebar nav{display:flex;flex-direction:column;padding:20px 0;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
+.with-sidebar .sidebar a{display:block;padding:.48rem 1.25rem;border-radius:8px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
+.with-sidebar .sidebar a:hover,.with-sidebar .sidebar a:focus-visible{color:var(--site-text);background:rgba(255,255,255,.07);outline:none}
+.with-sidebar .sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
+.with-sidebar .sidebar a[aria-current="page"]{color:var(--site-teal);background:rgba(18,165,148,.1)}
 .page-content{overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
