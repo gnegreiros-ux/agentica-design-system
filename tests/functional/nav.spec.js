@@ -46,7 +46,8 @@ test.describe('Navigation — tests fonctionnels', () => {
       const trigger = page.locator('[data-docs-trigger]');
       const panel = page.locator('[data-docs-panel]');
 
-      await trigger.click();
+      await trigger.hover();
+      await page.waitForTimeout(100); // rAF + transition
       await expect(panel).toHaveClass(/is-open/);
 
       await page.keyboard.press('Escape');
