@@ -41,7 +41,7 @@ jobs:
     # Image Docker Microsoft — diffs déterministes entre CI Linux et macOS local.
     # Sans cette image, les différences typographiques entre OS génèrent des faux positifs.
     container:
-      image: mcr.microsoft.com/playwright:v1.50.1-jammy
+      image: mcr.microsoft.com/playwright:v1.61.1-jammy
 
     strategy:
       fail-fast: false
