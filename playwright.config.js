@@ -23,10 +23,12 @@ export default defineConfig({
   },
 
   projects: [
+    // Chromium : tests visuels + fonctionnels (snapshots de référence = Chromium uniquement)
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox',  use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit',   use: { ...devices['Desktop Safari'] } },
-    // Breakpoints responsive
+    // Firefox et WebKit : tests fonctionnels et accessibilité seulement (pas de snapshots visuels)
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: '**/visual/**' },
+    { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: '**/visual/**' },
+    // Breakpoints responsive — visuel mobile sur Chromium uniquement
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 5'] },
