@@ -1987,15 +1987,9 @@ body[data-context="marketing"] .role-card::after{
 }
 .editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--site-text);border-top:none;padding-top:0;margin-top:0}
 
-/* Sidebar latérale V2 pour sous-pages */
-.with-sidebar{display:grid;grid-template-columns:var(--agtc-site-sidebar-width,236px) 1fr;gap:0;min-height:calc(100svh - var(--agtc-header-height,64px))}
-.page-content{overflow:hidden;background:var(--agtc-semantic-color-background-page)}
+.page-content{flex:1;overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
-@media(max-width:860px){
-  .with-sidebar{grid-template-columns:1fr}
-  .sidebar{display:none}
-}
 
 /* Stats hero (réutilisées depuis rd-*) */
 .hero-stats{

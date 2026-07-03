@@ -2757,15 +2757,9 @@ body[data-context="marketing"] .role-card::after{
 }
 .editorial-block h2{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--site-text);border-top:none;padding-top:0;margin-top:0}
 
-/* Sidebar latérale V2 pour sous-pages */
-.with-sidebar{display:grid;grid-template-columns:var(--agtc-site-sidebar-width,236px) 1fr;gap:0;min-height:calc(100svh - var(--agtc-header-height,64px))}
-.page-content{overflow:hidden;background:var(--agtc-semantic-color-background-page)}
+.page-content{flex:1;overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
-@media(max-width:860px){
-  .with-sidebar{grid-template-columns:1fr}
-  .sidebar{display:none}
-}
 
 /* Stats hero (réutilisées depuis rd-*) */
 .hero-stats{
@@ -3258,7 +3252,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
     : '';
   const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
-  const mainClass = fullWidth ? 'home-layout' : 'layout';
+  // Pages avec sidebar → toujours .layout (flex). home-layout est réservé à la home sans sidebar.
+  const outerClass = (fullWidth && !sidebar) ? 'home-layout' : 'layout';
 
   const auditHref = (depth > 0 ? '../'.repeat(depth) : '') + 'audit.html';
   const footer = `
@@ -3415,9 +3410,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   </div>
 </header>
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
-<div class="${mainClass}" id="main-content"${fullWidth ? ' data-context="marketing"' : ''}>
+<div class="${outerClass}" id="main-content"${context === 'marketing' ? ' data-context="marketing"' : ''}>
   ${sidebarHtml}
-  <main class="${fullWidth ? '' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
+  <main class="${!sidebar ? '' : fullWidth ? 'page-content' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
 </div>
 ${footer}
@@ -3850,21 +3845,12 @@ function v2Sidebar(base, current) {
     ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
   ];
   const a = (href, label) => `<a href="${base}${href}"${current === href ? ' class="active" aria-current="page"' : ''}>${label}</a>`;
-  return `<aside class="sidebar" aria-label="Navigation secondaire">
-  <div class="sidebar-group">
-    <span class="sidebar-label">Agentica</span>
-    ${links.map(([href, label]) => a(href, label)).join('\n    ')}
-  </div>
-  <div class="sidebar-group">
-    <span class="sidebar-label">Documentation</span>
-    ${docLinks.map(([href, label]) => a(href, label)).join('\n    ')}
-  </div>
-</aside>`;
+  // Retourne uniquement le contenu interne — layout() ajoute le <aside> (identique à sidebarFoundations/sidebarComponents)
+  return `<div class="sidebar-group"><span class="sidebar-label">Agentica</span>${links.map(([href, label]) => a(href, label)).join('')}</div><div class="sidebar-group"><span class="sidebar-label">Documentation</span>${docLinks.map(([href, label]) => a(href, label)).join('')}</div>`;
 }
 
 function buildPourquoi() {
-  const sidebar = v2Sidebar('', 'pourquoi.html');
-  const body = `<div class="with-sidebar">${sidebar}<div class="page-content">
+  const body = `
 <section class="site-section simple-hero">
   <div class="shell">
     <div class="copy" style="max-width:700px">
@@ -3918,13 +3904,12 @@ function buildPourquoi() {
     </div>
   </div>
 </section>
-</div></div>`;
-  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', body }));
+`;
+  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'pourquoi.html'), body }));
 }
 
 function buildArchitecture() {
-  const sidebar = v2Sidebar('', 'architecture.html');
-  const body = `<div class="with-sidebar">${sidebar}<div class="page-content">
+  const body = `
 <section class="site-section simple-hero">
   <div class="shell">
     <div class="copy" style="max-width:700px">
@@ -3978,13 +3963,12 @@ function buildArchitecture() {
     </div>
   </div>
 </section>
-</div></div>`;
-  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', body }));
+`;
+  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'architecture.html'), body }));
 }
 
 function buildQualite() {
-  const sidebar = v2Sidebar('', 'qualite.html');
-  const body = `<div class="with-sidebar">${sidebar}<div class="page-content">
+  const body = `
 <section class="site-section simple-hero">
   <div class="shell">
     <div class="copy" style="max-width:700px">
@@ -4038,13 +4022,12 @@ function buildQualite() {
     </div>
   </div>
 </section>
-</div></div>`;
-  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', body }));
+`;
+  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'qualite.html'), body }));
 }
 
 function buildIA() {
-  const sidebar = v2Sidebar('', 'ia.html');
-  const body = `<div class="with-sidebar">${sidebar}<div class="page-content">
+  const body = `
 <section class="site-section simple-hero">
   <div class="shell">
     <div class="copy" style="max-width:700px">
@@ -4098,13 +4081,12 @@ function buildIA() {
     </div>
   </div>
 </section>
-</div></div>`;
-  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
+`;
+  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'ia.html'), body }));
 }
 
 function buildDocumentation() {
-  const sidebar = v2Sidebar('', 'documentation.html');
-  const body = `<div class="with-sidebar">${sidebar}<div class="page-content">
+  const body = `
 <section class="site-section simple-hero">
   <div class="shell">
     <div class="copy" style="max-width:700px">
@@ -4172,8 +4154,8 @@ function buildDocumentation() {
     </div>
   </div>
 </section>
-</div></div>`;
-  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', body }));
+`;
+  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'documentation.html'), body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
