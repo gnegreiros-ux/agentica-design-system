@@ -15,11 +15,14 @@ test.describe('Navigation — tests fonctionnels', () => {
       await expect(page.locator('[data-docs-panel]')).not.toHaveClass(/is-open/);
     });
 
-    test('s\'ouvre au clic sur docs-trigger', async ({ page }) => {
+    test('s\'ouvre au survol du docs-trigger', async ({ page }) => {
+      // Le trigger ouvre via mouseenter (UX hover), pas via click
+      // click → closeDocs() (navigation vers documentation.html)
       const trigger = page.locator('[data-docs-trigger]');
       const panel = page.locator('[data-docs-panel]');
 
-      await trigger.click();
+      await trigger.hover();
+      await page.waitForTimeout(100); // rAF + transition CSS
 
       await expect(panel).toHaveClass(/is-open/);
       await expect(trigger).toHaveAttribute('aria-expanded', 'true');
