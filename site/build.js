@@ -3829,7 +3829,7 @@ function buildHome(adrs) {
 
 // ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
 
-function v2Sidebar(base, current) {
+function sidebarSite(base, current) {
   const links = [
     ['pourquoi.html', '<span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span>'],
     ['architecture.html', '<span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span>'],
@@ -3905,7 +3905,7 @@ function buildPourquoi() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'pourquoi.html'), body }));
+  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'pourquoi.html'), body }));
 }
 
 function buildArchitecture() {
@@ -3964,7 +3964,7 @@ function buildArchitecture() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'architecture.html'), body }));
+  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'architecture.html'), body }));
 }
 
 function buildQualite() {
@@ -4023,7 +4023,7 @@ function buildQualite() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'qualite.html'), body }));
+  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'qualite.html'), body }));
 }
 
 function buildIA() {
@@ -4082,7 +4082,7 @@ function buildIA() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'ia.html'), body }));
+  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'ia.html'), body }));
 }
 
 function buildDocumentation() {
@@ -4155,7 +4155,7 @@ function buildDocumentation() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: v2Sidebar('', 'documentation.html'), body }));
+  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'documentation.html'), body }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
