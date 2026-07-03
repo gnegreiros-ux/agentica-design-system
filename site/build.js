@@ -2759,14 +2759,6 @@ body[data-context="marketing"] .role-card::after{
 
 /* Sidebar latérale V2 pour sous-pages */
 .with-sidebar{display:grid;grid-template-columns:var(--agtc-site-sidebar-width,236px) 1fr;gap:0;min-height:calc(100svh - var(--agtc-header-height,64px))}
-/* Pattern 2 : sidebar dans .with-sidebar — scoped .with-sidebar .sidebar pour ne pas
-   écraser les règles Pattern 1 (.sidebar>nav, .sidebar a) via la cascade. */
-.with-sidebar>.sidebar{background:var(--agtc-semantic-color-background-surface);border-right:1px solid var(--site-line)}
-.with-sidebar .sidebar nav{display:flex;flex-direction:column;padding:20px 0;gap:.2rem;position:sticky;top:var(--agtc-header-height,64px);height:calc(100svh - var(--agtc-header-height,64px));overflow-y:auto}
-.with-sidebar .sidebar a{display:block;padding:.48rem 1.25rem;border-radius:8px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .14s,background .14s}
-.with-sidebar .sidebar a:hover,.with-sidebar .sidebar a:focus-visible{color:var(--site-text);background:rgba(255,255,255,.07);outline:none}
-.with-sidebar .sidebar a:visited{color:#a4abb8;color:var(--agtc-semantic-color-text-on-dark-muted)}
-.with-sidebar .sidebar a[aria-current="page"]{color:var(--site-teal);background:rgba(18,165,148,.1)}
 .page-content{overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
@@ -3857,13 +3849,16 @@ function v2Sidebar(base, current) {
     ['decisions/index.html', '<span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span>'],
     ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
   ];
+  const a = (href, label) => `<a href="${base}${href}"${current === href ? ' class="active" aria-current="page"' : ''}>${label}</a>`;
   return `<aside class="sidebar" aria-label="Navigation secondaire">
-  <nav>
+  <div class="sidebar-group">
     <span class="sidebar-label">Agentica</span>
-    ${links.map(([href, label]) => `<a href="${base}${href}"${current === href ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
+    ${links.map(([href, label]) => a(href, label)).join('\n    ')}
+  </div>
+  <div class="sidebar-group">
     <span class="sidebar-label">Documentation</span>
-    ${docLinks.map(([href, label]) => `<a href="${base}${href}">${label}</a>`).join('\n    ')}
-  </nav>
+    ${docLinks.map(([href, label]) => a(href, label)).join('\n    ')}
+  </div>
 </aside>`;
 }
 
