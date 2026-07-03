@@ -129,3 +129,15 @@ jobs:
           publish_branch: gh-pages
           destination_dir: playwright-report
           keep_files: true
+
+      - name: Rapport publié — URL de consultation
+        run: |
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  ✅  Rapport Playwright publié"
+          echo ""
+          echo "  👉  https://designsystem.gnegreiros.com/playwright-report/"
+          echo ""
+          echo "  Le rapport est disponible dans ~30 secondes"
+          echo "  (délai de propagation GitHub Pages)."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
