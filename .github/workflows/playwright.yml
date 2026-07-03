@@ -13,14 +13,6 @@ name: Playwright — Tests visuels, fonctionnels et accessibilité
 on:
   push:
     branches: [main]
-    paths:
-      - 'site/**'
-      - 'tokens/**'
-      - 'components/**'
-      - 'tests/**'
-      - 'playwright.config.js'
-      - 'package.json'
-      - '.github/workflows/playwright.yml'
   workflow_dispatch:
     inputs:
       update_snapshots:
