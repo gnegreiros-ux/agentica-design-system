@@ -5,8 +5,10 @@ name: Playwright — Tests visuels, fonctionnels et accessibilité
 # Remplace axe.yml pour les pages critiques — axe.yml reste pour l'audit exhaustif manuel.
 # Les snapshots PNG de référence sont committés dans tests/visual/snapshots/.
 #
-# Rapport HTML fusionné publié sur GitHub Pages après chaque run sur main.
-# URL : https://<org>.github.io/<repo>/playwright-report/
+# Rapport HTML fusionné publié dans le sous-répertoire /playwright-report/ du site Pages.
+# URL : https://designsystem.gnegreiros.com/playwright-report/
+# Déployé dans gh-pages via peaceiris/actions-gh-pages (même mécanisme que deploy-site.yml).
+# keep_files: true — ne touche pas au reste du site.
 
 on:
   push:
@@ -29,9 +31,7 @@ on:
           APPROBATION HUMAINE REQUISE — ne jamais activer automatiquement (ADR-066, ADR-004).
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
   playwright:
@@ -104,14 +104,10 @@ jobs:
           retention-days: 7
 
   publish-report:
-    name: Publier rapport fusionné → GitHub Pages
+    name: Publier rapport → designsystem.gnegreiros.com/playwright-report/
     needs: playwright
     if: always()
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
       - uses: actions/checkout@v5
@@ -133,14 +129,11 @@ jobs:
       - name: Fusionner les rapports multi-browser
         run: npx playwright merge-reports --reporter html all-blob-reports
 
-      - name: Configurer GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload rapport fusionné vers Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Publier dans /playwright-report/ (sans toucher au reste du site)
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: playwright-report/
-
-      - name: Déployer sur GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: playwright-report
+          publish_branch: gh-pages
+          destination_dir: playwright-report
+          keep_files: true

@@ -70,11 +70,11 @@ Le rapport HTML fusionné (Chromium + Firefox + WebKit) est publié automatiquem
 **Accéder au rapport :**
 
 ```
-https://gnegreiros.github.io/agentic-design-system/
+https://designsystem.gnegreiros.com/playwright-report/
 ```
 
-> Si l'URL Pages n'est pas encore activée : Actions → télécharger l'artifact `playwright-report-chromium`
-> et ouvrir `index.html` localement.
+> Fallback si le rapport n'est pas encore publié : Actions → télécharger l'artifact
+> `playwright-report-chromium` et ouvrir `index.html` localement.
 
 **Processus de revue :**
 
