@@ -7409,6 +7409,11 @@ function buildChangelog() {
         { fr:'Gouvernance', en:'Governance', items:[
           {fr:'ADR-063 (<code>agtc-feature-card</code>), ADR-064 (mode clair V2), ADR-065 (dark mode dual-mode) — 65 ADRs au total',en:'ADR-063 (<code>agtc-feature-card</code>), ADR-064 (V2 light mode), ADR-065 (dark mode dual-mode) — 65 ADRs total'},
         ]},
+        { fr:'Gouvernance & synchronisation Figma', en:'Governance & Figma sync', items:[
+          {fr:'Audit complet Figma ↔ code via MCP Figma : 1 470+ variables vérifiées (tokens non-couleur + 654 tokens couleur, Text Styles, Effect Styles) contre <code>tokens/*.json</code>',en:'Full Figma ↔ code audit via Figma MCP: 1,470+ variables verified (non-color tokens + 654 color tokens, Text Styles, Effect Styles) against <code>tokens/*.json</code>'},
+          {fr:'2 dérives de valeur corrigées côté Figma : échelle <code>fontSize</code> primitive (rem×4 au lieu de px), espacement densité <code>compact</code>/<code>comfortable</code> (valait 0 au lieu des formules floor/ceil ADR-025)',en:'2 value drifts fixed on the Figma side: primitive <code>fontSize</code> scale (rem×4 instead of px), <code>compact</code>/<code>comfortable</code> density spacing (was 0 instead of the ADR-025 floor/ceil formulas)'},
+          {fr:'822 variables Figma reclassées de <code>ALL_SCOPES</code> vers des scopes explicites (<code>GAP</code>, <code>CORNER_RADIUS</code>, <code>FONT_SIZE</code>, <code>TEXT_FILL</code>, <code>FRAME_FILL</code>/<code>SHAPE_FILL</code>, <code>STROKE_COLOR</code>, <code>EFFECT_COLOR</code>) — conforme aux bonnes pratiques du design system builder Figma',en:'822 Figma variables reclassified from <code>ALL_SCOPES</code> to explicit scopes (<code>GAP</code>, <code>CORNER_RADIUS</code>, <code>FONT_SIZE</code>, <code>TEXT_FILL</code>, <code>FRAME_FILL</code>/<code>SHAPE_FILL</code>, <code>STROKE_COLOR</code>, <code>EFFECT_COLOR</code>) — aligned with Figma design-system-builder best practices'},
+        ]},
       ]
     },
     {
