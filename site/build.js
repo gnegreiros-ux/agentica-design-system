@@ -3412,7 +3412,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${outerClass}" id="main-content"${context === 'marketing' ? ' data-context="marketing"' : ''}>
   ${sidebarHtml}
-  <main class="${!sidebar ? '' : fullWidth ? 'page-content' : 'content'}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
+  <main class="${!fullWidth ? 'content' : sidebar ? 'page-content' : ''}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
 </div>
 ${footer}
