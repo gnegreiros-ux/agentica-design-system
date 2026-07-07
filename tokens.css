@@ -549,9 +549,15 @@
   --agtc-semantic-typography-detail-size: 0.75rem;
   --agtc-semantic-typography-detail-weight: 400;
   --agtc-semantic-typography-detail-line-height: 1.6;
+  --agtc-semantic-typography-detail-bold-size: 0.75rem;
+  --agtc-semantic-typography-detail-bold-weight: 700;
+  --agtc-semantic-typography-detail-bold-line-height: 1.6;
   --agtc-semantic-typography-label-size: 0.875rem;
   --agtc-semantic-typography-label-weight: 500;
   --agtc-semantic-typography-label-line-height: 1.6;
+  --agtc-semantic-typography-label-bold-size: 0.875rem;
+  --agtc-semantic-typography-label-bold-weight: 700;
+  --agtc-semantic-typography-label-bold-line-height: 1.6;
   --agtc-semantic-typography-body-size: 1rem;
   --agtc-semantic-typography-body-weight: 400;
   --agtc-semantic-typography-body-line-height: 1.6;
