@@ -1585,9 +1585,9 @@
       flex-direction: column;
       position: relative;
       padding: 1.5rem;
-      background: rgba(12, 15, 25, .78);
+      background: var(--agtc-semantic-color-background-overlay-dark, rgba(12, 15, 25, .78));
       backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,.06);
+      border: 1px solid var(--agtc-semantic-color-border-overlay-dark, rgba(255,255,255,.06));
       overflow: hidden;
       min-height: 200px;
     }
@@ -1607,7 +1607,7 @@
       background: linear-gradient(
         90deg,
         var(--agtc-semantic-color-action-primary, #12a594),
-        var(--agtc-semantic-color-accent, #e35d6a)
+        var(--agtc-semantic-color-brand-accent, #e35d6a)
       );
     }
 
@@ -1630,8 +1630,6 @@
       justify-content: center;
       width: 2.25rem;
       height: 2.25rem;
-      border-radius: 8px;
-      background: rgba(18, 165, 148, .12);
       color: var(--agtc-semantic-color-action-primary, #12a594);
       margin-bottom: .875rem;
       flex-shrink: 0;
