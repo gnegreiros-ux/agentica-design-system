@@ -1,0 +1,424 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/components/all-components.spec.js >> icon — régressions visuelles >> page icon — light
+- Location: tests/visual/components/all-components.spec.js:13:7
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1280px by 3564px, received 1280px by 3586px. 186725 pixels (ratio 0.05 of all image pixels) are different.
+
+  Snapshot: icon-light.png
+
+Call log:
+  - Expect "toHaveScreenshot(icon-light.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1280px by 3564px, received 1280px by 3586px. 186725 pixels (ratio 0.05 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1280px by 3564px, received 1280px by 3586px. 186725 pixels (ratio 0.05 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Aller au contenu" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Accueil" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Pourquoi" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Qualité" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "IA" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Comprendre" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Fondations":
+              - /url: ../foundations/index.html
+            - link "Contrôle humain":
+              - /url: ../ia.html
+            - link "Source unique de vérité":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Référence" [level=2]
+            - link "Fondations":
+              - /url: ../foundations/index.html
+            - link "Composants":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Décisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+          - generic:
+            - heading "Explorer" [level=2]
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - link "Audit":
+              - /url: ../audit.html
+      - link "Démarrer" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e20]:
+        - button "FR" [ref=e21] [cursor=pointer]
+        - button "EN" [ref=e22] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e23] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e24]
+      - link "GitHub — Code source du projet" [ref=e26] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentic-design-system
+  - generic [ref=e27]:
+    - navigation "Navigation secondaire" [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]: Composants
+        - link "Vue d'ensemble" [ref=e31] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e32] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e33] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e34] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e35] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Card" [ref=e36] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e37] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e38] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e39] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e40] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e41] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e42] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e43] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e44] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e45] [cursor=pointer]:
+          - /url: ../components/tabs.html
+    - main [ref=e46]:
+      - heading "Icon" [level=1] [ref=e47]
+      - paragraph [ref=e48]:
+        - generic [ref=e49]:
+          - text: Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (
+          - code [ref=e50]: "strokeWidth: 1.5px"
+          - text: ), accessibilité WCAG 1.1.1 intégrée.
+      - heading "Tokens" [level=2] [ref=e51]
+      - table [ref=e53]:
+        - rowgroup [ref=e58]:
+          - row "CSS Custom Property Token sémantique Valeur" [ref=e59]:
+            - columnheader "CSS Custom Property" [ref=e60]
+            - columnheader "Token sémantique" [ref=e61]
+            - columnheader "Valeur" [ref=e62]
+        - rowgroup [ref=e63]:
+          - row "--agtc-semantic-icon-size-inline semantic.icon.size.inline 16px" [ref=e64]:
+            - cell "--agtc-semantic-icon-size-inline" [ref=e65]:
+              - code [ref=e66]: "--agtc-semantic-icon-size-inline"
+            - cell "semantic.icon.size.inline" [ref=e67]:
+              - code [ref=e68]: semantic.icon.size.inline
+            - cell "16px" [ref=e69]
+          - row "--agtc-semantic-icon-size-control semantic.icon.size.control 20px" [ref=e70]:
+            - cell "--agtc-semantic-icon-size-control" [ref=e71]:
+              - code [ref=e72]: "--agtc-semantic-icon-size-control"
+            - cell "semantic.icon.size.control" [ref=e73]:
+              - code [ref=e74]: semantic.icon.size.control
+            - cell "20px" [ref=e75]
+          - row "--agtc-semantic-icon-size-nav semantic.icon.size.nav 24px" [ref=e76]:
+            - cell "--agtc-semantic-icon-size-nav" [ref=e77]:
+              - code [ref=e78]: "--agtc-semantic-icon-size-nav"
+            - cell "semantic.icon.size.nav" [ref=e79]:
+              - code [ref=e80]: semantic.icon.size.nav
+            - cell "24px" [ref=e81]
+      - heading "DOs et DON'Ts" [level=2] [ref=e82]
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - heading "À faire" [level=3] [ref=e85]:
+            - img [ref=e86]
+            - text: À faire
+          - list [ref=e89]:
+            - listitem [ref=e90]:
+              - generic [ref=e91]:
+                - text: Toujours utiliser
+                - code [ref=e92]: <agtc-icon name="…" size="control">
+            - listitem [ref=e93]:
+              - generic [ref=e94]:
+                - text: Ajouter
+                - code [ref=e95]: label="…"
+                - text: si l'icône est la seule information visible
+            - listitem [ref=e96]:
+              - generic [ref=e97]:
+                - text: Ajouter
+                - code [ref=e98]: decorative
+                - text: si l'icône accompagne un texte qui la décrit
+            - listitem [ref=e99]:
+              - generic [ref=e100]:
+                - text: "Choisir le token de taille correspondant au contexte :"
+                - code [ref=e101]: inline
+                - text: dans un texte,
+                - code [ref=e102]: control
+                - text: dans un bouton,
+                - code [ref=e103]: nav
+                - text: en en-tête
+        - generic [ref=e104]:
+          - heading "À éviter" [level=3] [ref=e105]:
+            - img [ref=e106]
+            - text: À éviter
+          - list [ref=e110]:
+            - listitem [ref=e111]:
+              - generic [ref=e112]:
+                - text: SVG inline sans passer par
+                - code [ref=e113]: <agtc-icon>
+                - text: — aucun contrat d'accessibilité
+            - listitem [ref=e114]:
+              - generic [ref=e115]:
+                - text: "Taille codée en dur :"
+                - code [ref=e116]: style="width:20px"
+            - listitem [ref=e117]:
+              - generic [ref=e118]:
+                - text: Icône sémantique sans
+                - code [ref=e119]: label
+                - text: ni
+                - code [ref=e120]: decorative
+            - listitem [ref=e121]: Tailles inventées hors des 3 tokens sémantiques définis
+      - heading "Référence complète" [level=2] [ref=e122]
+      - heading "Bibliothèque — Lucide Icons" [level=3] [ref=e123]
+      - paragraph [ref=e124]:
+        - generic [ref=e125]:
+          - text: Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (
+          - code [ref=e126]: "strokeWidth: 1.5px"
+          - text: "). Référence canonique :"
+          - strong [ref=e127]: lucide.dev
+      - heading "API du composant" [level=3] [ref=e128]
+      - generic [ref=e129]:
+        - code [ref=e130]: <!-- Semantic icon (label required) --> <agtc-icon name="trash-2" size="control" label="Delete file"></agtc-icon> <!-- Decorative icon (aria-hidden) --> <agtc-icon name="check" size="inline" decorative></agtc-icon> <!-- Navigation icon --> <agtc-icon name="settings" size="nav" label="Settings"></agtc-icon>
+        - generic [ref=e131]: html
+        - button "Copier le code (html)" [ref=e132] [cursor=pointer]: Copier
+      - table [ref=e134]:
+        - rowgroup [ref=e135]:
+          - row "Prop Type Valeurs Défaut Requis" [ref=e136]:
+            - columnheader "Prop" [ref=e137]
+            - columnheader "Type" [ref=e138]
+            - columnheader "Valeurs" [ref=e139]
+            - columnheader "Défaut" [ref=e140]
+            - columnheader "Requis" [ref=e141]
+        - rowgroup [ref=e142]:
+          - 'row "name String Nom Lucide (ex : trash-2) — ✅" [ref=e143]':
+            - cell "name" [ref=e144]:
+              - code [ref=e145]: name
+            - cell "String" [ref=e146]
+            - 'cell "Nom Lucide (ex : trash-2)" [ref=e147]':
+              - generic [ref=e148]:
+                - text: "Nom Lucide (ex :"
+                - code [ref=e149]: trash-2
+                - text: )
+            - cell "—" [ref=e150]
+            - cell "✅" [ref=e151]
+          - row "size String inline / control / nav control —" [ref=e152]:
+            - cell "size" [ref=e153]:
+              - code [ref=e154]: size
+            - cell "String" [ref=e155]
+            - cell "inline / control / nav" [ref=e156]:
+              - code [ref=e157]: inline
+              - text: /
+              - code [ref=e158]: control
+              - text: /
+              - code [ref=e159]: nav
+            - cell "control" [ref=e160]:
+              - code [ref=e161]: control
+            - cell "—" [ref=e162]
+          - row "label String Texte accessible — Si non décoratif" [ref=e163]:
+            - cell "label" [ref=e164]:
+              - code [ref=e165]: label
+            - cell "String" [ref=e166]
+            - cell "Texte accessible" [ref=e167]
+            - cell "—" [ref=e168]
+            - cell "Si non décoratif" [ref=e169]
+          - row "decorative Boolean Icône purement ornementale false —" [ref=e170]:
+            - cell "decorative" [ref=e171]:
+              - code [ref=e172]: decorative
+            - cell "Boolean" [ref=e173]
+            - cell "Icône purement ornementale" [ref=e174]
+            - cell "false" [ref=e175]:
+              - code [ref=e176]: "false"
+            - cell "—" [ref=e177]
+      - heading "Usage avec agtc-button" [level=3] [ref=e178]
+      - generic [ref=e179]:
+        - code [ref=e180]: <!-- Button with decorative icon + text --> <agtc-button variant="critical"> <agtc-icon name="trash-2" size="control" decorative></agtc-icon> Delete permanently </agtc-button> <!-- Icon-only button — label required on agtc-icon --> <agtc-button variant="ghost" aria-label="Close"> <agtc-icon name="x" size="control" label="Close"></agtc-icon> </agtc-button>
+        - generic [ref=e181]: html
+        - button "Copier le code (html)" [ref=e182] [cursor=pointer]: Copier
+      - heading "Accessibilité — WCAG 1.1.1" [level=3] [ref=e183]
+      - generic [ref=e184]:
+        - table [ref=e186]:
+          - rowgroup [ref=e187]:
+            - row "Scénario Implémentation" [ref=e188]:
+              - columnheader "Scénario" [ref=e189]
+              - columnheader "Implémentation" [ref=e190]
+          - rowgroup [ref=e191]:
+            - row "Icône seule (bouton, lien) label=\"…\" → aria-label" [ref=e192]:
+              - cell "Icône seule (bouton, lien)" [ref=e193]
+              - cell "label=\"…\" → aria-label" [ref=e194]:
+                - code [ref=e195]: label="…"
+                - text: →
+                - code [ref=e196]: aria-label
+            - row "Icône + texte adjacent decorative → aria-hidden=\"true\"" [ref=e197]:
+              - cell "Icône + texte adjacent" [ref=e198]
+              - cell "decorative → aria-hidden=\"true\"" [ref=e199]:
+                - code [ref=e200]: decorative
+                - text: →
+                - code [ref=e201]: aria-hidden="true"
+            - row "Icône dans un champ label sur le champ parent (aria-describedby)" [ref=e202]:
+              - cell "Icône dans un champ" [ref=e203]
+              - cell "label sur le champ parent (aria-describedby)" [ref=e204]:
+                - generic [ref=e205]:
+                  - code [ref=e206]: label
+                  - text: sur le champ parent (
+                  - code [ref=e207]: aria-describedby
+                  - text: )
+        - heading "Installation" [level=3] [ref=e208]
+        - generic [ref=e209]:
+          - code [ref=e210]: "# npm (recommended for bundler projects) npm install lucide # CDN (static projects) <script src=\"https://unpkg.com/lucide@latest\"></script>"
+          - generic [ref=e211]: bash
+          - button "Copier le code (bash)" [ref=e212] [cursor=pointer]: Copier
+        - generic [ref=e213]:
+          - generic [ref=e214]:
+            - strong [ref=e215]: Contribuer à ce projet
+            - paragraph [ref=e216]: Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.
+          - link "Voir sur GitHub" [ref=e217] [cursor=pointer]:
+            - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - generic [ref=e218]: Voir sur GitHub
+    - navigation "Table des matières" [ref=e219]:
+      - generic [ref=e220]: Sur cette page
+      - link "Tokens" [ref=e221] [cursor=pointer]:
+        - /url: "#tokens"
+      - link "DOs et DON'Ts" [ref=e222] [cursor=pointer]:
+        - /url: "#dos-et-don-ts"
+      - link "Référence complète" [ref=e223] [cursor=pointer]:
+        - /url: "#reference-complete"
+  - contentinfo [ref=e224]:
+    - generic [ref=e225]:
+      - generic [ref=e226]:
+        - link "Agentica — Accueil" [ref=e227] [cursor=pointer]:
+          - /url: ../index.html
+          - img [ref=e228]
+        - link "Guilherme Negreiros" [ref=e229] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e230]
+          - text: Guilherme Negreiros
+      - generic [ref=e234]:
+        - generic [ref=e235]: Navigation
+        - link "Accueil" [ref=e236] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Pourquoi" [ref=e237] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e238] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Qualité" [ref=e239] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "IA" [ref=e240] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e241]:
+        - generic [ref=e242]: Documentation
+        - link "Comprendre" [ref=e243] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Démarrer" [ref=e244] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Fondations" [ref=e245] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Composants" [ref=e246] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e247] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Décisions" [ref=e248] [cursor=pointer]:
+          - /url: ../decisions/index.html
+      - generic [ref=e249]:
+        - generic [ref=e250]: Explorer
+        - link "Storybook" [ref=e251] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e252] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentic-design-system
+        - link "Audit" [ref=e253] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "Brief IA" [ref=e254] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e255]:
+      - generic [ref=e256]: © 2026 Guilherme Negreiros
+      - generic [ref=e257]: Construit avec Claude Code.
+  - button "Retour en haut" [ref=e258] [cursor=pointer]:
+    - img [ref=e259]
+    - generic [ref=e261]: Haut
+  - status [ref=e262]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | // Régressions visuelles de toutes les pages composants (sauf button.html, déjà couvert)
+  4  | const PAGES = [
+  5  |   'badge', 'banner', 'card', 'checkbox', 'code-block',
+  6  |   'icon', 'input', 'link', 'radio', 'segmented',
+  7  |   'table', 'tabs', 'toggle',
+  8  | ];
+  9  | 
+  10 | for (const name of PAGES) {
+  11 |   test.describe(`${name} — régressions visuelles`, () => {
+  12 |     for (const theme of ['light', 'dark']) {
+  13 |       test(`page ${name} — ${theme}`, async ({ page }) => {
+  14 |         await page.goto(`/components/${name}.html`);
+  15 |         await page.waitForLoadState('networkidle');
+  16 |         await page.evaluate((t) =>
+  17 |           document.documentElement.setAttribute('data-theme', t), theme
+  18 |         );
+> 19 |         await expect(page).toHaveScreenshot(`${name}-${theme}.png`, { fullPage: true });
+     |                            ^ Error: expect(page).toHaveScreenshot(expected) failed
+  20 |       });
+  21 |     }
+  22 |   });
+  23 | }
+  24 | 
+```
