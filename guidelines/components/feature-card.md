@@ -31,6 +31,20 @@ Présenter une capacité, un rôle ou une fonctionnalité dans un bloc éditoria
 
 ---
 
+## Contrat token
+
+| Usage | Token CSS |
+|-------|-----------|
+| Fond de carte (glassmorphism) | `--agtc-semantic-color-background-overlay-dark` |
+| Bordure de carte | `--agtc-semantic-color-border-overlay-dark` |
+| Border-bottom (`default`) | `--agtc-semantic-color-action-primary` |
+| Gradient border-bottom (`marketing`) | `--agtc-semantic-color-action-primary` → `--agtc-semantic-color-brand-accent` |
+
+> Dette de tokens corrigée le 2026-07-07 (audit Figma) : `background` et `border` du
+> `:host` utilisaient des valeurs `rgba()` codées en dur, et le gradient marketing
+> référençait `--agtc-semantic-color-accent` (inexistant, fallback CSS silencieux).
+> Voir `.claude/rules/tokens-system.md`.
+
 ## Attributs
 
 | Attribut | Type | Défaut | Description |

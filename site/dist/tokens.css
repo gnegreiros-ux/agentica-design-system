@@ -471,6 +471,7 @@
   --agtc-semantic-color-background-code: #202020;
   --agtc-semantic-color-background-code-raised: #646464;
   --agtc-semantic-color-background-code-raised-hover: #838383;
+  --agtc-semantic-color-background-overlay-dark: rgba(12, 15, 25, 0.78);
   --agtc-semantic-color-overlay-scrim: rgba(15, 17, 23, 0.65);
   --agtc-semantic-color-overlay-dark: rgba(15, 17, 23, 0.88);
   --agtc-semantic-color-overlay-medium: rgba(15, 17, 23, 0.50);
@@ -491,6 +492,7 @@
   --agtc-semantic-color-border-danger: #ce2c31;
   --agtc-semantic-color-border-on-dark: rgba(255,255,255,0.18);
   --agtc-semantic-color-border-swatch: rgba(0,0,0,0.10);
+  --agtc-semantic-color-border-overlay-dark: rgba(255, 255, 255, 0.06);
   --agtc-semantic-color-viz-scale-bar: #fdbdbe;
   --agtc-semantic-color-control-track-off: #8d8d8d;
   --agtc-semantic-color-control-track-off-hover: #838383;

@@ -220,6 +220,21 @@
           "$value": "{primitive.color.gray.10}",
           "$type": "color",
           "$intent": "Fond surélevé sur surface code au survol — bouton copier hover"
+        },
+        "overlay-dark": {
+          "$value": "rgba(12, 15, 25, 0.78)",
+          "$type": "color",
+          "$intent": "Fond glassmorphism sombre — carte translucide sur fond marketing (feature-card)",
+          "$description": "Fond semi-transparent sombre pour cartes en verre dépoli (à associer à backdrop-filter:blur()). Valeur littérale non aliasée à une primitive, au même titre que overlay.scrim/dark/medium/subtle — aucune primitive existante ne couvre ce ton + cette opacité. Dette de tokens corrigée (audit Figma du 2026-07-07) : remplace une valeur codée en dur dans agtc-feature-card.js.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "background-overlay-dark",
+              "use": ["agtc-feature-card"],
+              "doNotUse": "Fond de section entière — utiliser background.inverse. Sans backdrop-filter — l'effet dépoli fait partie de l'intention.",
+              "components": ["agtc-feature-card"]
+            }
+          }
         }
       },
       "overlay": {
@@ -370,6 +385,21 @@
           "$value": "{primitive.color.black.2}",
           "$type": "color",
           "$intent": "Filet de contour des échantillons de couleur sur fond clair — non textuel (ADR-046)"
+        },
+        "overlay-dark": {
+          "$value": "rgba(255, 255, 255, 0.06)",
+          "$type": "color",
+          "$intent": "Bordure très subtile — délimite une carte glassmorphism sombre (feature-card), non textuel",
+          "$description": "Bordure fine (6% opacité blanche) pour délimiter une carte translucide sur fond sombre marketing, à associer à background.overlay-dark. Valeur littérale non aliasée à une primitive — l'échelle white s'arrête à white.12 (18% d'opacité), aucun palier n'existe à 6%. Dette de tokens corrigée (audit Figma du 2026-07-07) : remplace une valeur codée en dur dans agtc-feature-card.js.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "border-overlay-dark",
+              "use": ["agtc-feature-card"],
+              "doNotUse": "Bordure standard sur fond clair — utiliser border.default. Élément textuel — cette bordure est non-textuelle et décorative uniquement.",
+              "components": ["agtc-feature-card"]
+            }
+          }
         }
       },
       "viz": {

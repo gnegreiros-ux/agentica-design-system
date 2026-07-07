@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 06 Jul 2026 18:26:28 GMT
+ * Generated on Tue, 07 Jul 2026 17:50:27 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -498,6 +498,7 @@ export const SemanticColorBackgroundInverseRaised = "#1a1e24";
 export const SemanticColorBackgroundCode = "#202020";
 export const SemanticColorBackgroundCodeRaised = "#646464";
 export const SemanticColorBackgroundCodeRaisedHover = "#838383";
+export const SemanticColorBackgroundOverlayDark = "rgba(12, 15, 25, 0.78)";
 export const SemanticColorOverlayScrim = "rgba(15, 17, 23, 0.65)";
 export const SemanticColorOverlayDark = "rgba(15, 17, 23, 0.88)";
 export const SemanticColorOverlayMedium = "rgba(15, 17, 23, 0.50)";
@@ -518,6 +519,7 @@ export const SemanticColorBorderFocus = "#007a68";
 export const SemanticColorBorderDanger = "#ce2c31";
 export const SemanticColorBorderOnDark = "rgba(255,255,255,0.18)";
 export const SemanticColorBorderSwatch = "rgba(0,0,0,0.10)";
+export const SemanticColorBorderOverlayDark = "rgba(255, 255, 255, 0.06)";
 export const SemanticColorVizScaleBar = "#fdbdbe";
 export const SemanticColorControlTrackOff = "#8d8d8d";
 export const SemanticColorControlTrackOffHover = "#838383";

@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Mon, 06 Jul 2026 18:26:28 GMT
+// Generated on Tue, 07 Jul 2026 17:50:27 GMT
 
 
 import UIKit
@@ -627,6 +627,7 @@ public class AgenticaTokens {
     public static let semanticColorBackgroundHover = #fafafa
     public static let semanticColorBackgroundInverse = #0f1117
     public static let semanticColorBackgroundInverseRaised = #1a1e24
+    public static let semanticColorBackgroundOverlayDark = rgba(12, 15, 25, 0.78)
     public static let semanticColorBackgroundPage = #fcfcfc
     public static let semanticColorBackgroundSubtle = #f0f0f0
     public static let semanticColorBackgroundSurface = #ffffff
@@ -634,6 +635,7 @@ public class AgenticaTokens {
     public static let semanticColorBorderDefault = #e8e8e8
     public static let semanticColorBorderFocus = #007a68
     public static let semanticColorBorderOnDark = rgba(255,255,255,0.18)
+    public static let semanticColorBorderOverlayDark = rgba(255, 255, 255, 0.06)
     public static let semanticColorBorderSwatch = rgba(0,0,0,0.10)
     public static let semanticColorBrandAccent = #ed6b86
     public static let semanticColorBrandAccentHover = #e05f7b
