@@ -1432,6 +1432,415 @@ qui y fait référence) → CSS compilé (`npm run tokens`) → composant code
 
 ---
 
+## 20. Icônes en instance-swap — `constraints: SCALE` obligatoire à chaque niveau imbriqué
+
+> **Incident du 2026-07-07.** Les icônes (composant `Icon / <name>`, page `Foundations / Icons`)
+> avaient été reconstruites en 24×24 avec de vrais tracés Lucide (fin de l'incident du
+> 2026-07-06 — carrés gris placeholder). Mais utilisées en instance-swap dans `agtc-button`
+> (slot `icon-prefix`/`icon-suffix` redimensionné à 18×18), certaines icônes débordaient du
+> bouton, chevauchant le libellé — visible uniquement avec certaines formes d'icône, pas
+> toutes (ex. `plus` semblait correct, `layout-dashboard` débordait franchement).
+
+### Cause
+
+Le redimensionnement d'une instance (`instance.resize(18, 18)`) ne fait cascader la mise à
+l'échelle vers les enfants **que si chaque enfant, à chaque niveau de la hiérarchie, porte
+`constraints: { horizontal: 'SCALE', vertical: 'SCALE' }` par rapport à son parent direct**.
+Un enfant en `MIN`/`MIN` (valeur par défaut de `figma.createNodeFromSvg()` et de
+`figma.createFrame()`) reste figé à sa taille native — il ignore le redimensionnement du
+parent et déborde silencieusement.
+
+Structure de chaque icône : `Icon / <name>` (COMPONENT 24×24) → `Frame` (24×24, wrapper créé
+par `createNodeFromSvg`) → `Vector` × N (tracés). Les `Vector` avaient bien `SCALE/SCALE`
+(hérité de l'export SVG), mais le `Frame` intermédiaire était resté en `MIN/MIN` — un seul
+niveau non conforme suffit à casser toute la chaîne d'échelle.
+
+### Règle
+
+```
+✅ Après toute création/modification d'un composant Icon, vérifier `constraints` sur
+   CHAQUE enfant direct de chaque ancêtre jusqu'à la feuille (pas seulement le premier niveau)
+✅ Régler explicitement { horizontal:'SCALE', vertical:'SCALE' } sur ces enfants —
+   ne jamais supposer que c'est déjà le cas
+✅ Tester le redimensionnement d'une INSTANCE (pas seulement le master) avec une icône
+   dont le tracé touche les bords (ex. layout-dashboard, cpu, boxes) — les icônes
+   symétriques centrées (plus, x, check) masquent le bug visuellement
+❌ Ne jamais supposer qu'un enfant hérite du comportement SCALE de son propre enfant —
+   chaque niveau de la hiérarchie a ses propres constraints, indépendantes
+```
+
+```javascript
+// ✅ CORRECT — fixe les 81 icônes en une passe (incident du 2026-07-07)
+const icons = page.findAllWithCriteria({types:['COMPONENT']}).filter(n => n.name.startsWith('Icon / '));
+for (const icon of icons) {
+  const frame = icon.children.find(c => c.name === 'Frame');
+  frame.constraints = { horizontal: 'SCALE', vertical: 'SCALE' };
+}
+```
+
+Une fois ce fix appliqué au niveau du master, `instance.swapComponent(autreIcone)` préserve
+la taille de l'instance (ex. 18×18) et la nouvelle icône s'y adapte automatiquement — c'est
+tout l'intérêt de l'instance-swap : composer librement sans re-corriger la taille à chaque
+échange.
+
+---
+
+## 21. Validation obligatoire — dimensions, contrastes, affichage
+
+> **Règle absolue (2026-07-07, suite aux incidents §16/§17/§20) : aucun composant ni
+> aucune page ne peut être considéré terminé sans avoir passé ces trois validations.**
+> Ce n'est pas une checklist visuelle optionnelle — ce sont trois scripts à exécuter
+> réellement via `use_figma` avant de rapporter un composant comme fini, sur le
+> composant/la page concernée ET sur tout ce qui a été touché indirectement (ex. :
+> modifier un master Icon impacte tous ses usages ailleurs dans le fichier).
+
+Déclencheur historique : icônes qui débordaient de leur slot (§20), fond `icon-wrap`
+qui a perdu son opacité en cours de construction et rendu l'icône invisible (même
+couleur que le fond), gap codé en dur au lieu d'un token. Ces trois bugs auraient été
+détectés immédiatement par les scripts ci-dessous — ils n'ont pas été vus car aucune
+vérification programmatique n'avait été faite, seulement une relecture visuelle rapide.
+
+### A. Dimensions — pas de débordement, pas de désalignement
+
+**Critère de passage :** pour tout nœud enfant (hors nœuds décoratifs `_préfixés` en
+`layoutPositioning:"ABSOLUTE"`, et hors anneaux de focus `strokeAlign:"OUTSIDE"`
+volontaires), les bornes de l'enfant doivent rester à l'intérieur des bornes de son
+parent direct.
+
+```javascript
+// À exécuter sur chaque page modifiée — détecte tout débordement
+function findOverflows(root) {
+  const issues = [];
+  function walk(node) {
+    if (!('children' in node)) return;
+    for (const child of node.children) {
+      const isDecorative = child.name.startsWith('_') && child.layoutPositioning === 'ABSOLUTE';
+      const isFocusRing = child.strokeAlign === 'OUTSIDE';
+      if (!isDecorative && !isFocusRing && 'width' in node) {
+        const overflowsRight  = child.x + child.width  > node.width  + 0.5;
+        const overflowsBottom = child.y + child.height > node.height + 0.5;
+        const overflowsLeft   = child.x < -0.5;
+        const overflowsTop    = child.y < -0.5;
+        if (overflowsRight || overflowsBottom || overflowsLeft || overflowsTop) {
+          issues.push({ parent: node.name, child: child.name, parentSize: [node.width, node.height], childBounds: [child.x, child.y, child.x+child.width, child.y+child.height] });
+        }
+      }
+      walk(child);
+    }
+  }
+  walk(root);
+  return issues;
+}
+```
+
+Exécuter `findOverflows(pageNode)` (ou sur un `ComponentSet`/instance précis) et traiter
+tout résultat non vide comme un blocant — pas seulement un signalement.
+
+**Cas particulier instance-swap (icônes, avatars, etc.) :** tester le redimensionnement
+avec au moins une valeur "à risque" (contenu proche des bords), pas uniquement la valeur
+par défaut — voir §20, l'icône `plus` masquait le bug, `layout-dashboard` le révélait.
+
+### B. Contrastes — calcul réel, pas une estimation visuelle
+
+**Seuils WCAG :**
+- Texte normal : **4.5:1** minimum
+- Texte large (≥ 24px, ou ≥ 18.66px en Bold) : **3:1** minimum
+- Icônes / graphiques UI (WCAG 1.4.11) : **3:1** minimum
+
+```javascript
+// Calcul de contraste WCAG — composite les fonds semi-transparents en remontant l'arbre
+function relLum(c) {
+  const lin = v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+}
+function contrastRatio(c1, c2) {
+  const L1 = relLum(c1), L2 = relLum(c2);
+  const [light, dark] = L1 > L2 ? [L1, L2] : [L2, L1];
+  return (light + 0.05) / (dark + 0.05);
+}
+function compositeOver(fg, opacity, bg) {
+  return { r: fg.r*opacity + bg.r*(1-opacity), g: fg.g*opacity + bg.g*(1-opacity), b: fg.b*opacity + bg.b*(1-opacity) };
+}
+function resolveBackground(node, canvasBg = {r:1,g:1,b:1}) {
+  const chain = [];
+  let n = node.parent;
+  while (n && n.type !== 'PAGE') { chain.unshift(n); n = n.parent; }
+  let bg = canvasBg;
+  for (const anc of chain) {
+    if (!('fills' in anc) || !Array.isArray(anc.fills)) continue;
+    for (const f of anc.fills) {
+      if (f.type === 'SOLID' && f.visible !== false) bg = compositeOver(f.color, f.opacity ?? 1, bg);
+    }
+  }
+  return bg;
+}
+// Usage sur un texte : requiredRatio dépend de fontSize/fontWeight (voir seuils ci-dessus)
+const bg = resolveBackground(textNode);
+const fg = textNode.fills[0].color;
+const ratio = contrastRatio(fg, bg);
+```
+
+Traiter tout ratio sous le seuil comme un blocant, **y compris pour les icônes teintées
+sur fond teinté** (ex. incident `icon-wrap` : icône `action-primary` plein sur fond
+`action-primary` à 12% — le calcul aurait immédiatement donné un ratio proche de 1:1).
+
+### ⚠️ Piège fréquent — anneau de focus de la même couleur que le fond du composant
+
+> **Incident du 2026-07-07.** L'anneau de focus de `agtc-button` (Primary, fond teal)
+> utilisait `border-focus`, qui résout **à la même couleur teal** que le fond du bouton
+> — ratio 1:1 entre l'anneau et le composant qu'il entoure. Le même risque existe partout
+> où un composant à fond `action-primary` (Toggle on, Checkbox coché, Radio sélectionné,
+> Segmented sélectionné) reçoit un anneau de focus lié au même token.
+
+**Solution standard (technique W3C C40 — "Two-Color Focus Indicator"), pas une
+invention locale :** utiliser **deux couleurs à fort contraste entre elles** (une claire,
+une foncée) pour l'anneau — tant que ces deux couleurs ont **au moins 9:1 de contraste
+entre elles**, l'une des deux aura *toujours* au moins 3:1 avec n'importe quel fond plein,
+sans avoir à décliner un anneau différent par variante de couleur.
+Référence : [W3C WCAG — Technique C40](https://www.w3.org/WAI/WCAG22/Techniques/css/C40.html).
+
+```
+✅ Bande claire (blanc) directement collée au composant + bande foncée (teal/noir) à
+   l'extérieur — la bande claire garantit à elle seule le contraste contre N'IMPORTE
+   QUEL fond, y compris un fond de la même couleur que la bande foncée
+✅ Chaque bande ≥ 2px — vérifié : blanc (spread 2) + teal (spread 6) sur Button
+✅ Vérifié : blanc vs teal = 5.28:1 (> 3:1 requis) — donc même si l'anneau extérieur
+   « disparaît » visuellement sur un fond de même teinte, le composant reste conforme
+   ET visuellement plus grand (silhouette agrandie) — accepté explicitlement par
+   l'utilisateur comme critère suffisant : « même si c'est la même couleur, l'état
+   Focus devrait être plus grosse à cause du contour plus gros »
+❌ Ne jamais supposer qu'un seul anneau à une couleur suffit sur tous les fonds
+❌ Ne jamais évaluer un anneau de focus seulement au ratio interne (anneau vs fond) —
+   toujours vérifier aussi la bande claire (anneau vs n'importe quel fond, garantie C40)
+```
+
+**Repère largeur :** Material Design 3 utilise `--md-focus-ring-width: 3px` par défaut
+pour son anneau de focus — nos deux bandes (2px + 6px = 8px de largeur totale visible)
+sont dans le même ordre de grandeur, légèrement plus généreuses pour rester lisibles
+même en export basse résolution.
+
+**Piège API associé (Plugin Figma) :** `figma.variables.setBoundVariableForEffect()`
+lie correctement `boundVariables` mais ne recalcule pas toujours le champ `color`
+littéral de l'effet immédiatement — vérifier le `color` résolu après binding, et le
+forcer explicitement si besoin (`effect.color = {r,g,b,a}` en plus du binding) :
+```javascript
+let ring = { type:'DROP_SHADOW', color:{r:0,g:0,b:0,a:1}, spread:6, /* ... */ };
+ring = figma.variables.setBoundVariableForEffect(ring, 'color', borderFocusVar);
+ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync si le rendu montre encore l'ancienne couleur
+```
+
+### C. Affichage sur la page — élégance mesurable, pas seulement "ça a l'air bien"
+
+- [ ] Gap icône ⇄ libellé : **toujours** un token (`space/control/gap` ou équivalent),
+      jamais une valeur codée en dur — voir §18
+- [ ] Alignement vertical : icône et texte partagent le même `counterAxisAlignItems:"CENTER"`
+      sur leur parent — pas de décalage de baseline
+- [ ] Aucun `itemSpacing:0` par défaut sur un conteneur qui reçoit ensuite des enfants
+      icône+texte (piège rencontré sur Button — le composant avait été construit texte
+      seul, `itemSpacing` jamais revisité en ajoutant les icônes)
+- [ ] `findOverflows()` (§A) donne un résultat vide sur la page entière, pas seulement
+      sur le composant modifié — une page voisine peut hériter un master modifié
+- [ ] Screenshot final à `maxDimension` suffisant pour voir les détails (≥ 900px sur
+      la zone concernée) — un screenshot trop petit masque exactement ce genre de bug
+
+### Quand exécuter ces trois validations
+
+```
+✅ Après CHAQUE création ou modification de composant, avant de le déclarer terminé
+✅ Après CHAQUE modification d'un master (Icon, Text Style, variable) — auditer tous
+   les usages ailleurs dans le fichier, pas seulement l'endroit qu'on vient de modifier
+✅ Avant le screenshot de vérification final d'une session de travail
+❌ Ne jamais se fier à un screenshot basse résolution comme validation suffisante
+❌ Ne jamais valider un composant en ne testant qu'une seule valeur/variante par propriété
+   (ex. tester l'instance-swap avec une seule icône ne prouve rien sur les 80 autres)
+```
+
+---
+
+## 22. Audit complet obligatoire — 9 catégories
+
+> Référencé par `.claude/rules/figma-library-governance.md`. À exécuter sur toute page
+> nouvellement créée/modifiée, avant de la déclarer terminée, et à chaque demande
+> explicite ("audit", "vérifie tout le fichier", "screenshot global").
+
+### 1. Accessibilité
+- [ ] Anneau de focus visible sur tous les états focusables — technique C40 (§20), jamais
+      un simple contour touchant l'élément (voir incident 2026-07-07 "bouton plus gros
+      ≠ focus ring")
+- [ ] Contraste texte ≥ 4.5:1 (≥ 3:1 si ≥ 24px ou ≥ 18.66px Bold) — script §21.B
+- [ ] Contraste icônes/graphiques UI ≥ 3:1
+- [ ] États `disabled` exemptés de contraste (WCAG) — ne pas les traiter comme des bugs
+
+### 2. Affichage de la page
+- [ ] `findOverflows()` (§21.A) retourne un tableau vide sur `page-wrapper` ET sur le
+      `ComponentSet` lui-même
+- [ ] Aucun nœud orphelin au niveau racine de la page (rectangles/instances de test
+      oubliés — voir incident 2026-07-07, deux résidus de test laissés sur Button)
+- [ ] Gap icône ⇄ libellé toujours via `space/control/gap` (ou équivalent), jamais codé
+      en dur (§18)
+
+### 3. Variables
+- [ ] Aucun fill/stroke/padding/radius sans `boundVariables` — script de scan ci-dessous
+- [ ] Priorité au token composant sur le sémantique (§18)
+- [ ] Jamais de token primitif bindé directement sur un composant
+
+```javascript
+// Scanner les fills/strokes non liés à une Variable sur un ComponentSet
+function scanUnboundPaints(root) {
+  const issues = [];
+  function walk(node) {
+    if ('fills' in node && Array.isArray(node.fills)) {
+      node.fills.forEach((f, i) => {
+        if (f.type === 'SOLID' && f.visible !== false && !f.boundVariables?.color) {
+          issues.push({ node: node.name, prop: `fills[${i}]`, color: f.color });
+        }
+      });
+    }
+    if ('strokes' in node && Array.isArray(node.strokes)) {
+      node.strokes.forEach((s, i) => {
+        if (s.type === 'SOLID' && s.visible !== false && !s.boundVariables?.color) {
+          issues.push({ node: node.name, prop: `strokes[${i}]`, color: s.color });
+        }
+      });
+    }
+    if ('children' in node) node.children.forEach(walk);
+  }
+  walk(root);
+  return issues;
+}
+```
+
+### 4. Styles (Text Styles)
+- [ ] Tout `TEXT` a un `textStyleId` non vide (§19) — jamais fontName/fontSize manuels
+      qui "ressemblent" à un style existant
+
+```javascript
+function scanMissingTextStyles(root) {
+  const issues = [];
+  root.findAllWithCriteria({ types: ['TEXT'] }).forEach(t => {
+    if (!t.textStyleId) issues.push({ node: t.name, characters: t.characters.slice(0, 30) });
+  });
+  return issues;
+}
+```
+
+### 5. États
+- [ ] Les états Figma correspondent exactement à ceux du composant code (grep les
+      `:hover`, `:focus-visible`, `:disabled`, états custom comme `loading`/`error` dans
+      `components/agtc-<comp>.js`)
+- [ ] Aucun état manquant, aucun état inventé
+
+### 6. Variantes
+- [ ] `componentPropertyDefinitions.Variant.variantOptions` (ou équivalent) correspond
+      exactement à l'union type / `argTypes.variant.options` du fichier `.stories.js`
+- [ ] Les propriétés (BOOLEAN/TEXT/INSTANCE_SWAP) correspondent aux props exposées par
+      le composant Lit (`static properties`)
+
+### 7. Documentation in-page
+- [ ] `section-header` (titre + description), `section-showcase` (VARIANTES),
+      `section-states` ou équivalent, `section-tokens`, `section-dos-donts`,
+      `section-links` — tous présents (§8)
+- [ ] Tableau `TOKENS UTILISÉS` reflète les tokens `component.<comp>.*` réels, pas les
+      sémantiques bruts (§18)
+
+### 8. Liens
+- [ ] `section-links` contient au minimum : Guidelines, 1 source UX (NN/g, W3C APG, IxDF…),
+      1 référence WCAG/ADR, Tokens — cf. `ux-patterns-sources.md`
+- [ ] Aucun lien dupliqué entre le header et le bas de page (§10)
+
+### 9. Parité code ↔ Figma après une instruction visuelle humaine directe
+
+> **Incident du 2026-07-07.** L'utilisateur a demandé de retirer le fond de `.icon-wrap`
+> sur Feature-card directement dans Figma (retour visuel, pas une lecture du code). Le
+> changement a été fait côté Figma sans vérifier immédiatement `agtc-feature-card.js` —
+> créant un écart Figma↔code silencieux (`background: rgba(18, 165, 148, .12)` restait
+> dans le code). Un agent développeur séparé a dû corriger le code après coup pour que
+> les deux convergent à nouveau.
+
+**Règle** : toute modification visuelle faite dans Figma **sur la base d'un retour
+humain direct** (pas sourcée depuis une lecture du code) crée par construction un écart
+avec le code tant que celui-ci n'est pas mis à jour — ce n'est pas une erreur en soi,
+mais l'écart doit être **rendu visible**, jamais silencieux.
+
+```
+✅ Après tout changement visuel demandé directement (pas lu dans le code) :
+   1. Vérifier immédiatement le fichier components/agtc-<comp>.js correspondant
+   2. Si le code diverge, noter l'écart explicitement (ex. ligne "corrigé" dans le
+      tableau TOKENS UTILISÉS, comme fait pour Feature-card) — jamais silencieux
+   3. Proposer à l'utilisateur un prompt de transfert vers l'agent développeur
+      (voir `.claude/rules/figma-library-governance.md` — code = source de vérité)
+   4. Une fois le code corrigé, revérifier Figma ↔ code et nettoyer la note d'écart
+❌ Ne jamais supposer qu'un changement visuel "juste dans Figma" restera cohérent avec
+   le code sans action explicite de propagation
+❌ Ne jamais laisser un tableau de tokens Figma affirmer une valeur que le code ne
+   produit pas réellement (ou l'inverse) sans note explicite de l'écart
+```
+
+---
+
+## 23. Test de combinaisons variantes × états × contenu — méthode EightShapes
+
+> **Incident du 2026-07-07.** Button avait un anneau de focus qui fonctionnait
+> parfaitement… tant que le libellé restait "Bouton" et qu'aucune icône n'était activée.
+> Dès qu'un designer combinait `State=Focus` + les deux propriétés icône, l'anneau
+> (dimensionné une fois pour toutes lors de sa construction, en sibling statique du
+> pill) ne suivait plus la taille réelle du bouton — chevauchement visuel complet.
+> Le bug n'était détectable qu'en testant une **combinaison**, jamais en regardant
+> chaque variante isolément.
+
+**Référence méthodologique** : [Nathan Curtis (EightShapes) — Component Visual Test
+Cases](https://medium.com/eightshapes-llc/component-visual-test-cases-e501e2d21def).
+Principe central : **ne jamais tester une grille exhaustive de toutes les combinaisons**
+(explosion combinatoire ingérable) — tester plutôt des **cas limites représentatifs**,
+organisés en 5 catégories :
+
+```
+1. Propriétés    — chaque valeur de propriété fonctionne (déjà couvert par la grille
+                    de variantes elle-même — pas la priorité ici)
+2. Contenu       — texte/icônes : le plus court réaliste, le plus long réaliste,
+                    et volontairement en trop (stress test) — pas seulement le cas nominal
+3. Espacement    — layout de base avec plusieurs éléments simultanés affichés ensemble
+4. Mise en page  — largeur du composant variée (plus étroit / plus large que la norme)
+5. Composition   — slots/contenu imbriqué testés dans plusieurs proportions
+```
+
+### Règle pratique pour ce fichier Figma
+
+Pour tout composant ayant **à la fois** (a) un état interactif visuel additif (Focus,
+Selected, Hover…) **et** (b) un contenu de taille variable (texte libre, icônes
+optionnelles) — combiner explicitement les deux avant de considérer le composant fini :
+
+```javascript
+// Test ciblé — pas exhaustif : le pire cas plausible pour CE composant
+// 1. Créer une instance sur la variante d'état la plus "additive visuellement" (Focus, Selected)
+// 2. Activer TOUTES les propriétés de contenu optionnelles en même temps (icônes, etc.)
+// 3. Mettre le texte le plus long réaliste (pas un lorem ipsum géant — un vrai libellé long)
+// 4. Screenshot + findOverflows() — si ça casse, c'est structurel, pas cosmétique
+const inst = componentSet.children.find(c => c.name.includes('State=Focus')).createInstance();
+inst.setProperties({
+  [showIconPrefixKey]: true,
+  [showIconSuffixKey]: true,
+  [labelKey]: 'Un texte représentatif du pire cas réaliste',
+});
+```
+
+### Composants à risque identifié (contenu variable + état additif visuel)
+
+| Composant | Contenu variable | État additif | Statut |
+|---|---|---|---|
+| Button | Label + 2 icônes optionnelles | Focus (anneau) | Corrigé 2026-07-07 — anneau en wrapper auto-layout HUG, plus jamais un sibling de taille statique |
+| Segmented | Labels d'options (2-5, longueur libre) | Focused (anneau) | Corrigé 2026-07-07 — même pattern wrapper |
+| Input | Label + Placeholder/Value + icônes | Focus (bordure) | Bordure interne à `.control`, pas un sibling — risque plus faible mais à re-tester si la structure change |
+| Toggle/Checkbox/Radio | Label (texte libre) | Focus (anneau) | Risque faible — l'anneau entoure une piste/case à **taille fixe**, indépendante du texte du label (élément séparé) |
+
+**Leçon d'architecture** : un anneau de focus (ou tout indicateur additif) ne doit
+**jamais** être un nœud sibling à taille calculée une fois puis figée. Il doit soit :
+(a) entourer son contenu via un wrapper auto-layout `HUG` (le contenu grandit → le
+wrapper suit automatiquement, sans recalcul manuel), soit (b) cibler un élément dont la
+taille est structurellement fixe et indépendante du contenu variable (cas Toggle/Checkbox/Radio).
+
+---
+
 ## Erreurs connues — Plugin API Figma
 
 | Erreur | Cause | Fix |
@@ -1448,3 +1857,4 @@ qui y fait référence) → CSS compilé (`npm run tokens`) → composant code
 | Contenu dupliqué (ex. liens) visible deux fois sur la même page | `links-row` ajoutée à la fois dans `section-header` et `section-links` | Une seule `links-row`, uniquement dans `section-links` (bas de page) — voir §10 |
 | Fill/stroke lié à `semantic/...` alors qu'un token composant existe | Habitude de binder le sémantique sans vérifier `component/<comp>/...` d'abord | Toujours chercher le token `component/` correspondant avant de binder — voir §18 |
 | `textStyleId` redevient `""` après avoir semblé s'appliquer | `fontName`/`setRangeFontName` posé après `textStyleId` — l'API efface le lien, contrairement à l'éditeur Figma | Ne jamais muter la police après `textStyleId` ; si le poids ne correspond pas, créer/utiliser le bon Text Style — voir §19 |
+| Icône déborde de son slot (18×18) quand redimensionnée ou échangée via instance-swap | Wrapper `Frame` interne de l'icône en `constraints: MIN/MIN` (défaut `createNodeFromSvg`) — ne suit pas le resize de l'instance parente | `frame.constraints = { horizontal:'SCALE', vertical:'SCALE' }` sur CHAQUE niveau intermédiaire, pas seulement les `Vector` finaux — voir §20 |
