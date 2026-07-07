@@ -730,6 +730,22 @@
           "$type": "number"
         }
       },
+      "detail-bold": {
+        "size": {
+          "$value": "{primitive.fontSize.xs}",
+          "$type": "dimension",
+          "$intent": "12px — Emphase sur une annotation (ex. eyebrow de section, badge) — même taille que detail, poids renforcé"
+        },
+        "weight": {
+          "$value": "{primitive.fontWeight.bold}",
+          "$type": "fontWeight",
+          "$intent": "Bold — distinct de detail.weight (regular) : réservé aux petites annotations qui nécessitent une emphase (labels de section, badges d'état)"
+        },
+        "line-height": {
+          "$value": "{primitive.lineHeight.reading}",
+          "$type": "number"
+        }
+      },
       "label": {
         "size": {
           "$value": "{primitive.fontSize.sm}",
@@ -739,6 +755,22 @@
         "weight": {
           "$value": "{primitive.fontWeight.medium}",
           "$type": "fontWeight"
+        },
+        "line-height": {
+          "$value": "{primitive.lineHeight.reading}",
+          "$type": "number"
+        }
+      },
+      "label-bold": {
+        "size": {
+          "$value": "{primitive.fontSize.sm}",
+          "$type": "dimension",
+          "$intent": "14px — Emphase sur libellé (ex. texte de bouton) — même taille que label, poids renforcé"
+        },
+        "weight": {
+          "$value": "{primitive.fontWeight.bold}",
+          "$type": "fontWeight",
+          "$intent": "Bold — distinct de label.weight (medium) : réservé aux libellés qui nécessitent une emphase visuelle forte (CTA)"
         },
         "line-height": {
           "$value": "{primitive.lineHeight.reading}",

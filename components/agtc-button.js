@@ -128,9 +128,9 @@ class AgtcButton extends LitElement {
       border-radius: var(--agtc-component-button-primary-radius);
 
       font-family: inherit;
-      font-size: var(--agtc-semantic-typography-label-size);
-      font-weight: var(--agtc-semantic-typography-label-weight);
-      line-height: var(--agtc-semantic-typography-label-line-height);
+      font-size: var(--agtc-component-button-font-size);
+      font-weight: var(--agtc-component-button-font-weight);
+      line-height: var(--agtc-semantic-typography-label-bold-line-height);
       white-space: nowrap;
       letter-spacing: 0.01em;
 

@@ -130,28 +130,83 @@ Niveau 3 — Patterns
 ```
 ✅ Créer des composants de base réutilisables avant de construire les composants composites
 ✅ Imbriquer des instances (pas des frames copiées) pour maintenir les connexions
-✅ Créer un ComponentSet par famille (Button/Primary, Button/Secondary…)
-   OU un seul ComponentSet multi-propriétés si < 10 variantes
+✅ UN composant logique = UN seul ComponentSet, avec une propriété Variant pour ses
+   déclinaisons de style (Primary/Secondary/Critical/Ghost…) — jamais un ComponentSet
+   par déclinaison
 ❌ Ne jamais copier-coller la structure d'un composant au lieu d'imbriquer son instance
 ❌ Ne jamais dupliquer les variantes pour créer "une version légèrement différente"
+❌ Ne jamais créer un ComponentSet séparé par déclinaison de style (Button/Primary,
+   Button/Secondary… en sets distincts) — voir l'incident ci-dessous
 ```
 
-### Structure d'un ComponentSet Agentica
+### Structure d'un ComponentSet Agentica — règle corrigée (ADR 2026-07-06)
+
+> **Incident.** La règle précédente de ce document préconisait « un ComponentSet par
+> déclinaison de style » (`Button / Primary`, `Button / Secondary`… en 4 ComponentSets
+> séparés) au motif de rester sous 10 variantes par set. C'était une erreur : dans Figma,
+> chaque déclinaison devenait alors un **composant distinct** — un designer construisant
+> une maquette devait remplacer toute l'instance pour passer de Primary à Secondary,
+> au lieu de changer une simple propriété. Ce n'est pas ainsi que les designers
+> attendent de travailler avec un composant à variantes (Material, Polaris, etc. n'ont
+> qu'un seul composant Button). Corrigé le 2026-07-06 : les 4 ComponentSets Button ont
+> été fusionnés en un seul avec deux propriétés (`Variant`, `State`).
+
+**Bon pattern — UN seul ComponentSet, deux axes de propriété :**
 
 ```
-ComponentSet "Button / Primary"
-  └── Component State=Default
-  └── Component State=Hover
-  └── Component State=Focus
-  └── Component State=Disabled
-  └── Component State=Loading
-
-ComponentSet "Button / Secondary"
-  └── (même structure)
+ComponentSet "Button"
+  Variant=Primary,   State=Default/Hover/Focus/Disabled/Loading
+  Variant=Secondary, State=Default/Hover/Focus/Disabled/Loading
+  Variant=Critical,  State=Default/Hover/Focus/Disabled/Loading
+  Variant=Ghost,     State=Default/Hover/Focus/Disabled        (Loading non applicable)
 ```
 
-Préféré à un seul grand ComponentSet `Variant=Primary, State=Default` → 20 variantes
-car les ComponentSets restent sous 10 éléments.
+Une grille incomplète (Ghost sans Loading) est acceptable — toutes les combinaisons
+n'ont pas à exister.
+
+**Plafond de variantes** — aligné sur le skill `figma-generate-library`, pas sur un
+plafond arbitraire de 10 : cap réel à **30 combinaisons** (`Variant × State`, ou plus si
+d'autres axes s'ajoutent) avant de fractionner en sous-composant. Button à 19-20
+variantes reste largement dans cette limite — il n'y avait donc jamais de raison de le
+séparer.
+
+**Il n'y a pas d'exception « structure différente ».** Une version précédente de cette
+règle tolérait un ComponentSet séparé si les familles étaient « structurellement
+distinctes » (ex. Input `Search` avec une icône intégrée que `Text` n'a pas). Corrigé le
+2026-07-06 : dans les faits, `Input/Text` et `Input/Search` avaient été construits comme
+2 ComponentSets alors que `Search` n'avait même pas de structure différente (juste un
+placeholder différent) — et même si la structure avait réellement différé, la bonne
+solution est un **slot interne** (Boolean `HasIcon` ou Instance Swap `Icon=`) à
+l'intérieur d'un seul ComponentSet, pas un ComponentSet séparé. Un composant logique
+= un seul ComponentSet, toujours — la variation structurelle se gère par propriété
+(Boolean/Instance Swap), jamais en dupliquant le ComponentSet.
+
+### ⚠️ Piège API — fusionner des composants déjà rattachés à un ComponentSet
+
+`figma.combineAsVariants()` sur des composants qui appartenaient chacun à un ancien
+ComponentSet **distinct** produit un ComponentSet cassé (« Component set has existing
+errors » — `componentPropertyDefinitions` et `variantProperties` deviennent illisibles),
+même si le renommage semble avoir fonctionné. Chaque composant garde une référence
+interne à l'ancien jeu de propriétés de son ex-ComponentSet, et Figma ne les réconcilie
+pas silencieusement.
+
+```
+❌ INTERDIT
+const old = [...setA.children, ...setB.children]; // composants d'anciens sets DIFFÉRENTS
+figma.combineAsVariants(old, page); // → ComponentSet cassé, illisible
+
+✅ CORRECT — reconstruire des composants neufs avant de fusionner
+// 1. Lire fills/strokes/texte/layout de chaque ancien composant (ça reste lisible)
+// 2. figma.createComponent() pour CHAQUE variante, reproduire le visuel, nommer
+//    correctement "Variant=X, State=Y" (composants neufs = pas d'historique de propriété)
+// 3. figma.combineAsVariants(nouveauxComposants, page) → ComponentSet propre
+// 4. instance.swapComponent(nouveauComposant) sur toutes les instances existantes
+//    AVANT de supprimer les anciens composants/ComponentSets
+```
+
+Cf. incidents Button et Input du 2026-07-06 — récupération complète documentée dans
+`log/kit-construction.md`. Même correctif appliqué aux deux : Button (4 ComponentSets
+`Variant` → 1 seul, 19 variantes) et Input (2 ComponentSets `Type` → 1 seul, 9 variantes).
 
 ---
 
@@ -584,7 +639,12 @@ wrapper.appendChild(sectionDos);
 
 ## 10. Liens de documentation obligatoires
 
-**Chaque page composant doit avoir une `links-row` dans son header.**
+**Chaque page composant doit avoir une `links-row` — une seule fois, dans `section-links` en bas de page.**
+
+> Historique : cette règle demandait autrefois une `links-row` dans le header ET dans
+> `section-links`, ce qui dupliquait le même contenu deux fois sur la page (corrigé le
+> 2026-07-06 — voir §17 Erreurs connues). Le header ne contient plus que le titre et la
+> description ; les liens vivent uniquement en bas de page.
 
 ### Palette liens vérifiée
 
@@ -667,9 +727,10 @@ const linksRow = mkLinksRow([
 ✅ Fond blanc sur les pills (fond teinté translucide = #007A6A sur #E0ECEC = 4.35:1 — FAIL)
 ✅ Texte #006B5C — 6.5:1 sur blanc, 5.9:1 sur zinc ✅ (vs #007A6A qui échoue sur pill teinté)
 ✅ URLs absolues — jamais de chemins relatifs
-✅ links-row dans section-header, sous le titre et la description
+✅ links-row uniquement dans section-links (bas de page) — jamais aussi dans section-header
 ❌ opacity sur la pill entière — dilue la lisibilité ; mettre opacity sur la pill frame, pas sur le texte
 ❌ Lien vers un fichier Figma (risque de loop circulaire)
+❌ Dupliquer la même links-row dans le header ET section-links
 ```
 
 ---
@@ -732,7 +793,7 @@ Le fond du header reste blanc. La décoration teal est un overlay absolutement p
 dans la moitié droite — **jamais sous du texte**. Tous les textes restent sur fond blanc.
 
 ```javascript
-function mkHeaderSection(title, description, links) {
+function mkHeaderSection(title, description) {
   const section = figma.createFrame();
   section.name = "section-header";
   section.fills = vFill("color/background/default", "#FFFFFF");
@@ -806,7 +867,7 @@ function mkHeaderSection(title, description, links) {
   descNode.textAutoResize = "HEIGHT";
   section.appendChild(descNode);
 
-  section.appendChild(mkLinksRow(links)); // token color/border/focus — 6.5:1 ✅
+  // Pas de links-row ici — elle vit uniquement dans section-links, en bas de page (§10)
 
   return section;
 }
@@ -829,7 +890,7 @@ Le header entier est teal. Les textes passent en **blanc** — contraste vérifi
 Les links-pills deviennent des pills blanches avec texte teal.
 
 ```javascript
-function mkHeaderSectionBold(title, description, links) {
+function mkHeaderSectionBold(title, description) {
   const section = figma.createFrame();
   section.name = "section-header";
   // Gradient diagonal sombre → brand teal
@@ -889,8 +950,8 @@ function mkHeaderSectionBold(title, description, links) {
   descNode.textAutoResize = "HEIGHT";
   section.appendChild(descNode);
 
-  // Pills blanches avec texte teal pour les liens
-  section.appendChild(mkLinksRowOnDark(links));
+  // Pas de links-row ici — elle vit uniquement dans section-links, en bas de page (§10)
+  // mkLinksRowOnDark reste disponible si une pill de lien est nécessaire ailleurs sur fond teal
 
   return section;
 }
@@ -1231,6 +1292,146 @@ async function mkComposantPrincipal(sets) {
 
 ---
 
+## 17. Rows à nombre d'items variable — WRAP + FILL obligatoires
+
+> **Toute row dont le nombre d'items dépend du composant (`states-row`, `instances-row`,
+> ou équivalent) doit être en `layoutWrap="WRAP"` ET `layoutSizingHorizontal="FILL"`.**
+> Incident du 2026-07-06 : la `states-row` d'Input (6 états : Default, Focused, Filled,
+> Error, Disabled, ReadOnly) faisait 1560px dans une section de 1440px — elle débordait
+> visuellement de la page (visible sur le dernier état, "ReadOnly", coupé par le bord du
+> canevas). §15 documentait déjà ce correctif pour `instances-row`, mais ne le généralisait
+> pas à `states-row` — l'oubli s'est reproduit ailleurs par simple copier-coller du pattern
+> non-WRAP.
+
+### Pourquoi `layoutWrap="WRAP"` seul ne suffit pas
+
+```javascript
+// ❌ INSUFFISANT — WRAP sans contrainte de largeur ne fait RIEN
+row.layoutWrap = "WRAP";
+// La row est en HUG (largeur = somme des enfants) : il n'y a jamais de bord à atteindre,
+// donc jamais de retour à la ligne. Elle déborde silencieusement de la section parente.
+
+// ✅ CORRECT — WRAP + FILL (la row doit être enfant d'un parent auto-layout)
+row.layoutWrap = "WRAP";
+row.counterAxisSpacing = 16;         // gap vertical entre les lignes wrappées
+row.layoutSizingHorizontal = "FILL"; // contraint la row à la largeur du parent → force le wrap
+```
+
+### Règle de vérification systématique
+
+Avant de considérer une page composant terminée, pour **chaque row horizontale** (états,
+instances, ou toute liste dont la taille dépend des variantes du composant) :
+
+```
+✅ layoutWrap = "WRAP"
+✅ layoutSizingHorizontal = "FILL" (jamais laissé en HUG/AUTO)
+✅ counterAxisSpacing défini (sinon les lignes wrappées se touchent)
+✅ Vérifier avec get_screenshot que rien ne dépasse le fond blanc de la section
+   (contenu qui déborde sur le gris du canevas #535353 = signal de débordement)
+❌ Ne jamais supposer qu'un composant à peu de variantes restera toujours en une seule ligne
+   — le nombre d'états (Input a 6, la plupart en ont 4) varie par composant
+❌ Ne jamais tolérer un débordement « minime » (quelques pixels) au motif qu'il est
+   imperceptible — appliquer WRAP+FILL systématiquement, sans seuil de tolérance
+```
+
+> **Incident du 2026-07-06 (bis) — Segmented.** La `instances-row` de la section COMPOSANT
+> débordait de 2px (1442px dans une section de 1440px). Laissé de côté une première fois car
+> jugé « négligeable ». Corrigé sur demande explicite : préférer systématiquement une ligne
+> supplémentaire (WRAP) à un débordement, même minime — il n'existe pas de seuil acceptable.
+> Une fois WRAP+FILL appliqué, le rendu en plusieurs lignes reste propre (chaque `Tabs=N`
+> occupe naturellement sa propre ligne) — l'argument « ça casserait une belle mise en page »
+> ne justifie jamais de garder un débordement.
+
+---
+
+## 18. Toujours le token de composant — jamais le sémantique directement
+
+> **Incident du 2026-07-06.** Button, Input, Toggle, Checkbox, Radio et Segmented liaient
+> leurs fills/strokes/textes directement aux variables de la collection `semantic`
+> (ex. `semantic/color/action/primary`), alors que la collection `component` existe et
+> définit des tokens dédiés par composant (ex. `component/button/primary/background`).
+> C'est l'équivalent Figma exact de la règle `tokens-system.md` niveau 3 — violée dans
+> les deux sens (Figma **et** le CSS de `agtc-button.js`, qui référençait aussi le
+> sémantique directement avant correction).
+
+### Règle
+
+```
+✅ Avant de binder une fill/stroke/texte, chercher si un token component/<comp>/... existe
+✅ Si oui → l'utiliser, jamais le semantic/... qu'il référence en interne
+✅ Si non (état non couvert par tokens/component.json, ex. Disabled sur la plupart des
+   composants) → rester sur semantic/... explicitement, ce n'est pas une erreur
+❌ Ne jamais binder un semantic/... quand un component/... équivalent existe
+❌ Ne jamais inventer un token component/... qui n'existe pas dans tokens/component.json
+   sans l'y ajouter d'abord (le JSON fait foi, Figma suit — jamais l'inverse)
+```
+
+### Comment vérifier qu'un token composant existe
+
+```javascript
+// Lister tous les tokens de la collection "component" pour un composant donné
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+const comp = collections.find(c => c.name === 'component');
+const vars = await Promise.all(comp.variableIds.map(id => figma.variables.getVariableByIdAsync(id)));
+vars.filter(v => v.name.startsWith('button/')).map(v => v.name);
+```
+
+Le tableau « TOKENS UTILISÉS » de chaque page composant doit lister les tokens **component**
+réellement liés — pas les tokens sémantiques qu'ils référencent en interne (sauf pour les
+propriétés qui n'ont pas de token composant dédié, où le sémantique reste correct et
+doit être affiché tel quel).
+
+---
+
+## 19. Toujours `textStyleId` — jamais fontName/fontSize manuels qui "matchent" un style
+
+> **Incident du 2026-07-06.** Les textes des composants utilisaient la bonne police et
+> la bonne taille (ex. 14px Regular = valeurs identiques à `typography/label`) mais sans
+> être **liés** au Text Style de la librairie via `textStyleId`. Résultat : si la
+> librairie change sa typographie, ces textes ne suivent pas — ils ne font que
+> ressembler au style au moment de leur création.
+
+### Règle
+
+```
+✅ Toujours poser text.textStyleId = <id du Text Style de la librairie>
+❌ Ne jamais se contenter de fontName + fontSize + lineHeight qui reproduisent
+   manuellement les valeurs d'un Text Style existant — ce n'est pas une liaison
+```
+
+### ⚠️ Piège API — `textStyleId` + poids différent du style = lien cassé
+
+`textNode.textStyleId = style.id` fonctionne. Mais toute mutation de police **après**
+(`textNode.fontName = {...}` OU `textNode.setRangeFontName(...)`) efface silencieusement
+`textStyleId` (redevient `""`) — contrairement à l'éditeur Figma, où changer le poids
+sur du texte stylé laisse un indicateur de « override » partiel. Le Plugin API ne
+supporte pas ce comportement partiel : c'est tout ou rien.
+
+```javascript
+// ❌ INTERDIT — efface le lien
+textNode.textStyleId = labelStyle.id;
+textNode.fontName = { family: "Atkinson Hyperlegible", style: "Bold" }; // → textStyleId redevient ""
+
+// ✅ CORRECT — si le poids nécessaire diffère du style existant, créer le style qu'il faut
+// (voir incident Button : typography/label est Regular, le texte de bouton est Bold
+//  → création de typography/label-bold, un Text Style à part entière, Bold natif)
+textNode.textStyleId = labelBoldStyle.id; // aucune mutation de police après → lien intact
+```
+
+**Ne jamais contourner par une valeur manuelle "qui ressemble".** Si aucun Text Style
+existant ne correspond au poids réellement nécessaire, c'est un signal qu'il **manque
+un Text Style dans la librairie** — pas une invitation à débrancher le texte du système.
+Ajouter le style manque-t-il de légitimité ? Non : un poids d'emphase distinct
+(ex. Bold pour un CTA vs Regular pour un label de formulaire) est une décision de
+typographie réelle, pas un détail cosmétique — elle mérite son propre token, propagé
+partout : `tokens/semantic.json` (composite `typography.*`) → `tokens/figma.json`
+(génère le Text Style via Tokens Studio) → `tokens/component.json` (token de composant
+qui y fait référence) → CSS compilé (`npm run tokens`) → composant code
+(`components/agtc-*.js`) → Figma (Text Style créé/appliqué) → documentation
+(`guidelines/components/*.md`). Jamais une correction Figma-only.
+
+---
+
 ## Erreurs connues — Plugin API Figma
 
 | Erreur | Cause | Fix |
@@ -1240,5 +1441,10 @@ async function mkComposantPrincipal(sets) {
 | `Cannot write to node with unloaded font` | textStyleId utilise une police non chargée | Charger TOUTES les polices au début de l'appel (`loadFontAsync`) |
 | Texte vide après `textStyleId` | `characters` posé après `textStyleId` sur nœud vide | Toujours : `fontName` → `characters` → `textStyleId` → `fills` |
 | `strokeAlign OUTSIDE` invisible | Frame avec `clipsContent=true` | Mettre `clipsContent=false` sur le parent quand anneau focus externe |
+| Effet (`DROP_SHADOW`/glow) invisible sur un état hover/focus/selected | Le nœud qui porte l'effet a lui-même `clipsContent=true` — pas seulement son parent | Vérifier `clipsContent` sur le nœud qui porte l'effet ET sur chaque ancêtre jusqu'au ComponentSet — mettre `false` partout où l'effet doit déborder. Incident du 2026-07-06 : la pastille sélectionnée de Segmented (`tab-1`) et le ComponentSet lui-même avaient `clipsContent=true`, masquant le drop-shadow — audit exhaustif de tout le fichier requis (le bug ne se limite pas aux strokes, les effets sont clippés de la même façon) |
 | Variantes ComponentSet chevauchées | CS inséré directement dans le flux — variantes à `(0,0)` | CS à `y=3000` + `variant.createInstance()` dans instRow WRAP |
 | `instRow` déborde (2637 px+) | `primaryAxisSizingMode="AUTO"` sans contrainte | Après `append` : `instRow.layoutSizingHorizontal = "FILL"` |
+| N'importe quelle row (états, instances) déborde de la section (contenu visible sur le gris du canevas) | `layoutWrap="WRAP"` posé sans `layoutSizingHorizontal="FILL"` — WRAP est un no-op en HUG | `row.layoutWrap="WRAP"` **+** `row.layoutSizingHorizontal="FILL"` **+** `counterAxisSpacing` — voir §17 |
+| Contenu dupliqué (ex. liens) visible deux fois sur la même page | `links-row` ajoutée à la fois dans `section-header` et `section-links` | Une seule `links-row`, uniquement dans `section-links` (bas de page) — voir §10 |
+| Fill/stroke lié à `semantic/...` alors qu'un token composant existe | Habitude de binder le sémantique sans vérifier `component/<comp>/...` d'abord | Toujours chercher le token `component/` correspondant avant de binder — voir §18 |
+| `textStyleId` redevient `""` après avoir semblé s'appliquer | `fontName`/`setRangeFontName` posé après `textStyleId` — l'API efface le lien, contrairement à l'éditeur Figma | Ne jamais muter la police après `textStyleId` ; si le poids ne correspond pas, créer/utiliser le bon Text Style — voir §19 |

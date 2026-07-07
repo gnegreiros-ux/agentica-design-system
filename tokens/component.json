@@ -13,6 +13,16 @@
       "owner": "design-system-team",
       "contract": "guidelines/components/button.md"
     },
+    "font-size": {
+      "$value": "{semantic.typography.label-bold.size}",
+      "$type": "dimension",
+      "$intent": "Taille du libellé — partagée par toutes les variantes"
+    },
+    "font-weight": {
+      "$value": "{semantic.typography.label-bold.weight}",
+      "$type": "fontWeight",
+      "$intent": "Emphase forte du libellé — partagée par toutes les variantes (CTA)"
+    },
     "primary": {
       "$description": "Bouton d'action principale — maximum 1 par section ou formulaire. Jamais pour actions destructrices.",
       "$extensions": {

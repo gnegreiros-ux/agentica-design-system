@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 29 Jun 2026 17:38:40 GMT
+ * Generated on Mon, 06 Jul 2026 18:26:28 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -576,9 +576,15 @@ export const SemanticTypographyMonoFamily = "'Atkinson Hyperlegible Mono', 'JetB
 export const SemanticTypographyDetailSize = "0.75rem";
 export const SemanticTypographyDetailWeight = "400";
 export const SemanticTypographyDetailLineHeight = "1.6";
+export const SemanticTypographyDetailBoldSize = "0.75rem";
+export const SemanticTypographyDetailBoldWeight = "700";
+export const SemanticTypographyDetailBoldLineHeight = "1.6";
 export const SemanticTypographyLabelSize = "0.875rem";
 export const SemanticTypographyLabelWeight = "500";
 export const SemanticTypographyLabelLineHeight = "1.6";
+export const SemanticTypographyLabelBoldSize = "0.875rem";
+export const SemanticTypographyLabelBoldWeight = "700";
+export const SemanticTypographyLabelBoldLineHeight = "1.6";
 export const SemanticTypographyBodySize = "1rem";
 export const SemanticTypographyBodyWeight = "400";
 export const SemanticTypographyBodyLineHeight = "1.6";
@@ -611,6 +617,8 @@ export const SemanticMarketingTypographyEyebrowSize = "0.75rem";
 export const SemanticMarketingTypographyEyebrowWeight = "700";
 export const SemanticMarketingSpaceSectionBreathing = "96px";
 export const SemanticMarketingSpaceHeroGap = "120px";
+export const ButtonFontSize = "0.875rem";
+export const ButtonFontWeight = "700";
 export const ButtonPrimaryBackground = "#007a68";
 export const ButtonPrimaryBackgroundHover = "#0d3d38";
 export const ButtonPrimaryBackgroundDisabled = "#d9d9d9";

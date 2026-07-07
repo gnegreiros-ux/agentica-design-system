@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 29 Jun 2026 17:38:40 GMT
+ * Generated on Mon, 06 Jul 2026 18:26:28 GMT
  */
 
 :root {
@@ -567,9 +567,15 @@
   --agtc-semantic-typography-body-line-height: var(--agtc-primitive-lineHeight-reading);
   --agtc-semantic-typography-body-weight: var(--agtc-primitive-fontWeight-regular);
   --agtc-semantic-typography-body-size: var(--agtc-primitive-fontSize-base);
+  --agtc-semantic-typography-label-bold-line-height: var(--agtc-primitive-lineHeight-reading);
+  --agtc-semantic-typography-label-bold-weight: var(--agtc-primitive-fontWeight-bold);
+  --agtc-semantic-typography-label-bold-size: var(--agtc-primitive-fontSize-sm);
   --agtc-semantic-typography-label-line-height: var(--agtc-primitive-lineHeight-reading);
   --agtc-semantic-typography-label-weight: var(--agtc-primitive-fontWeight-medium);
   --agtc-semantic-typography-label-size: var(--agtc-primitive-fontSize-sm);
+  --agtc-semantic-typography-detail-bold-line-height: var(--agtc-primitive-lineHeight-reading);
+  --agtc-semantic-typography-detail-bold-weight: var(--agtc-primitive-fontWeight-bold);
+  --agtc-semantic-typography-detail-bold-size: var(--agtc-primitive-fontSize-xs);
   --agtc-semantic-typography-detail-line-height: var(--agtc-primitive-lineHeight-reading);
   --agtc-semantic-typography-detail-weight: var(--agtc-primitive-fontWeight-regular);
   --agtc-semantic-typography-detail-size: var(--agtc-primitive-fontSize-xs);
@@ -794,4 +800,6 @@
   --agtc-component-button-primary-background-disabled: var(--agtc-semantic-color-action-primary-disabled);
   --agtc-component-button-primary-background-hover: var(--agtc-semantic-color-action-primary-hover);
   --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);
+  --agtc-component-button-font-weight: var(--agtc-semantic-typography-label-bold-weight);
+  --agtc-component-button-font-size: var(--agtc-semantic-typography-label-bold-size);
 }

@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Mon, 29 Jun 2026 17:38:40 GMT
+// Generated on Mon, 06 Jul 2026 18:26:28 GMT
 
 
 import UIKit
@@ -60,6 +60,8 @@ public class AgenticaTokens {
     public static let buttonCriticalBackgroundHover = #feebec
     public static let buttonCriticalBorder = #ce2c31
     public static let buttonCriticalText = #ffffff
+    public static let buttonFontSize = 0.875rem
+    public static let buttonFontWeight = 700
     public static let buttonGhostBackground = transparent
     public static let buttonGhostBackgroundHover = #f0f0f0
     public static let buttonGhostBorder = transparent
@@ -729,6 +731,9 @@ public class AgenticaTokens {
     public static let semanticTypographyBodyLineHeight = 1.6
     public static let semanticTypographyBodySize = 1rem
     public static let semanticTypographyBodyWeight = 400
+    public static let semanticTypographyDetailBoldLineHeight = 1.6
+    public static let semanticTypographyDetailBoldSize = 0.75rem
+    public static let semanticTypographyDetailBoldWeight = 700
     public static let semanticTypographyDetailLineHeight = 1.6
     public static let semanticTypographyDetailSize = 0.75rem
     public static let semanticTypographyDetailWeight = 400
@@ -751,6 +756,9 @@ public class AgenticaTokens {
     public static let semanticTypographyHeroLineHeight = 1.0
     public static let semanticTypographyHeroSize = 3rem
     public static let semanticTypographyHeroWeight = 700
+    public static let semanticTypographyLabelBoldLineHeight = 1.6
+    public static let semanticTypographyLabelBoldSize = 0.875rem
+    public static let semanticTypographyLabelBoldWeight = 700
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500

@@ -17,6 +17,19 @@
       "$type": "typography",
       "$description": "12px · Regular · 1.6 — Annotations, captions, aide contextuelle"
     },
+    "detail-bold": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Bold",
+        "fontSize": "12",
+        "lineHeight": "160%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "12px · Bold · 1.6 — Emphase sur une annotation (eyebrow de section, badge). Génère le Text Style Figma \"typography/detail-bold\"."
+    },
     "label": {
       "$value": {
         "fontFamily": "Atkinson Hyperlegible",
@@ -29,6 +42,19 @@
       },
       "$type": "typography",
       "$description": "14px · Regular · 1.6 — Labels de formulaire, métadonnées (fontWeight.medium=500 arrondi à 400, ADR-021)"
+    },
+    "label-bold": {
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontWeight": "Bold",
+        "fontSize": "14",
+        "lineHeight": "160%",
+        "letterSpacing": "0%",
+        "textCase": "none",
+        "textDecoration": "none"
+      },
+      "$type": "typography",
+      "$description": "14px · Bold · 1.6 — Emphase de libellé (texte de bouton). Génère le Text Style Figma \"typography/label-bold\"."
     },
     "body": {
       "$value": {

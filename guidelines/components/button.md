@@ -38,16 +38,27 @@ Permettre à l'utilisateur de déclencher une action dans l'interface.
 
 ## Tokens utilisés
 
-| Propriété | Token sémantique |
-|-----------|-----------------|
-| Fond primary | `semantic.color.action.primary` |
-| Fond primary hover | `semantic.color.action.primary-hover` |
-| Fond primary disabled | `semantic.color.action.primary-disabled` |
-| Fond critical | `semantic.color.feedback.danger` |
-| Texte sur action | `semantic.color.text.on-action` |
-| Padding X | `semantic.space.control.padding-x` |
-| Padding Y | `semantic.space.control.padding-y` |
-| Rayon | `semantic.radius.control` |
+> Le composant consomme des **tokens de composant** (`component.button.*`), jamais les
+> tokens sémantiques directement — cf. `tokens-system.md` (niveau 3 = contrat institutionnel).
+
+| Propriété | Token composant | Référence sémantique |
+|-----------|-----------------|----------------------|
+| Fond primary | `component.button.primary.background` | `semantic.color.action.primary` |
+| Fond primary hover | `component.button.primary.background-hover` | `semantic.color.action.primary-hover` |
+| Fond primary disabled | `component.button.primary.background-disabled` | `semantic.color.action.primary-disabled` |
+| Fond critical | `component.button.critical.background` | `semantic.color.feedback.danger` |
+| Texte primary | `component.button.primary.text` | `semantic.color.text.on-action` |
+| Fond secondary | `component.button.secondary.background` | `transparent` |
+| Bordure secondary | `component.button.secondary.border` | `semantic.color.action.primary` |
+| Fond ghost | `component.button.ghost.background` | `transparent` |
+| Padding X | `component.button.primary.padding-x` | `semantic.space.control.padding-x` |
+| Padding Y | `component.button.primary.padding-y` | `semantic.space.control.padding-y` |
+| Rayon | `component.button.primary.radius` | `semantic.radius.control` |
+| Taille du libellé | `component.button.font-size` | `semantic.typography.label-bold.size` (14px) |
+| Poids du libellé | `component.button.font-weight` | `semantic.typography.label-bold.weight` (Bold — emphase CTA, distinct de `label.weight` medium) |
+
+Les états sans token de composant dédié (ex. `disabled` pour secondary/critical/ghost)
+retombent sur les tokens sémantiques génériques — c'est attendu, pas une erreur.
 
 ---
 
