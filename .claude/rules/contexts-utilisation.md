@@ -32,6 +32,7 @@ En cas de doute : si la page contient de la documentation de composant ou de tok
 | `qualite.html` | Marketing | `data-context="marketing"` |
 | `ia.html` | Marketing | `data-context="marketing"` |
 | `documentation.html` | Marketing | `data-context="marketing"` |
+| `continuite.html` | Produit | *(absent)* |
 | Toutes les autres | Produit | *(absent)* |
 
 ---

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Continuité sans agents IA — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Continuité sans agents IA — Agentica">
+<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="designsystem.gnegreiros.com">
+<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta name="twitter:title" content="Continuité sans agents IA — Agentica">
+<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<script src="components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner" data-site-header>
+  <a class="brand" href="index.html" aria-label="Agentica — Accueil">
+    <img src="img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Navigation">
+    <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="site-nav" id="main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="ia.html">IA</a>
+    <div class="docs-menu">
+      <a href="documentation.html" class="docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="docs-panel" id="docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="tokens/index.html">Tokens</a>
+          <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="pipelines/index.html">Pipelines</a>
+          <a href="continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-cta" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="site-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="true">FR</button>
+      <button type="button" data-lang="en" aria-current="false">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+
+<div class="layout" id="main-content">
+  
+  <main class="content" role="main">
+<h1><span class="lang-fr">Continuité sans agents IA</span><span class="lang-en">Continuity without AI agents</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Agentica n'a jamais dépendu d'un agent IA pour fonctionner. Les tokens, les contrats de composants et les règles de gouvernance sont des fichiers versionnés dans Git — jamais enfermés dans une conversation d'agent. Voici le plan documenté et scripté qui le prouve, pour l'équipe qui maintient le système et pour les équipes qui le consomment.</span>
+  <span class="lang-en">Agentica has never depended on an AI agent to function. Tokens, component contracts and governance rules are versioned files in Git — never locked inside an agent conversation. Here is the documented, scripted plan that proves it, for the team that maintains the system and for the teams that consume it.</span>
+</p>
+
+<agtc-banner variant="info">
+  <strong><span class="lang-fr">Le dernier mot reste toujours humain</span><span class="lang-en">Humans always keep the final word</span></strong>
+  <span>
+    <span class="lang-fr">Ce plan ne change aucune règle de gouvernance — <code>tokens-system.md</code>, <code>git-workflow.md</code>, <code>code-style.md</code> restent en vigueur à l'identique. Seul l'<strong>exécutant</strong> change : un humain fait ce qu'un agent faisait par commodité.</span>
+    <span class="lang-en">This plan changes no governance rule — <code>tokens-system.md</code>, <code>git-workflow.md</code>, <code>code-style.md</code> stay exactly in force. Only the <strong>executor</strong> changes: a human does what an agent used to do for convenience.</span>
+  </span>
+</agtc-banner>
+
+<div class="hero-actions">
+  <a href="#equipe-systeme" class="agtc-button secondary"><span class="lang-fr">Équipe système de design</span><span class="lang-en">Design system team</span></a>
+  <a href="#equipes-produit" class="agtc-button ghost"><span class="lang-fr">Équipes produit →</span><span class="lang-en">Product teams →</span></a>
+</div>
+
+<h2 class="first" id="equipe-systeme"><span class="lang-fr">Équipe système de design (maintien d'Agentica)</span><span class="lang-en">Design system team (maintaining Agentica)</span></h2>
+<p>
+  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>.claude/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
+  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>.claude/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
+</p>
+
+<h3><span class="lang-fr">1.1 Les outils existants tournent sans agent</span><span class="lang-en">1.1 Existing tools run without an agent</span></h3>
+<p>
+  <span class="lang-fr">Ces commandes tournaient déjà sans qu'un agent soit strictement nécessaire — un agent les lançait par commodité, un humain les lance à l'identique.</span>
+  <span class="lang-en">These commands already ran without an agent being strictly necessary — an agent ran them for convenience, a human runs the same ones.</span>
+</p>
+<div class="table-wrap" tabindex="0"><table>
+  <thead><tr>
+    <th><span class="lang-fr">Tâche</span><span class="lang-en">Task</span></th>
+    <th><span class="lang-fr">Commande</span><span class="lang-en">Command</span></th>
+  </tr></thead>
+  <tbody><tr><td>Compiler les tokens</td><td><code>npm run tokens</code></td></tr><tr><td>Rebuild du site</td><td><code>node site/build.js</code></td></tr><tr><td>Audit tokens</td><td><code>node scripts/audit-tokens.js --ci</code></td></tr><tr><td>Audit accessibilité</td><td><code>npm run axe</code></td></tr><tr><td>Tests visuels/E2E</td><td><code>npx playwright test --project=chromium</code></td></tr><tr><td>Tests Chromatic</td><td><code>npm run chromatic</code></td></tr></tbody>
+</table></div>
+<pre class="code-block"><code class="lang-bash">bash scripts/continuity/1-1-outils-existants.sh
+# --skip-visual pour sauter Playwright/Chromatic (services externes)</code></pre>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-1-outils-existants.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.2 Quality gate manuel</span><span class="lang-en">1.2 Manual quality gate</span></h3>
+<p>
+  <span class="lang-fr">Les 8 pipelines du <code>quality-gate.md</code> traduits en étapes humaines : cohérence tokens, WCAG, revue patterns UX, conformité ADR, déclencheurs ADR manquants, documentation, rebuild du site, commit. Les étapes 3 et 5 sont du jugement humain pur — aucun script ne peut les remplacer, seulement rappeler qu'elles doivent être faites et bloquer tant qu'elles ne sont pas confirmées.</span>
+  <span class="lang-en">The 8 pipelines from <code>quality-gate.md</code> translated into human steps: token consistency, WCAG, UX pattern review, ADR conformity, missing-ADR triggers, documentation, site rebuild, commit. Steps 3 and 5 are pure human judgment — no script can replace them, only remind that they must happen and block until confirmed.</span>
+</p>
+<pre class="code-block"><code class="lang-bash">bash scripts/continuity/1-2-quality-gate-manuel.sh
+# Bloque tant que chaque étape n'est pas confirmée (y/n)</code></pre>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-2-quality-gate-manuel.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.3 Gouvernance Figma sans script Plugin API</span><span class="lang-en">1.3 Figma governance without a Plugin API script</span></h3>
+<p>
+  <span class="lang-fr">Checklist manuelle : lire le composant code et ses stories avant de toucher Figma, lier chaque fill/stroke/spacing à une Variable Figma existante à la main (panneau Inspect), vérifier les variantes par échantillonnage, règle no-delete inchangée (déplacer vers <code>_corbeille</code>, jamais supprimer), page de staging et rapport 10 points déjà conçus pour un humain, geler les chantiers de grande ampleur le temps de l'indisponibilité.</span>
+  <span class="lang-en">Manual checklist: read the code component and its stories before touching Figma, link every fill/stroke/spacing to an existing Figma Variable by hand (Inspect panel), verify variants by sampling, unchanged no-delete rule (move to <code>_corbeille</code>, never delete), staging page and 10-point report already designed for a human, freeze large-scale work while agents are unavailable.</span>
+</p>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-3-figma-checklist.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.4 ADR et log — inchangés</span><span class="lang-en">1.4 ADRs and log — unchanged</span></h3>
+<p>
+  <span class="lang-fr">Rédiger un ADR et mettre à jour <code>log/kit-construction.md</code> sont déjà des exercices humains d'écriture, non affectés par l'absence d'agent — seulement un rappel qu'ils restent obligatoires à chaque session ou commit significatif.</span>
+  <span class="lang-en">Writing an ADR and updating <code>log/kit-construction.md</code> are already human writing tasks, unaffected by agent absence — just a reminder they remain mandatory for every significant session or commit.</span>
+</p>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-4-adr-log-rappel.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h2 id="equipes-produit"><span class="lang-fr">Équipes produit (consommatrices d'Agentica)</span><span class="lang-en">Product teams (consuming Agentica)</span></h2>
+
+<h3><span class="lang-fr">2.1 Ce qui ne change pas du tout</span><span class="lang-en">2.1 What doesn't change at all</span></h3>
+<p>
+  <span class="lang-fr">Le flux d'installation documenté sur <a href="get-started.html">la page Démarrer</a> fonctionne sans aucun agent : cloner, importer <code>dist/tokens/css/all.css</code> et <code>dark.css</code>, monter les Web Components <code>agtc-*</code>. <code>guidelines/components/*.md</code> et <code>DESIGN.md</code> sont des contrats lisibles humains, utilisables tels quels.</span>
+  <span class="lang-en">The installation flow documented on the <a href="get-started.html">Get started page</a> works with zero agent: clone, import <code>dist/tokens/css/all.css</code> and <code>dark.css</code>, mount the <code>agtc-*</code> Web Components. <code>guidelines/components/*.md</code> and <code>DESIGN.md</code> are human-readable contracts, usable as-is.</span>
+</p>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/2-1-installation-produit.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.2 Ce qui demande une checklist de remplacement</span><span class="lang-en">2.2 What needs a replacement checklist</span></h3>
+<p>
+  <span class="lang-fr">Valeurs en dur : lancer l'audit de tokens sur votre propre projet, ou revue visuelle manuelle contre <code>tokens-system.md</code>. Pattern UX : consulter directement les 5 sources publiques de <code>ux-patterns-sources.md</code> et documenter le choix vous-même. Accessibilité : WebAIM Contrast Checker et l'extension navigateur axe DevTools.</span>
+  <span class="lang-en">Hardcoded values: run the token audit against your own project, or a manual visual review against <code>tokens-system.md</code>. UX pattern: consult the 5 public sources from <code>ux-patterns-sources.md</code> directly and document the choice yourself. Accessibility: WebAIM Contrast Checker and the axe DevTools browser extension.</span>
+</p>
+<pre class="code-block"><code class="lang-bash"># Vérifier l'installation d'un clone Agentica
+bash scripts/continuity/2-1-installation-produit.sh &lt;chemin-du-clone&gt;
+
+# Auditer un projet consommateur contre les tokens
+bash scripts/continuity/2-2-checklist-produit.sh &lt;chemin-du-projet&gt;</code></pre>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/2-2-checklist-produit.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.3 Garde-fou anti-contournement</span><span class="lang-en">2.3 Anti-bypass safeguard</span></h3>
+<agtc-banner variant="warning">
+  <strong><span class="lang-fr">L'absence d'agent ne change pas la règle</span><span class="lang-en">Agent absence doesn't change the rule</span></strong>
+  <span>
+    <span class="lang-fr">Sans agent pour faciliter l'usage du design system, une équipe pressée peut être tentée de contourner Agentica entièrement (retour d'expérience documenté chez Spotify/Encore). <code>tokens-system.md</code> reste en vigueur — une valeur en dur reste interdite, elle est juste vérifiée à la main. Si un délai est intenable, la voie correcte est l'escalade (2.4), jamais le contournement silencieux.</span>
+    <span class="lang-en">Without an agent easing design system adoption, a pressured team may be tempted to bypass Agentica entirely (a documented Spotify/Encore case study). <code>tokens-system.md</code> still applies — a hardcoded value is still forbidden, it is just checked by hand. If a deadline is untenable, the correct path is escalation (2.4), never silent bypass.</span>
+  </span>
+</agtc-banner>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/2-3-anti-contournement.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.4 Point de contact en cas de doute</span><span class="lang-en">2.4 Point of contact when in doubt</span></h3>
+<p>
+  <span class="lang-fr">Toute question d'interprétation remonte au Design System Lead / Principal Designer humain — jamais d'improvisation silencieuse.</span>
+  <span class="lang-en">Any interpretation question goes to the human Design System Lead / Principal Designer — never silent improvisation.</span>
+</p>
+<p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/2-4-contact-escalade.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<agtc-banner variant="brand" icon="shield-check">
+  <strong><span class="lang-fr">Guide complet</span><span class="lang-en">Full guide</span></strong>
+  <span>
+    <span class="lang-fr">Ce résumé s'appuie sur <code>How-to-sans-agents.md</code>, qui détaille aussi le déclenchement du plan et la sortie de ce mode. <a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/How-to-sans-agents.md" target="_blank" rel="noopener noreferrer">Lire la source complète →</a></span>
+    <span class="lang-en">This summary is based on <code>How-to-sans-agents.md</code>, which also details how the plan is triggered and exited. <a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/How-to-sans-agents.md" target="_blank" rel="noopener noreferrer">Read the full source →</a></span>
+  </span>
+</agtc-banner>
+
+<div class="hero-actions">
+  <a href="get-started.html" class="agtc-button primary"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  <a href="documentation.html" class="agtc-button secondary"><span class="lang-fr">Explorer la documentation</span><span class="lang-en">Explore documentation</span></a>
+  <a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity" target="_blank" rel="noopener noreferrer" class="agtc-button ghost"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Scripts de continuité</span><span class="lang-en">Continuity scripts</span></a>
+</div></main>
+  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <a class="brand" href="index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="180" loading="lazy">
+        <img src="img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Navigation</span>
+      <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="ia.html">IA</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Documentation</span>
+      <a href="pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="tokens/index.html">Tokens</a>
+      <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+      <a href="continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Explorer</span>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="audit.html">Audit</a>
+      <a href="ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="site.js"></script>
+</body>
+</html>

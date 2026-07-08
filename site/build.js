@@ -3285,6 +3285,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
       <a href="${base}tokens/index.html">Tokens</a>
       <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+      <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
@@ -3381,6 +3382,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
           <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
           <a href="${base}agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
           <a href="${base}pipelines/index.html">Pipelines</a>
+          <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
         </div>
         <div>
           <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
@@ -3780,6 +3782,13 @@ function buildHome(adrs) {
         <span class="lang-fr">Agentica repose sur les standards ouverts du W3C. Ses composants sont des Web Components natifs, portables, indépendants des frameworks. Ses décisions survivent aux outils.</span>
         <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
       </p>
+      <p>
+        <span class="lang-fr">Le système fonctionne aussi sans agent IA : chaque flux critique a un équivalent humain documenté et testé.</span>
+        <span class="lang-en">The system also works without any AI agent: every critical workflow has a documented, tested human equivalent.</span>
+      </p>
+      <div class="hero-actions">
+        <a class="cta-btn cta-btn-secondary" href="continuite.html"><span class="lang-fr">Voir le plan de continuité →</span><span class="lang-en">View the continuity plan →</span></a>
+      </div>
     </div>
     <figure class="illus" aria-hidden="true">
       <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
@@ -3843,6 +3852,7 @@ function sidebarSite(base, current) {
     ['tokens/index.html', 'Tokens'],
     ['decisions/index.html', '<span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span>'],
     ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
+    ['continuite.html', '<span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span>'],
   ];
   const a = (href, label) => `<a href="${base}${href}"${current === href ? ' class="active" aria-current="page"' : ''}>${label}</a>`;
   // Retourne uniquement le contenu interne — layout() ajoute le <aside> (identique à sidebarFoundations/sidebarComponents)
@@ -3889,6 +3899,14 @@ function buildPourquoi() {
         <div class="editorial-icon">${icon('shield-check', 20)}</div>
         <h2><span class="lang-fr">La qualité est structurelle</span><span class="lang-en">Quality is structural</span></h2>
         <p><span class="lang-fr">Accessibilité, régressions visuelles, cohérence des tokens et des ADRs — ces vérifications ne sont pas optionnelles. Elles font partie du système, déclenchées automatiquement à chaque changement.</span><span class="lang-en">Accessibility, visual regressions, token and ADR consistency — these checks are not optional. They are part of the system, triggered automatically with every change.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon('server', 20)}</div>
+        <h2><span class="lang-fr">Le système survit sans agent IA</span><span class="lang-en">The system survives without AI agents</span></h2>
+        <p><span class="lang-fr">Les tokens, les contrats de composants et les règles de gouvernance sont des fichiers versionnés dans Git — jamais enfermés dans une conversation avec un agent. Un plan de continuité documenté et scripté couvre chaque flux critique.</span><span class="lang-en">Tokens, component contracts and governance rules are versioned files in Git — never locked inside an agent conversation. A documented, scripted continuity plan covers every critical workflow.</span></p>
+        <div class="hero-actions" style="margin-top:1rem">
+          <a class="cta-btn cta-btn-secondary" href="continuite.html"><span class="lang-fr">Voir le plan de continuité →</span><span class="lang-en">View the continuity plan →</span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -4008,6 +4026,14 @@ function buildQualite() {
         <h2><span class="lang-fr">Documentation obligatoire</span><span class="lang-en">Mandatory documentation</span></h2>
         <p><span class="lang-fr">Aucun composant ne peut être publié sans sa guideline, sa Storybook story et ses patterns UX approuvés. La documentation est un gate, pas un bonus.</span><span class="lang-en">No component can be published without its guideline, Storybook story and approved UX patterns. Documentation is a gate, not a bonus.</span></p>
       </div>
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon('life-buoy', 20)}</div>
+        <h2><span class="lang-fr">La gouvernance résiste aux pannes d'agent</span><span class="lang-en">Governance survives agent outages</span></h2>
+        <p><span class="lang-fr">Le quality gate, l'audit d'accessibilité et la revue Figma ont chacun un équivalent manuel documenté. Le contrôle qualité ne dépend jamais d'un agent IA disponible.</span><span class="lang-en">The quality gate, accessibility audit and Figma review each have a documented manual equivalent. Quality control never depends on an available AI agent.</span></p>
+        <div class="hero-actions" style="margin-top:1rem">
+          <a class="cta-btn cta-btn-secondary" href="continuite.html"><span class="lang-fr">Voir le plan de continuité →</span><span class="lang-en">View the continuity plan →</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -4125,6 +4151,7 @@ function buildDocumentation() {
           <li><a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a></li>
           <li><a href="foundations/index.html"><span class="lang-fr">Guides de fondations</span><span class="lang-en">Foundation guides</span></a></li>
           <li><a href="components/index.html"><span class="lang-fr">Exemples de composants</span><span class="lang-en">Component examples</span></a></li>
+          <li><a href="continuite.html"><span class="lang-fr">Continuité sans agents IA</span><span class="lang-en">Continuity without AI agents</span></a></li>
           <li><a href="changelog.html"><span class="lang-fr">Changelog</span><span class="lang-en">Changelog</span></a></li>
         </ul>
       </div>
@@ -4156,6 +4183,154 @@ function buildDocumentation() {
 </section>
 `;
   write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'documentation.html'), body }));
+}
+
+// ─── PAGE: CONTINUITÉ SANS AGENTS IA ────────────────────────────────────────
+function buildContinuite() {
+  const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
+  const SCRIPTS = `${REPO}/blob/main/scripts/continuity`;
+  const HOWTO = `${REPO}/blob/main/How-to-sans-agents.md`;
+
+  const outilsCode = esc(`bash scripts/continuity/1-1-outils-existants.sh
+# --skip-visual pour sauter Playwright/Chromatic (services externes)`);
+
+  const gateCode = esc(`bash scripts/continuity/1-2-quality-gate-manuel.sh
+# Bloque tant que chaque étape n'est pas confirmée (y/n)`);
+
+  const produitCode = esc(`# Vérifier l'installation d'un clone Agentica
+bash scripts/continuity/2-1-installation-produit.sh <chemin-du-clone>
+
+# Auditer un projet consommateur contre les tokens
+bash scripts/continuity/2-2-checklist-produit.sh <chemin-du-projet>`);
+
+  const outilsRows = [
+    ['Compiler les tokens', 'npm run tokens'],
+    ['Rebuild du site', 'node site/build.js'],
+    ['Audit tokens', 'node scripts/audit-tokens.js --ci'],
+    ['Audit accessibilité', 'npm run axe'],
+    ['Tests visuels/E2E', 'npx playwright test --project=chromium'],
+    ['Tests Chromatic', 'npm run chromatic'],
+  ].map(([task, cmd]) => `<tr><td>${task}</td><td><code>${cmd}</code></td></tr>`).join('');
+
+  const body = `
+<h1><span class="lang-fr">Continuité sans agents IA</span><span class="lang-en">Continuity without AI agents</span></h1>
+<p class="page-lead">
+  <span class="lang-fr">Agentica n'a jamais dépendu d'un agent IA pour fonctionner. Les tokens, les contrats de composants et les règles de gouvernance sont des fichiers versionnés dans Git — jamais enfermés dans une conversation d'agent. Voici le plan documenté et scripté qui le prouve, pour l'équipe qui maintient le système et pour les équipes qui le consomment.</span>
+  <span class="lang-en">Agentica has never depended on an AI agent to function. Tokens, component contracts and governance rules are versioned files in Git — never locked inside an agent conversation. Here is the documented, scripted plan that proves it, for the team that maintains the system and for the teams that consume it.</span>
+</p>
+
+<agtc-banner variant="info">
+  <strong><span class="lang-fr">Le dernier mot reste toujours humain</span><span class="lang-en">Humans always keep the final word</span></strong>
+  <span>
+    <span class="lang-fr">Ce plan ne change aucune règle de gouvernance — <code>tokens-system.md</code>, <code>git-workflow.md</code>, <code>code-style.md</code> restent en vigueur à l'identique. Seul l'<strong>exécutant</strong> change : un humain fait ce qu'un agent faisait par commodité.</span>
+    <span class="lang-en">This plan changes no governance rule — <code>tokens-system.md</code>, <code>git-workflow.md</code>, <code>code-style.md</code> stay exactly in force. Only the <strong>executor</strong> changes: a human does what an agent used to do for convenience.</span>
+  </span>
+</agtc-banner>
+
+<div class="hero-actions">
+  <a href="#equipe-systeme" class="agtc-button secondary"><span class="lang-fr">Équipe système de design</span><span class="lang-en">Design system team</span></a>
+  <a href="#equipes-produit" class="agtc-button ghost"><span class="lang-fr">Équipes produit →</span><span class="lang-en">Product teams →</span></a>
+</div>
+
+<h2 class="first" id="equipe-systeme"><span class="lang-fr">Équipe système de design (maintien d'Agentica)</span><span class="lang-en">Design system team (maintaining Agentica)</span></h2>
+<p>
+  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>.claude/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
+  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>.claude/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
+</p>
+
+<h3><span class="lang-fr">1.1 Les outils existants tournent sans agent</span><span class="lang-en">1.1 Existing tools run without an agent</span></h3>
+<p>
+  <span class="lang-fr">Ces commandes tournaient déjà sans qu'un agent soit strictement nécessaire — un agent les lançait par commodité, un humain les lance à l'identique.</span>
+  <span class="lang-en">These commands already ran without an agent being strictly necessary — an agent ran them for convenience, a human runs the same ones.</span>
+</p>
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Tâche</span><span class="lang-en">Task</span></th>
+    <th><span class="lang-fr">Commande</span><span class="lang-en">Command</span></th>
+  </tr></thead>
+  <tbody>${outilsRows}</tbody>
+</table>
+<pre class="code-block"><code class="lang-bash">${outilsCode}</code></pre>
+<p><a href="${SCRIPTS}/1-1-outils-existants.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.2 Quality gate manuel</span><span class="lang-en">1.2 Manual quality gate</span></h3>
+<p>
+  <span class="lang-fr">Les 8 pipelines du <code>quality-gate.md</code> traduits en étapes humaines : cohérence tokens, WCAG, revue patterns UX, conformité ADR, déclencheurs ADR manquants, documentation, rebuild du site, commit. Les étapes 3 et 5 sont du jugement humain pur — aucun script ne peut les remplacer, seulement rappeler qu'elles doivent être faites et bloquer tant qu'elles ne sont pas confirmées.</span>
+  <span class="lang-en">The 8 pipelines from <code>quality-gate.md</code> translated into human steps: token consistency, WCAG, UX pattern review, ADR conformity, missing-ADR triggers, documentation, site rebuild, commit. Steps 3 and 5 are pure human judgment — no script can replace them, only remind that they must happen and block until confirmed.</span>
+</p>
+<pre class="code-block"><code class="lang-bash">${gateCode}</code></pre>
+<p><a href="${SCRIPTS}/1-2-quality-gate-manuel.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.3 Gouvernance Figma sans script Plugin API</span><span class="lang-en">1.3 Figma governance without a Plugin API script</span></h3>
+<p>
+  <span class="lang-fr">Checklist manuelle : lire le composant code et ses stories avant de toucher Figma, lier chaque fill/stroke/spacing à une Variable Figma existante à la main (panneau Inspect), vérifier les variantes par échantillonnage, règle no-delete inchangée (déplacer vers <code>_corbeille</code>, jamais supprimer), page de staging et rapport 10 points déjà conçus pour un humain, geler les chantiers de grande ampleur le temps de l'indisponibilité.</span>
+  <span class="lang-en">Manual checklist: read the code component and its stories before touching Figma, link every fill/stroke/spacing to an existing Figma Variable by hand (Inspect panel), verify variants by sampling, unchanged no-delete rule (move to <code>_corbeille</code>, never delete), staging page and 10-point report already designed for a human, freeze large-scale work while agents are unavailable.</span>
+</p>
+<p><a href="${SCRIPTS}/1-3-figma-checklist.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">1.4 ADR et log — inchangés</span><span class="lang-en">1.4 ADRs and log — unchanged</span></h3>
+<p>
+  <span class="lang-fr">Rédiger un ADR et mettre à jour <code>log/kit-construction.md</code> sont déjà des exercices humains d'écriture, non affectés par l'absence d'agent — seulement un rappel qu'ils restent obligatoires à chaque session ou commit significatif.</span>
+  <span class="lang-en">Writing an ADR and updating <code>log/kit-construction.md</code> are already human writing tasks, unaffected by agent absence — just a reminder they remain mandatory for every significant session or commit.</span>
+</p>
+<p><a href="${SCRIPTS}/1-4-adr-log-rappel.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h2 id="equipes-produit"><span class="lang-fr">Équipes produit (consommatrices d'Agentica)</span><span class="lang-en">Product teams (consuming Agentica)</span></h2>
+
+<h3><span class="lang-fr">2.1 Ce qui ne change pas du tout</span><span class="lang-en">2.1 What doesn't change at all</span></h3>
+<p>
+  <span class="lang-fr">Le flux d'installation documenté sur <a href="get-started.html">la page Démarrer</a> fonctionne sans aucun agent : cloner, importer <code>dist/tokens/css/all.css</code> et <code>dark.css</code>, monter les Web Components <code>agtc-*</code>. <code>guidelines/components/*.md</code> et <code>DESIGN.md</code> sont des contrats lisibles humains, utilisables tels quels.</span>
+  <span class="lang-en">The installation flow documented on the <a href="get-started.html">Get started page</a> works with zero agent: clone, import <code>dist/tokens/css/all.css</code> and <code>dark.css</code>, mount the <code>agtc-*</code> Web Components. <code>guidelines/components/*.md</code> and <code>DESIGN.md</code> are human-readable contracts, usable as-is.</span>
+</p>
+<p><a href="${SCRIPTS}/2-1-installation-produit.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.2 Ce qui demande une checklist de remplacement</span><span class="lang-en">2.2 What needs a replacement checklist</span></h3>
+<p>
+  <span class="lang-fr">Valeurs en dur : lancer l'audit de tokens sur votre propre projet, ou revue visuelle manuelle contre <code>tokens-system.md</code>. Pattern UX : consulter directement les 5 sources publiques de <code>ux-patterns-sources.md</code> et documenter le choix vous-même. Accessibilité : WebAIM Contrast Checker et l'extension navigateur axe DevTools.</span>
+  <span class="lang-en">Hardcoded values: run the token audit against your own project, or a manual visual review against <code>tokens-system.md</code>. UX pattern: consult the 5 public sources from <code>ux-patterns-sources.md</code> directly and document the choice yourself. Accessibility: WebAIM Contrast Checker and the axe DevTools browser extension.</span>
+</p>
+<pre class="code-block"><code class="lang-bash">${produitCode}</code></pre>
+<p><a href="${SCRIPTS}/2-2-checklist-produit.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.3 Garde-fou anti-contournement</span><span class="lang-en">2.3 Anti-bypass safeguard</span></h3>
+<agtc-banner variant="warning">
+  <strong><span class="lang-fr">L'absence d'agent ne change pas la règle</span><span class="lang-en">Agent absence doesn't change the rule</span></strong>
+  <span>
+    <span class="lang-fr">Sans agent pour faciliter l'usage du design system, une équipe pressée peut être tentée de contourner Agentica entièrement (retour d'expérience documenté chez Spotify/Encore). <code>tokens-system.md</code> reste en vigueur — une valeur en dur reste interdite, elle est juste vérifiée à la main. Si un délai est intenable, la voie correcte est l'escalade (2.4), jamais le contournement silencieux.</span>
+    <span class="lang-en">Without an agent easing design system adoption, a pressured team may be tempted to bypass Agentica entirely (a documented Spotify/Encore case study). <code>tokens-system.md</code> still applies — a hardcoded value is still forbidden, it is just checked by hand. If a deadline is untenable, the correct path is escalation (2.4), never silent bypass.</span>
+  </span>
+</agtc-banner>
+<p><a href="${SCRIPTS}/2-3-anti-contournement.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<h3><span class="lang-fr">2.4 Point de contact en cas de doute</span><span class="lang-en">2.4 Point of contact when in doubt</span></h3>
+<p>
+  <span class="lang-fr">Toute question d'interprétation remonte au Design System Lead / Principal Designer humain — jamais d'improvisation silencieuse.</span>
+  <span class="lang-en">Any interpretation question goes to the human Design System Lead / Principal Designer — never silent improvisation.</span>
+</p>
+<p><a href="${SCRIPTS}/2-4-contact-escalade.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+
+<agtc-banner variant="brand" icon="shield-check">
+  <strong><span class="lang-fr">Guide complet</span><span class="lang-en">Full guide</span></strong>
+  <span>
+    <span class="lang-fr">Ce résumé s'appuie sur <code>How-to-sans-agents.md</code>, qui détaille aussi le déclenchement du plan et la sortie de ce mode. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Lire la source complète →</a></span>
+    <span class="lang-en">This summary is based on <code>How-to-sans-agents.md</code>, which also details how the plan is triggered and exited. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Read the full source →</a></span>
+  </span>
+</agtc-banner>
+
+<div class="hero-actions">
+  <a href="get-started.html" class="agtc-button primary"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  <a href="documentation.html" class="agtc-button secondary"><span class="lang-fr">Explorer la documentation</span><span class="lang-en">Explore documentation</span></a>
+  <a href="${SCRIPTS}" target="_blank" rel="noopener noreferrer" class="agtc-button ghost">${icon('github', 16)} <span class="lang-fr">Scripts de continuité</span><span class="lang-en">Continuity scripts</span></a>
+</div>`;
+
+  write(path.join(DIST, 'continuite.html'), layout({
+    title: 'Continuité',
+    pageTitle: 'Continuité sans agents IA — Agentica',
+    depth: 0,
+    sidebar: null,
+    fullWidth: false,
+    body,
+  }));
 }
 
 // ─── PAGE: FOUNDATIONS INDEX ─────────────────────────────────────────────────
@@ -8146,6 +8321,7 @@ function build() {
   buildQualite();
   buildIA();
   buildDocumentation();
+  buildContinuite();
   buildGetStarted();
   buildChangelog();
   buildFoundationsIndex();
