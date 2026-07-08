@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Tue, 07 Jul 2026 17:50:27 GMT
+// Generated on Wed, 08 Jul 2026 16:06:38 GMT
 
 
 import UIKit
@@ -585,6 +585,9 @@ public class AgenticaTokens {
     public static let primitiveIconSizeMd = 20px
     public static let primitiveIconSizeSm = 16px
     public static let primitiveIconSizeXl = 32px
+    public static let primitiveLetterSpacingNormal = 0em
+    public static let primitiveLetterSpacingWide = 0.06em
+    public static let primitiveLetterSpacingWidest = 0.12em
     public static let primitiveLineHeightDisplay = 1.0
     public static let primitiveLineHeightHeading = 1.1
     public static let primitiveLineHeightReading = 1.6
@@ -696,6 +699,7 @@ public class AgenticaTokens {
     public static let semanticMarketingTypographyDisplayLineHeight = 1.0
     public static let semanticMarketingTypographyDisplaySize = 3.75rem
     public static let semanticMarketingTypographyDisplayWeight = 700
+    public static let semanticMarketingTypographyEyebrowLetterSpacing = 0.12em
     public static let semanticMarketingTypographyEyebrowSize = 0.75rem
     public static let semanticMarketingTypographyEyebrowWeight = 700
     public static let semanticRadiusCard = 10px
@@ -764,6 +768,8 @@ public class AgenticaTokens {
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500
+    public static let semanticTypographyLetterSpacingNormal = 0em
+    public static let semanticTypographyLetterSpacingWide = 0.06em
     public static let semanticTypographyMonoFamily = 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
     public static let tableDefaultBorder = #e8e8e8
     public static let tableDefaultCaptionText = #646464

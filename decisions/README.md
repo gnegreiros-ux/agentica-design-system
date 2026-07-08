@@ -123,6 +123,8 @@ des décisions déjà tranchées.
 | [ADR-063](ADR-063-agtc-feature-card.md) | Composant `agtc-feature-card` : architecture, variantes, revue UX | 2026-06-25 | ✅ Actif |
 | [ADR-064](ADR-064-v2-light-mode-implementation.md) | Mode clair V2 : implémentation et correction du découplage dark/light (amende ADR-058) | 2026-06-25 | ✅ Actif |
 | [ADR-065](ADR-065-dark-mode-tokens-storybook-chromatic.md) | Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic | 2026-06-29 | ✅ Actif |
+| [ADR-066](ADR-066-playwright-testing-strategy.md) | Stratégie de tests Playwright : deux périmètres distincts | 2026-07-02 | ✅ Actif |
+| [ADR-067](ADR-067-letter-spacing-token-category.md) | Nouvelle catégorie de token `letterSpacing` — dette `agtc-code-block` | 2026-07-08 | ✅ Actif |
 
 ---
 

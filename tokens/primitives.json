@@ -607,6 +607,11 @@
       "heading":  { "$value": "1.1", "$type": "number", "$description": "Titres intermédiaires (lg, xl, 2xl — h5 à h3)." },
       "display":  { "$value": "1.0", "$type": "number", "$description": "Grands titres (3xl, 4xl, 5xl — h2, h1, hero)." }
     },
+    "letterSpacing": {
+      "normal": { "$value": "0em",    "$type": "dimension", "$description": "Défaut — corps de texte, labels, détails." },
+      "wide":   { "$value": "0.06em", "$type": "dimension", "$description": "Élargi — petites capitales/étiquettes majuscules (ex. indicateur de langue) où l'espacement compense la réduction de lisibilité du texte en capitales." },
+      "widest": { "$value": "0.12em", "$type": "dimension", "$description": "Très élargi — étiquette eyebrow marketing (majuscules, petite taille, forte emphase). Valeur préexistante (--agtc-tracking-eyebrow) préservée, câblée au token (ADR-067). Nommage \"widest\" (pas \"wider\") pour éviter la collision avec --agtc-tracking-wider (0.06em, échelle site non tokenisée)." }
+    },
     "radius": {
       "sm": { "$value": "6px",  "$type": "dimension", "$description": "Petit rayon — contrôles interactifs (boutons, inputs)" },
       "md": { "$value": "10px", "$type": "dimension", "$description": "Rayon moyen — cartes, panneaux" }

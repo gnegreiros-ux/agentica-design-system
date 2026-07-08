@@ -913,6 +913,18 @@
           "$value": "{primitive.lineHeight.display}",
           "$type": "number"
         }
+      },
+      "letter-spacing": {
+        "normal": {
+          "$value": "{primitive.letterSpacing.normal}",
+          "$type": "dimension",
+          "$intent": "Défaut — corps de texte, labels, détails en casse normale"
+        },
+        "wide": {
+          "$value": "{primitive.letterSpacing.wide}",
+          "$type": "dimension",
+          "$intent": "Élargi — étiquettes en petites majuscules (ex. indicateur de langue de code, eyebrow) où l'espacement compense la réduction de lisibilité du texte en capitales"
+        }
       }
     },
     "icon": {
@@ -964,11 +976,16 @@
           "size": {
             "$value": "{primitive.fontSize.xs}",
             "$type": "dimension",
-            "$intent": "12px — Étiquette courte au-dessus d'un titre hero. letter-spacing large. Marketing uniquement."
+            "$intent": "12px — Étiquette courte au-dessus d'un titre hero. Marketing uniquement."
           },
           "weight": {
             "$value": "{primitive.fontWeight.bold}",
             "$type": "fontWeight"
+          },
+          "letter-spacing": {
+            "$value": "{primitive.letterSpacing.widest}",
+            "$type": "dimension",
+            "$intent": "Espacement large — compense la lisibilité réduite du texte en petites majuscules sur l'étiquette eyebrow (ADR-067)"
           }
         }
       },
