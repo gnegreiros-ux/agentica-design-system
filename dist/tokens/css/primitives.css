@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 08 Jul 2026 16:06:38 GMT
+ * Generated on Wed, 08 Jul 2026 18:08:27 GMT
  */
 
 :root {
@@ -461,8 +461,16 @@
   --agtc-primitive-lineHeight-reading: 1.6;
   --agtc-primitive-lineHeight-heading: 1.1;
   --agtc-primitive-lineHeight-display: 1.0;
+  --agtc-primitive-letterSpacing-tighter: -0.03em;
+  --agtc-primitive-letterSpacing-tight: -0.025em;
+  --agtc-primitive-letterSpacing-snug: -0.02em;
+  --agtc-primitive-letterSpacing-heading: -0.015em;
   --agtc-primitive-letterSpacing-normal: 0em;
+  --agtc-primitive-letterSpacing-relaxed: 0.04em;
   --agtc-primitive-letterSpacing-wide: 0.06em;
+  --agtc-primitive-letterSpacing-label: 0.08em;
+  --agtc-primitive-letterSpacing-loose: 0.09em;
+  --agtc-primitive-letterSpacing-overline: 0.1em;
   --agtc-primitive-letterSpacing-widest: 0.12em;
   --agtc-primitive-radius-sm: 6px;
   --agtc-primitive-radius-md: 10px;

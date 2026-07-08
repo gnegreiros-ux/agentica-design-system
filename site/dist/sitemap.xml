@@ -571,6 +571,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://designsystem.gnegreiros.com/decisions/adr-068.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://designsystem.gnegreiros.com/pipelines/quality-gate.html</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>

@@ -125,6 +125,7 @@ des décisions déjà tranchées.
 | [ADR-065](ADR-065-dark-mode-tokens-storybook-chromatic.md) | Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic | 2026-06-29 | ✅ Actif |
 | [ADR-066](ADR-066-playwright-testing-strategy.md) | Stratégie de tests Playwright : deux périmètres distincts | 2026-07-02 | ✅ Actif |
 | [ADR-067](ADR-067-letter-spacing-token-category.md) | Nouvelle catégorie de token `letterSpacing` — dette `agtc-code-block` | 2026-07-08 | ✅ Actif |
+| [ADR-068](ADR-068-letter-spacing-scale-extension.md) | Extension de l'échelle `letterSpacing` — résorption dette `--agtc-tracking-*` du site | 2026-07-08 | ✅ Actif |
 
 ---
 

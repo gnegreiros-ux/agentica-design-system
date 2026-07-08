@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 08 Jul 2026 16:06:38 GMT
+ * Generated on Wed, 08 Jul 2026 18:08:27 GMT
  */
 
 :root {
@@ -26,8 +26,16 @@
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-iconSize-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-iconSize-md);
   --agtc-semantic-icon-size-inline: var(--agtc-primitive-iconSize-sm);
+  --agtc-semantic-typography-letter-spacing-overline: var(--agtc-primitive-letterSpacing-overline);
+  --agtc-semantic-typography-letter-spacing-loose: var(--agtc-primitive-letterSpacing-loose);
+  --agtc-semantic-typography-letter-spacing-label: var(--agtc-primitive-letterSpacing-label);
   --agtc-semantic-typography-letter-spacing-wide: var(--agtc-primitive-letterSpacing-wide);
+  --agtc-semantic-typography-letter-spacing-relaxed: var(--agtc-primitive-letterSpacing-relaxed);
   --agtc-semantic-typography-letter-spacing-normal: var(--agtc-primitive-letterSpacing-normal);
+  --agtc-semantic-typography-letter-spacing-heading: var(--agtc-primitive-letterSpacing-heading);
+  --agtc-semantic-typography-letter-spacing-snug: var(--agtc-primitive-letterSpacing-snug);
+  --agtc-semantic-typography-letter-spacing-tight: var(--agtc-primitive-letterSpacing-tight);
+  --agtc-semantic-typography-letter-spacing-tighter: var(--agtc-primitive-letterSpacing-tighter);
   --agtc-semantic-typography-hero-line-height: var(--agtc-primitive-lineHeight-display);
   --agtc-semantic-typography-hero-weight: var(--agtc-primitive-fontWeight-bold);
   --agtc-semantic-typography-hero-size: var(--agtc-primitive-fontSize-5xl);

@@ -608,9 +608,17 @@
       "display":  { "$value": "1.0", "$type": "number", "$description": "Grands titres (3xl, 4xl, 5xl — h2, h1, hero)." }
     },
     "letterSpacing": {
-      "normal": { "$value": "0em",    "$type": "dimension", "$description": "Défaut — corps de texte, labels, détails." },
-      "wide":   { "$value": "0.06em", "$type": "dimension", "$description": "Élargi — petites capitales/étiquettes majuscules (ex. indicateur de langue) où l'espacement compense la réduction de lisibilité du texte en capitales." },
-      "widest": { "$value": "0.12em", "$type": "dimension", "$description": "Très élargi — étiquette eyebrow marketing (majuscules, petite taille, forte emphase). Valeur préexistante (--agtc-tracking-eyebrow) préservée, câblée au token (ADR-067). Nommage \"widest\" (pas \"wider\") pour éviter la collision avec --agtc-tracking-wider (0.06em, échelle site non tokenisée)." }
+      "tighter": { "$value": "-0.03em",  "$type": "dimension", "$description": "Très resserré — grands nombres/chiffres display (stats, KPI). Valeur préexistante du site (--agtc-tracking-tighter), câblée au token (ADR-068)." },
+      "tight":   { "$value": "-0.025em", "$type": "dimension", "$description": "Resserré — titres h1 hors hero. Valeur préexistante du site (--agtc-tracking-tight), câblée au token (ADR-068)." },
+      "snug":    { "$value": "-0.02em",  "$type": "dimension", "$description": "Légèrement resserré — logo, nombres de stats secondaires, titres de section home. Valeur préexistante du site (--agtc-tracking-snug), câblée au token (ADR-068)." },
+      "heading": { "$value": "-0.015em", "$type": "dimension", "$description": "Resserrement discret — titres h2, titres de page ADR. Valeur préexistante du site (--agtc-tracking-heading), câblée au token (ADR-068)." },
+      "normal":  { "$value": "0em",    "$type": "dimension", "$description": "Défaut — corps de texte, labels, détails." },
+      "relaxed": { "$value": "0.04em", "$type": "dimension", "$description": "Légèrement élargi — boutons de langue, en-têtes de tableau de contraste. Valeur préexistante du site (--agtc-tracking-wide), renommée \"relaxed\" pour éviter la collision avec la primitive \"wide\" existante (0.06em ≠ 0.04em). Câblée au token (ADR-068)." },
+      "wide":    { "$value": "0.06em", "$type": "dimension", "$description": "Élargi — petites capitales/étiquettes majuscules (ex. indicateur de langue) où l'espacement compense la réduction de lisibilité du texte en capitales." },
+      "label":   { "$value": "0.08em", "$type": "dimension", "$description": "Élargi — labels de propriété/métadonnée en majuscules (prop-label, adr-meta-item, step/density card label). Valeur préexistante du site (--agtc-tracking-label), câblée au token (ADR-068)." },
+      "loose":   { "$value": "0.09em", "$type": "dimension", "$description": "Très élargi — étiquette d'audience en majuscules. Valeur préexistante du site (--agtc-tracking-loose), câblée au token (ADR-068)." },
+      "overline": { "$value": "0.1em", "$type": "dimension", "$description": "Overline — badges/tags contextuels en majuscules (pipeline-tag, context-badge, toc-title…). Valeur préexistante du site (--agtc-tracking-overline), câblée au token (ADR-068)." },
+      "widest":  { "$value": "0.12em", "$type": "dimension", "$description": "Très élargi — étiquette eyebrow marketing (majuscules, petite taille, forte emphase). Valeur préexistante (--agtc-tracking-eyebrow) préservée, câblée au token (ADR-067). Nommage \"widest\" (pas \"wider\") pour éviter la collision avec --agtc-tracking-wider (0.06em, échelle site non tokenisée)." }
     },
     "radius": {
       "sm": { "$value": "6px",  "$type": "dimension", "$description": "Petit rayon — contrôles interactifs (boutons, inputs)" },

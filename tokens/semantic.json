@@ -915,15 +915,55 @@
         }
       },
       "letter-spacing": {
+        "tighter": {
+          "$value": "{primitive.letterSpacing.tighter}",
+          "$type": "dimension",
+          "$intent": "Très resserré — grands nombres/chiffres display (stats, KPI) (ADR-068)"
+        },
+        "tight": {
+          "$value": "{primitive.letterSpacing.tight}",
+          "$type": "dimension",
+          "$intent": "Resserré — titres h1 hors hero (ADR-068)"
+        },
+        "snug": {
+          "$value": "{primitive.letterSpacing.snug}",
+          "$type": "dimension",
+          "$intent": "Légèrement resserré — logo, nombres de stats secondaires, titres de section home (ADR-068)"
+        },
+        "heading": {
+          "$value": "{primitive.letterSpacing.heading}",
+          "$type": "dimension",
+          "$intent": "Resserrement discret — titres h2, titres de page ADR (ADR-068)"
+        },
         "normal": {
           "$value": "{primitive.letterSpacing.normal}",
           "$type": "dimension",
           "$intent": "Défaut — corps de texte, labels, détails en casse normale"
         },
+        "relaxed": {
+          "$value": "{primitive.letterSpacing.relaxed}",
+          "$type": "dimension",
+          "$intent": "Légèrement élargi — boutons de langue, en-têtes de tableau de contraste (ADR-068)"
+        },
         "wide": {
           "$value": "{primitive.letterSpacing.wide}",
           "$type": "dimension",
           "$intent": "Élargi — étiquettes en petites majuscules (ex. indicateur de langue de code, eyebrow) où l'espacement compense la réduction de lisibilité du texte en capitales"
+        },
+        "label": {
+          "$value": "{primitive.letterSpacing.label}",
+          "$type": "dimension",
+          "$intent": "Élargi — labels de propriété/métadonnée en majuscules (ADR-068)"
+        },
+        "loose": {
+          "$value": "{primitive.letterSpacing.loose}",
+          "$type": "dimension",
+          "$intent": "Très élargi — étiquette d'audience en majuscules (ADR-068)"
+        },
+        "overline": {
+          "$value": "{primitive.letterSpacing.overline}",
+          "$type": "dimension",
+          "$intent": "Overline — badges/tags contextuels en majuscules (ADR-068)"
         }
       }
     },

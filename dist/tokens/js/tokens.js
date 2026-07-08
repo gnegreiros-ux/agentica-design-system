@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 08 Jul 2026 16:06:38 GMT
+ * Generated on Wed, 08 Jul 2026 18:08:27 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -460,8 +460,16 @@ export const PrimitiveFontWeightBold = "700";
 export const PrimitiveLineHeightReading = "1.6";
 export const PrimitiveLineHeightHeading = "1.1";
 export const PrimitiveLineHeightDisplay = "1.0";
+export const PrimitiveLetterSpacingTighter = "-0.03em";
+export const PrimitiveLetterSpacingTight = "-0.025em";
+export const PrimitiveLetterSpacingSnug = "-0.02em";
+export const PrimitiveLetterSpacingHeading = "-0.015em";
 export const PrimitiveLetterSpacingNormal = "0em";
+export const PrimitiveLetterSpacingRelaxed = "0.04em";
 export const PrimitiveLetterSpacingWide = "0.06em";
+export const PrimitiveLetterSpacingLabel = "0.08em";
+export const PrimitiveLetterSpacingLoose = "0.09em";
+export const PrimitiveLetterSpacingOverline = "0.1em";
 export const PrimitiveLetterSpacingWidest = "0.12em";
 export const PrimitiveRadiusSm = "6px";
 export const PrimitiveRadiusMd = "10px";
@@ -611,8 +619,16 @@ export const SemanticTypographyHeading5LineHeight = "1.1";
 export const SemanticTypographyHeroSize = "3rem";
 export const SemanticTypographyHeroWeight = "700";
 export const SemanticTypographyHeroLineHeight = "1.0";
+export const SemanticTypographyLetterSpacingTighter = "-0.03em";
+export const SemanticTypographyLetterSpacingTight = "-0.025em";
+export const SemanticTypographyLetterSpacingSnug = "-0.02em";
+export const SemanticTypographyLetterSpacingHeading = "-0.015em";
 export const SemanticTypographyLetterSpacingNormal = "0em";
+export const SemanticTypographyLetterSpacingRelaxed = "0.04em";
 export const SemanticTypographyLetterSpacingWide = "0.06em";
+export const SemanticTypographyLetterSpacingLabel = "0.08em";
+export const SemanticTypographyLetterSpacingLoose = "0.09em";
+export const SemanticTypographyLetterSpacingOverline = "0.1em";
 export const SemanticIconSizeInline = "16px";
 export const SemanticIconSizeControl = "20px";
 export const SemanticIconSizeNav = "24px";

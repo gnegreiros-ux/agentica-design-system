@@ -73,6 +73,36 @@ Trois valeurs seulement, assignées par contexte de taille :
 
 ---
 
+## Règles de letter-spacing (tracking)
+
+Onze valeurs, de resserré (grands nombres/titres display) à élargi (badges/étiquettes en
+petites majuscules). Résorption de dette en deux temps : ADR-067 (catégorie + `wide`/`widest`
+pour le badge de langue `agtc-code-block`), ADR-068 (extension complète — les 9 variables
+`--agtc-tracking-*` du site, ~50 sites d'appel, n'ont plus aucune valeur en dur).
+
+| Token | Valeur | Rôle |
+|-------|--------|------|
+| `primitive.letterSpacing.tighter` | -0.03em | Grands nombres/chiffres display (stats, KPI) |
+| `primitive.letterSpacing.tight` | -0.025em | Titres h1 hors hero |
+| `primitive.letterSpacing.snug` | -0.02em | Logo, nombres de stats secondaires, titres de section home |
+| `primitive.letterSpacing.heading` | -0.015em | Titres h2, titres de page ADR |
+| `primitive.letterSpacing.normal` | 0em | Défaut — corps de texte, labels, détails |
+| `primitive.letterSpacing.relaxed` | 0.04em | Boutons de langue, en-têtes de tableau de contraste |
+| `primitive.letterSpacing.wide` | 0.06em | Petites majuscules — indicateur de langue de code, tableaux |
+| `primitive.letterSpacing.label` | 0.08em | Labels de propriété/métadonnée en majuscules |
+| `primitive.letterSpacing.loose` | 0.09em | Étiquette d'audience en majuscules |
+| `primitive.letterSpacing.overline` | 0.1em | Badges/tags contextuels en majuscules (overline) |
+| `primitive.letterSpacing.widest` | 0.12em | Étiquette eyebrow marketing |
+
+Chaque primitive a un alias `semantic.typography.letter-spacing.*` de même nom. Le site
+consomme ces tokens via une échelle nommée `--agtc-tracking-*` (`site/build.js`) qui reprend
+les mêmes noms sauf deux exceptions historiques préservées pour ne pas toucher aux sites
+d'appel : `--agtc-tracking-wide` → `letter-spacing.relaxed` (0.04em) et
+`--agtc-tracking-wider` → `letter-spacing.wide` (0.06em) — voir ADR-068 pour le détail de
+cette collision de nommage.
+
+---
+
 ## Styles sémantiques — les 9 niveaux
 
 | Token sémantique | Taille | Graisse | Line-height | Rôle |

@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Wed, 08 Jul 2026 16:06:38 GMT
+// Generated on Wed, 08 Jul 2026 18:08:28 GMT
 
 
 import UIKit
@@ -585,7 +585,15 @@ public class AgenticaTokens {
     public static let primitiveIconSizeMd = 20px
     public static let primitiveIconSizeSm = 16px
     public static let primitiveIconSizeXl = 32px
+    public static let primitiveLetterSpacingHeading = -0.015em
+    public static let primitiveLetterSpacingLabel = 0.08em
+    public static let primitiveLetterSpacingLoose = 0.09em
     public static let primitiveLetterSpacingNormal = 0em
+    public static let primitiveLetterSpacingOverline = 0.1em
+    public static let primitiveLetterSpacingRelaxed = 0.04em
+    public static let primitiveLetterSpacingSnug = -0.02em
+    public static let primitiveLetterSpacingTight = -0.025em
+    public static let primitiveLetterSpacingTighter = -0.03em
     public static let primitiveLetterSpacingWide = 0.06em
     public static let primitiveLetterSpacingWidest = 0.12em
     public static let primitiveLineHeightDisplay = 1.0
@@ -768,7 +776,15 @@ public class AgenticaTokens {
     public static let semanticTypographyLabelLineHeight = 1.6
     public static let semanticTypographyLabelSize = 0.875rem
     public static let semanticTypographyLabelWeight = 500
+    public static let semanticTypographyLetterSpacingHeading = -0.015em
+    public static let semanticTypographyLetterSpacingLabel = 0.08em
+    public static let semanticTypographyLetterSpacingLoose = 0.09em
     public static let semanticTypographyLetterSpacingNormal = 0em
+    public static let semanticTypographyLetterSpacingOverline = 0.1em
+    public static let semanticTypographyLetterSpacingRelaxed = 0.04em
+    public static let semanticTypographyLetterSpacingSnug = -0.02em
+    public static let semanticTypographyLetterSpacingTight = -0.025em
+    public static let semanticTypographyLetterSpacingTighter = -0.03em
     public static let semanticTypographyLetterSpacingWide = 0.06em
     public static let semanticTypographyMonoFamily = 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
     public static let tableDefaultBorder = #e8e8e8

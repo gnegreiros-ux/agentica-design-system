@@ -700,16 +700,16 @@ function tokensCSS() {
   /* Font-weight sémantique — bold(700) et display(800) complètent la palette DTCG */
   --agtc-semantic-fontWeight-bold:700;
   --agtc-semantic-fontWeight-display:800;
-  /* Tracking (letter-spacing) — échelle systémique */
-  --agtc-tracking-tighter:-.03em;
-  --agtc-tracking-tight:-.025em;
-  --agtc-tracking-snug:-.02em;
-  --agtc-tracking-heading:-.015em;
-  --agtc-tracking-wide:.04em;
-  --agtc-tracking-wider:.06em;
-  --agtc-tracking-label:.08em;
-  --agtc-tracking-loose:.09em;
-  --agtc-tracking-overline:.1em;
+  /* Tracking (letter-spacing) — échelle systémique, câblée sur semantic.typography.letter-spacing.* (ADR-068) */
+  --agtc-tracking-tighter:var(--agtc-semantic-typography-letter-spacing-tighter);
+  --agtc-tracking-tight:var(--agtc-semantic-typography-letter-spacing-tight);
+  --agtc-tracking-snug:var(--agtc-semantic-typography-letter-spacing-snug);
+  --agtc-tracking-heading:var(--agtc-semantic-typography-letter-spacing-heading);
+  --agtc-tracking-wide:var(--agtc-semantic-typography-letter-spacing-relaxed);
+  --agtc-tracking-wider:var(--agtc-semantic-typography-letter-spacing-wide);
+  --agtc-tracking-label:var(--agtc-semantic-typography-letter-spacing-label);
+  --agtc-tracking-loose:var(--agtc-semantic-typography-letter-spacing-loose);
+  --agtc-tracking-overline:var(--agtc-semantic-typography-letter-spacing-overline);
   --agtc-tracking-eyebrow:var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing);
   color-scheme:light;
 }

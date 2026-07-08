@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Stratégie de synchronisation Figma pour les palettes de marque custom — Agentica</title>
+<title>Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Stratégie de synchronisation Figma pour les palettes de marque custom — Agentica">
+<meta property="og:title" content="Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Stratégie de synchronisation Figma pour les palettes de marque custom — Agentica">
+<meta name="twitter:title" content="Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -113,89 +113,68 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-026</code>
+    <code class="adr-number">ADR-068</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    <span class="adr-type">token</span>
   </div>
-  <h1 class="adr-page-title">Stratégie de synchronisation Figma pour les palettes de marque custom</h1>
+  <h1 class="adr-page-title">Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-29</dd>
+      <dd>2026-07-08</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Guilherme Negreiros — Design System Lead, Principal Designer</dd>
+      <dd>Design System Lead (sémantique) — Principal Designer (primitive, nommage)</dd>
     </div>
   </dl>
 </div><h2>Contexte</h2>
-<p>ADR-024 a introduit deux palettes de marque custom (<code>accent</code> rose-corail et <code>secondary</code> bordeaux) dans <code>tokens/primitives.json</code>. Contrairement aux palettes Radix UI déjà présentes (Teal, Blue, Red, etc.), ces palettes :</p>
-<p>1. <strong>Ne sont pas dans Figma Community</strong> — Tokens Studio ne peut pas les importer depuis un fichier partagé officiel 2. <strong>N'ont pas de documentation de référence externe</strong> — les utilisateurs doivent comprendre chaque step depuis le JSON seul 3. <strong>Peuvent évoluer</strong> — les valeurs hex sont décisions de design, pas des constantes issues d'un système tiers</p>
-<p>La question soulevée dans la dette d'ADR-024 :</p>
-<blockquote><p>Comment les palettes custom sont-elles synchronisées avec Figma de manière fiable, gouvernée, et sans créer une seconde source de vérité ?</p></blockquote>
+<p>ADR-067 a créé la catégorie <code>letterSpacing</code> (primitif + sémantique) avec 3 valeurs (<code>normal</code>, <code>wide</code>, <code>widest</code>) pour résorber la dette de <code>agtc-code-block.js</code>. Son entrée de log notait une dette résiduelle <strong>hors périmètre</strong> : le site (<code>site/build.js</code>) définit sa propre échelle locale de 9 variables <code>--agtc-tracking-*</code>, presque toutes en valeurs codées en dur, consommées à <strong>50 sites d'appel</strong> à travers ~60 sélecteurs CSS (stats, titres, badges de langue, tableaux, labels de propriété, overlines).</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Variable site</th><th>Valeur en dur</th><th>Usages</th><th>Recoupe une primitive existante ?</th></tr></thead><tbody><tr><td><code>--agtc-tracking-tighter</code></td><td><code>-.03em</code></td><td>8</td><td>❌</td></tr><tr><td><code>--agtc-tracking-tight</code></td><td><code>-.025em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-snug</code></td><td><code>-.02em</code></td><td>6</td><td>❌</td></tr><tr><td><code>--agtc-tracking-heading</code></td><td><code>-.015em</code></td><td>3</td><td>❌</td></tr><tr><td><code>--agtc-tracking-wide</code></td><td><code>.04em</code></td><td>4</td><td>❌ — <strong>collision de nom</strong> avec <code>primitive.letterSpacing.wide</code> (0.06em, valeur différente)</td></tr><tr><td><code>--agtc-tracking-wider</code></td><td><code>.06em</code></td><td>4</td><td>✅ = <code>primitive.letterSpacing.wide</code> (0.06em)</td></tr><tr><td><code>--agtc-tracking-label</code></td><td><code>.08em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-loose</code></td><td><code>.09em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-overline</code></td><td><code>.1em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-eyebrow</code></td><td>*(déjà tokenisé, ADR-067)*</td><td>5</td><td>✅ = <code>primitive.letterSpacing.widest</code></td></tr></tbody></table></div>
+<p>Le point bloquant : le nom local du site <code>wide</code> (0.04em) désigne une valeur <strong>différente</strong> du token déjà nommé <code>wide</code> (0.06em, ADR-067). Une correction automatique aurait silencieusement changé le rendu visuel ou créé une confusion de nommage durable — décision escaladée à l'humain (<code>figma-library-governance.md</code> §1 : le code fait foi, mais un conflit de nommage entre deux sources de vérité locales n'est pas un cas où l'agent tranche seul).</p>
 <hr>
 <h2>Décision</h2>
-<h3>Principe : même pipeline que les palettes Radix</h3>
-<p>Les palettes custom (<code>accent</code>, <code>secondary</code>) sont traitées <strong>exactement comme les palettes Radix</strong> dans le pipeline de sync. Il n'existe pas de processus spécial pour elles.</p>
-<pre class="code-block"><code class="lang-text">tokens/primitives.json
-  ↓ (Tokens Studio lit ce fichier)
-Variables Figma — Collection "Primitives"
-  ↓ (les designers utilisent via semantic tokens)
-Variables Figma — Collection "Semantic" + "Component"</code></pre>
-<p>Tokens Studio ne fait pas de distinction entre une palette Radix et une palette custom — il lit le JSON et mappe les tokens à des Variables Figma selon la structure du fichier.</p>
-<hr>
-<h3>Configuration Tokens Studio</h3>
-<p><strong>Collection Figma cible</strong> : <code>Primitives</code> (même collection que <code>primitive.color.teal</code>, <code>primitive.color.blue</code>, etc.)</p>
-<p><strong>Nommage automatique dans Figma</strong> :</p>
-<ul><li><code>primitive/color/accent/1</code> → variable Figma <code>accent/1</code></li><li><code>primitive/color/accent/9</code> → variable Figma <code>accent/9</code></li><li><code>primitive/color/secondary/9</code> → variable Figma <code>secondary/9</code></li><li>etc.</li></ul>
-<p>Les tokens <code>_readme</code> (type <code>other</code>) sont ignorés par Tokens Studio à l'import — ils ne génèrent pas de variables Figma. Ils servent exclusivement à la documentation du JSON pour les agents et développeurs.</p>
-<p><strong>Import order</strong> (inchangé depuis ADR-011) : 1. <code>primitives.json</code> → Collection <code>Primitives</code> 2. <code>semantic.json</code> → Collection <code>Semantic</code> 3. <code>component.json</code> → Collection <code>Component</code></p>
-<hr>
-<h3>Quand les valeurs custom changent</h3>
-<p>Toute modification des valeurs hex d'une palette custom suit le processus standard :</p>
-<p>1. Ouvrir une PR de type <code>token(primitives)</code> sur une branche <code>token/brand-palette-update</code> 2. Modifier les valeurs dans <code>tokens/primitives.json</code> 3. Approbation obligatoire du <strong>Principal Designer</strong> (règle gouvernance ADR-001, ADR-004) 4. Merge → le pipeline de sync Tokens Studio détecte le changement au prochain pull depuis Figma</p>
-<p>Les designers <strong>ne modifient pas</strong> les valeurs directement dans Figma. Si une teinte ne convient pas, ils ouvrent une issue / soumettent une PR — pas une modification locale de variable Figma.</p>
-<hr>
-<h3>Documentation des steps dans Figma</h3>
-<p>Les descriptions des variables Figma (champ <code>description</code> dans Tokens Studio) sont renseignées depuis le champ <code>$description</code> de chaque token JSON. Les designers voient directement dans le panneau Figma :</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Variable Figma</th><th>Description automatique</th></tr></thead><tbody><tr><td><code>accent/9</code></td><td>Solid background — brand accent / CTA secondaire</td></tr><tr><td><code>accent/11</code></td><td>Texte accent — 7.1:1 sur blanc (WCAG AA+AAA)</td></tr><tr><td><code>secondary/9</code></td><td>Solid dark background — 12.2:1 avec texte blanc</td></tr><tr><td><code>secondary/12</code></td><td>High-contrast text — 13.8:1 sur blanc (WCAG AAA)</td></tr></tbody></table></div>
-<p>La règle d'usage par step (héritée de la convention Radix — steps 1-2 fonds, 9-10 solides, 11-12 texte) s'applique aux palettes custom. Elle est documentée dans le champ <code>_readme</code> de chaque palette dans <code>primitives.json</code>.</p>
-<hr>
-<h3>Validation après sync</h3>
-<p>Après chaque mise à jour de palette custom dans Figma, le Principal Designer valide :</p>
-<ul><li>[ ] Les 12 steps de chaque palette apparaissent dans la collection <code>Primitives</code></li><li>[ ] Les tokens sémantiques <code>semantic/color/brand/*</code> résolvent correctement les alias</li><li>[ ] Aucune variable Figma orpheline (alias cassé) dans les collections <code>Semantic</code> ou <code>Component</code></li><li>[ ] Les descriptions de variables correspondent aux <code>$description</code> du JSON</li></ul>
-<hr>
-<h3>Ce qu'un agent peut faire</h3>
-<pre class="code-block"><code class="lang-text">✅ Modifier les valeurs hex dans tokens/primitives.json via PR
-✅ Ajouter un nouveau step intermédiaire (ex: accent/9-5) si justifié
-✅ Mettre à jour les $description pour améliorer la documentation Figma
-❌ Modifier les variables Figma directement (jamais — direction JSON → Figma)
-❌ Créer une nouvelle palette sans ADR et sans approbation Principal Designer</code></pre>
+<h3>1. Nommage — <code>relaxed</code> pour la valeur 0.04em du site</h3>
+<p>Approuvé par l'humain : nouvelle primitive <code>letterSpacing.relaxed</code> (0.04em), plutôt que de renommer le token existant <code>wide</code> ou de créer une variante suffixée (<code>wide-sm</code> rejeté). <code>relaxed</code> se lit naturellement sur l'échelle, entre <code>normal</code> (0em) et <code>wide</code> (0.06em).</p>
+<h3>2. Portée — primitive + alias sémantique pour chaque nouvelle valeur</h3>
+<p>Approuvé par l'humain : suivre le même patron qu'ADR-067 pour les 7 nouvelles valeurs (pas seulement des primitives consommées directement) — chaque valeur reçoit une intention nommée en <code>semantic.typography.letter-spacing.*</code>.</p>
+<h3>Primitif — <code>tokens/primitives.json</code> → <code>primitive.letterSpacing</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Valeur</th><th>Ancien nom site</th></tr></thead><tbody><tr><td><code>letterSpacing.tighter</code></td><td><code>-0.03em</code></td><td><code>--agtc-tracking-tighter</code></td></tr><tr><td><code>letterSpacing.tight</code></td><td><code>-0.025em</code></td><td><code>--agtc-tracking-tight</code></td></tr><tr><td><code>letterSpacing.snug</code></td><td><code>-0.02em</code></td><td><code>--agtc-tracking-snug</code></td></tr><tr><td><code>letterSpacing.heading</code></td><td><code>-0.015em</code></td><td><code>--agtc-tracking-heading</code></td></tr><tr><td><code>letterSpacing.normal</code></td><td><code>0em</code></td><td>*(ADR-067)*</td></tr><tr><td><code>letterSpacing.relaxed</code></td><td><code>0.04em</code></td><td><code>--agtc-tracking-wide</code> (renommé)</td></tr><tr><td><code>letterSpacing.wide</code></td><td><code>0.06em</code></td><td>*(ADR-067)* — <code>--agtc-tracking-wider</code> s'y rattache</td></tr><tr><td><code>letterSpacing.label</code></td><td><code>0.08em</code></td><td><code>--agtc-tracking-label</code></td></tr><tr><td><code>letterSpacing.loose</code></td><td><code>0.09em</code></td><td><code>--agtc-tracking-loose</code></td></tr><tr><td><code>letterSpacing.overline</code></td><td><code>0.1em</code></td><td><code>--agtc-tracking-overline</code></td></tr><tr><td><code>letterSpacing.widest</code></td><td><code>0.12em</code></td><td>*(ADR-067)* — <code>--agtc-tracking-eyebrow</code></td></tr></tbody></table></div>
+<h3>Sémantique — <code>tokens/semantic.json</code> → <code>semantic.typography.letter-spacing</code></h3>
+<p>Alias 1:1 vers chaque primitive ci-dessus (<code>tighter</code>, <code>tight</code>, <code>snug</code>, <code>heading</code>, <code>relaxed</code>, <code>label</code>, <code>loose</code>, <code>overline</code> ajoutés ; <code>normal</code>/<code>wide</code> déjà existants depuis ADR-067).</p>
+<h3>Site — <code>site/build.js</code></h3>
+<p>Les 9 variables <code>--agtc-tracking-*</code> restent en place (aucun des ~50 sites d'appel n'est modifié) mais leur <strong>définition</strong> est repointée vers les tokens au lieu de valeurs littérales :</p>
+<pre class="code-block"><code class="lang-css">--agtc-tracking-tighter:var(--agtc-semantic-typography-letter-spacing-tighter);
+--agtc-tracking-tight:var(--agtc-semantic-typography-letter-spacing-tight);
+--agtc-tracking-snug:var(--agtc-semantic-typography-letter-spacing-snug);
+--agtc-tracking-heading:var(--agtc-semantic-typography-letter-spacing-heading);
+--agtc-tracking-wide:var(--agtc-semantic-typography-letter-spacing-relaxed);
+--agtc-tracking-wider:var(--agtc-semantic-typography-letter-spacing-wide);
+--agtc-tracking-label:var(--agtc-semantic-typography-letter-spacing-label);
+--agtc-tracking-loose:var(--agtc-semantic-typography-letter-spacing-loose);
+--agtc-tracking-overline:var(--agtc-semantic-typography-letter-spacing-overline);
+--agtc-tracking-eyebrow:var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing); /* inchangé, ADR-067 */</code></pre>
+<p>0 changement visuel : chaque variable résout exactement à la même valeur numérique qu'avant.</p>
 <hr>
 <h2>Argumentaire</h2>
-<h3>Pourquoi ne pas créer une collection Figma séparée pour les palettes custom ?</h3>
-<p>Une collection <code>Brand</code> séparée des <code>Primitives</code> :</p>
-<ul><li>Introduit une asymétrie dans la structure Figma vs la structure JSON (où tout est dans <code>primitives.json</code>)</li><li>Complique les règles d'import Tokens Studio (ordre, résolution des alias)</li><li>Ne bénéficie pas aux agents — qui travaillent sur le JSON, pas sur Figma</li></ul>
-<p>Garder tout dans la collection <code>Primitives</code> préserve la cohérence entre JSON et Figma.</p>
-<h3>Pourquoi les <code>_readme</code> ne créent-ils pas de variables Figma ?</h3>
-<p>Tokens Studio ignore les tokens de type <code>other</code> à l'import des variables (ils ne sont pas des valeurs de design — pas de <code>$value</code> utile). Ce comportement est documenté et intentionnel. Les <code>_readme</code> sont un pattern de documentation interne au JSON.</p>
+<ul><li>L'échelle du site n'était pas un ensemble de valeurs incidentes — 50 sites d'appel en font</li></ul>
+<p>  une véritable échelle typographique systémique, justifiant sa promotion complète au niveau   token plutôt qu'un traitement au cas par cas.</p>
+<ul><li>Conserver les noms <code>--agtc-tracking-*</code> côté site (au lieu de les faire disparaître au profit</li></ul>
+<p>  des noms sémantiques) évite de toucher aux ~50 sélecteurs CSS consommateurs — seule la couche   de définition change, réduisant le risque de régression visuelle à 10 lignes.</p>
+<ul><li>La collision <code>wide</code> (site, 0.04em) vs <code>wide</code> (token, 0.06em) est résolue par un renommage</li></ul>
+<p>  ciblé (<code>relaxed</code>) plutôt qu'en cassant la compatibilité de l'un ou l'autre nommage.</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Créer les palettes custom manuellement dans Figma</strong></td><td>Crée une seconde source de vérité hors du repo. Dérive garantie à la prochaine mise à jour.</td></tr><tr><td><strong>Héberger les palettes custom dans un fichier JSON séparé</strong></td><td>Fragmente <code>primitives.json</code> sans bénéfice — Tokens Studio peut gérer un seul fichier pour tous les primitifs.</td></tr><tr><td><strong>Utiliser des Figma Styles (pas des Variables)</strong></td><td>Les Figma Styles ne supportent pas les alias/références — les tokens sémantiques ne pourraient pas pointer vers les primitifs. Variables Figma est le bon mécanisme.</td></tr><tr><td><strong>Attendre un fork Radix</strong></td><td>Les couleurs custom ne correspondent à aucune palette Radix existante. Attendre une hypothétique palette Radix similaire n'est pas actionnable.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td>Renommer le token existant <code>wide</code> (0.06em) pour libérer le nom au site</td><td>Casserait la référence déjà en production dans <code>agtc-code-block.js</code> (ADR-067) pour un composant déjà livré</td></tr><tr><td><code>wide-sm</code> pour la valeur 0.04em</td><td>Rejeté par l'humain au profit de <code>relaxed</code>, plus lisible sur l'échelle</td></tr><tr><td>Primitives seules, sans alias sémantique</td><td>Rejeté par l'humain — cohérence avec le patron déjà établi par ADR-067 (chaque valeur porte une intention nommée)</td></tr><tr><td>Renommer les 9 variables <code>--agtc-tracking-*</code> du site pour matcher 1:1 les noms de tokens</td><td>Aurait nécessité de toucher les ~50 sites d'appel CSS pour un gain nul (les noms de site restent lisibles et stables)</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
-<p><strong>Immédiates :</strong></p>
-<ul><li>Les palettes <code>accent</code> et <code>secondary</code> sont disponibles dans Figma au prochain pull Tokens Studio depuis le repo</li><li>Aucune configuration supplémentaire requise — elles apparaissent automatiquement dans la collection <code>Primitives</code></li></ul>
-<p><strong>Pour les designers :</strong></p>
-<ul><li>Même workflow que pour les palettes Radix — rien à apprendre de nouveau</li><li>Les descriptions de step sont visibles directement dans le panneau Variables Figma</li><li>Toute demande de modification de teinte passe par une PR, pas par une modification Figma locale</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Les agents continuent de travailler exclusivement sur les fichiers JSON</li><li>La sync Figma est transparente pour les agents — elle ne change pas les règles d'usage des tokens</li></ul>
-<p><strong>Pour la gouvernance :</strong></p>
-<ul><li>Une palette custom sans ADR = dérive — l'audit-tokens.js peut détecter des tokens sans documentation associée</li><li>Toute nouvelle palette custom déclenche la création d'un ADR + approbation Principal Designer</li></ul>
-<p><strong>Dette soldée :</strong></p>
-<ul><li>La dette documentée dans ADR-024 ("un ADR séparé devra documenter la stratégie de sync Figma pour les palettes custom") est soldée par cet ADR.</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-025.html" class="agtc-button secondary">← ADR-025</a>
-    <a href="adr-027.html" class="agtc-button secondary">ADR-027 →</a>
+<p><strong>Pour les agents :</strong> toute nouvelle étiquette/titre nécessitant un espacement de lettres doit consommer <code>semantic.typography.letter-spacing.*</code> (ou la variable site <code>--agtc-tracking-*</code> existante si le contexte est déjà couvert) — plus aucune valeur en dur disponible comme excuse.</p>
+<p><strong>Pour le système :</strong> <code>site/build.js</code> n'a plus aucune valeur <code>letter-spacing</code> codée en dur dans sa définition d'échelle. La dette de tokens <code>letterSpacing</code> (ouverte par ADR-067) est fermée.</p>
+<p><strong>Build :</strong> <code>npm run tokens</code> régénéré (0 fantôme) ; <code>node site/build.js</code> régénéré — 823 variables définies, 280 référencées, 0 fantôme, 101 fichiers.</p>
+<p><strong>Gouvernance :</strong> extension de catégorie sémantique existante → approbation Design System Lead ; primitives (nommage <code>relaxed</code>, portée primitive+sémantique) → approbation Principal Designer. Les deux approuvées par l'humain le 2026-07-08.</p>
+<p><strong>Figma :</strong> hors périmètre de cet ADR — <code>.claude/instructions/figma-components.md</code> §24 (typographie de présentation Monospace) référence uniquement <code>semantic.typography.mono.family</code> et les tokens du badge <code>code-block</code> (ADR-067), pas cette échelle de tracking plus large. Un futur chantier Figma sur les titres/badges du site devra tracer ces mêmes tokens avant de créer quoi que ce soit — même règle : le code fait foi.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-067.html" class="agtc-button secondary">← ADR-067</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
