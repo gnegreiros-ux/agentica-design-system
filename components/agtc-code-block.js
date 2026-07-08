@@ -77,8 +77,8 @@ class AgtcCodeBlock extends LitElement {
     }
     .language {
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 600;
+      letter-spacing: var(--agtc-semantic-typography-letter-spacing-wide, 0.06em);
+      font-weight: var(--agtc-semantic-typography-label-weight, 500);
       flex-shrink: 0;
     }
 
@@ -114,7 +114,7 @@ class AgtcCodeBlock extends LitElement {
       color: var(--agtc-component-code-block-default-text);
       font-family: var(--agtc-semantic-typography-mono-family, monospace);
       font-size: var(--agtc-component-code-block-default-font-size);
-      line-height: 1.6;
+      line-height: var(--agtc-semantic-typography-detail-line-height, 1.6);
       background: none;
       white-space: pre;
     }

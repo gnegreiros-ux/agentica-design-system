@@ -62,8 +62,9 @@ font-weight: var(--agtc-semantic-marketing-typography-display-weight);    /* bol
 line-height: var(--agtc-semantic-marketing-typography-display-line-height); /* display */
 
 /* Étiquette eyebrow */
-font-size: var(--agtc-semantic-marketing-typography-eyebrow-size);        /* 12px */
-font-weight: var(--agtc-semantic-marketing-typography-eyebrow-weight);    /* bold */
+font-size: var(--agtc-semantic-marketing-typography-eyebrow-size);            /* 12px */
+font-weight: var(--agtc-semantic-marketing-typography-eyebrow-weight);        /* bold */
+letter-spacing: var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing); /* 0.12em — ADR-067 */
 
 /* Espacement sections */
 gap: var(--agtc-semantic-marketing-space-section-breathing);   /* 96px */

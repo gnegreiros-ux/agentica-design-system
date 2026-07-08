@@ -63,6 +63,9 @@ Le code est fourni via le **slot** (HTML déjà échappé par l'auteur).
 | Taille de police | `component.code-block.default.font-size` |
 | Padding horizontal / vertical | `component.code-block.default.padding-x` / `padding-y` |
 | Police monospace | `semantic.typography.mono.family` (ADR-028) |
+| Interligne du corps de code | `semantic.typography.detail.line-height` |
+| Graisse de l'indicateur de langue | `semantic.typography.label.weight` |
+| Espacement des lettres de l'indicateur de langue | `semantic.typography.letter-spacing.wide` (ADR-067) |
 
 ---
 

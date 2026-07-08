@@ -710,7 +710,7 @@ function tokensCSS() {
   --agtc-tracking-label:.08em;
   --agtc-tracking-loose:.09em;
   --agtc-tracking-overline:.1em;
-  --agtc-tracking-eyebrow:.12em;
+  --agtc-tracking-eyebrow:var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing);
   color-scheme:light;
 }
 /* ── Dark mode — semantic overrides only ── */

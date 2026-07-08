@@ -581,6 +581,8 @@
   --agtc-semantic-typography-hero-size: 3rem;
   --agtc-semantic-typography-hero-weight: 700;
   --agtc-semantic-typography-hero-line-height: 1.0;
+  --agtc-semantic-typography-letter-spacing-normal: 0em;
+  --agtc-semantic-typography-letter-spacing-wide: 0.06em;
   --agtc-semantic-icon-size-inline: 16px;
   --agtc-semantic-icon-size-control: 20px;
   --agtc-semantic-icon-size-nav: 24px;
@@ -590,6 +592,7 @@
   --agtc-semantic-marketing-typography-display-line-height: 1.0;
   --agtc-semantic-marketing-typography-eyebrow-size: 0.75rem;
   --agtc-semantic-marketing-typography-eyebrow-weight: 700;
+  --agtc-semantic-marketing-typography-eyebrow-letter-spacing: 0.12em;
   --agtc-semantic-marketing-space-section-breathing: 96px;
   --agtc-semantic-marketing-space-hero-gap: 120px;
 
@@ -826,7 +829,7 @@
   --agtc-tracking-label:.08em;
   --agtc-tracking-loose:.09em;
   --agtc-tracking-overline:.1em;
-  --agtc-tracking-eyebrow:.12em;
+  --agtc-tracking-eyebrow:var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing);
   color-scheme:light;
 }
 /* ── Dark mode — semantic overrides only ── */
