@@ -1,0 +1,488 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/documentation.spec.js >> Documentation — régressions visuelles >> foundations/typography — dark
+- Location: tests/visual/documentation.spec.js:19:5
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1280px by 4858px, received 1280px by 4888px. 39990 pixels (ratio 0.01 of all image pixels) are different.
+
+  Snapshot: foundations-typography-dark.png
+
+Call log:
+  - Expect "toHaveScreenshot(foundations-typography-dark.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1280px by 4858px, received 1280px by 4888px. 39990 pixels (ratio 0.01 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1280px by 4858px, received 1280px by 4888px. 39990 pixels (ratio 0.01 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Aller au contenu" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "Agentica" [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Accueil" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Pourquoi" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Qualité" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "IA" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Comprendre" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Fondations":
+              - /url: ../foundations/index.html
+            - link "Contrôle humain":
+              - /url: ../ia.html
+            - link "Source unique de vérité":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Référence" [level=2]
+            - link "Fondations":
+              - /url: ../foundations/index.html
+            - link "Composants":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Décisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuité":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explorer" [level=2]
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - link "Audit":
+              - /url: ../audit.html
+      - link "Démarrer" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e19]:
+        - button "FR" [ref=e20] [cursor=pointer]
+        - button "EN" [ref=e21] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e22] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e23]
+      - link "GitHub — Code source du projet" [ref=e25] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentic-design-system
+  - generic [ref=e26]:
+    - navigation "Navigation secondaire" [ref=e27]:
+      - generic [ref=e28]:
+        - generic [ref=e29]: Fondations
+        - link "Vue d'ensemble" [ref=e30] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Couleur" [ref=e31] [cursor=pointer]:
+          - /url: ../foundations/color.html
+        - link "Espacement" [ref=e32] [cursor=pointer]:
+          - /url: ../foundations/spacing.html
+        - link "Typographie" [ref=e33] [cursor=pointer]:
+          - /url: ../foundations/typography.html
+        - link "Icônes" [ref=e34] [cursor=pointer]:
+          - /url: ../foundations/icons.html
+        - link "Contextes" [ref=e35] [cursor=pointer]:
+          - /url: ../foundations/contextes.html
+    - main [ref=e36]:
+      - heading "Typographie" [level=1] [ref=e37]
+      - paragraph [ref=e38]:
+        - generic [ref=e39]:
+          - text: "Police principale :"
+          - strong [ref=e40]: Atkinson Hyperlegible
+          - text: — conçue pour la basse vision. Échelle
+          - strong [ref=e41]: Minor Third
+          - text: "(ratio 1.200, 9 échelons xs→5xl) arrondie au multiple de 4px. Trois modes de line-height :"
+          - code [ref=e42]: reading
+          - text: (1.6),
+          - code [ref=e43]: heading
+          - text: (1.1),
+          - code [ref=e44]: display
+          - text: (1.0). Voir
+          - link "ADR-023" [ref=e45] [cursor=pointer]:
+            - /url: ../decisions/index.html
+          - text: .
+      - heading "Police — Atkinson Hyperlegible" [level=2] [ref=e46]
+      - generic [ref=e47]:
+        - paragraph [ref=e48]:
+          - code [ref=e49]: "--agtc-semantic-typography-fontFamily"
+        - generic [ref=e50]: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        - generic [ref=e51]: abcdefghijklmnopqrstuvwxyz
+        - generic [ref=e52]: 0 1 2 3 4 5 6 7 8 9
+        - generic [ref=e53]: "! @ # $ % & * ( ) [ ] { } , . ; : ' \" - _ / ? + = < >"
+        - generic [ref=e54]:
+          - generic [ref=e55]: Caractères ambigus — différenciation maximale
+          - text: l 1 I · O 0 · b d p q · n u m · rn m
+        - generic [ref=e56]:
+          - generic [ref=e57]: Caractères accentués
+          - text: À Â Ä Æ Ç É È Ê Ë Î Ï Ô Œ Ù Û Ü à â ä æ ç é è ê ë î ï ô œ ù û ü
+        - paragraph [ref=e58]:
+          - generic [ref=e59]:
+            - text: "2 graisses disponibles : Regular (400) · Bold (700). Le token"
+            - code [ref=e60]: fontWeight.medium
+            - text: (500) s'arrondit à 400.
+      - heading "Police monospace — Atkinson Hyperlegible Mono" [level=2] [ref=e61]
+      - paragraph [ref=e62]: Compagnon monospace d'Atkinson Hyperlegible — même ADN d'accessibilité, glyphes monospacés optimisés pour le code et les valeurs de tokens.
+      - generic [ref=e63]:
+        - paragraph [ref=e64]:
+          - code [ref=e65]: "--agtc-font-mono"
+        - generic [ref=e66]: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        - generic [ref=e67]: abcdefghijklmnopqrstuvwxyz
+        - generic [ref=e68]: 0 1 2 3 4 5 6 7 8 9
+        - generic [ref=e69]: "! @ # $ % & * ( ) [ ] { } , . ; : ' \" - _ / ? + = < >"
+        - generic [ref=e70]:
+          - generic [ref=e71]: Caractères ambigus — clé pour le code
+          - text: l 1 I · O 0 · b d p q · n u m · rn m
+        - generic [ref=e72]:
+          - generic [ref=e73]: Exemple — token CSS
+          - text: "--agtc-semantic-color-action-primary: #007a68;"
+          - text: "--agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);"
+        - paragraph [ref=e74]:
+          - generic [ref=e75]:
+            - text: "Utilisée sur : éléments"
+            - code [ref=e76]: <code>
+            - text: ", valeurs de tokens, labels de l'explorateur, numéros ADR. Google Fonts :"
+            - code [ref=e77]: family=Atkinson+Hyperlegible+Mono
+      - heading "Échelle Minor Third — 9 échelons" [level=2] [ref=e78]
+      - paragraph [ref=e79]:
+        - generic [ref=e80]:
+          - text: "Ratio :"
+          - strong [ref=e81]: "1.200"
+          - text: (tierce mineure). Chaque échelon = échelon précédent × 1.2, arrondi au multiple de 4px le plus proche. Unité
+          - code [ref=e82]: rem
+          - text: pour respecter le zoom navigateur (WCAG 1.4.4).
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - code [ref=e85]: 5xl
+          - generic [ref=e86]: Hero display
+          - generic [ref=e87]: 3rem · lh 1.0
+        - generic [ref=e88]:
+          - code [ref=e89]: 4xl
+          - generic [ref=e90]: Heading 1
+          - generic [ref=e91]: 2.5rem · lh 1.0
+        - generic [ref=e92]:
+          - code [ref=e93]: 3xl
+          - generic [ref=e94]: Heading 2
+          - generic [ref=e95]: 2rem · lh 1.0
+        - generic [ref=e96]:
+          - code [ref=e97]: 2xl
+          - generic [ref=e98]: Heading 3
+          - generic [ref=e99]: 1.75rem · lh 1.1
+        - generic [ref=e100]:
+          - code [ref=e101]: xl
+          - generic [ref=e102]: Heading 4
+          - generic [ref=e103]: 1.5rem · lh 1.1
+        - generic [ref=e104]:
+          - code [ref=e105]: lg
+          - generic [ref=e106]: Heading 5
+          - generic [ref=e107]: 1.25rem · lh 1.1
+        - generic [ref=e108]:
+          - code [ref=e109]: base
+          - generic [ref=e110]: Body
+          - generic [ref=e111]: 1rem · lh 1.6
+        - generic [ref=e112]:
+          - code [ref=e113]: sm
+          - generic [ref=e114]: Label / metadata
+          - generic [ref=e115]: 0.875rem · lh 1.6
+        - generic [ref=e116]:
+          - code [ref=e117]: xs
+          - generic [ref=e118]: Detail / caption
+          - generic [ref=e119]: 0.75rem · lh 1.6
+      - heading "Tableau — primitifs fontSize" [level=2] [ref=e120]
+      - table [ref=e122]:
+        - rowgroup [ref=e129]:
+          - row "Échelon Valeur rem (px) Line-height Weight Rôle" [ref=e130]:
+            - columnheader "Échelon" [ref=e131]
+            - columnheader "Valeur rem (px)" [ref=e132]
+            - columnheader "Line-height" [ref=e133]
+            - columnheader "Weight" [ref=e134]
+            - columnheader "Rôle" [ref=e135]
+        - rowgroup [ref=e136]:
+          - row "fontSize.5xl 3rem (48px) 1.0 700 Hero display" [ref=e137]:
+            - cell "fontSize.5xl" [ref=e138]:
+              - code [ref=e139]: fontSize.5xl
+            - cell "3rem (48px)" [ref=e140]
+            - cell "1.0" [ref=e141]
+            - cell "700" [ref=e142]
+            - cell "Hero display" [ref=e143]
+          - row "fontSize.4xl 2.5rem (40px) 1.0 700 Heading 1" [ref=e144]:
+            - cell "fontSize.4xl" [ref=e145]:
+              - code [ref=e146]: fontSize.4xl
+            - cell "2.5rem (40px)" [ref=e147]
+            - cell "1.0" [ref=e148]
+            - cell "700" [ref=e149]
+            - cell "Heading 1" [ref=e150]
+          - row "fontSize.3xl 2rem (32px) 1.0 700 Heading 2" [ref=e151]:
+            - cell "fontSize.3xl" [ref=e152]:
+              - code [ref=e153]: fontSize.3xl
+            - cell "2rem (32px)" [ref=e154]
+            - cell "1.0" [ref=e155]
+            - cell "700" [ref=e156]
+            - cell "Heading 2" [ref=e157]
+          - row "fontSize.2xl 1.75rem (28px) 1.1 700 Heading 3" [ref=e158]:
+            - cell "fontSize.2xl" [ref=e159]:
+              - code [ref=e160]: fontSize.2xl
+            - cell "1.75rem (28px)" [ref=e161]
+            - cell "1.1" [ref=e162]
+            - cell "700" [ref=e163]
+            - cell "Heading 3" [ref=e164]
+          - row "fontSize.xl 1.5rem (24px) 1.1 700 Heading 4" [ref=e165]:
+            - cell "fontSize.xl" [ref=e166]:
+              - code [ref=e167]: fontSize.xl
+            - cell "1.5rem (24px)" [ref=e168]
+            - cell "1.1" [ref=e169]
+            - cell "700" [ref=e170]
+            - cell "Heading 4" [ref=e171]
+          - row "fontSize.lg 1.25rem (20px) 1.1 700 Heading 5" [ref=e172]:
+            - cell "fontSize.lg" [ref=e173]:
+              - code [ref=e174]: fontSize.lg
+            - cell "1.25rem (20px)" [ref=e175]
+            - cell "1.1" [ref=e176]
+            - cell "700" [ref=e177]
+            - cell "Heading 5" [ref=e178]
+          - row "fontSize.base 1rem (16px) 1.6 400 Body" [ref=e179]:
+            - cell "fontSize.base" [ref=e180]:
+              - code [ref=e181]: fontSize.base
+            - cell "1rem (16px)" [ref=e182]
+            - cell "1.6" [ref=e183]
+            - cell "400" [ref=e184]
+            - cell "Body" [ref=e185]
+          - row "fontSize.sm 0.875rem (14px) 1.6 400 Label / metadata" [ref=e186]:
+            - cell "fontSize.sm" [ref=e187]:
+              - code [ref=e188]: fontSize.sm
+            - cell "0.875rem (14px)" [ref=e189]
+            - cell "1.6" [ref=e190]
+            - cell "400" [ref=e191]
+            - cell "Label / metadata" [ref=e192]
+          - row "fontSize.xs 0.75rem (12px) 1.6 400 Detail / caption" [ref=e193]:
+            - cell "fontSize.xs" [ref=e194]:
+              - code [ref=e195]: fontSize.xs
+            - cell "0.75rem (12px)" [ref=e196]
+            - cell "1.6" [ref=e197]
+            - cell "400" [ref=e198]
+            - cell "Detail / caption" [ref=e199]
+      - heading "Modes de line-height" [level=2] [ref=e200]
+      - generic [ref=e202]:
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - code [ref=e205]: reading
+            - text: — 1.6
+          - generic [ref=e206]: Texte courant, labels, captions. Conforme WCAG 1.4.12. Maximise le confort de lecture sur plusieurs lignes.
+        - generic [ref=e207]:
+          - generic [ref=e208]:
+            - code [ref=e209]: heading
+            - text: — 1.1
+          - generic [ref=e210]: Titres h5 → h3. Compact sans être étouffant.
+        - generic [ref=e211]:
+          - generic [ref=e212]:
+            - code [ref=e213]: display
+            - text: — 1.0
+          - generic [ref=e214]: h2, h1, hero.
+      - heading "Règles" [level=2] [ref=e215]
+      - list [ref=e216]:
+        - listitem [ref=e217]:
+          - img [ref=e219]
+          - code [ref=e223]: "font-size: 16px"
+          - text: — utiliser
+          - code [ref=e224]: var(--agtc-primitive-fontSize-base)
+        - listitem [ref=e225]:
+          - img [ref=e227]
+          - code [ref=e231]: "font-family: 'Atkinson Hyperlegible'"
+          - text: — utiliser
+          - code [ref=e232]: var(--agtc-semantic-typography-fontFamily)
+        - listitem [ref=e233]:
+          - img [ref=e235]
+          - code [ref=e239]: "font-weight: bold"
+          - text: — utiliser
+          - code [ref=e240]: var(--agtc-semantic-fontWeight-bold)
+        - listitem [ref=e241]:
+          - img [ref=e243]
+          - text: "Taille hors-échelle :"
+          - code [ref=e247]: 15px
+          - text: ","
+          - code [ref=e248]: 18px
+          - text: ","
+          - code [ref=e249]: 22px
+          - text: — choisir l'échelon Minor Third le plus proche
+        - listitem [ref=e250]:
+          - img [ref=e252]
+          - text: "Import Google Fonts (sans-serif) :"
+          - code [ref=e255]: family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700
+        - listitem [ref=e256]:
+          - img [ref=e258]
+          - text: "Import Google Fonts (mono) :"
+          - code [ref=e261]: family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700
+        - listitem [ref=e262]:
+          - img [ref=e264]
+          - code [ref=e268]: "font-family: monospace"
+          - text: — utiliser
+          - code [ref=e269]: var(--agtc-font-mono)
+        - listitem [ref=e270]:
+          - img [ref=e272]
+          - generic [ref=e275]:
+            - text: Toujours choisir le mode
+            - code [ref=e276]: lineHeight
+            - text: "selon le rôle :"
+            - code [ref=e277]: reading
+            - text: ≤ base,
+            - code [ref=e278]: heading
+            - text: pour lg–2xl,
+            - code [ref=e279]: display
+            - text: pour 3xl+
+      - generic [ref=e280]:
+        - generic [ref=e281]:
+          - strong [ref=e282]: Contribuer à ce projet
+          - paragraph [ref=e283]: Ce système est ouvert aux contributions — tokens, composants, décisions architecturales, corrections d'accessibilité ou documentation. Toute amélioration est bienvenue.
+        - link "Voir sur GitHub" [ref=e284] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentic-design-system
+          - generic [ref=e285]: Voir sur GitHub
+    - navigation "Table des matières" [ref=e286]:
+      - generic [ref=e287]: Sur cette page
+      - link "Police — Atkinson Hyperlegible" [ref=e288] [cursor=pointer]:
+        - /url: "#police-atkinson-hyperlegible"
+      - link "Police monospace — Atkinson Hyperlegible Mono" [ref=e289] [cursor=pointer]:
+        - /url: "#police-monospace-atkinson-hyperlegible-mono"
+      - link "Échelle Minor Third — 9 échelons" [ref=e290] [cursor=pointer]:
+        - /url: "#echelle-minor-third-9-echelons"
+      - link "Tableau — primitifs fontSize" [ref=e291] [cursor=pointer]:
+        - /url: "#tableau-primitifs-fontsize"
+      - link "Modes de line-height" [ref=e292] [cursor=pointer]:
+        - /url: "#modes-de-line-height"
+      - link "Règles" [ref=e293] [cursor=pointer]:
+        - /url: "#regles"
+  - contentinfo [ref=e294]:
+    - generic [ref=e295]:
+      - generic [ref=e296]:
+        - link "Agentica — Accueil" [ref=e297] [cursor=pointer]:
+          - /url: ../index.html
+          - img "Agentica" [ref=e298]
+        - link "Guilherme Negreiros" [ref=e299] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e300]
+          - text: Guilherme Negreiros
+      - generic [ref=e304]:
+        - generic [ref=e305]: Navigation
+        - link "Accueil" [ref=e306] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Pourquoi" [ref=e307] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e308] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Qualité" [ref=e309] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "IA" [ref=e310] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e311]:
+        - generic [ref=e312]: Documentation
+        - link "Comprendre" [ref=e313] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Démarrer" [ref=e314] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Fondations" [ref=e315] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Composants" [ref=e316] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e317] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Décisions" [ref=e318] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuité" [ref=e319] [cursor=pointer]:
+          - /url: ../continuite.html
+      - generic [ref=e320]:
+        - generic [ref=e321]: Explorer
+        - link "Storybook" [ref=e322] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e323] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentic-design-system
+        - link "Audit" [ref=e324] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "Brief IA" [ref=e325] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e326]:
+      - generic [ref=e327]: © 2026 Guilherme Negreiros
+      - generic [ref=e328]: Construit avec Claude Code.
+  - button "Retour en haut" [ref=e329] [cursor=pointer]:
+    - img [ref=e330]
+    - generic [ref=e332]: Haut
+  - status [ref=e333]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | test.describe('Documentation — régressions visuelles', () => {
+  4  |   for (const theme of ['light', 'dark']) {
+  5  |     test(`page documentation — ${theme}`, async ({ page }) => {
+  6  |       await page.goto('/documentation.html');
+  7  |       await page.waitForLoadState('networkidle');
+  8  |       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+  9  |       await expect(page).toHaveScreenshot(`documentation-${theme}.png`, { fullPage: true });
+  10 |     });
+  11 | 
+  12 |     test(`foundations/color — ${theme}`, async ({ page }) => {
+  13 |       await page.goto('/foundations/color.html');
+  14 |       await page.waitForLoadState('networkidle');
+  15 |       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+  16 |       await expect(page).toHaveScreenshot(`foundations-color-${theme}.png`, { fullPage: true });
+  17 |     });
+  18 | 
+  19 |     test(`foundations/typography — ${theme}`, async ({ page }) => {
+  20 |       await page.goto('/foundations/typography.html');
+  21 |       await page.waitForLoadState('networkidle');
+  22 |       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+> 23 |       await expect(page).toHaveScreenshot(`foundations-typography-${theme}.png`, { fullPage: true });
+     |                          ^ Error: expect(page).toHaveScreenshot(expected) failed
+  24 |     });
+  25 | 
+  26 |     test(`foundations/spacing — ${theme}`, async ({ page }) => {
+  27 |       await page.goto('/foundations/spacing.html');
+  28 |       await page.waitForLoadState('networkidle');
+  29 |       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+  30 |       await expect(page).toHaveScreenshot(`foundations-spacing-${theme}.png`, { fullPage: true });
+  31 |     });
+  32 |   }
+  33 | });
+  34 | 
+```
