@@ -40,6 +40,58 @@
 
 ---
 
+## Cycle de vie d'une modification Figma — staging, no-delete, rapport
+
+> Adopté le 2026-07-08 (revue du pilote Button). Complète les 5 règles absolues côté
+> **process**. Ces trois garde-fous existent parce qu'un sous-agent a supprimé par erreur
+> le ComponentSet Button maître en « nettoyant » une section qui le contenait — incident
+> qui n'aurait pas eu lieu sous ces règles.
+
+### A. Jamais supprimer — règle dure
+
+```
+❌ INTERDIT : supprimer un nœud, un composant, un ComponentSet, une variable, une page,
+   un Text Style — même s'il semble orphelin, en double, ou « juste un brouillon »
+✅ En cas de doute sur un nœud à retirer : le DÉPLACER hors du flux (ex. frame « _corbeille »
+   à x=6000) et le SIGNALER à l'humain — jamais .remove()
+✅ Seule exception : supprimer un nœud que l'agent vient LUI-MÊME de créer dans la même
+   session et qu'il reconstruit immédiatement (ex. rebuild d'un ComponentSet cassé)
+```
+
+> Avant tout `.remove()`, vérifier `node.findAll()`/`node.children` : un nœud « décoratif »
+> peut contenir un composant maître comme enfant direct (cause exacte de l'incident Button).
+
+### B. Page de staging « 🟡 Proposition — en attente d'approbation »
+
+```
+✅ Toute création ou refonte importante s'écrit D'ABORD sur la page de staging
+✅ L'humain approuve visuellement, PUIS l'agent déplace le résultat vers la page finale
+✅ Les petites corrections ciblées (fix d'un token, d'un lien) peuvent se faire en place
+❌ Ne jamais publier la librairie ni déplacer vers la page finale sans approbation explicite
+```
+
+### C. Rapport obligatoire — checklist 10 points avant toute revue humaine
+
+Avant de solliciter votre validation, l'agent fournit ce rapport court (complète l'audit
+détaillé §21/§22, ne le remplace pas) :
+
+```
+[ ] 1. Toutes les props du contrat présentes, du bon type Figma
+[ ] 2. Aucune prop combinée (« Style » fusionnant variant + state)
+[ ] 3. Propriété text sur chaque calque textuel — zéro texte en dur
+[ ] 4. Matrice variant × state complète, focus inclus
+[ ] 5. 100 % variables liées — zéro hex/px en dur (scanUnboundPaints §22.3)
+[ ] 6. Auto-layout partout, aucun positionnement absolu (hors décor _préfixé)
+[ ] 7. Nommage conforme (ComponentSet, props Variant/State, calques)
+[ ] 8. Ordre du panneau conforme à l'API documentée
+[ ] 9. Description + lien vers guidelines/components/<comp>.md renseignés
+[ ] 10. Capture comparée au rendu du site — écarts corrigés
+```
+
+Format : **liste des 10 points + capture + écarts résiduels**. Jamais de livrable sans ce rapport.
+
+---
+
 ## Pourquoi cette hiérarchie (code → Figma, jamais l'inverse)
 
 > « Structural component parity — keeping Figma variants, states, and properties in sync

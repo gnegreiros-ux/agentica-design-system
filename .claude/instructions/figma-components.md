@@ -1841,6 +1841,130 @@ taille est structurellement fixe et indépendante du contenu variable (cas Toggl
 
 ---
 
+## 24. Typographie de présentation en Monospace — isoler la doc des composants
+
+> **Règle adoptée le 2026-07-08.** Tous les textes de **présentation/documentation** d'une
+> page Figma (titres de section, descriptions, légendes d'anatomie, labels de colonnes de
+> grille, en-têtes de tableaux de tokens, texte des DO/DON'T) utilisent la police mono
+> **du token**, pas la police de contenu, et pas un nom de police deviné à l'œil. Objectif :
+> distinguer visuellement d'un coup d'œil ce qui est **méta** (la doc *à propos* du composant)
+> de ce qui est **le composant lui-même** (qui, lui, garde sa police réelle
+> `Atkinson Hyperlegible`).
+
+### Source de vérité — le token, jamais une supposition
+
+> Règle générale (`figma-library-governance.md` §1) : **le code fait foi**. Pour la
+> Monospace, ça veut dire tracer le token jusqu'à sa valeur réelle avant de créer quoi
+> que ce soit en Figma — jamais partir d'un nom de police mémorisé.
+
+```
+Token          semantic.typography.mono.family
+  → alias de   primitive.fontFamily.mono
+  → valeur     'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
+  → CSS var    --agtc-semantic-typography-mono-family
+  → consommateur : components/agtc-code-block.js
+```
+
+Premier maillon de la pile disponible dans Figma → **`Atkinson Hyperlegible Mono`**
+(les fallbacks `JetBrains Mono` / `Cascadia Code` sont une pile CSS de repli navigateur,
+pas des variantes à répliquer en Figma).
+
+### Valeurs réelles câblées dans `agtc-code-block.js` — à reproduire, pas à réinventer
+
+Dette résorbée le 2026-07-08 (commits `15070ef` token(semantic), `3dedc58` fix(component) —
+voir ADR-067). Le composant n'a plus aucune valeur de typographie codée en dur ; ces
+tokens sont la référence exacte pour le Text Style `typography/doc-mono` :
+
+| Usage dans le composant | Taille | Graisse | Line-height | Letter-spacing | Token |
+|---|---|---|---|---|---|
+| Corps du code | 14px | 400 (regular) | **1.6** | normal (0em) | `component.code-block.default.font-size` (= `semantic.typography.label.size`) · `semantic.typography.detail.line-height` (= `primitive.lineHeight.reading`) |
+| Badge de langage (header) | 12px | **500 (medium)** | normal | **0.06em** | `semantic.typography.detail.size` · `semantic.typography.label.weight` (= `primitive.fontWeight.medium`) · `semantic.typography.letter-spacing.wide` (= `primitive.typography.letterSpacing.wide`) |
+
+> Décision actée avec le badge de langage à 500 (medium) plutôt que 600 : aucune nouvelle
+> primitive `semibold` n'a été créée — réutilisation de `fontWeight.medium` existant,
+> approuvée par le Design System Lead + Principal Designer (ADR-067). Ne pas créer de
+> Text Style Figma à "graisse 600" — il n'existe pas côté code.
+
+### Périmètre — quoi passe en Monospace, quoi n'y passe PAS
+
+| ✅ Monospace (texte de présentation, méta) | ❌ Reste en police de contenu réelle |
+|---|---|
+| Titres de section (`section-header`, « ANATOMIE », « VARIANTES »…) | **Le libellé du composant lui-même** (ex. « Bouton » dans un `agtc-button`) |
+| Descriptions et paragraphes explicatifs de la page | Tout texte **à l'intérieur d'une instance de composant** |
+| Légendes d'anatomie, labels de colonnes/lignes de la grille de variantes | Les valeurs affichées par un composant en situation réelle |
+| En-têtes et cellules des tableaux de tokens | |
+| Badges/texte des colonnes DO/DON'T, texte des pills de liens | |
+
+> **Frontière absolue :** dès qu'un texte vit **dans une instance de composant**, il garde
+> la police du composant. La Monospace ne s'applique qu'au **chrome de documentation** autour.
+> C'est ce contraste de police qui crée la séparation visuelle demandée.
+
+### Implémentation — un Text Style dédié, jamais fontName manuel (§19)
+
+Créer/réutiliser un Text Style de librairie `typography/doc-mono` (et ses variantes de
+graisse si besoin, `typography/doc-mono-bold`) et le poser via `textStyleId` — jamais un
+`fontName` monospace codé à la main (mêmes raisons qu'au §19 : un texte qui « ressemble »
+à du mono n'est pas lié au système).
+
+```javascript
+// La famille mono existe déjà (§14) — vérifier le style avant usage
+await figma.loadFontAsync({ family: "Atkinson Hyperlegible Mono", style: "Regular" });
+// Poser le Text Style de doc (créé une fois dans la librairie), pas un fontName brut
+docTextNode.textStyleId = TX["typography/doc-mono"].id;
+// Aucune mutation de police après (sinon textStyleId redevient "" — piège §19)
+```
+
+```
+✅ Texte de présentation → textStyleId = typography/doc-mono (ou -bold)
+✅ Le composant showcasé garde Atkinson Hyperlegible (sa vraie police)
+❌ Ne jamais passer le libellé interne d'un composant en mono (casse la parité avec le code)
+❌ Ne jamais coder la police mono à la main — toujours via le Text Style (§19)
+```
+
+---
+
+## 25. Largeur de contenu des pages — jamais de débordement du wrapper
+
+> **Règle adoptée le 2026-07-08.** Déclencheur : la page `Foundations / Logos` débordait
+> encore de son `page-wrapper` (contenu large poussé hors du fond blanc, visible sur le
+> gris `#535353` du canevas). Généralise le principe du §17 (WRAP+FILL) à **tout le
+> contenu d'une page**, pas seulement les rows d'états/instances.
+
+### Largeur canonique
+
+```
+Largeur du page-wrapper : 1440 px (fixe, counterAxisSizingMode = "FIXED")
+Padding horizontal des sections : 80 px de chaque côté
+→ Largeur de contenu utile : 1440 − 160 = 1280 px MAXIMUM
+```
+
+Aucun élément de contenu (frame, grille, image de logo, rangée) ne doit dépasser **1280 px**
+de large une fois posé dans une section. Tout élément susceptible d'être plus large que la
+place disponible doit soit passer en `layoutSizingHorizontal = "FILL"`, soit être en
+conteneur `layoutWrap = "WRAP"` (§17), soit être mis à l'échelle pour tenir.
+
+### Règle de vérification (à exécuter sur chaque page, pas seulement Logos)
+
+```javascript
+// Réutilise findOverflows() (§21.A) : tout enfant non décoratif dont les bornes
+// dépassent celles de son parent direct = blocant. Cibler AUSSI le page-wrapper entier.
+const overflows = findOverflows(pageWrapper);
+// Cas Logos : une grille de logos ou un logo unique en largeur native > 1280
+// → contraindre la grille en FILL + WRAP, ou resize chaque tuile de logo
+```
+
+```
+✅ Contenu ≤ 1280 px de large dans toute section (wrapper 1440 − 2×80 de padding)
+✅ Grilles/rangées de largeur variable : layoutSizingHorizontal="FILL" + layoutWrap="WRAP" (§17)
+✅ Images (logos, illustrations) trop larges : resize proportionnel pour tenir dans 1280
+✅ findOverflows(pageWrapper) doit retourner un tableau vide avant de déclarer la page finie
+❌ Ne jamais laisser un élément déborder sur le gris du canevas, même « de quelques pixels » (§17)
+❌ Ne jamais élargir le page-wrapper au-delà de 1440 pour « faire rentrer » un contenu trop large
+   → corriger le contenu, pas le wrapper
+```
+
+---
+
 ## Erreurs connues — Plugin API Figma
 
 | Erreur | Cause | Fix |
