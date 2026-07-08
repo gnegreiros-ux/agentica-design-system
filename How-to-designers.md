@@ -6,7 +6,7 @@
 > **Chemin logique:** How-to-designers.md
 > **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md
+> **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md, How-to-sans-agents.md (fallback si agents indisponibles)
 
 ---
 

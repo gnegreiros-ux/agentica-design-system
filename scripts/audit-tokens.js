@@ -17,8 +17,12 @@
  *   node scripts/audit-tokens.js --src-dir <chemin>    → analyse un répertoire source spécifique
  */
 
-const fs   = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 
@@ -82,7 +86,7 @@ function extractTokenKeys(obj, prefix = '') {
   for (const [key, value] of Object.entries(obj)) {
     if (key.startsWith('$')) continue; // métadonnées
     const fullKey = prefix ? `${prefix}.${key}` : key;
-    if (value && typeof value === 'object' && value.value !== undefined) {
+    if (value && typeof value === 'object' && value.$value !== undefined) {
       keys.push(fullKey);
     } else if (value && typeof value === 'object') {
       keys.push(...extractTokenKeys(value, fullKey));
@@ -218,8 +222,8 @@ function auditTokenStructure(primitives, semantic, component) {
   function checkRefs(obj, layer) {
     for (const [key, value] of Object.entries(obj)) {
       if (key.startsWith('$')) continue;
-      if (value && typeof value === 'object' && typeof value.value === 'string') {
-        const ref = value.value.match(/^\{(.+)\}$/);
+      if (value && typeof value === 'object' && typeof value.$value === 'string') {
+        const ref = value.$value.match(/^\{(.+)\}$/);
         if (ref) {
           const refKey = ref[1];
           const isDefined = layer === 'semantic'

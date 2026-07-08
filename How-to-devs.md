@@ -6,7 +6,7 @@
 > **Chemin logique:** How-to-devs.md
 > **Auteur:** Guilherme Negreiros
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** tokens/semantic.json, tokens/component.json, .eslintrc-ds.json, AGENTS.md
+> **Relations:** tokens/semantic.json, tokens/component.json, .eslintrc-ds.json, AGENTS.md, How-to-sans-agents.md (fallback si agents indisponibles)
 
 ---
 
