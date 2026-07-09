@@ -1713,6 +1713,9 @@ function scanUnboundPaints(root) {
 ### 4. Styles (Text Styles)
 - [ ] Tout `TEXT` a un `textStyleId` non vide (§19) — jamais fontName/fontSize manuels
       qui "ressemblent" à un style existant
+- [ ] **Tout Text Style a ses 4 propriétés (`fontSize`, `fontFamily`, `fontWeight`,
+      `lineHeight`) bindées à une Variable** — jamais une valeur littérale, même si la
+      valeur affichée est correcte (script `scanUnboundTextStyleProperties` ci-dessous)
 
 ```javascript
 function scanMissingTextStyles(root) {
@@ -1722,6 +1725,87 @@ function scanMissingTextStyles(root) {
   });
   return issues;
 }
+```
+
+> **Incident du 2026-07-09.** 10 des 11 Text Styles de la librairie (tous sauf
+> `typography/detail`) n'avaient **aucune** variable bindée — valeurs littérales
+> (`fontSize: 40`, etc.) accompagnées d'une simple description texte pointant vers le
+> nom du token, sans lien réel. Pire : `detail-bold` et `label-bold` n'avaient **aucune
+> variable Figma du tout** (ni taille, ni graisse, ni line-height), alors que
+> `tokens/semantic.json` les définit intégralement — un vrai trou de parité code↔Figma
+> resté invisible tant qu'aucun script d'audit ne vérifiait spécifiquement les Text
+> Styles (le scan §3 `scanUnboundPaints` ne couvre que fills/strokes, pas la
+> typographie). Détecté seulement parce qu'un humain a comparé un Text Style créé
+> correctement (bindé) à ceux existants.
+
+```javascript
+// Scanner tous les Text Styles locaux — détecte les propriétés non bindées
+async function scanUnboundTextStyleProperties() {
+  const styles = await figma.getLocalTextStylesAsync();
+  const required = ['fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
+  const issues = [];
+  for (const s of styles) {
+    const bound = Object.keys(s.boundVariables || {});
+    const missing = required.filter(k => !bound.includes(k));
+    if (missing.length) issues.push({ style: s.name, missing });
+  }
+  return issues;
+}
+```
+
+```
+✅ Toujours binder fontSize/fontFamily/fontWeight/lineHeight sur CHAQUE Text Style créé
+   — jamais seulement une description texte pointant vers le nom du token
+✅ Exécuter scanUnboundTextStyleProperties() sur TOUTE la librairie (pas seulement les
+   styles nouvellement créés) à chaque audit §22 — la dette peut être ancienne et
+   invisible
+✅ Si un token composé (ex. detail-bold, label-bold) référencé par du texte du chrome
+   n'a pas de Variable Figma correspondante, la créer en alias vers la primitive
+   adéquate AVANT de binder le Text Style — ne jamais laisser un Text Style sans lien
+❌ Ne jamais considérer une valeur littérale "correcte" comme suffisante — sans binding,
+   un futur changement de primitive (ex. re-échelonnage typographique) ne se propage pas
+```
+
+### 4bis. Polices locales — vérifier `loadFontAsync` AVANT de bâtir sur une police
+
+> **Incident du 2026-07-09.** Une police installée localement (`Atkinson Hyperlegible
+> Mono`) est sélectionnable et s'affiche correctement dans l'éditeur Figma interactif —
+> mais `figma.loadFontAsync({family, style})` échoue systématiquement dans le bac à
+> sable du Plugin API (`use_figma`), même après redémarrage de l'app desktop, avec
+> l'erreur *"The font family ... does not exist"*. Un Text Style créé à la main dans
+> l'UI avec cette police reste inspectable par script (lecture, binding de variables
+> fonctionnent) mais **ne peut être appliqué à aucun autre nœud par script**
+> (`setTextStyleIdAsync` échoue avec `unloaded font`) — un plafond dur de la plateforme,
+> pas une question d'installation locale insuffisante.
+
+```javascript
+// Vérification OBLIGATOIRE avant de baser un chantier de Text Style sur une police
+// non standard (pas dans Google Fonts / la bibliothèque Figma par défaut)
+async function canLoadFont(family, style) {
+  try {
+    await figma.loadFontAsync({ family, style });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+```
+
+```
+✅ Avant tout chantier basé sur une police locale non standard : tester canLoadFont()
+   pour CHAQUE style utilisé (Regular ET Bold ne sont pas garantis équivalents)
+✅ Si canLoadFont() échoue : soit utiliser le fallback documenté de la pile CSS du
+   token (ex. JetBrains Mono, 2e maillon), soit accepter que l'application aux nœuds
+   reste une tâche manuelle humaine dans l'UI Figma (le Text Style peut quand même être
+   créé et bindé aux variables par script — seule l'APPLICATION à de nouveaux nœuds est
+   bloquée)
+❌ Ne jamais supposer qu'une police "visible dans le sélecteur Figma" est utilisable
+   par un script — ce sont deux chemins d'accès différents (rendu interactif vs Plugin
+   API), voir aide Figma "Add a font to Figma"
+❌ Ne jamais boucler indéfiniment sur des redémarrages d'app en espérant que la police
+   se charge — si `canLoadFont()` échoue deux fois de suite après un redémarrage
+   confirmé, considérer que c'est un plafond de plateforme et escalader l'option
+   fallback à l'humain plutôt que réessayer
 ```
 
 ### 5. États

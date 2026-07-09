@@ -80,7 +80,10 @@ détaillé §21/§22, ne le remplace pas) :
 [ ] 2. Aucune prop combinée (« Style » fusionnant variant + state)
 [ ] 3. Propriété text sur chaque calque textuel — zéro texte en dur
 [ ] 4. Matrice variant × state complète, focus inclus
-[ ] 5. 100 % variables liées — zéro hex/px en dur (scanUnboundPaints §22.3)
+[ ] 5. 100 % variables liées — zéro hex/px en dur (scanUnboundPaints §22.3) ET zéro
+       propriété de Text Style non bindée — fontSize/fontFamily/fontWeight/lineHeight
+       (scanUnboundTextStyleProperties §22.4, incident 2026-07-09 : 10/11 styles
+       existants étaient non bindés malgré des valeurs affichées correctes)
 [ ] 6. Auto-layout partout, aucun positionnement absolu (hors décor _préfixé)
 [ ] 7. Nommage conforme (ComponentSet, props Variant/State, calques)
 [ ] 8. Ordre du panneau conforme à l'API documentée
