@@ -7616,6 +7616,10 @@ function buildChangelog() {
           {fr:'Section Durabilité de la page d\'accueil reformulée (accroche marketing sur l\'absence de dépendance/verrouillage aux agents IA)',en:'Home page Durability section reworded (marketing framing around freedom from AI agent lock-in/dependency)'},
           {fr:'Lien vers la page Continuité ajouté au footer (partagé par toutes les pages) et à la page Documentation',en:'Link to the Continuity page added to the footer (shared across all pages) and to the Documentation page'},
         ]},
+        { fr:'Gestion de projet', en:'Project management', items:[
+          {fr:'Migration du suivi de projet vers <a href="https://github.com/users/gnegreiros-ux/projects/1">GitHub Projects</a> (ADR-069, remplace ADR-016) : 100 items migrés (91 chantiers historiques + 1 en attente + 8 tickets de backlog), champs <code>Status</code>/<code>Domaine</code>/<code>Dépendance</code>/<code>ADR</code>/<code>Date</code>, vues Board/Par domaine/Historique',en:'Project tracking migrated to <a href="https://github.com/users/gnegreiros-ux/projects/1">GitHub Projects</a> (ADR-069, replaces ADR-016): 100 items migrated (91 historical items + 1 pending + 8 backlog tickets), <code>Status</code>/<code>Domaine</code>/<code>Dépendance</code>/<code>ADR</code>/<code>Date</code> fields, Board/By domain/History views'},
+          {fr:'<code>log/kit-construction.md</code> et son hook <code>PostToolUse</code> de journalisation automatique retirés du dépôt — le suivi de tâches ne vit plus dans un fichier versionné',en:'<code>log/kit-construction.md</code> and its automatic <code>PostToolUse</code> logging hook removed from the repo — task tracking no longer lives in a versioned file'},
+        ]},
       ]
     },
     {
