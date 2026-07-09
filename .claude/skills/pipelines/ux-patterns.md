@@ -53,7 +53,7 @@ Sources et checklist : `.claude/rules/ux-patterns-sources.md`
 - [ ] **Storybook** — `parameters.docs.description.component` (sauf composant sans story → noter)
 - [ ] **Site** — `node site/build.js` exécuté
 - [ ] **ADR** — patterns appliqués listés dans l'ADR d'implémentation du composant
-- [ ] **Log** — entrée dans `log/kit-construction.md` (sans chemin `/Users/...`)
+- [ ] **GitHub Projects** — item du chantier reflété (statut, domaine) — voir ADR-069
 
 ---
 

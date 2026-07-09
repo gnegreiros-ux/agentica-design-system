@@ -53,3 +53,16 @@ Les agents observent, analysent, proposent. Les humains approuvent, décident, d
 2. **Accessibilité** — WCAG 2.1 AA minimum. Non contournable.
 3. **Auditabilité** — Toute décision est traçable, versionnée, justifiée.
 4. **Auto-guérison encadrée** — Les dérives sont détectées automatiquement, corrigées avec approbation humaine.
+
+---
+
+## Gestion de projet
+
+Le suivi de tâches (statuts, backlog, dépendances) vit exclusivement dans
+[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — jamais dans un
+fichier versionné du dépôt. Ne pas recréer de fichier de log/journal local pour cet usage
+(voir [ADR-069](../../decisions/ADR-069-migration-suivi-projet-github-projects.md), qui
+remplace [ADR-016](../../decisions/ADR-016-journal-construction.md)).
+
+Le changelog public (documentation des versions livrées, `site/dist/changelog.html`) reste
+dans le dépôt et est distinct de la gestion de projet — il n'est pas concerné par cette règle.

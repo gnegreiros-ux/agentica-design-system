@@ -34,20 +34,12 @@ Types valides : `feat` `fix` `token` `docs` `a11y` `style` `refactor` `test` `ch
 - ❌ Binaires non intentionnels (sauf Brand/ et assets explicitement approuvés)
 - ⚠️ `.DS_Store` — à inclure si présent (convention projet, voir memory)
 
-### 4. Chemins locaux
-
-Avant de commiter, vérifier dans `log/kit-construction.md` :
-```bash
-grep "/Users/" log/kit-construction.md
-```
-❌ Toute ligne avec `/Users/[nom]/` doit être corrigée en chemin relatif.
-
-### 5. `--no-verify` interdit
+### 4. `--no-verify` interdit
 
 ❌ Ne jamais utiliser `git commit --no-verify`.
 Si un hook échoue → diagnostiquer et corriger, ne pas contourner.
 
-### 6. Push immédiat après commit
+### 5. Push immédiat après commit
 
 ✅ Toujours pousser juste après le commit.
 ✅ Vérifier que le push réussit (pas de rejet remote).
@@ -82,7 +74,6 @@ git push
 ```
 ### 6. Commit
 - [x] Format : docs(adr): ADR-029 quality gate pré-commit modulaire
-- [x] Fichiers staged : decisions/ADR-029.md, decisions/README.md, .claude/skills/, log/kit-construction.md, site/dist/
-- [x] Aucun chemin /Users/ dans log/kit-construction.md
+- [x] Fichiers staged : decisions/ADR-029.md, decisions/README.md, .claude/skills/, site/dist/
 - [x] Push réussi → origin/main à jour
 ```

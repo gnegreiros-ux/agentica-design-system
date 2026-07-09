@@ -60,7 +60,7 @@ Propager le **Pattern Decision Record** (voir `.claude/rules/ux-patterns-sources
 3. **Storybook** `components/agtc-<comp>.stories.js` → `parameters.docs.description.component`.
 4. **Site** → `node site/build.js`.
 5. **ADR** d'implémentation du composant → liste des patterns appliqués.
-6. **Log** `log/kit-construction.md` → entrée de la revue.
+6. **GitHub Projects** → item du chantier reflété (statut, domaine) — voir ADR-069.
 
 ---
 

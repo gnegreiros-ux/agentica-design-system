@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica</title>
+<title>Migration du suivi de projet vers GitHub Projects — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica">
+<meta property="og:title" content="Migration du suivi de projet vers GitHub Projects — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica">
+<meta name="twitter:title" content="Migration du suivi de projet vers GitHub Projects — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,49 +114,63 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-053</code>
+    <code class="adr-number">ADR-069</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">pattern</span>
+    <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu</h1>
+  <h1 class="adr-page-title">Migration du suivi de projet vers GitHub Projects</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-10</dd>
+      <dd>2026-07-09</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Humain (approbation) · Design System Lead (navigation)</dd>
+      <dd>Design System Lead</dd>
     </div>
   </dl>
 </div><h2>Contexte</h2>
-<p>Sur mobile (≤ 768 px), la sidebar de navigation secondaire (Fondations, Composants, Décisions) s'affichait dans le flux normal de la page — <strong>avant le contenu</strong> — car elle précède <code>&lt;main&gt;</code> dans le DOM et le layout passe en <code>flex-direction: column</code>. Le premier élément visible était donc la liste de navigation, non le titre de page.</p>
-<p>Par ailleurs, sur les pages sans sidebar (accueil, Tokens, Agents), le bouton d'accès au drawer était présent dans le header alors qu'il n'avait aucun effet — il était contextuel mais positionné de manière globale.</p>
+<p><code>log/kit-construction.md</code> (ADR-016, 2026-05-28) journalisait automatiquement, via un hook <code>PostToolUse</code>, chaque modification des fichiers de construction du kit (<code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code>). Après six semaines d'usage, le fichier comptait 464 lignes et ~440 entrées.</p>
+<p>Ce format (tableau chronologique append-only) remplissait bien son rôle de journal, mais ne permettait pas de gérer un projet : pas de statut autre que « fait », pas de backlog distinct de l'historique, pas de vue par domaine, pas de suivi de dépendances entre chantiers. Relire le fichier pour répondre à « qu'est-ce qui reste à faire ? » demandait de reparser tout l'historique à la recherche de mentions informelles (« porte laissée ouverte », « hors scope », « à faire »).</p>
+<p>La question posée était :</p>
+<blockquote><p><strong>Comment obtenir un vrai outil de gestion de projet (statuts, backlog, dépendances) sans dupliquer l'effort de journalisation déjà fourni par git et les ADR ?</strong></p></blockquote>
 <hr>
 <h2>Décision</h2>
-<h3>1. Sidebar transformée en drawer coulissant (mobile uniquement)</h3>
-<p>Sur <code>max-width: 768px</code>, la sidebar est repositionnée en <code>position: fixed</code> (hors flux), glissant depuis la gauche via <code>transform: translateX(-100%)</code> → <code>translateX(0)</code>. Elle n'interfère plus avec l'ordre de lecture du contenu.</p>
-<p>Comportement du drawer :</p>
-<ul><li>Ouverture via bouton toggle (voir point 2)</li><li>Fermeture via : bouton toggle, clic sur l'overlay, touche <code>Escape</code>, clic sur un lien de navigation</li><li>Overlay semi-transparent (<code>rgba(0,0,0,.40)</code> + <code>backdrop-filter: blur(2px)</code>) recouvre le contenu</li><li><code>document.body.overflow: hidden</code> pendant l'ouverture (empêche le scroll en arrière-plan)</li><li>ARIA : <code>aria-expanded</code> sur le bouton, <code>aria-hidden</code> sur l'overlay</li></ul>
-<h3>2. Bouton d'accès au drawer placé dans le contenu, avant le <code>&lt;h1&gt;</code></h3>
-<p>Le bouton <code>sidebar-toggle</code> est rendu <strong>dans <code>&lt;main&gt;</code></strong>, juste avant le titre de page — uniquement sur les pages possédant une sidebar. Il n'est jamais présent dans le header ni sur les pages sans sidebar.</p>
-<p>Justification :</p>
-<ul><li><strong>Contextuel</strong> : visible uniquement là où il est utile</li><li><strong>Lisibilité</strong> : le header reste identique sur toutes les pages</li><li><strong>Séquence logique</strong> : l'utilisateur voit le bouton navigation avant le titre, peut y accéder</li></ul>
-<p>  immédiatement avant de lire</p>
-<p>Style du bouton : fond <code>background-subtle</code> + bordure + icône <code>panel-left</code> + label "Navigation" (FR/EN) — lisible comme action, pas juste une icône opaque.</p>
+<p>Le suivi de projet d'Agentica est migré vers <strong>GitHub Projects (v2)</strong> — Project #1 « Agentica — Gestion de projet »> https://github.com/users/gnegreiros-ux/projects/1.</p>
+<ul><li><strong>Champs personnalisés</strong> : <code>Status</code> (Backlog, En cours, En attente, Terminé, Abandonné),</li></ul>
+<p>  <code>Domaine</code> (Figma, Tokens, Site, Composants, Tests, Gouvernance, Présentation),   <code>Dépendance</code> (texte libre, ex. <code>#12</code>), <code>ADR</code> (texte libre, ex. <code>ADR-059</code>), <code>Date</code>.</p>
+<ul><li><strong>Vues</strong> : Board (par Status, usage quotidien), Table « Par domaine » (group by Domaine),</li></ul>
+<p>  Table « Historique » (filtre <code>Status:Terminé</code>, tri par Date décroissant — remplace la   fonction de journal chronologique de l'ancien fichier).</p>
+<ul><li><strong>Peuplement</strong> : les ~440 entrées brutes de <code>log/kit-construction.md</code> ont été condensées</li></ul>
+<p>  en 100 items (91 chantiers historiques + 1 chantier en attente + 8 tickets de backlog   identifiés à partir des mentions « à faire »/« porte ouverte » retrouvées dans   l'historique et en mémoire de session), tous migrés avec leur statut réel.</p>
+<ul><li>Le hook <code>PostToolUse</code> (<code>.claude/hooks/log-kit-construction.sh</code>) et le fichier</li></ul>
+<p>  <code>log/kit-construction.md</code> sont retirés du dépôt.</p>
+<p>Le <strong>changelog public</strong> (<code>site/dist/changelog.html</code>, notes de version livrées) reste dans le dépôt — il est distinct de la gestion de projet interne et n'est pas concerné par cette migration.</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td>Bouton dans le header (toujours visible)</td><td>Présent sur pages sans sidebar — trompeur et inutile</td></tr><tr><td>Sidebar au-dessus du contenu (comportement initial)</td><td>L'utilisateur lit la navigation avant la page — charge cognitive inutile</td></tr><tr><td>Menu déroulant intégré au top-nav mobile</td><td>Confond navigation principale et secondaire</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Garder le fichier + ajouter une couche de gestion par-dessus</strong></td><td>Duplique l'effort de saisie (fichier + outil) et crée un risque de désynchronisation entre les deux sources.</td></tr><tr><td><strong>GitHub Issues + Milestones seuls</strong></td><td>Pas de champ libre pour croiser Domaine/ADR/Dépendance sans détourner labels et milestones de leur usage prévu ; Projects v2 offre des champs personnalisés nativement.</td></tr><tr><td><strong>Outil externe (Linear, Jira…)</strong></td><td>Ajoute une dépendance payante et un système hors de l'écosystème GitHub déjà utilisé pour le code et la CI ; contraire au principe de souveraineté numérique (<code>project-overview.md</code>).</td></tr><tr><td><strong>Journal automatique conservé pour l'historique, GitHub Projects pour le futur seulement</strong></td><td>Aurait laissé deux registres d'historique actifs en parallèle (dépôt + Project) — contraire à l'objectif d'une source unique de vérité.</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
-<ul><li>Sur desktop (> 768 px) : aucun changement — la sidebar reste dans le flux, le bouton est masqué</li></ul>
-<p>  via <code>display: none</code></p>
-<ul><li>Le JS du drawer doit être présent sur toutes les pages avec sidebar (injecté via <code>layout()</code>)</li><li>Toute nouvelle page avec sidebar hérite automatiquement du comportement (rendu conditionnel dans</li></ul>
-<p>  <code>layout()</code>)</p>
-<ul><li><strong>À surveiller :</strong> si une page accumule beaucoup de liens sidebar, envisager un accordéon par</li></ul>
-<p>  groupe (ADR futur)</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-052.html" class="agtc-button secondary">← ADR-052</a>
-    <a href="adr-054.html" class="agtc-button secondary">ADR-054 →</a>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li>Une question du type « qu'est-ce qui a été fait sur X ? » ou « qu'est-ce qui reste à</li></ul>
+<p>  faire ? » se répond via <code>gh project item-list 1 --owner gnegreiros-ux</code> ou la vue   « Historique »/Board, plus via lecture de <code>log/kit-construction.md</code>.</p>
+<ul><li>Le hook <code>PostToolUse</code> qui journalisait automatiquement chaque <code>Write</code>/<code>Edit</code> sur</li></ul>
+<p>  <code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code> est retiré — ces modifications   restent tracées par git et par les ADR eux-mêmes, pas par un journal séparé.</p>
+<ul><li>Toute proposition de nouveau chantier (Backlog) doit être créée dans GitHub Projects</li></ul>
+<p>  après validation humaine explicite — jamais directement, conformément à   <code>project-overview.md</code> (« le dernier mot est toujours humain »).</p>
+<p><strong>Pour les humains :</strong></p>
+<ul><li>Le Board donne une vue de pilotage quotidien impossible avec un fichier plat.</li><li>Les vues « Par domaine » et « Historique » remplacent respectivement le besoin de</li></ul>
+<p>  filtrage manuel et la fonction de journal chronologique de l'ancien fichier.</p>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>L'historique perd la granularité horodatée à la minute près de l'ancien hook (les</li></ul>
+<p>  entrées migrées portent une date, pas une heure) — jugé non significatif pour un usage   de gestion de projet plutôt que de débogage de session.</p>
+<ul><li>GitHub Projects est un service externe au dépôt git lui-même (mais reste dans</li></ul>
+<p>  l'écosystème GitHub déjà utilisé pour le code, les Issues et la CI).</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Demande explicite de l'utilisateur le 2026-07-09 : « besoin d'un outil de gestion de projet pour mieux mener Agentica ». Le format journal de <code>kit-construction.md</code> (conçu par ADR-016 comme observabilité de la construction du kit, pas comme outil de pilotage) ne répondait plus à ce besoin une fois le volume d'historique accumulé.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-068.html" class="agtc-button secondary">← ADR-068</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>

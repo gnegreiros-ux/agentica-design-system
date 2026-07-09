@@ -1,12 +1,17 @@
 # ADR-016 — Journal de construction automatique du kit
 
 > **Date :** 2026-05-28
-> **Statut :** ✅ Actif
+> **Statut :** ⚠️ Remplacé par [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) (2026-07-09)
 > **Décideurs :** Design System Lead
 > **Type:** contract
 > **Chemin logique:** decisions/ADR-016-journal-construction.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
-> **Relations:** log/kit-construction.md, .claude/hooks/log-kit-construction.sh, .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md
+> **Relations:** log/kit-construction.md (retiré), .claude/hooks/log-kit-construction.sh (retiré), .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
+
+> **Note de dépréciation (2026-07-09) :** le mécanisme décrit ci-dessous (fichier +
+> hook `PostToolUse`) a été retiré. Le suivi de la construction du kit vit désormais
+> dans GitHub Projects — voir ADR-069. Ce document reste comme registre historique
+> de la décision d'origine, conformément à la règle « un ADR ne se supprime jamais ».
 
 ---
 

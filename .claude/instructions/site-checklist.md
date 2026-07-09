@@ -4,7 +4,7 @@
 > **Type:** instruction
 > **Chemin logique:** .claude/instructions/site-checklist.md
 > **Auteur:** Guilherme Negreiros
-> **Relations:** site/build.js, log/kit-construction.md, .claude/instructions/session-spec.md
+> **Relations:** site/build.js, .claude/instructions/session-spec.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
 
@@ -64,11 +64,9 @@ Signe de liens cassés : chemin doublé comme `foundations/foundations/color.htm
 
 ---
 
-## 6. Log de construction
+## 6. Suivi de projet
 
-- [ ] `log/kit-construction.md` mis à jour avec les fichiers créés/modifiés
-- [ ] Aucun chemin local dans le log : supprimer toute ligne contenant `/Users/gnegreiros/.claude/...`
-- [ ] Le log est inclus dans le `git add`
+- [ ] Chantier reflété dans GitHub Projects (statut, domaine) — voir ADR-069, pas de fichier de log dans le dépôt
 
 ---
 
@@ -87,13 +85,12 @@ Signe de liens cassés : chemin doublé comme `foundations/foundations/color.htm
 
 ```bash
 git status          # vérifier les fichiers stagés
-git add <fichiers>  # inclure log/kit-construction.md obligatoirement
+git add <fichiers>
 git commit -m "type(scope): description"
 git push origin main
 ```
 
 - [ ] Convention Conventional Commits respectée (`feat`, `fix`, `token`, `docs`, `ci`, `chore`...)
-- [ ] `log/kit-construction.md` dans le commit
 - [ ] Pas de fichiers hors-repo accidentellement inclus
 
 ---

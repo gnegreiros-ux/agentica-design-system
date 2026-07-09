@@ -20,17 +20,6 @@
             "statusMessage": "Vérification patterns UX…"
           }
         ]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/gnegreiros/Documents/Git/agentic-design-system/.claude/hooks/log-kit-construction.sh",
-            "statusMessage": "Journal de construction…",
-            "async": true
-          }
-        ]
       }
     ]
   }

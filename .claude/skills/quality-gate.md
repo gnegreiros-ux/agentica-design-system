@@ -94,7 +94,7 @@ Exécuter ce quality gate **après toute modification**, quelle que soit sa tail
 
 ### 5. Documentation
 - [ ] guidelines/[section].md mis à jour
-- [ ] log/kit-construction.md — entrée sans chemin local
+- [ ] Chantier reflété dans GitHub Projects (statut, domaine) — voir ADR-069
 - [ ] decisions/README.md mis à jour (si nouvel ADR)
 - [ ] Parité bilingue FR/EN vérifiée
 - [ ] Site rebuild : node site/build.js

@@ -21,9 +21,9 @@
 - ✅ Types valides : `feat`, `fix`, `token`, `docs`, `a11y`, `style`, `refactor`, `test`, `chore`, `ci`
 - ❌ Pas de commit avec message vague ("update", "fix", "wip")
 
-### ADR-016 — Journal de construction
-- ✅ `log/kit-construction.md` mis à jour à chaque session
-- ❌ Pas de chemins locaux `/Users/...` dans le log
+### ADR-069 — Migration du suivi de projet vers GitHub Projects (remplace ADR-016)
+- ✅ Chantier reflété dans GitHub Projects (statut, domaine)
+- ❌ Ne pas recréer de fichier de log/journal local pour le suivi de projet
 
 ### ADR-020 — Grille 4px
 - ✅ Tout espacement = multiple de 4px

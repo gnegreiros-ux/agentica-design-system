@@ -148,8 +148,7 @@
   <tbody>
     <tr><td><code>Tout commit</code></td><td><span class="lang-fr">Systématique — dernier pipeline</span><span class="lang-en">Systematic — last pipeline</span></td></tr>
     <tr><td><code>Message de commit</code></td><td><span class="lang-fr">Format Conventional Commits requis (ADR-014)</span><span class="lang-en">Conventional Commits format required (ADR-014)</span></td></tr>
-    <tr><td><code>log/kit-construction.md staged</code></td><td><span class="lang-fr">Vérification chemins locaux /Users/</span><span class="lang-en">Check for /Users/ local paths</span></td></tr>
-    <tr><td><code>Fichiers staged</code></td><td><span class="lang-fr">Scan anti-secrets (.env, credentials)</span><span class="lang-en">Anti-secrets scan (.env, credentials)</span></td></tr>
+    <tr><td><code>Fichiers staged</code></td><td><span class="lang-fr">Vérification chemins locaux /Users/ + scan anti-secrets (.env, credentials)</span><span class="lang-en">Check for /Users/ local paths + anti-secrets scan (.env, credentials)</span></td></tr>
   </tbody>
 </table></div>
 
@@ -160,7 +159,7 @@
   <li><span class="lang-fr">Messages interdits : "update", "fix", "wip", "changes", "misc"</span><span class="lang-en">Forbidden messages: "update", "fix", "wip", "changes", "misc"</span></li>
   <li><span class="lang-fr">Un seul commit cohérent par session — pas de commit partiel</span><span class="lang-en">One coherent commit per session — no partial commit</span></li>
   <li><span class="lang-fr">Aucun fichier .env ou secret dans les fichiers staged</span><span class="lang-en">No .env or secret files in staged files</span></li>
-  <li><span class="lang-fr">log/kit-construction.md sans chemin /Users/[nom]/</span><span class="lang-en">log/kit-construction.md with no /Users/[name]/ path</span></li>
+  <li><span class="lang-fr">Aucun chemin /Users/[nom]/ dans les fichiers staged</span><span class="lang-en">No /Users/[name]/ path in staged files</span></li>
   <li><span class="lang-fr">--no-verify interdit — diagnostiquer et corriger les hooks qui échouent</span><span class="lang-en">--no-verify forbidden — diagnose and fix failing hooks</span></li>
   <li><span class="lang-fr">Push immédiat après le commit — origin/main à jour</span><span class="lang-en">Immediate push after commit — origin/main up to date</span></li>
 </ol>

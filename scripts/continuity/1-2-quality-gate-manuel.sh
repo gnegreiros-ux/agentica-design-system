@@ -44,10 +44,7 @@ echo "=== 7/8 — Rebuild site ==="
 node site/build.js
 
 echo "=== 8/8 — Commit ==="
-if grep -rn "/Users/" log/kit-construction.md >/dev/null 2>&1; then
-  echo "❌ Chemin local détecté dans log/kit-construction.md — à nettoyer avant commit."
-  exit 1
-fi
 echo "Format Conventional Commits attendu : type(scope): description — jamais --no-verify."
+echo "Rappel : le suivi de projet vit dans GitHub Projects (ADR-069), pas dans un fichier du dépôt."
 
 echo "✅ Quality gate manuel complété."
