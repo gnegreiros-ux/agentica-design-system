@@ -3286,6 +3286,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}tokens/index.html">Tokens</a>
       <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
       <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+      <a href="${base}changelog.html">Changelog</a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
