@@ -80,8 +80,7 @@ Les 8 pipelines du quality gate, traduits en étapes humaines :
 5. **Déclencheurs ADR manquants** → répondre soi-même aux 4 questions de `pipelines/adr-triggers.md`
 6. **Documentation** → checklist de fichiers à jour de `pipelines/docs.md`
 7. **Rebuild site** → `node site/build.js`
-8. **Commit** → format Conventional Commits, `grep -rn "/Users/" log/kit-construction.md`
-   doit être vide, jamais `--no-verify`
+8. **Commit** → format Conventional Commits, jamais `--no-verify`
 
 Les étapes 3 et 5 sont des étapes de **jugement humain pur** — aucun script ne peut les
 remplacer, seulement rappeler qu'elles doivent être faites et bloquer tant qu'elles ne
@@ -105,13 +104,14 @@ Checklist manuelle dérivée de `figma-library-governance.md` + `figma-component
 - Geler les chantiers Figma de grande ampleur (nouveau composant, refonte) le temps de
   l'indisponibilité ; se limiter aux corrections ponctuelles ciblées
 
-### 1.4 ADR et log — inchangés
+### 1.4 ADR et suivi de projet — inchangés
 
 **Script :** `scripts/continuity/1-4-adr-log-rappel.sh`
 
-Rédaction d'ADR et mise à jour de `log/kit-construction.md` : déjà un exercice humain
-(écriture), non affecté par l'absence d'agent — seulement un rappel qu'ils restent
-obligatoires à chaque session/commit significatif.
+Rédaction d'ADR : déjà un exercice humain (écriture), non affecté par l'absence d'agent —
+seulement un rappel qu'elle reste obligatoire à chaque session/commit significatif. Le
+suivi de projet (statuts, historique, backlog) vit dans GitHub Projects (ADR-069), pas
+dans un fichier du dépôt — rien à journaliser manuellement ici.
 
 ---
 

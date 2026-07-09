@@ -4,7 +4,7 @@
 > **Type:** skill
 > **Chemin logique:** .claude/skills/post-change-pipeline.md
 > **Lecture avant:** AGENTS.md, .claude/rules/git-workflow.md, .claude/rules/tokens-system.md
-> **Relations:** log/kit-construction.md, site/build.js, tokens/, decisions/
+> **Relations:** site/build.js, tokens/, decisions/, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
 
@@ -32,9 +32,9 @@ Appliquer la matrice d'impact :
 | `decisions/ADR-*.md` | Site rebuild (page ADR), log |
 | `.claude/rules/` ou `.claude/skills/` | Log |
 | `AGENTS.md`, `DESIGN.md`, `README.md` | Log |
-| `log/kit-construction.md` | Rien (c'est lui-même la mise à jour) |
 
-Règle absolue : **le log du kit est toujours proposé**, sauf si le seul fichier modifié est le log lui-même.
+Le suivi de ce chantier (statut, domaine) vit dans GitHub Projects (ADR-069) — pas dans
+un fichier du dépôt, donc rien à proposer côté log pour cette raison.
 
 ---
 
@@ -50,7 +50,6 @@ Présenter un rapport structuré **avant tout commit** :
 
 ### Mises à jour proposées
 - [ ] Site rebuild (`node site/build.js`) — [raison]
-- [ ] Log du kit (`log/kit-construction.md`) — [entrée proposée]
 - [ ] ADR-XXX à créer — [titre proposé] — si décision architecturale
 - [ ] Tokens CSS à regénérer — si tokens modifiés
 - [ ] Autre : [description]
@@ -70,9 +69,8 @@ Exécuter uniquement les tâches approuvées, dans cet ordre :
 
 1. Regénérer les tokens CSS si `tokens/` modifiés
 2. Rebuilder le site si approuvé (`node site/build.js`)
-3. Mettre à jour `log/kit-construction.md` avec horodatage `YYYY-MM-DD`
-4. Créer les ADRs approuvés
-5. Stager et commiter tous les fichiers en un seul commit cohérent
+3. Créer les ADRs approuvés
+4. Stager et commiter tous les fichiers en un seul commit cohérent
 
 ---
 

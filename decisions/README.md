@@ -73,7 +73,7 @@ des décisions déjà tranchées.
 | [ADR-013](ADR-013-design-md-contrat-portable.md) | DESIGN.md comme contrat portable versionné avec le code | 2026-05-28 | ✅ Actif |
 | [ADR-014](ADR-014-conventional-commits.md) | Choix de Conventional Commits pour les messages de commit | 2026-05-28 | ✅ Actif |
 | [ADR-015](ADR-015-hook-rappel-adr.md) | Hook automatique de rappel ADR sur modifications critiques | 2026-05-28 | ✅ Actif |
-| [ADR-016](ADR-016-journal-construction.md) | Journal de construction automatique du kit | 2026-05-28 | ✅ Actif |
+| [ADR-016](ADR-016-journal-construction.md) | Journal de construction automatique du kit | 2026-05-28 | ⚠️ Remplacé par ADR-069 |
 | [ADR-017](ADR-017-correction-contraste-text-disabled.md) | Correction valeur contraste texte désactivé (4.54:1) | 2026-05-28 | ✅ Actif |
 | [ADR-018](ADR-018-migration-references-primitives-radix.md) | Migration des références primitives vers la convention Radix | 2026-05-28 | ✅ Actif |
 | [ADR-019](ADR-019-resolution-dynamique-tokens-build.md) | Résolution dynamique des tokens au build (Site Dictionary) | 2026-05-29 | ✅ Actif |
@@ -126,6 +126,7 @@ des décisions déjà tranchées.
 | [ADR-066](ADR-066-playwright-testing-strategy.md) | Stratégie de tests Playwright : deux périmètres distincts | 2026-07-02 | ✅ Actif |
 | [ADR-067](ADR-067-letter-spacing-token-category.md) | Nouvelle catégorie de token `letterSpacing` — dette `agtc-code-block` | 2026-07-08 | ✅ Actif |
 | [ADR-068](ADR-068-letter-spacing-scale-extension.md) | Extension de l'échelle `letterSpacing` — résorption dette `--agtc-tracking-*` du site | 2026-07-08 | ✅ Actif |
+| [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) | Migration du suivi de projet vers GitHub Projects (remplace ADR-016) | 2026-07-09 | ✅ Actif |
 
 ---
 

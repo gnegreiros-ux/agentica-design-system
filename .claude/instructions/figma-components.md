@@ -205,7 +205,7 @@ figma.combineAsVariants(old, page); // → ComponentSet cassé, illisible
 ```
 
 Cf. incidents Button et Input du 2026-07-06 — récupération complète documentée dans
-`log/kit-construction.md`. Même correctif appliqué aux deux : Button (4 ComponentSets
+l'historique GitHub Projects (ADR-069). Même correctif appliqué aux deux : Button (4 ComponentSets
 `Variant` → 1 seul, 19 variantes) et Input (2 ComponentSets `Type` → 1 seul, 9 variantes).
 
 ---

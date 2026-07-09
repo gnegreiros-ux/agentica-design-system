@@ -139,7 +139,7 @@
 | ADR-013 | DESIGN.md comme contrat portable versionné avec le code | ✅ Actif |
 | ADR-014 | Choix de Conventional Commits pour les messages de commit | ✅ Actif |
 | ADR-015 | Hook de rappel ADR dans les sessions IA | ✅ Actif |
-| ADR-016 | Journal de construction (log/kit-construction.md) | ✅ Actif |
+| ADR-016 | Journal de construction (log/kit-construction.md) | ⚠️ Remplacé par ADR-069 |
 | ADR-017 | Correction du contraste text.disabled (4.54:1 WCAG AA) | ✅ Actif |
 | ADR-018 | Migration des références primitives vers notation Radix | ✅ Actif |
 | ADR-019 | Résolution dynamique des tokens dans le build | ✅ Actif |

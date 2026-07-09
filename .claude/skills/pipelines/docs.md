@@ -17,7 +17,6 @@
 | `guidelines/overview.md` | Ajout d'un nouveau composant |
 | `decisions/ADR-0XX.md` | Toute décision architecturale (voir adr-triggers.md) |
 | `decisions/README.md` | Tout nouvel ADR |
-| `log/kit-construction.md` | Toute session de modification |
 | `DESIGN.md` | Changement d'identité, de gouvernance ou de principes |
 | `README.md` | Changement de structure du projet |
 | `AGENTS.md` | Nouvelle règle pour les agents |
@@ -28,11 +27,9 @@
 
 ## Règles de qualité documentaire
 
-### Log de construction (`log/kit-construction.md`)
-- ✅ Entrée horodatée pour chaque session
-- ❌ Aucun chemin local `/Users/[nom]/...` — chemins relatifs au repo uniquement
-- ✅ Format : `| YYYY-MM-DD HH:MM | Action | Fichier/description |`
-- ✅ Une entrée par type de changement (pas une entrée par fichier)
+### Suivi de projet (GitHub Projects, ADR-069)
+- ✅ Chantier reflété dans GitHub Projects (statut, domaine)
+- ❌ Ne pas recréer de fichier de log/journal local pour cet usage
 
 ### Parité bilingue FR/EN
 - ✅ Tout contenu ajouté en français → version anglaise requise dans `<span class="lang-en">`
@@ -56,7 +53,6 @@
 ```
 ### 5. Documentation
 - [x] guidelines/foundations/typography.md — mis à jour (section Mono)
-- [x] log/kit-construction.md — entrée 2026-05-30, sans chemin local
 - [x] decisions/README.md — ADR-028 indexé
 - [x] Parité bilingue vérifiée (lang-fr / lang-en présents)
 - [ ] Site rebuild : node site/build.js → ✓ 37 fichiers générés

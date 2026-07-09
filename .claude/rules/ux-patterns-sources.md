@@ -89,7 +89,7 @@ Une fois les patterns **approuvés par l'humain**, la décision est documentée 
 | 3 | **Storybook** `components/agtc-<comp>.stories.js` | `parameters.docs.description.component` — résumé des patterns appliqués + liens |
 | 4 | **Site** | `node site/build.js` régénère la page composant à partir de la guideline |
 | 5 | **ADR** | ADR d'implémentation du composant — liste des patterns appliqués (gouverné par ADR-036) |
-| 6 | **Log** `log/kit-construction.md` | Entrée de la revue (sans chemin `/Users/...`) |
+| 6 | **GitHub Projects** | Item du chantier reflété (statut, domaine) — voir ADR-069 |
 
 > Le pipeline `pipelines/ux-patterns.md` **vérifie** que ces 6 surfaces sont à jour avant tout commit.
 
