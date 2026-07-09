@@ -3783,8 +3783,8 @@ function buildHome(adrs) {
         <span class="lang-en">Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.</span>
       </p>
       <p>
-        <span class="lang-fr">Le système fonctionne aussi sans agent IA : chaque flux critique a un équivalent humain documenté et testé.</span>
-        <span class="lang-en">The system also works without any AI agent: every critical workflow has a documented, tested human equivalent.</span>
+        <span class="lang-fr">Zéro dépendance cachée. Zéro verrouillage. Agentica fonctionne avec des agents IA — jamais à cause d'eux. Le jour où ils s'arrêtent, votre système de design continue de tourner : documenté, scripté et testé pour le prouver.</span>
+        <span class="lang-en">Zero hidden dependency. Zero lock-in. Agentica runs with AI agents — never because of them. The day they stop, your design system keeps running: documented, scripted and tested to prove it.</span>
       </p>
       <div class="hero-actions">
         <a class="cta-btn cta-btn-secondary" href="continuite.html"><span class="lang-fr">Voir le plan de continuité →</span><span class="lang-en">View the continuity plan →</span></a>
