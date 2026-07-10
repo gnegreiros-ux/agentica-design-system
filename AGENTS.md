@@ -84,16 +84,22 @@ decisions/                             ← pourquoi les décisions ont été pri
 
 ---
 
-## Agent skills
+## Suivi de projet et documentation des décisions
 
-### Issue tracker
+### Gestion de projet
 
-Issues live in GitHub Issues. See `docs/agents/issue-tracker.md`.
+Le suivi de tâches (statuts, backlog, priorités, dépendances) vit exclusivement dans
+[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — jamais dans un
+fichier versionné du dépôt. Voir `.claude/rules/project-overview.md` (ADR-069).
 
-### Triage labels
+### Décisions architecturales (ADR)
 
-Using the five default canonical labels (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+Les décisions sont documentées dans `decisions/` (pas `docs/adr/`) — un fichier par ADR,
+format `ADR-XXX-titre.md`. Lire les ADR qui touchent la zone sur laquelle tu travailles
+avant toute action. Voir `.claude/skills/pipelines/adr-triggers.md` pour savoir quand en
+créer un nouveau.
 
-### Domain docs
+### Contexte de domaine
 
-Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.
+Pas de `CONTEXT.md` à la racine — le contexte du domaine vit dans `DESIGN.md` (contrat de
+marque portable), `guidelines/` (fondations et composants) et les règles `.claude/rules/`.
