@@ -1,55 +1,55 @@
-# Rule : code-style
+# Rule: code-style
 
-> Conventions de style et de nommage pour ce projet.
+> Style and naming conventions for this project.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/code-style.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/code-style.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/git-workflow.md, .claude/rules/development.md
 
 ---
 
-## Nommage des fichiers
+## File naming
 
-| Type | Convention | Exemple |
+| Type | Convention | Example |
 |------|-----------|---------|
-| Composant Web | kebab-case | `ds-button.js`, `ds-input.js` |
+| Web Component | kebab-case | `ds-button.js`, `ds-input.js` |
 | Token JSON | kebab-case | `primitives.json`, `semantic.json` |
 | Documentation | kebab-case | `button.md`, `color.md` |
 | Config | kebab-case | `config.json`, `style-dictionary.json` |
 
 ---
 
-## Nommage des classes CSS — règle absolue (ADR-2026-06-30)
+## CSS class naming — absolute rule (ADR-2026-06-30)
 
-> **Zéro préfixe de version dans les noms de classes CSS et custom properties.**
-> Cette règle s'applique au site Agentica, aux composants `agtc-*`, et à tout futur projet consommateur.
+> **Zero version prefixes in CSS class names and custom properties.**
+> This rule applies to the Agentica site, `agtc-*` components, and any future consumer project.
 
 ```
-❌ INTERDIT : .v2-hero, .v2-section, .v2-button, --v2-shell, .ds-btn
-✅ OBLIGATOIRE : .hero, .site-section, .cta-btn, --site-shell, .agtc-button
+❌ FORBIDDEN: .v2-hero, .v2-section, .v2-button, --v2-shell, .ds-btn
+✅ REQUIRED: .hero, .site-section, .cta-btn, --site-shell, .agtc-button
 ```
 
-### Classes de composants Web
+### Web Component classes
 
-Format : `agtc-[nom]` (kebab-case, pas de version)
+Format: `agtc-[name]` (kebab-case, no version)
 
 ```html
 ✅ <agtc-button>, <agtc-card>, <agtc-top-nav>
 ❌ <ds-button>, <v2-button>, <agtc-button-v2>
 ```
 
-### Classes CSS du site
+### Site CSS classes
 
-Deux namespaces autorisés, aucun préfixe de version :
+Two allowed namespaces, no version prefix:
 
-| Namespace | Préfixe | Usage | Exemples |
-|-----------|---------|-------|---------|
-| Chrome site | `site-` | Header, nav, footer — distingue du HTML element | `.site-header`, `.site-nav`, `.site-footer` |
-| Contenu/sections | *(aucun)* | Sections, grilles, éléments de page | `.hero`, `.shell`, `.overlap`, `.kicker`, `.copy` |
-| Boutons CTA (liens stylisés) | `cta-` | Liens `<a>` stylisés en bouton, distincts de `<agtc-button>` | `.cta-btn`, `.cta-btn-primary` |
+| Namespace | Prefix | Usage | Examples |
+|-----------|--------|-------|---------|
+| Site chrome | `site-` | Header, nav, footer — distinguishes from the HTML element | `.site-header`, `.site-nav`, `.site-footer` |
+| Content/sections | *(none)* | Sections, grids, page elements | `.hero`, `.shell`, `.overlap`, `.kicker`, `.copy` |
+| CTA buttons (styled links) | `cta-` | `<a>` links styled as buttons, distinct from `<agtc-button>` | `.cta-btn`, `.cta-btn-primary` |
 
 ```css
-/* ✅ Noms sémantiques — décrivent le contenu ou le rôle */
+/* ✅ Semantic names — describe content or role */
 .hero { … }
 .shell { … }
 .site-nav { … }
@@ -57,16 +57,16 @@ Deux namespaces autorisés, aucun préfixe de version :
 .kicker { … }
 .cta-btn { … }
 
-/* ❌ Noms avec version ou position */
+/* ❌ Names with version or position */
 .v2-hero { … }
 .v2-section { … }
 .v2-nav { … }
 .v2-btn-primary { … }
 ```
 
-### Custom properties du site (shorthand CSS)
+### Site custom properties (CSS shorthand)
 
-Format : `--site-[rôle]`
+Format: `--site-[role]`
 
 ```css
 /* ✅ */
@@ -79,11 +79,11 @@ Format : `--site-[rôle]`
 --v2-teal: …
 ```
 
-### Table de migration complète (2026-06-30)
+### Full migration table (2026-06-30)
 
-Cette table documente tous les renames effectués lors de la migration de la dette `v2-` :
+This table documents all the renames performed during the `v2-` debt migration:
 
-| Ancien nom | Nouveau nom | Catégorie |
+| Old name | New name | Category |
 |-----------|------------|-----------|
 | `.v2-header` | `.site-header` | Chrome |
 | `.v2-nav` | `.site-nav` | Chrome |
@@ -102,11 +102,11 @@ Cette table documente tous les renames effectués lors de la migration de la det
 | `.v2-section-heading` | `.section-heading` | Section |
 | `.v2-hero` | `.hero` | Section |
 | `.v2-immersive` | `.immersive` | Section |
-| `.v2-overlap` | `.overlap` | Grille |
-| `.v2-split` | `.split` | Grille |
+| `.v2-overlap` | `.overlap` | Grid |
+| `.v2-split` | `.split` | Grid |
 | `.v2-final` | `.section-final` | Section |
-| `.v2-copy` | `.copy` | Contenu |
-| `.v2-kicker` | `.kicker` | Contenu |
+| `.v2-copy` | `.copy` | Content |
+| `.v2-kicker` | `.kicker` | Content |
 | `.v2-button` | `.cta-btn` | CTA |
 | `.v2-button-primary` | `.cta-btn-primary` | CTA |
 | `.v2-button-secondary` | `.cta-btn-secondary` | CTA |
@@ -115,71 +115,71 @@ Cette table documente tous les renames effectués lors de la migration de la det
 | `--v2-teal` | `--site-teal` | Custom prop |
 | `@keyframes v2-float` | `@keyframes float-illus` | Animation |
 
-*(Table complète dans le commit `refactor(css): supprime préfixe v2-` du 2026-06-30)*
+*(Full table in the `refactor(css): remove v2- prefix` commit from 2026-06-30)*
 
 ---
 
-## Nommage des CSS Custom Properties (tokens design system)
+## CSS Custom Property naming (design system tokens)
 
-Format : `--[prefix]-[niveau]-[composant]-[variant]-[propriété]`
+Format: `--[prefix]-[level]-[component]-[variant]-[property]`
 
 ```css
-/* Primitif */
+/* Primitive */
 --agtc-primitive-color-blue-700: #1D4ED8;
 
-/* Sémantique */
+/* Semantic */
 --agtc-semantic-color-action-primary: var(--agtc-primitive-color-blue-700);
 
-/* Composant */
+/* Component */
 --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary);
 ```
 
 ---
 
-## Commentaires dans le code
+## Comments in code
 
 ```javascript
-// ✅ Bon commentaire — explique le POURQUOI
-// Le bouton critique nécessite une confirmation car l'action est irréversible (contrat token)
+// ✅ Good comment — explains the WHY
+// The critical button requires confirmation because the action is irreversible (token contract)
 
-// ❌ Mauvais commentaire — décrit le QUOI (déjà lisible dans le code)
-// Définit la couleur de fond du bouton
+// ❌ Bad comment — describes the WHAT (already readable from the code)
+// Sets the button's background color
 ```
 
 ---
 
 ## JavaScript / TypeScript
 
-- ES6+ uniquement
-- Pas de `var` — utiliser `const` et `let`
-- Fonctions arrow pour les callbacks
-- Destructuration préférée
-- Nommage des variables en camelCase
-- Nommage des constantes en UPPER_SNAKE_CASE
+- ES6+ only
+- No `var` — use `const` and `let`
+- Arrow functions for callbacks
+- Destructuring preferred
+- Variable naming in camelCase
+- Constant naming in UPPER_SNAKE_CASE
 
 ---
 
 ## JSON (tokens)
 
-- Indentation : 2 espaces
-- Clés en camelCase pour les valeurs composées
-- Toujours inclure `$type` pour chaque token
-- Toujours inclure `intent` pour les tokens sémantiques
-- Toujours inclure `$metadata` au niveau racine
+- Indentation: 2 spaces
+- Keys in camelCase for compound values
+- Always include `$type` for every token
+- Always include `intent` for semantic tokens
+- Always include `$metadata` at the root level
 
 ---
 
 ## Markdown (documentation)
 
-- Titres H1 (`#`) uniquement pour le nom du fichier/composant
-- H2 (`##`) pour les sections principales
-- H3 (`###`) pour les sous-sections
-- Tableaux pour les comparaisons et propriétés
-- Code blocks avec spécification du langage (` ```json `, ` ```css `, etc.)
-- Jamais plus de 100 caractères par ligne dans les descriptions
+- H1 headings (`#`) only for the file/component name
+- H2 (`##`) for main sections
+- H3 (`###`) for subsections
+- Tables for comparisons and properties
+- Code blocks with the language specified (` ```json `, ` ```css `, etc.)
+- Never more than 100 characters per line in descriptions
 
 ---
 
 ## Git
 
-Voir `.claude/rules/git-workflow.md` pour les conventions de commit et de branch.
+See `.claude/rules/git-workflow.md` for commit and branch conventions.

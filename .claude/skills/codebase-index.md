@@ -1,41 +1,41 @@
-# Skill : codebase-index
+# Skill: codebase-index
 
-> Capacité réutilisable : indexer et cartographier le système de design.
-> Permet de connaître l'état complet du système à tout moment.
+> Reusable capability: index and map the design system.
+> Enables knowing the system's complete state at any time.
 > **Type:** skill
-> **Chemin logique:** .claude/skills/codebase-index.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/skills/codebase-index.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/components/, tokens/component.json, .claude/skills/ai-component-metadata.md
 
 ---
 
-## Objectif
+## Objective
 
-Maintenir une carte à jour du système : quels composants existent,
-quelles sont leurs dépendances, quels tokens ils consomment,
-et où se trouvent les dérives.
+Maintain an up-to-date map of the system: which components exist,
+what their dependencies are, which tokens they consume,
+and where drift is occurring.
 
 ---
 
-## Index des composants
+## Component index
 
-### Processus de génération
+### Generation process
 
 ```
-Pour chaque composant dans guidelines/components/ :
-  1. Lire le fichier .md (contrat)
-  2. Lire le token dans tokens/component.json
-  3. Identifier les dépendances (tokens sémantiques utilisés)
-  4. Identifier les composants qui l'utilisent (consumers)
-  5. Calculer le score de complétude (voir skill ai-component-metadata)
+For each component in guidelines/components/:
+  1. Read the .md file (contract)
+  2. Read the token in tokens/component.json
+  3. Identify dependencies (semantic tokens used)
+  4. Identify components that use it (consumers)
+  5. Compute the completeness score (see ai-component-metadata skill)
 ```
 
-### Format de l'index
+### Index format
 
 ```markdown
-## Index des composants — [DATE]
+## Component index — [DATE]
 
-| Composant | Variantes | Tokens | Score | Storybook |
+| Component | Variants | Tokens | Score | Storybook |
 |-----------|-----------|--------|-------|-----------|
 | button    | 4         | 18     | 100%  | ✅ |
 | input     | 3         | 12     | 70%   | ✅ |
@@ -45,9 +45,9 @@ Pour chaque composant dans guidelines/components/ :
 
 ---
 
-## Graphe de relations
+## Relationship graph
 
-### Dépendances descendantes (composant → tokens)
+### Downstream dependencies (component → tokens)
 
 ```
 button.primary
@@ -59,7 +59,7 @@ button.primary
         └── primitive.space.4
 ```
 
-### Dépendances ascendantes (token → composants)
+### Upstream dependencies (token → components)
 
 ```
 semantic.color.action.primary
@@ -68,30 +68,30 @@ semantic.color.action.primary
   └── component.input.default (border-focus)
 ```
 
-Ce graphe permet : si on modifie `primitive.color.blue.700`,
-de savoir immédiatement quels composants sont impactés.
+This graph makes it possible to know instantly, if `primitive.color.blue.700`
+is modified, which components are impacted.
 
 ---
 
-## Détection de dérives
+## Drift detection
 
-### Tokens orphelins
-Tokens définis dans `component.json` mais jamais utilisés dans le code.
+### Orphaned tokens
+Tokens defined in `component.json` but never used in code.
 
-### Tokens fantômes
-Tokens utilisés dans le code mais non définis dans les JSON.
+### Phantom tokens
+Tokens used in code but not defined in the JSON files.
 
-### Composants sans contrat
-Composants dans le code sans fichier `.md` correspondant dans `guidelines/`.
+### Components without a contract
+Components in the code with no matching `.md` file in `guidelines/`.
 
-### Instances détachées (Figma)
-Composants Figma dont les propriétés ont été surchargées localement.
+### Detached instances (Figma)
+Figma components whose properties have been overridden locally.
 
 ---
 
-## Rapport d'état du système
+## System status report
 
-Format de sortie pour le dashboard Observatory :
+Output format for the Observatory dashboard:
 
 ```json
 {
@@ -123,11 +123,11 @@ Format de sortie pour le dashboard Observatory :
 
 ---
 
-## Fréquence recommandée
+## Recommended frequency
 
-| Type d'index | Fréquence | Déclencheur |
+| Index type | Frequency | Trigger |
 |-------------|-----------|-------------|
-| Index complet | Hebdomadaire | Cron ou manuel |
-| Détection de dérives | À chaque PR | CI/CD |
-| Rapport Observatory | Quotidien | Cron |
-| Graphe de relations | À chaque ajout de token | CI/CD |
+| Full index | Weekly | Cron or manual |
+| Drift detection | On every PR | CI/CD |
+| Observatory report | Daily | Cron |
+| Relationship graph | On every token addition | CI/CD |

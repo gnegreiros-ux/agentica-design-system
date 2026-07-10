@@ -1,95 +1,95 @@
-# Skill : ai-ds-composer
+# Skill: ai-ds-composer
 
-> Capacité réutilisable : assembler des patterns d'interface à partir du langage naturel.
-> Ce skill traduit une demande en assemblage de composants valides du système.
+> Reusable capability: assemble interface patterns from natural language.
+> This skill translates a request into a valid assembly of system components.
 > **Type:** skill
-> **Chemin logique:** .claude/skills/ai-ds-composer.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/skills/ai-ds-composer.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/components/overview.md, .claude/rules/components/, tokens/component.json
 
 ---
 
-## Objectif
+## Objective
 
-Permettre la composition d'interfaces en langage naturel tout en garantissant
-que le résultat respecte les règles, tokens et contrats du système de design.
-
----
-
-## Processus de composition
-
-### Étape 1 — Comprendre la demande
-Extraire de la demande :
-- L'objectif de l'utilisateur (ce qu'il veut accomplir)
-- Le contexte (type de page, flux, plateforme)
-- Les contraintes spécifiées (accessibilité, langue, densité)
-
-### Étape 2 — Lire le catalogue
-Consulter `guidelines/components/overview.md` pour identifier :
-- Les composants disponibles
-- Les patterns existants qui résolvent déjà ce besoin
-- Les anti-patterns à éviter
-
-### Étape 3 — Composer
-Assembler les composants en respectant :
-- Les règles de chaque composant (`.claude/rules/components/`)
-- La hiérarchie visuelle (un seul primary par section)
-- Les contraintes d'accessibilité (WCAG 2.1 AA)
-- Les dépendances de tokens
-
-### Étape 4 — Valider
-Avant de retourner le résultat, vérifier :
-```
-✅ Tous les composants utilisés existent dans le système
-✅ Aucune variante inventée
-✅ Les tokens référencés existent dans component.json
-✅ Pas de valeur en dur
-✅ Accessibilité respectée
-✅ Règles de chaque composant respectées
-```
-
-### Étape 5 — Signaler les cas non couverts
-Si la demande requiert quelque chose qui n'existe pas dans le système :
-- Ne pas inventer de composant
-- Signaler le manque au designer responsable
-- Proposer l'alternative la plus proche disponible
+Enable interface composition in natural language while guaranteeing
+that the result respects the system's rules, tokens, and contracts.
 
 ---
 
-## Format de sortie
+## Composition process
+
+### Step 1 — Understand the request
+Extract from the request:
+- The user's goal (what they want to accomplish)
+- The context (page type, flow, platform)
+- The specified constraints (accessibility, language, density)
+
+### Step 2 — Read the catalog
+Consult `guidelines/components/overview.md` to identify:
+- Available components
+- Existing patterns that already solve this need
+- Anti-patterns to avoid
+
+### Step 3 — Compose
+Assemble the components while respecting:
+- Each component's rules (`.claude/rules/components/`)
+- Visual hierarchy (only one primary per section)
+- Accessibility constraints (WCAG 2.1 AA)
+- Token dependencies
+
+### Step 4 — Validate
+Before returning the result, verify:
+```
+✅ All components used exist in the system
+✅ No invented variant
+✅ Referenced tokens exist in component.json
+✅ No hardcoded value
+✅ Accessibility respected
+✅ Each component's rules respected
+```
+
+### Step 5 — Flag uncovered cases
+If the request requires something that does not exist in the system:
+- Do not invent a component
+- Flag the gap to the responsible designer
+- Propose the closest available alternative
+
+---
+
+## Output format
 
 ```markdown
-## Composition : [titre de la demande]
+## Composition: [request title]
 
-### Composants utilisés
-- `ds-button` (variant: primary) — action principale
-- `ds-input` (type: text) — saisie du nom
+### Components used
+- `ds-button` (variant: primary) — primary action
+- `ds-input` (type: text) — name entry
 - `ds-badge` (variant: success) — confirmation
 
 ### Structure
-[Code HTML / pseudo-code avec les composants]
+[HTML code / pseudo-code with the components]
 
-### Tokens appliqués
+### Tokens applied
 - background: `var(--agtc-component-button-primary-background)`
 - spacing: `var(--agtc-semantic-space-layout-component)`
 
-### Règles respectées
-- [x] Un seul bouton primary
-- [x] Focus visible sur tous les interactifs
-- [x] Contraste suffisant
+### Rules respected
+- [x] Only one primary button
+- [x] Focus visible on all interactive elements
+- [x] Sufficient contrast
 
-### Cas non couverts / escalade
-- [ ] Le pattern de date picker n'existe pas encore → signaler au Design System Lead
+### Uncovered cases / escalation
+- [ ] The date picker pattern does not exist yet → flag to the Design System Lead
 ```
 
 ---
 
-## Ce que ce skill ne fait PAS
+## What this skill does NOT do
 
 ```
-❌ Inventer des composants
-❌ Inventer des tokens
-❌ Contourner les règles d'accessibilité
-❌ Décider du contenu éditorial (textes, libellés finaux)
-❌ Prendre des décisions d'architecture produit
+❌ Invent components
+❌ Invent tokens
+❌ Bypass accessibility rules
+❌ Decide editorial content (final copy, labels)
+❌ Make product architecture decisions
 ```

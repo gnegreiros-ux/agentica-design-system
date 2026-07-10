@@ -1,45 +1,45 @@
-# Pipeline : chromatic
+# Pipeline: chromatic
 
-> Tests de régression visuelle via Chromatic (captures de composants).
-> **Statut :** ✅ Actif — workflow CI `.github/workflows/chromatic.yml`
-> **Déclencheur :** tout changement dans `components/`, `tokens/`, `.storybook/`
-
----
-
-## Objectif
-
-Quand activé, ce pipeline :
-1. Publie les stories sur Chromatic
-2. Compare les captures avec le baseline approuvé
-3. Bloque le commit si des régressions visuelles non approuvées sont détectées
+> Visual regression tests via Chromatic (component captures).
+> **Status:** ✅ Active — CI workflow `.github/workflows/chromatic.yml`
+> **Trigger:** any change in `components/`, `tokens/`, `.storybook/`
 
 ---
 
-## Commande
+## Objective
 
-Le token est lu depuis l'environnement (`CHROMATIC_PROJECT_TOKEN`) — jamais passé en argument.
+Once activated, this pipeline:
+1. Publishes stories to Chromatic
+2. Compares captures against the approved baseline
+3. Blocks the commit if unapproved visual regressions are detected
+
+---
+
+## Command
+
+The token is read from the environment (`CHROMATIC_PROJECT_TOKEN`) — never passed as an argument.
 
 ```bash
-# Local : exporter le token de session, puis publier
+# Local: export the session token, then publish
 export CHROMATIC_PROJECT_TOKEN=chpt_xxx
 npm run chromatic
 
-# CI : le workflow injecte le secret GitHub automatiquement
+# CI: the workflow injects the GitHub secret automatically
 ```
 
-## Checks à implémenter
+## Checks to implement
 
-- [ ] Chromatic exit 0 ou changements explicitement approuvés
-- [ ] Aucune régression non intentionnelle sur les composants existants
-- [ ] Captures de tous les états : default, hover, focus, disabled, loading
+- [ ] Chromatic exit 0 or changes explicitly approved
+- [ ] No unintentional regression on existing components
+- [ ] Captures for every state: default, hover, focus, disabled, loading
 
-## Activation — ✅ faite le 2026-06-01
+## Activation — ✅ done on 2026-06-01
 
-1. ✅ Projet créé sur chromatic.com
-2. ✅ Secret `CHROMATIC_PROJECT_TOKEN` ajouté dans les secrets GitHub (token régénéré — l'ancien, exposé dans l'historique git, est révoqué)
-3. ✅ Workflow CI : `.github/workflows/chromatic.yml`
-4. ✅ Statut → Actif
-5. ✅ ADR-006 référencé
+1. ✅ Project created on chromatic.com
+2. ✅ `CHROMATIC_PROJECT_TOKEN` secret added to GitHub secrets (token regenerated — the old one, exposed in git history, is revoked)
+3. ✅ CI workflow: `.github/workflows/chromatic.yml`
+4. ✅ Status → Active
+5. ✅ ADR-006 referenced
 
-> Le token n'est **jamais** en clair dans le dépôt : ni dans `package.json`, ni dans le workflow.
-> Toute rotation se fait sur chromatic.com + mise à jour du secret GitHub.
+> The token is **never** in plain text in the repo: not in `package.json`, not in the workflow.
+> Any rotation happens on chromatic.com + a GitHub secret update.

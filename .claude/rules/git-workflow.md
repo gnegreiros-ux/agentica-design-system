@@ -1,98 +1,98 @@
-# Rule : git-workflow
+# Rule: git-workflow
 
-> Conventions Git pour ce projet. À lire avant d'ouvrir une PR ou de faire un commit.
+> Git conventions for this project. Read before opening a PR or making a commit.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/git-workflow.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/git-workflow.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/development.md, .claude/rules/tokens-system.md
 
 ---
 
-## Structure des branches
+## Branch structure
 
 ```
-main          ← production stable, protégée
-develop       ← intégration, tests
-feature/[xx]  ← nouvelle fonctionnalité
-fix/[xx]      ← correction de bug
-token/[xx]    ← modification de tokens (approbation requise)
-docs/[xx]     ← documentation uniquement
+main          ← stable production, protected
+develop       ← integration, testing
+feature/[xx]  ← new feature
+fix/[xx]      ← bug fix
+token/[xx]    ← token change (approval required)
+docs/[xx]     ← documentation only
 chore/[xx]    ← maintenance, configuration
 ```
 
 ---
 
-## Convention de commits (Conventional Commits)
+## Commit convention (Conventional Commits)
 
-Format : `[type]([scope]): [description courte]`
+Format: `[type]([scope]): [short description]`
 
 | Type | Usage |
 |------|-------|
-| `feat` | Nouveau composant ou fonctionnalité |
-| `fix` | Correction de bug |
-| `token` | Modification de tokens (déclenche revue obligatoire) |
-| `docs` | Documentation uniquement |
-| `a11y` | Amélioration d'accessibilité |
-| `style` | Changement de style sans impact fonctionnel |
-| `refactor` | Refactoring sans changement de comportement |
-| `test` | Ajout ou modification de tests |
-| `chore` | Maintenance, dépendances |
-| `ci` | Configuration CI/CD |
+| `feat` | New component or feature |
+| `fix` | Bug fix |
+| `token` | Token change (triggers mandatory review) |
+| `docs` | Documentation only |
+| `a11y` | Accessibility improvement |
+| `style` | Style change with no functional impact |
+| `refactor` | Refactor with no behavior change |
+| `test` | Adding or modifying tests |
+| `chore` | Maintenance, dependencies |
+| `ci` | CI/CD configuration |
 
-### Exemples valides
+### Valid examples
 ```
-feat(button): ajouter variante ghost avec états hover/focus
-fix(input): corriger le ratio de contraste en état d'erreur (4.2 → 4.5)
-token(semantic): ajouter color.feedback.warning pour les alertes
-docs(button): mettre à jour le contrat avec les règles d'escalade
-a11y(modal): ajouter gestion du focus trap et aria-modal
+feat(button): add ghost variant with hover/focus states
+fix(input): fix contrast ratio in error state (4.2 → 4.5)
+token(semantic): add color.feedback.warning for alerts
+docs(button): update the contract with escalation rules
+a11y(modal): add focus trap and aria-modal handling
 ```
 
 ---
 
-## Règles de PR
+## PR rules
 
-### Titre de la PR
-Même format que les commits : `[type]([scope]): [description]`
+### PR title
+Same format as commits: `[type]([scope]): [description]`
 
-### Description de la PR
+### PR description
 ```markdown
-## Changement
-[Décrire ce qui change et pourquoi]
+## Change
+[Describe what changes and why]
 
-## Impact tokens
-- [ ] Aucun token modifié
-- [ ] Tokens primitifs modifiés → lister lesquels
-- [ ] Tokens sémantiques modifiés → lister lesquels
-- [ ] Tokens de composant modifiés → APPROBATION PRINCIPALE REQUISE
+## Token impact
+- [ ] No token modified
+- [ ] Primitive tokens modified → list which ones
+- [ ] Semantic tokens modified → list which ones
+- [ ] Component tokens modified → PRINCIPAL DESIGNER APPROVAL REQUIRED
 
-## Accessibilité
-- [ ] axe-core : 0 violations critiques
-- [ ] Focus visible testé
-- [ ] Contraste vérifié
+## Accessibility
+- [ ] axe-core: 0 critical violations
+- [ ] Focus visibility tested
+- [ ] Contrast verified
 
 ## Tests
-- [ ] Storybook story créée/mise à jour
-- [ ] Chromatic : captures approuvées
-- [ ] Tests unitaires passent
+- [ ] Storybook story created/updated
+- [ ] Chromatic: captures approved
+- [ ] Unit tests pass
 ```
 
 ---
 
-## Règles de protection
+## Protection rules
 
-- `main` : merge uniquement via PR + 2 approbations + CI verte
-- `develop` : merge uniquement via PR + 1 approbation + CI verte
-- Toute PR modifiant `tokens/component.json` requiert l'approbation du Principal Designer
+- `main`: merge only via PR + 2 approvals + green CI
+- `develop`: merge only via PR + 1 approval + green CI
+- Any PR modifying `tokens/component.json` requires Principal Designer approval
 
 ---
 
-## Règle pour les agents
+## Rule for agents
 
-Un agent peut :
-- ✅ Créer une branche `fix/` ou `docs/`
-- ✅ Faire des commits sur une branche feature
-- ✅ Ouvrir une PR avec description complète
-- ❌ Merger une PR sans approbation humaine
-- ❌ Pusher directement sur `main` ou `develop`
-- ❌ Modifier `tokens/component.json` sans approbation explicite
+An agent can:
+- ✅ Create a `fix/` or `docs/` branch
+- ✅ Make commits on a feature branch
+- ✅ Open a PR with a complete description
+- ❌ Merge a PR without human approval
+- ❌ Push directly to `main` or `develop`
+- ❌ Modify `tokens/component.json` without explicit approval

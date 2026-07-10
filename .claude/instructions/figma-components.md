@@ -1,309 +1,311 @@
-# Rule : figma-components
+# Rule: figma-components
 
-> Règles de construction des composants Figma pour la librairie Agentica.
-> Basées sur les meilleures pratiques officielles Figma (2024-2025) + retours d'expérience de la session de build.
+> Construction rules for Figma components in the Agentica library.
+> Based on official Figma best practices (2024-2025) + lessons learned from the build session.
 > **Type:** rule
-> **Chemin logique:** .claude/instructions/figma-components.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/instructions/figma-components.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** .claude/rules/tokens-system.md, .claude/rules/development.md
 
 ---
 
-## 0. Règle fondamentale — Jamais de token primitif, jamais de hex en dur
+## 0. Fundamental rule — Never a primitive token, never a hardcoded hex
 
-> **Cette règle s'applique à TOUT le code Figma : composants ET pages de documentation.**
+> **This rule applies to ALL Figma code: components AND documentation pages.**
 
 ```
-❌ INTERDIT — token primitif dans un fill ou stroke
+❌ FORBIDDEN — primitive token in a fill or stroke
    comp.fills = [{type:"SOLID", color:{r:0,g:0.478,b:0.408}}]
    frame.fills = [hexRgb("#007A68")]
-   VARS["color/teal/500"]               ← token primitif
+   VARS["color/teal/500"]               ← primitive token
 
-✅ OBLIGATOIRE — token sémantique via vFill() avec fallback
+✅ REQUIRED — semantic token via vFill() with fallback
    comp.fills = vFill("color/action/primary", "#007A68")
    frame.fills = vFill("color/background/default", "#FFFFFF")
 ```
 
-### Pourquoi
+### Why
 
-Si un token sémantique change de valeur (ex: `color/action/primary` passe de teal à bleu),
-toutes les libraisons Figma se mettent à jour automatiquement. Avec des hex en dur, rien ne bouge.
-Les primitifs (`color/teal/500`) exposent l'implémentation, pas l'intention — cf. `tokens-system.md`.
+If a semantic token changes value (e.g. `color/action/primary` switches from teal to blue),
+every Figma library update picks it up automatically. With hardcoded hex, nothing moves.
+Primitives (`color/teal/500`) expose the implementation, not the intent — see `tokens-system.md`.
 
-### Exceptions acceptées
+### Accepted exceptions
 
-| Cas | Raison | Pattern requis |
+| Case | Reason | Required pattern |
 |-----|--------|----------------|
-| `gradientStops` | L'API Figma ne supporte pas `setBoundVariableForPaint` sur les stops | Utiliser le hex **fallback du token sémantique** + commentaire `// token: color/...` |
-| Opacité sur ellipse décorative | Figma applique l'opacité sur le nœud, pas sur la variable | `opacity:` sur le nœud, `vFill()` pour la couleur |
+| `gradientStops` | The Figma API doesn't support `setBoundVariableForPaint` on stops | Use the **semantic token's fallback hex** + comment `// token: color/...` |
+| Opacity on decorative ellipse | Figma applies opacity on the node, not on the variable | `opacity:` on the node, `vFill()` for the color |
 
 ---
 
-## 1. Propriétés de composant — quand utiliser quoi
+## 1. Component properties — when to use what
 
-| Propriété | Type Figma | Quand l'utiliser |
+| Property | Figma type | When to use it |
 |-----------|-----------|-----------------|
-| État interactif | **Variant** `State=` | Default, Hover, Focus, Disabled, Loading, Error, ReadOnly |
-| Taille | **Variant** `Size=` | sm / md / lg quand les dimensions changent réellement |
-| Style visuel | **Variant** `Variant=` | Primary / Secondary / Critical / Ghost |
-| Sous-élément optionnel | **Boolean** `HasIconLeft` | Afficher/masquer icône, label, helper text, badge |
-| Contenu texte | **Text** `Label=` | Libellé bouton, placeholder, titre de carte |
-| Slot icône / avatar | **Instance Swap** `Icon=` | Remplacer une icône ou un avatar par une autre instance |
+| Interactive state | **Variant** `State=` | Default, Hover, Focus, Disabled, Loading, Error, ReadOnly |
+| Size | **Variant** `Size=` | sm / md / lg when dimensions actually change |
+| Visual style | **Variant** `Variant=` | Primary / Secondary / Critical / Ghost |
+| Optional sub-element | **Boolean** `HasIconLeft` | Show/hide icon, label, helper text, badge |
+| Text content | **Text** `Label=` | Button label, placeholder, card title |
+| Icon / avatar slot | **Instance Swap** `Icon=` | Swap an icon or avatar for another instance |
 
-### Règles absolues
+### Absolute rules
 
 ```
-✅ Utiliser Variant pour tout ce qui change la structure visuelle (états, tailles)
-✅ Utiliser Boolean pour activer/désactiver un sous-layer (jamais une Variant pour ça)
-✅ Nommer les layers de texte de façon identique entre variantes (ex: "label")
-   → Préserve les overrides texte quand on change de variante
-✅ Documenter chaque composant avec une description dans le panneau de propriétés
-❌ Ne jamais créer une Variant uniquement pour cacher/montrer un layer → Boolean
-❌ Ne jamais dépasser 10 variantes dans un seul ComponentSet (performance)
-❌ Ne jamais imbriquer plus de 3 niveaux de composants
+✅ Use Variant for anything that changes the visual structure (states, sizes)
+✅ Use Boolean to toggle a sub-layer on/off (never a Variant for this)
+✅ Name text layers identically across variants (e.g. "label")
+   → Preserves text overrides when switching variants
+✅ Document every component with a description in the properties panel
+❌ Never create a Variant just to hide/show a layer → Boolean
+❌ Never exceed 10 variants in a single ComponentSet (performance)
+❌ Never nest more than 3 levels of components
 ```
 
 ---
 
-## 2. Auto-layout — règles de sizing
+## 2. Auto-layout — sizing rules
 
-### Modes de taille
+### Size modes
 
-| Mode | Quand l'utiliser | Exemple |
+| Mode | When to use it | Example |
 |------|-----------------|---------|
-| **HUG** (`AUTO`) | Composant qui grandit avec son contenu | Bouton, tag, badge |
-| **FIXED** | Largeur/hauteur définie (doc, grid, field) | Input 280 px, colonne doc |
-| **FILL** (`layoutGrow=1`) | Enfant qui remplit l'espace disponible | Texte dans un input, colonne flexible |
-| **Min/Max width** | Composant responsive avec contraintes | Input min 120 px / max 480 px |
+| **HUG** (`AUTO`) | Component that grows with its content | Button, tag, badge |
+| **FIXED** | Defined width/height (doc, grid, field) | Input 280 px, doc column |
+| **FILL** (`layoutGrow=1`) | Child that fills available space | Text inside an input, flexible column |
+| **Min/Max width** | Responsive component with constraints | Input min 120 px / max 480 px |
 
-### Règle critique — resize() avant primaryAxisSizingMode
+### Critical rule — resize() before primaryAxisSizingMode
 
 ```javascript
-// ✅ CORRECT — toujours dans cet ordre
+// ✅ CORRECT — always in this order
 frame.resize(width, 40);          // 1. resize FIRST
-frame.primaryAxisSizingMode = "AUTO"; // 2. AUTO après resize
+frame.primaryAxisSizingMode = "AUTO"; // 2. AUTO after resize
 
-// ❌ INCORRECT — figma revient silencieusement en FIXED (bug API)
+// ❌ INCORRECT — figma silently reverts to FIXED (API bug)
 frame.primaryAxisSizingMode = "AUTO";
 frame.resize(width, 40);
 ```
 
-### Padding et gap
+### Padding and gap
 
 ```
-✅ Lier paddingLeft/paddingRight à space/control/padding-x
-✅ Lier paddingTop/paddingBottom à space/control/padding-y
-✅ Lier itemSpacing à space/control/gap (contrôles) ou space/layout/component (sections)
-✅ Utiliser counterAxisAlignItems = "CENTER" pour les boutons et contrôles inline
-❌ Ne jamais coder des valeurs numériques en dur — toujours via bindV()
+✅ Bind paddingLeft/paddingRight to space/control/padding-x
+✅ Bind paddingTop/paddingBottom to space/control/padding-y
+✅ Bind itemSpacing to space/control/gap (controls) or space/layout/component (sections)
+✅ Use counterAxisAlignItems = "CENTER" for buttons and inline controls
+❌ Never hardcode numeric values — always via bindV()
 ```
 
-### Auto-layout imbriqué
+### Nested auto-layout
 
-- Un composant peut contenir des frames auto-layout imbriquées (ex: wrapper VERTICAL → field HORIZONTAL)
-- Les frames sans auto-layout (`layoutMode = "NONE"`) permettent le positionnement absolu des enfants
-  → Utiliser pour les contrôles internes : pouce du Toggle, checkmark, dot radio
+- A component can contain nested auto-layout frames (e.g. VERTICAL wrapper → HORIZONTAL field)
+- Frames without auto-layout (`layoutMode = "NONE"`) allow absolute positioning of children
+  → Use for internal controls: Toggle thumb, checkmark, radio dot
 
 ---
 
-## 3. Architecture des composants
+## 3. Component architecture
 
-### Modèle recommandé (atomique)
+### Recommended model (atomic)
 
 ```
-Niveau 0 — Primitifs
+Level 0 — Primitives
   Icon/16  Icon/24  Avatar/xs  Avatar/md
 
-Niveau 1 — Contrôles simples
+Level 1 — Simple controls
   Toggle   Checkbox   Radio   Badge
 
-Niveau 2 — Composants
-  Button (utilise Icon/16)
-  Input  (utilise Icon/16)
-  Select (utilise Icon/16 + Badge)
+Level 2 — Components
+  Button (uses Icon/16)
+  Input  (uses Icon/16)
+  Select (uses Icon/16 + Badge)
 
-Niveau 3 — Patterns
-  FormField (utilise Input + Label + HelperText)
-  Toolbar   (utilise Button + Toggle + Input)
+Level 3 — Patterns
+  FormField (uses Input + Label + HelperText)
+  Toolbar   (uses Button + Toggle + Input)
 ```
 
 ```
-✅ Créer des composants de base réutilisables avant de construire les composants composites
-✅ Imbriquer des instances (pas des frames copiées) pour maintenir les connexions
-✅ UN composant logique = UN seul ComponentSet, avec une propriété Variant pour ses
-   déclinaisons de style (Primary/Secondary/Critical/Ghost…) — jamais un ComponentSet
-   par déclinaison
-❌ Ne jamais copier-coller la structure d'un composant au lieu d'imbriquer son instance
-❌ Ne jamais dupliquer les variantes pour créer "une version légèrement différente"
-❌ Ne jamais créer un ComponentSet séparé par déclinaison de style (Button/Primary,
-   Button/Secondary… en sets distincts) — voir l'incident ci-dessous
+✅ Create reusable base components before building composite components
+✅ Nest instances (not copied frames) to preserve connections
+✅ ONE logical component = ONE ComponentSet, with a Variant property for its
+   style variations (Primary/Secondary/Critical/Ghost…) — never a separate
+   ComponentSet per variation
+❌ Never copy-paste a component's structure instead of nesting its instance
+❌ Never duplicate variants to create "a slightly different version"
+❌ Never create a separate ComponentSet per style variation (Button/Primary,
+   Button/Secondary… as distinct sets) — see the incident below
 ```
 
-### Structure d'un ComponentSet Agentica — règle corrigée (ADR 2026-07-06)
+### Structure of an Agentica ComponentSet — corrected rule (ADR 2026-07-06)
 
-> **Incident.** La règle précédente de ce document préconisait « un ComponentSet par
-> déclinaison de style » (`Button / Primary`, `Button / Secondary`… en 4 ComponentSets
-> séparés) au motif de rester sous 10 variantes par set. C'était une erreur : dans Figma,
-> chaque déclinaison devenait alors un **composant distinct** — un designer construisant
-> une maquette devait remplacer toute l'instance pour passer de Primary à Secondary,
-> au lieu de changer une simple propriété. Ce n'est pas ainsi que les designers
-> attendent de travailler avec un composant à variantes (Material, Polaris, etc. n'ont
-> qu'un seul composant Button). Corrigé le 2026-07-06 : les 4 ComponentSets Button ont
-> été fusionnés en un seul avec deux propriétés (`Variant`, `State`).
+> **Incident.** This document's previous rule recommended "one ComponentSet per
+> style variation" (`Button / Primary`, `Button / Secondary`… as 4 separate
+> ComponentSets) to stay under 10 variants per set. That was a mistake: in Figma,
+> each variation then became a **distinct component** — a designer building a
+> mockup had to swap the entire instance to go from Primary to Secondary,
+> instead of changing a single property. That is not how designers expect to
+> work with a variant component (Material, Polaris, etc. all have just one
+> Button component). Fixed on 2026-07-06: the 4 Button ComponentSets were
+> merged into one with two properties (`Variant`, `State`).
 
-**Bon pattern — UN seul ComponentSet, deux axes de propriété :**
+**Correct pattern — ONE ComponentSet, two property axes:**
 
 ```
 ComponentSet "Button"
   Variant=Primary,   State=Default/Hover/Focus/Disabled/Loading
   Variant=Secondary, State=Default/Hover/Focus/Disabled/Loading
   Variant=Critical,  State=Default/Hover/Focus/Disabled/Loading
-  Variant=Ghost,     State=Default/Hover/Focus/Disabled        (Loading non applicable)
+  Variant=Ghost,     State=Default/Hover/Focus/Disabled        (Loading not applicable)
 ```
 
-Une grille incomplète (Ghost sans Loading) est acceptable — toutes les combinaisons
-n'ont pas à exister.
+An incomplete grid (Ghost without Loading) is acceptable — not every combination
+has to exist.
 
-**Plafond de variantes** — aligné sur le skill `figma-generate-library`, pas sur un
-plafond arbitraire de 10 : cap réel à **30 combinaisons** (`Variant × State`, ou plus si
-d'autres axes s'ajoutent) avant de fractionner en sous-composant. Button à 19-20
-variantes reste largement dans cette limite — il n'y avait donc jamais de raison de le
-séparer.
+**Variant ceiling** — aligned with the `figma-generate-library` skill, not an
+arbitrary cap of 10: the real cap is **30 combinations** (`Variant × State`, or
+more if other axes are added) before splitting into a sub-component. Button at
+19-20 variants stays well within this limit — there was never a reason to
+split it.
 
-**Il n'y a pas d'exception « structure différente ».** Une version précédente de cette
-règle tolérait un ComponentSet séparé si les familles étaient « structurellement
-distinctes » (ex. Input `Search` avec une icône intégrée que `Text` n'a pas). Corrigé le
-2026-07-06 : dans les faits, `Input/Text` et `Input/Search` avaient été construits comme
-2 ComponentSets alors que `Search` n'avait même pas de structure différente (juste un
-placeholder différent) — et même si la structure avait réellement différé, la bonne
-solution est un **slot interne** (Boolean `HasIcon` ou Instance Swap `Icon=`) à
-l'intérieur d'un seul ComponentSet, pas un ComponentSet séparé. Un composant logique
-= un seul ComponentSet, toujours — la variation structurelle se gère par propriété
-(Boolean/Instance Swap), jamais en dupliquant le ComponentSet.
+**There is no "different structure" exception.** An earlier version of this
+rule tolerated a separate ComponentSet if the families were "structurally
+distinct" (e.g. Input `Search` with a built-in icon that `Text` doesn't have).
+Fixed on 2026-07-06: in practice, `Input/Text` and `Input/Search` had been
+built as 2 ComponentSets even though `Search` didn't even have a different
+structure (just a different placeholder) — and even if the structure had
+genuinely differed, the right solution is an **internal slot** (Boolean
+`HasIcon` or Instance Swap `Icon=`) inside a single ComponentSet, not a
+separate ComponentSet. One logical component = one ComponentSet, always —
+structural variation is handled via a property (Boolean/Instance Swap), never
+by duplicating the ComponentSet.
 
-### ⚠️ Piège API — fusionner des composants déjà rattachés à un ComponentSet
+### ⚠️ API pitfall — merging components already attached to a ComponentSet
 
-`figma.combineAsVariants()` sur des composants qui appartenaient chacun à un ancien
-ComponentSet **distinct** produit un ComponentSet cassé (« Component set has existing
-errors » — `componentPropertyDefinitions` et `variantProperties` deviennent illisibles),
-même si le renommage semble avoir fonctionné. Chaque composant garde une référence
-interne à l'ancien jeu de propriétés de son ex-ComponentSet, et Figma ne les réconcilie
-pas silencieusement.
+`figma.combineAsVariants()` on components that each belonged to a **distinct**
+former ComponentSet produces a broken ComponentSet ("Component set has existing
+errors" — `componentPropertyDefinitions` and `variantProperties` become
+unreadable), even if the renaming appears to have worked. Each component keeps
+an internal reference to its ex-ComponentSet's old property set, and Figma does
+not silently reconcile them.
 
 ```
-❌ INTERDIT
-const old = [...setA.children, ...setB.children]; // composants d'anciens sets DIFFÉRENTS
-figma.combineAsVariants(old, page); // → ComponentSet cassé, illisible
+❌ FORBIDDEN
+const old = [...setA.children, ...setB.children]; // components from DIFFERENT former sets
+figma.combineAsVariants(old, page); // → broken, unreadable ComponentSet
 
-✅ CORRECT — reconstruire des composants neufs avant de fusionner
-// 1. Lire fills/strokes/texte/layout de chaque ancien composant (ça reste lisible)
-// 2. figma.createComponent() pour CHAQUE variante, reproduire le visuel, nommer
-//    correctement "Variant=X, State=Y" (composants neufs = pas d'historique de propriété)
-// 3. figma.combineAsVariants(nouveauxComposants, page) → ComponentSet propre
-// 4. instance.swapComponent(nouveauComposant) sur toutes les instances existantes
-//    AVANT de supprimer les anciens composants/ComponentSets
+✅ CORRECT — rebuild fresh components before merging
+// 1. Read fills/strokes/text/layout from each old component (still readable)
+// 2. figma.createComponent() for EACH variant, reproduce the visual, name it
+//    correctly "Variant=X, State=Y" (fresh components = no leftover property history)
+// 3. figma.combineAsVariants(newComponents, page) → clean ComponentSet
+// 4. instance.swapComponent(newComponent) on every existing instance
+//    BEFORE deleting the old components/ComponentSets
 ```
 
-Cf. incidents Button et Input du 2026-07-06 — récupération complète documentée dans
-l'historique GitHub Projects (ADR-069). Même correctif appliqué aux deux : Button (4 ComponentSets
-`Variant` → 1 seul, 19 variantes) et Input (2 ComponentSets `Type` → 1 seul, 9 variantes).
+See the Button and Input incidents from 2026-07-06 — full recovery documented
+in the GitHub Projects history (ADR-069). Same fix applied to both: Button (4
+`Variant` ComponentSets → 1, 19 variants) and Input (2 `Type` ComponentSets →
+1, 9 variants).
 
 ---
 
-## 4. Nommage
+## 4. Naming
 
-### Composants et ComponentSets
+### Components and ComponentSets
 
-| Élément | Convention | Exemple |
+| Element | Convention | Example |
 |---------|-----------|---------|
-| ComponentSet | `Nom / Variante` | `Button / Primary` |
-| Variant property | `State=Valeur` | `State=Default` |
-| Propriété booléenne | PascalCase | `HasIconLeft`, `ShowHelper` |
-| Propriété texte | PascalCase | `Label`, `Placeholder` |
+| ComponentSet | `Name / Variant` | `Button / Primary` |
+| Variant property | `State=Value` | `State=Default` |
+| Boolean property | PascalCase | `HasIconLeft`, `ShowHelper` |
+| Text property | PascalCase | `Label`, `Placeholder` |
 
-### Layers internes
-
-```
-✅ Nommer les layers de façon sémantique et stable : "label", "field", "icon-left", "track", "thumb"
-✅ Garder le MÊME nom de layer entre toutes les variantes d'un ComponentSet
-   → Override texte préservé quand on change d'état
-✅ Préfixer les layers invisibles avec "_" : "_focus-ring" (convention optionnelle)
-❌ Laisser des noms par défaut (Frame 47, Rectangle 2, Group 12)
-```
-
-### Pages Figma
+### Internal layers
 
 ```
-🎯 Brand          ← assets brand, jamais toucher
-🎨 Foundations    ← cover + sous-pages
+✅ Name layers semantically and stably: "label", "field", "icon-left", "track", "thumb"
+✅ Keep the SAME layer name across every variant of a ComponentSet
+   → Preserves text overrides when switching state
+✅ Prefix invisible layers with "_": "_focus-ring" (optional convention)
+❌ Leave default names (Frame 47, Rectangle 2, Group 12)
+```
+
+### Figma pages
+
+```
+🎯 Brand          ← brand assets, never touch
+🎨 Foundations    ← cover + sub-pages
   Foundations / Colors
   Foundations / Typography
   Foundations / Spacing
   Foundations / Logos
   Foundations / Icons
-🧩 Components     ← cover catalogue + sous-pages
+🧩 Components     ← catalog cover + sub-pages
   Components / Button
   Components / Input
   ...
-📐 Patterns       ← flows, compositions, exemples in-context
+📐 Patterns       ← flows, compositions, in-context examples
 ```
 
 ---
 
-## 5. Liaison Variables et Styles
+## 5. Binding Variables and Styles
 
-### Tableau de mapping — token sémantique → fallback hex
+### Mapping table — semantic token → fallback hex
 
-> Chaque couleur utilisée dans les composants ET dans les pages de documentation
-> doit être tirée de cette table. **Jamais de hex en dehors de cette table.**
+> Every color used in components AND in documentation pages must come from
+> this table. **Never a hex value outside this table.**
 
-#### Couleurs d'action et de marque
+#### Action and brand colors
 
-| Token sémantique | Hex fallback | Primitive → | Usage |
+| Semantic token | Hex fallback | Primitive → | Usage |
 |-----------------|-------------|------------|-------|
-| `color/action/primary` | `#007A68` | teal.11 | Fill principal — bouton, lien |
+| `color/action/primary` | `#007A68` | teal.11 | Main fill — button, link |
 | `color/action/primary-hover` | `#0d3d38` | teal.12 | Hover / pressed state |
-| `color/action/primary-subtle` | `#F0FAF8` | teal.2 | Texte description sur fond teal (Approche B header) |
+| `color/action/primary-subtle` | `#F0FAF8` | teal.2 | Description text on teal background (Header approach B) |
 
-#### Texte
+#### Text
 
-| Token sémantique | Hex fallback | Primitive → | Usage |
+| Semantic token | Hex fallback | Primitive → | Usage |
 |-----------------|-------------|------------|-------|
-| `color/text/primary` | `#202020` | gray.12 | Corps de texte, titres |
+| `color/text/primary` | `#202020` | gray.12 | Body text, headings |
 | `color/text/secondary` | `#646464` | gray.11 | Description, labels, helper text |
-| `color/text/disabled` | `#767676` | neutral.500 | Placeholder, texte Disabled |
-| `color/text/on-action` | `#FFFFFF` | neutral.0 | Texte sur fond action/primary |
+| `color/text/disabled` | `#767676` | neutral.500 | Placeholder, Disabled text |
+| `color/text/on-action` | `#FFFFFF` | neutral.0 | Text on an action/primary background |
 
 #### Backgrounds
 
-| Token sémantique | Hex fallback | Primitive → | Usage |
+| Semantic token | Hex fallback | Primitive → | Usage |
 |-----------------|-------------|------------|-------|
-| `color/background/surface` | `#FFFFFF` | neutral.0 | Fond champs (Input), cards, sections blanches |
-| `color/background/subtle` | `#f0f0f0` | gray.3 | Alternance, states cells, fond showcase |
-| `color/background/page` | `#fcfcfc` | gray.1 | Fond page-wrapper |
-| `color/background/hover` | `#fafafa` | neutral.50 | Hover row tableau |
+| `color/background/surface` | `#FFFFFF` | neutral.0 | Field background (Input), cards, white sections |
+| `color/background/subtle` | `#f0f0f0` | gray.3 | Alternation, state cells, showcase background |
+| `color/background/page` | `#fcfcfc` | gray.1 | page-wrapper background |
+| `color/background/hover` | `#fafafa` | neutral.50 | Table row hover |
 
-#### Feedback (DO / DON'T / états d'erreur)
+#### Feedback (DO / DON'T / error states)
 
-| Token sémantique | Hex fallback | Primitive → | Usage |
+| Semantic token | Hex fallback | Primitive → | Usage |
 |-----------------|-------------|------------|-------|
-| `color/feedback/success` | `#18794e` | green.11 | Badge DO, bordure left DO-column |
-| `color/feedback/danger` | `#ce2c31` | red.11 | Badge DON'T, message d'erreur, bordure Error |
+| `color/feedback/success` | `#18794e` | green.11 | DO badge, DO-column left border |
+| `color/feedback/danger` | `#ce2c31` | red.11 | DON'T badge, error message, Error border |
 
-#### Bordures
+#### Borders
 
-| Token sémantique | Hex fallback | Primitive → | Usage |
+| Semantic token | Hex fallback | Primitive → | Usage |
 |-----------------|-------------|------------|-------|
-| `color/border/default` | `#e8e8e8` | gray.4 | Stroke de card, tableau, champ Default |
-| `color/border/focus` | `#007A68` | teal.11 | Anneau focus 2px OUTSIDE — strokes |
-| `color/border/danger` | `#ce2c31` | red.11 | Bordure champ Error |
+| `color/border/default` | `#e8e8e8` | gray.4 | Card stroke, table, Default field |
+| `color/border/focus` | `#007A68` | teal.11 | 2px OUTSIDE focus ring — strokes |
+| `color/border/danger` | `#ce2c31` | red.11 | Error field border |
 
 ---
 
-### Fills et strokes
+### Fills and strokes
 
 ```javascript
-// ✅ CORRECT — token sémantique + fallback (valeurs issues de primitives.json)
+// ✅ CORRECT — semantic token + fallback (values from primitives.json)
 comp.fills  = vFill("color/action/primary",      "#007A68"); // teal.11
 frame.fills = vFill("color/background/surface",  "#FFFFFF"); // neutral.0
 text.fills  = vFill("color/text/secondary",      "#646464"); // gray.11
@@ -315,36 +317,36 @@ comp.strokes = [figma.variables.setBoundVariableForPaint(
   VARS["color/border/focus"]
 )];
 
-// ❌ INTERDIT
-comp.fills = [{type:"SOLID", color:{r:0,g:0.478,b:0.408}}]; // hex brut
-comp.fills = [{type:"SOLID", color:hexRgb("#007A68")}];      // hex brut
-VARS["color/teal/500"]                                        // token primitif
+// ❌ FORBIDDEN
+comp.fills = [{type:"SOLID", color:{r:0,g:0.478,b:0.408}}]; // raw hex
+comp.fills = [{type:"SOLID", color:hexRgb("#007A68")}];      // raw hex
+VARS["color/teal/500"]                                        // primitive token
 ```
 
 ### Float properties
 
 ```javascript
-// ✅ Valeur de fallback d'abord, puis bindV()
+// ✅ Fallback value first, then bindV()
 comp.paddingLeft = 16;
 bindV(comp, 'paddingLeft', 'space/control/padding-x');
 ```
 
-### Texte
+### Text
 
 ```javascript
-// ✅ Ordre obligatoire pour éviter les erreurs Figma API
-t.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")}; // 1. font chargée
-t.fontSize = 14;                                 // 2. taille par défaut
-t.characters = "Label";                          // 3. contenu
-t.textStyleId = TX["typography/label"].id;       // 4. style (override police)
-t.fills = vFill("color/text/primary","#202020"); // 5. token sémantique (gray.12)
+// ✅ Required order to avoid Figma API errors
+t.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")}; // 1. font loaded
+t.fontSize = 14;                                 // 2. default size
+t.characters = "Label";                          // 3. content
+t.textStyleId = TX["typography/label"].id;       // 4. style (overrides font)
+t.fills = vFill("color/text/primary","#202020"); // 5. semantic token (gray.12)
 ```
 
-### Exception — gradientStops (binding non supporté par l'API)
+### Exception — gradientStops (binding not supported by the API)
 
 ```javascript
-// Seul cas où le hex peut apparaître directement
-// → Utiliser le fallback du token sémantique + commenter le nom
+// The only case where hex can appear directly
+// → Use the semantic token's fallback + comment its name
 {
   type: "GRADIENT_LINEAR",
   gradientTransform: [[1, 0, 0], [0, 1, 0.5]],
@@ -353,118 +355,118 @@ t.fills = vFill("color/text/primary","#202020"); // 5. token sémantique (gray.1
     {position: 1, color: {r:0,   g:0.478,b:0.408,a:0.14}}, // color/action/primary @ 14%
   ]
 }
-// ✅ Le hex correspond au fallback du token sémantique — token référencé en commentaire
+// ✅ The hex matches the semantic token's fallback — token referenced in a comment
 ```
 
-### Portée des Variables (scoping)
+### Variable scoping
 
-- Définir les variables avec le scope le plus restrictif possible :
-  - `color/text/*` → scope TEXT FILL
-  - `color/background/*` → scope FRAME FILL
-  - `color/border/*` → scope STROKE
-  - `space/*` → scope GAP, PADDING
-  - `radius/*` → scope CORNER RADIUS
-- Cela évite que les variables color/text apparaissent dans le sélecteur de fond de frame
+- Define variables with the narrowest scope possible:
+  - `color/text/*` → TEXT FILL scope
+  - `color/background/*` → FRAME FILL scope
+  - `color/border/*` → STROKE scope
+  - `space/*` → GAP, PADDING scope
+  - `radius/*` → CORNER RADIUS scope
+- This keeps color/text variables from showing up in the frame background picker
 
 ---
 
-## 6. Performances et scalabilité
+## 6. Performance and scalability
 
 ```
-✅ Maximum 10 variantes par ComponentSet
-✅ Maximum 3 niveaux d'imbrication de composants
-✅ Séparer la librairie en fichiers si > 200 composants (Foundation lib / Component lib / Pattern lib)
-✅ Utiliser Shared Libraries pour distribuer les composants à d'autres fichiers
-❌ Ne pas mettre tous les composants dans un seul frame/page → lag
-❌ Ne pas utiliser de Group là où un Frame auto-layout serait approprié
-❌ Ne pas créer de "ComponentSet de preview" avec 100 instances → utiliser les pages doc dédiées
+✅ Maximum 10 variants per ComponentSet
+✅ Maximum 3 levels of component nesting
+✅ Split the library into files if > 200 components (Foundation lib / Component lib / Pattern lib)
+✅ Use Shared Libraries to distribute components to other files
+❌ Don't put every component in a single frame/page → lag
+❌ Don't use a Group where an auto-layout Frame would be appropriate
+❌ Don't create a "preview ComponentSet" with 100 instances → use dedicated doc pages
 ```
 
 ---
 
-## 7. Checklist avant publication d'un composant
+## 7. Checklist before publishing a component
 
-**Composant**
-- [ ] Toutes les fills/strokes via `vFill(tokenSémantique, fallback)` — jamais `hexRgb()` direct, jamais token primitif
-- [ ] Gradient stops : commentaire `// token: color/...` présent sur chaque stop
-- [ ] Tous les textes liés à un Text Style + couleur via Variable
-- [ ] Padding, gap, cornerRadius liés aux Float Variables
-- [ ] Tous les états interactifs couverts (Default, Hover, Focus, Disabled minimum)
-- [ ] Layers nommés sémantiquement et stables entre variantes
-- [ ] Description du composant renseignée (panneau propriétés Figma)
+**Component**
+- [ ] All fills/strokes via `vFill(semanticToken, fallback)` — never direct `hexRgb()`, never a primitive token
+- [ ] Gradient stops: `// token: color/...` comment present on every stop
+- [ ] All text bound to a Text Style + color via Variable
+- [ ] Padding, gap, cornerRadius bound to Float Variables
+- [ ] All interactive states covered (Default, Hover, Focus, Disabled minimum)
+- [ ] Layers named semantically and stably across variants
+- [ ] Component description filled in (Figma properties panel)
 
-**Page de documentation**
-- [ ] `page-wrapper` VERTICAL auto-layout — aucun élément positionné manuellement
-- [ ] `section-header` avec titre, description et `links-row` (≥ 3 liens)
-- [ ] `section-showcase` avec tous les ComponentSets visibles
-- [ ] `section-states` ou `section-tokens` avec tableau descriptif
-- [ ] `section-dos-donts` avec au moins 1 paire DO/DON'T
-- [ ] Aucun chevauchement visible — scroll vertical propre
-- [ ] section-header : décoration gradient (approche A ou B, jamais de texte sur fond non vérifié)
-- [ ] Éléments décoratifs préfixés `_` et `layoutPositioning = "ABSOLUTE"`
+**Documentation page**
+- [ ] `page-wrapper` VERTICAL auto-layout — no manually positioned element
+- [ ] `section-header` with title, description, and `links-row` (≥ 3 links)
+- [ ] `section-showcase` with every ComponentSet visible
+- [ ] `section-states` or `section-tokens` with a descriptive table
+- [ ] `section-dos-donts` with at least 1 DO/DON'T pair
+- [ ] No visible overlap — clean vertical scroll
+- [ ] section-header: gradient decoration (approach A or B, never text on an unverified background)
+- [ ] Decorative elements prefixed `_` and `layoutPositioning = "ABSOLUTE"`
 
 **Distribution**
-- [ ] Testé à différentes largeurs (si composant responsive)
-- [ ] Catalogue `Components` (35:7) mis à jour (badge ✅)
+- [ ] Tested at different widths (if the component is responsive)
+- [ ] `Components` catalog (35:7) updated (✅ badge)
 
 ---
 
-## 8. Mise en page des pages composant
+## 8. Component page layout
 
-### Règle de co-localisation — documentation sur la même page que le composant
+### Co-location rule — documentation on the same page as the component
 
-> **La documentation (états, tokens, DO/DON'T, liens) vit sur la MÊME page Figma que le composant.**
-> Pas de page séparée « doc » — un seul `page-wrapper` contient tout.
+> **Documentation (states, tokens, DO/DON'T, links) lives on the SAME Figma page as the component.**
+> No separate "doc" page — a single `page-wrapper` holds everything.
 
 ```
 Page "Components / Button"
   └── page-wrapper (VERTICAL auto-layout)
-        ├── section-header      ← titre, description, liens
-        ├── section-showcase    ← ComponentSets (le composant lui-même)
-        ├── section-states      ← documentation des états
-        ├── section-tokens      ← tokens utilisés
-        ├── section-dos-donts   ← bonnes pratiques
-        └── section-links       ← références externes
+        ├── section-header      ← title, description, links
+        ├── section-showcase    ← ComponentSets (the component itself)
+        ├── section-states      ← state documentation
+        ├── section-tokens      ← tokens used
+        ├── section-dos-donts   ← best practices
+        └── section-links       ← external references
 
 Page "Patterns / Form"
-  └── page-wrapper (même structure)
+  └── page-wrapper (same structure)
         ├── section-header
-        ├── section-showcase    ← pattern en situation réelle
+        ├── section-showcase    ← pattern in a real situation
         ├── section-anatomy     ← annotations
         ├── section-dos-donts
         └── section-links
 ```
 
-Idem pour les patterns. Le catalogue `Components` (35:7) ne contient qu'un **résumé** ;
-la documentation complète est toujours sur la page dédiée.
+Same for patterns. The `Components` catalog (35:7) only holds a **summary**;
+the full documentation always lives on the dedicated page.
 
 ---
 
-### Problème à éviter — chevauchement
+### Problem to avoid — overlap
 
-Les nœuds créés sans positionnement explicite s'empilent tous à `x=0, y=0`.
-**Solution : un `page-wrapper` VERTICAL auto-layout qui contient tout.**
+Nodes created without explicit positioning all stack up at `x=0, y=0`.
+**Solution: a VERTICAL auto-layout `page-wrapper` that holds everything.**
 
 ```javascript
-// ✅ PATTERN OBLIGATOIRE — début de chaque page composant / pattern
-// Tous les fills via vFill() — jamais hexRgb() directement (voir section 0)
+// ✅ REQUIRED PATTERN — start of every component / pattern page
+// All fills via vFill() — never hexRgb() directly (see section 0)
 const wrapper = figma.createFrame();
 wrapper.name = "page-wrapper";
 wrapper.fills = vFill("color/background/page", "#F4F4F5");
 wrapper.layoutMode = "VERTICAL";
-wrapper.primaryAxisSizingMode = "AUTO";       // hauteur = contenu
+wrapper.primaryAxisSizingMode = "AUTO";       // height = content
 wrapper.counterAxisSizingMode = "FIXED";
-wrapper.resize(1440, 800);                    // largeur fixe, hauteur ajustée après
-wrapper.itemSpacing = 0;                      // gap géré par les sections
+wrapper.resize(1440, 800);                    // fixed width, height adjusted after
+wrapper.itemSpacing = 0;                      // gap handled by sections
 wrapper.paddingTop = 0; wrapper.paddingBottom = 0;
 wrapper.paddingLeft = 0; wrapper.paddingRight = 0;
 wrapper.clipsContent = false;
-// Tous les éléments sont appendés à wrapper, pas à figma.currentPage
+// All elements are appended to wrapper, not to figma.currentPage
 ```
 
-### Fonds de section — tokens et alternance
+### Section backgrounds — tokens and alternation
 
-| Section | Token sémantique | Hex fallback | Ratio texte principal |
+| Section | Semantic token | Hex fallback | Main text ratio |
 |---------|-----------------|-------------|----------------------|
 | section-header | `color/background/default` | `#FFFFFF` | 16.4:1 ✅ |
 | section-showcase | `color/background/subtle` | `#F4F4F5` | 14.9:1 ✅ |
@@ -474,7 +476,7 @@ wrapper.clipsContent = false;
 | section-links | `color/background/subtle` | `#F4F4F5` | 14.9:1 ✅ |
 
 ```javascript
-// Helper — toujours vFill() pour le fond de section
+// Helper — always vFill() for the section background
 function mkSection(name, bgToken, bgFallback) {
   const s = figma.createFrame();
   s.name = name;
@@ -490,7 +492,7 @@ function mkSection(name, bgToken, bgFallback) {
   return s;
 }
 
-// Appels standards
+// Standard calls
 const sHeader   = mkSection("section-header",    "color/background/default", "#FFFFFF");
 const sShowcase = mkSection("section-showcase",  "color/background/subtle",  "#F4F4F5");
 const sStates   = mkSection("section-states",    "color/background/default", "#FFFFFF");
@@ -499,40 +501,41 @@ const sDos      = mkSection("section-dos-donts", "color/background/default", "#F
 const sLinks    = mkSection("section-links",     "color/background/subtle",  "#F4F4F5");
 ```
 
-### Positionnement du wrapper
+### Wrapper positioning
 
 ```javascript
 wrapper.x = 0;
 wrapper.y = 0;
-// Ne PAS appeler figma.currentPage.appendChild(wrapper) — il s'attache automatiquement
+// Do NOT call figma.currentPage.appendChild(wrapper) — it attaches automatically
 ```
 
 ---
 
-## 9. Template DO / DON'T
+## 9. DO / DON'T template
 
-**Règle : toujours inclure une section DOs/DON'Ts sur chaque page composant.**
+**Rule: always include a DOs/DON'Ts section on every component page.**
 
-Les colonnes utilisent un fond **blanc** avec une **bordure gauche colorée** (4px) comme signal visuel.
-Ce choix garantit le contraste minimum sur le texte secondaire (description), qui était en échec sur
-fond teinté (4.48:1 < 4.5:1 requis WCAG AA). Sur fond blanc, tous les textes passent ≥ 6.4:1.
+The columns use a **white** background with a **colored left border** (4px) as the visual
+signal. This choice guarantees minimum contrast on secondary text (description), which was
+failing on a tinted background (4.48:1 < 4.5:1 required by WCAG AA). On a white background,
+every text passes ≥ 6.4:1.
 
-### Palette DO/DON'T vérifiée
+### Verified DO/DON'T palette
 
-| Rôle | Hex | Fond | Ratio WCAG |
+| Role | Hex | Background | WCAG ratio |
 |------|-----|------|-----------|
-| DO — bordure gauche | `#1B6E1B` | — | — |
-| DO — badge texte | `#1B6E1B` | `#FFFFFF` | **6.4:1** ✅ AA |
-| DON'T — bordure gauche | `#B91C1C` | — | — |
-| DON'T — badge texte | `#B91C1C` | `#FFFFFF` | **6.5:1** ✅ AA |
-| Exemple texte | `#1C2024` | `#FFFFFF` | **16.4:1** ✅ AAA |
-| Description texte | `#4A5568` | `#FFFFFF` | **7.5:1** ✅ AA |
+| DO — left border | `#1B6E1B` | — | — |
+| DO — badge text | `#1B6E1B` | `#FFFFFF` | **6.4:1** ✅ AA |
+| DON'T — left border | `#B91C1C` | — | — |
+| DON'T — badge text | `#B91C1C` | `#FFFFFF` | **6.5:1** ✅ AA |
+| Example text | `#1C2024` | `#FFFFFF` | **16.4:1** ✅ AAA |
+| Description text | `#4A5568` | `#FFFFFF` | **7.5:1** ✅ AA |
 
-### Pattern de code
+### Code pattern
 
 ```javascript
 function mkDosSection(doExample, dontExample) {
-  // Conteneur horizontal sans fond propre (fond = section parente #FFFFFF)
+  // Horizontal container with no fill of its own (background = parent section #FFFFFF)
   const row = figma.createFrame();
   row.name = "dos-row";
   row.layoutMode = "HORIZONTAL";
@@ -554,7 +557,7 @@ function mkDosSection(doExample, dontExample) {
     col.cornerRadius = 8;
     col.fills = vFill("color/background/default", "#FFFFFF"); // 16.4:1 ✅
 
-    // Bordure gauche colorée (4px) — token sémantique selon type
+    // Colored left border (4px) — semantic token depending on type
     const borderToken = type === "do" ? "color/feedback/success" : "color/feedback/error";
     const borderFallback = type === "do" ? "#1B6E1B" : "#B91C1C";
     col.strokes = [figma.variables.setBoundVariableForPaint(
@@ -566,15 +569,15 @@ function mkDosSection(doExample, dontExample) {
     col.strokeWeight = 4;
     col.strokeAlign = "INSIDE";
 
-    // Badge DO / DON'T
+    // DO / DON'T badge
     const badge = figma.createText();
     badge.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
     badge.fontSize = 12;
     badge.characters = type === "do" ? "✅  DO" : "❌  DON'T";
-    badge.fills = vFill(borderToken, borderFallback); // 6.4:1 sur blanc ✅
+    badge.fills = vFill(borderToken, borderFallback); // 6.4:1 on white ✅
     col.appendChild(badge);
 
-    // Exemple
+    // Example
     const example = figma.createText();
     example.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
     example.fontSize = 14;
@@ -601,7 +604,7 @@ function mkDosSection(doExample, dontExample) {
 }
 ```
 
-### Intégration dans la section
+### Integration into the section
 
 ```javascript
 const sectionDos = mkSection("section-dos-donts", "#FFFFFF");
@@ -609,64 +612,64 @@ const sectionDos = mkSection("section-dos-donts", "#FFFFFF");
 const dosLabel = figma.createText();
 dosLabel.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
 dosLabel.fontSize = 14;
-dosLabel.characters = "Bonnes pratiques";
+dosLabel.characters = "Best practices";
 dosLabel.fills = vFill("color/text/primary", "#1C2024");
 sectionDos.appendChild(dosLabel);
 
 const dosRow = mkDosSection(
-  {text: "Supprimer définitivement ce dossier",
-   desc: "Libellé explicite — l'utilisateur comprend l'action et son impact."},
+  {text: "Permanently delete this folder",
+   desc: "Explicit label — the user understands the action and its impact."},
   {text: "OK",
-   desc: "Libellé vague — ne décrit pas l'action critique ni ses conséquences."}
+   desc: "Vague label — doesn't describe the critical action or its consequences."}
 );
 sectionDos.appendChild(dosRow);
 wrapper.appendChild(sectionDos);
 ```
 
-### Règles contenu
+### Content rules
 
 ```
-✅ Fond blanc pour les colonnes — jamais de fond teinté (problèmes contraste confirmés)
-✅ Bordure colorée gauche 4px comme signal — assez visible, non envahissant
-✅ DO : montrer ce qu'il faut faire + justification courte
-✅ DON'T : montrer l'anti-pattern le plus courant + conséquence
-✅ Maximum 3 paires DO/DON'T par page
-❌ Fond vert/rouge : DO badge sur #F0FCEF = 4.15:1 — FAIL WCAG AA
-❌ Fond rouge : description sur #FFEFEF = 4.48:1 — FAIL WCAG AA (< 4.5:1)
+✅ White background for columns — never a tinted background (contrast issues confirmed)
+✅ 4px colored left border as the signal — visible enough, not intrusive
+✅ DO: show the right way to do it + a short justification
+✅ DON'T: show the most common anti-pattern + its consequence
+✅ Maximum 3 DO/DON'T pairs per page
+❌ Green/red background: DO badge on #F0FCEF = 4.15:1 — FAILS WCAG AA
+❌ Red background: description on #FFEFEF = 4.48:1 — FAILS WCAG AA (< 4.5:1)
 ```
 
 ---
 
-## 10. Liens de documentation obligatoires
+## 10. Mandatory links
 
-**Chaque page composant doit avoir une `links-row` — une seule fois, dans `section-links` en bas de page.**
+**Every component page must have a `links-row` — exactly once, in `section-links` at the bottom of the page.**
 
-> Historique : cette règle demandait autrefois une `links-row` dans le header ET dans
-> `section-links`, ce qui dupliquait le même contenu deux fois sur la page (corrigé le
-> 2026-07-06 — voir §17 Erreurs connues). Le header ne contient plus que le titre et la
-> description ; les liens vivent uniquement en bas de page.
+> History: this rule used to require a `links-row` in the header AND in
+> `section-links`, which duplicated the same content twice on the page (fixed
+> on 2026-07-06 — see §17 Known errors). The header now only contains the
+> title and description; links live only at the bottom of the page.
 
-### Palette liens vérifiée
+### Verified link palette
 
-| Rôle | Hex texte | Hex fond | Ratio WCAG |
+| Role | Text hex | Background hex | WCAG ratio |
 |------|-----------|----------|-----------|
-| Texte lien | `#006B5C` | `#FFFFFF` | **6.5:1** ✅ AA |
-| Texte lien | `#006B5C` | `#F4F4F5` | **5.9:1** ✅ AA |
-| Bordure pill | `#006B5C` 40% | — | (décorative) |
+| Link text | `#006B5C` | `#FFFFFF` | **6.5:1** ✅ AA |
+| Link text | `#006B5C` | `#F4F4F5` | **5.9:1** ✅ AA |
+| Pill border | `#006B5C` 40% | — | (decorative) |
 
-> `#007A6A` sur fond pill teinté (#E0ECEC) = **4.35:1 — FAIL** — remplacé par `#006B5C` sur fond transparent.
+> `#007A6A` on a tinted pill background (#E0ECEC) = **4.35:1 — FAIL** — replaced by `#006B5C` on a transparent background.
 
-### Liens obligatoires
+### Mandatory links
 
-| Lien | Source | Présent quand |
+| Link | Source | Present when |
 |------|--------|---------------|
-| Guidelines | `guidelines/components/<comp>.md` (repo) | Toujours |
-| NN/g | Article Nielsen Norman pertinent | Toujours |
-| WCAG | Critère WCAG 2.1/2.2 applicable | Si composant interactif |
-| ADR | `decisions/ADR-XXX.md` | Si ADR existe |
-| Tokens | `tokens/component.json` (repo) | Toujours |
+| Guidelines | `guidelines/components/<comp>.md` (repo) | Always |
+| NN/g | Relevant Nielsen Norman article | Always |
+| WCAG | Applicable WCAG 2.1/2.2 criterion | If the component is interactive |
+| ADR | `decisions/ADR-XXX.md` | If an ADR exists |
+| Tokens | `tokens/component.json` (repo) | Always |
 
-### Pattern de code
+### Code pattern
 
 ```javascript
 function mkLinksRow(links) {
@@ -709,7 +712,7 @@ function mkLinksRow(links) {
 }
 ```
 
-### Appel type (exemple Button)
+### Typical call (Button example)
 
 ```javascript
 const linksRow = mkLinksRow([
@@ -721,76 +724,76 @@ const linksRow = mkLinksRow([
 ]);
 ```
 
-### Règles contenu
+### Content rules
 
 ```
-✅ Fond blanc sur les pills (fond teinté translucide = #007A6A sur #E0ECEC = 4.35:1 — FAIL)
-✅ Texte #006B5C — 6.5:1 sur blanc, 5.9:1 sur zinc ✅ (vs #007A6A qui échoue sur pill teinté)
-✅ URLs absolues — jamais de chemins relatifs
-✅ links-row uniquement dans section-links (bas de page) — jamais aussi dans section-header
-❌ opacity sur la pill entière — dilue la lisibilité ; mettre opacity sur la pill frame, pas sur le texte
-❌ Lien vers un fichier Figma (risque de loop circulaire)
-❌ Dupliquer la même links-row dans le header ET section-links
+✅ White background on the pills (translucent tinted background = #007A6A on #E0ECEC = 4.35:1 — FAIL)
+✅ Text #006B5C — 6.5:1 on white, 5.9:1 on zinc ✅ (vs #007A6A which fails on a tinted pill)
+✅ Absolute URLs — never relative paths
+✅ links-row only in section-links (bottom of page) — never also in section-header
+❌ opacity on the whole pill — dilutes readability; put opacity on the pill frame, not the text
+❌ Link to a Figma file (risk of a circular loop)
+❌ Duplicate the same links-row in the header AND section-links
 ```
 
 ---
 
-## 11. Palette d'accessibilité — valeurs vérifiées WCAG AA
+## 11. Accessibility palette — verified WCAG AA values
 
-> Toutes les valeurs ci-dessous ont été calculées via la formule WCAG 2.1 (luminance relative).
-> Ratio minimum requis : **4.5:1** pour le texte normal (< 18pt / < 14pt gras).
+> All values below were computed using the WCAG 2.1 formula (relative luminance).
+> Minimum required ratio: **4.5:1** for normal text (< 18pt / < 14pt bold).
 
-### Texte sur fonds de page
+### Text on page backgrounds
 
-| Rôle | Hex texte | Hex fond | Ratio | WCAG |
+| Role | Text hex | Background hex | Ratio | WCAG |
 |------|-----------|----------|-------|------|
-| Titre (H1-H2) | `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
-| Titre (H1-H2) | `#1C2024` | `#F4F4F5` | 14.9:1 | ✅ AAA |
-| Corps / label | `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
-| Secondaire | `#4A5568` | `#FFFFFF` | 7.5:1 | ✅ AA |
-| Secondaire | `#4A5568` | `#F4F4F5` | 6.9:1 | ✅ AA |
-| Lien teal | `#006B5C` | `#FFFFFF` | 6.5:1 | ✅ AA |
-| Lien teal | `#006B5C` | `#F4F4F5` | 5.9:1 | ✅ AA |
+| Heading (H1-H2) | `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
+| Heading (H1-H2) | `#1C2024` | `#F4F4F5` | 14.9:1 | ✅ AAA |
+| Body / label | `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
+| Secondary | `#4A5568` | `#FFFFFF` | 7.5:1 | ✅ AA |
+| Secondary | `#4A5568` | `#F4F4F5` | 6.9:1 | ✅ AA |
+| Teal link | `#006B5C` | `#FFFFFF` | 6.5:1 | ✅ AA |
+| Teal link | `#006B5C` | `#F4F4F5` | 5.9:1 | ✅ AA |
 
 ### DO / DON'T
 
-| Rôle | Hex texte | Hex fond | Ratio | WCAG |
+| Role | Text hex | Background hex | Ratio | WCAG |
 |------|-----------|----------|-------|------|
-| Badge DO | `#1B6E1B` | `#FFFFFF` | 6.4:1 | ✅ AA |
-| Badge DON'T | `#B91C1C` | `#FFFFFF` | 6.5:1 | ✅ AA |
-| ~~Badge DO (ancien)~~ | ~~`#228B22`~~ | ~~`#F0FCEF`~~ | ~~4.15:1~~ | ❌ FAIL |
-| ~~Description (ancien)~~ | ~~`#637180`~~ | ~~`#FFEFEF`~~ | ~~4.48:1~~ | ❌ FAIL |
+| DO badge | `#1B6E1B` | `#FFFFFF` | 6.4:1 | ✅ AA |
+| DON'T badge | `#B91C1C` | `#FFFFFF` | 6.5:1 | ✅ AA |
+| ~~DO badge (old)~~ | ~~`#228B22`~~ | ~~`#F0FCEF`~~ | ~~4.15:1~~ | ❌ FAIL |
+| ~~Description (old)~~ | ~~`#637180`~~ | ~~`#FFEFEF`~~ | ~~4.48:1~~ | ❌ FAIL |
 
-### Valeurs à ne jamais utiliser dans ce contexte
+### Values to never use in this context
 
-| Combinaison interdite | Ratio | Problème |
+| Forbidden combination | Ratio | Problem |
 |-----------------------|-------|---------|
-| `#228B22` sur `#F0FCEF` | 4.15:1 | Badge DO teinté — FAIL |
-| `#637180` sur `#FFEFEF` | 4.48:1 | Description sur fond rose — FAIL |
-| `#007A6A` sur `#E0ECEC` | 4.35:1 | Lien sur pill translucide teal — FAIL |
+| `#228B22` on `#F0FCEF` | 4.15:1 | Tinted DO badge — FAIL |
+| `#637180` on `#FFEFEF` | 4.48:1 | Description on pink background — FAIL |
+| `#007A6A` on `#E0ECEC` | 4.35:1 | Link on translucent teal pill — FAIL |
 
 ---
 
-## 12. Décorations — Gradient Hero
+## 12. Decorations — Hero Gradient
 
-### Principe d'accessibilité des décorations
+### Decoration accessibility principle
 
-> Toute décoration qui **touche** du texte doit être vérifiée pour le contraste.
-> Les éléments décoratifs sans texte par-dessus peuvent avoir n'importe quelle opacité.
+> Any decoration that **touches** text must be checked for contrast.
+> Decorative elements with no text on top of them can have any opacity.
 
-Deux approches sont définies — le choix se fait au niveau de la page :
+Two approaches are defined — the choice is made at the page level:
 
-| Approche | Quand l'utiliser | Texte |
+| Approach | When to use it | Text |
 |----------|-----------------|-------|
-| **A — Partielle** (recommandée) | Header blanc + teal comme décoration à droite | Sombre (#1C2024) |
-| **B — Bold** | Header entièrement teal — impact visuel fort | Blanc (#FFFFFF) |
+| **A — Partial** (recommended) | White header + teal as a right-side decoration | Dark (#1C2024) |
+| **B — Bold** | Fully teal header — strong visual impact | White (#FFFFFF) |
 
 ---
 
-### Approche A — Gradient partiel (décoration droite)
+### Approach A — Partial gradient (right-side decoration)
 
-Le fond du header reste blanc. La décoration teal est un overlay absolutement positionné
-dans la moitié droite — **jamais sous du texte**. Tous les textes restent sur fond blanc.
+The header background stays white. The teal decoration is an absolutely positioned
+overlay in the right half — **never underneath text**. All text stays on a white background.
 
 ```javascript
 function mkHeaderSection(title, description) {
@@ -804,19 +807,19 @@ function mkHeaderSection(title, description) {
   section.itemSpacing = 20;
   section.paddingTop = 60; section.paddingBottom = 60;
   section.paddingLeft = 80; section.paddingRight = 80;
-  section.clipsContent = true; // clip les blobs qui débordent
+  section.clipsContent = true; // clip overflowing blobs
 
-  // ── Décorations absolues (préfixe "_" = non-content) ──────────────────
+  // ── Absolute decorations ("_" prefix = non-content) ──────────────────
 
-  // Gradient de droite (transparent → color/action/primary 14%)
-  // Exception acceptée (section 0) : gradientStops ne supportent pas setBoundVariableForPaint
-  // → hex fallback du token sémantique + commentaire obligatoire
+  // Right-side gradient (transparent → color/action/primary 14%)
+  // Accepted exception (section 0): gradientStops don't support setBoundVariableForPaint
+  // → semantic token's fallback hex + mandatory comment
   const decoGrad = figma.createFrame();
   decoGrad.name = "_deco-gradient";
   decoGrad.resize(800, 320);
   decoGrad.fills = [{
     type: "GRADIENT_LINEAR",
-    gradientTransform: [[1,0,0],[0,1,0.5]], // gauche→droite
+    gradientTransform: [[1,0,0],[0,1,0.5]], // left→right
     gradientStops: [
       {position:0,   color:{r:1,  g:1,    b:1,    a:0   }}, // color/background/default transparent
       {position:0.5, color:{r:0,  g:0.478,b:0.408,a:0.06}}, // color/action/primary 6%
@@ -828,17 +831,17 @@ function mkHeaderSection(title, description) {
   decoGrad.x = 640; decoGrad.y = 0;
   section.appendChild(decoGrad);
 
-  // Grand blob — couleur via vFill(), opacité via node.opacity (pas sur le fill)
+  // Large blob — color via vFill(), opacity via node.opacity (not on the fill)
   const blob1 = figma.createEllipse();
   blob1.name = "_deco-blob-lg";
   blob1.resize(340, 340);
   blob1.fills = vFill("color/action/primary", "#007A68");
-  blob1.opacity = 0.07; // opacité sur le nœud — exception section 0
+  blob1.opacity = 0.07; // opacity on the node — section 0 exception
   blob1.layoutPositioning = "ABSOLUTE";
   blob1.x = 1160; blob1.y = -120;
   section.appendChild(blob1);
 
-  // Petit blob secondaire
+  // Small secondary blob
   const blob2 = figma.createEllipse();
   blob2.name = "_deco-blob-sm";
   blob2.resize(180, 180);
@@ -848,7 +851,7 @@ function mkHeaderSection(title, description) {
   blob2.x = 1310; blob2.y = 100;
   section.appendChild(blob2);
 
-  // ── Contenu (participe au auto-layout) ──────────────────────────────────
+  // ── Content (participates in auto-layout) ──────────────────────────────────
 
   const titleNode = figma.createText();
   titleNode.name = "component-title";
@@ -867,34 +870,34 @@ function mkHeaderSection(title, description) {
   descNode.textAutoResize = "HEIGHT";
   section.appendChild(descNode);
 
-  // Pas de links-row ici — elle vit uniquement dans section-links, en bas de page (§10)
+  // No links-row here — it lives only in section-links, at the bottom of the page (§10)
 
   return section;
 }
 ```
 
-**Vérification contraste — Approche A :**
+**Contrast check — Approach A:**
 
-| Texte | Fond effectif | Ratio | WCAG |
+| Text | Effective background | Ratio | WCAG |
 |-------|--------------|-------|------|
-| Titre `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
+| Title `#1C2024` | `#FFFFFF` | 16.4:1 | ✅ AAA |
 | Description `#4A5568` | `#FFFFFF` | 7.5:1 | ✅ AA |
-| Lien `#006B5C` | `#FFFFFF` | 6.5:1 | ✅ AA |
-| Fond teal 14% max | Aucun texte dessus | — | décoratif ✅ |
+| Link `#006B5C` | `#FFFFFF` | 6.5:1 | ✅ AA |
+| Teal background 14% max | No text on top | — | decorative ✅ |
 
 ---
 
-### Approche B — Gradient teal plein (texte blanc)
+### Approach B — Full teal gradient (white text)
 
-Le header entier est teal. Les textes passent en **blanc** — contraste vérifié.
-Les links-pills deviennent des pills blanches avec texte teal.
+The entire header is teal. Text switches to **white** — contrast checked.
+Link pills become white pills with teal text.
 
 ```javascript
 function mkHeaderSectionBold(title, description) {
   const section = figma.createFrame();
   section.name = "section-header";
-  // Gradient diagonal sombre → brand teal
-  // Exception gradientStops (section 0) — hex = fallback des tokens sémantiques
+  // Dark diagonal gradient → brand teal
+  // gradientStops exception (section 0) — hex = fallback of the semantic tokens
   section.fills = [{
     type: "GRADIENT_LINEAR",
     gradientTransform: [[1, 0, 0], [0, 1, 0]],
@@ -912,11 +915,11 @@ function mkHeaderSectionBold(title, description) {
   section.paddingLeft = 80; section.paddingRight = 80;
   section.clipsContent = true;
 
-  // Blobs décoratifs — couleur via vFill(), opacité via node.opacity
+  // Decorative blobs — color via vFill(), opacity via node.opacity
   const blobW1 = figma.createEllipse();
   blobW1.name = "_deco-blob-white-lg";
   blobW1.resize(400, 400);
-  blobW1.fills = vFill("color/text/on-primary", "#FFFFFF"); // blanc
+  blobW1.fills = vFill("color/text/on-primary", "#FFFFFF"); // white
   blobW1.opacity = 0.06;
   blobW1.layoutPositioning = "ABSOLUTE";
   blobW1.x = 1100; blobW1.y = -160;
@@ -931,7 +934,7 @@ function mkHeaderSectionBold(title, description) {
   blobW2.x = 1280; blobW2.y = 80;
   section.appendChild(blobW2);
 
-  // Titre blanc — color/text/on-primary (5.27:1 min sur #007A68 ✅)
+  // White title — color/text/on-primary (5.27:1 min on #007A68 ✅)
   const titleNode = figma.createText();
   titleNode.name = "component-title";
   titleNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Semi Bold")};
@@ -940,7 +943,7 @@ function mkHeaderSectionBold(title, description) {
   titleNode.fills = vFill("color/text/on-primary", "#FFFFFF");
   section.appendChild(titleNode);
 
-  // Description — couleur légèrement teintée pour hiérarchie visuelle (4.95:1 ✅)
+  // Description — slightly tinted color for visual hierarchy (4.95:1 ✅)
   const descNode = figma.createText();
   descNode.name = "description";
   descNode.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Regular")};
@@ -950,13 +953,13 @@ function mkHeaderSectionBold(title, description) {
   descNode.textAutoResize = "HEIGHT";
   section.appendChild(descNode);
 
-  // Pas de links-row ici — elle vit uniquement dans section-links, en bas de page (§10)
-  // mkLinksRowOnDark reste disponible si une pill de lien est nécessaire ailleurs sur fond teal
+  // No links-row here — it lives only in section-links, at the bottom of the page (§10)
+  // mkLinksRowOnDark stays available if a link pill is needed elsewhere on a teal background
 
   return section;
 }
 
-// Variante de mkLinksRow pour fond teal (pills blanches, texte teal)
+// mkLinksRow variant for a teal background (white pills, teal text)
 function mkLinksRowOnDark(links) {
   const row = figma.createFrame();
   row.name = "links-row";
@@ -974,12 +977,12 @@ function mkLinksRowOnDark(links) {
     pill.paddingTop = 6; pill.paddingBottom = 6;
     pill.paddingLeft = 12; pill.paddingRight = 12;
     pill.cornerRadius = 100;
-    pill.fills = vFill("color/background/default", "#FFFFFF"); // fond blanc — token sémantique
+    pill.fills = vFill("color/background/default", "#FFFFFF"); // white background — semantic token
     const txt = figma.createText();
     txt.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Medium")};
     txt.fontSize = 12;
     txt.characters = `↗  ${link.label}`;
-    txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 sur blanc ✅
+    txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 on white ✅
     txt.hyperlink = {type:"URL", value:link.url};
     pill.appendChild(txt);
     row.appendChild(pill);
@@ -988,21 +991,21 @@ function mkLinksRowOnDark(links) {
 }
 ```
 
-**Vérification contraste — Approche B :**
+**Contrast check — Approach B:**
 
-| Texte | Fond effectif | Ratio | WCAG |
+| Text | Effective background | Ratio | WCAG |
 |-------|--------------|-------|------|
-| Titre blanc | `#005A4B` (foncé) | 8.2:1 | ✅ AAA |
-| Titre blanc | `#007A68` (clair) | 5.3:1 | ✅ AA |
+| White title | `#005A4B` (dark) | 8.2:1 | ✅ AAA |
+| White title | `#007A68` (light) | 5.3:1 | ✅ AA |
 | Description `#F0FAF8` | `#007A68` | 5.0:1 | ✅ AA |
-| Lien teal `#006B5C` | pill `#FFFFFF` | 6.5:1 | ✅ AA |
+| Teal link `#006B5C` | pill `#FFFFFF` | 6.5:1 | ✅ AA |
 
 ---
 
-### Décoration section-showcase — Points discrets
+### section-showcase decoration — Subtle dots
 
 ```javascript
-// Ajouter des points de grille en fond du section-showcase
+// Add a grid of dots to the section-showcase background
 function addDotGrid(section, cols, rows) {
   const dotSize = 4, spacing = 24;
   for (let c = 0; c < cols; c++) {
@@ -1011,45 +1014,45 @@ function addDotGrid(section, cols, rows) {
       dot.name = "_dot";
       dot.resize(dotSize, dotSize);
       dot.fills = vFill("color/action/primary", "#007A68");
-      dot.opacity = 0.12; // opacité sur le nœud — exception section 0
+      dot.opacity = 0.12; // opacity on the node — section 0 exception
       dot.layoutPositioning = "ABSOLUTE";
       dot.x = c * spacing; dot.y = r * spacing;
       section.appendChild(dot);
     }
   }
 }
-// Appel (20×8 = 160 points sur ~480×192px)
+// Call (20×8 = 160 dots over ~480×192px)
 const showcase = mkSection("section-showcase", "#F4F4F5");
 showcase.clipsContent = true;
 addDotGrid(showcase, 20, 8);
-// Ensuite ajouter les ComponentSets dans showcase (ils passent au-dessus)
+// Then add the ComponentSets into showcase (they render above)
 ```
 
 ---
 
-### Règles décorations
+### Decoration rules
 
 ```
-✅ Préfixer les layers décoratifs avec "_" : _deco-gradient, _deco-blob-lg
-✅ layoutPositioning = "ABSOLUTE" sur tous les éléments décoratifs
-✅ section.clipsContent = true quand les décorations débordent
-✅ Opacité max : 14% pour les remplissages décoratifs (préserve le contraste)
-✅ Aucun texte sur un fond teinté non vérifié
-❌ Ne pas mettre du texte dans les frames _deco-*
-❌ Opacité > 20% pour les décorations (risque sur textes adjacents)
-❌ Blobs / gradients dans section-states, section-tokens, section-dos-donts
-   → ces sections restent blanches ou zinc pures pour maximiser la lisibilité
+✅ Prefix decorative layers with "_": _deco-gradient, _deco-blob-lg
+✅ layoutPositioning = "ABSOLUTE" on every decorative element
+✅ section.clipsContent = true when decorations overflow
+✅ Max opacity: 14% for decorative fills (preserves contrast)
+✅ No text on an unverified tinted background
+❌ Don't put text inside _deco-* frames
+❌ Opacity > 20% for decorations (risk to adjacent text)
+❌ Blobs / gradients in section-states, section-tokens, section-dos-donts
+   → these sections stay pure white or zinc to maximize readability
 ```
 
 ---
 
-## 13. Fond de canevas — règle #535353
+## 13. Canvas background — the #535353 rule
 
-> **Toutes les pages Figma (sauf Brand) doivent avoir un fond de canevas `#535353`.**
-> Cette règle s'applique à chaque nouvelle page et à tout script de build.
+> **Every Figma page (except Brand) must have a `#535353` canvas background.**
+> This rule applies to every new page and every build script.
 
 ```javascript
-// ✅ OBLIGATOIRE — à exécuter sur chaque page (hors Brand 17:4)
+// ✅ REQUIRED — run on every page (except Brand 17:4)
 function h2r(hex) {
   const r = parseInt(hex.slice(1,3),16)/255;
   const g = parseInt(hex.slice(3,5),16)/255;
@@ -1060,17 +1063,17 @@ const BG_CANVAS = h2r("#535353");
 figma.currentPage.backgrounds = [{type:"SOLID", color:BG_CANVAS}];
 ```
 
-### Pourquoi `#535353`
+### Why `#535353`
 
-Ce gris neutre crée un contraste suffisant avec les frames blanches et subtile (#FCFCFC, #F4F4F5)
-sans "avaler" les composants dark — il simule l'environnement de production (fond page web neutre).
+This neutral gray creates enough contrast against white and subtle frames (#FCFCFC, #F4F4F5)
+without "swallowing" dark components — it simulates the production environment (a neutral web page background).
 
 ### Exception
 
-- **Brand (page 17:4)** : fond propre à la brand, jamais toucher.
-- Les frames *elles-mêmes* gardent leurs propres tokens — seul `page.backgrounds` change.
+- **Brand (page 17:4)**: has its own brand-specific background, never touch it.
+- The frames *themselves* keep their own tokens — only `page.backgrounds` changes.
 
-### Vérification automatique dans un script
+### Automated check in a script
 
 ```javascript
 const bgTarget = h2r("#535353");
@@ -1088,22 +1091,22 @@ pages.forEach(page => {
 
 ---
 
-## 14. Police Agentica — Atkinson Hyperlegible
+## 14. Agentica font — Atkinson Hyperlegible
 
-> **Inter est remplacé par Atkinson Hyperlegible depuis 2026-06-09 (ADR-021).**
-> Tout nouveau code doit utiliser AH. Les scripts de global fix s'appuient sur `ahStyle()`.
+> **Inter has been replaced by Atkinson Hyperlegible since 2026-06-09 (ADR-021).**
+> All new code must use AH. Global-fix scripts rely on `ahStyle()`.
 
-### Disponibilité des graisses
+### Weight availability
 
-| Graisse demandée | Graisse utilisée | Raison |
+| Requested weight | Weight used | Reason |
 |-----------------|-----------------|--------|
 | Regular | Regular | Direct |
-| Medium | **Regular** | AH n'a pas Medium (ADR-021 : fontWeight.medium=500 → 400) |
-| Semi Bold | **Bold** | AH n'a pas Semi Bold |
+| Medium | **Regular** | AH has no Medium (ADR-021: fontWeight.medium=500 → 400) |
+| Semi Bold | **Bold** | AH has no Semi Bold |
 | Bold | Bold | Direct |
-| Extra Bold / Black / Heavy | **Bold** | AH n'a que 2 graisses |
+| Extra Bold / Black / Heavy | **Bold** | AH only has 2 weights |
 
-### Helper obligatoire
+### Mandatory helper
 
 ```javascript
 function ahStyle(s) {
@@ -1111,7 +1114,7 @@ function ahStyle(s) {
   return bold.includes(s) ? "Bold" : "Regular";
 }
 
-// mkT — texte FILL dans un conteneur (wrap naturel)
+// mkT — FILL text inside a container (natural wrap)
 function mkT(chars, style, size, tok, fb) {
   const t = figma.createText();
   t.fontName = {family:"Atkinson Hyperlegible", style: ahStyle(style||"Regular")};
@@ -1120,7 +1123,7 @@ function mkT(chars, style, size, tok, fb) {
   t.textAutoResize = "HEIGHT"; return t;
 }
 
-// mkI — texte inline (pills, titres, badges) — largeur naturelle
+// mkI — inline text (pills, titles, badges) — natural width
 function mkI(chars, style, size, tok, fb) {
   const t = figma.createText();
   t.fontName = {family:"Atkinson Hyperlegible", style: ahStyle(style||"Regular")};
@@ -1130,30 +1133,30 @@ function mkI(chars, style, size, tok, fb) {
 }
 ```
 
-### Police monospace
+### Monospace font
 
-`Atkinson Hyperlegible Mono` uniquement pour les blocs de code (`<code>`, `<pre>`).
-Jamais pour du texte courant.
+`Atkinson Hyperlegible Mono` only for code blocks (`<code>`, `<pre>`).
+Never for running text.
 
-### Installation requise
+### Required installation
 
-Les deux polices doivent être installées **localement** pour que le plugin Figma les charge :
+Both fonts must be installed **locally** for the Figma plugin to load them:
 - `Atkinson Hyperlegible` (Regular + Bold)
 - `Atkinson Hyperlegible Mono` (Regular)
 
 ---
 
-## 15. Showcase ComponentSet — approche instances
+## 15. ComponentSet showcase — instance approach
 
-> **Ne jamais insérer un ComponentSet directement dans le flux de mise en page.**
-> Les variantes se positionnent à `(0,0)` → chevauchement garanti.
+> **Never insert a ComponentSet directly into the page layout flow.**
+> Variants position themselves at `(0,0)` → guaranteed overlap.
 
-### Règle
+### Rule
 
-1. Déplacer le ComponentSet à `y = 3000` (hors flux, accessible à la librairie)
-2. Créer une `instances-row` WRAP auto-layout
-3. Pour chaque variante : `variant.createInstance()` dans une wrap VERTICAL avec label
-4. Après `sSection.appendChild(instRow)` : `instRow.layoutSizingHorizontal = "FILL"`
+1. Move the ComponentSet to `y = 3000` (out of the flow, still accessible to the library)
+2. Create an `instances-row` WRAP auto-layout
+3. For each variant: `variant.createInstance()` inside a VERTICAL wrap with a label
+4. After `sSection.appendChild(instRow)`: `instRow.layoutSizingHorizontal = "FILL"`
 
 ```javascript
 // ComponentSet → y=3000
@@ -1193,54 +1196,54 @@ compSets.forEach(cs => {
 });
 
 sSection.appendChild(instRow);
-instRow.layoutSizingHorizontal = "FILL"; // contraindre à la largeur de la section
+instRow.layoutSizingHorizontal = "FILL"; // constrain to the section's width
 ```
 
 ---
 
-## 16. Frame "Composant principal" — règle obligatoire
+## 16. "Main component" frame — mandatory rule
 
-> **Tout ComponentSet (ou Component isolé) doit vivre dans un frame nommé `Composant principal`,
-> positionné à `x = 1600, y = 0` sur sa page.**
+> **Every ComponentSet (or isolated Component) must live inside a frame named `Main component`,
+> positioned at `x = 1600, y = 0` on its page.**
 
 ### Structure
 
 ```
-Frame "Composant principal"   x=1600, y=0
+Frame "Main component"   x=1600, y=0
   VERTICAL auto-layout · padding 24px · gap 32px
-  fond #FAFAFA · bordure #E8E8E8 1px · cornerRadius 8
+  background #FAFAFA · border #E8E8E8 1px · cornerRadius 8
   ├── section "button-/-primary"
-  │   ├── Titre (Bold 12px, #202020)  "Button / Primary"
-  │   ├── Variantes (Regular 10px, #646464)  "Default · Hover · Focus · Disabled · Loading"
-  │   └── ComponentSet  (FIXED sizing — conserve ses dimensions natives)
+  │   ├── Title (Bold 12px, #202020)  "Button / Primary"
+  │   ├── Variants (Regular 10px, #646464)  "Default · Hover · Focus · Disabled · Loading"
+  │   └── ComponentSet  (FIXED sizing — keeps its native dimensions)
   ├── section "button-/-secondary"
   │   └── ...
-  └── (une section par ComponentSet)
+  └── (one section per ComponentSet)
 ```
 
-### Règles
+### Rules
 
 ```
-✅ x=1600, y=0 sur toutes les pages composant
-✅ Un seul frame "Composant principal" par page (supprimer l'ancien avant de recréer)
-✅ Chaque section : titre gras + liste des états en sous-titre + ComponentSet
-✅ layoutSizingHorizontal = "FIXED" sur chaque ComponentSet (conserve sa largeur native)
-✅ S'applique aussi aux Components isolés (ex : variantes Focus/Disabled de Checkbox)
-❌ Ne jamais laisser un ComponentSet flottant directement sur le canevas
-❌ Ne jamais renommer les ComponentSets en les déplaçant dans le frame
+✅ x=1600, y=0 on every component page
+✅ Only one "Main component" frame per page (delete the old one before recreating it)
+✅ Each section: bold title + list of states as a subtitle + the ComponentSet
+✅ layoutSizingHorizontal = "FIXED" on every ComponentSet (keeps its native width)
+✅ Also applies to isolated Components (e.g. Checkbox's Focus/Disabled variants)
+❌ Never leave a ComponentSet floating directly on the canvas
+❌ Never rename ComponentSets while moving them into the frame
 ```
 
-### Pattern de code
+### Code pattern
 
 ```javascript
-async function mkComposantPrincipal(sets) {
+async function mkMainComponent(sets) {
   // sets = [{ node: ComponentSetNode, label: "Button / Primary", variants: "Default · Hover…" }]
 
-  const existing = figma.currentPage.findChildren(n => n.name === "Composant principal");
+  const existing = figma.currentPage.findChildren(n => n.name === "Main component");
   existing.forEach(e => e.remove());
 
   const frame = figma.createFrame();
-  frame.name = "Composant principal";
+  frame.name = "Main component";
   frame.layoutMode = "VERTICAL";
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "AUTO";
@@ -1292,185 +1295,188 @@ async function mkComposantPrincipal(sets) {
 
 ---
 
-## 17. Rows à nombre d'items variable — WRAP + FILL obligatoires
+## 17. Rows with a variable item count — WRAP + FILL mandatory
 
-> **Toute row dont le nombre d'items dépend du composant (`states-row`, `instances-row`,
-> ou équivalent) doit être en `layoutWrap="WRAP"` ET `layoutSizingHorizontal="FILL"`.**
-> Incident du 2026-07-06 : la `states-row` d'Input (6 états : Default, Focused, Filled,
-> Error, Disabled, ReadOnly) faisait 1560px dans une section de 1440px — elle débordait
-> visuellement de la page (visible sur le dernier état, "ReadOnly", coupé par le bord du
-> canevas). §15 documentait déjà ce correctif pour `instances-row`, mais ne le généralisait
-> pas à `states-row` — l'oubli s'est reproduit ailleurs par simple copier-coller du pattern
-> non-WRAP.
+> **Any row whose item count depends on the component (`states-row`, `instances-row`,
+> or equivalent) must have `layoutWrap="WRAP"` AND `layoutSizingHorizontal="FILL"`.**
+> 2026-07-06 incident: Input's `states-row` (6 states: Default, Focused, Filled,
+> Error, Disabled, ReadOnly) was 1560px inside a 1440px section — it visually
+> overflowed the page (visible on the last state, "ReadOnly", clipped by the
+> canvas edge). §15 already documented this fix for `instances-row`, but didn't
+> generalize it to `states-row` — the omission recurred elsewhere from simply
+> copy-pasting the non-WRAP pattern.
 
-### Pourquoi `layoutWrap="WRAP"` seul ne suffit pas
+### Why `layoutWrap="WRAP"` alone isn't enough
 
 ```javascript
-// ❌ INSUFFISANT — WRAP sans contrainte de largeur ne fait RIEN
+// ❌ INSUFFICIENT — WRAP with no width constraint does NOTHING
 row.layoutWrap = "WRAP";
-// La row est en HUG (largeur = somme des enfants) : il n'y a jamais de bord à atteindre,
-// donc jamais de retour à la ligne. Elle déborde silencieusement de la section parente.
+// The row is HUG-sized (width = sum of children): there's never an edge to
+// reach, so it never wraps to a new line. It silently overflows the parent section.
 
-// ✅ CORRECT — WRAP + FILL (la row doit être enfant d'un parent auto-layout)
+// ✅ CORRECT — WRAP + FILL (the row must be a child of an auto-layout parent)
 row.layoutWrap = "WRAP";
-row.counterAxisSpacing = 16;         // gap vertical entre les lignes wrappées
-row.layoutSizingHorizontal = "FILL"; // contraint la row à la largeur du parent → force le wrap
+row.counterAxisSpacing = 16;         // vertical gap between wrapped lines
+row.layoutSizingHorizontal = "FILL"; // constrains the row to the parent's width → forces the wrap
 ```
 
-### Règle de vérification systématique
+### Systematic verification rule
 
-Avant de considérer une page composant terminée, pour **chaque row horizontale** (états,
-instances, ou toute liste dont la taille dépend des variantes du composant) :
+Before considering a component page done, for **every horizontal row** (states,
+instances, or any list whose size depends on the component's variants):
 
 ```
 ✅ layoutWrap = "WRAP"
-✅ layoutSizingHorizontal = "FILL" (jamais laissé en HUG/AUTO)
-✅ counterAxisSpacing défini (sinon les lignes wrappées se touchent)
-✅ Vérifier avec get_screenshot que rien ne dépasse le fond blanc de la section
-   (contenu qui déborde sur le gris du canevas #535353 = signal de débordement)
-❌ Ne jamais supposer qu'un composant à peu de variantes restera toujours en une seule ligne
-   — le nombre d'états (Input a 6, la plupart en ont 4) varie par composant
-❌ Ne jamais tolérer un débordement « minime » (quelques pixels) au motif qu'il est
-   imperceptible — appliquer WRAP+FILL systématiquement, sans seuil de tolérance
+✅ layoutSizingHorizontal = "FILL" (never left as HUG/AUTO)
+✅ counterAxisSpacing defined (otherwise wrapped lines touch each other)
+✅ Verify with get_screenshot that nothing extends past the section's white background
+   (content overflowing onto the #535353 canvas gray = overflow signal)
+❌ Never assume a component with few variants will always stay on a single line
+   — the number of states (Input has 6, most have 4) varies per component
+❌ Never tolerate a "minor" overflow (a few pixels) on the grounds that it's
+   imperceptible — apply WRAP+FILL systematically, with no tolerance threshold
 ```
 
-> **Incident du 2026-07-06 (bis) — Segmented.** La `instances-row` de la section COMPOSANT
-> débordait de 2px (1442px dans une section de 1440px). Laissé de côté une première fois car
-> jugé « négligeable ». Corrigé sur demande explicite : préférer systématiquement une ligne
-> supplémentaire (WRAP) à un débordement, même minime — il n'existe pas de seuil acceptable.
-> Une fois WRAP+FILL appliqué, le rendu en plusieurs lignes reste propre (chaque `Tabs=N`
-> occupe naturellement sa propre ligne) — l'argument « ça casserait une belle mise en page »
-> ne justifie jamais de garder un débordement.
+> **2026-07-06 incident (again) — Segmented.** The COMPONENT section's
+> `instances-row` overflowed by 2px (1442px inside a 1440px section). Left as-is
+> at first, judged "negligible." Fixed after an explicit request: always prefer
+> an extra line (WRAP) over any overflow, however small — there is no acceptable
+> threshold. Once WRAP+FILL is applied, the multi-line rendering stays clean
+> (each `Tabs=N` naturally gets its own line) — the argument "it would break a
+> clean layout" never justifies keeping an overflow.
 
 ---
 
-## 18. Toujours le token de composant — jamais le sémantique directement
+## 18. Always the component token — never the semantic one directly
 
-> **Incident du 2026-07-06.** Button, Input, Toggle, Checkbox, Radio et Segmented liaient
-> leurs fills/strokes/textes directement aux variables de la collection `semantic`
-> (ex. `semantic/color/action/primary`), alors que la collection `component` existe et
-> définit des tokens dédiés par composant (ex. `component/button/primary/background`).
-> C'est l'équivalent Figma exact de la règle `tokens-system.md` niveau 3 — violée dans
-> les deux sens (Figma **et** le CSS de `agtc-button.js`, qui référençait aussi le
-> sémantique directement avant correction).
+> **2026-07-06 incident.** Button, Input, Toggle, Checkbox, Radio, and Segmented bound
+> their fills/strokes/text directly to variables from the `semantic` collection
+> (e.g. `semantic/color/action/primary`), even though the `component` collection
+> exists and defines dedicated tokens per component (e.g. `component/button/primary/background`).
+> This is the exact Figma equivalent of the `tokens-system.md` level-3 rule —
+> violated on both sides (Figma **and** `agtc-button.js`'s CSS, which also
+> referenced the semantic token directly before the fix).
 
-### Règle
+### Rule
 
 ```
-✅ Avant de binder une fill/stroke/texte, chercher si un token component/<comp>/... existe
-✅ Si oui → l'utiliser, jamais le semantic/... qu'il référence en interne
-✅ Si non (état non couvert par tokens/component.json, ex. Disabled sur la plupart des
-   composants) → rester sur semantic/... explicitement, ce n'est pas une erreur
-❌ Ne jamais binder un semantic/... quand un component/... équivalent existe
-❌ Ne jamais inventer un token component/... qui n'existe pas dans tokens/component.json
-   sans l'y ajouter d'abord (le JSON fait foi, Figma suit — jamais l'inverse)
+✅ Before binding a fill/stroke/text, check whether a component/<comp>/... token exists
+✅ If yes → use it, never the semantic/... it references internally
+✅ If not (a state not covered by tokens/component.json, e.g. Disabled on most
+   components) → stay on semantic/... explicitly, that's not a mistake
+❌ Never bind a semantic/... when an equivalent component/... exists
+❌ Never invent a component/... token that doesn't exist in tokens/component.json
+   without adding it there first (the JSON is the source of truth, Figma follows — never the reverse)
 ```
 
-### Comment vérifier qu'un token composant existe
+### How to check whether a component token exists
 
 ```javascript
-// Lister tous les tokens de la collection "component" pour un composant donné
+// List every token in the "component" collection for a given component
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
 const comp = collections.find(c => c.name === 'component');
 const vars = await Promise.all(comp.variableIds.map(id => figma.variables.getVariableByIdAsync(id)));
 vars.filter(v => v.name.startsWith('button/')).map(v => v.name);
 ```
 
-Le tableau « TOKENS UTILISÉS » de chaque page composant doit lister les tokens **component**
-réellement liés — pas les tokens sémantiques qu'ils référencent en interne (sauf pour les
-propriétés qui n'ont pas de token composant dédié, où le sémantique reste correct et
-doit être affiché tel quel).
+The "TOKENS USED" table on each component page must list the **component** tokens
+actually bound — not the semantic tokens they reference internally (except for
+properties with no dedicated component token, where the semantic token is
+correct and should be shown as-is).
 
 ---
 
-## 19. Toujours `textStyleId` — jamais fontName/fontSize manuels qui "matchent" un style
+## 19. Always `textStyleId` — never manual fontName/fontSize that "match" a style
 
-> **Incident du 2026-07-06.** Les textes des composants utilisaient la bonne police et
-> la bonne taille (ex. 14px Regular = valeurs identiques à `typography/label`) mais sans
-> être **liés** au Text Style de la librairie via `textStyleId`. Résultat : si la
-> librairie change sa typographie, ces textes ne suivent pas — ils ne font que
-> ressembler au style au moment de leur création.
+> **2026-07-06 incident.** Component text used the right font and the right size
+> (e.g. 14px Regular = values identical to `typography/label`) but wasn't
+> **bound** to the library's Text Style via `textStyleId`. Result: if the
+> library's typography changes, this text doesn't follow along — it only
+> resembled the style at the moment it was created.
 
-### Règle
+### Rule
 
 ```
-✅ Toujours poser text.textStyleId = <id du Text Style de la librairie>
-❌ Ne jamais se contenter de fontName + fontSize + lineHeight qui reproduisent
-   manuellement les valeurs d'un Text Style existant — ce n'est pas une liaison
+✅ Always set text.textStyleId = <the library Text Style's id>
+❌ Never settle for fontName + fontSize + lineHeight that manually reproduce
+   an existing Text Style's values — that is not a binding
 ```
 
-### ⚠️ Piège API — `textStyleId` + poids différent du style = lien cassé
+### ⚠️ API pitfall — `textStyleId` + a weight different from the style = broken link
 
-`textNode.textStyleId = style.id` fonctionne. Mais toute mutation de police **après**
-(`textNode.fontName = {...}` OU `textNode.setRangeFontName(...)`) efface silencieusement
-`textStyleId` (redevient `""`) — contrairement à l'éditeur Figma, où changer le poids
-sur du texte stylé laisse un indicateur de « override » partiel. Le Plugin API ne
-supporte pas ce comportement partiel : c'est tout ou rien.
+`textNode.textStyleId = style.id` works. But any font mutation **afterward**
+(`textNode.fontName = {...}` OR `textNode.setRangeFontName(...)`) silently
+clears `textStyleId` (it reverts to `""`) — unlike the Figma editor, where
+changing the weight on styled text leaves a partial "override" indicator. The
+Plugin API doesn't support this partial behavior: it's all or nothing.
 
 ```javascript
-// ❌ INTERDIT — efface le lien
+// ❌ FORBIDDEN — clears the link
 textNode.textStyleId = labelStyle.id;
-textNode.fontName = { family: "Atkinson Hyperlegible", style: "Bold" }; // → textStyleId redevient ""
+textNode.fontName = { family: "Atkinson Hyperlegible", style: "Bold" }; // → textStyleId reverts to ""
 
-// ✅ CORRECT — si le poids nécessaire diffère du style existant, créer le style qu'il faut
-// (voir incident Button : typography/label est Regular, le texte de bouton est Bold
-//  → création de typography/label-bold, un Text Style à part entière, Bold natif)
-textNode.textStyleId = labelBoldStyle.id; // aucune mutation de police après → lien intact
+// ✅ CORRECT — if the required weight differs from the existing style, create the right style
+// (see the Button incident: typography/label is Regular, the button's text is Bold
+//  → typography/label-bold created, a full Text Style in its own right, native Bold)
+textNode.textStyleId = labelBoldStyle.id; // no font mutation afterward → link intact
 ```
 
-**Ne jamais contourner par une valeur manuelle "qui ressemble".** Si aucun Text Style
-existant ne correspond au poids réellement nécessaire, c'est un signal qu'il **manque
-un Text Style dans la librairie** — pas une invitation à débrancher le texte du système.
-Ajouter le style manque-t-il de légitimité ? Non : un poids d'emphase distinct
-(ex. Bold pour un CTA vs Regular pour un label de formulaire) est une décision de
-typographie réelle, pas un détail cosmétique — elle mérite son propre token, propagé
-partout : `tokens/semantic.json` (composite `typography.*`) → `tokens/figma.json`
-(génère le Text Style via Tokens Studio) → `tokens/component.json` (token de composant
-qui y fait référence) → CSS compilé (`npm run tokens`) → composant code
-(`components/agtc-*.js`) → Figma (Text Style créé/appliqué) → documentation
-(`guidelines/components/*.md`). Jamais une correction Figma-only.
+**Never work around this with a manual value "that looks close enough."** If no
+existing Text Style matches the weight actually needed, that's a signal that
+the library is **missing a Text Style** — not an invitation to disconnect the
+text from the system. Does adding the style lack legitimacy? No: a distinct
+emphasis weight (e.g. Bold for a CTA vs Regular for a form label) is a real
+typography decision, not a cosmetic detail — it deserves its own token,
+propagated everywhere: `tokens/semantic.json` (`typography.*` composite) →
+`tokens/figma.json` (generates the Text Style via Tokens Studio) →
+`tokens/component.json` (component token referencing it) → compiled CSS
+(`npm run tokens`) → code component (`components/agtc-*.js`) → Figma (Text
+Style created/applied) → documentation (`guidelines/components/*.md`). Never
+a Figma-only fix.
 
 ---
 
-## 20. Icônes en instance-swap — `constraints: SCALE` obligatoire à chaque niveau imbriqué
+## 20. Instance-swap icons — `constraints: SCALE` mandatory at every nested level
 
-> **Incident du 2026-07-07.** Les icônes (composant `Icon / <name>`, page `Foundations / Icons`)
-> avaient été reconstruites en 24×24 avec de vrais tracés Lucide (fin de l'incident du
-> 2026-07-06 — carrés gris placeholder). Mais utilisées en instance-swap dans `agtc-button`
-> (slot `icon-prefix`/`icon-suffix` redimensionné à 18×18), certaines icônes débordaient du
-> bouton, chevauchant le libellé — visible uniquement avec certaines formes d'icône, pas
-> toutes (ex. `plus` semblait correct, `layout-dashboard` débordait franchement).
+> **2026-07-07 incident.** The icons (`Icon / <name>` component, `Foundations / Icons`
+> page) had been rebuilt at 24×24 with real Lucide paths (closing out the
+> 2026-07-06 incident — gray placeholder squares). But used in instance-swap
+> inside `agtc-button` (the `icon-prefix`/`icon-suffix` slot resized to 18×18),
+> some icons overflowed the button, overlapping the label — only visible with
+> certain icon shapes, not all (e.g. `plus` looked fine, `layout-dashboard`
+> clearly overflowed).
 
 ### Cause
 
-Le redimensionnement d'une instance (`instance.resize(18, 18)`) ne fait cascader la mise à
-l'échelle vers les enfants **que si chaque enfant, à chaque niveau de la hiérarchie, porte
-`constraints: { horizontal: 'SCALE', vertical: 'SCALE' }` par rapport à son parent direct**.
-Un enfant en `MIN`/`MIN` (valeur par défaut de `figma.createNodeFromSvg()` et de
-`figma.createFrame()`) reste figé à sa taille native — il ignore le redimensionnement du
-parent et déborde silencieusement.
+Resizing an instance (`instance.resize(18, 18)`) only cascades the scaling down
+to children **if every child, at every level of the hierarchy, carries
+`constraints: { horizontal: 'SCALE', vertical: 'SCALE' }` relative to its
+direct parent**. A child left at `MIN`/`MIN` (the default for
+`figma.createNodeFromSvg()` and `figma.createFrame()`) stays frozen at its
+native size — it ignores the parent's resize and silently overflows.
 
-Structure de chaque icône : `Icon / <name>` (COMPONENT 24×24) → `Frame` (24×24, wrapper créé
-par `createNodeFromSvg`) → `Vector` × N (tracés). Les `Vector` avaient bien `SCALE/SCALE`
-(hérité de l'export SVG), mais le `Frame` intermédiaire était resté en `MIN/MIN` — un seul
-niveau non conforme suffit à casser toute la chaîne d'échelle.
+Structure of each icon: `Icon / <name>` (COMPONENT 24×24) → `Frame` (24×24,
+wrapper created by `createNodeFromSvg`) → `Vector` × N (paths). The `Vector`
+nodes did have `SCALE/SCALE` (inherited from the SVG export), but the
+intermediate `Frame` had stayed at `MIN/MIN` — a single non-compliant level
+is enough to break the whole scaling chain.
 
-### Règle
+### Rule
 
 ```
-✅ Après toute création/modification d'un composant Icon, vérifier `constraints` sur
-   CHAQUE enfant direct de chaque ancêtre jusqu'à la feuille (pas seulement le premier niveau)
-✅ Régler explicitement { horizontal:'SCALE', vertical:'SCALE' } sur ces enfants —
-   ne jamais supposer que c'est déjà le cas
-✅ Tester le redimensionnement d'une INSTANCE (pas seulement le master) avec une icône
-   dont le tracé touche les bords (ex. layout-dashboard, cpu, boxes) — les icônes
-   symétriques centrées (plus, x, check) masquent le bug visuellement
-❌ Ne jamais supposer qu'un enfant hérite du comportement SCALE de son propre enfant —
-   chaque niveau de la hiérarchie a ses propres constraints, indépendantes
+✅ After creating/modifying any Icon component, check `constraints` on EVERY
+   direct child at every ancestor level down to the leaf (not just the first level)
+✅ Explicitly set { horizontal:'SCALE', vertical:'SCALE' } on these children —
+   never assume it's already the case
+✅ Test resizing an INSTANCE (not just the master) with an icon whose path
+   touches the edges (e.g. layout-dashboard, cpu, boxes) — symmetric, centered
+   icons (plus, x, check) visually mask the bug
+❌ Never assume a child inherits SCALE behavior from its own child —
+   each level of the hierarchy has its own, independent constraints
 ```
 
 ```javascript
-// ✅ CORRECT — fixe les 81 icônes en une passe (incident du 2026-07-07)
+// ✅ CORRECT — fixes all 81 icons in one pass (2026-07-07 incident)
 const icons = page.findAllWithCriteria({types:['COMPONENT']}).filter(n => n.name.startsWith('Icon / '));
 for (const icon of icons) {
   const frame = icon.children.find(c => c.name === 'Frame');
@@ -1478,37 +1484,37 @@ for (const icon of icons) {
 }
 ```
 
-Une fois ce fix appliqué au niveau du master, `instance.swapComponent(autreIcone)` préserve
-la taille de l'instance (ex. 18×18) et la nouvelle icône s'y adapte automatiquement — c'est
-tout l'intérêt de l'instance-swap : composer librement sans re-corriger la taille à chaque
-échange.
+Once this fix is applied at the master level, `instance.swapComponent(otherIcon)`
+preserves the instance's size (e.g. 18×18) and the new icon automatically
+adapts to it — that's the whole point of instance-swap: compose freely without
+re-fixing the size on every swap.
 
 ---
 
-## 21. Validation obligatoire — dimensions, contrastes, affichage
+## 21. Mandatory validation — dimensions, contrast, display
 
-> **Règle absolue (2026-07-07, suite aux incidents §16/§17/§20) : aucun composant ni
-> aucune page ne peut être considéré terminé sans avoir passé ces trois validations.**
-> Ce n'est pas une checklist visuelle optionnelle — ce sont trois scripts à exécuter
-> réellement via `use_figma` avant de rapporter un composant comme fini, sur le
-> composant/la page concernée ET sur tout ce qui a été touché indirectement (ex. :
-> modifier un master Icon impacte tous ses usages ailleurs dans le fichier).
+> **Absolute rule (2026-07-07, following the §16/§17/§20 incidents): no component
+> and no page can be considered done without passing these three validations.**
+> This is not an optional visual checklist — these are three scripts to actually
+> run via `use_figma` before reporting a component as finished, on the affected
+> component/page AND on anything touched indirectly (e.g. modifying an Icon
+> master affects every usage of it elsewhere in the file).
 
-Déclencheur historique : icônes qui débordaient de leur slot (§20), fond `icon-wrap`
-qui a perdu son opacité en cours de construction et rendu l'icône invisible (même
-couleur que le fond), gap codé en dur au lieu d'un token. Ces trois bugs auraient été
-détectés immédiatement par les scripts ci-dessous — ils n'ont pas été vus car aucune
-vérification programmatique n'avait été faite, seulement une relecture visuelle rapide.
+Historical trigger: icons overflowing their slot (§20), an `icon-wrap` background
+that lost its opacity mid-build and made the icon invisible (same color as the
+background), a hardcoded gap instead of a token. All three bugs would have been
+caught immediately by the scripts below — they went unnoticed because no
+programmatic check had been run, only a quick visual read-through.
 
-### A. Dimensions — pas de débordement, pas de désalignement
+### A. Dimensions — no overflow, no misalignment
 
-**Critère de passage :** pour tout nœud enfant (hors nœuds décoratifs `_préfixés` en
-`layoutPositioning:"ABSOLUTE"`, et hors anneaux de focus `strokeAlign:"OUTSIDE"`
-volontaires), les bornes de l'enfant doivent rester à l'intérieur des bornes de son
-parent direct.
+**Pass criterion:** for every child node (excluding `_prefixed` decorative nodes
+with `layoutPositioning:"ABSOLUTE"`, and excluding intentional focus rings with
+`strokeAlign:"OUTSIDE"`), the child's bounds must stay inside its direct
+parent's bounds.
 
 ```javascript
-// À exécuter sur chaque page modifiée — détecte tout débordement
+// Run on every modified page — detects any overflow
 function findOverflows(root) {
   const issues = [];
   function walk(node) {
@@ -1533,22 +1539,23 @@ function findOverflows(root) {
 }
 ```
 
-Exécuter `findOverflows(pageNode)` (ou sur un `ComponentSet`/instance précis) et traiter
-tout résultat non vide comme un blocant — pas seulement un signalement.
+Run `findOverflows(pageNode)` (or on a specific `ComponentSet`/instance) and
+treat any non-empty result as a blocker — not just a flag.
 
-**Cas particulier instance-swap (icônes, avatars, etc.) :** tester le redimensionnement
-avec au moins une valeur "à risque" (contenu proche des bords), pas uniquement la valeur
-par défaut — voir §20, l'icône `plus` masquait le bug, `layout-dashboard` le révélait.
+**Instance-swap special case (icons, avatars, etc.):** test the resize with at
+least one "at-risk" value (content close to the edges), not only the default
+value — see §20, where the `plus` icon masked the bug and `layout-dashboard`
+revealed it.
 
-### B. Contrastes — calcul réel, pas une estimation visuelle
+### B. Contrast — an actual calculation, not a visual estimate
 
-**Seuils WCAG :**
-- Texte normal : **4.5:1** minimum
-- Texte large (≥ 24px, ou ≥ 18.66px en Bold) : **3:1** minimum
-- Icônes / graphiques UI (WCAG 1.4.11) : **3:1** minimum
+**WCAG thresholds:**
+- Normal text: **4.5:1** minimum
+- Large text (≥ 24px, or ≥ 18.66px Bold): **3:1** minimum
+- Icons / UI graphics (WCAG 1.4.11): **3:1** minimum
 
 ```javascript
-// Calcul de contraste WCAG — composite les fonds semi-transparents en remontant l'arbre
+// WCAG contrast calculation — composites semi-transparent backgrounds up the tree
 function relLum(c) {
   const lin = v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
   return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
@@ -1574,118 +1581,121 @@ function resolveBackground(node, canvasBg = {r:1,g:1,b:1}) {
   }
   return bg;
 }
-// Usage sur un texte : requiredRatio dépend de fontSize/fontWeight (voir seuils ci-dessus)
+// Usage on a text node: requiredRatio depends on fontSize/fontWeight (see thresholds above)
 const bg = resolveBackground(textNode);
 const fg = textNode.fills[0].color;
 const ratio = contrastRatio(fg, bg);
 ```
 
-Traiter tout ratio sous le seuil comme un blocant, **y compris pour les icônes teintées
-sur fond teinté** (ex. incident `icon-wrap` : icône `action-primary` plein sur fond
-`action-primary` à 12% — le calcul aurait immédiatement donné un ratio proche de 1:1).
+Treat any ratio under the threshold as a blocker, **including tinted icons on a
+tinted background** (e.g. the `icon-wrap` incident: a solid `action-primary`
+icon on a 12% `action-primary` background — the calculation would have
+immediately given a ratio close to 1:1).
 
-### ⚠️ Piège fréquent — anneau de focus de la même couleur que le fond du composant
+### ⚠️ Frequent pitfall — a focus ring the same color as the component's background
 
-> **Incident du 2026-07-07.** L'anneau de focus de `agtc-button` (Primary, fond teal)
-> utilisait `border-focus`, qui résout **à la même couleur teal** que le fond du bouton
-> — ratio 1:1 entre l'anneau et le composant qu'il entoure. Le même risque existe partout
-> où un composant à fond `action-primary` (Toggle on, Checkbox coché, Radio sélectionné,
-> Segmented sélectionné) reçoit un anneau de focus lié au même token.
+> **2026-07-07 incident.** `agtc-button`'s focus ring (Primary, teal background)
+> used `border-focus`, which resolves to **the same teal** as the button's
+> background — a 1:1 ratio between the ring and the component it surrounds.
+> The same risk exists everywhere a component with an `action-primary`
+> background (Toggle on, Checkbox checked, Radio selected, Segmented selected)
+> gets a focus ring bound to the same token.
 
-**Solution standard (technique W3C C40 — "Two-Color Focus Indicator"), pas une
-invention locale :** utiliser **deux couleurs à fort contraste entre elles** (une claire,
-une foncée) pour l'anneau — tant que ces deux couleurs ont **au moins 9:1 de contraste
-entre elles**, l'une des deux aura *toujours* au moins 3:1 avec n'importe quel fond plein,
-sans avoir à décliner un anneau différent par variante de couleur.
-Référence : [W3C WCAG — Technique C40](https://www.w3.org/WAI/WCAG22/Techniques/css/C40.html).
+**Standard solution (W3C technique C40 — "Two-Color Focus Indicator"), not a
+local invention:** use **two colors with strong contrast between them** (one
+light, one dark) for the ring — as long as these two colors have **at least a
+9:1 contrast ratio between them**, one of the two will *always* have at least
+3:1 against any solid background, without needing a different ring per color
+variant.
+Reference: [W3C WCAG — Technique C40](https://www.w3.org/WAI/WCAG22/Techniques/css/C40.html).
 
 ```
-✅ Bande claire (blanc) directement collée au composant + bande foncée (teal/noir) à
-   l'extérieur — la bande claire garantit à elle seule le contraste contre N'IMPORTE
-   QUEL fond, y compris un fond de la même couleur que la bande foncée
-✅ Chaque bande ≥ 2px — vérifié : blanc (spread 2) + teal (spread 6) sur Button
-✅ Vérifié : blanc vs teal = 5.28:1 (> 3:1 requis) — donc même si l'anneau extérieur
-   « disparaît » visuellement sur un fond de même teinte, le composant reste conforme
-   ET visuellement plus grand (silhouette agrandie) — accepté explicitlement par
-   l'utilisateur comme critère suffisant : « même si c'est la même couleur, l'état
-   Focus devrait être plus grosse à cause du contour plus gros »
-❌ Ne jamais supposer qu'un seul anneau à une couleur suffit sur tous les fonds
-❌ Ne jamais évaluer un anneau de focus seulement au ratio interne (anneau vs fond) —
-   toujours vérifier aussi la bande claire (anneau vs n'importe quel fond, garantie C40)
+✅ A light band (white) directly against the component + a dark band (teal/black)
+   on the outside — the light band alone guarantees contrast against ANY
+   background, including one the same color as the dark band
+✅ Each band ≥ 2px — verified: white (spread 2) + teal (spread 6) on Button
+✅ Verified: white vs teal = 5.28:1 (> 3:1 required) — so even if the outer
+   ring visually "disappears" on a background of the same hue, the component
+   stays compliant AND visually larger (enlarged silhouette) — explicitly
+   accepted by the user as a sufficient criterion: "even if it's the same
+   color, the Focus state should look bigger because of the wider outline"
+❌ Never assume a single-color ring is enough against every background
+❌ Never evaluate a focus ring only on its internal ratio (ring vs background) —
+   always also check the light band (ring vs any background, the C40 guarantee)
 ```
 
-**Repère largeur :** Material Design 3 utilise `--md-focus-ring-width: 3px` par défaut
-pour son anneau de focus — nos deux bandes (2px + 6px = 8px de largeur totale visible)
-sont dans le même ordre de grandeur, légèrement plus généreuses pour rester lisibles
-même en export basse résolution.
+**Width reference:** Material Design 3 uses `--md-focus-ring-width: 3px` by
+default for its focus ring — our two bands (2px + 6px = 8px total visible
+width) are in the same order of magnitude, slightly more generous to stay
+legible even in low-resolution exports.
 
-**Piège API associé (Plugin Figma) :** `figma.variables.setBoundVariableForEffect()`
-lie correctement `boundVariables` mais ne recalcule pas toujours le champ `color`
-littéral de l'effet immédiatement — vérifier le `color` résolu après binding, et le
-forcer explicitement si besoin (`effect.color = {r,g,b,a}` en plus du binding) :
+**Related API pitfall (Figma Plugin):** `figma.variables.setBoundVariableForEffect()`
+correctly binds `boundVariables` but doesn't always immediately recompute the
+effect's literal `color` field — check the resolved `color` after binding, and
+force it explicitly if needed (`effect.color = {r,g,b,a}` in addition to the binding):
 ```javascript
 let ring = { type:'DROP_SHADOW', color:{r:0,g:0,b:0,a:1}, spread:6, /* ... */ };
 ring = figma.variables.setBoundVariableForEffect(ring, 'color', borderFocusVar);
-ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync si le rendu montre encore l'ancienne couleur
+ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync if the render still shows the old color
 ```
 
-### C. Affichage sur la page — élégance mesurable, pas seulement "ça a l'air bien"
+### C. On-page display — measurable elegance, not just "it looks fine"
 
-- [ ] Gap icône ⇄ libellé : **toujours** un token (`space/control/gap` ou équivalent),
-      jamais une valeur codée en dur — voir §18
-- [ ] Alignement vertical : icône et texte partagent le même `counterAxisAlignItems:"CENTER"`
-      sur leur parent — pas de décalage de baseline
-- [ ] Aucun `itemSpacing:0` par défaut sur un conteneur qui reçoit ensuite des enfants
-      icône+texte (piège rencontré sur Button — le composant avait été construit texte
-      seul, `itemSpacing` jamais revisité en ajoutant les icônes)
-- [ ] `findOverflows()` (§A) donne un résultat vide sur la page entière, pas seulement
-      sur le composant modifié — une page voisine peut hériter un master modifié
-- [ ] Screenshot final à `maxDimension` suffisant pour voir les détails (≥ 900px sur
-      la zone concernée) — un screenshot trop petit masque exactement ce genre de bug
+- [ ] Icon ⇄ label gap: **always** a token (`space/control/gap` or equivalent),
+      never a hardcoded value — see §18
+- [ ] Vertical alignment: icon and text share the same `counterAxisAlignItems:"CENTER"`
+      on their parent — no baseline offset
+- [ ] No default `itemSpacing:0` on a container that later receives icon+text
+      children (a pitfall hit on Button — the component had originally been
+      built text-only, `itemSpacing` never revisited when icons were added)
+- [ ] `findOverflows()` (§A) returns an empty result for the entire page, not
+      just the modified component — a neighboring page can inherit a modified master
+- [ ] Final screenshot at a `maxDimension` high enough to see details (≥ 900px
+      on the relevant area) — a too-small screenshot hides exactly this kind of bug
 
-### Quand exécuter ces trois validations
+### When to run these three validations
 
 ```
-✅ Après CHAQUE création ou modification de composant, avant de le déclarer terminé
-✅ Après CHAQUE modification d'un master (Icon, Text Style, variable) — auditer tous
-   les usages ailleurs dans le fichier, pas seulement l'endroit qu'on vient de modifier
-✅ Avant le screenshot de vérification final d'une session de travail
-❌ Ne jamais se fier à un screenshot basse résolution comme validation suffisante
-❌ Ne jamais valider un composant en ne testant qu'une seule valeur/variante par propriété
-   (ex. tester l'instance-swap avec une seule icône ne prouve rien sur les 80 autres)
+✅ After EVERY component creation or modification, before declaring it done
+✅ After EVERY master modification (Icon, Text Style, variable) — audit every
+   usage elsewhere in the file, not just the spot just modified
+✅ Before the final verification screenshot of a work session
+❌ Never rely on a low-resolution screenshot as sufficient validation
+❌ Never validate a component by testing only one value/variant per property
+   (e.g. testing instance-swap with a single icon proves nothing about the other 80)
 ```
 
 ---
 
-## 22. Audit complet obligatoire — 9 catégories
+## 22. Mandatory full audit — 9 categories
 
-> Référencé par `.claude/rules/figma-library-governance.md`. À exécuter sur toute page
-> nouvellement créée/modifiée, avant de la déclarer terminée, et à chaque demande
-> explicite ("audit", "vérifie tout le fichier", "screenshot global").
+> Referenced by `.claude/rules/figma-library-governance.md`. Run on any newly
+> created/modified page, before declaring it done, and on every explicit
+> request ("audit", "check the whole file", "full screenshot").
 
-### 1. Accessibilité
-- [ ] Anneau de focus visible sur tous les états focusables — technique C40 (§20), jamais
-      un simple contour touchant l'élément (voir incident 2026-07-07 "bouton plus gros
-      ≠ focus ring")
-- [ ] Contraste texte ≥ 4.5:1 (≥ 3:1 si ≥ 24px ou ≥ 18.66px Bold) — script §21.B
-- [ ] Contraste icônes/graphiques UI ≥ 3:1
-- [ ] États `disabled` exemptés de contraste (WCAG) — ne pas les traiter comme des bugs
+### 1. Accessibility
+- [ ] Focus ring visible on every focusable state — technique C40 (§20), never
+      a simple outline touching the element (see the 2026-07-07 "bigger button
+      ≠ focus ring" incident)
+- [ ] Text contrast ≥ 4.5:1 (≥ 3:1 if ≥ 24px or ≥ 18.66px Bold) — §21.B script
+- [ ] Icon/UI graphic contrast ≥ 3:1
+- [ ] `disabled` states exempt from contrast (WCAG) — don't treat these as bugs
 
-### 2. Affichage de la page
-- [ ] `findOverflows()` (§21.A) retourne un tableau vide sur `page-wrapper` ET sur le
-      `ComponentSet` lui-même
-- [ ] Aucun nœud orphelin au niveau racine de la page (rectangles/instances de test
-      oubliés — voir incident 2026-07-07, deux résidus de test laissés sur Button)
-- [ ] Gap icône ⇄ libellé toujours via `space/control/gap` (ou équivalent), jamais codé
-      en dur (§18)
+### 2. Page display
+- [ ] `findOverflows()` (§21.A) returns an empty array on `page-wrapper` AND on
+      the `ComponentSet` itself
+- [ ] No orphaned node at the page's root level (leftover test rectangles/instances
+      — see the 2026-07-07 incident, two test leftovers left on Button)
+- [ ] Icon ⇄ label gap always via `space/control/gap` (or equivalent), never
+      hardcoded (§18)
 
 ### 3. Variables
-- [ ] Aucun fill/stroke/padding/radius sans `boundVariables` — script de scan ci-dessous
-- [ ] Priorité au token composant sur le sémantique (§18)
-- [ ] Jamais de token primitif bindé directement sur un composant
+- [ ] No fill/stroke/padding/radius without `boundVariables` — scan script below
+- [ ] Component token prioritized over semantic (§18)
+- [ ] Never a primitive token bound directly to a component
 
 ```javascript
-// Scanner les fills/strokes non liés à une Variable sur un ComponentSet
+// Scan for fills/strokes not bound to a Variable on a ComponentSet
 function scanUnboundPaints(root) {
   const issues = [];
   function walk(node) {
@@ -1711,11 +1721,12 @@ function scanUnboundPaints(root) {
 ```
 
 ### 4. Styles (Text Styles)
-- [ ] Tout `TEXT` a un `textStyleId` non vide (§19) — jamais fontName/fontSize manuels
-      qui "ressemblent" à un style existant
-- [ ] **Tout Text Style a ses 4 propriétés (`fontSize`, `fontFamily`, `fontWeight`,
-      `lineHeight`) bindées à une Variable** — jamais une valeur littérale, même si la
-      valeur affichée est correcte (script `scanUnboundTextStyleProperties` ci-dessous)
+- [ ] Every `TEXT` has a non-empty `textStyleId` (§19) — never manual
+      fontName/fontSize that "resembles" an existing style
+- [ ] **Every Text Style has all 4 properties (`fontSize`, `fontFamily`, `fontWeight`,
+      `lineHeight`) bound to a Variable** — never a literal value, even if the
+      displayed value looks correct (see the `scanUnboundTextStyleProperties`
+      script below)
 
 ```javascript
 function scanMissingTextStyles(root) {
@@ -1727,19 +1738,19 @@ function scanMissingTextStyles(root) {
 }
 ```
 
-> **Incident du 2026-07-09.** 10 des 11 Text Styles de la librairie (tous sauf
-> `typography/detail`) n'avaient **aucune** variable bindée — valeurs littérales
-> (`fontSize: 40`, etc.) accompagnées d'une simple description texte pointant vers le
-> nom du token, sans lien réel. Pire : `detail-bold` et `label-bold` n'avaient **aucune
-> variable Figma du tout** (ni taille, ni graisse, ni line-height), alors que
-> `tokens/semantic.json` les définit intégralement — un vrai trou de parité code↔Figma
-> resté invisible tant qu'aucun script d'audit ne vérifiait spécifiquement les Text
-> Styles (le scan §3 `scanUnboundPaints` ne couvre que fills/strokes, pas la
-> typographie). Détecté seulement parce qu'un humain a comparé un Text Style créé
-> correctement (bindé) à ceux existants.
+> **2026-07-09 incident.** 10 of the library's 11 Text Styles (all except
+> `typography/detail`) had **no** variable bound at all — literal values
+> (`fontSize: 40`, etc.) with only a text description pointing at the token
+> name, with no real link. Worse: `detail-bold` and `label-bold` had **no
+> Figma variable whatsoever** (no size, weight, or line-height), even though
+> `tokens/semantic.json` fully defines them — a genuine code↔Figma parity gap
+> that stayed invisible as long as no audit script specifically checked the
+> Text Styles (the §3 `scanUnboundPaints` scan only covers fills/strokes, not
+> typography). Only caught because a human compared a correctly bound Text
+> Style against the existing ones.
 
 ```javascript
-// Scanner tous les Text Styles locaux — détecte les propriétés non bindées
+// Scan every local Text Style — detects unbound properties
 async function scanUnboundTextStyleProperties() {
   const styles = await figma.getLocalTextStylesAsync();
   const required = ['fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
@@ -1754,33 +1765,32 @@ async function scanUnboundTextStyleProperties() {
 ```
 
 ```
-✅ Toujours binder fontSize/fontFamily/fontWeight/lineHeight sur CHAQUE Text Style créé
-   — jamais seulement une description texte pointant vers le nom du token
-✅ Exécuter scanUnboundTextStyleProperties() sur TOUTE la librairie (pas seulement les
-   styles nouvellement créés) à chaque audit §22 — la dette peut être ancienne et
-   invisible
-✅ Si un token composé (ex. detail-bold, label-bold) référencé par du texte du chrome
-   n'a pas de Variable Figma correspondante, la créer en alias vers la primitive
-   adéquate AVANT de binder le Text Style — ne jamais laisser un Text Style sans lien
-❌ Ne jamais considérer une valeur littérale "correcte" comme suffisante — sans binding,
-   un futur changement de primitive (ex. re-échelonnage typographique) ne se propage pas
+✅ Always bind fontSize/fontFamily/fontWeight/lineHeight on EVERY Text Style created
+   — never just a text description pointing at the token name
+✅ Run scanUnboundTextStyleProperties() on the WHOLE library (not just newly
+   created styles) on every §22 audit — the debt can be old and invisible
+✅ If a composite token (e.g. detail-bold, label-bold) referenced by chrome text
+   has no matching Figma Variable, create it as an alias to the right primitive
+   BEFORE binding the Text Style — never leave a Text Style unbound
+❌ Never treat a "correct-looking" literal value as sufficient — without a
+   binding, a future primitive change (e.g. a typographic rescale) won't propagate
 ```
 
-### 4bis. Polices locales — vérifier `loadFontAsync` AVANT de bâtir sur une police
+### 4bis. Local fonts — check `loadFontAsync` BEFORE building on a font
 
-> **Incident du 2026-07-09.** Une police installée localement (`Atkinson Hyperlegible
-> Mono`) est sélectionnable et s'affiche correctement dans l'éditeur Figma interactif —
-> mais `figma.loadFontAsync({family, style})` échoue systématiquement dans le bac à
-> sable du Plugin API (`use_figma`), même après redémarrage de l'app desktop, avec
-> l'erreur *"The font family ... does not exist"*. Un Text Style créé à la main dans
-> l'UI avec cette police reste inspectable par script (lecture, binding de variables
-> fonctionnent) mais **ne peut être appliqué à aucun autre nœud par script**
-> (`setTextStyleIdAsync` échoue avec `unloaded font`) — un plafond dur de la plateforme,
-> pas une question d'installation locale insuffisante.
+> **2026-07-09 incident.** A locally installed font (`Atkinson Hyperlegible
+> Mono`) is selectable and renders correctly in the interactive Figma editor —
+> but `figma.loadFontAsync({family, style})` systematically fails in the
+> Plugin API sandbox (`use_figma`), even after restarting the desktop app,
+> with the error *"The font family ... does not exist"*. A Text Style created
+> by hand in the UI with this font stays inspectable by script (reading,
+> binding variables both work) but **cannot be applied to any other node by
+> script** (`setTextStyleIdAsync` fails with `unloaded font`) — a hard
+> platform ceiling, not a matter of insufficient local installation.
 
 ```javascript
-// Vérification OBLIGATOIRE avant de baser un chantier de Text Style sur une police
-// non standard (pas dans Google Fonts / la bibliothèque Figma par défaut)
+// MANDATORY check before basing a Text Style effort on a non-standard font
+// (not in Google Fonts / Figma's default library)
 async function canLoadFont(family, style) {
   try {
     await figma.loadFontAsync({ family, style });
@@ -1792,277 +1802,276 @@ async function canLoadFont(family, style) {
 ```
 
 ```
-✅ Avant tout chantier basé sur une police locale non standard : tester canLoadFont()
-   pour CHAQUE style utilisé (Regular ET Bold ne sont pas garantis équivalents)
-✅ Si canLoadFont() échoue : soit utiliser le fallback documenté de la pile CSS du
-   token (ex. JetBrains Mono, 2e maillon), soit accepter que l'application aux nœuds
-   reste une tâche manuelle humaine dans l'UI Figma (le Text Style peut quand même être
-   créé et bindé aux variables par script — seule l'APPLICATION à de nouveaux nœuds est
-   bloquée)
-❌ Ne jamais supposer qu'une police "visible dans le sélecteur Figma" est utilisable
-   par un script — ce sont deux chemins d'accès différents (rendu interactif vs Plugin
-   API), voir aide Figma "Add a font to Figma"
-❌ Ne jamais boucler indéfiniment sur des redémarrages d'app en espérant que la police
-   se charge — si `canLoadFont()` échoue deux fois de suite après un redémarrage
-   confirmé, considérer que c'est un plafond de plateforme et escalader l'option
-   fallback à l'humain plutôt que réessayer
+✅ Before any effort based on a non-standard local font: test canLoadFont()
+   for EVERY style used (Regular AND Bold are not guaranteed equivalent)
+✅ If canLoadFont() fails: either use the token's documented CSS stack fallback
+   (e.g. JetBrains Mono, 2nd link), or accept that applying it to nodes stays a
+   manual human task in the Figma UI (the Text Style can still be created and
+   bound to variables by script — only the APPLICATION to new nodes is blocked)
+❌ Never assume a font "visible in the Figma picker" is usable by a script —
+   these are two different access paths (interactive rendering vs Plugin API),
+   see Figma help "Add a font to Figma"
+❌ Never loop indefinitely on app restarts hoping the font will load — if
+   `canLoadFont()` fails twice in a row after a confirmed restart, treat it as
+   a platform ceiling and escalate the fallback option to the human instead of retrying
 ```
 
-### 5. États
-- [ ] Les états Figma correspondent exactement à ceux du composant code (grep les
-      `:hover`, `:focus-visible`, `:disabled`, états custom comme `loading`/`error` dans
+### 5. States
+- [ ] Figma states match exactly those of the code component (grep the
+      `:hover`, `:focus-visible`, `:disabled`, custom states like `loading`/`error` in
       `components/agtc-<comp>.js`)
-- [ ] Aucun état manquant, aucun état inventé
+- [ ] No missing state, no invented state
 
-### 6. Variantes
-- [ ] `componentPropertyDefinitions.Variant.variantOptions` (ou équivalent) correspond
-      exactement à l'union type / `argTypes.variant.options` du fichier `.stories.js`
-- [ ] Les propriétés (BOOLEAN/TEXT/INSTANCE_SWAP) correspondent aux props exposées par
-      le composant Lit (`static properties`)
+### 6. Variants
+- [ ] `componentPropertyDefinitions.Variant.variantOptions` (or equivalent) matches
+      exactly the union type / `argTypes.variant.options` from the `.stories.js` file
+- [ ] Properties (BOOLEAN/TEXT/INSTANCE_SWAP) match the props exposed by the Lit
+      component (`static properties`)
 
-### 7. Documentation in-page
-- [ ] `section-header` (titre + description), `section-showcase` (VARIANTES),
-      `section-states` ou équivalent, `section-tokens`, `section-dos-donts`,
-      `section-links` — tous présents (§8)
-- [ ] Tableau `TOKENS UTILISÉS` reflète les tokens `component.<comp>.*` réels, pas les
-      sémantiques bruts (§18)
+### 7. In-page documentation
+- [ ] `section-header` (title + description), `section-showcase` (VARIANTS),
+      `section-states` or equivalent, `section-tokens`, `section-dos-donts`,
+      `section-links` — all present (§8)
+- [ ] The `TOKENS USED` table reflects the real `component.<comp>.*` tokens, not
+      the raw semantic ones (§18)
 
-### 8. Liens
-- [ ] `section-links` contient au minimum : Guidelines, 1 source UX (NN/g, W3C APG, IxDF…),
-      1 référence WCAG/ADR, Tokens — cf. `ux-patterns-sources.md`
-- [ ] Aucun lien dupliqué entre le header et le bas de page (§10)
+### 8. Links
+- [ ] `section-links` contains at minimum: Guidelines, 1 UX source (NN/g, W3C APG, IxDF…),
+      1 WCAG/ADR reference, Tokens — see `ux-patterns-sources.md`
+- [ ] No link duplicated between the header and the bottom of the page (§10)
 
-### 9. Parité code ↔ Figma après une instruction visuelle humaine directe
+### 9. Code ↔ Figma parity after a direct human visual instruction
 
-> **Incident du 2026-07-07.** L'utilisateur a demandé de retirer le fond de `.icon-wrap`
-> sur Feature-card directement dans Figma (retour visuel, pas une lecture du code). Le
-> changement a été fait côté Figma sans vérifier immédiatement `agtc-feature-card.js` —
-> créant un écart Figma↔code silencieux (`background: rgba(18, 165, 148, .12)` restait
-> dans le code). Un agent développeur séparé a dû corriger le code après coup pour que
-> les deux convergent à nouveau.
+> **2026-07-07 incident.** The user asked to remove `.icon-wrap`'s background on
+> Feature-card directly in Figma (visual feedback, not a code read). The change
+> was made on the Figma side without immediately checking
+> `agtc-feature-card.js` — creating a silent Figma↔code gap
+> (`background: rgba(18, 165, 148, .12)` stayed in the code). A separate
+> developer agent had to fix the code afterward to bring the two back into sync.
 
-**Règle** : toute modification visuelle faite dans Figma **sur la base d'un retour
-humain direct** (pas sourcée depuis une lecture du code) crée par construction un écart
-avec le code tant que celui-ci n'est pas mis à jour — ce n'est pas une erreur en soi,
-mais l'écart doit être **rendu visible**, jamais silencieux.
+**Rule**: any visual change made in Figma **based on direct human feedback**
+(not sourced from reading the code) inherently creates a gap with the code
+until the code is updated — this is not a mistake in itself, but the gap must
+be **made visible**, never silent.
 
 ```
-✅ Après tout changement visuel demandé directement (pas lu dans le code) :
-   1. Vérifier immédiatement le fichier components/agtc-<comp>.js correspondant
-   2. Si le code diverge, noter l'écart explicitement (ex. ligne "corrigé" dans le
-      tableau TOKENS UTILISÉS, comme fait pour Feature-card) — jamais silencieux
-   3. Proposer à l'utilisateur un prompt de transfert vers l'agent développeur
-      (voir `.claude/rules/figma-library-governance.md` — code = source de vérité)
-   4. Une fois le code corrigé, revérifier Figma ↔ code et nettoyer la note d'écart
-❌ Ne jamais supposer qu'un changement visuel "juste dans Figma" restera cohérent avec
-   le code sans action explicite de propagation
-❌ Ne jamais laisser un tableau de tokens Figma affirmer une valeur que le code ne
-   produit pas réellement (ou l'inverse) sans note explicite de l'écart
+✅ After any visual change requested directly (not read from the code):
+   1. Immediately check the matching components/agtc-<comp>.js file
+   2. If the code diverges, note the gap explicitly (e.g. a "fixed" row in the
+      TOKENS USED table, as done for Feature-card) — never silently
+   3. Offer the user a handoff prompt to the developer agent
+      (see `.claude/rules/figma-library-governance.md` — code is the source of truth)
+   4. Once the code is fixed, recheck Figma ↔ code and clear the gap note
+❌ Never assume a "Figma-only" visual change will stay consistent with the code
+   without an explicit propagation action
+❌ Never let a Figma token table claim a value the code doesn't actually
+   produce (or vice versa) without an explicit note of the gap
 ```
 
 ---
 
-## 23. Test de combinaisons variantes × états × contenu — méthode EightShapes
+## 23. Testing variant × state × content combinations — the EightShapes method
 
-> **Incident du 2026-07-07.** Button avait un anneau de focus qui fonctionnait
-> parfaitement… tant que le libellé restait "Bouton" et qu'aucune icône n'était activée.
-> Dès qu'un designer combinait `State=Focus` + les deux propriétés icône, l'anneau
-> (dimensionné une fois pour toutes lors de sa construction, en sibling statique du
-> pill) ne suivait plus la taille réelle du bouton — chevauchement visuel complet.
-> Le bug n'était détectable qu'en testant une **combinaison**, jamais en regardant
-> chaque variante isolément.
+> **2026-07-07 incident.** Button had a focus ring that worked perfectly… as
+> long as the label stayed "Button" and no icon property was on. As soon as a
+> designer combined `State=Focus` with both icon properties, the ring (sized
+> once and for all at build time, as a static sibling of the pill) no longer
+> tracked the button's actual size — full visual overlap. The bug was only
+> detectable by testing a **combination**, never by looking at each variant in isolation.
 
-**Référence méthodologique** : [Nathan Curtis (EightShapes) — Component Visual Test
+**Methodological reference**: [Nathan Curtis (EightShapes) — Component Visual Test
 Cases](https://medium.com/eightshapes-llc/component-visual-test-cases-e501e2d21def).
-Principe central : **ne jamais tester une grille exhaustive de toutes les combinaisons**
-(explosion combinatoire ingérable) — tester plutôt des **cas limites représentatifs**,
-organisés en 5 catégories :
+Core principle: **never test an exhaustive grid of every combination**
+(an unmanageable combinatorial explosion) — instead test **representative edge
+cases**, organized into 5 categories:
 
 ```
-1. Propriétés    — chaque valeur de propriété fonctionne (déjà couvert par la grille
-                    de variantes elle-même — pas la priorité ici)
-2. Contenu       — texte/icônes : le plus court réaliste, le plus long réaliste,
-                    et volontairement en trop (stress test) — pas seulement le cas nominal
-3. Espacement    — layout de base avec plusieurs éléments simultanés affichés ensemble
-4. Mise en page  — largeur du composant variée (plus étroit / plus large que la norme)
-5. Composition   — slots/contenu imbriqué testés dans plusieurs proportions
+1. Properties    — every property value works (already covered by the variant
+                    grid itself — not the priority here)
+2. Content       — text/icons: shortest realistic, longest realistic,
+                    and deliberately too much (stress test) — not just the nominal case
+3. Spacing       — base layout with several elements shown together at once
+4. Layout        — varied component width (narrower / wider than the norm)
+5. Composition   — nested slots/content tested at several proportions
 ```
 
-### Règle pratique pour ce fichier Figma
+### Practical rule for this Figma file
 
-Pour tout composant ayant **à la fois** (a) un état interactif visuel additif (Focus,
-Selected, Hover…) **et** (b) un contenu de taille variable (texte libre, icônes
-optionnelles) — combiner explicitement les deux avant de considérer le composant fini :
+For any component that has **both** (a) a visually additive interactive state (Focus,
+Selected, Hover…) **and** (b) content of variable size (free text, optional
+icons) — combine both explicitly before considering the component done:
 
 ```javascript
-// Test ciblé — pas exhaustif : le pire cas plausible pour CE composant
-// 1. Créer une instance sur la variante d'état la plus "additive visuellement" (Focus, Selected)
-// 2. Activer TOUTES les propriétés de contenu optionnelles en même temps (icônes, etc.)
-// 3. Mettre le texte le plus long réaliste (pas un lorem ipsum géant — un vrai libellé long)
-// 4. Screenshot + findOverflows() — si ça casse, c'est structurel, pas cosmétique
+// Targeted test — not exhaustive: the plausible worst case for THIS component
+// 1. Create an instance on the most "visually additive" state variant (Focus, Selected)
+// 2. Turn on ALL optional content properties at the same time (icons, etc.)
+// 3. Use the longest realistic text (not a giant lorem ipsum — a real long label)
+// 4. Screenshot + findOverflows() — if it breaks, it's structural, not cosmetic
 const inst = componentSet.children.find(c => c.name.includes('State=Focus')).createInstance();
 inst.setProperties({
   [showIconPrefixKey]: true,
   [showIconSuffixKey]: true,
-  [labelKey]: 'Un texte représentatif du pire cas réaliste',
+  [labelKey]: 'A label representative of the realistic worst case',
 });
 ```
 
-### Composants à risque identifié (contenu variable + état additif visuel)
+### Components with identified risk (variable content + visually additive state)
 
-| Composant | Contenu variable | État additif | Statut |
+| Component | Variable content | Additive state | Status |
 |---|---|---|---|
-| Button | Label + 2 icônes optionnelles | Focus (anneau) | Corrigé 2026-07-07 — anneau en wrapper auto-layout HUG, plus jamais un sibling de taille statique |
-| Segmented | Labels d'options (2-5, longueur libre) | Focused (anneau) | Corrigé 2026-07-07 — même pattern wrapper |
-| Input | Label + Placeholder/Value + icônes | Focus (bordure) | Bordure interne à `.control`, pas un sibling — risque plus faible mais à re-tester si la structure change |
-| Toggle/Checkbox/Radio | Label (texte libre) | Focus (anneau) | Risque faible — l'anneau entoure une piste/case à **taille fixe**, indépendante du texte du label (élément séparé) |
+| Button | Label + 2 optional icons | Focus (ring) | Fixed 2026-07-07 — ring now in a HUG auto-layout wrapper, never again a statically sized sibling |
+| Segmented | Option labels (2-5, free length) | Focused (ring) | Fixed 2026-07-07 — same wrapper pattern |
+| Input | Label + Placeholder/Value + icons | Focus (border) | Border is internal to `.control`, not a sibling — lower risk but should be retested if the structure changes |
+| Toggle/Checkbox/Radio | Label (free text) | Focus (ring) | Low risk — the ring surrounds a track/box with a **fixed size**, independent of the label text (a separate element) |
 
-**Leçon d'architecture** : un anneau de focus (ou tout indicateur additif) ne doit
-**jamais** être un nœud sibling à taille calculée une fois puis figée. Il doit soit :
-(a) entourer son contenu via un wrapper auto-layout `HUG` (le contenu grandit → le
-wrapper suit automatiquement, sans recalcul manuel), soit (b) cibler un élément dont la
-taille est structurellement fixe et indépendante du contenu variable (cas Toggle/Checkbox/Radio).
+**Architecture lesson**: a focus ring (or any additive indicator) must
+**never** be a sibling node sized once and then frozen. It must either:
+(a) surround its content via a `HUG` auto-layout wrapper (the content grows →
+the wrapper follows automatically, with no manual recalculation), or (b)
+target an element whose size is structurally fixed and independent of the
+variable content (the Toggle/Checkbox/Radio case).
 
 ---
 
-## 24. Typographie de présentation en Monospace — isoler la doc des composants
+## 24. Monospace presentation typography — isolating docs from components
 
-> **Règle adoptée le 2026-07-08.** Tous les textes de **présentation/documentation** d'une
-> page Figma (titres de section, descriptions, légendes d'anatomie, labels de colonnes de
-> grille, en-têtes de tableaux de tokens, texte des DO/DON'T) utilisent la police mono
-> **du token**, pas la police de contenu, et pas un nom de police deviné à l'œil. Objectif :
-> distinguer visuellement d'un coup d'œil ce qui est **méta** (la doc *à propos* du composant)
-> de ce qui est **le composant lui-même** (qui, lui, garde sa police réelle
-> `Atkinson Hyperlegible`).
+> **Rule adopted 2026-07-08.** All **presentation/documentation** text on a
+> Figma page (section titles, descriptions, anatomy captions, grid column
+> labels, token table headers, DO/DON'T text) uses the mono font **from the
+> token**, not the content font, and not a font name guessed by eye. Goal:
+> visually distinguish at a glance what is **meta** (the docs *about* the
+> component) from what is **the component itself** (which keeps its real
+> `Atkinson Hyperlegible` font).
 
-### Source de vérité — le token, jamais une supposition
+### Source of truth — the token, never a guess
 
-> Règle générale (`figma-library-governance.md` §1) : **le code fait foi**. Pour la
-> Monospace, ça veut dire tracer le token jusqu'à sa valeur réelle avant de créer quoi
-> que ce soit en Figma — jamais partir d'un nom de police mémorisé.
+> General rule (`figma-library-governance.md` §1): **code is the source of
+> truth**. For Monospace, that means tracing the token to its real value
+> before creating anything in Figma — never starting from a font name pulled from memory.
 
 ```
 Token          semantic.typography.mono.family
-  → alias de   primitive.fontFamily.mono
-  → valeur     'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
+  → alias of   primitive.fontFamily.mono
+  → value      'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace
   → CSS var    --agtc-semantic-typography-mono-family
-  → consommateur : components/agtc-code-block.js
+  → consumer: components/agtc-code-block.js
 ```
 
-Premier maillon de la pile disponible dans Figma → **`Atkinson Hyperlegible Mono`**
-(les fallbacks `JetBrains Mono` / `Cascadia Code` sont une pile CSS de repli navigateur,
-pas des variantes à répliquer en Figma).
+First link in the stack available in Figma → **`Atkinson Hyperlegible Mono`**
+(the `JetBrains Mono` / `Cascadia Code` fallbacks are a browser CSS fallback
+stack, not variants to replicate in Figma).
 
-### Valeurs réelles câblées dans `agtc-code-block.js` — à reproduire, pas à réinventer
+### Real values wired into `agtc-code-block.js` — to reproduce, not reinvent
 
-Dette résorbée le 2026-07-08 (commits `15070ef` token(semantic), `3dedc58` fix(component) —
-voir ADR-067). Le composant n'a plus aucune valeur de typographie codée en dur ; ces
-tokens sont la référence exacte pour le Text Style `typography/doc-mono` :
+Debt paid down on 2026-07-08 (commits `15070ef` token(semantic), `3dedc58`
+fix(component) — see ADR-067). The component no longer has any hardcoded
+typography value; these tokens are the exact reference for the
+`typography/doc-mono` Text Style:
 
-| Usage dans le composant | Taille | Graisse | Line-height | Letter-spacing | Token |
+| Usage in the component | Size | Weight | Line-height | Letter-spacing | Token |
 |---|---|---|---|---|---|
-| Corps du code | 14px | 400 (regular) | **1.6** | normal (0em) | `component.code-block.default.font-size` (= `semantic.typography.label.size`) · `semantic.typography.detail.line-height` (= `primitive.lineHeight.reading`) |
-| Badge de langage (header) | 12px | **500 (medium)** | normal | **0.06em** | `semantic.typography.detail.size` · `semantic.typography.label.weight` (= `primitive.fontWeight.medium`) · `semantic.typography.letter-spacing.wide` (= `primitive.typography.letterSpacing.wide`) |
+| Code body | 14px | 400 (regular) | **1.6** | normal (0em) | `component.code-block.default.font-size` (= `semantic.typography.label.size`) · `semantic.typography.detail.line-height` (= `primitive.lineHeight.reading`) |
+| Language badge (header) | 12px | **500 (medium)** | normal | **0.06em** | `semantic.typography.detail.size` · `semantic.typography.label.weight` (= `primitive.fontWeight.medium`) · `semantic.typography.letter-spacing.wide` (= `primitive.typography.letterSpacing.wide`) |
 
-> Décision actée avec le badge de langage à 500 (medium) plutôt que 600 : aucune nouvelle
-> primitive `semibold` n'a été créée — réutilisation de `fontWeight.medium` existant,
-> approuvée par le Design System Lead + Principal Designer (ADR-067). Ne pas créer de
-> Text Style Figma à "graisse 600" — il n'existe pas côté code.
+> Decision made to set the language badge at 500 (medium) rather than 600: no
+> new `semibold` primitive was created — the existing `fontWeight.medium` was
+> reused, approved by the Design System Lead + Principal Designer (ADR-067).
+> Don't create a Figma Text Style at "weight 600" — it doesn't exist on the code side.
 
-### Périmètre — quoi passe en Monospace, quoi n'y passe PAS
+### Scope — what goes Monospace, what does NOT
 
-| ✅ Monospace (texte de présentation, méta) | ❌ Reste en police de contenu réelle |
+| ✅ Monospace (presentation text, meta) | ❌ Stays in the real content font |
 |---|---|
-| Titres de section (`section-header`, « ANATOMIE », « VARIANTES »…) | **Le libellé du composant lui-même** (ex. « Bouton » dans un `agtc-button`) |
-| Descriptions et paragraphes explicatifs de la page | Tout texte **à l'intérieur d'une instance de composant** |
-| Légendes d'anatomie, labels de colonnes/lignes de la grille de variantes | Les valeurs affichées par un composant en situation réelle |
-| En-têtes et cellules des tableaux de tokens | |
-| Badges/texte des colonnes DO/DON'T, texte des pills de liens | |
+| Section titles (`section-header`, "ANATOMY", "VARIANTS"…) | **The component's own label** (e.g. "Button" inside an `agtc-button`) |
+| Descriptions and explanatory paragraphs on the page | Any text **inside a component instance** |
+| Anatomy captions, column/row labels of the variant grid | Values displayed by a component in a real-world situation |
+| Token table headers and cells | |
+| DO/DON'T column badges/text, link pill text | |
 
-> **Frontière absolue :** dès qu'un texte vit **dans une instance de composant**, il garde
-> la police du composant. La Monospace ne s'applique qu'au **chrome de documentation** autour.
-> C'est ce contraste de police qui crée la séparation visuelle demandée.
+> **Absolute boundary:** as soon as text lives **inside a component instance**,
+> it keeps the component's font. Monospace only applies to the surrounding
+> **documentation chrome**. It's this font contrast that creates the requested visual separation.
 
-### Implémentation — un Text Style dédié, jamais fontName manuel (§19)
+### Implementation — a dedicated Text Style, never a manual fontName (§19)
 
-Créer/réutiliser un Text Style de librairie `typography/doc-mono` (et ses variantes de
-graisse si besoin, `typography/doc-mono-bold`) et le poser via `textStyleId` — jamais un
-`fontName` monospace codé à la main (mêmes raisons qu'au §19 : un texte qui « ressemble »
-à du mono n'est pas lié au système).
+Create/reuse a `typography/doc-mono` library Text Style (and its weight
+variants if needed, `typography/doc-mono-bold`) and apply it via
+`textStyleId` — never a hand-coded monospace `fontName` (same reasons as
+§19: text that "looks like" mono isn't bound to the system).
 
 ```javascript
-// La famille mono existe déjà (§14) — vérifier le style avant usage
+// The mono family already exists (§14) — check the style before use
 await figma.loadFontAsync({ family: "Atkinson Hyperlegible Mono", style: "Regular" });
-// Poser le Text Style de doc (créé une fois dans la librairie), pas un fontName brut
+// Apply the library's doc Text Style (created once), not a raw fontName
 docTextNode.textStyleId = TX["typography/doc-mono"].id;
-// Aucune mutation de police après (sinon textStyleId redevient "" — piège §19)
+// No font mutation afterward (otherwise textStyleId reverts to "" — §19 pitfall)
 ```
 
 ```
-✅ Texte de présentation → textStyleId = typography/doc-mono (ou -bold)
-✅ Le composant showcasé garde Atkinson Hyperlegible (sa vraie police)
-❌ Ne jamais passer le libellé interne d'un composant en mono (casse la parité avec le code)
-❌ Ne jamais coder la police mono à la main — toujours via le Text Style (§19)
+✅ Presentation text → textStyleId = typography/doc-mono (or -bold)
+✅ The showcased component keeps Atkinson Hyperlegible (its real font)
+❌ Never switch a component's internal label to mono (breaks parity with the code)
+❌ Never hand-code the mono font — always via the Text Style (§19)
 ```
 
 ---
 
-## 25. Largeur de contenu des pages — jamais de débordement du wrapper
+## 25. Page content width — never let the wrapper overflow
 
-> **Règle adoptée le 2026-07-08.** Déclencheur : la page `Foundations / Logos` débordait
-> encore de son `page-wrapper` (contenu large poussé hors du fond blanc, visible sur le
-> gris `#535353` du canevas). Généralise le principe du §17 (WRAP+FILL) à **tout le
-> contenu d'une page**, pas seulement les rows d'états/instances.
+> **Rule adopted 2026-07-08.** Trigger: the `Foundations / Logos` page was
+> still overflowing its `page-wrapper` (wide content pushed outside the white
+> background, visible on the canvas's `#535353` gray). Generalizes the §17
+> principle (WRAP+FILL) to **all page content**, not just state/instance rows.
 
-### Largeur canonique
+### Canonical width
 
 ```
-Largeur du page-wrapper : 1440 px (fixe, counterAxisSizingMode = "FIXED")
-Padding horizontal des sections : 80 px de chaque côté
-→ Largeur de contenu utile : 1440 − 160 = 1280 px MAXIMUM
+page-wrapper width: 1440 px (fixed, counterAxisSizingMode = "FIXED")
+Section horizontal padding: 80 px on each side
+→ Usable content width: 1440 − 160 = 1280 px MAXIMUM
 ```
 
-Aucun élément de contenu (frame, grille, image de logo, rangée) ne doit dépasser **1280 px**
-de large une fois posé dans une section. Tout élément susceptible d'être plus large que la
-place disponible doit soit passer en `layoutSizingHorizontal = "FILL"`, soit être en
-conteneur `layoutWrap = "WRAP"` (§17), soit être mis à l'échelle pour tenir.
+No content element (frame, grid, logo image, row) should exceed **1280 px**
+wide once placed in a section. Any element that might be wider than the
+available space must either switch to `layoutSizingHorizontal = "FILL"`, be
+in a `layoutWrap = "WRAP"` container (§17), or be scaled to fit.
 
-### Règle de vérification (à exécuter sur chaque page, pas seulement Logos)
+### Verification rule (run on every page, not just Logos)
 
 ```javascript
-// Réutilise findOverflows() (§21.A) : tout enfant non décoratif dont les bornes
-// dépassent celles de son parent direct = blocant. Cibler AUSSI le page-wrapper entier.
+// Reuses findOverflows() (§21.A): any non-decorative child whose bounds
+// exceed its direct parent's = a blocker. ALSO target the entire page-wrapper.
 const overflows = findOverflows(pageWrapper);
-// Cas Logos : une grille de logos ou un logo unique en largeur native > 1280
-// → contraindre la grille en FILL + WRAP, ou resize chaque tuile de logo
+// Logos case: a logo grid or a single logo with a native width > 1280
+// → constrain the grid to FILL + WRAP, or resize each logo tile
 ```
 
 ```
-✅ Contenu ≤ 1280 px de large dans toute section (wrapper 1440 − 2×80 de padding)
-✅ Grilles/rangées de largeur variable : layoutSizingHorizontal="FILL" + layoutWrap="WRAP" (§17)
-✅ Images (logos, illustrations) trop larges : resize proportionnel pour tenir dans 1280
-✅ findOverflows(pageWrapper) doit retourner un tableau vide avant de déclarer la page finie
-❌ Ne jamais laisser un élément déborder sur le gris du canevas, même « de quelques pixels » (§17)
-❌ Ne jamais élargir le page-wrapper au-delà de 1440 pour « faire rentrer » un contenu trop large
-   → corriger le contenu, pas le wrapper
+✅ Content ≤ 1280 px wide in every section (1440 wrapper − 2×80 padding)
+✅ Variable-width grids/rows: layoutSizingHorizontal="FILL" + layoutWrap="WRAP" (§17)
+✅ Oversized images (logos, illustrations): proportional resize to fit within 1280
+✅ findOverflows(pageWrapper) must return an empty array before declaring the page done
+❌ Never let an element overflow onto the canvas gray, even "by a few pixels" (§17)
+❌ Never widen the page-wrapper past 1440 to "fit" oversized content
+   → fix the content, not the wrapper
 ```
 
 ---
 
-## Erreurs connues — Plugin API Figma
+## Known errors — Figma Plugin API
 
-| Erreur | Cause | Fix |
+| Error | Cause | Fix |
 |--------|-------|-----|
-| Frame reste à 40 px en hauteur | `primaryAxisSizingMode="AUTO"` avant `resize()` | `resize()` d'abord, `AUTO` ensuite |
-| `page.appendChild(node)` — conflit | Les nœuds s'auto-attachent à la page courante | Ne jamais appeler `page.appendChild()` pour les nœuds top-level |
-| `Cannot write to node with unloaded font` | textStyleId utilise une police non chargée | Charger TOUTES les polices au début de l'appel (`loadFontAsync`) |
-| Texte vide après `textStyleId` | `characters` posé après `textStyleId` sur nœud vide | Toujours : `fontName` → `characters` → `textStyleId` → `fills` |
-| `strokeAlign OUTSIDE` invisible | Frame avec `clipsContent=true` | Mettre `clipsContent=false` sur le parent quand anneau focus externe |
-| Effet (`DROP_SHADOW`/glow) invisible sur un état hover/focus/selected | Le nœud qui porte l'effet a lui-même `clipsContent=true` — pas seulement son parent | Vérifier `clipsContent` sur le nœud qui porte l'effet ET sur chaque ancêtre jusqu'au ComponentSet — mettre `false` partout où l'effet doit déborder. Incident du 2026-07-06 : la pastille sélectionnée de Segmented (`tab-1`) et le ComponentSet lui-même avaient `clipsContent=true`, masquant le drop-shadow — audit exhaustif de tout le fichier requis (le bug ne se limite pas aux strokes, les effets sont clippés de la même façon) |
-| Variantes ComponentSet chevauchées | CS inséré directement dans le flux — variantes à `(0,0)` | CS à `y=3000` + `variant.createInstance()` dans instRow WRAP |
-| `instRow` déborde (2637 px+) | `primaryAxisSizingMode="AUTO"` sans contrainte | Après `append` : `instRow.layoutSizingHorizontal = "FILL"` |
-| N'importe quelle row (états, instances) déborde de la section (contenu visible sur le gris du canevas) | `layoutWrap="WRAP"` posé sans `layoutSizingHorizontal="FILL"` — WRAP est un no-op en HUG | `row.layoutWrap="WRAP"` **+** `row.layoutSizingHorizontal="FILL"` **+** `counterAxisSpacing` — voir §17 |
-| Contenu dupliqué (ex. liens) visible deux fois sur la même page | `links-row` ajoutée à la fois dans `section-header` et `section-links` | Une seule `links-row`, uniquement dans `section-links` (bas de page) — voir §10 |
-| Fill/stroke lié à `semantic/...` alors qu'un token composant existe | Habitude de binder le sémantique sans vérifier `component/<comp>/...` d'abord | Toujours chercher le token `component/` correspondant avant de binder — voir §18 |
-| `textStyleId` redevient `""` après avoir semblé s'appliquer | `fontName`/`setRangeFontName` posé après `textStyleId` — l'API efface le lien, contrairement à l'éditeur Figma | Ne jamais muter la police après `textStyleId` ; si le poids ne correspond pas, créer/utiliser le bon Text Style — voir §19 |
-| Icône déborde de son slot (18×18) quand redimensionnée ou échangée via instance-swap | Wrapper `Frame` interne de l'icône en `constraints: MIN/MIN` (défaut `createNodeFromSvg`) — ne suit pas le resize de l'instance parente | `frame.constraints = { horizontal:'SCALE', vertical:'SCALE' }` sur CHAQUE niveau intermédiaire, pas seulement les `Vector` finaux — voir §20 |
+| Frame stays at 40 px tall | `primaryAxisSizingMode="AUTO"` before `resize()` | `resize()` first, `AUTO` after |
+| `page.appendChild(node)` — conflict | Nodes auto-attach to the current page | Never call `page.appendChild()` for top-level nodes |
+| `Cannot write to node with unloaded font` | textStyleId uses an unloaded font | Load ALL fonts at the start of the call (`loadFontAsync`) |
+| Empty text after `textStyleId` | `characters` set after `textStyleId` on an empty node | Always: `fontName` → `characters` → `textStyleId` → `fills` |
+| `strokeAlign OUTSIDE` invisible | Frame with `clipsContent=true` | Set `clipsContent=false` on the parent when there's an external focus ring |
+| Effect (`DROP_SHADOW`/glow) invisible on a hover/focus/selected state | The node carrying the effect itself has `clipsContent=true` — not just its parent | Check `clipsContent` on the node carrying the effect AND on every ancestor up to the ComponentSet — set it to `false` everywhere the effect must overflow. 2026-07-06 incident: Segmented's selected pill (`tab-1`) and the ComponentSet itself had `clipsContent=true`, hiding the drop-shadow — a full file-wide audit is required (the bug isn't limited to strokes, effects get clipped the same way) |
+| Overlapping ComponentSet variants | CS inserted directly into the flow — variants at `(0,0)` | CS at `y=3000` + `variant.createInstance()` inside a WRAP instRow |
+| `instRow` overflows (2637 px+) | `primaryAxisSizingMode="AUTO"` with no constraint | After `append`: `instRow.layoutSizingHorizontal = "FILL"` |
+| Any row (states, instances) overflows the section (content visible on the canvas gray) | `layoutWrap="WRAP"` set without `layoutSizingHorizontal="FILL"` — WRAP is a no-op under HUG | `row.layoutWrap="WRAP"` **+** `row.layoutSizingHorizontal="FILL"` **+** `counterAxisSpacing` — see §17 |
+| Duplicated content (e.g. links) visible twice on the same page | `links-row` added to both `section-header` and `section-links` | Only one `links-row`, in `section-links` alone (bottom of page) — see §10 |
+| Fill/stroke bound to `semantic/...` when a component token exists | Habit of binding the semantic token without checking `component/<comp>/...` first | Always look for the matching `component/` token before binding — see §18 |
+| `textStyleId` reverts to `""` after appearing to apply | `fontName`/`setRangeFontName` set after `textStyleId` — the API clears the link, unlike the Figma editor | Never mutate the font after `textStyleId`; if the weight doesn't match, create/use the right Text Style — see §19 |
+| Icon overflows its slot (18×18) when resized or swapped via instance-swap | The icon's internal `Frame` wrapper is at `constraints: MIN/MIN` (the `createNodeFromSvg` default) — doesn't follow the parent instance's resize | `frame.constraints = { horizontal:'SCALE', vertical:'SCALE' }` at EVERY intermediate level, not just the final `Vector` nodes — see §20 |

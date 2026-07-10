@@ -1,99 +1,99 @@
-# Skill : ai-component-metadata
+# Skill: ai-component-metadata
 
-> Capacité réutilisable : auditer et enrichir les métadonnées des composants.
-> Utiliser ce skill pour vérifier qu'un composant est "agent-ready".
+> Reusable capability: audit and enrich component metadata.
+> Use this skill to verify that a component is "agent-ready".
 > **Type:** skill
-> **Chemin logique:** .claude/skills/ai-component-metadata.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/skills/ai-component-metadata.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/components/, tokens/component.json, .claude/skills/codebase-index.md
 
 ---
 
-## Objectif
+## Objective
 
-S'assurer que chaque composant possède les métadonnées structurées nécessaires
-pour qu'un agent puisse l'analyser, le valider et l'utiliser correctement.
-
----
-
-## Métadonnées requises — checklist
-
-Pour chaque composant, vérifier la présence de :
-
-```
-✅ intent          — Pourquoi ce composant existe
-✅ variants        — Liste des variantes autorisées
-✅ rules           — Règles d'usage (quand utiliser, quand ne pas utiliser)
-✅ accessibility   — Exigences WCAG (contraste, focus, ARIA)
-✅ behavior        — États, animations, interactions spéciales
-✅ dependencies    — Tokens et composants dont il dépend
-✅ antiPatterns    — Ce qu'il ne faut jamais faire avec ce composant
-✅ owner           — Qui est responsable
-✅ approvalLevel   — Quel niveau d'approbation pour le modifier
-✅ version         — Version courante du contrat
-```
+Ensure every component has the structured metadata an agent needs
+to analyze, validate, and use it correctly.
 
 ---
 
-## Processus d'audit des métadonnées
+## Required metadata — checklist
 
-### Étape 1 — Inventaire
+For each component, verify the presence of:
+
 ```
-Pour chaque composant dans guidelines/components/ :
-  - Lire le fichier .md
-  - Lire le token correspondant dans tokens/component.json
-  - Comparer les deux pour détecter les écarts
+✅ intent          — Why this component exists
+✅ variants        — List of allowed variants
+✅ rules           — Usage rules (when to use, when not to use)
+✅ accessibility   — WCAG requirements (contrast, focus, ARIA)
+✅ behavior        — States, animations, special interactions
+✅ dependencies    — Tokens and components it depends on
+✅ antiPatterns    — What must never be done with this component
+✅ owner           — Who is responsible
+✅ approvalLevel   — What approval level is required to modify it
+✅ version         — Current contract version
 ```
 
-### Étape 2 — Scoring
-Calculer un score de complétude :
-- 10 champs requis × 10 points = 100 points possible
-- Score < 70 : composant non agent-ready → signaler
-- Score 70–89 : composant partiellement agent-ready → amélioration recommandée
-- Score ≥ 90 : composant agent-ready ✅
+---
 
-### Étape 3 — Rapport
-Produire un rapport structuré :
+## Metadata audit process
+
+### Step 1 — Inventory
+```
+For each component in guidelines/components/:
+  - Read the .md file
+  - Read the matching token in tokens/component.json
+  - Compare the two to detect gaps
+```
+
+### Step 2 — Scoring
+Compute a completeness score:
+- 10 required fields × 10 points = 100 points possible
+- Score < 70: component not agent-ready → flag it
+- Score 70–89: partially agent-ready → improvement recommended
+- Score ≥ 90: agent-ready ✅
+
+### Step 3 — Report
+Produce a structured report:
 ```markdown
-## Rapport de métadonnées — [DATE]
+## Metadata report — [DATE]
 
-| Composant | Score | Manquant | Priorité |
-|-----------|-------|----------|----------|
-| button    | 100%  | —        | ✅ |
+| Component | Score | Missing | Priority |
+|-----------|-------|---------|----------|
+| button    | 100%  | —       | ✅ |
 | input     | 70%   | antiPatterns, approvalLevel | 🟡 |
 | modal     | 40%   | rules, accessibility, behavior, dependencies | 🔴 |
 
-### Recommandations
-[Liste des actions à faire, par ordre de priorité]
+### Recommendations
+[List of actions to take, in priority order]
 ```
 
-### Étape 4 — Ne pas modifier sans approbation
-Ce skill génère uniquement des rapports et des suggestions.
-**Ne jamais modifier les fichiers directement.**
+### Step 4 — Do not modify without approval
+This skill only produces reports and suggestions.
+**Never modify files directly.**
 
 ---
 
-## Format de métadonnées enrichies (exemple JSON)
+## Enriched metadata format (JSON example)
 
 ```json
 {
   "component": {
     "button": {
       "$metadata": {
-        "intent": "Déclencher une action dans l'interface",
+        "intent": "Trigger an action in the interface",
         "variants": ["primary", "secondary", "critical", "ghost"],
         "rules": [
-          "Maximum 1 bouton primary par section",
-          "Le bouton critical requiert une confirmation"
+          "Maximum 1 primary button per section",
+          "The critical button requires confirmation"
         ],
         "accessibility": {
           "minimumContrast": "4.5:1",
           "requiresFocusVisible": true,
-          "ariaAttributes": ["aria-label si pas de texte visible", "aria-disabled"]
+          "ariaAttributes": ["aria-label if no visible text", "aria-disabled"]
         },
         "antiPatterns": [
-          "Deux boutons primary côte à côte",
-          "Libellé 'OK' ou 'Confirmer' seul pour un bouton critical"
+          "Two primary buttons side by side",
+          "Generic label ('OK' or 'Confirm') alone for a critical button"
         ],
         "owner": "design-system-team",
         "approvalLevel": "principal-designer",

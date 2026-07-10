@@ -1,76 +1,76 @@
-# Rule : tokens-system
+# Rule: tokens-system
 
-> Règles absolues pour la gestion des tokens dans ce système.
-> Ces règles s'appliquent à tout agent et à toute équipe.
+> Absolute rules for managing tokens in this system.
+> These rules apply to every agent and every team.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/tokens-system.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, DESIGN.md
 
 ---
 
-## Standard de référence — Design Tokens (W3C DTCG)
+## Reference standard — Design Tokens (W3C DTCG)
 
-> Source officielle du standard des design tokens : **https://www.designtokens.org/**
-> (Design Tokens Community Group du W3C — DTCG).
+> Official source for the design tokens standard: **https://www.designtokens.org/**
+> (W3C Design Tokens Community Group — DTCG).
 
-Ce système suit le **format DTCG** comme standard d'interopérabilité des tokens :
+This system follows the **DTCG format** as the token interoperability standard:
 
-| Convention DTCG | Application dans ce dépôt |
+| DTCG convention | Application in this repository |
 |-----------------|---------------------------|
-| `$value` | Valeur du token (primitifs) — ex. `"$value": "#fcfcfc"` |
-| `$type` | Type du token — `color`, `dimension`, etc. (obligatoire, cf. `code-style.md`) |
-| `$description` | Description lisible humain + agent |
-| Alias `{group.token}` | Référence inter-tokens — ex. `{primitive.color.teal.11}` |
+| `$value` | Token value (primitives) — e.g. `"$value": "#fcfcfc"` |
+| `$type` | Token type — `color`, `dimension`, etc. (mandatory, see `code-style.md`) |
+| `$description` | Human + agent readable description |
+| `{group.token}` alias | Cross-token reference — e.g. `{primitive.color.teal.11}` |
 | `$schema` | `https://design-tokens.github.io/community-group/format/` |
 
-> Toute évolution du format des fichiers `tokens/*.json` doit rester **conforme au
-> standard DTCG**. En cas de divergence entre une habitude locale et le standard,
-> c'est le standard designtokens.org qui fait foi. Décision : **ADR-052**.
+> Any evolution of the `tokens/*.json` file format must remain **DTCG-compliant**.
+> In case of divergence between a local habit and the standard, the
+> designtokens.org standard prevails. Decision: **ADR-052**.
 
 ---
 
-## Les trois niveaux — règle non négociable
+## The three levels — non-negotiable rule
 
 ```
-Tokens primitifs   →   Tokens sémantiques   →   Tokens de composant
-(valeurs brutes)        (intention UX)            (contrats institutionnels)
+Primitive tokens   →   Semantic tokens   →   Component tokens
+(raw values)             (UX intent)            (institutional contracts)
 ```
 
-### Niveau 1 — Primitifs (`tokens/primitives.json`)
-- Valeurs physiques : couleurs, espacements, rayons, tailles de police.
-- **Très stables.** On les change rarement.
-- **Jamais utilisés directement dans les composants.** Toujours via un token sémantique.
+### Level 1 — Primitives (`tokens/primitives.json`)
+- Physical values: colors, spacing, radii, font sizes.
+- **Very stable.** Rarely changed.
+- **Never used directly in components.** Always through a semantic token.
 
-### Niveau 2 — Sémantiques (`tokens/semantic.json`)
-- Traduisent les primitives en langage métier.
-- Exemple : `color.action.primary` = `primitive.color.blue.700`
-- **Ce que les agents doivent utiliser** pour comprendre l'intention.
-- Nommés pour exprimer la **fonction**, pas la valeur.
+### Level 2 — Semantic (`tokens/semantic.json`)
+- Translate primitives into business language.
+- Example: `color.action.primary` = `primitive.color.blue.700`
+- **What agents should use** to understand intent.
+- Named to express **function**, not value.
 
-### Niveau 3 — Composant (`tokens/component.json`)
-- Décisions spécifiques à chaque composant.
-- Portent les règles comportementales (ex: `requiresConfirmation: true`).
-- **Contrats institutionnels** — toute modification requiert une approbation.
+### Level 3 — Component (`tokens/component.json`)
+- Decisions specific to each component.
+- Carry behavioral rules (e.g. `requiresConfirmation: true`).
+- **Institutional contracts** — any modification requires approval.
 
 ---
 
-## Règles absolues
+## Absolute rules
 
 ```
-❌ INTERDIT : color: #3B82F6                 → utiliser var(--ds-color-action-primary)
-❌ INTERDIT : padding: 16px                  → utiliser var(--ds-space-control-padding-x)
-❌ INTERDIT : token primitif dans composant  → passer par le token sémantique
-❌ INTERDIT : modifier un token de composant sans approbation humaine
+❌ FORBIDDEN: color: #3B82F6                 → use var(--ds-color-action-primary)
+❌ FORBIDDEN: padding: 16px                  → use var(--ds-space-control-padding-x)
+❌ FORBIDDEN: primitive token in a component → go through the semantic token
+❌ FORBIDDEN: modifying a component token without human approval
 ```
 
 ---
 
-## Règle de nommage
+## Naming rule
 
-Format : `[catégorie].[rôle].[variante]`
+Format: `[category].[role].[variant]`
 
-| ✅ Valide | ❌ Invalide |
+| ✅ Valid | ❌ Invalid |
 |----------|------------|
 | `color.action.primary` | `blue500` |
 | `space.control.padding` | `mainPadding` |
@@ -79,21 +79,21 @@ Format : `[catégorie].[rôle].[variante]`
 
 ---
 
-## Règle de gouvernance des tokens
+## Token governance rule
 
-| Type de changement | Qui peut le faire | Approbation |
-|-------------------|-------------------|-------------|
-| Valeur d'un token primitif | Dev ou agent | Principal Designer |
-| Ajout d'un token sémantique | Dev ou agent (PR) | Design System Lead |
-| Modification d'un token de composant | Humain seulement | Principal Designer |
-| Suppression d'un token | Humain seulement | Principal Designer + audit d'impact |
+| Change type | Who can make it | Approval |
+|-------------------|-------------------|--------------|
+| Primitive token value | Dev or agent | Principal Designer |
+| Adding a semantic token | Dev or agent (PR) | Design System Lead |
+| Modifying a component token | Human only | Principal Designer |
+| Deleting a token | Human only | Principal Designer + impact audit |
 
 ---
 
-## Ce que les agents voient — et ce qu'ils ratent
+## What agents see — and what they miss
 
-Un agent IA comprend `color.feedback.danger` comme **une intention**.
-Il ne comprend pas `red-700` comme **une intention** — c'est juste une valeur.
+An AI agent understands `color.feedback.danger` as **an intent**.
+It does not understand `red-700` as **an intent** — it's just a value.
 
-> « Les agents comprennent la fonction, pas seulement la valeur. »
+> "Agents understand function, not just value."
 > — Jan Six, GitHub, IDS 2026

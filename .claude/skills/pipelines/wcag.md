@@ -1,93 +1,93 @@
-# Pipeline : wcag
+# Pipeline: wcag
 
-> Checklist de conformité WCAG 2.2 AA à valider après toute modification d'interface.
-> **Statut :** ✅ Actif
-> **Déclencheur :** tout changement dans `site/build.js`, `components/`, `tokens/` (couleurs)
+> WCAG 2.2 AA compliance checklist to validate after any interface change.
+> **Status:** ✅ Active
+> **Trigger:** any change in `site/build.js`, `components/`, `tokens/` (colors)
 
 ---
 
-## Déclencheurs
+## Triggers
 
-| Fichier modifié | Checks requis |
+| Modified file | Required checks |
 |----------------|--------------|
-| `tokens/primitives.json` (couleurs) | Contraste — vérification complète |
-| `tokens/semantic.json` (couleurs) | Contraste — vérification complète |
-| `site/build.js` (CSS) | Focus visible, touch targets |
-| `components/*.js` | ARIA, focus, rôles |
-| Nouveau composant interactif | Checklist complète |
+| `tokens/primitives.json` (colors) | Contrast — full check |
+| `tokens/semantic.json` (colors) | Contrast — full check |
+| `site/build.js` (CSS) | Visible focus, touch targets |
+| `components/*.js` | ARIA, focus, roles |
+| New interactive component | Full checklist |
 
 ---
 
-## Checks WCAG 2.2
+## WCAG 2.2 checks
 
-### 1.4.3 — Contraste texte normal ≥ 4.5:1 (AA)
+### 1.4.3 — Normal text contrast ≥ 4.5:1 (AA)
 
-Vérifier les paires token texte / fond :
+Check text/background token pairs:
 
-| Contexte | Paire de tokens | Minimum |
+| Context | Token pair | Minimum |
 |----------|----------------|---------|
-| Corps de texte | `text-primary` / `background-page` | 4.5:1 |
-| Texte secondaire | `text-secondary` / `background-page` | 4.5:1 |
-| Texte sur action | `text-on-action` / `action-primary` | 4.5:1 |
-| Texte disabled | `text-disabled` / `background-page` | 3:1 (large) |
-| Code inline | `text-primary` / `background-subtle` | 4.5:1 |
+| Body text | `text-primary` / `background-page` | 4.5:1 |
+| Secondary text | `text-secondary` / `background-page` | 4.5:1 |
+| Text on action | `text-on-action` / `action-primary` | 4.5:1 |
+| Disabled text | `text-disabled` / `background-page` | 3:1 (large) |
+| Inline code | `text-primary` / `background-subtle` | 4.5:1 |
 
-Outil de référence : [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+Reference tool: [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
 
-### 1.4.11 — Contraste des composants non-textuels ≥ 3:1
+### 1.4.11 — Non-text component contrast ≥ 3:1
 
-- Bordures de champs de saisie vs fond
-- Icônes significatives vs fond
-- Indicateurs d'état (badges, chips)
+- Input field borders vs. background
+- Meaningful icons vs. background
+- State indicators (badges, chips)
 
-### 1.4.12 — Espacement du texte (AA)
+### 1.4.12 — Text spacing (AA)
 
-Le système doit supporter sans perte d'information :
-- Line-height ≥ 1.5× la taille de police
-- Espacement des paragraphes ≥ 2× la taille de police
-- Letter-spacing ≥ 0.12× la taille
-- Word-spacing ≥ 0.16× la taille
+The system must support, without loss of information:
+- Line-height ≥ 1.5× the font size
+- Paragraph spacing ≥ 2× the font size
+- Letter-spacing ≥ 0.12× the size
+- Word-spacing ≥ 0.16× the size
 
-Notre token `reading` (1.6) respecte ce critère.
+Our `reading` token (1.6) meets this criterion.
 
-### 2.4.7 — Focus visible (AA)
+### 2.4.7 — Visible focus (AA)
 
-Chaque élément interactif doit avoir un `:focus-visible` explicite :
+Every interactive element must have an explicit `:focus-visible`:
 ```css
-/* obligatoire */
+/* required */
 :focus-visible {
   outline: 2px solid var(--agtc-semantic-color-border-focus);
   outline-offset: 2px;
 }
 ```
-Vérifier que `outline: none` ou `outline: 0` n'est jamais utilisé sans alternative visible.
+Verify that `outline: none` or `outline: 0` is never used without a visible alternative.
 
-### 2.4.11 — Focus non masqué (AA, nouveau en WCAG 2.2)
+### 2.4.11 — Focus not obscured (AA, new in WCAG 2.2)
 
-Le focus ne doit pas être entièrement masqué par d'autres contenus (sticky headers, modales).
-Notre header fixe de 60px doit laisser le focus visible sur les éléments en dessous.
+Focus must not be entirely hidden by other content (sticky headers, modals).
+Our fixed 60px header must leave focus visible on the elements beneath it.
 
-### 2.5.3 — Étiquette dans le nom accessible
+### 2.5.3 — Label in accessible name
 
-Tout bouton dont le `aria-label` contient du texte visible doit inclure ce texte.
+Any button whose `aria-label` contains visible text must include that text.
 
 ```html
 <!-- ✅ -->
-<button aria-label="Supprimer le dossier">Supprimer</button>
+<button aria-label="Delete the folder">Delete</button>
 
 <!-- ❌ -->
-<button aria-label="Effacer">Supprimer</button>
+<button aria-label="Clear">Delete</button>
 ```
 
-### 2.5.8 — Taille des cibles tactiles ≥ 24×24px (AA, nouveau en WCAG 2.2)
+### 2.5.8 — Touch target size ≥ 24×24px (AA, new in WCAG 2.2)
 
-Tout élément interactif doit avoir une zone cliquable d'au moins 24×24px.
-Les boutons du système (`ds-button`) doivent respecter cette règle via leur padding.
+Every interactive element must have a clickable area of at least 24×24px.
+The system's buttons (`ds-button`) must meet this rule via their padding.
 
-### Mouvement et animation
+### Motion and animation
 
 ```css
-/* Obligatoire pour toute animation */
+/* Required for any animation */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
@@ -95,14 +95,14 @@ Les boutons du système (`ds-button`) doivent respecter cette règle via leur pa
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
 ### 2. WCAG 2.2
-- [x] text-primary / background-page : 14.7:1 ✓
-- [x] text-secondary / background-page : 5.2:1 ✓
-- [x] text-on-action / action-primary (#12A594) : vérifier → [résultat]
-- [x] Focus visible sur ds-button (toutes variantes)
-- [x] Touch targets boutons ≥ 24×24px
-- [ ] ⚠️ Vérifier focus sur nouveau composant [nom]
+- [x] text-primary / background-page: 14.7:1 ✓
+- [x] text-secondary / background-page: 5.2:1 ✓
+- [x] text-on-action / action-primary (#12A594): verify → [result]
+- [x] Visible focus on ds-button (all variants)
+- [x] Button touch targets ≥ 24×24px
+- [ ] ⚠️ Verify focus on new component [name]
 ```

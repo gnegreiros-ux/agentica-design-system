@@ -1,120 +1,120 @@
-# Checklist — Mise à jour du site
+# Checklist — Site update
 
-> À exécuter dans l'ordre avant chaque commit touchant `site/`, `tokens/`, `guidelines/` ou `decisions/`.
+> Run in order before every commit touching `site/`, `tokens/`, `guidelines/`, or `decisions/`.
 > **Type:** instruction
-> **Chemin logique:** .claude/instructions/site-checklist.md
-> **Auteur:** Guilherme Negreiros
+> **Logical path:** .claude/instructions/site-checklist.md
+> **Author:** Guilherme Negreiros
 > **Relations:** site/build.js, .claude/instructions/session-spec.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
 
 ## 1. Tokens
 
-- [ ] Toute nouvelle valeur primitive a `$value`, `$type`, `$description`
-- [ ] Les tokens sémantiques référencent des primitifs via `{primitive.X.Y}` — jamais de valeur en dur
-- [ ] Aucun préfixe `--ds-` — uniquement `--agtc-`
-- [ ] Un ADR créé si la décision est architecturale (nouvelle police, nouvelle bibliothèque, nouveau système)
+- [ ] Every new primitive value has `$value`, `$type`, `$description`
+- [ ] Semantic tokens reference primitives via `{primitive.X.Y}` — never a hardcoded value
+- [ ] No `--ds-` prefix — only `--agtc-`
+- [ ] An ADR created if the decision is architectural (new font, new library, new system)
 
 ---
 
-## 2. Build site
+## 2. Site build
 
 ```bash
 cd site && node build.js
 ```
 
-- [ ] Le build se termine sans erreur
-- [ ] Le compteur de fichiers dans la console est cohérent (`N + adrs.length`)
-- [ ] Vérifier le compte réel : `find site/dist -name "*.html" | wc -l`
-- [ ] Si un écart existe, mettre à jour `const total = N + adrs.length` dans `build()`
+- [ ] The build completes without error
+- [ ] The file counter in the console output is consistent (`N + adrs.length`)
+- [ ] Verify the actual count: `find site/dist -name "*.html" | wc -l`
+- [ ] If there is a discrepancy, update `const total = N + adrs.length` in `build()`
 
 ---
 
-## 3. Nouvelles pages ou sections
+## 3. New pages or sections
 
-Pour toute nouvelle page de fondation ou composant :
+For every new foundation or component page:
 
-- [ ] Fonction `buildXxx()` créée dans `build.js`
-- [ ] Appelée dans `build()` au bon endroit
-- [ ] Ajoutée dans `sidebarFoundations()` ou `sidebarComponents()`
-- [ ] Le `base` de la sidebar est `'../'` pour toute page en sous-répertoire (`depth: 1`)
-- [ ] `layout({ depth: 1, ... })` utilisé pour les pages dans `foundations/`, `components/`, `decisions/`
-
----
-
-## 4. Contenu
-
-- [ ] Aucun emoji UI — uniquement des icônes Lucide via `icon('nom', taille)`
-- [ ] Aucune mention d'"Inter" — la police est Atkinson Hyperlegible
-- [ ] Les valeurs dans les tableaux sont résolues depuis `SEM['key']`, pas hardcodées
-- [ ] Les règles ✅/❌ utilisent `icon('circle-check', 16)` / `icon('circle-x', 16)` avec classes `.icon-ok` / `.icon-no`
+- [ ] `buildXxx()` function created in `build.js`
+- [ ] Called in `build()` at the right place
+- [ ] Added to `sidebarFoundations()` or `sidebarComponents()`
+- [ ] The sidebar's `base` is `'../'` for any page in a subdirectory (`depth: 1`)
+- [ ] `layout({ depth: 1, ... })` used for pages in `foundations/`, `components/`, `decisions/`
 
 ---
 
-## 5. Liens
+## 4. Content
 
-Tester au moins une page par niveau de profondeur :
-
-- [ ] Page racine (`index.html`) — liens sans `../`
-- [ ] Page fondation (`foundations/*.html`) — liens sidebar avec `../`
-- [ ] Page composant (`components/*.html`) — liens sidebar avec `../`
-- [ ] Page décision (`decisions/*.html`) — liens sidebar locaux
-
-Signe de liens cassés : chemin doublé comme `foundations/foundations/color.html`.
+- [ ] No UI emoji — only Lucide icons via `icon('name', size)`
+- [ ] No mention of "Inter" — the font is Atkinson Hyperlegible
+- [ ] Values in tables are resolved from `SEM['key']`, not hardcoded
+- [ ] ✅/❌ rules use `icon('circle-check', 16)` / `icon('circle-x', 16)` with `.icon-ok` / `.icon-no` classes
 
 ---
 
-## 6. Suivi de projet
+## 5. Links
 
-- [ ] Chantier reflété dans GitHub Projects (statut, domaine) — voir ADR-069, pas de fichier de log dans le dépôt
+Test at least one page per depth level:
+
+- [ ] Root page (`index.html`) — links without `../`
+- [ ] Foundation page (`foundations/*.html`) — sidebar links with `../`
+- [ ] Component page (`components/*.html`) — sidebar links with `../`
+- [ ] Decision page (`decisions/*.html`) — local sidebar links
+
+Sign of broken links: a doubled path like `foundations/foundations/color.html`.
+
+---
+
+## 6. Project tracking
+
+- [ ] Undertaking reflected in GitHub Projects (status, domain) — see ADR-069, no log file in the repo
 
 ---
 
 ## 7. session-spec.md
 
-À mettre à jour si l'un des éléments suivants a changé :
+Update if any of the following has changed:
 
-- [ ] Nouveau token sémantique → ajouter dans "Tokens sémantiques — référence rapide"
-- [ ] Nouveau composant → ajouter dans "Inventaire des composants"
-- [ ] Nouvel ADR → ajouter dans "Décisions architecturales actives"
-- [ ] Changement de stack → mettre à jour "Identité du système"
+- [ ] New semantic token → add to "Semantic tokens — quick reference"
+- [ ] New component → add to "Component inventory"
+- [ ] New ADR → add to "Active architectural decisions"
+- [ ] Stack change → update "System identity"
 
 ---
 
 ## 8. Commit
 
 ```bash
-git status          # vérifier les fichiers stagés
-git add <fichiers>
+git status          # check staged files
+git add <files>
 git commit -m "type(scope): description"
 git push origin main
 ```
 
-- [ ] Convention Conventional Commits respectée (`feat`, `fix`, `token`, `docs`, `ci`, `chore`...)
-- [ ] Pas de fichiers hors-repo accidentellement inclus
+- [ ] Conventional Commits convention respected (`feat`, `fix`, `token`, `docs`, `ci`, `chore`...)
+- [ ] No files from outside the repo accidentally included
 
 ---
 
 ## 9. CI
 
 ```bash
-# Vérifier via l'API GitHub
+# Check via the GitHub API
 curl -s "https://api.github.com/repos/gnegreiros-ux/agentic-design-system/actions/runs?per_page=1" \
-  | python3 -c "import json,sys; r=json.load(sys.stdin)['workflow_runs'][0]; print(r['head_sha'][:7], r['status'], r['conclusion'] or 'en cours')"
+  | python3 -c "import json,sys; r=json.load(sys.stdin)['workflow_runs'][0]; print(r['head_sha'][:7], r['status'], r['conclusion'] or 'in progress')"
 ```
 
-- [ ] CI `completed success` sur le bon SHA
-- [ ] Si échec : vérifier `npm ci` présent dans le workflow, vérifier les erreurs de build
+- [ ] CI `completed success` on the right SHA
+- [ ] If failed: check that `npm ci` is present in the workflow, check build errors
 
 ---
 
-## 10. Site déployé
+## 10. Deployed site
 
-Vérifier au moins ces URLs après déploiement :
+Check at least these URLs after deployment:
 
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/` — page d'accueil
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/foundations/color.html` — fondation
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/components/button.html` — composant
-- [ ] Toute nouvelle page ajoutée dans cette session
+- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/` — home page
+- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/foundations/color.html` — foundation
+- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/components/button.html` — component
+- [ ] Any new page added in this session
 
-Signe de succès : sidebar affiche 4 fondations, 3 composants, liens sans chemin doublé.
+Sign of success: sidebar shows 4 foundations, 3 components, no doubled-path links.

@@ -1,43 +1,43 @@
-# Rule : development
+# Rule: development
 
-> Règles de développement pour ce système de design.
-> À lire si tu génères du code, ouvres une PR ou travailles sur des composants.
+> Development rules for this design system.
+> Read this if you generate code, open a PR, or work on components.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/development.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/development.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, .claude/rules/code-style.md
 
 ---
 
-## Stack technique
+## Tech stack
 
-| Couche | Technologie | Rôle |
+| Layer | Technology | Role |
 |--------|-------------|------|
-| Web Components | Lit (Google) | Contrats UI universels |
-| Compilation tokens | Style Dictionary | JSON → CSS / JS / Swift / Android |
-| Tests visuels | Chromatic | Régressions visuelles |
-| Tests accessibilité | axe-core | Audit automatique WCAG |
-| Tests E2E | Playwright | Parcours complets |
-| Documentation | Storybook | Canvas + preview + spécifications |
-| Sync Figma | Tokens Studio | Figma ↔ JSON |
+| Web Components | Lit (Google) | Universal UI contracts |
+| Token compilation | Style Dictionary | JSON → CSS / JS / Swift / Android |
+| Visual testing | Chromatic | Visual regression |
+| Accessibility testing | axe-core | Automated WCAG audit |
+| E2E testing | Playwright | Full user flows |
+| Documentation | Storybook | Canvas + preview + specs |
+| Figma sync | Tokens Studio | Figma ↔ JSON |
 
 ---
 
-## Règles de code — absolues
+## Code rules — absolute
 
 ```
-❌ Jamais de valeur en dur (couleur, espacement, radius)
-❌ Jamais de styles en ligne (inline styles) sauf exception documentée
-❌ Jamais de token primitif dans un composant
-✅ Toujours via CSS Custom Properties : var(--ds-[token])
-✅ Toujours utiliser les Web Components pour les éléments partagés
-✅ Toujours des attributs ARIA appropriés
-✅ Toujours un :focus-visible visible
+❌ Never a hardcoded value (color, spacing, radius)
+❌ Never inline styles unless documented as an exception
+❌ Never a primitive token inside a component
+✅ Always via CSS Custom Properties: var(--ds-[token])
+✅ Always use Web Components for shared elements
+✅ Always appropriate ARIA attributes
+✅ Always a visible :focus-visible
 ```
 
 ---
 
-## Structure d'un Web Component (Lit)
+## Web Component structure (Lit)
 
 ```javascript
 import { LitElement, html, css } from 'lit';
@@ -78,22 +78,22 @@ customElements.define('ds-button', DsButton);
 
 ---
 
-## Règles pour les PR
+## PR rules
 
-Avant d'ouvrir une PR, vérifier :
-- [ ] Aucune valeur de token codée en dur
-- [ ] Tous les tokens référencés existent dans les JSON
-- [ ] Axe-core ne retourne aucune violation critique
-- [ ] Focus visible sur tous les éléments interactifs
-- [ ] Storybook story mise à jour
-- [ ] `guidelines/components/[composant].md` mis à jour si le comportement change
+Before opening a PR, verify:
+- [ ] No token value hardcoded
+- [ ] All referenced tokens exist in the JSON files
+- [ ] axe-core returns zero critical violations
+- [ ] Focus is visible on all interactive elements
+- [ ] Storybook story created/updated
+- [ ] `guidelines/components/[component].md` updated if behavior changes
 
 ---
 
-## Environnements
+## Environments
 
-| Env | URL | Déclenchement |
+| Env | URL | Trigger |
 |-----|-----|---------------|
-| Preview | PR Chromatic | Automatique à chaque PR |
-| Staging | staging.design-system.org | Merge sur `develop` |
-| Production | design-system.org | Merge sur `main` + approbation |
+| Preview | PR Chromatic | Automatic on every PR |
+| Staging | staging.design-system.org | Merge to `develop` |
+| Production | design-system.org | Merge to `main` + approval |

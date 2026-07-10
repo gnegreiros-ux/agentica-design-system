@@ -1,27 +1,27 @@
-# Pipeline : style-dictionary
+# Pipeline: style-dictionary
 
-> Compilation et validation des tokens via Style Dictionary.
-> **Statut :** 🔜 Planifié — non bloquant jusqu'à activation
-> **Déclencheur :** tout changement dans `tokens/`
-
----
-
-## Objectif
-
-Quand activé, ce pipeline :
-1. Compile `tokens/primitives.json` + `tokens/semantic.json` + `tokens/component.json` → CSS, JS, Swift, Android XML
-2. Valide que toutes les références se résolvent
-3. Vérifie que les sorties (`dist/css/`, `dist/js/`, etc.) sont cohérentes avec les tokens sources
+> Token compilation and validation via Style Dictionary.
+> **Status:** 🔜 Planned — non-blocking until activated
+> **Trigger:** any change in `tokens/`
 
 ---
 
-## Commande (future)
+## Objective
+
+Once activated, this pipeline:
+1. Compiles `tokens/primitives.json` + `tokens/semantic.json` + `tokens/component.json` → CSS, JS, Swift, Android XML
+2. Validates that every reference resolves
+3. Verifies that outputs (`dist/css/`, `dist/js/`, etc.) are consistent with the source tokens
+
+---
+
+## Command (future)
 
 ```bash
 npx style-dictionary build --config style-dictionary/config.json
 ```
 
-## Sorties attendues
+## Expected outputs
 
 ```
 dist/
@@ -31,18 +31,18 @@ dist/
 └── android/tokens.xml      ← Android XML
 ```
 
-## Checks à implémenter
+## Checks to implement
 
-- [ ] Exit 0 sur la compilation (aucune erreur de résolution)
-- [ ] `dist/css/variables.css` contient tous les tokens sémantiques
-- [ ] Valeur résolue en CSS correspond à la valeur dans `primitives.json`
-- [ ] Aucun token `{unresolved.ref}` dans les sorties
+- [ ] Exit 0 on compilation (no resolution errors)
+- [ ] `dist/css/variables.css` contains every semantic token
+- [ ] Resolved CSS value matches the value in `primitives.json`
+- [ ] No `{unresolved.ref}` token in the outputs
 
 ## Activation
 
-Quand Style Dictionary est intégré au projet :
-1. Installer : `npm install style-dictionary`
-2. Configurer `style-dictionary/config.json`
-3. Changer le statut ci-dessus à `✅ Actif`
-4. Ajouter dans `quality-gate.md` → tableau des pipelines : `✅ Actif`
-5. Créer ADR documentant la décision (si pas déjà fait — ADR-003 existe)
+Once Style Dictionary is integrated into the project:
+1. Install: `npm install style-dictionary`
+2. Configure `style-dictionary/config.json`
+3. Change the status above to `✅ Active`
+4. Add to `quality-gate.md` → pipeline table: `✅ Active`
+5. Create an ADR documenting the decision (if not already done — ADR-003 exists)

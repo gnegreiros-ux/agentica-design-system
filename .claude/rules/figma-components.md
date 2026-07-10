@@ -1,37 +1,37 @@
-# Rule : figma-components
+# Rule: figma-components
 
-> Stub — règles complètes dans `.claude/instructions/figma-components.md`.
-> Charger ce fichier **uniquement** lors du travail sur les scripts Figma.
+> Stub — full rules in `.claude/instructions/figma-components.md`.
+> Load this file **only** when working on Figma scripts.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/figma-components.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/rules/figma-components.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** .claude/instructions/figma-components.md, .claude/rules/tokens-system.md
 
 ---
 
-## Règle absolue (rappel)
+## Absolute rule (reminder)
 
-Tout fill ou stroke dans un script Figma passe par `vFill(tokenSémantique, fallbackHex)`.
-Jamais de `hexRgb()` direct, jamais de token primitif dans un composant.
+Every fill or stroke in a Figma script goes through `vFill(semanticToken, fallbackHex)`.
+Never a direct `hexRgb()`, never a primitive token inside a component.
 
 ---
 
-## Document complet
+## Full document
 
-`.claude/instructions/figma-components.md` contient 25 sections :
-§0 Règle fondamentale · §1 Propriétés de composant · §2 Auto-layout · §3 Architecture
-§4 Nommage · §5 Variables & Styles (tableau de mapping tokens → hex) · §6 Performances
-§7 Checklist publication · §8 Mise en page pages composant · §9 Template DO/DON'T
-§10 Liens obligatoires · §11 Palette accessibilité · §12 Décorations gradient hero
-§13 Fond de canevas #535353 · §14 Police Atkinson Hyperlegible · §15 Showcase instances
-§16 Frame "Composant principal" · §17 Rows variables (WRAP+FILL) · §18 Token composant
-avant sémantique · §19 textStyleId obligatoire · §20 Icônes instance-swap (constraints
-SCALE) · §21 Validation dimensions/contrastes/affichage · §22 Audit complet (9 catégories,
-dont parité code↔Figma après instruction visuelle directe) · §23 Test de combinaisons
-variantes × états × contenu (méthode EightShapes — anneaux de focus en wrapper HUG)
-· §24 Typographie de présentation en Monospace (isoler la doc des composants)
-· §25 Largeur de contenu des pages (≤ 1280 px, jamais de débordement du wrapper)
+`.claude/instructions/figma-components.md` contains 25 sections:
+§0 Fundamental rule · §1 Component properties · §2 Auto-layout · §3 Architecture
+§4 Naming · §5 Variables & Styles (tokens → hex mapping table) · §6 Performance
+§7 Publication checklist · §8 Component page layout · §9 DO/DON'T template
+§10 Mandatory links · §11 Accessibility palette · §12 Hero gradient decorations
+§13 Canvas background #535353 · §14 Atkinson Hyperlegible font · §15 Instance showcase
+§16 "Main component" frame · §17 Variable rows (WRAP+FILL) · §18 Component token
+before semantic · §19 Mandatory textStyleId · §20 Instance-swap icons (SCALE
+constraints) · §21 Dimension/contrast/display validation · §22 Full audit (9 categories,
+including code↔Figma parity after direct visual instruction) · §23 Combination testing of
+variants × states × content (EightShapes method — focus rings in a HUG wrapper)
+· §24 Presentation typography in Monospace (isolating component docs)
+· §25 Page content width (≤ 1280 px, wrapper must never overflow)
 
-**Lire `.claude/instructions/figma-components.md` avant tout travail sur un script plugin Figma.**
-**Lire aussi `.claude/rules/figma-library-governance.md`** — charte code-source-de-vérité,
-tokens-only, parité architecture/rendu, veille des bonnes pratiques.
+**Read `.claude/instructions/figma-components.md` before any work on a Figma plugin script.**
+**Also read `.claude/rules/figma-library-governance.md`** — code-as-source-of-truth charter,
+tokens-only, architecture/rendering parity, best-practices watch.

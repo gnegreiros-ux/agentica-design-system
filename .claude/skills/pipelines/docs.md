@@ -1,60 +1,60 @@
-# Pipeline : docs
+# Pipeline: docs
 
-> Checklist exhaustive des mises à jour de documentation requises après un changement.
-> **Statut :** ✅ Actif
-> **Déclencheur :** tout changement (sans exception)
+> Exhaustive checklist of documentation updates required after a change.
+> **Status:** ✅ Active
+> **Trigger:** every change (no exception)
 
 ---
 
-## Matrice documentation → déclencheur
+## Documentation → trigger matrix
 
-| Documentation | Déclencheur |
+| Documentation | Trigger |
 |--------------|------------|
-| `guidelines/foundations/color.md` | Changement dans tokens couleur |
-| `guidelines/foundations/typography.md` | Changement de police ou d'échelle |
-| `guidelines/foundations/spacing.md` | Changement d'espacement ou de densité |
-| `guidelines/components/[composant].md` | Changement d'un composant |
-| `guidelines/overview.md` | Ajout d'un nouveau composant |
-| `decisions/ADR-0XX.md` | Toute décision architecturale (voir adr-triggers.md) |
-| `decisions/README.md` | Tout nouvel ADR |
-| `DESIGN.md` | Changement d'identité, de gouvernance ou de principes |
-| `README.md` | Changement de structure du projet |
-| `AGENTS.md` | Nouvelle règle pour les agents |
-| `.claude/rules/` | Nouvelle convention ou modification d'une règle |
-| Site web (`site/build.js`) | Tout changement visible sur le site |
+| `guidelines/foundations/color.md` | Change in color tokens |
+| `guidelines/foundations/typography.md` | Font or scale change |
+| `guidelines/foundations/spacing.md` | Spacing or density change |
+| `guidelines/components/[component].md` | Change to a component |
+| `guidelines/overview.md` | New component added |
+| `decisions/ADR-0XX.md` | Any architectural decision (see adr-triggers.md) |
+| `decisions/README.md` | Any new ADR |
+| `DESIGN.md` | Identity, governance, or principle change |
+| `README.md` | Project structure change |
+| `AGENTS.md` | New rule for agents |
+| `.claude/rules/` | New convention or rule change |
+| Website (`site/build.js`) | Any visible change on the site |
 
 ---
 
-## Règles de qualité documentaire
+## Documentation quality rules
 
-### Suivi de projet (GitHub Projects, ADR-069)
-- ✅ Chantier reflété dans GitHub Projects (statut, domaine)
-- ❌ Ne pas recréer de fichier de log/journal local pour cet usage
+### Project tracking (GitHub Projects, ADR-069)
+- ✅ Effort reflected in GitHub Projects (status, domain)
+- ❌ Do not recreate a local log/journal file for this purpose
 
-### Parité bilingue FR/EN
-- ✅ Tout contenu ajouté en français → version anglaise requise dans `<span class="lang-en">`
-- ✅ Tout contenu ajouté en anglais → version française requise dans `<span class="lang-fr">`
-- ❌ Jamais de texte visible uniquement dans une langue sur le site
+### FR/EN bilingual parity
+- ✅ Any content added in French → English version required in `<span class="lang-en">`
+- ✅ Any content added in English → French version required in `<span class="lang-fr">`
+- ❌ Never visible text in only one language on the site
 
-### Guidelines composants
-- ✅ `guidelines/components/[composant].md` mis à jour si le comportement ou les tokens changent
-- ✅ Les variantes autorisées reflètent exactement `tokens/component.json`
-- ❌ Jamais de variante documentée mais absente du token
+### Component guidelines
+- ✅ `guidelines/components/[component].md` updated when behavior or tokens change
+- ✅ Allowed variants exactly mirror `tokens/component.json`
+- ❌ Never a variant documented but absent from the token
 
-### Décisions
-- ✅ `decisions/README.md` → ligne ajoutée pour chaque nouvel ADR
-- ✅ L'ADR référence les fichiers qu'il impacte dans ses `Relations:`
-- ✅ Les alternatives rejetées sont documentées avec leur justification
+### Decisions
+- ✅ `decisions/README.md` → line added for every new ADR
+- ✅ The ADR references the files it impacts in its `Relations:`
+- ✅ Rejected alternatives are documented with their rationale
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
 ### 5. Documentation
-- [x] guidelines/foundations/typography.md — mis à jour (section Mono)
-- [x] decisions/README.md — ADR-028 indexé
-- [x] Parité bilingue vérifiée (lang-fr / lang-en présents)
-- [ ] Site rebuild : node site/build.js → ✓ 37 fichiers générés
-- [x] DESIGN.md — à jour (aucun changement requis)
+- [x] guidelines/foundations/typography.md — updated (Mono section)
+- [x] decisions/README.md — ADR-028 indexed
+- [x] Bilingual parity verified (lang-fr / lang-en present)
+- [ ] Site rebuild: node site/build.js → ✓ 37 files generated
+- [x] DESIGN.md — up to date (no change required)
 ```

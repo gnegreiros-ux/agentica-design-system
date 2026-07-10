@@ -1,166 +1,166 @@
-# Instruction : session-spec
+# Instruction: session-spec
 
-> Spec condensée rechargée à chaque session IA — source de vérité rapide.
+> Condensed spec reloaded at every AI session — fast source of truth.
 > **Type:** instruction
-> **Chemin logique:** .claude/instructions/session-spec.md
-> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Logical path:** .claude/instructions/session-spec.md
+> **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, decisions/
 
 ---
 
-## Identité du système
+## System identity
 
-| Champ | Valeur |
-|-------|--------|
-| Nom | Système de design agentique |
-| Sigle | sda |
-| Auteur | Guilherme Negreiros |
+| Field | Value |
+|-------|-------|
+| Name | Agentic design system |
+| Acronym | sda |
+| Author | Guilherme Negreiros |
 | Version | 1.0.0 |
-| Préfixe CSS | `--agtc-` |
-| Gouvernance | Le dernier mot est toujours humain |
+| CSS prefix | `--agtc-` |
+| Governance | The human always has the final word |
 | Stack | Lit (Web Components), Style Dictionary, axe-core, Storybook, Lucide Icons |
 
 ---
 
-## Inventaire des composants
+## Component inventory
 
-| Composant | Variantes | Contrat | Tokens | Statut |
+| Component | Variants | Contract | Tokens | Status |
 |-----------|-----------|---------|--------|--------|
 | `ds-button` | primary, secondary, ghost, critical | `guidelines/components/button.md` | `component.json#button` | ✅ agent-ready |
 | `ds-icon` | size: inline, control, nav | `guidelines/components/icon.md` | `semantic.json#icon` | ✅ agent-ready |
 
-> Mettre à jour ce tableau à chaque ajout de composant.
+> Update this table with every new component.
 
 ---
 
-## Tokens sémantiques — référence rapide
+## Semantic tokens — quick reference
 
-| Intention | Token | Niveau |
+| Intent | Token | Level |
 |-----------|-------|--------|
-| Action principale | `color.action.primary` | sémantique |
-| Action hover | `color.action.primary-hover` | sémantique |
-| Danger / destructeur | `color.feedback.danger` | sémantique |
-| Texte sur action | `color.text.on-action` | sémantique |
-| Texte principal | `color.text.primary` | sémantique |
-| Fond de page | `color.background.page` | sémantique |
-| Focus border | `color.border.focus` | sémantique |
-| Padding horizontal contrôle | `space.control.padding-x` | sémantique |
-| Padding vertical contrôle | `space.control.padding-y` | sémantique |
-| Gap interne contrôle | `space.control.gap` | sémantique |
-| Espacement entre sections | `space.layout.section` | sémantique |
-| Espacement entre composants | `space.layout.component` | sémantique |
-| Rayon contrôle | `radius.control` | sémantique |
-| Police principale | `typography.fontFamily` | sémantique |
-| Taille icône inline | `icon.size.inline` | sémantique |
-| Taille icône contrôle | `icon.size.control` | sémantique |
-| Taille icône navigation | `icon.size.nav` | sémantique |
+| Primary action | `color.action.primary` | semantic |
+| Action hover | `color.action.primary-hover` | semantic |
+| Danger / destructive | `color.feedback.danger` | semantic |
+| Text on action | `color.text.on-action` | semantic |
+| Primary text | `color.text.primary` | semantic |
+| Page background | `color.background.page` | semantic |
+| Focus border | `color.border.focus` | semantic |
+| Control horizontal padding | `space.control.padding-x` | semantic |
+| Control vertical padding | `space.control.padding-y` | semantic |
+| Control internal gap | `space.control.gap` | semantic |
+| Spacing between sections | `space.layout.section` | semantic |
+| Spacing between components | `space.layout.component` | semantic |
+| Control radius | `radius.control` | semantic |
+| Primary font | `typography.fontFamily` | semantic |
+| Inline icon size | `icon.size.inline` | semantic |
+| Control icon size | `icon.size.control` | semantic |
+| Navigation icon size | `icon.size.nav` | semantic |
 
-> Source de vérité complète : `tokens/semantic.json`
+> Complete source of truth: `tokens/semantic.json`
 
 ---
 
-## Grille dimensionnelle — échelle 4px
+## Dimensional grid — 4px scale
 
-| Token primitif | Valeur | Usage |
+| Primitive token | Value | Usage |
 |----------------|--------|-------|
-| `primitive.space.1` | 4px | Micro — séparateur |
-| `primitive.space.2` | 8px | Petit — padding vertical |
-| `primitive.space.3` | 12px | Intermédiaire |
-| `primitive.space.4` | 16px | Standard — padding horizontal |
-| `primitive.space.5` | 20px | Moyen |
-| `primitive.space.6` | 24px | Intermédiaire large |
-| `primitive.space.8` | 32px | Grand |
-| `primitive.space.10` | 40px | Très grand |
+| `primitive.space.1` | 4px | Micro — separator |
+| `primitive.space.2` | 8px | Small — vertical padding |
+| `primitive.space.3` | 12px | Intermediate |
+| `primitive.space.4` | 16px | Standard — horizontal padding |
+| `primitive.space.5` | 20px | Medium |
+| `primitive.space.6` | 24px | Large intermediate |
+| `primitive.space.8` | 32px | Large |
+| `primitive.space.10` | 40px | Very large |
 | `primitive.space.12` | 48px | Macro |
 | `primitive.space.16` | 64px | Macro — sections |
 
-> Toute valeur d'espacement doit être un multiple de 4px. Jamais de valeur hors échelle.
+> Every spacing value must be a multiple of 4px. Never a value outside the scale.
 
 ---
 
-## Règles critiques — mémo agent
+## Critical rules — agent cheat sheet
 
 ```
-❌ Jamais de valeur en dur (hex, px, rem brut)
-❌ Jamais de token primitif dans un composant
-❌ Jamais de variante inventée (hors component.json)
-❌ Jamais de merge sans approbation humaine
-❌ Jamais d'icône sémantique sans label ou decorative
-✅ Toujours via var(--agtc-[token])
-✅ Toujours :focus-visible visible
-✅ Toujours aria-* appropriés
-✅ Escalader si doute sur impact d'une action
+❌ Never a hardcoded value (hex, raw px, rem)
+❌ Never a primitive token inside a component
+❌ Never an invented variant (outside component.json)
+❌ Never a merge without human approval
+❌ Never a semantic icon without a label or decorative flag
+✅ Always via var(--agtc-[token])
+✅ Always visible :focus-visible
+✅ Always appropriate aria-*
+✅ Escalate if in doubt about an action's impact
 ```
 
 ---
 
-## Variantes autorisées par composant
+## Allowed variants per component
 
 ### ds-button
 `primary` | `secondary` | `ghost` | `critical`
 
-> ⚠️ `critical` requiert `requiresConfirmation: true` dans le token + pattern de confirmation dans l'interface.
+> ⚠️ `critical` requires `requiresConfirmation: true` in the token + a confirmation pattern in the interface.
 
 ### ds-icon
 `size="inline"` (16px) | `size="control"` (20px) | `size="nav"` (24px)
 
-> ⚠️ Si l'icône est la seule information visible, `label` est obligatoire. Si elle accompagne un texte, utiliser `decorative`.
+> ⚠️ If the icon is the only visible information, `label` is required. If it accompanies text, use `decorative`.
 
 ---
 
-## Gouvernance — niveaux d'approbation
+## Governance — approval levels
 
-| Action | Qui | Approbation |
+| Action | Who | Approval |
 |--------|-----|-------------|
-| Modifier token primitif | Dev / agent | Principal Designer |
-| Ajouter token sémantique | Dev / agent (PR) | Design System Lead |
-| Modifier token composant | Humain seulement | Principal Designer |
-| Supprimer token | Humain seulement | Principal Designer + audit d'impact |
-| Ajouter composant | Dev / agent (PR) | Design System Lead + Principal Designer |
+| Modify primitive token | Dev / agent | Principal Designer |
+| Add semantic token | Dev / agent (PR) | Design System Lead |
+| Modify component token | Human only | Principal Designer |
+| Delete token | Human only | Principal Designer + impact audit |
+| Add component | Dev / agent (PR) | Design System Lead + Principal Designer |
 
 ---
 
-## Décisions architecturales actives
+## Active architectural decisions
 
-| ADR | Décision | Statut |
+| ADR | Decision | Status |
 |-----|----------|--------|
-| ADR-001 | Architecture 3 niveaux de tokens (primitif → sémantique → composant) | ✅ Actif |
-| ADR-002 | Choix de Lit pour les Web Components | ✅ Actif |
-| ADR-003 | Choix de Style Dictionary pour la compilation des tokens | ✅ Actif |
-| ADR-004 | Gouvernance humaine : le dernier mot est toujours humain | ✅ Actif |
-| ADR-005 | Remplacement de la variante `danger` par `critical` | ✅ Actif |
-| ADR-006 | Choix de Chromatic pour les tests de régression visuelle | ✅ Actif |
-| ADR-007 | Choix de axe-core pour les tests d'accessibilité | ✅ Actif |
-| ADR-008 | Choix de Radix UI Colors pour la palette primitive | ✅ Actif |
-| ADR-009 | Choix de Storybook pour la documentation des composants | ✅ Actif |
-| ADR-010 | Choix de Playwright pour les tests E2E et d'accessibilité | ✅ Actif |
-| ADR-011 | Choix de Tokens Studio pour la synchronisation Figma ↔ JSON | ✅ Actif |
-| ADR-012 | Détection de dérive par script d'audit (audit-tokens.js) | ✅ Actif |
-| ADR-013 | DESIGN.md comme contrat portable versionné avec le code | ✅ Actif |
-| ADR-014 | Choix de Conventional Commits pour les messages de commit | ✅ Actif |
-| ADR-015 | Hook de rappel ADR dans les sessions IA | ✅ Actif |
-| ADR-016 | Journal de construction (log/kit-construction.md) | ⚠️ Remplacé par ADR-069 |
-| ADR-017 | Correction du contraste text.disabled (4.54:1 WCAG AA) | ✅ Actif |
-| ADR-018 | Migration des références primitives vers notation Radix | ✅ Actif |
-| ADR-019 | Résolution dynamique des tokens dans le build | ✅ Actif |
-| ADR-020 | Grille 4px comme échelle dimensionnelle systémique | ✅ Actif |
-| ADR-021 | Atkinson Hyperlegible comme police principale | ✅ Actif |
-| ADR-022 | Lucide Icons comme bibliothèque d'icônes | ✅ Actif |
+| ADR-001 | 3-level token architecture (primitive → semantic → component) | ✅ Active |
+| ADR-002 | Choice of Lit for Web Components | ✅ Active |
+| ADR-003 | Choice of Style Dictionary for token compilation | ✅ Active |
+| ADR-004 | Human governance: the human always has the final word | ✅ Active |
+| ADR-005 | Replacement of the `danger` variant with `critical` | ✅ Active |
+| ADR-006 | Choice of Chromatic for visual regression testing | ✅ Active |
+| ADR-007 | Choice of axe-core for accessibility testing | ✅ Active |
+| ADR-008 | Choice of Radix UI Colors for the primitive palette | ✅ Active |
+| ADR-009 | Choice of Storybook for component documentation | ✅ Active |
+| ADR-010 | Choice of Playwright for E2E and accessibility testing | ✅ Active |
+| ADR-011 | Choice of Tokens Studio for Figma ↔ JSON sync | ✅ Active |
+| ADR-012 | Drift detection via audit script (audit-tokens.js) | ✅ Active |
+| ADR-013 | DESIGN.md as a portable contract versioned with the code | ✅ Active |
+| ADR-014 | Choice of Conventional Commits for commit messages | ✅ Active |
+| ADR-015 | ADR reminder hook in AI sessions | ✅ Active |
+| ADR-016 | Build log (log/kit-construction.md) | ⚠️ Replaced by ADR-069 |
+| ADR-017 | text.disabled contrast fix (4.54:1 WCAG AA) | ✅ Active |
+| ADR-018 | Migration of primitive references to Radix notation | ✅ Active |
+| ADR-019 | Dynamic token resolution in the build | ✅ Active |
+| ADR-020 | 4px grid as the systemic dimensional scale | ✅ Active |
+| ADR-021 | Atkinson Hyperlegible as the primary font | ✅ Active |
+| ADR-022 | Lucide Icons as the icon library | ✅ Active |
 
-> Dossier complet : `decisions/`
-
----
-
-## Tokens dépréciés
-
-Aucun token déprécié à ce jour.
-
-> Tenir ce tableau à jour à chaque TCR. Voir `tokens/deprecated.md` quand le fichier existera.
+> Full folder: `decisions/`
 
 ---
 
-## Dernière mise à jour
+## Deprecated tokens
 
-Date : 2026-05-29
-Modifié par : Guilherme Negreiros
-Raison : Ajout des tokens fontFamily, iconSize, space étendu (grille 4px) — ADR-020/021/022. Mise à jour préfixe --ds- → --agtc-. Ajout ds-icon dans l'inventaire composants. Complétion des ADRs 015-022.
+No deprecated tokens as of this writing.
+
+> Keep this table up to date at every TCR. See `tokens/deprecated.md` once that file exists.
+
+---
+
+## Last updated
+
+Date: 2026-05-29
+Modified by: Guilherme Negreiros
+Reason: Added fontFamily, iconSize, extended space tokens (4px grid) — ADR-020/021/022. Updated prefix --ds- → --agtc-. Added ds-icon to the component inventory. Completed ADRs 015-022.

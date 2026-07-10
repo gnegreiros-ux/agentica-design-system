@@ -1,122 +1,122 @@
-# Skill : quality-gate
+# Skill: quality-gate
 
-> Orchestrateur pré-commit. Exécute tous les pipelines actifs dans l'ordre, génère un rapport d'impact, attend l'approbation humaine avant tout commit.
+> Pre-commit orchestrator. Runs all active pipelines in order, generates an impact report, waits for human approval before any commit.
 > **Type:** skill
-> **Chemin logique:** .claude/skills/quality-gate.md
-> **Lecture avant:** AGENTS.md, .claude/rules/post-change-pipeline.md
+> **Logical path:** .claude/skills/quality-gate.md
+> **Read before:** AGENTS.md, .claude/rules/post-change-pipeline.md
 > **Relations:** .claude/skills/pipelines/, decisions/ADR-029-quality-gate-pre-commit.md
 
 ---
 
-## Règle absolue
+## Absolute rule
 
-> **Aucun commit sans que tous les blocs obligatoires aient été exécutés et approuvés par l'humain.**
-
----
-
-## Déclenchement
-
-Exécuter ce quality gate **après toute modification**, quelle que soit sa taille :
-- Modification d'un token (primitif, sémantique, composant)
-- Modification d'un composant ou d'une page du site
-- Ajout ou modification d'une règle, d'un ADR, d'une guideline
-- Modification de la configuration (build, Style Dictionary, etc.)
+> **No commit until all mandatory blocks have been run and approved by the human.**
 
 ---
 
-## Pipelines disponibles
+## Trigger
 
-| Pipeline | Fichier | Statut | Obligatoire |
+Run this quality gate **after every modification**, regardless of size:
+- Modification of a token (primitive, semantic, component)
+- Modification of a component or a site page
+- Addition or modification of a rule, an ADR, a guideline
+- Configuration change (build, Style Dictionary, etc.)
+
+---
+
+## Available pipelines
+
+| Pipeline | File | Status | Mandatory |
 |----------|---------|--------|-------------|
-| Cohérence tokens | `pipelines/tokens-audit.md` | ✅ Actif | Oui |
-| WCAG 2.2 | `pipelines/wcag.md` | ✅ Actif | Oui |
-| Revue patterns UX | `pipelines/ux-patterns.md` | ✅ Actif | Oui (nouveau composant + modif UX pertinente) |
-| Conformité règles / ADRs | `pipelines/adr-conformity.md` | ✅ Actif | Oui |
-| ADRs manquants | `pipelines/adr-triggers.md` | ✅ Actif | Oui |
-| Documentation | `pipelines/docs.md` | ✅ Actif | Oui |
-| Site rebuild | `pipelines/site.md` | ✅ Actif | Oui |
-| Commit | `pipelines/commit.md` | ✅ Actif | Oui |
-| Style Dictionary | `pipelines/style-dictionary.md` | 🔜 Planifié | Quand actif |
-| Storybook | `pipelines/storybook.md` | 🔜 Planifié | Quand actif |
-| Chromatic | `pipelines/chromatic.md` | ✅ Actif | Oui (changement `components/`, `tokens/`, `.storybook/`) |
-| axe-core | `pipelines/axe-core.md` | 🔜 Planifié | Quand actif |
-| Playwright | `pipelines/playwright.md` | 🔜 Planifié | Quand actif |
+| Token consistency | `pipelines/tokens-audit.md` | ✅ Active | Yes |
+| WCAG 2.2 | `pipelines/wcag.md` | ✅ Active | Yes |
+| UX pattern review | `pipelines/ux-patterns.md` | ✅ Active | Yes (new component + relevant UX change) |
+| Rule / ADR compliance | `pipelines/adr-conformity.md` | ✅ Active | Yes |
+| Missing ADRs | `pipelines/adr-triggers.md` | ✅ Active | Yes |
+| Documentation | `pipelines/docs.md` | ✅ Active | Yes |
+| Site rebuild | `pipelines/site.md` | ✅ Active | Yes |
+| Commit | `pipelines/commit.md` | ✅ Active | Yes |
+| Style Dictionary | `pipelines/style-dictionary.md` | 🔜 Planned | Once active |
+| Storybook | `pipelines/storybook.md` | 🔜 Planned | Once active |
+| Chromatic | `pipelines/chromatic.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`) |
+| axe-core | `pipelines/axe-core.md` | 🔜 Planned | Once active |
+| Playwright | `pipelines/playwright.md` | 🔜 Planned | Once active |
 
 ---
 
-## Séquence d'exécution
+## Execution sequence
 
 ```
-1. git diff --name-only                    → identifier les fichiers modifiés
-2. Filtrer les pipelines déclenchés        → selon la matrice dans chaque pipeline
-3. Exécuter chaque pipeline actif          → générer les items de rapport
-4. Présenter le rapport complet            → format checklist ci-dessous
-5. Attendre l'approbation explicite        → "Oui, vas-y" ou corrections demandées
-6. Exécuter les tâches approuvées          → dans l'ordre : tokens → site → docs → commit
-7. Commiter en un seul commit cohérent     → conventional commits, sans --no-verify
+1. git diff --name-only                    → identify modified files
+2. Filter triggered pipelines              → per the matrix in each pipeline
+3. Run each active pipeline                → generate report items
+4. Present the full report                 → checklist format below
+5. Wait for explicit approval               → "Yes, go ahead" or requested changes
+6. Execute the approved tasks              → in order: tokens → site → docs → commit
+7. Commit in a single coherent commit      → conventional commits, no --no-verify
 ```
 
 ---
 
-## Format du rapport
+## Report format
 
 ```markdown
-## Quality Gate — approbation requise
+## Quality Gate — approval required
 
-### Fichiers modifiés
-- [liste des fichiers depuis git diff]
+### Modified files
+- [list of files from git diff]
 
-### 1. Cohérence tokens
-- [ ] Aucune valeur codée en dur (hex, px, font-family hardcodé)
-- [ ] Tous les tokens référencés existent
-- [ ] Aucun token orphelin créé
+### 1. Token consistency
+- [ ] No hardcoded value (hex, px, hardcoded font-family)
+- [ ] All referenced tokens exist
+- [ ] No orphaned token created
 
 ### 2. WCAG 2.2
-- [ ] Contraste texte normal ≥ 4.5:1
-- [ ] Contraste texte large ≥ 3:1
-- [ ] Focus visible sur tous les éléments interactifs
+- [ ] Normal text contrast ≥ 4.5:1
+- [ ] Large text contrast ≥ 3:1
+- [ ] Focus visible on all interactive elements
 - [ ] Touch targets ≥ 24×24px (WCAG 2.5.8)
-- [ ] Pas d'animation sans prefers-reduced-motion
+- [ ] No animation without prefers-reduced-motion
 
-### 2b. Revue patterns UX (si composant créé/modifié — sinon « N/A »)
-- [ ] Patterns suggérés présentés à l'humain avec liens directs
-- [ ] Décision humaine consignée (✅/❌ par pattern)
-- [ ] 6 surfaces documentées : guideline, code, story, site, ADR, log
-- ou : N/A — aucun composant créé ni modification UX pertinente
+### 2b. UX pattern review (if a component was created/modified — otherwise "N/A")
+- [ ] Suggested patterns presented to the human with direct links
+- [ ] Human decision recorded (✅/❌ per pattern)
+- [ ] 6 surfaces documented: guideline, code, story, site, ADR, log
+- or: N/A — no component created and no relevant UX modification
 
-### 3. Conformité règles / ADRs
-- [ ] ADR actif n°XX respecté : [règle spécifique]
+### 3. Rule / ADR compliance
+- [ ] Active ADR #XX respected: [specific rule]
 - [ ] ...
 
-### 4. ADRs manquants
-- [ ] [Décision X] → ADR-0XX à créer : [titre proposé]
-- ou : Aucun nouvel ADR requis
+### 4. Missing ADRs
+- [ ] [Decision X] → ADR-0XX to create: [proposed title]
+- or: No new ADR required
 
 ### 5. Documentation
-- [ ] guidelines/[section].md mis à jour
-- [ ] Chantier reflété dans GitHub Projects (statut, domaine) — voir ADR-069
-- [ ] decisions/README.md mis à jour (si nouvel ADR)
-- [ ] Parité bilingue FR/EN vérifiée
-- [ ] Site rebuild : node site/build.js
+- [ ] guidelines/[section].md updated
+- [ ] Work reflected in GitHub Projects (status, domain) — see ADR-069
+- [ ] decisions/README.md updated (if new ADR)
+- [ ] FR/EN bilingual parity verified
+- [ ] Site rebuild: node site/build.js
 
-### 6. Pipelines planifiés (non bloquants)
-- ⏳ Style Dictionary : non encore actif
-- ⏳ Storybook : non encore actif
+### 6. Planned pipelines (non-blocking)
+- ⏳ Style Dictionary: not yet active
+- ⏳ Storybook: not yet active
 
 ### 7. Commit
-- [ ] Format : type(scope): description courte
-- [ ] Un seul commit cohérent
-- [ ] Pas de chemin /Users/... dans les fichiers commités
+- [ ] Format: type(scope): short description
+- [ ] A single coherent commit
+- [ ] No /Users/... path in committed files
 
-### Points d'attention
-- [escalades, approbations spéciales Principal Designer]
+### Points of attention
+- [escalations, special Principal Designer approvals]
 ```
 
 ---
 
-## Ajouter un nouveau pipeline
+## Adding a new pipeline
 
-1. Créer `.claude/skills/pipelines/[nom].md` avec le format standard (voir `pipelines/style-dictionary.md` comme exemple de stub)
-2. Ajouter une ligne dans le tableau "Pipelines disponibles" ci-dessus
-3. Mettre le statut à `✅ Actif` quand le pipeline est opérationnel
-4. Créer un ADR si le pipeline représente une décision architecturale significative
+1. Create `.claude/skills/pipelines/[name].md` with the standard format (see `pipelines/style-dictionary.md` as a stub example)
+2. Add a line to the "Available pipelines" table above
+3. Set the status to `✅ Active` once the pipeline is operational
+4. Create an ADR if the pipeline represents a significant architectural decision

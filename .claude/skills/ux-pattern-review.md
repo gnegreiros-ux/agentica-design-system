@@ -1,99 +1,99 @@
-# Skill : ux-pattern-review
+# Skill: ux-pattern-review
 
-> Capacité réutilisable : présenter les patterns UX de référence pour un composant,
-> recueillir l'approbation humaine, puis documenter la décision sur 6 surfaces.
+> Reusable capability: present the reference UX patterns for a component,
+> gather human approval, then document the decision on 6 surfaces.
 > **Type:** skill
-> **Chemin logique:** .claude/skills/ux-pattern-review.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
+> **Logical path:** .claude/skills/ux-pattern-review.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
 > **Relations:** .claude/rules/ux-patterns-sources.md, .claude/skills/pipelines/ux-patterns.md, guidelines/components/, decisions/ADR-036-ux-pattern-review-pre-composant.md
 
 ---
 
-## Objectif
+## Objective
 
-Avant de publier un composant — nouveau ou modifié de façon UX pertinente — présenter à
-l'humain les **patterns UX suggérés** par les 5 sources de référence (voir
-`.claude/rules/ux-patterns-sources.md`), **avec liens directs**, afin qu'il **juge et approuve**
-lesquels appliquer. La décision est ensuite **documentée partout**.
+Before publishing a component — new or modified in a UX-relevant way — present to
+the human the **UX patterns suggested** by the 5 reference sources (see
+`.claude/rules/ux-patterns-sources.md`), **with direct links**, so they can **judge and approve**
+which ones to apply. The decision is then **documented everywhere**.
 
-> **Le dernier mot est toujours humain.** Ce skill propose, l'humain décide.
-
----
-
-## Quand exécuter ce skill
-
-- À la **création** d'un nouveau composant (toujours).
-- À une **modification pertinente** d'un composant existant : nouvelle variante/état, changement
-  de la logique de validation, de l'affichage erreur/aide, d'une interaction, ajout d'un type.
-- **Pas nécessaire** pour : correction de contraste, typo, renommage de variable, refactor sans
-  changement de comportement.
+> **The human always has the final word.** This skill proposes, the human decides.
 
 ---
 
-## Processus
+## When to run this skill
 
-### Étape 1 — Cadrer
-Identifier :
-- Le composant concerné et son **type** (champ, action, feedback, conteneur, icône, navigation, données…).
-- La **nature du changement** (création vs modification ; quel aspect UX est touché).
+- On the **creation** of a new component (always).
+- On a **relevant modification** of an existing component: new variant/state, change
+  to validation logic, error/help display, an interaction, or adding a type.
+- **Not necessary** for: contrast fix, typo, variable rename, refactor with no
+  behavior change.
 
-### Étape 2 — Consulter les sources (hybride)
-- Lire la **matrice type → sources prioritaires** dans `.claude/rules/ux-patterns-sources.md`.
-- Faire un **WebFetch ciblé** sur la/les source(s) prioritaires pour ce type de composant.
-- Toujours inclure NN/g comme socle d'usabilité.
+---
 
-### Étape 3 — Présenter les patterns suggérés
-Produire un tableau (format ci-dessous) listant chaque pattern candidat avec :
-nom, source + **lien direct**, problème qu'il résout, recommandation par défaut.
-Couvrir explicitement les questions de la **checklist de revue** : états, affichage erreur,
-help text, **moment de validation**, required markers, progressive disclosure, dark patterns.
+## Process
 
-### Étape 4 — Attendre l'approbation humaine
-- L'humain coche les patterns à appliquer (✅) et écarte les autres (❌), avec justification.
-- **Ne rien construire ni publier avant cette approbation.**
-- En cas de doute sur l'impact (ex. action critique, donnée sensible) : escalader.
+### Step 1 — Frame it
+Identify:
+- The component involved and its **type** (field, action, feedback, container, icon, navigation, data…).
+- The **nature of the change** (creation vs. modification; which UX aspect is affected).
 
-### Étape 5 — Documenter sur les 6 surfaces
-Propager le **Pattern Decision Record** (voir `.claude/rules/ux-patterns-sources.md`) :
-1. **Guideline** `guidelines/components/<comp>.md` → section `## PATTERNS UX DE RÉFÉRENCE`.
-2. **Code** `components/agtc-<comp>.js` → bloc commentaire d'en-tête « POURQUOI » + liens.
+### Step 2 — Consult the sources (hybrid)
+- Read the **type → priority sources matrix** in `.claude/rules/ux-patterns-sources.md`.
+- Do a **targeted WebFetch** on the priority source(s) for this component type.
+- Always include NN/g as the usability baseline.
+
+### Step 3 — Present the suggested patterns
+Produce a table (format below) listing each candidate pattern with:
+name, source + **direct link**, problem it solves, default recommendation.
+Explicitly cover the **review checklist** questions: states, error display,
+help text, **validation timing**, required markers, progressive disclosure, dark patterns.
+
+### Step 4 — Wait for human approval
+- The human checks off the patterns to apply (✅) and rejects the others (❌), with justification.
+- **Do not build or publish anything before this approval.**
+- If in doubt about the impact (e.g. critical action, sensitive data): escalate.
+
+### Step 5 — Document on the 6 surfaces
+Propagate the **Pattern Decision Record** (see `.claude/rules/ux-patterns-sources.md`):
+1. **Guideline** `guidelines/components/<comp>.md` → section `## UX Patterns Reference`.
+2. **Code** `components/agtc-<comp>.js` → "WHY" header comment block + links.
 3. **Storybook** `components/agtc-<comp>.stories.js` → `parameters.docs.description.component`.
 4. **Site** → `node site/build.js`.
-5. **ADR** d'implémentation du composant → liste des patterns appliqués.
-6. **GitHub Projects** → item du chantier reflété (statut, domaine) — voir ADR-069.
+5. **ADR** for the component's implementation → list of applied patterns.
+6. **GitHub Projects** → reflect the work item (status, domain) — see ADR-069.
 
 ---
 
-## Format de sortie — patterns suggérés
+## Output format — suggested patterns
 
 ```markdown
-## Revue de patterns UX — <composant>
+## UX pattern review — <component>
 
-Type : <type> · Nature : <création | modification : aspect touché>
-Sources consultées : <liste avec liens>
+Type: <type> · Nature: <creation | modification: aspect affected>
+Sources consulted: <list with links>
 
-| Pattern | Source (lien) | Problème résolu | Recommandation | Décision |
+| Pattern | Source (link) | Problem solved | Recommendation | Decision |
 |---------|---------------|-----------------|----------------|----------|
-| Inline error sous le champ | [NN/g — error handling](https://www.nngroup.com/articles/design-pattern-guidelines/) | Où afficher l'erreur | Recommandé | ☐ ✅ / ☐ ❌ |
-| Validation onBlur (pas onChange) | [IxDF — forms](https://ixdf.org/literature/topics/ui-design-patterns) | Quand valider | Recommandé | ☐ ✅ / ☐ ❌ |
-| Required marker `*` + aria-required | [IxDF — required fields](https://ixdf.org/literature/topics/ui-design-patterns) | Signaler l'obligatoire | Recommandé | ☐ ✅ / ☐ ❌ |
+| Inline error under the field | [NN/g — error handling](https://www.nngroup.com/articles/design-pattern-guidelines/) | Where to show the error | Recommended | ☐ ✅ / ☐ ❌ |
+| onBlur validation (not onChange) | [IxDF — forms](https://ixdf.org/literature/topics/ui-design-patterns) | When to validate | Recommended | ☐ ✅ / ☐ ❌ |
+| Required marker `*` + aria-required | [IxDF — required fields](https://ixdf.org/literature/topics/ui-design-patterns) | Signal required fields | Recommended | ☐ ✅ / ☐ ❌ |
 | … | … | … | … | ☐ ✅ / ☐ ❌ |
 
-### Questions ouvertes pour l'humain
-- [moment de validation, cas limites, arbitrages]
+### Open questions for the human
+- [validation timing, edge cases, trade-offs]
 
-### En attente d'approbation
-> Coche les patterns à appliquer. Aucune publication avant ta décision.
+### Awaiting approval
+> Check off the patterns to apply. No publishing before your decision.
 ```
 
 ---
 
-## Ce que ce skill ne fait PAS
+## What this skill does NOT do
 
 ```
-❌ Inventer un pattern non issu des sources de référence
-❌ Décider seul des patterns à appliquer
-❌ Construire ou publier un composant sans approbation humaine
-❌ Sauter la propagation sur les 6 surfaces
-❌ Contourner le pipeline ux-patterns du quality-gate
+❌ Invent a pattern not from the reference sources
+❌ Decide alone which patterns to apply
+❌ Build or publish a component without human approval
+❌ Skip propagation to the 6 surfaces
+❌ Bypass the quality-gate's ux-patterns pipeline
 ```

@@ -1,61 +1,61 @@
-# Pipeline : commit
+# Pipeline: commit
 
-> Règles de commit à appliquer systématiquement avant tout `git commit`.
-> **Statut :** ✅ Actif
-> **Déclencheur :** systématique — dernier pipeline avant le commit
+> Commit rules to apply systematically before every `git commit`.
+> **Status:** ✅ Active
+> **Trigger:** systematic — last pipeline before the commit
 
 ---
 
-## Checklist pré-commit
+## Pre-commit checklist
 
-### 1. Format du message (ADR-014)
+### 1. Message format (ADR-014)
 
 ```
-type(scope): description courte en minuscules
+type(scope): short description in lowercase
 
-[corps optionnel]
+[optional body]
 
 Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
-Types valides : `feat` `fix` `token` `docs` `a11y` `style` `refactor` `test` `chore` `ci`
+Valid types: `feat` `fix` `token` `docs` `a11y` `style` `refactor` `test` `chore` `ci`
 
-❌ Messages interdits : `"update"`, `"fix"`, `"wip"`, `"changes"`, `"misc"`
+❌ Forbidden messages: `"update"`, `"fix"`, `"wip"`, `"changes"`, `"misc"`
 
-### 2. Périmètre du commit
+### 2. Commit scope
 
-- ✅ Un seul commit cohérent par session de modifications
-- ✅ Tous les fichiers liés au changement dans le même commit
-- ❌ Jamais de commit partiel qui laisse le repo dans un état incohérent (ex: ADR créé mais site non rebuild)
+- ✅ One coherent commit per round of changes
+- ✅ All files related to the change in the same commit
+- ❌ Never a partial commit that leaves the repo in an inconsistent state (e.g. ADR created but site not rebuilt)
 
-### 3. Fichiers à ne jamais commiter
+### 3. Files to never commit
 
-- ❌ Fichiers `.env` ou secrets
-- ❌ Binaires non intentionnels (sauf Brand/ et assets explicitement approuvés)
-- ⚠️ `.DS_Store` — à inclure si présent (convention projet, voir memory)
+- ❌ `.env` files or secrets
+- ❌ Unintentional binaries (except Brand/ and explicitly approved assets)
+- ⚠️ `.DS_Store` — include if present (project convention, see memory)
 
-### 4. `--no-verify` interdit
+### 4. `--no-verify` forbidden
 
-❌ Ne jamais utiliser `git commit --no-verify`.
-Si un hook échoue → diagnostiquer et corriger, ne pas contourner.
+❌ Never use `git commit --no-verify`.
+If a hook fails → diagnose and fix, don't bypass it.
 
-### 5. Push immédiat après commit
+### 5. Push immediately after commit
 
-✅ Toujours pousser juste après le commit.
-✅ Vérifier que le push réussit (pas de rejet remote).
+✅ Always push right after the commit.
+✅ Verify that the push succeeds (no remote rejection).
 
 ---
 
-## Commandes de référence
+## Reference commands
 
 ```bash
-# Staging sélectif (pas de git add -A sans vérification)
-git add [fichiers spécifiques]
+# Selective staging (no git add -A without verification)
+git add [specific files]
 
-# Vérification avant commit
+# Verify before commit
 git diff --staged
 
-# Commit avec heredoc (évite les problèmes d'échappement)
+# Commit with heredoc (avoids escaping issues)
 git commit -m "$(cat <<'EOF'
 type(scope): description
 
@@ -69,11 +69,11 @@ git push
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
 ### 6. Commit
-- [x] Format : docs(adr): ADR-029 quality gate pré-commit modulaire
-- [x] Fichiers staged : decisions/ADR-029.md, decisions/README.md, .claude/skills/, site/dist/
-- [x] Push réussi → origin/main à jour
+- [x] Format: docs(adr): ADR-029 modular pre-commit quality gate
+- [x] Staged files: decisions/ADR-029.md, decisions/README.md, .claude/skills/, site/dist/
+- [x] Push succeeded → origin/main up to date
 ```

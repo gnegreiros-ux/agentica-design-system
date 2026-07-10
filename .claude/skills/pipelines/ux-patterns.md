@@ -1,69 +1,69 @@
-# Pipeline : ux-patterns
+# Pipeline: ux-patterns
 
-> Garde-fou bloquant — toute création de composant et toute modification UX pertinente
-> doit passer par une revue des patterns UX approuvée par l'humain, documentée sur 6 surfaces.
-> **Statut :** ✅ Actif
-> **Déclencheur :** nouveau composant, ou modification UX pertinente d'un composant existant
-
----
-
-## Principe
-
-> Aucun composant n'est publié sans que les **patterns UX de référence** aient été présentés
-> à l'humain (avec liens) et que sa décision ait été **documentée partout**.
-
-Référence d'exécution : `.claude/skills/ux-pattern-review.md`
-Sources et checklist : `.claude/rules/ux-patterns-sources.md`
+> Blocking guardrail — any component creation and any relevant UX modification
+> must go through a human-approved UX pattern review, documented across 6 surfaces.
+> **Status:** ✅ Active
+> **Trigger:** new component, or relevant UX modification of an existing component
 
 ---
 
-## Matrice de déclenchement
+## Principle
 
-| Changement effectué | Revue requise ? |
+> No component is published without the **reference UX patterns** having been presented
+> to the human (with links) and their decision **documented everywhere**.
+
+Execution reference: `.claude/skills/ux-pattern-review.md`
+Sources and checklist: `.claude/rules/ux-patterns-sources.md`
+
+---
+
+## Trigger matrix
+
+| Change made | Review required? |
 |--------------------|-----------------|
-| Nouveau `components/agtc-*.js` | ✅ Oui — revue complète |
-| Nouvelle `guidelines/components/*.md` | ✅ Oui — revue complète |
-| Nouvelle variante ou nouvel état d'un composant | ✅ Oui |
-| Changement de la logique de validation (moment, règles) | ✅ Oui |
-| Changement d'affichage erreur / texte d'aide | ✅ Oui |
-| Nouvelle interaction ou nouveau type supporté | ✅ Oui |
-| Correction de contraste / WCAG | ❌ Non — couvert par `pipelines/wcag.md` |
-| Typo, renommage de variable, refactor sans changement de comportement | ❌ Non |
-| Mise à jour de tokens sans impact comportemental | ❌ Non |
+| New `components/agtc-*.js` | ✅ Yes — full review |
+| New `guidelines/components/*.md` | ✅ Yes — full review |
+| New variant or new state on a component | ✅ Yes |
+| Change to validation logic (timing, rules) | ✅ Yes |
+| Change to error display / help text | ✅ Yes |
+| New interaction or newly supported type | ✅ Yes |
+| Contrast / WCAG fix | ❌ No — covered by `pipelines/wcag.md` |
+| Typo, variable rename, refactor with no behavior change | ❌ No |
+| Token update with no behavioral impact | ❌ No |
 
-> Même distinction « décision vs ajustement » que l'amendement d'ADR-015 : la revue se déclenche
-> quand on **crée un comportement UX**, pas quand on corrige l'existant.
+> Same "decision vs. adjustment" distinction as the ADR-015 amendment: the review triggers
+> when a **UX behavior is created**, not when an existing one is fixed.
 
 ---
 
-## Checks du pipeline
+## Pipeline checks
 
-### 1. La revue a-t-elle eu lieu ?
-- [ ] Patterns suggérés présentés à l'humain (tableau + **liens directs** vers les sources)
-- [ ] Checklist de revue couverte : états, affichage erreur, help text, **moment de validation**,
+### 1. Did the review happen?
+- [ ] Suggested patterns presented to the human (table + **direct links** to the sources)
+- [ ] Review checklist covered: states, error display, help text, **validation timing**,
       required markers, progressive disclosure, dark patterns
 
-### 2. L'humain a-t-il approuvé ?
-- [ ] Décision explicite (✅/❌) consignée pour chaque pattern proposé
-- [ ] Aucun pattern appliqué sans approbation
+### 2. Did the human approve?
+- [ ] Explicit decision (✅/❌) recorded for each proposed pattern
+- [ ] No pattern applied without approval
 
-### 3. Les 6 surfaces sont-elles documentées ?
-- [ ] **Guideline** — section `## PATTERNS UX DE RÉFÉRENCE` à jour
-- [ ] **Code** — bloc commentaire d'en-tête « POURQUOI » + liens
-- [ ] **Storybook** — `parameters.docs.description.component` (sauf composant sans story → noter)
-- [ ] **Site** — `node site/build.js` exécuté
-- [ ] **ADR** — patterns appliqués listés dans l'ADR d'implémentation du composant
-- [ ] **GitHub Projects** — item du chantier reflété (statut, domaine) — voir ADR-069
+### 3. Are the 6 surfaces documented?
+- [ ] **Guideline** — section `## UX Patterns Reference` up to date
+- [ ] **Code** — header comment block "WHY" + links
+- [ ] **Storybook** — `parameters.docs.description.component` (unless component has no story → note it)
+- [ ] **Site** — `node site/build.js` run
+- [ ] **ADR** — applied patterns listed in the component's implementation ADR
+- [ ] **GitHub Projects** — project item reflected (status, domain) — see ADR-069
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
-### X. Revue patterns UX
-- [x] Composant : agtc-input (modification : logique de validation)
-- [x] Patterns présentés avec liens (NN/g, IxDF, Smashing)
-- [x] Approbation humaine : 4 patterns ✅, 1 ❌ (lazy registration — non pertinent)
-- [x] 6 surfaces documentées (guideline, code, story, site, ADR-033, log)
-- [ ] ⚠️ Vérifier rebuild site
+### X. UX pattern review
+- [x] Component: agtc-input (change: validation logic)
+- [x] Patterns presented with links (NN/g, IxDF, Smashing)
+- [x] Human approval: 4 patterns ✅, 1 ❌ (lazy registration — not relevant)
+- [x] 6 surfaces documented (guideline, code, story, site, ADR-033, log)
+- [ ] ⚠️ Verify site rebuild
 ```

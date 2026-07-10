@@ -1,21 +1,21 @@
-# Pipeline : storybook
+# Pipeline: storybook
 
-> Validation des stories de composants et cohérence avec le système de tokens.
-> **Statut :** 🔜 Planifié — non bloquant jusqu'à activation
-> **Déclencheur :** tout changement dans `components/`
-
----
-
-## Objectif
-
-Quand activé, ce pipeline :
-1. Vérifie que chaque composant a une story Storybook correspondante
-2. Lance le build Storybook pour détecter les erreurs de compilation
-3. Valide que les args/controls reflètent les variantes définies dans `tokens/component.json`
+> Validation of component stories and consistency with the token system.
+> **Status:** 🔜 Planned — non-blocking until activated
+> **Trigger:** any change in `components/`
 
 ---
 
-## Commandes (futures)
+## Objective
+
+Once activated, this pipeline:
+1. Verifies that every component has a matching Storybook story
+2. Runs the Storybook build to catch compilation errors
+3. Validates that args/controls mirror the variants defined in `tokens/component.json`
+
+---
+
+## Commands (future)
 
 ```bash
 # Build
@@ -25,16 +25,16 @@ npx storybook build
 npx storybook test
 ```
 
-## Checks à implémenter
+## Checks to implement
 
-- [ ] Chaque `components/ds-[nom].js` a un `stories/ds-[nom].stories.js`
-- [ ] Les variantes dans la story correspondent aux variantes dans `component.json`
-- [ ] Build Storybook exit 0 (aucune erreur)
-- [ ] Aucun import de valeur hardcodée dans les stories
+- [ ] Every `components/ds-[name].js` has a `stories/ds-[name].stories.js`
+- [ ] Variants in the story match the variants in `component.json`
+- [ ] Storybook build exit 0 (no errors)
+- [ ] No hardcoded value imported in the stories
 
 ## Activation
 
-1. Installer : `npx storybook@latest init`
-2. Configurer pour Web Components (Lit)
-3. Changer le statut à `✅ Actif`
-4. Créer ADR-009 est déjà prévu — vérifier et activer
+1. Install: `npx storybook@latest init`
+2. Configure for Web Components (Lit)
+3. Change the status to `✅ Active`
+4. ADR-009 is already planned — verify and activate

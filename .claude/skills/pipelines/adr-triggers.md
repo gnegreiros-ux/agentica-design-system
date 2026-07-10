@@ -1,79 +1,79 @@
-# Pipeline : adr-triggers
+# Pipeline: adr-triggers
 
-> Matrice de déclenchement — détermine si un nouvel ADR est requis après un changement.
-> **Statut :** ✅ Actif
-> **Déclencheur :** tout changement (vérification systématique)
-
----
-
-## Principe
-
-> Toute **décision architecturale ou de design** qui n'est pas déjà couverte par un ADR existant doit en créer un.
-> Un changement peut être sans ADR seulement si c'est une **application** d'une décision déjà documentée.
+> Trigger matrix — determines whether a new ADR is required after a change.
+> **Status:** ✅ Active
+> **Trigger:** every change (systematic check)
 
 ---
 
-## Matrice de déclenchement
+## Principle
 
-| Changement effectué | ADR requis ? | Type d'ADR |
+> Any **architectural or design decision** not already covered by an existing ADR must create one.
+> A change can go without an ADR only if it is an **application** of an already documented decision.
+
+---
+
+## Trigger matrix
+
+| Change made | ADR required? | ADR type |
 |--------------------|-------------|-----------|
-| Nouvelle police de caractères | ✅ Oui | Typographie |
-| Modification de l'échelle typographique | ✅ Oui | Typographie |
-| Nouveau système de grille ou d'espacement | ✅ Oui | Espacement |
-| Nouvelle palette de couleurs | ✅ Oui | Couleur / Marque |
-| Nouveau mode de densité | ✅ Oui | Espacement |
-| Nouveau composant ajouté au système | ✅ Oui | Composant |
-| Changement de bibliothèque d'icônes | ✅ Oui | Icônes |
-| Nouveau pipeline CI/CD | ✅ Oui | Infrastructure |
-| Nouvelle dépendance technique majeure | ✅ Oui | Infrastructure |
-| Changement de token sémantique (sens / intention) | ✅ Oui | Token |
-| Changement de token de composant | ✅ Oui | Token — approbation Principal Designer |
-| Nouvelle règle de gouvernance | ✅ Oui | Gouvernance |
-| Correction de valeur dans un token existant | ❌ Non | Application d'ADR existant |
-| Ajout de page au site de documentation | ❌ Non | Documentation courante |
-| Correction de bug CSS | ❌ Non | Fix standard |
-| Mise à jour du log de construction | ❌ Non | Log courant |
-| Ajout d'un ADR (ce fichier) | ❌ Non | Meta-documentation |
+| New font | ✅ Yes | Typography |
+| Change to the typographic scale | ✅ Yes | Typography |
+| New grid or spacing system | ✅ Yes | Spacing |
+| New color palette | ✅ Yes | Color / Brand |
+| New density mode | ✅ Yes | Spacing |
+| New component added to the system | ✅ Yes | Component |
+| Icon library change | ✅ Yes | Icons |
+| New CI/CD pipeline | ✅ Yes | Infrastructure |
+| Major new technical dependency | ✅ Yes | Infrastructure |
+| Semantic token change (meaning / intent) | ✅ Yes | Token |
+| Component token change | ✅ Yes | Token — Principal Designer approval |
+| New governance rule | ✅ Yes | Governance |
+| Value fix in an existing token | ❌ No | Application of an existing ADR |
+| Page added to the documentation site | ❌ No | Routine documentation |
+| CSS bug fix | ❌ No | Standard fix |
+| Build log update | ❌ No | Routine log |
+| Adding an ADR (this file) | ❌ No | Meta-documentation |
 
 ---
 
-## Questions à se poser
+## Questions to ask
 
-Pour chaque changement, répondre à ces questions :
+For every change, answer these questions:
 
-1. **Est-ce une décision nouvelle ?** Pas déjà couverte par un ADR existant.
-2. **A-t-elle un impact cross-équipe ?** Designers, développeurs, agents IA concernés.
-3. **Est-ce irréversible ou difficile à changer ?** Plus c'est difficile à défaire, plus l'ADR est critique.
-4. **Y a-t-il des alternatives rejetées ?** Si oui → ADR obligatoire pour documenter le pourquoi.
+1. **Is this a new decision?** Not already covered by an existing ADR.
+2. **Does it have a cross-team impact?** Designers, developers, AI agents affected.
+3. **Is it irreversible or hard to change?** The harder it is to undo, the more critical the ADR.
+4. **Are there rejected alternatives?** If yes → ADR mandatory to document the why.
 
-**Si 2 réponses "oui" ou plus → créer un ADR.**
+**If 2 or more answers are "yes" → create an ADR.**
 
 ---
 
-## Format d'un ADR (rappel)
+## ADR format (reminder)
 
 ```markdown
-# ADR-0XX — [Titre de la décision]
+# ADR-0XX — [Decision title]
 
-> **Date :** YYYY-MM-DD
-> **Statut :** ✅ Actif
-> **Décideurs :** [Nom] — [Rôle]
-> **Relations :** [fichiers impactés]
+> **Date:** YYYY-MM-DD
+> **Status:** ✅ Active
+> **Decision-makers:** [Name] — [Role]
+> **Relations:** [impacted files]
 
-## Contexte
-## Décision
-## Argumentaire
-## Alternatives rejetées
-## Conséquences
+## Context
+## Decision
+## Rationale
+## Rejected alternatives
+## Consequences
 ```
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
-### 4. ADRs manquants
-- [x] Nouveau token couleur → déjà couvert par ADR-024 (palettes marque)
-- [ ] ⚠️ Nouvelle police monospace → ADR-028 à créer : "Atkinson Hyperlegible Mono"
-- [x] Aucune autre décision sans ADR détectée
+### 4. Missing ADRs
+- [x] New color token → already covered by ADR-024 (brand palettes)
+- [ ] ⚠️ New mono font → ADR-028 to create: "Atkinson Hyperlegible Mono"
+- [x] No other undocumented decision detected
 ```

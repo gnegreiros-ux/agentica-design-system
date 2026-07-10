@@ -1,98 +1,98 @@
-# Rule : no-visited-nav
+# Rule: no-visited-nav
 
-> Les éléments de navigation ne portent jamais d'état `:visited` distinct.
-> Règle de portée **système entière** (site, composants, applications consommatrices).
+> Navigation elements never carry a distinct `:visited` state.
+> **System-wide** scope rule (site, components, consumer applications).
 > **Type:** rule
-> **Chemin logique:** .claude/rules/no-visited-nav.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/no-visited-nav.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/development.md, .claude/rules/code-style.md, guidelines/components/link.md
 
 ---
 
-## Règle absolue
+## Absolute rule
 
 ```
-❌ INTERDIT : styliser :visited différemment sur un élément de navigation
-✅ OBLIGATOIRE : la couleur :visited est réalignée sur l'état non-visité
+❌ FORBIDDEN: styling :visited differently on a navigation element
+✅ REQUIRED: the :visited color is realigned with the unvisited state
 ```
 
-> La navigation n'est pas du **contenu** « lu / non lu ». Un lien de menu, d'onglet,
-> de fil d'Ariane, de sidebar, de table des matières (TOC) ou un bouton-icône d'en-tête
-> doit avoir la **même apparence** qu'il ait été visité ou non. L'état `:visited` (teinte
-> violette du navigateur, ou toute autre dérive) casse la cohérence et la hiérarchie.
+> Navigation is not "read / unread" **content**. A menu link, tab, breadcrumb,
+> sidebar link, table of contents (TOC) entry, or header icon-button must look
+> **the same** whether it was visited or not. The `:visited` state (the browser's
+> purple tint, or any other drift) breaks consistency and hierarchy.
 
 ---
 
-## Périmètre — qu'est-ce qu'un « élément de navigation » ?
+## Scope — what counts as a "navigation element"?
 
-| ✅ Concerné (pas d'état visité) | ❌ Non concerné (état visité acceptable) |
+| ✅ In scope (no visited state) | ❌ Out of scope (visited state acceptable) |
 |-------------------------------|------------------------------------------|
-| Nav principale (header), CTA de nav | Liens de **contenu** dans la prose d'un article |
-| Sidebar, table des matières (TOC), onglets | Listes de résultats / d'archives où « déjà lu » aide l'utilisateur |
-| Fil d'Ariane, pagination, menus | Références bibliographiques longues |
-| Boutons-icônes d'en-tête/pied (GitHub, Storybook…) | |
-| Liens du pied de page de navigation | |
+| Main nav (header), nav CTA | **Content** links within an article's prose |
+| Sidebar, table of contents (TOC), tabs | Result/archive lists where "already read" helps the user |
+| Breadcrumbs, pagination, menus | Long bibliographic references |
+| Header/footer icon-buttons (GitHub, Storybook…) | |
+| Footer navigation links | |
 
-> En cas de doute : si l'élément sert à **se déplacer** dans le produit, c'est de la
-> navigation → pas d'état visité. S'il pointe vers une **ressource à lire**, l'état
-> visité peut aider → autorisé.
+> When in doubt: if the element is used to **move around** the product, it's
+> navigation → no visited state. If it points to a **resource to read**, the visited
+> state may help → allowed.
 
 ---
 
-## Implémentation de référence (CSS)
+## Reference implementation (CSS)
 
 ```css
-/* La couleur visitée = couleur non-visitée (token sémantique identique).
-   Déclarer AVANT les règles :hover/.active — à spécificité égale, le sélecteur
-   le plus tardif (hover/actif) doit l'emporter sur un lien visité ET survolé. */
+/* Visited color = unvisited color (same semantic token). Declare BEFORE the
+   :hover/.active rules — at equal specificity, the later selector
+   (hover/active) must win over a visited AND hovered link. */
 .top-nav a:visited,
 .sidebar a:visited,
 .toc a:visited,
 .footer-links a:visited { color: var(--agtc-semantic-color-text-secondary); }
 ```
 
-### Exception Safari — valeur littérale obligatoire
+### Safari exception — literal value required
 
-Safari (et WebKit) bloquent la résolution de `var()` dans les règles `:visited` pour des raisons
-de sécurité (protection contre le sniffing de l'historique de navigation). `var()` est accepté
-en syntaxe mais ignoré silencieusement à l'application — la couleur reste celle du navigateur.
+Safari (and WebKit) block `var()` resolution inside `:visited` rules for security
+reasons (protection against browser history sniffing). `var()` is accepted as
+syntax but silently ignored at apply time — the color stays the browser default.
 
-**Pattern correct pour le site Agentica :**
+**Correct pattern for the Agentica site:**
 ```css
-/* Valeur hex résolue AVANT le var() — Safari applique le hex, Chrome/Firefox appliquent var(). */
+/* Hex value resolved BEFORE the var() — Safari applies the hex, Chrome/Firefox apply var(). */
 .top-nav a:visited { color: #646464; color: var(--agtc-semantic-color-text-secondary); }
 
-/* Thème sombre : même pattern avec la valeur résolue dark */
+/* Dark theme: same pattern with the resolved dark value */
 [data-theme="dark"] .top-nav a:visited { color: #a4abb8; color: var(--agtc-semantic-color-text-secondary); }
 ```
 
-> **Ce n'est PAS une valeur en dur au sens de `tokens-system.md`** : la valeur littérale est
-> identique à la valeur résolue du token sémantique. Il s'agit d'une contrainte de sécurité
-> navigateur, documentée ici pour que les agents ne la suppriment pas lors d'audits.
-> Référence : ADR-047 (règle), ADR-059 (incident de suppression erronée le 2026-06-15).
+> **This is NOT a hardcoded value** in the sense of `tokens-system.md`: the literal
+> value is identical to the semantic token's resolved value. It's a browser security
+> constraint, documented here so agents don't remove it during audits.
+> Reference: ADR-047 (rule), ADR-059 (incorrect-removal incident, 2026-06-15).
 
-- Toujours passer par un **token sémantique** (jamais de valeur en dur) — cf. `tokens-system.md`.
-- Exception ci-dessus : la valeur littérale est autorisée uniquement dans les règles `:visited`,
-  accompagnée obligatoirement du token `var()` comme deuxième déclaration.
-- Web Components (`agtc-*`) : si un composant expose un lien de navigation (ex. `agtc-link`
-  en usage nav, `agtc-segmented`, futur `agtc-tabs`), il neutralise `:visited` dans son
-  shadow DOM selon la même règle.
-
----
-
-## Vérification (quality gate)
-
-- [ ] Aucun élément de navigation n'affiche de couleur `:visited` distincte (visuel + audit CSS)
-- [ ] La neutralisation passe par un token sémantique, pas une valeur en dur
-- [ ] Les liens de **contenu** ne sont PAS affectés (la règle ne s'applique qu'à la navigation)
+- Always go through a **semantic token** (never a hardcoded value) — see `tokens-system.md`.
+- Exception above: the literal value is allowed only in `:visited` rules,
+  always paired with the `var()` token as the second declaration.
+- Web Components (`agtc-*`): if a component exposes a navigation link (e.g. `agtc-link`
+  used in nav, `agtc-segmented`, future `agtc-tabs`), it must neutralize `:visited` in its
+  shadow DOM following the same rule.
 
 ---
 
-## Règle pour les agents
+## Verification (quality gate)
+
+- [ ] No navigation element shows a distinct `:visited` color (visual + CSS audit)
+- [ ] The `:visited` neutralization goes through a semantic token, not a hardcoded value
+- [ ] **Content** links are NOT affected (the rule only applies to navigation)
+
+---
+
+## Rule for agents
 
 ```
-✅ Neutraliser :visited sur tout élément de navigation (site ET composants)
-✅ Conserver l'état visité sur les liens de contenu/lecture si pertinent
-❌ Styliser :visited d'une couleur différente sur un menu, onglet, sidebar, TOC, bouton de nav
-❌ Coder la couleur en dur — toujours via un token sémantique
+✅ Neutralize :visited on every navigation element (site AND components)
+✅ Keep the visited state on content/reading links where relevant
+❌ Style :visited a different color on a menu, tab, sidebar, TOC, or nav button
+❌ Hardcode the color — always go through a semantic token
 ```

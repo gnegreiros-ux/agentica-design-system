@@ -1,59 +1,59 @@
-# Pipeline : adr-conformity
+# Pipeline: adr-conformity
 
-> Vérifie que les changements respectent les ADRs actifs.
-> **Statut :** ✅ Actif
-> **Déclencheur :** tout changement (sans exception)
+> Verifies that changes comply with active ADRs.
+> **Status:** ✅ Active
+> **Trigger:** every change (no exception)
 
 ---
 
-## Vérification par ADR actif
+## Verification by active ADR
 
-### ADR-001 — Trois niveaux de tokens
-- ❌ Aucun token primitif utilisé directement dans un composant
-- ❌ Aucune valeur brute dans `component.json` (toujours une référence sémantique)
+### ADR-001 — Three token levels
+- ❌ No primitive token used directly in a component
+- ❌ No raw value in `component.json` (always a semantic reference)
 
-### ADR-004 — Gouvernance humaine
-- ❌ Aucun merge sur `main` ou `develop` sans approbation humaine
-- ❌ Aucune modification de `tokens/component.json` sans approbation explicite
+### ADR-004 — Human governance
+- ❌ No merge to `main` or `develop` without human approval
+- ❌ No modification of `tokens/component.json` without explicit approval
 
 ### ADR-014 — Conventional Commits
-- ✅ Format : `type(scope): description`
-- ✅ Types valides : `feat`, `fix`, `token`, `docs`, `a11y`, `style`, `refactor`, `test`, `chore`, `ci`
-- ❌ Pas de commit avec message vague ("update", "fix", "wip")
+- ✅ Format: `type(scope): description`
+- ✅ Valid types: `feat`, `fix`, `token`, `docs`, `a11y`, `style`, `refactor`, `test`, `chore`, `ci`
+- ❌ No commit with a vague message ("update", "fix", "wip")
 
-### ADR-069 — Migration du suivi de projet vers GitHub Projects (remplace ADR-016)
-- ✅ Chantier reflété dans GitHub Projects (statut, domaine)
-- ❌ Ne pas recréer de fichier de log/journal local pour le suivi de projet
+### ADR-069 — Project tracking migration to GitHub Projects (replaces ADR-016)
+- ✅ Effort reflected in GitHub Projects (status, domain)
+- ❌ Do not recreate a local log/journal file for project tracking
 
-### ADR-020 — Grille 4px
-- ✅ Tout espacement = multiple de 4px
-- ❌ Valeurs comme `6px`, `10px`, `14px`, `18px` dans les tokens d'espacement
+### ADR-020 — 4px grid
+- ✅ Every spacing value = multiple of 4px
+- ❌ Values like `6px`, `10px`, `14px`, `18px` in spacing tokens
 
 ### ADR-021 — Atkinson Hyperlegible (sans-serif)
-- ✅ Police principale via `var(--agtc-semantic-typography-fontFamily)`
-- ❌ `font-family: 'Atkinson Hyperlegible'` en dur dans le code
+- ✅ Main font via `var(--agtc-semantic-typography-fontFamily)`
+- ❌ `font-family: 'Atkinson Hyperlegible'` hardcoded in code
 
-### ADR-023 — Échelle Minor Third
-- ✅ Font-size uniquement sur les 9 échelons définis (xs→5xl)
-- ❌ `font-size: 15px`, `18px`, `22px` ou tout px hors échelle
+### ADR-023 — Minor Third scale
+- ✅ Font-size only on the 9 defined steps (xs→5xl)
+- ❌ `font-size: 15px`, `18px`, `22px` or any px value outside the scale
 
-### ADR-027 — Pipeline d'impact pré-commit
-- ✅ Ce quality gate est exécuté avant chaque commit
-- ❌ Commit sans rapport d'impact approuvé
+### ADR-027 — Pre-commit impact pipeline
+- ✅ This quality gate runs before every commit
+- ❌ Commit without an approved impact report
 
 ### ADR-028 — Atkinson Hyperlegible Mono
-- ✅ Police mono via `var(--agtc-font-mono)`
-- ❌ `font-family: monospace` ou `font-family: 'JetBrains Mono'` en dur
+- ✅ Mono font via `var(--agtc-font-mono)`
+- ❌ `font-family: monospace` or `font-family: 'JetBrains Mono'` hardcoded
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
-### 3. Conformité règles / ADRs
-- [x] ADR-001 : aucun token primitif dans les composants
-- [x] ADR-020 : espacements sur grille 4px
-- [x] ADR-023 : font-sizes sur échelle Minor Third
-- [x] ADR-028 : font-family mono via var(--agtc-font-mono)
-- [ ] ⚠️ ADR-004 : tokens/component.json modifié → approbation requise
+### 3. Rule / ADR conformity
+- [x] ADR-001: no primitive token in components
+- [x] ADR-020: spacing on the 4px grid
+- [x] ADR-023: font-sizes on the Minor Third scale
+- [x] ADR-028: mono font-family via var(--agtc-font-mono)
+- [ ] ⚠️ ADR-004: tokens/component.json modified → approval required
 ```

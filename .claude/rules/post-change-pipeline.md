@@ -1,45 +1,46 @@
-# Rule : post-change-pipeline
+# Rule: post-change-pipeline
 
-> Quality gate obligatoire avant tout commit — non négociable pour tout agent ou session.
+> Mandatory quality gate before any commit — non-negotiable for any agent or session.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/post-change-pipeline.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/post-change-pipeline.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/skills/quality-gate.md, .claude/skills/pipelines/, .claude/rules/git-workflow.md, decisions/ADR-029-quality-gate-pre-commit.md
 
 ---
 
-## Règle absolue
+## Absolute rule
 
-> **Aucun commit sans que le quality gate ait été exécuté et approuvé par l'humain.**
+> **No commit without the quality gate having been run and approved by the human.**
 
-Ce quality gate s'applique à **toute modification**, quelle que soit sa taille.
-Il ne peut pas être sauté, raccourci ou différé.
+This quality gate applies to **every modification**, no matter how small.
+It cannot be skipped, shortened, or deferred.
 
 ---
 
-## Référence d'exécution
+## Execution reference
 
-Voir `.claude/skills/quality-gate.md` — orchestrateur de tous les pipelines.
+See `.claude/skills/quality-gate.md` — orchestrator for all pipelines.
 
-Pipelines actifs (bloquants) :
+Active (blocking) pipelines:
 
-| # | Pipeline | Fichier |
-|---|----------|---------|
-| 1 | Cohérence tokens | `pipelines/tokens-audit.md` |
+| # | Pipeline | File |
+|---|----------|------|
+| 1 | Token consistency | `pipelines/tokens-audit.md` |
 | 2 | WCAG 2.2 | `pipelines/wcag.md` |
-| 3 | Revue patterns UX | `pipelines/ux-patterns.md` |
-| 4 | Conformité règles / ADRs | `pipelines/adr-conformity.md` |
-| 5 | ADRs manquants | `pipelines/adr-triggers.md` |
+| 3 | UX pattern review | `pipelines/ux-patterns.md` |
+| 4 | Rule/ADR compliance | `pipelines/adr-conformity.md` |
+| 5 | Missing ADRs | `pipelines/adr-triggers.md` |
 | 6 | Documentation | `pipelines/docs.md` |
 | 7 | Site rebuild | `pipelines/site.md` |
 | 8 | Commit | `pipelines/commit.md` |
 
-Pipelines planifiés (non bloquants jusqu'à activation) :
+Planned pipelines (non-blocking until activated):
 `style-dictionary.md` · `storybook.md` · `chromatic.md` · `axe-core.md` · `playwright.md`
 
 ---
 
-## Violations de cette règle
+## Violations of this rule
 
-Commiter sans quality gate approuvé est une violation grave du contrat de gouvernance.
-Le dernier mot est toujours humain — ce pipeline en est la garantie opérationnelle.
+Committing without an approved quality gate is a serious violation of the governance
+contract. The human always has the final word — this pipeline is the operational
+guarantee of that principle.

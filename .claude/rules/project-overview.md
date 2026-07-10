@@ -1,68 +1,72 @@
-# Rule : project-overview
+# Rule: project-overview
 
-> Contexte général du projet — à lire en premier pour tout agent travaillant dans ce dépôt.
+> General context for this project — read first by any agent working in this repository.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/project-overview.md
-> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Logical path:** .claude/rules/project-overview.md
+> **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/instructions/codebase-context.md
 
 ---
 
-## Ce qu'est ce projet
+## What this project is
 
-Ce dépôt contient un **système de design agentique** : un système de design conçu pour être compris et utilisé à la fois par des humains et par des agents IA.
+This repository contains an **agentic design system**: a design system built to be
+understood and used by both humans and AI agents.
 
-Il encode les décisions d'interface sous forme de tokens structurés, de contrats de composants et de règles lisibles par machine — afin que les agents puissent appliquer correctement les décisions définies par les équipes, sans improviser.
-
----
-
-## Principe fondamental
-
-> **Le dernier mot est toujours humain.**
-
-Les agents observent, analysent, proposent. Les humains approuvent, décident, déploient.
+It encodes interface decisions as structured tokens, component contracts, and
+machine-readable rules — so agents can correctly apply the decisions defined by
+teams, without improvising.
 
 ---
 
-## Ce que ce système n'est PAS
+## Core principle
 
-- ❌ Un système autonome qui s'administre lui-même
-- ❌ Un système qui remplace les designers
-- ❌ Un système décisionnel — les agents appliquent des règles humaines
-- ❌ Un projet purement technologique — c'est avant tout de la gouvernance
+> **The human always has the final word.**
+
+Agents observe, analyze, propose. Humans approve, decide, deploy.
 
 ---
 
-## Éléments clés
+## What this system is NOT
 
-| Élément | Rôle |
+- ❌ A self-administering autonomous system
+- ❌ A system that replaces designers
+- ❌ A decision-making system — agents apply human-defined rules
+- ❌ A purely technological project — it is first and foremost governance
+
+---
+
+## Key elements
+
+| Element | Role |
 |---------|------|
-| `DESIGN.md` | Contrat portable de la marque — lisible humain + agent |
-| `AGENTS.md` | Routeur d'agents — première lecture obligatoire |
-| `tokens/` | Trois niveaux : primitif → sémantique → composant |
-| `.claude/rules/` | Contraintes et décisions du projet |
-| `.claude/instructions/` | Méthodologie d'orchestration |
-| `.claude/skills/` | Capacités exécutables réutilisables |
-| `guidelines/` | Documentation composants et fondations |
+| `DESIGN.md` | Portable brand contract — human + agent readable |
+| `AGENTS.md` | Agent router — mandatory first read |
+| `tokens/` | Three levels: primitive → semantic → component |
+| `.claude/rules/` | Project constraints and decisions |
+| `.claude/instructions/` | Orchestration methodology |
+| `.claude/skills/` | Reusable executable capabilities |
+| `guidelines/` | Component and foundation documentation |
 
 ---
 
-## Valeurs non négociables
+## Non-negotiable values
 
-1. **Souveraineté numérique** — Les données, décisions et outils restent sous contrôle organisationnel.
-2. **Accessibilité** — WCAG 2.1 AA minimum. Non contournable.
-3. **Auditabilité** — Toute décision est traçable, versionnée, justifiée.
-4. **Auto-guérison encadrée** — Les dérives sont détectées automatiquement, corrigées avec approbation humaine.
+1. **Digital sovereignty** — Data, decisions, and tools stay under organizational control.
+2. **Accessibility** — WCAG 2.1 AA minimum. Non-negotiable.
+3. **Auditability** — Every decision is traceable, versioned, justified.
+4. **Guided self-healing** — Drift is detected automatically, corrected with human approval.
 
 ---
 
-## Gestion de projet
+## Project management
 
-Le suivi de tâches (statuts, backlog, dépendances) vit exclusivement dans
-[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — jamais dans un
-fichier versionné du dépôt. Ne pas recréer de fichier de log/journal local pour cet usage
-(voir [ADR-069](../../decisions/ADR-069-migration-suivi-projet-github-projects.md), qui
-remplace [ADR-016](../../decisions/ADR-016-journal-construction.md)).
+Task tracking (statuses, backlog, dependencies) lives exclusively in
+[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — never in a
+versioned file in the repository. Don't recreate a local log/journal file for this
+purpose (see [ADR-069](../../decisions/ADR-069-migration-suivi-projet-github-projects.md),
+which replaces [ADR-016](../../decisions/ADR-016-journal-construction.md)).
 
-Le changelog public (documentation des versions livrées, `site/dist/changelog.html`) reste
-dans le dépôt et est distinct de la gestion de projet — il n'est pas concerné par cette règle.
+The public changelog (documentation of shipped versions, `site/dist/changelog.html`)
+stays in the repository and is separate from project management — it is not covered by
+this rule.

@@ -1,25 +1,25 @@
-# Pipeline : site
+# Pipeline: site
 
-> Rebuild et validation du site de documentation statique.
-> **Statut :** ✅ Actif
-> **Déclencheur :** tout changement dans `site/build.js`, `tokens/`, `decisions/`, `guidelines/`
+> Rebuild and validation of the static documentation site.
+> **Status:** ✅ Active
+> **Trigger:** any change in `site/build.js`, `tokens/`, `decisions/`, `guidelines/`
 
 ---
 
-## Déclencheurs
+## Triggers
 
-| Fichier modifié | Action requise |
+| Modified file | Required action |
 |----------------|---------------|
-| `site/build.js` | Rebuild complet |
-| `tokens/primitives.json` | Rebuild (tokens.css régénéré) |
-| `tokens/semantic.json` | Rebuild (tokens.css régénéré) |
-| `decisions/ADR-*.md` | Rebuild (nouvelle page ADR générée) |
-| `guidelines/**/*.md` | Rebuild si contenu injecté |
-| `Brand/` | Rebuild + copie assets (logo, favicons, image sociale) |
+| `site/build.js` | Full rebuild |
+| `tokens/primitives.json` | Rebuild (tokens.css regenerated) |
+| `tokens/semantic.json` | Rebuild (tokens.css regenerated) |
+| `decisions/ADR-*.md` | Rebuild (new ADR page generated) |
+| `guidelines/**/*.md` | Rebuild if content is injected |
+| `Brand/` | Rebuild + copy assets (logo, favicons, social image) |
 
 ---
 
-## Commande
+## Command
 
 ```bash
 cd site && node build.js
@@ -27,19 +27,19 @@ cd site && node build.js
 
 ---
 
-## Vérifications post-build
+## Post-build checks
 
-### 1. Nombre de fichiers générés
-- Baseline : 37 fichiers (à mettre à jour lors d'ajouts de pages)
-- Un nouveau ADR = +1 fichier
-- Une nouvelle page = +1 fichier
-- Vérifier que le count augmente correctement
+### 1. Number of generated files
+- Baseline: 37 files (update when pages are added)
+- A new ADR = +1 file
+- A new page = +1 file
+- Verify the count increases correctly
 
-### 2. Assets statiques présents
+### 2. Static assets present
 ```
 site/dist/
-├── logo.svg          ← logo Agentica teal
-├── social.jpg        ← image OG
+├── logo.svg          ← Agentica teal logo
+├── social.jpg        ← OG image
 ├── favicon.ico
 ├── favicon-16x16.png
 ├── favicon-32x32.png
@@ -49,30 +49,30 @@ site/dist/
 └── site.webmanifest
 ```
 
-### 3. Métadonnées par page
-Chaque page HTML doit contenir :
-- `<title>` — non vide, ≥ 30 caractères pour la home
-- `og:title`, `og:description`, `og:image` — présents
-- `twitter:card`, `twitter:domain` — présents
-- `<link rel="apple-touch-icon">` — présent
+### 3. Metadata per page
+Every HTML page must contain:
+- `<title>` — non-empty, ≥ 30 characters for the home page
+- `og:title`, `og:description`, `og:image` — present
+- `twitter:card`, `twitter:domain` — present
+- `<link rel="apple-touch-icon">` — present
 
-### 4. Parité bilingue
-- Chaque `<span class="lang-fr">` a un `<span class="lang-en">` dans le même contexte
-- Vérifier visuellement en basculant FR ↔ EN sur les pages modifiées
+### 4. Bilingual parity
+- Every `<span class="lang-fr">` has a matching `<span class="lang-en">` in the same context
+- Verify visually by switching FR ↔ EN on the modified pages
 
-### 5. Tableaux de tokens
-- Vérifier que les nouvelles entrées de tokens apparaissent dans l'explorateur
-- `class="token-table"` présent sur tous les tableaux de tokens
+### 5. Token tables
+- Verify that new token entries appear in the explorer
+- `class="token-table"` present on every token table
 
 ---
 
-## Rapport partiel (exemple)
+## Partial report (example)
 
 ```
 ### Site rebuild
-- [x] node site/build.js → ✓ 38 fichiers générés (37 + adr-029.html)
-- [x] logo.svg présent dans dist/
-- [x] Métadonnées OG vérifiées sur index.html
-- [x] ADR-029 visible dans decisions/index.html
-- [x] Parité FR/EN vérifiée sur typography.html
+- [x] node site/build.js → ✓ 38 files generated (37 + adr-029.html)
+- [x] logo.svg present in dist/
+- [x] OG metadata verified on index.html
+- [x] ADR-029 visible in decisions/index.html
+- [x] FR/EN parity verified on typography.html
 ```

@@ -1,84 +1,84 @@
-# Rule : layout-pattern
+# Rule: layout-pattern
 
-> Un seul pattern de layout pour toutes les pages du site. Non négociable.
+> A single layout pattern for every page on the site. Non-negotiable.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/layout-pattern.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/code-style.md, .claude/rules/development.md, site/build.js (function layout)
+> **Logical path:** .claude/rules/layout-pattern.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** .claude/rules/code-style.md, .claude/rules/development.md, site/build.js (layout function)
 
 ---
 
-## Règle absolue
+## Absolute rule
 
-> **Toutes les pages du site utilisent la fonction `layout()` de `site/build.js`.**
-> Il n'existe qu'un seul pattern de layout avec sidebar. Aucun autre conteneur grid ou flex
-> ne doit être inventé pour positionner une sidebar.
+> **Every page on the site uses the `layout()` function from `site/build.js`.**
+> There is only one layout pattern with a sidebar. No other grid or flex container
+> should be invented to position a sidebar.
 
 ---
 
-## Architecture — unique source de vérité
+## Architecture — single source of truth
 
 ```
 layout()
-  ├── <div class="layout">          ← flex, pour toutes les pages avec sidebar
-  │     ├── <aside class="sidebar"> ← landmark navigation, HORS de <main>
-  │     └── <main class="…">        ← contenu principal
+  ├── <div class="layout">          ← flex, for every page with a sidebar
+  │     ├── <aside class="sidebar"> ← navigation landmark, OUTSIDE <main>
+  │     └── <main class="…">        ← main content
   │
-  └── <div class="home-layout">     ← UNIQUEMENT pour index.html (pas de sidebar)
+  └── <div class="home-layout">     ← ONLY for index.html (no sidebar)
 ```
 
-### Classes `<main>` selon le type de page
+### `<main>` classes by page type
 
-| Type de page | Paramètre `layout()` | `class` de `<main>` | CSS |
+| Page type | `layout()` parameter | `<main>` `class` | CSS |
 |---|---|---|---|
-| Documentation (fondations, composants, tokens…) | `fullWidth:false, sidebar:X` | `content` | `padding:52px 64px; max-width:960px` |
-| Marketing avec sidebar (pourquoi, ia, documentation…) | `fullWidth:true, sidebar:X` | `page-content` | sections full-width avec `.shell` |
-| Home (index.html, sans sidebar) | `fullWidth:true, sidebar:null` | `''` | `home-layout` |
+| Documentation (foundations, components, tokens…) | `fullWidth:false, sidebar:X` | `content` | `padding:52px 64px; max-width:960px` |
+| Marketing with sidebar (why, ai, documentation…) | `fullWidth:true, sidebar:X` | `page-content` | full-width sections with `.shell` |
+| Home (index.html, no sidebar) | `fullWidth:true, sidebar:null` | `''` | `home-layout` |
 
 ---
 
-## Règles absolues
+## Absolute rules
 
 ```
-✅ Passer sidebar comme paramètre à layout() — jamais dans le body HTML
-✅ Les fonctions sidebar* (sidebarFoundations, sidebarComponents, v2Sidebar…)
-   retournent UNIQUEMENT le contenu interne (div.sidebar-group + liens)
-   — jamais un <aside> ou un wrapper externe
-✅ layout() est la SEULE fonction qui émet le <aside class="sidebar">
-✅ <aside class="sidebar"> est TOUJOURS en dehors de <main> (WCAG landmarks)
+✅ Pass sidebar as a parameter to layout() — never in the HTML body
+✅ sidebar* functions (sidebarFoundations, sidebarComponents, v2Sidebar…)
+   return ONLY the inner content (div.sidebar-group + links)
+   — never an <aside> or an outer wrapper
+✅ layout() is the ONLY function that emits <aside class="sidebar">
+✅ <aside class="sidebar"> is ALWAYS outside <main> (WCAG landmarks)
 
-❌ Ne jamais créer un conteneur .with-sidebar, .sidebar-layout ou équivalent dans le body
-❌ Ne jamais imbriquer <aside> dans <main>
-❌ Ne jamais écrire de règles CSS .nouvelle-classe .sidebar — utiliser les règles génériques
-❌ Ne jamais créer un nouveau layout sans modifier layout() elle-même
+❌ Never create a .with-sidebar, .sidebar-layout, or equivalent container in the body
+❌ Never nest <aside> inside <main>
+❌ Never write CSS rules like .new-class .sidebar — use the generic rules
+❌ Never create a new layout without modifying layout() itself
 ```
 
 ---
 
-## Pourquoi `<aside>` hors de `<main>` (WCAG 1.3.6 + 4.1.2)
+## Why `<aside>` outside `<main>` (WCAG 1.3.6 + 4.1.2)
 
-Les régions de landmarks ARIA doivent être sémantiquement distinctes :
-- `<main>` = contenu principal de la page (landmark `main`)
-- `<aside>` = navigation complémentaire (landmark `navigation` ou `complementary`)
+ARIA landmark regions must be semantically distinct:
+- `<main>` = the page's main content (`main` landmark)
+- `<aside>` = complementary navigation (`navigation` or `complementary` landmark)
 
-Mettre `<aside class="sidebar">` DANS `<main>` casse la hiérarchie de landmarks
-et nuit à la navigation au clavier et aux lecteurs d'écran.
+Putting `<aside class="sidebar">` INSIDE `<main>` breaks the landmark hierarchy
+and hurts keyboard navigation and screen readers.
 
 ---
 
-## Sidebar interne — format de retour des fonctions
+## Internal sidebar — function return format
 
 ```js
-// ✅ CORRECT — retourne uniquement le contenu interne
+// ✅ CORRECT — returns only the inner content
 function sidebarFoundations(base, current) {
   return `<div class="sidebar-group">
-    <span class="sidebar-label">Fondations</span>
-    <a href="..." class="active" aria-current="page">Vue d'ensemble</a>
+    <span class="sidebar-label">Foundations</span>
+    <a href="..." class="active" aria-current="page">Overview</a>
     ...
   </div>`;
 }
 
-// ❌ INTERDIT — encapsule dans <aside> (layout() le ferait en double)
+// ❌ FORBIDDEN — wraps in <aside> (layout() would then emit it twice)
 function sidebarFoundations(base, current) {
   return `<aside class="sidebar">
     <div class="sidebar-group">...</div>
@@ -88,30 +88,30 @@ function sidebarFoundations(base, current) {
 
 ---
 
-## Ajouter une nouvelle page avec sidebar
+## Adding a new page with a sidebar
 
 ```js
-// Étape 1 : créer ou réutiliser une fonction sidebar* qui retourne div.sidebar-group
-// Étape 2 : passer sidebar au paramètre de layout()
-write(path.join(DIST, 'ma-page.html'), layout({
-  title: 'Ma page',
+// Step 1: create or reuse a sidebar* function that returns div.sidebar-group
+// Step 2: pass sidebar to the layout() parameter
+write(path.join(DIST, 'my-page.html'), layout({
+  title: 'My page',
   depth: 0,
-  fullWidth: false,          // true si page marketing avec sections shell
-  context: '',               // 'marketing' si page data-context="marketing"
-  sidebar: maSidebarFn(),    // contenu interne seulement
-  body: `<h1>...</h1>...`,  // contenu de <main> uniquement
+  fullWidth: false,          // true for a marketing page with shell sections
+  context: '',               // 'marketing' if the page is data-context="marketing"
+  sidebar: mySidebarFn(),    // inner content only
+  body: `<h1>...</h1>...`,  // <main> content only
 }));
 ```
 
 ---
 
-## Règles pour les agents
+## Rules for agents
 
 ```
-✅ Utiliser layout() pour toutes les nouvelles pages
-✅ Vérifier que la fonction sidebar retourne div.sidebar-group (pas <aside>)
-✅ Tester avec grep que le HTML généré ne contient qu'un seul <aside class="sidebar">
-❌ Créer un conteneur intermédiaire pour positionner la sidebar
-❌ Dupliquer le CSS de layout dans un bloc .ma-nouvelle-classe .sidebar
-❌ Modifier la structure de layout() sans mettre à jour cette règle et les tests Playwright
+✅ Use layout() for every new page
+✅ Verify the sidebar function returns div.sidebar-group (not <aside>)
+✅ Test with grep that the generated HTML contains only one <aside class="sidebar">
+❌ Create an intermediate container to position the sidebar
+❌ Duplicate the layout CSS in a .my-new-class .sidebar block
+❌ Modify layout()'s structure without updating this rule and the Playwright tests
 ```

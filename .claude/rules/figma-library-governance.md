@@ -1,206 +1,205 @@
-# Rule : figma-library-governance
+# Rule: figma-library-governance
 
-> Charte de gouvernance de la librairie Figma Agentica — le code fait foi, Figma en est
-> la représentation. Ces règles s'appliquent à **tout agent** qui crée ou modifie un
-> composant, une page ou une variable dans le fichier Figma.
+> Governance charter for the Agentica Figma library — code is the source of truth, Figma is
+> its representation. These rules apply to **every agent** creating or modifying a
+> component, page, or variable in the Figma file.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/figma-library-governance.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/figma-components.md
-> **Relations:** .claude/instructions/figma-components.md (mécanique Plugin API + audit §22),
+> **Logical path:** .claude/rules/figma-library-governance.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/figma-components.md
+> **Relations:** .claude/instructions/figma-components.md (Plugin API mechanics + §22 audit),
 > .claude/rules/tokens-system.md, tokens/*.json, components/agtc-*.js, components/agtc-*.stories.js
 
 ---
 
-## Les 5 règles absolues
+## The 5 absolute rules
 
 ```
-1. Le CODE est la source unique de vérité — jamais l'inverse.
-   components/agtc-*.js + *.stories.js définissent variantes, états, propriétés.
-   Figma les REPRODUIT. En cas de divergence, le code gagne — on corrige Figma, jamais
-   l'inverse sans décision humaine explicite (ADR si le changement doit remonter au code).
+1. CODE is the single source of truth — never the other way around.
+   components/agtc-*.js + *.stories.js define variants, states, properties.
+   Figma REPRODUCES them. In case of divergence, code wins — we fix Figma, never
+   the reverse without an explicit human decision (an ADR if the change must flow back into code).
 
-2. Aucune valeur en dur dans un composant Figma. Uniquement des Variables Figma qui
-   miroitent les tokens du code (primitive → semantic → component, cf. tokens-system.md).
-   Un fill, un stroke, un padding, un radius, un gap non lié à une Variable est un bug —
-   pas une exception acceptable.
+2. No hardcoded value in a Figma component. Only Figma Variables mirroring the code
+   tokens (primitive → semantic → component, see tokens-system.md).
+   A fill, stroke, padding, radius, or gap not bound to a Variable is a bug —
+   not an acceptable exception.
 
-3. Même architecture, même logique, mêmes options qu'en code.
-   Si agtc-button.js expose variant + icon + icon-suffix + icon-only + loading + disabled,
-   le ComponentSet Figma expose EXACTEMENT ces axes — ni plus, ni moins. Une propriété
-   Figma qui n'existe pas dans le composant code est une invention à corriger.
+3. Same architecture, same logic, same options as in code.
+   If agtc-button.js exposes variant + icon + icon-suffix + icon-only + loading + disabled,
+   the Figma ComponentSet exposes EXACTLY these axes — no more, no less. A Figma
+   property that doesn't exist on the code component is an invention to be fixed.
 
-4. Construction Figma alignée sur les meilleures pratiques de l'industrie (§ ci-dessous) —
-   pas de raccourci qui casse la parité avec le code au moment du hand-off.
+4. Figma construction aligned with industry best practices (§ below) — no shortcut
+   that breaks parity with code at hand-off time.
 
-5. Le rendu visuel Figma doit être le plus proche possible de Storybook et de l'écran final.
-   Nuance actée par l'industrie (2026) : la parité structurelle automatique Figma↔code n'a
-   pas de solution fiable — la vérification reste humaine + scriptée (§22 audit), jamais
-   present automatique une fois pour toutes.
+5. The Figma visual rendering must be as close as possible to Storybook and the final
+   screen. Industry-acknowledged nuance (2026): there is no reliable solution for
+   automatic structural Figma↔code parity — verification stays human + scripted (§22
+   audit), never a one-time automated guarantee.
 ```
 
 ---
 
-## Cycle de vie d'une modification Figma — staging, no-delete, rapport
+## Lifecycle of a Figma change — staging, no-delete, report
 
-> Adopté le 2026-07-08 (revue du pilote Button). Complète les 5 règles absolues côté
-> **process**. Ces trois garde-fous existent parce qu'un sous-agent a supprimé par erreur
-> le ComponentSet Button maître en « nettoyant » une section qui le contenait — incident
-> qui n'aurait pas eu lieu sous ces règles.
+> Adopted 2026-07-08 (Button pilot review). Completes the 5 absolute rules on the
+> **process** side. These three guardrails exist because a sub-agent mistakenly deleted
+> the master Button ComponentSet while "cleaning up" a section that contained it — an
+> incident that would not have happened under these rules.
 
-### A. Jamais supprimer — règle dure
-
-```
-❌ INTERDIT : supprimer un nœud, un composant, un ComponentSet, une variable, une page,
-   un Text Style — même s'il semble orphelin, en double, ou « juste un brouillon »
-✅ En cas de doute sur un nœud à retirer : le DÉPLACER hors du flux (ex. frame « _corbeille »
-   à x=6000) et le SIGNALER à l'humain — jamais .remove()
-✅ Seule exception : supprimer un nœud que l'agent vient LUI-MÊME de créer dans la même
-   session et qu'il reconstruit immédiatement (ex. rebuild d'un ComponentSet cassé)
-```
-
-> Avant tout `.remove()`, vérifier `node.findAll()`/`node.children` : un nœud « décoratif »
-> peut contenir un composant maître comme enfant direct (cause exacte de l'incident Button).
-
-### B. Page de staging « 🟡 Proposition — en attente d'approbation »
+### A. Never delete — hard rule
 
 ```
-✅ Toute création ou refonte importante s'écrit D'ABORD sur la page de staging
-✅ L'humain approuve visuellement, PUIS l'agent déplace le résultat vers la page finale
-✅ Les petites corrections ciblées (fix d'un token, d'un lien) peuvent se faire en place
-❌ Ne jamais publier la librairie ni déplacer vers la page finale sans approbation explicite
+❌ FORBIDDEN: deleting a node, component, ComponentSet, variable, page, or Text Style —
+   even if it looks orphaned, duplicated, or "just a draft"
+✅ If in doubt about removing a node: MOVE it out of the flow (e.g. a "_trash" frame
+   at x=6000) and FLAG it to the human — never .remove()
+✅ The only exception: deleting a node the agent JUST created in the same session
+   and is immediately rebuilding (e.g. rebuilding a broken ComponentSet)
 ```
 
-### C. Rapport obligatoire — checklist 10 points avant toute revue humaine
+> Before any `.remove()`, check `node.findAll()`/`node.children`: a "decorative" node
+> can contain a master component as a direct child (the exact cause of the Button incident).
 
-Avant de solliciter votre validation, l'agent fournit ce rapport court (complète l'audit
-détaillé §21/§22, ne le remplace pas) :
+### B. Staging page "🟡 Proposal — pending approval"
 
 ```
-[ ] 1. Toutes les props du contrat présentes, du bon type Figma
-[ ] 2. Aucune prop combinée (« Style » fusionnant variant + state)
-[ ] 3. Propriété text sur chaque calque textuel — zéro texte en dur
-[ ] 4. Matrice variant × state complète, focus inclus
-[ ] 5. 100 % variables liées — zéro hex/px en dur (scanUnboundPaints §22.3) ET zéro
-       propriété de Text Style non bindée — fontSize/fontFamily/fontWeight/lineHeight
-       (scanUnboundTextStyleProperties §22.4, incident 2026-07-09 : 10/11 styles
-       existants étaient non bindés malgré des valeurs affichées correctes)
-[ ] 6. Auto-layout partout, aucun positionnement absolu (hors décor _préfixé)
-[ ] 7. Nommage conforme (ComponentSet, props Variant/State, calques)
-[ ] 8. Ordre du panneau conforme à l'API documentée
-[ ] 9. Description + lien vers guidelines/components/<comp>.md renseignés
-[ ] 10. Capture comparée au rendu du site — écarts corrigés
+✅ Every significant creation or redesign is written FIRST on the staging page
+✅ The human approves visually, THEN the agent moves the result to the final page
+✅ Small targeted fixes (a token, a link) can be made in place
+❌ Never publish the library or move to the final page without explicit approval
 ```
 
-Format : **liste des 10 points + capture + écarts résiduels**. Jamais de livrable sans ce rapport.
+### C. Mandatory report — 10-point checklist before any human review
+
+Before requesting your validation, the agent provides this short report (complements the
+detailed §21/§22 audit, does not replace it):
+
+```
+[ ] 1. All contract props present, with the correct Figma type
+[ ] 2. No combined prop ("Style" merging variant + state)
+[ ] 3. A text property on every text layer — zero hardcoded text
+[ ] 4. Full variant × state matrix, including focus
+[ ] 5. 100% variables bound — zero hardcoded hex/px (scanUnboundPaints §22.3) AND zero
+       unbound Text Style property — fontSize/fontFamily/fontWeight/lineHeight
+       (scanUnboundTextStyleProperties §22.4, 2026-07-09 incident: 10/11 existing
+       styles were unbound despite displaying correct-looking values)
+[ ] 6. Auto-layout everywhere, no absolute positioning (outside of _prefixed decor)
+[ ] 7. Naming compliant (ComponentSet, Variant/State props, layers)
+[ ] 8. Panel order matches the documented API
+[ ] 9. Description + link to guidelines/components/<comp>.md filled in
+[ ] 10. Screenshot compared against the site rendering — discrepancies fixed
+```
+
+Format: **10-point list + screenshot + residual discrepancies**. Never a deliverable without this report.
 
 ---
 
-## Pourquoi cette hiérarchie (code → Figma, jamais l'inverse)
+## Why this hierarchy (code → Figma, never the reverse)
 
-> « Structural component parity — keeping Figma variants, states, and properties in sync
+> "Structural component parity — keeping Figma variants, states, and properties in sync
 > with coded component APIs — does not have a reliable automated solution. The most
 > consistent advice from mature design systems teams is: **code is the source of truth,
-> Figma is the representation**. » — [Atomize, Figma Design System Parity 2026](https://atomize.tools/blog/figma-design-system-parity-code-sync)
+> Figma is the representation**." — [Atomize, Figma Design System Parity 2026](https://atomize.tools/blog/figma-design-system-parity-code-sync)
 
-Ce dépôt suit ce principe à la lettre. Concrètement pour un agent :
+This repository follows this principle to the letter. Concretely, for an agent:
 
 ```
-✅ Avant de créer/modifier un composant Figma : lire components/agtc-<comp>.js ET
-   components/agtc-<comp>.stories.js — c'est LÀ que sont les variantes/états/props réels
-✅ Si Figma et le code divergent : Figma a tort par défaut, sauf décision humaine contraire
-✅ Si le code lui-même semble avoir un défaut (token inexistant, valeur codée en dur) :
-   le signaler à l'humain — ne jamais le "corriger" silencieusement seulement côté Figma
-❌ Ne jamais inventer une variante, un état ou une propriété qui n'existe pas dans le code
-❌ Ne jamais laisser Figma "avoir raison" sur le code sans qu'un humain tranche
+✅ Before creating/modifying a Figma component: read components/agtc-<comp>.js AND
+   components/agtc-<comp>.stories.js — that's WHERE the real variants/states/props live
+✅ If Figma and code diverge: Figma is wrong by default, unless a human decides otherwise
+✅ If the code itself seems to have a flaw (nonexistent token, hardcoded value):
+   flag it to the human — never silently "fix" it only on the Figma side
+❌ Never invent a variant, state, or property that doesn't exist in the code
+❌ Never let Figma "be right" over the code without a human ruling
 ```
 
 ---
 
-## Architecture des tokens — Variables Figma = miroir exact du code
+## Token architecture — Figma Variables = exact mirror of code
 
-Trois collections, alignées sur `tokens/primitives.json` → `tokens/semantic.json` → `tokens/component.json` :
+Three collections, aligned with `tokens/primitives.json` → `tokens/semantic.json` → `tokens/component.json`:
 
-| Niveau code | Collection Figma | Règle de binding |
+| Code level | Figma collection | Binding rule |
 |---|---|---|
-| `primitive.*` | `Primitives` | **Jamais** bindé directement sur un composant |
-| `semantic.*` | `Semantic` | Bindé si aucun token composant n'existe pour ce rôle |
-| `component.<comp>.*` | (via alias vers Semantic, même nommage `component/<comp>/<prop>`) | **Toujours priorité** — chercher le token composant avant de binder le sémantique (voir §18 de `figma-components.md`) |
+| `primitive.*` | `Primitives` | **Never** bound directly to a component |
+| `semantic.*` | `Semantic` | Bound if no component token exists for this role |
+| `component.<comp>.*` | (via alias to Semantic, same `component/<comp>/<prop>` naming) | **Always priority** — look for the component token before binding to semantic (see §18 of `figma-components.md`) |
 
-**Sourcé** : « Never bind a component directly to a Primitive Color variable. Bind components
-to semantic variables only. » — [Design Systems Collective, Figma Variables Playbook](https://www.designsystemscollective.com/design-system-mastery-with-figma-variables-the-2025-2026-best-practice-playbook-da0500ca0e66)
+**Sourced**: "Never bind a component directly to a Primitive Color variable. Bind components
+to semantic variables only." — [Design Systems Collective, Figma Variables Playbook](https://www.designsystemscollective.com/design-system-mastery-with-figma-variables-the-2025-2026-best-practice-playbook-da0500ca0e66)
 
-Convention de nommage — **identique de part et d'autre** (Figma path = CSS custom property) :
+Naming convention — **identical on both sides** (Figma path = CSS custom property):
 ```
 Figma : component/button/primary/background
 Code  : --agtc-component-button-primary-background
 ```
-Aucune traduction manuelle ne doit être nécessaire pour relier les deux — le chemin Figma
-avec `/` remplacé par `-` et préfixé `--agtc-` DOIT correspondre exactement.
+No manual translation should be needed to connect the two — the Figma path with `/`
+replaced by `-` and prefixed with `--agtc-` MUST match exactly.
 
 ---
 
-## Composants vs Variantes — quand utiliser quoi (rappel sourcé)
+## Components vs Variants — when to use which (sourced reminder)
 
-> « Use component properties for simple variations (on/off icon, text content) and variants
+> "Use component properties for simple variations (on/off icon, text content) and variants
 > for visual changes (primary/secondary/ghost). Auto-layout and Variable bindings on every
-> component are not optional refinements — they are baseline for production handoff. »
+> component are not optional refinements — they are baseline for production handoff."
 > — [Atomize, Figma Design System Best Practices 2026](https://atomize.tools/blog/figma-design-system-best-practices/)
 
 ```
-✅ VARIANT (axe du ComponentSet) : changement visuel qualitatif — Primary/Secondary/Ghost,
+✅ VARIANT (ComponentSet axis): qualitative visual change — Primary/Secondary/Ghost,
    Text/Search/Password, Default/Selected
-✅ COMPONENT PROPERTY (BOOLEAN/TEXT/INSTANCE_SWAP) : présence/absence ou contenu —
-   icon-only, show-icon-prefix, le libellé du bouton, l'icône affichée
-❌ Ne jamais créer une variante pour ce qui est en réalité une propriété booléenne du
-   composant code (incident Button icônes du 2026-07-06 — voir §3 de figma-components.md)
+✅ COMPONENT PROPERTY (BOOLEAN/TEXT/INSTANCE_SWAP): presence/absence or content —
+   icon-only, show-icon-prefix, the button's label, the displayed icon
+❌ Never create a variant for what is actually a boolean property of the code
+   component (2026-07-06 Button icon incident — see §3 of figma-components.md)
 ```
 
 ---
 
-## Veille — sources à revérifier périodiquement
+## Watch — sources to re-verify periodically
 
-Cette liste doit être re-vérifiée (WebSearch) au début de tout chantier Figma de grande
-ampleur (nouveau composant, refonte d'architecture) — les pratiques Figma évoluent vite.
+This list must be re-verified (WebSearch) at the start of any large-scale Figma effort
+(new component, architecture redesign) — Figma practices evolve quickly.
 
-| Source | Ce qu'elle couvre |
+| Source | What it covers |
 |---|---|
-| [Figma Help — Guide to variables](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma) | API variables officielle, source de vérité Figma |
-| [Atomize — Figma Design System Best Practices](https://atomize.tools/blog/figma-design-system-best-practices/) | Architecture tokens, variantes vs propriétés |
-| [Atomize — Figma↔Code Parity](https://atomize.tools/blog/figma-design-system-parity-code-sync) | Positionnement code = source de vérité |
-| [Design Systems Collective — Figma Variables Playbook](https://www.designsystemscollective.com/design-system-mastery-with-figma-variables-the-2025-2026-best-practice-playbook-da0500ca0e66) | Anti-patterns de binding, naming |
-| [W3C WCAG — Technique C40](https://www.w3.org/WAI/WCAG22/Techniques/css/C40.html) | Anneau de focus deux couleurs (référence pour tout composant interactif) |
-| [zeroheight — Scalable Figma Design Systems](https://zeroheight.com/blog/building-scalable-design-systems-with-figma-26-tips-for-2026/) | Scalabilité, documentation in-page |
+| [Figma Help — Guide to variables](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma) | Official variables API, Figma source of truth |
+| [Atomize — Figma Design System Best Practices](https://atomize.tools/blog/figma-design-system-best-practices/) | Token architecture, variants vs properties |
+| [Atomize — Figma↔Code Parity](https://atomize.tools/blog/figma-design-system-parity-code-sync) | Positioning code as source of truth |
+| [Design Systems Collective — Figma Variables Playbook](https://www.designsystemscollective.com/design-system-mastery-with-figma-variables-the-2025-2026-best-practice-playbook-da0500ca0e66) | Binding anti-patterns, naming |
+| [W3C WCAG — Technique C40](https://www.w3.org/WAI/WCAG22/Techniques/css/C40.html) | Two-color focus ring (reference for any interactive component) |
+| [zeroheight — Scalable Figma Design Systems](https://zeroheight.com/blog/building-scalable-design-systems-with-figma-26-tips-for-2026/) | Scalability, in-page documentation |
 
-> Ne pas se fier uniquement à cette table figée : relancer une recherche ciblée si un
-> problème structurel récurrent apparaît (comme l'incident du 2026-07-07 sur les anneaux
-> de focus, qui a mené à documenter la technique C40 après coup — elle aurait dû être
-> vérifiée en amont).
-
----
-
-## Audit obligatoire — voir §22 de `figma-components.md`
-
-L'audit complet (accessibilité, affichage, variables, styles, états, variantes,
-documentation in-page, liens) est scripté et documenté dans
-`.claude/instructions/figma-components.md` §22. Il doit être exécuté :
-
-```
-✅ Sur toute page nouvellement créée, avant de la déclarer terminée
-✅ Sur toute page dont un composant partagé (Icon, Text Style, Variable) a été modifié
-✅ À la demande explicite de l'utilisateur ("audit", "vérifie tout", "screenshot global")
-```
+> Don't rely solely on this fixed table: run a targeted search if a recurring structural
+> issue appears (like the 2026-07-07 focus ring incident, which led to documenting
+> technique C40 after the fact — it should have been verified upfront).
 
 ---
 
-## Règles pour les agents
+## Mandatory audit — see §22 of `figma-components.md`
+
+The full audit (accessibility, display, variables, styles, states, variants,
+in-page documentation, links) is scripted and documented in
+`.claude/instructions/figma-components.md` §22. It must be run:
 
 ```
-✅ Lire le code (composant + stories) AVANT de toucher à Figma — jamais l'inverse
-✅ Chercher le token composant avant de binder le sémantique — jamais de valeur en dur
-✅ Faire correspondre variantes/propriétés Figma 1:1 avec l'API du composant code
-✅ Relancer une recherche de bonnes pratiques avant un chantier de grande ampleur
-✅ Exécuter l'audit §22 avant de déclarer un composant ou une page terminée
-❌ Ne jamais inventer une variante, un token ou une propriété absente du code
-❌ Ne jamais corriger une divergence Figma↔code en donnant raison à Figma sans arbitrage humain
-❌ Ne jamais considérer un audit visuel non scripté (juste un screenshot) comme suffisant
+✅ On any newly created page, before declaring it complete
+✅ On any page whose shared component (Icon, Text Style, Variable) has been modified
+✅ At explicit user request ("audit", "check everything", "global screenshot")
+```
+
+---
+
+## Rules for agents
+
+```
+✅ Read the code (component + stories) BEFORE touching Figma — never the reverse
+✅ Look for the component token before binding to semantic — never a hardcoded value
+✅ Match Figma variants/properties 1:1 with the code component's API
+✅ Re-run a best-practices search before a large-scale effort
+✅ Run the §22 audit before declaring a component or page complete
+❌ Never invent a variant, token, or property absent from the code
+❌ Never resolve a Figma↔code divergence by favoring Figma without human arbitration
+❌ Never treat a non-scripted visual audit (just a screenshot) as sufficient
 ```

@@ -1,74 +1,74 @@
-# Rule : components/button
+# Rule: components/button
 
-> Règles spécifiques au composant Button pour les agents.
-> Ce fichier complète le contrat complet dans `guidelines/components/button.md`.
+> Button-specific rules for agents.
+> This file complements the full contract in `guidelines/components/button.md`.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/components/button.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, guidelines/components/button.md
+> **Logical path:** .claude/rules/components/button.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, guidelines/components/button.md
 > **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/tokens-system.md
 
 ---
 
-## Règles absolues
+## Absolute rules
 
 ```
-✅ Maximum 1 bouton primary par section ou formulaire
-✅ Toujours un libellé explicite (jamais "OK", "Confirmer" seul)
-✅ Le bouton critical DOIT avoir une confirmation avant exécution
-✅ Toujours un :focus-visible visible
-✅ Largeur préservée pendant les états async (loading)
-❌ Jamais de bouton critical sans pattern de confirmation
-❌ Jamais deux boutons primary côte à côte
-❌ Jamais de couleur ou espacement en dur
-❌ Jamais de variante inventée non définie dans component.json
+✅ Maximum 1 primary button per section or form
+✅ Always an explicit label (never "OK", "Confirm" alone)
+✅ The critical button MUST have a confirmation pattern before executing
+✅ Always a visible :focus-visible
+✅ Width preserved during async (loading) states
+❌ Never a critical button without a confirmation pattern
+❌ Never two primary buttons side by side
+❌ Never a hardcoded color or spacing value
+❌ Never an invented variant not defined in component.json
 ```
 
 ---
 
-## Variantes autorisées
+## Allowed variants
 
-| Variante | Token | Usage |
+| Variant | Token | Usage |
 |----------|-------|-------|
-| `primary` | `component.button.primary` | Action principale d'une section |
-| `secondary` | `component.button.secondary` | Action alternative |
-| `critical` | `component.button.critical` | Action irréversible — voir règles spéciales |
-| `ghost` | `component.button.ghost` | Action tertiaire, faible emphase |
+| `primary` | `component.button.primary` | Main action of a section |
+| `secondary` | `component.button.secondary` | Alternative action |
+| `critical` | `component.button.critical` | Irreversible action — see special rules |
+| `ghost` | `component.button.ghost` | Tertiary action, low emphasis |
 
 ---
 
-## Règles spéciales — variante critical
+## Special rules — critical variant
 
-Si tu génères ou modifies un bouton `critical` :
+If you generate or modify a `critical` button:
 
-1. Vérifier que `requiresConfirmation: true` est dans le token
-2. Vérifier que le pattern de confirmation existe dans l'interface
-3. Vérifier que le libellé décrit l'action (ex: "Supprimer définitivement le dossier")
-4. Vérifier le contraste : minimum 4.5:1 sur fond blanc
-5. **Escalader à un humain** si tu as un doute sur l'impact de l'action
+1. Verify that `requiresConfirmation: true` is present in the token
+2. Verify that the confirmation pattern exists in the interface
+3. Verify that the label describes the action (e.g. "Permanently delete the folder")
+4. Verify the contrast: minimum 4.5:1 on a white background
+5. **Escalate to a human** if you have any doubt about the impact of the action
 
 ---
 
-## Anti-patterns à détecter
+## Anti-patterns to detect
 
 ```
-❌ <button style="background: red;">Supprimer</button>
-   → Valeur en dur + pas de token + variante non reconnue
+❌ <button style="background: red;">Delete</button>
+   → Hardcoded value + no token + unrecognized variant
 
 ❌ <ds-button variant="critical">OK</ds-button>
-   → Libellé non explicite pour une action critique
+   → Non-explicit label for a critical action
 
-❌ Deux <ds-button variant="primary"> dans le même formulaire
-   → Hiérarchie cassée
+❌ Two <ds-button variant="primary"> in the same form
+   → Broken hierarchy
 
-❌ <ds-button variant="danger">   (variante inexistante)
-   → Escalader — demander la variante correcte
+❌ <ds-button variant="danger">   (nonexistent variant)
+   → Escalate — ask for the correct variant
 ```
 
 ---
 
-## Escalade obligatoire
+## Mandatory escalation
 
-Escalader à un humain si :
-- La variante demandée n'existe pas dans `component.json`
-- L'action du bouton critical n'est pas clairement irréversible ou non
-- Le pattern de confirmation n'est pas défini dans le système
+Escalate to a human if:
+- The requested variant does not exist in `component.json`
+- Whether the critical button's action is clearly irreversible or not is unclear
+- The confirmation pattern is not defined in the system

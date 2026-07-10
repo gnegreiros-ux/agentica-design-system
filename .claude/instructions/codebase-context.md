@@ -1,93 +1,93 @@
-# Instruction : codebase-context
+# Instruction: codebase-context
 
-> Méthodologie pour comprendre et naviguer dans ce dépôt.
-> Ce fichier décrit COMMENT travailler dans ce système, pas seulement QUOI faire.
+> Methodology for understanding and navigating this repository.
+> This file describes HOW to work in this system, not just WHAT to do.
 > **Type:** instruction
-> **Chemin logique:** .claude/instructions/codebase-context.md
-> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Logical path:** .claude/instructions/codebase-context.md
+> **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** AGENTS.md, .claude/rules/project-overview.md, .claude/rules/tokens-system.md
 
 ---
 
-## Ordre de lecture obligatoire
+## Mandatory reading order
 
-Avant toute tâche, lire dans cet ordre :
-
-```
-1. AGENTS.md                               ← routeur, niveaux d'autonomie
-2. DESIGN.md                               ← contrat global de la marque
-3. .claude/rules/project-overview.md       ← contexte du projet
-4. .claude/rules/tokens-system.md          ← règles des tokens
-5. [fichier spécifique à la tâche]         ← selon ce que tu dois faire
-```
-
----
-
-## Résolution de conflits
-
-Si deux règles semblent en conflit, appliquer dans cet ordre de priorité :
+Before any task, read in this order:
 
 ```
-1. DESIGN.md (règles globales)
-2. .claude/rules/tokens-system.md (règles des tokens)
-3. .claude/rules/[règle spécifique]
-4. guidelines/components/[composant].md (contrat)
+1. AGENTS.md                               ← router, autonomy levels
+2. DESIGN.md                               ← global brand contract
+3. .claude/rules/project-overview.md       ← project context
+4. .claude/rules/tokens-system.md          ← token rules
+5. [task-specific file]                    ← depending on what you need to do
 ```
 
-En cas de doute : **escalader à un humain. Ne pas improviser.**
+---
+
+## Conflict resolution
+
+If two rules appear to conflict, apply in this priority order:
+
+```
+1. DESIGN.md (global rules)
+2. .claude/rules/tokens-system.md (token rules)
+3. .claude/rules/[specific rule]
+4. guidelines/components/[component].md (contract)
+```
+
+If in doubt: **escalate to a human. Do not improvise.**
 
 ---
 
-## Méthodologie d'audit
+## Audit methodology
 
-### Audit de tokens
-1. Lire `.claude/skills/ai-component-metadata.md`
-2. Scanner tous les fichiers de code pour les valeurs en dur
-3. Scanner pour les tokens dépréciés
-4. Générer un rapport structuré (liste par fichier, par type de dérive)
-5. Proposer des corrections — ne pas appliquer sans approbation
+### Token audit
+1. Read `.claude/skills/ai-component-metadata.md`
+2. Scan all code files for hardcoded values
+3. Scan for deprecated tokens
+4. Generate a structured report (list by file, by type of drift)
+5. Propose fixes — do not apply without approval
 
-### Audit de composant
-1. Lire `guidelines/components/[composant].md`
-2. Comparer avec l'implémentation dans le code
-3. Vérifier les métadonnées dans `tokens/component.json`
-4. Lancer axe-core si disponible
-5. Produire un rapport de conformité
+### Component audit
+1. Read `guidelines/components/[component].md`
+2. Compare against the implementation in the code
+3. Verify metadata in `tokens/component.json`
+4. Run axe-core if available
+5. Produce a compliance report
 
-### Audit d'accessibilité
-1. Vérifier les ratios de contraste (min 4.5:1 texte, 3:1 UI)
-2. Vérifier la présence de `:focus-visible` sur tous les interactifs
-3. Vérifier les attributs ARIA requis
-4. Vérifier la navigation clavier
-5. Escalader toute violation critique immédiatement
-
----
-
-## Génération de code
-
-Avant de générer un composant :
-1. Lire le contrat dans `guidelines/components/[composant].md`
-2. Vérifier que tous les tokens utilisés existent dans `tokens/component.json`
-3. Générer le code avec les tokens (jamais de valeur en dur)
-4. Inclure les attributs ARIA et le focus
-5. Signaler tout cas non couvert par le système
+### Accessibility audit
+1. Check contrast ratios (min 4.5:1 text, 3:1 UI)
+2. Check that `:focus-visible` is present on all interactive elements
+3. Check required ARIA attributes
+4. Check keyboard navigation
+5. Escalate any critical violation immediately
 
 ---
 
-## Mise à jour de documentation
+## Code generation
 
-Avant de modifier un fichier `.md` :
-1. Vérifier que le changement reflète le système réel (pas une intention)
-2. Mettre à jour la date de dernière modification
-3. Ouvrir une PR `docs/` — ne pas pusher directement
-4. Si le changement affecte un contrat de composant : approbation requise
+Before generating a component:
+1. Read the contract in `guidelines/components/[component].md`
+2. Verify that all tokens used exist in `tokens/component.json`
+3. Generate the code with tokens (never a hardcoded value)
+4. Include ARIA attributes and focus handling
+5. Flag any case not covered by the system
 
 ---
 
-## Économie de contexte
+## Documentation updates
 
-Pour éviter de saturer le contexte :
-- Lire uniquement les fichiers pertinents à la tâche en cours
-- Utiliser les skills pour les tâches répétables
-- Sous-agents spécialisés pour les tâches complexes multi-domaines
-- Ne pas charger tous les tokens — chercher par composant concerné
+Before modifying a `.md` file:
+1. Verify that the change reflects the actual system (not an intention)
+2. Update the last-modified date
+3. Open a `docs/` PR — do not push directly
+4. If the change affects a component contract: approval required
+
+---
+
+## Context economy
+
+To avoid saturating context:
+- Only read files relevant to the current task
+- Use skills for repeatable tasks
+- Specialized sub-agents for complex multi-domain tasks
+- Do not load all tokens — search by the relevant component

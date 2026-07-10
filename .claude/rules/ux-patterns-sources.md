@@ -1,109 +1,109 @@
-# Rule : ux-patterns-sources
+# Rule: ux-patterns-sources
 
-> Registre des sources de référence UX et checklist de revue des patterns par composant.
-> À consulter avant la création de tout composant et avant toute modification UX pertinente.
+> Registry of UX reference sources and pattern-review checklist by component.
+> To consult before creating any component and before any relevant UX change.
 > **Type:** rule
-> **Chemin logique:** .claude/rules/ux-patterns-sources.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** .claude/rules/ux-patterns-sources.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/
 
 ---
 
-## Pourquoi ce registre existe
+## Why this registry exists
 
-> Avant de publier un composant, l'humain doit pouvoir juger **quels patterns UX** lui appliquer.
-> Les agents ne décident pas des patterns — ils **présentent** les options issues de sources
-> reconnues, avec liens, et l'humain **approuve**.
+> Before publishing a component, the human must be able to judge **which UX patterns**
+> to apply. Agents do not decide the patterns — they **present** the options drawn from
+> recognized sources, with links, and the human **approves**.
 
-Exemple concret (composant `input`) : *comment afficher l'état d'erreur ? le texte d'aide ?
-à quel moment exécuter la validation (à la frappe, à la perte de focus, à la soumission) ?*
-Ces questions ont des réponses documentées dans les sources ci-dessous — on les présente
-systématiquement plutôt que d'improviser.
+Concrete example (`input` component): *how should the error state be displayed? the help
+text? at what point should validation run (while typing, on blur, on submit)?*
+These questions have documented answers in the sources below — we present them
+systematically rather than improvising.
 
 ---
 
-## Les 5 sources de référence
+## The 5 reference sources
 
-| # | Source | Lien | Ce qu'elle couvre | Pertinente surtout pour |
+| # | Source | Link | What it covers | Mostly relevant for |
 |---|--------|------|-------------------|-------------------------|
-| 1 | **IF — Data Patterns Catalogue** | https://catalogue.projectsbyif.com/ | Consentement, authentification, partage et accès aux données, transparence IA, contrôles de sécurité | Champs sensibles, consentement, login, composants « agentiques »/IA |
-| 2 | **Nielsen Norman Group** | https://www.nngroup.com/articles/design-pattern-guidelines/ | Index de 72 guidelines : input controls, forms & wizards, tooltips/dialogs, icons & indicators, menus, navigation, search, error handling, privacy & ethics | Quasi tous les composants — référence d'usabilité |
-| 3 | **Dashboard Design Patterns** | https://dashboarddesignpatterns.github.io/patterns.html | Patterns composants (data / meta / visual / interaction) + composition (screenspace / structure / page layout / color) | Dashboard, data viz, tables, cards, layout |
+| 1 | **IF — Data Patterns Catalogue** | https://catalogue.projectsbyif.com/ | Consent, authentication, data sharing and access, AI transparency, security controls | Sensitive fields, consent, login, "agentic"/AI components |
+| 2 | **Nielsen Norman Group** | https://www.nngroup.com/articles/design-pattern-guidelines/ | Index of 72 guidelines: input controls, forms & wizards, tooltips/dialogs, icons & indicators, menus, navigation, search, error handling, privacy & ethics | Nearly all components — usability reference |
+| 3 | **Dashboard Design Patterns** | https://dashboarddesignpatterns.github.io/patterns.html | Component patterns (data / meta / visual / interaction) + composition (screenspace / structure / page layout / color) | Dashboards, data viz, tables, cards, layout |
 | 4 | **Interaction Design Foundation** | https://ixdf.org/literature/topics/ui-design-patterns | Navigation & wayfinding, forms & input (lazy registration, forgiving formats, required markers, progressive disclosure), interaction, feedback, dark patterns | Forms, inputs, navigation, feedback |
-| 5 | **Smashing Magazine** | https://www.smashingmagazine.com/category/design-patterns/ | Modals vs pages, notifications, forms & error messages, data tables, nested filters, hidden vs disabled, accessibilité | Forms, tables, modals, notifications, états |
+| 5 | **Smashing Magazine** | https://www.smashingmagazine.com/category/design-patterns/ | Modals vs pages, notifications, forms & error messages, data tables, nested filters, hidden vs disabled, accessibility | Forms, tables, modals, notifications, states |
 
-> Le contenu des sources est consulté **en hybride** : ce registre sert de base versionnée, et
-> le skill `ux-pattern-review` fait un **WebFetch ciblé** sur la/les source(s) prioritaires au
-> moment de la revue (voir matrice ci-dessous).
+> Source content is consulted in a **hybrid** way: this registry serves as a versioned
+> baseline, and the `ux-pattern-review` skill performs a **targeted WebFetch** on the
+> priority source(s) at review time (see matrix below).
 
 ---
 
-## Matrice : type de composant → sources prioritaires
+## Matrix: component type → priority sources
 
-| Type de composant | Sources à consulter en priorité |
+| Component type | Sources to consult first |
 |-------------------|--------------------------------|
-| Champ de saisie (`input`, `textarea`, `select`) | NN/g (input controls, forms, error handling), IxDF (forms & input), Smashing (forms & error messages) |
-| Action (`button`, liens d'action) | NN/g (input controls), IxDF (clear primary action), Smashing (hidden vs disabled) |
-| Feedback / statut (`badge`, `toast`, `alert`) | NN/g (icons & indicators), Dashboard (visual representations), Smashing (notifications) |
-| Conteneur / mise en page (`card`, `panel`, grilles) | Dashboard (page layout, composition), Smashing (modals vs pages) |
-| Iconographie (`icon`) | NN/g (icons & indicators), IF (transparence / signification) |
+| Input field (`input`, `textarea`, `select`) | NN/g (input controls, forms, error handling), IxDF (forms & input), Smashing (forms & error messages) |
+| Action (`button`, action links) | NN/g (input controls), IxDF (clear primary action), Smashing (hidden vs disabled) |
+| Feedback / status (`badge`, `toast`, `alert`) | NN/g (icons & indicators), Dashboard (visual representations), Smashing (notifications) |
+| Container / layout (`card`, `panel`, grids) | Dashboard (page layout, composition), Smashing (modals vs pages) |
+| Iconography (`icon`) | NN/g (icons & indicators), IF (transparency / meaning) |
 | Navigation (`tabs`, `breadcrumb`, `menu`) | IxDF (navigation & wayfinding), NN/g (navigation, menus) |
-| Données / tableaux (`table`, `data-grid`, dashboards) | Dashboard (data, interaction, composition), Smashing (data tables, nested filters) |
-| Données sensibles / consentement / IA | IF (consentement, accès données, transparence IA), NN/g (privacy & ethics) |
+| Data / tables (`table`, `data-grid`, dashboards) | Dashboard (data, interaction, composition), Smashing (data tables, nested filters) |
+| Sensitive data / consent / AI | IF (consent, data access, AI transparency), NN/g (privacy & ethics) |
 
-> Toujours inclure **NN/g** comme socle d'usabilité, plus la/les source(s) spécifiques au type.
-
----
-
-## Checklist de revue par composant
-
-Pour chaque composant (nouveau ou modification UX pertinente), passer en revue :
-
-### États et interactions
-- [ ] États couverts : default, hover, focus(-visible), active, error/invalid, disabled, readonly, loading
-- [ ] Action principale claire (un seul `primary` par section — cf. règle button)
-- [ ] Cibles tactiles ≥ 24×24px (WCAG 2.5.8)
-
-### Saisie et validation (si applicable)
-- [ ] **Affichage de l'état d'erreur** : emplacement, couleur tokenisée, `role="alert"`, message explicite
-- [ ] **Texte d'aide (help text)** : emplacement, lien `aria-describedby`, distinction visuelle vs erreur
-- [ ] **Moment de la validation** : à la frappe (`onChange`) / à la perte de focus (`onBlur`) / à la soumission (`onSubmit`) — décision explicite et justifiée
-- [ ] **Required markers** : marqueur visuel `*` + `aria-required`
-- [ ] **Forgiving formats** : tolérance de saisie quand pertinent (espaces, formats multiples)
-- [ ] **Progressive disclosure** : révéler la complexité progressivement quand pertinent
-
-### Éthique et accessibilité
-- [ ] **Dark patterns à éviter** : pas de consentement forcé, pas de hiérarchie trompeuse, pas de désactivation masquée trompeuse
-- [ ] Accessibilité : déléguer au pipeline `pipelines/wcag.md` (contraste, focus, ARIA, reduced-motion)
+> Always include **NN/g** as the usability baseline, plus the type-specific source(s).
 
 ---
 
-## Checklist des 6 surfaces de propagation
+## Per-component review checklist
 
-Une fois les patterns **approuvés par l'humain**, la décision est documentée **partout** :
+For every component (new or with a relevant UX change), review:
 
-| # | Surface | Forme attendue |
+### States and interactions
+- [ ] States covered: default, hover, focus(-visible), active, error/invalid, disabled, readonly, loading
+- [ ] Clear primary action (only one `primary` per section — see button rule)
+- [ ] Touch targets ≥ 24×24px (WCAG 2.5.8)
+
+### Input and validation (if applicable)
+- [ ] **Error state display**: placement, tokenized color, `role="alert"`, explicit message
+- [ ] **Help text**: placement, `aria-describedby` link, visual distinction from errors
+- [ ] **When validation runs**: on typing (`onChange`) / on blur (`onBlur`) / on submit (`onSubmit`) — an explicit, justified decision
+- [ ] **Required markers**: visual `*` marker + `aria-required`
+- [ ] **Forgiving formats**: input tolerance where relevant (spaces, multiple formats)
+- [ ] **Progressive disclosure**: reveal complexity gradually where relevant
+
+### Ethics and accessibility
+- [ ] **Dark patterns to avoid**: no forced consent, no misleading hierarchy, no deceptive hidden opt-outs
+- [ ] Accessibility: delegate to the `pipelines/wcag.md` pipeline (contrast, focus, ARIA, reduced-motion)
+
+---
+
+## Checklist for the 6 propagation surfaces
+
+Once patterns are **approved by the human**, the decision is documented **everywhere**:
+
+| # | Surface | Expected form |
 |---|---------|----------------|
-| 1 | **Guideline** `guidelines/components/<comp>.md` | Section `## PATTERNS UX DE RÉFÉRENCE` — tableau `Pattern \| Source (lien) \| Appliqué ✅/❌ \| Justification` |
-| 2 | **Code** `components/agtc-<comp>.js` | Bloc commentaire d'en-tête « POURQUOI » listant les patterns appliqués + liens |
-| 3 | **Storybook** `components/agtc-<comp>.stories.js` | `parameters.docs.description.component` — résumé des patterns appliqués + liens |
-| 4 | **Site** | `node site/build.js` régénère la page composant à partir de la guideline |
-| 5 | **ADR** | ADR d'implémentation du composant — liste des patterns appliqués (gouverné par ADR-036) |
-| 6 | **GitHub Projects** | Item du chantier reflété (statut, domaine) — voir ADR-069 |
+| 1 | **Guideline** `guidelines/components/<comp>.md` | `## UX Patterns Reference` section — table `Pattern \| Source (link) \| Applied ✅/❌ \| Justification` |
+| 2 | **Code** `components/agtc-<comp>.js` | Header comment block "WHY" listing applied patterns + links |
+| 3 | **Storybook** `components/agtc-<comp>.stories.js` | `parameters.docs.description.component` — summary of applied patterns + links |
+| 4 | **Site** | `node site/build.js` regenerates the component page from the guideline |
+| 5 | **ADR** | Component implementation ADR — lists applied patterns (governed by ADR-036) |
+| 6 | **GitHub Projects** | Project item reflected (status, domain) — see ADR-069 |
 
-> Le pipeline `pipelines/ux-patterns.md` **vérifie** que ces 6 surfaces sont à jour avant tout commit.
+> The `pipelines/ux-patterns.md` pipeline **verifies** that these 6 surfaces are up to date before any commit.
 
 ---
 
-## Règle pour les agents
+## Rule for agents
 
 ```
-✅ Présenter les patterns issus des sources, avec liens directs
-✅ Recommander un défaut, mais laisser l'humain trancher
-✅ Documenter la décision sur les 6 surfaces
-❌ Inventer un pattern non issu des sources
-❌ Appliquer un pattern sans approbation humaine explicite
-❌ Publier un composant sans que la revue ait eu lieu
+✅ Present patterns from the sources, with direct links
+✅ Recommend a default, but let the human decide
+✅ Document the decision across the 6 surfaces
+❌ Invent a pattern not drawn from the sources
+❌ Apply a pattern without explicit human approval
+❌ Publish a component without the review having taken place
 ```
 
-> **Le dernier mot est toujours humain** — l'agent propose les patterns, l'humain décide.
+> **The human always has the final word** — the agent proposes patterns, the human decides.

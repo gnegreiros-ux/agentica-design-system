@@ -1,42 +1,42 @@
-# Pipeline : axe-core
+# Pipeline: axe-core
 
-> Audit automatique d'accessibilité WCAG via axe-core.
-> **Statut :** ✅ Actif — **mode rapport** (non bloquant pendant le burn-down ; bascule en bloquant prévue)
-> **Déclencheur :** tout changement dans `components/`, `site/build.js`, `tokens/`
-
----
-
-## Objectif
-
-Quand activé, ce pipeline :
-1. Exécute axe-core sur toutes les pages générées
-2. Rapporte les violations critiques (niveau A et AA)
-3. Bloque le commit si des violations critiques sont présentes
+> Automated WCAG accessibility audit via axe-core.
+> **Status:** ✅ Active — **report mode** (non-blocking during burn-down; switch to blocking planned)
+> **Trigger:** any change in `components/`, `site/build.js`, `tokens/`
 
 ---
 
-## Commandes (futures)
+## Objective
+
+Once activated, this pipeline:
+1. Runs axe-core on every generated page
+2. Reports critical violations (level A and AA)
+3. Blocks the commit if critical violations are present
+
+---
+
+## Commands (future)
 
 ```bash
 # Via Playwright
 npx playwright test --grep axe
 
-# Via script dédié
+# Via dedicated script
 node scripts/axe-audit.js
 ```
 
-## Règle absolue
+## Absolute rule
 
-**0 violation critique (impact: critical | serious) autorisée.**
-Les violations modérées sont signalées mais non bloquantes.
+**0 critical violations (impact: critical | serious) allowed.**
+Moderate violations are flagged but non-blocking.
 
-## Checks à implémenter
+## Checks to implement
 
-- [ ] Exit 0 sur toutes les pages du site
-- [ ] Aucune violation sur les composants (ds-button, ds-icon, etc.)
-- [ ] Rapport complet dans `axe-report.json`
+- [ ] Exit 0 on every page of the site
+- [ ] No violations on components (ds-button, ds-icon, etc.)
+- [ ] Full report in `axe-report.json`
 
-## Pages à auditer
+## Pages to audit
 
 - `/index.html`
 - `/foundations/*.html`
@@ -45,30 +45,30 @@ Les violations modérées sont signalées mais non bloquantes.
 - `/decisions/*.html`
 - `/agents/index.html`
 
-## Activation — ✅ fait (2026-06-06)
+## Activation — ✅ done (2026-06-06)
 
-1. ✅ `@axe-core/playwright` ajouté aux devDependencies (`npm run axe`)
-2. ✅ `scripts/axe-audit.js` créé — scanne `site/dist/**`, exclut le logotype
-   (`.logo`/`.hero-name`, exempt WCAG 1.4.3), exit 1 sur `critical`/`serious`
-   (sauf `AXE_BLOCKING=false`). Rapport → `axe-report.json`.
-3. ✅ Workflow `.github/workflows/axe.yml` — build site + audit, artefact uploadé.
-4. ✅ Applique **ADR-007**.
+1. ✅ `@axe-core/playwright` added to devDependencies (`npm run axe`)
+2. ✅ `scripts/axe-audit.js` created — scans `site/dist/**`, excludes the logotype
+   (`.logo`/`.hero-name`, exempt under WCAG 1.4.3), exits 1 on `critical`/`serious`
+   (unless `AXE_BLOCKING=false`). Report → `axe-report.json`.
+3. ✅ Workflow `.github/workflows/axe.yml` — builds the site + runs the audit, artifact uploaded.
+4. ✅ Applies **ADR-007**.
 
-### Burn-down — résorbé (76 → 0)
+### Burn-down — resolved (76 → 0)
 
-Au moment de l'activation : **76 violations** (`critical`/`serious`) sur 73 pages. Toutes résorbées :
+At activation time: **76 violations** (`critical`/`serious`) across 73 pages. All resolved:
 
-- **`color-contrast`** (cause dominante) : le teal d'action `action.primary` (teal.11) en **texte**
-  sur le fond de page `#fcfcfc` (gray.1) mesurait **4.44:1** avec l'ancienne valeur `#008573` —
-  échec 4.5:1 d'un cheveu, **uniformément** (boutons secondary/ghost, liens actifs de nav, code
-  inline `td code`, liens de prose). Pas de palier teal Radix entre teal.11 et teal.12 (quasi-noir).
-  **Résolu (ADR-050)** : teal.11 retuné `#008573` → `#007a68` = **5.14:1** sur `#fcfcfc` (texte
-  blanc dessus = 5.27:1).
-- **`aria-prohibited-attr`** : `aria-label` sur des `<div>` décoratifs (barres d'espacement,
-  échantillons de palette) sans rôle permettant l'attribut. **Résolu** : ajout de `role="img"`.
-- **`label`** (×2) : `<input>` de démo sans libellé associé. **Résolu** : association `for`/`id`.
-- **`color-contrast` résiduel** (libellés de démo en état désactivé, exempts WCAG 1.4.3) : **Résolu**
-  par `aria-disabled="true"` sur la ligne de démo désactivée (axe exempte les contrôles désactivés).
+- **`color-contrast`** (dominant cause): the action teal `action.primary` (teal.11) as **text**
+  on the page background `#fcfcfc` (gray.1) measured **4.44:1** with the old value `#008573` —
+  failing the 4.5:1 threshold by a hair, **uniformly** (secondary/ghost buttons, active nav links,
+  inline code `td code`, prose links). No Radix teal step between teal.11 and teal.12 (near-black).
+  **Resolved (ADR-050)**: teal.11 retuned `#008573` → `#007a68` = **5.14:1** on `#fcfcfc` (white
+  text on top = 5.27:1).
+- **`aria-prohibited-attr`**: `aria-label` on decorative `<div>` elements (spacing bars,
+  palette swatches) without a role that permits the attribute. **Resolved**: added `role="img"`.
+- **`label`** (×2): demo `<input>` without an associated label. **Resolved**: `for`/`id` association added.
+- **Residual `color-contrast`** (demo labels in disabled state, exempt under WCAG 1.4.3): **Resolved**
+  via `aria-disabled="true"` on the disabled demo row (axe exempts disabled controls).
 
-État : **0 violation** sur 74 pages. Le gate peut désormais basculer en **bloquant** — retirer
-`AXE_BLOCKING: 'false'` du workflow `.github/workflows/axe.yml`, conformément à l'esprit d'ADR-007.
+Status: **0 violations** across 74 pages. The gate can now switch to **blocking** — remove
+`AXE_BLOCKING: 'false'` from the `.github/workflows/axe.yml` workflow, consistent with the intent of ADR-007.

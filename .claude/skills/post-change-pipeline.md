@@ -1,93 +1,93 @@
-# Skill : post-change-pipeline
+# Skill: post-change-pipeline
 
-> Pipeline obligatoire avant tout commit — analyse l'impact des changements et soumet un rapport d'approbation humaine.
+> Mandatory pipeline before any commit — analyzes the impact of changes and submits a report for human approval.
 > **Type:** skill
-> **Chemin logique:** .claude/skills/post-change-pipeline.md
-> **Lecture avant:** AGENTS.md, .claude/rules/git-workflow.md, .claude/rules/tokens-system.md
+> **Logical path:** .claude/skills/post-change-pipeline.md
+> **Read before:** AGENTS.md, .claude/rules/git-workflow.md, .claude/rules/tokens-system.md
 > **Relations:** site/build.js, tokens/, decisions/, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
 
-## Déclenchement
+## Trigger
 
-Ce pipeline s'exécute **obligatoirement** après toute modification et **avant tout commit**.
-Il ne peut pas être sauté, même pour un changement mineur.
+This pipeline runs **mandatorily** after every modification and **before every commit**.
+It cannot be skipped, even for a minor change.
 
 ---
 
-## Étape 1 — Analyse d'impact (automatique)
+## Step 1 — Impact analysis (automatic)
 
-Exécuter `git diff --name-only` et `git diff --cached --name-only` pour identifier les fichiers modifiés.
+Run `git diff --name-only` and `git diff --cached --name-only` to identify modified files.
 
-Appliquer la matrice d'impact :
+Apply the impact matrix:
 
-| Fichiers modifiés | Mises à jour à évaluer |
+| Modified files | Updates to evaluate |
 |---|---|
-| `tokens/primitives.json` | Site rebuild, log, ADR si nouveau token ou palette |
-| `tokens/semantic.json` | Site rebuild, log, `tokens.css` généré |
-| `tokens/component.json` | Site rebuild, log, **approbation Principal Designer requise** |
-| `site/build.js` | Site rebuild uniquement |
-| `site/dist/` | Log uniquement (dist est un output) |
-| `guidelines/` ou `components/` | Site rebuild, log |
-| `decisions/ADR-*.md` | Site rebuild (page ADR), log |
-| `.claude/rules/` ou `.claude/skills/` | Log |
+| `tokens/primitives.json` | Site rebuild, log, ADR if new token or palette |
+| `tokens/semantic.json` | Site rebuild, log, generated `tokens.css` |
+| `tokens/component.json` | Site rebuild, log, **Principal Designer approval required** |
+| `site/build.js` | Site rebuild only |
+| `site/dist/` | Log only (dist is an output) |
+| `guidelines/` or `components/` | Site rebuild, log |
+| `decisions/ADR-*.md` | Site rebuild (ADR page), log |
+| `.claude/rules/` or `.claude/skills/` | Log |
 | `AGENTS.md`, `DESIGN.md`, `README.md` | Log |
 
-Le suivi de ce chantier (statut, domaine) vit dans GitHub Projects (ADR-069) — pas dans
-un fichier du dépôt, donc rien à proposer côté log pour cette raison.
+Tracking for this work (status, domain) lives in GitHub Projects (ADR-069) — not in
+a file in the repo, so there is nothing to propose on the log side for this reason.
 
 ---
 
-## Étape 2 — Rapport d'impact (présenter à l'humain)
+## Step 2 — Impact report (present to the human)
 
-Présenter un rapport structuré **avant tout commit** :
+Present a structured report **before any commit**:
 
 ```
-## Impact des changements — approbation requise
+## Change impact — approval required
 
-### Fichiers modifiés
-- [liste des fichiers git diff]
+### Modified files
+- [list of files from git diff]
 
-### Mises à jour proposées
-- [ ] Site rebuild (`node site/build.js`) — [raison]
-- [ ] ADR-XXX à créer — [titre proposé] — si décision architecturale
-- [ ] Tokens CSS à regénérer — si tokens modifiés
-- [ ] Autre : [description]
+### Proposed updates
+- [ ] Site rebuild (`node site/build.js`) — [reason]
+- [ ] ADR-XXX to create — [proposed title] — if architectural decision
+- [ ] CSS tokens to regenerate — if tokens modified
+- [ ] Other: [description]
 
-### Points d'attention
-- [Toute modification de token de composant → rappel d'approbation]
-- [Tout nouveau token → suggérer un ADR]
+### Points of attention
+- [Any component token modification → approval reminder]
+- [Any new token → suggest an ADR]
 ```
 
-**Ne pas commiter avant réponse explicite de l'humain.**
+**Do not commit before an explicit response from the human.**
 
 ---
 
-## Étape 3 — Exécution (après approbation seulement)
+## Step 3 — Execution (only after approval)
 
-Exécuter uniquement les tâches approuvées, dans cet ordre :
+Execute only the approved tasks, in this order:
 
-1. Regénérer les tokens CSS si `tokens/` modifiés
-2. Rebuilder le site si approuvé (`node site/build.js`)
-3. Créer les ADRs approuvés
-4. Stager et commiter tous les fichiers en un seul commit cohérent
+1. Regenerate CSS tokens if `tokens/` was modified
+2. Rebuild the site if approved (`node site/build.js`)
+3. Create the approved ADRs
+4. Stage and commit all files in a single coherent commit
 
 ---
 
-## Règles d'escalade
+## Escalation rules
 
-- Modification de `tokens/component.json` → mentionner explicitement que l'approbation du Principal Designer est requise
-- Nouveau token primitif ou sémantique → proposer un ADR
-- Suppression d'un token → bloquer et demander audit d'impact complet
+- Modification of `tokens/component.json` → explicitly mention that Principal Designer approval is required
+- New primitive or semantic token → propose an ADR
+- Removal of a token → block and request a full impact audit
 
 ---
 
 ## Anti-patterns
 
 ```
-❌ Commiter sans présenter le rapport d'impact
-❌ Rebuilder le site sans l'approuver
-❌ Mettre à jour le log après le commit plutôt qu'avant
-❌ Proposer toutes les mises à jour même si non pertinentes (utiliser la matrice)
-❌ Attendre que l'humain demande le log — toujours le proposer
+❌ Committing without presenting the impact report
+❌ Rebuilding the site without it being approved
+❌ Updating the log after the commit rather than before
+❌ Proposing all updates even when not relevant (use the matrix)
+❌ Waiting for the human to ask for the log — always propose it
 ```
