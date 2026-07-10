@@ -2901,7 +2901,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -3064,7 +3064,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!q) {
           searchStatus.textContent = '';
         } else {
-          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          const lang = document.documentElement.getAttribute('data-lang') || 'en';
           searchStatus.textContent = lang === 'fr'
             ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
             : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
@@ -3303,7 +3303,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </footer>`;
 
   return `<!DOCTYPE html>
-<html lang="fr" data-lang="fr" data-theme="dark"${homePage ? ' data-page="home"' : ''}>
+<html lang="en" data-lang="en" data-theme="dark"${homePage ? ' data-page="home"' : ''}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -3401,8 +3401,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <div class="agtc-segmented lang-switch lang-switch" role="group" aria-label="Language">
-      <button type="button" data-lang="fr" aria-current="true">FR</button>
-      <button type="button" data-lang="en" aria-current="false">EN</button>
+      <button type="button" data-lang="fr" aria-current="false">FR</button>
+      <button type="button" data-lang="en" aria-current="true">EN</button>
     </div>
     <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
       ${storybookIcon(18)}

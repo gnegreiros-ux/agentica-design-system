@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language toggle ─────────────────────────────────────
   const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'fr';
+  const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
   // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
   // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!q) {
           searchStatus.textContent = '';
         } else {
-          const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+          const lang = document.documentElement.getAttribute('data-lang') || 'en';
           searchStatus.textContent = lang === 'fr'
             ? totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' trouvé' + (totalVisible !== 1 ? 's' : '')
             : totalVisible + ' token' + (totalVisible !== 1 ? 's' : '') + ' found';
