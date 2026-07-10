@@ -8314,9 +8314,11 @@ function build() {
   const logoColor = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color.svg');
   if (fs.existsSync(logoColor)) fs.copyFileSync(logoColor, path.join(DIST, 'img', 'logo-color.svg'));
 
+  // Anciens diagrammes SVG (pipeline-tokens, human-last-word, multi-platform) : remplacés
+  // par les illustrations PNG ci-dessous — retirer les copies orphelines si présentes.
   ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
-    const src = path.join(ROOT, 'illustrations', f);
-    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
+    const orphan = path.join(DIST, 'img', f);
+    if (fs.existsSync(orphan)) fs.rmSync(orphan);
   });
 
   // Illustrations PNG (redesign narratif) — source : Brand/illustrations/

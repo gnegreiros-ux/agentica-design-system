@@ -31,22 +31,28 @@
 
 Toute illustration SVG **> 10 KB** doit être chargée lazily — jamais inlinée dans le HTML.
 
+> **Note (2026-07-10) :** les 3 diagrammes SVG (`pipeline-tokens.svg`, `human-last-word.svg`,
+> `multi-platform.svg`) qui illustraient ce standard ont été remplacés par le système
+> d'illustrations PNG (`Brand/illustrations/`, cf. `.claude/rules/illustrations-source.md`) et
+> retirés du dépôt. Le pattern `illus-lazy`/`data-svg` reste le standard obligatoire pour tout
+> futur SVG > 10 KB — l'exemple ci-dessous est générique, à adapter au nom réel du fichier.
+
 ### Pattern obligatoire dans `site/build.js`
 
 ```js
 // ❌ INTERDIT — inline dans le template HTML
-const svgPipeline = read(path.join(ROOT, 'illustrations/pipeline-tokens.svg'));
-// → injecte 490 KB dans chaque réponse HTTP
+const svgDiagram = read(path.join(ROOT, 'illustrations/nom-illustration.svg'));
+// → injecte le poids complet du SVG dans chaque réponse HTTP
 
 // ✅ OBLIGATOIRE — placeholder lazy-load
-const illusPipeline = `<div class="illus-block illus-lazy" data-svg="${base}img/pipeline-tokens.svg"></div>`;
+const illusDiagram = `<div class="illus-block illus-lazy" data-svg="${base}img/nom-illustration.svg"></div>`;
 ```
 
 ### Copie dans `build()` obligatoire
 
 ```js
 ensureDir(path.join(DIST, 'img'));
-['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
+['nom-illustration.svg'].forEach(f => {
   const src = path.join(ROOT, 'illustrations', f);
   if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'img', f));
 });

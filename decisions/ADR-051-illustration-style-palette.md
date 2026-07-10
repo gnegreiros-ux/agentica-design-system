@@ -7,7 +7,7 @@
 > **Chemin logique:** decisions/ADR-051-illustration-style-palette.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/foundations/illustration.md, tokens/semantic.json,
-> .claude/rules/ux-patterns-sources.md, Prototype redesign site web système de design/inspiration/
+> .claude/rules/ux-patterns-sources.md
 
 ---
 
