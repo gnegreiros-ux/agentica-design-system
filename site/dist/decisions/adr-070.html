@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Règle système : pas d'état `:visited` sur la navigation — Agentica</title>
+<title>Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Règle système : pas d'état `:visited` sur la navigation — Agentica">
+<meta property="og:title" content="Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Règle système : pas d'état `:visited` sur la navigation — Agentica">
+<meta name="twitter:title" content="Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,55 +114,55 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-047</code>
+    <code class="adr-number">ADR-070</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">governance</span>
+    <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Règle système : pas d'état `:visited` sur la navigation</h1>
+  <h1 class="adr-page-title">Anglais comme langue par défaut du dépôt (traduction communautaire)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-05</dd>
+      <dd>2026-07-10</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros (Design System Lead)</dd>
     </div>
   </dl>
 </div><h2>Contexte</h2>
-<p>Au cours du redesign du site, un défaut de pattern a été relevé : les éléments de <strong>navigation</strong> peuvent hériter de l'état <code>:visited</code> du navigateur (teinte violette, ou dérive de couleur), ce qui casse la cohérence visuelle et la hiérarchie. Un menu, un onglet, une sidebar, une table des matières ou un bouton-icône d'en-tête n'est <strong>pas du contenu « lu / non lu »</strong> : son apparence ne doit pas dépendre de l'historique de navigation.</p>
-<p>Le site neutralisait déjà <code>:visited</code> de façon <strong>ponctuelle et dispersée</strong> (uniquement <code>.top-nav</code> et <code>.github-btn</code>), tandis que d'autres surfaces de navigation (<code>.sidebar</code>, <code>.toc</code>, <code>.footer-links</code>, <code>.audit-footer-link</code>) ne l'étaient pas. La demande humaine est explicite : <strong>en faire une règle de portée système entière</strong>, pas seulement une correction locale du site web.</p>
+<p>Le dépôt Agentica était rédigé entièrement en français — documentation racine (README, AGENTS.md, DESIGN.md, guides How-to), guidelines, règles <code>.claude/</code>, décisions architecturales (<code>decisions/</code>). L'objectif exprimé est de partager le projet avec la communauté internationale des design systems (Storybook, Figma Community, publications type Design Systems Collective) — un lectorat très majoritairement anglophone.</p>
+<p>Le site public (<code>site/</code>) dispose déjà d'un système bilingue FR/EN fonctionnel (spans <code>lang-fr</code>/<code>lang-en</code>, bascule via <code>.lang-btn</code>) depuis un chantier antérieur (2026-05-29). Ce système ne couvre que le site généré, pas les fichiers markdown du dépôt lui-même — qui sont ce qu'un contributeur externe consulte en premier sur GitHub.</p>
 <hr>
 <h2>Décision</h2>
-<p>Adoption d'une règle de gouvernance <strong><code>no-visited-nav</code></strong> (voir <code>.claude/rules/no-visited-nav.md</code>) :</p>
-<blockquote><p>Tout <strong>élément de navigation</strong> réaligne sa couleur <code>:visited</code> sur l'état non-visité. La règle s'applique au **site, aux composants <code>agtc-*</code> et aux applications consommatrices**.</p></blockquote>
-<h3>Périmètre de la règle</h3>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ Concerné (pas d'état visité)</th><th>❌ Non concerné (état visité autorisé)</th></tr></thead><tbody><tr><td>Nav header (+ CTA), sidebar, TOC, onglets, fil d'Ariane, pagination, menus, boutons-icônes header/footer, liens de pied de navigation</td><td>Liens de <strong>contenu</strong> dans la prose, listes de résultats/archives où « déjà lu » aide l'utilisateur</td></tr></tbody></table></div>
-<blockquote><p>Critère de tri : si l'élément sert à <strong>se déplacer</strong> dans le produit → navigation → pas d'état visité. S'il pointe vers une <strong>ressource à lire</strong> → état visité autorisé.</p></blockquote>
-<h3>Implémentation de référence (site)</h3>
-<p>Bloc CSS unique et commenté dans <code>site/build.js</code>, neutralisant <code>:visited</code> sur toutes les surfaces de navigation via <strong>token sémantique</strong> (jamais de valeur en dur), déclaré <strong>avant</strong> les règles <code>:hover</code>/<code>.active</code> (à spécificité égale, le sélecteur le plus tardif l'emporte sur un lien visité ET survolé). Les déclarations <code>:visited</code> ponctuelles préexistantes (<code>.top-nav</code>, <code>.github-btn</code>) sont supprimées au profit de ce bloc consolidé.</p>
-<hr>
-<h2>Accessibilité (WCAG 2.2)</h2>
-<p>Neutre, voire bénéfique : supprimer la distinction <code>:visited</code> ne réduit aucune information utile sur de la navigation (l'état actif/courant reste porté par <code>.active</code> + <code>aria-current</code>). Aucun ratio de contraste n'est dégradé — la couleur visitée devient <strong>identique</strong> à la couleur non-visitée déjà validée. Sur les liens de <strong>contenu</strong>, où <code>:visited</code> peut aider l'orientation, la règle ne s'applique pas (WCAG 1.4.1 — ne pas véhiculer l'information par la seule couleur reste de toute façon respecté par les états <code>.active</code>/soulignement).</p>
+<p>L'anglais devient la langue par défaut du dépôt. Migration en 6 chantiers découpés dans GitHub Projects (Domaine Gouvernance/Site/Composants, tous rattachés au ticket parent « Traduction complète du dépôt vers l'anglais ») :</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Périmètre</th><th>Stratégie</th><th>Priorité</th></tr></thead><tbody><tr><td>1</td><td>Documentation racine (README, How-to-*, AGENTS.md, DESIGN.md)</td><td>Anglais <strong>remplace</strong> le français — aucune version FR conservée dans ces fichiers</td><td>P1</td></tr><tr><td>2</td><td>Site public (<code>site/contenu.md</code>, <code>site/build.js</code>)</td><td>Bascule EN par défaut sur le système bilingue existant — le FR reste disponible via le sélecteur</td><td>P1</td></tr><tr><td>3</td><td><code>guidelines/</code> (25 fichiers)</td><td>À déterminer au démarrage du chantier</td><td>P2</td></tr><tr><td>4</td><td><code>.claude/</code> (règles, instructions, skills — 38 fichiers agent-facing)</td><td>À déterminer au démarrage du chantier</td><td>P2</td></tr><tr><td>5</td><td><code>decisions/</code> (70 ADR, journal historique)</td><td>Stratégie allégée envisagée (résumé EN en tête) plutôt que traduction intégrale rétroactive — à valider</td><td>P3</td></tr><tr><td>6</td><td>Commentaires code composants (<code>agtc-*.js</code>, <code>*.stories.js</code>)</td><td>À déterminer au démarrage du chantier</td><td>P3</td></tr></tbody></table></div>
+<p>Ce chantier 1 (documentation racine) est le premier livré par cette décision — remplacement intégral du français par l'anglais, sans version française conservée en parallèle (décision explicite : éviter la dette de double maintenance de deux copies complètes).</p>
+<p>Les chemins de fichiers (<code>.claude/rules/contexts-utilisation.md</code>, etc.) ne sont <strong>pas</strong> renommés lors de cette traduction — seul le contenu change, pas les noms de fichiers, pour ne pas casser les références croisées à travers le dépôt.</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<ul><li><strong>Garder l'état <code>:visited</code> par défaut du navigateur</strong> sur la navigation : teinte violette</li></ul>
-<p>  incohérente avec la marque, casse la hiérarchie — rejeté.</p>
-<ul><li><strong>Limiter la correction au seul site web</strong> (sans règle système) : reconduit la dérive dans les</li></ul>
-<p>  composants et les applications consommatrices — contraire à la demande explicite « au système   complet ».</p>
-<ul><li><strong>Neutraliser <code>:visited</code> globalement sur tout <code>&lt;a&gt;</code></strong> (y compris contenu) : prive les liens de</li></ul>
-<p>  contenu/archives d'un repère d'orientation parfois utile — trop large, rejeté au profit d'un   périmètre « navigation ».</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Bilingue FR+EN sur tous les fichiers racine</strong> (<code>.md</code> + <code>.fr.md</code>)</td><td>Double la charge de maintenance de chaque future modification de gouvernance ; le site conserve déjà un vrai bilinguisme là où c'est le plus utile (contenu public visité), la doc racine peut se permettre un choix tranché.</td></tr><tr><td><strong>Ne traduire que le site, garder la doc de gouvernance en français</strong></td><td>Un contributeur externe ouvrant le dépôt sur GitHub lit <code>README.md</code>/<code>AGENTS.md</code> avant même d'atteindre le site — laisser ces fichiers en français casse l'objectif de partage communautaire dès la première impression.</td></tr><tr><td><strong>Tout traduire en un seul chantier monolithique</strong></td><td>860+ lignes pour la seule doc racine, ~2000 lignes pour <code>.claude/</code>, 70 ADR — un chantier unique serait ingérable et invérifiable ; découpage en 6 sous-chantiers priorisés (visibilité externe d'abord) déjà acté dans GitHub Projects.</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
-<ul><li>Nouvelle règle versionnée <code>.claude/rules/no-visited-nav.md</code>, applicable à tout agent et toute</li></ul>
-<p>  surface (site + composants + apps).</p>
-<ul><li><code>site/build.js</code> : neutralisation <code>:visited</code> <strong>consolidée</strong> sur 6 surfaces de navigation</li></ul>
-<p>  (<code>top-nav</code>, <code>sidebar</code>, <code>toc</code>, <code>footer-links</code>, <code>audit-footer-link</code>, boutons-icônes), via tokens   sémantiques. Build : <strong>662 défini · 177 référencé · 0 fantôme</strong>.</p>
-<ul><li>Les futurs composants exposant de la navigation (<code>agtc-link</code> en usage nav, <code>agtc-segmented</code>, futur</li></ul>
-<p>  <code>agtc-tabs</code>) devront neutraliser <code>:visited</code> dans leur shadow DOM selon la même règle.</p>
-<ul><li>Aucun token ajouté ou modifié — décision purement de gouvernance/pattern.</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-046.html" class="agtc-button secondary">← ADR-046</a>
-    <a href="adr-048.html" class="agtc-button secondary">ADR-048 →</a>
+<p><strong>Pour les agents IA :</strong></p>
+<ul><li><code>AGENTS.md</code>, <code>DESIGN.md</code> et les guides <code>How-to-*.md</code> sont désormais en anglais — toute</li></ul>
+<p>  future modification de ces fichiers se fait en anglais, sauf décision contraire explicite.</p>
+<ul><li>Les fichiers <code>.claude/rules/*.md</code> restent en français jusqu'au chantier #4 — un agent</li></ul>
+<p>  lira donc un mélange EN (routeur, contrat) / FR (règles détaillées) pendant la transition.   Aucune ambiguïté fonctionnelle : les noms de fichiers et chemins ne changent pas.</p>
+<ul><li>Les préférences globales de l'utilisateur (réponse en français en conversation) sont</li></ul>
+<p>  indépendantes de la langue du contenu versionné dans le dépôt — aucune contradiction.</p>
+<p><strong>Pour les humains :</strong></p>
+<ul><li>Le dépôt devient lisible par un contributeur externe non-francophone dès l'ouverture du</li></ul>
+<p>  README.</p>
+<ul><li>Perte de la version française de ces 6 fichiers dans le dépôt (récupérable via</li></ul>
+<p>  l'historique git si nécessaire — aucune archive séparée créée, contrairement au dossier   <code>Redesign/</code> qui contenait des assets binaires non recréables).</p>
+<p><strong>Coût accepté :</strong></p>
+<ul><li>Pendant la période de transition (chantiers #3 à #6 non encore réalisés), le dépôt est</li></ul>
+<p>  bilingue de facto par zone plutôt que par fichier — assumé comme état intermédiaire, pas   comme fin de chantier.</p>
+<hr>
+<h2>Incidents ou déclencheurs</h2>
+<p>Demande explicite de l'utilisateur le 2026-07-09 dans le cadre de la constitution d'un backlog de gouvernance (avec nettoyage du dépôt et gouvernance Figma) : « Traduction totale du dépôt vers l'anglais. L'anglais devra passer à la langue par défaut pour que je puisse partager le projet à la communauté internationale. »</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-069.html" class="agtc-button secondary">← ADR-069</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
