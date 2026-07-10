@@ -1,51 +1,51 @@
-# Agentica — Système de design agentique
+# Agentica — Agentic Design System
 
-> Un système de design structuré pour être lu par les humains **et** par les agents IA.
-> Basé sur les travaux présentés à l'AI Design Systems Conference 2026 (Into Design Systems).
+> A design system structured to be read by humans **and** AI agents.
+> Based on work presented at the AI Design Systems Conference 2026 (Into Design Systems).
 > **Type:** instruction
-> **Chemin logique:** README.md
-> **Lecture avant:** (point d'entrée — lire en premier)
+> **Logical path:** README.md
+> **Read before:** (entry point — read first)
 > **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
-**Auteur :** Guilherme Negreiros
-**Site de documentation :** https://designsystem.gnegreiros.com
+**Author:** Guilherme Negreiros
+**Documentation site:** https://designsystem.gnegreiros.com
 
 ---
 
-## Principe fondamental
+## Core principle
 
-**Le dernier mot est toujours humain.**
-Les agents proposent, détectent et exécutent.
-Les décisions stratégiques, les exceptions et les valeurs appartiennent aux équipes.
+**The human always has the final word.**
+Agents propose, detect, and execute.
+Strategic decisions, exceptions, and values belong to the teams.
 
 ---
 
-## Structure du kit
+## Kit structure
 
 ```
 agentic-design-system/
 │
-├── README.md                          ← vous êtes ici
-├── DESIGN.md                          ← contrat portable de la marque
-├── AGENTS.md                          ← routeur d'agents IA
-├── How-to-designers.md                ← guide équipe design system (designers)
-├── How-to-devs.md                     ← guide équipe design system (développeurs)
+├── README.md                          ← you are here
+├── DESIGN.md                          ← portable brand contract
+├── AGENTS.md                          ← AI agent router
+├── How-to-designers.md                ← design system team guide (designers)
+├── How-to-devs.md                     ← design system team guide (developers)
 │
 ├── tokens/
-│   ├── primitives.json                ← couche 1 — valeurs brutes
-│   ├── semantic.json                  ← couche 2 — intentions UX
-│   └── component.json                 ← couche 3 — contrats UI
+│   ├── primitives.json                ← layer 1 — raw values
+│   ├── semantic.json                  ← layer 2 — UX intentions
+│   └── component.json                 ← layer 3 — UI contracts
 │
 ├── style-dictionary/
-│   └── config.json                    ← compilation CSS, JS, iOS, Android
+│   └── config.json                    ← CSS, JS, iOS, Android compilation
 │
 ├── scripts/
-│   └── audit-tokens.js                ← audit dérives : orphelins, fantômes, hardcodés
+│   └── audit-tokens.js                ← drift audit: orphans, ghosts, hardcoded values
 │
-├── .eslintrc-ds.json                  ← lint anti-dérive IA (hex, arbitrary values)
+├── .eslintrc-ds.json                  ← anti-AI-drift lint (hex, arbitrary values)
 │
 ├── .claude/
-│   ├── rules/                         ← contraintes et conventions du projet
+│   ├── rules/                         ← project constraints and conventions
 │   │   ├── project-overview.md
 │   │   ├── tokens-system.md
 │   │   ├── development.md
@@ -53,102 +53,102 @@ agentic-design-system/
 │   │   ├── git-workflow.md
 │   │   └── components/button.md
 │   ├── instructions/
-│   │   ├── codebase-context.md        ← contexte technique complet
-│   │   └── session-spec.md            ← spec condensée rechargée à chaque session IA
+│   │   ├── codebase-context.md        ← full technical context
+│   │   └── session-spec.md            ← condensed spec reloaded every AI session
 │   └── skills/
 │       ├── ai-component-metadata.md
 │       ├── ai-ds-composer.md
 │       └── codebase-index.md
 │
 ├── components/
-│   └── ds-icon.js                     ← Web Component icône (Lucide)
+│   └── ds-icon.js                     ← icon Web Component (Lucide)
 │
 └── guidelines/
     ├── overview.md
     ├── foundations/
     │   ├── color.md
-    │   ├── typography.md              ← Atkinson Hyperlegible (accessibilité)
-    │   └── spacing.md                 ← grille 4px
+    │   ├── typography.md              ← Atkinson Hyperlegible (accessibility)
+    │   └── spacing.md                 ← 4px grid
     └── components/
         ├── overview.md
-        ├── button.md                  ← contrat complet (exemple de référence)
-        └── icon.md                    ← contrat ds-icon (Lucide)
+        ├── button.md                  ← full contract (reference example)
+        └── icon.md                    ← ds-icon contract (Lucide)
 ```
 
 ---
 
-## Démarrage rapide
+## Quick start
 
-### 1. Personnaliser
-Remplacer les placeholders dans `DESIGN.md` et `.claude/rules/project-overview.md` :
-- `[NOM_DU_SYSTÈME]`
-- `[NOM_ORGANISATION]`
-- `[NOM_RESPONSABLE]`
+### 1. Customize
+Replace the placeholders in `DESIGN.md` and `.claude/rules/project-overview.md`:
+- `[SYSTEM_NAME]`
+- `[ORGANIZATION_NAME]`
+- `[OWNER_NAME]`
 
-### 2. Installer les dépendances
+### 2. Install dependencies
 ```bash
 npm install style-dictionary
 npm install --save-dev eslint eslint-plugin-tailwindcss
 ```
 
-### 3. Compiler les tokens
+### 3. Compile the tokens
 ```bash
 npx style-dictionary build --config style-dictionary/config.json
-# → dist/css/   variables CSS
+# → dist/css/   CSS variables
 # → dist/js/    ES6 modules
 # → dist/ios/   Swift
 # → dist/android/ XML
 ```
 
-### 4. Activer le lint
+### 4. Enable linting
 ```bash
-# Étendre votre config ESLint existante :
+# Extend your existing ESLint config:
 # { "extends": ["./.eslintrc-ds.json"] }
 ```
 
-### 5. Lancer l'audit
+### 5. Run the audit
 ```bash
-node scripts/audit-tokens.js              # rapport console
+node scripts/audit-tokens.js              # console report
 node scripts/audit-tokens.js --fix-report # + audit-report.json
-node scripts/audit-tokens.js --ci         # mode CI/CD — exit 1 si violations
+node scripts/audit-tokens.js --ci         # CI/CD mode — exit 1 on violations
 ```
 
 ---
 
-## Architecture des tokens
+## Token architecture
 
 ```
-Tokens primitifs    →   Tokens sémantiques   →   Tokens de composant
-(valeurs brutes)        (intention UX)            (contrats UI)
-primitives.json         semantic.json             component.json
+Primitive tokens    →   Semantic tokens   →   Component tokens
+(raw values)             (UX intent)            (UI contracts)
+primitives.json          semantic.json          component.json
 ```
 
-**Règle absolue :** les primitifs ne sont jamais utilisés directement dans les composants.
-Toujours passer par la couche sémantique.
+**Absolute rule:** primitives are never used directly in components.
+Always go through the semantic layer.
 
 ---
 
-## Ce que ce kit n'est pas
+## What this kit is not
 
-- ❌ Une bibliothèque de composants prête à l'emploi
-- ❌ Un remplacement de Figma ou Storybook
-- ❌ Un outil autonome — il requiert une équipe qui maintient les contrats
+- ❌ A ready-to-use component library
+- ❌ A replacement for Figma or Storybook
+- ❌ A standalone tool — it requires a team that maintains the contracts
 
-## Ce que ce kit est
+## What this kit is
 
-- ✅ Une fondation architecturale pour un système agentique
-- ✅ Un gabarit de gouvernance formalisée
-- ✅ Un contrat lisible par les humains et les agents IA
-- ✅ Un point de départ à adapter à votre organisation
+- ✅ An architectural foundation for an agentic system
+- ✅ A template for formalized governance
+- ✅ A contract readable by both humans and AI agents
+- ✅ A starting point to adapt to your organization
 
 ---
 
-## Crédits
+## Credits
 
-Ce kit a été conçu et développé par **Guilherme Negreiros** en s'appuyant sur les travaux et enseignements des personnes et ressources suivantes :
+This kit was designed and developed by **Guilherme Negreiros**, drawing on the work and teachings of the following people and resources:
 
 - *The Design System Guide* — Romina Kavcic
 - *Into Design Systems* — AI Design Systems Conference 2026
 - Jan Six — GitHub / Tokens Studio (IDS 2026)
 - Cristian Morales Achiardi — Enara Health (IDS 2026)
-- George William Amalan — *Your Design System Is a Suggestion Box*, Design Systems Collective, mai 2026
+- George William Amalan — *Your Design System Is a Suggestion Box*, Design Systems Collective, May 2026

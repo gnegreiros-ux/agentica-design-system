@@ -1,162 +1,162 @@
-# How-to — Développeurs (équipe design system)
+# How-to — Developers (design system team)
 
-> Ce guide s'adresse à l'équipe qui **maintient** le système, pas aux équipes produit.
-> Dernier mot toujours humain. Les agents proposent, vous approuvez.
+> This guide is for the team that **maintains** the system, not product teams.
+> The human always has the final word. Agents propose, you approve.
 > **Type:** instruction
-> **Chemin logique:** How-to-devs.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** tokens/semantic.json, tokens/component.json, .eslintrc-ds.json, AGENTS.md, How-to-sans-agents.md (fallback si agents indisponibles)
+> **Logical path:** How-to-devs.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** tokens/semantic.json, tokens/component.json, .eslintrc-ds.json, AGENTS.md, How-to-sans-agents.md (fallback if agents are unavailable)
 
 ---
 
-## 1. Setup initial
+## 1. Initial setup
 
-### Cloner et installer
+### Clone and install
 ```bash
 git clone [REPO_URL]
 cd agentic-design-system
 npm install
 ```
 
-### Compiler les tokens
+### Compile the tokens
 ```bash
 npx style-dictionary build --config style-dictionary/config.json
-# Génère : dist/tokens/css/, dist/tokens/js/, dist/tokens/ios/, dist/tokens/android/, …
+# Generates: dist/tokens/css/, dist/tokens/js/, dist/tokens/ios/, dist/tokens/android/, …
 ```
 
-### Générer le site
+### Generate the site
 ```bash
 node site/build.js
-# Génère site/dist/ (99 fichiers HTML + site.css + agtc.js)
+# Generates site/dist/ (99 HTML files + site.css + agtc.js)
 ```
 
 ---
 
-## 2. Workflow quotidien
+## 2. Daily workflow
 
-### Modifier un token existant
+### Modifying an existing token
 
-**Règle :** tout changement de token sémantique ou composant = TCR.
-
-```
-1. Créer une branche : token/[nom-court]  (convention git-workflow.md)
-2. Modifier le fichier JSON concerné (semantic.json ou component.json)
-3. Soumettre PR → review Principal Designer obligatoire
-4. Après merge : compiler les tokens + rebuilder le site + communiquer aux équipes
-```
-
-### Ajouter un composant
+**Rule:** any change to a semantic or component token = TCR.
 
 ```
-1. Créer le contrat : guidelines/components/[nom].md
-2. Ajouter les tokens : tokens/component.json  (TCR requis)
-3. Implémenter le Web Component (Lit) : components/agtc-[nom].js
-4. Ajouter les métadonnées : .claude/skills/ai-component-metadata.md
-5. Mettre à jour guidelines/components/overview.md
-6. Rebuilder le site : node site/build.js
+1. Create a branch: token/[short-name]  (git-workflow.md convention)
+2. Edit the relevant JSON file (semantic.json or component.json)
+3. Submit a PR → Principal Designer review required
+4. After merge: compile tokens + rebuild the site + communicate to teams
 ```
 
-### Vérifier les dérives avant une PR
+### Adding a component
+
+```
+1. Create the contract: guidelines/components/[name].md
+2. Add the tokens: tokens/component.json  (TCR required)
+3. Implement the Web Component (Lit): components/agtc-[name].js
+4. Add metadata: .claude/skills/ai-component-metadata.md
+5. Update guidelines/components/overview.md
+6. Rebuild the site: node site/build.js
+```
+
+### Checking for drift before a PR
 ```bash
-# Tokens orphelins / variables CSS fantômes
-node site/build.js   # validateCssVars() s'exécute dans le build, signale les fantômes
+# Orphaned tokens / ghost CSS variables
+node site/build.js   # validateCssVars() runs during the build, flags ghosts
 
-# Accessibilité WCAG — pipeline CI actif (axe-core)
-# Se déclenche automatiquement sur chaque push ; vérifier les runs GitHub Actions
+# WCAG accessibility — active CI pipeline (axe-core)
+# Triggers automatically on every push; check GitHub Actions runs
 
-# Régressions visuelles — Playwright (remplace Chromatic, ADR-066)
-# Lance les tests visuels localement avant de pousser :
+# Visual regressions — Playwright (replaces Chromatic, ADR-066)
+# Run visual tests locally before pushing:
 npx playwright test --project=chromium
 
-# Nommage CSS — règle absolue (ADR-2026-06-30)
-# Zéro préfixe de version (v2-, ds-), zéro valeur en dur
-# Voir .claude/rules/code-style.md
+# CSS naming — absolute rule (ADR-2026-06-30)
+# Zero version prefixes (v2-, ds-), zero hardcoded values
+# See .claude/rules/code-style.md
 ```
 
 ---
 
-## 3. Tests visuels et fonctionnels (Playwright)
+## 3. Visual and functional tests (Playwright)
 
-> Deux périmètres distincts — voir ADR-066.
+> Two distinct scopes — see ADR-066.
 
-### Périmètre 1 : tests DS (ce dépôt)
+### Scope 1: DS tests (this repo)
 
-Ces tests valident les pages du site et les composants `agtc-*`. Ils tournent en CI sur chaque
-push sur `main` via `.github/workflows/playwright.yml`.
+These tests validate the site's pages and the `agtc-*` components. They run in CI on every
+push to `main` via `.github/workflows/playwright.yml`.
 
 ```bash
-# Prérequis : site généré
+# Prerequisite: site generated
 node site/build.js
 
-# Lancer tous les tests
+# Run all tests
 npx playwright test
 
-# Lancer un seul fichier
+# Run a single file
 npx playwright test tests/visual/home.spec.js
 
-# Browser uniquement (plus rapide en local)
+# Single browser (faster locally)
 npx playwright test --project=chromium
 
-# Voir le rapport HTML après échec
+# View the HTML report after a failure
 npx playwright show-report
 ```
 
-### Mettre à jour les snapshots de référence
+### Updating reference snapshots
 
-Quand un changement visuel est **intentionnel** (nouveau token, refonte) :
+When a visual change is **intentional** (new token, redesign):
 
 ```bash
-# 1. Vérifier que le changement est attendu
+# 1. Confirm the change is expected
 npx playwright test --project=chromium
 
-# 2. Régénérer les snapshots (approbation humaine obligatoire — ADR-066)
+# 2. Regenerate the snapshots (human approval required — ADR-066)
 npx playwright test --update-snapshots --project=chromium
 
-# 3. Vérifier les PNG mis à jour dans tests/visual/snapshots/
+# 3. Check the updated PNGs in tests/visual/snapshots/
 git diff tests/visual/snapshots/
 
-# 4. Committer les nouveaux snapshots avec le changement qui les explique
+# 4. Commit the new snapshots along with the change that explains them
 git add tests/visual/snapshots/
 ```
 
-> ❌ Ne jamais committer des snapshots mis à jour sans avoir inspecté visuellement les diffs.
+> ❌ Never commit updated snapshots without visually inspecting the diffs.
 
-### Hook pre-push — rappel automatique
+### Pre-push hook — automatic reminder
 
-Activer le hook après clonage (une seule fois) :
+Enable the hook after cloning (one time only):
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-Le hook affiche un message si `components/` ou `tokens/` ont changé depuis le dernier commit.
+The hook displays a message if `components/` or `tokens/` changed since the last commit.
 
-### Périmètre 2 : tests produit (vos dépôts consommateurs)
+### Scope 2: product tests (your consuming repos)
 
-Voir `guidelines/foundations/testing.md` — kit de démarrage pour tester votre produit avec le DS.
+See `guidelines/foundations/testing.md` — starter kit for testing your product with the DS.
 
 ---
 
-## 4. Fichiers à connaître
+## 4. Files to know
 
-| Fichier | Rôle | Quand le modifier |
+| File | Role | When to change it |
 |---------|------|-------------------|
-| `tokens/semantic.json` | Source de vérité des intentions UX | Via TCR uniquement |
-| `tokens/component.json` | Contrats UI | Via TCR + approbation |
-| `site/build.js` | Générateur du site statique (CSS, HTML, JS) | À chaque changement de layout ou composant site |
-| `.claude/rules/code-style.md` | Conventions CSS/HTML — règles de nommage | Si nouvelle règle de style décidée |
-| `.claude/rules/` | Règles et contraintes pour les agents IA | Si nouvelle décision de gouvernance |
-| `AGENTS.md` | Routeur d'agents | Si nouveau type d'agent ajouté |
+| `tokens/semantic.json` | Source of truth for UX intentions | Via TCR only |
+| `tokens/component.json` | UI contracts | Via TCR + approval |
+| `site/build.js` | Static site generator (CSS, HTML, JS) | On every layout or site component change |
+| `.claude/rules/code-style.md` | CSS/HTML conventions — naming rules | If a new style rule is decided |
+| `.claude/rules/` | Rules and constraints for AI agents | If a new governance decision is made |
+| `AGENTS.md` | Agent router | If a new agent type is added |
 
 ---
 
-## 5. Règles non négociables
+## 5. Non-negotiable rules
 
-- ❌ Jamais de valeur hex ou px en dur dans le code
-- ❌ Jamais de token primitif dans un composant
-- ❌ Jamais de token inventé (non défini dans semantic.json)
-- ❌ Jamais de préfixe de version dans les noms de classes CSS (`v2-`, `ds-`) — voir `code-style.md`
-- ✅ Tout changement de token sémantique = TCR
-- ✅ `node site/build.js` avant chaque commit touchant le site
-- ✅ Les règles agents sont dans `.claude/rules/` — les lire avant de modifier l'architecture
+- ❌ Never a hardcoded hex or px value in code
+- ❌ Never a primitive token in a component
+- ❌ Never an invented token (not defined in semantic.json)
+- ❌ Never a version prefix in CSS class names (`v2-`, `ds-`) — see `code-style.md`
+- ✅ Every semantic token change = TCR
+- ✅ `node site/build.js` before every commit touching the site
+- ✅ Agent rules live in `.claude/rules/` — read them before changing the architecture

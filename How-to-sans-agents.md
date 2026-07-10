@@ -1,182 +1,182 @@
-# How-to — Continuité sans agents IA
+# How-to — Continuity Without AI Agents
 
-> Que faire si l'accès aux agents IA disparaît (panne, coupure, décision organisationnelle,
-> contrainte de souveraineté) — pour l'équipe qui **maintient** Agentica et pour les
-> équipes produits qui le **consomment**.
-> Dernier mot toujours humain — ce guide ne change pas ce principe, il change seulement
-> qui EXÉCUTE les tâches habituellement faites par un agent.
+> What to do if access to AI agents disappears (outage, service cut, organizational
+> decision, sovereignty constraint) — for the team that **maintains** Agentica and for
+> the product teams that **consume** it.
+> The human always has the final word — this guide doesn't change that principle, it only
+> changes who EXECUTES the tasks normally done by an agent.
 > **Type:** instruction
-> **Chemin logique:** How-to-sans-agents.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** How-to-sans-agents.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** How-to-devs.md, How-to-designers.md, .claude/rules/post-change-pipeline.md,
 > .claude/rules/figma-library-governance.md, .claude/rules/tokens-system.md,
 > scripts/continuity/
 
 ---
 
-## 0. Principe — ce qui ne change PAS
+## 0. Principle — what does NOT change
 
-- « Le dernier mot est toujours humain » reste vrai — seul l'**exécutant** change (agent → humain)
-- Les tokens (`tokens/*.json`), `guidelines/*.md`, les contrats de composants restent la
-  source de vérité
-- Aucune règle de gouvernance (`tokens-system.md`, `git-workflow.md`, `code-style.md`) n'est
-  suspendue le temps de l'indisponibilité des agents
+- "The human always has the final word" remains true — only the **executor** changes (agent → human)
+- Tokens (`tokens/*.json`), `guidelines/*.md`, and component contracts remain the
+  source of truth
+- No governance rule (`tokens-system.md`, `git-workflow.md`, `code-style.md`) is
+  suspended while agents are unavailable
 
 ---
 
-## 0bis. Déclenchement du plan
+## 0bis. Activating the plan
 
-| Question | Réponse |
+| Question | Answer |
 |---|---|
-| Qui déclare l'indisponibilité et active ce mode ? | Design System Lead / Principal Designer (ou suppléant désigné) |
-| Qui communique aux équipes produits consommatrices ? | La même personne — message court renvoyant vers la [section 2](#2-équipes-produits-consommatrices-dagentica), jamais de silence |
-| Comment sortir de ce mode ? | Dès le retour d'accès aux agents, reprise normale — ce document n'a pas besoin d'être « refermé » formellement, c'est un fallback, pas un nouvel état permanent |
+| Who declares the unavailability and activates this mode? | Design System Lead / Principal Designer (or designated backup) |
+| Who communicates with consuming product teams? | The same person — a short message pointing to [section 2](#2-product-teams-consuming-agentica), never silence |
+| How do you exit this mode? | As soon as agent access returns, normal operation resumes — this document doesn't need to be formally "closed," it's a fallback, not a new permanent state |
 
 ---
 
-## 1.0 Résilience déjà en place (rien à construire dans l'urgence)
+## 1.0 Resilience already in place (nothing to build under pressure)
 
-Les tokens (`tokens/*.json`), les contrats (`guidelines/components/*.md`), les règles
-(`.claude/rules/*.md`) et le code des composants (`components/agtc-*.js`) sont déjà des
-**fichiers plats versionnés dans Git** — pas enfermés dans un outil ou une session IA.
-Rien à exporter ni sauvegarder en urgence : la source de vérité a toujours été le dépôt,
-jamais un historique de conversation avec un agent.
+Tokens (`tokens/*.json`), contracts (`guidelines/components/*.md`), rules
+(`.claude/rules/*.md`), and component code (`components/agtc-*.js`) are already
+**flat files versioned in Git** — not locked inside a tool or an AI session.
+Nothing to export or back up urgently: the source of truth has always been the repo,
+never a conversation history with an agent.
 
 ---
 
-## 1. Équipe système de design (maintien d'Agentica)
+## 1. Design system team (maintaining Agentica)
 
-### 1.1 Ce qui continue de tourner tel quel (scripts existants, pas besoin d'agent)
+### 1.1 What keeps running as-is (existing scripts, no agent needed)
 
-**Script :** `scripts/continuity/1-1-outils-existants.sh`
+**Script:** `scripts/continuity/1-1-outils-existants.sh`
 
-| Tâche | Commande |
+| Task | Command |
 |---|---|
-| Compiler les tokens | `npm run tokens` |
-| Rebuild du site | `node site/build.js` |
-| Audit tokens | `node scripts/audit-tokens.js --ci` |
-| Audit accessibilité | `npm run axe` |
-| Tests visuels/E2E | `npx playwright test --project=chromium` |
-| Tests Chromatic | `npm run chromatic` |
+| Compile tokens | `npm run tokens` |
+| Rebuild the site | `node site/build.js` |
+| Token audit | `node scripts/audit-tokens.js --ci` |
+| Accessibility audit | `npm run axe` |
+| Visual/E2E tests | `npx playwright test --project=chromium` |
+| Chromatic tests | `npm run chromatic` |
 
-Ces commandes tournaient déjà sans qu'un agent soit strictement nécessaire — un agent les
-lançait par commodité, un humain les lance à l'identique.
+These commands already ran without an agent being strictly necessary — an agent
+ran them for convenience; a human runs them identically.
 
-### 1.2 Quality gate manuel (remplace `.claude/skills/quality-gate.md`)
+### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate.md`)
 
-**Script :** `scripts/continuity/1-2-quality-gate-manuel.sh`
+**Script:** `scripts/continuity/1-2-quality-gate-manuel.sh`
 
-Les 8 pipelines du quality gate, traduits en étapes humaines :
+The 8 quality gate pipelines, translated into human steps:
 
-1. **Cohérence tokens** → `node scripts/audit-tokens.js --ci` + grep manuels de
-   `pipelines/tokens-audit.md` (valeurs hex/px en dur, références fantômes, grille 4px,
-   échelle Minor Third)
-2. **WCAG** → `npm run axe` + vérification manuelle du contraste (WebAIM Contrast Checker)
-3. **Revue patterns UX (ADR-036)** → consulter soi-même les 5 sources de
-   `ux-patterns-sources.md`, documenter la décision sur les 6 surfaces habituelles — sans
-   agent qui « propose », le rédacteur humain propose ET décide dans le même geste
-4. **Conformité ADR** → grep manuels listés dans `pipelines/adr-conformity.md` (un par ADR actif)
-5. **Déclencheurs ADR manquants** → répondre soi-même aux 4 questions de `pipelines/adr-triggers.md`
-6. **Documentation** → checklist de fichiers à jour de `pipelines/docs.md`
-7. **Rebuild site** → `node site/build.js`
-8. **Commit** → format Conventional Commits, jamais `--no-verify`
+1. **Token consistency** → `node scripts/audit-tokens.js --ci` + manual greps from
+   `pipelines/tokens-audit.md` (hardcoded hex/px values, ghost references, 4px grid,
+   Minor Third scale)
+2. **WCAG** → `npm run axe` + manual contrast check (WebAIM Contrast Checker)
+3. **UX pattern review (ADR-036)** → consult the 5 sources in
+   `ux-patterns-sources.md` yourself, document the decision across the usual 6 surfaces —
+   without an agent that "proposes," the human author proposes AND decides in the same step
+4. **ADR compliance** → manual greps listed in `pipelines/adr-conformity.md` (one per active ADR)
+5. **Missing ADR triggers** → answer the 4 questions from `pipelines/adr-triggers.md` yourself
+6. **Documentation** → the file checklist from `pipelines/docs.md`
+7. **Rebuild the site** → `node site/build.js`
+8. **Commit** → Conventional Commits format, never `--no-verify`
 
-Les étapes 3 et 5 sont des étapes de **jugement humain pur** — aucun script ne peut les
-remplacer, seulement rappeler qu'elles doivent être faites et bloquer tant qu'elles ne
-sont pas confirmées.
+Steps 3 and 5 are steps of **pure human judgment** — no script can replace them,
+it can only remind that they must be done and block until they're confirmed.
 
-### 1.3 Gouvernance Figma sans script Plugin API
+### 1.3 Figma governance without Plugin API scripts
 
-**Script :** `scripts/continuity/1-3-figma-checklist.sh`
+**Script:** `scripts/continuity/1-3-figma-checklist.sh`
 
-Checklist manuelle dérivée de `figma-library-governance.md` + `figma-components.md` :
+Manual checklist derived from `figma-library-governance.md` + `figma-components.md`:
 
-- Toujours lire le composant code + stories AVANT de toucher Figma (inchangé)
-- Lier chaque fill/stroke/spacing à une **Variable Figma existante manuellement**
-  (panneau Inspect → Applied variables) — jamais de valeur en dur, même sans script
-- Vérifier variantes ComponentSet = props du composant code, une par une (pas d'audit
-  automatique de la totalité des variables — accepter un audit plus lent, par
-  échantillonnage, en priorisant les composants récemment modifiés)
-- Règle no-delete inchangée : déplacer vers une frame `_corbeille`, jamais `.remove()`
-- Page de staging + rapport 10 points : déjà une checklist conçue pour un humain, aucune
-  adaptation nécessaire
-- Geler les chantiers Figma de grande ampleur (nouveau composant, refonte) le temps de
-  l'indisponibilité ; se limiter aux corrections ponctuelles ciblées
+- Always read the code component + stories BEFORE touching Figma (unchanged)
+- Link every fill/stroke/spacing to an **existing Figma Variable manually**
+  (Inspect panel → Applied variables) — never a hardcoded value, even without a script
+- Check that ComponentSet variants = code component props, one by one (no automated
+  audit of the entire variable set — accept a slower, sampled audit,
+  prioritizing recently modified components)
+- No-delete rule unchanged: move to a `_corbeille` frame, never `.remove()`
+- Staging page + 10-point report: already a checklist designed for a human, no
+  adaptation needed
+- Freeze large-scale Figma work (new component, redesign) while unavailable;
+  limit to targeted one-off fixes
 
-### 1.4 ADR et suivi de projet — inchangés
+### 1.4 ADR and project tracking — unchanged
 
-**Script :** `scripts/continuity/1-4-adr-log-rappel.sh`
+**Script:** `scripts/continuity/1-4-adr-log-rappel.sh`
 
-Rédaction d'ADR : déjà un exercice humain (écriture), non affecté par l'absence d'agent —
-seulement un rappel qu'elle reste obligatoire à chaque session/commit significatif. Le
-suivi de projet (statuts, historique, backlog) vit dans GitHub Projects (ADR-069), pas
-dans un fichier du dépôt — rien à journaliser manuellement ici.
-
----
-
-## 2. Équipes produits (consommatrices d'Agentica)
-
-### 2.1 Ce qui ne change pas du tout
-
-**Script :** `scripts/continuity/2-1-installation-produit.sh`
-
-- Le flux d'installation documenté dans `site/dist/get-started.html` fonctionne sans
-  aucun agent : cloner, importer `dist/tokens/css/all.css` + `dark.css`, monter les Web
-  Components (`agtc-*`, Lit en peer dependency)
-- `guidelines/components/*.md` = contrat lisible humain, utilisable tel quel
-- `DESIGN.md` = référence de marque, utilisable tel quel
-
-### 2.2 Ce qui demande une checklist de remplacement
-
-**Script :** `scripts/continuity/2-2-checklist-produit.sh`
-
-- Vérifier qu'un nouveau composant produit ne code pas de valeur en dur → lancer
-  `node scripts/audit-tokens.js --src-dir <chemin-du-projet>` depuis un clone d'Agentica,
-  ou revue visuelle manuelle contre `tokens-system.md`
-- Choisir un pattern UX (formulaire, erreur, feedback) → consulter directement les 5
-  sources de `ux-patterns-sources.md` (liens publics), sans l'étape de « présentation »
-  normalement faite par l'agent — le produit documente lui-même son choix
-- Accessibilité → WebAIM Contrast Checker + extension navigateur axe DevTools, en
-  remplacement de `scripts/axe-audit.js`
-
-### 2.3 Garde-fou anti-contournement
-
-**Script :** `scripts/continuity/2-3-anti-contournement.sh`
-
-- Risque documenté dans la littérature design systems (retour d'expérience Spotify/Encore) :
-  sans agent pour faciliter l'usage du design system, une équipe pressée peut être tentée
-  de contourner Agentica entièrement (coder une valeur en dur, ignorer un composant
-  existant) plutôt que de suivre la checklist manuelle du §2.2
-- Rappel explicite : l'absence d'agent **ne change pas** la règle `tokens-system.md` — une
-  valeur en dur reste interdite, elle est juste vérifiée à la main plutôt que par script
-- Si un délai est intenable, la voie correcte est l'escalade (§2.4), jamais le
-  contournement silencieux
-
-### 2.4 Point de contact en cas de doute
-
-**Script :** `scripts/continuity/2-4-contact-escalade.sh`
-
-En l'absence d'agent, toute question d'interprétation (« est-ce que ce token s'applique
-ici ? ») remonte au Design System Lead / Principal Designer humain — jamais
-d'improvisation silencieuse (cohérent avec `tokens-system.md`, une gouvernance déjà
-écrite pour des humains).
+Writing ADRs: already a human exercise (writing), unaffected by the absence of an agent —
+just a reminder that it remains mandatory at every significant session/commit. Project
+tracking (status, history, backlog) lives in GitHub Projects (ADR-069), not
+in a file in the repo — nothing to log manually here.
 
 ---
 
-## 3. Hors périmètre
+## 2. Product teams (consuming Agentica)
 
-`.claude/rules/contexts-utilisation.md` et `.claude/rules/layout-pattern.md` gouvernent
-uniquement `site/build.js` (le site vitrine Agentica lui-même) — non pertinents pour un
-consommateur externe, à ne pas dupliquer dans la section produits.
+### 2.1 What doesn't change at all
+
+**Script:** `scripts/continuity/2-1-installation-produit.sh`
+
+- The installation flow documented in `site/dist/get-started.html` works without
+  any agent: clone, import `dist/tokens/css/all.css` + `dark.css`, mount the Web
+  Components (`agtc-*`, Lit as a peer dependency)
+- `guidelines/components/*.md` = human-readable contract, usable as-is
+- `DESIGN.md` = brand reference, usable as-is
+
+### 2.2 What needs a replacement checklist
+
+**Script:** `scripts/continuity/2-2-checklist-produit.sh`
+
+- Check that a new product component doesn't hardcode a value → run
+  `node scripts/audit-tokens.js --src-dir <path-to-project>` from a clone of Agentica,
+  or a manual visual review against `tokens-system.md`
+- Choose a UX pattern (form, error, feedback) → consult the 5
+  sources in `ux-patterns-sources.md` directly (public links), skipping the "presentation"
+  step normally done by the agent — the product documents its own choice
+- Accessibility → WebAIM Contrast Checker + axe DevTools browser extension, replacing
+  `scripts/axe-audit.js`
+
+### 2.3 Anti-bypass safeguard
+
+**Script:** `scripts/continuity/2-3-anti-contournement.sh`
+
+- Risk documented in design systems literature (Spotify/Encore case study):
+  without an agent to ease design system adoption, a rushed team may be tempted
+  to bypass Agentica entirely (hardcode a value, ignore an existing component)
+  rather than follow the manual checklist in §2.2
+- Explicit reminder: the absence of an agent **does not change** the `tokens-system.md`
+  rule — a hardcoded value is still forbidden, it's just checked by hand instead of by script
+- If a deadline is untenable, the correct path is escalation (§2.4), never
+  silent bypassing
+
+### 2.4 Point of contact when in doubt
+
+**Script:** `scripts/continuity/2-4-contact-escalade.sh`
+
+Without an agent, any interpretation question ("does this token apply
+here?") goes up to the human Design System Lead / Principal Designer — never
+silent improvisation (consistent with `tokens-system.md`, a governance already
+written for humans).
+
+---
+
+## 3. Out of scope
+
+`.claude/rules/contexts-utilisation.md` and `.claude/rules/layout-pattern.md` govern
+only `site/build.js` (the Agentica showcase site itself) — not relevant for an
+external consumer, do not duplicate in the product section.
 
 ---
 
 ## Sources
 
-Structure inspirée de deux références externes (2026) :
-- Cyber Unit — continuité d'activité face aux pannes de LLM : inventaire des dépendances,
-  points de défaillance unique, contrôle des données source, procédure d'activation.
-- intoDesignSystems — design systems face aux agents IA : risque de dépendance
-  progressive et de contournement, niveaux de confiance structurels par action (déjà
-  le principe d'ADR-004 dans ce dépôt).
+Structure inspired by two external references (2026):
+- Cyber Unit — business continuity in the face of LLM outages: dependency
+  inventory, single points of failure, control of source data, activation
+  procedure.
+- intoDesignSystems — design systems facing AI agents: risk of gradual
+  dependency and bypassing, structural trust levels per action (already
+  the principle behind ADR-004 in this repo).

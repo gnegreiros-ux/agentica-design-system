@@ -1,120 +1,120 @@
-# How-to — Designers (équipe design system)
+# How-to — Designers (design system team)
 
-> Ce guide s'adresse à l'équipe qui **maintient** le système, pas aux équipes produit.
-> Dernier mot toujours humain. Les agents proposent, vous approuvez.
+> This guide is for the team that **maintains** the system, not product teams.
+> The human always has the final word. Agents propose, you approve.
 > **Type:** instruction
-> **Chemin logique:** How-to-designers.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md, How-to-sans-agents.md (fallback si agents indisponibles)
+> **Logical path:** How-to-designers.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md, How-to-sans-agents.md (fallback if agents are unavailable)
 
 ---
 
-## 1. Setup initial
+## 1. Initial setup
 
 ### Tokens Studio (Figma)
-1. Installer le plugin **Tokens Studio for Figma**
-2. Connecter au repo : Settings → Sync → GitHub → pointer vers `tokens/`
-3. Importer dans cet ordre : `primitives.json` → `semantic.json` → `component.json`
-4. **Ne jamais modifier les tokens directement dans Figma** — toujours éditer les JSON et synchroniser
+1. Install the **Tokens Studio for Figma** plugin
+2. Connect to the repo: Settings → Sync → GitHub → point to `tokens/`
+3. Import in this order: `primitives.json` → `semantic.json` → `component.json`
+4. **Never edit tokens directly in Figma** — always edit the JSON and sync
 
-### Variables Figma natives
-1. Dans le fichier Figma du système : ouvrir le panneau **Variables**
-2. Les collections correspondent aux trois couches :
+### Native Figma Variables
+1. In the system's Figma file: open the **Variables** panel
+2. Collections map to the three layers:
    - `Primitives` → `tokens/primitives.json`
    - `Semantic` → `tokens/semantic.json`
    - `Components` → `tokens/component.json`
-3. Toute variable locale créée dans un fichier produit = dette — signaler à l'équipe
+3. Any local variable created in a product file = debt — flag it to the team
 
 ---
 
-## 2. Workflow quotidien
+## 2. Daily workflow
 
-### Modifier un token existant
+### Modifying an existing token
 
-**Règle :** tout changement de token sémantique ou composant = TCR.
-
-```
-1. Identifier la couche : primitif / sémantique / composant
-2. Modifier le fichier JSON (pas dans Figma directement)
-3. Soumettre une demande TCR avec justification et impact
-4. Après approbation : pousser au repo → sync Tokens Studio ou Variables Figma
-5. Communiquer aux équipes consommatrices
-```
-
-### Ajouter un composant
+**Rule:** any change to a semantic or component token = TCR.
 
 ```
-1. Rédiger le contrat : guidelines/components/[nom].md
-   — Intention, variantes, tokens, accessibilité, anti-patterns
-2. Créer les tokens dans tokens/component.json
-3. Construire le composant Figma en utilisant UNIQUEMENT les tokens semantic/component
-4. Documenter dans Storybook (avec le développeur)
-5. Mettre à jour guidelines/components/overview.md
+1. Identify the layer: primitive / semantic / component
+2. Edit the JSON file (not directly in Figma)
+3. Submit a TCR with justification and impact
+4. After approval: push to the repo → sync Tokens Studio or Figma Variables
+5. Communicate to consuming teams
 ```
 
-### Détecter une dérive (audit)
-Signaux à surveiller dans les fichiers Figma des équipes produit :
-- Instances détachées (composants modifiés localement)
-- Variables locales créées en dehors du système
-- Couleurs ou espacements sans référence à un token
-- Composants dupliqués qui reproduisent un existant
+### Adding a component
 
-Quand une dérive est détectée : documenter → ouvrir un ticket → proposer la correction (jamais corriger sans en aviser l'équipe produit).
+```
+1. Write the contract: guidelines/components/[name].md
+   — Intent, variants, tokens, accessibility, anti-patterns
+2. Create the tokens in tokens/component.json
+3. Build the Figma component using ONLY semantic/component tokens
+4. Document in Storybook (with the developer)
+5. Update guidelines/components/overview.md
+```
 
-### Approuver une régression visuelle (Playwright)
+### Detecting drift (audit)
+Signals to watch for in product teams' Figma files:
+- Detached instances (locally modified components)
+- Local variables created outside the system
+- Colors or spacing without a token reference
+- Duplicated components that reproduce an existing one
 
-Depuis 2026-07-02, les régressions visuelles sont détectées par Playwright (remplace Chromatic, ADR-066).
-Le rapport HTML fusionné (Chromium + Firefox + WebKit) est publié automatiquement sur **GitHub Pages** après chaque push sur `main`.
+When drift is detected: document it → open a ticket → propose the fix (never fix it without notifying the product team).
 
-**Accéder au rapport :**
+### Approving a visual regression (Playwright)
+
+Since 2026-07-02, visual regressions are detected by Playwright (replaces Chromatic, ADR-066).
+The merged HTML report (Chromium + Firefox + WebKit) is automatically published to **GitHub Pages** after every push to `main`.
+
+**Accessing the report:**
 
 ```
 https://designsystem.gnegreiros.com/playwright-report/
 ```
 
-> Fallback si le rapport n'est pas encore publié : Actions → télécharger l'artifact
-> `playwright-report-chromium` et ouvrir `index.html` localement.
+> Fallback if the report isn't published yet: Actions → download the
+> `playwright-report-chromium` artifact and open `index.html` locally.
 
-**Processus de revue :**
+**Review process:**
 
 ```
-1. Ouvrir le rapport Pages (URL ci-dessus) — ou l'artifact si Pages n'est pas activé
-2. Naviguer vers l'onglet des tests échoués
-3. Comparer le screenshot "actual" vs "expected"
-4. Si le changement est intentionnel :
-   → demander à un dev de lancer update_snapshots via workflow_dispatch
-   → valider les nouveaux PNG dans la PR
-5. Si c'est une vraie régression → ouvrir un ticket (ne pas approuver)
+1. Open the Pages report (URL above) — or the artifact if Pages isn't enabled
+2. Go to the failed tests tab
+3. Compare the "actual" vs "expected" screenshot
+4. If the change is intentional:
+   → ask a developer to run update_snapshots via workflow_dispatch
+   → approve the new PNGs in the PR
+5. If it's a real regression → open a ticket (do not approve)
 ```
 
-**Issue de rappel automatique :**
-Quand des fichiers `components/` sont modifiés sur `main`, une issue GitHub étiquetée `visual-review`
-est créée automatiquement (workflow `playwright-reminder.yml`). Elle contient un lien direct vers le
-rapport et le guide de révision — les designers n'ont pas besoin d'aller chercher l'artifact.
+**Automatic reminder issue:**
+When files in `components/` are changed on `main`, a GitHub issue labeled `visual-review`
+is created automatically (workflow `playwright-reminder.yml`). It contains a direct link to the
+report and the review guide — designers don't need to go hunting for the artifact.
 
-> Le rapport HTML Playwright joue le même rôle que l'interface Chromatic — sans envoyer
-> les captures hors de l'infrastructure de l'équipe.
+> The Playwright HTML report plays the same role as the Chromatic interface — without sending
+> screenshots outside the team's infrastructure.
 
 ---
 
-## 3. Fichiers à connaître
+## 3. Files to know
 
-| Fichier | Rôle | Quand le modifier |
+| File | Role | When to change it |
 |---------|------|-------------------|
-| `tokens/semantic.json` | Intentions UX — nommer avec sens | Via TCR uniquement |
-| `tokens/component.json` | Décisions visuelles par composant | Via TCR + approbation |
-| `guidelines/components/[nom].md` | Contrat du composant | À chaque changement de règle |
-| `.claude/rules/` | Ce que les agents IA lisent au démarrage | Après chaque TCR majeur ou nouvelle règle |
-| `DESIGN.md` | Principes et gouvernance | Révision trimestrielle |
+| `tokens/semantic.json` | UX intentions — name with meaning | Via TCR only |
+| `tokens/component.json` | Visual decisions per component | Via TCR + approval |
+| `guidelines/components/[name].md` | Component contract | On every rule change |
+| `.claude/rules/` | What AI agents read on startup | After every major TCR or new rule |
+| `DESIGN.md` | Principles and governance | Quarterly review |
 
 ---
 
-## 4. Règles non négociables
+## 4. Non-negotiable rules
 
-- ❌ Jamais de variable locale dans les fichiers système
-- ❌ Jamais de token primitif appliqué directement sur un composant
-- ❌ Jamais de modification de token sans TCR
-- ✅ Nommer les tokens par **intention**, pas par valeur (`color.feedback.danger`, pas `color.red`)
-- ✅ Tout composant a un contrat `.md` avant d'être livré
-- ✅ `.claude/rules/` à jour = agents IA fiables pour toute l'équipe
+- ❌ Never a local variable in system files
+- ❌ Never a primitive token applied directly to a component
+- ❌ Never a token change without a TCR
+- ✅ Name tokens by **intent**, not value (`color.feedback.danger`, not `color.red`)
+- ✅ Every component has a `.md` contract before shipping
+- ✅ Up-to-date `.claude/rules/` = reliable AI agents for the whole team

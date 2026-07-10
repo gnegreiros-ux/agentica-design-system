@@ -127,6 +127,7 @@ des décisions déjà tranchées.
 | [ADR-067](ADR-067-letter-spacing-token-category.md) | Nouvelle catégorie de token `letterSpacing` — dette `agtc-code-block` | 2026-07-08 | ✅ Actif |
 | [ADR-068](ADR-068-letter-spacing-scale-extension.md) | Extension de l'échelle `letterSpacing` — résorption dette `--agtc-tracking-*` du site | 2026-07-08 | ✅ Actif |
 | [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) | Migration du suivi de projet vers GitHub Projects (remplace ADR-016) | 2026-07-09 | ✅ Actif |
+| [ADR-070](ADR-070-anglais-langue-par-defaut.md) | Anglais comme langue par défaut du dépôt (traduction communautaire) | 2026-07-10 | ✅ Actif |
 
 ---
 

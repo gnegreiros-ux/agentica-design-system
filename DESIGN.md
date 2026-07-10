@@ -1,137 +1,137 @@
-# DESIGN.md — Contrat portable du système de design
+# DESIGN.md — Portable Design System Contract
 
-> Spécification portable, versionnée avec le code.
-> Lisible par les humains et par les agents IA.
+> Portable specification, versioned with the code.
+> Readable by both humans and AI agents.
 > **Type:** contract
-> **Chemin logique:** DESIGN.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md
+> **Logical path:** DESIGN.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md
 > **Relations:** AGENTS.md, tokens/semantic.json, tokens/component.json, guidelines/components/
 
-> **Note pour la réutilisation :** Remplacer "Agentica (agtc)" et "GNegreiros.com" par le nom du système et de votre organisation.
+> **Note for reuse:** Replace "Agentica (agtc)" and "GNegreiros.com" with your system's and organization's name.
 
 ---
 
-## 1. Identité et intention du système
+## 1. System identity and intent
 
-**Nom du système :** Agentica (agtc)
-**Organisation :** GNegreiros.com
-**Site :** https://designsystem.gnegreiros.com
-**Version :** 1.0.0
-**Dernière mise à jour :** 2026-05-30
-**Responsable :** Guilherme Negreiros
+**System name:** Agentica (agtc)
+**Organization:** GNegreiros.com
+**Site:** https://designsystem.gnegreiros.com
+**Version:** 1.0.0
+**Last updated:** 2026-05-30
+**Owner:** Guilherme Negreiros
 
 ### Mission
-Ce système de design encode les décisions d'interface partagées par toutes les équipes.
-Il garantit la cohérence, l'accessibilité et la souveraineté numérique de l'organisation.
+This design system encodes interface decisions shared across all teams.
+It guarantees consistency, accessibility, and the organization's digital sovereignty.
 
-### Principes directeurs
-1. **Le dernier mot est humain.** Les agents proposent, les humains approuvent.
-2. **Si ce n'est pas un token, ce n'est pas une décision.** Toute valeur locale est une dette.
-3. **La documentation instruit.** Elle doit être lisible par les machines, pas seulement par les humains.
-4. **Souveraineté numérique.** Les outils, données et décisions restent sous contrôle organisationnel.
+### Guiding principles
+1. **The human has the final word.** Agents propose, humans approve.
+2. **If it's not a token, it's not a decision.** Any local value is debt.
+3. **Documentation instructs.** It must be readable by machines, not just humans.
+4. **Digital sovereignty.** Tools, data, and decisions remain under organizational control.
 
 ---
 
-## 2. Architecture des tokens
+## 2. Token architecture
 
-### Trois niveaux — règle absolue
+### Three levels — absolute rule
 
 ```
-Tokens primitifs   →  Tokens sémantiques  →  Tokens de composant
-(valeurs brutes)       (intention UX)          (contrats UI)
+Primitive tokens   →  Semantic tokens  →  Component tokens
+(raw values)           (UX intent)          (UI contracts)
 ```
 
-| Niveau | Fichier source | Exemple |
+| Level | Source file | Example |
 |--------|---------------|---------|
-| Primitif | `tokens/primitives.json` | `blue-700`, `space-4` |
-| Sémantique | `tokens/semantic.json` | `color.action.primary` |
-| Composant | `tokens/component.json` | `button.critical.requiresConfirmation` |
+| Primitive | `tokens/primitives.json` | `blue-700`, `space-4` |
+| Semantic | `tokens/semantic.json` | `color.action.primary` |
+| Component | `tokens/component.json` | `button.critical.requiresConfirmation` |
 
-### Règles de gouvernance des tokens
-- Les tokens primitifs ne sont **jamais** utilisés directement dans les composants.
-- Les tokens sémantiques encodent l'**intention**, pas la valeur.
-- Les tokens de composant sont des **contrats institutionnels** — toute modification requiert une approbation.
-- Aucune couleur ou espacement en dur dans le code. **Jamais.**
+### Token governance rules
+- Primitive tokens are **never** used directly in components.
+- Semantic tokens encode **intent**, not value.
+- Component tokens are **institutional contracts** — any change requires approval.
+- No hardcoded color or spacing in code. **Ever.**
 
-### Conformité au standard (W3C DTCG)
-Les fichiers `tokens/*.json` suivent le **format Design Tokens** du W3C Community Group (DTCG) —
-source officielle : **https://www.designtokens.org/**. Conventions appliquées : `$value`, `$type`,
-`$description`, alias inter-tokens `{group.token}`, et `$schema` pointant le format DTCG.
-Cela garantit l'interopérabilité avec Style Dictionary, Tokens Studio et tout outil compatible.
-En cas de divergence entre une habitude locale et le standard, **c'est le standard qui fait foi**
-(voir `.claude/rules/tokens-system.md` et ADR-052).
-
----
-
-## 3. Composants — règles générales
-
-Chaque composant est un **contrat**. Il encode :
-- Son intention (pourquoi il existe)
-- Ses variantes autorisées
-- Ses règles d'accessibilité non négociables
-- Ses comportements (états, animations)
-- Sa gouvernance (qui approuve les changements)
-
-Les contrats de composants sont dans `guidelines/components/`.
+### Standard conformance (W3C DTCG)
+The `tokens/*.json` files follow the **Design Tokens Format** from the W3C Community Group (DTCG) —
+official source: **https://www.designtokens.org/**. Conventions applied: `$value`, `$type`,
+`$description`, cross-token aliases `{group.token}`, and `$schema` pointing to the DTCG format.
+This guarantees interoperability with Style Dictionary, Tokens Studio, and any compatible tool.
+In case of divergence between a local habit and the standard, **the standard prevails**
+(see `.claude/rules/tokens-system.md` and ADR-052).
 
 ---
 
-## 4. Accessibilité — non négociable
+## 3. Components — general rules
 
-| Règle | Standard |
+Every component is a **contract**. It encodes:
+- Its intent (why it exists)
+- Its allowed variants
+- Its non-negotiable accessibility rules
+- Its behaviors (states, animations)
+- Its governance (who approves changes)
+
+Component contracts live in `guidelines/components/`.
+
+---
+
+## 4. Accessibility — non-negotiable
+
+| Rule | Standard |
 |-------|----------|
-| Contraste texte normal | WCAG AA — 4.5:1 minimum |
-| Contraste texte large | WCAG AA — 3:1 minimum |
-| Navigation clavier | 100% des interactions accessibles |
-| Attributs ARIA | Obligatoires sur tous les composants interactifs |
-| Tests automatisés | axe-core + Playwright avant chaque déploiement |
+| Normal text contrast | WCAG AA — 4.5:1 minimum |
+| Large text contrast | WCAG AA — 3:1 minimum |
+| Keyboard navigation | 100% of interactions accessible |
+| ARIA attributes | Required on all interactive components |
+| Automated tests | axe-core + Playwright before every deployment |
 
 ---
 
 ## 5. Token Change Request (TCR)
 
-Tout changement de token suit ce flux :
+Every token change follows this flow:
 
-1. Problème identifié et documenté
-2. Demande formelle soumise (TCR)
-3. Couche identifiée (primitif / sémantique / composant)
-4. Évaluation de l'impact
-5. Approbation selon le niveau de risque
-6. Modification + compilation automatique
-7. Tests et audits
-8. Communication aux équipes
+1. Problem identified and documented
+2. Formal request submitted (TCR)
+3. Layer identified (primitive / semantic / component)
+4. Impact assessment
+5. Approval based on risk level
+6. Change + automatic compilation
+7. Tests and audits
+8. Communication to teams
 
-**Le dernier mot appartient toujours à l'équipe design system.**
+**The design system team always has the final word.**
 
 ---
 
-## 6. Contextes d'utilisation
+## 6. Usage contexts
 
-Le système distingue deux modes éditoraux, déclarés via `data-context` sur `<body>` :
+The system distinguishes two editorial modes, declared via `data-context` on `<body>`:
 
-| Dimension | Mode Produit (SaaS) | Mode Marketing (Narratif) |
+| Dimension | Product Mode (SaaS) | Marketing Mode (Narrative) |
 |-----------|---------------------|--------------------------|
-| Objectif | Permettre d'agir | Communiquer une vision |
-| Espacement | density=normal | `semantic.marketing.space.*` (96-120px) |
-| Typographie max | `heading.1` — 40px | `marketing.typography.display` — 60px |
-| Mise en page | Grille régulière | Asymétrie contrôlée |
-| Variation visuelle | Faible (répétabilité) | Contrôlée (hiérarchie éditoriale) |
-| Attribut | *(absent)* | `data-context="marketing"` |
+| Goal | Enable action | Communicate a vision |
+| Spacing | density=normal | `semantic.marketing.space.*` (96-120px) |
+| Max typography | `heading.1` — 40px | `marketing.typography.display` — 60px |
+| Layout | Regular grid | Controlled asymmetry |
+| Visual variation | Low (repeatability) | Controlled (editorial hierarchy) |
+| Attribute | *(absent)* | `data-context="marketing"` |
 
-**Règle de sélection :** si la page convainc ou onboarde → Marketing. Si elle documente → Produit.
-Voir `.claude/rules/contexts-utilisation.md` et `guidelines/foundations/contextes.md`.
+**Selection rule:** if the page convinces or onboards → Marketing. If it documents → Product.
+See `.claude/rules/contexts-utilisation.md` and `guidelines/foundations/contextes.md`.
 
 ---
 
-## 7. Ce que les agents peuvent faire
+## 7. What agents can do
 
-| Action | Autorisé |
+| Action | Allowed |
 |--------|----------|
-| Lire les contrats de composants | ✅ |
-| Générer du code depuis les tokens | ✅ |
-| Détecter les dérives | ✅ |
-| Proposer des corrections | ✅ (avec approbation humaine) |
-| Modifier un token sémantique | ❌ — TCR requis |
-| Modifier un contrat de composant | ❌ — approbation Principal Designer |
-| Déployer en production | ❌ — validation humaine obligatoire |
+| Read component contracts | ✅ |
+| Generate code from tokens | ✅ |
+| Detect drift | ✅ |
+| Propose corrections | ✅ (with human approval) |
+| Modify a semantic token | ❌ — TCR required |
+| Modify a component contract | ❌ — Principal Designer approval |
+| Deploy to production | ❌ — human validation required |

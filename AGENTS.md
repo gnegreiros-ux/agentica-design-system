@@ -1,105 +1,105 @@
-# AGENTS.md — Routeur d'agents
+# AGENTS.md — Agent Router
 
-> Ce fichier est le point d'entrée pour tout agent IA qui interagit avec ce système de design.
-> Lire ce fichier en premier. Toujours.
+> This file is the entry point for any AI agent interacting with this design system.
+> Read this file first. Always.
 > **Type:** instruction
-> **Chemin logique:** AGENTS.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** DESIGN.md
-> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-sans-agents.md (fallback si agents indisponibles)
+> **Logical path:** AGENTS.md
+> **Author:** Guilherme Negreiros
+> **Read before:** DESIGN.md
+> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-sans-agents.md (fallback if agents are unavailable)
 
 ---
 
-## Principe fondamental
+## Core principle
 
-**Le dernier mot est toujours humain.**
-Les agents exécutent, proposent et détectent les dérives.
-Les décisions stratégiques, les exceptions et les valeurs appartiennent aux équipes.
-
----
-
-## Agents disponibles
-
-### Agent Designer
-**Rôle :** Surveiller la dérive dans Figma
-**Peut :** Détecter instances détachées, composants sans description, espacements incohérents
-**Ne peut pas :** Modifier automatiquement les fichiers Figma
-**Produit :** Rapports de dérive — approbation humaine requise avant action
-
-### Agent Développeur
-**Rôle :** Détecter les mauvais usages de tokens dans le code
-**Peut :** Détecter couleurs en dur, tokens dépréciés, composants dupliqués, ouvrir des PRs de suggestion
-**Ne peut pas :** Merger sans approbation humaine
-**Produit :** PRs de correction — review obligatoire
-
-### Agent Documentation
-**Rôle :** Maintenir la doc synchronisée avec les composants
-**Peut :** Générer changelogs, guides de migration, notes d'accessibilité
-**Ne peut pas :** Publier sans validation
-**Produit :** Drafts de documentation — validation humaine requise
-
-### Agent QA
-**Rôle :** Vérifications systématiques avant merge
-**Peut :** Exécuter tests accessibilité, régressions visuelles, conformité tokens
-**Ne peut pas :** Approuver un merge
-**Produit :** Rapports de conformité — bloquants si violations critiques
+**The human always has the final word.**
+Agents execute, propose, and detect drift.
+Strategic decisions, exceptions, and values belong to the teams.
 
 ---
 
-## Orchestrateur
+## Available agents
 
-L'orchestrateur coordonne les agents. Il décide :
-- Quels changements sont sûrs d'automatiser
-- Lesquels nécessitent une approbation humaine
-- Quand escalader à l'équipe
+### Designer Agent
+**Role:** Monitor drift in Figma
+**Can:** Detect detached instances, components without a description, inconsistent spacing
+**Cannot:** Automatically modify Figma files
+**Produces:** Drift reports — human approval required before action
 
-**Règle d'escalade :** Tout changement touchant un token sémantique ou un contrat de composant est automatiquement escaladé.
+### Developer Agent
+**Role:** Detect token misuse in code
+**Can:** Detect hardcoded colors, deprecated tokens, duplicated components, open suggestion PRs
+**Cannot:** Merge without human approval
+**Produces:** Correction PRs — review required
+
+### Documentation Agent
+**Role:** Keep docs in sync with components
+**Can:** Generate changelogs, migration guides, accessibility notes
+**Cannot:** Publish without validation
+**Produces:** Documentation drafts — human validation required
+
+### QA Agent
+**Role:** Systematic checks before merge
+**Can:** Run accessibility tests, visual regressions, token conformance
+**Cannot:** Approve a merge
+**Produces:** Conformance reports — blocking on critical violations
 
 ---
 
-## Fichiers à lire avant toute action
+## Orchestrator
+
+The orchestrator coordinates the agents. It decides:
+- Which changes are safe to automate
+- Which require human approval
+- When to escalate to the team
+
+**Escalation rule:** Any change touching a semantic token or a component contract is automatically escalated.
+
+---
+
+## Files to read before any action
 
 ```
-DESIGN.md                              ← contrat portable — toujours lire en premier
-.claude/rules/project-overview.md      ← contexte du projet
-.claude/rules/tokens-system.md         ← règles des tokens
-.claude/rules/ux-patterns-sources.md   ← sources + revue patterns UX (avant tout composant)
-.claude/rules/figma-components.md      ← règles Figma (propriétés, auto-layout, nommage, API)
-.claude/instructions/codebase-context.md ← contexte technique
-.claude/instructions/session-spec.md   ← spec condensée pour cette session
-tokens/semantic.json                   ← source de vérité des intentions UX
-decisions/                             ← pourquoi les décisions ont été prises (ADRs)
+DESIGN.md                              ← portable contract — always read first
+.claude/rules/project-overview.md      ← project context
+.claude/rules/tokens-system.md         ← token rules
+.claude/rules/ux-patterns-sources.md   ← sources + UX pattern review (before any component)
+.claude/rules/figma-components.md      ← Figma rules (properties, auto-layout, naming, API)
+.claude/instructions/codebase-context.md ← technical context
+.claude/instructions/session-spec.md   ← condensed spec for this session
+tokens/semantic.json                   ← source of truth for UX intentions
+decisions/                             ← why decisions were made (ADRs)
 ```
 
 ---
 
-## Ce que les agents ne doivent jamais faire
+## What agents must never do
 
-- ❌ Utiliser une valeur de couleur ou d'espacement en dur
-- ❌ Référencer un token primitif directement dans un composant
-- ❌ Modifier un token sémantique sans TCR approuvé
-- ❌ Déployer en production sans validation humaine
-- ❌ Ignorer un rapport de violation d'accessibilité
-- ❌ Contourner les règles de lint
+- ❌ Use a hardcoded color or spacing value
+- ❌ Reference a primitive token directly in a component
+- ❌ Modify a semantic token without an approved TCR
+- ❌ Deploy to production without human validation
+- ❌ Ignore an accessibility violation report
+- ❌ Bypass lint rules
 
 ---
 
-## Suivi de projet et documentation des décisions
+## Project tracking and decision documentation
 
-### Gestion de projet
+### Project management
 
-Le suivi de tâches (statuts, backlog, priorités, dépendances) vit exclusivement dans
-[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — jamais dans un
-fichier versionné du dépôt. Voir `.claude/rules/project-overview.md` (ADR-069).
+Task tracking (statuses, backlog, priorities, dependencies) lives exclusively in
+[GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — never in a
+versioned file in the repo. See `.claude/rules/project-overview.md` (ADR-069).
 
-### Décisions architecturales (ADR)
+### Architectural decisions (ADR)
 
-Les décisions sont documentées dans `decisions/` (pas `docs/adr/`) — un fichier par ADR,
-format `ADR-XXX-titre.md`. Lire les ADR qui touchent la zone sur laquelle tu travailles
-avant toute action. Voir `.claude/skills/pipelines/adr-triggers.md` pour savoir quand en
-créer un nouveau.
+Decisions are documented in `decisions/` (not `docs/adr/`) — one file per ADR,
+format `ADR-XXX-title.md`. Read the ADRs that touch the area you're about to work on
+before taking any action. See `.claude/skills/pipelines/adr-triggers.md` to know when
+to create a new one.
 
-### Contexte de domaine
+### Domain context
 
-Pas de `CONTEXT.md` à la racine — le contexte du domaine vit dans `DESIGN.md` (contrat de
-marque portable), `guidelines/` (fondations et composants) et les règles `.claude/rules/`.
+No `CONTEXT.md` at the root — domain context lives in `DESIGN.md` (portable brand
+contract), `guidelines/` (foundations and components), and the `.claude/rules/` rules.
