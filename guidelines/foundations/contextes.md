@@ -4,7 +4,7 @@
 > **Type:** guideline
 > **Chemin logique:** guidelines/foundations/contextes.md
 > **Lecture avant:** DESIGN.md, .claude/rules/contexts-utilisation.md
-> **Relations:** decisions/ADR-057, tokens/semantic.json (semantic.marketing.*), Redesign/AI anti-patters.md
+> **Relations:** decisions/ADR-057, tokens/semantic.json (semantic.marketing.*)
 
 ---
 
@@ -86,7 +86,11 @@ padding-top: var(--agtc-semantic-marketing-space-hero-gap);    /* 120px */
 
 ---
 
-## Anti-patterns (sources : `Redesign/AI anti-patters.md`)
+## Anti-patterns
+
+> Distillés à l'origine de `Redesign/AI anti-patters.md` (dossier d'exploration supprimé le
+> 2026-06-20) — contenu intégralement repris ci-dessous, cette section en est désormais la
+> seule source.
 
 Ces erreurs s'appliquent spécifiquement au Mode Marketing :
 

@@ -74,7 +74,7 @@ En cas de doute : si la page contient de la documentation de composant ou de tok
 ```
 ✅ Lire le mapping ci-dessus avant de générer ou modifier une page
 ✅ Utiliser semantic.marketing.* uniquement sur les pages data-context="marketing"
-✅ Respecter les anti-patterns de Redesign/AI anti-patters.md pour les pages marketing
+✅ Respecter les anti-patterns listés dans guidelines/foundations/contextes.md pour les pages marketing
 ❌ Ajouter data-context="marketing" à une page de documentation de composant
 ❌ Utiliser semantic.marketing.typography.display dans un composant partagé
 ❌ Modifier le mapping sans approbation humaine (c'est une décision de gouvernance)
