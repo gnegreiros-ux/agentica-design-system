@@ -1,128 +1,128 @@
-# Composant : Tabs — Contrat complet
+# Component: Tabs — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-12
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-12
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/tabs.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/tabs.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-056-agtc-tabs-implementation.md, guidelines/components/segmented.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Afficher plusieurs sections de contenu dans un même espace, accessibles par onglets horizontaux.
-Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit quelle section lire.
+**Why this component exists:**
+Display several content sections in the same space, accessible via horizontal tabs.
+Each tab is associated with a content panel — the user chooses which section to read.
 
-**Ce composant n'est pas :**
-- Un réglage à effet immédiat (`agtc-segmented`) — pas de panneau, 2-5 options courtes
-- Un groupe radio de formulaire (`agtc-radio-group`)
-- Un menu déroulant
+**This component is not:**
+- An immediate-effect setting (`agtc-segmented`) — no panel, 2-5 short options
+- A form radio group (`agtc-radio-group`)
+- A dropdown menu
 
 ---
 
-## Distinction avec `agtc-segmented`
+## Distinction from `agtc-segmented`
 
 | | `agtc-tabs` | `agtc-segmented` |
 |---|-------------|------------------|
-| Effet | Affiche un **panneau de contenu** | **Réglage immédiat** (langue, densité…) |
+| Effect | Displays a **content panel** | **Immediate setting** (language, density…) |
 | ARIA | `role="tablist"` + `tabpanel` | `role="group"` + `aria-current` |
-| Clavier | **Flèches** + roving tabindex | **Tab** natif entre segments |
-| Usage | Navigation doc-chrome, sections | Bascule langue, vue liste/grille |
+| Keyboard | **Arrows** + roving tabindex | Native **Tab** between segments |
+| Usage | Doc-chrome navigation, sections | Language switch, list/grid view |
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut / Propriété | Type | Défaut | Description |
+| Attribute / Property | Type | Default | Description |
 |----------------------|------|--------|-------------|
-| `.tabs` | Array | `[]` | `[{ value, label, href? }]` — liste des onglets |
-| `selected` | String | Premier sans href | Valeur de l'onglet actif |
-| `label` | String | — | **aria-label du tablist (requis pour les AT)** |
-| `activation` | String | `"auto"` | `"auto"` (flèches activent) ou `"manual"` (Enter requis) |
+| `.tabs` | Array | `[]` | `[{ value, label, href? }]` — list of tabs |
+| `selected` | String | First without href | Value of the active tab |
+| `label` | String | — | **aria-label of the tablist (required for AT)** |
+| `activation` | String | `"auto"` | `"auto"` (arrows activate) or `"manual"` (Enter required) |
 
-Émet **`change`** (`detail: { value }`) sur changement d'onglet in-page.
+Emits **`change`** (`detail: { value }`) on in-page tab change.
 
-**Slots :** un slot nommé par valeur d'onglet in-page (sans `href`).
+**Slots:** one named slot per in-page tab value (without `href`).
 
 ```html
-<agtc-tabs label="Documentation Button" selected="overview">
-  <div slot="overview">Contenu Aperçu</div>
-  <div slot="tokens">Contenu Tokens</div>
+<agtc-tabs label="Button Documentation" selected="overview">
+  <div slot="overview">Overview content</div>
+  <div slot="tokens">Tokens content</div>
 </agtc-tabs>
 <script>
   document.querySelector('agtc-tabs').tabs = [
-    { value: 'overview', label: 'Aperçu' },
+    { value: 'overview', label: 'Overview' },
     { value: 'tokens',   label: 'Tokens' },
   ];
 </script>
 ```
 
-**Tab avec lien externe (`href`) :**
+**Tab with an external link (`href`):**
 ```js
 { value: 'storybook', label: 'Storybook ↗', href: 'https://…' }
 ```
-→ Rendu comme `<a role="tab">`, pas de slot associé.
+→ Rendered as `<a role="tab">`, no associated slot.
 
 ---
 
-## États
+## States
 
-| État | Comportement |
+| State | Behavior |
 |------|-------------|
-| Default | Onglet inactif — `color.text.secondary` |
+| Default | Inactive tab — `color.text.secondary` |
 | Hover | `color.text.primary` |
-| Active (sélectionné) | `color.action.primary` · indicateur bas 2px · `font-weight: 700` |
-| Focus | Anneau `border.focus` 2px offset |
-| Visited | Identique à Default — ADR-047 (no-visited-nav) |
+| Active (selected) | `color.action.primary` · 2px bottom indicator · `font-weight: 700` |
+| Focus | 2px offset `border.focus` ring |
+| Visited | Identical to Default — ADR-047 (no-visited-nav) |
 
 ---
 
-## Clavier
+## Keyboard
 
-| Touche | Effet |
+| Key | Effect |
 |--------|-------|
-| `ArrowRight` | Focus onglet suivant (circulaire). Activation si `activation="auto"` |
-| `ArrowLeft` | Focus onglet précédent (circulaire). Activation si `activation="auto"` |
-| `Home` | Focus premier onglet |
-| `End` | Focus dernier onglet |
-| `Enter` / `Space` | Active l'onglet focusé (toujours) |
-| `Tab` | Sort du groupe d'onglets vers le panneau actif |
+| `ArrowRight` | Focus next tab (circular). Activates if `activation="auto"` |
+| `ArrowLeft` | Focus previous tab (circular). Activates if `activation="auto"` |
+| `Home` | Focus first tab |
+| `End` | Focus last tab |
+| `Enter` / `Space` | Activates the focused tab (always) |
+| `Tab` | Exits the tab group to the active panel |
 
 ---
 
-## Accessibilité
+## Accessibility
 
-- `role="tablist"` + `aria-label` sur le conteneur
-- `role="tab"` + `aria-selected` + `aria-controls` sur chaque onglet
-- `role="tabpanel"` + `aria-labelledby` sur chaque panneau
-- Roving tabindex : onglet actif `tabindex="0"`, les autres `tabindex="-1"`
-- `:focus-visible` tokenisé (`border-focus`)
-- `:visited` neutralisé (ADR-047)
-- Contraste texte actif (teal sur blanc) : 5.14:1 ✅ WCAG AA
+- `role="tablist"` + `aria-label` on the container
+- `role="tab"` + `aria-selected` + `aria-controls` on each tab
+- `role="tabpanel"` + `aria-labelledby` on each panel
+- Roving tabindex: active tab `tabindex="0"`, others `tabindex="-1"`
+- Tokenized `:focus-visible` (`border-focus`)
+- `:visited` neutralized (ADR-047)
+- Active text contrast (teal on white): 5.14:1 ✅ WCAG AA
 
 ---
 
-## Règles absolues
+## Absolute rules
 
 ```
-✅ Toujours un label sur le tablist (attribut label="…")
-✅ Minimum 2 onglets — un seul onglet = pas de tabs
-✅ Labels en casse naturelle (jamais ALL-CAPS)
-✅ Le tablist est positionné AU-DESSUS du panneau
-✅ :visited neutralisé (règle no-visited-nav ADR-047)
-❌ Jamais de tabs pour un réglage à effet immédiat sans panneau (→ agtc-segmented)
-❌ Jamais de valeur codée en dur (toujours via token)
+✅ Always a label on the tablist (label="…" attribute)
+✅ Minimum 2 tabs — a single tab is not a tabs component
+✅ Labels in natural case (never ALL-CAPS)
+✅ The tablist is positioned ABOVE the panel
+✅ :visited neutralized (no-visited-nav rule ADR-047)
+❌ Never use tabs for an immediate-effect setting without a panel (→ agtc-segmented)
+❌ Never a hardcoded value (always via token)
 ```
 
 ---
 
-## Tokens de composant
+## Component tokens
 
-| Token CSS | Référence sémantique |
+| CSS token | Semantic reference |
 |-----------|---------------------|
 | `--agtc-component-tabs-default-tab-text` | `semantic.color.text.secondary` |
 | `--agtc-component-tabs-default-tab-text-hover` | `semantic.color.text.primary` |
@@ -135,15 +135,15 @@ Chaque onglet est associé à un panneau de contenu — l'utilisateur choisit qu
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-| Pattern | Source (lien) | Appliqué | Justification |
+| Pattern | Source (link) | Applied | Justification |
 |---------|---------------|----------|---------------|
-| Tablist au-dessus du panel | [NN/g — Tabs Used Right](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Découvrabilité maximale du contenu |
-| In-page tabs (changement instantané) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Maintient l'utilisateur en place |
-| Activation automatique au focus | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Contenu préchargé — APG recommande auto |
-| ARIA tablist/tab/tabpanel | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Pattern d'accessibilité standard |
-| Flèches + Home/End + roving tabindex | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Navigation clavier conforme |
-| Labels en casse naturelle | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Lisibilité — jamais ALL-CAPS |
-| `:visited` neutralisé | [ADR-047](decisions/ADR-047-no-visited-nav.md) | ✅ | Règle système — navigation |
-| `href` optionnel (navigation tabs) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Tabs mixtes in-page + lien externe |
+| Tablist above the panel | [NN/g — Tabs Used Right](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Maximum content discoverability |
+| In-page tabs (instant change) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Keeps the user in place |
+| Automatic activation on focus | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Preloaded content — APG recommends auto |
+| ARIA tablist/tab/tabpanel | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Standard accessibility pattern |
+| Arrows + Home/End + roving tabindex | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Compliant keyboard navigation |
+| Labels in natural case | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Readability — never ALL-CAPS |
+| `:visited` neutralized | [ADR-047](decisions/ADR-047-no-visited-nav.md) | ✅ | System rule — navigation |
+| Optional `href` (navigation tabs) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ | Mixed in-page + external link tabs |

@@ -1,118 +1,118 @@
-# Composant : Feature Card — Contrat complet
+# Component: Feature Card — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-25
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-25
 > **Type:** contract
-> **Chemin logique:** guidelines/components/feature-card.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/feature-card.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-063-agtc-feature-card.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Présenter une capacité, un rôle ou une fonctionnalité dans un bloc éditorial compact — icône + titre + corps — avec une affordance d'interactivité visuelle (border-bottom animé). Conçu pour les sections marketing narratives de type "Valeur par rôle".
+**Why this component exists:**
+Present a capability, role, or feature in a compact editorial block — icon + title + body — with a visual interactivity affordance (animated border-bottom). Designed for "Value by role" narrative marketing sections.
 
-**Ce composant n'est pas :**
-- Un lien de navigation (placer un `<a>` à l'intérieur si cliquable)
-- Une carte de données (`<agtc-card>` pour les surfaces de contenu générique)
-- Un bouton ou une action primaire
+**This component is not:**
+- A navigation link (place an `<a>` inside if clickable)
+- A data card (`<agtc-card>` for generic content surfaces)
+- A button or primary action
 
 ---
 
-## Variantes
+## Variants
 
-| Variante | Border-bottom | Usage |
+| Variant | Border-bottom | Usage |
 |----------|--------------|-------|
-| `default` | Couleur principale (`--agtc-semantic-color-action-primary`) | Pages SaaS / produit |
-| `marketing` | Gradient primary → accent | Pages `data-context="marketing"` |
+| `default` | Primary color (`--agtc-semantic-color-action-primary`) | SaaS / product pages |
+| `marketing` | Primary → accent gradient | `data-context="marketing"` pages |
 
 ---
 
-## Contrat token
+## Token contract
 
-| Usage | Token CSS |
+| Usage | CSS token |
 |-------|-----------|
-| Fond de carte (glassmorphism) | `--agtc-semantic-color-background-overlay-dark` |
-| Bordure de carte | `--agtc-semantic-color-border-overlay-dark` |
+| Card background (glassmorphism) | `--agtc-semantic-color-background-overlay-dark` |
+| Card border | `--agtc-semantic-color-border-overlay-dark` |
 | Border-bottom (`default`) | `--agtc-semantic-color-action-primary` |
-| Gradient border-bottom (`marketing`) | `--agtc-semantic-color-action-primary` → `--agtc-semantic-color-brand-accent` |
+| Border-bottom gradient (`marketing`) | `--agtc-semantic-color-action-primary` → `--agtc-semantic-color-brand-accent` |
 
-> Dette de tokens corrigée le 2026-07-07 (audit Figma) : `background` et `border` du
-> `:host` utilisaient des valeurs `rgba()` codées en dur, et le gradient marketing
-> référençait `--agtc-semantic-color-accent` (inexistant, fallback CSS silencieux).
-> Voir `.claude/rules/tokens-system.md`.
+> Token debt fixed on 2026-07-07 (Figma audit): the `:host`'s `background` and `border`
+> used hardcoded `rgba()` values, and the marketing gradient referenced
+> `--agtc-semantic-color-accent` (non-existent, silent CSS fallback).
+> See `.claude/rules/tokens-system.md`.
 
-## Attributs
+## Attributes
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `heading` | `String` | `''` | Titre de la carte (2-3 mots max) |
-| `heading-level` | `Number` | `3` | Niveau du heading HTML (1–6) — ajuster selon la hiérarchie de la page |
-| `variant` | `String` | `'default'` | `"default"` ou `"marketing"` |
+| `heading` | `String` | `''` | Card title (2-3 words max) |
+| `heading-level` | `Number` | `3` | HTML heading level (1–6) — adjust based on page hierarchy |
+| `variant` | `String` | `'default'` | `"default"` or `"marketing"` |
 
 ## Slots
 
-| Slot | Contenu attendu |
+| Slot | Expected content |
 |------|----------------|
-| `icon` (nommé) | SVG 20×20px — icône fonctionnelle, non décorative |
-| *(défaut)* | Description courte — 1 à 2 phrases |
+| `icon` (named) | 20×20px SVG — functional icon, not decorative |
+| *(default)* | Short description — 1 to 2 sentences |
 
 ---
 
-## Règles d'utilisation
+## Usage rules
 
 ```
-✅ Maximum 1 niveau de heading par section — ajuster heading-level selon le contexte
-✅ Icône fonctionnelle seulement — représenter l'intention du bloc, pas décorer
-✅ Corps court — 1 à 2 phrases, pas de listes imbriquées
-✅ Utiliser variant="marketing" uniquement sur les pages data-context="marketing"
-❌ Jamais de bouton primary à l'intérieur — la carte n'est pas une zone d'action primaire
-❌ Jamais d'image raster à l'intérieur — utiliser uniquement des icônes SVG dans le slot icon
+✅ Maximum 1 heading level per section — adjust heading-level based on context
+✅ Functional icon only — represent the block's intent, not decoration
+✅ Short body — 1 to 2 sentences, no nested lists
+✅ Use variant="marketing" only on data-context="marketing" pages
+❌ Never a primary button inside — the card is not a primary action zone
+❌ Never a raster image inside — use only SVG icons in the icon slot
 ```
 
 ---
 
-## PATTERNS UX DE RÉFÉRENCE
+## UX Patterns Reference
 
-Revue approuvée le 2026-06-25 (ADR-063).
+Review approved on 2026-06-25 (ADR-063).
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Icône + titre en duo | [NN/g — Icons & Indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Signal fonctionnel : l'icône aide à identifier le bloc avant la lecture du titre |
-| Affordance d'interactivité contrôlée | [IxDF — UI Design Patterns](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Animation `scaleX` seulement au hover/focus — pas d'animation idle distractante |
-| Non-interactivité par défaut | [Smashing Magazine — Card patterns](https://www.smashingmagazine.com/category/design-patterns/) | ✅ | `:host` n'est ni `<a>` ni `<button>` — l'action se place à l'intérieur si nécessaire |
-| Cibles tactiles ≥ 24×24px | [IxDF — Touch Targets](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Icône 36px, non interactive — conforme WCAG 2.5.8 |
-| Heading niveau flexible | [NN/g — Visual Hierarchy](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Attribut `heading-level` (défaut 3) — évite les sauts de niveaux dans la hiérarchie de page |
-| Variante contextuelle | [Dashboard Design Patterns](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | `default` / `marketing` — adapte l'emphase sans dupliquer le composant |
-| `prefers-reduced-motion` | [IxDF — Accessibilité](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Border visible en permanence (`scaleX(1)`), transition désactivée |
-| Markup accessible | [IF — Data Patterns Catalogue](https://catalogue.projectsbyif.com/) | ✅ | `role="heading"` + `aria-level` dans le shadow DOM — SR agnostique du tag wrapper |
+| Icon + title pairing | [NN/g — Icons & Indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Functional signal: the icon helps identify the block before reading the title |
+| Controlled interactivity affordance | [IxDF — UI Design Patterns](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `scaleX` animation only on hover/focus — no distracting idle animation |
+| Non-interactive by default | [Smashing Magazine — Card patterns](https://www.smashingmagazine.com/category/design-patterns/) | ✅ | `:host` is neither `<a>` nor `<button>` — the action goes inside if needed |
+| Touch targets ≥ 24×24px | [IxDF — Touch Targets](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | 36px icon, non-interactive — compliant with WCAG 2.5.8 |
+| Flexible heading level | [NN/g — Visual Hierarchy](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `heading-level` attribute (default 3) — avoids skipped levels in page hierarchy |
+| Contextual variant | [Dashboard Design Patterns](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | `default` / `marketing` — adapts emphasis without duplicating the component |
+| `prefers-reduced-motion` | [IxDF — Accessibility](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Border always visible (`scaleX(1)`), transition disabled |
+| Accessible markup | [IF — Data Patterns Catalogue](https://catalogue.projectsbyif.com/) | ✅ | `role="heading"` + `aria-level` in the shadow DOM — SR-agnostic of the wrapper tag |
 
 ---
 
-## Accessibilité
+## Accessibility
 
-- `role="heading"` + `aria-level="${headingLevel}"` → lecture correcte par les SR quel que soit le contexte
-- `prefers-reduced-motion: reduce` → border-bottom à pleine largeur dès le départ, pas d'animation
-- Slot `icon` doit contenir un SVG avec `aria-hidden="true"` — le titre est le label sémantique
-- Focus visible : `:host(:focus-within)::after` assure une indication visuelle en navigation clavier
+- `role="heading"` + `aria-level="${headingLevel}"` → correctly read by SRs regardless of context
+- `prefers-reduced-motion: reduce` → full-width border-bottom from the start, no animation
+- The `icon` slot must contain an SVG with `aria-hidden="true"` — the title is the semantic label
+- Visible focus: `:host(:focus-within)::after` ensures a visual indication during keyboard navigation
 
 ---
 
-## Exemple d'utilisation
+## Usage example
 
 ```html
-<!-- Contexte SaaS — variant par défaut -->
-<agtc-feature-card heading="Accessibilité" heading-level="3">
+<!-- SaaS context — default variant -->
+<agtc-feature-card heading="Accessibility" heading-level="3">
   <svg slot="icon" ...></svg>
-  WCAG 2.1 AA automatiquement vérifié avant chaque commit.
+  WCAG 2.1 AA automatically checked before every commit.
 </agtc-feature-card>
 
-<!-- Contexte marketing -->
+<!-- Marketing context -->
 <agtc-feature-card heading="Designers" variant="marketing" heading-level="3">
   <svg slot="icon" ...></svg>
-  Tokens sémantiques, contrats de composants et décisions documentées.
+  Semantic tokens, component contracts, and documented decisions.
 </agtc-feature-card>
 ```

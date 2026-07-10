@@ -1,58 +1,58 @@
-# Fondation — Typographie
+# Foundation — Typography
 
-> Fondation typographie du système de design — police, échelle, tokens et règles d'usage.
+> Typography foundation of the design system — typeface, scale, tokens and usage rules.
 > **Type:** guideline
-> **Chemin logique:** guidelines/foundations/typography.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/foundations/typography.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, decisions/ADR-021-atkinson-hyperlegible.md, decisions/ADR-023-echelle-typographique-minor-third.md
 
 ---
 
-## Police principale — Atkinson Hyperlegible
+## Primary typeface — Atkinson Hyperlegible
 
-Conçue par Applied Design Works pour le Braille Institute of America (2019, Open Font License).
-Objectif : différenciation maximale des caractères ambigus pour les personnes à basse vision.
+Designed by Applied Design Works for the Braille Institute of America (2019, Open Font License).
+Goal: maximum differentiation of ambiguous characters for people with low vision.
 
-**Pourquoi ce choix :**
+**Why this choice:**
 
-| Paire ambiguë | Traitement |
+| Ambiguous pair | Treatment |
 |--------------|-----------|
-| `l` / `1` / `I` | Délibérément distincts — empattements et formes uniques |
-| `O` / `0` | Distincts — le zéro est barré |
-| `b` / `d` / `p` / `q` | Asymétries intentionnelles — non-miroirs |
-| `n` / `u` / `m` | Contre-formes accentuées |
+| `l` / `1` / `I` | Deliberately distinct — unique serifs and shapes |
+| `O` / `0` | Distinct — the zero is slashed |
+| `b` / `d` / `p` / `q` | Intentional asymmetries — non-mirrored |
+| `n` / `u` / `m` | Accentuated counter-forms |
 
-Voir [ADR-021](../../decisions/ADR-021-atkinson-hyperlegible.md) pour l'argumentaire complet.
+See [ADR-021](../../decisions/ADR-021-atkinson-hyperlegible.md) for the full rationale.
 
 ---
 
-## Graisses disponibles
+## Available weights
 
-Atkinson Hyperlegible ne supporte que **2 graisses** :
+Atkinson Hyperlegible supports only **2 weights**:
 
-| Token | Valeur | Graisse réelle | Usage |
+| Token | Value | Actual weight | Usage |
 |-------|--------|----------------|-------|
-| `fontWeight.regular` | 400 | Regular | Corps de texte, descriptions |
-| `fontWeight.medium`  | 500 | → 400 (arrondi navigateur) | Labels, contrôles — comportement documenté |
-| `fontWeight.bold`    | 700 | Bold | Titres, emphase |
+| `fontWeight.regular` | 400 | Regular | Body text, descriptions |
+| `fontWeight.medium`  | 500 | → 400 (browser rounding) | Labels, controls — documented behavior |
+| `fontWeight.bold`    | 700 | Bold | Titles, emphasis |
 
-> ⚠️ `fontWeight.medium` (500) n'existe pas dans Atkinson Hyperlegible. Les navigateurs l'arrondissent à Regular (400). Ce compromis est acceptable et choisi délibérément.
+> ⚠️ `fontWeight.medium` (500) does not exist in Atkinson Hyperlegible. Browsers round it down to Regular (400). This trade-off is acceptable and deliberately chosen.
 
 ---
 
-## Échelle de tailles — Minor Third (ratio 1.2)
+## Size scale — Minor Third (1.2 ratio)
 
-Voir [ADR-023](../../decisions/ADR-023-echelle-typographique-minor-third.md) pour l'argumentaire complet.
+See [ADR-023](../../decisions/ADR-023-echelle-typographique-minor-third.md) for the full rationale.
 
-**Principe :** ratio 1.200 (Minor Third), arrondi au multiple de 4px le plus proche. Unité : `rem` (respecte le zoom navigateur — WCAG 1.4.4).
+**Principle:** 1.200 ratio (Minor Third), rounded to the nearest multiple of 4px. Unit: `rem` (respects browser zoom — WCAG 1.4.4).
 
-| Token primitif | rem | px | Contexte |
+| Primitive token | rem | px | Context |
 |---------------|-----|----|---------|
-| `primitive.fontSize.xs`   | 0.75rem  | 12px | Détails, annotations, captions |
-| `primitive.fontSize.sm`   | 0.875rem | 14px | Labels, métadonnées, helper text |
-| `primitive.fontSize.base` | 1rem     | 16px | Corps de texte principal |
-| `primitive.fontSize.lg`   | 1.25rem  | 20px | Heading 5, sous-titres |
+| `primitive.fontSize.xs`   | 0.75rem  | 12px | Details, annotations, captions |
+| `primitive.fontSize.sm`   | 0.875rem | 14px | Labels, metadata, helper text |
+| `primitive.fontSize.base` | 1rem     | 16px | Main body text |
+| `primitive.fontSize.lg`   | 1.25rem  | 20px | Heading 5, subtitles |
 | `primitive.fontSize.xl`   | 1.5rem   | 24px | Heading 4 |
 | `primitive.fontSize.2xl`  | 1.75rem  | 28px | Heading 3 |
 | `primitive.fontSize.3xl`  | 2rem     | 32px | Heading 2 |
@@ -61,88 +61,87 @@ Voir [ADR-023](../../decisions/ADR-023-echelle-typographique-minor-third.md) pou
 
 ---
 
-## Règles de line-height
+## Line-height rules
 
-Trois valeurs seulement, assignées par contexte de taille :
+Only three values, assigned by size context:
 
-| Token | Valeur | Règle |
+| Token | Value | Rule |
 |-------|--------|-------|
-| `primitive.lineHeight.reading` | 1.6 | Tout texte ≤ base (xs, sm, base) — WCAG 1.4.12 |
-| `primitive.lineHeight.heading` | 1.1 | Titres intermédiaires (lg, xl, 2xl) |
-| `primitive.lineHeight.display` | 1.0 | Grands titres (3xl, 4xl, 5xl) |
+| `primitive.lineHeight.reading` | 1.6 | Any text ≤ base (xs, sm, base) — WCAG 1.4.12 |
+| `primitive.lineHeight.heading` | 1.1 | Intermediate headings (lg, xl, 2xl) |
+| `primitive.lineHeight.display` | 1.0 | Large headings (3xl, 4xl, 5xl) |
 
 ---
 
-## Règles de letter-spacing (tracking)
+## Letter-spacing (tracking) rules
 
-Onze valeurs, de resserré (grands nombres/titres display) à élargi (badges/étiquettes en
-petites majuscules). Résorption de dette en deux temps : ADR-067 (catégorie + `wide`/`widest`
-pour le badge de langue `agtc-code-block`), ADR-068 (extension complète — les 9 variables
-`--agtc-tracking-*` du site, ~50 sites d'appel, n'ont plus aucune valeur en dur).
+Eleven values, from tight (large numbers/display titles) to wide (badges/labels in small caps).
+Debt resolved in two phases: ADR-067 (category + `wide`/`widest` for the `agtc-code-block`
+language badge), ADR-068 (full extension — the 9 `--agtc-tracking-*` site variables, ~50 call
+sites, no longer have any hardcoded value).
 
-| Token | Valeur | Rôle |
+| Token | Value | Role |
 |-------|--------|------|
-| `primitive.letterSpacing.tighter` | -0.03em | Grands nombres/chiffres display (stats, KPI) |
-| `primitive.letterSpacing.tight` | -0.025em | Titres h1 hors hero |
-| `primitive.letterSpacing.snug` | -0.02em | Logo, nombres de stats secondaires, titres de section home |
-| `primitive.letterSpacing.heading` | -0.015em | Titres h2, titres de page ADR |
-| `primitive.letterSpacing.normal` | 0em | Défaut — corps de texte, labels, détails |
-| `primitive.letterSpacing.relaxed` | 0.04em | Boutons de langue, en-têtes de tableau de contraste |
-| `primitive.letterSpacing.wide` | 0.06em | Petites majuscules — indicateur de langue de code, tableaux |
-| `primitive.letterSpacing.label` | 0.08em | Labels de propriété/métadonnée en majuscules |
-| `primitive.letterSpacing.loose` | 0.09em | Étiquette d'audience en majuscules |
-| `primitive.letterSpacing.overline` | 0.1em | Badges/tags contextuels en majuscules (overline) |
-| `primitive.letterSpacing.widest` | 0.12em | Étiquette eyebrow marketing |
+| `primitive.letterSpacing.tighter` | -0.03em | Large display numbers/digits (stats, KPIs) |
+| `primitive.letterSpacing.tight` | -0.025em | H1 titles outside the hero |
+| `primitive.letterSpacing.snug` | -0.02em | Logo, secondary stat numbers, home section titles |
+| `primitive.letterSpacing.heading` | -0.015em | H2 titles, ADR page titles |
+| `primitive.letterSpacing.normal` | 0em | Default — body text, labels, details |
+| `primitive.letterSpacing.relaxed` | 0.04em | Language buttons, contrast table headers |
+| `primitive.letterSpacing.wide` | 0.06em | Small caps — code language indicator, tables |
+| `primitive.letterSpacing.label` | 0.08em | Uppercase property/metadata labels |
+| `primitive.letterSpacing.loose` | 0.09em | Uppercase audience label |
+| `primitive.letterSpacing.overline` | 0.1em | Uppercase contextual badges/tags (overline) |
+| `primitive.letterSpacing.widest` | 0.12em | Marketing eyebrow label |
 
-Chaque primitive a un alias `semantic.typography.letter-spacing.*` de même nom. Le site
-consomme ces tokens via une échelle nommée `--agtc-tracking-*` (`site/build.js`) qui reprend
-les mêmes noms sauf deux exceptions historiques préservées pour ne pas toucher aux sites
-d'appel : `--agtc-tracking-wide` → `letter-spacing.relaxed` (0.04em) et
-`--agtc-tracking-wider` → `letter-spacing.wide` (0.06em) — voir ADR-068 pour le détail de
-cette collision de nommage.
+Each primitive has a `semantic.typography.letter-spacing.*` alias of the same name. The site
+consumes these tokens through a `--agtc-tracking-*` named scale (`site/build.js`) that reuses
+the same names except for two historical exceptions preserved to avoid touching call sites:
+`--agtc-tracking-wide` → `letter-spacing.relaxed` (0.04em) and `--agtc-tracking-wider` →
+`letter-spacing.wide` (0.06em) — see ADR-068 for the detail of this naming collision.
 
 ---
 
-## Styles sémantiques — les 9 niveaux
+## Semantic styles — the 9 levels
 
-| Token sémantique | Taille | Graisse | Line-height | Rôle |
+| Semantic token | Size | Weight | Line-height | Role |
 |-----------------|--------|---------|-------------|------|
-| `semantic.typography.detail`    | xs (12px)  | 400 | 1.6 | Annotations, captions, aide contextuelle |
-| `semantic.typography.label`     | sm (14px)  | 500 | 1.6 | Labels de formulaire, tags, métadonnées |
-| `semantic.typography.body`      | base (16px)| 400 | 1.6 | Corps de texte principal |
-| `semantic.typography.heading.5` | lg (20px)  | 500 | 1.1 | H5, sous-titres de section |
+| `semantic.typography.detail`    | xs (12px)  | 400 | 1.6 | Annotations, captions, contextual help |
+| `semantic.typography.label`     | sm (14px)  | 500 | 1.6 | Form labels, tags, metadata |
+| `semantic.typography.body`      | base (16px)| 400 | 1.6 | Main body text |
+| `semantic.typography.heading.5` | lg (20px)  | 500 | 1.1 | H5, section subtitles |
 | `semantic.typography.heading.4` | xl (24px)  | 700 | 1.1 | H4 |
 | `semantic.typography.heading.3` | 2xl (28px) | 700 | 1.1 | H3 |
 | `semantic.typography.heading.2` | 3xl (32px) | 700 | 1.0 | H2 |
-| `semantic.typography.heading.1` | 4xl (40px) | 700 | 1.0 | H1 principal |
-| `semantic.typography.hero`      | 5xl (48px) | 700 | 1.0 | Titre hero, landing page |
+| `semantic.typography.heading.1` | 4xl (40px) | 700 | 1.0 | Main H1 |
+| `semantic.typography.hero`      | 5xl (48px) | 700 | 1.0 | Hero title, landing page |
 
 ---
 
-## Règles d'usage
+## Usage rules
 
 ```
-✅ Toujours référencer un token sémantique pour la typographie
-✅ font-family toujours via var(--agtc-semantic-typography-fontFamily)
-✅ Choisir le niveau par INTENTION (h1 pour titre principal, body pour paragraphe)
+✅ Always reference a semantic token for typography
+✅ font-family always via var(--agtc-semantic-typography-fontFamily)
+✅ Choose the level by INTENT (h1 for main title, body for paragraph)
 
-❌ Jamais de font-size en dur : font-size: 16px
-❌ Jamais de font-family en dur : font-family: 'Atkinson Hyperlegible'
-�� Jamais de token primitif directement dans un composant
-❌ Jamais inventer un niveau intermédiaire (ex: 18px) — choisir l'échelon existant
+❌ Never a hardcoded font-size: font-size: 16px
+❌ Never a hardcoded font-family: font-family: 'Atkinson Hyperlegible'
+❌ Never a primitive token directly in a component
+❌ Never invent an intermediate level (e.g. 18px) — choose an existing step
 ```
 
 ---
 
-## Import Google Fonts
+## Google Fonts import
 
-Pour les projets web utilisant le CDN :
+For web projects using the CDN:
 
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 ```
 
-Pour les projets avec dépendance npm locale :
+For projects with a local npm dependency:
 
 ```bash
 npm install @fontsource/atkinson-hyperlegible

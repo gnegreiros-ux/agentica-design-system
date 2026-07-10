@@ -1,72 +1,72 @@
-# Composant : Top-nav — Contrat complet
+# Component: Top-nav — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-15
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-15
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/top-nav.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/top-nav.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-060-agtc-top-nav-implementation.md, guidelines/components/tabs.md, .claude/rules/no-visited-nav.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Fournir la navigation principale horizontale du produit sous forme de liens inter-pages.
-Visuellement inspiré du pattern tabs (indicateur border-bottom pleine hauteur), mais sémantiquement
-correct : `<nav>` + `<a>` + `aria-current="page"`, pas `role="tablist"`.
+**Why this component exists:**
+Provide the product's main horizontal navigation as inter-page links.
+Visually inspired by the tabs pattern (full-height border-bottom indicator), but semantically
+correct: `<nav>` + `<a>` + `aria-current="page"`, not `role="tablist"`.
 
-**Ce composant n'est pas :**
-- `agtc-tabs` — qui affiche des panneaux de contenu in-page avec `role="tablist"`
-- `agtc-segmented` — réglage à effet immédiat (langue, densité)
-- Un menu déroulant (dropdown)
+**This component is not:**
+- `agtc-tabs` — which displays in-page content panels with `role="tablist"`
+- `agtc-segmented` — immediate-effect setting (language, density)
+- A dropdown menu
 
 ---
 
-## Distinction avec `agtc-tabs`
+## Distinction from `agtc-tabs`
 
 | | `agtc-top-nav` | `agtc-tabs` |
 |---|----------------|-------------|
-| Sémantique ARIA | `role=navigation` + `<a>` | `role=tablist` + `role=tab` + `role=tabpanel` |
-| Navigation clavier | Tab + Enter (liens standard) | Flèches ←/→ + Home/End (roving tabindex) |
-| État actif | `aria-current="page"` | `aria-selected="true"` |
-| Effet | Navigation inter-pages | Panneau de contenu in-page |
-| CTA | Oui (bouton Démarrer intégré) | Non |
+| ARIA semantics | `role=navigation` + `<a>` | `role=tablist` + `role=tab` + `role=tabpanel` |
+| Keyboard navigation | Tab + Enter (standard links) | Arrows ←/→ + Home/End (roving tabindex) |
+| Active state | `aria-current="page"` | `aria-selected="true"` |
+| Effect | Inter-page navigation | In-page content panel |
+| CTA | Yes (built-in Get Started button) | No |
 
 ---
 
-## Propriétés
+## Properties
 
-| Propriété / Attribut | Type | Défaut | Description |
+| Property / Attribute | Type | Default | Description |
 |----------------------|------|--------|-------------|
-| `items` | Array | `[]` | `[{ label?, labelFr?, labelEn?, href, cta? }]` — liste des liens |
-| `current` | String | `window.location.pathname` | Pathname pour détection du lien actif |
-| `nav-label` | String | `"Navigation principale"` | `aria-label` de l'élément `<nav>` (**requis** pour les AT) |
+| `items` | Array | `[]` | `[{ label?, labelFr?, labelEn?, href, cta? }]` — list of links |
+| `current` | String | `window.location.pathname` | Pathname for active link detection |
+| `nav-label` | String | `"Main navigation"` | `aria-label` of the `<nav>` element (**required** for AT) |
 
-### Structure d'un item
+### Structure of an item
 
 ```javascript
 {
-  labelFr: 'Tokens',        // texte français (affiché quand data-lang="fr")
-  labelEn: 'Tokens',        // texte anglais (affiché quand data-lang="en")
-  label:   'Tokens',        // fallback langue neutre (si labelFr/labelEn absents)
-  href:    '../tokens/',    // URL de destination
-  cta:     false,           // true → bouton CTA d'adoption (Démarrer)
+  labelFr: 'Tokens',        // French text (shown when data-lang="fr")
+  labelEn: 'Tokens',        // English text (shown when data-lang="en")
+  label:   'Tokens',        // language-neutral fallback (if labelFr/labelEn absent)
+  href:    '../tokens/',    // destination URL
+  cta:     false,           // true → adoption CTA button (Get Started)
 }
 ```
 
-### Bilinguisme
+### Bilingualism
 
-Le composant observe `document.documentElement[data-lang]` via `MutationObserver`
-et re-render automatiquement quand la langue change. Il n'est pas nécessaire de
-re-assigner `.items` lors d'un changement de langue.
+The component observes `document.documentElement[data-lang]` via `MutationObserver`
+and automatically re-renders when the language changes. There is no need to
+re-assign `.items` on a language change.
 
-### Mobile — état ouvert
+### Mobile — open state
 
-Ajouter la classe CSS `.open` sur l'hôte `<agtc-top-nav>` pour ouvrir le drawer mobile.
-Le composant gère son propre CSS responsive via `@media (max-width: 768px)` en shadow DOM.
+Add the `.open` CSS class on the `<agtc-top-nav>` host to open the mobile drawer.
+The component manages its own responsive CSS via `@media (max-width: 768px)` in shadow DOM.
 
 ```javascript
 document.querySelector('agtc-top-nav').classList.toggle('open');
@@ -77,16 +77,16 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 ## Usage
 
 ```html
-<agtc-top-nav nav-label="Navigation principale"></agtc-top-nav>
+<agtc-top-nav nav-label="Main navigation"></agtc-top-nav>
 <script>
   const nav = document.querySelector('agtc-top-nav');
   nav.items = [
     { label: 'Tokens',      href: '../tokens/' },
-    { label: 'Composants',  href: '../components/' },
-    { label: 'Fondations',  href: '../foundations/' },
+    { label: 'Components',  href: '../components/' },
+    { label: 'Foundations', href: '../foundations/' },
     { label: 'Agents',      href: '../agents/' },
-    { label: 'Décisions',   href: '../decisions/' },
-    { label: 'Démarrer',    href: '../get-started.html', cta: true },
+    { label: 'Decisions',   href: '../decisions/' },
+    { label: 'Get started', href: '../get-started.html', cta: true },
   ];
   nav.current = window.location.pathname;
 </script>
@@ -98,84 +98,84 @@ document.querySelector('agtc-top-nav').classList.toggle('open');
 
 | Variant | Description |
 |---------|-------------|
-| Tab link (défaut) | Lien de navigation pleine hauteur, indicateur border-bottom au hover actif |
-| CTA (`cta: true`) | Bouton d'adoption visuellement distinct — arrondi, fond action-primary, séparé des tabs |
+| Tab link (default) | Full-height navigation link, border-bottom indicator on active hover |
+| CTA (`cta: true`) | Visually distinct adoption button — rounded, action-primary background, separated from the tabs |
 
 ---
 
 ## Tokens
 
-### Tokens de composant (source de vérité)
+### Component tokens (source of truth)
 
-| Token CSS | Valeur résolue | Usage |
+| CSS token | Resolved value | Usage |
 |-----------|----------------|-------|
-| `--agtc-component-top-nav-tab-color` | `semantic.color.text.secondary` | Lien au repos |
-| `--agtc-component-top-nav-tab-color-hover` | `semantic.color.text.primary` | Lien au survol |
-| `--agtc-component-top-nav-tab-background-hover` | `semantic.color.background.subtle` | Fond au survol |
-| `--agtc-component-top-nav-tab-color-active` | `semantic.color.action.primary` | Lien de la page active |
-| `--agtc-component-top-nav-tab-indicator-color` | `semantic.color.action.primary` | Couleur de l'indicateur |
-| `--agtc-component-top-nav-tab-indicator-width` | `2px` | Épaisseur de l'indicateur |
-| `--agtc-component-top-nav-tab-padding-x` | `14px` | Espacement horizontal des tabs |
-| `--agtc-component-top-nav-tab-font-size` | `semantic.typography.label.size` | Taille de texte |
-| `--agtc-component-top-nav-tab-font-weight` | `semantic.typography.label.weight` | Graisse par défaut |
-| `--agtc-component-top-nav-tab-font-weight-active` | `semantic.fontWeight.bold` | Graisse page active |
-| `--agtc-component-top-nav-tab-focus-ring` | `semantic.color.border.focus` | Ring de focus clavier |
-| `--agtc-component-top-nav-cta-gap` | `8px` | Séparation tabs → CTA |
-| `--agtc-component-top-nav-cta-background` | `semantic.color.action.primary` | Fond CTA |
-| `--agtc-component-top-nav-cta-background-hover` | `semantic.color.action.primary-hover` | Fond CTA hover |
-| `--agtc-component-top-nav-cta-color` | `semantic.color.text.on-action` | Texte CTA |
-| `--agtc-component-top-nav-cta-padding-x` | `semantic.space.control.padding-x` | Espacement horizontal CTA |
-| `--agtc-component-top-nav-cta-padding-y` | `semantic.space.control.padding-y` | Espacement vertical CTA |
-| `--agtc-component-top-nav-cta-radius` | `semantic.radius.control` | Arrondi CTA |
+| `--agtc-component-top-nav-tab-color` | `semantic.color.text.secondary` | Link at rest |
+| `--agtc-component-top-nav-tab-color-hover` | `semantic.color.text.primary` | Link on hover |
+| `--agtc-component-top-nav-tab-background-hover` | `semantic.color.background.subtle` | Background on hover |
+| `--agtc-component-top-nav-tab-color-active` | `semantic.color.action.primary` | Active page link |
+| `--agtc-component-top-nav-tab-indicator-color` | `semantic.color.action.primary` | Indicator color |
+| `--agtc-component-top-nav-tab-indicator-width` | `2px` | Indicator thickness |
+| `--agtc-component-top-nav-tab-padding-x` | `14px` | Horizontal tab spacing |
+| `--agtc-component-top-nav-tab-font-size` | `semantic.typography.label.size` | Text size |
+| `--agtc-component-top-nav-tab-font-weight` | `semantic.typography.label.weight` | Default weight |
+| `--agtc-component-top-nav-tab-font-weight-active` | `semantic.fontWeight.bold` | Active page weight |
+| `--agtc-component-top-nav-tab-focus-ring` | `semantic.color.border.focus` | Keyboard focus ring |
+| `--agtc-component-top-nav-cta-gap` | `8px` | Tabs → CTA separation |
+| `--agtc-component-top-nav-cta-background` | `semantic.color.action.primary` | CTA background |
+| `--agtc-component-top-nav-cta-background-hover` | `semantic.color.action.primary-hover` | CTA background hover |
+| `--agtc-component-top-nav-cta-color` | `semantic.color.text.on-action` | CTA text |
+| `--agtc-component-top-nav-cta-padding-x` | `semantic.space.control.padding-x` | CTA horizontal spacing |
+| `--agtc-component-top-nav-cta-padding-y` | `semantic.space.control.padding-y` | CTA vertical spacing |
+| `--agtc-component-top-nav-cta-radius` | `semantic.radius.control` | CTA radius |
 
 ---
 
-## États
+## States
 
-| État | Sélecteur CSS | Comportement |
+| State | CSS selector | Behavior |
 |------|---------------|--------------|
-| Repos | `a` | Texte `text-secondary`, pas de fond |
-| Survol | `a:hover` | Fond `background-subtle`, texte `text-primary` — plat, pas de border-radius |
-| Clic | `a:active` | Identique hover — pas d'effet de pression (lien, pas bouton) |
-| Focus clavier | `a:focus-visible` | `outline:2px solid border-focus; outline-offset:2px` |
-| Page active | `a[aria-current="page"]` | Texte `action-primary`, bold, `border-bottom-color:action-primary` |
-| Visité | `a:visited` | Identique repos — navigation ne montre pas l'état lu (ADR-047) |
+| Rest | `a` | `text-secondary` text, no background |
+| Hover | `a:hover` | `background-subtle` background, `text-primary` text — flat, no border-radius |
+| Click | `a:active` | Same as hover — no press effect (link, not a button) |
+| Keyboard focus | `a:focus-visible` | `outline:2px solid border-focus; outline-offset:2px` |
+| Active page | `a[aria-current="page"]` | `action-primary` text, bold, `border-bottom-color:action-primary` |
+| Visited | `a:visited` | Same as rest — navigation does not show the read state (ADR-047) |
 
 ---
 
-## Accessibilité
+## Accessibility
 
-- `<nav aria-label="...">` — landmark obligatoire, nommé via `nav-label`
-- `aria-current="page"` — appliqué automatiquement sur le lien actif
-- `:focus-visible` — ring visible sur tous les liens (WCAG 2.4.7)
-- Navigation clavier : **Tab** pour traverser les liens, **Enter** pour activer
-- `:visited` neutralisé — cohérence visuelle (ADR-047, ADR-059 pour Safari)
-- Cibles tactiles ≥ 44px (hauteur du header = 64px) — WCAG 2.5.5
+- `<nav aria-label="...">` — required landmark, named via `nav-label`
+- `aria-current="page"` — automatically applied to the active link
+- `:focus-visible` — visible ring on all links (WCAG 2.4.7)
+- Keyboard navigation: **Tab** to traverse the links, **Enter** to activate
+- `:visited` neutralized — visual consistency (ADR-047, ADR-059 for Safari)
+- Touch targets ≥ 44px (header height = 64px) — WCAG 2.5.5
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Navigation landmark `<nav aria-label>` | [W3C WAI Landmarks](https://www.w3.org/WAI/ARIA/apg/) | ✅ | Invisible aux AT sans landmark |
-| `aria-current="page"` sur le lien actif | [WCAG 2.4.4 / 4.1.2](https://www.w3.org/WAI/WCAG22/) | ✅ | Classe CSS seule insuffisante |
-| Indicateur border-bottom pleine hauteur | [NN/g — Horizontal Navigation](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Fond rempli = bouton togglé |
-| Pas de `role="tablist"` pour nav inter-pages | [W3C APG Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Sémantique incorrecte sans panneau |
-| CTA visuellement distinct (bouton pill) | [IxDF — Clear primary action](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | L'adoption est une action, pas une destination |
-| `:visited` neutralisé | ADR-047 | ✅ | Navigation ≠ contenu lu/non lu |
-| Mobile hamburger + `aria-expanded` | [NN/g — Mobile nav](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Pas de défilement horizontal |
+| Navigation landmark `<nav aria-label>` | [W3C WAI Landmarks](https://www.w3.org/WAI/ARIA/apg/) | ✅ | Invisible to AT without a landmark |
+| `aria-current="page"` on the active link | [WCAG 2.4.4 / 4.1.2](https://www.w3.org/WAI/WCAG22/) | ✅ | CSS class alone is insufficient |
+| Full-height border-bottom indicator | [NN/g — Horizontal Navigation](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Filled background = toggled button |
+| No `role="tablist"` for inter-page nav | [W3C APG Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ | Incorrect semantics without a panel |
+| Visually distinct CTA (pill button) | [IxDF — Clear primary action](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Adoption is an action, not a destination |
+| `:visited` neutralized | ADR-047 | ✅ | Navigation ≠ read/unread content |
+| Mobile hamburger + `aria-expanded` | [NN/g — Mobile nav](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | No horizontal scrolling |
 
 ---
 
-## Règles pour les agents
+## Rules for agents
 
 ```
-✅ Toujours fournir nav-label — l'aria-label est obligatoire pour les AT
-✅ Utiliser aria-current="page" (géré automatiquement par le composant)
-✅ Marquer le bouton d'adoption avec cta:true — jamais comme un tab standard
-✅ Gérer la langue (labelFr/labelEn) côté consommateur, pas dans le composant
-❌ Ne pas utiliser role="tablist" sur cet élément — c'est de la navigation inter-pages
-❌ Ne pas ajouter de border-radius sur les liens-tabs
-❌ Ne pas mettre de fond rempli persistant sur le lien actif
+✅ Always provide nav-label — the aria-label is mandatory for AT
+✅ Use aria-current="page" (automatically managed by the component)
+✅ Mark the adoption button with cta:true — never as a standard tab
+✅ Handle language (labelFr/labelEn) on the consumer side, not in the component
+❌ Do not use role="tablist" on this element — it is inter-page navigation
+❌ Do not add border-radius to the tab links
+❌ Do not add a persistent filled background to the active link
 ```

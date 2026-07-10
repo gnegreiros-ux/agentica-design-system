@@ -1,102 +1,103 @@
-# Fondation - Illustration
+# Foundation — Illustration
 
-> Spec de style des illustrations du système Agentica — style « Tactile Tech ».
-> **Statut :** ✅ Approuvé (humain, 2026-06-06) — formalisé par ADR-051. Chaque illustration
-> produite reste soumise à approbation individuelle (cf. `.claude/rules/ux-patterns-sources.md`).
+> Style spec for Agentica system illustrations — "Tactile Tech" style.
+> **Status:** ✅ Approved (human, 2026-06-06) — formalized by ADR-051. Each illustration
+> produced remains subject to individual approval (see `.claude/rules/ux-patterns-sources.md`).
 > **Type:** guideline
-> **Chemin logique:** guidelines/foundations/illustration.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/foundations/illustration.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/foundations/color.md, tokens/semantic.json, decisions/ADR-051,
 > .claude/rules/illustrations-source.md
 
 ---
 
-## Pourquoi ce style
+## Why this style
 
-Style retenu : **« Tactile Tech : Humanizing Complexity »**
-(réf. https://getillustrations.com/blog/saas-illustration-styles-that-convert/, style #1).
+Style chosen: **"Tactile Tech: Humanizing Complexity"**
+(ref. https://getillustrations.com/blog/saas-illustration-styles-that-convert/, style #1).
 
-Ce style « comble l'écart entre la froideur d'un produit logiciel et la chaleur » de
-l'expérience humaine. L'imperfection assumée (grain, pointillé, touches de brush) signale
-un **soin intentionnel** plutôt que du générique IA sur-lissé. Il sert directement le récit
-du système : *« le dernier mot est toujours humain »* — la machine est précise, l'humain la
-rend chaleureuse et la gouverne.
+This style "bridges the gap between the coldness of a software product and the warmth" of
+the human experience. Deliberate imperfection (grain, stipple, brush touches) signals
+**intentional care** rather than over-smoothed AI-generic. It directly serves the system's
+narrative: *"the last word is always human"* — the machine is precise, the human makes it
+warm and governs it.
 
-Cibles d'usage : sections hero, section « Pour chaque rôle », et la **vitrine Pipelines &
-Workflows**. Un seul langage visuel partagé sur toutes ces surfaces.
+Usage targets: hero sections, the "For each role" section, and the **Pipelines &
+Workflows showcase**. A single shared visual language across all these surfaces.
 
 ---
 
-## Caractéristiques visuelles
+## Visual characteristics
 
-| Dimension | Décision |
+| Dimension | Decision |
 |-----------|----------|
-| **Fondation** | Formes vectorielles géométriques précises, grands aplats anguleux qui se chevauchent (réf. `color-pattern.jpg`, archivé hors dépôt avec le reste du prototype d'exploration) |
-| **Texture** | Grain + pointillé (stipple) + touches de brush par-dessus le vecteur — tension précision/imperfection |
-| **Profondeur** | Légère, par superposition d'aplats et transparence ; pas d'ombres portées réalistes |
-| **Niveau de détail** | Équilibré — assez raffiné pour être pro, assez texturé pour sembler « fait main » |
-| **Ton** | Professionnel mais chaleureux ; technique mais humain |
-| **Sujet** | Montrer le **résultat** (équipe alignée, dérive corrigée, décision tracée) — jamais des captures d'UI |
+| **Foundation** | Precise geometric vector shapes, large overlapping angular fills (ref. `color-pattern.jpg`, archived outside the repo with the rest of the exploration prototype) |
+| **Texture** | Grain + stipple + brush touches over the vector — precision/imperfection tension |
+| **Depth** | Light, through layering of fills and transparency; no realistic drop shadows |
+| **Level of detail** | Balanced — refined enough to feel professional, textured enough to feel "hand-made" |
+| **Tone** | Professional but warm; technical but human |
+| **Subject** | Show the **outcome** (aligned team, corrected drift, tracked decision) — never UI screenshots |
 
 ---
 
-## Palette d'illustration
+## Illustration palette
 
-Tokenisée en `semantic.color.illustration.*` (ADR-051) — mapping de `brand-colors.jpg` (archivé
-hors dépôt) sur le pas de primitive le plus proche, le teal étant déjà commun à la marque.
+Tokenized as `semantic.color.illustration.*` (ADR-051) — mapping from `brand-colors.jpg` (archived
+outside the repo) to the closest primitive step, teal already being common to the brand.
 
-| Jeton sémantique | Primitive | Usage dans l'illustration |
+| Semantic token | Primitive | Illustration usage |
 |------------------|-----------|---------------------------|
-| `color.illustration.ink`     | `mauve.12`   | masses sombres, ancrage |
-| `color.illustration.accent`  | `crimson.9`  | point focal chaud, énergie |
-| `color.illustration.brand`   | `teal.9`     | lien visuel au produit, fil conducteur |
-| `color.illustration.neutral` | `slate.9`    | masses secondaires, profondeur |
-| `color.illustration.surface` | `slate.3`    | respiration, négatif clair |
+| `color.illustration.ink`     | `mauve.12`   | dark masses, anchoring |
+| `color.illustration.accent`  | `crimson.9`  | warm focal point, energy |
+| `color.illustration.brand`   | `teal.9`     | visual link to the product, throughline |
+| `color.illustration.neutral` | `slate.9`    | secondary masses, depth |
+| `color.illustration.surface` | `slate.3`    | breathing room, light negative space |
 
-> Light ET dark (cf. décision thème dual) : la palette doit rester lisible sur fond clair
-> **et** sombre. Prévoir une variante des aplats neutres par thème. Repasser au gate
-> **axe-core** (contraste des éléments porteurs de sens ≥ 3:1).
-
----
-
-## Règles de cohérence
-
-```
-✅ Toujours la même palette tokenisée (pas de couleur en dur dans le pipeline d'export)
-✅ Toujours formes géométriques + grain/stipple — jamais l'un sans l'autre
-✅ Toujours illustrer un RÉSULTAT métier, pas une interface
-✅ Lisibilité garantie en light ET dark
-❌ Pas de captures d'écran déguisées en illustration
-❌ Pas de dégradés réalistes / ombres portées lourdes
-❌ Pas de style hétérogène d'une section à l'autre
-```
+> Light AND dark (see dual-theme decision): the palette must stay legible on light **and**
+> dark backgrounds. Plan a per-theme variant for neutral fills. Re-run through the
+> **axe-core** gate (contrast of meaning-bearing elements ≥ 3:1).
 
 ---
 
-## Illustrations produites (v1 — remplacées)
+## Consistency rules
 
-> **2026-07-10 :** ces 3 diagrammes SVG ont été remplacés par le système d'illustrations PNG
-> (`Brand/illustrations/`, cf. `.claude/rules/illustrations-source.md`) avant d'avoir été intégrés
-> au site — l'étape 4 du pipeline ci-dessous n'a donc jamais eu lieu pour ces fichiers. Dossier
-> `illustrations/` retiré du dépôt ; table conservée à titre historique.
+```
+✅ Always the same tokenized palette (no hardcoded color in the export pipeline)
+✅ Always geometric shapes + grain/stipple — never one without the other
+✅ Always illustrate a business OUTCOME, not an interface
+✅ Legibility guaranteed in light AND dark
+❌ No screenshots disguised as illustrations
+❌ No realistic gradients / heavy drop shadows
+❌ No inconsistent style from one section to another
+```
 
-| Fichier (supprimé) | Sujet | Statut |
+---
+
+## Illustrations produced (v1 — replaced)
+
+> **2026-07-10:** these 3 SVG diagrams were replaced by the PNG illustration system
+> (`Brand/illustrations/`, see `.claude/rules/illustrations-source.md`) before ever being
+> integrated into the site — step 4 of the pipeline below therefore never happened for these
+> files. The `illustrations/` folder was removed from the repo; the table is kept for
+> historical reference.
+
+| File (removed) | Subject | Status |
 |---------|-------|--------|
-| `illustrations/pipeline-tokens.svg` | Architecture 3 niveaux (Primitif → Sémantique → Composant) | ✅ v1 approuvé (2026-06-06) — remplacé par PNG |
-| `illustrations/human-last-word.svg` | Gouvernance humaine — flux d'approbation Agent → Humain → Système | ✅ v1 approuvé (2026-06-06) — remplacé par PNG |
-| `illustrations/multi-platform.svg`  | Style Dictionary multi-plateforme (6 sorties : CSS, Swift, JS, Android, Angular, Tailwind) | ✅ v1 approuvé (2026-06-06) — remplacé par PNG |
+| `illustrations/pipeline-tokens.svg` | 3-level architecture (Primitive → Semantic → Component) | ✅ v1 approved (2026-06-06) — replaced by PNG |
+| `illustrations/human-last-word.svg` | Human governance — Agent → Human → System approval flow | ✅ v1 approved (2026-06-06) — replaced by PNG |
+| `illustrations/multi-platform.svg`  | Multi-platform Style Dictionary (6 outputs: CSS, Swift, JS, Android, Angular, Tailwind) | ✅ v1 approved (2026-06-06) — replaced by PNG |
 
-Style : **diagramme fonctionnel** sur fond `ink` (#211f26), accents teal, snippets de code réels.
-Ce style de diagramme SVG n'est plus la direction retenue — voir `Brand/illustrations/` pour les
-illustrations PNG actuellement en production sur le site.
+Style: **functional diagram** on an `ink` background (#211f26), teal accents, real code snippets.
+This SVG diagram style is no longer the chosen direction — see `Brand/illustrations/` for the
+PNG illustrations currently in production on the site.
 
 ---
 
-## Pipeline de production (historique)
+## Production pipeline (historical)
 
-1. ✅ **Spec approuvé** (ce document) — décision humaine (2026-06-06).
-2. ✅ **Palette tokenisée** (`semantic.color.illustration.*`) + ADR-051.
-3. ✅ **Compositions vectorielles v1** — 3 illustrations diagrammes fonctionnels approuvées (2026-06-06).
-4. ❌ **Intégration site** — jamais faite ; les 3 SVG ont été remplacés par le système PNG
-   (`Brand/illustrations/`) avant intégration.
-5. Illustrations supplémentaires selon besoins (section rôles, hero, pipelines vitrine).
+1. ✅ **Spec approved** (this document) — human decision (2026-06-06).
+2. ✅ **Tokenized palette** (`semantic.color.illustration.*`) + ADR-051.
+3. ✅ **v1 vector compositions** — 3 functional diagram illustrations approved (2026-06-06).
+4. ❌ **Site integration** — never happened; the 3 SVGs were replaced by the PNG system
+   (`Brand/illustrations/`) before integration.
+5. Additional illustrations as needed (roles section, hero, pipelines showcase).

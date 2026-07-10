@@ -1,199 +1,199 @@
-# Composant : Input — Contrat complet
+# Component: Input — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-05-31
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-05-31
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/input.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/input.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Permettre à l'utilisateur de saisir des données textuelles ou structurées dans un formulaire.
+**Why this component exists:**
+Allow the user to enter textual or structured data in a form.
 
-**Ce composant n'est pas :**
-- Un sélecteur (utiliser `<agtc-select>`)
-- Une zone de texte longue (utiliser `<agtc-textarea>`)
-- Un bouton (utiliser `<agtc-button>`)
+**This component is not:**
+- A selector (use `<agtc-select>`)
+- A long text area (use `<agtc-textarea>`)
+- A button (use `<agtc-button>`)
 
 ---
 
-## Types supportés
+## Supported types
 
 | Type | Usage |
 |------|-------|
-| `text` | Saisie libre (défaut) |
-| `email` | Adresse e-mail avec validation native |
-| `password` | Mot de passe avec toggle show/hide intégré |
-| `number` | Valeur numérique (spinners natifs supprimés) |
-| `search` | Champ de recherche |
-| `tel` | Numéro de téléphone |
-| `url` | URL avec validation native |
+| `text` | Free-form input (default) |
+| `email` | Email address with native validation |
+| `password` | Password with built-in show/hide toggle |
+| `number` | Numeric value (native spinners removed) |
+| `search` | Search field |
+| `tel` | Phone number |
+| `url` | URL with native validation |
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `label` | String | — | **Obligatoire** — libellé accessible (WCAG 1.3.1) |
-| `type` | String | `text` | Type HTML de l'input |
-| `name` | String | — | Nom du champ pour les formulaires |
-| `value` | String | `''` | Valeur courante |
-| `placeholder` | String | — | Texte indicatif — jamais seul comme étiquette |
-| `helper-text` | String | — | Aide contextuelle sous le champ |
-| `error-message` | String | — | Message d'erreur (visible si `invalid`) |
-| `invalid` | Boolean | `false` | État d'erreur — bordure rouge + role=alert |
-| `disabled` | Boolean | `false` | Désactivé — fond subtle, non interactif |
-| `readonly` | Boolean | `false` | Lecture seule — fond transparent |
-| `required` | Boolean | `false` | Obligatoire — marqueur `*` + aria-required |
-| `icon` | String | — | Icône Lucide en prefix |
-| `icon-suffix` | String | — | Icône Lucide en suffix |
-| `maxlength` | Number | — | Longueur maximale |
-| `autocomplete` | String | — | Hint autocomplete HTML |
+| `label` | String | — | **Required** — accessible label (WCAG 1.3.1) |
+| `type` | String | `text` | HTML input type |
+| `name` | String | — | Field name for forms |
+| `value` | String | `''` | Current value |
+| `placeholder` | String | — | Hint text — never used alone as a label |
+| `helper-text` | String | — | Contextual help below the field |
+| `error-message` | String | — | Error message (visible when `invalid`) |
+| `invalid` | Boolean | `false` | Error state — red border + role=alert |
+| `disabled` | Boolean | `false` | Disabled — subtle background, non-interactive |
+| `readonly` | Boolean | `false` | Read-only — transparent background |
+| `required` | Boolean | `false` | Required — `*` marker + aria-required |
+| `icon` | String | — | Lucide icon as prefix |
+| `icon-suffix` | String | — | Lucide icon as suffix |
+| `maxlength` | Number | — | Maximum length |
+| `autocomplete` | String | — | HTML autocomplete hint |
 
 ---
 
-## Événements
+## Events
 
-| Événement | Détail | Déclenchement |
+| Event | Detail | Trigger |
 |-----------|--------|---------------|
-| `agtc-input` | `{ value, name }` | À chaque frappe |
-| `agtc-change` | `{ value, name }` | À la perte de focus |
+| `agtc-input` | `{ value, name }` | On every keystroke |
+| `agtc-change` | `{ value, name }` | On blur |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Propriété | Token composant |
+| Property | Component token |
 |-----------|-----------------|
-| Fond | `component.input.default.background` |
-| Bordure | `component.input.default.border` |
-| Bordure focus | `component.input.default.border-focus` |
-| Bordure erreur | `component.input.default.border-error` |
-| Texte | `component.input.default.text` |
+| Background | `component.input.default.background` |
+| Border | `component.input.default.border` |
+| Border focus | `component.input.default.border-focus` |
+| Border error | `component.input.default.border-error` |
+| Text | `component.input.default.text` |
 | Placeholder | `component.input.default.placeholder` |
-| Rayon | `component.input.default.radius` |
+| Radius | `component.input.default.radius` |
 | Padding X | `component.input.default.padding-x` |
 | Padding Y | `component.input.default.padding-y` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Label obligatoire | WCAG 1.3.1 — jamais placeholder seul |
-| Contraste texte | 4.5:1 minimum (WCAG AA) |
-| Focus visible | `outline` sur le wrapper `.control` |
-| État invalide | `aria-invalid="true"` + `role="alert"` sur le message |
-| Champ requis | `aria-required="true"` + marqueur visuel `*` |
-| Password toggle | `aria-label` dynamique (afficher/masquer) |
-| Descriptions liées | `aria-describedby` sur helper-text et error-message |
+| Label required | WCAG 1.3.1 — never placeholder alone |
+| Text contrast | 4.5:1 minimum (WCAG AA) |
+| Visible focus | `outline` on the `.control` wrapper |
+| Invalid state | `aria-invalid="true"` + `role="alert"` on the message |
+| Required field | `aria-required="true"` + visual `*` marker |
+| Password toggle | Dynamic `aria-label` (show/hide) |
+| Linked descriptions | `aria-describedby` on helper-text and error-message |
 
 ---
 
-## Comportements et états
+## Behaviors and states
 
-| État | Comportement |
+| State | Behavior |
 |------|-------------|
-| Default | Bordure default, fond surface |
-| Focus | Bordure + outline teal (border-focus) |
-| Invalid | Bordure rouge, message d'erreur avec role=alert |
-| Disabled | Fond subtle, pointer-events none |
-| Readonly | Fond transparent, non éditable |
-| Password | Bouton show/hide intégré, aria-label dynamique |
+| Default | Default border, surface background |
+| Focus | Teal border + outline (border-focus) |
+| Invalid | Red border, error message with role=alert |
+| Disabled | Subtle background, pointer-events none |
+| Readonly | Transparent background, not editable |
+| Password | Built-in show/hide button, dynamic aria-label |
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Input sans `label` | Inaccessible (WCAG 1.3.1) |
-| Placeholder comme seule étiquette | Disparaît à la saisie, échoue WCAG |
-| Valeur `invalid` sans `error-message` | Erreur signalée sans explication |
-| Style inline sur le champ | Contourne les tokens de composant |
-| Type non supporté | Comportement indéfini |
+| Input without a `label` | Inaccessible (WCAG 1.3.1) |
+| Placeholder as the only label | Disappears on input, fails WCAG |
+| `invalid` value without an `error-message` | Error flagged without explanation |
+| Inline style on the field | Bypasses component tokens |
+| Unsupported type | Undefined behavior |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
-> (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.
+> Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
+> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Label visible toujours présent (jamais placeholder seul) | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | WCAG 1.3.1 — `label` obligatoire |
-| **Validation à la perte de focus (`onBlur`)** par défaut | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Ne pas signaler l'erreur pendant la frappe initiale |
-| **Re-validation à la frappe une fois le champ en erreur** | [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Récompenser la correction immédiatement |
-| Erreur inline sous le champ + `role="alert"` | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Erreur localisée et annoncée aux AT |
-| Message d'erreur constructif (dit quoi corriger) | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Règle d'écriture du `error-message` |
-| Help text persistant, distinct de l'erreur, `aria-describedby` | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `helper-text` lié par `aria-describedby` |
-| Required marker `*` + `aria-required` | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Champ obligatoire signalé visuellement et aux AT |
-| Forgiving format (tolérer espaces/formats : `tel`, `number`) | [IxDF — forgiving formats](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Réduire les erreurs de saisie |
-| Éviter les hostile patterns (pas de blocage agressif, pas d'effacement du champ en erreur) | [NN/g — Hostile Patterns in Error Messages](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Anti-dark-pattern |
+| Visible label always present (never placeholder alone) | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | WCAG 1.3.1 — `label` required |
+| **Validation on blur (`onBlur`)** by default | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Don't flag an error during the initial keystrokes |
+| **Re-validation on keystroke once a field is in error** | [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Reward the correction immediately |
+| Inline error under the field + `role="alert"` | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Localized error, announced to AT |
+| Constructive error message (states what to fix) | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `error-message` writing rule |
+| Persistent help text, distinct from the error, `aria-describedby` | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `helper-text` linked via `aria-describedby` |
+| Required marker `*` + `aria-required` | [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Required field flagged visually and to AT |
+| Forgiving format (tolerate spaces/formats: `tel`, `number`) | [IxDF — forgiving formats](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Reduces input errors |
+| Avoid hostile patterns (no aggressive blocking, no clearing an errored field) | [NN/g — Hostile Patterns in Error Messages](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Anti-dark-pattern |
 
-**Contrat de validation (synthèse des patterns 2 + 3) :** valider à `onBlur`, puis re-valider à
-chaque frappe tant que le champ est en état d'erreur. Ne jamais valider à la première frappe.
+**Validation contract (synthesis of patterns 2 + 3):** validate on `onBlur`, then re-validate on
+every keystroke while the field is in an error state. Never validate on the first keystroke.
 
 ---
 
-## Implémentation
+## Implementation
 
 ### Web Component (Lit)
 ```html
-<!-- Champ texte basique -->
-<agtc-input label="Nom complet" name="fullname"></agtc-input>
+<!-- Basic text field -->
+<agtc-input label="Full name" name="fullname"></agtc-input>
 
-<!-- Avec aide contextuelle -->
+<!-- With contextual help -->
 <agtc-input
-  label="Adresse e-mail"
+  label="Email address"
   type="email"
   name="email"
-  helper-text="Utilisée pour les notifications uniquement"
+  helper-text="Used for notifications only"
 ></agtc-input>
 
-<!-- État d'erreur -->
+<!-- Error state -->
 <agtc-input
-  label="Identifiant"
+  label="Username"
   invalid
-  error-message="Cet identifiant n'existe pas"
+  error-message="This username doesn't exist"
 ></agtc-input>
 
-<!-- Mot de passe avec toggle intégré -->
+<!-- Password with built-in toggle -->
 <agtc-input
-  label="Mot de passe"
+  label="Password"
   type="password"
   name="password"
   required
 ></agtc-input>
 
-<!-- Avec icône prefix -->
+<!-- With prefix icon -->
 <agtc-input
-  label="Rechercher"
+  label="Search"
   type="search"
   icon="search"
-  placeholder="Rechercher un composant…"
+  placeholder="Search for a component…"
 ></agtc-input>
 
-<!-- Désactivé -->
-<agtc-input label="Code postal" disabled value="75001"></agtc-input>
+<!-- Disabled -->
+<agtc-input label="Postal code" disabled value="75001"></agtc-input>
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'un nouveau type | Principal Designer + Tech Lead |
-| Modification token de composant | Principal Designer |
-| Changement comportement validation | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Adding a new type | Principal Designer + Tech Lead |
+| Modifying a component token | Principal Designer |
+| Changing validation behavior | Design system team |
+| Accessibility bug fix | Design system team review |

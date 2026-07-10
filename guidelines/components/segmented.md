@@ -1,124 +1,124 @@
-# Composant : Segmented — Contrat complet
+# Component: Segmented — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-04
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-04
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/segmented.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/segmented.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-044-agtc-segmented-implementation.md, guidelines/components/radio.md, guidelines/components/toggle.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Choisir **une** option parmi 2 à 5, avec **effet immédiat**, dans un contrôle compact (segments
-connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
+**Why this component exists:**
+Choose **one** option among 2 to 5, with an **immediate effect**, in a compact control (connected
+segments). Formalizes the site's FR/EN language switch (~114 usages).
 
-**Ce composant n'est pas :**
-- Un groupe radio de formulaire (`agtc-radio-group`) — soumis avec le formulaire, navigation flèches
-- Un interrupteur on/off (`agtc-toggle`)
-- Des onglets de contenu (`tablist`) — qui changent de panneau
-- Un menu déroulant (au-delà de 5 options → `select`)
+**This component is not:**
+- A form radio group (`agtc-radio-group`) — submitted with the form, arrow-key navigation
+- An on/off switch (`agtc-toggle`)
+- Content tabs (`tablist`) — which change a panel
+- A dropdown menu (beyond 5 options → `select`)
 
 ---
 
-## Distinction avec `agtc-radio-group`
+## Distinction from `agtc-radio-group`
 
 | | `agtc-segmented` | `agtc-radio-group` |
 |---|------------------|--------------------|
-| Effet | **Immédiat** | Soumis avec le formulaire |
-| ARIA | Groupe de `<button>` + `aria-current` | `role="radiogroup"` + `role="radio"` |
-| Clavier | **Tab** entre segments (natif) | **Flèches** + roving tabindex |
-| Usage | Réglage / vue (densité, langue, liste/grille) | Choix de formulaire (plan, civilité) |
+| Effect | **Immediate** | Submitted with the form |
+| ARIA | `<button>` group + `aria-current` | `role="radiogroup"` + `role="radio"` |
+| Keyboard | **Tab** between segments (native) | **Arrows** + roving tabindex |
+| Usage | Setting / view (density, language, list/grid) | Form choice (plan, title) |
 
-> Écart de pattern **assumé** (Primer) : un segmented à effet immédiat ne doit pas être un radiogroup.
+> **Deliberate** pattern deviation (Primer): a segmented control with immediate effect must not be a radiogroup.
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut / Propriété | Type | Défaut | Description |
+| Attribute / Property | Type | Default | Description |
 |----------------------|------|--------|-------------|
 | `.options` | Array | `[]` | `[{ value, label, icon? } \| "Label"]` |
-| `value` | String | — | Valeur sélectionnée (toujours exactement une) |
-| `label` | String | — | **aria-label du groupe (requis)** |
-| `equal-width` | Boolean | `false` | Segments à largeur égale |
+| `value` | String | — | Selected value (always exactly one) |
+| `label` | String | — | **Group aria-label (required)** |
+| `equal-width` | Boolean | `false` | Equal-width segments |
 
-Émet **`change`** (`detail: { value }`) à chaque sélection.
+Emits **`change`** (`detail: { value }`) on every selection.
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Rôle | Token |
+| Role | Token |
 |------|-------|
-| Fond du rail | `component.segmented.default.track-background` |
-| Texte d'un segment | `component.segmented.default.text` |
-| Texte au survol | `component.segmented.default.text-hover` |
-| Fond du segment sélectionné | `component.segmented.default.selected-background` |
-| Texte du segment sélectionné | `component.segmented.default.selected-text` |
-| Anneau de focus | `component.segmented.default.border-focus` |
-| Rayon | `component.segmented.default.radius` |
+| Track background | `component.segmented.default.track-background` |
+| Segment text | `component.segmented.default.text` |
+| Hover text | `component.segmented.default.text-hover` |
+| Selected segment background | `component.segmented.default.selected-background` |
+| Selected segment text | `component.segmented.default.selected-text` |
+| Focus ring | `component.segmented.default.border-focus` |
+| Radius | `component.segmented.default.radius` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Rôle | `role="group"` + `aria-label` sur le rail |
-| Segment sélectionné | `aria-current="true"` (les autres `false`) |
-| Clavier | `<button>` natifs — Tab entre segments, Entrée/Espace pour activer |
-| État sélectionné | Pas par la couleur seule : fond plein + poids `700` (WCAG 1.4.1) |
-| Focus | `:focus-visible` tokenisé par segment (WCAG 2.4.7) |
+| Role | `role="group"` + `aria-label` on the track |
+| Selected segment | `aria-current="true"` (others `false`) |
+| Keyboard | Native `<button>` — Tab between segments, Enter/Space to activate |
+| Selected state | Not by color alone: solid background + `700` weight (WCAG 1.4.1) |
+| Focus | Tokenized `:focus-visible` per segment (WCAG 2.4.7) |
 
 ---
 
-## Comportements
+## Behaviors
 
-- **Effet immédiat** — la sélection s'applique au clic/activation (émet `change`).
-- **Toujours un actif** — pas d'état vide.
-- **2 à 5 options** courtes ; au-delà, préférer `select` ou des onglets.
+- **Immediate effect** — the selection applies on click/activation (emits `change`).
+- **Always one active** — no empty state.
+- **2 to 5 short options**; beyond that, prefer `select` or tabs.
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| `role="radiogroup"` + flèches sur un contrôle à effet immédiat | Pattern inadapté (implique soumission) — Primer |
-| `role="tablist"` si ça ne change pas un panneau de contenu | Mauvaise sémantique |
-| Plus de 5 options ou libellés longs | Illisible — utiliser `select` |
-| État sélectionné par la couleur seule | WCAG 1.4.1 |
-| Aucun `label` | Groupe non nommé pour les AT |
+| `role="radiogroup"` + arrows on an immediate-effect control | Wrong pattern (implies submission) — Primer |
+| `role="tablist"` if it doesn't change a content panel | Incorrect semantics |
+| More than 5 options or long labels | Unreadable — use `select` |
+| Selected state by color alone | WCAG 1.4.1 |
+| No `label` | Unnamed group for AT |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/044). Décision : **SG1–SG8 tous approuvés**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036/044). Decision: **SG1–SG8 all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Mono-sélection, toujours un actif | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Pas d'état vide |
-| Groupe de `<button>` + `aria-current` + effet immédiat | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Écart assumé vs radiogroup |
-| 2–5 options, libellés courts | NN/g | ✅ | Guidance documentée |
-| Sélectionné pas par la couleur seule | [WCAG 1.4.1](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) | ✅ | Fond plein + poids 700 |
-| Effet immédiat (pas de « appliquer ») | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Émet `change` |
-| `:focus-visible` par segment, Tab natif | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Boutons natifs |
-| Segments largeur égale, icône + libellé | NN/g | ✅ | `equal-width`, `icon` optionnels |
-| API `value` + événement `change` | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Intégration |
+| Single selection, always one active | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | No empty state |
+| `<button>` group + `aria-current` + immediate effect | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Deliberate deviation from radiogroup |
+| 2–5 options, short labels | NN/g | ✅ | Documented guidance |
+| Selected not by color alone | [WCAG 1.4.1](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) | ✅ | Solid background + weight 700 |
+| Immediate effect (no "apply") | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Emits `change` |
+| `:focus-visible` per segment, native Tab | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Native buttons |
+| Equal-width segments, icon + label | NN/g | ✅ | `equal-width`, `icon` optional |
+| `value` API + `change` event | [Primer](https://primer.style/product/components/segmented-control/accessibility/) | ✅ | Integration |
 
 ---
 
-## Implémentation
+## Implementation
 
-### Composant (Lit, piloté par données)
+### Component (Lit, data-driven)
 ```html
-<agtc-segmented label="Langue" value="fr"></agtc-segmented>
+<agtc-segmented label="Language" value="fr"></agtc-segmented>
 <script>
   const s = document.querySelector('agtc-segmented');
   s.options = [{ value: 'fr', label: 'FR' }, { value: 'en', label: 'EN' }];
@@ -126,9 +126,9 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 </script>
 ```
 
-### Classe (HTML statique du site)
+### Class (static site HTML)
 ```html
-<div class="agtc-segmented" role="group" aria-label="Langue">
+<div class="agtc-segmented" role="group" aria-label="Language">
   <button type="button" aria-current="true">FR</button>
   <button type="button" aria-current="false">EN</button>
 </div>
@@ -136,11 +136,11 @@ connectés). Formalise la bascule de langue FR/EN du site (~114 usages).
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'un mode multi-sélection | Principal Designer + Tech Lead + nouvel ADR |
-| Modification d'un token | Principal Designer |
-| Changement du pattern ARIA | Principal Designer + revue accessibilité |
-| Correction bug accessibilité | Review design system team |
+| Adding a multi-select mode | Principal Designer + Tech Lead + new ADR |
+| Modifying a token | Principal Designer |
+| Changing the ARIA pattern | Principal Designer + accessibility review |
+| Accessibility bug fix | Design system team review |

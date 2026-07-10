@@ -1,141 +1,141 @@
-# Composant : Table — Contrat complet
+# Component: Table — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-03
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-03
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/table.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/table.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-040-agtc-table-implementation.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Présenter des données tabulaires de façon lisible, scannable et accessible, en **lecture seule**.
-C'est le composant le plus utilisé du site (tables de tokens : token → référence → valeur → intention).
+**Why this component exists:**
+Present tabular data in a readable, scannable, and accessible way, **read-only**.
+It is the most used component on the site (token tables: token → reference → value → intent).
 
-**Ce composant n'est pas :**
-- Un tableau interactif éditable (édition en ligne → futur, hors v1)
-- Une grille de données avec tri/filtre/pagination (porte ouverte, non implémentée — voir ADR-040)
-- Une mise en page (ne pas utiliser une table pour disposer des éléments non tabulaires)
+**This component is not:**
+- An interactive editable table (inline editing → future, out of v1)
+- A data grid with sort/filter/pagination (open door, not implemented — see ADR-040)
+- A layout mechanism (do not use a table to arrange non-tabular elements)
 
 ---
 
-## Architecture — le « mix » (ADR-040)
+## Architecture — the "mix" (ADR-040)
 
-Deux formes consommant **les mêmes tokens** `component.table.*` :
+Two forms consuming **the same tokens** `component.table.*`:
 
-| Forme | Usage | Rendu |
+| Form | Usage | Rendering |
 |-------|-------|-------|
-| **Composant** `<agtc-table>` (piloté par données) | Apps, contextes JS, Storybook | `<table>` sémantique en shadow DOM, depuis `.columns`/`.rows` |
-| **Classe** `.agtc-table` sur un `<table>` réel | Site statique (HTML sans JS) | Stylage d'un `<table>` light DOM écrit à la main |
+| **Component** `<agtc-table>` (data-driven) | Apps, JS contexts, Storybook | Semantic `<table>` in shadow DOM, from `.columns`/`.rows` |
+| **Class** `.agtc-table` on a real `<table>` | Static site (HTML without JS) | Styling of a hand-written light DOM `<table>` |
 
-> Le site reste du HTML statique résilient (pas de dépendance JS pour afficher une table) ;
-> les apps bénéficient d'une API par données. Source de tokens unique.
+> The site remains resilient static HTML (no JS dependency to display a table);
+> apps benefit from a data-driven API. Single source of tokens.
 
 ---
 
-## Propriétés (composant `<agtc-table>`)
+## Properties (`<agtc-table>` component)
 
-| Attribut / Propriété | Type | Défaut | Description |
+| Attribute / Property | Type | Default | Description |
 |----------------------|------|--------|-------------|
-| `.columns` | Array | `[]` | `[{ label, align?, width?, key? } \| "Label"]` — `align` : `start` (défaut) / `end` / `center` |
-| `.rows` | Array | `[]` | `[["a","b"], …]` (positionnel) ou `[{ key: valeur }, …]` |
-| `caption` | String | — | **Recommandé** — légende accessible (WCAG 1.3.1) |
-| `caption-hidden` | Boolean | `false` | Masque la légende visuellement, la garde pour les AT |
-| `striped` | Boolean | `false` | Zébrage (sinon : séparateurs de lignes) |
-| `sticky-header` | Boolean | `false` | En-tête figé au défilement vertical |
-| `density` | String | `compact` | `compact` ou `comfortable` |
+| `.columns` | Array | `[]` | `[{ label, align?, width?, key? } \| "Label"]` — `align`: `start` (default) / `end` / `center` |
+| `.rows` | Array | `[]` | `[["a","b"], …]` (positional) or `[{ key: value }, …]` |
+| `caption` | String | — | **Recommended** — accessible caption (WCAG 1.3.1) |
+| `caption-hidden` | Boolean | `false` | Visually hides the caption, keeps it for AT |
+| `striped` | Boolean | `false` | Zebra striping (otherwise: row separators) |
+| `sticky-header` | Boolean | `false` | Header pinned on vertical scroll |
+| `density` | String | `compact` | `compact` or `comfortable` |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Rôle | Token |
+| Role | Token |
 |------|-------|
-| Fond d'en-tête | `component.table.default.header-background` |
-| Texte d'en-tête | `component.table.default.header-text` |
-| Texte de cellule | `component.table.default.cell-text` |
-| Bordure / séparateurs | `component.table.default.border` |
-| Survol de ligne | `component.table.default.row-hover` |
-| Zébrage | `component.table.default.stripe` |
-| Texte de légende | `component.table.default.caption-text` |
-| Rayon (conteneur) | `component.table.default.radius` |
-| Taille de police | `component.table.default.font-size` |
-| Padding horizontal | `component.table.padding-x` |
-| Padding vertical compact | `component.table.padding-y-compact` |
-| Padding vertical confortable | `component.table.padding-y-comfortable` |
+| Header background | `component.table.default.header-background` |
+| Header text | `component.table.default.header-text` |
+| Cell text | `component.table.default.cell-text` |
+| Border / separators | `component.table.default.border` |
+| Row hover | `component.table.default.row-hover` |
+| Zebra striping | `component.table.default.stripe` |
+| Caption text | `component.table.default.caption-text` |
+| Radius (container) | `component.table.default.radius` |
+| Font size | `component.table.default.font-size` |
+| Horizontal padding | `component.table.padding-x` |
+| Compact vertical padding | `component.table.padding-y-compact` |
+| Comfortable vertical padding | `component.table.padding-y-comfortable` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Structure sémantique | `<table>` / `<thead>` / `<tbody>` réels — jamais de `<div>` simulant une table |
-| Association cellule↔en-tête | `scope="col"` sur chaque `<th>` |
-| Description de la table | `<caption>` (visible ou masqué via `caption-hidden`) — WCAG 1.3.1 |
-| Alignement numérique | Colonnes de valeurs alignées à droite (`align="end"`) — scan vertical |
-| Contraste texte/fond | 4.5:1 minimum (WCAG AA) — texte gris.12 sur blanc/gris.3 |
-| Scroll horizontal | Conteneur focalisable au clavier, indicateur d'overflow visible |
+| Semantic structure | Real `<table>` / `<thead>` / `<tbody>` — never a `<div>` simulating a table |
+| Cell↔header association | `scope="col"` on every `<th>` |
+| Table description | `<caption>` (visible or hidden via `caption-hidden`) — WCAG 1.3.1 |
+| Numeric alignment | Value columns right-aligned (`align="end"`) — vertical scanning |
+| Text/background contrast | 4.5:1 minimum (WCAG AA) — gray.12 text on white/gray.3 |
+| Horizontal scroll | Keyboard-focusable container, visible overflow indicator |
 
 ---
 
-## Comportements
+## Behaviors
 
-- **Lecture seule** — aucune interaction de cellule par défaut.
-- **Survol** de ligne (`row-hover`) pour garder sa ligne à l'œil sur des tables larges.
-- **Séparateurs** de lignes par défaut ; **zébrage** en option (`striped`).
-- **Overflow** : conteneur `overflow-x:auto` avec ombres de bord signalant le contenu masqué.
+- **Read-only** — no cell interaction by default.
+- **Row hover** (`row-hover`) to keep track of your row on wide tables.
+- **Row separators** by default; **zebra striping** optional (`striped`).
+- **Overflow**: `overflow-x:auto` container with edge shadows signaling hidden content.
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| `<div>` stylés en grille pour des données tabulaires | Inaccessible aux lecteurs d'écran |
-| `<th>` sans `scope` | Association cellule↔en-tête perdue |
-| Table sans `caption` ni `aria-label` | Contexte absent pour les AT (WCAG 1.3.1) |
-| Valeurs numériques alignées à gauche | Comparaison verticale plus difficile |
-| Table pour faire de la mise en page | Détourne la sémantique |
-| Couleur/espacement codé en dur | Contourne les tokens |
+| `<div>` styled as a grid for tabular data | Inaccessible to screen readers |
+| `<th>` without `scope` | Cell↔header association lost |
+| Table without `caption` or `aria-label` | Missing context for AT (WCAG 1.3.1) |
+| Numeric values left-aligned | Harder vertical comparison |
+| Table used for layout | Misuses the semantics |
+| Hardcoded color/spacing | Bypasses the tokens |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/040). Décision : **T1–T10 tous approuvés**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036/040). Decision: **T1–T10 all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| HTML sémantique + `scope="col"` | [Smashing — Table Patterns](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Association cellule↔en-tête (absente du HTML d'origine du site) |
-| `<caption>` décrivant la table | [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Masquable via `caption-hidden` (WCAG 1.3.1) |
-| Alignement texte/gauche, numérique/droite | [NN/g — Data Tables](https://www.nngroup.com/articles/data-tables/) | ✅ | `align` par colonne, défaut `start` |
-| Séparateurs de lignes (zébrage en option) | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | Séparateurs par défaut, `striped` optionnel — choix utilisateur |
-| Survol de ligne | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | `row-hover` |
-| En-tête figé | [NN/g](https://www.nngroup.com/articles/data-tables/) · [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Optionnel via `sticky-header` |
-| Scroll horizontal + indicateur d'overflow | [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Conteneur `overflow-x` + ombres de bord (noms de tokens longs) |
-| 1ʳᵉ colonne = identifiant lisible, ordre = importance | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | Convention des tables de tokens |
-| Densité `compact` par défaut | [Dashboard Design Patterns](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | `density="comfortable"` disponible |
-| Tri / filtrage / pagination | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ (porte ouverte) | **Hors v1** : tables de doc statiques ; API `columns`/`rows` conçue pour les accueillir sans rupture (futur `column.sortable` + `@sort`) |
+| Semantic HTML + `scope="col"` | [Smashing — Table Patterns](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Cell↔header association (missing from the site's original HTML) |
+| `<caption>` describing the table | [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Hideable via `caption-hidden` (WCAG 1.3.1) |
+| Text alignment left, numeric right | [NN/g — Data Tables](https://www.nngroup.com/articles/data-tables/) | ✅ | `align` per column, default `start` |
+| Row separators (zebra striping optional) | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | Separators by default, `striped` optional — user choice |
+| Row hover | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | `row-hover` |
+| Sticky header | [NN/g](https://www.nngroup.com/articles/data-tables/) · [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | Optional via `sticky-header` |
+| Horizontal scroll + overflow indicator | [Smashing](https://www.smashingmagazine.com/2019/01/table-design-patterns-web/) | ✅ | `overflow-x` container + edge shadows (long token names) |
+| 1st column = readable identifier, order = importance | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ | Token table convention |
+| `compact` density by default | [Dashboard Design Patterns](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | `density="comfortable"` available |
+| Sort / filter / pagination | [NN/g](https://www.nngroup.com/articles/data-tables/) | ✅ (open door) | **Out of v1**: static docs tables; `columns`/`rows` API designed to accommodate them without breaking changes (future `column.sortable` + `@sort`) |
 
 ---
 
-## Implémentation
+## Implementation
 
-### Composant (Lit, piloté par données)
+### Component (Lit, data-driven)
 ```html
-<agtc-table caption="Tokens du composant badge" caption-hidden></agtc-table>
+<agtc-table caption="Badge component tokens" caption-hidden></agtc-table>
 <script>
   const t = document.querySelector('agtc-table');
   t.columns = [
-    { label: 'Token CSS', align: 'start', width: '46%' },
-    { label: 'Référence', align: 'start' },
-    { label: 'Valeur',    align: 'end' },
+    { label: 'CSS token', align: 'start', width: '46%' },
+    { label: 'Reference', align: 'start' },
+    { label: 'Value',    align: 'end' },
   ];
   t.rows = [
     ['--agtc-badge-neutral-background', 'semantic.color.background.subtle', '#f0f0f0'],
@@ -144,12 +144,12 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 </script>
 ```
 
-### Classe (HTML statique, light DOM)
+### Class (static HTML, light DOM)
 ```html
 <table class="agtc-table">
-  <caption class="visually-hidden">Tokens du composant badge</caption>
+  <caption class="visually-hidden">Badge component tokens</caption>
   <thead>
-    <tr><th scope="col">Token CSS</th><th scope="col">Référence</th><th scope="col" class="num">Valeur</th></tr>
+    <tr><th scope="col">CSS token</th><th scope="col">Reference</th><th scope="col" class="num">Value</th></tr>
   </thead>
   <tbody>
     <tr><td><code>--agtc-badge-neutral-background</code></td><td>semantic.color.background.subtle</td><td class="num">#f0f0f0</td></tr>
@@ -159,11 +159,11 @@ Deux formes consommant **les mêmes tokens** `component.table.*` :
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'une fonctionnalité (tri, filtre, pagination) | Principal Designer + Tech Lead + nouvel ADR |
-| Modification d'un token | Principal Designer |
-| Changement de densité par défaut | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Adding a feature (sort, filter, pagination) | Principal Designer + Tech Lead + new ADR |
+| Modifying a token | Principal Designer |
+| Changing the default density | Design system team |
+| Accessibility bug fix | Design system team review |

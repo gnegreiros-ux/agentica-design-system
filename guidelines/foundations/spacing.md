@@ -1,58 +1,58 @@
-# Fondation — Espacement
+# Foundation — Spacing
 
-> Fondation espacement du système de design — grille 4px et règles d'usage.
+> Spacing foundation of the design system — 4px grid and usage rules.
 > **Type:** guideline
-> **Chemin logique:** guidelines/foundations/spacing.md
-> **Auteur:** Guilherme Negreiros
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/foundations/spacing.md
+> **Author:** Guilherme Negreiros
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, decisions/ADR-020-grille-4px.md
 
 ---
 
-## Principe — La grille 4px
+## Principle — The 4px grid
 
-**Toute valeur dimensionnelle est un multiple de 4px.**
+**Every dimensional value is a multiple of 4px.**
 
-Ce module de base garantit la cohérence visuelle à toutes les densités d'affichage, simplifie les décisions d'espacement et permet l'audit automatique des dérives.
+This base module guarantees visual consistency across all display densities, simplifies spacing decisions, and enables automated drift audits.
 
-> « Si la valeur n'est pas dans la table, ce n'est pas une valeur du système. »
+> "If the value isn't in the table, it isn't a system value."
 
-Voir [ADR-020](../../decisions/ADR-020-grille-4px.md) pour l'argumentaire complet et les alternatives rejetées.
+See [ADR-020](../../decisions/ADR-020-grille-4px.md) for the full rationale and rejected alternatives.
 
 ---
 
-## Échelle primitive complète
+## Full primitive scale
 
-| Token primitif | Valeur | Multiplicateur | Usage type |
+| Primitive token | Value | Multiplier | Typical usage |
 |----------------|--------|----------------|-----------|
-| `primitive.space.1`  | 4px  | 4 × 1  | Micro — gap interne minimal, séparateur |
-| `primitive.space.2`  | 8px  | 4 × 2  | Petit — padding vertical des contrôles |
-| `primitive.space.3`  | 12px | 4 × 3  | Intermédiaire |
-| `primitive.space.4`  | 16px | 4 × 4  | Standard — padding horizontal des contrôles |
-| `primitive.space.5`  | 20px | 4 × 5  | Moyen |
-| `primitive.space.6`  | 24px | 4 × 6  | Intermédiaire large |
-| `primitive.space.8`  | 32px | 4 × 8  | Grand — séparation entre composants |
-| `primitive.space.10` | 40px | 4 × 10 | Très grand |
+| `primitive.space.1`  | 4px  | 4 × 1  | Micro — minimal internal gap, separator |
+| `primitive.space.2`  | 8px  | 4 × 2  | Small — control vertical padding |
+| `primitive.space.3`  | 12px | 4 × 3  | Intermediate |
+| `primitive.space.4`  | 16px | 4 × 4  | Standard — control horizontal padding |
+| `primitive.space.5`  | 20px | 4 × 5  | Medium |
+| `primitive.space.6`  | 24px | 4 × 6  | Large intermediate |
+| `primitive.space.8`  | 32px | 4 × 8  | Large — separation between components |
+| `primitive.space.10` | 40px | 4 × 10 | Very large |
 | `primitive.space.12` | 48px | 4 × 12 | Macro |
-| `primitive.space.16` | 64px | 4 × 16 | Macro — séparation entre sections de page |
+| `primitive.space.16` | 64px | 4 × 16 | Macro — separation between page sections |
 
-Les primitifs ne sont **jamais utilisés directement** dans les composants. Toujours passer par un token sémantique.
+Primitives are **never used directly** in components. Always go through a semantic token.
 
 ---
 
-## Tokens sémantiques
+## Semantic tokens
 
-Les tokens sémantiques traduisent l'échelle en intentions UX :
+Semantic tokens translate the scale into UX intentions:
 
-| Token sémantique | Valeur résolue | Intention |
+| Semantic token | Resolved value | Intent |
 |-----------------|----------------|-----------|
-| `semantic.space.control.padding-x` | 16px (`space.4`) | Padding horizontal des contrôles interactifs |
-| `semantic.space.control.padding-y` | 8px (`space.2`)  | Padding vertical des contrôles interactifs |
-| `semantic.space.control.gap`       | 8px (`space.2`)  | Écart interne (icône + label dans un bouton) |
-| `semantic.space.layout.section`    | 32px (`space.8`) | Séparation entre sections de page |
-| `semantic.space.layout.component`  | 20px (`space.5`) | Séparation entre composants |
+| `semantic.space.control.padding-x` | 16px (`space.4`) | Horizontal padding of interactive controls |
+| `semantic.space.control.padding-y` | 8px (`space.2`)  | Vertical padding of interactive controls |
+| `semantic.space.control.gap`       | 8px (`space.2`)  | Internal gap (icon + label in a button) |
+| `semantic.space.layout.section`    | 32px (`space.8`) | Separation between page sections |
+| `semantic.space.layout.component`  | 20px (`space.5`) | Separation between components |
 
-En CSS :
+In CSS:
 ```css
 padding: var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);
 gap: var(--agtc-semantic-space-control-gap);
@@ -61,48 +61,48 @@ margin-bottom: var(--agtc-semantic-space-layout-component);
 
 ---
 
-## Règles d'usage
+## Usage rules
 
 ```
-✅ Toujours utiliser un token sémantique dans les composants
-✅ Si aucun token sémantique ne correspond, en créer un (PR requise)
-✅ Toute nouvelle valeur primitive doit être un multiple de 4
+✅ Always use a semantic token in components
+✅ If no semantic token matches, create one (PR required)
+✅ Any new primitive value must be a multiple of 4
 
-❌ Jamais de valeur px en dur : padding: 14px
-❌ Jamais de Tailwind arbitrary values : p-[14px]
-❌ Jamais de token primitif dans un composant : var(--agtc-primitive-space-4)
+❌ Never a hardcoded px value: padding: 14px
+❌ Never Tailwind arbitrary values: p-[14px]
+❌ Never a primitive token in a component: var(--agtc-primitive-space-4)
 ```
 
 ---
 
-## Quand utiliser quel échelon
+## Which level to use when
 
-| Contexte | Token recommandé | Valeur |
+| Context | Recommended token | Value |
 |----------|-----------------|--------|
-| Gap entre icône et label | `control.gap` | 8px |
-| Padding bouton / input | `control.padding-x/y` | 16px / 8px |
-| Marge entre deux composants | `layout.component` | 20px |
-| Marge entre sections | `layout.section` | 32px |
-| Espacement micro (badge, tag) | `primitive.space.1` via nouveau token sémantique | 4px |
-| Padding carte | Créer `semantic.space.card.padding` = `space.6` | 24px |
+| Gap between icon and label | `control.gap` | 8px |
+| Button / input padding | `control.padding-x/y` | 16px / 8px |
+| Margin between two components | `layout.component` | 20px |
+| Margin between sections | `layout.section` | 32px |
+| Micro spacing (badge, tag) | `primitive.space.1` via new semantic token | 4px |
+| Card padding | Create `semantic.space.card.padding` = `space.6` | 24px |
 
 ---
 
-## Système de densité
+## Density system
 
-Voir [ADR-025](../../decisions/ADR-025-densite-espacement-math-tokens.md) pour l'argumentaire complet et la technique floor/ceil.
+See [ADR-025](../../decisions/ADR-025-densite-espacement-math-tokens.md) for the full rationale and the floor/ceil technique.
 
-Trois niveaux d'espacement adaptés aux contextes d'usage :
+Three spacing levels adapted to usage contexts:
 
-| Mode | Facteur | Contexte | Groupe de tokens |
+| Mode | Factor | Context | Token group |
 |------|---------|----------|-----------------|
-| **compact** | ×0.75 | Dashboards, tableaux, outils data-dense | `semantic.space.compact.*` |
-| **normal** | ×1.0 | Usage courant — formulaires, settings | `semantic.space.control.*` (défaut) |
-| **comfortable** | ×1.25 | Marketing, onboarding, lecture longue | `semantic.space.comfortable.*` |
+| **compact** | ×0.75 | Dashboards, tables, data-dense tools | `semantic.space.compact.*` |
+| **normal** | ×1.0 | Everyday usage — forms, settings | `semantic.space.control.*` (default) |
+| **comfortable** | ×1.25 | Marketing, onboarding, long-form reading | `semantic.space.comfortable.*` |
 
-### Valeurs résolues par mode — toutes sur grille 4px
+### Resolved values by mode — all on the 4px grid
 
-| Token de base | Normal | Compact | Comfortable |
+| Base token | Normal | Compact | Comfortable |
 |--------------|--------|---------|-------------|
 | `control.padding-x` (base: 16px) | **16px** | **12px** | **20px** |
 | `control.padding-y` (base: 8px) | **8px** | **4px** | **12px** |
@@ -110,15 +110,15 @@ Trois niveaux d'espacement adaptés aux contextes d'usage :
 | `layout.section` (base: 32px) | **32px** | **24px** | **40px** |
 | `layout.component` (base: 20px) | **20px** | **12px** | **28px** |
 
-La technique `floor()/ceil()` garantit que toutes les valeurs calculées restent des multiples de 4px.
+The `floor()/ceil()` technique guarantees that every computed value stays a multiple of 4px.
 
-### Usage dans les composants
+### Usage in components
 
 ```css
-/* Normal (défaut) */
+/* Normal (default) */
 padding: var(--agtc-semantic-space-control-padding-y) var(--agtc-semantic-space-control-padding-x);
 
-/* Compact — SaaS data-dense */
+/* Compact — data-dense SaaS */
 padding: var(--agtc-semantic-space-compact-control-padding-y) var(--agtc-semantic-space-compact-control-padding-x);
 
 /* Comfortable — marketing */
@@ -126,6 +126,6 @@ padding: var(--agtc-semantic-space-comfortable-control-padding-y) var(--agtc-sem
 ```
 
 ```
-❌ Jamais de valeur intermédiaire inventée : padding: 10px
-✅ Si la densité ne correspond pas — choisir l'échelon le plus proche parmi les trois modes
+❌ Never an invented intermediate value: padding: 10px
+✅ If density doesn't match — choose the closest of the three modes
 ```

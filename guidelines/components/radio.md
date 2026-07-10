@@ -1,155 +1,155 @@
-# Composant : Radio — Contrat complet
+# Component: Radio — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-01
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-01
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/radio.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/radio.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-038-agtc-radio-implementation.md, guidelines/components/checkbox.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Permettre de choisir **exactement une** option dans un ensemble mutuellement exclusif.
+**Why this component exists:**
+Allow choosing **exactly one** option in a mutually exclusive set.
 
-**Ce composant n'est pas :**
-- Une sélection multiple indépendante (utiliser `<agtc-checkbox>`)
-- Un réglage on/off à effet immédiat (utiliser `<agtc-toggle>`)
-- Un sélecteur pour de nombreuses options (préférer un futur `<agtc-select>` au-delà de ~7 choix)
+**This component is not:**
+- An independent multiple selection (use `<agtc-checkbox>`)
+- An on/off setting with immediate effect (use `<agtc-toggle>`)
+- A selector for many options (prefer a future `<agtc-select>` beyond ~7 choices)
 
 ---
 
-## Deux composants
+## Two components
 
-| Élément | Rôle |
+| Element | Role |
 |---------|------|
-| `<agtc-radio-group>` | Conteneur — `role="radiogroup"`, gère exclusivité, focus roving, clavier, événement |
-| `<agtc-radio>` | Un choix — `role="radio"`, forme ronde |
+| `<agtc-radio-group>` | Container — `role="radiogroup"`, manages exclusivity, roving focus, keyboard, event |
+| `<agtc-radio>` | A choice — `role="radio"`, round shape |
 
-> Un `<agtc-radio>` **doit** vivre dans un `<agtc-radio-group>` : des `<input type="radio">`
-> dans des shadow DOM séparés ne forment pas un groupe natif (voir ADR-038).
-
----
-
-## Forme — décision
-
-**Ronde.** NN/g : le rond est la convention du bouton radio ; le carré signale une checkbox.
+> An `<agtc-radio>` **must** live inside an `<agtc-radio-group>`: `<input type="radio">`
+> elements in separate shadow DOMs do not form a native group (see ADR-038).
 
 ---
 
-## Propriétés
+## Shape — decision
+
+**Round.** NN/g: round is the radio button convention; a square signals a checkbox.
+
+---
+
+## Properties
 
 ### `<agtc-radio-group>`
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `value` | String | `''` | Valeur du radio sélectionné |
-| `name` | String | — | Nom du groupe pour les formulaires |
-| `label` | String | — | Libellé accessible du groupe (`aria-label`) |
-| `disabled` | Boolean | `false` | Désactive le groupe |
+| `value` | String | `''` | Value of the selected radio |
+| `name` | String | — | Group name for forms |
+| `label` | String | — | Accessible label for the group (`aria-label`) |
+| `disabled` | Boolean | `false` | Disables the group |
 
 ### `<agtc-radio>`
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `value` | String | `''` | Valeur de cette option |
-| `label` | String | — | Libellé — ou texte en slot |
-| `checked` | Boolean | `false` | Géré par le groupe (lecture) |
-| `disabled` | Boolean | `false` | Option désactivée |
+| `value` | String | `''` | Value of this option |
+| `label` | String | — | Label — or text in slot |
+| `checked` | Boolean | `false` | Managed by the group (read-only) |
+| `disabled` | Boolean | `false` | Disabled option |
 
 ---
 
-## Événements
+## Events
 
-| Événement | Émis par | Détail | Déclenchement |
+| Event | Emitted by | Detail | Trigger |
 |-----------|----------|--------|---------------|
-| `agtc-change` | `agtc-radio-group` | `{ value, name }` | À chaque changement de sélection |
+| `agtc-change` | `agtc-radio-group` | `{ value, name }` | On every selection change |
 
 ---
 
-## Navigation clavier
+## Keyboard navigation
 
-| Touche | Action |
+| Key | Action |
 |--------|--------|
-| `Tab` | Entre/sort du groupe (un seul radio tabbable — focus roving) |
-| `↓` / `→` | Option suivante (sélectionne, boucle) |
-| `↑` / `←` | Option précédente (sélectionne, boucle) |
-| `Espace` | Sélectionne l'option focalisée (`Entrée` réservé à la soumission de formulaire) |
+| `Tab` | Enters/exits the group (only one tabbable radio — roving focus) |
+| `↓` / `→` | Next option (selects, loops) |
+| `↑` / `←` | Previous option (selects, loops) |
+| `Space` | Selects the focused option (`Enter` reserved for form submission) |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Propriété | Token composant |
+| Property | Component token |
 |-----------|-----------------|
-| Fond | `component.radio.default.background` |
-| Bordure | `component.radio.default.border` |
-| Bordure survol | `component.radio.default.border-hover` |
-| Bordure focus | `component.radio.default.border-focus` |
-| Pastille sélectionnée | `component.radio.default.fill` |
-| Libellé | `component.radio.default.label` |
+| Background | `component.radio.default.background` |
+| Border | `component.radio.default.border` |
+| Border hover | `component.radio.default.border-hover` |
+| Border focus | `component.radio.default.border-focus` |
+| Selected dot | `component.radio.default.fill` |
+| Label | `component.radio.default.label` |
 
-> Taille : `--agtc-semantic-icon-size-control` (20px). Forme ronde : `border-radius: 9999px`.
+> Size: `--agtc-semantic-icon-size-control` (20px). Round shape: `border-radius: 9999px`.
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Groupe | `role="radiogroup"` + `aria-label` |
+| Group | `role="radiogroup"` + `aria-label` |
 | Option | `role="radio"` + `aria-checked` |
-| Focus roving | Un seul radio `tabindex="0"` à la fois |
-| Navigation | Flèches sélectionnent (comportement radio natif) |
-| Cible tactile | ≥ 24px de haut (WCAG 2.5.8) |
-| Label cliquable | Toute l'option (pastille + texte) |
+| Roving focus | Only one radio `tabindex="0"` at a time |
+| Navigation | Arrows select (native radio behavior) |
+| Touch target | ≥ 24px tall (WCAG 2.5.8) |
+| Clickable label | The whole option (dot + text) |
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Forme carrée | Convention checkbox — confusion (NN/g) |
-| `<agtc-radio>` hors d'un groupe | Pas d'exclusivité ni de clavier |
-| Sélection multiple attendue | Utiliser des checkboxes |
-| Aucun défaut quand un défaut sensé existe | Étape inutile pour l'utilisateur (NN/g) |
-| Défaut présomptueux (genre, civilité) | Laisser vide (NN/g, exception) |
+| Square shape | Checkbox convention — confusion (NN/g) |
+| `<agtc-radio>` outside a group | No exclusivity or keyboard support |
+| Expected multiple selection | Use checkboxes |
+| No default when a sensible default exists | Unnecessary step for the user (NN/g) |
+| Presumptuous default (gender, title) | Leave empty (NN/g, exception) |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
-> (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.
+> Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
+> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| **Forme ronde** (le carré = checkbox) | [NN/g — checkboxes vs radio](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | `border-radius: 9999px` |
-| Sélection mutuellement exclusive (exactement 1) | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Groupe gère l'exclusivité |
-| Pré-sélectionner un défaut sensé (sauf exceptions) | [NN/g — radio default selection](https://www.nngroup.com/articles/radio-buttons-default-selection/) | ✅ | `value` du groupe — guidance d'usage |
-| Empilement vertical, une option par ligne | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Recommandation de mise en page |
-| Label cliquable (pastille **ou** texte) — Fitts | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Toute l'option est cliquable |
-| Cible tactile ≥ 24×24px | [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `min-height: 24px` (WCAG 2.5.8) |
-| Navigation flèches = sélection (radio natif) | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Géré par le groupe (WAI-ARIA radiogroup) |
-| États visibles complets | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | default/hover/focus/selected/disabled |
+| **Round shape** (square = checkbox) | [NN/g — checkboxes vs radio](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | `border-radius: 9999px` |
+| Mutually exclusive selection (exactly 1) | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Group manages exclusivity |
+| Pre-select a sensible default (except exceptions) | [NN/g — radio default selection](https://www.nngroup.com/articles/radio-buttons-default-selection/) | ✅ | Group `value` — usage guidance |
+| Vertical stacking, one option per row | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Layout recommendation |
+| Clickable label (dot **or** text) — Fitts | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | The whole option is clickable |
+| Touch target ≥ 24×24px | [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `min-height: 24px` (WCAG 2.5.8) |
+| Arrow navigation = selection (native radio) | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Managed by the group (WAI-ARIA radiogroup) |
+| Complete visible states | [NN/g](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | default/hover/focus/selected/disabled |
 
 ---
 
-## Implémentation
+## Implementation
 
 ```html
-<!-- Groupe avec défaut sélectionné -->
-<agtc-radio-group name="plan" value="pro" label="Formule">
-  <agtc-radio value="free">Gratuit</agtc-radio>
+<!-- Group with a selected default -->
+<agtc-radio-group name="plan" value="pro" label="Plan">
+  <agtc-radio value="free">Free</agtc-radio>
   <agtc-radio value="pro">Pro</agtc-radio>
-  <agtc-radio value="team">Équipe</agtc-radio>
+  <agtc-radio value="team">Team</agtc-radio>
 </agtc-radio-group>
 
-<!-- Sans pré-sélection -->
-<agtc-radio-group name="ship" label="Livraison">
+<!-- Without a pre-selection -->
+<agtc-radio-group name="ship" label="Shipping">
   <agtc-radio value="standard">Standard</agtc-radio>
   <agtc-radio value="express">Express</agtc-radio>
 </agtc-radio-group>
@@ -162,10 +162,10 @@ document.querySelector('agtc-radio-group')
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Modification token de composant | Principal Designer |
-| Changement de comportement clavier | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Component token modification | Principal Designer |
+| Keyboard behavior change | Design system team |
+| Accessibility bug fix | Design system team review |

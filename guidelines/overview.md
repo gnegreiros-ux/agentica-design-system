@@ -1,18 +1,18 @@
-# Guidelines — Vue d ensemble
+# Guidelines — Overview
 
-> Point d'entrée du système de guidelines — à lire avant toute guideline spécifique.
+> Entry point of the guidelines system — read before any specific guideline.
 > **Type:** guideline
-> **Chemin logique:** guidelines/overview.md
-> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Logical path:** guidelines/overview.md
+> **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** guidelines/foundations/color.md, guidelines/foundations/typography.md, guidelines/foundations/spacing.md, guidelines/components/overview.md
 
-Point d entree du systeme de guidelines.
-Lire ce fichier avant d acceder a n importe quelle guideline.
+Entry point of the guidelines system.
+Read this file before accessing any guideline.
 
 ## Structure
-foundations/ — couleur, typo, espacement
-components/  — contrats de composants
+foundations/ — color, type, spacing
+components/  — component contracts
 
-## Principe
-Chaque guideline est un contrat, pas une recommandation.
-Les regles s appliquent a toutes les equipes, tous les frameworks.
+## Principle
+Each guideline is a contract, not a recommendation.
+The rules apply to every team, every framework.

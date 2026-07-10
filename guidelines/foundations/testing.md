@@ -1,36 +1,36 @@
-# Testing — Guide pour les équipes consommatrices
+# Testing — Guide for consuming teams
 
-> Ce guide s'adresse aux **équipes produit** qui consomment le design system Agentica
-> et souhaitent tester leur produit final.
+> This guide is for **product teams** who consume the Agentica design system
+> and want to test their final product.
 >
-> Pour les tests du design system lui-même, voir `How-to-devs.md`.
+> For testing the design system itself, see `How-to-devs.md`.
 
 ---
 
-## Les deux périmètres (ADR-066)
+## The two scopes (ADR-066)
 
-Le design system distingue deux responsabilités distinctes :
+The design system distinguishes two separate responsibilities:
 
-| Périmètre | Propriétaire | Dépôt | Outil |
+| Scope | Owner | Repo | Tool |
 |-----------|-------------|-------|-------|
-| Tests DS | Équipe DS | `agentic-design-system` | Playwright (CI interne) |
-| Tests produit | Votre équipe | Votre dépôt | Playwright (votre CI) |
+| DS tests | DS team | `agentic-design-system` | Playwright (internal CI) |
+| Product tests | Your team | Your repo | Playwright (your CI) |
 
-Le DS ne peut pas tester votre produit à votre place — il ne connaît pas votre contexte,
-vos pages, ni vos décisions visuelles. Il vous fournit un kit pour démarrer.
+The DS cannot test your product on your behalf — it doesn't know your context,
+your pages, or your visual decisions. It provides you with a kit to get started.
 
 ---
 
-## Setup minimal en 3 étapes
+## Minimal setup in 3 steps
 
-### 1. Installer Playwright dans votre projet
+### 1. Install Playwright in your project
 
 ```bash
 npm init playwright@latest
-# → Choisir JavaScript, dossier tests/, ajouter GitHub Actions
+# → Choose JavaScript, tests/ folder, add GitHub Actions
 ```
 
-### 2. Configurer la base URL
+### 2. Configure the base URL
 
 ```js
 // playwright.config.js
@@ -39,8 +39,8 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   use: {
-    baseURL: 'http://localhost:3000', // votre port de dev
-    reducedMotion: 'reduce',          // screenshots déterministes
+    baseURL: 'http://localhost:3000', // your dev port
+    reducedMotion: 'reduce',          // deterministic screenshots
   },
   webServer: {
     command: 'npm run dev',
@@ -50,50 +50,50 @@ export default defineConfig({
 });
 ```
 
-### 3. Charger les tokens DS dans vos tests
+### 3. Load DS tokens in your tests
 
-Les composants `agtc-*` nécessitent les tokens CSS pour s'afficher correctement.
-Si votre app charge déjà `agtc.js` et `tokens.css`, rien à faire de plus.
+`agtc-*` components require the CSS tokens to render correctly.
+If your app already loads `agtc.js` and `tokens.css`, there's nothing else to do.
 
 ---
 
-## Patterns de test recommandés
+## Recommended test patterns
 
-### Test visuel de base (light + dark)
+### Basic visual test (light + dark)
 
 ```js
 import { test, expect } from '@playwright/test';
 
-test.describe('Ma page produit', () => {
+test.describe('My product page', () => {
   for (const theme of ['light', 'dark']) {
-    test(`rendu ${theme}`, async ({ page }) => {
-      await page.goto('/ma-page');
+    test(`${theme} render`, async ({ page }) => {
+      await page.goto('/my-page');
       await page.evaluate((t) =>
         document.documentElement.setAttribute('data-theme', t), theme
       );
-      await expect(page).toHaveScreenshot(`ma-page-${theme}.png`, { fullPage: true });
+      await expect(page).toHaveScreenshot(`my-page-${theme}.png`, { fullPage: true });
     });
   }
 });
 ```
 
-### Vérifier qu'un composant DS s'affiche correctement
+### Verify a DS component renders correctly
 
 ```js
 import { test, expect } from '@playwright/test';
 
-test('agtc-button — variantes visibles', async ({ page }) => {
-  await page.goto('/ma-page-avec-bouton');
+test('agtc-button — variants visible', async ({ page }) => {
+  await page.goto('/my-page-with-button');
   const btn = page.locator('agtc-button[variant="primary"]');
   await expect(btn).toBeVisible();
   await expect(btn).toHaveScreenshot('btn-primary.png');
 });
 ```
 
-### Tester le comportement d'un composant DS interactif
+### Test the behavior of an interactive DS component
 
 ```js
-test('agtc-top-nav — menu mobile s\'ouvre', async ({ page }) => {
+test('agtc-top-nav — mobile menu opens', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/');
   await page.locator('.menu-btn').click();
@@ -101,7 +101,7 @@ test('agtc-top-nav — menu mobile s\'ouvre', async ({ page }) => {
 });
 ```
 
-### Intégration axe-core (accessibilité)
+### axe-core integration (accessibility)
 
 ```bash
 npm install -D @axe-core/playwright
@@ -111,8 +111,8 @@ npm install -D @axe-core/playwright
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('ma page — 0 violation WCAG', async ({ page }) => {
-  await page.goto('/ma-page');
+test('my page — 0 WCAG violations', async ({ page }) => {
+  await page.goto('/my-page');
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze();
@@ -122,54 +122,54 @@ test('ma page — 0 violation WCAG', async ({ page }) => {
 
 ---
 
-## Gérer les mises à jour DS
+## Handling DS updates
 
-Quand vous montez la version du DS dans votre `package.json`, certains composants peuvent
-avoir changé visuellement (refonte, correction de contraste, nouveau token).
+When you bump the DS version in your `package.json`, some components may
+have changed visually (redesign, contrast fix, new token).
 
-**Processus recommandé après un upgrade DS :**
+**Recommended process after a DS upgrade:**
 
 ```bash
-# 1. Mettre à jour le DS
+# 1. Update the DS
 npm install @agentica/design-system@latest
 
-# 2. Lancer vos tests visuels
+# 2. Run your visual tests
 npx playwright test
 
-# 3. Si des diffs apparaissent :
-#    - Consulter le CHANGELOG du DS
-#    - Comparer le diff visuel : intentionnel ou régression ?
-#    - Si intentionnel → mettre à jour vos snapshots
+# 3. If diffs appear:
+#    - Check the DS CHANGELOG
+#    - Compare the visual diff: intentional or regression?
+#    - If intentional → update your snapshots
 npx playwright test --update-snapshots
 
-# 4. Committer les nouveaux snapshots avec une note dans votre PR
+# 4. Commit the new snapshots with a note in your PR
 ```
 
 ---
 
-## Où trouver la documentation des comportements testables
+## Where to find documentation of testable behaviors
 
-Chaque composant `agtc-*` documente ses comportements attendus dans `guidelines/components/` :
+Each `agtc-*` component documents its expected behaviors in `guidelines/components/`:
 
-| Composant | Guideline |
+| Component | Guideline |
 |-----------|-----------|
 | `agtc-button` | `guidelines/components/button.md` |
 | `agtc-top-nav` | `guidelines/components/top-nav.md` |
 | `agtc-card` | `guidelines/components/card.md` |
 | … | `guidelines/components/` |
 
-Ces guidelines décrivent les états, variantes et accessibilité — ce sont les comportements
-que vos tests doivent couvrir si vous utilisez ces composants.
+These guidelines describe states, variants and accessibility — these are the behaviors
+your tests should cover if you use these components.
 
 ---
 
-## Règles de gouvernance
+## Governance rules
 
 ```
-✅ Vos snapshots vivent dans votre dépôt — pas dans le dépôt DS
-✅ Vous êtes propriétaires de vos tests et de vos baselines
-✅ Toute approbation de diff visuel est de votre responsabilité
-❌ Ne pas demander au DS de maintenir vos tests produit
-❌ Ne pas tester en utilisant des valeurs hex ou px issues des tokens (ils peuvent changer)
-   → Tester le comportement observable, pas les valeurs internes
+✅ Your snapshots live in your repo — not in the DS repo
+✅ You own your tests and your baselines
+✅ Approving any visual diff is your responsibility
+❌ Don't ask the DS to maintain your product tests
+❌ Don't test using hex or px values taken from tokens (they can change)
+   → Test observable behavior, not internal values
 ```

@@ -1,65 +1,65 @@
-# Composant : Badge — Contrat complet
+# Component: Badge — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-05-31
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-05-31
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/badge.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/badge.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Afficher un statut, une catégorie ou un compteur de manière compacte et non interactive.
+**Why this component exists:**
+Display a status, category, or count in a compact, non-interactive way.
 
-**Ce composant n'est pas :**
-- Un bouton (utiliser `<agtc-button>`)
-- Une alerte contextuelle (utiliser `<agtc-alert>`)
-- Un tag cliquable (encapsuler dans un `<button>`)
+**This component is not:**
+- A button (use `<agtc-button>`)
+- A contextual alert (use `<agtc-alert>`)
+- A clickable tag (wrap it in a `<button>`)
 
 ---
 
-## Variantes
+## Variants
 
-| Variante | Sémantique | Usage typique |
+| Variant | Semantics | Typical usage |
 |----------|-----------|---------------|
-| `neutral` | Neutre, informatif | Statut par défaut, labels génériques |
-| `brand` | Identité produit | Fonctionnalités nouvelles, highlights |
-| `success` | Succès, validé | Statut "Actif", "Approuvé", "Complété" |
-| `warning` | Attention requise | Statut "En attente", "À revoir" |
-| `danger` | Erreur, critique | Statut "Rejeté", "Expiré", "Erreur" |
-| `info` | Information neutre | Statut "En cours", "Brouillon" |
+| `neutral` | Neutral, informative | Default status, generic labels |
+| `brand` | Product identity | New features, highlights |
+| `success` | Success, validated | "Active", "Approved", "Completed" status |
+| `warning` | Attention required | "Pending", "Needs review" status |
+| `danger` | Error, critical | "Rejected", "Expired", "Error" status |
+| `info` | Neutral information | "In progress", "Draft" status |
 
 ---
 
-## Tailles
+## Sizes
 
-| Taille | Usage |
+| Size | Usage |
 |--------|-------|
-| `md` | Défaut — usage général dans les listes et tableaux |
-| `sm` | Espaces contraints — tableaux denses, en-têtes |
+| `md` | Default — general use in lists and tables |
+| `sm` | Constrained spaces — dense tables, headers |
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `variant` | String | `neutral` | Variante sémantique |
-| `size` | String | `md` | Taille : `md` ou `sm` |
-| `icon` | String | — | Icône Lucide en prefix |
-| `icon-only` | Boolean | `false` | Affiche uniquement l'icône |
-| `label` | String | — | **Obligatoire si `icon-only`** — WCAG 1.1.1 |
+| `variant` | String | `neutral` | Semantic variant |
+| `size` | String | `md` | Size: `md` or `sm` |
+| `icon` | String | — | Lucide icon as prefix |
+| `icon-only` | Boolean | `false` | Displays only the icon |
+| `label` | String | — | **Required if `icon-only`** — WCAG 1.1.1 |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Variante | Token background | Token text | Token border |
+| Variant | Background token | Text token | Border token |
 |----------|-----------------|-----------|--------------|
 | neutral | `component.badge.neutral.background` | `component.badge.neutral.text` | `component.badge.neutral.border` |
 | brand | `component.badge.brand.background` | `component.badge.brand.text` | — |
@@ -68,96 +68,96 @@ Afficher un statut, une catégorie ou un compteur de manière compacte et non in
 | danger | `component.badge.danger.background` | `component.badge.danger.text` | — |
 | info | `component.badge.info.background` | `component.badge.info.text` | — |
 
-| Propriété | Token |
+| Property | Token |
 |-----------|-------|
-| Rayon md | `component.badge.md.radius` (pill — 9999px) |
+| Radius md | `component.badge.md.radius` (pill — 9999px) |
 | Padding X md | `component.badge.md.padding-x` |
 | Padding Y md | `component.badge.md.padding-y` |
 | Font size md | `component.badge.md.font-size` |
-| Rayon sm | `component.badge.sm.radius` (pill — 9999px) |
+| Radius sm | `component.badge.sm.radius` (pill — 9999px) |
 | Padding X sm | `component.badge.sm.padding-x` |
 | Padding Y sm | `component.badge.sm.padding-y` |
 | Font size sm | `component.badge.sm.font-size` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Rôle sémantique | `role="status"` — annonce les changements aux lecteurs d'écran |
-| Badge icon-only | `aria-label` obligatoire (WCAG 1.1.1) |
-| Badge icon-only sans label | `aria-hidden="true"` — purement décoratif |
-| Contraste texte/fond | 4.5:1 minimum sur fond blanc (WCAG AA) |
-| Non interactif | Pas de `tabindex` — si cliquable, encapsuler dans un `<button>` |
+| Semantic role | `role="status"` — announces changes to screen readers |
+| Icon-only badge | `aria-label` required (WCAG 1.1.1) |
+| Icon-only badge without label | `aria-hidden="true"` — purely decorative |
+| Text/background contrast | 4.5:1 minimum on white background (WCAG AA) |
+| Non-interactive | No `tabindex` — if clickable, wrap in a `<button>` |
 
 ---
 
-## Comportements
+## Behaviors
 
-Le badge est **non interactif** par défaut.
+The badge is **non-interactive** by default.
 
-- `user-select: none` — le texte n'est pas sélectionnable
-- `white-space: nowrap` — jamais de retour à la ligne
-- Icon-only : `aspect-ratio: 1` — forme carrée parfaite
+- `user-select: none` — text is not selectable
+- `white-space: nowrap` — never wraps to a new line
+- Icon-only: `aspect-ratio: 1` — perfect square shape
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Badge cliquable sans encapsulation | Non accessible, pas de focus |
-| `icon-only` sans `label` | Inaccessible (WCAG 1.1.1) |
-| Variante inventée hors de `component.json` | Escalader au design system team |
-| Couleur codée en dur | Contourne les tokens sémantiques |
-| Badge pour une action | Utiliser `<agtc-button>` à la place |
+| Clickable badge without wrapping | Not accessible, no focus |
+| `icon-only` without `label` | Inaccessible (WCAG 1.1.1) |
+| Variant invented outside of `component.json` | Escalate to the design system team |
+| Hardcoded color | Bypasses semantic tokens |
+| Badge used for an action | Use `<agtc-button>` instead |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **tous approuvés**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036). Decision: **all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Statut pas encodé uniquement par la couleur | [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | **Recommandé** : pour les statuts critiques (`danger`/`warning`), ajouter une icône ou un libellé distinctif (non imposé, mais bonne pratique) |
-| `role="status"` pour annoncer les changements aux AT | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Déjà en place |
-| Mapping sémantique cohérent (traffic-light) | [Dashboard — color/semantic](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Variantes success/warning/danger |
-| Badge non interactif — encapsuler si cliquable | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Anti-pattern existant |
+| Status not encoded by color alone | [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | **Recommended**: for critical statuses (`danger`/`warning`), add a distinctive icon or label (not enforced, but good practice) |
+| `role="status"` to announce changes to AT | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Already in place |
+| Consistent semantic mapping (traffic-light) | [Dashboard — color/semantic](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | success/warning/danger variants |
+| Non-interactive badge — wrap if clickable | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Existing anti-pattern |
 
 ---
 
-## Implémentation
+## Implementation
 
 ### Web Component (Lit)
 ```html
-<!-- Badge texte basique -->
-<agtc-badge>Nouveau</agtc-badge>
-<agtc-badge variant="success">Actif</agtc-badge>
-<agtc-badge variant="warning">En attente</agtc-badge>
-<agtc-badge variant="danger">Rejeté</agtc-badge>
-<agtc-badge variant="info">En cours</agtc-badge>
+<!-- Basic text badge -->
+<agtc-badge>New</agtc-badge>
+<agtc-badge variant="success">Active</agtc-badge>
+<agtc-badge variant="warning">Pending</agtc-badge>
+<agtc-badge variant="danger">Rejected</agtc-badge>
+<agtc-badge variant="info">In progress</agtc-badge>
 <agtc-badge variant="brand">Beta</agtc-badge>
 
-<!-- Avec icône -->
-<agtc-badge variant="success" icon="check">Approuvé</agtc-badge>
-<agtc-badge variant="danger" icon="x">Expiré</agtc-badge>
+<!-- With icon -->
+<agtc-badge variant="success" icon="check">Approved</agtc-badge>
+<agtc-badge variant="danger" icon="x">Expired</agtc-badge>
 
-<!-- Taille sm -->
+<!-- Size sm -->
 <agtc-badge size="sm" variant="neutral">Draft</agtc-badge>
 
-<!-- Icon-only — label obligatoire -->
-<agtc-badge icon-only icon="check" label="Approuvé" variant="success"></agtc-badge>
+<!-- Icon-only — label required -->
+<agtc-badge icon-only icon="check" label="Approved" variant="success"></agtc-badge>
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'une variante | Principal Designer + Tech Lead |
-| Modification d'un token | Principal Designer |
-| Changement de taille | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Adding a variant | Principal Designer + Tech Lead |
+| Modifying a token | Principal Designer |
+| Size change | Design system team |
+| Accessibility bug fix | Design system team review |

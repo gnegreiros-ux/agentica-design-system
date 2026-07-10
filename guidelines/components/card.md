@@ -1,140 +1,140 @@
-# Composant : Card — Contrat complet
+# Component: Card — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-05-31
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-05-31
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/card.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/card.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Regrouper des informations visuellement liées dans un conteneur délimité, avec support d'en-tête et de pied de page optionnels.
+**Why this component exists:**
+Group visually related information inside a bounded container, with optional header and footer support.
 
-**Ce composant n'est pas :**
-- Un lien de navigation (placer un `<a>` à l'intérieur)
-- Un modal (utiliser `<agtc-modal>`)
-- Un composant interactif — non cliquable par défaut
+**This component is not:**
+- A navigation link (place an `<a>` inside it)
+- A modal (use `<agtc-modal>`)
+- An interactive component — not clickable by default
 
 ---
 
-## Variantes
+## Variants
 
-| Variante | Effet visuel | Usage |
+| Variant | Visual effect | Usage |
 |----------|-------------|-------|
-| `default` | Bordure fine, fond surface | Usage général |
-| `elevated` | Ombre portée, fond surface | Mise en avant, hiérarchie |
-| `flat` | Fond subtle, pas de bordure visible | Sections secondaires, groupements denses |
+| `default` | Thin border, surface background | General use |
+| `elevated` | Drop shadow, surface background | Highlighting, hierarchy |
+| `flat` | Subtle background, no visible border | Secondary sections, dense groupings |
 
 ---
 
 ## Padding
 
-| Valeur | Taille | Usage |
+| Value | Size | Usage |
 |--------|--------|-------|
-| `none` | 0px | Médias plein-bord, listes sans padding |
-| `sm` | `primitive.space.3` | Espaces contraints |
-| `md` | `semantic.space.layout.component` | Défaut — usage général |
-| `lg` | `primitive.space.6` | Contenu spacieux, formulaires |
+| `none` | 0px | Full-bleed media, padding-free lists |
+| `sm` | `primitive.space.3` | Constrained spaces |
+| `md` | `semantic.space.layout.component` | Default — general use |
+| `lg` | `primitive.space.6` | Spacious content, forms |
 
 ---
 
 ## Slots
 
-| Slot | Comportement |
+| Slot | Behavior |
 |------|-------------|
-| `header` | Séparateur bas automatique si contenu présent |
-| (défaut) | Corps de la carte |
-| `footer` | Séparateur haut automatique si contenu présent |
+| `header` | Automatic bottom separator if content is present |
+| (default) | Card body |
+| `footer` | Automatic top separator if content is present |
 
-Les séparateurs sont masqués si le slot est vide (détection via `slotchange`).
+Separators are hidden if the slot is empty (detected via `slotchange`).
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `variant` | String | `default` | Variante visuelle |
-| `padding` | String | `md` | Taille de padding interne |
+| `variant` | String | `default` | Visual variant |
+| `padding` | String | `md` | Internal padding size |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Variante | Token background | Token border | Token shadow |
+| Variant | Background token | Border token | Shadow token |
 |----------|-----------------|-------------|--------------|
 | default | `component.card.default.background` | `component.card.default.border` | — |
 | elevated | `component.card.elevated.background` | transparent | `component.card.elevated.shadow` |
 | flat | `component.card.flat.background` | transparent | — |
 
-| Propriété | Token |
+| Property | Token |
 |-----------|-------|
-| Rayon | `component.card.default.radius` |
+| Radius | `component.card.default.radius` |
 | Padding md | `component.card.default.padding` |
 | Padding none | `component.card.padding-none` |
 | Padding sm | `component.card.padding-sm` |
 | Padding lg | `component.card.padding-lg` |
 
-### Typographie — dual contexte (ADR-057)
+### Typography — dual context (ADR-057)
 
-La typographie de la card suit le contexte d'utilisation déclaré par `data-context` sur `<body>`.
+The card's typography follows the usage context declared via `data-context` on `<body>`.
 
-| Rôle | Token SaaS/Produit | Token Marketing (`data-context="marketing"`) |
+| Role | SaaS/Product token | Marketing token (`data-context="marketing"`) |
 |------|--------------------|---------------------------------------------|
-| Titre standard | `component.card.typography.title.size` (14px) | `component.card.typography.marketing.title.size` (16px) |
-| Titre prominent (persona, feature) | — | `component.card.typography.marketing.hero-title.size` (20px) |
-| Corps | `component.card.typography.body.size` (14px) | `component.card.typography.marketing.body.size` (16px) |
-| Méta / label secondaire | `component.card.typography.meta.size` (12px) | `component.card.typography.marketing.meta.size` (14px) |
+| Standard title | `component.card.typography.title.size` (14px) | `component.card.typography.marketing.title.size` (16px) |
+| Prominent title (persona, feature) | — | `component.card.typography.marketing.hero-title.size` (20px) |
+| Body | `component.card.typography.body.size` (14px) | `component.card.typography.marketing.body.size` (16px) |
+| Meta / secondary label | `component.card.typography.meta.size` (12px) | `component.card.typography.marketing.meta.size` (14px) |
 
-**Règle :** utiliser `component.card.typography.marketing.*` uniquement sur les pages `data-context="marketing"` (`index.html`, `get-started.html`, `agents/index.html`). Ne jamais appliquer ces tokens sur une page de documentation de composant.
+**Rule:** use `component.card.typography.marketing.*` only on pages with `data-context="marketing"` (`index.html`, `get-started.html`, `agents/index.html`). Never apply these tokens on a component documentation page.
 
-Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-title { font-size: var(--agtc-component-card-typography-marketing-title-size) }` dans `siteCSS()` — les tokens cascadent automatiquement sans modification du Web Component.
+Marketing overrides are applied via `[data-context="marketing"] .card-title { font-size: var(--agtc-component-card-typography-marketing-title-size) }` in `siteCSS()` — the tokens cascade automatically without modifying the Web Component.
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Non interactif | Pas de `role` ajouté — sémantique neutre (`<div>`) |
-| Carte cliquable | Encapsuler dans un `<a>` avec texte accessible |
-| Contenu lisible | Contraste du texte à l'intérieur ≥ 4.5:1 |
-| Focus | Géré par les éléments interactifs à l'intérieur, pas la carte elle-même |
+| Non-interactive | No `role` added — neutral semantics (`<div>`) |
+| Clickable card | Wrap in an `<a>` with accessible text |
+| Readable content | Contrast of text inside ≥ 4.5:1 |
+| Focus | Managed by the interactive elements inside, not the card itself |
 
 ---
 
-## Comportements
+## Behaviors
 
-- `overflow: hidden` — le contenu ne déborde jamais du rayon
-- Le padding du body est ajusté automatiquement si header/footer présents (pas de double espacement)
-- Les séparateurs header/footer s'adaptent à la variante (couleur de bordure cohérente)
+- `overflow: hidden` — content never overflows the radius
+- Body padding is adjusted automatically when a header/footer is present (no double spacing)
+- Header/footer separators adapt to the variant (consistent border color)
 
 ---
 
 ## Composition
 
 ```html
-<!-- Carte cliquable — <a> à l'intérieur -->
+<!-- Clickable card — <a> inside -->
 <agtc-card variant="elevated">
   <a href="/detail" style="display:block;text-decoration:none">
-    <h3>Titre de la carte</h3>
-    <p>Description du contenu.</p>
+    <h3>Card title</h3>
+    <p>Content description.</p>
   </a>
 </agtc-card>
 
-<!-- Avec actions en footer -->
+<!-- With footer actions -->
 <agtc-card>
-  <span slot="header">Titre</span>
-  Contenu principal de la carte.
+  <span slot="header">Title</span>
+  Main card content.
   <div slot="footer">
-    <agtc-button variant="primary">Confirmer</agtc-button>
-    <agtc-button variant="ghost">Annuler</agtc-button>
+    <agtc-button variant="primary">Confirm</agtc-button>
+    <agtc-button variant="ghost">Cancel</agtc-button>
   </div>
 </agtc-card>
 ```
@@ -143,85 +143,85 @@ Les surcharges marketing sont appliquées via `[data-context="marketing"] .card-
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| `<agtc-card>` cliquable sans `<a>` | Non accessible — pas de focus natif |
-| Couleur de fond codée en dur | Contourne les tokens de variante |
-| Padding inline style | Utiliser les valeurs de `padding` |
-| Carte sans contenu | Affichage vide — toujours fournir un body |
-| Variante inventée | Escalader au design system team |
-| **Élément interactif imbriqué** (`<button>` dans un `<a>` englobant) | Invalide en HTML, ambigu au clic et au clavier (cf. pattern C2) |
-| Carte « tout cliquable » contenant ≥ 2 actions distinctes | Conflit de cibles — utiliser l'overlay `::after` ou des actions propres (cf. C2) |
+| Clickable `<agtc-card>` without an `<a>` | Not accessible — no native focus |
+| Hardcoded background color | Bypasses variant tokens |
+| Inline padding style | Use the `padding` values |
+| Card with no content | Empty display — always provide a body |
+| Invented variant | Escalate to the design system team |
+| **Nested interactive element** (`<button>` inside an enclosing `<a>`) | Invalid HTML, ambiguous on click and via keyboard (see pattern C2) |
+| "Fully clickable" card containing ≥ 2 distinct actions | Target conflict — use an `::after` overlay or dedicated actions (see C2) |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036). Décision : **C1, C3, C4 approuvés + C2 révisé**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036). Decision: **C1, C3, C4 approved + C2 revised**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Groupement visuel clair (clustering) du contenu lié | [Dashboard — grouped layout](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Intention du composant |
-| **Carte cliquable — règle révisée** | [Smashing — clickable cards](https://www.smashingmagazine.com/category/design-patterns/) · [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ (révisé) | Voir contrat ci-dessous |
-| Hiérarchie via élévation/ombre, pas via couleur seule | [Dashboard — composition](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Variante `elevated` |
-| Détail-on-demand : la carte résume, le détail s'ouvre ailleurs | [Dashboard — screenspace](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Guideline d'usage : éviter la carte « réceptacle de tout le détail » |
+| Clear visual grouping (clustering) of related content | [Dashboard — grouped layout](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Component intent |
+| **Clickable card — revised rule** | [Smashing — clickable cards](https://www.smashingmagazine.com/category/design-patterns/) · [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ (revised) | See contract below |
+| Hierarchy via elevation/shadow, not color alone | [Dashboard — composition](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | `elevated` variant |
+| Detail-on-demand: the card summarizes, detail opens elsewhere | [Dashboard — screenspace](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Usage guideline: avoid the card becoming a "container for all detail" |
 
-### Contrat de cliquabilité (C2 révisé)
+### Clickability contract (revised C2)
 
-- **Carte avec une seule destination** → le lien couvre **toute la surface** (cible de clic
-  englobante, focus visible sur la carte).
-- **Carte avec des actions distinctes** (≥ 2 boutons/liens) → la carte **n'est pas** un lien global :
-  - soit un **lien primaire** (le titre) étendu sur la carte via un overlay `::after`, avec les
-    boutons secondaires posés au-dessus (`position: relative; z-index`) pour rester cliquables ;
-  - soit un **conteneur non interactif** où chaque action porte son propre `<button>`/`<a>`.
-- **Jamais d'élément interactif imbriqué** dans un autre.
+- **Card with a single destination** → the link covers the **entire surface** (encompassing
+  click target, visible focus on the card).
+- **Card with distinct actions** (≥ 2 buttons/links) → the card **is not** a global link:
+  - either a **primary link** (the title) extended over the card via an `::after` overlay, with
+    secondary buttons placed above it (`position: relative; z-index`) to remain clickable;
+  - or a **non-interactive container** where each action has its own `<button>`/`<a>`.
+- **Never nest an interactive element** inside another one.
 
 ---
 
-## Implémentation
+## Implementation
 
 ### Web Component (Lit)
 ```html
 <!-- Default -->
 <agtc-card>
-  <p>Contenu de la carte.</p>
+  <p>Card content.</p>
 </agtc-card>
 
 <!-- Elevated -->
 <agtc-card variant="elevated">
-  <p>Carte mise en avant.</p>
+  <p>Highlighted card.</p>
 </agtc-card>
 
 <!-- Flat -->
 <agtc-card variant="flat">
-  <p>Section secondaire.</p>
+  <p>Secondary section.</p>
 </agtc-card>
 
-<!-- Avec header et footer -->
+<!-- With header and footer -->
 <agtc-card padding="lg">
-  <span slot="header">Paramètres du compte</span>
-  <p>Gérez vos informations personnelles.</p>
+  <span slot="header">Account settings</span>
+  <p>Manage your personal information.</p>
   <div slot="footer">
-    <agtc-button variant="primary">Enregistrer</agtc-button>
+    <agtc-button variant="primary">Save</agtc-button>
   </div>
 </agtc-card>
 
-<!-- Padding none — image plein-bord -->
+<!-- Padding none — full-bleed image -->
 <agtc-card variant="elevated" padding="none">
-  <img src="cover.jpg" alt="Couverture" style="width:100%;display:block">
+  <img src="cover.jpg" alt="Cover" style="width:100%;display:block">
   <div style="padding:var(--agtc-semantic-space-layout-component)">
-    <h3>Titre</h3>
+    <h3>Title</h3>
   </div>
 </agtc-card>
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'une variante | Principal Designer + Tech Lead |
-| Modification d'un token | Principal Designer |
-| Ajout d'un nouveau slot | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Adding a variant | Principal Designer + Tech Lead |
+| Modifying a token | Principal Designer |
+| Adding a new slot | Design system team |
+| Accessibility bug fix | Design system team review |

@@ -1,181 +1,180 @@
-# Contextes d'utilisation — Mode Produit vs Mode Marketing
+# Usage contexts — Product Mode vs Marketing Mode
 
-> Décision de "direction" éditoriale — comment distinguer les pages qui convainquent des pages qui documentent.
+> Editorial "direction" decision — how to distinguish pages that persuade from pages that document.
 > **Type:** guideline
-> **Chemin logique:** guidelines/foundations/contextes.md
-> **Lecture avant:** DESIGN.md, .claude/rules/contexts-utilisation.md
+> **Logical path:** guidelines/foundations/contextes.md
+> **Read before:** DESIGN.md, .claude/rules/contexts-utilisation.md
 > **Relations:** decisions/ADR-057, tokens/semantic.json (semantic.marketing.*)
 
 ---
 
-## Pourquoi deux contextes ?
+## Why two contexts?
 
-Un système de design produit des outputs homogènes par défaut. Sans distinction explicite, la page
-d'accueil d'un produit ressemble à sa page de documentation : même espacement, même typographie, même
-densité visuelle.
+A design system produces homogeneous output by default. Without an explicit distinction, a
+product's home page looks like its documentation page: same spacing, same typography, same
+visual density.
 
-Les deux contextes formalisent une différence d'intention :
+The two contexts formalize a difference in intent:
 
-| | Mode Produit (SaaS) | Mode Marketing (Narratif) |
+| | Product Mode (SaaS) | Marketing Mode (Narrative) |
 |-|---------------------|--------------------------|
-| **But** | Permettre d'agir | Communiquer une vision |
-| **Lecteur** | Utilisateur qui travaille | Visiteur qui évalue |
-| **Ton** | Précision, efficacité | Clarté, conviction |
-| **Espace** | Densité normale | Respiration ample |
-| **Hiérarchie** | Répétable, prévisible | Éditoriale, unique |
+| **Purpose** | Enable action | Communicate a vision |
+| **Reader** | User who is working | Visitor who is evaluating |
+| **Tone** | Precision, efficiency | Clarity, conviction |
+| **Space** | Normal density | Generous breathing room |
+| **Hierarchy** | Repeatable, predictable | Editorial, unique |
 
 ---
 
-## Déclaration — comment activer chaque mode
+## Declaration — how to activate each mode
 
 ```html
-<!-- Mode Marketing (pages de conviction) -->
+<!-- Marketing Mode (persuasion pages) -->
 <body data-context="marketing">
 
-<!-- Mode Produit (défaut — documentation, composants) -->
+<!-- Product Mode (default — documentation, components) -->
 <body>
 ```
 
-Le CSS réagit automatiquement via `[data-context="marketing"]`.
+CSS reacts automatically via `[data-context="marketing"]`.
 
 ---
 
-## Tokens par contexte
+## Tokens by context
 
-### Mode Produit — tokens autorisés
+### Product Mode — allowed tokens
 
 ```css
-/* Typographie — maximum heading.1 */
+/* Typography — maximum heading.1 */
 font-size: var(--agtc-semantic-typography-heading-1-size);      /* 40px */
 
-/* Espacement — density=normal */
+/* Spacing — density=normal */
 gap: var(--agtc-semantic-space-layout-section);                 /* 48px */
 padding: var(--agtc-semantic-space-layout-component);           /* 24px */
 ```
 
-### Mode Marketing — tokens supplémentaires
+### Marketing Mode — additional tokens
 
 ```css
-/* Typographie display — hero uniquement */
+/* Display typography — hero only */
 font-size: var(--agtc-semantic-marketing-typography-display-size);        /* 60px */
 font-weight: var(--agtc-semantic-marketing-typography-display-weight);    /* bold */
 line-height: var(--agtc-semantic-marketing-typography-display-line-height); /* display */
 
-/* Étiquette eyebrow */
+/* Eyebrow label */
 font-size: var(--agtc-semantic-marketing-typography-eyebrow-size);            /* 12px */
 font-weight: var(--agtc-semantic-marketing-typography-eyebrow-weight);        /* bold */
 letter-spacing: var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing); /* 0.12em — ADR-067 */
 
-/* Espacement sections */
+/* Section spacing */
 gap: var(--agtc-semantic-marketing-space-section-breathing);   /* 96px */
 padding-top: var(--agtc-semantic-marketing-space-hero-gap);    /* 120px */
 ```
 
 ---
 
-## Mapping des pages actuelles
+## Current page mapping
 
 | Page | Mode | Justification |
 |------|------|---------------|
-| `/` (home) | Marketing | Présente la vision — onboarde |
-| `/get-started.html` | Marketing | Convainc et onboarde le visiteur |
-| `/agents/` | Marketing | Explique le système agentique |
-| `/foundations/*` | Produit | Documente les fondations |
-| `/components/*` | Produit | Documente les composants |
-| `/decisions/*` | Produit | Archive les décisions |
+| `/` (home) | Marketing | Presents the vision — onboards |
+| `/get-started.html` | Marketing | Persuades and onboards the visitor |
+| `/agents/` | Marketing | Explains the agentic system |
+| `/foundations/*` | Product | Documents the foundations |
+| `/components/*` | Product | Documents the components |
+| `/decisions/*` | Product | Archives the decisions |
 
 ---
 
 ## Anti-patterns
 
-> Distillés à l'origine de `Redesign/AI anti-patters.md` (dossier d'exploration supprimé le
-> 2026-06-20) — contenu intégralement repris ci-dessous, cette section en est désormais la
-> seule source.
+> Originally distilled from `Redesign/AI anti-patters.md` (exploration folder deleted on
+> 2026-06-20) — content fully carried over below; this section is now the sole source.
 
-Ces erreurs s'appliquent spécifiquement au Mode Marketing :
+These mistakes apply specifically to Marketing Mode:
 
-### Espacement
+### Spacing
 
 ```
-❌ Section spacing en dehors de l'échelle (96, 120px pour sections marketing)
-❌ Valeurs en dur — toujours via semantic.marketing.space.*
+❌ Section spacing outside the scale (96, 120px for marketing sections)
+❌ Hardcoded values — always via semantic.marketing.space.*
 ✅ Section breathing = 96px via var(--agtc-semantic-marketing-space-section-breathing)
 ✅ Hero gap = 120px via var(--agtc-semantic-marketing-space-hero-gap)
 ```
 
-### Typographie
+### Typography
 
 ```
-❌ Plus de 3 tailles par section (headline, body, caption — max)
-❌ Plus de 2 graisses sur la page entière
-❌ Titre display > 60px (au-delà de marketing.typography.display)
-❌ Italic en corps de texte
-❌ All-caps sauf labels 11-12px
-✅ Eyebrow 12px bold → titre 60px bold → corps 16-17px regular : hiérarchie claire
+❌ More than 3 sizes per section (headline, body, caption — max)
+❌ More than 2 weights across the entire page
+❌ Display title > 60px (beyond marketing.typography.display)
+❌ Italic in body text
+❌ All-caps except for 11-12px labels
+✅ Eyebrow 12px bold → title 60px bold → body 16-17px regular: clear hierarchy
 ```
 
-### Visuels
+### Visuals
 
 ```
-❌ Gradient sur plus d'un élément de la page
-❌ Gradient sur les boutons
-❌ Ombres decoratives (glassmorphism, backdrop-filter, shadows colorées > 4px)
-❌ 3D orbs, spheres, blobs flottants dans le hero
-❌ Particules, mesh gradients, images "cosmiques"
-✅ Hero image = UI réelle ou artefact réel (ou texte seul si rien de réel n'existe)
+❌ Gradient on more than one element on the page
+❌ Gradient on buttons
+❌ Decorative shadows (glassmorphism, backdrop-filter, colored shadows > 4px)
+❌ 3D orbs, spheres, floating blobs in the hero
+❌ Particles, mesh gradients, "cosmic" images
+✅ Hero image = real UI or real artifact (or text only if nothing real exists)
 ```
 
 ### Motion
 
 ```
-❌ Animations au scroll (scroll-triggered entrances)
+❌ Scroll-triggered animations (scroll-triggered entrances)
 ❌ Parallax, stagger reveals, blur-to-focus
 ❌ Scale-on-hover, rotate-on-hover, elastic easing
-✅ Hover : 150ms ease-out, opacity 0.7 ou translateY(-1px) uniquement
+✅ Hover: 150ms ease-out, opacity 0.7 or translateY(-1px) only
 ```
 
 ### Copywriting
 
 ```
-❌ Buzzwords : "leverage", "unlock", "empower", "supercharge", "revolutionize", "seamless"
-❌ Headlines-tease : "Ready to transform your tokens?"
-✅ Headlines-statements : "Design tokens that work." — assertion, pas promesse
-✅ Feature cards : titre = nom de chose concret, description = bénéfice concret avec au moins un nom
+❌ Buzzwords: "leverage", "unlock", "empower", "supercharge", "revolutionize", "seamless"
+❌ Tease headlines: "Ready to transform your tokens?"
+✅ Statement headlines: "Design tokens that work." — assertion, not promise
+✅ Feature cards: title = concrete thing name, description = concrete benefit with at least one noun
 ```
 
 ---
 
 ## Do / Don't
 
-### DO — Asymétrie contrôlée (page home)
+### DO — Controlled asymmetry (home page)
 
 ```
-[eyebrow 12px bold]   "SYSTÈME DE DESIGN AGENTIQUE"
-[H1 60px bold]        "Des tokens que les agents comprennent."
-[corps 17px]          "Agentica encode les décisions d'interface pour les humains et les IA."
-[CTA]                 → 96px de respiration avant la section suivante
+[eyebrow 12px bold]   "AGENTIC DESIGN SYSTEM"
+[H1 60px bold]        "Design tokens agents understand."
+[body 17px]           "Agentica encodes interface decisions for humans and AI alike."
+[CTA]                 → 96px of breathing room before the next section
 ```
 
-### DON'T — Card SaaS générique sur page hero
+### DON'T — Generic SaaS card on the hero page
 
 ```
-[H2 24px]  "Pourquoi Agentica ?"
-[4 cards avec icônes abstraites]
-  ⚡ Fast    — "Performant."
-  🔒 Secure  — "Sécurisé."
-  🎨 Design  — "Beau."
-  🤖 AI-ready — "Prêt pour l'IA."
+[H2 24px]  "Why Agentica?"
+[4 cards with abstract icons]
+  ⚡ Fast    — "Fast."
+  🔒 Secure  — "Secure."
+  🎨 Design  — "Beautiful."
+  🤖 AI-ready — "AI-ready."
 ```
 
-→ Icônes abstraites sans contenu, titres adjectifs, descriptions sans substantif.
+→ Abstract icons with no content, adjective titles, descriptions with no noun.
 
 ---
 
-## Vérification avant publication
+## Pre-publication checklist
 
-- [ ] Le mode est déclaré (`data-context="marketing"` ou absent)
-- [ ] Typographie : max 3 tailles par section, max 2 graisses sur la page
-- [ ] Espacement : valeurs issues de `semantic.marketing.space.*` ou `semantic.space.*`
-- [ ] Aucun gradient sur plus d'un élément
-- [ ] Hero image : contenu réel ou texte seul
-- [ ] Headlines : assertions, aucun buzzword
+- [ ] The mode is declared (`data-context="marketing"` or absent)
+- [ ] Typography: max 3 sizes per section, max 2 weights on the page
+- [ ] Spacing: values from `semantic.marketing.space.*` or `semantic.space.*`
+- [ ] No gradient on more than one element
+- [ ] Hero image: real content or text only
+- [ ] Headlines: assertions, no buzzwords

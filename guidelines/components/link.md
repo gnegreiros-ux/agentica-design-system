@@ -1,129 +1,129 @@
-# Composant : Link — Contrat complet
+# Component: Link — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-04
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-04
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/link.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/link.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-043-agtc-link-implementation.md, guidelines/components/button.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Un lien de **navigation** textuel, interne ou externe, inline ou standalone. Formalise les ~2700
-`<a>` du site et le traitement uniforme des liens externes.
+**Why this component exists:**
+A textual **navigation** link, internal or external, inline or standalone. Formalizes the ~2700
+`<a>` elements on the site and the uniform treatment of external links.
 
-**Ce composant n'est pas :**
-- Un bouton (`agtc-button`) — un lien **navigue**, un bouton **agit**
-- Un onglet / une nav primaire (composants distincts)
+**This component is not:**
+- A button (`agtc-button`) — a link **navigates**, a button **acts**
+- A tab / a primary nav (distinct components)
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `href` | String | `#` | Destination (requis) |
-| `external` | Boolean | `false` | Force le traitement externe (auto-détecté pour http(s) d'une autre origine) |
+| `href` | String | `#` | Destination (required) |
+| `external` | Boolean | `false` | Forces external treatment (auto-detected for http(s) from another origin) |
 | `underline` | String | `always` | `always` / `hover` / `none` |
 
-Texte via le **slot**.
+Text via the **slot**.
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Rôle | Token |
+| Role | Token |
 |------|-------|
-| Couleur du lien | `component.link.default.text` |
-| Couleur au survol | `component.link.default.text-hover` |
-| Anneau de focus | `component.link.default.border-focus` |
+| Link color | `component.link.default.text` |
+| Hover color | `component.link.default.text-hover` |
+| Focus ring | `component.link.default.border-focus` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Distinguable au-delà de la couleur | Soulignement (`always`) en texte courant — WCAG 1.4.1 |
-| Focus clavier | `:focus-visible` visible (anneau tokenisé) — WCAG 2.4.7 |
-| Lien externe / nouvel onglet | `rel="noopener noreferrer"` + icône **+ texte masqué « (ouvre dans un nouvel onglet) »** — WCAG H83 (l'icône seule ne suffit pas) |
-| Texte de lien | Descriptif, lisible hors contexte — jamais « cliquez ici » (WCAG 2.4.4) ; avertissement console si générique |
-| Sémantique | `<a href>` réel — pour une action, utiliser `agtc-button` |
+| Distinguishable beyond color | Underline (`always`) in body text — WCAG 1.4.1 |
+| Keyboard focus | Visible `:focus-visible` (tokenized ring) — WCAG 2.4.7 |
+| External link / new tab | `rel="noopener noreferrer"` + icon **+ hidden text "(opens in a new tab)"** — WCAG H83 (the icon alone is not enough) |
+| Link text | Descriptive, readable out of context — never "click here" (WCAG 2.4.4); console warning if generic |
+| Semantics | Real `<a href>` — for an action, use `agtc-button` |
 
 ---
 
-## Comportements
+## Behaviors
 
-- `underline="always"` (défaut) : souligné en permanence — recommandé en **texte courant**.
-- `underline="hover"` : souligné au survol uniquement — pour la **nav** (où le contexte distingue déjà le lien).
-- `underline="none"` : jamais souligné — contextes où le lien est clairement identifié autrement.
-- **Externe** : ouvre dans un nouvel onglet, sécurisé (`noopener`), annoncé aux AT.
+- `underline="always"` (default): always underlined — recommended in **body text**.
+- `underline="hover"`: underlined on hover only — for **nav** (where context already distinguishes the link).
+- `underline="none"`: never underlined — contexts where the link is clearly identified otherwise.
+- **External**: opens in a new tab, secured (`noopener`), announced to AT.
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Un lien pour déclencher une action JS sans navigation | Utiliser `agtc-button` |
-| `target="_blank"` sans `rel="noopener"` ni avertissement | Faille (tabnabbing) + perte de repère AT |
-| Texte « cliquez ici » / « en savoir plus » seul | Illisible hors contexte (WCAG 2.4.4) |
-| Lien distinguable par la couleur seule en texte courant | WCAG 1.4.1 |
-| Couleur codée en dur | Contourne les tokens |
+| A link used to trigger a JS action without navigation | Use `agtc-button` |
+| `target="_blank"` without `rel="noopener"` or warning | Security flaw (tabnabbing) + AT loses its bearings |
+| "Click here" / "learn more" text alone | Unreadable out of context (WCAG 2.4.4) |
+| Link distinguishable by color alone in body text | WCAG 1.4.1 |
+| Hardcoded color | Bypasses the tokens |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/043). Décision : **LK1–LK8 tous approuvés**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036/043). Decision: **LK1–LK8 all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Soulignement en texte courant (au-delà de la couleur) | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `underline="always"` par défaut (WCAG 1.4.1) |
-| `:focus-visible` visible | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | Anneau tokenisé |
-| Lien externe : `rel="noopener noreferrer"` + icône + texte AT | [WCAG H83](https://www.w3.org/WAI/WCAG21/Techniques/html/H83) | ✅ | « (ouvre dans un nouvel onglet) » masqué |
-| Auto-détection externe + override | [Coder's Block](https://codersblock.com/blog/external-links-new-tabs-and-accessibility/) | ✅ | http(s) autre origine, `external` force |
-| Texte de lien descriptif | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | Avertissement console si générique |
-| Lien = navigation, bouton = action | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `<a href>` requis |
-| État visité distinct | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ❌ | Hors v1 — peu pertinent en doc/app ; ajout ultérieur possible |
-| Indice au survol même sans soulignement permanent | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `hover`/`none` soulignent au survol |
+| Underline in body text (beyond color) | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `underline="always"` by default (WCAG 1.4.1) |
+| Visible `:focus-visible` | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | Tokenized ring |
+| External link: `rel="noopener noreferrer"` + icon + AT text | [WCAG H83](https://www.w3.org/WAI/WCAG21/Techniques/html/H83) | ✅ | Hidden "(opens in a new tab)" |
+| Auto-detect external + override | [Coder's Block](https://codersblock.com/blog/external-links-new-tabs-and-accessibility/) | ✅ | http(s) other origin, `external` forces |
+| Descriptive link text | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | Console warning if generic |
+| Link = navigation, button = action | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `<a href>` required |
+| Distinct visited state | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ❌ | Out of v1 — not very relevant in docs/apps; possible later addition |
+| Hover cue even without permanent underline | [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/) | ✅ | `hover`/`none` underline on hover |
 
 ---
 
-## Implémentation
+## Implementation
 
-### Composant (Lit)
+### Component (Lit)
 ```html
-<!-- Inline (souligné par défaut) -->
-Consulter la <agtc-link href="/guidelines/link">guideline</agtc-link>.
+<!-- Inline (underlined by default) -->
+See the <agtc-link href="/guidelines/link">guideline</agtc-link>.
 
-<!-- Externe (nouvel onglet, sécurisé, annoncé) -->
+<!-- External (new tab, secured, announced) -->
 <agtc-link href="https://lucide.dev" external>Lucide</agtc-link>
 
-<!-- Nav (soulignement au survol) -->
-<agtc-link href="/components" underline="hover">Composants</agtc-link>
+<!-- Nav (underline on hover) -->
+<agtc-link href="/components" underline="hover">Components</agtc-link>
 ```
 
-### Classe (HTML statique du site)
+### Class (static site HTML)
 ```html
-<a class="agtc-link" href="/components">Composants</a>
+<a class="agtc-link" href="/components">Components</a>
 <a class="agtc-link" href="https://lucide.dev" target="_blank" rel="noopener noreferrer">
-  Lucide <span aria-hidden="true">↗</span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>
+  Lucide <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span>
 </a>
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'un état (visited) ou d'une variante | Principal Designer + Tech Lead |
-| Modification d'un token | Principal Designer |
-| Changement du soulignement par défaut | Principal Designer |
-| Correction bug accessibilité | Review design system team |
+| Adding a state (visited) or a variant | Principal Designer + Tech Lead |
+| Modifying a token | Principal Designer |
+| Changing the default underline | Principal Designer |
+| Accessibility bug fix | Design system team review |

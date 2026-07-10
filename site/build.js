@@ -3495,12 +3495,13 @@ function sidebarPipelines(base, current) {
 }
 
 // Section « Patterns UX de référence » — lue depuis la guideline markdown du composant
-// (source unique de vérité). Extrait la section "## PATTERNS UX DE RÉFÉRENCE" et la rend
-// via parseMd, comme la page icon. Voir workflow ux-pattern-review / ADR-036.
+// (source unique de vérité). Extrait la section "## UX Patterns Reference" (titre EN depuis
+// la traduction ADR-070) et la rend via parseMd, comme la page icon. Voir workflow
+// ux-pattern-review / ADR-036.
 function uxPatternsFromMd(comp) {
   const md = read(path.join(ROOT, `guidelines/components/${comp}.md`));
   const lines = md.split('\n');
-  const start = lines.findIndex(l => /^##\s+PATTERNS UX DE RÉFÉRENCE/i.test(l));
+  const start = lines.findIndex(l => /^##\s+UX Patterns Reference/i.test(l));
   if (start === -1) return '';
   let end = start + 1;
   while (end < lines.length && !/^##\s+/.test(lines[end])) end++;

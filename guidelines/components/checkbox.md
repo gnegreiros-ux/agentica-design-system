@@ -1,155 +1,155 @@
-# Composant : Checkbox — Contrat complet
+# Component: Checkbox — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-01
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-01
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/checkbox.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/checkbox.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-037-agtc-checkbox-implementation.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Permettre une sélection binaire **indépendante** — cocher/décocher une option, accepter une
-condition, ou marquer une tâche comme faite.
+**Why this component exists:**
+Allow an **independent** binary selection — check/uncheck an option, accept a
+condition, or mark a task as done.
 
-**Ce composant n'est pas :**
-- Un réglage à effet immédiat on/off (utiliser un futur `<agtc-toggle>` — cf. NN/g checkbox vs toggle)
-- Un choix mutuellement exclusif dans une liste (utiliser un futur `<agtc-radio>`)
-- Un bouton d'action (utiliser `<agtc-button>`)
-
----
-
-## Forme — décision
-
-**Carré uniquement.** NN/g recommande explicitement le carré pour une case à cocher ; le rond
-signale conventionnellement un bouton radio. La référence ToDo (cercles) a été écartée au profit
-de la convention d'usabilité. Voir ADR-037.
+**This component is not:**
+- An immediate-effect on/off setting (use a future `<agtc-toggle>` — see NN/g checkbox vs toggle)
+- A mutually exclusive choice within a list (use a future `<agtc-radio>`)
+- An action button (use `<agtc-button>`)
 
 ---
 
-## Propriétés
+## Shape — decision
 
-| Attribut | Type | Défaut | Description |
+**Square only.** NN/g explicitly recommends a square for a checkbox; a circle conventionally
+signals a radio button. The ToDo reference (circles) was set aside in favor of usability
+convention. See ADR-037.
+
+---
+
+## Properties
+
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `label` | String | — | Libellé cliquable — fournir `label` **ou** du texte en slot |
-| `checked` | Boolean | `false` | État coché |
-| `indeterminate` | Boolean | `false` | État partiel (`aria-checked="mixed"`) — pour un parent « tout cocher » |
-| `disabled` | Boolean | `false` | Désactivé — non interactif |
-| `required` | Boolean | `false` | Obligatoire — `aria-required` |
-| `name` | String | — | Nom du champ pour les formulaires |
-| `value` | String | `'on'` | Valeur soumise quand coché |
+| `label` | String | — | Clickable label — provide `label` **or** slotted text |
+| `checked` | Boolean | `false` | Checked state |
+| `indeterminate` | Boolean | `false` | Partial state (`aria-checked="mixed"`) — for a "select all" parent |
+| `disabled` | Boolean | `false` | Disabled — non-interactive |
+| `required` | Boolean | `false` | Required — `aria-required` |
+| `name` | String | — | Field name for forms |
+| `value` | String | `'on'` | Submitted value when checked |
 
 ---
 
-## Événements
+## Events
 
-| Événement | Détail | Déclenchement |
+| Event | Detail | Trigger |
 |-----------|--------|---------------|
-| `agtc-change` | `{ checked, name, value }` | À chaque bascule (cocher/décocher) |
+| `agtc-change` | `{ checked, name, value }` | On every toggle (check/uncheck) |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Propriété | Token composant |
+| Property | Component token |
 |-----------|-----------------|
-| Fond (case vide) | `component.checkbox.default.background` |
-| Bordure | `component.checkbox.default.border` |
-| Bordure survol | `component.checkbox.default.border-hover` |
-| Bordure focus | `component.checkbox.default.border-focus` |
-| Remplissage coché | `component.checkbox.default.fill` |
-| Remplissage coché survol | `component.checkbox.default.fill-hover` |
-| Coche / tiret | `component.checkbox.default.check` |
-| Libellé | `component.checkbox.default.label` |
-| Rayon | `component.checkbox.default.radius` |
+| Background (empty box) | `component.checkbox.default.background` |
+| Border | `component.checkbox.default.border` |
+| Border hover | `component.checkbox.default.border-hover` |
+| Border focus | `component.checkbox.default.border-focus` |
+| Checked fill | `component.checkbox.default.fill` |
+| Checked fill hover | `component.checkbox.default.fill-hover` |
+| Check mark / dash | `component.checkbox.default.check` |
+| Label | `component.checkbox.default.label` |
+| Radius | `component.checkbox.default.radius` |
 
-> Taille de la case : `--agtc-semantic-icon-size-control` (20px). Écart entre case et texte :
+> Box size: `--agtc-semantic-icon-size-control` (20px). Gap between box and text:
 > `--agtc-semantic-space-control-gap`.
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Élément accessible | `<input type="checkbox">` natif (rôle, état, clavier) |
-| Nom accessible | `<label>` implicite enveloppant — texte du libellé |
-| Focus visible | `outline` sur la case via `:focus-visible` |
-| Cible tactile | ≥ 24px de haut (WCAG 2.5.8) |
-| État indéterminé | propriété DOM `indeterminate` → `aria-checked="mixed"` |
-| Contraste case/coche | ≥ 3:1 (composant UI, WCAG 1.4.11) |
+| Accessible element | Native `<input type="checkbox">` (role, state, keyboard) |
+| Accessible name | Implicit wrapping `<label>` — label text |
+| Visible focus | `outline` on the box via `:focus-visible` |
+| Touch target | ≥ 24px tall (WCAG 2.5.8) |
+| Indeterminate state | DOM `indeterminate` property → `aria-checked="mixed"` |
+| Box/check contrast | ≥ 3:1 (UI component, WCAG 1.4.11) |
 
 ---
 
-## Comportements et états
+## Behaviors and states
 
-| État | Comportement |
+| State | Behavior |
 |------|-------------|
-| Default | Carré vide, bordure default, fond surface |
-| Hover | Bordure teal (border-hover) |
-| Focus | Outline teal (border-focus) — clavier |
-| Checked | Remplissage teal + coche blanche |
-| Indeterminate | Remplissage teal + tiret blanc |
-| Disabled | Fond subtle, non interactif, libellé atténué |
+| Default | Empty square, default border, surface background |
+| Hover | Teal border (border-hover) |
+| Focus | Teal outline (border-focus) — keyboard |
+| Checked | Teal fill + white check mark |
+| Indeterminate | Teal fill + white dash |
+| Disabled | Subtle background, non-interactive, dimmed label |
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Case ronde | Convention radio — confusion (NN/g) |
-| Case pré-cochée pour un consentement | Dark pattern (IxDF / RGPD) |
-| Libellé en négation (« Ne pas m'envoyer… ») | Ambiguïté coché/décoché (NN/g) |
-| Checkbox pour un réglage à effet immédiat | Préférer un toggle (NN/g) |
-| Valeur ou taille codée en dur | Contourne les tokens |
+| Round box | Radio convention — confusing (NN/g) |
+| Pre-checked box for consent | Dark pattern (IxDF / GDPR) |
+| Negatively phrased label ("Do not send me…") | Checked/unchecked ambiguity (NN/g) |
+| Checkbox for an immediate-effect setting | Prefer a toggle (NN/g) |
+| Hardcoded value or size | Bypasses tokens |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
-> (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.
+> Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
+> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Checkbox (pas toggle) pour un item indépendant | [NN/g — checkbox vs toggle](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Sélection 0–N indépendante, pas un réglage à effet immédiat |
-| **Forme carrée** (le rond signale un radio) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Convention d'usabilité ; écart assumé vs la maquette ToDo ronde |
-| Label cliquable (case **ou** texte) — loi de Fitts | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `<label>` implicite englobant case + texte |
-| Cible tactile ≥ 24×24px | [IxDF — touch targets](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `.root` min-height 24px (WCAG 2.5.8) |
-| États visibles complets (default/hover/focus/checked/disabled) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Affordance et retour immédiat |
-| Libellé en formulation positive (pas de négation) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Règle d'écriture du `label` (anti-pattern documenté) |
-| Pas de pré-cochage de consentement (anti-dark-pattern) | [IxDF — deceptive patterns](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `checked` à `false` par défaut |
-| Sémantique ARIA native (`role=checkbox`, `aria-checked`) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | `<input type="checkbox">` natif, `indeterminate` → `mixed` |
+| Checkbox (not toggle) for an independent item | [NN/g — checkbox vs toggle](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Independent 0–N selection, not an immediate-effect setting |
+| **Square shape** (a circle signals a radio) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Usability convention; deliberate departure from the round ToDo mockup |
+| Clickable label (box **or** text) — Fitts's law | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Implicit `<label>` wrapping box + text |
+| Touch target ≥ 24×24px | [IxDF — touch targets](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `.root` min-height 24px (WCAG 2.5.8) |
+| Complete visible states (default/hover/focus/checked/disabled) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Affordance and immediate feedback |
+| Positively phrased label (no negation) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | `label` writing rule (documented anti-pattern) |
+| No pre-checked consent (anti-dark-pattern) | [IxDF — deceptive patterns](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `checked` defaults to `false` |
+| Native ARIA semantics (`role=checkbox`, `aria-checked`) | [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/) | ✅ | Native `<input type="checkbox">`, `indeterminate` → `mixed` |
 
 ---
 
-## Implémentation
+## Implementation
 
 ### Web Component (Lit)
 ```html
-<!-- Basique -->
-<agtc-checkbox label="Recevoir la newsletter" name="newsletter"></agtc-checkbox>
+<!-- Basic -->
+<agtc-checkbox label="Receive the newsletter" name="newsletter"></agtc-checkbox>
 
-<!-- Cochée par défaut -->
-<agtc-checkbox label="Activer les notifications" checked></agtc-checkbox>
+<!-- Checked by default -->
+<agtc-checkbox label="Enable notifications" checked></agtc-checkbox>
 
-<!-- Parent d'un groupe « tout cocher » -->
-<agtc-checkbox label="Tout sélectionner" indeterminate></agtc-checkbox>
+<!-- Parent of a "select all" group -->
+<agtc-checkbox label="Select all" indeterminate></agtc-checkbox>
 
-<!-- Désactivée -->
-<agtc-checkbox label="Option indisponible" disabled></agtc-checkbox>
+<!-- Disabled -->
+<agtc-checkbox label="Option unavailable" disabled></agtc-checkbox>
 
-<!-- Texte en slot plutôt que via l'attribut label -->
-<agtc-checkbox>J'accepte les <a href="/cgu">conditions</a></agtc-checkbox>
+<!-- Slotted text instead of the label attribute -->
+<agtc-checkbox>I accept the <a href="/terms">terms</a></agtc-checkbox>
 ```
 
-### Écoute de l'événement
+### Listening to the event
 ```javascript
 document.querySelector('agtc-checkbox')
   .addEventListener('agtc-change', (e) => {
@@ -159,11 +159,11 @@ document.querySelector('agtc-checkbox')
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'une variante de forme (ex. rond) | Principal Designer (écart NN/g à justifier) |
-| Modification token de composant | Principal Designer |
-| Changement de comportement | Design system team |
-| Correction bug accessibilité | Review design system team |
+| Adding a shape variant (e.g. round) | Principal Designer (NN/g deviation must be justified) |
+| Modifying a component token | Principal Designer |
+| Changing behavior | Design system team |
+| Accessibility bug fix | Design system team review |

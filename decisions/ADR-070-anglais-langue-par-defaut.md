@@ -35,7 +35,7 @@ GitHub Projects (Domaine Gouvernance/Site/Composants, tous rattachés au ticket 
 |---|-----------|-----------|----------|
 | 1 | Documentation racine (README, How-to-*, AGENTS.md, DESIGN.md) | Anglais **remplace** le français — aucune version FR conservée dans ces fichiers | P1 |
 | 2 | Site public (`site/contenu.md`, `site/build.js`) | Bascule EN par défaut sur le système bilingue existant — le FR reste disponible via le sélecteur | P1 |
-| 3 | `guidelines/` (25 fichiers) | À déterminer au démarrage du chantier | P2 |
+| 3 | `guidelines/` (24 fichiers) | Anglais **remplace** le français — même stratégie que le chantier 1, aucune version FR conservée | P2 |
 | 4 | `.claude/` (règles, instructions, skills — 38 fichiers agent-facing) | À déterminer au démarrage du chantier | P2 |
 | 5 | `decisions/` (70 ADR, journal historique) | Stratégie allégée envisagée (résumé EN en tête) plutôt que traduction intégrale rétroactive — à valider | P3 |
 | 6 | Commentaires code composants (`agtc-*.js`, `*.stories.js`) | À déterminer au démarrage du chantier | P3 |

@@ -1,155 +1,155 @@
-# Composant : Banner — Contrat complet
+# Component: Banner — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-03
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-03
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/banner.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/banner.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-042-agtc-banner-implementation.md, guidelines/components/badge.md, DESIGN.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Afficher un **message inline contextuel** (callout / alerte) dans le flux de la page : information,
-succès, avertissement ou erreur. Généralise le `contribution-banner` du site.
+**Why this component exists:**
+Display a **contextual inline message** (callout / alert) within the page flow: information,
+success, warning, or error. Generalizes the site's `contribution-banner`.
 
-**Ce composant n'est pas :**
-- Un *toast* (notification flottante temporaire) — composant distinct ultérieur
-- Une *modale* / `alertdialog` (interrompt et capture le focus)
-- Un `agtc-badge` (label compact de statut)
+**This component is not:**
+- A *toast* (temporary floating notification) — separate component, planned later
+- A *modal* / `alertdialog` (interrupts and captures focus)
+- An `agtc-badge` (compact status label)
 
 ---
 
-## Variantes
+## Variants
 
-| Variante | Sémantique | Usage typique |
+| Variant | Semantics | Typical usage |
 |----------|-----------|---------------|
-| `neutral` | Neutre | Information générique |
-| `brand` | Identité | Highlight produit, contribution |
-| `info` | Information | Aide contextuelle (défaut) |
-| `success` | Succès | Confirmation d'opération |
-| `warning` | Attention | Conséquence à vérifier |
-| `danger` | Erreur | Échec, action bloquée |
+| `neutral` | Neutral | Generic information |
+| `brand` | Identity | Product highlight, contribution |
+| `info` | Information | Contextual help (default) |
+| `success` | Success | Operation confirmation |
+| `warning` | Attention | Consequence to check |
+| `danger` | Error | Failure, blocked action |
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `variant` | String | `info` | Variante sémantique |
-| `heading` | String | — | Titre optionnel |
-| `icon` | String | (par variante) | Icône Lucide — override du défaut |
-| `no-icon` | Boolean | `false` | Masque l'icône |
-| `dismissible` | Boolean | `false` | Affiche un bouton fermer (émet `dismiss`) |
-| `live` | String | `off` | `off` / `polite` (role=status) / `assertive` (role=alert) — **usage dynamique** |
+| `variant` | String | `info` | Semantic variant |
+| `heading` | String | — | Optional title |
+| `icon` | String | (per variant) | Lucide icon — overrides the default |
+| `no-icon` | Boolean | `false` | Hides the icon |
+| `dismissible` | Boolean | `false` | Shows a close button (emits `dismiss`) |
+| `live` | String | `off` | `off` / `polite` (role=status) / `assertive` (role=alert) — **dynamic usage** |
 
-Corps via le **slot** par défaut · actions via **`slot="actions"`**.
+Body via the default **slot** · actions via **`slot="actions"`**.
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Rôle | Token |
+| Role | Token |
 |------|-------|
-| Fond (par variante) | `component.banner.<variant>.background` |
-| Accent — bordure gauche + icône (par variante) | `component.banner.<variant>.accent` |
-| Texte du titre | `component.banner.heading-text` |
-| Texte du corps | `component.banner.body-text` |
-| Bouton fermer / survol | `component.banner.close-color` / `close-hover` |
-| Anneau de focus | `component.banner.border-focus` |
-| Rayon / padding | `component.banner.radius` / `padding-x` / `padding-y` |
+| Background (per variant) | `component.banner.<variant>.background` |
+| Accent — left border + icon (per variant) | `component.banner.<variant>.accent` |
+| Heading text | `component.banner.heading-text` |
+| Body text | `component.banner.body-text` |
+| Close button / hover | `component.banner.close-color` / `close-hover` |
+| Focus ring | `component.banner.border-focus` |
+| Radius / padding | `component.banner.radius` / `padding-x` / `padding-y` |
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Sens jamais par la couleur seule | Icône par variante **+** préfixe de sévérité masqué pour AT (« Erreur : »…) |
-| Banner statique | **Aucune** région live (ne pas s'annoncer au chargement) |
-| Banner dynamique | `live="polite"` (role=status) ou `live="assertive"` (role=alert) — **avec parcimonie** |
-| Bouton fermer | `<button>` réel, `aria-label="Fermer"`, `:focus-visible` ; ne capture jamais le focus |
-| Contraste | Texte gris.12/gris.11 sur fond subtil ≥ 4.5:1 |
+| Meaning never conveyed by color alone | Icon per variant **+** severity prefix hidden for AT ("Error: "…) |
+| Static banner | **No** live region (does not announce itself on load) |
+| Dynamic banner | `live="polite"` (role=status) or `live="assertive"` (role=alert) — **sparingly** |
+| Close button | Real `<button>`, `aria-label="Close"`, `:focus-visible`; never captures focus |
+| Contrast | gray.12/gray.11 text on subtle background ≥ 4.5:1 |
 
 ---
 
-## Comportements
+## Behaviors
 
-- **Inline** : le banner reste dans le flux, ne flotte pas, ne capture pas le focus.
-- **Dismiss** : clic → émet `dismiss` (annulable via `preventDefault`) puis se masque.
-- **Persistance** : ne pas auto-masquer un `danger` / `warning` (N9).
+- **Inline**: the banner stays in the flow, does not float, does not capture focus.
+- **Dismiss**: click → emits `dismiss` (cancelable via `preventDefault`) then hides.
+- **Persistence**: do not auto-hide a `danger` / `warning` banner (N9).
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| `role="alert"` sur un banner statique de page | S'annonce au chargement — perturbant |
-| Couleur seule pour la sévérité | Inaccessible (daltonisme, AT) |
-| Auto-dismiss d'une erreur | L'utilisateur rate le message |
-| Banner pour une notification flottante | Utiliser un *toast* (composant distinct) |
-| Bouton fermer sans `aria-label` ni focus | Inutilisable au clavier / AT |
+| `role="alert"` on a static page banner | Announces itself on load — disruptive |
+| Color alone for severity | Inaccessible (color blindness, AT) |
+| Auto-dismissing an error | The user misses the message |
+| Banner used for a floating notification | Use a *toast* (separate component) |
+| Close button without `aria-label` or focus | Unusable via keyboard / AT |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés via le workflow `ux-pattern-review` (ADR-036/042). Décision : **N1–N9 tous approuvés**.
+> Patterns approved via the `ux-pattern-review` workflow (ADR-036/042). Decision: **N1–N9 all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| Variantes sémantiques (6) | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Alignées sur `agtc-badge` |
-| Sens jamais par la couleur seule (icône + texte AT) | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Préfixe de sévérité masqué |
-| Icône par variante | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Overridable, `no-icon` possible |
-| Statique par défaut (pas de live region) | [MDN — status role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/status_role) | ✅ | `live="off"` par défaut |
-| `role="alert"` assertif avec parcimonie | [A11Y Collective](https://www.a11y-collective.com/blog/aria-alert/) | ✅ | Via `live="assertive"` |
-| Bouton fermer accessible, sans piège de focus | [MDN — alert role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role) | ✅ | `dismissible` + événement `dismiss` |
-| Titre + corps + zone d'action | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | `heading` + slot + `slot="actions"` |
-| Bordure d'accent gauche + fond subtil | [Dashboard](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Reprend le style du `contribution-banner` |
-| Pas d'auto-dismiss du critique | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Guidance documentée (danger/warning persistants) |
+| Semantic variants (6) | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Aligned with `agtc-badge` |
+| Meaning never conveyed by color alone (icon + AT text) | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Hidden severity prefix |
+| Icon per variant | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Overridable, `no-icon` possible |
+| Static by default (no live region) | [MDN — status role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/status_role) | ✅ | `live="off"` by default |
+| Assertive `role="alert"` used sparingly | [A11Y Collective](https://www.a11y-collective.com/blog/aria-alert/) | ✅ | Via `live="assertive"` |
+| Accessible close button, no focus trap | [MDN — alert role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role) | ✅ | `dismissible` + `dismiss` event |
+| Heading + body + action zone | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | `heading` + slot + `slot="actions"` |
+| Left accent border + subtle background | [Dashboard](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ | Reuses the `contribution-banner` style |
+| No auto-dismiss for critical messages | [NN/g](https://www.nngroup.com/articles/indicators-validations-notifications/) | ✅ | Documented guidance (persistent danger/warning) |
 
 ---
 
-## Implémentation
+## Implementation
 
-### Composant (Lit)
+### Component (Lit)
 ```html
-<agtc-banner variant="warning" heading="Attention">
-  Cette action affectera 3 fichiers liés.
+<agtc-banner variant="warning" heading="Warning">
+  This action will affect 3 linked files.
 </agtc-banner>
 
-<agtc-banner variant="brand" heading="Contribuer" dismissible>
-  Ce système est ouvert aux contributions.
-  <span slot="actions"><a href="…">Voir sur GitHub →</a></span>
+<agtc-banner variant="brand" heading="Contribute" dismissible>
+  This system is open to contributions.
+  <span slot="actions"><a href="…">View on GitHub →</a></span>
 </agtc-banner>
 
-<!-- Notification dynamique (insérée par JS) -->
-<agtc-banner variant="danger" live="assertive" heading="Erreur">
-  Impossible de contacter le serveur.
+<!-- Dynamic notification (inserted via JS) -->
+<agtc-banner variant="danger" live="assertive" heading="Error">
+  Unable to reach the server.
 </agtc-banner>
 ```
 
-### Classe (HTML statique du site)
+### Class (static site HTML)
 ```html
 <div class="agtc-banner info">
   <span class="banner-icon">…</span>
-  <div class="banner-content"><strong>Titre</strong><span>Corps du message.</span></div>
+  <div class="banner-content"><strong>Title</strong><span>Message body.</span></div>
 </div>
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Ajout d'une variante | Principal Designer + Tech Lead |
-| Modification d'un token | Principal Designer |
-| Ajout d'un comportement (auto-dismiss, toast) | Principal Designer + nouvel ADR |
-| Correction bug accessibilité | Review design system team |
+| Adding a variant | Principal Designer + Tech Lead |
+| Modifying a token | Principal Designer |
+| Adding a behavior (auto-dismiss, toast) | Principal Designer + new ADR |
+| Accessibility bug fix | Design system team review |

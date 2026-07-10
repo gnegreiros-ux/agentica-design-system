@@ -1,160 +1,160 @@
-# Composant : Toggle — Contrat complet
+# Component: Toggle — Full Contract
 
-> Version : 1.0.0
-> Responsable : design-system-team
-> Dernière révision : 2026-06-01
-> Toute modification requiert approbation du Principal Designer.
+> Version: 1.0.0
+> Owner: design-system-team
+> Last updated: 2026-06-01
+> Any modification requires Principal Designer approval.
 > **Type:** contract
-> **Chemin logique:** guidelines/components/toggle.md
-> **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** guidelines/components/toggle.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-039-agtc-toggle-implementation.md, guidelines/components/checkbox.md
 
 ---
 
-## Intention
+## Intent
 
-**Pourquoi ce composant existe :**
-Activer/désactiver un réglage binaire avec **effet immédiat** — le changement s'applique
-instantanément, sans bouton « Enregistrer ».
+**Why this component exists:**
+Turn a binary setting on/off with an **immediate effect** — the change applies
+instantly, with no "Save" button.
 
-**Ce composant n'est pas :**
-- Une sélection de formulaire validée à la soumission (utiliser `<agtc-checkbox>`)
-- Un choix exclusif parmi plusieurs (utiliser `<agtc-radio>`)
+**This component is not:**
+- A form selection validated on submission (use `<agtc-checkbox>`)
+- An exclusive choice among several (use `<agtc-radio>`)
 
 ---
 
-## Checkbox vs Toggle — la règle
+## Checkbox vs Toggle — the rule
 
 | | Checkbox | Toggle |
 |--|----------|--------|
-| Effet | À la soumission | **Immédiat** |
-| Usage | Sélection 0–N dans un formulaire | Réglage on/off instantané |
-| Exemple | « J'accepte les CGU » | « Mode sombre » |
+| Effect | On submission | **Immediate** |
+| Usage | 0–N selection in a form | Instant on/off setting |
+| Example | "I accept the Terms of Service" | "Dark mode" |
 
-> Ne jamais mélanger un toggle (effet immédiat) avec des champs soumis ensemble — cela crée
-> une ambiguïté sur le moment où le changement s'applique (NN/g).
+> Never mix a toggle (immediate effect) with fields submitted together — it creates
+> ambiguity about when the change applies (NN/g).
 
 ---
 
-## Propriétés
+## Properties
 
-| Attribut | Type | Défaut | Description |
+| Attribute | Type | Default | Description |
 |----------|------|--------|-------------|
-| `label` | String | — | Libellé concis décrivant l'état « on » — ou texte en slot |
-| `checked` | Boolean | `false` | État activé (on) |
-| `disabled` | Boolean | `false` | Désactivé |
-| `name` | String | — | Nom du champ pour les formulaires |
-| `value` | String | `'on'` | Valeur soumise quand activé |
+| `label` | String | — | Concise label describing the "on" state — or text in slot |
+| `checked` | Boolean | `false` | Enabled (on) state |
+| `disabled` | Boolean | `false` | Disabled |
+| `name` | String | — | Field name for forms |
+| `value` | String | `'on'` | Value submitted when enabled |
 
 ---
 
-## Événements
+## Events
 
-| Événement | Détail | Déclenchement |
+| Event | Detail | Trigger |
 |-----------|--------|---------------|
-| `agtc-change` | `{ checked, name, value }` | Immédiatement à la bascule |
+| `agtc-change` | `{ checked, name, value }` | Immediately on toggle |
 
 ---
 
-## Tokens utilisés
+## Tokens used
 
-| Propriété | Token composant |
+| Property | Component token |
 |-----------|-----------------|
-| Piste off | `component.toggle.default.track-off` |
-| Piste off survol | `component.toggle.default.track-off-hover` |
-| Piste on | `component.toggle.default.track-on` |
-| Piste on survol | `component.toggle.default.track-on-hover` |
-| Curseur | `component.toggle.default.knob` |
-| Bordure focus | `component.toggle.default.border-focus` |
-| Libellé | `component.toggle.default.label` |
+| Off track | `component.toggle.default.track-off` |
+| Off track hover | `component.toggle.default.track-off-hover` |
+| On track | `component.toggle.default.track-on` |
+| On track hover | `component.toggle.default.track-on-hover` |
+| Knob | `component.toggle.default.knob` |
+| Focus border | `component.toggle.default.border-focus` |
+| Label | `component.toggle.default.label` |
 
-> `track-off` est un proxy vers `primitive.color.gray.9` (#8d8d8d) : aucun token sémantique
-> de gris neutre-médium n'existe encore. Choisi pour un contraste ≥ 3:1 du curseur blanc sur la
-> piste (WCAG 1.4.11). Voir ADR-039.
+> `track-off` is a proxy to `primitive.color.gray.9` (#8d8d8d): no medium-neutral gray
+> semantic token exists yet. Chosen for a ≥ 3:1 contrast of the white knob against the
+> track (WCAG 1.4.11). See ADR-039.
 
 ---
 
-## Accessibilité — non négociable
+## Accessibility — non-negotiable
 
-| Règle | Valeur |
+| Rule | Value |
 |-------|--------|
-| Élément accessible | `<input type="checkbox" role="switch">` natif |
-| État sans couleur seule | Signalé par la **position du curseur** (WCAG 1.4.1) |
-| Contraste curseur/piste | ≥ 3:1 dans les deux états (WCAG 1.4.11) — curseur blanc + ombre |
-| Focus visible | `outline` sur la piste via `:focus-visible` |
-| Cible tactile | ≥ 24px de haut (WCAG 2.5.8) |
-| Nom accessible | `<label>` implicite englobant |
+| Accessible element | Native `<input type="checkbox" role="switch">` |
+| State without color alone | Signaled by the **knob position** (WCAG 1.4.1) |
+| Knob/track contrast | ≥ 3:1 in both states (WCAG 1.4.11) — white knob + shadow |
+| Visible focus | `outline` on the track via `:focus-visible` |
+| Touch target | ≥ 24px tall (WCAG 2.5.8) |
+| Accessible name | Implicit enclosing `<label>` |
 
 ---
 
-## Comportements et états
+## Behaviors and states
 
-| État | Comportement |
+| State | Behavior |
 |------|-------------|
-| Off | Piste grise, curseur à gauche |
-| On | Piste teal, curseur à droite |
-| Hover | Piste assombrie |
-| Focus | Outline teal — clavier (Espace bascule) |
-| Disabled | Opacité réduite, non interactif |
+| Off | Gray track, knob on the left |
+| On | Teal track, knob on the right |
+| Hover | Darkened track |
+| Focus | Teal outline — keyboard (Space toggles) |
+| Disabled | Reduced opacity, non-interactive |
 
 ---
 
 ## Anti-patterns
 
-| À éviter | Raison |
+| Avoid | Reason |
 |----------|--------|
-| Toggle dans un formulaire soumis | Ambiguïté effet immédiat vs submit (NN/g) |
-| État signalé par la couleur seule | Échoue WCAG 1.4.1 |
-| Libellé interrogatif (« Voulez-vous… ? ») | Préférer un libellé concis frontload (NN/g) |
-| Toggle pour un choix non binaire | Utiliser radio/checkbox |
-| Couleur ou taille en dur | Contourne les tokens |
+| Toggle inside a submitted form | Ambiguity between immediate effect and submit (NN/g) |
+| State signaled by color alone | Fails WCAG 1.4.1 |
+| Interrogative label ("Do you want…?") | Prefer a concise frontloaded label (NN/g) |
+| Toggle for a non-binary choice | Use radio/checkbox |
+| Hardcoded color or size | Bypasses the tokens |
 
 ---
 
-## Patterns UX de référence
+## UX Patterns Reference
 
-> Patterns approuvés par le Design System Lead via le workflow `ux-pattern-review`
-> (voir `.claude/rules/ux-patterns-sources.md` et ADR-036). Décision : **tous approuvés**.
+> Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
+> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
-| Pattern | Source | Appliqué | Justification |
+| Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|
-| `role="switch"` + `aria-checked` | [NN/g — toggle switch](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | `<input type="checkbox" role="switch">` natif |
-| **Effet immédiat** (pas de submit) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | `agtc-change` émis à la bascule |
-| **État par position du curseur** (pas couleur seule) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Curseur glisse gauche/droite (WCAG 1.4.1) |
-| Curseur délimité (contraste ≥ 3:1) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Blanc + ombre, piste gray.9 (WCAG 1.4.11) |
-| Label concis décrivant l'état « on », frontload | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Règle d'écriture du `label` |
-| Label cliquable + cible ≥ 24px | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | `<label>` englobant, `min-height: 24px` |
-| Binaire uniquement | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Sinon radio/checkbox |
+| `role="switch"` + `aria-checked` | [NN/g — toggle switch](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Native `<input type="checkbox" role="switch">` |
+| **Immediate effect** (no submit) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | `agtc-change` emitted on toggle |
+| **State by knob position** (not color alone) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Knob slides left/right (WCAG 1.4.1) |
+| Delimited knob (contrast ≥ 3:1) | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | White + shadow, gray.9 track (WCAG 1.4.11) |
+| Concise label describing the "on" state, frontloaded | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | `label` writing rule |
+| Clickable label + target ≥ 24px | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) · [IxDF](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ | Enclosing `<label>`, `min-height: 24px` |
+| Binary only | [NN/g](https://www.nngroup.com/articles/toggle-switch-guidelines/) | ✅ | Otherwise radio/checkbox |
 
 ---
 
-## Implémentation
+## Implementation
 
 ```html
-<!-- Basique -->
-<agtc-toggle label="Notifications par e-mail" name="email-notif"></agtc-toggle>
+<!-- Basic -->
+<agtc-toggle label="Email notifications" name="email-notif"></agtc-toggle>
 
-<!-- Activé -->
-<agtc-toggle label="Mode sombre" checked></agtc-toggle>
+<!-- Enabled -->
+<agtc-toggle label="Dark mode" checked></agtc-toggle>
 
-<!-- Désactivé -->
-<agtc-toggle label="Synchronisation" disabled></agtc-toggle>
+<!-- Disabled -->
+<agtc-toggle label="Sync" disabled></agtc-toggle>
 ```
 
 ```javascript
 document.querySelector('agtc-toggle')
   .addEventListener('agtc-change', (e) => {
-    // Effet immédiat — appliquer le changement maintenant
+    // Immediate effect — apply the change now
     console.log(e.detail); // { checked, name, value }
   });
 ```
 
 ---
 
-## Gouvernance
+## Governance
 
-| Action | Approbation requise |
+| Action | Approval required |
 |--------|-------------------|
-| Modification token de composant | Principal Designer |
-| Création d'un token sémantique neutre-track | Design System Lead |
-| Correction bug accessibilité | Review design system team |
+| Component token modification | Principal Designer |
+| Creating a neutral-track semantic token | Design System Lead |
+| Accessibility bug fix | Design system team review |

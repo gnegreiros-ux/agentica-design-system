@@ -1,16 +1,16 @@
-# Composants - Vue ensemble
+# Components — Overview
 
-> Vue d'ensemble des composants du système de design.
+> Overview of the design system's components.
 > **Type:** guideline
-> **Chemin logique:** guidelines/components/overview.md
-> **Lecture avant:** AGENTS.md, DESIGN.md
+> **Logical path:** guidelines/components/overview.md
+> **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** guidelines/components/button.md, .claude/skills/ai-ds-composer.md
 
-Chaque composant est un contrat.
+Every component is a contract.
 
-| Composant | Fichier | Statut |
+| Component | File | Status |
 |-----------|---------|--------|
-| Button | `button.md` | ✅ Actif |
-| Icon | `icon.md` | ✅ Actif |
+| Button | `button.md` | ✅ Active |
+| Icon | `icon.md` | ✅ Active |
 
-Pour ajouter un composant : contrat `.md` + tokens `component.json` + Web Component + Storybook
+To add a component: `.md` contract + `component.json` tokens + Web Component + Storybook
