@@ -1,0 +1,718 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/components/button.spec.js >> Composant Button — régressions visuelles >> page button — light
+- Location: tests/visual/components/button.spec.js:10:5
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1404px by 7862px, received 1404px by 7784px. 340262 pixels (ratio 0.04 of all image pixels) are different.
+
+  Snapshot: button-page-light.png
+
+Call log:
+  - Expect "toHaveScreenshot(button-page-light.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1404px by 7862px, received 1404px by 7784px. 340262 pixels (ratio 0.04 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1404px by 7862px, received 1404px by 7784px. 340262 pixels (ratio 0.04 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "IA" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Human control":
+              - /url: ../ia.html
+            - link "Single source of truth":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Components":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Decisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuity":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - link "Audit":
+              - /url: ../audit.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e20]:
+        - button "FR" [ref=e21] [cursor=pointer]
+        - button "EN" [ref=e22] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e23] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e24]
+      - link "GitHub — Code source du projet" [ref=e26] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentic-design-system
+  - generic [ref=e27]:
+    - navigation "Navigation secondaire" [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]: Components
+        - link "Overview" [ref=e31] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e32] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e33] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e34] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e35] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Card" [ref=e36] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e37] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e38] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e39] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e40] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e41] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e42] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e43] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e44] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e45] [cursor=pointer]:
+          - /url: ../components/tabs.html
+    - main [ref=e46]:
+      - heading "Button" [level=1] [ref=e47]
+      - paragraph [ref=e48]:
+        - generic [ref=e49]:
+          - text: Triggers a user action. Four variants, each with a precise hierarchy and use case. The
+          - code [ref=e50]: critical
+          - text: variant carries special behavioral rules for irreversible actions.
+      - heading "Variants" [level=2] [ref=e51]
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e54]: Primary — main action, 1 maximum per section
+          - generic [ref=e55]:
+            - button "Save changes" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: Save changes
+            - generic:
+              - button "Save (disabled)" [disabled]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Save (disabled)
+        - generic [ref=e59]:
+          - generic [ref=e60]: Secondary — alternative action
+          - generic [ref=e61]:
+            - button "Cancel" [ref=e63] [cursor=pointer]:
+              - generic [ref=e64]: Cancel
+            - generic:
+              - button "Cancel (disabled)" [disabled]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Cancel (disabled)
+        - generic [ref=e65]:
+          - generic [ref=e66]: Ghost — tertiary action, low emphasis
+          - generic [ref=e67]:
+            - button "Learn more" [ref=e69] [cursor=pointer]:
+              - generic [ref=e70]: Learn more
+            - generic:
+              - button "Learn more (disabled)" [disabled]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Learn more (disabled)
+        - generic [ref=e71]:
+          - generic [ref=e72]: Critical — irreversible action (confirmation required)
+          - button "Delete permanently" [ref=e75] [cursor=pointer]:
+            - generic [ref=e76]: Delete permanently
+      - heading "Icons" [level=2] [ref=e77]
+      - paragraph [ref=e78]: "Hybrid approach: property (Figma, React, all frameworks) or slot (advanced composition). Slotted content always takes priority over the property."
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e81]: Leading icon (prefix)
+          - generic [ref=e82]:
+            - button "plus Add" [ref=e84] [cursor=pointer]:
+              - generic [ref=e85]:
+                - img "plus" [ref=e88]
+                - generic [ref=e89]: Add
+            - button "download Download" [ref=e91] [cursor=pointer]:
+              - generic [ref=e92]:
+                - img "download" [ref=e95]
+                - generic [ref=e98]: Download
+            - button "settings Settings" [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]:
+                - img "settings" [ref=e104]
+                - generic [ref=e107]: Settings
+        - generic [ref=e108]:
+          - generic [ref=e109]: Trailing icon (suffix)
+          - generic [ref=e110]:
+            - button "Continue arrow-right" [ref=e112] [cursor=pointer]:
+              - generic [ref=e113]:
+                - generic [ref=e114]: Continue
+                - img "arrow-right" [ref=e117]
+            - button "Export external-link" [ref=e120] [cursor=pointer]:
+              - generic [ref=e121]:
+                - generic [ref=e122]: Export
+                - img "external-link" [ref=e125]
+        - generic [ref=e129]:
+          - generic [ref=e131]:
+            - text: Icon-only —
+            - code [ref=e132]: label
+            - text: required (WCAG 1.1.1)
+          - generic [ref=e133]:
+            - button "Ajouter" [ref=e135] [cursor=pointer]:
+              - img "plus" [ref=e139]
+            - button "Modifier" [ref=e141] [cursor=pointer]:
+              - img "pencil" [ref=e145]
+            - button "Paramètres" [ref=e149] [cursor=pointer]:
+              - img "settings" [ref=e153]
+            - button "Supprimer définitivement" [ref=e157] [cursor=pointer]:
+              - img "trash-2" [ref=e161]
+      - generic [ref=e164]:
+        - code [ref=e165]: <!-- Propriété icon — Figma Code Connect, React et tous les frameworks --> <agtc-button icon="plus"> Add item</agtc-button> <agtc-button variant="secondary" icon-suffix="arrow-right"> Continue</agtc-button> <!-- Icon-only — label="" obligatoire --> <agtc-button icon-only icon="x" label=" Close panel"></agtc-button> <!-- Slot — composition avancée, SVG custom --> <agtc-button> <agtc-icon slot="prefix" name="plus"></agtc-icon> Add item </agtc-button>
+        - generic [ref=e166]: html
+        - button "Copy code (html)" [ref=e167] [cursor=pointer]: Copy
+      - heading "Absolute rules" [level=2] [ref=e168]
+      - list [ref=e169]:
+        - listitem [ref=e170]:
+          - img [ref=e172]
+          - generic [ref=e175]:
+            - text: Maximum 1
+            - code [ref=e176]: primary
+            - text: button per section or form
+        - listitem [ref=e177]:
+          - img [ref=e179]
+          - text: Always an explicit label — never "OK" or "Confirm" alone
+        - listitem [ref=e182]:
+          - img [ref=e184]
+          - generic [ref=e187]:
+            - text: The
+            - code [ref=e188]: critical
+            - text: button MUST trigger a confirmation pattern
+        - listitem [ref=e189]:
+          - img [ref=e191]
+          - generic [ref=e194]:
+            - text: Always a visible
+            - code [ref=e195]: :focus-visible
+            - text: —
+            - code [ref=e196]: "outline: 2px solid var(--agtc-semantic-color-border-focus)"
+        - listitem [ref=e197]:
+          - img [ref=e199]
+          - generic [ref=e203]:
+            - text: Never two
+            - code [ref=e204]: primary
+            - text: buttons side by side
+        - listitem [ref=e205]:
+          - img [ref=e207]
+          - text: Never hardcoded colors or spacing
+        - listitem [ref=e211]:
+          - img [ref=e213]
+          - generic [ref=e217]:
+            - text: Never an invented variant outside
+            - code [ref=e218]: component.json
+      - heading "Component tokens" [level=2] [ref=e219]
+      - table [ref=e221]:
+        - rowgroup [ref=e226]:
+          - row "Token CSS Semantic reference Resolved value" [ref=e227]:
+            - columnheader "Token CSS" [ref=e228]
+            - columnheader "Semantic reference" [ref=e229]
+            - columnheader "Resolved value" [ref=e230]
+        - rowgroup [ref=e231]:
+          - 'row "--agtc-component-button-primary-background semantic.color.action.primary #007a68" [ref=e232]':
+            - cell "--agtc-component-button-primary-background" [ref=e233]:
+              - code [ref=e234]: "--agtc-component-button-primary-background"
+            - cell "semantic.color.action.primary" [ref=e235]:
+              - code [ref=e236]: semantic.color.action.primary
+            - cell "#007a68" [ref=e237]
+          - 'row "--agtc-component-button-primary-background-hover semantic.color.action.primary-hover #0d3d38" [ref=e238]':
+            - cell "--agtc-component-button-primary-background-hover" [ref=e239]:
+              - code [ref=e240]: "--agtc-component-button-primary-background-hover"
+            - cell "semantic.color.action.primary-hover" [ref=e241]:
+              - code [ref=e242]: semantic.color.action.primary-hover
+            - cell "#0d3d38" [ref=e243]
+          - 'row "--agtc-component-button-primary-background-disabled semantic.color.action.primary-disabled #d9d9d9" [ref=e244]':
+            - cell "--agtc-component-button-primary-background-disabled" [ref=e245]:
+              - code [ref=e246]: "--agtc-component-button-primary-background-disabled"
+            - cell "semantic.color.action.primary-disabled" [ref=e247]:
+              - code [ref=e248]: semantic.color.action.primary-disabled
+            - cell "#d9d9d9" [ref=e249]
+          - 'row "--agtc-component-button-primary-text semantic.color.text.on-action #ffffff" [ref=e250]':
+            - cell "--agtc-component-button-primary-text" [ref=e251]:
+              - code [ref=e252]: "--agtc-component-button-primary-text"
+            - cell "semantic.color.text.on-action" [ref=e253]:
+              - code [ref=e254]: semantic.color.text.on-action
+            - cell "#ffffff" [ref=e255]
+          - row "--agtc-component-button-primary-padding-x semantic.space.control.padding-x 16px" [ref=e256]:
+            - cell "--agtc-component-button-primary-padding-x" [ref=e257]:
+              - code [ref=e258]: "--agtc-component-button-primary-padding-x"
+            - cell "semantic.space.control.padding-x" [ref=e259]:
+              - code [ref=e260]: semantic.space.control.padding-x
+            - cell "16px" [ref=e261]
+          - row "--agtc-component-button-primary-padding-y semantic.space.control.padding-y 8px" [ref=e262]:
+            - cell "--agtc-component-button-primary-padding-y" [ref=e263]:
+              - code [ref=e264]: "--agtc-component-button-primary-padding-y"
+            - cell "semantic.space.control.padding-y" [ref=e265]:
+              - code [ref=e266]: semantic.space.control.padding-y
+            - cell "8px" [ref=e267]
+          - row "--agtc-component-button-primary-radius semantic.radius.control 6px" [ref=e268]:
+            - cell "--agtc-component-button-primary-radius" [ref=e269]:
+              - code [ref=e270]: "--agtc-component-button-primary-radius"
+            - cell "semantic.radius.control" [ref=e271]:
+              - code [ref=e272]: semantic.radius.control
+            - cell "6px" [ref=e273]
+          - 'row "--agtc-component-button-critical-background semantic.color.feedback.danger #ce2c31" [ref=e274]':
+            - cell "--agtc-component-button-critical-background" [ref=e275]:
+              - code [ref=e276]: "--agtc-component-button-critical-background"
+            - cell "semantic.color.feedback.danger" [ref=e277]:
+              - code [ref=e278]: semantic.color.feedback.danger
+            - cell "#ce2c31" [ref=e279]
+          - 'row "--agtc-component-button-secondary-text semantic.color.action.primary #007a68" [ref=e280]':
+            - cell "--agtc-component-button-secondary-text" [ref=e281]:
+              - code [ref=e282]: "--agtc-component-button-secondary-text"
+            - cell "semantic.color.action.primary" [ref=e283]:
+              - code [ref=e284]: semantic.color.action.primary
+            - cell "#007a68" [ref=e285]
+          - 'row "--agtc-component-button-secondary-border semantic.color.action.primary #007a68" [ref=e286]':
+            - cell "--agtc-component-button-secondary-border" [ref=e287]:
+              - code [ref=e288]: "--agtc-component-button-secondary-border"
+            - cell "semantic.color.action.primary" [ref=e289]:
+              - code [ref=e290]: semantic.color.action.primary
+            - cell "#007a68" [ref=e291]
+          - 'row "--agtc-component-button-ghost-text semantic.color.action.primary #007a68" [ref=e292]':
+            - cell "--agtc-component-button-ghost-text" [ref=e293]:
+              - code [ref=e294]: "--agtc-component-button-ghost-text"
+            - cell "semantic.color.action.primary" [ref=e295]:
+              - code [ref=e296]: semantic.color.action.primary
+            - cell "#007a68" [ref=e297]
+      - heading "Accessibility" [level=2] [ref=e298]
+      - list [ref=e299]:
+        - listitem [ref=e300]: Minimum contrast 4.5:1 on white background (WCAG AA)
+        - listitem [ref=e301]: Full keyboard navigation — Tab, Enter, Space
+        - listitem [ref=e302]:
+          - generic [ref=e303]:
+            - text: "Visible focus:"
+            - code [ref=e304]: "outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px"
+        - listitem [ref=e305]:
+          - generic [ref=e306]:
+            - text: "For icon-only buttons:"
+            - code [ref=e307]: aria-label
+            - text: required
+        - listitem [ref=e308]:
+          - generic [ref=e309]:
+            - code [ref=e310]: loading
+            - text: "state:"
+            - code [ref=e311]: aria-busy="true"
+            - text: + width preserved
+        - listitem [ref=e312]:
+          - generic [ref=e313]:
+            - code [ref=e314]: disabled
+            - text: "state:"
+            - code [ref=e315]: aria-disabled="true"
+            - text: or
+            - code [ref=e316]: disabled
+      - heading "Special rules — critical variant" [level=2] [ref=e317]
+      - paragraph [ref=e318]:
+        - text: Token
+        - code [ref=e319]: component.button.critical.$metadata.requires-confirmation
+        - text: =
+        - code [ref=e320]: "true"
+        - text: ". Before using this variant, verify:"
+      - list [ref=e321]:
+        - listitem [ref=e322]: The confirmation pattern exists in the UI (modal, popconfirm)
+        - listitem [ref=e323]: The label describes the action — e.g. "Delete folder permanently"
+        - listitem [ref=e324]: Contrast is ≥ 4.5:1 on white background
+        - listitem [ref=e325]: The agent escalates to a human if the irreversibility of the action is uncertain
+      - heading "Framework compatibility" [level=2] [ref=e326]
+      - table [ref=e328]:
+        - rowgroup [ref=e334]:
+          - row "Framework icon=\"...\" slot=\"prefix\" Figma Code Connect" [ref=e335]:
+            - columnheader "Framework" [ref=e336]
+            - columnheader "icon=\"...\"" [ref=e337]:
+              - code [ref=e338]: icon="..."
+            - columnheader "slot=\"prefix\"" [ref=e339]:
+              - code [ref=e340]: slot="prefix"
+            - columnheader "Figma Code Connect" [ref=e341]
+        - rowgroup [ref=e342]:
+          - row "HTML natif ✅ ✅ —" [ref=e343]:
+            - cell "HTML natif" [ref=e344]:
+              - generic [ref=e345]:
+                - img [ref=e346]
+                - text: HTML natif
+            - cell "✅" [ref=e349]
+            - cell "✅" [ref=e350]
+            - cell "—" [ref=e351]
+          - row "React React 19 ✅ ✅ ✅" [ref=e352]:
+            - cell "React React 19" [ref=e353]:
+              - generic [ref=e354]:
+                - img "React" [ref=e355]
+                - text: React 19
+            - cell "✅" [ref=e356]
+            - cell "✅" [ref=e357]
+            - cell "✅" [ref=e358]
+          - row "React React 18 ✅ ⚠️ via ref ✅" [ref=e359]:
+            - cell "React React 18" [ref=e360]:
+              - generic [ref=e361]:
+                - img "React" [ref=e362]
+                - text: React 18
+            - cell "✅" [ref=e363]
+            - cell "⚠️ via ref" [ref=e364]
+            - cell "✅" [ref=e365]
+          - row "Angular Angular ✅ ✅ ✅" [ref=e366]:
+            - cell "Angular Angular" [ref=e367]:
+              - generic [ref=e368]:
+                - img "Angular" [ref=e369]
+                - text: Angular
+            - cell "✅" [ref=e370]
+            - cell "✅" [ref=e371]
+            - cell "✅" [ref=e372]
+          - row "Vue Vue 3 ✅ ✅ ✅" [ref=e373]:
+            - cell "Vue Vue 3" [ref=e374]:
+              - generic [ref=e375]:
+                - img "Vue" [ref=e376]
+                - text: Vue 3
+            - cell "✅" [ref=e377]
+            - cell "✅" [ref=e378]
+            - cell "✅" [ref=e379]
+          - row "Svelte Svelte ✅ ✅ ✅" [ref=e380]:
+            - cell "Svelte Svelte" [ref=e381]:
+              - generic [ref=e382]:
+                - img "Svelte" [ref=e383]
+                - text: Svelte
+            - cell "✅" [ref=e384]
+            - cell "✅" [ref=e385]
+            - cell "✅" [ref=e386]
+      - heading "Implementation — Lit Web Component" [level=2] [ref=e387]
+      - generic [ref=e388]:
+        - code [ref=e389]: "import { LitElement, html, css } from 'lit'; import { ifDefined } from 'lit/directives/if-defined.js'; // agtc-icon doit être enregistré par le consommateur pour les propriétés icon/icon-suffix // import './agtc-icon.js'; class AgtcButton extends LitElement { static properties = { variant: { type: String, reflect: true }, // 'primary'|'secondary'|'ghost'|'critical' disabled: { type: Boolean, reflect: true }, loading: { type: Boolean, reflect: true }, iconOnly: { type: Boolean, reflect: true, attribute: 'icon-only' }, icon: { type: String }, // nom d'icône Lucide (prefix) iconSuffix: { type: String, attribute: 'icon-suffix' }, // nom d'icône (suffix) label: { type: String }, // aria-label — obligatoire pour icon-only loadingLabel: { type: String, attribute: 'loading-label' }, }; render() { const busy = this.loading; return html` <button class=\"${[this.variant, busy ? 'loading' : '', this.iconOnly ? 'icon-only' : ''].filter(Boolean).join(' ')}\" ?disabled=\"${this.disabled || busy}\" aria-busy=\"${busy}\" aria-label=\"${ifDefined(this.label ? (busy ? this.loadingLabel : this.label) : undefined)}\" > <span class=\"spinner\" aria-hidden=\"true\"></span> <span class=\"content\"> <slot name=\"prefix\"> ${this.icon ? html`<agtc-icon name=\"${this.icon}\" size=\"control\"></agtc-icon>` : ''} </slot> <slot></slot> <slot name=\"suffix\"> ${this.iconSuffix ? html`<agtc-icon name=\"${this.iconSuffix}\" size=\"control\"></agtc-icon>` : ''} </slot> </span> </button> `; } } customElements.define('agtc-button', AgtcButton);"
+        - generic [ref=e390]: javascript
+        - button "Copy code (javascript)" [ref=e391] [cursor=pointer]: Copy
+      - heading "DOs and DON'Ts" [level=2] [ref=e392]
+      - generic [ref=e393]:
+        - generic [ref=e394]:
+          - heading "Do" [level=3] [ref=e395]:
+            - img [ref=e396]
+            - text: Do
+          - list [ref=e399]:
+            - listitem [ref=e400]:
+              - generic [ref=e401]:
+                - text: Explicit label describing the action (
+                - emphasis [ref=e402]: "\"Delete folder permanently\""
+                - text: )
+            - listitem [ref=e403]:
+              - generic [ref=e404]:
+                - text: Maximum 1
+                - code [ref=e405]: primary
+                - text: button per section or form
+            - listitem [ref=e406]:
+              - generic [ref=e407]:
+                - text: Always a visible
+                - code [ref=e408]: :focus-visible
+                - text: for keyboard navigation
+            - listitem [ref=e409]:
+              - generic [ref=e410]:
+                - code [ref=e411]: loading
+                - text: state with
+                - code [ref=e412]: aria-busy="true"
+                - text: for async actions
+            - listitem [ref=e413]:
+              - generic [ref=e414]:
+                - text: Mandatory confirmation pattern before each
+                - code [ref=e415]: critical
+                - text: action
+        - generic [ref=e416]:
+          - heading "Don't" [level=3] [ref=e417]:
+            - img [ref=e418]
+            - text: Don't
+          - list [ref=e422]:
+            - listitem [ref=e423]:
+              - generic [ref=e424]:
+                - text: "Vague label:"
+                - emphasis [ref=e425]: "\"OK\""
+                - text: ","
+                - emphasis [ref=e426]: "\"Confirm\""
+                - text: ","
+                - emphasis [ref=e427]: "\"Submit\""
+                - text: alone
+            - listitem [ref=e428]:
+              - generic [ref=e429]:
+                - text: Two
+                - code [ref=e430]: primary
+                - text: buttons side by side in the same form
+            - listitem [ref=e431]:
+              - generic [ref=e432]:
+                - text: Hardcoded colors or spacing (
+                - code [ref=e433]: style="background:red"
+                - text: )
+            - listitem [ref=e434]:
+              - generic [ref=e435]:
+                - text: Invented variants outside
+                - code [ref=e436]: tokens/component.json
+            - listitem [ref=e437]:
+              - generic [ref=e438]:
+                - code [ref=e439]: critical
+                - text: button without a confirmation pattern
+      - heading "Anti-patterns" [level=2] [ref=e440]
+      - table [ref=e442]:
+        - rowgroup [ref=e443]:
+          - row "Bad Why" [ref=e444]:
+            - columnheader "Bad" [ref=e445]
+            - columnheader "Why" [ref=e446]
+        - rowgroup [ref=e447]:
+          - row "<button style=\"background:red\">Supprimer</button> Hardcoded value, unrecognized variant, no token" [ref=e448]:
+            - cell "<button style=\"background:red\">Supprimer</button>" [ref=e449]:
+              - code [ref=e450]: <button style="background:red">Supprimer</button>
+            - cell "Hardcoded value, unrecognized variant, no token" [ref=e451]
+          - row "<agtc-button variant=\"critical\">OK</agtc-button> Non-explicit label for a critical action" [ref=e452]:
+            - cell "<agtc-button variant=\"critical\">OK</agtc-button>" [ref=e453]:
+              - code [ref=e454]: <agtc-button variant="critical">OK</agtc-button>
+            - cell "Non-explicit label for a critical action" [ref=e455]
+          - row "Two variant=\"primary\" in the same form Broken hierarchy — loss of UX clarity" [ref=e456]:
+            - cell "Two variant=\"primary\" in the same form" [ref=e457]:
+              - generic [ref=e458]:
+                - text: Two
+                - code [ref=e459]: variant="primary"
+                - text: in the same form
+            - cell "Broken hierarchy — loss of UX clarity" [ref=e460]
+          - row "<agtc-button variant=\"danger\"> Non-existent variant — escalate, ask for the correct variant" [ref=e461]:
+            - cell "<agtc-button variant=\"danger\">" [ref=e462]:
+              - code [ref=e463]: <agtc-button variant="danger">
+            - cell "Non-existent variant — escalate, ask for the correct variant" [ref=e464]
+      - heading "Patterns UX de référence" [level=2] [ref=e465]
+      - blockquote [ref=e466]:
+        - paragraph [ref=e467]:
+          - text: Patterns approuvés via le workflow
+          - code [ref=e468]: ux-pattern-review
+          - text: "(ADR-036). Décision :"
+          - strong [ref=e469]: tous approuvés
+          - text: .
+      - generic [ref=e470]:
+        - table [ref=e472]:
+          - rowgroup [ref=e473]:
+            - row "Pattern Source Appliqué Justification" [ref=e474]:
+              - columnheader "Pattern" [ref=e475]
+              - columnheader "Source" [ref=e476]
+              - columnheader "Appliqué" [ref=e477]
+              - columnheader "Justification" [ref=e478]
+          - rowgroup [ref=e479]:
+            - row "Une seule action primaire claire par contexte IxDF — clear primary action ✅ Hiérarchie d'action lisible" [ref=e480]:
+              - cell "Une seule action primaire claire par contexte" [ref=e481]
+              - cell "IxDF — clear primary action" [ref=e482]:
+                - link "IxDF — clear primary action" [ref=e483] [cursor=pointer]:
+                  - /url: https://ixdf.org/literature/topics/ui-design-patterns
+              - cell "✅" [ref=e484]
+              - cell "Hiérarchie d'action lisible" [ref=e485]
+            - row "Confirmation explicite pour action destructrice (critical) NN/g — error prevention ✅ requires-confirmation" [ref=e486]:
+              - cell "Confirmation explicite pour action destructrice (critical)" [ref=e487]:
+                - text: Confirmation explicite pour action destructrice (
+                - code [ref=e488]: critical
+                - text: )
+              - cell "NN/g — error prevention" [ref=e489]:
+                - link "NN/g — error prevention" [ref=e490] [cursor=pointer]:
+                  - /url: https://www.nngroup.com/articles/design-pattern-guidelines/
+              - cell "✅" [ref=e491]
+              - cell "requires-confirmation" [ref=e492]:
+                - code [ref=e493]: requires-confirmation
+            - row "Largeur préservée pendant le loading Smashing ✅ Pas de saut de layout" [ref=e494]:
+              - cell "Largeur préservée pendant le loading" [ref=e495]:
+                - text: Largeur préservée pendant le
+                - code [ref=e496]: loading
+              - cell "Smashing" [ref=e497]:
+                - link "Smashing" [ref=e498] [cursor=pointer]:
+                  - /url: https://www.smashingmagazine.com/category/design-patterns/
+              - cell "✅" [ref=e499]
+              - cell "Pas de saut de layout" [ref=e500]
+            - row "Ne jamais désactiver sans indiquer la raison (préférer disabled motivé plutôt que masquer l'action) Smashing — hidden vs disabled ✅ Un disabled muet est un anti-pattern d'accessibilité — fournir texte d'aide/tooltip expliquant le blocage" [ref=e501]:
+              - cell "Ne jamais désactiver sans indiquer la raison (préférer disabled motivé plutôt que masquer l'action)" [ref=e502]:
+                - strong [ref=e503]: Ne jamais désactiver sans indiquer la raison
+                - text: (préférer
+                - code [ref=e504]: disabled
+                - text: motivé plutôt que masquer l'action)
+              - cell "Smashing — hidden vs disabled" [ref=e505]:
+                - link "Smashing — hidden vs disabled" [ref=e506] [cursor=pointer]:
+                  - /url: https://www.smashingmagazine.com/category/design-patterns/
+              - cell "✅" [ref=e507]
+              - cell "Un disabled muet est un anti-pattern d'accessibilité — fournir texte d'aide/tooltip expliquant le blocage" [ref=e508]:
+                - text: Un
+                - code [ref=e509]: disabled
+                - text: muet est un anti-pattern d'accessibilité — fournir texte d'aide/tooltip expliquant le blocage
+            - row "Libellé décrivant la conséquence, pas « OK » NN/g ✅ Libellé explicite" [ref=e510]:
+              - cell "Libellé décrivant la conséquence, pas « OK »" [ref=e511]
+              - cell "NN/g" [ref=e512]:
+                - link "NN/g" [ref=e513] [cursor=pointer]:
+                  - /url: https://www.nngroup.com/articles/design-pattern-guidelines/
+              - cell "✅" [ref=e514]
+              - cell "Libellé explicite" [ref=e515]
+        - generic [ref=e516]:
+          - generic [ref=e517]:
+            - strong [ref=e518]: Contribute to this project
+            - paragraph [ref=e519]: This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.
+          - link "View on GitHub" [ref=e520] [cursor=pointer]:
+            - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - generic [ref=e521]: View on GitHub
+    - navigation "Table des matières" [ref=e522]:
+      - generic [ref=e523]: On this page
+      - link "Variants" [ref=e524] [cursor=pointer]:
+        - /url: "#variantes"
+      - link "Icons" [ref=e525] [cursor=pointer]:
+        - /url: "#icones"
+      - link "Absolute rules" [ref=e526] [cursor=pointer]:
+        - /url: "#regles-absolues"
+      - link "Component tokens" [ref=e527] [cursor=pointer]:
+        - /url: "#tokens-de-composant"
+      - link "Accessibility" [ref=e528] [cursor=pointer]:
+        - /url: "#accessibilite"
+      - link "Special rules — critical variant" [ref=e529] [cursor=pointer]:
+        - /url: "#regles-speciales-variante-critical"
+      - link "Framework compatibility" [ref=e530] [cursor=pointer]:
+        - /url: "#compatibilite-frameworks"
+      - link "Implementation — Lit Web Component" [ref=e531] [cursor=pointer]:
+        - /url: "#implementation-lit-web-component"
+      - link "DOs and DON'Ts" [ref=e532] [cursor=pointer]:
+        - /url: "#dos-et-don-ts"
+      - link "Anti-patterns" [ref=e533] [cursor=pointer]:
+        - /url: "#anti-patterns"
+      - link "Patterns UX de référence" [ref=e534] [cursor=pointer]:
+        - /url: "#patterns-ux-de-reference"
+  - contentinfo [ref=e535]:
+    - generic [ref=e536]:
+      - generic [ref=e537]:
+        - link "Agentica — Accueil" [ref=e538] [cursor=pointer]:
+          - /url: ../index.html
+          - img [ref=e539]
+        - link "Guilherme Negreiros" [ref=e540] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e541]
+          - text: Guilherme Negreiros
+      - generic [ref=e545]:
+        - generic [ref=e546]: Navigation
+        - link "Home" [ref=e547] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Why" [ref=e548] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e549] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Quality" [ref=e550] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "IA" [ref=e551] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e552]:
+        - generic [ref=e553]: Documentation
+        - link "Understand" [ref=e554] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Get started" [ref=e555] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Foundations" [ref=e556] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Components" [ref=e557] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e558] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Decisions" [ref=e559] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuity" [ref=e560] [cursor=pointer]:
+          - /url: ../continuite.html
+        - link "Changelog" [ref=e561] [cursor=pointer]:
+          - /url: ../changelog.html
+      - generic [ref=e562]:
+        - generic [ref=e563]: Explorer
+        - link "Storybook" [ref=e564] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e565] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentic-design-system
+        - link "Audit" [ref=e566] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "AI Brief" [ref=e567] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e568]:
+      - generic [ref=e569]: © 2026 Guilherme Negreiros
+      - generic [ref=e570]: Built with Claude Code.
+  - button "Retour en haut" [ref=e571] [cursor=pointer]:
+    - img [ref=e572]
+    - generic [ref=e574]: Top
+  - status [ref=e575]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | test.describe('Composant Button — régressions visuelles', () => {
+  4  |   test.beforeEach(async ({ page }) => {
+  5  |     await page.goto('/components/button.html');
+  6  |     await page.waitForLoadState('networkidle');
+  7  |   });
+  8  | 
+  9  |   for (const theme of ['light', 'dark']) {
+  10 |     test(`page button — ${theme}`, async ({ page }) => {
+  11 |       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+> 12 |       await expect(page).toHaveScreenshot(`button-page-${theme}.png`, { fullPage: true });
+     |                          ^ Error: expect(page).toHaveScreenshot(expected) failed
+  13 |     });
+  14 |   }
+  15 | });
+  16 | 
+```
