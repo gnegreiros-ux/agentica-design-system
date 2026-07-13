@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-004-gouvernance-humaine.md
 > **Relations:** DESIGN.md, AGENTS.md, .claude/instructions/session-spec.md, decisions/ADR-004-gouvernance-humaine.md
 
+> **English summary:** Creates `DESIGN.md` as a portable, git-versioned governance contract (principles, token architecture, accessibility rules, the TCR process) instead of relying on a wiki or Notion — surfaces agents can't read. `DESIGN.md` is the first file agents must read, ensuring every session starts from the same stable contract.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

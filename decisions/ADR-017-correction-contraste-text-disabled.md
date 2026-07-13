@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-007-axe-core-accessibilite.md
 
+> **English summary:** Fixes `text.disabled` (1.57:1 contrast, used incorrectly on non-disabled elements) by changing its reference to resolve to `#767676` (4.54:1, WCAG AA), and adds a `background.hover` token to replace a hardcoded hover color. Also documents a pre-existing Tailwind/Radix naming mismatch in `semantic.json`, resolved later in ADR-018.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

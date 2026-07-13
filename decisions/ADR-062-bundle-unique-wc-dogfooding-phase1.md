@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md
 > **Relations:** components/index.js, site/build.js, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-043-agtc-link-implementation.md, decisions/ADR-044-agtc-segmented-implementation.md
 
+> **English summary:** Following the per-component bundling introduced for `agtc-top-nav` (ADR-061), this ADR completes Phase 1 of the site's Web Components rollout: a single `components/index.js` entry point bundles all 16 components into one `agtc.js` file (one `<script defer>` instead of many), and the documentation pages replace their CSS-simulated `.agtc-button`/`.agtc-banner`/`.agtc-badge`/`.agtc-link`/`.agtc-segmented` markup with the real Web Components — enforcing the "the site must consume the design system" principle, with two deliberate exceptions (button-styled links, and the language-switch segmented control) kept as-is for now.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

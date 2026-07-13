@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/tokens-system.md
 
+> **English summary:** Adopts a strict three-level token architecture — primitive → semantic → component — so that agents can infer intent from a token's name rather than guessing from a raw value. Primitive tokens are never used directly in components; everything flows through the semantic layer, which absorbs value changes without touching components.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

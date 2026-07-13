@@ -8,6 +8,14 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-028-atkinson-hyperlegible-mono.md, decisions/ADR-040-agtc-table-implementation.md, guidelines/components/code-block.md, tokens/component.json
 
+> **English summary:** Implements agtc-code-block to replace the site's ad hoc, French-only,
+> inaccessible copy-code button. Uses the same "mix" architecture as agtc-table (shadow-DOM
+> component + `.code-block` class for the static site), tokenizes previously hardcoded dark-surface
+> colors, and adds an accessible copy button with an `aria-live` success announcement. Syntax
+> highlighting and line numbers are deferred.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

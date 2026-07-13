@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md, decisions/ADR-008-radix-colors.md
 
+> **English summary:** Adopts Tokens Studio for Figma as a one-way sync bridge from the repo's JSON tokens into Figma variables, keeping the JSON as the sole source of truth. Designers cannot push token changes from Figma back to the repo — any token change still goes through the TCR process.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

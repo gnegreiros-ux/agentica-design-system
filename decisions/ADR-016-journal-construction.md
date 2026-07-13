@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** log/kit-construction.md (retiré), .claude/hooks/log-kit-construction.sh (retiré), .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
+> **English summary:** Originally set up an automatic, hook-driven construction log (`log/kit-construction.md`) distinct from git history, to track changes to `.claude/`, `decisions/`, and root contract files. Superseded 2026-07-09 by ADR-069 — kit-tracking now lives in GitHub Projects instead of a local log file.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 > **Note de dépréciation (2026-07-09) :** le mécanisme décrit ci-dessous (fichier +
 > hook `PostToolUse`) a été retiré. Le suivi de la construction du kit vit désormais
 > dans GitHub Projects — voir ADR-069. Ce document reste comme registre historique

@@ -5,6 +5,10 @@
 **Auteur :** Guilherme Negreiros
 **Relations :** ADR-051 (illustration), ADR-052 (DTCG), ADR-057 (deux contextes), `Redesign/AI anti-patters.md`, `site/build.js`
 
+> **English summary:** A standalone redesign mockup introduced a dark theme, CSS extension tokens (shadows, gradients, an extended type scale), and several animations. This ADR adopts the dark theme via a `data-theme` attribute (overriding only semantic tokens, never primitives or component tokens), formalizes the extension tokens in `site/build.js` outside the governed `tokens/*.json` pipeline, and arbitrates the animations against the project's AI anti-patterns list — keeping the hero gradient, 3D token-layer visualization, and stat counters, but removing scroll-triggered reveals, decorative particles, and button glow.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

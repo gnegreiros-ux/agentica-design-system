@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/post-change-pipeline.md, .claude/skills/post-change-pipeline.md, .claude/rules/git-workflow.md, log/kit-construction.md
 
+> **English summary:** Establishes a mandatory pre-commit pipeline — impact analysis, structured report, explicit wait for human approval, then ordered execution (tokens → site rebuild → log → ADRs → commit) — after observing agents commit changes without proposing necessary follow-up updates. This operationalizes the project's core principle that the human always has the final word.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

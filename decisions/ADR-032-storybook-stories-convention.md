@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md
 > **Relations:** decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-031-agtc-button-implementation.md, .claude/rules/development.md
 
+> **English summary:** Defines the mandatory structure for `.stories.js` files (colocated with each component), a required baseline set of stories (per-variant, Disabled, Loading, AllVariants), and naming conventions — keeping the Storybook catalogue consistent and Chromatic's visual-regression coverage predictable across components.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** style-dictionary/config.json, tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/tokens-system.md
 
+> **English summary:** Adopts Style Dictionary to compile the three JSON token source files into platform-specific outputs (CSS, JS, iOS, Android) from a single reproducible, CI-automatable command. The `config.json` structure lets agents predict generated file paths and CSS variable names without reading the output.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** scripts/audit-tokens.js, tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md
 
+> **English summary:** Introduces `scripts/audit-tokens.js`, a dependency-free internal script that detects four types of token drift (orphaned, phantom, hardcoded values, direct primitive use) and can block CI in `--ci` mode. It was built in-house rather than adopting an external tool because it needs project-specific knowledge (the three JSON files, the `--ds-` prefix, the three levels) that a generic linter can't reproduce.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

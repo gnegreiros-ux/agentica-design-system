@@ -9,6 +9,13 @@
 > **Relations:** guidelines/foundations/illustration.md, tokens/semantic.json,
 > .claude/rules/ux-patterns-sources.md
 
+> **English summary:** Establishes "Tactile Tech" as the site's illustration style (geometric
+> shapes + grain texture, showing business outcomes rather than UI screenshots) and adds a
+> 5-token `semantic.color.illustration.*` group, each mapped to existing color primitives with no
+> new raw values.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

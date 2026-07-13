@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-060-agtc-top-nav-implementation.md
 > **Relations:** components/agtc-top-nav.js, site/build.js, decisions/ADR-060-agtc-top-nav-implementation.md
 
+> **English summary:** Integrating the newly formalized `agtc-top-nav` component (ADR-060) into the live site surfaced three gaps: the component needed to render bilingual labels automatically, its mobile responsive styles lived in `site.css` and couldn't reach into the shadow DOM, and the site had no bundler for Lit's ES module imports. This ADR adds a `MutationObserver`-driven `_lang` property that watches `data-lang` on `<html>` and re-renders automatically, moves all mobile CSS into the component itself (exposed via a `:host(.open)` state), and introduces an esbuild IIFE bundling step (`bundleComponents()`) so the component can be dropped in with a single `<script defer>` tag, with no external CDN dependency.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

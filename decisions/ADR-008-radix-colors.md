@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/foundations/color.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-007-axe-core-accessibilite.md
 
+> **English summary:** Adopts Radix UI Colors as the primitive color source because its 12-step scale encodes usage semantics (step 9-10 = solid CTA fill, step 11-12 = high-contrast text) directly in the palette, letting agents pick an accessible value without computing contrast manually. It also provides native dark-mode equivalents for every hue, avoiding a second hand-built palette.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

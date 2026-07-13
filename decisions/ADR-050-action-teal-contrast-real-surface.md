@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-048-action-teal-wcag-contrast.md, tokens/primitives.json, tokens/semantic.json, .claude/skills/pipelines/axe-core.md, guidelines/components/button.md
 
+> **English summary:** Corrects ADR-048's teal.11 value: it was validated against pure white
+> (#ffffff), but the real page background is `#fcfcfc`, causing the first axe-core run to surface
+> 76 contrast violations. Retunes `primitive.color.teal.11` from `#008573` to `#007a68`, restoring
+> AA compliance (5.14:1) on the actual background with a comfortable safety margin.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

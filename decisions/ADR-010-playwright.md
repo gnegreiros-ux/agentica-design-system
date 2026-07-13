@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md
 > **Relations:** .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md, decisions/ADR-009-storybook.md
 
+> **English summary:** Adopts Playwright for E2E and interaction accessibility tests that neither axe-core nor Chromatic can cover — full keyboard navigation, focus traps, and multi-step behaviors like the `critical` button's confirmation flow. Playwright tests are the executable contract for component *behavior*, complementing the static `.md` contracts.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

@@ -5,6 +5,10 @@
 **Décideurs :** Guilherme Negreiros
 **Scope :** Infrastructure de compilation des tokens
 
+> **English summary:** Documents the technical decisions behind compiling the 3-level token JSON into CSS, JS, Tailwind, Angular Material M3, iOS Swift, and Android XML artifacts via Style Dictionary — including a custom DTCG-format parser, a level-filtering transform, `_readme` key stripping, and a Radix-step-to-M3-tonal-stop mapping.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

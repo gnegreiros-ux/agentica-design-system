@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** site/build.js, .claude/rules/no-visited-nav.md
 
+> **English summary:** On mobile (≤768px), the secondary sidebar rendered above the page content because it preceded `<main>` in the DOM. This ADR turns the sidebar into a sliding drawer (fixed position, off-canvas, overlay + Escape/click-outside to close) and moves its toggle button into the content, right before the page's `<h1>`, appearing only on pages that actually have a sidebar.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

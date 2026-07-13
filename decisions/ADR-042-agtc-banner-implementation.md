@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-040-agtc-table-implementation.md, decisions/ADR-041-agtc-code-block-implementation.md, guidelines/components/banner.md, tokens/component.json
 
+> **English summary:** Generalizes the site's ad hoc `contribution-banner` into agtc-banner, an
+> inline (non-toast, non-modal) message component with 6 severity variants aligned to agtc-badge.
+> Static by default (no live region) to avoid announcing banners present at page load;
+> `live="polite"/"assertive"` is opt-in for dynamically inserted messages.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

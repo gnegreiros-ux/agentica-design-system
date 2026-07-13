@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/foundations/spacing.md
 
+> **English summary:** Formalizes the 4px spacing grid that was already in informal use, completing the scale from 4 to 10 values (4px through 64px). Every spacing value must be a multiple of 4px; new values are added to the primitive scale rather than created ad hoc.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

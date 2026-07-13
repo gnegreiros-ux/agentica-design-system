@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** .claude/rules/no-visited-nav.md, .claude/rules/development.md, guidelines/components/link.md, site/build.js
 
+> **English summary:** Establishes a system-wide governance rule: navigation elements (nav,
+> sidebar, TOC, tabs, breadcrumbs, footer links, icon-buttons) must never carry a distinct
+> `:visited` color, since navigation is not "read/unread" content. Content links in prose are
+> unaffected. Consolidates previously scattered, incomplete `:visited` resets in `site/build.js`.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

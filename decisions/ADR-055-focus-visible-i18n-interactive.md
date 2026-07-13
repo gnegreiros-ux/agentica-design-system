@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** site/build.js, .claude/rules/development.md
 
+> **English summary:** A WCAG 2.1 AA audit found several gaps: missing `:focus-visible` on sidebar links, tabs, TOC links, nav cards, and toggle buttons; an insufficient focus indicator on the search input; a copy button label that never updated when switching FR/EN; and an ambiguous "21 WCAG 2.1 AA" stat label. This ADR adds `:focus-visible` (via semantic tokens) across all interactive elements, makes the copy button's label reactive to the active language, and clarifies the stat label to "21 WCAG 2.1 AA criteria covered."
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

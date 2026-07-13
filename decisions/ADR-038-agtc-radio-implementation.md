@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/radio.md, tokens/component.json
 
+> **English summary:** Implements `agtc-radio-group` + `agtc-radio` as a round-shaped, mutually
+> exclusive control. Because native `name`-based radio grouping doesn't cross shadow DOM
+> boundaries, a required group container implements the full WAI-ARIA radiogroup pattern (roving
+> focus, arrow-key selection) instead.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/development.md
 > **Relations:** decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-002-lit-web-components.md, tokens/component.json
 
+> **English summary:** Documents key implementation decisions for `agtc-input`: the label is rendered inside the Shadow DOM (native `for`/`id` association can't cross shadow boundaries), the focus ring lives on the `.control` wrapper via `:focus-within`, `aria-describedby` is built dynamically for helper/error text with `role="alert"` on errors, a built-in show/hide toggle covers `type="password"`, and Lit's `live()` directive keeps the input's DOM value in sync during re-renders.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

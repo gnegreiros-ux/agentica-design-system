@@ -5,6 +5,10 @@
 **Décideurs :** Guilherme Negreiros
 **Scope :** Composant `agtc-button` — contrat d'implémentation
 
+> **English summary:** Documents the Lit implementation of `agtc-button`: a self-contained two-click confirmation flow for the `critical` variant (no external modal dependency, auto-reset on blur/Escape/3s timeout), a width-preserving loading state via `visibility: hidden`, dimension tokens shared across all variants, and a hybrid icon API (property fallback plus named slots) for cross-framework and Figma Code Connect compatibility.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

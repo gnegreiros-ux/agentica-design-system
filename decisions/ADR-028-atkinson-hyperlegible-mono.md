@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** ADR-021-atkinson-hyperlegible.md, tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
 
+> **English summary:** Adopts Atkinson Hyperlegible Mono — the monospace companion to ADR-021's Atkinson Hyperlegible — as the tokenized monospace font (`--agtc-font-mono`) for code, token names, and ADR numbers, replacing the uncontrollable generic `monospace` fallback that rendered differently across OS/browsers.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

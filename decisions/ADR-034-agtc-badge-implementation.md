@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-033-agtc-input-implementation.md, tokens/component.json
 
+> **English summary:** Documents `agtc-badge`: 6 semantic variants (no solid style in v1, subtle background offers better contrast), a flat token structure separating color-by-variant from size-by-scale, a pill radius (9999px) encoded as a component token rather than a shared semantic one, and `role="status"` by default to cover both static and dynamic (counter) use cases.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

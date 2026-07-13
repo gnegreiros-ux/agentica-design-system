@@ -8,6 +8,14 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/table.md, tokens/component.json
 
+> **English summary:** Implements agtc-table — the site's most-used pattern (692 token-table
+> occurrences) — as a "mix" architecture: a data-driven Lit component for apps/Storybook, plus a
+> `.agtc-table` CSS class for the site's static HTML (so displaying a table never depends on JS).
+> Read-only in v1; sorting/filtering/pagination are deferred but designed for via an extensible
+> `columns`/`rows` API.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

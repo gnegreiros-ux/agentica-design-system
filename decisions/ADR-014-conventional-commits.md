@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-012-audit-tokens-script.md
 
+> **English summary:** Adopts Conventional Commits with a project-specific `token` type that signals a mandatory governance review, plus `a11y` for accessibility work. Machine-parsable commit messages let agents and CI answer questions like "when did this token change?" without reading every commit body.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

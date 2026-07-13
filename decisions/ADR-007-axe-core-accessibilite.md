@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-004-gouvernance-humaine.md
 > **Relations:** .claude/rules/development.md, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-006-chromatic-tests-visuels.md
 
+> **English summary:** Adopts axe-core (via Playwright and the Storybook a11y addon) as the automated accessibility engine, blocking merges on any `critical` or `serious` WCAG violation. Agents treat a critical violation as a mandatory escalation, never an optional warning — and the ADR is explicit that axe-core covers only ~30-40% of WCAG 2.1 AA, a floor rather than a ceiling.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

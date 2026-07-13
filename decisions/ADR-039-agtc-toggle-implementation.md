@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/toggle.md, tokens/component.json
 
+> **English summary:** Implements agtc-toggle as an immediate-effect switch (`role="switch"` via a
+> visually-hidden native checkbox), signaling state through knob position rather than color alone
+> (WCAG 1.4.1). The "off" track color is a temporary proxy to a raw gray primitive, pending a
+> dedicated semantic token.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

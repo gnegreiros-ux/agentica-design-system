@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-038-agtc-radio-implementation.md, decisions/ADR-039-agtc-toggle-implementation.md, guidelines/components/segmented.md, tokens/component.json
 
+> **English summary:** Implements agtc-segmented, formalizing the site's FR/EN language toggle.
+> Deliberately uses a native button-group + `aria-current` pattern (not radiogroup or tablist),
+> since industry guidance (Primer) favors this for immediate-effect segmented controls rather than
+> form-submission or content-panel semantics.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

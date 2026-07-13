@@ -8,6 +8,12 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/checkbox.md, tokens/component.json
 
+> **English summary:** Implements agtc-checkbox as a square control (not round, to avoid radio
+> confusion) using a visually-hidden native `<input type="checkbox">` for accessibility, with an
+> `indeterminate` state exposed via the DOM property, a clickable label, and a ≥24px touch target.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

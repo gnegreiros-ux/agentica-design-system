@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, ADR-008-radix-colors.md
 
+> **English summary:** Establishes the official brand palette: Teal (Radix, already present) as the primary action color replacing Blue, plus two new custom palettes — a rose-coral Accent and a dark bordeaux Secondary — each with verified WCAG contrast ratios. Adds a new `semantic.color.brand.*` token group; `action.primary` migrates from blue to teal.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

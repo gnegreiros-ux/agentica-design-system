@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md
 
+> **English summary:** Adopts Lucide Icons (MIT-licensed fork of Feather Icons, 1,500+ icons) as the system's official icon library, wrapped in an `agtc-icon` Lit component with three size tokens (inline/control/nav) and mandatory WCAG 1.1.1 labeling — either a `label` (rendered as `aria-label`) or `decorative` (rendered as `aria-hidden`).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

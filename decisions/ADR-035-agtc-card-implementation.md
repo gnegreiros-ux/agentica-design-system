@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-034-agtc-badge-implementation.md, tokens/component.json
 
+> **English summary:** Documents `agtc-card`: no native interactivity in v1 (a clickable card must wrap an `<a>`/`<agtc-button>`, avoiding the `<div role="button">` WCAG 4.1.2 anti-pattern), auto-detected `header`/`footer` slots with conditional separators and padding adjustments, 3 elevation variants (default/elevated/flat), and 4 padding levels (none/sm/md/lg).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

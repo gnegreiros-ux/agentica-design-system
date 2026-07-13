@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-047-no-visited-nav-rule.md
 > **Relations:** tokens/component.json, components/agtc-top-nav.js, guidelines/components/top-nav.md, decisions/ADR-056-agtc-tabs-implementation.md
 
+> **English summary:** The site's main navigation was hand-rolled HTML/CSS that had accumulated repeated bugs: unstyled `:visited`/`:active`, a filled "active" state that looked like a toggled button, missing `:focus-visible` and `aria-current`, and no component-token layer. This ADR formalizes `agtc-top-nav` as a Lit Web Component using `<nav>` + `aria-current="page"` (not `role="tablist"`, since it links between pages rather than switching in-page panels), a full-height tab visual pattern with a bottom-border active indicator, a separate CTA link style, and 18 new component tokens — making the component, not the site's CSS, the source of truth for the nav's design.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

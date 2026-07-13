@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, .claude/rules/post-change-pipeline.md
 > **Relations:** .claude/skills/quality-gate.md, .claude/skills/pipelines/, ADR-027-pipeline-impact-pre-commit.md
 
+> **English summary:** Replaces the monolithic ADR-027 pipeline with a modular quality gate — one independent file per check under `.claude/skills/pipelines/`, each with explicit triggers and verifiable checks — after ADR-028 (a new font) was implemented without a corresponding ADR being created. The new `adr-triggers.md` trigger matrix makes such omissions structurally harder to miss.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

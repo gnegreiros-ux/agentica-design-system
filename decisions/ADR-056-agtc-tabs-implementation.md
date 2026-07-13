@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** components/agtc-tabs.js, guidelines/components/tabs.md, tokens/component.json, decisions/ADR-047-no-visited-nav.md
 
+> **English summary:** Implements `agtc-tabs` for the site's doc-chrome (e.g. "Overview | Tokens | Best practices"). Decisions: in-page tabs by default with an optional per-tab `href` for external links; automatic activation on arrow-key focus (per the W3C APG, since panel content is preloaded); horizontal orientation only for now; closable tabs deferred (no use case yet); full ARIA tablist/tab/tabpanel pattern with roving tabindex; and `:visited` neutralized per the system-wide no-visited-nav rule (ADR-047).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

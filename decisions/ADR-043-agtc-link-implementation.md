@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, guidelines/components/link.md, tokens/component.json
 
+> **English summary:** Implements agtc-link as a real `<a href>` for navigation, distinct from
+> agtc-button (actions). Defaults to a permanent underline in running text (WCAG 1.4.1 — never
+> color alone), and external links auto-open in a new tab with `rel="noopener noreferrer"`, an
+> icon, and hidden text warning screen reader users.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Patterns UX de référence appliqués

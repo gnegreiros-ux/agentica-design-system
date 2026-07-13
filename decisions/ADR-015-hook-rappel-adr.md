@@ -9,6 +9,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md
 
+> **English summary:** Adds a `PostToolUse` hook that reminds the agent to ask "do you want an ADR for this?" whenever `tokens/`, `guidelines/`, or `components/` are touched, since documented rules were being forgotten in practice. A 2026-05-31 amendment restricts the reminder to `Write` (new files) only, since it fired too often on routine `Edit` bug fixes and became noise rather than a safeguard.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

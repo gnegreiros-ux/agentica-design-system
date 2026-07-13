@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, decisions/ADR-018-migration-references-primitives-radix.md
 
+> **English summary:** ADR-018 left two technical debts: `site/build.js` hardcoded all semantic token values in a static 37-line object, and non-color semantic references pointed to primitives that didn't exist. This decision adds five new primitive categories (space, fontSize, fontWeight, lineHeight, radius) and replaces the hardcoded object with a dynamic resolver, with zero visual change to the output.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

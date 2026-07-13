@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, ADR-020-grille-4px.md, ADR-011-tokens-studio.md
 
+> **English summary:** Introduces three spacing density modes (compact ×0.75, normal ×1.0, comfortable ×1.25) computed with `floor()`/`ceil()` math tokens against a 4px grid unit, guaranteeing every resulting value stays a multiple of 4px. This corrects a v1 approach that used a single swappable factor and produced off-grid values (e.g. 6px, 15px).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

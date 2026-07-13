@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, .claude/rules/feedback_site_dogfooding.md, decisions/ADR-045-feedback-color-family-completion.md, site/build.js
 
+> **English summary:** Adds two near-black primitives and 11 semantic tokens for inverse/dark
+> surfaces, on-inverse text, decorative borders, and shadows — eliminating the remaining hardcoded
+> dark-surface and shadow values in `site/build.js`. Also fixes two footer/link colors that were
+> failing WCAG AA contrast.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

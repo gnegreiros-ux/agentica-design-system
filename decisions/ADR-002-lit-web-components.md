@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md
 > **Relations:** .claude/rules/development.md, guidelines/components/, decisions/ADR-001-trois-niveaux-tokens.md
 
+> **English summary:** Adopts Lit as a lightweight abstraction over native Web Components so components work identically across React, Angular, Vue, and vanilla HTML without imposing a framework. Lit's declarative properties make component contracts machine-readable, letting agents inspect and generate components from a standardized template.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

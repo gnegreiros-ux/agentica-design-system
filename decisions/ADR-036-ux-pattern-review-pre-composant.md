@@ -8,6 +8,12 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
 > **Relations:** .claude/rules/ux-patterns-sources.md, .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, .claude/skills/quality-gate.md, .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-029-quality-gate-pre-commit.md
 
+> **English summary:** Before publishing any new or meaningfully UX-changed component, an agent
+> must present UX patterns from 5 recognized sources (with links) for human approval, then
+> document the decision across 6 surfaces (guideline, code, story, site, ADR, log).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

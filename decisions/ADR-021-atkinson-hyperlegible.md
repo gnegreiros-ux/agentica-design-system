@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
 
+> **English summary:** Replaces Inter (chosen with no documented accessibility rationale) with Atkinson Hyperlegible, a font designed for the Braille Institute of America that deliberately disambiguates commonly confused characters (l/1/I, O/0, b/d/p/q) to improve legibility for low-vision users. Tokenized as `primitive.fontFamily.base`; the font has no medium (500) weight, which browsers round down to 400.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

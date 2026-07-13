@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-011-tokens-studio.md, decisions/ADR-024-brand-palette-teal-accent-secondary.md, tokens/primitives.json, tokens/semantic.json
 
+> **English summary:** Custom brand palettes (accent, secondary) introduced in ADR-024 follow the exact same Tokens Studio → Figma Variables sync pipeline as the existing Radix palettes, living in the same "Primitives" collection with no special-case process. Designers never edit Figma variables directly — every palette change flows through a PR with mandatory Principal Designer approval.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

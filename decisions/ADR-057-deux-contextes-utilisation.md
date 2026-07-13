@@ -5,6 +5,10 @@
 **Auteur :** Guilherme Negreiros
 **Relations :** ADR-025 (densité), ADR-051 (illustration), ADR-052 (DTCG), `.claude/rules/contexts-utilisation.md`, `tokens/semantic.json`, `guidelines/foundations/contextes.md`
 
+> **English summary:** The Agentica site treated marketing pages (home, get-started, agents) and documentation pages identically, with no tonal distinction between "convincing a visitor" and "documenting a component." This ADR formalizes two usage contexts via a `data-context` attribute on `<body>`: the default Product (SaaS) mode, and an opt-in Marketing (Narrative) mode with its own `semantic.marketing.*` tokens (display typography, section-breathing spacing, hero gap) that override spacing/typography on marketing pages only, without touching shared components.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

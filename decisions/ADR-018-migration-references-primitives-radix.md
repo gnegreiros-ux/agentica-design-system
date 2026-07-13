@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-017-correction-contraste-text-disabled.md
 
+> **English summary:** Resolves a structural mismatch where `semantic.json` referenced primitives using Tailwind-like notation (`color.blue.700`) that didn't exist in the Radix-based `primitives.json`. Migrates all semantic color references to valid `{primitive.color.X.Y}` paths and adds a small `neutral` palette for the 3 values with no exact Radix equivalent — no resolved values change, this is purely structural.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

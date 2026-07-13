@@ -9,6 +9,13 @@
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json,
 > .claude/rules/tokens-system.md, .claude/skills/pipelines/style-dictionary.md
 
+> **English summary:** Formally declares the W3C DTCG (Design Tokens Community Group) format as
+> the repository's token standard — already followed de facto — and closes the gap by adding the
+> `$schema` field to `tokens/primitives.json` (metadata only, no token values changed). Documents
+> this on governance surfaces and publicly on the site with the official DTCG logo.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

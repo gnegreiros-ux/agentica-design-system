@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** tokens/semantic.json, site/build.js (COMP object), decisions/ADR-045-feedback-color-family-completion.md, decisions/ADR-046-inverse-surfaces-shadows-tokens.md
 
+> **English summary:** A systematic audit of the component-token object (`COMP`) in `site/build.js` found roughly 20 component tokens referencing primitive tokens directly, skipping the semantic layer required by ADR-001, plus 4 unrelated hardcoded CSS violations. This ADR closes the three-level hierarchy by adding 18 new intermediate semantic tokens (brand/feedback text colors, code-surface colors, toggle-track colors, a component spacing scale) and fixing the 4 CSS violations — leaving zero direct primitive references in the COMP object, with no visual change since resolved values stay identical.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

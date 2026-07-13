@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/foundations/typography.md
 
+> **English summary:** Establishes a rem-based Minor Third (1.2 ratio) type scale, rounded to the 4px grid, running from `xs` (12px) to `5xl` (48px), with three line-height rules assigned by context (1.6 for reading text, 1.1 for mid-size headings, 1.0 for display sizes) to satisfy WCAG 1.4.4 and 1.4.12.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, .claude/rules/tokens-system.md, .claude/rules/feedback_site_dogfooding.md, site/build.js
 
+> **English summary:** Completes the `semantic.color.feedback` family so every severity (danger,
+> success, warning, info) exposes all three roles — text, subtle background, border — eliminating
+> the last hardcoded feedback colors (including a previously-missing warning family) in
+> `site/build.js`.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

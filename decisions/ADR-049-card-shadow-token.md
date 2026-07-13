@@ -8,6 +8,12 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/component.json, decisions/ADR-046-inverse-surfaces-shadows-tokens.md, site/build.js
 
+> **English summary:** Tokenizes the last remaining raw shadow value in the system — the card's
+> resting elevation — as a new `semantic.shadow.card` token, with `component.card.elevated.shadow`
+> repointed to reference it. Pure indirection refactor; the resolved visual value is unchanged.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

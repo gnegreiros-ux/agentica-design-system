@@ -8,6 +8,13 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, decisions/ADR-024-brand-palette-migration.md, guidelines/components/button.md, site/build.js
 
+> **English summary:** Fixes a systemic WCAG AA contrast failure: `action.primary` was teal.9
+> (3.07:1 with white text), violating the button contract's own 4.5:1 requirement — and correcting
+> an inaccurate claim in ADR-024. Splits the identity teal (`brand.primary`, unchanged teal.9) from
+> a new accessible interactive teal (`action.primary` = teal.11, 4.56:1).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

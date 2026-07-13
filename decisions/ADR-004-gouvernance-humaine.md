@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, decisions/ADR-001-trois-niveaux-tokens.md
 
+> **English summary:** Establishes "the human always has the final word" as a non-negotiable governance rule, driven by accessibility, brand, and irreversibility risks that agents cannot reliably self-assess. Agents may read, analyze, and propose freely, but merging, pushing to protected branches, and modifying component tokens always require explicit human approval.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

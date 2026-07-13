@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/components/button.md
 > **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/components/button.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-004-gouvernance-humaine.md
 
+> **English summary:** Replaces the industry-standard `danger` button variant with `critical`, because a behavior-oriented name (what the system must do: confirm, audit, prevent double-clicks) is more useful to agents than an appearance-oriented one (what the button looks like). `danger` is not a valid variant in this system; any agent encountering it must escalate rather than apply it silently.
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

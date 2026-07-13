@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md
 > **Relations:** .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md
 
+> **English summary:** Adopts Storybook as the component documentation and development canvas, serving as the entry point for Chromatic visual testing and the axe-core a11y addon. Stories are machine-readable — an agent can check that every variant defined in `component.json` has a corresponding story, and treat a missing story as "not agent-ready."
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte

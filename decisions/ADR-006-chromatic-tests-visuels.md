@@ -8,6 +8,10 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-004-gouvernance-humaine.md
 > **Relations:** .claude/rules/development.md, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md
 
+> **English summary:** Adopts Chromatic, integrated with Storybook and CI, to catch silent visual regressions that unit and accessibility tests miss. Every PR triggers a pixel-comparison capture against the approved baseline, and any visual diff requires explicit human approval before merge — agents cannot approve Chromatic captures themselves (see ADR-004).
+>
+> *The original French version follows below — preserved unaltered as the historical record.*
+
 ---
 
 ## Contexte
