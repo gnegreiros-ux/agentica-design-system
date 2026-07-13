@@ -1,34 +1,34 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Variantes : primary | secondary | ghost | critical
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Variants : primary | secondary | ghost | critical
 //
-// Icônes — approche hybride (propriété + slot, slot a la priorité) :
-//   icon="name"         → <agtc-icon> en prefix via fallback slot
-//   icon-suffix="name"  → <agtc-icon> en suffix via fallback slot
-//   slot[name="prefix"] → composition libre (SVG custom, etc.)
-//   slot[name="suffix"] → idem
-//   icon-only           → padding carré, label="" requis (WCAG 1.1.1)
+// Icons — hybrid approach (property + slot, slot takes priority):
+//   icon="name"         → <agtc-icon> as prefix via fallback slot
+//   icon-suffix="name"  → <agtc-icon> as suffix via fallback slot
+//   slot[name="prefix"] → free composition (custom SVG, etc.)
+//   slot[name="suffix"] → same
+//   icon-only           → square padding, label="" required (WCAG 1.1.1)
 //
-// La propriété active Figma Code Connect et les frameworks (React…).
-// Le slot reste disponible pour la composition avancée.
+// The property enables Figma Code Connect and frameworks (React…).
+// The slot remains available for advanced composition.
 //
-// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
-//   Une seule action primaire par contexte — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
-//   Confirmation explicite pour critical — NN/g error prevention
-//   Largeur préservée pendant loading (pas de saut de layout) — Smashing
-//   Ne jamais désactiver sans indiquer la raison (disabled motivé > masquer)
-//     — Smashing hidden vs disabled : https://www.smashingmagazine.com/category/design-patterns/
-//   Libellé décrivant la conséquence — NN/g : https://www.nngroup.com/articles/design-pattern-guidelines/
-//   Détail : guidelines/components/button.md § PATTERNS UX DE RÉFÉRENCE
-// Prérequis : agtc-icon doit être enregistré par le consommateur.
+// UX reference patterns applied (ADR-036, all approved):
+//   A single primary action per context — IxDF: https://ixdf.org/literature/topics/ui-design-patterns
+//   Explicit confirmation for critical — NN/g error prevention
+//   Width preserved during loading (no layout shift) — Smashing
+//   Never disable without stating the reason (motivated disabled > hiding)
+//     — Smashing hidden vs disabled: https://www.smashingmagazine.com/category/design-patterns/
+//   Label describing the consequence — NN/g: https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Details: guidelines/components/button.md § UX Patterns Reference
+// Prerequisite: agtc-icon must be registered by the consumer.
 //
-// Règle critical : deux clics requis (confirmation explicite).
-//   - 1er clic → état confirming, event agtc-confirm-request
-//   - 2e clic  → action confirmée, events agtc-confirm + agtc-click
-//   - blur ou Escape → reset automatique
-// Largeur préservée pendant le loading (.content visibility:hidden, icônes incluses).
+// Critical rule: two clicks required (explicit confirmation).
+//   - 1st click → confirming state, agtc-confirm-request event
+//   - 2nd click → action confirmed, agtc-confirm + agtc-click events
+//   - blur or Escape → automatic reset
+// Width preserved during loading (.content visibility:hidden, icons included).
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcButton extends LitElement {
@@ -55,14 +55,14 @@ class AgtcButton extends LitElement {
     this.iconSuffix   = undefined;
     this.type         = 'button';
     this.label        = undefined;
-    this.loadingLabel = 'En cours…';
+    this.loadingLabel = 'Loading…';
     this._confirming  = false;
     this._confirmTimer = null;
   }
 
   updated() {
     if (this.iconOnly && !this.label) {
-      console.warn('[agtc-button] icon-only sans label="" — inaccessible (WCAG 1.1.1). Ajouter label="Description de l\'action".');
+      console.warn('[agtc-button] icon-only without label="" — inaccessible (WCAG 1.1.1). Add label="Action description".');
     }
   }
 
@@ -140,20 +140,20 @@ class AgtcButton extends LitElement {
       user-select: none;
     }
 
-    /* ── Icon slots — transparents au flex layout ──────────────────────────── */
-    /* display:contents permet aux éléments slottés d'être des flex items directs.
-       Un slot vide ne génère pas d'espace ni de gap superflu. */
+    /* ── Icon slots — transparent to the flex layout ───────────────────────── */
+    /* display:contents lets slotted elements be direct flex items.
+       An empty slot generates no extra space or gap. */
     slot[name="prefix"],
     slot[name="suffix"] {
       display: contents;
     }
 
-    /* ── Icon-only — padding carré ─────────────────────────────────────────── */
+    /* ── Icon-only — square padding ────────────────────────────────────────── */
     button.icon-only {
       padding: var(--agtc-component-button-primary-padding-y);
     }
 
-    /* ── Focus — non négociable ────────────────────────────────────────────── */
+    /* ── Focus — non-negotiable ────────────────────────────────────────────── */
     button:focus-visible {
       outline: 2.5px solid var(--agtc-semantic-color-border-focus);
       outline-offset: 2px;
@@ -229,10 +229,10 @@ class AgtcButton extends LitElement {
       cursor: wait;
     }
 
-    /* .content est display:contents — transparent au layout.
-       visibility:hidden se propage aux enfants via héritage CSS,
-       les cache visuellement ET de l'arbre d'accessibilité tout en
-       préservant leurs boîtes flex (largeur du bouton stable). */
+    /* .content is display:contents — transparent to the layout.
+       visibility:hidden propagates to children via CSS inheritance,
+       hiding them visually AND from the accessibility tree while
+       preserving their flex boxes (stable button width). */
     .content {
       display: contents;
     }
@@ -240,7 +240,7 @@ class AgtcButton extends LitElement {
       visibility: hidden;
     }
 
-    /* .label est display:contents — le texte devient flex item direct */
+    /* .label is display:contents — the text becomes a direct flex item */
     .label {
       display: contents;
     }
@@ -261,7 +261,7 @@ class AgtcButton extends LitElement {
       animation: spin 0.65s linear infinite;
     }
 
-    /* Visible uniquement pour les lecteurs d'écran */
+    /* Visible to screen readers only */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -295,8 +295,8 @@ class AgtcButton extends LitElement {
       this.iconOnly    ? 'icon-only'  : '',
     ].filter(Boolean).join(' ');
 
-    // Pour icon-only : aria-label bascule vers loadingLabel pendant le chargement.
-    // Pour les autres : aria-label n'est pas défini (le contenu du bouton fait foi).
+    // For icon-only: aria-label switches to loadingLabel while loading.
+    // For the others: aria-label is not set (the button content is authoritative).
     const ariaLabel = this.label
       ? (busy ? this.loadingLabel : this.label)
       : undefined;
@@ -320,7 +320,7 @@ class AgtcButton extends LitElement {
             ${this.icon ? html`<agtc-icon name="${this.icon}" size="control"></agtc-icon>` : ''}
           </slot>
           <span class="label">
-            ${this._confirming ? 'Confirmer ?' : html`<slot></slot>`}
+            ${this._confirming ? 'Confirm?' : html`<slot></slot>`}
           </span>
           <slot name="suffix">
             ${this.iconSuffix ? html`<agtc-icon name="${this.iconSuffix}" size="control"></agtc-icon>` : ''}

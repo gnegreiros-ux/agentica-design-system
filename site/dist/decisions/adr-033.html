@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Documents key implementation decisions for <code>agtc-input</code>: the label is rendered inside the Shadow DOM (native <code>for</code>/<code>id</code> association can't cross shadow boundaries), the focus ring lives on the <code>.control</code> wrapper via <code>:focus-within</code>, <code>aria-describedby</code> is built dynamically for helper/error text with <code>role="alert"</code> on errors, a built-in show/hide toggle covers <code>type="password"</code>, and Lit's <code>live()</code> directive keeps the input's DOM value in sync during re-renders.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p><code>agtc-input</code> est le deuxième composant du système. Il couvre la saisie de texte dans les formulaires — le point d'entrée le plus fréquent des données utilisateur.</p>
 <p>Trois contraintes ont guidé les décisions :</p>
 <p>1. <strong>Accessibilité</strong> — un champ de saisie sans label visible est inaccessible    (WCAG 1.3.1). Chaque état (erreur, désactivé, lecture seule) doit être    communiqué à l'arbre d'accessibilité, pas seulement visuellement.</p>

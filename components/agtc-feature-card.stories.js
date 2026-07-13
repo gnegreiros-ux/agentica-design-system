@@ -7,28 +7,28 @@ export default {
     docs: {
       description: {
         component: `
-**Carte éditoriale V2** — icône fonctionnelle + titre + corps de texte avec affordance d'interactivité (border-bottom animé).
+**V2 editorial card** — functional icon + title + body text with an interactivity affordance (animated border-bottom).
 
-Conçue pour les sections marketing narratives ("Valeur par rôle", blocs éditoriaux). Deux variantes :
-- \`default\` — border-bottom couleur principale (pages SaaS)
-- \`marketing\` — border-bottom gradient primary→accent (pages \`data-context="marketing"\`)
+Designed for narrative marketing sections ("Value by role", editorial blocks). Two variants:
+- \`default\` — primary-color border-bottom (SaaS pages)
+- \`marketing\` — primary→accent gradient border-bottom (\`data-context="marketing"\` pages)
 
-**Patterns UX appliqués** (approuvés ADR-063, 2026-06-25) :
-- [NN/g — Icône + titre en duo](https://www.nngroup.com/articles/design-pattern-guidelines/) : icône fonctionnelle, pas décorative
-- [IxDF — Affordance contrôlée](https://ixdf.org/literature/topics/ui-design-patterns) : animation seulement au hover/focus
-- [IxDF — prefers-reduced-motion](https://ixdf.org/literature/topics/ui-design-patterns) : border visible en permanence si mouvement réduit
-- [Dashboard — Variante contextuelle](https://dashboarddesignpatterns.github.io/patterns.html) : default vs marketing
+**UX patterns applied** (approved ADR-063, 2026-06-25):
+- [NN/g — Icon + title as a duo](https://www.nngroup.com/articles/design-pattern-guidelines/): functional icon, not decorative
+- [IxDF — Controlled affordance](https://ixdf.org/literature/topics/ui-design-patterns): animation only on hover/focus
+- [IxDF — prefers-reduced-motion](https://ixdf.org/literature/topics/ui-design-patterns): border permanently visible when motion is reduced
+- [Dashboard — Contextual variant](https://dashboarddesignpatterns.github.io/patterns.html): default vs marketing
 
-**Attributs :** \`heading\` · \`heading-level\` (1-6, défaut 3) · \`variant\` (default | marketing)
+**Attributes:** \`heading\` · \`heading-level\` (1-6, default 3) · \`variant\` (default | marketing)
 
-**Slots :** \`icon\` (SVG 20×20) · *(défaut)* corps de texte
+**Slots:** \`icon\` (SVG 20×20) · *(default)* body text
         `,
       },
     },
   },
   argTypes: {
-    heading:      { control: 'text', description: 'Titre de la carte' },
-    headingLevel: { control: { type: 'number', min: 1, max: 6 }, description: 'Niveau HTML du heading (1-6)' },
+    heading:      { control: 'text', description: 'Card title' },
+    headingLevel: { control: { type: 'number', min: 1, max: 6 }, description: 'HTML heading level (1-6)' },
     variant:      { control: { type: 'select', options: ['default', 'marketing'] } },
   },
 };
@@ -43,7 +43,7 @@ export const Default = {
   render: (args) => `
     <agtc-feature-card heading="${args.heading}" heading-level="${args.headingLevel}" variant="${args.variant}">
       ${iconSvg}
-      Tokens sémantiques, contrats de composants et décisions documentées — lisibles par les humains et les agents IA.
+      Semantic tokens, component contracts and documented decisions — readable by humans and AI agents.
     </agtc-feature-card>
   `,
   args: { heading: 'Designers', headingLevel: 3, variant: 'default' },
@@ -54,7 +54,7 @@ export const Marketing = {
     <div style="background:#0c0f19;padding:2rem;">
       <agtc-feature-card heading="${args.heading}" heading-level="${args.headingLevel}" variant="${args.variant}">
         ${iconSvg}
-        Tokens sémantiques, contrats de composants et décisions documentées — lisibles par les humains et les agents IA.
+        Semantic tokens, component contracts and documented decisions — readable by humans and AI agents.
       </agtc-feature-card>
     </div>
   `,
@@ -64,26 +64,26 @@ export const Marketing = {
 export const Grid = {
   render: () => `
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#1e2433;max-width:900px;">
-      ${['Organisation', 'Managers', 'Designers', 'Développeurs', 'IA'].map(name => `
+      ${['Organization', 'Managers', 'Designers', 'Developers', 'AI'].map(name => `
         <agtc-feature-card heading="${name}" heading-level="3" variant="marketing">
           ${iconSvg}
-          Valeur spécifique pour ce rôle dans le système de design agentique.
+          Specific value for this role in the agentic design system.
         </agtc-feature-card>
       `).join('')}
     </div>
   `,
-  parameters: { docs: { description: { story: 'Grille de 5 cartes — usage type dans la section "Valeur par rôle".' } } },
+  parameters: { docs: { description: { story: 'Grid of 5 cards — typical usage in the "Value by role" section.' } } },
 };
 
 export const ReducedMotion = {
   render: () => `
     <p style="font-size:.85rem;margin-bottom:1rem;color:#94a3b8;">
-      Simuler avec : OS → Accessibilité → Réduire les animations.
-      La border-bottom est visible à pleine largeur dès le départ.
+      Simulate with: OS → Accessibility → Reduce motion.
+      The border-bottom is visible at full width from the start.
     </p>
-    <agtc-feature-card heading="Accessibilité" heading-level="3">
+    <agtc-feature-card heading="Accessibility" heading-level="3">
       ${iconSvg}
-      Le border-bottom reste visible même sans animation — prefers-reduced-motion respecté.
+      The border-bottom stays visible even without animation — prefers-reduced-motion respected.
     </agtc-feature-card>
   `,
 };

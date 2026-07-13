@@ -9,14 +9,14 @@ export default {
     docs: {
       description: {
         component: [
-          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          'UX reference patterns applied (ADR-036, all approved):',
           '',
-          '- **Statut pas encodé uniquement par la couleur** — recommandé : icône/libellé distinctif pour `danger`/`warning` — [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **`role="status"`** pour annoncer les changements aux AT — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **Mapping sémantique cohérent** (traffic-light) — [Dashboard](https://dashboarddesignpatterns.github.io/patterns.html)',
-          '- **Non interactif** — encapsuler dans un `<button>` si cliquable — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Status not encoded by color alone** — recommended: distinctive icon/label for `danger`/`warning` — [NN/g — indicators](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **`role="status"`** to announce changes to AT — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Consistent semantic mapping** (traffic-light) — [Dashboard](https://dashboarddesignpatterns.github.io/patterns.html)',
+          '- **Non-interactive** — wrap in a `<button>` if clickable — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
           '',
-          'Détail : `guidelines/components/badge.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/badge.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -34,7 +34,7 @@ export default {
     },
     icon:     { control: 'text' },
     iconOnly: { control: 'boolean', name: 'icon-only' },
-    label:    { control: 'text', description: 'aria-label pour icon-only' },
+    label:    { control: 'text', description: 'aria-label for icon-only' },
   },
   args: {
     variant: 'neutral',
@@ -53,118 +53,118 @@ export default {
   `,
 };
 
-// ── Variantes ────────────────────────────────────────────────────────────────
+// ── Variants ─────────────────────────────────────────────────────────────────
 
 export const Neutral = {
-  name: 'Neutral — état par défaut',
-  render: () => html`<agtc-badge variant="neutral">Brouillon</agtc-badge>`,
+  name: 'Neutral — default state',
+  render: () => html`<agtc-badge variant="neutral">Draft</agtc-badge>`,
 };
 
 export const Brand = {
-  name: 'Brand — identité Agentica',
+  name: 'Brand — Agentica identity',
   render: () => html`<agtc-badge variant="brand">Agentica</agtc-badge>`,
 };
 
 export const Success = {
-  name: 'Success — validé, actif',
-  render: () => html`<agtc-badge variant="success">Actif</agtc-badge>`,
+  name: 'Success — validated, active',
+  render: () => html`<agtc-badge variant="success">Active</agtc-badge>`,
 };
 
 export const Warning = {
-  name: 'Warning — attention requise',
-  render: () => html`<agtc-badge variant="warning">En attente</agtc-badge>`,
+  name: 'Warning — attention required',
+  render: () => html`<agtc-badge variant="warning">Pending</agtc-badge>`,
 };
 
 export const Danger = {
-  name: 'Danger — erreur, critique',
-  render: () => html`<agtc-badge variant="danger">Erreur</agtc-badge>`,
+  name: 'Danger — error, critical',
+  render: () => html`<agtc-badge variant="danger">Error</agtc-badge>`,
 };
 
 export const Info = {
-  name: 'Info — information contextuelle',
-  render: () => html`<agtc-badge variant="info">Nouveau</agtc-badge>`,
+  name: 'Info — contextual information',
+  render: () => html`<agtc-badge variant="info">New</agtc-badge>`,
 };
 
-// ── Tailles ──────────────────────────────────────────────────────────────────
+// ── Sizes ────────────────────────────────────────────────────────────────────
 
 export const Sizes = {
-  name: 'Tailles — sm et md',
+  name: 'Sizes — sm and md',
   render: () => html`
     <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
       <agtc-badge variant="brand" size="sm">sm</agtc-badge>
       <agtc-badge variant="brand" size="md">md</agtc-badge>
-      <agtc-badge variant="success" size="sm">Actif</agtc-badge>
-      <agtc-badge variant="success" size="md">Actif</agtc-badge>
-      <agtc-badge variant="danger" size="sm">Erreur</agtc-badge>
-      <agtc-badge variant="danger" size="md">Erreur</agtc-badge>
+      <agtc-badge variant="success" size="sm">Active</agtc-badge>
+      <agtc-badge variant="success" size="md">Active</agtc-badge>
+      <agtc-badge variant="danger" size="sm">Error</agtc-badge>
+      <agtc-badge variant="danger" size="md">Error</agtc-badge>
     </div>
   `,
 };
 
-// ── Icônes ───────────────────────────────────────────────────────────────────
+// ── Icons ────────────────────────────────────────────────────────────────────
 
 export const WithIcon = {
-  name: 'Avec icône prefix',
+  name: 'With prefix icon',
   render: () => html`
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <agtc-badge variant="success" icon="check-circle">Validé</agtc-badge>
-      <agtc-badge variant="warning" icon="alert-triangle">En attente</agtc-badge>
-      <agtc-badge variant="danger"  icon="x-circle">Erreur</agtc-badge>
-      <agtc-badge variant="info"    icon="info">Nouveau</agtc-badge>
+      <agtc-badge variant="success" icon="check-circle">Validated</agtc-badge>
+      <agtc-badge variant="warning" icon="alert-triangle">Pending</agtc-badge>
+      <agtc-badge variant="danger"  icon="x-circle">Error</agtc-badge>
+      <agtc-badge variant="info"    icon="info">New</agtc-badge>
       <agtc-badge variant="brand"   icon="zap">Agentica</agtc-badge>
     </div>
   `,
 };
 
 export const IconOnly = {
-  name: 'Icon-only (WCAG : label requis)',
+  name: 'Icon-only (WCAG: label required)',
   render: () => html`
     <div style="display:flex;gap:8px;align-items:center;">
-      <agtc-badge variant="success" icon="check"    icon-only label="Validé"></agtc-badge>
-      <agtc-badge variant="warning" icon="alert-triangle" icon-only label="Attention"></agtc-badge>
-      <agtc-badge variant="danger"  icon="x"        icon-only label="Erreur"></agtc-badge>
+      <agtc-badge variant="success" icon="check"    icon-only label="Validated"></agtc-badge>
+      <agtc-badge variant="warning" icon="alert-triangle" icon-only label="Warning"></agtc-badge>
+      <agtc-badge variant="danger"  icon="x"        icon-only label="Error"></agtc-badge>
       <agtc-badge variant="info"    icon="info"     icon-only label="Information"></agtc-badge>
     </div>
   `,
 };
 
-// ── Vue d'ensemble ───────────────────────────────────────────────────────────
+// ── Overview ─────────────────────────────────────────────────────────────────
 
 export const AllVariants = {
-  name: "Vue d'ensemble — toutes les variantes",
+  name: 'Overview — all variants',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:20px;">
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — sans icône</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — no icon</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <agtc-badge variant="neutral">Brouillon</agtc-badge>
+          <agtc-badge variant="neutral">Draft</agtc-badge>
           <agtc-badge variant="brand">Agentica</agtc-badge>
-          <agtc-badge variant="success">Actif</agtc-badge>
-          <agtc-badge variant="warning">En attente</agtc-badge>
-          <agtc-badge variant="danger">Erreur</agtc-badge>
-          <agtc-badge variant="info">Nouveau</agtc-badge>
+          <agtc-badge variant="success">Active</agtc-badge>
+          <agtc-badge variant="warning">Pending</agtc-badge>
+          <agtc-badge variant="danger">Error</agtc-badge>
+          <agtc-badge variant="info">New</agtc-badge>
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — avec icône</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — with icon</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <agtc-badge variant="neutral" icon="file">Brouillon</agtc-badge>
+          <agtc-badge variant="neutral" icon="file">Draft</agtc-badge>
           <agtc-badge variant="brand"   icon="zap">Agentica</agtc-badge>
-          <agtc-badge variant="success" icon="check-circle">Actif</agtc-badge>
-          <agtc-badge variant="warning" icon="alert-triangle">En attente</agtc-badge>
-          <agtc-badge variant="danger"  icon="x-circle">Erreur</agtc-badge>
-          <agtc-badge variant="info"    icon="info">Nouveau</agtc-badge>
+          <agtc-badge variant="success" icon="check-circle">Active</agtc-badge>
+          <agtc-badge variant="warning" icon="alert-triangle">Pending</agtc-badge>
+          <agtc-badge variant="danger"  icon="x-circle">Error</agtc-badge>
+          <agtc-badge variant="info"    icon="info">New</agtc-badge>
         </div>
       </div>
       <div>
         <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">sm</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <agtc-badge variant="neutral" size="sm">Brouillon</agtc-badge>
+          <agtc-badge variant="neutral" size="sm">Draft</agtc-badge>
           <agtc-badge variant="brand"   size="sm">Agentica</agtc-badge>
-          <agtc-badge variant="success" size="sm">Actif</agtc-badge>
-          <agtc-badge variant="warning" size="sm">En attente</agtc-badge>
-          <agtc-badge variant="danger"  size="sm">Erreur</agtc-badge>
-          <agtc-badge variant="info"    size="sm">Nouveau</agtc-badge>
+          <agtc-badge variant="success" size="sm">Active</agtc-badge>
+          <agtc-badge variant="warning" size="sm">Pending</agtc-badge>
+          <agtc-badge variant="danger"  size="sm">Error</agtc-badge>
+          <agtc-badge variant="info"    size="sm">New</agtc-badge>
         </div>
       </div>
     </div>

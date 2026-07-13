@@ -10,28 +10,28 @@ export default {
     docs: {
       description: {
         component: [
-          'Case à cocher pour une sélection binaire indépendante (cocher/décocher, marquer une tâche faite). Forme **carrée** par convention.',
+          'Checkbox for an independent binary selection (check/uncheck, mark a task done). **Square** shape by convention.',
           '',
-          'Patterns UX de référence appliqués (ADR-036/037, tous approuvés) :',
+          'UX reference patterns applied (ADR-036/037, all approved):',
           '',
-          '- **Checkbox plutôt que toggle** pour un item indépendant — [NN/g — checkbox vs toggle](https://www.nngroup.com/articles/toggle-switch-guidelines/)',
-          '- **Forme carrée** (le rond signale un radio) + **label cliquable** (Fitts) + **libellé positif** — [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)',
-          '- **Cible tactile ≥ 24px**, états visibles, **pas de pré-cochage trompeur** — [IxDF — UI patterns](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **Checkbox rather than toggle** for an independent item — [NN/g — checkbox vs toggle](https://www.nngroup.com/articles/toggle-switch-guidelines/)',
+          '- **Square shape** (a circle signals a radio) + **clickable label** (Fitts) + **positive wording** — [NN/g — checkboxes](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)',
+          '- **Touch target ≥ 24px**, visible states, **no deceptive pre-checking** — [IxDF — UI patterns](https://ixdf.org/literature/topics/ui-design-patterns)',
           '',
-          'Détail : `guidelines/components/checkbox.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/checkbox.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
   },
   argTypes: {
-    label: { control: 'text', description: 'Libellé cliquable (formulation positive)' },
+    label: { control: 'text', description: 'Clickable label (positive wording)' },
     checked: { control: 'boolean' },
-    indeterminate: { control: 'boolean', description: 'État partiel — `aria-checked="mixed"`' },
+    indeterminate: { control: 'boolean', description: 'Partial state — `aria-checked="mixed"`' },
     disabled: { control: 'boolean' },
     required: { control: 'boolean' },
   },
   args: {
-    label: 'Accepter les conditions',
+    label: 'Accept the terms',
     checked: false,
     indeterminate: false,
     disabled: false,
@@ -48,50 +48,50 @@ export default {
   `,
 };
 
-// ── États ────────────────────────────────────────────────────────────────────
+// ── States ───────────────────────────────────────────────────────────────────
 
 export const Default = {
-  name: 'Default — décochée',
-  render: () => html`<agtc-checkbox label="Recevoir la newsletter"></agtc-checkbox>`,
+  name: 'Default — unchecked',
+  render: () => html`<agtc-checkbox label="Receive the newsletter"></agtc-checkbox>`,
 };
 
 export const Checked = {
-  name: 'Checked — cochée',
-  render: () => html`<agtc-checkbox label="Recevoir la newsletter" checked></agtc-checkbox>`,
+  name: 'Checked',
+  render: () => html`<agtc-checkbox label="Receive the newsletter" checked></agtc-checkbox>`,
 };
 
 export const Indeterminate = {
-  name: 'Indeterminate — sélection partielle',
-  render: () => html`<agtc-checkbox label="Tout sélectionner" indeterminate></agtc-checkbox>`,
+  name: 'Indeterminate — partial selection',
+  render: () => html`<agtc-checkbox label="Select all" indeterminate></agtc-checkbox>`,
 };
 
 export const Disabled = {
-  name: 'Disabled — décochée et cochée',
+  name: 'Disabled — unchecked and checked',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:12px;">
-      <agtc-checkbox label="Option indisponible" disabled></agtc-checkbox>
-      <agtc-checkbox label="Option verrouillée (cochée)" checked disabled></agtc-checkbox>
+      <agtc-checkbox label="Unavailable option" disabled></agtc-checkbox>
+      <agtc-checkbox label="Locked option (checked)" checked disabled></agtc-checkbox>
     </div>
   `,
 };
 
 export const States = {
-  name: 'Tous les états',
+  name: 'All states',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:12px;">
-      <agtc-checkbox label="Default (décochée)"></agtc-checkbox>
-      <agtc-checkbox label="Checked (cochée)" checked></agtc-checkbox>
-      <agtc-checkbox label="Indeterminate (partielle)" indeterminate></agtc-checkbox>
+      <agtc-checkbox label="Default (unchecked)"></agtc-checkbox>
+      <agtc-checkbox label="Checked" checked></agtc-checkbox>
+      <agtc-checkbox label="Indeterminate (partial)" indeterminate></agtc-checkbox>
       <agtc-checkbox label="Disabled" disabled></agtc-checkbox>
       <agtc-checkbox label="Disabled + checked" checked disabled></agtc-checkbox>
     </div>
   `,
 };
 
-// ── Composition : liste de tâches (réf. ToDo) ────────────────────────────────
+// ── Composition: task list (ToDo reference) ──────────────────────────────────
 
 export const TaskList = {
-  name: 'Composition — liste de tâches',
+  name: 'Composition — task list',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;">
       <agtc-checkbox label="Learn Web Components" checked></agtc-checkbox>
@@ -101,16 +101,16 @@ export const TaskList = {
   `,
 };
 
-// ── Groupe avec parent indéterminé ───────────────────────────────────────────
+// ── Group with indeterminate parent ──────────────────────────────────────────
 
 export const SelectAllGroup = {
-  name: 'Groupe — parent indéterminé',
+  name: 'Group — indeterminate parent',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;">
-      <agtc-checkbox label="Tout sélectionner" indeterminate></agtc-checkbox>
+      <agtc-checkbox label="Select all" indeterminate></agtc-checkbox>
       <div style="display:flex;flex-direction:column;gap:8px;padding-inline-start:28px;">
-        <agtc-checkbox label="Notifications par e-mail" checked></agtc-checkbox>
-        <agtc-checkbox label="Notifications push"></agtc-checkbox>
+        <agtc-checkbox label="Email notifications" checked></agtc-checkbox>
+        <agtc-checkbox label="Push notifications"></agtc-checkbox>
       </div>
     </div>
   `,

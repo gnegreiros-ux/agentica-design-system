@@ -1,13 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { icons } from 'lucide';
 
-// ─── PATTERNS UX DE RÉFÉRENCE (ADR-036, tous approuvés) ──────────────────────
-//   Icône + texte quand le sens n'est pas universel — NN/g icon usability :
+// ─── UX REFERENCE PATTERNS (ADR-036, all approved) ───────────────────────────
+//   Icon + text when the meaning is not universal — NN/g icon usability:
 //     https://www.nngroup.com/articles/design-pattern-guidelines/
-//   Label obligatoire si l'icône porte l'information ; decorative → aria-hidden.
-//   Signification cohérente et non trompeuse (IF — transparence) :
+//   Label required when the icon carries the information; decorative → aria-hidden.
+//   Consistent, non-deceptive meaning (IF — transparency):
 //     https://catalogue.projectsbyif.com/
-//   Détail : guidelines/components/icon.md § PATTERNS UX DE RÉFÉRENCE
+//   Details: guidelines/components/icon.md § UX Patterns Reference
 // ─────────────────────────────────────────────────────────────────────────────
 
 class AgtcIcon extends LitElement {
@@ -64,10 +64,10 @@ class AgtcIcon extends LitElement {
       .join('');
     const iconDef = icons[iconName];
     if (!iconDef) {
-      console.warn(`[agtc-icon] Icône "${this.name}" introuvable dans Lucide.`);
+      console.warn(`[agtc-icon] Icon "${this.name}" not found in Lucide.`);
       return;
     }
-    // Lucide v1.x : iconDef est directement un tableau de [tag, attrs]
+    // Lucide v1.x: iconDef is directly an array of [tag, attrs]
     svg.innerHTML = iconDef
       .map(([tag, a]) => {
         const el = document.createElementNS('http://www.w3.org/2000/svg', tag);

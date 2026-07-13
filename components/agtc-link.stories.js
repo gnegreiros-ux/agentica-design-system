@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: [
-          'Patterns UX de référence appliqués (ADR-036/043, LK1–LK8 tous approuvés) :',
+          'UX reference patterns applied (ADR-036/043, LK1–LK8 all approved):',
           '',
-          '- **Soulignement en texte courant** (distinguable au-delà de la couleur, WCAG 1.4.1) — [NN/g — Visualizing Links](https://www.nngroup.com/articles/guidelines-for-visualizing-links/)',
-          '- **Lien externe** : `rel="noopener noreferrer"` + icône + texte masqué « ouvre dans un nouvel onglet » — [WCAG H83](https://www.w3.org/WAI/WCAG21/Techniques/html/H83)',
-          '- **Texte descriptif** (jamais « cliquez ici ») — [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/)',
+          '- **Underline in running text** (distinguishable beyond color, WCAG 1.4.1) — [NN/g — Visualizing Links](https://www.nngroup.com/articles/guidelines-for-visualizing-links/)',
+          '- **External link**: `rel="noopener noreferrer"` + icon + hidden text "opens in a new tab" — [WCAG H83](https://www.w3.org/WAI/WCAG21/Techniques/html/H83)',
+          '- **Descriptive text** (never "click here") — [NN/g](https://www.nngroup.com/articles/guidelines-for-visualizing-links/)',
           '',
-          'Un lien **navigue** — pour une action, utiliser `agtc-button`.',
+          'A link **navigates** — for an action, use `agtc-button`.',
           '',
-          'Détail : `guidelines/components/link.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/link.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -34,40 +34,40 @@ export default {
   },
   render: (args) => html`
     <p style="font-family:var(--agtc-semantic-typography-mono-family,system-ui);color:var(--agtc-semantic-color-text-primary)">
-      Un paragraphe contenant
-      <agtc-link href="${args.href}" ?external="${args.external}" underline="${args.underline}">${args.slotContent ?? 'un lien descriptif'}</agtc-link>
-      dans le flux du texte.
+      A paragraph containing
+      <agtc-link href="${args.href}" ?external="${args.external}" underline="${args.underline}">${args.slotContent ?? 'a descriptive link'}</agtc-link>
+      within the text flow.
     </p>
   `,
 };
 
-// ── Inline (défaut, souligné) ─────────────────────────────────────────────────
+// ── Inline (default, underlined) ──────────────────────────────────────────────
 export const Inline = {
-  name: 'Inline — souligné (défaut)',
+  name: 'Inline — underlined (default)',
   render: () => html`
     <p style="color:var(--agtc-semantic-color-text-primary)">
-      Consulter la <agtc-link href="#guideline">guideline du composant</agtc-link> pour les détails.
+      See the <agtc-link href="#guideline">component guideline</agtc-link> for details.
     </p>
   `,
 };
 
-// ── Externe (nouvel onglet) ───────────────────────────────────────────────────
+// ── External (new tab) ────────────────────────────────────────────────────────
 export const External = {
-  name: 'Externe — nouvel onglet (icône + AT)',
+  name: 'External — new tab (icon + AT)',
   render: () => html`
     <p style="color:var(--agtc-semantic-color-text-primary)">
-      Référence : <agtc-link href="https://www.nngroup.com/articles/guidelines-for-visualizing-links/" external>NN/g — Visualizing Links</agtc-link>.
+      Reference: <agtc-link href="https://www.nngroup.com/articles/guidelines-for-visualizing-links/" external>NN/g — Visualizing Links</agtc-link>.
     </p>
   `,
 };
 
-// ── Soulignement au survol (nav/standalone) ───────────────────────────────────
+// ── Underline on hover (nav/standalone) ───────────────────────────────────────
 export const UnderlineHover = {
-  name: 'Soulignement au survol (nav)',
+  name: 'Underline on hover (nav)',
   render: () => html`
     <div style="display:flex;gap:18px;">
-      <agtc-link href="#a" underline="hover">Accueil</agtc-link>
-      <agtc-link href="#b" underline="hover">Composants</agtc-link>
+      <agtc-link href="#a" underline="hover">Home</agtc-link>
+      <agtc-link href="#b" underline="hover">Components</agtc-link>
       <agtc-link href="#c" underline="hover">Tokens</agtc-link>
     </div>
   `,

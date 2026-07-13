@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: [
-          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          'UX reference patterns applied (ADR-036, all approved):',
           '',
-          '- **Validation à `onBlur`**, puis re-validation à la frappe une fois le champ en erreur — [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **Erreur inline** sous le champ + `role="alert"` ; **help text** persistant via `aria-describedby` — [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Validation on `onBlur`**, then re-validation on typing once the field is in error — [NN/g — How to Report Errors in Forms](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Inline error** below the field + `role="alert"`; persistent **help text** via `aria-describedby` — [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/design-pattern-guidelines/)',
           '- **Required marker** `*` + `aria-required` — [NN/g — Forms](https://www.nngroup.com/articles/design-pattern-guidelines/)',
           '- **Forgiving format** (`tel`/`number`) — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
-          '- **Anti hostile patterns** (pas d\'effacement du champ en erreur) — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Anti hostile patterns** (no clearing of the field on error) — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
           '',
-          'Détail : `guidelines/components/input.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/input.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -42,8 +42,8 @@ export default {
   },
   args: {
     type: 'text',
-    label: 'Adresse e-mail',
-    placeholder: 'nom@exemple.com',
+    label: 'Email address',
+    placeholder: 'name@example.com',
     invalid: false,
     disabled: false,
     readonly: false,
@@ -68,81 +68,81 @@ export default {
   `,
 };
 
-// ── États de base ────────────────────────────────────────────────────────────
+// ── Base states ──────────────────────────────────────────────────────────────
 
 export const Default = {
   name: 'Default',
   render: () => html`
     <div style="max-width:360px;">
-      <agtc-input label="Adresse e-mail" placeholder="nom@exemple.com"></agtc-input>
+      <agtc-input label="Email address" placeholder="name@example.com"></agtc-input>
     </div>
   `,
 };
 
 export const WithHelperText = {
-  name: 'Avec texte d\'aide',
+  name: 'With helper text',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
-        label="Adresse e-mail"
-        placeholder="nom@exemple.com"
-        helper-text="Nous ne partageons jamais votre adresse."
+        label="Email address"
+        placeholder="name@example.com"
+        helper-text="We never share your address."
       ></agtc-input>
     </div>
   `,
 };
 
 export const Required = {
-  name: 'Requis',
+  name: 'Required',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
-        label="Adresse e-mail"
-        placeholder="nom@exemple.com"
+        label="Email address"
+        placeholder="name@example.com"
         required
-        helper-text="Champ obligatoire."
+        helper-text="Required field."
       ></agtc-input>
     </div>
   `,
 };
 
 export const Invalid = {
-  name: 'État — Invalid',
+  name: 'State — Invalid',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
-        label="Adresse e-mail"
-        value="pas-une-adresse"
+        label="Email address"
+        value="not-an-address"
         invalid
-        error-message="Adresse e-mail invalide. Vérifiez le format (ex : nom@domaine.com)."
+        error-message="Invalid email address. Check the format (e.g. name@domain.com)."
       ></agtc-input>
     </div>
   `,
 };
 
 export const Disabled = {
-  name: 'État — Disabled',
+  name: 'State — Disabled',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
-        label="Adresse e-mail"
-        value="utilisateur@exemple.com"
+        label="Email address"
+        value="user@example.com"
         disabled
-        helper-text="Ce champ ne peut pas être modifié."
+        helper-text="This field cannot be edited."
       ></agtc-input>
     </div>
   `,
 };
 
 export const Readonly = {
-  name: 'État — Readonly',
+  name: 'State — Readonly',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
-        label="Identifiant"
+        label="Identifier"
         value="USR-00142"
         readonly
-        helper-text="Identifiant généré automatiquement."
+        helper-text="Automatically generated identifier."
       ></agtc-input>
     </div>
   `,
@@ -151,14 +151,14 @@ export const Readonly = {
 // ── Types ────────────────────────────────────────────────────────────────────
 
 export const Password = {
-  name: 'Type — Password (toggle show/hide)',
+  name: 'Type — Password (show/hide toggle)',
   render: () => html`
     <div style="max-width:360px;">
       <agtc-input
         type="password"
-        label="Mot de passe"
-        placeholder="8 caractères minimum"
-        helper-text="Utilisez une combinaison de lettres, chiffres et symboles."
+        label="Password"
+        placeholder="8 characters minimum"
+        helper-text="Use a combination of letters, numbers and symbols."
       ></agtc-input>
     </div>
   `,
@@ -170,8 +170,8 @@ export const Search = {
     <div style="max-width:360px;">
       <agtc-input
         type="search"
-        label="Rechercher"
-        placeholder="Composants, tokens, guidelines…"
+        label="Search"
+        placeholder="Components, tokens, guidelines…"
         icon="search"
       ></agtc-input>
     </div>
@@ -179,32 +179,32 @@ export const Search = {
 };
 
 export const Number = {
-  name: 'Type — Number (sans spinners natifs)',
+  name: 'Type — Number (no native spinners)',
   render: () => html`
     <div style="max-width:200px;">
       <agtc-input
         type="number"
-        label="Quantité"
+        label="Quantity"
         placeholder="0"
-        helper-text="Valeur entre 1 et 99."
+        helper-text="Value between 1 and 99."
       ></agtc-input>
     </div>
   `,
 };
 
-// ── Icônes ───────────────────────────────────────────────────────────────────
+// ── Icons ────────────────────────────────────────────────────────────────────
 
 export const WithIcons = {
-  name: 'Icônes — Prefix et suffix',
+  name: 'Icons — Prefix and suffix',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:16px;max-width:360px;">
       <agtc-input
-        label="Rechercher un utilisateur"
-        placeholder="Nom ou e-mail"
+        label="Search for a user"
+        placeholder="Name or email"
         icon="search"
       ></agtc-input>
       <agtc-input
-        label="Montant"
+        label="Amount"
         placeholder="0.00"
         icon="euro"
         icon-suffix="trending-up"
@@ -215,10 +215,10 @@ export const WithIcons = {
 };
 
 export const WithCustomSlot = {
-  name: 'Icônes — Slot composition libre',
+  name: 'Icons — Free slot composition',
   render: () => html`
     <div style="max-width:360px;">
-      <agtc-input label="URL du profil" placeholder="https://">
+      <agtc-input label="Profile URL" placeholder="https://">
         <svg slot="prefix" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
           stroke-linejoin="round" aria-hidden="true"
@@ -231,20 +231,20 @@ export const WithCustomSlot = {
   `,
 };
 
-// ── Vue d'ensemble ───────────────────────────────────────────────────────────
+// ── Overview ─────────────────────────────────────────────────────────────────
 
 export const AllStates = {
-  name: 'Vue d\'ensemble — tous les états',
+  name: 'Overview — all states',
   render: () => html`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px;">
-      <agtc-input label="Default" placeholder="Saisir une valeur"></agtc-input>
-      <agtc-input label="Required" placeholder="Saisir une valeur" required helper-text="Champ obligatoire."></agtc-input>
-      <agtc-input label="Invalid" value="valeur incorrecte" invalid error-message="Ce champ contient une erreur."></agtc-input>
-      <agtc-input label="Disabled" value="Valeur désactivée" disabled></agtc-input>
-      <agtc-input label="Readonly" value="Valeur en lecture" readonly helper-text="Non modifiable."></agtc-input>
-      <agtc-input label="Password" type="password" placeholder="Mot de passe"></agtc-input>
-      <agtc-input label="Avec icône" placeholder="Rechercher…" icon="search"></agtc-input>
-      <agtc-input label="Invalid + icône" value="erreur" icon="mail" invalid error-message="Format invalide."></agtc-input>
+      <agtc-input label="Default" placeholder="Enter a value"></agtc-input>
+      <agtc-input label="Required" placeholder="Enter a value" required helper-text="Required field."></agtc-input>
+      <agtc-input label="Invalid" value="incorrect value" invalid error-message="This field contains an error."></agtc-input>
+      <agtc-input label="Disabled" value="Disabled value" disabled></agtc-input>
+      <agtc-input label="Readonly" value="Read-only value" readonly helper-text="Not editable."></agtc-input>
+      <agtc-input label="Password" type="password" placeholder="Password"></agtc-input>
+      <agtc-input label="With icon" placeholder="Search…" icon="search"></agtc-input>
+      <agtc-input label="Invalid + icon" value="error" icon="mail" invalid error-message="Invalid format."></agtc-input>
     </div>
   `,
 };

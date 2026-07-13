@@ -10,14 +10,14 @@ export default {
     docs: {
       description: {
         component: [
-          'Interrupteur on/off à **effet immédiat** (pas de bouton « Enregistrer »). L\'état est signalé par la **position du curseur** (indicateur non-couleur, WCAG 1.4.1), renforcée par la couleur de la piste.',
+          'On/off switch with **immediate effect** (no "Save" button). State is signaled by the **knob position** (non-color indicator, WCAG 1.4.1), reinforced by the track color.',
           '',
-          'Patterns UX de référence appliqués (ADR-036/039, tous approuvés) :',
+          'UX reference patterns applied (ADR-036/039, all approved):',
           '',
-          '- **`role="switch"`, effet immédiat, état par position** (pas la couleur seule), **label concis décrivant l\'état « on »** — [NN/g — toggle switch guidelines](https://www.nngroup.com/articles/toggle-switch-guidelines/)',
-          '- **Cible tactile ≥ 24px** — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **`role="switch"`, immediate effect, state by position** (not color alone), **concise label describing the "on" state** — [NN/g — toggle switch guidelines](https://www.nngroup.com/articles/toggle-switch-guidelines/)',
+          '- **Touch target ≥ 24px** — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
           '',
-          'À préférer à la checkbox quand le changement s\'applique instantanément. Détail : `guidelines/components/toggle.md`.',
+          'Prefer over a checkbox when the change applies instantly. Details: `guidelines/components/toggle.md`.',
         ].join('\n'),
       },
     },
@@ -28,7 +28,7 @@ export default {
     disabled: { control: 'boolean' },
   },
   args: {
-    label: 'Notifications par e-mail',
+    label: 'Email notifications',
     checked: false,
     disabled: false,
   },
@@ -41,30 +41,30 @@ export default {
   `,
 };
 
-// ── États ────────────────────────────────────────────────────────────────────
+// ── States ───────────────────────────────────────────────────────────────────
 
 export const Off = {
   name: 'Off',
-  render: () => html`<agtc-toggle label="Mode sombre"></agtc-toggle>`,
+  render: () => html`<agtc-toggle label="Dark mode"></agtc-toggle>`,
 };
 
 export const On = {
   name: 'On',
-  render: () => html`<agtc-toggle label="Mode sombre" checked></agtc-toggle>`,
+  render: () => html`<agtc-toggle label="Dark mode" checked></agtc-toggle>`,
 };
 
 export const Disabled = {
-  name: 'Disabled — off et on',
+  name: 'Disabled — off and on',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:12px;">
-      <agtc-toggle label="Synchronisation (indisponible)" disabled></agtc-toggle>
-      <agtc-toggle label="Sauvegarde auto (verrouillée)" checked disabled></agtc-toggle>
+      <agtc-toggle label="Sync (unavailable)" disabled></agtc-toggle>
+      <agtc-toggle label="Auto-save (locked)" checked disabled></agtc-toggle>
     </div>
   `,
 };
 
 export const States = {
-  name: 'Tous les états',
+  name: 'All states',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:12px;">
       <agtc-toggle label="Off"></agtc-toggle>
@@ -75,15 +75,15 @@ export const States = {
   `,
 };
 
-// ── Composition : liste de réglages ──────────────────────────────────────────
+// ── Composition: settings list ────────────────────────────────────────────────
 
 export const SettingsList = {
-  name: 'Composition — liste de réglages',
+  name: 'Composition — settings list',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:14px;max-width:320px;">
-      <agtc-toggle label="Notifications par e-mail" checked></agtc-toggle>
-      <agtc-toggle label="Notifications push"></agtc-toggle>
-      <agtc-toggle label="Résumé hebdomadaire" checked></agtc-toggle>
+      <agtc-toggle label="Email notifications" checked></agtc-toggle>
+      <agtc-toggle label="Push notifications"></agtc-toggle>
+      <agtc-toggle label="Weekly digest" checked></agtc-toggle>
     </div>
   `,
 };

@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: [
-          'Patterns UX de référence appliqués (ADR-036/042, N1–N9 tous approuvés) :',
+          'UX reference patterns applied (ADR-036/042, N1–N9 all approved):',
           '',
-          '- **Variantes sémantiques + sens jamais par la couleur seule** (icône + préfixe de sévérité masqué pour AT) — [NN/g — Indicators, Validations & Notifications](https://www.nngroup.com/articles/indicators-validations-notifications/)',
-          '- **Statique par défaut** ; opt-in `live="polite|assertive"` (role=status/alert) pour le dynamique — [MDN — alert role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role)',
-          '- **Bouton fermer accessible** sans piège de focus — [A11Y Collective](https://www.a11y-collective.com/blog/aria-alert/)',
+          '- **Semantic variants + meaning never by color alone** (icon + severity prefix hidden for AT) — [NN/g — Indicators, Validations & Notifications](https://www.nngroup.com/articles/indicators-validations-notifications/)',
+          '- **Static by default**; opt-in `live="polite|assertive"` (role=status/alert) for dynamic usage — [MDN — alert role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role)',
+          '- **Accessible close button** without focus trap — [A11Y Collective](https://www.a11y-collective.com/blog/aria-alert/)',
           '',
-          'Message **inline** contextuel — pas un toast ni une modale.',
+          'Contextual **inline** message — not a toast nor a modal.',
           '',
-          'Détail : `guidelines/components/banner.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/banner.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -48,51 +48,51 @@ export default {
       ?no-icon="${args.noIcon}"
       ?dismissible="${args.dismissible}"
       live="${args.live ?? 'off'}"
-    >${args.slotContent ?? 'Message contextuel affiché dans le flux de la page.'}</agtc-banner>
+    >${args.slotContent ?? 'Contextual message displayed in the page flow.'}</agtc-banner>
   `,
 };
 
-// ── Variantes ─────────────────────────────────────────────────────────────────
+// ── Variants ──────────────────────────────────────────────────────────────────
 export const Info = {
-  name: 'Info (défaut)',
-  render: () => html`<agtc-banner variant="info" heading="Information">Ce composant est en lecture seule.</agtc-banner>`,
+  name: 'Info (default)',
+  render: () => html`<agtc-banner variant="info" heading="Information">This component is read-only.</agtc-banner>`,
 };
 export const Success = {
   name: 'Success',
-  render: () => html`<agtc-banner variant="success" heading="Enregistré">Vos modifications ont été sauvegardées.</agtc-banner>`,
+  render: () => html`<agtc-banner variant="success" heading="Saved">Your changes have been saved.</agtc-banner>`,
 };
 export const Warning = {
   name: 'Warning',
-  render: () => html`<agtc-banner variant="warning" heading="Attention">Cette action affectera 3 fichiers liés.</agtc-banner>`,
+  render: () => html`<agtc-banner variant="warning" heading="Warning">This action will affect 3 linked files.</agtc-banner>`,
 };
 export const Danger = {
   name: 'Danger',
-  render: () => html`<agtc-banner variant="danger" heading="Erreur">Impossible de contacter le serveur.</agtc-banner>`,
+  render: () => html`<agtc-banner variant="danger" heading="Error">Unable to reach the server.</agtc-banner>`,
 };
 
-// ── Avec actions + dismissible (N6/N7) ────────────────────────────────────────
+// ── With actions + dismissible (N6/N7) ────────────────────────────────────────
 export const WithActions = {
-  name: 'Avec actions + dismissible',
+  name: 'With actions + dismissible',
   render: () => html`
-    <agtc-banner variant="brand" heading="Contribuer à ce projet" dismissible
+    <agtc-banner variant="brand" heading="Contribute to this project" dismissible
       @dismiss="${(e) => console.log('dismissed', e)}">
-      Ce système est ouvert aux contributions.
-      <span slot="actions"><a href="#" style="color:var(--agtc-semantic-color-action-primary)">Voir sur GitHub →</a></span>
+      This system is open to contributions.
+      <span slot="actions"><a href="#" style="color:var(--agtc-semantic-color-action-primary)">View on GitHub →</a></span>
     </agtc-banner>
   `,
 };
 
-// ── Vue d'ensemble ────────────────────────────────────────────────────────────
+// ── Overview ──────────────────────────────────────────────────────────────────
 export const AllVariants = {
-  name: "Vue d'ensemble — toutes les variantes",
+  name: 'Overview — all variants',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:4px;">
-      <agtc-banner variant="neutral" heading="Neutre">Message neutre.</agtc-banner>
-      <agtc-banner variant="brand" heading="Agentica">Highlight de marque.</agtc-banner>
-      <agtc-banner variant="info" heading="Information">Aide contextuelle.</agtc-banner>
-      <agtc-banner variant="success" heading="Succès">Opération réussie.</agtc-banner>
-      <agtc-banner variant="warning" heading="Attention">Vérification requise.</agtc-banner>
-      <agtc-banner variant="danger" heading="Erreur">Quelque chose a échoué.</agtc-banner>
+      <agtc-banner variant="neutral" heading="Neutral">Neutral message.</agtc-banner>
+      <agtc-banner variant="brand" heading="Agentica">Brand highlight.</agtc-banner>
+      <agtc-banner variant="info" heading="Information">Contextual help.</agtc-banner>
+      <agtc-banner variant="success" heading="Success">Operation completed.</agtc-banner>
+      <agtc-banner variant="warning" heading="Warning">Verification required.</agtc-banner>
+      <agtc-banner variant="danger" heading="Error">Something went wrong.</agtc-banner>
     </div>
   `,
 };

@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Following the per-component bundling introduced for <code>agtc-top-nav</code> (ADR-061), this ADR completes Phase 1 of the site's Web Components rollout: a single <code>components/index.js</code> entry point bundles all 16 components into one <code>agtc.js</code> file (one <code>&lt;script defer&gt;</code> instead of many), and the documentation pages replace their CSS-simulated <code>.agtc-button</code>/<code>.agtc-banner</code>/<code>.agtc-badge</code>/<code>.agtc-link</code>/<code>.agtc-segmented</code> markup with the real Web Components — enforcing the "the site must consume the design system" principle, with two deliberate exceptions (button-styled links, and the language-switch segmented control) kept as-is for now.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-061 a introduit le bundling esbuild IIFE pour <code>agtc-top-nav</code> dans un fichier individuel. L'étape suivante (Phase 1 du plan "Web Components / Styles / Spacing") était :</p>
 <p>1. <strong>Bundle unique</strong> — remplacer les N fichiers individuels par un seul <code>agtc.js</code> regroupant    les 16 composants. Réduire la surface d'entrée de <code>&lt;head&gt;</code> (un seul <code>&lt;script defer&gt;</code>).</p>
 <p>2. <strong>Dogfooding Phase 1</strong> — les pages de documentation utilisaient des <code>&lt;button class="agtc-button"&gt;</code>,    <code>&lt;div class="agtc-banner"&gt;</code>, <code>&lt;span class="agtc-badge"&gt;</code>, <code>&lt;a class="agtc-link"&gt;</code> et    <code>&lt;div class="agtc-segmented"&gt;</code> simulés en CSS. Elles devaient consommer les vrais WC.</p>

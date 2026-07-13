@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> A systematic audit of the component-token object (<code>COMP</code>) in <code>site/build.js</code> found roughly 20 component tokens referencing primitive tokens directly, skipping the semantic layer required by ADR-001, plus 4 unrelated hardcoded CSS violations. This ADR closes the three-level hierarchy by adding 18 new intermediate semantic tokens (brand/feedback text colors, code-surface colors, toggle-track colors, a component spacing scale) and fixing the 4 CSS violations — leaving zero direct primitive references in the COMP object, with no visual change since resolved values stay identical.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'ADR-001 pose la règle fondamentale :</p>
 <pre class="code-block"><code class="lang-text">Tokens primitifs → Tokens sémantiques → Tokens de composant</code></pre>
 <p>Un audit systématique du COMP object dans <code>site/build.js</code> a révélé que <strong>~20 tokens de composant</strong> référençaient directement des primitifs, sautant le niveau sémantique :</p>

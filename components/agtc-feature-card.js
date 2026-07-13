@@ -1,33 +1,33 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Carte éditoriale V2 avec icône, titre et corps de texte.
-// Utilisée dans les sections "Valeur par rôle" et blocs éditoriaux marketing.
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// V2 editorial card with icon, title and body text.
+// Used in the "Value by role" sections and marketing editorial blocks.
 //
-// POURQUOI — Patterns UX appliqués (approuvés ADR-070, revue 2026-06-25) :
-//   P1 Icône + titre en duo — NN/g Icons & Indicators — signal fonctionnel, pas décoratif
-//   P2 Affordance d'interactivité contrôlée — IxDF Hover Controls — animation au hover seulement
-//   P3 Non-interactivité par défaut — Smashing Card patterns — l'action se place à l'intérieur
-//   P4 Cibles tactiles ≥ 24×24px — IxDF Touch Targets — icône 36px, non-interactive
-//   P5 Heading niveau flexible — NN/g Visual Hierarchy — attribut heading-level (défaut 3)
-//   P6 Variante contextuelle — Dashboard Design Patterns — SaaS (couleur) vs marketing (gradient)
-//   P7 prefers-reduced-motion — IxDF Accessibilité — border visible, transition désactivée
-//   P8 Markup accessible — IF Transparence — heading + slot suffisent sans aria-label supplémentaire
+// WHY — UX patterns applied (approved ADR-070, review 2026-06-25):
+//   P1 Icon + title as a duo — NN/g Icons & Indicators — functional signal, not decorative
+//   P2 Controlled interactivity affordance — IxDF Hover Controls — animation on hover only
+//   P3 Non-interactive by default — Smashing Card patterns — the action goes inside
+//   P4 Touch targets ≥ 24×24px — IxDF Touch Targets — 36px icon, non-interactive
+//   P5 Flexible heading level — NN/g Visual Hierarchy — heading-level attribute (default 3)
+//   P6 Contextual variant — Dashboard Design Patterns — SaaS (color) vs marketing (gradient)
+//   P7 prefers-reduced-motion — IxDF Accessibility — visible border, transition disabled
+//   P8 Accessible markup — IF Transparency — heading + slot suffice without extra aria-label
 //
-// Attributs :
-//   heading       — titre de la carte (court, max 2-3 mots)
-//   heading-level — niveau du heading HTML, 1-6 (défaut : 3)
+// Attributes:
+//   heading       — card title (short, max 2-3 words)
+//   heading-level — HTML heading level, 1-6 (default: 3)
 //   variant       — "default" | "marketing"
 //
-// Slots :
-//   slot[name="icon"] → icône SVG (20×20px recommandé)
-//   slot (défaut)     → description courte
+// Slots:
+//   slot[name="icon"] → SVG icon (20×20px recommended)
+//   slot (default)    → short description
 //
-// Contrat token :
+// Token contract:
 //   border-bottom    → --agtc-semantic-color-action-primary
 //   gradient (mktg)  → --agtc-semantic-color-action-primary + --agtc-semantic-color-brand-accent
-//   fond carte       → --agtc-semantic-color-background-overlay-dark
-//   bordure carte    → --agtc-semantic-color-border-overlay-dark
+//   card background  → --agtc-semantic-color-background-overlay-dark
+//   card border      → --agtc-semantic-color-border-overlay-dark
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcFeatureCard extends LitElement {
@@ -81,7 +81,7 @@ class AgtcFeatureCard extends LitElement {
       transform: scaleX(1);
     }
 
-    /* P7 — prefers-reduced-motion : border toujours visible, transition désactivée */
+    /* P7 — prefers-reduced-motion: border always visible, transition disabled */
     @media (prefers-reduced-motion: reduce) {
       :host::after {
         transform: scaleX(1);

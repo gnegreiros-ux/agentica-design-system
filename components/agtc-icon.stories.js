@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: [
-          'Composant d\'icône basé sur Lucide Icons (ADR-022). Tailles tokenisées `inline`/`control`/`nav`.',
+          'Icon component based on Lucide Icons (ADR-022). Tokenized sizes `inline`/`control`/`nav`.',
           '',
-          'Patterns UX de référence appliqués (ADR-036, tous approuvés) :',
+          'UX reference patterns applied (ADR-036, all approved):',
           '',
-          '- **Icône + texte** quand le sens n\'est pas universel — [NN/g — icon usability](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **Label accessible obligatoire** si l\'icône porte l\'information ; `decorative` → `aria-hidden` — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **Signification cohérente et non trompeuse** (même icône = même sens) — [IF — transparence](https://catalogue.projectsbyif.com/)',
+          '- **Icon + text** when the meaning is not universal — [NN/g — icon usability](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Accessible label required** when the icon carries the information; `decorative` → `aria-hidden` — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Consistent, non-deceptive meaning** (same icon = same meaning) — [IF — transparency](https://catalogue.projectsbyif.com/)',
           '',
-          'Détail : `guidelines/components/icon.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/icon.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -25,7 +25,7 @@ export default {
   argTypes: {
     name: {
       control: 'text',
-      description: 'Nom de l\'icône Lucide (kebab-case, ex: `trash-2`)',
+      description: 'Lucide icon name (kebab-case, e.g. `trash-2`)',
     },
     size: {
       control: 'select',
@@ -34,18 +34,18 @@ export default {
     },
     label: {
       control: 'text',
-      description: 'Texte accessible — requis si l\'icône n\'est pas `decorative`',
+      description: 'Accessible text — required when the icon is not `decorative`',
     },
     decorative: {
       control: 'boolean',
-      description: 'Icône purement ornementale → `aria-hidden="true"`',
+      description: 'Purely ornamental icon → `aria-hidden="true"`',
       table: { defaultValue: { summary: 'false' } },
     },
   },
   args: {
     name: 'settings',
     size: 'control',
-    label: 'Paramètres',
+    label: 'Settings',
     decorative: false,
   },
   render: (args) => html`
@@ -58,30 +58,30 @@ export default {
   `,
 };
 
-// ── Tailles ────────────────────────────────────────────────────────────────
+// ── Sizes ──────────────────────────────────────────────────────────────────
 
 export const Inline = {
-  name: 'Inline — 16px (dans un texte)',
+  name: 'Inline — 16px (within text)',
   render: () => html`
     <p style="display:flex;align-items:center;gap:6px;font-size:16px;">
       <agtc-icon name="info" size="inline" decorative></agtc-icon>
-      Texte avec une icône inline.
+      Text with an inline icon.
     </p>
   `,
 };
 
 export const Control = {
-  name: 'Control — 20px (boutons, champs)',
-  render: () => html`<agtc-icon name="search" size="control" label="Rechercher"></agtc-icon>`,
+  name: 'Control — 20px (buttons, fields)',
+  render: () => html`<agtc-icon name="search" size="control" label="Search"></agtc-icon>`,
 };
 
 export const Nav = {
-  name: 'Nav — 24px (navigation, emphase)',
-  render: () => html`<agtc-icon name="settings" size="nav" label="Paramètres"></agtc-icon>`,
+  name: 'Nav — 24px (navigation, emphasis)',
+  render: () => html`<agtc-icon name="settings" size="nav" label="Settings"></agtc-icon>`,
 };
 
 export const Sizes = {
-  name: 'Tailles — inline / control / nav',
+  name: 'Sizes — inline / control / nav',
   render: () => html`
     <div style="display:flex;gap:24px;align-items:center;">
       <agtc-icon name="home" size="inline" decorative></agtc-icon>
@@ -91,41 +91,41 @@ export const Sizes = {
   `,
 };
 
-// ── Accessibilité ────────────────────────────────────────────────────────────
+// ── Accessibility ────────────────────────────────────────────────────────────
 
 export const Semantic = {
-  name: 'Sémantique — label requis (WCAG 1.1.1)',
+  name: 'Semantic — label required (WCAG 1.1.1)',
   render: () => html`
     <div style="display:flex;gap:16px;align-items:center;">
-      <agtc-icon name="trash-2" size="control" label="Supprimer le fichier"></agtc-icon>
-      <agtc-icon name="download" size="control" label="Télécharger"></agtc-icon>
+      <agtc-icon name="trash-2" size="control" label="Delete the file"></agtc-icon>
+      <agtc-icon name="download" size="control" label="Download"></agtc-icon>
       <agtc-icon name="bell" size="control" label="Notifications"></agtc-icon>
     </div>
   `,
 };
 
 export const Decorative = {
-  name: 'Décorative — aria-hidden (texte adjacent)',
+  name: 'Decorative — aria-hidden (adjacent text)',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:8px;">
       <span style="display:flex;align-items:center;gap:6px;">
-        <agtc-icon name="check" size="control" decorative></agtc-icon> Enregistré
+        <agtc-icon name="check" size="control" decorative></agtc-icon> Saved
       </span>
       <span style="display:flex;align-items:center;gap:6px;">
-        <agtc-icon name="alert-triangle" size="control" decorative></agtc-icon> Attention requise
+        <agtc-icon name="alert-triangle" size="control" decorative></agtc-icon> Attention required
       </span>
     </div>
   `,
 };
 
-// ── Vue d'ensemble ───────────────────────────────────────────────────────────
+// ── Overview ─────────────────────────────────────────────────────────────────
 
 export const AllVariants = {
-  name: "Vue d'ensemble — tailles et icônes courantes",
+  name: 'Overview — sizes and common icons',
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:20px;">
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Tailles (inline · control · nav)</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Sizes (inline · control · nav)</p>
         <div style="display:flex;gap:24px;align-items:center;">
           <agtc-icon name="star" size="inline" decorative></agtc-icon>
           <agtc-icon name="star" size="control" decorative></agtc-icon>
@@ -133,7 +133,7 @@ export const AllVariants = {
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Icônes courantes (control)</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Common icons (control)</p>
         <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;color:#1a1a1a;">
           <agtc-icon name="home" size="control" decorative></agtc-icon>
           <agtc-icon name="search" size="control" decorative></agtc-icon>

@@ -129,7 +129,11 @@
       <dd>Design System Lead, Principal Designer, Tech Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts axe-core (via Playwright and the Storybook a11y addon) as the automated accessibility engine, blocking merges on any <code>critical</code> or <code>serious</code> WCAG violation. Agents treat a critical violation as a mandatory escalation, never an optional warning — and the ADR is explicit that axe-core covers only ~30-40% of WCAG 2.1 AA, a floor rather than a ceiling.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p><code>DESIGN.md</code> établit que l'accessibilité est <strong>non négociable</strong> : WCAG 2.1 AA minimum sur tous les composants, en toutes circonstances. Cette exigence n'est pas une recommandation — c'est une règle de gouvernance au même niveau que les règles de tokens.</p>
 <p>Deux problèmes structurels rendaient une réponse outil nécessaire :</p>
 <p><strong>1. L'accessibilité est invisible au moment de l'écriture du code</strong> Un ratio de contraste insuffisant, un attribut <code>aria-label</code> manquant, un <code>role</code> incorrect — aucune de ces violations n'est détectable à la lecture du code ou lors d'un test fonctionnel standard. Elles nécessitent une analyse spécialisée.</p>

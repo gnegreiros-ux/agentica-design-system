@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: [
-          'Patterns UX de référence appliqués (ADR-036/044, SG1–SG8 tous approuvés) :',
+          'UX reference patterns applied (ADR-036/044, SG1–SG8 all approved):',
           '',
-          '- **Groupe de `<button>` + `aria-current` + effet immédiat** (≠ radiogroup, ≠ tablist) — [Primer — Segmented Control](https://primer.style/product/components/segmented-control/accessibility/)',
-          '- **Mono-sélection, toujours exactement un actif** ; 2–5 options courtes — NN/g',
-          '- **État sélectionné pas par la couleur seule** (fond plein + poids) — WCAG 1.4.1',
+          '- **Group of `<button>` + `aria-current` + immediate effect** (≠ radiogroup, ≠ tablist) — [Primer — Segmented Control](https://primer.style/product/components/segmented-control/accessibility/)',
+          '- **Single-select, always exactly one active**; 2–5 short options — NN/g',
+          '- **Selected state not by color alone** (solid background + weight) — WCAG 1.4.1',
           '',
-          'Navigation **Tab** native (pas de flèches), émet `change`. Écart assumé vs `agtc-radio-group` (effet immédiat).',
+          'Native **Tab** navigation (no arrow keys), emits `change`. Deliberate divergence vs `agtc-radio-group` (immediate effect).',
           '',
-          'Détail : `guidelines/components/segmented.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/segmented.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -29,7 +29,7 @@ export default {
   },
   args: {
     value: 'fr',
-    label: 'Langue',
+    label: 'Language',
     equalWidth: false,
   },
   render: (args) => {
@@ -43,45 +43,45 @@ export default {
   },
 };
 
-// ── Bascule de langue (cas réel du site) ──────────────────────────────────────
+// ── Language toggle (real site use case) ──────────────────────────────────────
 export const Language = {
-  name: 'Bascule de langue (FR/EN)',
+  name: 'Language toggle (FR/EN)',
   render: () => {
     const el = document.createElement('agtc-segmented');
     el.options = [{ value: 'fr', label: 'FR' }, { value: 'en', label: 'EN' }];
     el.value = 'fr';
-    el.label = 'Langue';
+    el.label = 'Language';
     return el;
   },
 };
 
-// ── Trois options ─────────────────────────────────────────────────────────────
+// ── Three options ─────────────────────────────────────────────────────────────
 export const ThreeOptions = {
-  name: 'Trois options (densité)',
+  name: 'Three options (density)',
   render: () => {
     const el = document.createElement('agtc-segmented');
     el.options = [
       { value: 'compact', label: 'Compact' },
       { value: 'normal', label: 'Normal' },
-      { value: 'comfortable', label: 'Confort' },
+      { value: 'comfortable', label: 'Comfortable' },
     ];
     el.value = 'normal';
-    el.label = 'Densité';
+    el.label = 'Density';
     return el;
   },
 };
 
-// ── Avec icônes + largeur égale ───────────────────────────────────────────────
+// ── With icons + equal width ──────────────────────────────────────────────────
 export const WithIcons = {
-  name: 'Avec icônes, largeur égale',
+  name: 'With icons, equal width',
   render: () => {
     const el = document.createElement('agtc-segmented');
     el.options = [
-      { value: 'list', label: 'Liste', icon: 'list' },
-      { value: 'grid', label: 'Grille', icon: 'grid-3x3' },
+      { value: 'list', label: 'List', icon: 'list' },
+      { value: 'grid', label: 'Grid', icon: 'grid-3x3' },
     ];
     el.value = 'list';
-    el.label = 'Affichage';
+    el.label = 'View';
     el.equalWidth = true;
     el.style.width = '260px';
     return el;

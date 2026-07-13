@@ -1,25 +1,25 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Bouton radio — un choix dans un ensemble mutuellement exclusif. Toujours
-// utilisé dans un <agtc-radio-group> qui gère l'exclusivité, le focus roving et
-// la navigation au clavier (les <input radio> en shadow DOM séparés ne forment
-// pas un groupe natif — voir ADR-038).
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Radio button — one choice within a mutually exclusive set. Always used
+// inside an <agtc-radio-group>, which handles exclusivity, roving focus and
+// keyboard navigation (<input radio> elements in separate shadow DOMs do not
+// form a native group — see ADR-038).
 //
-// Forme : RONDE — convention NN/g (le carré signale une checkbox).
+// Shape: ROUND — NN/g convention (a square signals a checkbox).
 //
-// États : default · hover · focus-visible · selected · disabled
+// States: default · hover · focus-visible · selected · disabled
 //
-// Accessibilité : host `role="radio"` + `aria-checked` ; le groupe porte
-// `role="radiogroup"`. Tabindex roving piloté par le groupe.
+// Accessibility: host `role="radio"` + `aria-checked`; the group carries
+// `role="radiogroup"`. Roving tabindex driven by the group.
 //
-// Patterns UX de référence appliqués (ADR-036/038, tous approuvés) :
-//   Forme ronde, sélection exclusive, label cliquable (Fitts) — NN/g :
+// UX reference patterns applied (ADR-036/038, all approved):
+//   Round shape, exclusive selection, clickable label (Fitts) — NN/g:
 //     https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/
-//   Pré-sélection d'un défaut sensé (guidance d'usage) — NN/g :
+//   Pre-selecting a sensible default (usage guidance) — NN/g:
 //     https://www.nngroup.com/articles/radio-buttons-default-selection/
-//   Cible tactile ≥ 24px — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
-//   Détail : guidelines/components/radio.md § PATTERNS UX DE RÉFÉRENCE
+//   Touch target ≥ 24px — IxDF: https://ixdf.org/literature/topics/ui-design-patterns
+//   Details: guidelines/components/radio.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcRadio extends LitElement {
@@ -42,7 +42,7 @@ class AgtcRadio extends LitElement {
     this.setAttribute('role', 'radio');
     this._onClick = () => {
       if (this.disabled) return;
-      // Le groupe parent décide de l'exclusivité — on signale juste l'intention
+      // The parent group decides exclusivity — we just signal the intent
       this.dispatchEvent(new CustomEvent('agtc-radio-select', {
         bubbles: true, composed: true, detail: { value: this.value },
       }));
@@ -58,7 +58,7 @@ class AgtcRadio extends LitElement {
   updated() {
     this.setAttribute('aria-checked', this.checked ? 'true' : 'false');
     this.setAttribute('aria-disabled', this.disabled ? 'true' : 'false');
-    // Filet de sécurité si le radio est utilisé hors groupe : reste focusable
+    // Safety net when the radio is used outside a group: stays focusable
     if (!this.hasAttribute('tabindex')) {
       this.setAttribute('tabindex', this.checked ? '0' : '-1');
     }
@@ -69,7 +69,7 @@ class AgtcRadio extends LitElement {
       display: inline-flex;
       align-items: center;
       gap: var(--agtc-semantic-space-control-gap);
-      min-height: 24px;            /* cible tactile ≥ 24px (WCAG 2.5.8) */
+      min-height: 24px;            /* touch target ≥ 24px (WCAG 2.5.8) */
       cursor: pointer;
       font-family: inherit;
       outline: none;
@@ -83,7 +83,7 @@ class AgtcRadio extends LitElement {
       inline-size: var(--agtc-semantic-icon-size-control);
       block-size: var(--agtc-semantic-icon-size-control);
       border: 1.5px solid var(--agtc-component-radio-default-border);
-      border-radius: 9999px;       /* rond — convention radio */
+      border-radius: 9999px;       /* round — radio convention */
       background: var(--agtc-component-radio-default-background);
       transition: border-color 0.12s;
     }
@@ -118,7 +118,7 @@ class AgtcRadio extends LitElement {
     }
     .label-text:empty { display: none; }
 
-    /* Désactivé */
+    /* Disabled */
     :host([disabled]) .control {
       background: var(--agtc-semantic-color-background-subtle);
       border-color: var(--agtc-semantic-color-border-default);

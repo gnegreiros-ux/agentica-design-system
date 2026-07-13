@@ -9,22 +9,22 @@ export default {
     docs: {
       description: {
         component: [
-          'Navigation principale horizontale — pattern tabs visuels full-height, liens inter-pages.',
+          'Horizontal main navigation — full-height visual-tabs pattern, cross-page links.',
           '',
-          '**Distinction critique avec `agtc-tabs` :**',
-          '`agtc-top-nav` = `<nav>` + `<a>` + `aria-current="page"` (navigation inter-pages)',
-          '`agtc-tabs` = `role=tablist` + panneaux de contenu in-page',
+          '**Critical distinction from `agtc-tabs`:**',
+          '`agtc-top-nav` = `<nav>` + `<a>` + `aria-current="page"` (cross-page navigation)',
+          '`agtc-tabs` = `role=tablist` + in-page content panels',
           '',
-          'Patterns UX de référence appliqués (ADR-060, tous approuvés) :',
+          'UX reference patterns applied (ADR-060, all approved):',
           '',
-          '- **Landmark navigation** `<nav aria-label="...">` — [W3C WAI](https://www.w3.org/WAI/ARIA/apg/)',
-          '- **`aria-current="page"`** sur le lien actif — [WCAG 2.4.4 / 4.1.2](https://www.w3.org/WAI/WCAG22/)',
-          '- **Indicateur border-bottom** pleine hauteur du header (pas de fond rempli) — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
-          '- **Navigation clavier Tab/Enter** (pas de flèches — ce ne sont pas des tabs ARIA) — [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)',
-          '- **CTA bouton pill** visuellement distinct des tabs — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
-          '- **`:visited` neutralisé** — ADR-047',
+          '- **Navigation landmark** `<nav aria-label="...">` — [W3C WAI](https://www.w3.org/WAI/ARIA/apg/)',
+          '- **`aria-current="page"`** on the active link — [WCAG 2.4.4 / 4.1.2](https://www.w3.org/WAI/WCAG22/)',
+          '- **Border-bottom indicator** spanning the full header height (no filled background) — [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/)',
+          '- **Tab/Enter keyboard navigation** (no arrow keys — these are not ARIA tabs) — [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)',
+          '- **Pill CTA button** visually distinct from the tabs — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **`:visited` neutralized** — ADR-047',
           '',
-          'Détail : `guidelines/components/top-nav.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/top-nav.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
@@ -35,7 +35,7 @@ export default {
     current:  { control: 'text' },
   },
   args: {
-    navLabel: 'Navigation principale',
+    navLabel: 'Main navigation',
     current:  '/tokens/',
   },
 };
@@ -49,9 +49,9 @@ const ITEMS = [
   { labelFr: 'Démarrer',    labelEn: 'Get started',  href: '/get-started.html', cta: true },
 ];
 
-/** Histoire principale — lien Tokens actif */
+/** Main story — Tokens link active */
 export const Default = {
-  name: 'Tokens actif',
+  name: 'Tokens active',
   render: (args) => {
     const nav = document.createElement('agtc-top-nav');
     nav.items    = ITEMS;
@@ -65,23 +65,23 @@ export const Default = {
   },
 };
 
-/** Page Composants active */
+/** Components page active */
 export const ComponentsActive = {
-  name: 'Composants actif',
+  name: 'Components active',
   args: { current: '/components/' },
   render: Default.render,
 };
 
-/** Sans page active (hors sections connues) */
+/** No active page (outside known sections) */
 export const NoneActive = {
-  name: 'Aucun lien actif',
+  name: 'No active link',
   args: { current: '/unknown/' },
   render: Default.render,
 };
 
-/** Sans CTA — navigation interne seulement */
+/** No CTA — internal navigation only */
 export const NoCTA = {
-  name: 'Sans bouton CTA',
+  name: 'No CTA button',
   render: (args) => {
     const nav = document.createElement('agtc-top-nav');
     nav.items    = ITEMS.filter(i => !i.cta);

@@ -11,42 +11,42 @@ export default {
     docs: {
       description: {
         component: [
-          'Sélection mutuellement exclusive : un seul choix parmi un ensemble. Forme **ronde**. Toujours dans un `<agtc-radio-group>` qui gère exclusivité, focus roving et navigation au clavier (les `<input radio>` en shadow DOM séparés ne groupent pas nativement).',
+          'Mutually exclusive selection: a single choice within a set. **Round** shape. Always inside an `<agtc-radio-group>`, which handles exclusivity, roving focus and keyboard navigation (`<input radio>` elements in separate shadow DOMs do not group natively).',
           '',
-          'Patterns UX de référence appliqués (ADR-036/038, tous approuvés) :',
+          'UX reference patterns applied (ADR-036/038, all approved):',
           '',
-          '- **Forme ronde** (le carré = checkbox), **sélection exclusive**, **label cliquable** — [NN/g — checkboxes vs radio](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)',
-          '- **Pré-sélectionner un défaut sensé** (sauf exceptions éthiques/légales) — [NN/g — radio default selection](https://www.nngroup.com/articles/radio-buttons-default-selection/)',
-          '- **Cible tactile ≥ 24px** — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
+          '- **Round shape** (square = checkbox), **exclusive selection**, **clickable label** — [NN/g — checkboxes vs radio](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)',
+          '- **Pre-select a sensible default** (except ethical/legal exceptions) — [NN/g — radio default selection](https://www.nngroup.com/articles/radio-buttons-default-selection/)',
+          '- **Touch target ≥ 24px** — [IxDF](https://ixdf.org/literature/topics/ui-design-patterns)',
           '',
-          'Détail : `guidelines/components/radio.md` § PATTERNS UX DE RÉFÉRENCE.',
+          'Details: `guidelines/components/radio.md` § UX Patterns Reference.',
         ].join('\n'),
       },
     },
   },
 };
 
-// ── Groupe avec défaut sélectionné ───────────────────────────────────────────
+// ── Group with a selected default ────────────────────────────────────────────
 
 export const Default = {
-  name: 'Groupe — défaut sélectionné',
+  name: 'Group — selected default',
   render: () => html`
-    <agtc-radio-group name="plan" value="pro" label="Formule">
+    <agtc-radio-group name="plan" value="pro" label="Plan">
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <agtc-radio value="free">Gratuit</agtc-radio>
+        <agtc-radio value="free">Free</agtc-radio>
         <agtc-radio value="pro">Pro</agtc-radio>
-        <agtc-radio value="team">Équipe</agtc-radio>
+        <agtc-radio value="team">Team</agtc-radio>
       </div>
     </agtc-radio-group>
   `,
 };
 
 export const NoDefault = {
-  name: 'Groupe — sans pré-sélection',
+  name: 'Group — no pre-selection',
   render: () => html`
-    <agtc-radio-group name="ship" label="Livraison">
+    <agtc-radio-group name="ship" label="Shipping">
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <agtc-radio value="standard">Standard (3–5 jours)</agtc-radio>
+        <agtc-radio value="standard">Standard (3–5 days)</agtc-radio>
         <agtc-radio value="express">Express (24h)</agtc-radio>
       </div>
     </agtc-radio-group>
@@ -54,28 +54,28 @@ export const NoDefault = {
 };
 
 export const WithDisabled = {
-  name: 'Groupe — option désactivée',
+  name: 'Group — disabled option',
   render: () => html`
-    <agtc-radio-group name="seat" value="window" label="Siège">
+    <agtc-radio-group name="seat" value="window" label="Seat">
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <agtc-radio value="window">Hublot</agtc-radio>
-        <agtc-radio value="aisle">Couloir</agtc-radio>
-        <agtc-radio value="middle" disabled>Milieu (complet)</agtc-radio>
+        <agtc-radio value="window">Window</agtc-radio>
+        <agtc-radio value="aisle">Aisle</agtc-radio>
+        <agtc-radio value="middle" disabled>Middle (full)</agtc-radio>
       </div>
     </agtc-radio-group>
   `,
 };
 
-// ── États d'un radio isolé (présentation) ────────────────────────────────────
+// ── States of a standalone radio (presentation) ──────────────────────────────
 
 export const States = {
-  name: 'États (présentation)',
+  name: 'States (presentation)',
   render: () => html`
     <agtc-radio-group name="states" value="selected">
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <agtc-radio value="default">Non sélectionné</agtc-radio>
-        <agtc-radio value="selected">Sélectionné</agtc-radio>
-        <agtc-radio value="disabled" disabled>Désactivé</agtc-radio>
+        <agtc-radio value="default">Unselected</agtc-radio>
+        <agtc-radio value="selected">Selected</agtc-radio>
+        <agtc-radio value="disabled" disabled>Disabled</agtc-radio>
       </div>
     </agtc-radio-group>
   `,

@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Resolves a structural mismatch where <code>semantic.json</code> referenced primitives using Tailwind-like notation (<code>color.blue.700</code>) that didn't exist in the Radix-based <code>primitives.json</code>. Migrates all semantic color references to valid <code>{primitive.color.X.Y}</code> paths and adds a small <code>neutral</code> palette for the 3 values with no exact Radix equivalent — no resolved values change, this is purely structural.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-017 documentait une incohérence structurelle entre <code>tokens/semantic.json</code> et <code>tokens/primitives.json</code> comme hors scope. Cet ADR la résout.</p>
 <h3>L'incohérence</h3>
 <p><code>tokens/semantic.json</code> utilisait une notation Tailwind-like pour référencer les primitives :</p>

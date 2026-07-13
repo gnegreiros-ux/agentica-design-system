@@ -1,30 +1,30 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Onglets horizontaux (tablist/tab/tabpanel) — navigation in-page avec panneau.
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Horizontal tabs (tablist/tab/tabpanel) — in-page navigation with a panel.
 //
 //   .tabs = [{ value, label, href? }]
-//   selected="…"       — valeur de l'onglet actif (défaut : premier sans href)
-//   label="…"          — aria-label du tablist (requis pour les AT)
-//   activation="auto"  — "auto" : flèches activent immédiatement (défaut)
-//                        "manual" : flèches déplacent le focus, Entrée active
+//   selected="…"       — value of the active tab (default: first without href)
+//   label="…"          — aria-label of the tablist (required for AT)
+//   activation="auto"  — "auto": arrows activate immediately (default)
+//                        "manual": arrows move focus, Enter activates
 //
-// Émet `change` (detail: { value }) sur changement d'onglet in-page.
+// Emits `change` (detail: { value }) on in-page tab change.
 //
-// PATTERN ARIA (W3C APG — Tabs Pattern) :
+// ARIA PATTERN (W3C APG — Tabs Pattern):
 //   role=tablist · role=tab · role=tabpanel
-//   aria-selected sur le tab actif · aria-controls · aria-labelledby
-//   Navigation : ←/→ (roving tabindex) · Home/End · Tab sort du groupe
-//   Activation automatique par défaut (APG — contenu préchargé)
+//   aria-selected on the active tab · aria-controls · aria-labelledby
+//   Navigation: ←/→ (roving tabindex) · Home/End · Tab leaves the group
+//   Automatic activation by default (APG — preloaded content)
 //
-// Règle no-visited-nav (ADR-047) : :visited neutralisé sur les tabs.
+// no-visited-nav rule (ADR-047): :visited neutralized on tabs.
 //
-// Patterns UX de référence appliqués (ADR-056) :
-//   Tablist au-dessus du panel — NN/g https://www.nngroup.com/articles/tabs-used-right/
-//   Activation automatique au focus — W3C APG https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
-//   Labels en casse naturelle (jamais ALL-CAPS) — NN/g
-//   href optionnel pour navigation tabs — NN/g
-//   Détail : guidelines/components/tabs.md § PATTERNS UX DE RÉFÉRENCE
+// UX reference patterns applied (ADR-056):
+//   Tablist above the panel — NN/g https://www.nngroup.com/articles/tabs-used-right/
+//   Automatic activation on focus — W3C APG https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+//   Labels in natural case (never ALL-CAPS) — NN/g
+//   Optional href for navigation tabs — NN/g
+//   Details: guidelines/components/tabs.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcTabs extends LitElement {
@@ -52,7 +52,7 @@ class AgtcTabs extends LitElement {
 
   updated() {
     if (!this.label) {
-      console.warn('[agtc-tabs] label requis — le tablist doit être nommé pour les AT. Ajouter label="…".');
+      console.warn('[agtc-tabs] label required — the tablist must be named for AT. Add label="…".');
     }
   }
 
@@ -121,7 +121,7 @@ class AgtcTabs extends LitElement {
 
     .tab:hover { color: var(--agtc-component-tabs-default-tab-text-hover); }
 
-    /* :visited neutralisé — ADR-047 (no-visited-nav) */
+    /* :visited neutralized — ADR-047 (no-visited-nav) */
     .tab:visited { color: var(--agtc-component-tabs-default-tab-text); }
 
     .tab[aria-selected="true"] {

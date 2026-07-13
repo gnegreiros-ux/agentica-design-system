@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Establishes a system-wide governance rule: navigation elements (nav, sidebar, TOC, tabs, breadcrumbs, footer links, icon-buttons) must never carry a distinct <code>:visited</code> color, since navigation is not "read/unread" content. Content links in prose are unaffected. Consolidates previously scattered, incomplete <code>:visited</code> resets in <code>site/build.js</code>.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Au cours du redesign du site, un défaut de pattern a été relevé : les éléments de <strong>navigation</strong> peuvent hériter de l'état <code>:visited</code> du navigateur (teinte violette, ou dérive de couleur), ce qui casse la cohérence visuelle et la hiérarchie. Un menu, un onglet, une sidebar, une table des matières ou un bouton-icône d'en-tête n'est <strong>pas du contenu « lu / non lu »</strong> : son apparence ne doit pas dépendre de l'historique de navigation.</p>
 <p>Le site neutralisait déjà <code>:visited</code> de façon <strong>ponctuelle et dispersée</strong> (uniquement <code>.top-nav</code> et <code>.github-btn</code>), tandis que d'autres surfaces de navigation (<code>.sidebar</code>, <code>.toc</code>, <code>.footer-links</code>, <code>.audit-footer-link</code>) ne l'étaient pas. La demande humaine est explicite : <strong>en faire une règle de portée système entière</strong>, pas seulement une correction locale du site web.</p>
 <hr>

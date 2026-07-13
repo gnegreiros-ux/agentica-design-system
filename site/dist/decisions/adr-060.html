@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> The site's main navigation was hand-rolled HTML/CSS that had accumulated repeated bugs: unstyled <code>:visited</code>/<code>:active</code>, a filled "active" state that looked like a toggled button, missing <code>:focus-visible</code> and <code>aria-current</code>, and no component-token layer. This ADR formalizes <code>agtc-top-nav</code> as a Lit Web Component using <code>&lt;nav&gt;</code> + <code>aria-current="page"</code> (not <code>role="tablist"</code>, since it links between pages rather than switching in-page panels), a full-height tab visual pattern with a bottom-border active indicator, a separate CTA link style, and 18 new component tokens — making the component, not the site's CSS, the source of truth for the nav's design.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Le site Agentica est le laboratoire vivant du design system — chaque fonctionnalité du site est l'occasion de construire et valider un composant réel avant de le formaliser.</p>
 <p>La navigation principale du site (<code>site/build.js</code>) était implémentée en HTML statique généré par JavaScript, avec des styles CSS définis directement en termes de tokens sémantiques (sans passer par un niveau composant). Plusieurs problèmes accumulés au fil des sessions :</p>
 <ul><li><code>:visited</code> persistait dans la couleur navigateur par défaut (signalé 3 fois — ADR-047, 2026-06-06, 2026-06-15)</li><li><code>:active</code> n'était pas défini → couleur navigateur par défaut</li><li><code>.active</code> utilisait un fond rempli persistant → ressemblait à un bouton togglé</li><li><code>:focus-visible</code> absent → navigation clavier non conforme WCAG 2.4.7</li><li><code>aria-current="page"</code> absent → lecteurs d'écran aveugles à la page courante (WCAG 4.1.2)</li><li>Aucun token composant → les décisions de design étaient directement dans le CSS du site</li></ul>

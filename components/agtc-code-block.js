@@ -1,27 +1,27 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Bloc de code en LECTURE SEULE, copiable, sur surface sombre.
-// Le code est fourni via <slot> (HTML déjà échappé par l'auteur).
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// READ-ONLY code block, copyable, on a dark surface.
+// The code is provided via <slot> (HTML already escaped by the author).
 //
-//   language="html|json|css|javascript|…"  — indicateur de langue (CD5)
-//   filename="agtc-badge.js"               — en-tête optionnel (CD8)
-//   copy-label / copied-label              — libellés du bouton (défaut FR)
+//   language="html|json|css|javascript|…"  — language indicator (CD5)
+//   filename="agtc-badge.js"               — optional header (CD8)
+//   copy-label / copied-label              — button labels (default EN)
 //
-// HORS PÉRIMÈTRE v1 (porte ouverte — ADR-041) :
-//   coloration syntaxique (CD7) — v1 = texte clair haut-contraste, sans
-//     dépendance (Prism/Shiki) ; numéros de ligne (CD9).
+// OUT OF SCOPE v1 (door left open — ADR-041):
+//   syntax highlighting (CD7) — v1 = high-contrast plain text, no
+//     dependency (Prism/Shiki); line numbers (CD9).
 //
-// Patterns UX de référence appliqués (ADR-036/041, tous approuvés CD1–CD9) :
-//   <pre><code> sémantique + classe de langue — DEV/whitep4nth3r :
+// UX reference patterns applied (ADR-036/041, all approved CD1–CD9):
+//   Semantic <pre><code> + language class — DEV/whitep4nth3r:
 //     https://dev.to/whitep4nth3r/how-to-build-a-copy-code-snippet-button-and-why-it-matters-3en8
-//   Bouton copier + feedback texte — roboleary :
+//   Copy button + text feedback — roboleary:
 //     https://www.roboleary.net/2022/01/13/copy-code-to-clipboard-blog
-//   Succès annoncé aux AT via role=status / aria-live — Sara Soueidan :
+//   Success announced to AT via role=status / aria-live — Sara Soueidan:
 //     https://www.sarasoueidan.com/blog/accessible-notifications-with-aria-live-regions-part-1/
-//   Scroll horizontal pour lignes longues — NN/g :
+//   Horizontal scroll for long lines — NN/g:
 //     https://www.nngroup.com/articles/design-pattern-guidelines/
-//   Détail : guidelines/components/code-block.md § PATTERNS UX DE RÉFÉRENCE
+//   Details: guidelines/components/code-block.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcCodeBlock extends LitElement {
@@ -35,8 +35,8 @@ class AgtcCodeBlock extends LitElement {
 
   constructor() {
     super();
-    this.copyLabel   = 'Copier';
-    this.copiedLabel = 'Copié !';
+    this.copyLabel   = 'Copy';
+    this.copiedLabel = 'Copied!';
     this._copied     = false;
   }
 
@@ -52,7 +52,7 @@ class AgtcCodeBlock extends LitElement {
       overflow: hidden;
     }
 
-    /* En-tête : nom de fichier / langue + bouton copier ───────────────────── */
+    /* Header: filename / language + copy button ────────────────────────────── */
     .header {
       display: flex;
       align-items: center;
@@ -133,7 +133,7 @@ class AgtcCodeBlock extends LitElement {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      console.warn('[agtc-code-block] clipboard indisponible (contexte non sécurisé ?)');
+      console.warn('[agtc-code-block] clipboard unavailable (insecure context?)');
       return;
     }
     this._copied = true;

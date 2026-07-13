@@ -129,7 +129,11 @@
       <dd>Tech Lead, Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Playwright for E2E and interaction accessibility tests that neither axe-core nor Chromatic can cover — full keyboard navigation, focus traps, and multi-step behaviors like the <code>critical</code> button's confirmation flow. Playwright tests are the executable contract for component *behavior*, complementing the static <code>.md</code> contracts.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>axe-core (ADR-007) audite les composants au niveau de leur structure sémantique. Chromatic (ADR-006) audite leur apparence visuelle en isolation. Aucun des deux ne teste le comportement d'un composant dans un parcours utilisateur réel : la navigation clavier complète, la gestion du focus trap dans une modale, ou le déclenchement correct du pattern de confirmation d'un bouton <code>critical</code>.</p>
 <p>La question posée était :</p>
 <blockquote><p><strong>Comment tester les interactions et parcours complets que ni axe-core ni Chromatic ne peuvent couvrir — notamment les comportements clavier et les séquences d'actions requises par les contrats de composants ?</strong></p></blockquote>

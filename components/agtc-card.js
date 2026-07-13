@@ -1,25 +1,25 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Variantes : default (bord) | elevated (ombre) | flat (fond subtil)
-// Padding   : none | sm | md (défaut) | lg
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Variants : default (border) | elevated (shadow) | flat (subtle background)
+// Padding  : none | sm | md (default) | lg
 //
-// Slots :
-//   slot[name="header"] → séparateur bas automatique si contenu présent
-//   slot (défaut)       → corps de la carte
-//   slot[name="footer"] → séparateur haut automatique si contenu présent
+// Slots:
+//   slot[name="header"] → automatic bottom separator when content is present
+//   slot (default)      → card body
+//   slot[name="footer"] → automatic top separator when content is present
 //
-// Non interactif par défaut.
+// Non-interactive by default.
 //
-// Patterns UX de référence appliqués (ADR-036 ; C1/C3/C4 approuvés, C2 révisé) :
-//   Clustering du contenu lié — Dashboard : https://dashboarddesignpatterns.github.io/patterns.html
-//   Carte cliquable (C2 révisé) : 1 destination → lien englobant ; actions distinctes →
-//     lien primaire en overlay ::after + boutons au-dessus, OU conteneur non interactif.
-//     Jamais d'interactif imbriqué — Smashing : https://www.smashingmagazine.com/category/design-patterns/
-//   Hiérarchie via élévation, pas couleur seule (Dashboard).
-//   Détail-on-demand : la carte résume, le détail s'ouvre ailleurs (Dashboard).
-//   Détail : guidelines/components/card.md § PATTERNS UX DE RÉFÉRENCE
-// Pour une carte cliquable, placer un <a> ou <agtc-button> à l'intérieur.
+// UX reference patterns applied (ADR-036; C1/C3/C4 approved, C2 revised):
+//   Clustering of related content — Dashboard: https://dashboarddesignpatterns.github.io/patterns.html
+//   Clickable card (C2 revised): 1 destination → wrapping link; distinct actions →
+//     primary link as ::after overlay + buttons above, OR non-interactive container.
+//     Never nested interactive elements — Smashing: https://www.smashingmagazine.com/category/design-patterns/
+//   Hierarchy via elevation, not color alone (Dashboard).
+//   Detail-on-demand: the card summarizes, details open elsewhere (Dashboard).
+//   Details: guidelines/components/card.md § UX Patterns Reference
+// For a clickable card, place an <a> or <agtc-button> inside.
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcCard extends LitElement {
@@ -49,17 +49,17 @@ class AgtcCard extends LitElement {
   static styles = css`
     :host {
       display: block;
-      /* Typographie exposée via CSS custom properties — override via tokens composant.
-         Les valeurs par défaut correspondent au contexte Produit SaaS (14px/14px/12px).
-         En contexte Marketing (data-context="marketing" sur <body>), le site surcharge
-         ces tokens via --agtc-component-card-typography-marketing-* dans siteCSS(). */
+      /* Typography exposed via CSS custom properties — override via component tokens.
+         Defaults match the Product SaaS context (14px/14px/12px).
+         In Marketing context (data-context="marketing" on <body>), the site overrides
+         these tokens via --agtc-component-card-typography-marketing-* in siteCSS(). */
       --card-title-size:  var(--agtc-component-card-typography-title-size,   var(--agtc-semantic-typography-label-size));
       --card-title-weight:var(--agtc-component-card-typography-title-weight,  var(--agtc-primitive-fontWeight-bold));
       --card-body-size:   var(--agtc-component-card-typography-body-size,    var(--agtc-semantic-typography-label-size));
       --card-meta-size:   var(--agtc-component-card-typography-meta-size,    var(--agtc-semantic-typography-detail-size));
     }
 
-    /* ── Typographie des éléments slottés directs ──────────────────────────── */
+    /* ── Typography of direct slotted elements ─────────────────────────────── */
     ::slotted(h1),::slotted(h2),::slotted(h3),::slotted(h4),::slotted(h5),::slotted(h6){
       font-size: var(--card-title-size);
       font-weight: var(--card-title-weight);
@@ -74,20 +74,20 @@ class AgtcCard extends LitElement {
       overflow: hidden;
     }
 
-    /* ── Variante default ──────────────────────────────────────────────────── */
+    /* ── Variant default ───────────────────────────────────────────────────── */
     .card.default {
       background: var(--agtc-component-card-default-background);
       border: 1px solid var(--agtc-component-card-default-border);
     }
 
-    /* ── Variante elevated ─────────────────────────────────────────────────── */
+    /* ── Variant elevated ──────────────────────────────────────────────────── */
     .card.elevated {
       background: var(--agtc-component-card-elevated-background);
       border: 1px solid var(--agtc-component-card-elevated-border);
       box-shadow: var(--agtc-component-card-elevated-shadow);
     }
 
-    /* ── Variante flat ─────────────────────────────────────────────────────── */
+    /* ── Variant flat ──────────────────────────────────────────────────────── */
     .card.flat {
       background: var(--agtc-component-card-flat-background);
       border: 1px solid var(--agtc-component-card-flat-border);
@@ -123,7 +123,7 @@ class AgtcCard extends LitElement {
       border-top: 1px solid var(--agtc-component-card-default-border);
     }
 
-    /* Pas de séparateur sur flat et elevated */
+    /* No separator on flat and elevated */
     .card.elevated .header,
     .card.flat     .header {
       border-bottom-color: var(--agtc-semantic-color-border-default);
@@ -138,8 +138,8 @@ class AgtcCard extends LitElement {
       display: none;
     }
 
-    /* Supprime padding-bottom du body si footer présent, et padding-top si header présent.
-       Évite le double espacement au niveau des séparateurs. */
+    /* Removes the body's padding-bottom when a footer is present, and padding-top
+       when a header is present. Avoids double spacing at the separators. */
     .has-header .body { padding-top: 0; }
     .has-footer .body { padding-bottom: 0; }
   `;

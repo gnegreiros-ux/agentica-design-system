@@ -2,35 +2,35 @@ import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
 // Types : text | email | password | number | search | tel | url
 //
-// Label obligatoire — jamais utiliser placeholder comme seule étiquette (WCAG 1.3.1).
+// Label required — never use placeholder as the only label (WCAG 1.3.1).
 //
-// États :
-//   invalid + error-message → bordure rouge + message role=alert
-//   disabled                → fond subtle, interactions bloquées
-//   readonly                → fond transparent, pas d'édition
+// States:
+//   invalid + error-message → red border + role=alert message
+//   disabled                → subtle background, interactions blocked
+//   readonly                → transparent background, no editing
 //
-// Icônes — même approche hybride que agtc-button :
+// Icons — same hybrid approach as agtc-button:
 //   icon="name"         → <agtc-icon> prefix via fallback slot
 //   icon-suffix="name"  → <agtc-icon> suffix via fallback slot
-//   slot[name="prefix"] / slot[name="suffix"] → composition libre
+//   slot[name="prefix"] / slot[name="suffix"] → free composition
 //
-// Type password : bouton show/hide intégré (WCAG 1.4.1).
+// Password type: built-in show/hide button (WCAG 1.4.1).
 //
-// Événements :
-//   agtc-input  → { value, name } à chaque frappe
-//   agtc-change → { value, name } à la perte de focus
+// Events:
+//   agtc-input  → { value, name } on every keystroke
+//   agtc-change → { value, name } on blur
 //
-// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
-//   Validation à onBlur, puis re-validation à la frappe une fois en erreur
-//     — NN/g How to Report Errors in Forms : https://www.nngroup.com/articles/design-pattern-guidelines/
-//   Erreur inline + role=alert, help text persistant via aria-describedby
-//     — NN/g Error-Message Guidelines : https://www.nngroup.com/articles/design-pattern-guidelines/
-//   Forgiving format (tel/number) — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
-//   Anti hostile patterns (pas d'effacement du champ en erreur)
-//   Détail complet : guidelines/components/input.md § PATTERNS UX DE RÉFÉRENCE
+// UX reference patterns applied (ADR-036, all approved):
+//   Validation on onBlur, then re-validation on typing once in error
+//     — NN/g How to Report Errors in Forms: https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Inline error + role=alert, persistent help text via aria-describedby
+//     — NN/g Error-Message Guidelines: https://www.nngroup.com/articles/design-pattern-guidelines/
+//   Forgiving format (tel/number) — IxDF: https://ixdf.org/literature/topics/ui-design-patterns
+//   Anti hostile patterns (no clearing of the field on error)
+//   Full details: guidelines/components/input.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 let _uid = 0;
@@ -71,7 +71,7 @@ class AgtcInput extends LitElement {
 
   updated() {
     if (!this.label) {
-      console.warn('[agtc-input] label manquant — inaccessible (WCAG 1.3.1). Toujours fournir label="Description du champ".');
+      console.warn('[agtc-input] missing label — inaccessible (WCAG 1.3.1). Always provide label="Field description".');
     }
   }
 
@@ -112,7 +112,7 @@ class AgtcInput extends LitElement {
       pointer-events: none;
     }
 
-    /* ── Champ ─────────────────────────────────────────────────────────────── */
+    /* ── Field ─────────────────────────────────────────────────────────────── */
     .field {
       display: flex;
       flex-direction: column;
@@ -133,7 +133,7 @@ class AgtcInput extends LitElement {
       color: var(--agtc-semantic-color-feedback-danger);
     }
 
-    /* ── Contrôle (wrapper input) ──────────────────────────────────────────── */
+    /* ── Control (input wrapper) ───────────────────────────────────────────── */
     .control {
       display: flex;
       align-items: center;
@@ -144,7 +144,7 @@ class AgtcInput extends LitElement {
       transition: border-color 0.12s;
     }
 
-    /* Focus ring sur le wrapper — visible pour clavier et pointeur */
+    /* Focus ring on the wrapper — visible for keyboard and pointer */
     .control:focus-within {
       border-color: var(--agtc-component-input-default-border-focus);
       outline: 2.5px solid var(--agtc-component-input-default-border-focus);
@@ -167,13 +167,13 @@ class AgtcInput extends LitElement {
       background: transparent;
     }
 
-    /* ── Slots icônes — transparents au flex layout ────────────────────────── */
+    /* ── Icon slots — transparent to the flex layout ───────────────────────── */
     slot[name="prefix"],
     slot[name="suffix"] {
       display: contents;
     }
 
-    /* ── Wrappers icônes fixes ─────────────────────────────────────────────── */
+    /* ── Fixed icon wrappers ───────────────────────────────────────────────── */
     .icon-prefix,
     .icon-suffix {
       display: flex;
@@ -189,7 +189,7 @@ class AgtcInput extends LitElement {
       padding-inline-end: var(--agtc-component-input-default-padding-x);
     }
 
-    /* ── Input natif ───────────────────────────────────────────────────────── */
+    /* ── Native input ──────────────────────────────────────────────────────── */
     input {
       flex: 1;
       min-width: 0;
@@ -216,14 +216,14 @@ class AgtcInput extends LitElement {
       color: var(--agtc-semantic-color-text-disabled);
     }
 
-    /* Supprime les spinners natifs sur number */
+    /* Removes native spinners on number */
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
     }
     input[type="number"] { -moz-appearance: textfield; }
 
-    /* ── Bouton show/hide password ─────────────────────────────────────────── */
+    /* ── Show/hide password button ─────────────────────────────────────────── */
     .toggle-password {
       display: flex;
       align-items: center;
@@ -241,7 +241,7 @@ class AgtcInput extends LitElement {
       border-radius: 2px;
     }
 
-    /* ── Textes d'aide et d'erreur ─────────────────────────────────────────── */
+    /* ── Help and error texts ──────────────────────────────────────────────── */
     .helper,
     .error-message {
       font-size: var(--agtc-semantic-typography-label-size);
@@ -308,7 +308,7 @@ class AgtcInput extends LitElement {
               <button
                 type="button"
                 class="toggle-password"
-                aria-label="${this._showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}"
+                aria-label="${this._showPassword ? 'Hide password' : 'Show password'}"
                 @click="${this._togglePassword}"
               >
                 <agtc-icon

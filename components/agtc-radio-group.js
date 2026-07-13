@@ -1,16 +1,16 @@
 import { LitElement, html } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Conteneur d'un groupe de <agtc-radio>. Porte `role="radiogroup"` et gère :
-//   - l'exclusivité (un seul radio sélectionné)
-//   - le focus roving (un seul radio tabbable à la fois)
-//   - la navigation clavier (flèches = sélection, comme un radio natif)
-//   - l'émission de `agtc-change { value, name }`
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Container for a group of <agtc-radio>. Carries `role="radiogroup"` and handles:
+//   - exclusivity (a single selected radio)
+//   - roving focus (a single tabbable radio at a time)
+//   - keyboard navigation (arrows = selection, like a native radio)
+//   - emitting `agtc-change { value, name }`
 //
-// Nécessaire car des <input type="radio"> dans des shadow DOM séparés ne forment
-// pas un groupe natif (voir ADR-038).
+// Required because <input type="radio"> elements in separate shadow DOMs do not
+// form a native group (see ADR-038).
 //
-// Détail : guidelines/components/radio.md
+// Details: guidelines/components/radio.md
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcRadioGroup extends LitElement {
@@ -59,7 +59,7 @@ class AgtcRadioGroup extends LitElement {
       r.setAttribute('tabindex', sel ? '0' : '-1');
       if (sel) anyChecked = true;
     });
-    // Aucun sélectionné → le premier radio actif reste atteignable au clavier
+    // None selected → the first enabled radio stays reachable via keyboard
     if (!anyChecked) {
       const first = radios.find((r) => !r.disabled);
       if (first) first.setAttribute('tabindex', '0');
@@ -98,8 +98,8 @@ class AgtcRadioGroup extends LitElement {
       const idx = curIdx < 0 ? radios.length - 1 : (curIdx - 1 + radios.length) % radios.length;
       this._select(radios[idx].value, true);
     } else if (e.key === ' ') {
-      // Espace seul sélectionne (pattern WAI-ARIA radio strict ; Entrée est
-      // réservé à la soumission de formulaire — voir ADR-038)
+      // Space alone selects (strict WAI-ARIA radio pattern; Enter is
+      // reserved for form submission — see ADR-038)
       const focused = radios.find((r) => r === document.activeElement);
       if (focused) { e.preventDefault(); this._select(focused.value, true); }
     }

@@ -1,25 +1,25 @@
 import { LitElement, html, css } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Contrôle segmenté MONO-SÉLECTION à EFFET IMMÉDIAT (2–5 options courtes).
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// SINGLE-SELECT segmented control with IMMEDIATE EFFECT (2–5 short options).
 //
 //   .options = [{ value, label, icon? } | "Label"]
-//   value="…"        — valeur sélectionnée (toujours exactement une, SG1)
-//   label="…"        — aria-label du groupe (requis pour l'accessibilité)
-//   equal-width      — segments à largeur égale
+//   value="…"        — selected value (always exactly one, SG1)
+//   label="…"        — aria-label of the group (required for accessibility)
+//   equal-width      — equal-width segments
 //
-// Émet `change` (detail: { value }) à chaque sélection.
+// Emits `change` (detail: { value }) on every selection.
 //
-// PATTERN ARIA (SG2, écart assumé vs agtc-radio-group) : groupe de <button> avec
-// aria-current sur le segment actif, navigation Tab native (PAS de flèches),
-// effet immédiat — recommandé par Primer pour un réglage instantané (≠ radiogroup
-// qui implique soumission, ≠ tablist qui change de panneau).
+// ARIA PATTERN (SG2, deliberate divergence vs agtc-radio-group): group of
+// <button> with aria-current on the active segment, native Tab navigation
+// (NO arrow keys), immediate effect — recommended by Primer for an instant
+// setting (≠ radiogroup which implies submission, ≠ tablist which switches panels).
 //
-// Patterns UX de référence appliqués (ADR-036/044, tous approuvés SG1–SG8) :
-//   Groupe de boutons + aria-current + effet immédiat — Primer :
+// UX reference patterns applied (ADR-036/044, all approved SG1–SG8):
+//   Button group + aria-current + immediate effect — Primer:
 //     https://primer.style/product/components/segmented-control/accessibility/
-//   État sélectionné pas par la couleur seule (fond plein + poids) — WCAG 1.4.1
-//   Détail : guidelines/components/segmented.md § PATTERNS UX DE RÉFÉRENCE
+//   Selected state not by color alone (solid background + weight) — WCAG 1.4.1
+//   Details: guidelines/components/segmented.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcSegmented extends LitElement {
@@ -39,7 +39,7 @@ class AgtcSegmented extends LitElement {
 
   updated() {
     if (!this.label) {
-      console.warn('[agtc-segmented] aucun label — le groupe doit être nommé pour les AT. Ajouter label="…".');
+      console.warn('[agtc-segmented] no label — the group must be named for AT. Add label="…".');
     }
   }
 
@@ -87,7 +87,7 @@ class AgtcSegmented extends LitElement {
     }
     button:hover { color: var(--agtc-component-segmented-default-text-hover); }
 
-    /* État sélectionné : fond plein + texte contrasté (pas la couleur seule, SG4) */
+    /* Selected state: solid background + contrasted text (not color alone, SG4) */
     button[aria-current="true"] {
       background: var(--agtc-component-segmented-default-selected-background);
       color: var(--agtc-component-segmented-default-selected-text);

@@ -129,7 +129,11 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Establishes a mandatory pre-commit pipeline — impact analysis, structured report, explicit wait for human approval, then ordered execution (tokens → site rebuild → log → ADRs → commit) — after observing agents commit changes without proposing necessary follow-up updates. This operationalizes the project's core principle that the human always has the final word.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Lors des premières sessions de travail avec des agents IA sur ce dépôt, un pattern problématique a été observé : les agents committaient des changements sans proposer les mises à jour collatérales nécessaires (log du kit, site rebuild, ADR). L'humain devait systématiquement demander ces mises à jour après coup, créant :</p>
 <ul><li>Un historique git incohérent (modifications et leurs conséquences dans des commits séparés)</li><li>Un log du kit incomplet ou mis à jour de mémoire (plutôt qu'en temps réel)</li><li>Des oublis de rebuild site après modification de <code>build.js</code> ou des tokens</li><li>Une gouvernance affaiblie : l'humain ne savait pas ce qu'il approuvait implicitement</li></ul>
 <p>Ce projet repose sur le principe fondamental : <strong>le dernier mot est toujours humain</strong>. Ce principe nécessite un mécanisme opérationnel — pas seulement une intention déclarée.</p>

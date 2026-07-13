@@ -129,7 +129,11 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Replaces the monolithic ADR-027 pipeline with a modular quality gate — one independent file per check under <code>.claude/skills/pipelines/</code>, each with explicit triggers and verifiable checks — after ADR-028 (a new font) was implemented without a corresponding ADR being created. The new <code>adr-triggers.md</code> trigger matrix makes such omissions structurally harder to miss.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-027 a introduit le concept de pipeline d'impact pré-commit. Cependant, la skill correspondante était trop générique : elle demandait d'"analyser l'impact" sans définir précisément ce que cela signifie.</p>
 <p><strong>Incident déclencheur :</strong> ADR-028 (Atkinson Hyperlegible Mono) a été oublié lors de l'ajout de la police monospace. La décision architecturale a été implémentée sans être documentée — violation directe des principes de gouvernance du système.</p>
 <p><strong>Cause racine :</strong> une checklist floue ("vérifier les ADRs manquants") sans matrice de déclenchement explicite. Un agent — ou un humain — peut consciencieusement parcourir une liste vague et manquer quand même un élément non évident.</p>

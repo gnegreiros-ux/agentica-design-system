@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adds a <code>PostToolUse</code> hook that reminds the agent to ask "do you want an ADR for this?" whenever <code>tokens/</code>, <code>guidelines/</code>, or <code>components/</code> are touched, since documented rules were being forgotten in practice. A 2026-05-31 amendment restricts the reminder to <code>Write</code> (new files) only, since it fired too often on routine <code>Edit</code> bug fixes and became noise rather than a safeguard.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Les fichiers <code>tokens/</code>, <code>guidelines/</code>, et <code>components/</code> contiennent les décisions structurantes du système de design : valeurs de tokens, contrats de composants, documentation normative. Toute modification dans ces zones devrait, en principe, être accompagnée d'un ADR ou d'un TCR qui en explique le pourquoi.</p>
 <p>En pratique, la documentation était oubliée. Un agent ou un humain modifiait <code>tokens/semantic.json</code> pour ajouter un token, commitait, et aucun ADR n'était créé. L'historique git conservait le _quoi_ mais perdait le _pourquoi_.</p>
 <p>La question posée était :</p>

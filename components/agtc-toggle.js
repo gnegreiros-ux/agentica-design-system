@@ -1,27 +1,27 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Interrupteur on/off à EFFET IMMÉDIAT. À préférer à la checkbox quand le
-// changement s'applique instantanément (pas de bouton « Enregistrer »).
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// On/off switch with IMMEDIATE EFFECT. Prefer over a checkbox when the
+// change applies instantly (no "Save" button).
 //
-// État signalé par la POSITION du curseur (indicateur non-couleur, WCAG 1.4.1),
-// renforcée par la couleur de la piste. Jamais la couleur seule.
+// State signaled by the POSITION of the knob (non-color indicator, WCAG 1.4.1),
+// reinforced by the track color. Never color alone.
 //
-// États : off · on · hover · focus-visible · disabled
+// States: off · on · hover · focus-visible · disabled
 //
-// Accessibilité : <input type="checkbox" role="switch"> natif masqué (rôle,
-// clavier via Espace, nom via le <label> implicite). Piste/curseur décoratifs.
+// Accessibility: hidden native <input type="checkbox" role="switch"> (role,
+// keyboard via Space, name via the implicit <label>). Track/knob decorative.
 //
-// Événements :
-//   agtc-change → { checked, name, value } immédiatement à la bascule
+// Events:
+//   agtc-change → { checked, name, value } immediately on toggle
 //
-// Patterns UX de référence appliqués (ADR-036/039, tous approuvés) :
-//   role=switch, effet immédiat, état par position (pas couleur seule),
-//   label concis décrivant l'état « on » — NN/g :
+// UX reference patterns applied (ADR-036/039, all approved):
+//   role=switch, immediate effect, state by position (not color alone),
+//   concise label describing the "on" state — NN/g:
 //     https://www.nngroup.com/articles/toggle-switch-guidelines/
-//   Cible tactile ≥ 24px — IxDF : https://ixdf.org/literature/topics/ui-design-patterns
-//   Détail : guidelines/components/toggle.md § PATTERNS UX DE RÉFÉRENCE
+//   Touch target ≥ 24px — IxDF: https://ixdf.org/literature/topics/ui-design-patterns
+//   Details: guidelines/components/toggle.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 let _uid = 0;
@@ -45,13 +45,13 @@ class AgtcToggle extends LitElement {
 
   updated() {
     if (!this.label && !this.textContent.trim()) {
-      console.warn('[agtc-toggle] label manquant — fournir label="…" ou du texte en slot (WCAG 4.1.2).');
+      console.warn('[agtc-toggle] missing label — provide label="…" or slotted text (WCAG 4.1.2).');
     }
   }
 
   _handleChange(e) {
     this.checked = e.target.checked;
-    // Effet immédiat — l'événement part à la bascule, sans submit
+    // Immediate effect — the event fires on toggle, without a submit
     this.dispatchEvent(new CustomEvent('agtc-change', {
       bubbles: true, composed: true,
       detail: { checked: this.checked, name: this.name, value: this.value },
@@ -66,7 +66,7 @@ class AgtcToggle extends LitElement {
       display: inline-flex;
       align-items: center;
       gap: var(--agtc-semantic-space-control-gap);
-      min-height: 24px;            /* cible tactile ≥ 24px (WCAG 2.5.8) */
+      min-height: 24px;            /* touch target ≥ 24px (WCAG 2.5.8) */
       cursor: pointer;
       font-family: inherit;
     }
@@ -101,7 +101,7 @@ class AgtcToggle extends LitElement {
       height: 20px;
       border-radius: 9999px;
       background: var(--agtc-component-toggle-default-knob);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* délimite le curseur (WCAG 1.4.11) */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* outlines the knob (WCAG 1.4.11) */
       transition: transform 0.15s;
     }
 

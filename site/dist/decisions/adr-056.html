@@ -129,7 +129,11 @@
       <dd>Humain (approbation) · Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Implements <code>agtc-tabs</code> for the site's doc-chrome (e.g. "Overview | Tokens | Best practices"). Decisions: in-page tabs by default with an optional per-tab <code>href</code> for external links; automatic activation on arrow-key focus (per the W3C APG, since panel content is preloaded); horizontal orientation only for now; closable tabs deferred (no use case yet); full ARIA tablist/tab/tabpanel pattern with roving tabindex; and <code>:visited</code> neutralized per the system-wide no-visited-nav rule (ADR-047).</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Phase D3 du redesign site : le doc-chrome nécessite un composant d'onglets pour structurer les pages composant (ex. <code>Aperçu | Tokens | Bonnes pratiques</code>). Aucun <code>agtc-tabs</code> n'existait.</p>
 <hr>
 <h2>Décisions</h2>

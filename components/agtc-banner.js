@@ -1,29 +1,29 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Message inline contextuel (callout / alerte) dans le flux de la page.
-// N'est PAS un toast (flottant temporaire) ni une modale.
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Contextual inline message (callout / alert) in the page flow.
+// NOT a toast (temporary floating element) nor a modal.
 //
-//   variant="neutral|brand|info|success|warning|danger"  (défaut info)
-//   heading="…"      — titre optionnel
-//   icon="name"      — icône Lucide (override du défaut par variante)
-//   no-icon          — masque l'icône
-//   dismissible      — bouton fermer (émet l'événement « dismiss »)
-//   live="off|polite|assertive"  — région live pour usage DYNAMIQUE
-//                       (défaut off : un banner statique ne s'annonce pas au chargement)
+//   variant="neutral|brand|info|success|warning|danger"  (default info)
+//   heading="…"      — optional title
+//   icon="name"      — Lucide icon (overrides the per-variant default)
+//   no-icon          — hides the icon
+//   dismissible      — close button (emits the "dismiss" event)
+//   live="off|polite|assertive"  — live region for DYNAMIC usage
+//                       (default off: a static banner is not announced on load)
 //
-// Contenu (corps) via <slot>. Actions via <slot name="actions">.
+// Content (body) via <slot>. Actions via <slot name="actions">.
 //
-// Patterns UX de référence appliqués (ADR-036/042, tous approuvés N1–N9) :
-//   Variantes sémantiques + sens jamais par la couleur seule (icône + préfixe
-//     de sévérité masqué pour AT) — NN/g :
+// UX reference patterns applied (ADR-036/042, all approved N1–N9):
+//   Semantic variants + meaning never by color alone (icon + severity
+//     prefix hidden for AT) — NN/g:
 //     https://www.nngroup.com/articles/indicators-validations-notifications/
-//   Statique par défaut, opt-in role=status/alert pour le dynamique — MDN :
+//   Static by default, opt-in role=status/alert for dynamic usage — MDN:
 //     https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role
-//   Bouton fermer accessible sans piège de focus — A11Y Collective :
+//   Accessible close button without focus trap — A11Y Collective:
 //     https://www.a11y-collective.com/blog/aria-alert/
-//   Détail : guidelines/components/banner.md § PATTERNS UX DE RÉFÉRENCE
+//   Details: guidelines/components/banner.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_ICON = {
@@ -35,14 +35,14 @@ const DEFAULT_ICON = {
   danger:  'octagon-alert',
 };
 
-// Préfixe de sévérité annoncé aux lecteurs d'écran (l'icône est décorative).
+// Severity prefix announced to screen readers (the icon is decorative).
 const SEVERITY_PREFIX = {
-  neutral: 'Information : ',
-  brand:   'Information : ',
-  info:    'Information : ',
-  success: 'Succès : ',
-  warning: 'Attention : ',
-  danger:  'Erreur : ',
+  neutral: 'Information: ',
+  brand:   'Information: ',
+  info:    'Information: ',
+  success: 'Success: ',
+  warning: 'Warning: ',
+  danger:  'Error: ',
 };
 
 class AgtcBanner extends LitElement {
@@ -80,7 +80,7 @@ class AgtcBanner extends LitElement {
       border-radius: 0 var(--agtc-component-banner-radius) var(--agtc-component-banner-radius) 0;
     }
 
-    /* Variantes : fond + accent (bordure gauche + icône) ───────────────────── */
+    /* Variants: background + accent (left border + icon) ───────────────────── */
     .banner.neutral { background: var(--agtc-component-banner-neutral-background); border-left-color: var(--agtc-component-banner-neutral-accent); }
     .banner.brand   { background: var(--agtc-component-banner-brand-background);   border-left-color: var(--agtc-component-banner-brand-accent); }
     .banner.info    { background: var(--agtc-component-banner-info-background);    border-left-color: var(--agtc-component-banner-info-accent); }
@@ -150,7 +150,7 @@ class AgtcBanner extends LitElement {
   render() {
     const variant = this.variant || 'info';
     const iconName = this.icon || DEFAULT_ICON[variant] || 'info';
-    // Région live : opt-in pour usage dynamique uniquement.
+    // Live region: opt-in for dynamic usage only.
     const role = this.live === 'assertive' ? 'alert' : this.live === 'polite' ? 'status' : undefined;
 
     return html`
@@ -168,7 +168,7 @@ class AgtcBanner extends LitElement {
           <div class="actions"><slot name="actions"></slot></div>
         </div>
         ${this.dismissible ? html`
-          <button class="close" type="button" aria-label="Fermer" @click="${this._dismiss}">
+          <button class="close" type="button" aria-label="Close" @click="${this._dismiss}">
             <agtc-icon name="x" size="inline" decorative></agtc-icon>
           </button>
         ` : ''}

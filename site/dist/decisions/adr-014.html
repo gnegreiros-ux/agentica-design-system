@@ -129,7 +129,11 @@
       <dd>Tech Lead, Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Conventional Commits with a project-specific <code>token</code> type that signals a mandatory governance review, plus <code>a11y</code> for accessibility work. Machine-parsable commit messages let agents and CI answer questions like "when did this token change?" without reading every commit body.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'historique git est l'une des sources de mémoire décisionnelle du système. Un commit qui dit <code>fix stuff</code> ne transmet aucune information exploitable — ni par un humain qui fait une revue, ni par un agent qui cherche quand un comportement a changé, ni par un pipeline CI qui décide si un changement nécessite une revue de gouvernance.</p>
 <p>Dans un système agentique, les commits ont un rôle supplémentaire : ils sont des événements lisibles par machine. Un commit de type <code>token</code> peut déclencher automatiquement une revue de gouvernance. Un commit de type <code>a11y</code> peut déclencher une re-exécution des tests axe-core en priorité.</p>
 <p>La question posée était :</p>

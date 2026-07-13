@@ -1,37 +1,37 @@
 import { LitElement, html, css, nothing } from 'lit';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Navigation principale horizontale — pattern tabs visuels full-height header.
-// Sémantique : role=navigation (pas role=tablist) + aria-current="page".
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Horizontal main navigation — full-height header visual-tabs pattern.
+// Semantics: role=navigation (not role=tablist) + aria-current="page".
 //
 //   items = [{ label?, labelFr?, labelEn?, href, cta? }]
-//     label    — texte unique (langue neutre)
-//     labelFr  — texte français (prioritaire si data-lang="fr")
-//     labelEn  — texte anglais (prioritaire si data-lang="en")
-//     href     — URL de destination
-//     cta      — true → bouton d'adoption (Démarrer), sort du pattern tab
+//     label    — single text (language-neutral)
+//     labelFr  — French text (takes priority if data-lang="fr")
+//     labelEn  — English text (takes priority if data-lang="en")
+//     href     — destination URL
+//     cta      — true → adoption button (Get started), breaks out of the tab pattern
 //
-//   current   — pathname actif pour la détection automatique (défaut: window.location.pathname)
-//   nav-label — aria-label de l'élément <nav> (requis pour les AT)
+//   current   — active pathname for automatic detection (default: window.location.pathname)
+//   nav-label — aria-label of the <nav> element (required for AT)
 //
-// Bilinguisme : le composant observe document.documentElement[data-lang]
-//   et re-render automatiquement quand la langue change.
+// Bilingualism: the component observes document.documentElement[data-lang]
+//   and automatically re-renders when the language changes.
 //
-// Mobile : le composant gère son propre état responsive.
-//   Ajouter la classe CSS .open (ou l'attribut open) sur l'hôte pour ouvrir.
-//   Le site contrôle l'ouverture via : topNavEl.classList.toggle('open')
+// Mobile: the component manages its own responsive state.
+//   Add the .open CSS class (or the open attribute) on the host to open it.
+//   The site controls opening via: topNavEl.classList.toggle('open')
 //
-// DISTINCTION CRITIQUE avec agtc-tabs :
-//   agtc-tabs    → role=tablist, navigation in-page, panneau de contenu associé
-//   agtc-top-nav → role=navigation, navigation inter-pages, aria-current="page"
+// CRITICAL DISTINCTION from agtc-tabs:
+//   agtc-tabs    → role=tablist, in-page navigation, associated content panel
+//   agtc-top-nav → role=navigation, cross-page navigation, aria-current="page"
 //
-// Règle no-visited-nav (ADR-047) : :visited neutralisé sur tous les liens.
-// Patterns UX de référence appliqués (ADR-060) :
-//   Nav principale = landmark navigation — W3C WAI https://www.w3.org/WAI/ARIA/apg/
-//   aria-current="page" sur le lien actif — WCAG 2.4.4 + 4.1.2
-//   Indicateur visuel border-bottom full-height — NN/g nav horizontale
-//   Bouton CTA visuellement distinct des tabs — IxDF clear primary action
-//   Détail : guidelines/components/top-nav.md § PATTERNS UX DE RÉFÉRENCE
+// no-visited-nav rule (ADR-047): :visited neutralized on all links.
+// UX reference patterns applied (ADR-060):
+//   Main nav = navigation landmark — W3C WAI https://www.w3.org/WAI/ARIA/apg/
+//   aria-current="page" on the active link — WCAG 2.4.4 + 4.1.2
+//   Full-height border-bottom visual indicator — NN/g horizontal nav
+//   CTA button visually distinct from the tabs — IxDF clear primary action
+//   Details: guidelines/components/top-nav.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 const SECTIONS = ['tokens', 'components', 'foundations', 'decisions', 'agents', 'guidelines', 'pipelines'];
@@ -48,7 +48,7 @@ class AgtcTopNav extends LitElement {
     super();
     this.items    = [];
     this.current  = '';
-    this.navLabel = 'Navigation principale';
+    this.navLabel = 'Main navigation';
     this._lang    = 'fr';
     this._observer = null;
   }
@@ -106,7 +106,7 @@ class AgtcTopNav extends LitElement {
       margin-left: auto;
     }
 
-    /* ── Tab links (liens inter-pages) ── */
+    /* ── Tab links (cross-page links) ── */
     a {
       display: flex;
       align-items: center;
@@ -122,7 +122,7 @@ class AgtcTopNav extends LitElement {
       -webkit-font-smoothing: antialiased;
     }
 
-    /* :visited neutralisé — ADR-047. Valeur littérale pour Safari (ADR-059). */
+    /* :visited neutralized — ADR-047. Literal value for Safari (ADR-059). */
     a:visited { color: var(--agtc-component-top-nav-tab-color); }
 
     a:hover {
@@ -140,7 +140,7 @@ class AgtcTopNav extends LitElement {
       outline-offset: 2px;
     }
 
-    /* Page active — indicateur border-bottom, pas de fond rempli */
+    /* Active page — border-bottom indicator, no filled background */
     a[aria-current="page"] {
       background: transparent;
       color: var(--agtc-component-top-nav-tab-color-active);
@@ -148,7 +148,7 @@ class AgtcTopNav extends LitElement {
       border-bottom-color: var(--agtc-component-top-nav-tab-indicator-color);
     }
 
-    /* ── CTA button — sort du pattern tab ── */
+    /* ── CTA button — breaks out of the tab pattern ── */
     a.cta {
       height: auto;
       align-self: center;
@@ -169,13 +169,13 @@ class AgtcTopNav extends LitElement {
       color: var(--agtc-component-top-nav-cta-color);
     }
 
-    /* Le CTA ne porte pas d'indicateur tab même s'il est "actif" */
+    /* The CTA carries no tab indicator even when it is "active" */
     a.cta[aria-current="page"] {
       background: var(--agtc-component-top-nav-cta-background);
       border-bottom: none;
     }
 
-    /* ── Mobile : drawer vertical ─────────────────────────── */
+    /* ── Mobile: vertical drawer ──────────────────────────── */
     @media (max-width: 768px) {
       nav {
         display: none;
@@ -193,7 +193,7 @@ class AgtcTopNav extends LitElement {
         align-self: auto;
       }
 
-      /* Ouverture via classe .open sur l'hôte */
+      /* Opened via the .open class on the host */
       :host(.open) nav {
         display: flex;
       }

@@ -38,7 +38,7 @@ GitHub Projects (Domaine Gouvernance/Site/Composants, tous rattachés au ticket 
 | 3 | `guidelines/` (24 fichiers) | Anglais **remplace** le français — même stratégie que le chantier 1, aucune version FR conservée | P2 |
 | 4 | `.claude/` (règles, instructions, skills — 38 fichiers agent-facing) | Anglais **remplace** le français — même stratégie que les chantiers 1 et 3, aucune version FR conservée | P2 |
 | 5 | `decisions/` (70 ADR, journal historique) | Stratégie allégée envisagée (résumé EN en tête) plutôt que traduction intégrale rétroactive — à valider | P3 |
-| 6 | Commentaires code composants (`agtc-*.js`, `*.stories.js`) | À déterminer au démarrage du chantier | P3 |
+| 6 | Commentaires code composants (`agtc-*.js`, `*.stories.js`) | Traduction intégrale — commentaires, blocs CONTRAT, avertissements `console.warn`, **et** chaînes `description` Storybook (user-facing) ; les paires `labelFr`/`labelEn` du composant `agtc-top-nav` sont conservées telles quelles (feature bilingue réelle du site, pas du contenu résiduel) | P3 |
 
 Ce chantier 1 (documentation racine) est le premier livré par cette décision — remplacement
 intégral du français par l'anglais, sans version française conservée en parallèle (décision

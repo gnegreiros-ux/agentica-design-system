@@ -129,7 +129,11 @@
       <dd>Humain (approbation) · Design System Lead (navigation)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> On mobile (≤768px), the secondary sidebar rendered above the page content because it preceded <code>&lt;main&gt;</code> in the DOM. This ADR turns the sidebar into a sliding drawer (fixed position, off-canvas, overlay + Escape/click-outside to close) and moves its toggle button into the content, right before the page's <code>&lt;h1&gt;</code>, appearing only on pages that actually have a sidebar.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Sur mobile (≤ 768 px), la sidebar de navigation secondaire (Fondations, Composants, Décisions) s'affichait dans le flux normal de la page — <strong>avant le contenu</strong> — car elle précède <code>&lt;main&gt;</code> dans le DOM et le layout passe en <code>flex-direction: column</code>. Le premier élément visible était donc la liste de navigation, non le titre de page.</p>
 <p>Par ailleurs, sur les pages sans sidebar (accueil, Tokens, Agents), le bouton d'accès au drawer était présent dans le header alors qu'il n'avait aucun effet — il était contextuel mais positionné de manière globale.</p>
 <hr>

@@ -1,32 +1,32 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Table de données en LECTURE SEULE, lisible et accessible.
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// READ-ONLY data table, readable and accessible.
 //
-// API pilotée par données (moitié « composant » du mix — ADR-040) :
+// Data-driven API (the "component" half of the mix — ADR-040):
 //   .columns = [{ label, align?, width? } | "Label", …]
-//   .rows    = [["a","b"], …]   (positionnel)  ou  [{ key: "valeur" }, …]
-//   caption="…"  — légende accessible (T2). Masquable visuellement : caption-hidden
-//   striped       — zébrage (T4, option ; séparateurs de lignes par défaut)
-//   sticky-header — en-tête figé (T6)
-//   density="compact|comfortable"  (T9, compact par défaut)
+//   .rows    = [["a","b"], …]   (positional)  or  [{ key: "value" }, …]
+//   caption="…"  — accessible caption (T2). Visually hideable: caption-hidden
+//   striped       — zebra striping (T4, optional; row separators by default)
+//   sticky-header — pinned header (T6)
+//   density="compact|comfortable"  (T9, compact by default)
 //
-// La moitié « light DOM » du mix = classe .agtc-table appliquée à un <table>
-// statique réel (mêmes tokens via --agtc-component-table-*) — voir guideline.
+// The "light DOM" half of the mix = .agtc-table class applied to a real
+// static <table> (same tokens via --agtc-component-table-*) — see guideline.
 //
-// HORS PÉRIMÈTRE v1 (porte ouverte — ADR-040) : tri, filtrage, pagination.
-//   L'API columns/rows a été choisie pour les accueillir sans rupture
-//   (futur column.sortable + événement @sort) — non implémentés ici.
+// OUT OF SCOPE v1 (door left open — ADR-040): sorting, filtering, pagination.
+//   The columns/rows API was chosen to accommodate them without breakage
+//   (future column.sortable + @sort event) — not implemented here.
 //
-// Patterns UX de référence appliqués (ADR-036/040, tous approuvés T1–T10) :
-//   HTML sémantique + scope="col" + <caption> — Smashing :
+// UX reference patterns applied (ADR-036/040, all approved T1–T10):
+//   Semantic HTML + scope="col" + <caption> — Smashing:
 //     https://www.smashingmagazine.com/2019/01/table-design-patterns-web/
-//   Alignement texte/gauche, numérique/droite ; séparateurs ou zébrage ;
-//     hover de ligne ; en-tête figé ; 1ʳᵉ colonne = identifiant lisible — NN/g :
+//   Alignment text/left, numeric/right; separators or zebra striping;
+//     row hover; pinned header; 1st column = readable identifier — NN/g:
 //     https://www.nngroup.com/articles/data-tables/
-//   Scroll horizontal + indicateur d'overflow — Smashing (idem)
-//   Détail : guidelines/components/table.md § PATTERNS UX DE RÉFÉRENCE
+//   Horizontal scroll + overflow indicator — Smashing (same)
+//   Details: guidelines/components/table.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcTable extends LitElement {
@@ -52,7 +52,7 @@ class AgtcTable extends LitElement {
 
   updated() {
     if (!this.caption) {
-      console.warn('[agtc-table] aucun caption — la table devrait décrire son contenu (WCAG 1.3.1, T2). Ajouter caption="…" (masquable via caption-hidden).');
+      console.warn('[agtc-table] no caption — the table should describe its content (WCAG 1.3.1, T2). Add caption="…" (hideable via caption-hidden).');
     }
   }
 
@@ -61,12 +61,12 @@ class AgtcTable extends LitElement {
       display: block;
     }
 
-    /* Conteneur scroll horizontal + indicateur d'overflow (T7) ─────────────── */
+    /* Horizontal scroll container + overflow indicator (T7) ────────────────── */
     .scroll {
       overflow-x: auto;
       border: 1px solid var(--agtc-component-table-default-border);
       border-radius: var(--agtc-component-table-default-radius);
-      /* Ombres de bord : apparaissent quand il reste du contenu à scroller. */
+      /* Edge shadows: appear when there is content left to scroll. */
       background:
         linear-gradient(to right, var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) left / 24px 100% no-repeat,
         linear-gradient(to left,  var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) right / 24px 100% no-repeat;
@@ -115,14 +115,14 @@ class AgtcTable extends LitElement {
 
     tbody tr:last-child td { border-bottom: none; }
 
-    /* Hover de ligne (T5) ──────────────────────────────────────────────────── */
+    /* Row hover (T5) ───────────────────────────────────────────────────────── */
     tbody tr:hover { background: var(--agtc-component-table-default-row-hover); }
 
-    /* Zébrage optionnel (T4) ───────────────────────────────────────────────── */
+    /* Optional zebra striping (T4) ─────────────────────────────────────────── */
     :host([striped]) tbody tr:nth-child(even) { background: var(--agtc-component-table-default-stripe); }
     :host([striped]) tbody tr:nth-child(even):hover { background: var(--agtc-component-table-default-row-hover); }
 
-    /* En-tête figé optionnel (T6) ──────────────────────────────────────────── */
+    /* Optional pinned header (T6) ──────────────────────────────────────────── */
     :host([sticky-header]) thead th {
       position: sticky;
       top: 0;
@@ -130,13 +130,13 @@ class AgtcTable extends LitElement {
     }
   `;
 
-  // Normalise une colonne : "Label" → { label, align: 'start' }
+  // Normalizes a column: "Label" → { label, align: 'start' }
   _col(c) {
     if (typeof c === 'string') return { label: c, align: 'start' };
     return { label: c.label ?? '', align: c.align ?? 'start', width: c.width, key: c.key };
   }
 
-  // Normalise une ligne en tableau de cellules, dans l'ordre des colonnes.
+  // Normalizes a row into an array of cells, in column order.
   _cells(row, cols) {
     if (Array.isArray(row)) return row;
     return cols.map((c) => (c.key != null ? row[c.key] : '') ?? '');

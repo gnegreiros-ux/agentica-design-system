@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Fixes a systemic WCAG AA contrast failure: <code>action.primary</code> was teal.9 (3.07:1 with white text), violating the button contract's own 4.5:1 requirement — and correcting an inaccurate claim in ADR-024. Splits the identity teal (<code>brand.primary</code>, unchanged teal.9) from a new accessible interactive teal (<code>action.primary</code> = teal.11, 4.56:1).</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Le redesign du site (mise en évidence du CTA « Démarrer » comme bouton primaire) a révélé une <strong>non-conformité WCAG AA préexistante et systémique</strong> : la couleur d'action <code>action.primary</code> était <code>teal.9</code> (<code>#12a594</code>), et le bouton primaire pose du <strong>texte blanc</strong> dessus.</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Usage de teal.9</th><th>Paire</th><th>Ratio</th><th>AA texte (4.5:1)</th></tr></thead><tbody><tr><td>Bouton primaire (CTA hero, nav-cta)</td><td>blanc sur teal.9</td><td><strong>3.07:1</strong></td><td>❌ échec</td></tr><tr><td>Survol bouton primaire</td><td>blanc sur teal.10 (<code>#0d9b8a</code>)</td><td><strong>3.46:1</strong></td><td>❌ échec</td></tr><tr><td>Lien actif (nav / TOC / sidebar)</td><td>teal.9 en <strong>texte</strong> sur blanc</td><td><strong>3.07:1</strong></td><td>❌ échec</td></tr><tr><td>Anneau de focus (<code>border.focus</code>)</td><td>teal.9 sur blanc</td><td>3.07:1</td><td>✅ (non-textuel, 3:1 requis)</td></tr></tbody></table></div>
 <blockquote><p>Le contraste étant <strong>symétrique</strong>, l'affirmation de l'<strong>ADR-024 (ligne 109)</strong> — « teal.9 = 4.6:1 sur blanc » — est <strong>factuellement erronée</strong> : la valeur 4.6:1 correspond à <strong>teal.11</strong> (<code>#008573</code>), pas à teal.9. Le contrat <code>guidelines/components/button.md</code> exige pourtant « 4.5:1 minimum ». Le bouton phare violait donc son propre contrat.</p></blockquote>

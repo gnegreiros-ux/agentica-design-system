@@ -1,23 +1,23 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// ─── CONTRAT ────────────────────────────────────────────────────────────────
-// Variantes : neutral | brand | success | warning | danger | info
-// Tailles   : sm | md (défaut)
+// ─── CONTRACT ───────────────────────────────────────────────────────────────
+// Variants : neutral | brand | success | warning | danger | info
+// Sizes    : sm | md (default)
 //
-// Badge texte : contenu via <slot>
-// Badge icône : icon="name" ajoute une icône prefix
-// Badge icon-only : icon="name" + icon-only + label="…" (WCAG 1.1.1)
+// Text badge : content via <slot>
+// Icon badge : icon="name" adds a prefix icon
+// Icon-only badge : icon="name" + icon-only + label="…" (WCAG 1.1.1)
 //
-// Non interactif — si une action est requise, utiliser agtc-button.
+// Non-interactive — if an action is required, use agtc-button.
 //
-// Patterns UX de référence appliqués (ADR-036, tous approuvés) :
-//   Statut pas encodé uniquement par la couleur (recommandé : icône/libellé
-//     distinctif pour danger/warning) — NN/g indicators :
+// UX reference patterns applied (ADR-036, all approved):
+//   Status not encoded by color alone (recommended: distinctive icon/label
+//     for danger/warning) — NN/g indicators:
 //     https://www.nngroup.com/articles/design-pattern-guidelines/
-//   role=status pour annoncer les changements aux AT — NN/g
-//   Mapping sémantique traffic-light — Dashboard : https://dashboarddesignpatterns.github.io/patterns.html
-//   Détail : guidelines/components/badge.md § PATTERNS UX DE RÉFÉRENCE
+//   role=status to announce changes to AT — NN/g
+//   Traffic-light semantic mapping — Dashboard: https://dashboarddesignpatterns.github.io/patterns.html
+//   Details: guidelines/components/badge.md § UX Patterns Reference
 // ────────────────────────────────────────────────────────────────────────────
 
 class AgtcBadge extends LitElement {
@@ -38,7 +38,7 @@ class AgtcBadge extends LitElement {
 
   updated() {
     if (this.iconOnly && !this.label) {
-      console.warn('[agtc-badge] icon-only sans label — inaccessible (WCAG 1.1.1). Ajouter label="Description du badge".');
+      console.warn('[agtc-badge] icon-only without label — inaccessible (WCAG 1.1.1). Add label="Badge description".');
     }
   }
 
@@ -63,7 +63,7 @@ class AgtcBadge extends LitElement {
       user-select: none;
     }
 
-    /* ── Taille md (défaut) ────────────────────────────────────────────────── */
+    /* ── Size md (default) ─────────────────────────────────────────────────── */
     .badge.md {
       padding: var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);
       border-radius: var(--agtc-component-badge-md-radius);
@@ -75,7 +75,7 @@ class AgtcBadge extends LitElement {
       justify-content: center;
     }
 
-    /* ── Taille sm ─────────────────────────────────────────────────────────── */
+    /* ── Size sm ───────────────────────────────────────────────────────────── */
     .badge.sm {
       padding: var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);
       border-radius: var(--agtc-component-badge-sm-radius);
@@ -87,42 +87,42 @@ class AgtcBadge extends LitElement {
       justify-content: center;
     }
 
-    /* ── Variante neutral ──────────────────────────────────────────────────── */
+    /* ── Variant neutral ───────────────────────────────────────────────────── */
     .badge.neutral {
       background: var(--agtc-component-badge-neutral-background);
       color:      var(--agtc-component-badge-neutral-text);
       border-color: var(--agtc-component-badge-neutral-border);
     }
 
-    /* ── Variante brand ────────────────────────────────────────────────────── */
+    /* ── Variant brand ─────────────────────────────────────────────────────── */
     .badge.brand {
       background: var(--agtc-component-badge-brand-background);
       color:      var(--agtc-component-badge-brand-text);
       border-color: var(--agtc-component-badge-brand-border);
     }
 
-    /* ── Variante success ──────────────────────────────────────────────────── */
+    /* ── Variant success ───────────────────────────────────────────────────── */
     .badge.success {
       background: var(--agtc-component-badge-success-background);
       color:      var(--agtc-component-badge-success-text);
       border-color: var(--agtc-component-badge-success-border);
     }
 
-    /* ── Variante warning ──────────────────────────────────────────────────── */
+    /* ── Variant warning ───────────────────────────────────────────────────── */
     .badge.warning {
       background: var(--agtc-component-badge-warning-background);
       color:      var(--agtc-component-badge-warning-text);
       border-color: var(--agtc-component-badge-warning-border);
     }
 
-    /* ── Variante danger ───────────────────────────────────────────────────── */
+    /* ── Variant danger ────────────────────────────────────────────────────── */
     .badge.danger {
       background: var(--agtc-component-badge-danger-background);
       color:      var(--agtc-component-badge-danger-text);
       border-color: var(--agtc-component-badge-danger-border);
     }
 
-    /* ── Variante info ─────────────────────────────────────────────────────── */
+    /* ── Variant info ──────────────────────────────────────────────────────── */
     .badge.info {
       background: var(--agtc-component-badge-info-background);
       color:      var(--agtc-component-badge-info-text);
