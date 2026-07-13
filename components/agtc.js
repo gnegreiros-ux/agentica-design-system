@@ -237,7 +237,7 @@
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: var(--agtc-semantic-space-component-padding-xs);
 
       font-family: inherit;
       font-weight: var(--agtc-semantic-typography-label-weight);
@@ -340,7 +340,7 @@
     .banner {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: var(--agtc-semantic-space-component-padding-md);
       padding: var(--agtc-component-banner-padding-y) var(--agtc-component-banner-padding-x);
       border: 1px solid var(--agtc-semantic-color-border-default);
       border-left-width: 3px;
@@ -472,8 +472,8 @@
 
     .track {
       display: inline-flex;
-      gap: 2px;
-      padding: 2px;
+      gap: var(--agtc-semantic-space-component-padding-2xs);
+      padding: var(--agtc-semantic-space-component-padding-2xs);
       background: var(--agtc-component-segmented-default-track-background);
       border-radius: var(--agtc-component-segmented-default-radius);
     }
@@ -1358,8 +1358,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 8px var(--agtc-component-code-block-default-padding-x);
+      gap: var(--agtc-semantic-space-control-gap);
+      padding: var(--agtc-semantic-space-component-padding-sm) var(--agtc-component-code-block-default-padding-x);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .meta {
@@ -1392,7 +1392,7 @@
       color: var(--agtc-component-code-block-default-copy-text);
       border: none;
       border-radius: 4px;
-      padding: 4px 10px;
+      padding: var(--agtc-semantic-space-component-padding-xs) 10px;
       font-family: inherit;
       font-size: var(--agtc-semantic-typography-detail-size);
       cursor: pointer;
@@ -1536,7 +1536,7 @@
         flex-direction: column;
         background: var(--agtc-semantic-color-background-surface);
         border-bottom: 1px solid var(--agtc-semantic-color-border-default);
-        padding: 8px 0;
+        padding: var(--agtc-semantic-space-component-padding-sm) 0;
         z-index: 99;
         box-shadow: var(--agtc-shadow-md);
         margin-left: 0;
@@ -1549,7 +1549,7 @@
       }
 
       a {
-        padding: 12px 24px;
+        padding: var(--agtc-semantic-space-component-padding-md) 24px;
         border-bottom: none;
         border-radius: 0;
         font-size: var(--agtc-semantic-typography-label-size);
@@ -1565,7 +1565,7 @@
       a.cta {
         height: auto;
         align-self: unset;
-        margin: 4px 16px;
+        margin: var(--agtc-semantic-space-component-padding-xs) 16px;
         border-radius: var(--agtc-semantic-radius-control);
         border-bottom: none;
         padding: 10px 14px;
