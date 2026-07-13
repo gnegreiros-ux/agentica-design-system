@@ -25,6 +25,11 @@ function cr(a, b) {
   return +((L1 + 0.05) / (L2 + 0.05)).toFixed(2);
 }
 
+// Literal resolved hex, not CSS var() references — intentional, not drift. This
+// runs headless in Node (no browser, no CSS cascade) to compute WCAG contrast
+// ratios via lum()/cr() above, which need concrete RGB math; a var(--x) string
+// has no meaning here. Keep these values in sync with tokens/semantic.json by
+// hand when a referenced color changes.
 const CONTRAST_PAIRS = [
   ['#ffffff', '#007a68', 'Button primary — texte sur fond (action.primary)',  4.5],
   ['#202020', '#fcfcfc', 'Corps de texte sur fond de page',                  4.5],
