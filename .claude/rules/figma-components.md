@@ -1,3 +1,9 @@
+---
+paths:
+  - "scripts/figma/**"
+  - "tokens/figma.json"
+---
+
 # Rule: figma-components
 
 > Stub — full rules in `.claude/instructions/figma-components.md`.

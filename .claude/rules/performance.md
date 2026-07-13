@@ -1,3 +1,8 @@
+---
+paths:
+  - "site/**"
+---
+
 # Rule: performance
 
 > Web performance standards for the Agentica site and all design system consumers.

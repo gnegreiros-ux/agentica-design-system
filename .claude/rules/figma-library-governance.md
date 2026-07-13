@@ -1,3 +1,9 @@
+---
+paths:
+  - "scripts/figma/**"
+  - "tokens/figma.json"
+---
+
 # Rule: figma-library-governance
 
 > Governance charter for the Agentica Figma library — code is the source of truth, Figma is

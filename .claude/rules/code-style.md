@@ -81,41 +81,8 @@ Format: `--site-[role]`
 
 ### Full migration table (2026-06-30)
 
-This table documents all the renames performed during the `v2-` debt migration:
-
-| Old name | New name | Category |
-|-----------|------------|-----------|
-| `.v2-header` | `.site-header` | Chrome |
-| `.v2-nav` | `.site-nav` | Chrome |
-| `.v2-footer` | `.site-footer` | Chrome |
-| `.v2-docs` | `.docs-menu` | Chrome |
-| `.v2-docs-panel` | `.docs-panel` | Chrome |
-| `.v2-docs-trigger` | `.docs-trigger` | Chrome |
-| `.v2-nav-action` | `.nav-cta` | Chrome |
-| `.v2-menu-button` | `.menu-btn` | Chrome |
-| `.v2-shell` | `.shell` | Structure |
-| `.v2-page` | `.page` | Structure |
-| `.v2-page-content` | `.page-content` | Structure |
-| `.v2-sidebar` | `.sidebar` | Structure |
-| `.v2-with-sidebar` | `.with-sidebar` | Structure |
-| `.v2-section` | `.site-section` | Section |
-| `.v2-section-heading` | `.section-heading` | Section |
-| `.v2-hero` | `.hero` | Section |
-| `.v2-immersive` | `.immersive` | Section |
-| `.v2-overlap` | `.overlap` | Grid |
-| `.v2-split` | `.split` | Grid |
-| `.v2-final` | `.section-final` | Section |
-| `.v2-copy` | `.copy` | Content |
-| `.v2-kicker` | `.kicker` | Content |
-| `.v2-button` | `.cta-btn` | CTA |
-| `.v2-button-primary` | `.cta-btn-primary` | CTA |
-| `.v2-button-secondary` | `.cta-btn-secondary` | CTA |
-| `--v2-shell` | `--site-shell` | Custom prop |
-| `--v2-text` | `--site-text` | Custom prop |
-| `--v2-teal` | `--site-teal` | Custom prop |
-| `@keyframes v2-float` | `@keyframes float-illus` | Animation |
-
-*(Full table in the `refactor(css): remove v2- prefix` commit from 2026-06-30)*
+Full old→new rename table (chrome, structure, section, grid, content, CTA, custom
+properties, animation): see the `refactor(css): remove v2- prefix` commit from 2026-06-30.
 
 ---
 
@@ -145,17 +112,6 @@ Format: `--[prefix]-[level]-[component]-[variant]-[property]`
 // ❌ Bad comment — describes the WHAT (already readable from the code)
 // Sets the button's background color
 ```
-
----
-
-## JavaScript / TypeScript
-
-- ES6+ only
-- No `var` — use `const` and `let`
-- Arrow functions for callbacks
-- Destructuring preferred
-- Variable naming in camelCase
-- Constant naming in UPPER_SNAKE_CASE
 
 ---
 

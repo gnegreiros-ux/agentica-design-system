@@ -1,3 +1,9 @@
+---
+paths:
+  - "components/agtc-button*"
+  - "guidelines/components/button.md"
+---
+
 # Rule: components/button
 
 > Button-specific rules for agents.
