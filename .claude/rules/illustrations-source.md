@@ -1,3 +1,9 @@
+---
+paths:
+  - "Brand/illustrations/**"
+  - "site/**"
+---
+
 # Rule: illustrations-source
 
 > Single source of truth for all illustrations — Brand/illustrations/.

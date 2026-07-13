@@ -1,3 +1,10 @@
+---
+paths:
+  - "components/agtc-*.js"
+  - "components/agtc-*.stories.js"
+  - "guidelines/components/**"
+---
+
 # Rule: ux-patterns-sources
 
 > Registry of UX reference sources and pattern-review checklist by component.

@@ -11,15 +11,9 @@
 
 ## Tech stack
 
-| Layer | Technology | Role |
-|--------|-------------|------|
-| Web Components | Lit (Google) | Universal UI contracts |
-| Token compilation | Style Dictionary | JSON → CSS / JS / Swift / Android |
-| Visual testing | Chromatic | Visual regression |
-| Accessibility testing | axe-core | Automated WCAG audit |
-| E2E testing | Playwright | Full user flows |
-| Documentation | Storybook | Canvas + preview + specs |
-| Figma sync | Tokens Studio | Figma ↔ JSON |
+See `package.json` for the exact dependency versions (Lit, Style Dictionary, Chromatic,
+axe-core, Playwright, Storybook). Figma sync uses Tokens Studio (a Figma plugin, not an
+npm dependency).
 
 ---
 
