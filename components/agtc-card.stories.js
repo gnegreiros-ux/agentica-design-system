@@ -100,17 +100,17 @@ export const WithHeaderAndFooter = {
   render: () => html`
     <div style="max-width:360px;">
       <agtc-card>
-        <div slot="header" style="display:flex;align-items:center;gap:8px;">
-          <agtc-icon name="user" size="control" style="color:#646464;"></agtc-icon>
+        <div slot="header" style="display:flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);">
+          <agtc-icon name="user" size="control" style="color:var(--agtc-semantic-color-text-secondary);"></agtc-icon>
           <strong style="font-size:0.875rem;">User profile</strong>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-control-gap);">
           <p style="margin:0;font-size:0.875rem;color:#444;">Guilherme Negreiros</p>
-          <p style="margin:0;font-size:0.75rem;color:#646464;">Design System Lead</p>
+          <p style="margin:0;font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);">Design System Lead</p>
         </div>
 
-        <div slot="footer" style="display:flex;justify-content:flex-end;gap:8px;">
+        <div slot="footer" style="display:flex;justify-content:flex-end;gap:var(--agtc-semantic-space-control-gap);">
           <agtc-button variant="ghost">Cancel</agtc-button>
           <agtc-button variant="primary">Save</agtc-button>
         </div>
@@ -127,7 +127,7 @@ export const WithFooterOnly = {
         <p style="margin:0;font-size:0.875rem;color:#444;">
           Confirm deleting this item? This action is irreversible.
         </p>
-        <div slot="footer" style="display:flex;justify-content:flex-end;gap:8px;">
+        <div slot="footer" style="display:flex;justify-content:flex-end;gap:var(--agtc-semantic-space-control-gap);">
           <agtc-button variant="secondary">Cancel</agtc-button>
           <agtc-button variant="critical">Permanently delete</agtc-button>
         </div>
@@ -141,9 +141,9 @@ export const WithFooterOnly = {
 export const PaddingVariants = {
   name: 'Padding — none / sm / md / lg',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:16px;max-width:360px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-lg);max-width:360px;">
       <agtc-card padding="none">
-        <div style="background:#e0f8f3;padding:12px;font-size:0.75rem;color:#008573;">padding="none" — full-width image</div>
+        <div style="background:var(--agtc-semantic-color-brand-primary-subtle);padding:var(--agtc-semantic-space-component-padding-md);font-size:0.75rem;color:#008573;">padding="none" — full-width image</div>
       </agtc-card>
       <agtc-card padding="sm">
         <p style="margin:0;font-size:0.875rem;color:#444;">padding="sm" — compact</p>
@@ -170,7 +170,7 @@ export const ComposedCard = {
           <agtc-badge variant="info" icon="shield">Secure</agtc-badge>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-lg);">
           <agtc-input
             type="email"
             label="Email address"
@@ -184,7 +184,7 @@ export const ComposedCard = {
           ></agtc-input>
         </div>
 
-        <div slot="footer" style="display:flex;flex-direction:column;gap:8px;">
+        <div slot="footer" style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-control-gap);">
           <agtc-button variant="primary" style="width:100%;">Sign in</agtc-button>
           <agtc-button variant="ghost" style="width:100%;">Forgot password?</agtc-button>
         </div>
@@ -198,7 +198,7 @@ export const ComposedCard = {
 export const AllVariants = {
   name: 'Overview — all variants',
   render: () => html`
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:800px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--agtc-semantic-space-component-padding-lg);max-width:800px;">
       <agtc-card variant="default">
         <div slot="header"><strong style="font-size:0.875rem;">Default</strong></div>
         <p style="margin:0;font-size:0.8125rem;color:#666;">Standard gray border.</p>

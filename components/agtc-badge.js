@@ -51,7 +51,7 @@ class AgtcBadge extends LitElement {
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: var(--agtc-semantic-space-component-padding-xs);
 
       font-family: inherit;
       font-weight: var(--agtc-semantic-typography-label-weight);

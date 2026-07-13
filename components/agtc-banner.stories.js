@@ -86,7 +86,7 @@ export const WithActions = {
 export const AllVariants = {
   name: 'Overview — all variants',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-xs);">
       <agtc-banner variant="neutral" heading="Neutral">Neutral message.</agtc-banner>
       <agtc-banner variant="brand" heading="Agentica">Brand highlight.</agtc-banner>
       <agtc-banner variant="info" heading="Information">Contextual help.</agtc-banner>

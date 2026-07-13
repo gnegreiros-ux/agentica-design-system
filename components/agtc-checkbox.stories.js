@@ -68,7 +68,7 @@ export const Indeterminate = {
 export const Disabled = {
   name: 'Disabled — unchecked and checked',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-md);">
       <agtc-checkbox label="Unavailable option" disabled></agtc-checkbox>
       <agtc-checkbox label="Locked option (checked)" checked disabled></agtc-checkbox>
     </div>
@@ -78,7 +78,7 @@ export const Disabled = {
 export const States = {
   name: 'All states',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-md);">
       <agtc-checkbox label="Default (unchecked)"></agtc-checkbox>
       <agtc-checkbox label="Checked" checked></agtc-checkbox>
       <agtc-checkbox label="Indeterminate (partial)" indeterminate></agtc-checkbox>
@@ -108,7 +108,7 @@ export const SelectAllGroup = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;">
       <agtc-checkbox label="Select all" indeterminate></agtc-checkbox>
-      <div style="display:flex;flex-direction:column;gap:8px;padding-inline-start:28px;">
+      <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-control-gap);padding-inline-start:28px;">
         <agtc-checkbox label="Email notifications" checked></agtc-checkbox>
         <agtc-checkbox label="Push notifications"></agtc-checkbox>
       </div>

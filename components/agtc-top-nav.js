@@ -186,7 +186,7 @@ class AgtcTopNav extends LitElement {
         flex-direction: column;
         background: var(--agtc-semantic-color-background-surface);
         border-bottom: 1px solid var(--agtc-semantic-color-border-default);
-        padding: 8px 0;
+        padding: var(--agtc-semantic-space-component-padding-sm) 0;
         z-index: 99;
         box-shadow: var(--agtc-shadow-md);
         margin-left: 0;
@@ -199,7 +199,7 @@ class AgtcTopNav extends LitElement {
       }
 
       a {
-        padding: 12px 24px;
+        padding: var(--agtc-semantic-space-component-padding-md) 24px;
         border-bottom: none;
         border-radius: 0;
         font-size: var(--agtc-semantic-typography-label-size);
@@ -215,7 +215,7 @@ class AgtcTopNav extends LitElement {
       a.cta {
         height: auto;
         align-self: unset;
-        margin: 4px 16px;
+        margin: var(--agtc-semantic-space-component-padding-xs) 16px;
         border-radius: var(--agtc-semantic-radius-control);
         border-bottom: none;
         padding: 10px 14px;

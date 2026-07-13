@@ -1182,7 +1182,7 @@ body{overflow-x:hidden}
   background:var(--agtc-semantic-color-overlay-scrim);
   -webkit-backdrop-filter:blur(10px);
   backdrop-filter:blur(10px);
-  border-radius:var(--agtc-space-4);
+  border-radius:16px;
 }
 /* L'image absolute doit passer au-dessus de l'aurora (z-index:0) mais sous le texte */
 [data-context="marketing"] .hero .hero-illus-wrap{z-index:1}
@@ -1369,7 +1369,7 @@ body{overflow-x:hidden}
   background:var(--agtc-semantic-color-overlay-scrim);
   -webkit-backdrop-filter:blur(10px);
   backdrop-filter:blur(10px);
-  border-radius:var(--agtc-space-4);
+  border-radius:16px;
 }
 .rd-cinematic-body-r{margin-left:auto}
 .rd-cinematic-tall{min-height:85vh}
@@ -1381,7 +1381,7 @@ body{overflow-x:hidden}
   .rd-bg-wrap img{width:100%;height:100%;object-fit:contain;mask-image:none;-webkit-mask-image:none}
   .rd-bg-fade{display:none}
   .rd-cinematic-inner{display:block;padding:0 clamp(1rem,5vw,2rem)}
-  .rd-cinematic-body,.rd-cinematic-body-r,.rd-cinematic-body-wide{width:100%;max-width:none;margin:0;border-radius:var(--agtc-space-3)}
+  .rd-cinematic-body,.rd-cinematic-body-r,.rd-cinematic-body-wide{width:100%;max-width:none;margin:0;border-radius:12px}
 }
 
 /* ── rd-split : illustration collée au bord — pas de max-width sur la colonne illus ──
@@ -1926,13 +1926,13 @@ body.page{
 .ai-answer{margin:0}
 .ai-answer p{margin:0 0 .5rem;color:var(--site-muted);font-size:.875rem;line-height:1.55}
 .ai-answer p:last-child{margin-bottom:0}
-.ai-answer code{background:rgba(52,211,187,.12);color:var(--site-teal);padding:.1em .35em;border-radius:var(--agtc-space-1);font-size:.8rem}
+.ai-answer code{background:rgba(52,211,187,.12);color:var(--site-teal);padding:.1em .35em;border-radius:4px;font-size:.8rem}
 .ai-brief-section{padding-block:2.5rem;border-top:1px solid var(--site-line)}
 .ai-brief-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:.75rem}
 .ai-brief-header h2{margin:0}
 .ai-brief-note{margin:0 0 1.5rem;color:var(--site-muted);font-size:.875rem}
 /* Bloc pre natif — remplacement de agtc-code-block (non injectible via slot JS) */
-.brief-block{border-radius:var(--agtc-space-3);overflow:hidden;background:var(--agtc-semantic-color-background-code);border:1px solid rgba(255,255,255,.08)}
+.brief-block{border-radius:12px;overflow:hidden;background:var(--agtc-semantic-color-background-code);border:1px solid rgba(255,255,255,.08)}
 .brief-block-header{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:var(--agtc-semantic-color-background-code-raised);border-bottom:1px solid rgba(255,255,255,.07)}
 .brief-block-lang{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--agtc-semantic-color-text-on-code-muted);text-transform:uppercase}
 .brief-copy-btn{padding:.35rem .8rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--agtc-semantic-color-text-on-code-strong);font-size:.8rem;cursor:pointer;transition:background .15s}

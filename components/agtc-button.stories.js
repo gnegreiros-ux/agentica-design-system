@@ -107,7 +107,7 @@ export const Critical = {
 export const Disabled = {
   name: 'States — Disabled (all variants)',
   render: () => html`
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
       <agtc-button variant="primary" disabled>Submit</agtc-button>
       <agtc-button variant="secondary" disabled>Cancel</agtc-button>
       <agtc-button variant="ghost" disabled>Learn more</agtc-button>
@@ -119,7 +119,7 @@ export const Disabled = {
 export const Loading = {
   name: 'States — Loading (all variants)',
   render: () => html`
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
       <agtc-button variant="primary" loading>Submit</agtc-button>
       <agtc-button variant="secondary" loading>Cancel</agtc-button>
       <agtc-button variant="ghost" loading>Learn more</agtc-button>
@@ -133,7 +133,7 @@ export const Loading = {
 export const CriticalConfirmFlow = {
   name: 'Critical — confirmation flow (2 clicks)',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:16px;max-width:400px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-lg);max-width:400px;">
       <p style="font-size:0.875rem;color:#666;margin:0;">
         1st click → "Confirm?" · 2nd click → action · Escape or blur → reset
       </p>
@@ -147,7 +147,7 @@ export const CriticalConfirmFlow = {
 export const WithIconPrefix = {
   name: 'Icons — Prefix (slot property)',
   render: () => html`
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
       <agtc-button variant="primary" icon="plus">Add</agtc-button>
       <agtc-button variant="secondary" icon="arrow-left">Back</agtc-button>
       <agtc-button variant="ghost" icon="info">Details</agtc-button>
@@ -158,7 +158,7 @@ export const WithIconPrefix = {
 export const WithIconSuffix = {
   name: 'Icons — Suffix (slot property)',
   render: () => html`
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
       <agtc-button variant="primary" icon-suffix="arrow-right">Next</agtc-button>
       <agtc-button variant="secondary" icon-suffix="external-link">View</agtc-button>
     </div>
@@ -182,10 +182,10 @@ export const WithCustomSlot = {
 export const AllVariants = {
   name: 'Overview — all variants',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-2xl);">
       <div>
         <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 10px;">Default</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
           <agtc-button variant="primary">Primary</agtc-button>
           <agtc-button variant="secondary">Secondary</agtc-button>
           <agtc-button variant="ghost">Ghost</agtc-button>
@@ -194,7 +194,7 @@ export const AllVariants = {
       </div>
       <div>
         <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 10px;">Disabled</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
           <agtc-button variant="primary" disabled>Primary</agtc-button>
           <agtc-button variant="secondary" disabled>Secondary</agtc-button>
           <agtc-button variant="ghost" disabled>Ghost</agtc-button>
@@ -203,7 +203,7 @@ export const AllVariants = {
       </div>
       <div>
         <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 10px;">Loading</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);flex-wrap:wrap;align-items:center;">
           <agtc-button variant="primary" loading>Primary</agtc-button>
           <agtc-button variant="secondary" loading>Secondary</agtc-button>
           <agtc-button variant="ghost" loading>Ghost</agtc-button>

@@ -73,7 +73,7 @@ class AgtcBanner extends LitElement {
     .banner {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: var(--agtc-semantic-space-component-padding-md);
       padding: var(--agtc-component-banner-padding-y) var(--agtc-component-banner-padding-x);
       border: 1px solid var(--agtc-semantic-color-border-default);
       border-left-width: 3px;

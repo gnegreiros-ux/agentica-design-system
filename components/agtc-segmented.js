@@ -59,8 +59,8 @@ class AgtcSegmented extends LitElement {
 
     .track {
       display: inline-flex;
-      gap: 2px;
-      padding: 2px;
+      gap: var(--agtc-semantic-space-component-padding-2xs);
+      padding: var(--agtc-semantic-space-component-padding-2xs);
       background: var(--agtc-component-segmented-default-track-background);
       border-radius: var(--agtc-component-segmented-default-radius);
     }

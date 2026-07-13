@@ -90,7 +90,7 @@ export const Info = {
 export const Sizes = {
   name: 'Sizes — sm and md',
   render: () => html`
-    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-md);align-items:center;flex-wrap:wrap;">
       <agtc-badge variant="brand" size="sm">sm</agtc-badge>
       <agtc-badge variant="brand" size="md">md</agtc-badge>
       <agtc-badge variant="success" size="sm">Active</agtc-badge>
@@ -106,7 +106,7 @@ export const Sizes = {
 export const WithIcon = {
   name: 'With prefix icon',
   render: () => html`
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-control-gap);align-items:center;flex-wrap:wrap;">
       <agtc-badge variant="success" icon="check-circle">Validated</agtc-badge>
       <agtc-badge variant="warning" icon="alert-triangle">Pending</agtc-badge>
       <agtc-badge variant="danger"  icon="x-circle">Error</agtc-badge>
@@ -119,7 +119,7 @@ export const WithIcon = {
 export const IconOnly = {
   name: 'Icon-only (WCAG: label required)',
   render: () => html`
-    <div style="display:flex;gap:8px;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-control-gap);align-items:center;">
       <agtc-badge variant="success" icon="check"    icon-only label="Validated"></agtc-badge>
       <agtc-badge variant="warning" icon="alert-triangle" icon-only label="Warning"></agtc-badge>
       <agtc-badge variant="danger"  icon="x"        icon-only label="Error"></agtc-badge>
@@ -133,10 +133,10 @@ export const IconOnly = {
 export const AllVariants = {
   name: 'Overview — all variants',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-xl);">
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — no icon</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">md — no icon</p>
+        <div style="display:flex;gap:var(--agtc-semantic-space-control-gap);flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral">Draft</agtc-badge>
           <agtc-badge variant="brand">Agentica</agtc-badge>
           <agtc-badge variant="success">Active</agtc-badge>
@@ -146,8 +146,8 @@ export const AllVariants = {
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">md — with icon</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">md — with icon</p>
+        <div style="display:flex;gap:var(--agtc-semantic-space-control-gap);flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral" icon="file">Draft</agtc-badge>
           <agtc-badge variant="brand"   icon="zap">Agentica</agtc-badge>
           <agtc-badge variant="success" icon="check-circle">Active</agtc-badge>
@@ -157,8 +157,8 @@ export const AllVariants = {
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">sm</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">sm</p>
+        <div style="display:flex;gap:var(--agtc-semantic-space-control-gap);flex-wrap:wrap;align-items:center;">
           <agtc-badge variant="neutral" size="sm">Draft</agtc-badge>
           <agtc-badge variant="brand"   size="sm">Agentica</agtc-badge>
           <agtc-badge variant="success" size="sm">Active</agtc-badge>

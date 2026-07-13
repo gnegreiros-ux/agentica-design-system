@@ -197,7 +197,7 @@ export const Number = {
 export const WithIcons = {
   name: 'Icons — Prefix and suffix',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:16px;max-width:360px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-lg);max-width:360px;">
       <agtc-input
         label="Search for a user"
         placeholder="Name or email"
@@ -236,7 +236,7 @@ export const WithCustomSlot = {
 export const AllStates = {
   name: 'Overview — all states',
   render: () => html`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--agtc-semantic-space-component-padding-2xl);max-width:760px;">
       <agtc-input label="Default" placeholder="Enter a value"></agtc-input>
       <agtc-input label="Required" placeholder="Enter a value" required helper-text="Required field."></agtc-input>
       <agtc-input label="Invalid" value="incorrect value" invalid error-message="This field contains an error."></agtc-input>

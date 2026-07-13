@@ -56,7 +56,7 @@ export const On = {
 export const Disabled = {
   name: 'Disabled — off and on',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-md);">
       <agtc-toggle label="Sync (unavailable)" disabled></agtc-toggle>
       <agtc-toggle label="Auto-save (locked)" checked disabled></agtc-toggle>
     </div>
@@ -66,7 +66,7 @@ export const Disabled = {
 export const States = {
   name: 'All states',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-md);">
       <agtc-toggle label="Off"></agtc-toggle>
       <agtc-toggle label="On" checked></agtc-toggle>
       <agtc-toggle label="Disabled (off)" disabled></agtc-toggle>

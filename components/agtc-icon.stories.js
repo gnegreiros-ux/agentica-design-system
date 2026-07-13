@@ -63,7 +63,7 @@ export default {
 export const Inline = {
   name: 'Inline — 16px (within text)',
   render: () => html`
-    <p style="display:flex;align-items:center;gap:6px;font-size:16px;">
+    <p style="display:flex;align-items:center;gap:6px;font-size:var(--agtc-semantic-space-component-padding-lg);">
       <agtc-icon name="info" size="inline" decorative></agtc-icon>
       Text with an inline icon.
     </p>
@@ -83,7 +83,7 @@ export const Nav = {
 export const Sizes = {
   name: 'Sizes — inline / control / nav',
   render: () => html`
-    <div style="display:flex;gap:24px;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-2xl);align-items:center;">
       <agtc-icon name="home" size="inline" decorative></agtc-icon>
       <agtc-icon name="home" size="control" decorative></agtc-icon>
       <agtc-icon name="home" size="nav" decorative></agtc-icon>
@@ -96,7 +96,7 @@ export const Sizes = {
 export const Semantic = {
   name: 'Semantic — label required (WCAG 1.1.1)',
   render: () => html`
-    <div style="display:flex;gap:16px;align-items:center;">
+    <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-lg);align-items:center;">
       <agtc-icon name="trash-2" size="control" label="Delete the file"></agtc-icon>
       <agtc-icon name="download" size="control" label="Download"></agtc-icon>
       <agtc-icon name="bell" size="control" label="Notifications"></agtc-icon>
@@ -107,7 +107,7 @@ export const Semantic = {
 export const Decorative = {
   name: 'Decorative — aria-hidden (adjacent text)',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-control-gap);">
       <span style="display:flex;align-items:center;gap:6px;">
         <agtc-icon name="check" size="control" decorative></agtc-icon> Saved
       </span>
@@ -123,18 +123,18 @@ export const Decorative = {
 export const AllVariants = {
   name: 'Overview — sizes and common icons',
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-component-padding-xl);">
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Sizes (inline · control · nav)</p>
-        <div style="display:flex;gap:24px;align-items:center;">
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">Sizes (inline · control · nav)</p>
+        <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-2xl);align-items:center;">
           <agtc-icon name="star" size="inline" decorative></agtc-icon>
           <agtc-icon name="star" size="control" decorative></agtc-icon>
           <agtc-icon name="star" size="nav" decorative></agtc-icon>
         </div>
       </div>
       <div>
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#646464;margin:0 0 8px;">Common icons (control)</p>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;color:#1a1a1a;">
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">Common icons (control)</p>
+        <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-lg);flex-wrap:wrap;align-items:center;color:#1a1a1a;">
           <agtc-icon name="home" size="control" decorative></agtc-icon>
           <agtc-icon name="search" size="control" decorative></agtc-icon>
           <agtc-icon name="settings" size="control" decorative></agtc-icon>
