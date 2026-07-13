@@ -53,15 +53,6 @@
       }
     ];
   }
-  function txt(chars, size, style, color) {
-    var t = figma.createText();
-    t.fontName = { family: fam, style: style }; // fontName AVANT characters
-    t.characters = chars;
-    t.fontSize = size;
-    t.fills = [{ type: "SOLID", color: C(color) }];
-    return t;
-  }
-
   // ── Variables + vFill ────────────────────────────────────
   var VARS = {};
   figma.variables.getLocalVariables().forEach(function (v) { VARS[v.name] = v; });
@@ -74,10 +65,21 @@
     catch (e) { return [p]; }
   }
 
+  // tok optionnel : si fourni, la couleur est liée à la Variable Figma correspondante
+  // (fallback vers color en cas d'absence — règle §0 figma-components.md)
+  function txt(chars, size, style, color, tok) {
+    var t = figma.createText();
+    t.fontName = { family: fam, style: style }; // fontName AVANT characters
+    t.characters = chars;
+    t.fontSize = size;
+    t.fills = tok ? vFill(tok, color) : [{ type: "SOLID", color: C(color) }];
+    return t;
+  }
+
   function styleSet(s, x, y) {
     s.fills = vFill("color/background/hover", "#FAFAFA");
     s.cornerRadius = 8;
-    s.strokes = [{ type: "SOLID", color: C("#e8e8e8") }];
+    s.strokes = vFill("color/border/default", "#e8e8e8");
     s.strokeWeight = 1;
     s.paddingLeft   = 32;
     s.paddingRight  = 32;
@@ -90,14 +92,14 @@
 
   // ── 4. TOGGLE ────────────────────────────────────────────
   var toggleData = [
-    { ck: "Off", st: "Default",  col: "#8d8d8d", r: false },
-    { ck: "Off", st: "Hover",    col: "#838383", r: false },
-    { ck: "Off", st: "Focus",    col: "#8d8d8d", r: true  },
-    { ck: "Off", st: "Disabled", col: "#d9d9d9", r: false },
-    { ck: "On",  st: "Default",  col: "#007a68", r: false },
-    { ck: "On",  st: "Hover",    col: "#0d3d38", r: false },
-    { ck: "On",  st: "Focus",    col: "#007a68", r: true  },
-    { ck: "On",  st: "Disabled", col: "#d9d9d9", r: false }
+    { ck: "Off", st: "Default",  col: "#8d8d8d", tok: "component/toggle/default/track-off",       r: false },
+    { ck: "Off", st: "Hover",    col: "#838383", tok: "component/toggle/default/track-off-hover", r: false },
+    { ck: "Off", st: "Focus",    col: "#8d8d8d", tok: "component/toggle/default/track-off",       r: true  },
+    { ck: "Off", st: "Disabled", col: "#d9d9d9", tok: "color/action/primary-disabled",            r: false },
+    { ck: "On",  st: "Default",  col: "#007a68", tok: "component/toggle/default/track-on",        r: false },
+    { ck: "On",  st: "Hover",    col: "#0d3d38", tok: "component/toggle/default/track-on-hover",   r: false },
+    { ck: "On",  st: "Focus",    col: "#007a68", tok: "component/toggle/default/track-on",         r: true  },
+    { ck: "On",  st: "Disabled", col: "#d9d9d9", tok: "color/action/primary-disabled",             r: false }
   ];
   var tComps = [];
   for (var i = 0; i < toggleData.length; i++) {
@@ -114,7 +116,7 @@
     var track = figma.createFrame();
     track.resize(40, 22);
     track.cornerRadius = 11;
-    track.fills = [{ type: "SOLID", color: C(d.col) }];
+    track.fills = vFill(d.tok, d.col);
     if (d.r) track.effects = ring();
 
     var knob = figma.createEllipse();
@@ -128,7 +130,8 @@
     var lbl = txt(
       d.ck === "On" ? "On" : "Off",
       14, fr,
-      d.st === "Disabled" ? "#d9d9d9" : "#202020"
+      d.st === "Disabled" ? "#d9d9d9" : "#202020",
+      d.st === "Disabled" ? "color/action/primary-disabled" : "component/toggle/default/label"
     );
     c.appendChild(lbl);
     if (d.st === "Disabled") c.opacity = 0.5;
@@ -140,16 +143,16 @@
 
   // ── 5. CHECKBOX ──────────────────────────────────────────
   var cbData = [
-    { ck: "False",         st: "Default",  border: "#e8e8e8", fill: null,      r: false },
-    { ck: "False",         st: "Hover",    border: "#007a68", fill: null,      r: false },
-    { ck: "False",         st: "Focus",    border: "#007a68", fill: null,      r: true  },
-    { ck: "False",         st: "Disabled", border: "#d9d9d9", fill: null,      r: false },
-    { ck: "True",          st: "Default",  border: null,      fill: "#007a68", r: false },
-    { ck: "True",          st: "Hover",    border: null,      fill: "#0d3d38", r: false },
-    { ck: "True",          st: "Focus",    border: null,      fill: "#007a68", r: true  },
-    { ck: "True",          st: "Disabled", border: null,      fill: "#d9d9d9", r: false },
-    { ck: "Indeterminate", st: "Default",  border: null,      fill: "#007a68", r: false },
-    { ck: "Indeterminate", st: "Disabled", border: null,      fill: "#d9d9d9", r: false }
+    { ck: "False",         st: "Default",  border: "#e8e8e8", borderTok: "component/checkbox/default/border",        fill: null,      fillTok: "component/checkbox/default/background",   r: false },
+    { ck: "False",         st: "Hover",    border: "#007a68", borderTok: "component/checkbox/default/border-hover",  fill: null,      fillTok: "component/checkbox/default/background",   r: false },
+    { ck: "False",         st: "Focus",    border: "#007a68", borderTok: "component/checkbox/default/border-hover",  fill: null,      fillTok: "component/checkbox/default/background",   r: true  },
+    { ck: "False",         st: "Disabled", border: "#d9d9d9", borderTok: "color/action/primary-disabled",            fill: null,      fillTok: "component/checkbox/default/background",   r: false },
+    { ck: "True",          st: "Default",  border: null,      borderTok: null,                                      fill: "#007a68", fillTok: "component/checkbox/default/fill",         r: false },
+    { ck: "True",          st: "Hover",    border: null,      borderTok: null,                                      fill: "#0d3d38", fillTok: "component/checkbox/default/fill-hover",   r: false },
+    { ck: "True",          st: "Focus",    border: null,      borderTok: null,                                      fill: "#007a68", fillTok: "component/checkbox/default/fill",         r: true  },
+    { ck: "True",          st: "Disabled", border: null,      borderTok: null,                                      fill: "#d9d9d9", fillTok: "color/action/primary-disabled",           r: false },
+    { ck: "Indeterminate", st: "Default",  border: null,      borderTok: null,                                      fill: "#007a68", fillTok: "component/checkbox/default/fill",         r: false },
+    { ck: "Indeterminate", st: "Disabled", border: null,      borderTok: null,                                      fill: "#d9d9d9", fillTok: "color/action/primary-disabled",           r: false }
   ];
   var cbComps = [];
   for (var i = 0; i < cbData.length; i++) {
@@ -165,7 +168,7 @@
 
     var box = figma.createFrame();
     box.cornerRadius = 6;
-    box.fills = [{ type: "SOLID", color: C(d.fill || "#ffffff") }];
+    box.fills = vFill(d.fillTok, d.fill || "#ffffff");
 
     // Auto-layout sur box pour centrer coche/barre
     if (d.ck === "True" || d.ck === "Indeterminate") {
@@ -178,14 +181,14 @@
     box.resize(18, 18);
 
     if (d.border) {
-      box.strokes = [{ type: "SOLID", color: C(d.border) }];
+      box.strokes = vFill(d.borderTok, d.border);
       box.strokeWeight = 1.5;
       box.strokeAlign = "INSIDE";
     }
     if (d.r) box.effects = ring();
 
     if (d.ck === "True") {
-      var mark = txt("v", 11, fb, "#ffffff");
+      var mark = txt("v", 11, fb, "#ffffff", "component/checkbox/default/check");
       box.appendChild(mark);
     } else if (d.ck === "Indeterminate") {
       var bar = figma.createRectangle();
@@ -197,7 +200,8 @@
 
     c.appendChild(box);
     var lbl = txt("Option", 14, fr,
-      d.st === "Disabled" ? "#d9d9d9" : "#202020");
+      d.st === "Disabled" ? "#d9d9d9" : "#202020",
+      d.st === "Disabled" ? "color/action/primary-disabled" : "component/checkbox/default/label");
     c.appendChild(lbl);
     if (d.st === "Disabled") c.opacity = 0.5;
     cbComps.push(c);
@@ -208,14 +212,14 @@
 
   // ── 6. RADIO ─────────────────────────────────────────────
   var rdData = [
-    { sel: "False", st: "Default",  border: "#e8e8e8", fill: null,      r: false },
-    { sel: "False", st: "Hover",    border: "#007a68", fill: null,      r: false },
-    { sel: "False", st: "Focus",    border: "#007a68", fill: null,      r: true  },
-    { sel: "False", st: "Disabled", border: "#d9d9d9", fill: null,      r: false },
-    { sel: "True",  st: "Default",  border: null,      fill: "#007a68", r: false },
-    { sel: "True",  st: "Hover",    border: null,      fill: "#0d3d38", r: false },
-    { sel: "True",  st: "Focus",    border: null,      fill: "#007a68", r: true  },
-    { sel: "True",  st: "Disabled", border: null,      fill: "#d9d9d9", r: false }
+    { sel: "False", st: "Default",  border: "#e8e8e8", borderTok: "component/radio/default/border",       fill: null,      fillTok: "component/radio/default/background",   r: false },
+    { sel: "False", st: "Hover",    border: "#007a68", borderTok: "component/radio/default/border-hover", fill: null,      fillTok: "component/radio/default/background",   r: false },
+    { sel: "False", st: "Focus",    border: "#007a68", borderTok: "component/radio/default/border-hover", fill: null,      fillTok: "component/radio/default/background",   r: true  },
+    { sel: "False", st: "Disabled", border: "#d9d9d9", borderTok: "color/action/primary-disabled",         fill: null,      fillTok: "component/radio/default/background",   r: false },
+    { sel: "True",  st: "Default",  border: null,      borderTok: null,                                   fill: "#007a68", fillTok: "component/radio/default/fill",         r: false },
+    { sel: "True",  st: "Hover",    border: null,      borderTok: null,                                   fill: "#0d3d38", fillTok: "component/radio/default/fill-hover",   r: false },
+    { sel: "True",  st: "Focus",    border: null,      borderTok: null,                                   fill: "#007a68", fillTok: "component/radio/default/fill",         r: true  },
+    { sel: "True",  st: "Disabled", border: null,      borderTok: null,                                   fill: "#d9d9d9", fillTok: "color/action/primary-disabled",         r: false }
   ];
   var rdComps = [];
   for (var i = 0; i < rdData.length; i++) {
@@ -231,11 +235,11 @@
 
     var circle = figma.createFrame();
     circle.cornerRadius = 9;
-    circle.fills = [{ type: "SOLID", color: C(d.fill || "#ffffff") }];
+    circle.fills = vFill(d.fillTok, d.fill || "#ffffff");
     circle.resize(18, 18);
 
     if (d.border) {
-      circle.strokes = [{ type: "SOLID", color: C(d.border) }];
+      circle.strokes = vFill(d.borderTok, d.border);
       circle.strokeWeight = 1.5;
       circle.strokeAlign = "INSIDE";
     }
@@ -252,7 +256,8 @@
 
     c.appendChild(circle);
     var lbl = txt("Option", 14, fr,
-      d.st === "Disabled" ? "#d9d9d9" : "#202020");
+      d.st === "Disabled" ? "#d9d9d9" : "#202020",
+      d.st === "Disabled" ? "color/action/primary-disabled" : "component/radio/default/label");
     c.appendChild(lbl);
     if (d.st === "Disabled") c.opacity = 0.5;
     rdComps.push(c);
@@ -284,7 +289,7 @@
     c.paddingBottom = 4;
     c.itemSpacing   = 2;
     c.cornerRadius  = 8;
-    c.fills = [{ type: "SOLID", color: C("#f0f0f0") }];
+    c.fills = vFill("component/segmented/default/track-background", "#f0f0f0");
     if (d.r) c.effects = ring();
 
     for (var j = 0; j < TABS.length; j++) {
@@ -301,11 +306,12 @@
       seg.paddingBottom = 6;
       seg.cornerRadius  = 6;
       seg.fills = on
-        ? [{ type: "SOLID", color: C("#007a68") }]
+        ? vFill("component/segmented/default/selected-background", "#007a68")
         : [];
       var t = txt(TABS[j], 14,
         on ? fb : fr,
-        on ? "#ffffff" : "#646464");
+        on ? "#ffffff" : "#646464",
+        on ? "component/segmented/default/selected-text" : "component/segmented/default/text");
       seg.appendChild(t);
       c.appendChild(seg);
     }

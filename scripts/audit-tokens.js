@@ -182,9 +182,18 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   return phantoms;
 }
 
+// Documented, human-approved fallback shapes where a literal color sits next to its
+// token reference on purpose — not drift. See .claude/rules/no-visited-nav.md (ADR-047/059
+// Safari :visited exception), the var(--x, #fallback) CSS resilience pattern used
+// throughout site/build.js, and the vFill(token, fallback) Figma-plugin equivalent
+// (.claude/instructions/figma-components.md §0) — Figma Plugin API has no CSS var()
+// concept, so a resolved literal fallback next to the token name is the correct pattern.
+const COLOR_EXCEPTION_LINE = /vFill\(|var\(--[\w-]+\s*,\s*#|:visited\s*(,|\{)|\w*[Tt]ok:\s*["']|["'](color|component)\/[\w-]+["']/;
+
 function auditHardcodedValues(sourceFiles) {
   section('3. Valeurs hardcodées (vecteurs de dérive IA)');
   const violations = [];
+  const colorPatternNames = new Set(['hex-color', 'rgb-color', 'hsl-color']);
 
   for (const file of sourceFiles) {
     const content  = fs.readFileSync(file, 'utf8');
@@ -193,6 +202,7 @@ function auditHardcodedValues(sourceFiles) {
 
     for (const pattern of DRIFT_PATTERNS) {
       lines.forEach((line, idx) => {
+        if (colorPatternNames.has(pattern.name) && COLOR_EXCEPTION_LINE.test(line)) return;
         const matches = [...line.matchAll(new RegExp(pattern.regex.source, 'g'))];
         for (const match of matches) {
           violations.push({

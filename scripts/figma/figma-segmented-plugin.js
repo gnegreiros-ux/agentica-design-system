@@ -134,9 +134,7 @@
       pill.paddingLeft = 12; pill.paddingRight = 12;
       pill.cornerRadius = 100;
       pill.fills = vFill("color/background/surface", "#FFFFFF");
-      var v = VARS["color/border/focus"];
-      var p = { type: "SOLID", color: hex("#006B5C") };
-      pill.strokes = [v ? figma.variables.setBoundVariableForPaint(p, "color", v) : p];
+      pill.strokes = vFill("color/border/focus", "#006B5C");
       pill.strokeWeight = 1;
       pill.strokeAlign = "INSIDE";
       var txt = mkI("↗  " + link.label, "Regular", 12, "color/border/focus", "#006B5C");
@@ -539,9 +537,7 @@
 
     var borderTok = type === "do" ? "color/feedback/success" : "color/feedback/danger";
     var borderFb  = type === "do" ? "#1B6E1B"               : "#B91C1C";
-    var vb = VARS[borderTok];
-    var pb = { type: "SOLID", color: hex(borderFb) };
-    col.strokes = [vb ? figma.variables.setBoundVariableForPaint(pb, "color", vb) : pb];
+    col.strokes = vFill(borderTok, borderFb);
     col.strokeWeight = 4;
     col.strokeAlign = "INSIDE";
 
