@@ -129,7 +129,11 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Radix UI Colors as the primitive color source because its 12-step scale encodes usage semantics (step 9-10 = solid CTA fill, step 11-12 = high-contrast text) directly in the palette, letting agents pick an accessible value without computing contrast manually. It also provides native dark-mode equivalents for every hue, avoiding a second hand-built palette.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'ADR-001 établit que les tokens primitifs sont des <strong>valeurs brutes sans intention UX</strong>. Pourtant, toutes les palettes de couleurs ne sont pas équivalentes pour un système agentique : certaines encodent implicitement des contraintes d'accessibilité et d'usage, d'autres non.</p>
 <p>Le projet avait besoin d'une palette primitive qui satisfasse trois contraintes simultanées :</p>
 <p><strong>1. Accessibilité garantie structurellement</strong> Le choix de la palette ne doit pas reporter sur chaque designer ou développeur la responsabilité de vérifier les ratios de contraste. La palette doit être conçue pour que les combinaisons correctes soient les combinaisons naturelles.</p>

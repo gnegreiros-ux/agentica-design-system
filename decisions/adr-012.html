@@ -129,7 +129,11 @@
       <dd>Tech Lead, Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Introduces <code>scripts/audit-tokens.js</code>, a dependency-free internal script that detects four types of token drift (orphaned, phantom, hardcoded values, direct primitive use) and can block CI in <code>--ci</code> mode. It was built in-house rather than adopting an external tool because it needs project-specific knowledge (the three JSON files, the <code>--ds-</code> prefix, the three levels) that a generic linter can't reproduce.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'ADR-001 interdit les valeurs en dur et les tokens primitifs dans les composants. L'ADR-004 établit que les agents détectent les dérives, les humains corrigent.</p>
 <p>Mais la détection des dérives ne peut pas reposer uniquement sur la vigilance humaine lors des code reviews. Dans un système agentique, la dérive peut être introduite à tout moment, par un humain ou par un agent, silencieusement.</p>
 <p>Quatre types de dérive ont été identifiés comme prioritaires :</p>

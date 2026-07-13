@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Completes the <code>semantic.color.feedback</code> family so every severity (danger, success, warning, info) exposes all three roles — text, subtle background, border — eliminating the last hardcoded feedback colors (including a previously-missing warning family) in <code>site/build.js</code>.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Le *dogfooding* du site (catégorie A) a tokenisé les couleurs de <strong>texte</strong> feedback en dur (<code>.icon-no</code>, <code>.icon-ok</code>, audit pass/fail) le 2026-06-04. Restait une dette explicitement consignée au log : les <strong>fonds subtils</strong>, <strong>bordures</strong> et la <strong>palette warning</strong> encore en dur dans <code>site/build.js</code> :</p>
 <ul><li><code>.rule-can</code> / <code>.rule-cannot</code> — <code>#ecfdf5</code> / <code>#bbf7d0</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.do-section</code> / <code>.dont-section</code> — <code>#f0fdf4</code> / <code>#86efac</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.audit-badge.pass/.fail</code> — <code>#ecfdf5</code>, <code>#fff1f2</code></li><li><code>.audit-card--pass/--warn/--fail</code> (bordures) — <code>#86efac</code>, <code>#fde68a</code>, <code>#fca5a5</code></li><li><code>.audit-card--warn .audit-number</code> — <code>#d97706</code> (<strong>warning, absent du système</strong>)</li></ul>
 <p>Ces valeurs ne pouvaient pas être routées : le niveau sémantique n'exposait que <code>danger</code>, <code>danger-subtle</code>, <code>success</code>, <code>info</code> — il manquait les variantes <strong>subtle</strong> (fond) et <strong>border</strong>, ainsi que <strong>toute la famille <code>warning</code></strong>.</p>

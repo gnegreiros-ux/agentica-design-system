@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> ADR-018 left two technical debts: <code>site/build.js</code> hardcoded all semantic token values in a static 37-line object, and non-color semantic references pointed to primitives that didn't exist. This decision adds five new primitive categories (space, fontSize, fontWeight, lineHeight, radius) and replaces the hardcoded object with a dynamic resolver, with zero visual change to the output.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-018 avait documenté deux dettes techniques restantes :</p>
 <p>1. <code>site/build.js</code> hardcodait toutes les valeurs sémantiques dans un objet <code>SEM</code> statique 2. Les tokens non-couleur de <code>semantic.json</code> (<code>{space.4}</code>, <code>{fontSize.md}</code>, etc.)    référençaient des primitives inexistantes dans <code>primitives.json</code></p>
 <p>Ces deux dettes s'adressaient ensemble : l'une rendait l'autre inévitable.</p>

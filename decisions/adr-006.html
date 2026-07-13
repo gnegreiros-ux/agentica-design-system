@@ -129,7 +129,11 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Chromatic, integrated with Storybook and CI, to catch silent visual regressions that unit and accessibility tests miss. Every PR triggers a pixel-comparison capture against the approved baseline, and any visual diff requires explicit human approval before merge — agents cannot approve Chromatic captures themselves (see ADR-004).</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Un système de design livre des contrats visuels. Un token modifié, un style Shadow DOM mal encapsulé, ou une propriété CSS surchargée peuvent introduire une régression visuelle silencieuse — le code compile, les tests unitaires passent, mais le composant ne ressemble plus à ce qu'il devrait.</p>
 <p>Ce risque est amplifié dans un système agentique : un agent qui modifie du code peut introduire une dérive visuelle sans qu'aucun test fonctionnel ne la détecte.</p>
 <p>Trois questions ont guidé le choix :</p>

@@ -129,7 +129,11 @@
       <dd>Principal Designer (valeur de jeton primitif)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Corrects ADR-048's teal.11 value: it was validated against pure white (#ffffff), but the real page background is <code>#fcfcfc</code>, causing the first axe-core run to surface 76 contrast violations. Retunes <code>primitive.color.teal.11</code> from <code>#008573</code> to <code>#007a68</code>, restoring AA compliance (5.14:1) on the actual background with a comfortable safety margin.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'<strong>ADR-048</strong> a porté <code>action.primary</code> à <code>teal.11</code> (<code>#008573</code>) en le certifiant à <strong>4.56:1</strong>, valeur mesurée <strong>sur du blanc pur <code>#ffffff</code></strong>. Or le fond de page réel du système est <strong><code>gray.1</code> = <code>#fcfcfc</code></strong> (jeton « App background »), pas du blanc pur.</p>
 <p>La <strong>première exécution du gate axe-core</strong> (ADR-007, activé en mode rapport — commit <code>2d84e75</code>) a révélé <strong>76 violations</strong>, dont une cause racine dominante et <strong>systémique</strong> :</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Paire mesurée</th><th>Ratio réel</th><th>AA texte (4.5:1)</th></tr></thead><tbody><tr><td><code>action.primary</code> teal.11 <code>#008573</code> en <strong>texte</strong> sur <code>#fcfcfc</code> (gray.1)</td><td><strong>4.45:1</strong></td><td>❌ échec d'un cheveu</td></tr><tr><td>Texte blanc sur bouton primaire teal.11 <code>#008573</code></td><td>4.56:1</td><td>✅ (limite)</td></tr></tbody></table></div>

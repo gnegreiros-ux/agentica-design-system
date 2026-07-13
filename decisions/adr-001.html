@@ -129,7 +129,11 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts a strict three-level token architecture — primitive → semantic → component — so that agents can infer intent from a token's name rather than guessing from a raw value. Primitive tokens are never used directly in components; everything flows through the semantic layer, which absorbs value changes without touching components.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Au démarrage du projet, deux questions structuraient les débats d'équipe :</p>
 <p>1. <strong>Où mettre les valeurs ?</strong> — Dans les composants directement ? Dans un fichier global ? Dans Figma ? 2. <strong>Comment nommer les tokens pour qu'un agent comprenne l'intention, pas seulement la valeur ?</strong></p>
 <p>L'équipe constatait que les systèmes existants utilisaient des tokens plats (<code>blue-700</code>, <code>spacing-4</code>) qui forçaient les agents et les développeurs à deviner l'intention derrière chaque valeur. Un agent qui voit <code>color: #3B82F6</code> ne sait pas si c'est une couleur d'action, de feedback, ou de décoration. Un agent qui voit <code>color.action.primary</code> comprend immédiatement le rôle.</p>

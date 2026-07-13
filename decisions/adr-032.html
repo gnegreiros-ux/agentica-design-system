@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Defines the mandatory structure for <code>.stories.js</code> files (colocated with each component), a required baseline set of stories (per-variant, Disabled, Loading, AllVariants), and naming conventions — keeping the Storybook catalogue consistent and Chromatic's visual-regression coverage predictable across components.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-009 décide d'utiliser Storybook. ADR-032 précise <strong>comment</strong> écrire les stories dans ce système — la convention de structure, de nommage et de contenu obligatoire pour chaque composant.</p>
 <p>Sans convention explicite, deux problèmes émergent :</p>
 <p>1. <strong>Incohérence entre composants</strong> — chaque développeur ou agent structure ses    stories différemment, rendant le catalogue illisible et Chromatic imprévisible. 2. <strong>Stories incomplètes</strong> — les états critiques (loading, disabled, confirming)    ne sont pas systématiquement documentés, créant des angles morts dans les    tests de régression visuelle.</p>

@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Patterns UX de référence appliqués</h2>
+</div><blockquote><p><strong>English summary:</strong> Implements agtc-segmented, formalizing the site's FR/EN language toggle. Deliberately uses a native button-group + <code>aria-current</code> pattern (not radiogroup or tablist), since industry guidance (Primer) favors this for immediate-effect segmented controls rather than form-submission or content-panel semantics.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-04 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>SG1–SG8 tous approuvés</strong>. Détail et liens : <code>guidelines/components/segmented.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Mono-sélection, toujours un actif</td><td>Primer</td></tr><tr><td>SG2</td><td>Groupe de <code>&lt;button&gt;</code> + <code>aria-current</code> + effet immédiat (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, libellés courts</td><td>NN/g</td></tr><tr><td>SG4</td><td>Sélectionné pas par la couleur seule</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Effet immédiat</td><td>Primer</td></tr><tr><td>SG6</td><td><code>:focus-visible</code> par segment, Tab natif</td><td>Primer</td></tr><tr><td>SG7</td><td>Largeur égale, icône + libellé</td><td>NN/g</td></tr><tr><td>SG8</td><td>API <code>value</code> + événement <code>change</code></td><td>Primer</td></tr></tbody></table></div>
 <hr>

@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Fixes <code>text.disabled</code> (1.57:1 contrast, used incorrectly on non-disabled elements) by changing its reference to resolve to <code>#767676</code> (4.54:1, WCAG AA), and adds a <code>background.hover</code> token to replace a hardcoded hover color. Also documents a pre-existing Tailwind/Radix naming mismatch in <code>semantic.json</code>, resolved later in ADR-018.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'audit WCAG 2.2 intégré au build a détecté deux types de non-conformités :</p>
 <h3>1. Valeur du token <code>text.disabled</code> inaccessible</h3>
 <p>Le token <code>semantic.color.text.disabled</code> référençait <code>{color.neutral.300}</code>, résolu en <code>#d9d9d9</code>. Ce gris très clair produit un ratio de contraste de <strong>1.57:1</strong> sur fond blanc — bien en dessous du seuil AA (4.5:1).</p>

@@ -129,7 +129,11 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Introduces three spacing density modes (compact ×0.75, normal ×1.0, comfortable ×1.25) computed with <code>floor()</code>/<code>ceil()</code> math tokens against a 4px grid unit, guaranteeing every resulting value stays a multiple of 4px. This corrects a v1 approach that used a single swappable factor and produced off-grid values (e.g. 6px, 15px).</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Un même composant doit s'adapter à des contextes d'usage radicalement différents :</p>
 <ul><li><strong>Marketing / Onboarding</strong> : interfaces aérées, visuellement généreuses</li><li><strong>SaaS courant</strong> : densité normale, équilibre entre confort et efficacité</li><li><strong>SaaS data-dense</strong> : dashboards, tableaux, workflows — chaque pixel compte</li></ul>
 <p>Les tokens d'espacement précédents avaient des valeurs fixes. Les équipes contournaient ce système en créant des valeurs locales, produisant de la dérive.</p>

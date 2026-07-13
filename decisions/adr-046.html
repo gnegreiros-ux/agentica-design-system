@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adds two near-black primitives and 11 semantic tokens for inverse/dark surfaces, on-inverse text, decorative borders, and shadows — eliminating the remaining hardcoded dark-surface and shadow values in <code>site/build.js</code>. Also fixes two footer/link colors that were failing WCAG AA contrast.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Après la complétion de la famille <code>feedback</code> (ADR-045), il restait dans <code>site/build.js</code> une dette de couleurs en dur sans équivalent sémantique : <strong>surfaces sombres</strong> (bandeau de stats, pied de page, tooltips), <strong>textes/bordures blancs sur fond sombre</strong>, <strong>ombres</strong> (<code>box-shadow</code>) et une <strong>barre décorative</strong> de visualisation d'espacement. Aucune de ces valeurs ne pouvait être routée : le niveau sémantique n'exposait ni surface inversée, ni texte « on-inverse », ni ombre, ni jeton de visualisation.</p>
 <p>Découverte clé : les <strong>échelles d'alpha existaient déjà</strong> au niveau primitif (<code>color.white.*</code> = blanc alpha, <code>color.black.*</code> = noir alpha, façon Radix) mais n'étaient <strong>jamais consommées</strong>. Elles fournissent exactement les valeurs nécessaires aux textes/ombres sur fond sombre.</p>
 <hr>

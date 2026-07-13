@@ -127,6 +127,9 @@
     
   </dl>
 </div><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-025 (densité), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
+<blockquote><p><strong>English summary:</strong> The Agentica site treated marketing pages (home, get-started, agents) and documentation pages identically, with no tonal distinction between "convincing a visitor" and "documenting a component." This ADR formalizes two usage contexts via a <code>data-context</code> attribute on <code>&lt;body&gt;</code>: the default Product (SaaS) mode, and an opt-in Marketing (Narrative) mode with its own <code>semantic.marketing.*</code> tokens (display typography, section-breathing spacing, hero gap) that override spacing/typography on marketing pages only, without touching shared components.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
 <hr>
 <h2>Contexte</h2>
 <p>Le site Agentica produit des pages homogènes : les pages marketing (home, get-started, agents) utilisent les mêmes patterns d'espacement et de typographie que les pages documentation (composants, fondations). Résultat : aucune différence de "ton" entre convaincre un visiteur et documenter un composant.</p>

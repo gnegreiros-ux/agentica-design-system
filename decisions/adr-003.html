@@ -129,7 +129,11 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Style Dictionary to compile the three JSON token source files into platform-specific outputs (CSS, JS, iOS, Android) from a single reproducible, CI-automatable command. The <code>config.json</code> structure lets agents predict generated file paths and CSS variable names without reading the output.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'ADR-001 établit que les tokens sont définis en JSON dans trois fichiers sources. Ces fichiers JSON ne sont pas consommables directement par les plateformes cibles :</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Plateforme</th><th>Format attendu</th></tr></thead><tbody><tr><td>Web (CSS)</td><td>Custom Properties <code>--ds-*</code> dans des fichiers <code>.css</code></td></tr><tr><td>JavaScript</td><td>Constantes ES6 exportables</td></tr><tr><td>iOS</td><td>Classe Swift <code>DesignTokens</code></td></tr><tr><td>Android</td><td>Fichiers XML <code>colors.xml</code> et <code>dimens.xml</code></td></tr></tbody></table></div>
 <p>La question posée était :</p>

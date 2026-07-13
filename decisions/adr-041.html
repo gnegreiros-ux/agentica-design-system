@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Patterns UX de référence appliqués</h2>
+</div><blockquote><p><strong>English summary:</strong> Implements agtc-code-block to replace the site's ad hoc, French-only, inaccessible copy-code button. Uses the same "mix" architecture as agtc-table (shadow-DOM component + <code>.code-block</code> class for the static site), tokenizes previously hardcoded dark-surface colors, and adds an accessible copy button with an <code>aria-live</code> success announcement. Syntax highlighting and line numbers are deferred.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>CD1–CD9 tous approuvés</strong>. Détail et liens : <code>guidelines/components/code-block.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>CD1</td><td><code>&lt;pre&gt;&lt;code&gt;</code> sémantique + classe de langue</td><td>DEV — copy code button</td></tr><tr><td>CD2</td><td>Bouton copier + feedback texte</td><td>roboleary</td></tr><tr><td>CD3</td><td>Bouton copier accessible (aria-label, focus-visible)</td><td>Sara Soueidan</td></tr><tr><td>CD4</td><td>Succès annoncé aux AT (<code>role="status"</code> / <code>aria-live</code>)</td><td>Sara Soueidan</td></tr><tr><td>CD5</td><td>Indicateur de langue</td><td>DEV</td></tr><tr><td>CD6</td><td>Scroll horizontal des lignes longues</td><td>NN/g</td></tr><tr><td>CD7</td><td>Coloration syntaxique — <strong>différée v1, porte ouverte</strong></td><td>NN/g</td></tr><tr><td>CD8</td><td>En-tête (nom de fichier) optionnel</td><td>DEV</td></tr><tr><td>CD9</td><td>Numéros de ligne — <strong>hors v1</strong></td><td>NN/g</td></tr></tbody></table></div>
 <hr>

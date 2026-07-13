@@ -129,7 +129,11 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Integrating the newly formalized <code>agtc-top-nav</code> component (ADR-060) into the live site surfaced three gaps: the component needed to render bilingual labels automatically, its mobile responsive styles lived in <code>site.css</code> and couldn't reach into the shadow DOM, and the site had no bundler for Lit's ES module imports. This ADR adds a <code>MutationObserver</code>-driven <code>_lang</code> property that watches <code>data-lang</code> on <code>&lt;html&gt;</code> and re-renders automatically, moves all mobile CSS into the component itself (exposed via a <code>:host(.open)</code> state), and introduces an esbuild IIFE bundling step (<code>bundleComponents()</code>) so the component can be dropped in with a single <code>&lt;script defer&gt;</code> tag, with no external CDN dependency.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>ADR-060 a défini le composant <code>agtc-top-nav</code> (formalisation). L'étape suivante était l'intégration effective dans le site — première validation réelle du contrat composant.</p>
 <p>Trois obstacles identifiés avant intégration :</p>
 <p>1. <strong>Bilinguisme</strong> — le composant utilisait <code>label</code> (langue neutre), mais le site a deux langues    (FR/EN) commutées via <code>data-lang</code> sur <code>&lt;html&gt;</code>. Il fallait que le composant gère    automatiquement le rendu dans la bonne langue.</p>

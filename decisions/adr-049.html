@@ -129,7 +129,11 @@
       <dd>Principal Designer (jeton de composant) · Design System Lead (jeton sémantique)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Tokenizes the last remaining raw shadow value in the system — the card's resting elevation — as a new <code>semantic.shadow.card</code> token, with <code>component.card.elevated.shadow</code> repointed to reference it. Pure indirection refactor; the resolved visual value is unchanged.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>L'ADR-046 a tokenisé toutes les ombres du système (<code>shadow.header</code>, <code>shadow.raised</code>, <code>shadow.card-hover</code>) <strong>sauf une</strong> : <code>component.card.elevated.shadow</code> portait encore une valeur <code>rgba</code> <strong>brute</strong> (<code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code>). C'était le <strong>résidu assumé</strong> d'ADR-046 — la dernière ombre du système non adossée à une couche sémantique nommée.</p>
 <p>Son niveau d'élévation (ombre <strong>au repos</strong>, fine : 1–3px) n'est couvert par aucun des trois jetons d'ombre existants (<code>header</code> = en-tête fixe, <code>raised</code> = menus/popovers à 4/16px, <code>card-hover</code> = lift teinté marque au survol). Il lui fallait donc son propre jeton sémantique.</p>
 <hr>

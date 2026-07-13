@@ -129,7 +129,11 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Adopts Atkinson Hyperlegible Mono — the monospace companion to ADR-021's Atkinson Hyperlegible — as the tokenized monospace font (<code>--agtc-font-mono</code>) for code, token names, and ADR numbers, replacing the uncontrollable generic <code>monospace</code> fallback that rendered differently across OS/browsers.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Depuis ADR-021, la police principale est Atkinson Hyperlegible (sans-serif). Le système utilisait la valeur générique <code>monospace</code> comme police de repli pour les éléments de code (<code>&lt;code&gt;</code>, labels de tokens, numéros ADR).</p>
 <p>Problèmes à résoudre : 1. <code>font-family: monospace</code> est incontrôlable — chaque OS et navigateur rend un résultat différent (Courier New, Menlo, Consolas, DejaVu Sans Mono) 2. Aucune cohérence d'accessibilité entre la police de texte et la police de code 3. Le choix n'était pas tokenisé ni documenté — invisible pour les agents</p>
 <hr>

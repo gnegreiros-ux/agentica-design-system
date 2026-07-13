@@ -129,7 +129,11 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><blockquote><p><strong>English summary:</strong> Replaces Inter (chosen with no documented accessibility rationale) with Atkinson Hyperlegible, a font designed for the Braille Institute of America that deliberately disambiguates commonly confused characters (l/1/I, O/0, b/d/p/q) to improve legibility for low-vision users. Tokenized as <code>primitive.fontFamily.base</code>; the font has no medium (500) weight, which browsers round down to 400.</p></blockquote>
+<p>></p>
+<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+<hr>
+<h2>Contexte</h2>
 <p>Le système utilisait Inter (Google Fonts) comme police par défaut — choix courant mais sans justification d'accessibilité documentée. La police n'était pas tokenisée : la valeur était hardcodée dans <code>site/build.js</code> et ne faisait pas partie du système de tokens.</p>
 <p>Deux problèmes à résoudre : 1. Aucun argumentaire d'accessibilité pour le choix typographique 2. La police n'étant pas un token, les agents ne pouvaient pas la tracer ni la faire respecter</p>
 <hr>
