@@ -95,13 +95,32 @@ function extractTokenKeys(obj, prefix = '') {
   return keys;
 }
 
+// Collecte les noms de variables CSS générés pour un arbre de tokens, en reproduisant
+// la transform kebab de Style Dictionary (segments de chemin joints par '-'). Construit
+// dans le sens direct (arbre → nom de variable) car la conversion inverse est ambiguë :
+// un tiret dans le nom généré peut être une frontière de segment OU un tiret interne au
+// nom d'un segment (ex. "label-bold", "line-height" sont chacun UN seul segment).
+function collectCssVarNames(obj, cssPrefix, pathParts = []) {
+  const names = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key.startsWith('$')) continue;
+    const parts = [...pathParts, key];
+    if (value && typeof value === 'object' && value.$value !== undefined) {
+      names.push(cssPrefix + parts.join('-'));
+    } else if (value && typeof value === 'object') {
+      names.push(...collectCssVarNames(value, cssPrefix, parts));
+    }
+  }
+  return names;
+}
+
 // Récupérer tous les fichiers source récursivement
 function getSourceFiles(dir) {
   if (!fs.existsSync(dir)) return [];
   const files = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude'].includes(entry.name)) {
+    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
       files.push(...getSourceFiles(fullPath));
     } else if (entry.isFile() && SOURCE_EXTENSIONS.includes(path.extname(entry.name))) {
       files.push(fullPath);
@@ -137,7 +156,9 @@ function auditOrphanedTokens(componentTokens, sourceFiles) {
 
 function auditPhantomTokens(semanticTokens, sourceFiles) {
   section('2. Tokens fantômes (utilisés dans le code mais non définis)');
-  const definedKeys = extractTokenKeys(semanticTokens);
+  // semantic.json nests everything under a top-level "semantic" key (DTCG $schema/$metadata
+  // wrapper) — collectCssVarNames strips it via semanticTokens.semantic.
+  const definedVars = new Set(collectCssVarNames(semanticTokens.semantic || semanticTokens, TOKEN_PREFIXES.semantic));
   const phantoms = [];
 
   // Chercher toutes les références --agtc-semantic-* dans les sources
@@ -146,12 +167,9 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
     const content = fs.readFileSync(file, 'utf8');
     let match;
     while ((match = semanticVarRegex.exec(content)) !== null) {
-      const usedVar = match[1];
-      // Convertir CSS var → clé token : color-action-primary → color.action.primary
-      const tokenKey = usedVar.replace(/-/g, '.');
-      const isDefined = definedKeys.some(k => k === tokenKey);
-      if (!isDefined && !phantoms.find(p => p.cssVar === usedVar)) {
-        phantoms.push({ cssVar: TOKEN_PREFIXES.semantic + usedVar, file: path.relative(process.cwd(), file) });
+      const cssVar = TOKEN_PREFIXES.semantic + match[1];
+      if (!definedVars.has(cssVar) && !phantoms.find(p => p.cssVar === cssVar)) {
+        phantoms.push({ cssVar, file: path.relative(process.cwd(), file) });
       }
     }
   }

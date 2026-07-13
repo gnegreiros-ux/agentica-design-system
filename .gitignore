@@ -8,6 +8,7 @@ storybook-static
 # Rapports et artefacts CI (non versionnés)
 axe-report.json
 smoke-report.json
+audit-report.json
 playwright-report/
 test-results/
 Temp/
