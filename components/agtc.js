@@ -25,7 +25,7 @@
         role=${a.role}
         data-lucide=${this.name}
       ></svg>
-    `}updated(){let a=this.shadowRoot?.querySelector("svg[data-lucide]");if(!a||!this.name)return;let t=this.name.split("-").map(r=>r.charAt(0).toUpperCase()+r.slice(1)).join(""),e=K[t];if(!e){console.warn(`[agtc-icon] Ic\xF4ne "${this.name}" introuvable dans Lucide.`);return}a.innerHTML=e.map(([r,d])=>{let l=document.createElementNS("http://www.w3.org/2000/svg",r);return Object.entries(d).forEach(([i,h])=>l.setAttribute(i,h)),l.outerHTML}).join("")}};customElements.define("agtc-icon",_1);var u=o=>o??n;var E1=class extends s{static properties={variant:{type:String,reflect:!0},disabled:{type:Boolean,reflect:!0},loading:{type:Boolean,reflect:!0},iconOnly:{type:Boolean,reflect:!0,attribute:"icon-only"},icon:{type:String},iconSuffix:{type:String,attribute:"icon-suffix"},type:{type:String},label:{type:String},loadingLabel:{type:String,attribute:"loading-label"},_confirming:{type:Boolean,state:!0}};constructor(){super(),this.variant="primary",this.disabled=!1,this.loading=!1,this.iconOnly=!1,this.icon=void 0,this.iconSuffix=void 0,this.type="button",this.label=void 0,this.loadingLabel="En cours\u2026",this._confirming=!1,this._confirmTimer=null}updated(){this.iconOnly&&!this.label&&console.warn(`[agtc-button] icon-only sans label="" \u2014 inaccessible (WCAG 1.1.1). Ajouter label="Description de l'action".`)}disconnectedCallback(){super.disconnectedCallback(),this._clearTimer()}_clearTimer(){clearTimeout(this._confirmTimer),this._confirmTimer=null}_handleClick(){if(!(this.disabled||this.loading)){if(this.variant==="critical"){if(!this._confirming){this._confirming=!0,this._confirmTimer=setTimeout(()=>{this._confirming=!1},3e3),this.dispatchEvent(new CustomEvent("agtc-confirm-request",{bubbles:!0,composed:!0}));return}this._clearTimer(),this._confirming=!1}this.dispatchEvent(new CustomEvent("agtc-click",{bubbles:!0,composed:!0,detail:{variant:this.variant}})),this.variant==="critical"&&this.dispatchEvent(new CustomEvent("agtc-confirm",{bubbles:!0,composed:!0}))}}_resetConfirm(){this._confirming&&(this._clearTimer(),this._confirming=!1)}static styles=f`
+    `}updated(){let a=this.shadowRoot?.querySelector("svg[data-lucide]");if(!a||!this.name)return;let t=this.name.split("-").map(r=>r.charAt(0).toUpperCase()+r.slice(1)).join(""),e=K[t];if(!e){console.warn(`[agtc-icon] Icon "${this.name}" not found in Lucide.`);return}a.innerHTML=e.map(([r,d])=>{let l=document.createElementNS("http://www.w3.org/2000/svg",r);return Object.entries(d).forEach(([i,h])=>l.setAttribute(i,h)),l.outerHTML}).join("")}};customElements.define("agtc-icon",_1);var u=o=>o??n;var E1=class extends s{static properties={variant:{type:String,reflect:!0},disabled:{type:Boolean,reflect:!0},loading:{type:Boolean,reflect:!0},iconOnly:{type:Boolean,reflect:!0,attribute:"icon-only"},icon:{type:String},iconSuffix:{type:String,attribute:"icon-suffix"},type:{type:String},label:{type:String},loadingLabel:{type:String,attribute:"loading-label"},_confirming:{type:Boolean,state:!0}};constructor(){super(),this.variant="primary",this.disabled=!1,this.loading=!1,this.iconOnly=!1,this.icon=void 0,this.iconSuffix=void 0,this.type="button",this.label=void 0,this.loadingLabel="Loading\u2026",this._confirming=!1,this._confirmTimer=null}updated(){this.iconOnly&&!this.label&&console.warn('[agtc-button] icon-only without label="" \u2014 inaccessible (WCAG 1.1.1). Add label="Action description".')}disconnectedCallback(){super.disconnectedCallback(),this._clearTimer()}_clearTimer(){clearTimeout(this._confirmTimer),this._confirmTimer=null}_handleClick(){if(!(this.disabled||this.loading)){if(this.variant==="critical"){if(!this._confirming){this._confirming=!0,this._confirmTimer=setTimeout(()=>{this._confirming=!1},3e3),this.dispatchEvent(new CustomEvent("agtc-confirm-request",{bubbles:!0,composed:!0}));return}this._clearTimer(),this._confirming=!1}this.dispatchEvent(new CustomEvent("agtc-click",{bubbles:!0,composed:!0,detail:{variant:this.variant}})),this.variant==="critical"&&this.dispatchEvent(new CustomEvent("agtc-confirm",{bubbles:!0,composed:!0}))}}_resetConfirm(){this._confirming&&(this._clearTimer(),this._confirming=!1)}static styles=f`
     :host {
       display: inline-flex;
     }
@@ -57,20 +57,20 @@
       user-select: none;
     }
 
-    /* ── Icon slots — transparents au flex layout ──────────────────────────── */
-    /* display:contents permet aux éléments slottés d'être des flex items directs.
-       Un slot vide ne génère pas d'espace ni de gap superflu. */
+    /* ── Icon slots — transparent to the flex layout ───────────────────────── */
+    /* display:contents lets slotted elements be direct flex items.
+       An empty slot generates no extra space or gap. */
     slot[name="prefix"],
     slot[name="suffix"] {
       display: contents;
     }
 
-    /* ── Icon-only — padding carré ─────────────────────────────────────────── */
+    /* ── Icon-only — square padding ────────────────────────────────────────── */
     button.icon-only {
       padding: var(--agtc-component-button-primary-padding-y);
     }
 
-    /* ── Focus — non négociable ────────────────────────────────────────────── */
+    /* ── Focus — non-negotiable ────────────────────────────────────────────── */
     button:focus-visible {
       outline: 2.5px solid var(--agtc-semantic-color-border-focus);
       outline-offset: 2px;
@@ -146,10 +146,10 @@
       cursor: wait;
     }
 
-    /* .content est display:contents — transparent au layout.
-       visibility:hidden se propage aux enfants via héritage CSS,
-       les cache visuellement ET de l'arbre d'accessibilité tout en
-       préservant leurs boîtes flex (largeur du bouton stable). */
+    /* .content is display:contents — transparent to the layout.
+       visibility:hidden propagates to children via CSS inheritance,
+       hiding them visually AND from the accessibility tree while
+       preserving their flex boxes (stable button width). */
     .content {
       display: contents;
     }
@@ -157,7 +157,7 @@
       visibility: hidden;
     }
 
-    /* .label est display:contents — le texte devient flex item direct */
+    /* .label is display:contents — the text becomes a direct flex item */
     .label {
       display: contents;
     }
@@ -178,7 +178,7 @@
       animation: spin 0.65s linear infinite;
     }
 
-    /* Visible uniquement pour les lecteurs d'écran */
+    /* Visible to screen readers only */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -219,7 +219,7 @@
             ${this.icon?p`<agtc-icon name="${this.icon}" size="control"></agtc-icon>`:""}
           </slot>
           <span class="label">
-            ${this._confirming?"Confirmer ?":p`<slot></slot>`}
+            ${this._confirming?"Confirm?":p`<slot></slot>`}
           </span>
           <slot name="suffix">
             ${this.iconSuffix?p`<agtc-icon name="${this.iconSuffix}" size="control"></agtc-icon>`:""}
@@ -228,7 +228,7 @@
 
         ${a&&!this.label?p`<span class="sr-only">${this.loadingLabel}</span>`:""}
       </button>
-    `}};customElements.define("agtc-button",E1);var Z1=class extends s{static properties={variant:{type:String},size:{type:String},icon:{type:String},iconOnly:{type:Boolean,attribute:"icon-only"},label:{type:String}};constructor(){super(),this.variant="neutral",this.size="md",this.iconOnly=!1}updated(){this.iconOnly&&!this.label&&console.warn('[agtc-badge] icon-only sans label \u2014 inaccessible (WCAG 1.1.1). Ajouter label="Description du badge".')}static styles=f`
+    `}};customElements.define("agtc-button",E1);var Z1=class extends s{static properties={variant:{type:String},size:{type:String},icon:{type:String},iconOnly:{type:Boolean,attribute:"icon-only"},label:{type:String}};constructor(){super(),this.variant="neutral",this.size="md",this.iconOnly=!1}updated(){this.iconOnly&&!this.label&&console.warn('[agtc-badge] icon-only without label \u2014 inaccessible (WCAG 1.1.1). Add label="Badge description".')}static styles=f`
     :host {
       display: inline-flex;
     }
@@ -249,7 +249,7 @@
       user-select: none;
     }
 
-    /* ── Taille md (défaut) ────────────────────────────────────────────────── */
+    /* ── Size md (default) ─────────────────────────────────────────────────── */
     .badge.md {
       padding: var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);
       border-radius: var(--agtc-component-badge-md-radius);
@@ -261,7 +261,7 @@
       justify-content: center;
     }
 
-    /* ── Taille sm ─────────────────────────────────────────────────────────── */
+    /* ── Size sm ───────────────────────────────────────────────────────────── */
     .badge.sm {
       padding: var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);
       border-radius: var(--agtc-component-badge-sm-radius);
@@ -273,42 +273,42 @@
       justify-content: center;
     }
 
-    /* ── Variante neutral ──────────────────────────────────────────────────── */
+    /* ── Variant neutral ───────────────────────────────────────────────────── */
     .badge.neutral {
       background: var(--agtc-component-badge-neutral-background);
       color:      var(--agtc-component-badge-neutral-text);
       border-color: var(--agtc-component-badge-neutral-border);
     }
 
-    /* ── Variante brand ────────────────────────────────────────────────────── */
+    /* ── Variant brand ─────────────────────────────────────────────────────── */
     .badge.brand {
       background: var(--agtc-component-badge-brand-background);
       color:      var(--agtc-component-badge-brand-text);
       border-color: var(--agtc-component-badge-brand-border);
     }
 
-    /* ── Variante success ──────────────────────────────────────────────────── */
+    /* ── Variant success ───────────────────────────────────────────────────── */
     .badge.success {
       background: var(--agtc-component-badge-success-background);
       color:      var(--agtc-component-badge-success-text);
       border-color: var(--agtc-component-badge-success-border);
     }
 
-    /* ── Variante warning ──────────────────────────────────────────────────── */
+    /* ── Variant warning ───────────────────────────────────────────────────── */
     .badge.warning {
       background: var(--agtc-component-badge-warning-background);
       color:      var(--agtc-component-badge-warning-text);
       border-color: var(--agtc-component-badge-warning-border);
     }
 
-    /* ── Variante danger ───────────────────────────────────────────────────── */
+    /* ── Variant danger ────────────────────────────────────────────────────── */
     .badge.danger {
       background: var(--agtc-component-badge-danger-background);
       color:      var(--agtc-component-badge-danger-text);
       border-color: var(--agtc-component-badge-danger-border);
     }
 
-    /* ── Variante info ─────────────────────────────────────────────────────── */
+    /* ── Variant info ──────────────────────────────────────────────────────── */
     .badge.info {
       background: var(--agtc-component-badge-info-background);
       color:      var(--agtc-component-badge-info-text);
@@ -330,7 +330,7 @@
         `:""}
         ${this.iconOnly?"":p`<slot></slot>`}
       </span>
-    `}};customElements.define("agtc-badge",Z1);var Ty={neutral:"info",brand:"sparkles",info:"info",success:"circle-check",warning:"triangle-alert",danger:"octagon-alert"},Ry={neutral:"Information : ",brand:"Information : ",info:"Information : ",success:"Succ\xE8s : ",warning:"Attention : ",danger:"Erreur : "},G1=class extends s{static properties={variant:{type:String},heading:{type:String},icon:{type:String},noIcon:{type:Boolean,attribute:"no-icon"},dismissible:{type:Boolean},live:{type:String}};constructor(){super(),this.variant="info",this.noIcon=!1,this.dismissible=!1,this.live="off"}static styles=f`
+    `}};customElements.define("agtc-badge",Z1);var Ty={neutral:"info",brand:"sparkles",info:"info",success:"circle-check",warning:"triangle-alert",danger:"octagon-alert"},Ry={neutral:"Information: ",brand:"Information: ",info:"Information: ",success:"Success: ",warning:"Warning: ",danger:"Error: "},G1=class extends s{static properties={variant:{type:String},heading:{type:String},icon:{type:String},noIcon:{type:Boolean,attribute:"no-icon"},dismissible:{type:Boolean},live:{type:String}};constructor(){super(),this.variant="info",this.noIcon=!1,this.dismissible=!1,this.live="off"}static styles=f`
     :host {
       display: block;
       margin: 18px 0;
@@ -347,7 +347,7 @@
       border-radius: 0 var(--agtc-component-banner-radius) var(--agtc-component-banner-radius) 0;
     }
 
-    /* Variantes : fond + accent (bordure gauche + icône) ───────────────────── */
+    /* Variants: background + accent (left border + icon) ───────────────────── */
     .banner.neutral { background: var(--agtc-component-banner-neutral-background); border-left-color: var(--agtc-component-banner-neutral-accent); }
     .banner.brand   { background: var(--agtc-component-banner-brand-background);   border-left-color: var(--agtc-component-banner-brand-accent); }
     .banner.info    { background: var(--agtc-component-banner-info-background);    border-left-color: var(--agtc-component-banner-info-accent); }
@@ -421,12 +421,12 @@
           <div class="actions"><slot name="actions"></slot></div>
         </div>
         ${this.dismissible?p`
-          <button class="close" type="button" aria-label="Fermer" @click="${this._dismiss}">
+          <button class="close" type="button" aria-label="Close" @click="${this._dismiss}">
             <agtc-icon name="x" size="inline" decorative></agtc-icon>
           </button>
         `:""}
       </div>
-    `}};customElements.define("agtc-banner",G1);var zy=["cliquez ici","cliquer ici","ici","click here","here","lien","link","en savoir plus","read more"],I1=class extends s{static properties={href:{type:String},external:{type:Boolean,reflect:!0},underline:{type:String,reflect:!0}};constructor(){super(),this.href="#",this.external=!1,this.underline="always"}get _isExternal(){if(this.external)return!0;if(!/^https?:\/\//i.test(this.href||""))return!1;try{return new URL(this.href).origin!==globalThis.location?.origin}catch{return!1}}updated(){let a=(this.textContent||"").trim().toLowerCase();a&&zy.includes(a)&&console.warn(`[agtc-link] texte de lien g\xE9n\xE9rique ("${a}") \u2014 pr\xE9f\xE9rer un libell\xE9 descriptif lisible hors contexte (NN/g, WCAG 2.4.4).`)}static styles=f`
+    `}};customElements.define("agtc-banner",G1);var zy=["cliquez ici","cliquer ici","ici","click here","here","lien","link","en savoir plus","read more"],I1=class extends s{static properties={href:{type:String},external:{type:Boolean,reflect:!0},underline:{type:String,reflect:!0}};constructor(){super(),this.href="#",this.external=!1,this.underline="always"}get _isExternal(){if(this.external)return!0;if(!/^https?:\/\//i.test(this.href||""))return!1;try{return new URL(this.href).origin!==globalThis.location?.origin}catch{return!1}}updated(){let a=(this.textContent||"").trim().toLowerCase();a&&zy.includes(a)&&console.warn(`[agtc-link] generic link text ("${a}") \u2014 prefer a descriptive label readable out of context (NN/g, WCAG 2.4.4).`)}static styles=f`
     :host { display: inline; }
 
     a {
@@ -466,8 +466,8 @@
         href="${this.href}"
         target="${u(a?"_blank":void 0)}"
         rel="${u(a?"noopener noreferrer":void 0)}"
-      ><slot></slot>${a?p`<span class="external-icon"><agtc-icon name="arrow-up-right" size="inline" decorative></agtc-icon></span><span class="visually-hidden"> (ouvre dans un nouvel onglet)</span>`:""}</a>
-    `}};customElements.define("agtc-link",I1);var W1=class extends s{static properties={options:{type:Array},value:{type:String},label:{type:String},equalWidth:{type:Boolean,attribute:"equal-width"}};constructor(){super(),this.options=[],this.value="",this.equalWidth=!1}updated(){this.label||console.warn('[agtc-segmented] aucun label \u2014 le groupe doit \xEAtre nomm\xE9 pour les AT. Ajouter label="\u2026".')}_opt(a){return typeof a=="string"?{value:a,label:a}:{value:a.value,label:a.label??a.value,icon:a.icon}}_select(a){a!==this.value&&(this.value=a,this.dispatchEvent(new CustomEvent("change",{detail:{value:a},bubbles:!0,composed:!0})))}static styles=f`
+      ><slot></slot>${a?p`<span class="external-icon"><agtc-icon name="arrow-up-right" size="inline" decorative></agtc-icon></span><span class="visually-hidden"> (opens in a new tab)</span>`:""}</a>
+    `}};customElements.define("agtc-link",I1);var W1=class extends s{static properties={options:{type:Array},value:{type:String},label:{type:String},equalWidth:{type:Boolean,attribute:"equal-width"}};constructor(){super(),this.options=[],this.value="",this.equalWidth=!1}updated(){this.label||console.warn('[agtc-segmented] no label \u2014 the group must be named for AT. Add label="\u2026".')}_opt(a){return typeof a=="string"?{value:a,label:a}:{value:a.value,label:a.label??a.value,icon:a.icon}}_select(a){a!==this.value&&(this.value=a,this.dispatchEvent(new CustomEvent("change",{detail:{value:a},bubbles:!0,composed:!0})))}static styles=f`
     :host { display: inline-block; }
 
     .track {
@@ -500,7 +500,7 @@
     }
     button:hover { color: var(--agtc-component-segmented-default-text-hover); }
 
-    /* État sélectionné : fond plein + texte contrasté (pas la couleur seule, SG4) */
+    /* Selected state: solid background + contrasted text (not color alone, SG4) */
     button[aria-current="true"] {
       background: var(--agtc-component-segmented-default-selected-background);
       color: var(--agtc-component-segmented-default-selected-text);
@@ -524,7 +524,7 @@
           </button>
         `)}
       </div>
-    `}};customElements.define("agtc-segmented",W1);var k={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},my=o=>(...a)=>({_$litDirective$:o,values:a}),j=class{constructor(a){}get _$AU(){return this._$AM._$AU}_$AT(a,t,e){this._$Ct=a,this._$AM=t,this._$Ci=e}_$AS(a,t){return this.update(a,t)}update(a,t){return this.render(...t)}};var{I:DMa}=C2;var My=o=>o.strings===void 0;var qy={},vy=(o,a=qy)=>o._$AH=a;var gy=my(class extends j{constructor(o){if(super(o),o.type!==k.PROPERTY&&o.type!==k.ATTRIBUTE&&o.type!==k.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!My(o))throw Error("`live` bindings can only contain a single expression")}render(o){return o}update(o,[a]){if(a===M||a===n)return a;let t=o.element,e=o.name;if(o.type===k.PROPERTY){if(a===t[e])return M}else if(o.type===k.BOOLEAN_ATTRIBUTE){if(!!a===t.hasAttribute(e))return M}else if(o.type===k.ATTRIBUTE&&t.getAttribute(e)===a+"")return M;return vy(o),a}});var Uy=0,N1=class extends s{static properties={type:{type:String},name:{type:String},value:{type:String},label:{type:String},placeholder:{type:String},helperText:{type:String,attribute:"helper-text"},errorMessage:{type:String,attribute:"error-message"},invalid:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},readonly:{type:Boolean,reflect:!0},required:{type:Boolean,reflect:!0},icon:{type:String},iconSuffix:{type:String,attribute:"icon-suffix"},maxlength:{type:Number},autocomplete:{type:String},_showPassword:{type:Boolean,state:!0}};constructor(){super(),this.type="text",this.value="",this.invalid=!1,this.disabled=!1,this.readonly=!1,this.required=!1,this._showPassword=!1,this._id=`agtc-input-${++Uy}`,this._helperId=`${this._id}-helper`,this._errorId=`${this._id}-error`}updated(){this.label||console.warn('[agtc-input] label manquant \u2014 inaccessible (WCAG 1.3.1). Toujours fournir label="Description du champ".')}_handleInput(a){this.value=a.target.value,this.dispatchEvent(new CustomEvent("agtc-input",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_handleChange(a){this.value=a.target.value,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_togglePassword(){this._showPassword=!this._showPassword}_describedBy(){let a=[];return this.helperText&&a.push(this._helperId),this.invalid&&this.errorMessage&&a.push(this._errorId),a.length?a.join(" "):void 0}static styles=f`
+    `}};customElements.define("agtc-segmented",W1);var k={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},my=o=>(...a)=>({_$litDirective$:o,values:a}),j=class{constructor(a){}get _$AU(){return this._$AM._$AU}_$AT(a,t,e){this._$Ct=a,this._$AM=t,this._$Ci=e}_$AS(a,t){return this.update(a,t)}update(a,t){return this.render(...t)}};var{I:DMa}=C2;var My=o=>o.strings===void 0;var qy={},vy=(o,a=qy)=>o._$AH=a;var gy=my(class extends j{constructor(o){if(super(o),o.type!==k.PROPERTY&&o.type!==k.ATTRIBUTE&&o.type!==k.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!My(o))throw Error("`live` bindings can only contain a single expression")}render(o){return o}update(o,[a]){if(a===M||a===n)return a;let t=o.element,e=o.name;if(o.type===k.PROPERTY){if(a===t[e])return M}else if(o.type===k.BOOLEAN_ATTRIBUTE){if(!!a===t.hasAttribute(e))return M}else if(o.type===k.ATTRIBUTE&&t.getAttribute(e)===a+"")return M;return vy(o),a}});var Uy=0,N1=class extends s{static properties={type:{type:String},name:{type:String},value:{type:String},label:{type:String},placeholder:{type:String},helperText:{type:String,attribute:"helper-text"},errorMessage:{type:String,attribute:"error-message"},invalid:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},readonly:{type:Boolean,reflect:!0},required:{type:Boolean,reflect:!0},icon:{type:String},iconSuffix:{type:String,attribute:"icon-suffix"},maxlength:{type:Number},autocomplete:{type:String},_showPassword:{type:Boolean,state:!0}};constructor(){super(),this.type="text",this.value="",this.invalid=!1,this.disabled=!1,this.readonly=!1,this.required=!1,this._showPassword=!1,this._id=`agtc-input-${++Uy}`,this._helperId=`${this._id}-helper`,this._errorId=`${this._id}-error`}updated(){this.label||console.warn('[agtc-input] missing label \u2014 inaccessible (WCAG 1.3.1). Always provide label="Field description".')}_handleInput(a){this.value=a.target.value,this.dispatchEvent(new CustomEvent("agtc-input",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_handleChange(a){this.value=a.target.value,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_togglePassword(){this._showPassword=!this._showPassword}_describedBy(){let a=[];return this.helperText&&a.push(this._helperId),this.invalid&&this.errorMessage&&a.push(this._errorId),a.length?a.join(" "):void 0}static styles=f`
     :host {
       display: block;
     }
@@ -532,7 +532,7 @@
       pointer-events: none;
     }
 
-    /* ── Champ ─────────────────────────────────────────────────────────────── */
+    /* ── Field ─────────────────────────────────────────────────────────────── */
     .field {
       display: flex;
       flex-direction: column;
@@ -553,7 +553,7 @@
       color: var(--agtc-semantic-color-feedback-danger);
     }
 
-    /* ── Contrôle (wrapper input) ──────────────────────────────────────────── */
+    /* ── Control (input wrapper) ───────────────────────────────────────────── */
     .control {
       display: flex;
       align-items: center;
@@ -564,7 +564,7 @@
       transition: border-color 0.12s;
     }
 
-    /* Focus ring sur le wrapper — visible pour clavier et pointeur */
+    /* Focus ring on the wrapper — visible for keyboard and pointer */
     .control:focus-within {
       border-color: var(--agtc-component-input-default-border-focus);
       outline: 2.5px solid var(--agtc-component-input-default-border-focus);
@@ -587,13 +587,13 @@
       background: transparent;
     }
 
-    /* ── Slots icônes — transparents au flex layout ────────────────────────── */
+    /* ── Icon slots — transparent to the flex layout ───────────────────────── */
     slot[name="prefix"],
     slot[name="suffix"] {
       display: contents;
     }
 
-    /* ── Wrappers icônes fixes ─────────────────────────────────────────────── */
+    /* ── Fixed icon wrappers ───────────────────────────────────────────────── */
     .icon-prefix,
     .icon-suffix {
       display: flex;
@@ -609,7 +609,7 @@
       padding-inline-end: var(--agtc-component-input-default-padding-x);
     }
 
-    /* ── Input natif ───────────────────────────────────────────────────────── */
+    /* ── Native input ──────────────────────────────────────────────────────── */
     input {
       flex: 1;
       min-width: 0;
@@ -636,14 +636,14 @@
       color: var(--agtc-semantic-color-text-disabled);
     }
 
-    /* Supprime les spinners natifs sur number */
+    /* Removes native spinners on number */
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
     }
     input[type="number"] { -moz-appearance: textfield; }
 
-    /* ── Bouton show/hide password ─────────────────────────────────────────── */
+    /* ── Show/hide password button ─────────────────────────────────────────── */
     .toggle-password {
       display: flex;
       align-items: center;
@@ -661,7 +661,7 @@
       border-radius: 2px;
     }
 
-    /* ── Textes d'aide et d'erreur ─────────────────────────────────────────── */
+    /* ── Help and error texts ──────────────────────────────────────────────── */
     .helper,
     .error-message {
       font-size: var(--agtc-semantic-typography-label-size);
@@ -718,7 +718,7 @@
               <button
                 type="button"
                 class="toggle-password"
-                aria-label="${this._showPassword?"Masquer le mot de passe":"Afficher le mot de passe"}"
+                aria-label="${this._showPassword?"Hide password":"Show password"}"
                 @click="${this._togglePassword}"
               >
                 <agtc-icon
@@ -746,7 +746,7 @@
         >${this.invalid&&this.errorMessage?this.errorMessage:""}</span>
 
       </div>
-    `}};customElements.define("agtc-input",N1);var $y=0,X1=class extends s{static properties={checked:{type:Boolean,reflect:!0},indeterminate:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},required:{type:Boolean,reflect:!0},name:{type:String},value:{type:String},label:{type:String}};constructor(){super(),this.checked=!1,this.indeterminate=!1,this.disabled=!1,this.required=!1,this.value="on",this._id=`agtc-checkbox-${++$y}`}updated(){let a=this.shadowRoot?.querySelector("input");a&&(a.indeterminate=this.indeterminate),!this.label&&!this.textContent.trim()&&console.warn('[agtc-checkbox] label manquant \u2014 fournir label="\u2026" ou du texte en slot (WCAG 4.1.2).')}_handleChange(a){this.checked=a.target.checked,this.indeterminate=!1,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{checked:this.checked,name:this.name,value:this.value}}))}static styles=f`
+    `}};customElements.define("agtc-input",N1);var $y=0,X1=class extends s{static properties={checked:{type:Boolean,reflect:!0},indeterminate:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},required:{type:Boolean,reflect:!0},name:{type:String},value:{type:String},label:{type:String}};constructor(){super(),this.checked=!1,this.indeterminate=!1,this.disabled=!1,this.required=!1,this.value="on",this._id=`agtc-checkbox-${++$y}`}updated(){let a=this.shadowRoot?.querySelector("input");a&&(a.indeterminate=this.indeterminate),!this.label&&!this.textContent.trim()&&console.warn('[agtc-checkbox] missing label \u2014 provide label="\u2026" or slotted text (WCAG 4.1.2).')}_handleChange(a){this.checked=a.target.checked,this.indeterminate=!1,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{checked:this.checked,name:this.name,value:this.value}}))}static styles=f`
     :host { display: inline-block; }
     :host([disabled]) { pointer-events: none; }
 
@@ -754,13 +754,13 @@
       display: inline-flex;
       align-items: center;
       gap: var(--agtc-semantic-space-control-gap);
-      min-height: 24px;            /* cible tactile ≥ 24px (WCAG 2.5.8) */
+      min-height: 24px;            /* touch target ≥ 24px (WCAG 2.5.8) */
       cursor: pointer;
       font-family: inherit;
     }
     :host([disabled]) .root { cursor: not-allowed; }
 
-    /* Input natif : accessible (clavier, AT) mais visuellement masqué */
+    /* Native input: accessible (keyboard, AT) but visually hidden */
     .native {
       position: absolute;
       width: 1px;
@@ -771,7 +771,7 @@
       pointer-events: none;
     }
 
-    /* Case stylée — décorative (aria-hidden) */
+    /* Styled box — decorative (aria-hidden) */
     .box {
       position: relative;
       flex-shrink: 0;
@@ -787,13 +787,13 @@
       border-color: var(--agtc-component-checkbox-default-border-hover);
     }
 
-    /* Focus clavier → anneau visible sur la case */
+    /* Keyboard focus → visible ring on the box */
     .native:focus-visible + .box {
       outline: 2.5px solid var(--agtc-component-checkbox-default-border-focus);
       outline-offset: 2px;
     }
 
-    /* Coché ou indéterminé → remplissage primaire */
+    /* Checked or indeterminate → primary fill */
     :host([checked]) .box,
     :host([indeterminate]) .box {
       background: var(--agtc-component-checkbox-default-fill);
@@ -805,7 +805,7 @@
       border-color: var(--agtc-component-checkbox-default-fill-hover);
     }
 
-    /* Glyphes — coche et tiret (indéterminé) */
+    /* Glyphs — check mark and dash (indeterminate) */
     .check,
     .dash {
       position: absolute;
@@ -831,7 +831,7 @@
     }
     .label-text:empty { display: none; }
 
-    /* Désactivé */
+    /* Disabled */
     :host([disabled]) .box {
       background: var(--agtc-semantic-color-background-subtle);
       border-color: var(--agtc-semantic-color-border-default);
@@ -873,7 +873,7 @@
       display: inline-flex;
       align-items: center;
       gap: var(--agtc-semantic-space-control-gap);
-      min-height: 24px;            /* cible tactile ≥ 24px (WCAG 2.5.8) */
+      min-height: 24px;            /* touch target ≥ 24px (WCAG 2.5.8) */
       cursor: pointer;
       font-family: inherit;
       outline: none;
@@ -887,7 +887,7 @@
       inline-size: var(--agtc-semantic-icon-size-control);
       block-size: var(--agtc-semantic-icon-size-control);
       border: 1.5px solid var(--agtc-component-radio-default-border);
-      border-radius: 9999px;       /* rond — convention radio */
+      border-radius: 9999px;       /* round — radio convention */
       background: var(--agtc-component-radio-default-background);
       transition: border-color 0.12s;
     }
@@ -922,7 +922,7 @@
     }
     .label-text:empty { display: none; }
 
-    /* Désactivé */
+    /* Disabled */
     :host([disabled]) .control {
       background: var(--agtc-semantic-color-background-subtle);
       border-color: var(--agtc-semantic-color-border-default);
@@ -942,7 +942,7 @@
   `;render(){return p`
       <span class="control" aria-hidden="true"><span class="dot"></span></span>
       <span class="label-text"><slot>${this.label??""}</slot></span>
-    `}};customElements.define("agtc-radio",K1);var j1=class extends s{static properties={name:{type:String},value:{type:String,reflect:!0},label:{type:String},disabled:{type:Boolean,reflect:!0}};constructor(){super(),this.value="",this._onSelect=this._onSelect.bind(this),this._onKeydown=this._onKeydown.bind(this)}connectedCallback(){super.connectedCallback(),this.setAttribute("role","radiogroup"),this.addEventListener("agtc-radio-select",this._onSelect),this.addEventListener("keydown",this._onKeydown)}disconnectedCallback(){this.removeEventListener("agtc-radio-select",this._onSelect),this.removeEventListener("keydown",this._onKeydown),super.disconnectedCallback()}firstUpdated(){this._sync()}updated(){this._sync()}get _radios(){return[...this.querySelectorAll("agtc-radio")]}_sync(){let a=this._radios;this.label&&this.setAttribute("aria-label",this.label);let t=!1;if(a.forEach(e=>{let r=e.value===this.value&&this.value!=="";e.checked=r,e.setAttribute("tabindex",r?"0":"-1"),r&&(t=!0)}),!t){let e=a.find(r=>!r.disabled);e&&e.setAttribute("tabindex","0")}}_select(a,t){if(a===this.value){t&&this._radios.find(e=>e.value===a)?.focus();return}this.value=a,this._sync(),t&&this._radios.find(e=>e.value===a)?.focus(),this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_onSelect(a){a.stopPropagation(),this._select(a.detail.value,!1)}_onKeydown(a){let t=this._radios.filter(r=>!r.disabled);if(!t.length)return;let e=t.findIndex(r=>r.value===this.value);if(a.key==="ArrowDown"||a.key==="ArrowRight"){a.preventDefault();let r=e<0?0:(e+1)%t.length;this._select(t[r].value,!0)}else if(a.key==="ArrowUp"||a.key==="ArrowLeft"){a.preventDefault();let r=e<0?t.length-1:(e-1+t.length)%t.length;this._select(t[r].value,!0)}else if(a.key===" "){let r=t.find(d=>d===document.activeElement);r&&(a.preventDefault(),this._select(r.value,!0))}}render(){return p`<slot @slotchange="${this._sync}"></slot>`}};customElements.define("agtc-radio-group",j1);var Oy=0,J1=class extends s{static properties={checked:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},name:{type:String},value:{type:String},label:{type:String}};constructor(){super(),this.checked=!1,this.disabled=!1,this.value="on",this._id=`agtc-toggle-${++Oy}`}updated(){!this.label&&!this.textContent.trim()&&console.warn('[agtc-toggle] label manquant \u2014 fournir label="\u2026" ou du texte en slot (WCAG 4.1.2).')}_handleChange(a){this.checked=a.target.checked,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{checked:this.checked,name:this.name,value:this.value}}))}static styles=f`
+    `}};customElements.define("agtc-radio",K1);var j1=class extends s{static properties={name:{type:String},value:{type:String,reflect:!0},label:{type:String},disabled:{type:Boolean,reflect:!0}};constructor(){super(),this.value="",this._onSelect=this._onSelect.bind(this),this._onKeydown=this._onKeydown.bind(this)}connectedCallback(){super.connectedCallback(),this.setAttribute("role","radiogroup"),this.addEventListener("agtc-radio-select",this._onSelect),this.addEventListener("keydown",this._onKeydown)}disconnectedCallback(){this.removeEventListener("agtc-radio-select",this._onSelect),this.removeEventListener("keydown",this._onKeydown),super.disconnectedCallback()}firstUpdated(){this._sync()}updated(){this._sync()}get _radios(){return[...this.querySelectorAll("agtc-radio")]}_sync(){let a=this._radios;this.label&&this.setAttribute("aria-label",this.label);let t=!1;if(a.forEach(e=>{let r=e.value===this.value&&this.value!=="";e.checked=r,e.setAttribute("tabindex",r?"0":"-1"),r&&(t=!0)}),!t){let e=a.find(r=>!r.disabled);e&&e.setAttribute("tabindex","0")}}_select(a,t){if(a===this.value){t&&this._radios.find(e=>e.value===a)?.focus();return}this.value=a,this._sync(),t&&this._radios.find(e=>e.value===a)?.focus(),this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{value:this.value,name:this.name}}))}_onSelect(a){a.stopPropagation(),this._select(a.detail.value,!1)}_onKeydown(a){let t=this._radios.filter(r=>!r.disabled);if(!t.length)return;let e=t.findIndex(r=>r.value===this.value);if(a.key==="ArrowDown"||a.key==="ArrowRight"){a.preventDefault();let r=e<0?0:(e+1)%t.length;this._select(t[r].value,!0)}else if(a.key==="ArrowUp"||a.key==="ArrowLeft"){a.preventDefault();let r=e<0?t.length-1:(e-1+t.length)%t.length;this._select(t[r].value,!0)}else if(a.key===" "){let r=t.find(d=>d===document.activeElement);r&&(a.preventDefault(),this._select(r.value,!0))}}render(){return p`<slot @slotchange="${this._sync}"></slot>`}};customElements.define("agtc-radio-group",j1);var Oy=0,J1=class extends s{static properties={checked:{type:Boolean,reflect:!0},disabled:{type:Boolean,reflect:!0},name:{type:String},value:{type:String},label:{type:String}};constructor(){super(),this.checked=!1,this.disabled=!1,this.value="on",this._id=`agtc-toggle-${++Oy}`}updated(){!this.label&&!this.textContent.trim()&&console.warn('[agtc-toggle] missing label \u2014 provide label="\u2026" or slotted text (WCAG 4.1.2).')}_handleChange(a){this.checked=a.target.checked,this.dispatchEvent(new CustomEvent("agtc-change",{bubbles:!0,composed:!0,detail:{checked:this.checked,name:this.name,value:this.value}}))}static styles=f`
     :host { display: inline-block; }
     :host([disabled]) { pointer-events: none; }
 
@@ -950,7 +950,7 @@
       display: inline-flex;
       align-items: center;
       gap: var(--agtc-semantic-space-control-gap);
-      min-height: 24px;            /* cible tactile ≥ 24px (WCAG 2.5.8) */
+      min-height: 24px;            /* touch target ≥ 24px (WCAG 2.5.8) */
       cursor: pointer;
       font-family: inherit;
     }
@@ -985,7 +985,7 @@
       height: 20px;
       border-radius: 9999px;
       background: var(--agtc-component-toggle-default-knob);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* délimite le curseur (WCAG 1.4.11) */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* outlines the knob (WCAG 1.4.11) */
       transition: transform 0.15s;
     }
 
@@ -1027,17 +1027,17 @@
         <span class="track" aria-hidden="true"><span class="knob"></span></span>
         <span class="label-text"><slot>${this.label??""}</slot></span>
       </label>
-    `}};customElements.define("agtc-toggle",J1);var Q1=class extends s{static properties={columns:{type:Array},rows:{type:Array},caption:{type:String},captionHidden:{type:Boolean,attribute:"caption-hidden"},striped:{type:Boolean},stickyHeader:{type:Boolean,attribute:"sticky-header"},density:{type:String}};constructor(){super(),this.columns=[],this.rows=[],this.captionHidden=!1,this.striped=!1,this.stickyHeader=!1,this.density="compact"}updated(){this.caption||console.warn('[agtc-table] aucun caption \u2014 la table devrait d\xE9crire son contenu (WCAG 1.3.1, T2). Ajouter caption="\u2026" (masquable via caption-hidden).')}static styles=f`
+    `}};customElements.define("agtc-toggle",J1);var Q1=class extends s{static properties={columns:{type:Array},rows:{type:Array},caption:{type:String},captionHidden:{type:Boolean,attribute:"caption-hidden"},striped:{type:Boolean},stickyHeader:{type:Boolean,attribute:"sticky-header"},density:{type:String}};constructor(){super(),this.columns=[],this.rows=[],this.captionHidden=!1,this.striped=!1,this.stickyHeader=!1,this.density="compact"}updated(){this.caption||console.warn('[agtc-table] no caption \u2014 the table should describe its content (WCAG 1.3.1, T2). Add caption="\u2026" (hideable via caption-hidden).')}static styles=f`
     :host {
       display: block;
     }
 
-    /* Conteneur scroll horizontal + indicateur d'overflow (T7) ─────────────── */
+    /* Horizontal scroll container + overflow indicator (T7) ────────────────── */
     .scroll {
       overflow-x: auto;
       border: 1px solid var(--agtc-component-table-default-border);
       border-radius: var(--agtc-component-table-default-radius);
-      /* Ombres de bord : apparaissent quand il reste du contenu à scroller. */
+      /* Edge shadows: appear when there is content left to scroll. */
       background:
         linear-gradient(to right, var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) left / 24px 100% no-repeat,
         linear-gradient(to left,  var(--agtc-component-table-default-header-background), rgba(255,255,255,0)) right / 24px 100% no-repeat;
@@ -1086,14 +1086,14 @@
 
     tbody tr:last-child td { border-bottom: none; }
 
-    /* Hover de ligne (T5) ──────────────────────────────────────────────────── */
+    /* Row hover (T5) ───────────────────────────────────────────────────────── */
     tbody tr:hover { background: var(--agtc-component-table-default-row-hover); }
 
-    /* Zébrage optionnel (T4) ───────────────────────────────────────────────── */
+    /* Optional zebra striping (T4) ─────────────────────────────────────────── */
     :host([striped]) tbody tr:nth-child(even) { background: var(--agtc-component-table-default-stripe); }
     :host([striped]) tbody tr:nth-child(even):hover { background: var(--agtc-component-table-default-row-hover); }
 
-    /* En-tête figé optionnel (T6) ──────────────────────────────────────────── */
+    /* Optional pinned header (T6) ──────────────────────────────────────────── */
     :host([sticky-header]) thead th {
       position: sticky;
       top: 0;
@@ -1126,17 +1126,17 @@
     `}};customElements.define("agtc-table",Q1);var Y1=class extends s{static properties={variant:{type:String},padding:{type:String},_hasHeader:{type:Boolean,state:!0},_hasFooter:{type:Boolean,state:!0}};constructor(){super(),this.variant="default",this.padding="md",this._hasHeader=!1,this._hasFooter=!1}_onHeaderSlotChange(a){this._hasHeader=a.target.assignedNodes({flatten:!0}).length>0}_onFooterSlotChange(a){this._hasFooter=a.target.assignedNodes({flatten:!0}).length>0}static styles=f`
     :host {
       display: block;
-      /* Typographie exposée via CSS custom properties — override via tokens composant.
-         Les valeurs par défaut correspondent au contexte Produit SaaS (14px/14px/12px).
-         En contexte Marketing (data-context="marketing" sur <body>), le site surcharge
-         ces tokens via --agtc-component-card-typography-marketing-* dans siteCSS(). */
+      /* Typography exposed via CSS custom properties — override via component tokens.
+         Defaults match the Product SaaS context (14px/14px/12px).
+         In Marketing context (data-context="marketing" on <body>), the site overrides
+         these tokens via --agtc-component-card-typography-marketing-* in siteCSS(). */
       --card-title-size:  var(--agtc-component-card-typography-title-size,   var(--agtc-semantic-typography-label-size));
       --card-title-weight:var(--agtc-component-card-typography-title-weight,  var(--agtc-primitive-fontWeight-bold));
       --card-body-size:   var(--agtc-component-card-typography-body-size,    var(--agtc-semantic-typography-label-size));
       --card-meta-size:   var(--agtc-component-card-typography-meta-size,    var(--agtc-semantic-typography-detail-size));
     }
 
-    /* ── Typographie des éléments slottés directs ──────────────────────────── */
+    /* ── Typography of direct slotted elements ─────────────────────────────── */
     ::slotted(h1),::slotted(h2),::slotted(h3),::slotted(h4),::slotted(h5),::slotted(h6){
       font-size: var(--card-title-size);
       font-weight: var(--card-title-weight);
@@ -1151,20 +1151,20 @@
       overflow: hidden;
     }
 
-    /* ── Variante default ──────────────────────────────────────────────────── */
+    /* ── Variant default ───────────────────────────────────────────────────── */
     .card.default {
       background: var(--agtc-component-card-default-background);
       border: 1px solid var(--agtc-component-card-default-border);
     }
 
-    /* ── Variante elevated ─────────────────────────────────────────────────── */
+    /* ── Variant elevated ──────────────────────────────────────────────────── */
     .card.elevated {
       background: var(--agtc-component-card-elevated-background);
       border: 1px solid var(--agtc-component-card-elevated-border);
       box-shadow: var(--agtc-component-card-elevated-shadow);
     }
 
-    /* ── Variante flat ─────────────────────────────────────────────────────── */
+    /* ── Variant flat ──────────────────────────────────────────────────────── */
     .card.flat {
       background: var(--agtc-component-card-flat-background);
       border: 1px solid var(--agtc-component-card-flat-border);
@@ -1200,7 +1200,7 @@
       border-top: 1px solid var(--agtc-component-card-default-border);
     }
 
-    /* Pas de séparateur sur flat et elevated */
+    /* No separator on flat and elevated */
     .card.elevated .header,
     .card.flat     .header {
       border-bottom-color: var(--agtc-semantic-color-border-default);
@@ -1215,8 +1215,8 @@
       display: none;
     }
 
-    /* Supprime padding-bottom du body si footer présent, et padding-top si header présent.
-       Évite le double espacement au niveau des séparateurs. */
+    /* Removes the body's padding-bottom when a footer is present, and padding-top
+       when a header is present. Avoids double spacing at the separators. */
     .has-header .body { padding-top: 0; }
     .has-footer .body { padding-bottom: 0; }
   `;render(){let a=`padding-${this.padding||"md"}`,t=["card",this.variant||"default",a,this._hasHeader?"has-header":"",this._hasFooter?"has-footer":""].filter(Boolean).join(" ");return p`
@@ -1245,7 +1245,7 @@
           ></slot>
         </div>
       </div>
-    `}};customElements.define("agtc-card",Y1);var a2=class extends s{static properties={tabs:{type:Array},selected:{type:String},label:{type:String},activation:{type:String}};constructor(){super(),this.tabs=[],this.selected="",this.label="",this.activation="auto"}willUpdate(a){if((a.has("tabs")||a.has("selected"))&&!this.selected&&this.tabs.length){let t=this.tabs.find(e=>!e.href);t&&(this.selected=t.value)}}updated(){this.label||console.warn('[agtc-tabs] label requis \u2014 le tablist doit \xEAtre nomm\xE9 pour les AT. Ajouter label="\u2026".')}_select(a){a!==this.selected&&(this.selected=a,this.dispatchEvent(new CustomEvent("change",{detail:{value:a},bubbles:!0,composed:!0})))}_focusTab(a){this.shadowRoot?.querySelector(`[data-idx="${a}"]`)?.focus()}_onKeyDown(a,t){let e=this.tabs.length,r;switch(a.key){case"ArrowRight":r=(t+1)%e;break;case"ArrowLeft":r=(t-1+e)%e;break;case"Home":r=0;break;case"End":r=e-1;break;default:return}a.preventDefault(),this._focusTab(r),this.activation==="auto"&&!this.tabs[r].href&&this._select(this.tabs[r].value)}static styles=f`
+    `}};customElements.define("agtc-card",Y1);var a2=class extends s{static properties={tabs:{type:Array},selected:{type:String},label:{type:String},activation:{type:String}};constructor(){super(),this.tabs=[],this.selected="",this.label="",this.activation="auto"}willUpdate(a){if((a.has("tabs")||a.has("selected"))&&!this.selected&&this.tabs.length){let t=this.tabs.find(e=>!e.href);t&&(this.selected=t.value)}}updated(){this.label||console.warn('[agtc-tabs] label required \u2014 the tablist must be named for AT. Add label="\u2026".')}_select(a){a!==this.selected&&(this.selected=a,this.dispatchEvent(new CustomEvent("change",{detail:{value:a},bubbles:!0,composed:!0})))}_focusTab(a){this.shadowRoot?.querySelector(`[data-idx="${a}"]`)?.focus()}_onKeyDown(a,t){let e=this.tabs.length,r;switch(a.key){case"ArrowRight":r=(t+1)%e;break;case"ArrowLeft":r=(t-1+e)%e;break;case"Home":r=0;break;case"End":r=e-1;break;default:return}a.preventDefault(),this._focusTab(r),this.activation==="auto"&&!this.tabs[r].href&&this._select(this.tabs[r].value)}static styles=f`
     :host { display: block; }
 
     .tablist-wrapper {
@@ -1283,7 +1283,7 @@
 
     .tab:hover { color: var(--agtc-component-tabs-default-tab-text-hover); }
 
-    /* :visited neutralisé — ADR-047 (no-visited-nav) */
+    /* :visited neutralized — ADR-047 (no-visited-nav) */
     .tab:visited { color: var(--agtc-component-tabs-default-tab-text); }
 
     .tab[aria-selected="true"] {
@@ -1341,7 +1341,7 @@
           <slot name="${t.value}"></slot>
         </div>
       `)}
-    `}};customElements.define("agtc-tabs",a2);var t2=class extends s{static properties={language:{type:String},filename:{type:String},copyLabel:{type:String,attribute:"copy-label"},copiedLabel:{type:String,attribute:"copied-label"},_copied:{state:!0}};constructor(){super(),this.copyLabel="Copier",this.copiedLabel="Copi\xE9 !",this._copied=!1}static styles=f`
+    `}};customElements.define("agtc-tabs",a2);var t2=class extends s{static properties={language:{type:String},filename:{type:String},copyLabel:{type:String,attribute:"copy-label"},copiedLabel:{type:String,attribute:"copied-label"},_copied:{state:!0}};constructor(){super(),this.copyLabel="Copy",this.copiedLabel="Copied!",this._copied=!1}static styles=f`
     :host {
       display: block;
       margin: 18px 0;
@@ -1353,7 +1353,7 @@
       overflow: hidden;
     }
 
-    /* En-tête : nom de fichier / langue + bouton copier ───────────────────── */
+    /* Header: filename / language + copy button ────────────────────────────── */
     .header {
       display: flex;
       align-items: center;
@@ -1427,7 +1427,7 @@
       overflow: hidden; clip: rect(0 0 0 0);
       white-space: nowrap; border: 0;
     }
-  `;async _copy(){let a=(this.textContent||"").replace(/^\n+|\n+$/g,"");try{await navigator.clipboard.writeText(a)}catch{console.warn("[agtc-code-block] clipboard indisponible (contexte non s\xE9curis\xE9 ?)");return}this._copied=!0,setTimeout(()=>{this._copied=!1},1600)}render(){let a=`${this.copyLabel}${this.language?` (${this.language})`:""}`;return p`
+  `;async _copy(){let a=(this.textContent||"").replace(/^\n+|\n+$/g,"");try{await navigator.clipboard.writeText(a)}catch{console.warn("[agtc-code-block] clipboard unavailable (insecure context?)");return}this._copied=!0,setTimeout(()=>{this._copied=!1},1600)}render(){let a=`${this.copyLabel}${this.language?` (${this.language})`:""}`;return p`
       <div class="block">
         <div class="header">
           <span class="meta">
@@ -1443,7 +1443,7 @@
       <span class="visually-hidden" role="status" aria-live="polite">
         ${this._copied?this.copiedLabel:""}
       </span>
-    `}};customElements.define("agtc-code-block",t2);var yy=["tokens","components","foundations","decisions","agents","guidelines","pipelines"],e2=class extends s{static properties={items:{type:Array},current:{type:String},navLabel:{type:String,attribute:"nav-label"},_lang:{type:String,state:!0}};constructor(){super(),this.items=[],this.current="",this.navLabel="Navigation principale",this._lang="fr",this._observer=null}connectedCallback(){super.connectedCallback(),!this.current&&typeof window<"u"&&(this.current=window.location.pathname),typeof document<"u"&&(this._lang=document.documentElement.dataset.lang||"fr",this._observer=new MutationObserver(()=>{this._lang=document.documentElement.dataset.lang||"fr"}),this._observer.observe(document.documentElement,{attributes:!0,attributeFilter:["data-lang"]}))}disconnectedCallback(){super.disconnectedCallback(),this._observer&&(this._observer.disconnect(),this._observer=null)}_label(a){return this._lang==="en"?a.labelEn||a.label||"":a.labelFr||a.label||""}_isActive(a){let t=this.current,e=a.replace(/^(\.\.\/)+/,"/").split("/").filter(Boolean),r=e[e.length-1]||"",d=e.length>1?e[e.length-2]:"";return d&&yy.includes(d)?t.includes("/"+d+"/"):r==="index.html"&&!d?t==="/"||t.endsWith("/index.html")&&yy.every(l=>!t.includes("/"+l+"/")):r?t.endsWith("/"+r):!1}static styles=f`
+    `}};customElements.define("agtc-code-block",t2);var yy=["tokens","components","foundations","decisions","agents","guidelines","pipelines"],e2=class extends s{static properties={items:{type:Array},current:{type:String},navLabel:{type:String,attribute:"nav-label"},_lang:{type:String,state:!0}};constructor(){super(),this.items=[],this.current="",this.navLabel="Main navigation",this._lang="fr",this._observer=null}connectedCallback(){super.connectedCallback(),!this.current&&typeof window<"u"&&(this.current=window.location.pathname),typeof document<"u"&&(this._lang=document.documentElement.dataset.lang||"fr",this._observer=new MutationObserver(()=>{this._lang=document.documentElement.dataset.lang||"fr"}),this._observer.observe(document.documentElement,{attributes:!0,attributeFilter:["data-lang"]}))}disconnectedCallback(){super.disconnectedCallback(),this._observer&&(this._observer.disconnect(),this._observer=null)}_label(a){return this._lang==="en"?a.labelEn||a.label||"":a.labelFr||a.label||""}_isActive(a){let t=this.current,e=a.replace(/^(\.\.\/)+/,"/").split("/").filter(Boolean),r=e[e.length-1]||"",d=e.length>1?e[e.length-2]:"";return d&&yy.includes(d)?t.includes("/"+d+"/"):r==="index.html"&&!d?t==="/"||t.endsWith("/index.html")&&yy.every(l=>!t.includes("/"+l+"/")):r?t.endsWith("/"+r):!1}static styles=f`
     :host {
       display: contents;
     }
@@ -1456,7 +1456,7 @@
       margin-left: auto;
     }
 
-    /* ── Tab links (liens inter-pages) ── */
+    /* ── Tab links (cross-page links) ── */
     a {
       display: flex;
       align-items: center;
@@ -1472,7 +1472,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* :visited neutralisé — ADR-047. Valeur littérale pour Safari (ADR-059). */
+    /* :visited neutralized — ADR-047. Literal value for Safari (ADR-059). */
     a:visited { color: var(--agtc-component-top-nav-tab-color); }
 
     a:hover {
@@ -1490,7 +1490,7 @@
       outline-offset: 2px;
     }
 
-    /* Page active — indicateur border-bottom, pas de fond rempli */
+    /* Active page — border-bottom indicator, no filled background */
     a[aria-current="page"] {
       background: transparent;
       color: var(--agtc-component-top-nav-tab-color-active);
@@ -1498,7 +1498,7 @@
       border-bottom-color: var(--agtc-component-top-nav-tab-indicator-color);
     }
 
-    /* ── CTA button — sort du pattern tab ── */
+    /* ── CTA button — breaks out of the tab pattern ── */
     a.cta {
       height: auto;
       align-self: center;
@@ -1519,13 +1519,13 @@
       color: var(--agtc-component-top-nav-cta-color);
     }
 
-    /* Le CTA ne porte pas d'indicateur tab même s'il est "actif" */
+    /* The CTA carries no tab indicator even when it is "active" */
     a.cta[aria-current="page"] {
       background: var(--agtc-component-top-nav-cta-background);
       border-bottom: none;
     }
 
-    /* ── Mobile : drawer vertical ─────────────────────────── */
+    /* ── Mobile: vertical drawer ──────────────────────────── */
     @media (max-width: 768px) {
       nav {
         display: none;
@@ -1543,7 +1543,7 @@
         align-self: auto;
       }
 
-      /* Ouverture via classe .open sur l'hôte */
+      /* Opened via the .open class on the host */
       :host(.open) nav {
         display: flex;
       }
@@ -1616,7 +1616,7 @@
       transform: scaleX(1);
     }
 
-    /* P7 — prefers-reduced-motion : border toujours visible, transition désactivée */
+    /* P7 — prefers-reduced-motion: border always visible, transition disabled */
     @media (prefers-reduced-motion: reduce) {
       :host::after {
         transform: scaleX(1);
