@@ -2918,6 +2918,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
       // Update copy button labels when language switches
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      buildToc();
     });
   });
 
@@ -2939,6 +2940,7 @@ document.addEventListener('DOMContentLoaded', () => {
         b.setAttribute('aria-pressed', a ? 'true' : 'false');
       });
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      buildToc();
     });
   });
 
@@ -2999,48 +3001,58 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── TOC auto-generation ──────────────────────────────────
+  // A named, re-callable function: bilingual ADR pages (ADR-071) wrap each language's
+  // full body — headings included — in a block-level .lang-en/.lang-fr div (unlike the
+  // rest of the site's inline per-heading spans), so switching language changes which
+  // <h2> elements are actually visible. offsetParent filters to only the ones currently
+  // rendered, and re-running this on every language toggle (not just once at load) keeps
+  // the TOC in sync instead of going stale — see ADR-071.
   const tocEl = document.getElementById('page-toc');
-  if (tocEl) {
-    const headings = Array.from(document.querySelectorAll('.content h2'));
-    if (headings.length > 1) {
-      function slugify(t) {
-        return t.toLowerCase()
-          .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[ïî]/g,'i')
-          .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u')
-          .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-      }
-      const title = document.createElement('span');
-      title.className = 'toc-title';
-      title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
-      tocEl.appendChild(title);
-      headings.forEach(h => {
-        const frSpan = h.querySelector('.lang-fr');
-        const enSpan = h.querySelector('.lang-en');
-        const frText = frSpan ? frSpan.textContent : h.textContent;
-        if (!h.id) h.id = slugify(frText);
-        const a = document.createElement('a');
-        a.href = '#' + h.id;
-        if (frSpan && enSpan) {
-          a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
-        } else {
-          a.textContent = frText;
-        }
-        tocEl.appendChild(a);
-      });
-      // Active tracking
-      const tocLinks = tocEl.querySelectorAll('a');
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            tocLinks.forEach(l => l.classList.remove('active'));
-            const active = tocEl.querySelector('a[href="#' + e.target.id + '"]');
-            if (active) active.classList.add('active');
-          }
-        });
-      }, { rootMargin: '-10px 0px -80% 0px' });
-      headings.forEach(h => obs.observe(h));
+  let tocObserver = null;
+  function buildToc() {
+    if (!tocEl) return;
+    if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+    tocEl.innerHTML = '';
+    const headings = Array.from(document.querySelectorAll('.content h2')).filter(h => h.offsetParent !== null);
+    if (headings.length <= 1) return;
+    function slugify(t) {
+      return t.toLowerCase()
+        .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[ïî]/g,'i')
+        .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
     }
+    const title = document.createElement('span');
+    title.className = 'toc-title';
+    title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
+    tocEl.appendChild(title);
+    headings.forEach(h => {
+      const frSpan = h.querySelector('.lang-fr');
+      const enSpan = h.querySelector('.lang-en');
+      const frText = frSpan ? frSpan.textContent : h.textContent;
+      if (!h.id) h.id = slugify(frText);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      if (frSpan && enSpan) {
+        a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
+      } else {
+        a.textContent = h.textContent;
+      }
+      tocEl.appendChild(a);
+    });
+    // Active tracking
+    const tocLinks = tocEl.querySelectorAll('a');
+    tocObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = tocEl.querySelector('a[href="#' + e.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10px 0px -80% 0px' });
+    headings.forEach(h => tocObserver.observe(h));
   }
+  buildToc();
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
@@ -6979,16 +6991,33 @@ function buildDecisionsIndex(adrs) {
   }));
 }
 
-// ─── PAGE: INDIVIDUAL ADR ───────────────────────────────────────────────────
-function buildADR(adr, adrs) {
-  // Strip the leading H1 and frontmatter blockquote — already rendered in .adr-header
-  const lines = adr.content.split('\n');
+// Strips a section's leading "# Title" + "> frontmatter" blockquote lines — the
+// title/meta are re-rendered separately in .adr-header, so only the body remains.
+function stripADRHeader(raw) {
+  const lines = raw.split('\n');
   let start = 0;
+  // Absorb any leading blank lines first — the FR half in particular can have extra
+  // blank lines around the <!-- FR --> split marker depending on source formatting.
+  while (start < lines.length && lines[start].trim() === '') start++;
   if (lines[start]?.startsWith('# ')) start++;
   while (start < lines.length && lines[start].trim() === '') start++;
   while (start < lines.length && lines[start].startsWith('> ')) start++;
   while (start < lines.length && (lines[start].trim() === '' || /^-{3,}$/.test(lines[start].trim()))) start++;
-  const content = parseMd(lines.slice(start).join('\n'));
+  return lines.slice(start).join('\n');
+}
+
+// ─── PAGE: INDIVIDUAL ADR ───────────────────────────────────────────────────
+function buildADR(adr, adrs) {
+  // ADR-071+: bilingual ADRs (ADR-001–070, batch-translated) carry a full English
+  // section, an HTML-comment marker, then the full original French section — split on
+  // it and wrap each half in the site's existing lang-en/lang-fr toggle, exactly like
+  // everywhere else on the site. English-only ADRs (no marker) render as plain content,
+  // unwrapped, so they display regardless of the active site language (see ADR-071).
+  const frMarkerSplit = adr.content.split(/\n<!--\s*FR\s*-->\n/);
+  const content = frMarkerSplit.length > 1
+    ? `<div class="lang-en">${parseMd(stripADRHeader(frMarkerSplit[0]))}</div>`
+      + `<div class="lang-fr">${parseMd(stripADRHeader(frMarkerSplit[1]))}</div>`
+    : parseMd(stripADRHeader(adr.content));
 
   const statusBadge = `<agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>`;
   const typeBadge = adr.type ? `<span class="adr-type">${esc(adr.type)}</span>` : '';
@@ -7351,7 +7380,11 @@ function loadADRs() {
     const titleMatch = content.match(/^#\s+(.+)$/m);
     const title = titleMatch ? titleMatch[1].replace(/^ADR-\d+\s*—?\s*/,'').trim() : f;
     const dateMatch = content.match(/\*\*Date\s*:\*\*\s*(.+)/);
-    const decidersMatch = content.match(/\*\*Décideurs\s*:\*\*\s*(.+)/);
+    // Matches both the French label (ADR-001–070, untranslated frontmatter) and the
+    // English one (ADR-071+, and the translated English section of older ADRs — see
+    // ADR-071). English always comes first in a bilingual file, so a single match()
+    // naturally picks the right one for both cases.
+    const decidersMatch = content.match(/\*\*(?:D[ée]cideurs|Decision-makers)\s*:\*\*\s*(.+)/);
     const typeMatch = content.match(/\*\*Type\s*:\*\*\s*(.+)/);
     const slug = `adr-${String(num).padStart(3,'0')}`;
     return { num, title, date: dateMatch ? dateMatch[1].trim() : '2026-05-28', deciders: decidersMatch ? decidersMatch[1].trim() : '', type: typeMatch ? typeMatch[1].trim() : '', slug, content, file: f };

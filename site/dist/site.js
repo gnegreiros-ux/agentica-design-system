@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
       // Update copy button labels when language switches
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      buildToc();
     });
   });
 
@@ -92,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         b.setAttribute('aria-pressed', a ? 'true' : 'false');
       });
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      buildToc();
     });
   });
 
@@ -152,48 +154,58 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── TOC auto-generation ──────────────────────────────────
+  // A named, re-callable function: bilingual ADR pages (ADR-071) wrap each language's
+  // full body — headings included — in a block-level .lang-en/.lang-fr div (unlike the
+  // rest of the site's inline per-heading spans), so switching language changes which
+  // <h2> elements are actually visible. offsetParent filters to only the ones currently
+  // rendered, and re-running this on every language toggle (not just once at load) keeps
+  // the TOC in sync instead of going stale — see ADR-071.
   const tocEl = document.getElementById('page-toc');
-  if (tocEl) {
-    const headings = Array.from(document.querySelectorAll('.content h2'));
-    if (headings.length > 1) {
-      function slugify(t) {
-        return t.toLowerCase()
-          .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[ïî]/g,'i')
-          .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u')
-          .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-      }
-      const title = document.createElement('span');
-      title.className = 'toc-title';
-      title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
-      tocEl.appendChild(title);
-      headings.forEach(h => {
-        const frSpan = h.querySelector('.lang-fr');
-        const enSpan = h.querySelector('.lang-en');
-        const frText = frSpan ? frSpan.textContent : h.textContent;
-        if (!h.id) h.id = slugify(frText);
-        const a = document.createElement('a');
-        a.href = '#' + h.id;
-        if (frSpan && enSpan) {
-          a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
-        } else {
-          a.textContent = frText;
-        }
-        tocEl.appendChild(a);
-      });
-      // Active tracking
-      const tocLinks = tocEl.querySelectorAll('a');
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            tocLinks.forEach(l => l.classList.remove('active'));
-            const active = tocEl.querySelector('a[href="#' + e.target.id + '"]');
-            if (active) active.classList.add('active');
-          }
-        });
-      }, { rootMargin: '-10px 0px -80% 0px' });
-      headings.forEach(h => obs.observe(h));
+  let tocObserver = null;
+  function buildToc() {
+    if (!tocEl) return;
+    if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+    tocEl.innerHTML = '';
+    const headings = Array.from(document.querySelectorAll('.content h2')).filter(h => h.offsetParent !== null);
+    if (headings.length <= 1) return;
+    function slugify(t) {
+      return t.toLowerCase()
+        .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[ïî]/g,'i')
+        .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
     }
+    const title = document.createElement('span');
+    title.className = 'toc-title';
+    title.innerHTML = '<span class="lang-fr">Sur cette page</span><span class="lang-en">On this page</span>';
+    tocEl.appendChild(title);
+    headings.forEach(h => {
+      const frSpan = h.querySelector('.lang-fr');
+      const enSpan = h.querySelector('.lang-en');
+      const frText = frSpan ? frSpan.textContent : h.textContent;
+      if (!h.id) h.id = slugify(frText);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      if (frSpan && enSpan) {
+        a.innerHTML = '<span class="lang-fr">' + frSpan.textContent + '</span><span class="lang-en">' + enSpan.textContent + '</span>';
+      } else {
+        a.textContent = h.textContent;
+      }
+      tocEl.appendChild(a);
+    });
+    // Active tracking
+    const tocLinks = tocEl.querySelectorAll('a');
+    tocObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = tocEl.querySelector('a[href="#' + e.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10px 0px -80% 0px' });
+    headings.forEach(h => tocObserver.observe(h));
   }
+  buildToc();
 
   // ── Token search ─────────────────────────────────────────
   const search = document.getElementById('token-search');
