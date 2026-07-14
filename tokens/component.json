@@ -200,7 +200,7 @@
         "$type": "color"
       },
       "text": {
-        "$value": "{primitive.color.teal.12}",
+        "$value": "{semantic.color.brand.primary-text}",
         "$type": "color"
       },
       "border": {
@@ -210,7 +210,7 @@
     },
     "success": {
       "background": {
-        "$value": "{primitive.color.green.3}",
+        "$value": "{semantic.color.feedback.success-subtle}",
         "$type": "color"
       },
       "text": {
@@ -224,11 +224,11 @@
     },
     "warning": {
       "background": {
-        "$value": "{primitive.color.orange.3}",
+        "$value": "{semantic.color.feedback.warning-subtle}",
         "$type": "color"
       },
       "text": {
-        "$value": "{primitive.color.orange.12}",
+        "$value": "{semantic.color.feedback.warning-text}",
         "$type": "color"
       },
       "border": {
@@ -252,11 +252,11 @@
     },
     "info": {
       "background": {
-        "$value": "{primitive.color.blue.3}",
+        "$value": "{semantic.color.feedback.info-subtle}",
         "$type": "color"
       },
       "text": {
-        "$value": "{primitive.color.blue.12}",
+        "$value": "{semantic.color.feedback.info-text}",
         "$type": "color"
       },
       "border": {
@@ -270,11 +270,11 @@
         "$type": "dimension"
       },
       "padding-x": {
-        "$value": "{primitive.space.3}",
+        "$value": "{semantic.space.component.padding-md}",
         "$type": "dimension"
       },
       "padding-y": {
-        "$value": "{primitive.space.1}",
+        "$value": "{semantic.space.component.padding-xs}",
         "$type": "dimension"
       },
       "font-size": {
@@ -288,11 +288,11 @@
         "$type": "dimension"
       },
       "padding-x": {
-        "$value": "{primitive.space.2}",
+        "$value": "{semantic.space.component.padding-sm}",
         "$type": "dimension"
       },
       "padding-y": {
-        "$value": "{primitive.space.0}",
+        "$value": "{semantic.space.component.padding-2xs}",
         "$type": "dimension"
       },
       "font-size": {
@@ -353,11 +353,11 @@
       "$type": "dimension"
     },
     "padding-sm": {
-      "$value": "{primitive.space.3}",
+      "$value": "{semantic.space.component.padding-md}",
       "$type": "dimension"
     },
     "padding-lg": {
-      "$value": "{primitive.space.6}",
+      "$value": "{semantic.space.component.padding-2xl}",
       "$type": "dimension"
     },
     "typography": {
@@ -371,12 +371,12 @@
           "$intent": "14px — Titre de carte en contexte Produit SaaS"
         },
         "weight": {
-          "$value": "{primitive.fontWeight.bold}",
+          "$value": "{semantic.typography.heading.4.weight}",
           "$type": "fontWeight",
           "$intent": "Bold pour distinguer visuellement le titre"
         },
         "line-height": {
-          "$value": "{primitive.lineHeight.reading}",
+          "$value": "{semantic.typography.label-bold.line-height}",
           "$type": "number"
         }
       },
@@ -391,7 +391,7 @@
           "$type": "fontWeight"
         },
         "line-height": {
-          "$value": "{primitive.lineHeight.reading}",
+          "$value": "{semantic.typography.body.line-height}",
           "$type": "number"
         }
       },
@@ -417,7 +417,7 @@
             "$intent": "20px — Titre de carte en contexte Marketing (heading-5)"
           },
           "weight": {
-            "$value": "{primitive.fontWeight.bold}",
+            "$value": "{semantic.typography.heading.4.weight}",
             "$type": "fontWeight",
             "$intent": "Bold pour impact éditorial"
           }
@@ -429,7 +429,7 @@
             "$intent": "20px — Titre de carte prominente en contexte Marketing (audience, features)"
           },
           "weight": {
-            "$value": "{primitive.fontWeight.bold}",
+            "$value": "{semantic.typography.hero.weight}",
             "$type": "fontWeight"
           }
         },
@@ -537,11 +537,11 @@
     },
     "default": {
       "track-off": {
-        "$value": "{primitive.color.gray.9}",
+        "$value": "{semantic.color.control.track-off}",
         "$type": "color"
       },
       "track-off-hover": {
-        "$value": "{primitive.color.gray.10}",
+        "$value": "{semantic.color.control.track-off-hover}",
         "$type": "color"
       },
       "track-on": {
@@ -610,15 +610,15 @@
       }
     },
     "padding-x": {
-      "$value": "{primitive.space.3}",
+      "$value": "{semantic.space.component.padding-md}",
       "$type": "dimension"
     },
     "padding-y-compact": {
-      "$value": "{primitive.space.2}",
+      "$value": "{semantic.space.component.padding-sm}",
       "$type": "dimension"
     },
     "padding-y-comfortable": {
-      "$value": "{primitive.space.3}",
+      "$value": "{semantic.space.component.padding-md}",
       "$type": "dimension"
     }
   },
@@ -705,7 +705,7 @@
     },
     "info": {
       "background": {
-        "$value": "{primitive.color.blue.3}",
+        "$value": "{semantic.color.feedback.info-subtle}",
         "$type": "color"
       },
       "accent": {
@@ -715,7 +715,7 @@
     },
     "success": {
       "background": {
-        "$value": "{primitive.color.green.3}",
+        "$value": "{semantic.color.feedback.success-subtle}",
         "$type": "color"
       },
       "accent": {
@@ -725,11 +725,11 @@
     },
     "warning": {
       "background": {
-        "$value": "{primitive.color.orange.3}",
+        "$value": "{semantic.color.feedback.warning-subtle}",
         "$type": "color"
       },
       "accent": {
-        "$value": "{primitive.color.orange.11}",
+        "$value": "{semantic.color.feedback.warning}",
         "$type": "color"
       }
     },
@@ -768,11 +768,11 @@
       "$type": "dimension"
     },
     "padding-x": {
-      "$value": "{primitive.space.5}",
+      "$value": "{semantic.space.component.padding-xl}",
       "$type": "dimension"
     },
     "padding-y": {
-      "$value": "{primitive.space.4}",
+      "$value": "{semantic.space.component.padding-lg}",
       "$type": "dimension"
     }
   },
@@ -783,27 +783,27 @@
     },
     "default": {
       "background": {
-        "$value": "{primitive.color.gray.12}",
+        "$value": "{semantic.color.background.code}",
         "$type": "color"
       },
       "text": {
-        "$value": "{primitive.color.gray.4}",
+        "$value": "{semantic.color.text.on-code}",
         "$type": "color"
       },
       "meta-text": {
-        "$value": "{primitive.color.gray.8}",
+        "$value": "{semantic.color.text.on-code-muted}",
         "$type": "color"
       },
       "copy-background": {
-        "$value": "{primitive.color.gray.11}",
+        "$value": "{semantic.color.background.code-raised}",
         "$type": "color"
       },
       "copy-background-hover": {
-        "$value": "{primitive.color.gray.10}",
+        "$value": "{semantic.color.background.code-raised-hover}",
         "$type": "color"
       },
       "copy-text": {
-        "$value": "{primitive.color.gray.1}",
+        "$value": "{semantic.color.text.on-code-strong}",
         "$type": "color"
       },
       "border-focus": {
@@ -819,11 +819,11 @@
         "$type": "dimension"
       },
       "padding-x": {
-        "$value": "{primitive.space.5}",
+        "$value": "{semantic.space.component.padding-xl}",
         "$type": "dimension"
       },
       "padding-y": {
-        "$value": "{primitive.space.4}",
+        "$value": "{semantic.space.component.padding-lg}",
         "$type": "dimension"
       }
     }
@@ -922,7 +922,7 @@
         "$intent": "Graisse par défaut des liens"
       },
       "font-weight-active": {
-        "$value": "{primitive.fontWeight.bold}",
+        "$value": "{semantic.typography.label-bold.weight}",
         "$type": "fontWeight",
         "$intent": "Graisse de la page active — renforce la lisibilité sans fond rempli"
       },
