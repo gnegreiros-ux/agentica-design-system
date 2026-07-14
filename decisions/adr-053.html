@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica</title>
+<title>Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica">
+<meta property="og:title" content="Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu — Agentica">
+<meta name="twitter:title" content="Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">pattern</span>
   </div>
-  <h1 class="adr-page-title">Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu</h1>
+  <h1 class="adr-page-title">Mobile navigation: sidebar as a sliding drawer and contextual button in the content</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,35 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Humain (approbation) · Design System Lead (navigation)</dd>
+      <dd>Human (approval) · Design System Lead (navigation)</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> On mobile (≤768px), the secondary sidebar rendered above the page content because it preceded <code>&lt;main&gt;</code> in the DOM. This ADR turns the sidebar into a sliding drawer (fixed position, off-canvas, overlay + Escape/click-outside to close) and moves its toggle button into the content, right before the page's <code>&lt;h1&gt;</code>, appearing only on pages that actually have a sidebar.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>On mobile (≤768px), the secondary navigation sidebar (Foundations, Components, Decisions) rendered in the normal page flow — <strong>before the content</strong> — because it precedes <code>&lt;main&gt;</code> in the DOM and the layout switches to <code>flex-direction: column</code>. The first visible element was therefore the navigation list, not the page title.</p>
+<p>Additionally, on pages without a sidebar (home, Tokens, Agents), the drawer-access button was present in the header even though it had no effect — it was contextual but positioned globally.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>1. Sidebar turned into a sliding drawer (mobile only)</h3>
+<p>At <code>max-width: 768px</code>, the sidebar is repositioned to <code>position: fixed</code> (out of flow), sliding in from the left via <code>transform: translateX(-100%)</code> → <code>translateX(0)</code>. It no longer interferes with the content's reading order.</p>
+<p>Drawer behavior:</p>
+<ul><li>Opens via the toggle button (see point 2)</li><li>Closes via: the toggle button, clicking the overlay, the <code>Escape</code> key, clicking a navigation link</li><li>A semi-transparent overlay (<code>rgba(0,0,0,.40)</code> + <code>backdrop-filter: blur(2px)</code>) covers the content</li><li><code>document.body.overflow: hidden</code> while open (prevents background scrolling)</li><li>ARIA: <code>aria-expanded</code> on the button, <code>aria-hidden</code> on the overlay</li></ul>
+<h3>2. Drawer-access button placed in the content, before the <code>&lt;h1&gt;</code></h3>
+<p>The <code>sidebar-toggle</code> button is rendered <strong>inside <code>&lt;main&gt;</code></strong>, right before the page title — only on pages that have a sidebar. It is never present in the header, nor on pages without a sidebar.</p>
+<p>Rationale:</p>
+<ul><li><strong>Contextual</strong>: visible only where it's useful</li><li><strong>Readability</strong>: the header stays identical on every page</li><li><strong>Logical sequence</strong>: the user sees the navigation button before the title, and can access it</li></ul>
+<p>  immediately before reading</p>
+<p>Button style: <code>background-subtle</code> background + border + <code>panel-left</code> icon + "Navigation" label (FR/EN) — reads as an action, not just an opaque icon.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Button in the header (always visible)</td><td>Present on pages without a sidebar — misleading and useless</td></tr><tr><td>Sidebar above the content (initial behavior)</td><td>The user reads the navigation before the page — unnecessary cognitive load</td></tr><tr><td>Dropdown menu integrated into the mobile top-nav</td><td>Confuses primary and secondary navigation</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<ul><li>On desktop (> 768px): no change — the sidebar stays in flow, the button is hidden via</li></ul>
+<p>  <code>display: none</code></p>
+<ul><li>The drawer JS must be present on every page with a sidebar (injected via <code>layout()</code>)</li><li>Any new page with a sidebar automatically inherits this behavior (conditional rendering in</li></ul>
+<p>  <code>layout()</code>)</p>
+<ul><li><strong>To watch:</strong> if a page accumulates many sidebar links, consider a per-group accordion (future</li></ul>
+<p>  ADR)</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Sur mobile (≤ 768 px), la sidebar de navigation secondaire (Fondations, Composants, Décisions) s'affichait dans le flux normal de la page — <strong>avant le contenu</strong> — car elle précède <code>&lt;main&gt;</code> dans le DOM et le layout passe en <code>flex-direction: column</code>. Le premier élément visible était donc la liste de navigation, non le titre de page.</p>
 <p>Par ailleurs, sur les pages sans sidebar (accueil, Tokens, Agents), le bouton d'accès au drawer était présent dans le header alors qu'il n'avait aucun effet — il était contextuel mais positionné de manière globale.</p>
 <hr>
@@ -158,7 +179,7 @@
 <ul><li>Le JS du drawer doit être présent sur toutes les pages avec sidebar (injecté via <code>layout()</code>)</li><li>Toute nouvelle page avec sidebar hérite automatiquement du comportement (rendu conditionnel dans</li></ul>
 <p>  <code>layout()</code>)</p>
 <ul><li><strong>À surveiller :</strong> si une page accumule beaucoup de liens sidebar, envisager un accordéon par</li></ul>
-<p>  groupe (ADR futur)</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  groupe (ADR futur)</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-052.html" class="agtc-button secondary">← ADR-052</a>
     <a href="adr-054.html" class="agtc-button secondary">ADR-054 →</a>
   </div></main>

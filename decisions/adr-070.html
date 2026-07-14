@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica</title>
+<title>English as the repository's default language (community translation) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica">
+<meta property="og:title" content="English as the repository's default language (community translation) — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Anglais comme langue par défaut du dépôt (traduction communautaire) — Agentica">
+<meta name="twitter:title" content="English as the repository's default language (community translation) — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Anglais comme langue par défaut du dépôt (traduction communautaire)</h1>
+  <h1 class="adr-page-title">English as the repository's default language (community translation)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,7 +129,39 @@
       <dd>Guilherme Negreiros (Design System Lead)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The Agentica repository was written entirely in French — root documentation (README, AGENTS.md, DESIGN.md, How-to guides), guidelines, <code>.claude/</code> rules, architectural decisions (<code>decisions/</code>). The stated goal is to share the project with the international design systems community (Storybook, Figma Community, publications like Design Systems Collective) — an overwhelmingly English-speaking readership.</p>
+<p>The public site (<code>site/</code>) already has a working bilingual FR/EN system (<code>lang-fr</code>/<code>lang-en</code> spans, toggled via <code>.lang-btn</code>) from an earlier effort (2026-05-29). This system only covers the generated site, not the repository's own markdown files — which are what an external contributor reads first on GitHub.</p>
+<hr>
+<h2>Decision</h2>
+<p>English becomes the repository's default language. Migration is split into 6 initiatives in GitHub Projects (Domain Governance/Site/Components, all linked to the parent ticket "Full translation of the repository to English"):</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Scope</th><th>Strategy</th><th>Priority</th></tr></thead><tbody><tr><td>1</td><td>Root documentation (README, How-to-*, AGENTS.md, DESIGN.md)</td><td>English <strong>replaces</strong> French — no FR version kept in these files</td><td>P1</td></tr><tr><td>2</td><td>Public site (<code>site/contenu.md</code>, <code>site/build.js</code>)</td><td>Switch the existing bilingual system's default to EN — FR remains available via the selector</td><td>P1</td></tr><tr><td>3</td><td><code>guidelines/</code> (24 files)</td><td>English <strong>replaces</strong> French — same strategy as initiative 1, no FR version kept</td><td>P2</td></tr><tr><td>4</td><td><code>.claude/</code> (rules, instructions, skills — 38 agent-facing files)</td><td>English <strong>replaces</strong> French — same strategy as initiatives 1 and 3, no FR version kept</td><td>P2</td></tr><tr><td>5</td><td><code>decisions/</code> (70 ADRs, historical log)</td><td>A lightweight strategy was initially considered (an EN summary up top) rather than a full retroactive translation — to be validated</td><td>P3</td></tr><tr><td>6</td><td>Component code comments (<code>agtc-*.js</code>, <code>*.stories.js</code>)</td><td>Full translation — comments, CONTRACT blocks, <code>console.warn</code> warnings, <strong>and</strong> Storybook <code>description</code> strings (user-facing); the <code>agtc-top-nav</code> component's <code>labelFr</code>/<code>labelEn</code> pairs are kept as-is (a real bilingual site feature, not residual content)</td><td>P3</td></tr></tbody></table></div>
+<p>This initiative 1 (root documentation) is the first delivered by this decision — a full replacement of French with English, with no French version kept in parallel (an explicit decision: avoid the double-maintenance debt of two complete copies).</p>
+<p>File paths (<code>.claude/rules/contexts-utilisation.md</code>, etc.) are <strong>not</strong> renamed during this translation — only the content changes, not the file names, so as not to break cross-references throughout the repository.</p>
+<blockquote><p><strong>Note (ADR-071, 2026-07-13):</strong> initiative 5's lightweight strategy (an EN summary up top, French body preserved) was implemented first, then superseded by a full retroactive translation of all 70 ADRs — see ADR-071, which establishes English as the sole language for all future content while extending full bilingual treatment to every already-existing ADR.</p></blockquote>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Bilingual FR+EN on every root file</strong> (<code>.md</code> + <code>.fr.md</code>)</td><td>Doubles the maintenance load of every future governance change; the site already keeps genuine bilingualism where it matters most (visited public content), root docs can afford a clean-cut choice.</td></tr><tr><td><strong>Translate only the site, keep governance docs in French</strong></td><td>An external contributor opening the repo on GitHub reads <code>README.md</code>/<code>AGENTS.md</code> before even reaching the site — leaving these files in French breaks the community-sharing goal from the very first impression.</td></tr><tr><td><strong>Translate everything in a single monolithic initiative</strong></td><td>860+ lines for root docs alone, ~2000 lines for <code>.claude/</code>, 70 ADRs — a single initiative would be unmanageable and unverifiable; splitting into 6 prioritized sub-initiatives (external visibility first) is already recorded in GitHub Projects.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li><code>AGENTS.md</code>, <code>DESIGN.md</code>, and the <code>How-to-*.md</code> guides are now in English — any future</li></ul>
+<p>  modification to these files is done in English, unless explicitly decided otherwise.</p>
+<ul><li><code>.claude/rules/*.md</code> files remain in French until initiative #4 — an agent will</li></ul>
+<p>  therefore read a mix of EN (router, contract) / FR (detailed rules) during the   transition. No functional ambiguity: file names and paths don't change.</p>
+<ul><li>The user's global conversation preferences (responding in French in conversation) are</li></ul>
+<p>  independent of the language of the content versioned in the repository — no contradiction.</p>
+<p><strong>For humans:</strong></p>
+<ul><li>The repository becomes readable by an external, non-French-speaking contributor as</li></ul>
+<p>  soon as they open the README.</p>
+<ul><li>Loss of the French version of these 6 files in the repository (recoverable via git</li></ul>
+<p>  history if needed — no separate archive created, unlike the <code>Redesign/</code> folder, which   contained non-recreatable binary assets).</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>During the transition period (initiatives #3 through #6 not yet completed), the</li></ul>
+<p>  repository is bilingual de facto by zone rather than by file — accepted as an   intermediate state, not an end state.</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Explicit user request on 2026-07-09 as part of building a governance backlog (alongside repository cleanup and Figma governance): "Full translation of the repository to English. English needs to become the default language so I can share the project with the international community."</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le dépôt Agentica était rédigé entièrement en français — documentation racine (README, AGENTS.md, DESIGN.md, guides How-to), guidelines, règles <code>.claude/</code>, décisions architecturales (<code>decisions/</code>). L'objectif exprimé est de partager le projet avec la communauté internationale des design systems (Storybook, Figma Community, publications type Design Systems Collective) — un lectorat très majoritairement anglophone.</p>
 <p>Le site public (<code>site/</code>) dispose déjà d'un système bilingue FR/EN fonctionnel (spans <code>lang-fr</code>/<code>lang-en</code>, bascule via <code>.lang-btn</code>) depuis un chantier antérieur (2026-05-29). Ce système ne couvre que le site généré, pas les fichiers markdown du dépôt lui-même — qui sont ce qu'un contributeur externe consulte en premier sur GitHub.</p>
 <hr>
@@ -160,7 +192,7 @@
 <p>  bilingue de facto par zone plutôt que par fichier — assumé comme état intermédiaire, pas   comme fin de chantier.</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Demande explicite de l'utilisateur le 2026-07-09 dans le cadre de la constitution d'un backlog de gouvernance (avec nettoyage du dépôt et gouvernance Figma) : « Traduction totale du dépôt vers l'anglais. L'anglais devra passer à la langue par défaut pour que je puisse partager le projet à la communauté internationale. »</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Demande explicite de l'utilisateur le 2026-07-09 dans le cadre de la constitution d'un backlog de gouvernance (avec nettoyage du dépôt et gouvernance Figma) : « Traduction totale du dépôt vers l'anglais. L'anglais devra passer à la langue par défaut pour que je puisse partager le projet à la communauté internationale. »</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-069.html" class="agtc-button secondary">← ADR-069</a>
     <a href="adr-071.html" class="agtc-button secondary">ADR-071 →</a>
   </div></main>

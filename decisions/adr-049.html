@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Ombre de carte au repos tokenisée : `semantic.shadow.card` — Agentica</title>
+<title>Tokenizing the card's resting shadow: `semantic.shadow.card` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Ombre de carte au repos tokenisée : `semantic.shadow.card` — Agentica">
+<meta property="og:title" content="Tokenizing the card's resting shadow: `semantic.shadow.card` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Ombre de carte au repos tokenisée : `semantic.shadow.card` — Agentica">
+<meta name="twitter:title" content="Tokenizing the card's resting shadow: `semantic.shadow.card` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Ombre de carte au repos tokenisée : `semantic.shadow.card`</h1>
+  <h1 class="adr-page-title">Tokenizing the card's resting shadow: `semantic.shadow.card`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,35 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Principal Designer (jeton de composant) · Design System Lead (jeton sémantique)</dd>
+      <dd>Principal Designer (component token) · Design System Lead (semantic token)</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Tokenizes the last remaining raw shadow value in the system — the card's resting elevation — as a new <code>semantic.shadow.card</code> token, with <code>component.card.elevated.shadow</code> repointed to reference it. Pure indirection refactor; the resolved visual value is unchanged.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-046 tokenized every shadow in the system (<code>shadow.header</code>, <code>shadow.raised</code>, <code>shadow.card-hover</code>) <strong>except one</strong>: <code>component.card.elevated.shadow</code> still carried a <strong>raw</strong> <code>rgba</code> value (<code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code>). This was ADR-046's <strong>accepted residual debt</strong> — the last shadow in the system not backed by a named semantic layer.</p>
+<p>Its elevation level (a fine, <strong>resting</strong> shadow: 1–3px) isn't covered by any of the three existing shadow tokens (<code>header</code> = fixed header, <code>raised</code> = menus/popovers at 4/16px, <code>card-hover</code> = brand-tinted hover lift). It needed its own semantic token.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>1. <strong>Add the semantic token</strong> <code>shadow.card</code>:</p>
+<p>   | Token | Value | Role |    |-------|--------|------|    | <code>semantic.shadow.card</code> | <code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code> | Resting card shadow — light elevation |</p>
+<p>2. <strong>Repoint the component token</strong> <code>component.card.elevated.shadow</code>:    the raw value becomes a <strong>reference</strong>, <code>{semantic.shadow.card}</code>.</p>
+<blockquote><p><strong>Change in resolved value: NONE.</strong> The final value is strictly identical (<code>var(--agtc-component-card-elevated-shadow)</code> → <code>var(--agtc-semantic-shadow-card)</code> → same <code>rgba</code>). A pure indirection refactor — <strong>zero visual change</strong>.</p></blockquote>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td><code>semantic.shadow.card</code> (new); <code>component.card.elevated.shadow</code> → semantic reference</td><td>Any other shadow (already tokenized by ADR-046)</td></tr><tr><td>COMP mirror + the card doc's display line in <code>site/build.js</code></td><td>Modifying the shadow value (unchanged)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Reuse <code>shadow.raised</code> for the resting card</strong>: <code>raised</code> (4/16px) is a stronger</li></ul>
+<p>  elevation (menus, popovers) — semantically and visually distinct from the card's resting   shadow (1–3px). Reusing it would distort the intent and change the visual — rejected.</p>
+<ul><li><strong>Leave the raw value in the component</strong>: perpetuates the ADR-046 residual debt;</li></ul>
+<p>  contrary to the "never a raw value, always through a semantic" rule — rejected.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li><strong>No more raw shadow</strong> anywhere in the system: the ADR-046 shadow family is now</li></ul>
+<p>  complete and coherent (header, raised, card-hover, card). Build: <strong>663 defined · 178   referenced · 0 phantom</strong>.</p>
+<ul><li><code>component.card.elevated</code> now consumes a named intent, consistent with the</li></ul>
+<p>  three-level architecture (primitive → semantic → component).</p>
+<ul><li>Governance: 1 semantic token added (Design System Lead) + 1 component token repointed</li></ul>
+<p>  (Principal Designer). No primitive modified. Resolved value unchanged.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'ADR-046 a tokenisé toutes les ombres du système (<code>shadow.header</code>, <code>shadow.raised</code>, <code>shadow.card-hover</code>) <strong>sauf une</strong> : <code>component.card.elevated.shadow</code> portait encore une valeur <code>rgba</code> <strong>brute</strong> (<code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code>). C'était le <strong>résidu assumé</strong> d'ADR-046 — la dernière ombre du système non adossée à une couche sémantique nommée.</p>
 <p>Son niveau d'élévation (ombre <strong>au repos</strong>, fine : 1–3px) n'est couvert par aucun des trois jetons d'ombre existants (<code>header</code> = en-tête fixe, <code>raised</code> = menus/popovers à 4/16px, <code>card-hover</code> = lift teinté marque au survol). Il lui fallait donc son propre jeton sémantique.</p>
 <hr>
@@ -158,7 +179,7 @@
 <ul><li><code>component.card.elevated</code> consomme désormais une intention nommée, conformément à l'architecture à</li></ul>
 <p>  trois niveaux (primitif → sémantique → composant).</p>
 <ul><li>Gouvernance : 1 jeton sémantique ajouté (Design System Lead) + 1 jeton de composant re-pointé</li></ul>
-<p>  (Principal Designer). Aucun primitif modifié. Valeur résolue inchangée.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  (Principal Designer). Aucun primitif modifié. Valeur résolue inchangée.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-048.html" class="agtc-button secondary">← ADR-048</a>
     <a href="adr-050.html" class="agtc-button secondary">ADR-050 →</a>
   </div></main>

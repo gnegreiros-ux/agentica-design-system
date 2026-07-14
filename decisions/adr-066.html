@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Stratégie de tests Playwright : deux périmètres distincts — Agentica</title>
+<title>Playwright testing strategy: two distinct scopes — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Stratégie de tests Playwright : deux périmètres distincts — Agentica">
+<meta property="og:title" content="Playwright testing strategy: two distinct scopes — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Stratégie de tests Playwright : deux périmètres distincts — Agentica">
+<meta name="twitter:title" content="Playwright testing strategy: two distinct scopes — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Stratégie de tests Playwright : deux périmètres distincts</h1>
+  <h1 class="adr-page-title">Playwright testing strategy: two distinct scopes</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,7 +126,88 @@
     </div>
     
   </dl>
-</div><p><strong>Date :</strong> 2026-07-02 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-006 (Chromatic), ADR-007 (axe-core), ADR-009 (Storybook), ADR-004 (gouvernance humaine)</p>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-07-02 <strong>Status:</strong> Active <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-006 (Chromatic), ADR-007 (axe-core), ADR-009 (Storybook), ADR-004 (human governance)</p>
+<hr>
+<h2>Context</h2>
+<p>The Chromatic free monthly snapshot limit was reached on 2026-07-01 (period 2026-06-30 → 2026-07-31). The next paid plan costs ~149 USD/month (~205 CAD) and would require a formal RFP process in the targeted government context (RAMQ).</p>
+<p>In addition, Chromatic sends screenshots to Chromatic Inc.'s infrastructure (outside Quebec), which raises data-sovereignty constraints for government teams.</p>
+<p>While exploring a replacement, two distinct use cases were identified — with different needs, owners, and repositories — that call for an explicit architecture decision rather than a simple tool substitution.</p>
+<hr>
+<h2>The two testing scopes</h2>
+<h3>Scope 1 — DS team (this repository)</h3>
+<p>The team that maintains the design system tests its own deliverables:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Dimension</th><th>Detail</th></tr></thead><tbody><tr><td><strong>Repository</strong></td><td><code>agentic-design-system</code> (this repository)</td></tr><tr><td><strong>Trigger</strong></td><td>Commit on <code>tokens/</code>, <code>components/</code>, <code>site/</code></td></tr><tr><td><strong>What constitutes a failure</strong></td><td>A DS component has visually or functionally regressed</td></tr><tr><td><strong>Visual source of truth</strong></td><td>The components as defined by the DS</td></tr><tr><td><strong>Who approves diffs</strong></td><td>DS Lead (Guilherme Negreiros)</td></tr><tr><td><strong>Scope</strong></td><td><code>site/dist/</code> pages, <code>agtc-*</code> components, foundations</td></tr></tbody></table></div>
+<h3>Scope 2 — Consuming product teams</h3>
+<p>Teams that use the DS in their own product test their own product:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Dimension</th><th>Detail</th></tr></thead><tbody><tr><td><strong>Repository</strong></td><td>Each team's product repositories (outside this repository)</td></tr><tr><td><strong>Trigger</strong></td><td>Product commit, or a DS version bump in their <code>package.json</code></td></tr><tr><td><strong>What constitutes a failure</strong></td><td>The product UI is broken after use or a DS upgrade</td></tr><tr><td><strong>Visual source of truth</strong></td><td>The product UI as approved by their designer</td></tr><tr><td><strong>Who approves diffs</strong></td><td>The product team itself</td></tr><tr><td><strong>Scope</strong></td><td>Their application, their pages, their user journeys</td></tr></tbody></table></div>
+<blockquote><p><strong>Principle:</strong> the DS cannot and must not test the products that consume it. That would create an inverted coupling — the DS depending on product decisions — and would be impossible to maintain. The DS provides tools, not tests.</p></blockquote>
+<hr>
+<h2>Decision</h2>
+<h3>1. Playwright replaces Chromatic for the DS scope</h3>
+<p><strong>Tool:</strong> Playwright <code>^1.60.0</code> (already in <code>devDependencies</code>).</p>
+<p><strong>Advantages vs Chromatic:</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Criterion</th><th>Chromatic</th><th>Playwright</th></tr></thead><tbody><tr><td>Cost</td><td>~205 CAD/month</td><td>0 CAD</td></tr><tr><td>Data</td><td>Sent to Chromatic Inc.</td><td>Stays within internal CI infra</td></tr><tr><td>Browsers</td><td>Chromium only</td><td>Chromium + Firefox + WebKit</td></tr><tr><td>Quotas</td><td>35,000 snapshots/month (free)</td><td>Unlimited</td></tr><tr><td>RAMQ RFP</td><td>Required at ~149 USD/month</td><td>Not required</td></tr><tr><td>Approval interface</td><td>Chromatic web UI</td><td>Local HTML report (<code>playwright-report/</code>)</td></tr></tbody></table></div>
+<p>The only advantage lost: Chromatic's web-based approval interface (a dedicated UI for designers). Replaced by the Playwright HTML report — less visual, acceptable for the current phase.</p>
+<p><strong>DS test architecture:</strong></p>
+<pre class="code-block"><code class="lang-text">tests/
+  visual/
+    snapshots/              ← reference PNGs committed to the repo
+    home.spec.js            ← home page regressions (light/dark, desktop/mobile)
+    documentation.spec.js   ← doc pages + foundations regressions
+    components/
+      button.spec.js        ← button component page regression
+  functional/
+    nav.spec.js             ← mega menu, mobile menu, theme toggle
+    sidebar.spec.js         ← docs sidebar, TOC, active state
+playwright.config.js</code></pre>
+<p><strong>Key configuration:</strong></p>
+<ul><li><code>baseURL: http://localhost:8080</code> — site served via <code>npx serve site/dist</code></li><li>Browsers: Chromium, Firefox, WebKit</li><li>Microsoft Docker image (<code>mcr.microsoft.com/playwright</code>) in CI — guarantees</li></ul>
+<p>  deterministic diffs between Linux CI and local macOS (avoids false-positive   typographic diffs)</p>
+<ul><li><code>reducedMotion: 'reduce'</code> — disables animations during captures</li><li><code>update_snapshots</code>: <strong>never automatic</strong> — explicit human approval required (ADR-004)</li></ul>
+<p><strong>CI workflow (<code>.github/workflows/playwright.yml</code>):</strong></p>
+<pre class="code-block"><code class="lang-yaml">on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        type: boolean
+        default: false
+        description: "Regenerate reference snapshots (human approval required)"</code></pre>
+<p>The <code>update_snapshots</code> flag can only be enabled manually via <code>workflow_dispatch</code>. Enabling this flag automatically on push would destroy the test's value (always green = detects nothing). This rule is aligned with the "the human always has the final word" principle (ADR-004).</p>
+<p><strong>Update reminder mechanism:</strong></p>
+<p>Three layered mechanisms: 1. <strong>pre-push git hook</strong> (<code>.githooks/pre-push</code>) — console message when <code>components/</code> or <code>tokens/</code> changed 2. <strong>CI log message</strong> — a step displayed when a diff is detected 3. *(Optional)* <strong>Automatic GitHub issue</strong> — a <code>visual-review</code> issue for teams with non-dev designers</p>
+<h3>2. The DS provides a test kit for consuming teams</h3>
+<p>The DS <strong>does not test consumer products</strong> — it provides them with tools to test themselves. This kit is delivered as documentation and sample code in this repository.</p>
+<p><strong>Kit contents (to be implemented in phase 2):</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Deliverable</th><th>Location</th><th>Description</th></tr></thead><tbody><tr><td>Playwright fixtures</td><td><code>tests/consumer-kit/fixtures.js</code></td><td><code>withDSTheme(page, 'dark')</code>, <code>waitForDSReady(page)</code></td></tr><tr><td>Setup example</td><td><code>tests/consumer-kit/example.spec.js</code></td><td>Minimal test showing how to test a DS component in a product context</td></tr><tr><td>Documentation</td><td><code>guidelines/foundations/testing.md</code></td><td>"Testing your product with the DS" guide</td></tr></tbody></table></div>
+<p><strong>Kit principle:</strong> product teams copy or import the fixtures into their own repository. The DS doesn't know their product — it provides test primitives, not tests.</p>
+<h3>3. axe-core integration into Playwright (phase 2)</h3>
+<p>The existing <code>axe.yml</code> workflow already uses Playwright internally (Chromium). It will be merged into the Playwright workflow in phase 2 via <code>@axe-core/playwright</code> (already in <code>devDependencies</code>), resulting in a single CI workflow instead of two.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep Chromatic (paid plan)</td><td>~205 CAD/month → RAMQ RFP; data outside Quebec</td></tr><tr><td>Percy / Applitools</td><td>Same problem: external SaaS, cost, data outside infra</td></tr><tr><td>Storybook Visual Tests (Chromatic addon)</td><td>Depends on Chromatic; same limit</td></tr><tr><td>BackstopJS</td><td>Less maintained, no native multi-browser support, DX inferior to Playwright</td></tr><tr><td>Test consuming products from this repository</td><td>Inverted coupling (DS depends on products); impossible to maintain; each team owns its own tests</td></tr><tr><td>A single "merged" DS + product scope</td><td>Confusion of responsibilities; a product failure would block the DS CI</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<h3>For the DS team</h3>
+<ul><li>The reference PNG snapshots are committed to <code>tests/visual/snapshots/</code> — they are</li></ul>
+<p>  part of the repository and visible via <code>git diff</code> like any other file.</p>
+<ul><li>Any intentional visual change (redesign, new token) requires a manually triggered</li></ul>
+<p>  <code>--update-snapshots</code>, followed by a snapshot-update commit.</p>
+<ul><li>The Microsoft Docker image guarantees that detected diffs are real regressions, not</li></ul>
+<p>  rendering artifacts between OSes.</p>
+<h3>For product teams</h3>
+<ul><li>They are responsible for their own visual tests in their own repositories.</li><li>The DS provides them a kit (fixtures + example) to get started quickly.</li><li>The component guidelines document the expected, testable behaviors.</li></ul>
+<h3>For agents</h3>
+<ul><li><code>tests/visual/snapshots/</code> contains binary PNG files — never modify these files</li></ul>
+<p>  manually, only via <code>--update-snapshots</code>.</p>
+<ul><li>Do not add tests that test hypothetical consumer products in this repository.</li><li>The <code>playwright.yml</code> workflow must always build the site before the tests:</li></ul>
+<p>  <code>node site/build.js</code> → <code>npx playwright test</code>.</p>
+<h3>Files affected / created</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>File</th><th>Status</th><th>Description</th></tr></thead><tbody><tr><td><code>playwright.config.js</code></td><td>Created</td><td>Playwright configuration (multi-browser, baseURL, Docker)</td></tr><tr><td><code>tests/visual/home.spec.js</code></td><td>Created</td><td>Home page regressions</td></tr><tr><td><code>tests/visual/documentation.spec.js</code></td><td>Created</td><td>Doc pages + foundations regressions</td></tr><tr><td><code>tests/visual/components/button.spec.js</code></td><td>Created</td><td>Button page regression</td></tr><tr><td><code>tests/functional/nav.spec.js</code></td><td>To create</td><td>Navigation functional tests</td></tr><tr><td><code>tests/functional/sidebar.spec.js</code></td><td>To create</td><td>Sidebar functional tests</td></tr><tr><td><code>.github/workflows/playwright.yml</code></td><td>To create</td><td>Playwright CI workflow</td></tr><tr><td><code>.githooks/pre-push</code></td><td>To create</td><td>Local reminder hook</td></tr><tr><td><code>.github/workflows/chromatic.yml</code></td><td>Modified</td><td>Push disabled (2026-07-01)</td></tr></tbody></table></div>
+<hr>
+<h2>Expected outcome</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Metric</th><th>Chromatic (before)</th><th>Playwright (target)</th></tr></thead><tbody><tr><td>Monthly cost</td><td>~205 CAD</td><td>0 CAD</td></tr><tr><td>Data</td><td>Chromatic Inc. (external)</td><td>Internal CI only</td></tr><tr><td>Browsers covered</td><td>1 (Chromium)</td><td>3 (Chromium + Firefox + WebKit)</td></tr><tr><td>Quotas</td><td>35,000 snapshots/month</td><td>Unlimited</td></tr><tr><td>Themes tested</td><td>light + dark (modes)</td><td>light + dark (per spec)</td></tr><tr><td>Breakpoints</td><td>Desktop only</td><td>Desktop + Tablet + Mobile</td></tr><tr><td>Diff approval</td><td>Chromatic web interface</td><td><code>workflow_dispatch</code> + commit</td></tr></tbody></table></div></div><div class="lang-fr"><p><strong>Date :</strong> 2026-07-02 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-006 (Chromatic), ADR-007 (axe-core), ADR-009 (Storybook), ADR-004 (gouvernance humaine)</p>
 <hr>
 <h2>Contexte</h2>
 <p>La limite mensuelle de snapshots gratuits Chromatic a été atteinte le 2026-07-01 (période 2026-06-30 → 2026-07-31). Le plan payant suivant coûte ~149 USD/mois (~205 CAD) et nécessiterait un appel d'offres formel dans le contexte gouvernemental visé (RAMQ).</p>
@@ -207,7 +288,7 @@ playwright.config.js</code></pre>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Fichier</th><th>Statut</th><th>Description</th></tr></thead><tbody><tr><td><code>playwright.config.js</code></td><td>Créé</td><td>Configuration Playwright (multi-browser, baseURL, Docker)</td></tr><tr><td><code>tests/visual/home.spec.js</code></td><td>Créé</td><td>Régressions page home</td></tr><tr><td><code>tests/visual/documentation.spec.js</code></td><td>Créé</td><td>Régressions pages doc + fondations</td></tr><tr><td><code>tests/visual/components/button.spec.js</code></td><td>Créé</td><td>Régression page button</td></tr><tr><td><code>tests/functional/nav.spec.js</code></td><td>À créer</td><td>Tests fonctionnels navigation</td></tr><tr><td><code>tests/functional/sidebar.spec.js</code></td><td>À créer</td><td>Tests fonctionnels sidebar</td></tr><tr><td><code>.github/workflows/playwright.yml</code></td><td>À créer</td><td>Workflow CI Playwright</td></tr><tr><td><code>.githooks/pre-push</code></td><td>À créer</td><td>Hook local de rappel</td></tr><tr><td><code>.github/workflows/chromatic.yml</code></td><td>Modifié</td><td>Push désactivé (2026-07-01)</td></tr></tbody></table></div>
 <hr>
 <h2>Résultat attendu</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Métrique</th><th>Chromatic (avant)</th><th>Playwright (cible)</th></tr></thead><tbody><tr><td>Coût mensuel</td><td>~205 CAD</td><td>0 CAD</td></tr><tr><td>Données</td><td>Chromatic Inc. (externe)</td><td>CI interne uniquement</td></tr><tr><td>Browsers couverts</td><td>1 (Chromium)</td><td>3 (Chromium + Firefox + WebKit)</td></tr><tr><td>Quotas</td><td>35 000 snapshots/mois</td><td>Illimité</td></tr><tr><td>Thèmes testés</td><td>light + dark (modes)</td><td>light + dark (per spec)</td></tr><tr><td>Breakpoints</td><td>Desktop uniquement</td><td>Desktop + Tablet + Mobile</td></tr><tr><td>Approbation des diffs</td><td>Interface web Chromatic</td><td><code>workflow_dispatch</code> + commit</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Métrique</th><th>Chromatic (avant)</th><th>Playwright (cible)</th></tr></thead><tbody><tr><td>Coût mensuel</td><td>~205 CAD</td><td>0 CAD</td></tr><tr><td>Données</td><td>Chromatic Inc. (externe)</td><td>CI interne uniquement</td></tr><tr><td>Browsers couverts</td><td>1 (Chromium)</td><td>3 (Chromium + Firefox + WebKit)</td></tr><tr><td>Quotas</td><td>35 000 snapshots/mois</td><td>Illimité</td></tr><tr><td>Thèmes testés</td><td>light + dark (modes)</td><td>light + dark (per spec)</td></tr><tr><td>Breakpoints</td><td>Desktop uniquement</td><td>Desktop + Tablet + Mobile</td></tr><tr><td>Approbation des diffs</td><td>Interface web Chromatic</td><td><code>workflow_dispatch</code> + commit</td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-065.html" class="agtc-button secondary">← ADR-065</a>
     <a href="adr-067.html" class="agtc-button secondary">ADR-067 →</a>
   </div></main>

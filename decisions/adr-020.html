@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Grille 4px comme échelle dimensionnelle systémique — Agentica</title>
+<title>4px grid as the systemic dimensional scale — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Grille 4px comme échelle dimensionnelle systémique — Agentica">
+<meta property="og:title" content="4px grid as the systemic dimensional scale — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Grille 4px comme échelle dimensionnelle systémique — Agentica">
+<meta name="twitter:title" content="4px grid as the systemic dimensional scale — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Grille 4px comme échelle dimensionnelle systémique</h1>
+  <h1 class="adr-page-title">4px grid as the systemic dimensional scale</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,46 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Formalizes the 4px spacing grid that was already in informal use, completing the scale from 4 to 10 values (4px through 64px). Every spacing value must be a multiple of 4px; new values are added to the primitive scale rather than created ad hoc.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The project had used 4 primitive spacing values from the outset (8, 16, 20, 32 px) — all multiples of 4 — without this decision being formally documented or the full scale defined. This ADR formalizes the implicit decision and completes the scale.</p>
+<h3>Situation before</h3>
+<pre class="code-block"><code class="lang-json">"space": {
+  "2": "8px",
+  "4": "16px",
+  "5": "20px",
+  "8": "32px"
+}</code></pre>
+<p>Only four values, named by their multiplier without the base module (4px) being explicitly declared. Any new spacing value required an ad hoc decision with no normative reference.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Base module: 4px</h3>
+<p>Every dimensional value in the system is a multiple of 4px. This module is the smallest allowed increment.</p>
+<pre class="code-block"><code class="lang-text">1 unit = 4px</code></pre>
+<h3>Full spacing primitive scale</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Multiplier</th><th>Typical usage</th></tr></thead><tbody><tr><td><code>primitive.space.1</code></td><td>4px</td><td>4 × 1</td><td>Micro — separator, minimal internal gap</td></tr><tr><td><code>primitive.space.2</code></td><td>8px</td><td>4 × 2</td><td>Small — vertical control padding</td></tr><tr><td><code>primitive.space.3</code></td><td>12px</td><td>4 × 3</td><td>Intermediate</td></tr><tr><td><code>primitive.space.4</code></td><td>16px</td><td>4 × 4</td><td>Standard — horizontal control padding</td></tr><tr><td><code>primitive.space.5</code></td><td>20px</td><td>4 × 5</td><td>Medium</td></tr><tr><td><code>primitive.space.6</code></td><td>24px</td><td>4 × 6</td><td>Large intermediate</td></tr><tr><td><code>primitive.space.8</code></td><td>32px</td><td>4 × 8</td><td>Large — separation between components</td></tr><tr><td><code>primitive.space.10</code></td><td>40px</td><td>4 × 10</td><td>Very large</td></tr><tr><td><code>primitive.space.12</code></td><td>48px</td><td>4 × 12</td><td>Macro</td></tr><tr><td><code>primitive.space.16</code></td><td>64px</td><td>4 × 16</td><td>Macro — separation between page sections</td></tr></tbody></table></div>
+<p>The 4 existing values (2, 4, 5, 8) remain unchanged — full backward compatibility.</p>
+<h3>Extension rule</h3>
+<p>If a new spacing value is required, it must be a multiple of 4. If the value doesn't exist in the primitive scale, create the missing token rather than use an arbitrary value.</p>
+<hr>
+<h2>Rationale</h2>
+<h3>Why 4px?</h3>
+<p><strong>Industry convergence:</strong> Material Design (Google), Polaris (Shopify), Atlassian Design System, Carbon (IBM), Spectrum (Adobe) — all use a 4px or 8px grid (8px being simply a subset of 4px at double spacing).</p>
+<p><strong>Natural alignment:</strong> High-density screens (2×, 3×) divide whole pixels into sub-pixels. A 4px grid guarantees that every value stays a whole number at every display density.</p>
+<p><strong>Decision consistency:</strong> With a 4px grid, designers and agents don't have to arbitrate between close values (14px vs 16px). The grid decides: it's 12px or 16px, not 14px.</p>
+<p><strong>Automated audit:</strong> audit-tokens.js can detect any spacing value that isn't a multiple of 4 and flag it as drift.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>8px grid</strong></td><td>Too coarse for micro-spacing (a badge's internal gap, a tag's padding). 4px offers more flexibility without chaos.</td></tr><tr><td><strong>Fibonacci scale (4, 8, 12, 20, 32...)</strong></td><td>Memorization complexity with no demonstrable visual benefit for this project.</td></tr><tr><td><strong>T-shirt scale (xs/sm/md/lg/xl)</strong></td><td>Opaque to agents — <code>space.4</code> (16px, 4×4) is more traceable than <code>space.md</code> (an arbitrary value).</td></tr><tr><td><strong>Keep the 4 existing values</strong></td><td>Insufficient: teams create ad hoc values outside the grid as soon as a step is missing.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For tokens:</strong></p>
+<ul><li><code>primitive.space</code> goes from 4 to 10 values</li><li>All existing semantic references remain valid (no path changes)</li><li>6 new primitives available for future semantic tokens</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Any spacing request can be resolved by referencing the scale</li><li>Drift (hardcoded px, off-grid values) is detectable by audit</li></ul>
+<p><strong>For teams:</strong></p>
+<ul><li>Memorable rule: "if it's not in the table, it's not in the system"</li><li>Spacing decisions are reduced to picking a step, not a value</li></ul>
+<p><strong>Debt cleared:</strong></p>
+<ul><li>The implicit decision to use a 4px grid is now formalized and traceable</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le projet utilisait depuis l'origine 4 valeurs d'espacement primitives (8, 16, 20, 32 px) — toutes des multiples de 4 — sans que cette décision soit formellement documentée ni l'échelle complète définie. Cette ADR formalise la décision implicite et complète l'échelle.</p>
 <h3>Situation avant</h3>
 <pre class="code-block"><code class="lang-json">"space": {
@@ -172,7 +207,7 @@
 <p><strong>Pour les équipes :</strong></p>
 <ul><li>Règle mémorisable : « si ça n'est pas dans la table, ce n'est pas dans le système »</li><li>Les décisions d'espacement se réduisent à choisir un échelon, pas une valeur</li></ul>
 <p><strong>Dette soldée :</strong></p>
-<ul><li>La décision implicite d'utiliser une grille 4px est maintenant formalisée et traçable</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>La décision implicite d'utiliser une grille 4px est maintenant formalisée et traçable</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-019.html" class="agtc-button secondary">← ADR-019</a>
     <a href="adr-021.html" class="agtc-button secondary">ADR-021 →</a>
   </div></main>

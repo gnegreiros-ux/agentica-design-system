@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Échelle typographique : Minor Third rem + règles de line-height — Agentica</title>
+<title>Typographic scale: rem Minor Third + line-height rules — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Échelle typographique : Minor Third rem + règles de line-height — Agentica">
+<meta property="og:title" content="Typographic scale: rem Minor Third + line-height rules — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Échelle typographique : Minor Third rem + règles de line-height — Agentica">
+<meta name="twitter:title" content="Typographic scale: rem Minor Third + line-height rules — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Échelle typographique : Minor Third rem + règles de line-height</h1>
+  <h1 class="adr-page-title">Typographic scale: rem Minor Third + line-height rules</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,57 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes a rem-based Minor Third (1.2 ratio) type scale, rounded to the 4px grid, running from <code>xs</code> (12px) to <code>5xl</code> (48px), with three line-height rules assigned by context (1.6 for reading text, 1.1 for mid-size headings, 1.0 for display sizes) to satisfy WCAG 1.4.4 and 1.4.12.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The previous typographic scale had 3 sizes (sm/md/xl in px) with no formalized scale logic, no line-height management by context, and no distinction between the needs of marketing, e-commerce, and SaaS contexts. The goal is an accessible, coherent scale, adapted to usage profiles.</p>
+<h3>Situation before</h3>
+<pre class="code-block"><code class="lang-json">"fontSize": {
+  "sm": "14px",
+  "md": "16px",
+  "xl": "24px"
+},
+"lineHeight": {
+  "tight": "1.25",
+  "normal": "1.5"
+}</code></pre>
+<p>Three sizes in px, two line-heights with no assignment rules.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Unit: rem (relative to the browser base)</h3>
+<p>All font sizes are expressed in <code>rem</code> (reference = 1rem = 16px). This convention:</p>
+<ul><li>Respects user zoom preferences (WCAG accessibility)</li><li>Allows low-vision users to enlarge text without breaking relative layouts</li><li>Remains compatible with the 4px grid (the equivalent px values are multiples of 4)</li></ul>
+<h3>Scale: Minor Third (ratio 1.2)</h3>
+<p>The scale for large sizes (headings) follows the Minor Third musical scale (ratio 1.2), rounded to the nearest multiple of 4px to respect the grid.</p>
+<pre class="code-block"><code class="lang-text">16px × 1.200¹ = 19.2  → 20px  (lg)
+16px × 1.200² = 23.0  → 24px  (xl)
+16px × 1.200³ = 27.6  → 28px  (2xl)
+16px × 1.200⁴ = 33.2  → 32px  (3xl)
+16px × 1.200⁵ = 39.8  → 40px  (4xl)</code></pre>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>rem</th><th>px</th><th>Line-height</th><th>Role</th></tr></thead><tbody><tr><td><code>fontSize.xs</code></td><td>0.75rem</td><td>12px</td><td>1.6</td><td>Details, annotations, captions</td></tr><tr><td><code>fontSize.sm</code></td><td>0.875rem</td><td>14px</td><td>1.6</td><td>Labels, metadata, helper text</td></tr><tr><td><code>fontSize.base</code></td><td>1rem</td><td>16px</td><td>1.6</td><td>Main body text</td></tr><tr><td><code>fontSize.lg</code></td><td>1.25rem</td><td>20px</td><td>1.1</td><td>Heading 5, subtitles</td></tr><tr><td><code>fontSize.xl</code></td><td>1.5rem</td><td>24px</td><td>1.1</td><td>Heading 4</td></tr><tr><td><code>fontSize.2xl</code></td><td>1.75rem</td><td>28px</td><td>1.1</td><td>Heading 3</td></tr><tr><td><code>fontSize.3xl</code></td><td>2rem</td><td>32px</td><td>1.0</td><td>Heading 2</td></tr><tr><td><code>fontSize.4xl</code></td><td>2.5rem</td><td>40px</td><td>1.0</td><td>Heading 1</td></tr><tr><td><code>fontSize.5xl</code></td><td>3rem</td><td>48px</td><td>1.0</td><td>Hero display</td></tr></tbody></table></div>
+<h3>Line-height rules</h3>
+<p>Only three values, assigned by context:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Assignment rule</th></tr></thead><tbody><tr><td><code>lineHeight.reading</code></td><td>1.6</td><td>Any text of size ≤ base (xs, sm, base)</td></tr><tr><td><code>lineHeight.heading</code></td><td>1.1</td><td>Mid-size headings (lg, xl, 2xl)</td></tr><tr><td><code>lineHeight.display</code></td><td>1.0</td><td>Large headings (3xl, 4xl, 5xl)</td></tr></tbody></table></div>
+<p><strong>Rationale:</strong></p>
+<ul><li>1.6 on small sizes → maximum legibility, WCAG 1.4.12 compliance</li><li>1.0–1.1 on large headings → visual impact, consistency between marketing and SaaS sites</li></ul>
+<hr>
+<h2>Rationale</h2>
+<h3>Why Minor Third?</h3>
+<p>The Minor Third (1.200) is the scale best suited to hybrid interfaces (marketing + SaaS):</p>
+<ul><li>Expressive enough for marketing pages (visually hierarchical headings)</li><li>Restrained enough for SaaS (no gigantic gaps between levels)</li><li>Values rounded to 4px remain all memorable</li></ul>
+<h3>Why rem and not px?</h3>
+<p>Browser accessibility preferences (text zoom, base font size) use rem as their lever. A px-based system ignores these preferences. WCAG recommends relative units for text (Success Criterion 1.4.4).</p>
+<h3>Why line-height 1.6 for common text?</h3>
+<p>WCAG 2.1 Success Criterion 1.4.12 (Text Spacing) requires that content remain readable with a line-height of 1.5×. A default value of 1.6 covers this criterion automatically with no override needed.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Major Second (1.125)</strong></td><td>Too little differentiation between heading levels</td></tr><tr><td><strong>Perfect Fourth (1.333)</strong></td><td>Too dramatic for high information-density SaaS interfaces</td></tr><tr><td><strong>Fixed scale (8, 12, 16, 20, 24, 32, 40)</strong></td><td>No mathematical ratio — hard to extend coherently</td></tr><tr><td><strong>Keep px</strong></td><td>Incompatible with browser zoom preferences (WCAG 1.4.4)</td></tr><tr><td><strong>Single 1.5 line-height</strong></td><td>Too compressed on small text, too airy on very large text</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For tokens:</strong></p>
+<ul><li><code>primitive.fontSize</code> goes from 3 to 9 values (xs → 5xl)</li><li><code>primitive.lineHeight</code> goes from 2 to 3 values (reading, heading, display)</li><li><code>semantic.typography</code> expands from 3 styles (body, label, heading) to 9 (detail, label, body, h5→h1, hero)</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent can choose the correct typographic level by intent (body vs heading vs hero) without improvising sizes</li></ul>
+<p><strong>For teams:</strong></p>
+<ul><li>Simple rule: if it's body text → base (1rem); if it's a heading → choose among lg→4xl; if it's hero decoration → 5xl</li><li>No hardcoded intermediate value allowed</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'échelle typographique précédente comportait 3 tailles (sm/md/xl en px) sans logique d'échelle formalisée, sans gestion du line-height par contexte, et sans distinction entre les besoins des contextes marketing, e-commerce et SaaS. L'objectif est une échelle accessible, cohérente, et adaptée aux profils d'usage.</p>
 <h3>Situation avant</h3>
 <pre class="code-block"><code class="lang-json">"fontSize": {
@@ -183,7 +229,7 @@
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li>Un agent peut choisir le niveau typographique correct par intention (corps vs titre vs hero) sans improviser des tailles</li></ul>
 <p><strong>Pour les équipes :</strong></p>
-<ul><li>Règle simple : si c'est du texte courant → base (1rem) ; si c'est un titre → choisir parmi lg→4xl ; si c'est de la déco hero → 5xl</li><li>Aucune valeur intermédiaire en dur autorisée</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Règle simple : si c'est du texte courant → base (1rem) ; si c'est un titre → choisir parmi lg→4xl ; si c'est de la déco hero → 5xl</li><li>Aucune valeur intermédiaire en dur autorisée</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-022.html" class="agtc-button secondary">← ADR-022</a>
     <a href="adr-024.html" class="agtc-button secondary">ADR-024 →</a>
   </div></main>

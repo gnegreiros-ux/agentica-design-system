@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Style d'illustration « Tactile Tech » + palette sémantique `color.illustration` — Agentica</title>
+<title>Illustration style "Tactile Tech" + semantic palette `color.illustration` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Style d'illustration « Tactile Tech » + palette sémantique `color.illustration` — Agentica">
+<meta property="og:title" content="Illustration style "Tactile Tech" + semantic palette `color.illustration` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Style d'illustration « Tactile Tech » + palette sémantique `color.illustration` — Agentica">
+<meta name="twitter:title" content="Illustration style "Tactile Tech" + semantic palette `color.illustration` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Style d'illustration « Tactile Tech » + palette sémantique `color.illustration`</h1>
+  <h1 class="adr-page-title">Illustration style "Tactile Tech" + semantic palette `color.illustration`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,39 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Humain (approbation du style) · Design System Lead (jetons sémantiques)</dd>
+      <dd>Human (style approval) · Design System Lead (semantic tokens)</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes "Tactile Tech" as the site's illustration style (geometric shapes + grain texture, showing business outcomes rather than UI screenshots) and adds a 5-token <code>semantic.color.illustration.*</code> group, each mapped to existing color primitives with no new raw values.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The site redesign (2026-06-06 brief) calls for illustrations to visually explain the system's concepts (hero, "For every role" section, Pipelines & Workflows showcase). We needed <strong>a single coherent, tokenized visual language</strong>, rather than illustrations improvised case by case, and compliant with the "never a hardcoded color" rule.</p>
+<p>Two sources framed the decision:</p>
+<ul><li>The article *SaaS illustration styles that convert* — style #1 **"Tactile Tech: Humanizing</li></ul>
+<p>  Complexity"** (https://getillustrations.com/blog/saas-illustration-styles-that-convert/).</p>
+<ul><li>The prototype's <code>inspiration/</code> folder: <code>color-pattern.jpg</code> (flat-shape geometry) and</li></ul>
+<p>  <code>brand-colors.jpg</code> (palette).</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>1. <strong>Style chosen: "Tactile Tech."</strong> Precise geometric vector shapes (overlapping angular flat    fills) + grain/stipple/brush texture. Shows the <strong>business outcome</strong>, never UI screenshots.    Full spec: <code>guidelines/foundations/illustration.md</code> (approved by the human).    Product rationale: the tactile imperfection serves the narrative *"the last word is human."*</p>
+<p>2. <strong>Addition of the <code>color.illustration</code> semantic group</strong> (5 tokens, all backed by existing    primitives — no raw value, no primitive modified):</p>
+<p>   | Token | Primitive reference | Illustration role |    |-------|---------------------|-------------------|    | <code>color.illustration.ink</code>     | <code>{primitive.color.mauve.12}</code>   | dark masses, anchoring |    | <code>color.illustration.accent</code>  | <code>{primitive.color.crimson.9}</code>  | warm focal point, energy |    | <code>color.illustration.brand</code>   | <code>{primitive.color.teal.9}</code>     | brand throughline (= <code>brand.primary</code>) |    | <code>color.illustration.neutral</code> | <code>{primitive.color.slate.9}</code>    | secondary masses, depth |    | <code>color.illustration.surface</code> | <code>{primitive.color.slate.3}</code>    | breathing room, light negative space |</p>
+<p>   The inspiration palette (<code>brand-colors.jpg</code>) was mapped to the closest primitive step, teal    already being common to the brand.</p>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td>Style decision + <code>guidelines/foundations/illustration.md</code></td><td>Production of the final illustrations (pipeline steps 3-4)</td></tr><tr><td>5 <code>semantic.color.illustration.*</code> tokens</td><td>Dark-mode remapping of the tokens (upcoming dual-theme project)</td></tr><tr><td>—</td><td>Raster texture tool (grain/brush) — decision still to be made</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Introducing raw colors from the inspiration JPG</strong>: contrary to <code>tokens-system.md</code> (never a</li></ul>
+<p>  raw value). Mapping onto existing primitives preserves auditability — rejected.</p>
+<ul><li><strong>Reusing <code>viz</code> (data-viz)</strong>: <code>viz</code> targets information-bearing data visualization; illustration</li></ul>
+<p>  is narrative/decorative. Mixing the two would blur intent — rejected.</p>
+<ul><li><strong>Another style from the article</strong> (e.g. 3D, isometric): colder/more generic, less aligned with</li></ul>
+<p>  the system's "human" narrative — rejected.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>Every future illustration consumes <code>color.illustration.*</code> — consistency guaranteed across all</li></ul>
+<p>  surfaces (site + pipelines showcase, merged Phase E/F).</p>
+<ul><li>Governance: 5 semantic tokens added (Design System Lead). No primitive modified.</li><li><strong>To follow up:</strong> (1) remapping the tokens in dark mode during the dual-theme project; (2)</li></ul>
+<p>  decision on the raster texture tool; (3) every illustration produced goes through the axe-core   gate (meaning-bearing elements ≥ 3:1) and remains subject to human approval.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le redesign du site (brief 2026-06-06) prévoit des illustrations pour expliquer visuellement les concepts du système (hero, section « Pour chaque rôle », vitrine Pipelines & Workflows). Il fallait <strong>un seul langage visuel</strong> cohérent et <strong>tokenisé</strong>, plutôt que des illustrations improvisées au coup par coup, et conforme à la règle « jamais de couleur en dur ».</p>
 <p>Deux sources cadrent la décision :</p>
 <ul><li>L'article *SaaS illustration styles that convert* — style #1 **« Tactile Tech : Humanizing</li></ul>
@@ -162,7 +187,7 @@
 <ul><li>Toute illustration future consomme <code>color.illustration.*</code> — cohérence garantie sur toutes les</li></ul>
 <p>  surfaces (site + vitrine pipelines, Phase E/F fusionnées).</p>
 <ul><li>Gouvernance : 5 jetons sémantiques ajoutés (Design System Lead). Aucun primitif modifié.</li><li><strong>À suivre :</strong> (1) remappage des jetons en dark mode lors du chantier thème dual ; (2) décision</li></ul>
-<p>  sur l'outil de texture raster ; (3) chaque illustration produite passe au gate axe-core   (éléments porteurs de sens ≥ 3:1) et reste soumise à approbation humaine.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  sur l'outil de texture raster ; (3) chaque illustration produite passe au gate axe-core   (éléments porteurs de sens ≥ 3:1) et reste soumise à approbation humaine.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-050.html" class="agtc-button secondary">← ADR-050</a>
     <a href="adr-052.html" class="agtc-button secondary">ADR-052 →</a>
   </div></main>

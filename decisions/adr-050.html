@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Teal d'action conforme sur le fond réel : teal.11 `#008573` → `#007a68` — Agentica</title>
+<title>Compliant action teal on the real surface: teal.11 `#008573` → `#007a68` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Teal d'action conforme sur le fond réel : teal.11 `#008573` → `#007a68` — Agentica">
+<meta property="og:title" content="Compliant action teal on the real surface: teal.11 `#008573` → `#007a68` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Teal d'action conforme sur le fond réel : teal.11 `#008573` → `#007a68` — Agentica">
+<meta name="twitter:title" content="Compliant action teal on the real surface: teal.11 `#008573` → `#007a68` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Teal d'action conforme sur le fond réel : teal.11 `#008573` → `#007a68`</h1>
+  <h1 class="adr-page-title">Compliant action teal on the real surface: teal.11 `#008573` → `#007a68`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,49 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Principal Designer (valeur de jeton primitif)</dd>
+      <dd>Principal Designer (primitive token value)</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Corrects ADR-048's teal.11 value: it was validated against pure white (#ffffff), but the real page background is <code>#fcfcfc</code>, causing the first axe-core run to surface 76 contrast violations. Retunes <code>primitive.color.teal.11</code> from <code>#008573</code> to <code>#007a68</code>, restoring AA compliance (5.14:1) on the actual background with a comfortable safety margin.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p><strong>ADR-048</strong> raised <code>action.primary</code> to <code>teal.11</code> (<code>#008573</code>), certifying it at <strong>4.56:1</strong>, a value measured <strong>against pure white <code>#ffffff</code></strong>. But the system's real page background is <strong><code>gray.1</code> = <code>#fcfcfc</code></strong> ("App background" token), not pure white.</p>
+<p>The <strong>first run of the axe-core gate</strong> (ADR-007, enabled in reporting mode — commit <code>2d84e75</code>) revealed <strong>76 violations</strong>, with one dominant, <strong>systemic</strong> root cause:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pair measured</th><th>Real ratio</th><th>AA text (4.5:1)</th></tr></thead><tbody><tr><td><code>action.primary</code> teal.11 <code>#008573</code> as <strong>text</strong> on <code>#fcfcfc</code> (gray.1)</td><td><strong>4.45:1</strong></td><td>❌ fails by a hair</td></tr><tr><td>White text on primary button teal.11 <code>#008573</code></td><td>4.56:1</td><td>✅ (borderline)</td></tr></tbody></table></div>
+<p>The failure is <strong>uniform</strong> everywhere the action teal serves as <strong>text</strong>: active links (nav / TOC / sidebar), <code>secondary</code>/<code>ghost</code> button text, inline code (<code>td code</code>), prose links. ADR-048's margin (0.06 above threshold) was calibrated against the wrong surface; on <code>#fcfcfc</code> it drops below the threshold.</p>
+<blockquote><p>The Radix teal ramp offers <strong>no step</strong> between teal.11 (<code>#008573</code>) and teal.12 (<code>#0d3d38</code>, near-black, 11.75:1). The fix is therefore not an existing step but a <strong>slightly darker action teal</strong> — a <strong>primitive token value</strong> decision (Principal Designer governance), not a CSS patch.</p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Retune the <strong><code>teal.11</code></strong> primitive from <code>#008573</code> to <strong><code>#007a68</code></strong>.</p>
+<p><code>teal.11</code> is consumed by only two semantic roles — <code>action.primary</code> and <code>border.focus</code> — which automatically inherit the new value. No other consumer (contained blast radius).</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Before</th><th>After</th><th>As text on <code>#fcfcfc</code></th><th>White text on top</th></tr></thead><tbody><tr><td><code>primitive.color.teal.11</code></td><td><code>#008573</code></td><td><strong><code>#007a68</code></strong></td><td>4.45 → <strong>5.14:1</strong> ✅ AA</td><td>4.56 → <strong>5.27:1</strong> ✅ AA</td></tr><tr><td><code>semantic.action.primary</code> (→ teal.11)</td><td>—</td><td>inherits</td><td><strong>5.14:1</strong> ✅</td><td><strong>5.27:1</strong> ✅</td></tr><tr><td><code>semantic.border.focus</code> (→ teal.11)</td><td>—</td><td>inherits</td><td><strong>5.14:1</strong> (≥3:1, non-text) ✅</td><td>—</td></tr><tr><td><code>action.primary-hover</code> (teal.12 <code>#0d3d38</code>)</td><td>unchanged</td><td>unchanged</td><td>11.75:1 ✅</td><td>—</td></tr><tr><td><code>brand.primary</code> (teal.9 <code>#12a594</code>, identity)</td><td>unchanged</td><td>unchanged</td><td>— (logotype, exempt)</td><td>—</td></tr></tbody></table></div>
+<p>The retained margin (~0.6 above threshold) is robust to rounding and to any slightly tinted surface, while remaining <strong>visibly teal</strong> (no drift toward teal.12's near-black).</p>
+<hr>
+<h2>Accessibility (WCAG 2.2)</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Element</th><th>After (<code>#007a68</code>)</th><th>Verdict</th></tr></thead><tbody><tr><td>Active link / code / ghost button text (teal as text on <code>#fcfcfc</code>)</td><td>5.14:1</td><td>✅ AA</td></tr><tr><td>Primary button text (white on teal.11)</td><td>5.27:1</td><td>✅ AA</td></tr><tr><td>Primary button hover (white on teal.12)</td><td>11.75:1</td><td>✅ AAA</td></tr><tr><td>Focus ring (teal.11 on <code>#fcfcfc</code>, non-text)</td><td>5.14:1</td><td>✅ (≥ 3:1)</td></tr><tr><td>"Agentica" wordmark (teal.9, logotype)</td><td>—</td><td>exempt (WCAG 1.4.3)</td></tr></tbody></table></div>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td><code>primitive.color.teal.11</code>: <code>#008573</code> → <code>#007a68</code></td><td><code>brand.primary</code> (teal.9, identity — SVG logo / manifest)</td></tr><tr><td><code>action.primary</code> + <code>border.focus</code> intents (ref. real surface, ADR-050)</td><td><code>action.primary-hover</code> (teal.12, already compliant)</td></tr><tr><td>Token code display in <code>site/build.js</code> (<code>#008573</code> → <code>#007a68</code>)</td><td>ADR-048 (immutable; this ADR corrects the record)</td></tr><tr><td><code>axe-core.md</code> pipeline docs (root cause marked resolved)</td><td>Recompiling <code>dist/</code> + <code>site/dist/</code> (artifacts regenerated at build)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Dedicated off-ramp action primitive</strong> (leave teal.11 = <code>#008573</code>, add <code>teal.action</code> =</li></ul>
+<p>  <code>#007a68</code>): keeps the canonical Radix ramp, but introduces an unnumbered off-scale   primitive. Rejected — <code>teal.11</code> has only two interactive consumers; retuning it in   place is contained and avoids an exception primitive.</p>
+<ul><li><strong>Finer value <code>#007e6c</code></strong> (4.87:1): compliant but only ~0.37 of margin — fragile</li></ul>
+<p>  against rounding / marginally darker surfaces. Rejected in favor of a comfortable margin.</p>
+<ul><li><strong>Lighten the page background</strong> (<code>#fcfcfc</code> → pure white): touches a much broader</li></ul>
+<p>  surface foundation to save a single pair, and displaces the problem. Rejected.</p>
+<ul><li><strong>Change nothing, document the debt</strong>: contrary to the non-negotiable WCAG AA value</li></ul>
+<p>  and the button contract ("4.5:1 minimum"). Rejected.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>The action teal is AA-compliant <strong>on the real surface</strong> (<code>#fcfcfc</code>), not just on</li></ul>
+<p>  theoretical white. The root cause of the 76 violations (the <code>color-contrast</code> category)   is resolved.</p>
+<ul><li>Still to address before the axe-core gate can become <strong>blocking</strong>:</li></ul>
+<p>  <code>aria-prohibited-attr</code> (decorative <code>&lt;div&gt;</code> → <code>role="img"</code>) and <code>label</code> (×2 controls with   no label). Out of scope for this (token) ADR.</p>
+<ul><li><code>guidelines/components/button.md</code> ("4.5:1 minimum") is now genuinely satisfied on the</li></ul>
+<p>  page background.</p>
+<ul><li>ADR-048 remains the historical record of the "two teals, two roles" split (brand</li></ul>
+<p>  teal.9 / action teal.11); this ADR-050 <strong>only corrects the action teal's value</strong> and   the reference-surface error. ADRs are immutable; <strong>ADR-050 is authoritative</strong> on the   value of <code>teal.11</code>.</p>
+<ul><li>Governance: change to a <strong>primitive token value</strong> — <strong>Principal Designer</strong> approval.</li></ul>
+<p>  No token added, no component token modified, no hardcoded value introduced.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'<strong>ADR-048</strong> a porté <code>action.primary</code> à <code>teal.11</code> (<code>#008573</code>) en le certifiant à <strong>4.56:1</strong>, valeur mesurée <strong>sur du blanc pur <code>#ffffff</code></strong>. Or le fond de page réel du système est <strong><code>gray.1</code> = <code>#fcfcfc</code></strong> (jeton « App background »), pas du blanc pur.</p>
 <p>La <strong>première exécution du gate axe-core</strong> (ADR-007, activé en mode rapport — commit <code>2d84e75</code>) a révélé <strong>76 violations</strong>, dont une cause racine dominante et <strong>systémique</strong> :</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Paire mesurée</th><th>Ratio réel</th><th>AA texte (4.5:1)</th></tr></thead><tbody><tr><td><code>action.primary</code> teal.11 <code>#008573</code> en <strong>texte</strong> sur <code>#fcfcfc</code> (gray.1)</td><td><strong>4.45:1</strong></td><td>❌ échec d'un cheveu</td></tr><tr><td>Texte blanc sur bouton primaire teal.11 <code>#008573</code></td><td>4.56:1</td><td>✅ (limite)</td></tr></tbody></table></div>
@@ -172,7 +207,7 @@
 <ul><li>ADR-048 reste l'historique de la séparation « deux teals, deux rôles » (brand teal.9 / action</li></ul>
 <p>  teal.11) ; cet ADR-050 <strong>corrige uniquement la valeur du teal d'action</strong> et l'erreur de surface de   référence. Les ADR sont immuables ; <strong>ADR-050 fait foi</strong> sur la valeur de <code>teal.11</code>.</p>
 <ul><li>Gouvernance : changement de <strong>valeur de jeton primitif</strong> — approbation <strong>Principal Designer</strong>.</li></ul>
-<p>  Aucun jeton ajouté, aucun jeton de composant modifié, aucune valeur en dur introduite.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  Aucun jeton ajouté, aucun jeton de composant modifié, aucune valeur en dur introduite.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-049.html" class="agtc-button secondary">← ADR-049</a>
     <a href="adr-051.html" class="agtc-button secondary">ADR-051 →</a>
   </div></main>

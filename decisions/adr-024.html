@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Brand palette : Teal primaire, Accent rose, Secondary bordeaux — Agentica</title>
+<title>Brand palette: Teal primary, Rose accent, Bordeaux secondary — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Brand palette : Teal primaire, Accent rose, Secondary bordeaux — Agentica">
+<meta property="og:title" content="Brand palette: Teal primary, Rose accent, Bordeaux secondary — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Brand palette : Teal primaire, Accent rose, Secondary bordeaux — Agentica">
+<meta name="twitter:title" content="Brand palette: Teal primary, Rose accent, Bordeaux secondary — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Brand palette : Teal primaire, Accent rose, Secondary bordeaux</h1>
+  <h1 class="adr-page-title">Brand palette: Teal primary, Rose accent, Bordeaux secondary</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,67 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes the official brand palette: Teal (Radix, already present) as the primary action color replacing Blue, plus two new custom palettes — a rose-coral Accent and a dark bordeaux Secondary — each with verified WCAG contrast ratios. Adds a new <code>semantic.color.brand.*</code> token group; <code>action.primary</code> migrates from blue to teal.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The system used Radix UI's Blue palette as the primary action color, with no defined brand palette. Teams had no formalized accent or secondary colors. This ADR defines the official brand palette.</p>
+<h3>Situation before</h3>
+<ul><li>Primary action: <code>primitive.color.blue.11</code></li><li>No accent color</li><li>No secondary palette</li><li>No <code>semantic.color.brand.*</code> token</li></ul>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Three brand palettes</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Role</th><th>Source palette</th><th>Main step</th><th>Hex value</th></tr></thead><tbody><tr><td><strong>Primary</strong></td><td>Radix Teal</td><td>9 (solid CTA)</td><td><code>#12a594</code></td></tr><tr><td><strong>Accent</strong></td><td>Custom</td><td>9 (solid CTA)</td><td><code>#ed6b86</code></td></tr><tr><td><strong>Secondary</strong></td><td>Custom</td><td>9 (solid dark)</td><td><code>#463239</code></td></tr></tbody></table></div>
+<h3>Primary: Teal (existing Radix)</h3>
+<p>The Teal palette is already present in the primitives (ADR-008). Step 9 (<code>#12a594</code>) is the solid CTA hue per the Radix convention.</p>
+<ul><li><code>semantic.color.action.primary</code> → <code>{primitive.color.teal.9}</code></li><li><code>semantic.color.action.primary-hover</code> → <code>{primitive.color.teal.10}</code></li><li><code>semantic.color.border.focus</code> → <code>{primitive.color.teal.9}</code></li></ul>
+<h3>Accent: rose-coral palette (Custom)</h3>
+<p>A custom palette, not present in Radix. Added under <code>primitive.color.accent</code>.</p>
+<pre class="code-block"><code class="lang-text">accent.9  = #ed6b86  → accent CTA, highlights, badges
+accent.10 = #e05f7b  → hover
+accent.11 = #a6294c  → text on light background</code></pre>
+<p>Verified contrast ratios:</p>
+<ul><li>accent.9 (#ed6b86) on white → 3.4:1 — usable exclusively as a background (never as text alone)</li><li>accent.11 (#a6294c) on white → 7.1:1 — WCAG AA and AAA compliant for body text</li></ul>
+<h3>Secondary: bordeaux palette (Custom)</h3>
+<p>A custom palette. Step 9 (<code>#463239</code>) is a very dark value (~L20) usable as a solid background or as a secondary brand text color.</p>
+<pre class="code-block"><code class="lang-text">secondary.9  = #463239  → dark background (dark mode, headers, dark badges)
+secondary.10 = #5f404b  → hover
+secondary.11 = #6b4b56  → medium text on light background
+secondary.12 = #432f36  → high-legibility text on light background</code></pre>
+<p>Contrast ratios:</p>
+<ul><li>secondary.9 (#463239) against white → 12.2:1 — WCAG AAA ✅</li><li>secondary.12 (#432f36) on white → 13.8:1 — WCAG AAA ✅</li></ul>
+<h3>New brand semantic tokens</h3>
+<pre class="code-block"><code class="lang-json">"color.brand.primary"           → teal.9     (main CTA background)
+"color.brand.primary-hover"     → teal.10
+"color.brand.primary-subtle"    → teal.3     (subtle background, chips, tags)
+"color.brand.accent"            → accent.9   (accent background)
+"color.brand.accent-hover"      → accent.10
+"color.brand.accent-subtle"     → accent.3   (subtle accent background)
+"color.brand.accent-text"       → accent.11  (accent text on light background)
+"color.brand.secondary"         → secondary.9
+"color.brand.secondary-hover"   → secondary.10
+"color.brand.secondary-text"    → secondary.12</code></pre>
+<hr>
+<h2>Rationale</h2>
+<h3>Why Teal as primary (rather than Blue)?</h3>
+<p>Teal (#12a594) is perceptually distinct from the standard blue of links and system interfaces (Chrome, Windows). This distinction reduces confusion between system navigation elements and the application's CTAs — a documented benefit in UX research.</p>
+<h3>Why a custom Accent palette?</h3>
+<p>The rose Accent (#ed6b86) does not exist in Radix under this exact hue — the closest Radix palettes (Pink, Crimson) are either more saturated or cooler. The custom palette allows a specific warmth consistent with the visual identity.</p>
+<h3>Why such a dark Secondary (#463239)?</h3>
+<p>A very dark secondary allows:</p>
+<ul><li>Dark-mode-ready components with no separate dark token</li><li>High contrast for dark badges, tags, tooltips</li><li>A neutral alternative to pure black (<code>#000</code>) that stays within the brand identity</li></ul>
+<h3>Impact on <code>color.action.*</code></h3>
+<p><code>action.primary</code> moves from blue.11 to teal.9. This change affects primary buttons, active links, and focus rings. Contrast tests remain satisfied (teal.9 = 4.6:1 on white as body text).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Keep Blue as primary</strong></td><td>Too generic — no brand identity</td></tr><tr><td><strong>Use Radix Pink as accent</strong></td><td>Too cold, different from the identity guidelines</td></tr><tr><td><strong>secondary.11 as CTA</strong></td><td>Insufficient contrast for a solid background with white text (3.8:1)</td></tr><tr><td><strong>Integrate the custom palettes as Radix forks</strong></td><td>Complex maintenance — better to name them explicitly as custom</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For tokens:</strong></p>
+<ul><li>2 new primitive palettes (<code>accent</code>, <code>secondary</code>) — 24 new primitive tokens</li><li><code>semantic.color.action.primary</code> migrates from blue → teal</li><li>New <code>semantic.color.brand.*</code> group — 10 new semantic tokens</li><li><code>semantic.color.border.focus</code> migrates from blue → teal</li></ul>
+<p><strong>For components:</strong></p>
+<ul><li><code>component.button.primary.background</code> → teal (via semantic.color.action.primary)</li><li>No component yet uses <code>brand.*</code> — teams can start adopting it</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent understands <code>color.brand.accent</code> as "brand accentuation" — not <code>#ed6b86</code></li><li>The brand.primary and action.primary tokens are intentionally distinct: brand expresses identity, action expresses function</li></ul>
+<p><strong>Debt resolved:</strong></p>
+<ul><li>The Figma synchronization strategy for the custom palettes is documented in <strong>ADR-026</strong></li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le système utilisait la palette Blue de Radix UI comme couleur d'action principale, sans palette de marque définie. Les équipes n'avaient pas de couleurs d'accentuation ni de couleur secondaire formalisées. Cette ADR définit la palette de marque officielle.</p>
 <h3>Situation avant</h3>
 <ul><li>Action primaire : <code>primitive.color.blue.11</code></li><li>Pas de couleur d'accentuation</li><li>Pas de palette secondaire</li><li>Pas de token <code>semantic.color.brand.*</code></li></ul>
@@ -193,7 +249,7 @@ secondary.12 = #432f36  → texte haute lisibilité sur fond clair</code></pre>
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li>Un agent comprend <code>color.brand.accent</code> comme "accentuation de marque" — pas <code>#ed6b86</code></li><li>Les tokens brand.primary et action.primary sont intentionnellement distincts : brand exprime l'identité, action exprime la fonction</li></ul>
 <p><strong>Dette soldée :</strong></p>
-<ul><li>La stratégie de synchronisation Figma pour les palettes custom est documentée dans <strong>ADR-026</strong></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>La stratégie de synchronisation Figma pour les palettes custom est documentée dans <strong>ADR-026</strong></li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-023.html" class="agtc-button secondary">← ADR-023</a>
     <a href="adr-025.html" class="agtc-button secondary">ADR-025 →</a>
   </div></main>

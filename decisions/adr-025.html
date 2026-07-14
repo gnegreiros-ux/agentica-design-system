@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica</title>
+<title>Spacing density: floor/ceil on a 4px grid via math tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica">
+<meta property="og:title" content="Spacing density: floor/ceil on a 4px grid via math tokens — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Densité d'espacement : floor/ceil sur grille 4px via math tokens — Agentica">
+<meta name="twitter:title" content="Spacing density: floor/ceil on a 4px grid via math tokens — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Densité d'espacement : floor/ceil sur grille 4px via math tokens</h1>
+  <h1 class="adr-page-title">Spacing density: floor/ceil on a 4px grid via math tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,71 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Introduces three spacing density modes (compact ×0.75, normal ×1.0, comfortable ×1.25) computed with <code>floor()</code>/<code>ceil()</code> math tokens against a 4px grid unit, guaranteeing every resulting value stays a multiple of 4px. This corrects a v1 approach that used a single swappable factor and produced off-grid values (e.g. 6px, 15px).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The same component must adapt to radically different usage contexts:</p>
+<ul><li><strong>Marketing / Onboarding</strong>: airy, visually generous interfaces</li><li><strong>Everyday SaaS</strong>: normal density, a balance between comfort and efficiency</li><li><strong>Data-dense SaaS</strong>: dashboards, tables, workflows — every pixel counts</li></ul>
+<p>The previous spacing tokens had fixed values. Teams worked around this system by creating local values, producing drift.</p>
+<h3>v2 correction — the v1 problem</h3>
+<p>v1 used a single swappable factor: <code>{primitive.space.4} * {semantic.space.density.factor}</code>. This pattern has a structural flaw: with a single factor token, it is impossible to encode rounding direction (floor for compact, ceil for comfortable). Some results landed off the 4px grid:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Compact (×0.75)</th><th>Comfortable (×1.25)</th></tr></thead><tbody><tr><td><code>space.2</code> (8px)</td><td><strong>6px</strong> ✗ off-grid</td><td><strong>10px</strong> ✗ off-grid</td></tr><tr><td><code>space.5</code> (20px)</td><td><strong>15px</strong> ✗ off-grid</td><td><strong>25px</strong> ✗ off-grid</td></tr></tbody></table></div>
+<p>Source of the correction: _Sam's fancy math equations in Tokens Studio_ (Sami Am Designs, 2024) — section "Scales that round to a (4)pixel grid."</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Three density levels</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Mode</th><th>Factor</th><th>Rounding</th><th>Typical context</th></tr></thead><tbody><tr><td><code>compact</code></td><td>0.75</td><td><code>floor()</code></td><td>Dashboards, tables, data-dense tools</td></tr><tr><td><code>normal</code></td><td>1.0</td><td>none</td><td>Everyday usage — forms, settings, profile</td></tr><tr><td><code>comfortable</code></td><td>1.25</td><td><code>ceil()</code></td><td>Marketing, onboarding, reading pages</td></tr></tbody></table></div>
+<h3>Technique: floor/ceil + grid-unit</h3>
+<p><strong>General formula:</strong></p>
+<pre class="code-block"><code class="lang-text">compact    → floor(value × factor / grid-unit) × grid-unit
+comfortable → ceil(value × factor / grid-unit) × grid-unit</code></pre>
+<p>With <code>primitive.density.grid-unit = 4</code>.</p>
+<p>This technique, drawn from _Sam's math equations_, guarantees that <strong>100% of computed values are multiples of 4px</strong>, regardless of the base value.</p>
+<h3>Implementation in the tokens</h3>
+<p><strong>Primitive level</strong>:</p>
+<pre class="code-block"><code class="lang-json">"primitive.density.factor.normal"      = 1
+"primitive.density.factor.comfortable" = 1.25
+"primitive.density.factor.compact"     = 0.75
+"primitive.density.grid-unit"          = 4</code></pre>
+<p><strong>Semantic level</strong> — three explicit groups:</p>
+<pre class="code-block"><code class="lang-json">"semantic.space.control.padding-x"            = {primitive.space.4}            // 16px (normal)
+"semantic.space.compact.control.padding-x"    = floor(space.4 × 0.75 / 4) × 4  // 12px
+"semantic.space.comfortable.control.padding-x"= ceil(space.4 × 1.25 / 4) × 4   // 20px</code></pre>
+<p>Actual Tokens Studio syntax:</p>
+<pre class="code-block"><code class="lang-json">"value": "floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}"</code></pre>
+<h3>Results by mode — all values on the 4px grid</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Base</th><th>Normal</th><th>Compact</th><th>Comfortable</th></tr></thead><tbody><tr><td><code>*.control.padding-x</code></td><td>space.4 (16px)</td><td><strong>16px</strong></td><td><strong>12px</strong></td><td><strong>20px</strong></td></tr><tr><td><code>*.control.padding-y</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong> ¹</td><td><strong>12px</strong> ²</td></tr><tr><td><code>*.control.gap</code></td><td>space.2 (8px)</td><td><strong>8px</strong></td><td><strong>4px</strong></td><td><strong>12px</strong></td></tr><tr><td><code>*.layout.section</code></td><td>space.8 (32px)</td><td><strong>32px</strong></td><td><strong>24px</strong></td><td><strong>40px</strong></td></tr><tr><td><code>*.layout.component</code></td><td>space.5 (20px)</td><td><strong>20px</strong></td><td><strong>12px</strong> ³</td><td><strong>28px</strong> ⁴</td></tr></tbody></table></div>
+<p>All values are multiples of 4. Zero exceptions.</p>
+<blockquote><p>¹ 8 × 0.75 = 6 → floor(6/4)×4 = <strong>4px</strong> ² 8 × 1.25 = 10 → ceil(10/4)×4 = <strong>12px</strong> ³ 20 × 0.75 = 15 → floor(15/4)×4 = <strong>12px</strong> ⁴ 20 × 1.25 = 25 → ceil(25/4)×4 = <strong>28px</strong></p></blockquote>
+<h3>Token groups and compatibility</h3>
+<p><code>semantic.space.control.*</code> and <code>semantic.space.layout.*</code> remain the <strong>normal aliases</strong> (default density). <code>component.json</code> continues to reference them unchanged.</p>
+<p>To use a different density, the group is referenced explicitly:</p>
+<ul><li><code>{semantic.space.compact.control.padding-x}</code> → compact</li><li><code>{semantic.space.comfortable.layout.section}</code> → comfortable</li></ul>
+<hr>
+<h2>Rationale</h2>
+<h3>Why floor for compact and ceil for comfortable?</h3>
+<ul><li><code>floor()</code> rounds <strong>down</strong> — suited to reducing spacing (compact): we never want to exceed the target value.</li><li><code>ceil()</code> rounds <strong>up</strong> — suited to increasing spacing (comfortable): we never want to fall below the target value.</li><li><code>round()</code> alone (with no direction) gives unpredictable results depending on where the computed value falls relative to the grid step.</li></ul>
+<h3>Why explicit groups rather than a single swappable factor?</h3>
+<p>v1 used a single factor. Its problem: the same token cannot encode <code>floor()</code> for compact and <code>ceil()</code> for comfortable — the formula must know the rounding direction in advance.</p>
+<p>Three explicit groups:</p>
+<ul><li>Encode the direction within the formula itself (floor or ceil)</li><li>Guarantee grid alignment with no exception</li><li>Remain readable: <code>space.compact.control.padding-x</code> clearly expresses its context</li><li>Are compatible with Tokens Studio theme sets (each group = one theme)</li></ul>
+<h3>Why factors 0.75 / 1.0 / 1.25?</h3>
+<p>Memorable (−25%, ±0%, +25%), perceptually meaningful (Nielsen: a 25% change is perceptible but not disruptive), and they produce multiples of 4 after floor/ceil across every case in our scale.</p>
+<h3>Why math tokens and not CSS variables?</h3>
+<p>Math tokens are resolved at compile time (Style Dictionary), producing portable static CSS (iOS, Android, emails). CSS variables would require an additional runtime mechanism.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Single swappable factor (v1)</strong></td><td>Impossible to encode directional floor/ceil in a single formula — off-grid values guaranteed</td></tr><tr><td><strong><code>round()</code> alone with no floor/ceil</strong></td><td>Unpredictable results depending on position on the grid (e.g. <code>round(6/4)*4 = 8px</code> ≠ reduced)</td></tr><tr><td><strong>CSS custom property <code>--density</code></strong></td><td>Not portable (iOS/Android/email), requires runtime CSS infrastructure</td></tr><tr><td><strong>Utility classes (<code>density-compact</code>)</strong></td><td>Falls outside the token governance system</td></tr><tr><td><strong>Fixed pre-computed values (no math)</strong></td><td>Loses traceability between base and density — a base change no longer propagates</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For tokens:</strong></p>
+<ul><li><code>primitive.density.grid-unit = 4</code> added (grid divisor)</li><li><code>primitive.density.factor.*</code> kept (0.75 / 1.0 / 1.25)</li><li><code>semantic.space.control.*</code> and <code>semantic.space.layout.*</code> = normal density (direct references, no math)</li><li><code>semantic.space.compact.*</code> and <code>semantic.space.comfortable.*</code> added with floor/ceil formulas</li><li><code>semantic.space.density.factor.*</code> = documentation aliases to the primitives</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>For a dense interface: reference <code>semantic.space.compact.*</code></li><li>For a marketing page: reference <code>semantic.space.comfortable.*</code></li><li>For standard usage: <code>semantic.space.control.*</code> (default, unchanged)</li></ul>
+<p><strong>For teams:</strong></p>
+<ul><li><code>component.json</code> and existing code do not change (backward-compatible)</li><li>Adding a new spacing token: define all three variants (normal + compact + comfortable) at the same time</li></ul>
+<p><strong>For Tokens Studio:</strong></p>
+<ul><li><code>floor()</code> and <code>ceil()</code> are natively supported math functions</li><li>Each density group can become a distinct theme set</li><li>Technical reference: https://docs.tokens.studio/manage-tokens/token-values/math</li></ul>
+<p><strong>Risks:</strong></p>
+<ul><li>Style Dictionary < 4.x does not natively support <code>floor()</code>/<code>ceil()</code> — a custom transform may be needed (see ADR-019)</li><li>Compact <code>padding-y</code> = 4px: a very tight value, to be validated with a user test on real components before deployment</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Un même composant doit s'adapter à des contextes d'usage radicalement différents :</p>
 <ul><li><strong>Marketing / Onboarding</strong> : interfaces aérées, visuellement généreuses</li><li><strong>SaaS courant</strong> : densité normale, équilibre entre confort et efficacité</li><li><strong>SaaS data-dense</strong> : dashboards, tableaux, workflows — chaque pixel compte</li></ul>
 <p>Les tokens d'espacement précédents avaient des valeurs fixes. Les équipes contournaient ce système en créant des valeurs locales, produisant de la dérive.</p>
@@ -197,7 +257,7 @@ comfortable → ceil(valeur × facteur / grid-unit) × grid-unit</code></pre>
 <p><strong>Pour Tokens Studio :</strong></p>
 <ul><li><code>floor()</code> et <code>ceil()</code> sont des fonctions math natives supportées</li><li>Chaque groupe de densité peut devenir un theme set distinct</li><li>Référence technique : https://docs.tokens.studio/manage-tokens/token-values/math</li></ul>
 <p><strong>Risques :</strong></p>
-<ul><li>Style Dictionary < 4.x ne supporte pas <code>floor()</code>/<code>ceil()</code> nativement — une transform custom peut être nécessaire (voir ADR-019)</li><li><code>padding-y</code> compact = 4px : valeur très serrée, à valider avec un test utilisateur sur les composants réels avant déploiement</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Style Dictionary < 4.x ne supporte pas <code>floor()</code>/<code>ceil()</code> nativement — une transform custom peut être nécessaire (voir ADR-019)</li><li><code>padding-y</code> compact = 4px : valeur très serrée, à valider avec un test utilisateur sur les composants réels avant déploiement</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-024.html" class="agtc-button secondary">← ADR-024</a>
     <a href="adr-026.html" class="agtc-button secondary">ADR-026 →</a>
   </div></main>

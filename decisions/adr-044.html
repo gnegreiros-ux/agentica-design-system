@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-segmented` — Agentica</title>
+<title>Implementation of `agtc-segmented` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-segmented` — Agentica">
+<meta property="og:title" content="Implementation of `agtc-segmented` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-segmented` — Agentica">
+<meta name="twitter:title" content="Implementation of `agtc-segmented` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-segmented`</h1>
+  <h1 class="adr-page-title">Implementation of `agtc-segmented`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,38 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Implements agtc-segmented, formalizing the site's FR/EN language toggle. Deliberately uses a native button-group + <code>aria-current</code> pattern (not radiogroup or tablist), since industry guidance (Primer) favors this for immediate-effect segmented controls rather than form-submission or content-panel semantics.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Applied reference UX patterns</h2>
+<blockquote><p>Added on 2026-06-04 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>SG1–SG8 all approved</strong>. Detail and links: <code>guidelines/components/segmented.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Single selection, always one active</td><td>Primer</td></tr><tr><td>SG2</td><td><code>&lt;button&gt;</code> group + <code>aria-current</code> + immediate effect (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, short labels</td><td>NN/g</td></tr><tr><td>SG4</td><td>Selection never conveyed by color alone</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Immediate effect</td><td>Primer</td></tr><tr><td>SG6</td><td>Per-segment <code>:focus-visible</code>, native Tab</td><td>Primer</td></tr><tr><td>SG7</td><td>Equal width, icon + label</td><td>NN/g</td></tr><tr><td>SG8</td><td><code>value</code> API + <code>change</code> event</td><td>Primer</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p>The site uses an FR/EN toggle (~114 <code>lang-btn</code> usages): a <code>role="group"</code> containing two <code>&lt;button aria-pressed&gt;</code> elements, with immediate effect. <code>agtc-segmented</code> formalizes this single-selection segmented control. It's the <strong>5th and last component in category B</strong> of the 2026-06-03 gap analysis, after table, code-block, banner, and link.</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — ARIA pattern: button group + <code>aria-current</code>, NOT a radiogroup (SG2)</h3>
+<p>This is the structuring decision. Three patterns were candidates:</p>
+<ul><li><strong>radiogroup</strong> (like <code>agtc-radio-group</code>, ADR-038): arrow keys + roving tabindex, "form choice"</li></ul>
+<p>  semantics implying a submission;</p>
+<ul><li><strong>tablist</strong>: changes a content panel;</li><li><strong><code>&lt;button&gt;</code> group + <code>aria-current</code></strong>: immediate effect, native Tab between segments.</li></ul>
+<p>Primer (GitHub) explicitly advises against radiogroup and tablist for a segmented control with an <strong>immediate effect</strong>. We therefore adopt the <strong>native button group</strong>: each segment is a <code>&lt;button&gt;</code> (native Tab/Enter/Space), the active segment carries <code>aria-current="true"</code>, the selection applies immediately. This is a <strong>deliberate departure</strong> from <code>agtc-radio-group</code> (radiogroup + arrow keys), justified by the difference in usage (instant setting vs. submitted form choice).</p>
+<h3>Decision 2 — Tokenized "rail" (track) style</h3>
+<p>Rail with a subtle background (<code>background.subtle</code>), the selected segment shown as a solid pill (<code>action.primary</code> + <code>on-action</code> text). The selected state combines <strong>solid fill + weight 700</strong> — never color alone (WCAG 1.4.1).</p>
+<h3>Decision 3 — Data-driven with immediate effect</h3>
+<p><code>options</code> (<code>{value,label,icon?}</code>) + <code>value</code>; each selection emits <code>change</code> (<code>detail:{value}</code>). No "apply" button (SG5). <code>label</code> required to name the group (console warning otherwise).</p>
+<h3>Decision 4 — "Mix" architecture (consistent with ADR-040→043)</h3>
+<p><code>&lt;agtc-segmented&gt;</code> component (shadow DOM, data-driven) <strong>+</strong> <code>.agtc-segmented</code> class for static HTML. Both consume <code>component.segmented.*</code>. The site's language toggle will be migrated to this contract during *dogfooding* (category A).</p>
+<hr>
+<h2>v1 Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future evolution)</th></tr></thead><tbody><tr><td>Single selection, immediate effect, <code>aria-current</code></td><td>Multi-selection</td></tr><tr><td><code>options</code> (value/label/icon), <code>value</code>, <code>change</code></td><td>Content tabs (→ future <code>tabs</code>)</td></tr><tr><td><code>equal-width</code>, icons</td><td>Scrollable overflow</td></tr><tr><td>Tokenized rail, focus-visible</td><td>Multiple sizes (sm/lg)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>radiogroup pattern</strong> (consistency with <code>agtc-radio-group</code>): unsuited to immediate effect (Primer) — rejected in favor of the button group.</li><li><strong><code>role="tablist"</code></strong>: reserved for content-panel changes.</li><li><strong>"Separate bordered buttons" style</strong> (like the current <code>lang-btn</code>): replaced by the pill rail, more readable and modern.</li><li><strong><code>aria-pressed</code> per segment</strong>: <code>aria-current="true"</code> better expresses "the current option" of a single selection.</li></ul>
+<hr>
+<h2>Consequences</h2>
+<ul><li>The site's FR/EN toggle will be able to migrate to <code>.agtc-segmented</code> during *dogfooding* (category A).</li><li><strong>Closes category B</strong> of the gap analysis (table, code-block, banner, link, segmented).</li><li>A future <code>tabs</code> component (content-panel change) remains distinct (its own ADR).</li></ul>
+<hr>
+<h2>Tokens added — <code>component.segmented.default.*</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Reference</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-04 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>SG1–SG8 tous approuvés</strong>. Détail et liens : <code>guidelines/components/segmented.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Mono-sélection, toujours un actif</td><td>Primer</td></tr><tr><td>SG2</td><td>Groupe de <code>&lt;button&gt;</code> + <code>aria-current</code> + effet immédiat (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, libellés courts</td><td>NN/g</td></tr><tr><td>SG4</td><td>Sélectionné pas par la couleur seule</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Effet immédiat</td><td>Primer</td></tr><tr><td>SG6</td><td><code>:focus-visible</code> par segment, Tab natif</td><td>Primer</td></tr><tr><td>SG7</td><td>Largeur égale, icône + libellé</td><td>NN/g</td></tr><tr><td>SG8</td><td>API <code>value</code> + événement <code>change</code></td><td>Primer</td></tr></tbody></table></div>
 <hr>
@@ -164,7 +191,7 @@
 <ul><li>La bascule FR/EN du site pourra migrer vers <code>.agtc-segmented</code> au *dogfooding* (catégorie A).</li><li><strong>Clôt la catégorie B</strong> de la gap-analysis (table, code-block, banner, link, segmented).</li><li>Un futur composant <code>tabs</code> (changement de panneau) reste distinct (son propre ADR).</li></ul>
 <hr>
 <h2>Tokens ajoutés — <code>component.segmented.default.*</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-043.html" class="agtc-button secondary">← ADR-043</a>
     <a href="adr-045.html" class="agtc-button secondary">ADR-045 →</a>
   </div></main>

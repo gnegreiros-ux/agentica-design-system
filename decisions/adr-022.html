@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Lucide Icons comme bibliothèque d'icônes — Agentica</title>
+<title>Lucide Icons as the icon library — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Lucide Icons comme bibliothèque d'icônes — Agentica">
+<meta property="og:title" content="Lucide Icons as the icon library — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Lucide Icons comme bibliothèque d'icônes — Agentica">
+<meta name="twitter:title" content="Lucide Icons as the icon library — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Lucide Icons comme bibliothèque d'icônes</h1>
+  <h1 class="adr-page-title">Lucide Icons as the icon library</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,57 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Lucide Icons (MIT-licensed fork of Feather Icons, 1,500+ icons) as the system's official icon library, wrapped in an <code>agtc-icon</code> Lit component with three size tokens (inline/control/nav) and mandatory WCAG 1.1.1 labeling — either a <code>label</code> (rendered as <code>aria-label</code>) or <code>decorative</code> (rendered as <code>aria-hidden</code>).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
+<blockquote><p>Added 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>all approved</strong>. <code>agtc-icon</code> has no dedicated implementation ADR — its pattern decision is recorded here. Detail and links: <code>guidelines/components/icon.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Icon + text when meaning is not universal</td><td>NN/g — icon usability</td></tr><tr><td>Label mandatory when the icon carries the information</td><td>NN/g</td></tr><tr><td>Decorative icons hidden from AT (<code>aria-hidden</code>)</td><td>NN/g</td></tr><tr><td>Consistent, non-misleading meaning</td><td>IF — transparency</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p>The design system referenced <code>&lt;agtc-icon&gt;</code> in component examples (notably <code>guidelines/components/button.md</code>) without any icon system being defined. No icon size token existed. Teams were creating ad hoc solutions (emoji, inline SVG, Tailwind classes) — each one a potential source of drift.</p>
+<hr>
+<h2>Decision</h2>
+<h3>Library: Lucide Icons</h3>
+<p><strong>Lucide</strong> (a fork of Feather Icons, MIT) is adopted as the system's official icon library.</p>
+<p><strong>Technical characteristics:</strong></p>
+<ul><li>1,500+ icons, full UI coverage</li><li>Strict geometric consistency: a constant <code>strokeWidth: 1.5px</code> across all icons</li><li>Pure SVG format — no font, no mandatory sprite</li><li>Tree-shakeable — only the icons actually used are bundled</li><li>MIT license — no commercial constraint</li></ul>
+<p><strong>Industry adoption:</strong> Linear, Vercel, shadcn/ui, Raycast — a signal of quality and longevity.</p>
+<h3>Web Component: <code>agtc-icon</code></h3>
+<p>A Lit component wraps Lucide and exposes the design system's API:</p>
+<pre class="code-block"><code class="lang-javascript">// Usage
+&lt;agtc-icon name="trash-2" size="control" label="Supprimer"&gt;&lt;/agtc-icon&gt;
+&lt;agtc-icon name="check" size="inline" decorative&gt;&lt;/agtc-icon&gt;</code></pre>
+<p><strong>Props:</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Prop</th><th>Type</th><th>Values</th><th>Default</th></tr></thead><tbody><tr><td><code>name</code></td><td>String</td><td>Lucide name (e.g. <code>"trash-2"</code>)</td><td>— (required)</td></tr><tr><td><code>size</code></td><td>String</td><td><code>"inline"</code> / <code>"control"</code> / <code>"nav"</code></td><td><code>"control"</code></td></tr><tr><td><code>label</code></td><td>String</td><td>Accessible text</td><td>—</td></tr><tr><td><code>decorative</code></td><td>Boolean</td><td>Purely decorative icon</td><td><code>false</code></td></tr></tbody></table></div>
+<p><strong>WCAG 1.1.1 rule:</strong> If <code>decorative</code> is absent, <code>label</code> is mandatory → <code>aria-label</code> is injected. If <code>decorative</code> is present → <code>aria-hidden="true"</code>.</p>
+<h3>Icon size tokens</h3>
+<pre class="code-block"><code class="lang-json">// primitives.json
+"iconSize": {
+  "sm": "16px",  // inline — within text
+  "md": "20px",  // control — in a button, input
+  "lg": "24px"   // nav — navigation, emphasis
+}
+
+// semantic.json
+"icon.size.inline":  "{primitive.iconSize.sm}"
+"icon.size.control": "{primitive.iconSize.md}"
+"icon.size.nav":     "{primitive.iconSize.lg}"</code></pre>
+<h3>Integration into the documentation site</h3>
+<p>Lucide is added as an npm dependency in <code>site/package.json</code>. The build generates an icon reference page at <code>site/dist/components/icon.html</code>.</p>
+<hr>
+<h2>WCAG rationale</h2>
+<ul><li><strong>1.1.1 (Non-text Content):</strong> Every semantic icon has an <code>aria-label</code>. Decorative icons have <code>aria-hidden="true"</code>.</li><li><strong>1.4.3 (Contrast):</strong> Icons inherit <code>color: currentColor</code> — contrast is that of the parent text, always compliant.</li><li><strong>2.5.3 (Label in Name):</strong> Icon-only buttons expose their label via <code>aria-label</code> on <code>agtc-icon</code>.</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Material Icons</strong></td><td>Font icon — FOUT issues, more complex accessibility, coupling to Google.</td></tr><tr><td><strong>Heroicons</strong></td><td>Equivalent quality but lower adoption, fewer variants.</td></tr><tr><td><strong>Font Awesome</strong></td><td>Freemium model, proprietary dependency for advanced icons.</td></tr><tr><td><strong>Custom SVG sprite</strong></td><td>Unsustainable manual maintenance for 100+ icons.</td></tr><tr><td><strong>Phosphor Icons</strong></td><td>Equivalent quality but a React-centric ecosystem, less Web Components support.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For tokens:</strong></p>
+<ul><li><code>primitive.iconSize</code> (sm/md/lg) and <code>semantic.icon.size</code> (inline/control/nav) added</li></ul>
+<p><strong>For components:</strong></p>
+<ul><li><code>components/agtc-icon.js</code> provides the Lit implementation contract</li><li><code>guidelines/components/icon.md</code> documents usage rules and anti-patterns</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li><code>size="control"</code> is a readable intent — the agent understands it as an icon within an interactive control</li><li>Anti-patterns (icon with no label, hardcoded size) are auditable</li></ul>
+<p><strong>For teams:</strong></p>
+<ul><li>End of ad hoc solutions: a single API, a single token, a single library</li><li>Icon names documented on lucide.dev — the canonical reference</li></ul></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. <code>agtc-icon</code> n'a pas d'ADR d'implémentation dédié — sa décision de patterns est consignée ici. Détail et liens : <code>guidelines/components/icon.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Icône + texte quand le sens n'est pas universel</td><td>NN/g — icon usability</td></tr><tr><td>Label obligatoire si l'icône porte l'information</td><td>NN/g</td></tr><tr><td>Icônes décoratives masquées aux AT (<code>aria-hidden</code>)</td><td>NN/g</td></tr><tr><td>Signification cohérente et non trompeuse</td><td>IF — transparence</td></tr></tbody></table></div>
 <hr>
@@ -183,7 +229,7 @@
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li><code>size="control"</code> est une intention lisible — l'agent comprend que c'est une icône dans un contrôle interactif</li><li>Les anti-patterns (icône sans label, taille en dur) sont auditables</li></ul>
 <p><strong>Pour les équipes :</strong></p>
-<ul><li>Fin des solutions ad hoc : une seule API, un seul token, une seule bibliothèque</li><li>Noms d'icônes documentés sur lucide.dev — référence canonique</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Fin des solutions ad hoc : une seule API, un seul token, une seule bibliothèque</li><li>Noms d'icônes documentés sur lucide.dev — référence canonique</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-021.html" class="agtc-button secondary">← ADR-021</a>
     <a href="adr-023.html" class="agtc-button secondary">ADR-023 →</a>
   </div></main>

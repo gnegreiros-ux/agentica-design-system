@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Tokens Studio pour la synchronisation Figma ↔ JSON — Agentica</title>
+<title>Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Tokens Studio pour la synchronisation Figma ↔ JSON — Agentica">
+<meta property="og:title" content="Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Tokens Studio pour la synchronisation Figma ↔ JSON — Agentica">
+<meta name="twitter:title" content="Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Tokens Studio pour la synchronisation Figma ↔ JSON</h1>
+  <h1 class="adr-page-title">Choosing Tokens Studio for Figma ↔ JSON synchronization</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,50 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Tokens Studio for Figma as a one-way sync bridge from the repo's JSON tokens into Figma variables, keeping the JSON as the sole source of truth. Designers cannot push token changes from Figma back to the repo — any token change still goes through the TCR process.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The design system operates on two surfaces simultaneously:</p>
+<ul><li><strong>Code</strong> — JSON tokens + Web Components compiled by Style Dictionary</li><li><strong>Figma</strong> — mockups and components used by the design team</li></ul>
+<p>Without synchronization between these two surfaces, teams work from two diverging sources of truth. The designer changes a token in Figma, the developer changes the JSON — the two systems silently drift apart.</p>
+<p>The digital sovereignty constraint (ADR-004, DESIGN.md) complicates the problem: the source of truth must stay in the git repo, not in Figma. Figma is a tool for consultation and design, not for token governance.</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we keep Figma and the JSON repo synchronized without reversing the direction of truth — JSON leads, Figma follows?</strong></p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Tokens Studio for Figma</strong> (a Figma plugin) as the synchronization bridge between the repo's JSON files and Figma's variables/styles.</p>
+<p>The synchronization direction is non-negotiable:</p>
+<pre class="code-block"><code class="lang-text">tokens/*.json  →  Tokens Studio  →  Figma Variables
+     ↑ source of truth                ↓ consumer</code></pre>
+<p>The plugin reads the JSON files from the GitHub repo (via Settings → GitHub sync) and imports the tokens into Figma in the same order as ADR-001: <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code>.</p>
+<p><strong>What designers must NOT do via Tokens Studio:</strong> modify tokens directly in Figma and push them to the repo. Every token change follows the TCR process (DESIGN.md) — Figma is read-only.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Native Figma Variables only (no plugin)</strong></td><td>Figma Variables don't natively sync with a git repo. Every token update would require a manual update in Figma — a guaranteed source of drift. Acceptable for small teams, but not scalable.</td></tr><tr><td><strong>Theo / Style Dictionary → Figma export</strong></td><td>Style Dictionary can export to Figma-specific formats (specific JSON). But importing into Figma remains manual — no bidirectional sync and no management UI in Figma. Tokens Studio offers the management UI these exports lack.</td></tr><tr><td><strong>Custom sync script</strong></td><td>Maintainable short-term for a small token catalog. Not maintainable at scale (30 palettes × 12 steps × 3 layers = hundreds of tokens). Figma API updates would break the script without notice.</td></tr><tr><td><strong>Zeroheight / Supernova</strong></td><td>Design system documentation platforms with Figma sync. Focused on documentation, not on JSON-level token synchronization. Add a paid external dependency for a function Tokens Studio covers for free.</td></tr><tr><td><strong>No synchronization (two sources of truth)</strong></td><td>Explicitly rejected. The experience of teams without synchronization is documented: after a few sprints, designers work on tokens that no longer exist in the code, and developers are unaware of changes decided in Figma.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For designers:</strong></p>
+<ul><li>Import workflow: Settings → Sync → GitHub → point to <code>tokens/</code></li><li>Import order: <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code></li><li>The tokens available in Figma are always the tokens defined in the repo —</li></ul>
+<p>  no local token is possible without going through the TCR process</p>
+<ul><li>Any local variable created directly in Figma = debt — to be flagged to the team</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Tokens Studio is not in the agent loop — agents work directly with the JSON</li></ul>
+<p>  files, never with Figma</p>
+<ul><li>The plugin guarantees that what designers see in Figma matches what agents</li></ul>
+<p>  read in the JSON — consistency of the shared source of truth</p>
+<p><strong>For governance:</strong></p>
+<ul><li>The JSON → Figma direction preserves digital sovereignty: tokens can't be</li></ul>
+<p>  modified "on the sly" via Figma and pushed to the repo</p>
+<ul><li>Every token modification stays traced in git, via TCR, with approval</li></ul>
+<p><strong>For Style Dictionary (ADR-003):</strong></p>
+<ul><li>Style Dictionary and Tokens Studio share the same source: <code>tokens/*.json</code></li><li>Both compile from the same JSON — no intermediate format to maintain</li><li>Style Dictionary generates code outputs (CSS, JS, Swift, Android)</li><li>Tokens Studio manages the design output (Figma Variables)</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Tokens Studio is a third-party plugin (Figma Marketplace) — a dependency on</li></ul>
+<p>  its maintenance</p>
+<ul><li>The free version covers basic needs; some advanced features</li></ul>
+<p>  (automatic sync, webhooks) require a subscription</p>
+<ul><li>The plugin must be reinstalled/reconfigured if the repo is moved</li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision. Motivated by a systematic observation in teams without synchronization: Figma mockups use tokens named differently from the code, creating two parallel languages within the same team. A designer who talks about <code>Bleu Principal</code> and a developer who talks about <code>color.action.primary</code> are describing the same value without knowing it. Tokens Studio aligns both languages on the same JSON.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le système de design opère sur deux surfaces simultanément :</p>
 <ul><li><strong>Le code</strong> — JSON tokens + Web Components compilés par Style Dictionary</li><li><strong>Figma</strong> — maquettes et composants utilisés par l'équipe design</li></ul>
 <p>Sans synchronisation entre ces deux surfaces, les équipes travaillent sur deux sources de vérité divergentes. Le designer modifie un token dans Figma, le développeur modifie le JSON — les deux systèmes dérivent silencieusement.</p>
@@ -174,7 +213,7 @@
 <ul><li>Le plugin doit être réinstallé/reconfiguré si le repo est déplacé</li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Motivée par l'observation systématique dans les équipes sans synchronisation : les maquettes Figma utilisent des tokens nommés différemment du code, créant deux langages parallèles au sein de la même équipe. Un designer qui parle de <code>Bleu Principal</code> et un développeur qui parle de <code>color.action.primary</code> décrivent la même valeur sans le savoir. Tokens Studio aligne les deux langages sur le même JSON.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice. Motivée par l'observation systématique dans les équipes sans synchronisation : les maquettes Figma utilisent des tokens nommés différemment du code, créant deux langages parallèles au sein de la même équipe. Un designer qui parle de <code>Bleu Principal</code> et un développeur qui parle de <code>color.action.primary</code> décrivent la même valeur sans le savoir. Tokens Studio aligne les deux langages sur le même JSON.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-010.html" class="agtc-button secondary">← ADR-010</a>
     <a href="adr-012.html" class="agtc-button secondary">ADR-012 →</a>
   </div></main>

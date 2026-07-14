@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Migration des références sémantiques vers la notation Radix — Agentica</title>
+<title>Migrating semantic references to Radix notation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Migration des références sémantiques vers la notation Radix — Agentica">
+<meta property="og:title" content="Migrating semantic references to Radix notation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Migration des références sémantiques vers la notation Radix — Agentica">
+<meta name="twitter:title" content="Migrating semantic references to Radix notation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">token</span>
   </div>
-  <h1 class="adr-page-title">Migration des références sémantiques vers la notation Radix</h1>
+  <h1 class="adr-page-title">Migrating semantic references to Radix notation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,53 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Resolves a structural mismatch where <code>semantic.json</code> referenced primitives using Tailwind-like notation (<code>color.blue.700</code>) that didn't exist in the Radix-based <code>primitives.json</code>. Migrates all semantic color references to valid <code>{primitive.color.X.Y}</code> paths and adds a small <code>neutral</code> palette for the 3 values with no exact Radix equivalent — no resolved values change, this is purely structural.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-017 documented a structural inconsistency between <code>tokens/semantic.json</code> and <code>tokens/primitives.json</code> as out of scope. This ADR resolves it.</p>
+<h3>The inconsistency</h3>
+<p><code>tokens/semantic.json</code> used Tailwind-like notation to reference primitives:</p>
+<pre class="code-block"><code class="lang-json">"primary": { "value": "{color.blue.700}" }</code></pre>
+<p>But <code>tokens/primitives.json</code> exposes colors under an incompatible Radix path:</p>
+<pre class="code-block"><code class="lang-text">primitive.color.blue.11  (not color.blue.700)</code></pre>
+<p>References in <code>semantic.json</code> therefore didn't resolve in any standard token resolver (Style Dictionary, Tokens Studio). <code>site/build.js</code> worked around this by hardcoding every resolved value in a <code>SEM</code> object.</p>
+<h3>The three cases with no Radix equivalent</h3>
+<p>While building the correspondence table, three values had no exact equivalent in the Radix gray scale (steps 1–12):</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Value</th><th>Usage</th><th>Situation</th></tr></thead><tbody><tr><td><code>#ffffff</code></td><td>Surface, text on action</td><td>Radix only provides <code>rgba(255,255,255,1.00)</code></td></tr><tr><td><code>#fafafa</code></td><td>Hover background</td><td>Radix gray.2 = <code>#f9f9f9</code> ≠ #fafafa</td></tr><tr><td><code>#767676</code></td><td>Disabled text</td><td>Between gray.10 (#838383) and gray.11 (#646464)</td></tr></tbody></table></div>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>1. Add a <code>neutral</code> palette to <code>primitives.json</code></h3>
+<p>Add three entries under <code>primitive.color.neutral</code>:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Step</th><th>Value</th><th>Justification</th></tr></thead><tbody><tr><td><code>neutral.0</code></td><td><code>#ffffff</code></td><td>Pure white — more explicit than <code>white.1</code>'s <code>rgba(255,255,255,1.00)</code></td></tr><tr><td><code>neutral.50</code></td><td><code>#fafafa</code></td><td>Tailwind neutral.50 — one notch lighter than Radix gray.2 (#f9f9f9)</td></tr><tr><td><code>neutral.500</code></td><td><code>#767676</code></td><td>Accessible disabled text (4.54:1 on white, WCAG AA) — see ADR-017</td></tr></tbody></table></div>
+<p>These three values are the only ones that can't be directly referenced from the existing Radix gray scale. Every other neutral value used in <code>semantic.json</code> resolves to an exact Radix gray step.</p>
+<h3>2. Migrate <code>semantic.json</code> — <code>{primitive.color.X.Y}</code> notation</h3>
+<p>Every color reference in <code>semantic.json</code> migrates to Radix notation:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Old reference</th><th>New reference</th><th>Resolved value</th></tr></thead><tbody><tr><td><code>{color.blue.700}</code></td><td><code>{primitive.color.blue.11}</code></td><td>#0d74ce</td></tr><tr><td><code>{color.blue.900}</code></td><td><code>{primitive.color.blue.12}</code></td><td>#113264</td></tr><tr><td><code>{color.neutral.300}</code></td><td><code>{primitive.color.gray.6}</code></td><td>#d9d9d9</td></tr><tr><td><code>{color.red.700}</code></td><td><code>{primitive.color.red.11}</code></td><td>#ce2c31</td></tr><tr><td><code>{color.red.100}</code></td><td><code>{primitive.color.red.3}</code></td><td>#feebec</td></tr><tr><td><code>{color.green.700}</code></td><td><code>{primitive.color.green.11}</code></td><td>#18794e</td></tr><tr><td><code>{color.neutral.50}</code> (page)</td><td><code>{primitive.color.gray.1}</code></td><td>#fcfcfc</td></tr><tr><td><code>{color.neutral.0}</code></td><td><code>{primitive.color.neutral.0}</code></td><td>#ffffff</td></tr><tr><td><code>{color.neutral.100}</code></td><td><code>{primitive.color.gray.3}</code></td><td>#f0f0f0</td></tr><tr><td><code>{color.neutral.50}</code> (hover)</td><td><code>{primitive.color.neutral.50}</code></td><td>#fafafa</td></tr><tr><td><code>{color.neutral.900}</code></td><td><code>{primitive.color.gray.12}</code></td><td>#202020</td></tr><tr><td><code>{color.neutral.700}</code></td><td><code>{primitive.color.gray.11}</code></td><td>#646464</td></tr><tr><td><code>{color.neutral.500}</code></td><td><code>{primitive.color.neutral.500}</code></td><td>#767676</td></tr><tr><td><code>{color.neutral.200}</code></td><td><code>{primitive.color.gray.4}</code></td><td>#e8e8e8</td></tr></tbody></table></div>
+<p>No resolved value changes — the migration is purely structural.</p>
+<h3>3. Fix the comment in <code>site/build.js</code></h3>
+<p>The comment describing the Tailwind-like notation is updated to reflect the Radix notation. The hardcoded values in the <code>SEM</code> object remain unchanged (dynamic resolution is out of scope — see the *Rejected alternatives* section).</p>
+<hr>
+<h2>Out of scope — non-color tokens</h2>
+<p><code>semantic.json</code> also contains non-color references (<code>{space.4}</code>, <code>{fontSize.md}</code>, <code>{radius.sm}</code>, etc.) that don't resolve in <code>primitives.json</code> (which contains only colors). These references constitute a second structural inconsistency, distinct from the Tailwind/Radix inconsistency.</p>
+<p>They are not addressed in this ADR:</p>
+<ul><li>They have no impact on accessibility or conformance</li><li>Fixing them requires adding spacing, typography, and radius primitives</li><li>A dedicated ADR (ADR-019) is to be created if the project moves toward</li></ul>
+<p>  dynamic resolution</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Add a full <code>neutral</code> scale (0–900) to primitives.json</strong></td><td>Creates duplicates with the existing gray scale for most steps. Only 3 steps are missing — no need to add 8.</td></tr><tr><td><strong>Keep the Tailwind-like notation and add a <code>color.X.Y</code> alias in primitives.json</strong></td><td>Introduces an extra layer of indirection. Tailwind references (<code>blue.700</code>) have no semantic meaning in a Radix context.</td></tr><tr><td><strong>Migrate build.js to dynamically resolve tokens</strong></td><td>A significant change in scope — the script would need to implement a DTCG reference resolver. Limited added value while the project doesn't use Style Dictionary or Tokens Studio in production.</td></tr><tr><td><strong>Use <code>{primitive.color.white.1}</code> (rgba) for white</strong></td><td>The rgba notation creates a format ambiguity in tools that expect hex. <code>neutral.0 = #ffffff</code> is more interoperable.</td></tr><tr><td><strong>Accept gray.2 (#f9f9f9) for the hover background instead of #fafafa</strong></td><td>Introduces an unrequired visual change (even if tiny). The value #fafafa is intentional — it matches Tailwind neutral.50 and clearly differentiates the hover background from the page background.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>No visual change</strong> — all resolved values stay identical.</p>
+<p><strong>For token resolvers (Style Dictionary, Tokens Studio):</strong></p>
+<ul><li><code>{primitive.color.X.Y}</code> references now resolve correctly</li><li>The token compilation pipeline can be enabled without manual modification</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent reading <code>semantic.json</code> can trace every token to its primitive</li></ul>
+<p>  value via an unambiguous reference</p>
+<ul><li>No more dependency on an implicit Tailwind→Radix mapping</li></ul>
+<p><strong>Remaining technical debt:</strong></p>
+<ul><li><code>site/build.js</code> still hardcodes resolved values in the <code>SEM</code> object</li><li>Non-color tokens in <code>semantic.json</code> reference primitives that don't exist</li><li>Both points are documented but non-blocking for the site's current operation</li></ul>
+<hr>
+<h2>Full Tailwind→Radix correspondence table</h2>
+<p>For reference, the full table of equivalences used in this project:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Tailwind notation (old)</th><th>Radix notation (new)</th><th>Hex value</th></tr></thead><tbody><tr><td><code>neutral.0</code></td><td><code>neutral.0</code> (custom)</td><td>#ffffff</td></tr><tr><td><code>neutral.50</code> (page)</td><td><code>gray.1</code></td><td>#fcfcfc</td></tr><tr><td><code>neutral.50</code> (hover)</td><td><code>neutral.50</code> (custom)</td><td>#fafafa</td></tr><tr><td><code>neutral.100</code></td><td><code>gray.3</code></td><td>#f0f0f0</td></tr><tr><td><code>neutral.200</code></td><td><code>gray.4</code></td><td>#e8e8e8</td></tr><tr><td><code>neutral.300</code></td><td><code>gray.6</code></td><td>#d9d9d9</td></tr><tr><td><code>neutral.500</code></td><td><code>neutral.500</code> (custom)</td><td>#767676</td></tr><tr><td><code>neutral.700</code></td><td><code>gray.11</code></td><td>#646464</td></tr><tr><td><code>neutral.900</code></td><td><code>gray.12</code></td><td>#202020</td></tr><tr><td><code>blue.700</code></td><td><code>blue.11</code></td><td>#0d74ce</td></tr><tr><td><code>blue.900</code></td><td><code>blue.12</code></td><td>#113264</td></tr><tr><td><code>red.100</code></td><td><code>red.3</code></td><td>#feebec</td></tr><tr><td><code>red.700</code></td><td><code>red.11</code></td><td>#ce2c31</td></tr><tr><td><code>green.700</code></td><td><code>green.11</code></td><td>#18794e</td></tr></tbody></table></div></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-017 documentait une incohérence structurelle entre <code>tokens/semantic.json</code> et <code>tokens/primitives.json</code> comme hors scope. Cet ADR la résout.</p>
 <h3>L'incohérence</h3>
 <p><code>tokens/semantic.json</code> utilisait une notation Tailwind-like pour référencer les primitives :</p>
@@ -178,7 +220,7 @@
 <hr>
 <h2>Table de correspondance complète Tailwind→Radix</h2>
 <p>Pour référence, la table complète des équivalences utilisées dans ce projet :</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Notation Tailwind (ancienne)</th><th>Notation Radix (nouvelle)</th><th>Valeur hex</th></tr></thead><tbody><tr><td><code>neutral.0</code></td><td><code>neutral.0</code> (custom)</td><td>#ffffff</td></tr><tr><td><code>neutral.50</code> (page)</td><td><code>gray.1</code></td><td>#fcfcfc</td></tr><tr><td><code>neutral.50</code> (hover)</td><td><code>neutral.50</code> (custom)</td><td>#fafafa</td></tr><tr><td><code>neutral.100</code></td><td><code>gray.3</code></td><td>#f0f0f0</td></tr><tr><td><code>neutral.200</code></td><td><code>gray.4</code></td><td>#e8e8e8</td></tr><tr><td><code>neutral.300</code></td><td><code>gray.6</code></td><td>#d9d9d9</td></tr><tr><td><code>neutral.500</code></td><td><code>neutral.500</code> (custom)</td><td>#767676</td></tr><tr><td><code>neutral.700</code></td><td><code>gray.11</code></td><td>#646464</td></tr><tr><td><code>neutral.900</code></td><td><code>gray.12</code></td><td>#202020</td></tr><tr><td><code>blue.700</code></td><td><code>blue.11</code></td><td>#0d74ce</td></tr><tr><td><code>blue.900</code></td><td><code>blue.12</code></td><td>#113264</td></tr><tr><td><code>red.100</code></td><td><code>red.3</code></td><td>#feebec</td></tr><tr><td><code>red.700</code></td><td><code>red.11</code></td><td>#ce2c31</td></tr><tr><td><code>green.700</code></td><td><code>green.11</code></td><td>#18794e</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Notation Tailwind (ancienne)</th><th>Notation Radix (nouvelle)</th><th>Valeur hex</th></tr></thead><tbody><tr><td><code>neutral.0</code></td><td><code>neutral.0</code> (custom)</td><td>#ffffff</td></tr><tr><td><code>neutral.50</code> (page)</td><td><code>gray.1</code></td><td>#fcfcfc</td></tr><tr><td><code>neutral.50</code> (hover)</td><td><code>neutral.50</code> (custom)</td><td>#fafafa</td></tr><tr><td><code>neutral.100</code></td><td><code>gray.3</code></td><td>#f0f0f0</td></tr><tr><td><code>neutral.200</code></td><td><code>gray.4</code></td><td>#e8e8e8</td></tr><tr><td><code>neutral.300</code></td><td><code>gray.6</code></td><td>#d9d9d9</td></tr><tr><td><code>neutral.500</code></td><td><code>neutral.500</code> (custom)</td><td>#767676</td></tr><tr><td><code>neutral.700</code></td><td><code>gray.11</code></td><td>#646464</td></tr><tr><td><code>neutral.900</code></td><td><code>gray.12</code></td><td>#202020</td></tr><tr><td><code>blue.700</code></td><td><code>blue.11</code></td><td>#0d74ce</td></tr><tr><td><code>blue.900</code></td><td><code>blue.12</code></td><td>#113264</td></tr><tr><td><code>red.100</code></td><td><code>red.3</code></td><td>#feebec</td></tr><tr><td><code>red.700</code></td><td><code>red.11</code></td><td>#ce2c31</td></tr><tr><td><code>green.700</code></td><td><code>green.11</code></td><td>#18794e</td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-017.html" class="agtc-button secondary">← ADR-017</a>
     <a href="adr-019.html" class="agtc-button secondary">ADR-019 →</a>
   </div></main>

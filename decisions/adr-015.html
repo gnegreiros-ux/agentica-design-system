@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Hook automatique de rappel ADR sur modifications critiques — Agentica</title>
+<title>Automatic ADR reminder hook on critical modifications — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta property="og:title" content="Automatic ADR reminder hook on critical modifications — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Hook automatique de rappel ADR sur modifications critiques — Agentica">
+<meta name="twitter:title" content="Automatic ADR reminder hook on critical modifications — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Hook automatique de rappel ADR sur modifications critiques</h1>
+  <h1 class="adr-page-title">Automatic ADR reminder hook on critical modifications</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,84 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adds a <code>PostToolUse</code> hook that reminds the agent to ask "do you want an ADR for this?" whenever <code>tokens/</code>, <code>guidelines/</code>, or <code>components/</code> are touched, since documented rules were being forgotten in practice. A 2026-05-31 amendment restricts the reminder to <code>Write</code> (new files) only, since it fired too often on routine <code>Edit</code> bug fixes and became noise rather than a safeguard.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The <code>tokens/</code>, <code>guidelines/</code>, and <code>components/</code> files contain the design system's structuring decisions: token values, component contracts, normative documentation. Any modification in these areas should, in principle, be accompanied by an ADR or a TCR explaining why.</p>
+<p>In practice, documentation was being forgotten. An agent or a human would modify <code>tokens/semantic.json</code> to add a token, commit, and no ADR would be created. The git history kept the _what_ but lost the _why_.</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we ensure that a modification in a critical area of the system systematically triggers a reflection on whether an ADR is needed, without blocking the workflow or forcing an ADR for every minor change?</strong></p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Add a <code>PostToolUse</code> hook in <code>.claude/settings.json</code> that fires after every <code>Write</code> or <code>Edit</code> operation on a file whose path contains <code>/tokens/</code>, <code>/guidelines/</code>, or <code>/components/</code>.</p>
+<p>The hook injects a reminder into the model's context via <code>additionalContext</code>:</p>
+<pre class="code-block"><code class="lang-text">ADR REMINDER: The modified file is in a critical area of the design system.
+Immediately ask the user: Would you like to create an ADR
+to document this change? (Yes/No)</code></pre>
+<p>This reminder forces Claude to ask the question on every critical modification. The user answers Yes or No — no ADR is created without an explicit human decision.</p>
+<h3>Configuration (<code>/.claude/settings.json</code>)</h3>
+<pre class="code-block"><code class="lang-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{...additionalContext...}' \"$f\"; fi",
+            "statusMessage": "Checking ADR…"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Rule documented only in CLAUDE.md</strong></td><td>A textual rule in a context file depends on the agent correctly reading that file. A hook runs systematically, regardless of the loaded context.</td></tr><tr><td><strong>Blocking hook (non-zero exit)</strong></td><td>Blocking the <code>Edit</code> until an ADR is created would be too restrictive: not every change justifies an ADR (typo fix, reformatting). The non-blocking reminder leaves the decision to the human.</td></tr><tr><td><strong>Hook on <code>git commit</code> (pre-commit)</strong></td><td>A git hook checks at commit time, too late in the flow: the relevant question should be asked _during_ the modification, while the context is still active.</td></tr><tr><td><strong>System notification (OS notification)</strong></td><td>OS notifications are ignored when working in the terminal. The <code>additionalContext</code> is injected directly into Claude's response — impossible to miss.</td></tr><tr><td><strong>Mandatory ADR for every change</strong></td><td>Documentation overload. A primitive token value change from <code>#3B82F6</code> to <code>#3B81F5</code> doesn't justify a full ADR. The reminder filters through human judgment.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>After every <code>Edit</code> or <code>Write</code> in a critical area, Claude asks the ADR question</li></ul>
+<p>  without the user having to think about it</p>
+<ul><li>The hook runs via the Claude Code harness — it doesn't depend on the prompt,</li></ul>
+<p>  the loaded context, or the session's memory</p>
+<p><strong>For humans:</strong></p>
+<ul><li>Documentation friction is minimal: a Yes/No question after each change</li><li>Forgotten ADRs become structurally impossible in the covered areas</li><li>The behavior is transparent and auditable in <code>.claude/settings.json</code></li></ul>
+<p><strong>Covered areas:</strong></p>
+<ul><li><code>tokens/</code> — primitives, semantics, components</li><li><code>guidelines/</code> — normative documentation for components and foundations</li><li><code>components/</code> — Web Component implementations</li></ul>
+<p><strong>Areas deliberately not covered:</strong></p>
+<ul><li><code>.claude/</code> — internal configuration, not a design decision</li><li><code>src/</code> — application code, covered by other review processes</li><li><code>decisions/</code> — ADRs themselves don't trigger a recursive reminder</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>The reminder shows up even for minor changes (typo fix in a token)</li><li>The user must explicitly answer No — slight friction for obvious changes</li></ul>
+<hr>
+<h2>Amendment — 2026-05-31: ADR reminder on <code>Write</code> only</h2>
+<h3>Observed problem</h3>
+<p>During the development sessions for the <code>agtc-badge</code>, <code>agtc-card</code> components and the WCAG fixes that followed, the hook fired on <strong>every <code>Edit</code></strong> in the critical areas — including for bug fixes with no architectural decision involved (fixing an insufficient contrast ratio, correcting a typo in a story, adjusting a color that failed an axe test).</p>
+<p>Concrete result: to fix the badge's 27 WCAG violations (3 text colors to replace), the hook interrupted the work <strong>6 times</strong> to ask a question whose answer was systematically no. The documentation friction became noise rather than a useful safeguard.</p>
+<h3>Fundamental distinction</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Type of change</th><th>Needs an ADR</th><th>Example</th></tr></thead><tbody><tr><td><strong>New file</strong> (<code>Write</code>)</td><td>Yes — it's a creation, therefore a decision</td><td>Adding <code>agtc-badge.js</code>, creating a token</td></tr><tr><td><strong>Modification</strong> (<code>Edit</code>)</td><td>Rarely — often a bug fix or an adjustment</td><td>Fixing a contrast ratio, renaming a variable</td></tr></tbody></table></div>
+<p>The question "does this need an ADR?" is relevant when <strong>creating</strong> something (new component, new token, new guideline). It's almost always irrelevant when <strong>modifying</strong> something that already exists — the original ADR already covers the decision.</p>
+<h3>Change applied</h3>
+<p>The <code>PostToolUse</code> hook is now split into two entries:</p>
+<pre class="code-block"><code class="lang-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "...ADR reminder..." }]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{ "type": "command", "command": "...construction log..." }]
+      }
+    ]
+  }
+}</code></pre>
+<ul><li><strong>ADR reminder</strong>: <code>Write</code> only — fires on file creation</li><li><strong>Construction log</strong>: <code>Write|Edit</code> — unchanged, captures every modification</li></ul>
+<h3>Accepted cost of the amendment</h3>
+<p>An <code>Edit</code> that genuinely represents a new architectural decision will no longer automatically trigger the reminder. Discipline is still required: if a token or component modification encodes a non-trivial decision, the human or the agent must create the ADR manually. The hook is no longer the sole safeguard for modifications.</p>
+<hr>
+<h2>Incidents or triggers (original version)</h2>
+<p>Repeated observation: during work sessions on tokens and guidelines, structuring modifications were committed with no associated ADR. The git history kept the diff but not the justification. This hook is the procedural response to that lack of documentation discipline.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Les fichiers <code>tokens/</code>, <code>guidelines/</code>, et <code>components/</code> contiennent les décisions structurantes du système de design : valeurs de tokens, contrats de composants, documentation normative. Toute modification dans ces zones devrait, en principe, être accompagnée d'un ADR ou d'un TCR qui en explique le pourquoi.</p>
 <p>En pratique, la documentation était oubliée. Un agent ou un humain modifiait <code>tokens/semantic.json</code> pour ajouter un token, commitait, et aucun ADR n'était créé. L'historique git conservait le _quoi_ mais perdait le _pourquoi_.</p>
 <p>La question posée était :</p>
@@ -210,7 +283,7 @@ pour documenter ce changement ? (Oui/Non)</code></pre>
 <p>Un <code>Edit</code> qui représente réellement une nouvelle décision architecturale ne déclenchera plus automatiquement le rappel. La discipline reste nécessaire : si une modification de token ou de composant encode une décision non triviale, l'humain ou l'agent doit créer l'ADR manuellement. Le hook n'est plus le seul garde-fou pour les modifications.</p>
 <hr>
 <h2>Incidents ou déclencheurs (version originale)</h2>
-<p>Constat répété : lors de sessions de travail sur les tokens et les guidelines, des modifications structurantes étaient commitées sans ADR associé. L'historique git conservait le diff mais pas la justification. Ce hook est la réponse procédurale à ce manque de discipline documentaire.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Constat répété : lors de sessions de travail sur les tokens et les guidelines, des modifications structurantes étaient commitées sans ADR associé. L'historique git conservait le diff mais pas la justification. Ce hook est la réponse procédurale à ce manque de discipline documentaire.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-014.html" class="agtc-button secondary">← ADR-014</a>
     <a href="adr-016.html" class="agtc-button secondary">ADR-016 →</a>
   </div></main>

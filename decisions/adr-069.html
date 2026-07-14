@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Migration du suivi de projet vers GitHub Projects — Agentica</title>
+<title>Migrating project tracking to GitHub Projects — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Migration du suivi de projet vers GitHub Projects — Agentica">
+<meta property="og:title" content="Migrating project tracking to GitHub Projects — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Migration du suivi de projet vers GitHub Projects — Agentica">
+<meta name="twitter:title" content="Migrating project tracking to GitHub Projects — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Migration du suivi de projet vers GitHub Projects</h1>
+  <h1 class="adr-page-title">Migrating project tracking to GitHub Projects</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,7 +129,46 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><div class="lang-en"><h2>Context</h2>
+<p><code>log/kit-construction.md</code> (ADR-016, 2026-05-28) automatically logged, via a <code>PostToolUse</code> hook, every modification to the kit's construction files (<code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code>). After six weeks of use, the file had grown to 464 lines and ~440 entries.</p>
+<p>This format (an append-only chronological table) served its role as a log well, but didn't allow for real project management: no status other than "done," no backlog distinct from history, no view by domain, no dependency tracking between initiatives. Re-reading the file to answer "what's left to do?" required reparsing the entire history in search of informal mentions ("door left open," "out of scope," "to do").</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we get a real project management tool (statuses, backlog, dependencies) without duplicating the logging effort already provided by git and the ADRs?</strong></p></blockquote>
+<hr>
+<h2>Decision</h2>
+<p>Agentica's project tracking is migrated to <strong>GitHub Projects (v2)</strong> — Project #1 "Agentica — Project Management" → https://github.com/users/gnegreiros-ux/projects/1.</p>
+<ul><li><strong>Custom fields</strong>: <code>Status</code> (Backlog, In Progress, Waiting, Done, Abandoned),</li></ul>
+<p>  <code>Domain</code> (Figma, Tokens, Site, Components, Tests, Governance, Presentation),   <code>Dependency</code> (free text, e.g. <code>#12</code>), <code>ADR</code> (free text, e.g. <code>ADR-059</code>), <code>Date</code>.</p>
+<ul><li><strong>Views</strong>: Board (by Status, daily use), "By domain" table (group by Domain),</li></ul>
+<p>  "History" table (filter <code>Status:Done</code>, sorted by descending Date — replaces the   chronological log function of the old file).</p>
+<ul><li><strong>Population</strong>: the ~440 raw entries from <code>log/kit-construction.md</code> were condensed</li></ul>
+<p>  into 100 items (91 historical initiatives + 1 pending initiative + 8 backlog tickets   identified from "to do"/"door open" mentions found in the history and in session   memory), all migrated with their real status.</p>
+<ul><li>The <code>PostToolUse</code> hook (<code>.claude/hooks/log-kit-construction.sh</code>) and the</li></ul>
+<p>  <code>log/kit-construction.md</code> file are removed from the repository.</p>
+<p>The <strong>public changelog</strong> (<code>site/dist/changelog.html</code>, shipped release notes) stays in the repository — it is distinct from internal project management and is not affected by this migration.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Keep the file + add a management layer on top</strong></td><td>Duplicates the entry effort (file + tool) and creates a risk of desynchronization between the two sources.</td></tr><tr><td><strong>GitHub Issues + Milestones alone</strong></td><td>No free-text field to cross-reference Domain/ADR/Dependency without repurposing labels and milestones away from their intended use; Projects v2 offers custom fields natively.</td></tr><tr><td><strong>External tool (Linear, Jira…)</strong></td><td>Adds a paid dependency and a system outside the GitHub ecosystem already used for code and CI; contrary to the digital-sovereignty principle (<code>project-overview.md</code>).</td></tr><tr><td><strong>Keep the automatic log for history, GitHub Projects for the future only</strong></td><td>Would have left two active history registers in parallel (repo + Project) — contrary to the goal of a single source of truth.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>A question like "what's been done on X?" or "what's left to do?" is answered via</li></ul>
+<p>  <code>gh project item-list 1 --owner gnegreiros-ux</code> or the "History"/Board view, no longer   via reading <code>log/kit-construction.md</code>.</p>
+<ul><li>The <code>PostToolUse</code> hook that automatically logged every <code>Write</code>/<code>Edit</code> on <code>.claude/</code>,</li></ul>
+<p>  <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code> is removed — these modifications remain traced by   git and by the ADRs themselves, not by a separate log.</p>
+<ul><li>Any proposal for a new initiative (Backlog) must be created in GitHub Projects after</li></ul>
+<p>  explicit human validation — never directly, per <code>project-overview.md</code> ("the human   always has the final word").</p>
+<p><strong>For humans:</strong></p>
+<ul><li>The Board provides a daily-piloting view impossible with a flat file.</li><li>The "By domain" and "History" views respectively replace the need for manual</li></ul>
+<p>  filtering and the chronological log function of the old file.</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>History loses the minute-level timestamp granularity of the old hook (migrated</li></ul>
+<p>  entries carry a date, not a time) — judged not significant for project management use   rather than session debugging.</p>
+<ul><li>GitHub Projects is a service external to the git repository itself (but stays within</li></ul>
+<p>  the GitHub ecosystem already used for code, Issues, and CI).</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Explicit user request on 2026-07-09: "need a project management tool to better run Agentica." The <code>kit-construction.md</code> log format (designed by ADR-016 as observability for kit construction, not as a piloting tool) no longer met this need once the volume of accumulated history grew.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p><code>log/kit-construction.md</code> (ADR-016, 2026-05-28) journalisait automatiquement, via un hook <code>PostToolUse</code>, chaque modification des fichiers de construction du kit (<code>.claude/</code>, <code>decisions/</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code>). Après six semaines d'usage, le fichier comptait 464 lignes et ~440 entrées.</p>
 <p>Ce format (tableau chronologique append-only) remplissait bien son rôle de journal, mais ne permettait pas de gérer un projet : pas de statut autre que « fait », pas de backlog distinct de l'historique, pas de vue par domaine, pas de suivi de dépendances entre chantiers. Relire le fichier pour répondre à « qu'est-ce qui reste à faire ? » demandait de reparser tout l'historique à la recherche de mentions informelles (« porte laissée ouverte », « hors scope », « à faire »).</p>
 <p>La question posée était :</p>
@@ -168,7 +207,7 @@
 <p>  l'écosystème GitHub déjà utilisé pour le code, les Issues et la CI).</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Demande explicite de l'utilisateur le 2026-07-09 : « besoin d'un outil de gestion de projet pour mieux mener Agentica ». Le format journal de <code>kit-construction.md</code> (conçu par ADR-016 comme observabilité de la construction du kit, pas comme outil de pilotage) ne répondait plus à ce besoin une fois le volume d'historique accumulé.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Demande explicite de l'utilisateur le 2026-07-09 : « besoin d'un outil de gestion de projet pour mieux mener Agentica ». Le format journal de <code>kit-construction.md</code> (conçu par ADR-016 comme observabilité de la construction du kit, pas comme outil de pilotage) ne répondait plus à ce besoin une fois le volume d'historique accumulé.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-068.html" class="agtc-button secondary">← ADR-068</a>
     <a href="adr-070.html" class="agtc-button secondary">ADR-070 →</a>
   </div></main>

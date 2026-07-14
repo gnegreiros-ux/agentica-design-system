@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>DESIGN.md comme contrat portable versionné avec le code — Agentica</title>
+<title>DESIGN.md as a portable contract versioned with the code — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="DESIGN.md comme contrat portable versionné avec le code — Agentica">
+<meta property="og:title" content="DESIGN.md as a portable contract versioned with the code — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="DESIGN.md comme contrat portable versionné avec le code — Agentica">
+<meta name="twitter:title" content="DESIGN.md as a portable contract versioned with the code — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">DESIGN.md comme contrat portable versionné avec le code</h1>
+  <h1 class="adr-page-title">DESIGN.md as a portable contract versioned with the code</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,53 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead, Principal Designer, Direction produit</dd>
+      <dd>Design System Lead, Principal Designer, Product Leadership</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Creates <code>DESIGN.md</code> as a portable, git-versioned governance contract (principles, token architecture, accessibility rules, the TCR process) instead of relying on a wiki or Notion — surfaces agents can't read. <code>DESIGN.md</code> is the first file agents must read, ensuring every session starts from the same stable contract.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>A design system encodes organizational decisions: which values, which principles, which governance. These decisions traditionally live in wikis, presentations, Notion documents, or in the heads of key team members.</p>
+<p>This storage has two major flaws for an agentic system:</p>
+<p><strong>1. Desynchronization from the code</strong> A principle documented in Notion isn't linked to the code that implements it. An agent reading the code doesn't see the principle. An agent reading Notion doesn't see whether the principle is implemented or not.</p>
+<p><strong>2. Inaccessibility to agents</strong> An AI agent has no access to Notion, Confluence, or PowerPoint presentations. It can read the git repo. If governance decisions aren't in the repo, agents operate without those constraints — even if they formally exist elsewhere.</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we make the design system's principles and governance accessible to agents, synchronized with the code, and versioned in the same way as tokens?</strong></p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Create <code>DESIGN.md</code> as a <strong>portable contract</strong> — a Markdown file at the repo root that encodes the principles, token architecture, accessibility rules, and governance, in a format readable by both humans and AI agents.</p>
+<p><code>DESIGN.md</code> is versioned with the code. Any modification to <code>DESIGN.md</code> follows the same process as a token modification: PR, review, approval.</p>
+<p>The concept is inspired by Google Labs' work (April 2026) on portable specifications for agentic design systems — <code>DESIGN.md</code> is the local answer to the question "how does an agent know the rules of the game?"</p>
+<p><strong>What DESIGN.md contains:</strong></p>
+<ul><li>Identity and intent of the system (name, organization, version, owner)</li><li>Token architecture (the three levels, governance rules)</li><li>General component rules</li><li>Non-negotiable accessibility rules</li><li>The TCR (Token Change Request) process</li><li>What agents can and cannot do</li></ul>
+<p><strong>What DESIGN.md does not contain:</strong></p>
+<ul><li>Token values (in <code>tokens/*.json</code>)</li><li>Component contracts (in <code>guidelines/components/</code>)</li><li>Technical decisions (in <code>decisions/</code>)</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Internal wiki (Notion, Confluence)</strong></td><td>Not accessible to agents. Desynchronized from the code by nature — nobody updates the wiki when the code changes. Not versioned with git — no traceability of who changed what and when.</td></tr><tr><td><strong>README.md only</strong></td><td>The README is an introduction to the project, not a governance contract. Mixing the two overloads the README and makes both roles less legible. <code>DESIGN.md</code> is a file dedicated to governance.</td></tr><tr><td><strong>Comments in code files</strong></td><td>Not centralized. An agent has to read every file to reconstruct the rules. Not appropriate for principles that apply to the entire system.</td></tr><tr><td><strong>Environment variables or JSON config</strong></td><td>Governance principles are not technical configuration. A JSON config file isn't naturally readable by humans and can't express governance nuance.</td></tr><tr><td><strong>No governance document</strong></td><td>Explicitly rejected. Without <code>DESIGN.md</code>, every agent starts with an empty context and reconstructs the rules from the code — with guaranteed errors. The first instruction in <code>AGENTS.md</code> is "read DESIGN.md first".</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li><code>DESIGN.md</code> is the first file to read (<code>AGENTS.md</code> explicitly points to it)</li><li>An agent that has read <code>DESIGN.md</code> knows: the guiding principles, the token</li></ul>
+<p>  structure, the accessibility rules, the TCR process, and its own limits</p>
+<ul><li><code>DESIGN.md</code> stays stable across sessions — agents find the same contract every</li></ul>
+<p>  time they start, without depending on the memory of the previous session</p>
+<p><strong>For teams:</strong></p>
+<ul><li><code>DESIGN.md</code> is the answer to "where is the system's governance?" — a git file</li></ul>
+<p>  URL, not a link to a possibly deprecated wiki</p>
+<ul><li>Any new person (human or agent) who clones the repo immediately finds the</li></ul>
+<p>  organization's contract in the file</p>
+<p><strong>For governance:</strong></p>
+<ul><li>Modifying <code>DESIGN.md</code> is an act of governance — traceable in git, subject to review</li><li>If a rule changes in <code>DESIGN.md</code>, the git diff shows exactly what changed, who</li></ul>
+<p>  approved it, and in what context</p>
+<ul><li>The desynchronization between declared principles and implemented code becomes</li></ul>
+<p>  visible: if <code>DESIGN.md</code> says one thing and the code does another, that's a   detectable governance bug</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li><code>DESIGN.md</code> must be kept up to date — going stale without updates is worse than</li></ul>
+<p>  having no document</p>
+<ul><li>The temptation is to put everything in <code>DESIGN.md</code> — resist it. Only principles</li></ul>
+<p>  and global governance belong there. Details go in <code>decisions/</code>, contracts in   <code>guidelines/</code>, values in <code>tokens/</code></p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision, inspired by work presented at the AI Design Systems Conference 2026. The question that triggered it: "if an agent clones this repo tomorrow, what does it know about our rules?" Without <code>DESIGN.md</code>, the answer was "nothing — it reads the code and guesses." With <code>DESIGN.md</code>, the answer is "everything it needs to know to work without improvising."</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Un système de design encode des décisions d'organisation : quelles valeurs, quels principes, quelle gouvernance. Ces décisions vivent traditionnellement dans des wikis, des présentations, des documents Notion, ou dans la tête des personnes clés de l'équipe.</p>
 <p>Ce stockage a deux défauts majeurs pour un système agentique :</p>
 <p><strong>1. La désynchronisation avec le code</strong> Un principe documenté dans Notion n'est pas lié au code qui l'implémente. Un agent qui lit le code ne voit pas le principe. Un agent qui lit Notion ne voit pas si le principe est implémenté ou non.</p>
@@ -176,7 +215,7 @@
 <p>  et la gouvernance globale y ont leur place. Les détails vont dans <code>decisions/</code>,   les contrats dans <code>guidelines/</code>, les valeurs dans <code>tokens/</code></p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice, inspirée des travaux présentés à l'AI Design Systems Conference 2026. La question qui l'a déclenchée : "si un agent clone ce repo demain, que connaît-il de nos règles ?" Sans <code>DESIGN.md</code>, la réponse était "rien — il lit le code et devine". Avec <code>DESIGN.md</code>, la réponse est "tout ce qu'il a besoin de savoir pour travailler sans improviser".</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice, inspirée des travaux présentés à l'AI Design Systems Conference 2026. La question qui l'a déclenchée : "si un agent clone ce repo demain, que connaît-il de nos règles ?" Sans <code>DESIGN.md</code>, la réponse était "rien — il lit le code et devine". Avec <code>DESIGN.md</code>, la réponse est "tout ce qu'il a besoin de savoir pour travailler sans improviser".</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-012.html" class="agtc-button secondary">← ADR-012</a>
     <a href="adr-014.html" class="agtc-button secondary">ADR-014 →</a>
   </div></main>

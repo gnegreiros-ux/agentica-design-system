@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Pipeline d'impact pré-commit avec approbation humaine — Agentica</title>
+<title>Pre-commit impact pipeline with human approval — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Pipeline d'impact pré-commit avec approbation humaine — Agentica">
+<meta property="og:title" content="Pre-commit impact pipeline with human approval — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Pipeline d'impact pré-commit avec approbation humaine — Agentica">
+<meta name="twitter:title" content="Pre-commit impact pipeline with human approval — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Pipeline d'impact pré-commit avec approbation humaine</h1>
+  <h1 class="adr-page-title">Pre-commit impact pipeline with human approval</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,41 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes a mandatory pre-commit pipeline — impact analysis, structured report, explicit wait for human approval, then ordered execution (tokens → site rebuild → log → ADRs → commit) — after observing agents commit changes without proposing necessary follow-up updates. This operationalizes the project's core principle that the human always has the final word.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>During the earliest work sessions with AI agents on this repository, a problematic pattern was observed: agents were committing changes without proposing the necessary collateral updates (kit log, site rebuild, ADR). The human had to systematically request these updates afterward, creating:</p>
+<ul><li>An inconsistent git history (changes and their consequences split across separate commits)</li><li>An incomplete kit log, or one updated from memory (rather than in real time)</li><li>Missed site rebuilds after modifying <code>build.js</code> or the tokens</li><li>Weakened governance: the human did not know what they were implicitly approving</li></ul>
+<p>This project rests on a foundational principle: <strong>the human always has the final word</strong>. This principle requires an operational mechanism — not merely a stated intention.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Mandatory pre-commit pipeline</h3>
+<p>Any agent working on this repository must, after every modification and before any commit, execute the following pipeline:</p>
+<p><strong>Step 1 — Impact analysis</strong> Identify the modified files via <code>git diff --name-only</code> and apply the impact matrix defined in <code>.claude/skills/post-change-pipeline.md</code>.</p>
+<p><strong>Step 2 — Structured report</strong> Present the human with a report of proposed updates as a checklist, spelling out the reasoning for each item.</p>
+<p><strong>Step 3 — Wait for approval</strong> Execute nothing before an explicit response from the human. Absence of a response is not approval.</p>
+<p><strong>Step 4 — Ordered execution</strong> Execute only the approved tasks, in order: tokens → site rebuild → log → ADRs → commit.</p>
+<h3>Impact matrix</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Modified files</th><th>Updates evaluated</th></tr></thead><tbody><tr><td><code>tokens/primitives.json</code></td><td>Site rebuild, log, ADR if a new token</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Site rebuild, log, <code>tokens.css</code></td></tr><tr><td><code>tokens/component.json</code></td><td>Site rebuild, log, <strong>Principal Designer approval</strong></td></tr><tr><td><code>site/build.js</code></td><td>Site rebuild</td></tr><tr><td><code>guidelines/</code>, <code>components/</code></td><td>Site rebuild, log</td></tr><tr><td><code>decisions/ADR-*.md</code></td><td>Site rebuild (ADR page), log</td></tr><tr><td><code>.claude/rules/</code>, <code>.claude/skills/</code></td><td>Log, ADR if an architectural decision</td></tr><tr><td>Any change</td><td>Kit log (always)</td></tr></tbody></table></div>
+<h3>Intelligent detection</h3>
+<p>The pipeline proposes only the relevant updates based on the files actually modified — not a systematic exhaustive checklist. The goal is to minimize friction while guaranteeing completeness.</p>
+<hr>
+<h2>Rationale</h2>
+<h3>Why an explicit pipeline rather than a git hook?</h3>
+<p>A pre-commit hook runs with no human context — it can reject a commit but cannot propose alternative updates or wait for approval. The agent-human pipeline is intentionally conversational: it submits a report, waits for a decision, then executes.</p>
+<h3>Why detect impact from modified files?</h3>
+<p>A static checklist (always check everything) creates decision fatigue. Detection via <code>git diff</code> proposes only what is actually relevant, making every impact report meaningful and actionable.</p>
+<h3>Why is the execution order prescribed?</h3>
+<p>The tokens → site → log → ADR → commit order guarantees that each artifact is produced before being referenced in the next. A log updated before the rebuild would contain a state that does not yet exist on disk.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Automatic pre-commit hook</strong></td><td>No human feedback loop — violates the "the human has the final word" principle</td></tr><tr><td><strong>Exhaustive checklist on every commit</strong></td><td>Decision fatigue, items irrelevant to the actual changes</td></tr><tr><td><strong>Trust the agent to decide alone</strong></td><td>Inconsistent git history observed in practice during the earliest sessions</td></tr><tr><td><strong>Update the log after the commit</strong></td><td>Log decoupled from the change — unreliable history</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For agents:</strong></p>
+<ul><li>Read <code>.claude/rules/post-change-pipeline.md</code> before any commit</li><li>Execute <code>.claude/skills/post-change-pipeline.md</code> after every modification</li><li>Never commit without an approved report</li></ul>
+<p><strong>For the human:</strong></p>
+<ul><li>Receive a structured report before every commit</li><li>Approve or amend the list of proposed updates</li><li>Retain control over what enters the git history</li></ul>
+<p><strong>For the project:</strong></p>
+<ul><li>Consistent git history: every commit is complete and self-sufficient</li><li>Kit log faithful to the actual state of the repository</li><li>Operational governance, not merely declarative</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Lors des premières sessions de travail avec des agents IA sur ce dépôt, un pattern problématique a été observé : les agents committaient des changements sans proposer les mises à jour collatérales nécessaires (log du kit, site rebuild, ADR). L'humain devait systématiquement demander ces mises à jour après coup, créant :</p>
 <ul><li>Un historique git incohérent (modifications et leurs conséquences dans des commits séparés)</li><li>Un log du kit incomplet ou mis à jour de mémoire (plutôt qu'en temps réel)</li><li>Des oublis de rebuild site après modification de <code>build.js</code> ou des tokens</li><li>Une gouvernance affaiblie : l'humain ne savait pas ce qu'il approuvait implicitement</li></ul>
 <p>Ce projet repose sur le principe fondamental : <strong>le dernier mot est toujours humain</strong>. Ce principe nécessite un mécanisme opérationnel — pas seulement une intention déclarée.</p>
@@ -167,7 +197,7 @@
 <p><strong>Pour l'humain :</strong></p>
 <ul><li>Recevoir un rapport structuré avant chaque commit</li><li>Approuver ou modifier la liste des mises à jour proposées</li><li>Garder le contrôle sur ce qui entre dans l'historique git</li></ul>
 <p><strong>Pour le projet :</strong></p>
-<ul><li>Historique git cohérent : chaque commit est complet et auto-suffisant</li><li>Log du kit fidèle à l'état réel du dépôt</li><li>Gouvernance opérationnelle, pas seulement déclarative</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Historique git cohérent : chaque commit est complet et auto-suffisant</li><li>Log du kit fidèle à l'état réel du dépôt</li><li>Gouvernance opérationnelle, pas seulement déclarative</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-026.html" class="agtc-button secondary">← ADR-026</a>
     <a href="adr-028.html" class="agtc-button secondary">ADR-028 →</a>
   </div></main>

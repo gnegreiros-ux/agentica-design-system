@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-banner` — Agentica</title>
+<title>Implementation of `agtc-banner` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-banner` — Agentica">
+<meta property="og:title" content="Implementation of `agtc-banner` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-banner` — Agentica">
+<meta name="twitter:title" content="Implementation of `agtc-banner` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-banner`</h1>
+  <h1 class="adr-page-title">Implementation of `agtc-banner`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,37 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Generalizes the site's ad hoc <code>contribution-banner</code> into agtc-banner, an inline (non-toast, non-modal) message component with 6 severity variants aligned to agtc-badge. Static by default (no live region) to avoid announcing banners present at page load; <code>live="polite"/"assertive"</code> is opt-in for dynamically inserted messages.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Applied reference UX patterns</h2>
+<blockquote><p>Added on 2026-06-03 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>N1–N9 all approved</strong>. Detail and links: <code>guidelines/components/banner.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>N1</td><td>Semantic variants (6)</td><td>NN/g</td></tr><tr><td>N2</td><td>Meaning never conveyed by color alone (icon + AT text)</td><td>NN/g</td></tr><tr><td>N3</td><td>Icon per variant</td><td>NN/g</td></tr><tr><td>N4</td><td>Static by default (no live region)</td><td>MDN — status role</td></tr><tr><td>N5</td><td>Assertive <code>role="alert"</code> used sparingly</td><td>A11Y Collective</td></tr><tr><td>N6</td><td>Accessible close button with no focus trap</td><td>MDN — alert role</td></tr><tr><td>N7</td><td>Title + body + action zone</td><td>NN/g</td></tr><tr><td>N8</td><td>Left accent border + subtle background</td><td>Dashboard</td></tr><tr><td>N9</td><td>No auto-dismiss for critical</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p>The site uses a <code>contribution-banner</code> (16 usages) — an info callout with a left accent border, icon, title + body, and an action ("View on GitHub"). It's a special case of a broader need: a <strong>contextual inline message</strong> with multiple severity levels.</p>
+<p><code>agtc-banner</code> generalizes this need. It's the 3rd component from the 2026-06-03 gap analysis (category B), after <code>agtc-table</code> and <code>agtc-code-block</code>.</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — Inline message, not a toast or modal</h3>
+<p><code>agtc-banner</code> stays <strong>in the page flow</strong>. Temporary floating notifications (toast) and blocking interruptions (modal / <code>alertdialog</code>) are separate future components. This boundary avoids overloading a single component with contradictory responsibilities.</p>
+<h3>Decision 2 — 6 variants aligned with <code>agtc-badge</code></h3>
+<p><code>neutral, brand, info, success, warning, danger</code> — the same semantic intents as the badge, so that an agent, like a human, reasons consistently about severity across the system.</p>
+<h3>Decision 3 — Static by default; live region opt-in (N4/N5)</h3>
+<p>A central accessibility point: a banner <strong>present at page load</strong> must not be a live region (otherwise it gets announced, which is disruptive). The default is therefore <code>live="off"</code> (no <code>role</code>). For a <strong>dynamically inserted</strong> message, the consumer chooses <code>live="polite"</code> (→ <code>role="status"</code>) or <code>live="assertive"</code> (→ <code>role="alert"</code>, reserved for urgent cases). Severity remains accessible even without a live region thanks to a <strong>hidden prefix</strong> ("Error:", "Warning:"…), the icon being decorative.</p>
+<h3>Decision 4 — "Mix" architecture (consistent with ADR-040/041)</h3>
+<p><code>&lt;agtc-banner&gt;</code> component (shadow DOM, <code>default</code> + <code>actions</code> slots) for apps/Storybook <strong>+</strong> <code>.agtc-banner</code> class for the site's static HTML. Both consume <code>component.banner.*</code>. The <code>contribution-banner</code> will be migrated to <code>.agtc-banner</code> during *dogfooding* (category A).</p>
+<h3>Decision 5 — Per-variant tokens: <code>background</code> + <code>accent</code></h3>
+<p>To limit the number of tokens, each variant carries two tokens (<code>background</code>, <code>accent</code>), with <code>accent</code> serving <strong>both</strong> the left border and the icon. Text (title/body) is shared (<code>heading-text</code> = text.primary, <code>body-text</code> = text.secondary). Consistent with the existing <code>agtc-badge</code> precedent (reuse of the semantic feedback intents).</p>
+<hr>
+<h2>v1 Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future component/evolution)</th></tr></thead><tbody><tr><td>6 variants, icon per variant (+ override / <code>no-icon</code>)</td><td>Toast (temporary floating)</td></tr><tr><td>Title, body, action zone (slots)</td><td>Modal / <code>alertdialog</code></td></tr><tr><td><code>dismissible</code> + <code>dismiss</code> event</td><td>Timed auto-dismiss</td></tr><tr><td><code>live</code> opt-in (off/polite/assertive)</td><td>Notification stacking / queue</td></tr><tr><td>Tokenized accent border + subtle background</td><td>"Solid" variants (full background)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong><code>role="alert"</code> by default</strong>: would announce every static banner on load — disruptive (N4).</li><li><strong>Severity conveyed by color alone</strong>: inaccessible — icon + hidden prefix mandatory (N2).</li><li><strong>Merging toast/modal into this component</strong>: contradictory responsibilities (floating vs inline vs blocking).</li><li><strong>One token per sub-element and per variant</strong>: token explosion — <code>accent</code> pooled (border + icon).</li></ul>
+<hr>
+<h2>Consequences</h2>
+<ul><li>The site's <code>contribution-banner</code> will be able to migrate to <code>.agtc-banner variant="brand"</code> during *dogfooding*.</li><li>Toast and modal remain to be designed (each with its own ADR).</li></ul>
+<hr>
+<h2>Tokens added — <code>component.banner.*</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Reference</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>N1–N9 tous approuvés</strong>. Détail et liens : <code>guidelines/components/banner.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>N1</td><td>Variantes sémantiques (6)</td><td>NN/g</td></tr><tr><td>N2</td><td>Sens jamais par la couleur seule (icône + texte AT)</td><td>NN/g</td></tr><tr><td>N3</td><td>Icône par variante</td><td>NN/g</td></tr><tr><td>N4</td><td>Statique par défaut (pas de live region)</td><td>MDN — status role</td></tr><tr><td>N5</td><td><code>role="alert"</code> assertif avec parcimonie</td><td>A11Y Collective</td></tr><tr><td>N6</td><td>Bouton fermer accessible sans piège de focus</td><td>MDN — alert role</td></tr><tr><td>N7</td><td>Titre + corps + zone d'action</td><td>NN/g</td></tr><tr><td>N8</td><td>Bordure d'accent gauche + fond subtil</td><td>Dashboard</td></tr><tr><td>N9</td><td>Pas d'auto-dismiss du critique</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
@@ -163,7 +189,7 @@
 <ul><li>Le <code>contribution-banner</code> du site pourra migrer vers <code>.agtc-banner variant="brand"</code> au *dogfooding*.</li><li>Toast et modale restent à concevoir (chacun son ADR).</li></ul>
 <hr>
 <h2>Tokens ajoutés — <code>component.banner.*</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-041.html" class="agtc-button secondary">← ADR-041</a>
     <a href="adr-043.html" class="agtc-button secondary">ADR-043 →</a>
   </div></main>

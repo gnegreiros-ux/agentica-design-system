@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica</title>
+<title>Closing the 3-level hierarchy: intermediate semantic tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica">
+<meta property="og:title" content="Closing the 3-level hierarchy: intermediate semantic tokens — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires — Agentica">
+<meta name="twitter:title" content="Closing the 3-level hierarchy: intermediate semantic tokens — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires</h1>
+  <h1 class="adr-page-title">Closing the 3-level hierarchy: intermediate semantic tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,49 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> A systematic audit of the component-token object (<code>COMP</code>) in <code>site/build.js</code> found roughly 20 component tokens referencing primitive tokens directly, skipping the semantic layer required by ADR-001, plus 4 unrelated hardcoded CSS violations. This ADR closes the three-level hierarchy by adding 18 new intermediate semantic tokens (brand/feedback text colors, code-surface colors, toggle-track colors, a component spacing scale) and fixing the 4 CSS violations — leaving zero direct primitive references in the COMP object, with no visual change since resolved values stay identical.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-001 sets out the fundamental rule:</p>
+<pre class="code-block"><code class="lang-text">Primitive tokens → Semantic tokens → Component tokens</code></pre>
+<p>A systematic audit of the COMP object in <code>site/build.js</code> revealed that <strong>~20 component tokens</strong> referenced primitives directly, skipping the semantic level:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Component token</th><th>Referenced primitive (violation)</th></tr></thead><tbody><tr><td><code>badge-brand-text</code></td><td><code>primitive.color.teal.12</code></td></tr><tr><td><code>badge-success-background</code></td><td><code>primitive.color.green.3</code></td></tr><tr><td><code>badge-warning-background</code></td><td><code>primitive.color.orange.3</code></td></tr><tr><td><code>badge-warning-text</code></td><td><code>primitive.color.orange.12</code></td></tr><tr><td><code>badge-info-background</code></td><td><code>primitive.color.blue.3</code></td></tr><tr><td><code>badge-info-text</code></td><td><code>primitive.color.blue.12</code></td></tr><tr><td><code>banner-info-background</code></td><td><code>primitive.color.blue.3</code></td></tr><tr><td><code>banner-success-background</code></td><td><code>primitive.color.green.3</code></td></tr><tr><td><code>banner-warning-background</code></td><td><code>primitive.color.orange.3</code></td></tr><tr><td><code>banner-warning-accent</code></td><td><code>primitive.color.orange.11</code></td></tr><tr><td><code>code-block-default-background</code></td><td><code>primitive.color.gray.12</code></td></tr><tr><td><code>code-block-default-text</code></td><td><code>primitive.color.gray.4</code></td></tr><tr><td><code>code-block-default-meta-text</code></td><td><code>primitive.color.gray.8</code></td></tr><tr><td><code>code-block-default-copy-background</code></td><td><code>primitive.color.gray.11</code></td></tr><tr><td><code>code-block-default-copy-background-hover</code></td><td><code>primitive.color.gray.10</code></td></tr><tr><td><code>code-block-default-copy-text</code></td><td><code>primitive.color.gray.1</code></td></tr><tr><td><code>toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code></td></tr><tr><td><code>toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code></td></tr><tr><td><code>card-padding-sm</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>card-padding-lg</code></td><td><code>primitive.space.6</code></td></tr><tr><td><code>badge-md-padding-x</code>, <code>table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>badge-md-padding-y</code></td><td><code>primitive.space.1</code></td></tr><tr><td><code>badge-sm-padding-x</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>badge-sm-padding-y</code></td><td><code>"2px"</code> (hardcoded)</td></tr><tr><td><code>code-block-default-padding-x</code>, <code>banner-padding-x</code></td><td><code>primitive.space.5</code></td></tr><tr><td><code>code-block-default-padding-y</code>, <code>banner-padding-y</code></td><td><code>primitive.space.4</code></td></tr></tbody></table></div>
+<p>Consequence: changing the "dark code background" color required searching for every occurrence of <code>gray.12</code> in COMP, instead of modifying a single <code>background.code</code> semantic token that propagated everywhere. The intent ("code background") was invisible.</p>
+<p>The audit also identified <strong>3 immediate CSS violations</strong> unrelated to tokens:</p>
+<ul><li>Hex fallbacks inside <code>var(,fallback)</code> (e.g. <code>var(--agtc-...,#646464)</code>) in <code>[data-theme="light"]</code></li><li><code>font-size:0.85rem</code> outside a token on <code>.audit-contrast-table</code></li><li><code>filter:drop-shadow(rgba...)</code> outside a token on <code>.platform-logo-item img</code></li></ul>
+<blockquote><p><strong>Post-incident note, 2026-06-15:</strong> the audit initially classified the <code>color:#hex;color:var(...)</code> pairs in the <code>:visited</code> rules as "obsolete IE11 fallbacks" — that was a mistake. These literal values are a Safari compatibility necessity: WebKit blocks <code>var()</code> resolution inside <code>:visited</code> to prevent history sniffing. They were removed and then restored the same day. See <code>no-visited-nav.md</code> §Safari exception and ADR-047.</p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Part 1 — 18 new semantic tokens</h3>
+<p>Create the missing intermediate tokens in <code>tokens/semantic.json</code>, grouped by family:</p>
+<h4>Brand color</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Intent</th></tr></thead><tbody><tr><td><code>color.brand.primary-text</code></td><td><code>teal.12</code></td><td>Brand text on a light subtle background (brand badge) — 12:1 on white</td></tr></tbody></table></div>
+<h4>Feedback color (text on subtle background)</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Intent</th></tr></thead><tbody><tr><td><code>color.feedback.info-text</code></td><td><code>blue.12</code></td><td>Information text on subtle background (info badge/banner)</td></tr><tr><td><code>color.feedback.warning-text</code></td><td><code>orange.12</code></td><td>Warning text on subtle background (warning badge/banner)</td></tr></tbody></table></div>
+<blockquote><p><code>feedback.success-subtle</code>, <code>feedback.warning-subtle</code>, <code>feedback.warning</code>, <code>feedback.info-subtle</code> already existed (ADR-045) — COMP wasn't using them.</p></blockquote>
+<h4>Code surface</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Intent</th></tr></thead><tbody><tr><td><code>color.background.code</code></td><td><code>gray.12</code></td><td>Code block background — dark surface dedicated to source code</td></tr><tr><td><code>color.background.code-raised</code></td><td><code>gray.11</code></td><td>Raised background on code surface (copy button at rest)</td></tr><tr><td><code>color.background.code-raised-hover</code></td><td><code>gray.10</code></td><td>Raised background on code surface, hovered</td></tr></tbody></table></div>
+<h4>Text on code surface</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Intent</th></tr></thead><tbody><tr><td><code>color.text.on-code</code></td><td><code>gray.4</code></td><td>Source code body on dark surface</td></tr><tr><td><code>color.text.on-code-muted</code></td><td><code>gray.8</code></td><td>Metadata on code surface (language, line number)</td></tr><tr><td><code>color.text.on-code-strong</code></td><td><code>gray.1</code></td><td>Copy button — maximum contrast on code surface</td></tr></tbody></table></div>
+<h4>Toggle control</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Intent</th></tr></thead><tbody><tr><td><code>color.control.track-off</code></td><td><code>gray.9</code></td><td>Toggle track in the off state</td></tr><tr><td><code>color.control.track-off-hover</code></td><td><code>gray.10</code></td><td>Inactive toggle track, hovered</td></tr></tbody></table></div>
+<h4>Component spacing (2px → 24px scale)</h4>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Primitive</th><th>Value</th><th>Consumers</th></tr></thead><tbody><tr><td><code>space.component.padding-2xs</code></td><td><code>space.0</code></td><td>2px</td><td><code>badge.sm</code> vertical padding</td></tr><tr><td><code>space.component.padding-xs</code></td><td><code>space.1</code></td><td>4px</td><td><code>badge.md</code> vertical padding</td></tr><tr><td><code>space.component.padding-sm</code></td><td><code>space.2</code></td><td>8px</td><td><code>badge.sm</code> horizontal padding, compact table cells</td></tr><tr><td><code>space.component.padding-md</code></td><td><code>space.3</code></td><td>12px</td><td><code>badge.md</code> horizontal padding, table cells, compact <code>card</code></td></tr><tr><td><code>space.component.padding-lg</code></td><td><code>space.4</code></td><td>16px</td><td>vertical padding for code blocks/banners</td></tr><tr><td><code>space.component.padding-xl</code></td><td><code>space.5</code></td><td>20px</td><td>horizontal padding for code blocks/banners</td></tr><tr><td><code>space.component.padding-2xl</code></td><td><code>space.6</code></td><td>24px</td><td><code>card-padding-lg</code></td></tr></tbody></table></div>
+<h3>Part 2 — 4 CSS fixes</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Location</th><th>Violation</th><th>Fix</th></tr></thead><tbody><tr><td><code>[data-theme="light"]</code> (3 rules)</td><td><code>var(--agtc-...,#646464)</code> — fallback inside var()</td><td>Hex fallback removed</td></tr><tr><td><code>.audit-contrast-table</code></td><td><code>font-size:0.85rem</code> outside a token</td><td><code>var(--agtc-semantic-typography-label-size)</code></td></tr><tr><td><code>.platform-logo-item img</code></td><td><code>filter:drop-shadow(rgba...)</code> outside a token</td><td>New <code>--agtc-drop-shadow-sm</code> in <code>:root</code></td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Keep primitives in COMP</strong></td><td>Violates ADR-001 (non-negotiable hierarchy) — agents don't see the intent</td></tr><tr><td><strong>Create direct aliases in COMP with no semantic layer</strong> (<code>code-bg: primitive.gray.12</code>)</td><td>Intent stays hidden; a second component consuming the same background has no shared token</td></tr><tr><td><strong>Reuse <code>background.inverse</code></strong> for the code background</td><td><code>background.inverse</code> = <code>neutral.950</code> (generic dark surfaces: stats, footer). <code>background.code</code> = <code>gray.12</code> (surface dedicated to code) — close values but different intent</td></tr><tr><td><strong>Name the spacings by value</strong> (<code>padding-12</code>, <code>padding-16</code>)</td><td>Names the value, not the function. <code>space.component.padding-md</code> expresses relative density, not the absolute value</td></tr><tr><td><strong>Fix only the most visible violations</strong></td><td>The audit was systematic; fixing selectively would have left invisible debt in COMP</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For agents:</strong> every component token is now traceable back to a semantic intent. To change the color of every code background, it's enough to change <code>background.code</code> in <code>semantic.json</code>. To adjust components' compact spacing, <code>space.component.padding-md</code>.</p>
+<p><strong>For the system:</strong> the COMP object in <code>site/build.js</code> no longer contains any direct reference to <code>--agtc-primitive-*</code>. Validated by grep: 0 occurrences after the fix.</p>
+<p><strong>Build metrics:</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Before</th><th>After</th></tr></thead><tbody><tr><td>756 tokens defined</td><td>774 tokens defined (+18)</td></tr><tr><td>~20 hierarchy violations</td><td>0 hierarchy violations</td></tr><tr><td>4 CSS violations</td><td>0 CSS violations</td></tr><tr><td>0 ghosts</td><td>0 ghosts</td></tr></tbody></table></div>
+<p><strong>Governance:</strong> adding semantic tokens → <strong>Design System Lead</strong> approval, per <code>tokens-system.md</code>. No primitive or component token modified (component tokens now point to the new semantic tokens, but their resolved values are identical — 0 visual change).</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Systematic audit triggered by the <code>tokens-system.md</code> rule:</p>
+<blockquote><p>*"Level 1 — Primitives: Never used directly in components. Always through a semantic token."*</p></blockquote>
+<p>The violation had been known since the COMP object was built (comment in <code>tokensCSS()</code>: *"Primitive spacings — referenced by certain component tokens"*) but no intermediate semantic token had yet been created for these concepts.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'ADR-001 pose la règle fondamentale :</p>
 <pre class="code-block"><code class="lang-text">Tokens primitifs → Tokens sémantiques → Tokens de composant</code></pre>
 <p>Un audit systématique du COMP object dans <code>site/build.js</code> a révélé que <strong>~20 tokens de composant</strong> référençaient directement des primitifs, sautant le niveau sémantique :</p>
@@ -175,7 +213,7 @@
 <h2>Incidents ou déclencheurs</h2>
 <p>Audit systématique déclenché par la règle <code>tokens-system.md</code> :</p>
 <blockquote><p>*« Niveau 1 — Primitifs : Jamais utilisés directement dans les composants. Toujours via un token sémantique. »*</p></blockquote>
-<p>La violation était connue depuis la construction du COMP object (commentaire dans <code>tokensCSS()</code> : *« Espacements primitifs — référencés par certains tokens composant »*) mais aucun token sémantique intermédiaire n'avait encore été créé pour ces concepts.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>La violation était connue depuis la construction du COMP object (commentaire dans <code>tokensCSS()</code> : *« Espacements primitifs — référencés par certains tokens composant »*) mais aucun token sémantique intermédiaire n'avait encore été créé pour ces concepts.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-058.html" class="agtc-button secondary">← ADR-058</a>
     <a href="adr-060.html" class="agtc-button secondary">ADR-060 →</a>
   </div></main>
