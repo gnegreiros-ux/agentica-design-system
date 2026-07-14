@@ -1,3 +1,121 @@
+# ADR-010 — Choosing Playwright for E2E and accessibility testing
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Tech Lead, Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-010-playwright.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md
+> **Relations:** .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md, decisions/ADR-009-storybook.md
+
+---
+
+## Context
+
+axe-core (ADR-007) audits components at the level of their semantic structure.
+Chromatic (ADR-006) audits their visual appearance in isolation.
+Neither tests a component's behavior in a real user journey: full keyboard
+navigation, focus-trap handling in a modal, or the correct triggering of a
+`critical` button's confirmation pattern.
+
+The question was:
+
+> **How do we test the interactions and full journeys that neither axe-core nor
+> Chromatic can cover — in particular the keyboard behaviors and action
+> sequences required by component contracts?**
+
+---
+
+## Decision
+
+Adopt **Playwright** (Microsoft) for E2E tests and accessibility interaction
+tests, as a complement to axe-core.
+
+Playwright covers two cases the other tools can't address:
+
+**1. Accessibility interaction tests**
+axe-core audits the static ARIA structure. Playwright tests dynamic behavior:
+does the `Tab` key move in the correct order? Does `Escape` close the right
+element? Does the screen-reader announcement fire after the action?
+
+```javascript
+// Example: testing the critical button
+test('critical button requires confirmation before action', async ({ page }) => {
+  await page.click('agtc-button[variant="critical"]');
+  await expect(page.locator('[role="dialog"]')).toBeVisible(); // confirmation dialog
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[role="dialog"]')).not.toBeVisible();
+});
+```
+
+**2. axe-core integration into full journeys**
+Via `@axe-core/playwright`, axe-core can be run on entire pages in a real
+context — not just on isolated components in Storybook. Violations that only
+appear in an integration context are thus detected.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Cypress** | An excellent E2E tool, but slower and heavier than Playwright for Web Component tests. Less mature Web Component support. Playwright's API is closer to the native browser, an advantage for testing Shadow DOM and Custom Elements. |
+| **Jest + Testing Library** | Excellent for React/Vue component unit tests. But JSDOM tests don't simulate a real browser — Web Components' Shadow DOM isn't natively supported. Keyboard accessibility tests in JSDOM are unreliable. |
+| **WebDriverIO** | A wrapper around WebDriver/DevTools. More verbose than Playwright, more complex configuration. Playwright offers the same capabilities with a more modern API and better multi-browser support. |
+| **Puppeteer** | Developed by Google, Chrome-only. Playwright supports Chrome, Firefox, and Safari in parallel — a broader guarantee of components' cross-browser compatibility. |
+| **Manual testing only** | Not automatable in CI. Fully checking keyboard navigation for every component in every variant is unrealistic to verify manually on every PR. |
+
+---
+
+## Consequences
+
+**For CI/CD:**
+- Playwright tests run after the Storybook build — they test components within
+  their stories to ensure the isolated context
+- The `--grep a11y` tag allows running only the accessibility tests
+  (referenced in `How-to-devs.md`)
+- In CI mode, axe-core violations via Playwright block the merge the same way
+  violations detected in Storybook do
+
+**For AI agents:**
+- Playwright tests are the executable contract for components' **behaviors**
+- An agent that generates a `critical` button implementation with no
+  confirmation pattern will see the corresponding Playwright test fail —
+  automatic feedback with no human intervention
+- Agents can read Playwright tests to understand a component's expected
+  behaviors (a complement to the `.md` contract)
+
+**For developers:**
+- Interaction tests partially replace behavioral documentation: the test states
+  exactly what the component must do, not just what it must be
+- Playwright generates execution traces (screenshots + video) on failure —
+  eases debugging without manual reproduction
+
+**Scope vs. axe-core (ADR-007):**
+
+| | axe-core (Storybook) | Playwright + axe-core |
+|--|---------------------|----------------------|
+| **Context** | Isolated component | Full page / journey |
+| **Interactions** | Static | Dynamic (click, keyboard, focus) |
+| **Speed** | Fast | Slower (real browser) |
+| **Trigger** | Development + PR | PR + pre-deploy |
+
+**Accepted cost:**
+- Playwright tests are the slowest in the CI pipeline (full browser rendering)
+- Every critical component behavior must be explicitly tested — no automatic
+  coverage the way axe-core provides
+
+---
+
+## Incidents or triggers
+
+Foundational decision. The `critical` button's confirmation pattern (ADR-005) is
+the flagship use case: axe-core validates that the confirmation dialog has a
+correct ARIA role, but only Playwright can verify it actually appears when the
+button is clicked.
+
+<!-- FR -->
+
 # ADR-010 — Choix de Playwright pour les tests E2E et d'accessibilité
 
 > **Date :** 2026-05-28
@@ -7,10 +125,6 @@
 > **Chemin logique:** decisions/ADR-010-playwright.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md
 > **Relations:** .claude/rules/development.md, decisions/ADR-007-axe-core-accessibilite.md, decisions/ADR-009-storybook.md
-
-> **English summary:** Adopts Playwright for E2E and interaction accessibility tests that neither axe-core nor Chromatic can cover — full keyboard navigation, focus traps, and multi-step behaviors like the `critical` button's confirmation flow. Playwright tests are the executable contract for component *behavior*, complementing the static `.md` contracts.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

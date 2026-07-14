@@ -1,3 +1,141 @@
+# ADR-007 — Choosing axe-core for accessibility testing
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer, Tech Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-007-axe-core-accessibilite.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-004-gouvernance-humaine.md
+> **Relations:** .claude/rules/development.md, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-006-chromatic-tests-visuels.md
+
+---
+
+## Context
+
+`DESIGN.md` establishes that accessibility is **non-negotiable**: WCAG 2.1 AA
+minimum on every component, in every circumstance. This requirement isn't a
+recommendation — it's a governance rule at the same level as the token rules.
+
+Two structural problems made a tooling response necessary:
+
+**1. Accessibility is invisible at the time code is written**
+An insufficient contrast ratio, a missing `aria-label` attribute, an incorrect
+`role` — none of these violations is detectable by reading the code or through a
+standard functional test. They require specialized analysis.
+
+**2. Manual review doesn't scale**
+With multiple components, multiple variants, multiple states each, a full manual
+audit per PR is unrealistic. Violations reach production and impact every
+consumer of the system simultaneously.
+
+The question was:
+
+> **How do we guarantee zero critical WCAG 2.1 AA violations on every PR,
+> automatically, without depending on reviewers' individual vigilance?**
+
+---
+
+## Decision
+
+Adopt **axe-core** (Deque Systems) as the automated accessibility audit engine,
+integrated at two complementary levels:
+
+**Component level** — via `@axe-core/playwright` in Playwright tests: every
+component in every variant and state is audited under real browser rendering
+conditions. Zero critical violations = CI passing condition.
+
+**Storybook level** — via `@storybook/addon-a11y` (based on axe-core): live audit
+in the Storybook canvas during development, before a PR is even opened.
+
+The rule is strict: **zero `critical` or `serious` level violations**. `moderate`
+and `minor` violations generate a warning but don't block the merge — they are
+documented and addressed in a dedicated ticket.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Lighthouse (Google)** | Designed to audit full pages, not isolated components. Its integration into a unit-test or Storybook pipeline is indirect. Relevant for page-level E2E tests, not for component-by-component validation in CI. Used as a complement, not a replacement. |
+| **WAVE (WebAIM)** | Browser extension only. Not automatable in CI/CD. Indispensable for in-depth manual review, but cannot block a merge. |
+| **Pa11y** | Accessible, open-source CLI. Less well integrated with the Playwright + Storybook ecosystem. Its WCAG rule set is less granular than axe-core's, and its maintenance community is significantly smaller. |
+| **IBM Equal Access Checker** | Full WCAG coverage and interesting additional rules. Less adopted in the JS/Node ecosystem. Playwright and Storybook integration requires more custom configuration. Kept for occasional manual audits, not continuous CI. |
+| **Manual audit by an accessibility expert** | Not substitutable for final validation and edge cases. But doesn't scale as a continuous safety net. Choosing axe-core doesn't replace human expertise — it guarantees an automatic minimum floor on every PR. |
+| **ESLint + eslint-plugin-jsx-a11y** | Detects static issues in JSX (missing attributes, incorrect roles). Complementary but insufficient: it analyzes source code, not rendered output. A syntactically correct component can produce an incorrect accessibility tree at runtime (Shadow DOM, slots, dynamic states). |
+
+---
+
+## Consequences
+
+**For CI/CD:**
+- Any PR introducing a `critical` or `serious` violation is blocked at merge
+- The axe-core report is included in the PR artifacts — visible in GitHub Actions
+- The `exit 1` rule on a critical violation is aligned with `audit-tokens.js --ci`'s behavior
+
+**For AI agents:**
+- A critical accessibility violation detected by axe-core is a **mandatory
+  escalation**, not an optional warning (see `.claude/rules/development.md`)
+- An agent cannot approve or dismiss a critical violation — it must flag it and
+  block the PR until a human fixes it
+- axe-core provides a structured (JSON) report an agent can read and analyze to
+  precisely identify which WCAG rule is violated, on which element, and what fix to apply
+
+**For developers:**
+- Feedback is immediate: the Storybook addon flags violations in the
+  accessibility panel during development, before the commit
+- The axe-core report names the violated rule, the target element, and links to
+  the corresponding WCAG documentation — no need to search
+
+**For designers:**
+- Contrast violations (insufficient ratio) are detected automatically
+- A component that passes axe-core in every variant and state is certified WCAG
+  AA for automatically testable criteria
+- Criteria that can't be tested automatically (logical reading order, relevant
+  text alternatives, behavior with a real screen reader) remain a human
+  responsibility — axe-core doesn't cover 100% of WCAG
+
+**Exact coverage scope:**
+axe-core automatically detects roughly 30 to 40% of WCAG 2.1 AA violations. This
+figure is intentionally communicated to teams to avoid false confidence: zero
+axe-core violations is not equivalent to "accessible." It's a floor, not a ceiling.
+
+**Accepted cost:**
+- Playwright tests with axe-core lengthen the CI pipeline (real browser rendering)
+- False positives are rare with axe-core but do exist — every rule suppression
+  must be documented in code with justification (commented `axe.disable`)
+- WCAG's partial coverage must be explicitly communicated to avoid creating false
+  confidence in consuming teams
+
+---
+
+## Relation to Chromatic (ADR-006)
+
+axe-core and Chromatic are complementary, not redundant:
+
+| | Chromatic | axe-core |
+|--|-----------|----------|
+| **Detects** | Pixel visual regressions | Semantic WCAG violations |
+| **Example** | Background color that changes | Insufficient contrast ratio |
+| **Example** | Spacing that shifts | Missing `aria-label` |
+| **Approval** | Human (Chromatic interface) | Automatic (zero tolerance for critical) |
+
+A component can pass Chromatic (visually stable) and fail axe-core (semantically
+inaccessible), and vice versa.
+
+---
+
+## Incidents or triggers
+
+Foundational decision, made before any incident.
+Motivated by the observation that design systems shipping components without
+automated accessibility tests generate cascading violations across every
+consuming application — each team inherits the same problems and fixes them
+locally, without reporting back to the source system.
+axe-core at the system level guarantees the problem is solved once, for every consumer.
+
+<!-- FR -->
+
 # ADR-007 — Choix de axe-core pour les tests d'accessibilité
 
 > **Date :** 2026-05-28
@@ -7,10 +145,6 @@
 > **Chemin logique:** decisions/ADR-007-axe-core-accessibilite.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-004-gouvernance-humaine.md
 > **Relations:** .claude/rules/development.md, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-006-chromatic-tests-visuels.md
-
-> **English summary:** Adopts axe-core (via Playwright and the Storybook a11y addon) as the automated accessibility engine, blocking merges on any `critical` or `serious` WCAG violation. Agents treat a critical violation as a mandatory escalation, never an optional warning — and the ADR is explicit that axe-core covers only ~30-40% of WCAG 2.1 AA, a floor rather than a ceiling.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

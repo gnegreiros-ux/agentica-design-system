@@ -1,3 +1,112 @@
+# ADR-009 — Choosing Storybook for component documentation
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Tech Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-009-storybook.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md
+> **Relations:** .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md
+
+---
+
+## Context
+
+A design system with no isolated preview environment has two structural
+problems: components can only be tested by integrating them into a real
+application, and documentation is separate from the component it describes.
+
+For an agentic system, a third problem is added: agents need a structured
+catalog of components with their variants, states, and properties, accessible
+in a standardized form. Narrative documentation in a wiki isn't machine-analyzable.
+
+The question was:
+
+> **How do we simultaneously provide an isolated development environment,
+> living documentation synchronized with the code, and a structured catalog
+> accessible to agents?**
+
+---
+
+## Decision
+
+Adopt **Storybook** as the documentation platform and development canvas.
+
+Every component is documented via **stories** — `.stories.js` files that
+describe each variant and state of the component in isolation:
+
+```javascript
+// button.stories.js
+export default { title: 'Components/Button', component: 'agtc-button' };
+export const Primary = { args: { variant: 'primary', label: 'Submit' } };
+export const Critical = { args: { variant: 'critical', label: 'Permanently delete' } };
+```
+
+Storybook serves three simultaneous roles in the system:
+
+1. **Development canvas** — every component is developed and tested in
+   isolation, with no dependency on a host application
+2. **Living documentation** — stories are the source of truth for components'
+   actual behavior, always synchronized with the code
+3. **Bridge to Chromatic** — Storybook is the entry point for the Chromatic
+   pipeline (ADR-006): every story is automatically captured for visual
+   regression testing
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Static documentation (Markdown + MDX only)** | Describes the component without showing it. A developer has to integrate the component into their project to see whether it behaves as documented. No link between documentation and executable code. |
+| **Styleguidist** | Similar to Storybook but less adopted, fewer integrations (no native Chromatic, no axe-core addon). The Storybook ecosystem is significantly richer for Web Components. |
+| **Figma as the only preview source** | Figma shows the design, not the real component. A component can be visually compliant in Figma and dysfunctional in code. Storybook runs the real component in a browser. |
+| **Internal demo page** | An HTML page listing the components. Not maintainable at scale, no structure for variants and states, no CI/CD integration, no accessibility addon. |
+| **No interactive documentation** | Explicitly rejected: a design system with no preview canvas forces consuming teams to integrate components blindly. The integration error rate is directly tied to the quality of the interactive documentation. |
+
+---
+
+## Consequences
+
+**For developers:**
+- Every new component or variant requires a corresponding story — this is a PR
+  rule (`.claude/rules/development.md`)
+- Development happens in Storybook first, then integration into the application
+- Storybook's hot reload immediately reflects CSS token changes
+
+**For AI agents:**
+- The story structure is machine-readable: an agent can list every documented
+  variant of a component by reading the `.stories.js` file
+- Story args (`variant`, `disabled`, `loading`) map directly to the properties
+  declared in the Web Component (`static properties`) — guaranteed consistency
+- An agent can verify a story exists for every variant defined in
+  `component.json` — a missing story = a component that isn't agent-ready (see
+  the `ai-component-metadata` skill)
+
+**For Chromatic (ADR-006):**
+- Storybook is Chromatic's mandatory entry point — no story, no visual capture
+- The `@storybook/addon-a11y` addon (axe-core) audits every story in real time
+  during development, before the commit
+
+**For consuming teams:**
+- The published Storybook is the system's official documentation
+- Teams can see and interact with every variant without installing dependencies
+
+**Accepted cost:**
+- Every component requires a `.stories.js` file to maintain — debt accrues if
+  stories aren't updated alongside the component
+- Storybook build added to the CI pipeline (a few extra minutes)
+
+---
+
+## Incidents or triggers
+
+Foundational decision. Storybook is the de facto standard for component-based
+design systems (GitHub, Shopify, Atlassian, IBM all use it). Native integration
+with Chromatic, axe-core, and Web Components confirmed the choice.
+
+<!-- FR -->
+
 # ADR-009 — Choix de Storybook pour la documentation des composants
 
 > **Date :** 2026-05-28
@@ -7,10 +116,6 @@
 > **Chemin logique:** decisions/ADR-009-storybook.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md, decisions/ADR-002-lit-web-components.md
 > **Relations:** .claude/rules/development.md, decisions/ADR-002-lit-web-components.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-007-axe-core-accessibilite.md
-
-> **English summary:** Adopts Storybook as the component documentation and development canvas, serving as the entry point for Chromatic visual testing and the axe-core a11y addon. Stories are machine-readable — an agent can check that every variant defined in `component.json` has a corresponding story, and treat a missing story as "not agent-ready."
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

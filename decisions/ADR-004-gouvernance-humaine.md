@@ -1,3 +1,150 @@
+# ADR-004 — Human governance: the human always has the final word
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer, Product Leadership
+> **Type:** contract
+> **Logical path:** decisions/ADR-004-gouvernance-humaine.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, decisions/ADR-001-trois-niveaux-tokens.md
+
+---
+
+## Context
+
+This design system is designed to be used by AI agents. That reality raises a
+fundamental governance question that most teams avoid stating explicitly:
+
+> **How far can an agent go without human approval?**
+
+The question isn't technical. It's organizational, ethical, and legal.
+
+Three types of risk guided the thinking:
+
+**1. Accessibility risk**
+An agent that changes a color token can drop a contrast ratio from 4.5:1 to 3.8:1 —
+below the WCAG AA threshold. The component stays visually consistent, CI doesn't
+break, but the interface becomes inaccessible to low-vision users. This kind of
+drift is invisible without human eyes on it.
+
+**2. Brand risk**
+Semantic tokens encode brand intent (`color.action.primary`, `color.feedback.danger`).
+An agent can rename or rework these intentions in a way that's locally coherent but
+inconsistent with the organization's brand strategy. No automated test detects that
+a blue has changed meaning.
+
+**3. Irreversibility risk**
+Some decisions are hard to undo once deployed: a deleted component that consuming
+teams rely on, a renamed token with no deprecation period, a `critical` behavior
+changed without an audit. An agent's speed amplifies the impact of a bad judgment call.
+
+---
+
+## Decision
+
+Adopt the principle **"the human always has the final word"** as a non-negotiable,
+non-bypassable governance rule.
+
+This principle translates into explicit action boundaries:
+
+### What an agent CAN do without approval
+
+```
+✅ Read every file in the system
+✅ Analyze drift (hardcoded tokens, deprecated tokens, accessibility violations)
+✅ Generate code from existing tokens
+✅ Create a feature/, fix/, or docs/ branch
+✅ Make commits on a non-protected branch
+✅ Open a PR with a complete description
+✅ Produce reports and recommendations
+```
+
+### What an agent CANNOT do without explicit approval
+
+```
+❌ Merge a PR (into main or develop)
+❌ Push directly to main or develop
+❌ Modify tokens/component.json
+❌ Delete a token (any layer)
+❌ Rename a semantic token
+❌ Deploy to production
+❌ Ignore a critical accessibility violation
+```
+
+### The escalation rule
+
+Any change touching:
+- a semantic token → TCR required
+- a component contract → Principal Designer approval
+- a `critical` behavior → Principal Designer + Security approval
+
+When in doubt: **escalate. Never improvise.**
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Full agent autonomy** (merge without review) | No traceability of the intent behind a change. An agent optimizes for local consistency, not organizational strategy. Legal risk: who is liable for an inaccessible interface deployed by an agent? |
+| **No agents** (humans only) | Misses the real gains: large-scale drift detection, compliant code generation, automatic compliance reports. The goal isn't to exclude agents but to govern them. |
+| **Autonomous agents on primitive tokens only** | Seemingly safe, but primitives are the foundation of everything. Changing `blue-700` without human review can silently break dozens of components through the semantic and component layers. |
+| **Confidence-score-based autonomy** (agent authorized if confidence > 95%) | An LLM's confidence score doesn't measure organizational risk. An agent can be "certain" about a token rename that breaks an undocumented team contract. Technical confidence doesn't replace human judgment. |
+| **Lightweight async review** (approval by an AI review bot) | Displaces the problem instead of solving it. An AI approving another AI removes the human eye. Self-validation loops are a documented blind spot of agentic systems. |
+
+---
+
+## Consequences
+
+**For teams:**
+- Agents produce work that humans evaluate — not the other way around
+- Every impactful decision is traceable in git, in ADRs, in TCRs
+- Adoption by product teams is easier: they know no agent can deploy without a
+  human having seen the change
+
+**For agents:**
+- Boundaries are explicit, unambiguous, verifiable in the rules
+- An agent that hits a boundary knows what to do: escalate, not improvise
+- This constraint improves output quality: the agent knows a human will review,
+  which incentivizes documented, justified work
+
+**For token governance:**
+- The Token Change Request (TCR) is the formal approval mechanism
+- Any semantic token change without an approved TCR = governance violation
+- The history of TCRs constitutes the system's decision memory (see `decisions/`)
+
+**Accepted cost:**
+- Reduced velocity on changes that require approval
+- Intentional friction: any decision to bypass governance must be conscious and
+  documented — never silent
+- This cost is judged lower than the cost of an accessibility, brand, or compliance
+  incident caused by unsupervised autonomous action
+
+---
+
+## Note on the evolution of this principle
+
+This principle isn't distrust of AI agents. It's a recognition that trust is built
+progressively.
+
+As the system accumulates evidence of reliability — ADRs, validated TCRs, clean
+compliance reports — agents' action boundaries can be revisited and widened by
+explicit human decision.
+
+Any widening of agent autonomy will be the subject of an ADR that partially or
+fully replaces this one.
+
+---
+
+## Incidents or triggers
+
+Foundational decision, made before any incident. Motivated by the experience of
+teams that granted too much autonomy to interface agents: undetected visual drift
+over several sprints, tokens renamed with no deprecation period, components
+deleted in production with no impact audit on consuming teams.
+
+<!-- FR -->
+
 # ADR-004 — Gouvernance humaine : le dernier mot est toujours humain
 
 > **Date :** 2026-05-28
@@ -7,10 +154,6 @@
 > **Chemin logique:** decisions/ADR-004-gouvernance-humaine.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, decisions/ADR-001-trois-niveaux-tokens.md
-
-> **English summary:** Establishes "the human always has the final word" as a non-negotiable governance rule, driven by accessibility, brand, and irreversibility risks that agents cannot reliably self-assess. Agents may read, analyze, and propose freely, but merging, pushing to protected branches, and modifying component tokens always require explicit human approval.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

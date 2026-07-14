@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Radix UI Colors pour la palette primitive — Agentica</title>
+<title>Choosing Radix UI Colors for the primitive palette — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Radix UI Colors pour la palette primitive — Agentica">
+<meta property="og:title" content="Choosing Radix UI Colors for the primitive palette — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Radix UI Colors pour la palette primitive — Agentica">
+<meta name="twitter:title" content="Choosing Radix UI Colors for the primitive palette — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Radix UI Colors pour la palette primitive</h1>
+  <h1 class="adr-page-title">Choosing Radix UI Colors for the primitive palette</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,55 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Radix UI Colors as the primitive color source because its 12-step scale encodes usage semantics (step 9-10 = solid CTA fill, step 11-12 = high-contrast text) directly in the palette, letting agents pick an accessible value without computing contrast manually. It also provides native dark-mode equivalents for every hue, avoiding a second hand-built palette.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-001 establishes that primitive tokens are <strong>raw values with no UX intent</strong>. Yet not all color palettes are equivalent for an agentic system: some implicitly encode accessibility and usage constraints, others don't.</p>
+<p>The project needed a primitive palette satisfying three simultaneous constraints:</p>
+<p><strong>1. Structurally guaranteed accessibility</strong> The choice of palette must not shift onto every designer or developer the responsibility of checking contrast ratios. The palette must be designed so that the correct combinations are the natural combinations.</p>
+<p><strong>2. Readability by AI agents</strong> An agent that must choose a hue for an action background needs to be able to infer which value to use without scanning every shade of a flat palette. The palette must have internal usage semantics, not just values.</p>
+<p><strong>3. Native dark mode with no extra effort</strong> The system must support dark mode by remapping only semantic tokens. The primitive palette must provide the dark equivalent of every shade without the team having to manually define a second palette.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Radix UI Colors</strong> as the source for all of the system's primitive colors.</p>
+<p>Radix provides 30 chromatic palettes (gray, mauve, slate, sage, olive, sand, tomato, red, ruby, crimson, pink, plum, purple, violet, iris, indigo, blue, cyan, teal, jade, green, grass, brown, bronze, gold, sky, mint, lime, yellow, amber, orange) plus the <code>white</code> and <code>black</code> alpha palettes.</p>
+<p>Each palette is structured into <strong>12 steps</strong> with documented usage semantics:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Steps</th><th>Semantic usage</th></tr></thead><tbody><tr><td>1–2</td><td>App background and subtle background</td></tr><tr><td>3–4</td><td>UI component background, hover, pressed</td></tr><tr><td>5–6</td><td>Borders and separators</td></tr><tr><td>7–8</td><td>Muted text, subtle fills</td></tr><tr><td>9–10</td><td><strong>Solids</strong> — CTA, brand, action background</td></tr><tr><td>11–12</td><td>High-contrast text, icons</td></tr></tbody></table></div>
+<p>This semantics is encoded directly in <code>primitives.json</code> via each token's <code>$description</code> field, and documented in the color section's <code>_readme</code>.</p>
+<hr>
+<h2>Why the 12-step system matters for agents</h2>
+<p>An agent given the instruction "choose a background color for an action button" can reason as follows with Radix:</p>
+<pre class="code-block"><code class="lang-text">Step 9 or 10 = "Solid fills (brand, CTA)"
+→ primitive.color.blue.9 = #0090ff  ← blue CTA background
+→ primitive.color.blue.10 = #0588f0 ← hover state</code></pre>
+<p>Without this system, the agent would have to scan every value in the palette and evaluate the contrast of each shade to find a usable value. With Radix, the usage semantics lives in the token itself.</p>
+<p>This principle is consistent with ADR-005 (<code>critical</code> rather than <code>danger</code>): <strong>name by behavior, not by value</strong>.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Tailwind CSS colors</strong></td><td>A flat palette with no per-shade usage semantics. <code>blue-700</code> doesn't say whether the value works for a CTA background, text, or a border. An agent facing this palette has to compute contrasts itself. Popular but semantically poor for an agentic system.</td></tr><tr><td><strong>Material Design color system (Google)</strong></td><td>A palette designed for the Material ecosystem. Names (<code>Primary</code>, <code>Secondary</code>, <code>Tertiary</code>) are roles, not shade levels — they already anticipate the semantic layer and blur the two levels defined in ADR-001. Less adaptable to a custom design system.</td></tr><tr><td><strong>Custom palette defined by the team</strong></td><td>Requires expertise in color science (perceptual space, APCA/WCAG contrast, cross-hue consistency). Without dedicated tooling, accessibility guarantees must be verified manually for every shade. High maintenance cost the moment a hue changes.</td></tr><tr><td><strong>IBM Carbon Design System colors</strong></td><td>A quality, accessible palette, but coupled to Carbon's naming conventions (<code>carbon-10</code> to <code>carbon-100</code>). Integration requires mapping Carbon levels to the local system's levels. Radix offers the same quality without that coupling.</td></tr><tr><td><strong>Open Color</strong></td><td>A lightweight, simple open-source palette. 12 hues × 10 shades each. No documented per-shade usage semantics, no alpha palettes, no native dark mode. Insufficient for the system's needs.</td></tr><tr><td><strong>Auto-generated Figma palette</strong></td><td>Figma variables can auto-generate gradients. But the generated values aren't tested for WCAG contrast and don't provide a coherent dark mode. Also breaks digital sovereignty — the palette becomes dependent on Figma.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Each step's <code>$description</code> field (e.g., <code>"Solid background — brand / CTA"</code>) is</li></ul>
+<p>  directly readable — an agent can choose the right step with no contrast calculation</p>
+<ul><li>The convention "step 9 = solid CTA background, step 11 = readable text" is</li></ul>
+<p>  predictable and consistent across all 30 palettes: learning the rule once   covers every hue</p>
+<ul><li>An agent generating a semantic token knows the combinations `step 9</li></ul>
+<p>  (background) + white<code> and </code>step 11 (text) + step 1 (background)` are   accessible by construction</p>
+<p><strong>For designers:</strong></p>
+<ul><li>The Radix dark-mode palette is natively available — remapping happens only at</li></ul>
+<p>  the semantic-token level (e.g., <code>color.background.page</code> points to <code>gray.1</code> in   light mode and <code>gray.2</code> in dark mode), without redefining the primitive layer</p>
+<ul><li>Figma: the 30 palettes are importable via Tokens Studio directly from the JSON</li></ul>
+<p><strong>For accessibility (ADR-007):</strong></p>
+<ul><li>Radix guarantees that steps 9-10 on a white background reach a ratio ≥ 4.5:1</li></ul>
+<p>  for saturated hues, and that steps 11-12 reach ≥ 7:1 — the WCAG AA and AAA thresholds</p>
+<ul><li>axe-core detects contrast violations at runtime, but Radix reduces the</li></ul>
+<p>  likelihood of introducing them at design time</p>
+<p><strong>For governance:</strong></p>
+<ul><li>Radix Colors is open source (MIT) — no commercial dependency, no license-change risk</li><li>Values are stable across major versions — a Radix update doesn't break existing</li></ul>
+<p>  primitive tokens without an explicit changelog</p>
+<p><strong>Point of vigilance:</strong> The current semantic tokens (<code>semantic.json</code>) reference primitives using a <code>{color.blue.700}</code> notation inherited from a Tailwind convention (100–900), which doesn't directly correspond to the Radix steps (1–12) defined in <code>primitives.json</code>. This reference mismatch must be resolved in a dedicated TCR to align the two layers and ensure Style Dictionary resolves references correctly.</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision, made before any incident. Motivated by tests conducted with generative agents: when given a flat palette with no usage semantics, agents chose shades that were visually coherent but inaccessible (e.g., <code>blue-300</code> on a white background, ratio < 3:1). With the Radix palette and its step descriptions, agents naturally converged on accessible steps with no explicit rule injected.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'ADR-001 établit que les tokens primitifs sont des <strong>valeurs brutes sans intention UX</strong>. Pourtant, toutes les palettes de couleurs ne sont pas équivalentes pour un système agentique : certaines encodent implicitement des contraintes d'accessibilité et d'usage, d'autres non.</p>
 <p>Le projet avait besoin d'une palette primitive qui satisfasse trois contraintes simultanées :</p>
 <p><strong>1. Accessibilité garantie structurellement</strong> Le choix de la palette ne doit pas reporter sur chaque designer ou développeur la responsabilité de vérifier les ratios de contraste. La palette doit être conçue pour que les combinaisons correctes soient les combinaisons naturelles.</p>
@@ -183,7 +227,7 @@
 <p><strong>Point de vigilance :</strong> Les tokens sémantiques actuels (<code>semantic.json</code>) référencent les primitifs avec une notation <code>{color.blue.700}</code> héritée d'une convention Tailwind (100–900), qui ne correspond pas directement aux steps Radix (1–12) définis dans <code>primitives.json</code>. Cette incohérence de référence doit être résolue dans un TCR dédié pour aligner les deux couches et garantir que Style Dictionary résout les références correctement.</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice, prise avant incident. Motivée par les tests menés avec des agents génératifs : lorsqu'une palette plate sans sémantique d'usage était fournie, les agents choisissaient des nuances visuellement cohérentes mais inaccessibles (ex: <code>blue-300</code> sur fond blanc, ratio < 3:1). Avec la palette Radix et ses descriptions de step, les agents convergeaient naturellement vers des steps accessibles sans règle explicite injectée.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice, prise avant incident. Motivée par les tests menés avec des agents génératifs : lorsqu'une palette plate sans sémantique d'usage était fournie, les agents choisissaient des nuances visuellement cohérentes mais inaccessibles (ex: <code>blue-300</code> sur fond blanc, ratio < 3:1). Avec la palette Radix et ses descriptions de step, les agents convergeaient naturellement vers des steps accessibles sans règle explicite injectée.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-007.html" class="agtc-button secondary">← ADR-007</a>
     <a href="adr-009.html" class="agtc-button secondary">ADR-009 →</a>
   </div></main>

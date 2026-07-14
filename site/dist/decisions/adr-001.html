@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Architecture 3 niveaux de tokens — Agentica</title>
+<title>Three-Level Token Architecture — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Architecture 3 niveaux de tokens — Agentica">
+<meta property="og:title" content="Three-Level Token Architecture — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Architecture 3 niveaux de tokens — Agentica">
+<meta name="twitter:title" content="Three-Level Token Architecture — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Architecture 3 niveaux de tokens</h1>
+  <h1 class="adr-page-title">Three-Level Token Architecture</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,34 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts a strict three-level token architecture — primitive → semantic → component — so that agents can infer intent from a token's name rather than guessing from a raw value. Primitive tokens are never used directly in components; everything flows through the semantic layer, which absorbs value changes without touching components.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>At the start of the project, two questions structured the team's debates:</p>
+<p>1. <strong>Where should values live?</strong> — Directly in components? In a global file? In Figma? 2. <strong>How should tokens be named so an agent understands the intent, not just the value?</strong></p>
+<p>The team observed that existing systems used flat tokens (<code>blue-700</code>, <code>spacing-4</code>) that forced agents and developers to guess the intent behind each value. An agent that sees <code>color: #3B82F6</code> doesn't know whether it's an action color, a feedback color, or decoration. An agent that sees <code>color.action.primary</code> immediately understands the role.</p>
+<p>Additional context: the system is designed to be used by AI agents. Agents understand <strong>function</strong>, not raw value.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt a strict, ordered three-level architecture:</p>
+<pre class="code-block"><code class="lang-text">Primitive tokens    →   Semantic tokens    →   Component tokens
+(raw values)             (UX intent)             (institutional contracts)
+primitives.json          semantic.json           component.json</code></pre>
+<p><strong>Non-negotiable rule:</strong> primitive tokens are never used directly in components. Everything must go through the semantic layer.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Flat tokens</strong> (<code>blue-700</code>, <code>spacing-4</code>)</td><td>Agents and developers must guess the intent. No machine-readable semantics. Every rename breaks everything.</td></tr><tr><td><strong>Two levels</strong> (primitive + component, no semantic)</td><td>Components become coupled to raw values. Changing <code>blue-700</code> to <code>blue-600</code> requires auditing every component. The semantic layer isolates that change.</td></tr><tr><td><strong>Tokens directly in Figma</strong></td><td>Not versionable with the code. Agents have no access to Figma. Split source of truth.</td></tr><tr><td><strong>Global CSS Variables with no structure</strong></td><td>No governance. Anyone can create a local variable. Uncontrolled drift.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent can infer intent from a token's name (<code>color.feedback.danger</code> = destructive alert)</li><li>An agent cannot infer intent from a raw value (<code>#EF4444</code>)</li><li>Agents must refuse to generate code with hardcoded values — this architecture makes that refusal justifiable and verifiable</li></ul>
+<p><strong>For developers:</strong></p>
+<ul><li>Changing the value of <code>blue-700</code> only requires a change in <code>primitives.json</code></li><li>The semantic layer absorbs the change — components don't move</li><li>The anti-drift lint (<code>.eslintrc-ds.json</code>) can detect primitive tokens used directly</li></ul>
+<p><strong>For designers:</strong></p>
+<ul><li>Figma is synced via Tokens Studio in the same order: primitives → semantic → component</li><li>Dark mode only requires remapping semantic tokens — primitives don't move</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Verbosity: three files to maintain instead of one</li><li>Rigor: every new value must pass through all three levels</li><li>This cost is judged acceptable against the benefit of agent readability and stability at scale</li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>No real incident triggered this decision — it precedes production. It builds on the work of Jan Six (Tokens Studio, IDS 2026) and the experience of teams that used flat tokens with AI agents: agents invented plausible but nonexistent token names when semantics were absent.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Au démarrage du projet, deux questions structuraient les débats d'équipe :</p>
 <p>1. <strong>Où mettre les valeurs ?</strong> — Dans les composants directement ? Dans un fichier global ? Dans Figma ? 2. <strong>Comment nommer les tokens pour qu'un agent comprenne l'intention, pas seulement la valeur ?</strong></p>
 <p>L'équipe constatait que les systèmes existants utilisaient des tokens plats (<code>blue-700</code>, <code>spacing-4</code>) qui forçaient les agents et les développeurs à deviner l'intention derrière chaque valeur. Un agent qui voit <code>color: #3B82F6</code> ne sait pas si c'est une couleur d'action, de feedback, ou de décoration. Un agent qui voit <code>color.action.primary</code> comprend immédiatement le rôle.</p>
@@ -160,7 +183,7 @@ primitives.json         semantic.json             component.json</code></pre>
 <ul><li>Verbosité : trois fichiers à maintenir au lieu d'un</li><li>Rigueur : toute nouvelle valeur nécessite de passer par les trois niveaux</li><li>Ce coût est jugé acceptable face au bénéfice de lisibilité pour les agents et la stabilité à l'échelle</li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Aucun incident réel à l'origine de cette décision — elle précède la production. Elle s'appuie sur les travaux de Jan Six (Tokens Studio, IDS 2026) et les retours d'expérience d'équipes ayant utilisé des tokens plats avec des agents IA : les agents inventaient des noms de tokens plausibles mais inexistants lorsque la sémantique était absente.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Aucun incident réel à l'origine de cette décision — elle précède la production. Elle s'appuie sur les travaux de Jan Six (Tokens Studio, IDS 2026) et les retours d'expérience d'équipes ayant utilisé des tokens plats avec des agents IA : les agents inventaient des noms de tokens plausibles mais inexistants lorsque la sémantique était absente.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <span></span>
     <a href="adr-002.html" class="agtc-button secondary">ADR-002 →</a>
   </div></main>

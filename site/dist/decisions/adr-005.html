@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Remplacement de la variante `danger` par `critical` — Agentica</title>
+<title>Replacing the `danger` variant with `critical` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Remplacement de la variante `danger` par `critical` — Agentica">
+<meta property="og:title" content="Replacing the `danger` variant with `critical` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Remplacement de la variante `danger` par `critical` — Agentica">
+<meta name="twitter:title" content="Replacing the `danger` variant with `critical` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Remplacement de la variante `danger` par `critical`</h1>
+  <h1 class="adr-page-title">Replacing the `danger` variant with `critical`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,47 @@
       <dd>Design System Lead, Principal Designer</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Replaces the industry-standard <code>danger</code> button variant with <code>critical</code>, because a behavior-oriented name (what the system must do: confirm, audit, prevent double-clicks) is more useful to agents than an appearance-oriented one (what the button looks like). <code>danger</code> is not a valid variant in this system; any agent encountering it must escalate rather than apply it silently.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>While designing the <code>button</code> component, the team needed to name the variant meant for irreversible or destructive actions (deleting a folder, revoking access, permanently cancelling an order).</p>
+<p>The most common industry name is <code>danger</code>, used notably by Bootstrap, Material UI, and many established systems.</p>
+<p>Two questions structured the debate:</p>
+<p><strong>1. What should an agent understand from the variant's name?</strong></p>
+<p>An agent reading <code>variant="danger"</code> understands: *this action is visually dangerous* — probably red, alarming. It doesn't understand what it must do.</p>
+<p>An agent reading <code>variant="critical"</code> understands: *this action is critical* — it has irreversible consequences and requires a specific protocol.</p>
+<p><strong>2. Does the name encode an appearance or a behavior?</strong></p>
+<p><code>danger</code> is a visual and emotional judgment. It describes how the button *looks* to the user.</p>
+<p><code>critical</code> is a functional and behavioral judgment. It describes what the system *must do* when this button is used.</p>
+<p>This project encodes decisions in machine-readable tokens. A token that names an appearance is a value. A token that names a behavior is an intent. ADR-001 establishes that the system works with intents.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <code>critical</code> as the only variant name for irreversible actions. <code>danger</code> does not exist as a variant in this system — any agent that tries to use it must escalate, never improvise.</p>
+<p>The <code>component.button.critical</code> token explicitly carries:</p>
+<ul><li><code>requiresConfirmation: true</code> — the confirmation pattern is mandatory</li><li><code>auditLog: true</code> — every click is logged</li><li><code>preventDoubleClick: true</code> — protection against accidental triggers</li></ul>
+<p>This metadata is machine-readable. An agent generating a <code>critical</code> button knows it must also verify the confirmation pattern exists in the interface. An agent generating a <code>danger</code> button has none of these associated constraints — the name alone doesn't convey the protocol.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong><code>danger</code></strong></td><td>Describes an appearance, not a behavior. An agent interprets "danger" as a visual instruction (red, alarming) without inferring the need for confirmation. Common in the industry but semantically poor for an agentic system.</td></tr><tr><td><strong><code>destructive</code></strong></td><td>Better than <code>danger</code> — describes the type of action, not the color. Used by Radix UI and shadcn/ui. Rejected because it describes *what the action does* (destroy) rather than *what the system must do* (confirm, audit, protect). A <code>destructive</code> button indicates a consequence; a <code>critical</code> button indicates a protocol.</td></tr><tr><td><strong><code>warning</code></strong></td><td>Too weak. Implies caution, not irreversibility. A user can dismiss a warning. A <code>critical</code> action can't be dismissed — it demands explicit confirmation before execution.</td></tr><tr><td><strong><code>error</code></strong></td><td>Wrong semantics. <code>error</code> denotes a system state, not a user action. Mixing the two categories confuses agents that must distinguish component states from action variants.</td></tr><tr><td><strong><code>delete</code></strong></td><td>Too specific. Assumes the only critical action is deletion. But <code>critical</code> covers access revocation, permanent cancellation, account deactivation — irreversible actions that aren't deletions.</td></tr><tr><td><strong>No dedicated variant</strong> (use <code>primary</code> with a red color)</td><td>Would destroy the action hierarchy. A red <code>primary</code> button is a contradiction in the system: <code>primary</code> means "recommended main action," red means "danger." An agent facing this inconsistency can't reason correctly about intent.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li><code>critical</code> is the only valid name — any variant not defined in <code>component.json</code> triggers mandatory escalation</li><li>When an agent generates a <code>critical</code> button, it knows it must check three things:</li></ul>
+<p>  1. <code>requiresConfirmation: true</code> is in the token   2. The confirmation pattern exists in the adjacent interface   3. The label describes the consequence, not just the action ("Permanently delete the folder," not "Delete")</p>
+<ul><li>If an agent receives a request with <code>variant="danger"</code>, it must flag that the</li></ul>
+<p>  variant doesn't exist and propose <code>critical</code> as an alternative — never apply   <code>danger</code> silently</p>
+<p><strong>For developers:</strong></p>
+<ul><li>The rule is memorable: if the action is irreversible → <code>critical</code>, always</li><li>The anti-drift lint can detect <code>danger</code> usage and suggest <code>critical</code></li><li>Migration from a prior system using <code>danger</code> is documented: rename the variant,</li></ul>
+<p>  add the confirmation pattern, verify 4.5:1 contrast</p>
+<p><strong>For designers:</strong></p>
+<ul><li><code>critical</code> in Figma maps to the <code>component.button.critical</code> token</li><li>The background color (<code>semantic.color.feedback.danger</code>) stays red — that's the value</li><li>The component's *name* encodes the behavior, not the color. This distinction</li></ul>
+<p>  matters to avoid locally creating a <code>danger</code> component that would look identical   but lack the associated constraints</p>
+<p><strong>For accessibility:</strong></p>
+<ul><li>The minimum contrast for <code>critical</code> is 4.5:1 on a white background — non-negotiable</li><li>A red button with white text below that ratio is an anti-pattern automatically</li></ul>
+<p>  detected by axe-core</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>This decision emerged from an observation during tests with AI agents: an agent generating interfaces from natural-language descriptions systematically used <code>danger</code> for destructive actions, then applied a red style, without ever triggering a confirmation pattern.</p>
+<p>The same agent, faced with <code>critical</code>, inferred the need for a validation step before execution — simply from the name, with no explicit rule injected.</p>
+<p>This test empirically validated that behavior-oriented naming improves the reliability of agent output, regardless of the model used.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Lors de la conception du composant <code>button</code>, l'équipe devait nommer la variante destinée aux actions irréversibles ou destructrices (supprimer un dossier, révoquer un accès, annuler définitivement une commande).</p>
 <p>Le nom le plus courant dans l'industrie est <code>danger</code>, utilisé notamment par Bootstrap, Material UI, et de nombreux systèmes établis.</p>
 <p>Deux questions ont structuré le débat :</p>
@@ -172,7 +208,7 @@
 <h2>Incidents ou déclencheurs</h2>
 <p>Cette décision a émergé d'une observation lors de tests avec des agents IA : un agent générant des interfaces à partir de descriptions en langage naturel utilisait systématiquement <code>danger</code> pour les actions destructrices, puis appliquait un style rouge, sans jamais déclencher de pattern de confirmation.</p>
 <p>Le même agent, confronté à <code>critical</code>, inférait le besoin d'une étape de validation avant exécution — simplement à partir du nom, sans règle explicite injectée.</p>
-<p>Ce test a validé empiriquement que le nommage orienté comportement améliore la fiabilité des sorties des agents, indépendamment du modèle utilisé.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Ce test a validé empiriquement que le nommage orienté comportement améliore la fiabilité des sorties des agents, indépendamment du modèle utilisé.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-004.html" class="agtc-button secondary">← ADR-004</a>
     <a href="adr-006.html" class="agtc-button secondary">ADR-006 →</a>
   </div></main>

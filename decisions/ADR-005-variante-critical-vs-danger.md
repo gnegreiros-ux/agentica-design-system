@@ -1,3 +1,126 @@
+# ADR-005 — Replacing the `danger` variant with `critical`
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer
+> **Type:** contract
+> **Logical path:** decisions/ADR-005-variante-critical-vs-danger.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/components/button.md
+> **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/components/button.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-004-gouvernance-humaine.md
+
+---
+
+## Context
+
+While designing the `button` component, the team needed to name the variant meant
+for irreversible or destructive actions (deleting a folder, revoking access,
+permanently cancelling an order).
+
+The most common industry name is `danger`, used notably by Bootstrap, Material UI,
+and many established systems.
+
+Two questions structured the debate:
+
+**1. What should an agent understand from the variant's name?**
+
+An agent reading `variant="danger"` understands: *this action is visually
+dangerous* — probably red, alarming. It doesn't understand what it must do.
+
+An agent reading `variant="critical"` understands: *this action is critical* — it
+has irreversible consequences and requires a specific protocol.
+
+**2. Does the name encode an appearance or a behavior?**
+
+`danger` is a visual and emotional judgment. It describes how the button *looks*
+to the user.
+
+`critical` is a functional and behavioral judgment. It describes what the system
+*must do* when this button is used.
+
+This project encodes decisions in machine-readable tokens. A token that names an
+appearance is a value. A token that names a behavior is an intent. ADR-001
+establishes that the system works with intents.
+
+---
+
+## Decision
+
+Adopt `critical` as the only variant name for irreversible actions. `danger` does
+not exist as a variant in this system — any agent that tries to use it must
+escalate, never improvise.
+
+The `component.button.critical` token explicitly carries:
+- `requiresConfirmation: true` — the confirmation pattern is mandatory
+- `auditLog: true` — every click is logged
+- `preventDoubleClick: true` — protection against accidental triggers
+
+This metadata is machine-readable. An agent generating a `critical` button knows
+it must also verify the confirmation pattern exists in the interface. An agent
+generating a `danger` button has none of these associated constraints — the name
+alone doesn't convey the protocol.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **`danger`** | Describes an appearance, not a behavior. An agent interprets "danger" as a visual instruction (red, alarming) without inferring the need for confirmation. Common in the industry but semantically poor for an agentic system. |
+| **`destructive`** | Better than `danger` — describes the type of action, not the color. Used by Radix UI and shadcn/ui. Rejected because it describes *what the action does* (destroy) rather than *what the system must do* (confirm, audit, protect). A `destructive` button indicates a consequence; a `critical` button indicates a protocol. |
+| **`warning`** | Too weak. Implies caution, not irreversibility. A user can dismiss a warning. A `critical` action can't be dismissed — it demands explicit confirmation before execution. |
+| **`error`** | Wrong semantics. `error` denotes a system state, not a user action. Mixing the two categories confuses agents that must distinguish component states from action variants. |
+| **`delete`** | Too specific. Assumes the only critical action is deletion. But `critical` covers access revocation, permanent cancellation, account deactivation — irreversible actions that aren't deletions. |
+| **No dedicated variant** (use `primary` with a red color) | Would destroy the action hierarchy. A red `primary` button is a contradiction in the system: `primary` means "recommended main action," red means "danger." An agent facing this inconsistency can't reason correctly about intent. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- `critical` is the only valid name — any variant not defined in `component.json` triggers mandatory escalation
+- When an agent generates a `critical` button, it knows it must check three things:
+  1. `requiresConfirmation: true` is in the token
+  2. The confirmation pattern exists in the adjacent interface
+  3. The label describes the consequence, not just the action ("Permanently delete the folder," not "Delete")
+- If an agent receives a request with `variant="danger"`, it must flag that the
+  variant doesn't exist and propose `critical` as an alternative — never apply
+  `danger` silently
+
+**For developers:**
+- The rule is memorable: if the action is irreversible → `critical`, always
+- The anti-drift lint can detect `danger` usage and suggest `critical`
+- Migration from a prior system using `danger` is documented: rename the variant,
+  add the confirmation pattern, verify 4.5:1 contrast
+
+**For designers:**
+- `critical` in Figma maps to the `component.button.critical` token
+- The background color (`semantic.color.feedback.danger`) stays red — that's the value
+- The component's *name* encodes the behavior, not the color. This distinction
+  matters to avoid locally creating a `danger` component that would look identical
+  but lack the associated constraints
+
+**For accessibility:**
+- The minimum contrast for `critical` is 4.5:1 on a white background — non-negotiable
+- A red button with white text below that ratio is an anti-pattern automatically
+  detected by axe-core
+
+---
+
+## Incidents or triggers
+
+This decision emerged from an observation during tests with AI agents: an agent
+generating interfaces from natural-language descriptions systematically used
+`danger` for destructive actions, then applied a red style, without ever
+triggering a confirmation pattern.
+
+The same agent, faced with `critical`, inferred the need for a validation step
+before execution — simply from the name, with no explicit rule injected.
+
+This test empirically validated that behavior-oriented naming improves the
+reliability of agent output, regardless of the model used.
+
+<!-- FR -->
+
 # ADR-005 — Remplacement de la variante `danger` par `critical`
 
 > **Date :** 2026-05-28
@@ -7,10 +130,6 @@
 > **Chemin logique:** decisions/ADR-005-variante-critical-vs-danger.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/components/button.md
 > **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/components/button.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-004-gouvernance-humaine.md
-
-> **English summary:** Replaces the industry-standard `danger` button variant with `critical`, because a behavior-oriented name (what the system must do: confirm, audit, prevent double-clicks) is more useful to agents than an appearance-oriented one (what the button looks like). `danger` is not a valid variant in this system; any agent encountering it must escalate rather than apply it silently.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

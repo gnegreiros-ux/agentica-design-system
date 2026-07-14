@@ -1,3 +1,100 @@
+# ADR-002 — Choosing Lit for Web Components
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Tech Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-002-lit-web-components.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/development.md
+> **Relations:** .claude/rules/development.md, guidelines/components/, decisions/ADR-001-trois-niveaux-tokens.md
+
+---
+
+## Context
+
+The design system must serve multiple teams using different frameworks (React,
+Angular, Vue, vanilla JS). The question was:
+
+> **How do we ship UI components that work everywhere without imposing a framework?**
+
+Two non-negotiable constraints guided the choice:
+
+1. **Universal portability** — an `agtc-button` component must work identically in a
+   React app, an Angular app, or a static HTML page, with no adaptation.
+2. **Machine-readable contract** — components must expose their properties (`variant`,
+   `disabled`, `loading`) in a structured way so AI agents can inspect and generate
+   them correctly.
+
+Native Web Components (a W3C standard) satisfy constraint 1 natively. But writing
+them in vanilla JS is verbose and doesn't handle reactivity elegantly. A low-level
+tool was needed to cut the boilerplate without adding a heavy dependency.
+
+---
+
+## Decision
+
+Adopt **Lit** (Google) as a lightweight abstraction layer over native Web Components.
+
+Lit is not a framework — it's a minimal library (~5 kb gzipped) that adds:
+- Reactive property declaration (`static properties`)
+- Declarative templates via the `html` tagged literal
+- Encapsulated styles via Shadow DOM with the `css` tagged literal
+- A simplified lifecycle (`connectedCallback`, `updated`, etc.)
+
+Compiled components are real W3C Custom Elements — Lit disappears at runtime from
+the consumer's point of view.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Vanilla Web Components (no Lit)** | Excessive verbosity: manual Shadow DOM handling, observed attributes, reactivity. High maintenance cost per component. |
+| **React (exported components)** | Framework coupling. A React component can't be used in Angular without a wrapper. Contradicts the universal-portability principle. |
+| **Stencil.js** | More complex build pipeline, framework-specific code generation. Adds a compilation step Lit doesn't require. |
+| **Angular Elements** | Angular dependency baked into the bundles. Too large for multi-framework use. |
+| **Vue web components** | Same problem as Angular Elements — the Vue runtime is embedded. |
+| **An existing component library (MUI, Radix, etc.)** | These libraries are implementations, not token systems. They impose their own visual conventions and break the design system's sovereignty. |
+
+---
+
+## Consequences
+
+**For consuming developers:**
+- Universal import: `<agtc-button variant="primary">` works in any HTML context
+- Optional framework wrappers (React, Angular) can be auto-generated
+- No peer dependency to install — the Custom Element is self-contained
+
+**For AI agents:**
+- Properties declared in `static properties` are inspectable and documentable
+- The `variant: { type: String }` pattern is machine-readable — an agent can list
+  allowed variants without parsing CSS or JSX
+- A Lit component's structure is standardized: an agent can generate a new
+  component by following the template in `.claude/rules/development.md`
+
+**For token governance:**
+- Shadow DOM encapsulates styles — no global style can override a component
+  except through CSS Custom Properties (`var(--ds-[token])`)
+- This encapsulation forces token usage: it's impossible to style `agtc-button`
+  from the outside other than by changing a CSS Custom Property defined in the system
+
+**Accepted cost:**
+- A learning curve on the Lit API for developers unfamiliar with it
+- Shadow DOM complicates some test patterns (querySelector from the outside)
+- Dependency on a Google project — the deprioritization risk is mitigated by Lit
+  following W3C standards and components remaining functional without Lit
+
+---
+
+## Incidents or triggers
+
+No production incident. Decision made upstream during architecture design.
+Reference: a Web Components + Lit presentation at the AI Design Systems Conference
+2026 (Into Design Systems) — external validation of the pattern for agentic systems.
+
+<!-- FR -->
+
 # ADR-002 — Choix de Lit pour les Web Components
 
 > **Date :** 2026-05-28
@@ -7,10 +104,6 @@
 > **Chemin logique:** decisions/ADR-002-lit-web-components.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/development.md
 > **Relations:** .claude/rules/development.md, guidelines/components/, decisions/ADR-001-trois-niveaux-tokens.md
-
-> **English summary:** Adopts Lit as a lightweight abstraction over native Web Components so components work identically across React, Angular, Vue, and vanilla HTML without imposing a framework. Lit's declarative properties make component contracts machine-readable, letting agents inspect and generate components from a standardized template.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

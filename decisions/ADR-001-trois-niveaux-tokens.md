@@ -1,3 +1,90 @@
+# ADR-001 — Three-Level Token Architecture
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer
+> **Type:** contract
+> **Logical path:** decisions/ADR-001-trois-niveaux-tokens.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/tokens-system.md
+
+---
+
+## Context
+
+At the start of the project, two questions structured the team's debates:
+
+1. **Where should values live?** — Directly in components? In a global file? In Figma?
+2. **How should tokens be named so an agent understands the intent, not just the value?**
+
+The team observed that existing systems used flat tokens (`blue-700`, `spacing-4`) that
+forced agents and developers to guess the intent behind each value. An agent that sees
+`color: #3B82F6` doesn't know whether it's an action color, a feedback color, or
+decoration. An agent that sees `color.action.primary` immediately understands the role.
+
+Additional context: the system is designed to be used by AI agents. Agents understand
+**function**, not raw value.
+
+---
+
+## Decision
+
+Adopt a strict, ordered three-level architecture:
+
+```
+Primitive tokens    →   Semantic tokens    →   Component tokens
+(raw values)             (UX intent)             (institutional contracts)
+primitives.json          semantic.json           component.json
+```
+
+**Non-negotiable rule:** primitive tokens are never used directly in components.
+Everything must go through the semantic layer.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Flat tokens** (`blue-700`, `spacing-4`) | Agents and developers must guess the intent. No machine-readable semantics. Every rename breaks everything. |
+| **Two levels** (primitive + component, no semantic) | Components become coupled to raw values. Changing `blue-700` to `blue-600` requires auditing every component. The semantic layer isolates that change. |
+| **Tokens directly in Figma** | Not versionable with the code. Agents have no access to Figma. Split source of truth. |
+| **Global CSS Variables with no structure** | No governance. Anyone can create a local variable. Uncontrolled drift. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- An agent can infer intent from a token's name (`color.feedback.danger` = destructive alert)
+- An agent cannot infer intent from a raw value (`#EF4444`)
+- Agents must refuse to generate code with hardcoded values — this architecture makes that refusal justifiable and verifiable
+
+**For developers:**
+- Changing the value of `blue-700` only requires a change in `primitives.json`
+- The semantic layer absorbs the change — components don't move
+- The anti-drift lint (`.eslintrc-ds.json`) can detect primitive tokens used directly
+
+**For designers:**
+- Figma is synced via Tokens Studio in the same order: primitives → semantic → component
+- Dark mode only requires remapping semantic tokens — primitives don't move
+
+**Accepted cost:**
+- Verbosity: three files to maintain instead of one
+- Rigor: every new value must pass through all three levels
+- This cost is judged acceptable against the benefit of agent readability and stability at scale
+
+---
+
+## Incidents or triggers
+
+No real incident triggered this decision — it precedes production. It builds on the work
+of Jan Six (Tokens Studio, IDS 2026) and the experience of teams that used flat tokens
+with AI agents: agents invented plausible but nonexistent token names when semantics
+were absent.
+
+<!-- FR -->
+
 # ADR-001 — Architecture 3 niveaux de tokens
 
 > **Date :** 2026-05-28
@@ -7,10 +94,6 @@
 > **Chemin logique:** decisions/ADR-001-trois-niveaux-tokens.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/tokens-system.md
-
-> **English summary:** Adopts a strict three-level token architecture — primitive → semantic → component — so that agents can infer intent from a token's name rather than guessing from a raw value. Primitive tokens are never used directly in components; everything flows through the semantic layer, which absorbs value changes without touching components.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 
