@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Style Dictionary : build multi-plateforme avec formats custom — Agentica</title>
+<title>Style Dictionary: multi-platform build with custom formats — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Style Dictionary : build multi-plateforme avec formats custom — Agentica">
+<meta property="og:title" content="Style Dictionary: multi-platform build with custom formats — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Style Dictionary : build multi-plateforme avec formats custom — Agentica">
+<meta name="twitter:title" content="Style Dictionary: multi-platform build with custom formats — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Style Dictionary : build multi-plateforme avec formats custom</h1>
+  <h1 class="adr-page-title">Style Dictionary: multi-platform build with custom formats</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,10 +129,62 @@
       <dd>Guilherme Negreiros</dd>
     </div>
   </dl>
-</div><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> Accepté <strong>Décideurs :</strong> Guilherme Negreiros <strong>Scope :</strong> Infrastructure de compilation des tokens</p>
-<blockquote><p><strong>English summary:</strong> Documents the technical decisions behind compiling the 3-level token JSON into CSS, JS, Tailwind, Angular Material M3, iOS Swift, and Android XML artifacts via Style Dictionary — including a custom DTCG-format parser, a level-filtering transform, <code>_readme</code> key stripping, and a Radix-step-to-M3-tonal-stop mapping.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-05-30 <strong>Status:</strong> Accepted <strong>Decision-makers:</strong> Guilherme Negreiros <strong>Scope:</strong> Token compilation infrastructure</p>
+<hr>
+<h2>Context</h2>
+<p>Agentica tokens are defined in JSON (3 levels: primitive → semantic → component). They must be compiled into artifacts consumable by several stacks:</p>
+<ul><li><strong>CSS custom properties</strong> — Lit Web Components, any web team</li><li><strong>JavaScript ES6</strong> — tooling, scripts, tests</li><li><strong>Tailwind CSS</strong> — React/Shadcn teams extending their Tailwind config</li><li><strong>Material Angular M3</strong> — Angular teams defining their M3 theme</li><li><strong>iOS Swift</strong> — Apple mobile teams</li><li><strong>Android XML</strong> — Android mobile teams</li></ul>
+<p>Style Dictionary (ADR-003) was chosen as the compiler. This ADR documents the technical decisions made to get it working correctly with our token structure.</p>
+<hr>
+<h2>Problems solved</h2>
+<h3>1. DTCG format inconsistency</h3>
+<p>Primitives use <code>$value</code>/<code>$type</code> (W3C DTCG format), semantics use <code>value</code>/<code>$type</code> (SD v2 format). Style Dictionary v3 does not handle both simultaneously.</p>
+<p><strong>Solution:</strong> a custom parser (<code>registerParser</code>) that normalizes <code>$value → value</code> and <code>$type → type</code> before SD processes the files.</p>
+<h3>2. Level filtering with no native attribute</h3>
+<p>Tokens are filtered by level (primitive / semantic / component) to generate separate CSS files. SD v3 does not define this attribute automatically.</p>
+<p><strong>Solution:</strong> a custom <code>attribute/level</code> transform that reads <code>token.path[0]</code> and sets <code>token.attributes.level</code> accordingly.</p>
+<h3>3. Double prefix in custom formats</h3>
+<p>In custom formats (Tailwind, Angular), <code>token.name</code> already includes the prefix defined in the platform. Writing <code>var(--agtc-${t.name})</code> produces a double prefix.</p>
+<p><strong>Solution:</strong> use <code>var(--${t.name})</code> in custom formats.</p>
+<h3>4. <code>_readme</code> tokens in CSS output</h3>
+<p>Documentation keys (<code>_readme</code>) in the JSON files were ending up as CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>).</p>
+<p><strong>Solution:</strong> an <code>isReadme(t)</code> predicate that filters out any token whose path segment starts with <code>_</code>. Applied across all file filters.</p>
+<h3>5. <code>$schema</code> / <code>$metadata</code> collisions</h3>
+<p>The root keys <code>$schema</code> and <code>$metadata</code>, present in several JSON files, caused "Property Value Collision" warnings when merged.</p>
+<p><strong>Solution:</strong> the parser strips the <code>ROOT_META_KEYS = {$schema, $metadata, _note}</code> keys, but only at the root level (depth === 0).</p>
+<hr>
+<h2>Decisions</h2>
+<h3>CSS prefix</h3>
+<p><code>agtc</code> — replaces the former <code>sda</code> prefix (brand rename, see git history).</p>
+<h3>CSS reference chain (<code>outputReferences: true</code>)</h3>
+<p>The <code>semantic.css</code> and <code>components.css</code> files use <code>outputReferences: true</code>. This produces cascading CSS references:</p>
+<pre class="code-block"><code class="lang-css">/* components.css */
+--agtc-button-primary-background: var(--agtc-semantic-color-action-primary);
+
+/* semantic.css */
+--agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9);
+
+/* primitives.css */
+--agtc-primitive-color-teal-9: #12a594;</code></pre>
+<p>Benefit: modifying a primitive propagates automatically at runtime. Constraint: load all 3 files together, or use <code>all.css</code>.</p>
+<h3>Tailwind mapping</h3>
+<p>The <code>dist/tokens/tailwind/tokens.js</code> file exports only semantic tokens (not the primitives). Tailwind keys are prefixed <code>agtc-</code> to avoid collisions with the native Tailwind namespace.</p>
+<h3>Material Angular M3 mapping</h3>
+<p>Radix UI uses 12 steps (1=lightest, 12=darkest). M3 uses tonal stops (0-100, 100=lightest, 0=darkest). Mapping: Radix step → M3 stop: <code>{1:99, 2:95, 3:90, 4:80, 5:70, 6:60, 7:50, 8:40, 9:30, 10:20, 11:10, 12:0}</code>.</p>
+<p>Palettes mapped to M3 roles:</p>
+<ul><li><code>teal</code> → <code>primary</code></li><li><code>red</code> → <code>error</code></li><li><code>gray</code> → <code>neutral</code></li><li><code>accent</code> → <code>secondary</code></li></ul>
+<hr>
+<h2>Generated artifacts</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>File</th><th>Destination</th><th>Usage</th></tr></thead><tbody><tr><td><code>dist/tokens/css/primitives.css</code></td><td>Web</td><td>Raw values</td></tr><tr><td><code>dist/tokens/css/semantic.css</code></td><td>Web</td><td>UX intents (with <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/components.css</code></td><td>Web</td><td>Component contracts (with <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/all.css</code></td><td>Web</td><td>Everything in one file</td></tr><tr><td><code>dist/tokens/js/tokens.js</code></td><td>JS/TS</td><td>Named ES6 exports</td></tr><tr><td><code>dist/tokens/tailwind/tokens.js</code></td><td>React/Shadcn</td><td><code>theme.extend</code> extension</td></tr><tr><td><code>dist/tokens/angular/_m3-theme.scss</code></td><td>Angular M3</td><td>SCSS palettes + aliases</td></tr><tr><td><code>dist/tokens/ios/AgenticaTokens.swift</code></td><td>iOS</td><td>Swift class</td></tr><tr><td><code>dist/tokens/android/tokens.colors.xml</code></td><td>Android</td><td>Color resources</td></tr><tr><td><code>dist/tokens/android/tokens.dimens.xml</code></td><td>Android</td><td>Dimension resources</td></tr></tbody></table></div>
+<hr>
+<h2>Build command</h2>
+<pre class="code-block"><code class="lang-bash">npm run tokens        # single build
+npm run tokens:watch  # automatic rebuild on changes in tokens/</code></pre>
+<hr>
+<h2>Expected warnings (non-blocking)</h2>
+<pre class="code-block"><code class="lang-text">⚠️ semantic.css — filtered out token references were found
+⚠️ components.css — filtered out token references were found</code></pre>
+<p>These warnings are normal and expected. They indicate that <code>semantic.css</code> contains <code>var()</code> references pointing to tokens defined in <code>primitives.css</code>. This is the intended behavior — the files are designed to be loaded together.</p></div><div class="lang-fr"><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> Accepté <strong>Décideurs :</strong> Guilherme Negreiros <strong>Scope :</strong> Infrastructure de compilation des tokens</p>
 <hr>
 <h2>Contexte</h2>
 <p>Les tokens Agentica sont définis en JSON (3 niveaux : primitif → sémantique → composant). Ils doivent être compilés en artefacts consommables par plusieurs stacks :</p>
@@ -187,7 +239,7 @@ npm run tokens:watch  # rebuild automatique sur changement dans tokens/</code></
 <h2>Avertissements attendus (non bloquants)</h2>
 <pre class="code-block"><code class="lang-text">⚠️ semantic.css — filtered out token references were found
 ⚠️ components.css — filtered out token references were found</code></pre>
-<p>Ces avertissements sont normaux et attendus. Ils indiquent que <code>semantic.css</code> contient des <code>var()</code> pointant vers des tokens définis dans <code>primitives.css</code>. C'est le comportement voulu — les fichiers sont conçus pour être chargés ensemble.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Ces avertissements sont normaux et attendus. Ils indiquent que <code>semantic.css</code> contient des <code>var()</code> pointant vers des tokens définis dans <code>primitives.css</code>. C'est le comportement voulu — les fichiers sont conçus pour être chargés ensemble.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-029.html" class="agtc-button secondary">← ADR-029</a>
     <a href="adr-031.html" class="agtc-button secondary">ADR-031 →</a>
   </div></main>

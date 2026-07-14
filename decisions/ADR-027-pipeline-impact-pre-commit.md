@@ -1,3 +1,111 @@
+# ADR-027 — Pre-commit impact pipeline with human approval
+
+> **Date:** 2026-05-30
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** governance
+> **Logical path:** decisions/ADR-027-pipeline-impact-pre-commit.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** .claude/rules/post-change-pipeline.md, .claude/skills/post-change-pipeline.md, .claude/rules/git-workflow.md, log/kit-construction.md
+
+---
+
+## Context
+
+During the earliest work sessions with AI agents on this repository, a problematic pattern was observed: agents were committing changes without proposing the necessary collateral updates (kit log, site rebuild, ADR). The human had to systematically request these updates afterward, creating:
+
+- An inconsistent git history (changes and their consequences split across separate commits)
+- An incomplete kit log, or one updated from memory (rather than in real time)
+- Missed site rebuilds after modifying `build.js` or the tokens
+- Weakened governance: the human did not know what they were implicitly approving
+
+This project rests on a foundational principle: **the human always has the final word**. This principle requires an operational mechanism — not merely a stated intention.
+
+---
+
+## Decision
+
+### Mandatory pre-commit pipeline
+
+Any agent working on this repository must, after every modification and before any commit, execute the following pipeline:
+
+**Step 1 — Impact analysis**
+Identify the modified files via `git diff --name-only` and apply the impact matrix defined in `.claude/skills/post-change-pipeline.md`.
+
+**Step 2 — Structured report**
+Present the human with a report of proposed updates as a checklist, spelling out the reasoning for each item.
+
+**Step 3 — Wait for approval**
+Execute nothing before an explicit response from the human. Absence of a response is not approval.
+
+**Step 4 — Ordered execution**
+Execute only the approved tasks, in order: tokens → site rebuild → log → ADRs → commit.
+
+### Impact matrix
+
+| Modified files | Updates evaluated |
+|---|---|
+| `tokens/primitives.json` | Site rebuild, log, ADR if a new token |
+| `tokens/semantic.json` | Site rebuild, log, `tokens.css` |
+| `tokens/component.json` | Site rebuild, log, **Principal Designer approval** |
+| `site/build.js` | Site rebuild |
+| `guidelines/`, `components/` | Site rebuild, log |
+| `decisions/ADR-*.md` | Site rebuild (ADR page), log |
+| `.claude/rules/`, `.claude/skills/` | Log, ADR if an architectural decision |
+| Any change | Kit log (always) |
+
+### Intelligent detection
+
+The pipeline proposes only the relevant updates based on the files actually modified — not a systematic exhaustive checklist. The goal is to minimize friction while guaranteeing completeness.
+
+---
+
+## Rationale
+
+### Why an explicit pipeline rather than a git hook?
+
+A pre-commit hook runs with no human context — it can reject a commit but cannot propose alternative updates or wait for approval. The agent-human pipeline is intentionally conversational: it submits a report, waits for a decision, then executes.
+
+### Why detect impact from modified files?
+
+A static checklist (always check everything) creates decision fatigue. Detection via `git diff` proposes only what is actually relevant, making every impact report meaningful and actionable.
+
+### Why is the execution order prescribed?
+
+The tokens → site → log → ADR → commit order guarantees that each artifact is produced before being referenced in the next. A log updated before the rebuild would contain a state that does not yet exist on disk.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Automatic pre-commit hook** | No human feedback loop — violates the "the human has the final word" principle |
+| **Exhaustive checklist on every commit** | Decision fatigue, items irrelevant to the actual changes |
+| **Trust the agent to decide alone** | Inconsistent git history observed in practice during the earliest sessions |
+| **Update the log after the commit** | Log decoupled from the change — unreliable history |
+
+---
+
+## Consequences
+
+**For agents:**
+- Read `.claude/rules/post-change-pipeline.md` before any commit
+- Execute `.claude/skills/post-change-pipeline.md` after every modification
+- Never commit without an approved report
+
+**For the human:**
+- Receive a structured report before every commit
+- Approve or amend the list of proposed updates
+- Retain control over what enters the git history
+
+**For the project:**
+- Consistent git history: every commit is complete and self-sufficient
+- Kit log faithful to the actual state of the repository
+- Operational governance, not merely declarative
+
+<!-- FR -->
+
 # ADR-027 — Pipeline d'impact pré-commit avec approbation humaine
 
 > **Date :** 2026-05-30
@@ -7,10 +115,6 @@
 > **Chemin logique:** decisions/ADR-027-pipeline-impact-pre-commit.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** .claude/rules/post-change-pipeline.md, .claude/skills/post-change-pipeline.md, .claude/rules/git-workflow.md, log/kit-construction.md
-
-> **English summary:** Establishes a mandatory pre-commit pipeline — impact analysis, structured report, explicit wait for human approval, then ordered execution (tokens → site rebuild → log → ADRs → commit) — after observing agents commit changes without proposing necessary follow-up updates. This operationalizes the project's core principle that the human always has the final word.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

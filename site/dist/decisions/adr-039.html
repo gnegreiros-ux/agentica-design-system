@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-toggle` — Agentica</title>
+<title>Implementing `agtc-toggle` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-toggle` — Agentica">
+<meta property="og:title" content="Implementing `agtc-toggle` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-toggle` — Agentica">
+<meta name="twitter:title" content="Implementing `agtc-toggle` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-toggle`</h1>
+  <h1 class="adr-page-title">Implementing `agtc-toggle`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,32 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Implements agtc-toggle as an immediate-effect switch (<code>role="switch"</code> via a visually-hidden native checkbox), signaling state through knob position rather than color alone (WCAG 1.4.1). The "off" track color is a temporary proxy to a raw gray primitive, pending a dedicated semantic token.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
+<blockquote><p>Added 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>T1–T7 approved</strong>, state indicated by <strong>knob position alone</strong>. Detail and links: <code>guidelines/components/toggle.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td><code>role="switch"</code> + <code>aria-checked</code></td><td>NN/g — toggle switch</td></tr><tr><td>Immediate effect (no submit)</td><td>NN/g</td></tr><tr><td>State via knob position (not color alone)</td><td>NN/g · WCAG 1.4.1</td></tr><tr><td>Clearly bounded knob, contrast ≥ 3:1</td><td>NN/g · WCAG 1.4.11</td></tr><tr><td>Concise, front-loaded label describing the "on" state</td><td>NN/g</td></tr><tr><td>Touch target ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Binary only</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p>The toggle complements checkbox/radio: it's the control for <strong>immediate-effect</strong> settings. Three questions guided the decisions:</p>
+<p>1. <strong>Semantics</strong> — <code>role="switch"</code> vs. a plain checkbox. 2. <strong>State indicator</strong> — position alone vs. adding on/off (I/O) labels. 3. <strong>"Off" track color</strong> — no neutral-medium semantic token exists.</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — Hidden native <code>&lt;input type="checkbox" role="switch"&gt;</code></h3>
+<p>The accessible element is a native checkbox promoted to a <code>switch</code> via <code>role</code>. It provides the role, checked state, keyboard handling (Space), and accessible name (via the enclosing <code>&lt;label&gt;</code>). The styled track and knob are <strong>decorative</strong> (<code>aria-hidden</code>).</p>
+<p><strong>Rejected alternative:</strong> <code>&lt;div role="switch"&gt;</code> with manual keyboard handling — fragile and unnecessary since the native element provides everything (WCAG 4.1.2 anti-pattern).</p>
+<hr>
+<h3>Decision 2 — State signaled by knob position (non-color indicator)</h3>
+<p>The knob slides left (off) / right (on). <strong>Position</strong> is an indicator independent of color (WCAG 1.4.1); track color (gray → teal) only reinforces it.</p>
+<p><strong>Rejected alternative:</strong> I/O labels within the track. Discarded to stay clean (the iOS/Android standard); position alone is sufficient as a non-color indicator.</p>
+<p>The knob is <strong>white with a drop shadow</strong>, guaranteeing a contrast ≥ 3:1 against the track in both states (WCAG 1.4.11).</p>
+<hr>
+<h3>Decision 3 — <code>track-off</code> = proxy to <code>primitive.color.gray.9</code></h3>
+<p>No neutral-medium gray semantic token exists. <code>track-off</code> references <code>primitive.color.gray.9</code> (#8d8d8d) directly, chosen to give ~3.3:1 contrast between the white knob and the track (WCAG 1.4.11). This is a <strong>component-level proxy</strong> (the same approach as <code>card.elevated.shadow</code>) until a dedicated semantic token is created — governed by the Design System Lead.</p>
+<hr>
+<h2>v1 scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (v2)</th></tr></thead><tbody><tr><td>off/on/hover/focus/disabled states</td><td>On/off (I/O) labels in the track</td></tr><tr><td>Immediate effect (<code>agtc-change</code>)</td><td><code>sm</code>/<code>lg</code> size</td></tr><tr><td><code>role="switch"</code>, Space keyboard</td><td><code>loading</code> (async) state</td></tr></tbody></table></div>
+<hr>
+<h2>Tokens added to <code>component.json</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Reference</th></tr></thead><tbody><tr><td><code>--agtc-toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-on</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-toggle-default-track-on-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-toggle-default-knob</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-toggle-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-toggle-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>T1–T7 approuvés</strong>, indicateur d'état par <strong>position du curseur seule</strong>. Détail et liens : <code>guidelines/components/toggle.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td><code>role="switch"</code> + <code>aria-checked</code></td><td>NN/g — toggle switch</td></tr><tr><td>Effet immédiat (pas de submit)</td><td>NN/g</td></tr><tr><td>État par position du curseur (pas couleur seule)</td><td>NN/g · WCAG 1.4.1</td></tr><tr><td>Curseur délimité, contraste ≥ 3:1</td><td>NN/g · WCAG 1.4.11</td></tr><tr><td>Label concis frontload décrivant l'état « on »</td><td>NN/g</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Binaire uniquement</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
@@ -158,7 +179,7 @@
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>États off/on/hover/focus/disabled</td><td>Libellés on/off (I/O) dans la piste</td></tr><tr><td>Effet immédiat (<code>agtc-change</code>)</td><td>Taille <code>sm</code>/<code>lg</code></td></tr><tr><td><code>role="switch"</code>, clavier Espace</td><td>État <code>loading</code> (async)</td></tr></tbody></table></div>
 <hr>
 <h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>--agtc-toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-on</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-toggle-default-track-on-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-toggle-default-knob</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-toggle-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-toggle-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>--agtc-toggle-default-track-off</code></td><td><code>primitive.color.gray.9</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-off-hover</code></td><td><code>primitive.color.gray.10</code> (proxy)</td></tr><tr><td><code>--agtc-toggle-default-track-on</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-toggle-default-track-on-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-toggle-default-knob</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-toggle-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-toggle-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-038.html" class="agtc-button secondary">← ADR-038</a>
     <a href="adr-040.html" class="agtc-button secondary">ADR-040 →</a>
   </div></main>

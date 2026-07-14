@@ -1,3 +1,116 @@
+# ADR-011 — Choosing Tokens Studio for Figma ↔ JSON synchronization
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer
+> **Type:** contract
+> **Logical path:** decisions/ADR-011-tokens-studio.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md, decisions/ADR-008-radix-colors.md
+
+---
+
+## Context
+
+The design system operates on two surfaces simultaneously:
+- **Code** — JSON tokens + Web Components compiled by Style Dictionary
+- **Figma** — mockups and components used by the design team
+
+Without synchronization between these two surfaces, teams work from two diverging
+sources of truth. The designer changes a token in Figma, the developer changes the
+JSON — the two systems silently drift apart.
+
+The digital sovereignty constraint (ADR-004, DESIGN.md) complicates the problem:
+the source of truth must stay in the git repo, not in Figma. Figma is a tool for
+consultation and design, not for token governance.
+
+The question was:
+
+> **How do we keep Figma and the JSON repo synchronized without reversing the
+> direction of truth — JSON leads, Figma follows?**
+
+---
+
+## Decision
+
+Adopt **Tokens Studio for Figma** (a Figma plugin) as the synchronization bridge
+between the repo's JSON files and Figma's variables/styles.
+
+The synchronization direction is non-negotiable:
+
+```
+tokens/*.json  →  Tokens Studio  →  Figma Variables
+     ↑ source of truth                ↓ consumer
+```
+
+The plugin reads the JSON files from the GitHub repo (via Settings → GitHub sync)
+and imports the tokens into Figma in the same order as ADR-001:
+`primitives.json` → `semantic.json` → `component.json`.
+
+**What designers must NOT do via Tokens Studio:**
+modify tokens directly in Figma and push them to the repo.
+Every token change follows the TCR process (DESIGN.md) — Figma is read-only.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Native Figma Variables only (no plugin)** | Figma Variables don't natively sync with a git repo. Every token update would require a manual update in Figma — a guaranteed source of drift. Acceptable for small teams, but not scalable. |
+| **Theo / Style Dictionary → Figma export** | Style Dictionary can export to Figma-specific formats (specific JSON). But importing into Figma remains manual — no bidirectional sync and no management UI in Figma. Tokens Studio offers the management UI these exports lack. |
+| **Custom sync script** | Maintainable short-term for a small token catalog. Not maintainable at scale (30 palettes × 12 steps × 3 layers = hundreds of tokens). Figma API updates would break the script without notice. |
+| **Zeroheight / Supernova** | Design system documentation platforms with Figma sync. Focused on documentation, not on JSON-level token synchronization. Add a paid external dependency for a function Tokens Studio covers for free. |
+| **No synchronization (two sources of truth)** | Explicitly rejected. The experience of teams without synchronization is documented: after a few sprints, designers work on tokens that no longer exist in the code, and developers are unaware of changes decided in Figma. |
+
+---
+
+## Consequences
+
+**For designers:**
+- Import workflow: Settings → Sync → GitHub → point to `tokens/`
+- Import order: `primitives.json` → `semantic.json` → `component.json`
+- The tokens available in Figma are always the tokens defined in the repo —
+  no local token is possible without going through the TCR process
+- Any local variable created directly in Figma = debt — to be flagged to the team
+
+**For AI agents:**
+- Tokens Studio is not in the agent loop — agents work directly with the JSON
+  files, never with Figma
+- The plugin guarantees that what designers see in Figma matches what agents
+  read in the JSON — consistency of the shared source of truth
+
+**For governance:**
+- The JSON → Figma direction preserves digital sovereignty: tokens can't be
+  modified "on the sly" via Figma and pushed to the repo
+- Every token modification stays traced in git, via TCR, with approval
+
+**For Style Dictionary (ADR-003):**
+- Style Dictionary and Tokens Studio share the same source: `tokens/*.json`
+- Both compile from the same JSON — no intermediate format to maintain
+- Style Dictionary generates code outputs (CSS, JS, Swift, Android)
+- Tokens Studio manages the design output (Figma Variables)
+
+**Accepted cost:**
+- Tokens Studio is a third-party plugin (Figma Marketplace) — a dependency on
+  its maintenance
+- The free version covers basic needs; some advanced features
+  (automatic sync, webhooks) require a subscription
+- The plugin must be reinstalled/reconfigured if the repo is moved
+
+---
+
+## Incidents or triggers
+
+Foundational decision. Motivated by a systematic observation in teams without
+synchronization: Figma mockups use tokens named differently from the code,
+creating two parallel languages within the same team.
+A designer who talks about `Bleu Principal` and a developer who talks about
+`color.action.primary` are describing the same value without knowing it.
+Tokens Studio aligns both languages on the same JSON.
+
+<!-- FR -->
+
 # ADR-011 — Choix de Tokens Studio pour la synchronisation Figma ↔ JSON
 
 > **Date :** 2026-05-28
@@ -7,10 +120,6 @@
 > **Chemin logique:** decisions/ADR-011-tokens-studio.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, decisions/ADR-001-trois-niveaux-tokens.md, decisions/ADR-003-style-dictionary.md, decisions/ADR-008-radix-colors.md
-
-> **English summary:** Adopts Tokens Studio for Figma as a one-way sync bridge from the repo's JSON tokens into Figma variables, keeping the JSON as the sole source of truth. Designers cannot push token changes from Figma back to the repo — any token change still goes through the TCR process.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

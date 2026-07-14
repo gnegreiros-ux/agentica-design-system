@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Bundle unique `agtc.js` + dogfooding Web Components Phase 1 — Agentica</title>
+<title>Single `agtc.js` bundle + Web Components dogfooding Phase 1 — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Bundle unique `agtc.js` + dogfooding Web Components Phase 1 — Agentica">
+<meta property="og:title" content="Single `agtc.js` bundle + Web Components dogfooding Phase 1 — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Bundle unique `agtc.js` + dogfooding Web Components Phase 1 — Agentica">
+<meta name="twitter:title" content="Single `agtc.js` bundle + Web Components dogfooding Phase 1 — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">architecture</span>
   </div>
-  <h1 class="adr-page-title">Bundle unique `agtc.js` + dogfooding Web Components Phase 1</h1>
+  <h1 class="adr-page-title">Single `agtc.js` bundle + Web Components dogfooding Phase 1</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,46 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Following the per-component bundling introduced for <code>agtc-top-nav</code> (ADR-061), this ADR completes Phase 1 of the site's Web Components rollout: a single <code>components/index.js</code> entry point bundles all 16 components into one <code>agtc.js</code> file (one <code>&lt;script defer&gt;</code> instead of many), and the documentation pages replace their CSS-simulated <code>.agtc-button</code>/<code>.agtc-banner</code>/<code>.agtc-badge</code>/<code>.agtc-link</code>/<code>.agtc-segmented</code> markup with the real Web Components — enforcing the "the site must consume the design system" principle, with two deliberate exceptions (button-styled links, and the language-switch segmented control) kept as-is for now.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-061 introduced esbuild IIFE bundling for <code>agtc-top-nav</code> into an individual file. The next step (Phase 1 of the "Web Components / Styles / Spacing" plan) was:</p>
+<p>1. <strong>Single bundle</strong> — replace the N individual files with a single <code>agtc.js</code> grouping    all 16 components. Reduce the <code>&lt;head&gt;</code> entry-point surface (one <code>&lt;script defer&gt;</code>).</p>
+<p>2. <strong>Dogfooding Phase 1</strong> — the documentation pages used <code>&lt;button class="agtc-button"&gt;</code>,    <code>&lt;div class="agtc-banner"&gt;</code>, <code>&lt;span class="agtc-badge"&gt;</code>, <code>&lt;a class="agtc-link"&gt;</code> and    <code>&lt;div class="agtc-segmented"&gt;</code> simulated in CSS. They needed to consume the real WCs.</p>
+<p>Guiding principle: "The site MUST consume the design system — in the event of a discrepancy, the component is the source of truth."</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>1. <code>components/index.js</code> — single entry point</h3>
+<p>Created a <code>components/index.js</code> file importing all components in dependency order (<code>agtc-icon</code> first, a dependency of all the others).</p>
+<p>esbuild bundles this entry point into an IIFE: <code>components/index.js</code> → <code>site/dist/components/agtc.js</code>.</p>
+<p><strong>Reason:</strong> a single <code>&lt;script defer src="${base}components/agtc.js"&gt;</code> in <code>&lt;head&gt;</code>, all Custom Elements registered at once, no risk of partial loading.</p>
+<h3>2. Replacing CSS simulations with real WCs</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Doc page</th><th>Element replaced</th><th>WC used</th></tr></thead><tbody><tr><td><code>button.html</code></td><td><code>&lt;button class="agtc-button"&gt;</code> (12 occurrences)</td><td><code>&lt;agtc-button variant="..."&gt;</code></td></tr><tr><td><code>banner.html</code></td><td><code>&lt;div class="agtc-banner"&gt;</code> (demo)</td><td><code>&lt;agtc-banner variant="..."&gt;</code></td></tr><tr><td><code>badge.html</code></td><td><code>&lt;span&gt;</code> inline style (demo)</td><td><code>&lt;agtc-badge variant="..." size="..."&gt;</code></td></tr><tr><td><code>link.html</code></td><td><code>&lt;a class="agtc-link"&gt;</code> (3 demo)</td><td><code>&lt;agtc-link href="..." [external|underline]&gt;</code></td></tr><tr><td><code>segmented.html</code></td><td><code>&lt;div class="agtc-segmented"&gt;</code> (demo)</td><td><code>&lt;agtc-segmented label="..." options='...' value="..."&gt;</code></td></tr><tr><td>All pages</td><td><code>contributionBanner()</code></td><td><code>&lt;agtc-banner variant="brand" icon="github"&gt;</code></td></tr><tr><td><code>get-started.html</code></td><td>2 × <code>&lt;div class="agtc-banner"&gt;</code></td><td><code>&lt;agtc-banner variant="info/brand"&gt;</code></td></tr><tr><td><code>decisions/index.html</code></td><td><code>&lt;span class="agtc-badge success sm"&gt;</code> (61 lines)</td><td><code>&lt;agtc-badge variant="success" size="sm" icon="circle-check"&gt;</code></td></tr><tr><td>Individual ADRs</td><td>class-based <code>statusBadge</code></td><td><code>&lt;agtc-badge variant="success" size="sm" icon="circle-check"&gt;</code></td></tr></tbody></table></div>
+<h3>3. Exception maintained — stylistically primary links</h3>
+<p>The <code>&lt;a class="agtc-button primary" href="..."&gt;</code> in the hero and navigation sections intentionally remain a CSS class: <code>agtc-button</code> renders a <code>&lt;button&gt;</code>, not an <code>&lt;a&gt;</code>. This pattern is semantically correct (ADR-031, confirmed in ADR-061).</p>
+<h3>4. Exception maintained — lang-switch</h3>
+<p><code>&lt;div class="agtc-segmented lang-switch"&gt;</code> in <code>layout()</code>: coupled custom JS (<code>data-lang</code> on <code>&lt;html&gt;</code>, <code>localStorage</code>). Migration to <code>&lt;agtc-segmented&gt;</code> planned for Phase 2 with adaptation of the language-toggle JS.</p>
+<hr>
+<h2>Techniques used</h2>
+<p><strong><code>agtc-segmented</code> with JSON options as an attribute:</strong> Lit v3 converts <code>{ type: Array }</code> via <code>JSON.parse()</code> from the HTML attribute.</p>
+<pre class="code-block"><code class="lang-html">&lt;agtc-segmented label="Langue"
+  options='[{"value":"fr","label":"FR"},{"value":"en","label":"EN"}]'
+  value="fr"&gt;
+&lt;/agtc-segmented&gt;</code></pre>
+<p><strong><code>agtc-link external</code> for external links:</strong> The <code>external</code> attribute on <code>&lt;agtc-link&gt;</code> automatically adds the arrow-up-right icon and the <code>&lt;span class="visually-hidden"&gt; (opens in a new tab)&lt;/span&gt;</code>. The manual <code>extIcon</code> variable is removed.</p>
+<p><strong><code>agtc-banner</code> with <code>&lt;slot&gt;</code> for bilingualism:</strong> The <code>heading</code> attribute is a string — for bilingual headings, <code>&lt;strong&gt;</code> is passed in the default slot rather than using the <code>heading</code> attribute.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>N individual files</strong> (<code>agtc-button.js</code>, <code>agtc-banner.js</code>…)</td><td>N HTTP requests, N <code>&lt;script defer&gt;</code> in <code>&lt;head&gt;</code>, risk of a race condition between loads</td></tr><tr><td><strong>CDN for Lit</strong> + native modules</td><td>Against ADR-004 (digital sovereignty) and ADR-061</td></tr><tr><td><strong>Keep the CSS simulations</strong> for demos</td><td>Against the dogfooding principle — the component page must show the real component</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For the site:</strong></p>
+<ul><li><code>site/dist/components/agtc.js</code> (~526kb, all Lit components bundled)</li><li>A single <code>&lt;script defer&gt;</code> in each page (simplifies <code>&lt;head&gt;</code>)</li><li>The documentation pages now show the real, interactive WCs (critical with confirmation, interactive segmented, etc.)</li></ul>
+<p><strong>For the design system:</strong></p>
+<ul><li><code>components/index.js</code> becomes the official entry point for consumers without a bundler</li><li><code>bundleComponents()</code> in <code>site/build.js</code> simplified (1 bundle instead of N)</li></ul>
+<p><strong>For agents:</strong></p>
+<ul><li>Adding a component = adding <code>import './agtc-&lt;name&gt;.js'</code> to <code>components/index.js</code></li><li>No change to the build sequence</li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Direct follow-up to ADR-061 (individual <code>agtc-top-nav</code> bundle) + user directive "Web components / Styles / Spacing" defining the three phases of the site refactor (2026-06-15).</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-061 a introduit le bundling esbuild IIFE pour <code>agtc-top-nav</code> dans un fichier individuel. L'étape suivante (Phase 1 du plan "Web Components / Styles / Spacing") était :</p>
 <p>1. <strong>Bundle unique</strong> — remplacer les N fichiers individuels par un seul <code>agtc.js</code> regroupant    les 16 composants. Réduire la surface d'entrée de <code>&lt;head&gt;</code> (un seul <code>&lt;script defer&gt;</code>).</p>
 <p>2. <strong>Dogfooding Phase 1</strong> — les pages de documentation utilisaient des <code>&lt;button class="agtc-button"&gt;</code>,    <code>&lt;div class="agtc-banner"&gt;</code>, <code>&lt;span class="agtc-badge"&gt;</code>, <code>&lt;a class="agtc-link"&gt;</code> et    <code>&lt;div class="agtc-segmented"&gt;</code> simulés en CSS. Elles devaient consommer les vrais WC.</p>
@@ -172,7 +207,7 @@
 <ul><li>Ajouter un composant = ajouter <code>import './agtc-&lt;nom&gt;.js'</code> dans <code>components/index.js</code></li><li>Pas de changement dans la séquence de build</li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Suite directe de ADR-061 (bundle individuel agtc-top-nav) + directive utilisateur "Web components / Styles / Spacing" définissant les trois phases de refactoring du site (2026-06-15).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Suite directe de ADR-061 (bundle individuel agtc-top-nav) + directive utilisateur "Web components / Styles / Spacing" définissant les trois phases de refactoring du site (2026-06-15).</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-061.html" class="agtc-button secondary">← ADR-061</a>
     <a href="adr-063.html" class="agtc-button secondary">ADR-063 →</a>
   </div></main>

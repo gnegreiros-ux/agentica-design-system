@@ -1,3 +1,126 @@
+# ADR-042 — Implementation of `agtc-banner`
+
+> **Date:** 2026-06-03
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-042-agtc-banner-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-040-agtc-table-implementation.md, decisions/ADR-041-agtc-code-block-implementation.md, guidelines/components/banner.md, tokens/component.json
+
+---
+
+## Applied reference UX patterns
+
+> Added on 2026-06-03 via the `ux-pattern-review` workflow (ADR-036). Decision: **N1–N9 all approved**.
+> Detail and links: `guidelines/components/banner.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| # | Pattern | Source |
+|---|---------|--------|
+| N1 | Semantic variants (6) | NN/g |
+| N2 | Meaning never conveyed by color alone (icon + AT text) | NN/g |
+| N3 | Icon per variant | NN/g |
+| N4 | Static by default (no live region) | MDN — status role |
+| N5 | Assertive `role="alert"` used sparingly | A11Y Collective |
+| N6 | Accessible close button with no focus trap | MDN — alert role |
+| N7 | Title + body + action zone | NN/g |
+| N8 | Left accent border + subtle background | Dashboard |
+| N9 | No auto-dismiss for critical | NN/g |
+
+---
+
+## Context
+
+The site uses a `contribution-banner` (16 usages) — an info callout with a left accent border,
+icon, title + body, and an action ("View on GitHub"). It's a special case of a broader need: a
+**contextual inline message** with multiple severity levels.
+
+`agtc-banner` generalizes this need. It's the 3rd component from the 2026-06-03 gap analysis
+(category B), after `agtc-table` and `agtc-code-block`.
+
+---
+
+## Decisions
+
+### Decision 1 — Inline message, not a toast or modal
+
+`agtc-banner` stays **in the page flow**. Temporary floating notifications (toast) and blocking
+interruptions (modal / `alertdialog`) are separate future components. This boundary avoids
+overloading a single component with contradictory responsibilities.
+
+### Decision 2 — 6 variants aligned with `agtc-badge`
+
+`neutral, brand, info, success, warning, danger` — the same semantic intents as the badge, so
+that an agent, like a human, reasons consistently about severity across the system.
+
+### Decision 3 — Static by default; live region opt-in (N4/N5)
+
+A central accessibility point: a banner **present at page load** must not be a live region
+(otherwise it gets announced, which is disruptive). The default is therefore `live="off"` (no
+`role`). For a **dynamically inserted** message, the consumer chooses `live="polite"` (→
+`role="status"`) or `live="assertive"` (→ `role="alert"`, reserved for urgent cases). Severity
+remains accessible even without a live region thanks to a **hidden prefix** ("Error:", "Warning:"…),
+the icon being decorative.
+
+### Decision 4 — "Mix" architecture (consistent with ADR-040/041)
+
+`<agtc-banner>` component (shadow DOM, `default` + `actions` slots) for apps/Storybook **+**
+`.agtc-banner` class for the site's static HTML. Both consume `component.banner.*`. The
+`contribution-banner` will be migrated to `.agtc-banner` during *dogfooding* (category A).
+
+### Decision 5 — Per-variant tokens: `background` + `accent`
+
+To limit the number of tokens, each variant carries two tokens (`background`, `accent`), with
+`accent` serving **both** the left border and the icon. Text (title/body) is shared
+(`heading-text` = text.primary, `body-text` = text.secondary). Consistent with the existing
+`agtc-badge` precedent (reuse of the semantic feedback intents).
+
+---
+
+## v1 Scope
+
+| Included | Excluded (future component/evolution) |
+|--------|------------------------------------|
+| 6 variants, icon per variant (+ override / `no-icon`) | Toast (temporary floating) |
+| Title, body, action zone (slots) | Modal / `alertdialog` |
+| `dismissible` + `dismiss` event | Timed auto-dismiss |
+| `live` opt-in (off/polite/assertive) | Notification stacking / queue |
+| Tokenized accent border + subtle background | "Solid" variants (full background) |
+
+---
+
+## Rejected alternatives
+
+- **`role="alert"` by default**: would announce every static banner on load — disruptive (N4).
+- **Severity conveyed by color alone**: inaccessible — icon + hidden prefix mandatory (N2).
+- **Merging toast/modal into this component**: contradictory responsibilities (floating vs inline vs blocking).
+- **One token per sub-element and per variant**: token explosion — `accent` pooled (border + icon).
+
+---
+
+## Consequences
+
+- The site's `contribution-banner` will be able to migrate to `.agtc-banner variant="brand"` during *dogfooding*.
+- Toast and modal remain to be designed (each with its own ADR).
+
+---
+
+## Tokens added — `component.banner.*`
+
+| Token | Reference |
+|-------|-----------|
+| `neutral.background` / `neutral.accent` | `background.subtle` / `text.secondary` |
+| `brand.background` / `brand.accent` | `brand.primary-subtle` / `brand.primary` |
+| `info.background` / `info.accent` | `primitive.blue.3` / `feedback.info` |
+| `success.background` / `success.accent` | `primitive.green.3` / `feedback.success` |
+| `warning.background` / `warning.accent` | `primitive.orange.3` / `primitive.orange.11` |
+| `danger.background` / `danger.accent` | `feedback.danger-subtle` / `feedback.danger` |
+| `heading-text` / `body-text` | `text.primary` / `text.secondary` |
+| `close-color` / `close-hover` | `text.secondary` / `text.primary` |
+| `border-focus` / `radius` / `padding-x` / `padding-y` | `border.focus` / `radius.card` / `space.5` / `space.4` |
+
+<!-- FR -->
+
 # ADR-042 — Implémentation de `agtc-banner`
 
 > **Date :** 2026-06-03
@@ -7,13 +130,6 @@
 > **Chemin logique:** decisions/ADR-042-agtc-banner-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-040-agtc-table-implementation.md, decisions/ADR-041-agtc-code-block-implementation.md, guidelines/components/banner.md, tokens/component.json
-
-> **English summary:** Generalizes the site's ad hoc `contribution-banner` into agtc-banner, an
-> inline (non-toast, non-modal) message component with 6 severity variants aligned to agtc-badge.
-> Static by default (no live region) to avoid announcing banners present at page load;
-> `live="polite"/"assertive"` is opt-in for dynamically inserted messages.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

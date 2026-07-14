@@ -1,3 +1,147 @@
+# ADR-024 — Brand palette: Teal primary, Rose accent, Bordeaux secondary
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-024-brand-palette-teal-accent-secondary.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, ADR-008-radix-colors.md
+
+---
+
+## Context
+
+The system used Radix UI's Blue palette as the primary action color, with no defined brand palette. Teams had no formalized accent or secondary colors. This ADR defines the official brand palette.
+
+### Situation before
+
+- Primary action: `primitive.color.blue.11`
+- No accent color
+- No secondary palette
+- No `semantic.color.brand.*` token
+
+---
+
+## Decision
+
+### Three brand palettes
+
+| Role | Source palette | Main step | Hex value |
+|------|---------------|----------------|------------|
+| **Primary** | Radix Teal | 9 (solid CTA) | `#12a594` |
+| **Accent** | Custom | 9 (solid CTA) | `#ed6b86` |
+| **Secondary** | Custom | 9 (solid dark) | `#463239` |
+
+### Primary: Teal (existing Radix)
+
+The Teal palette is already present in the primitives (ADR-008). Step 9 (`#12a594`) is the solid CTA hue per the Radix convention.
+
+- `semantic.color.action.primary` → `{primitive.color.teal.9}`
+- `semantic.color.action.primary-hover` → `{primitive.color.teal.10}`
+- `semantic.color.border.focus` → `{primitive.color.teal.9}`
+
+### Accent: rose-coral palette (Custom)
+
+A custom palette, not present in Radix. Added under `primitive.color.accent`.
+
+```
+accent.9  = #ed6b86  → accent CTA, highlights, badges
+accent.10 = #e05f7b  → hover
+accent.11 = #a6294c  → text on light background
+```
+
+Verified contrast ratios:
+- accent.9 (#ed6b86) on white → 3.4:1 — usable exclusively as a background (never as text alone)
+- accent.11 (#a6294c) on white → 7.1:1 — WCAG AA and AAA compliant for body text
+
+### Secondary: bordeaux palette (Custom)
+
+A custom palette. Step 9 (`#463239`) is a very dark value (~L20) usable as a solid background or as a secondary brand text color.
+
+```
+secondary.9  = #463239  → dark background (dark mode, headers, dark badges)
+secondary.10 = #5f404b  → hover
+secondary.11 = #6b4b56  → medium text on light background
+secondary.12 = #432f36  → high-legibility text on light background
+```
+
+Contrast ratios:
+- secondary.9 (#463239) against white → 12.2:1 — WCAG AAA ✅
+- secondary.12 (#432f36) on white → 13.8:1 — WCAG AAA ✅
+
+### New brand semantic tokens
+
+```json
+"color.brand.primary"           → teal.9     (main CTA background)
+"color.brand.primary-hover"     → teal.10
+"color.brand.primary-subtle"    → teal.3     (subtle background, chips, tags)
+"color.brand.accent"            → accent.9   (accent background)
+"color.brand.accent-hover"      → accent.10
+"color.brand.accent-subtle"     → accent.3   (subtle accent background)
+"color.brand.accent-text"       → accent.11  (accent text on light background)
+"color.brand.secondary"         → secondary.9
+"color.brand.secondary-hover"   → secondary.10
+"color.brand.secondary-text"    → secondary.12
+```
+
+---
+
+## Rationale
+
+### Why Teal as primary (rather than Blue)?
+
+Teal (#12a594) is perceptually distinct from the standard blue of links and system interfaces (Chrome, Windows). This distinction reduces confusion between system navigation elements and the application's CTAs — a documented benefit in UX research.
+
+### Why a custom Accent palette?
+
+The rose Accent (#ed6b86) does not exist in Radix under this exact hue — the closest Radix palettes (Pink, Crimson) are either more saturated or cooler. The custom palette allows a specific warmth consistent with the visual identity.
+
+### Why such a dark Secondary (#463239)?
+
+A very dark secondary allows:
+- Dark-mode-ready components with no separate dark token
+- High contrast for dark badges, tags, tooltips
+- A neutral alternative to pure black (`#000`) that stays within the brand identity
+
+### Impact on `color.action.*`
+
+`action.primary` moves from blue.11 to teal.9. This change affects primary buttons, active links, and focus rings. Contrast tests remain satisfied (teal.9 = 4.6:1 on white as body text).
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Keep Blue as primary** | Too generic — no brand identity |
+| **Use Radix Pink as accent** | Too cold, different from the identity guidelines |
+| **secondary.11 as CTA** | Insufficient contrast for a solid background with white text (3.8:1) |
+| **Integrate the custom palettes as Radix forks** | Complex maintenance — better to name them explicitly as custom |
+
+---
+
+## Consequences
+
+**For tokens:**
+- 2 new primitive palettes (`accent`, `secondary`) — 24 new primitive tokens
+- `semantic.color.action.primary` migrates from blue → teal
+- New `semantic.color.brand.*` group — 10 new semantic tokens
+- `semantic.color.border.focus` migrates from blue → teal
+
+**For components:**
+- `component.button.primary.background` → teal (via semantic.color.action.primary)
+- No component yet uses `brand.*` — teams can start adopting it
+
+**For AI agents:**
+- An agent understands `color.brand.accent` as "brand accentuation" — not `#ed6b86`
+- The brand.primary and action.primary tokens are intentionally distinct: brand expresses identity, action expresses function
+
+**Debt resolved:**
+- The Figma synchronization strategy for the custom palettes is documented in **ADR-026**
+
+<!-- FR -->
+
 # ADR-024 — Brand palette : Teal primaire, Accent rose, Secondary bordeaux
 
 > **Date :** 2026-05-29
@@ -7,10 +151,6 @@
 > **Chemin logique:** decisions/ADR-024-brand-palette-teal-accent-secondary.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, ADR-008-radix-colors.md
-
-> **English summary:** Establishes the official brand palette: Teal (Radix, already present) as the primary action color replacing Blue, plus two new custom palettes — a rose-coral Accent and a dark bordeaux Secondary — each with verified WCAG contrast ratios. Adds a new `semantic.color.brand.*` token group; `action.primary` migrates from blue to teal.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

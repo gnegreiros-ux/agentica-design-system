@@ -1,3 +1,105 @@
+# ADR-038 — Implementing `agtc-radio` and `agtc-radio-group`
+
+> **Date:** 2026-06-01
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-038-agtc-radio-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/radio.md, tokens/component.json
+
+---
+
+## Reference UX patterns applied
+
+> Added 2026-06-01 via the `ux-pattern-review` workflow (ADR-036).
+> Decision: **R1–R7 approved**, **round** shape, **group + radio** architecture.
+> Detail and links: `guidelines/components/radio.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| Round shape (square = checkbox) | NN/g — checkboxes vs radio |
+| Mutually exclusive selection | NN/g |
+| Pre-selecting a sensible default | NN/g — radio default selection |
+| Vertical stacking, one option per line | NN/g |
+| Clickable label (Fitts) | NN/g · IxDF |
+| Touch target ≥ 24px | IxDF · WCAG 2.5.8 |
+| Arrow-key navigation = selection | NN/g (WAI-ARIA radiogroup) |
+
+---
+
+## Context
+
+The radio is the exclusive counterpart to the checkbox. Three questions guided the decisions:
+
+1. **Shape** — round (NN/g) vs. square. Unambiguous: round.
+2. **Grouping** — how do we guarantee exclusivity across Web Components?
+3. **Keyboard** — how do we reproduce native radio behavior (arrows)?
+
+---
+
+## Decisions
+
+### Decision 1 — Two-component architecture: `agtc-radio-group` + `agtc-radio`
+
+**Problem:** `<input type="radio">` elements rendered in **separate** shadow DOMs don't
+form a native group — exclusivity via `name` doesn't cross shadow-root boundaries.
+
+**Decision:** an `agtc-radio-group` container (`role="radiogroup"`) is **mandatory**. It:
+- collects the child `agtc-radio` elements, applies single selection via `value`
+- manages **roving focus** (only one radio has `tabindex="0"`)
+- handles the keyboard (arrows select, like a native radio)
+- emits `agtc-change { value, name }`
+
+**Rejected alternative:** a standalone `agtc-radio` coordinated by `name` via the
+document. Rejected for weaker accessibility (no `role="radiogroup"`, no roving arrow-key
+navigation).
+
+---
+
+### Decision 2 — Round shape
+
+`border-radius: 9999px`. NN/g: round is the radio convention; square signals a
+checkbox. Central fill dot (teal) animated via `transform: scale`.
+
+---
+
+### Decision 3 — Full ARIA radiogroup pattern
+
+The group implements the WAI-ARIA pattern: `role="radiogroup"` + `aria-label`, children
+`role="radio"` + `aria-checked`, roving focus, `↓→` next / `↑←` previous (looping,
+selecting), `Space` selects. `Enter` is deliberately **not** handled (reserved for form
+submission, per the strict WAI-ARIA radio pattern). This faithfully reproduces the
+behavior of a native group without relying on native grouping, which doesn't work across
+shadow DOM.
+
+---
+
+## v1 scope
+
+| Included | Excluded (v2) |
+|----------|----------------|
+| `agtc-radio-group` + `agtc-radio`, round | Assisted horizontal orientation |
+| default/hover/focus/selected/disabled states | Per-option description/help |
+| Roving focus + arrow-key keyboard | Group "required" validation |
+| `agtc-change` event | — |
+
+---
+
+## Tokens added to `component.json`
+
+| Token | Semantic reference |
+|-------|----------------------|
+| `--agtc-radio-default-background` | `semantic.color.background.surface` |
+| `--agtc-radio-default-border` | `semantic.color.border.default` |
+| `--agtc-radio-default-border-hover` | `semantic.color.action.primary` |
+| `--agtc-radio-default-border-focus` | `semantic.color.border.focus` |
+| `--agtc-radio-default-fill` | `semantic.color.action.primary` |
+| `--agtc-radio-default-fill-hover` | `semantic.color.action.primary-hover` |
+| `--agtc-radio-default-label` | `semantic.color.text.primary` |
+
+<!-- FR -->
+
 # ADR-038 — Implémentation de `agtc-radio` et `agtc-radio-group`
 
 > **Date :** 2026-06-01
@@ -7,13 +109,6 @@
 > **Chemin logique:** decisions/ADR-038-agtc-radio-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/radio.md, tokens/component.json
-
-> **English summary:** Implements `agtc-radio-group` + `agtc-radio` as a round-shaped, mutually
-> exclusive control. Because native `name`-based radio grouping doesn't cross shadow DOM
-> boundaries, a required group container implements the full WAI-ARIA radiogroup pattern (roving
-> focus, arrow-key selection) instead.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

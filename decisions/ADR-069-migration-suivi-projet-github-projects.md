@@ -1,3 +1,106 @@
+# ADR-069 — Migrating project tracking to GitHub Projects
+
+> **Date:** 2026-07-09
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-069-migration-suivi-projet-github-projects.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md, decisions/ADR-016-journal-construction.md
+> **Relations:** decisions/ADR-016-journal-construction.md (replaced), .claude/rules/project-overview.md, .claude/settings.json, .claude/rules/git-workflow.md
+
+---
+
+## Context
+
+`log/kit-construction.md` (ADR-016, 2026-05-28) automatically logged, via a
+`PostToolUse` hook, every modification to the kit's construction files (`.claude/`,
+`decisions/`, `AGENTS.md`, `DESIGN.md`). After six weeks of use, the file had grown to
+464 lines and ~440 entries.
+
+This format (an append-only chronological table) served its role as a log well, but
+didn't allow for real project management: no status other than "done," no backlog
+distinct from history, no view by domain, no dependency tracking between initiatives.
+Re-reading the file to answer "what's left to do?" required reparsing the entire history
+in search of informal mentions ("door left open," "out of scope," "to do").
+
+The question was:
+
+> **How do we get a real project management tool (statuses, backlog, dependencies)
+> without duplicating the logging effort already provided by git and the ADRs?**
+
+---
+
+## Decision
+
+Agentica's project tracking is migrated to **GitHub Projects (v2)**
+— Project #1 "Agentica — Project Management" → https://github.com/users/gnegreiros-ux/projects/1.
+
+- **Custom fields**: `Status` (Backlog, In Progress, Waiting, Done, Abandoned),
+  `Domain` (Figma, Tokens, Site, Components, Tests, Governance, Presentation),
+  `Dependency` (free text, e.g. `#12`), `ADR` (free text, e.g. `ADR-059`), `Date`.
+- **Views**: Board (by Status, daily use), "By domain" table (group by Domain),
+  "History" table (filter `Status:Done`, sorted by descending Date — replaces the
+  chronological log function of the old file).
+- **Population**: the ~440 raw entries from `log/kit-construction.md` were condensed
+  into 100 items (91 historical initiatives + 1 pending initiative + 8 backlog tickets
+  identified from "to do"/"door open" mentions found in the history and in session
+  memory), all migrated with their real status.
+- The `PostToolUse` hook (`.claude/hooks/log-kit-construction.sh`) and the
+  `log/kit-construction.md` file are removed from the repository.
+
+The **public changelog** (`site/dist/changelog.html`, shipped release notes) stays in
+the repository — it is distinct from internal project management and is not affected by
+this migration.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Keep the file + add a management layer on top** | Duplicates the entry effort (file + tool) and creates a risk of desynchronization between the two sources. |
+| **GitHub Issues + Milestones alone** | No free-text field to cross-reference Domain/ADR/Dependency without repurposing labels and milestones away from their intended use; Projects v2 offers custom fields natively. |
+| **External tool (Linear, Jira…)** | Adds a paid dependency and a system outside the GitHub ecosystem already used for code and CI; contrary to the digital-sovereignty principle (`project-overview.md`). |
+| **Keep the automatic log for history, GitHub Projects for the future only** | Would have left two active history registers in parallel (repo + Project) — contrary to the goal of a single source of truth. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- A question like "what's been done on X?" or "what's left to do?" is answered via
+  `gh project item-list 1 --owner gnegreiros-ux` or the "History"/Board view, no longer
+  via reading `log/kit-construction.md`.
+- The `PostToolUse` hook that automatically logged every `Write`/`Edit` on `.claude/`,
+  `decisions/`, `AGENTS.md`, `DESIGN.md` is removed — these modifications remain traced by
+  git and by the ADRs themselves, not by a separate log.
+- Any proposal for a new initiative (Backlog) must be created in GitHub Projects after
+  explicit human validation — never directly, per `project-overview.md` ("the human
+  always has the final word").
+
+**For humans:**
+- The Board provides a daily-piloting view impossible with a flat file.
+- The "By domain" and "History" views respectively replace the need for manual
+  filtering and the chronological log function of the old file.
+
+**Accepted cost:**
+- History loses the minute-level timestamp granularity of the old hook (migrated
+  entries carry a date, not a time) — judged not significant for project management use
+  rather than session debugging.
+- GitHub Projects is a service external to the git repository itself (but stays within
+  the GitHub ecosystem already used for code, Issues, and CI).
+
+---
+
+## Incidents or triggers
+
+Explicit user request on 2026-07-09: "need a project management tool to better run
+Agentica." The `kit-construction.md` log format (designed by ADR-016 as observability
+for kit construction, not as a piloting tool) no longer met this need once the volume of
+accumulated history grew.
+
+<!-- FR -->
+
 # ADR-069 — Migration du suivi de projet vers GitHub Projects
 
 > **Date :** 2026-07-09

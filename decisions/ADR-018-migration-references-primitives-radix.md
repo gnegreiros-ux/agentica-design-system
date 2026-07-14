@@ -1,3 +1,168 @@
+# ADR-018 — Migrating semantic references to Radix notation
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** token
+> **Logical path:** decisions/ADR-018-migration-references-primitives-radix.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/semantic.json, tokens/primitives.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-017-correction-contraste-text-disabled.md
+
+---
+
+## Context
+
+ADR-017 documented a structural inconsistency between `tokens/semantic.json` and
+`tokens/primitives.json` as out of scope. This ADR resolves it.
+
+### The inconsistency
+
+`tokens/semantic.json` used Tailwind-like notation to reference primitives:
+
+```json
+"primary": { "value": "{color.blue.700}" }
+```
+
+But `tokens/primitives.json` exposes colors under an incompatible Radix path:
+
+```
+primitive.color.blue.11  (not color.blue.700)
+```
+
+References in `semantic.json` therefore didn't resolve in any standard token
+resolver (Style Dictionary, Tokens Studio). `site/build.js` worked around this
+by hardcoding every resolved value in a `SEM` object.
+
+### The three cases with no Radix equivalent
+
+While building the correspondence table, three values had no exact equivalent
+in the Radix gray scale (steps 1–12):
+
+| Value | Usage | Situation |
+|-------|-------|-----------|
+| `#ffffff` | Surface, text on action | Radix only provides `rgba(255,255,255,1.00)` |
+| `#fafafa` | Hover background | Radix gray.2 = `#f9f9f9` ≠ #fafafa |
+| `#767676` | Disabled text | Between gray.10 (#838383) and gray.11 (#646464) |
+
+---
+
+## Decision
+
+### 1. Add a `neutral` palette to `primitives.json`
+
+Add three entries under `primitive.color.neutral`:
+
+| Step | Value | Justification |
+|------|-------|----------------|
+| `neutral.0` | `#ffffff` | Pure white — more explicit than `white.1`'s `rgba(255,255,255,1.00)` |
+| `neutral.50` | `#fafafa` | Tailwind neutral.50 — one notch lighter than Radix gray.2 (#f9f9f9) |
+| `neutral.500` | `#767676` | Accessible disabled text (4.54:1 on white, WCAG AA) — see ADR-017 |
+
+These three values are the only ones that can't be directly referenced from the
+existing Radix gray scale. Every other neutral value used in `semantic.json`
+resolves to an exact Radix gray step.
+
+### 2. Migrate `semantic.json` — `{primitive.color.X.Y}` notation
+
+Every color reference in `semantic.json` migrates to Radix notation:
+
+| Old reference | New reference | Resolved value |
+|--------------------|--------------------|----------------|
+| `{color.blue.700}` | `{primitive.color.blue.11}` | #0d74ce |
+| `{color.blue.900}` | `{primitive.color.blue.12}` | #113264 |
+| `{color.neutral.300}` | `{primitive.color.gray.6}` | #d9d9d9 |
+| `{color.red.700}` | `{primitive.color.red.11}` | #ce2c31 |
+| `{color.red.100}` | `{primitive.color.red.3}` | #feebec |
+| `{color.green.700}` | `{primitive.color.green.11}` | #18794e |
+| `{color.neutral.50}` (page) | `{primitive.color.gray.1}` | #fcfcfc |
+| `{color.neutral.0}` | `{primitive.color.neutral.0}` | #ffffff |
+| `{color.neutral.100}` | `{primitive.color.gray.3}` | #f0f0f0 |
+| `{color.neutral.50}` (hover) | `{primitive.color.neutral.50}` | #fafafa |
+| `{color.neutral.900}` | `{primitive.color.gray.12}` | #202020 |
+| `{color.neutral.700}` | `{primitive.color.gray.11}` | #646464 |
+| `{color.neutral.500}` | `{primitive.color.neutral.500}` | #767676 |
+| `{color.neutral.200}` | `{primitive.color.gray.4}` | #e8e8e8 |
+
+No resolved value changes — the migration is purely structural.
+
+### 3. Fix the comment in `site/build.js`
+
+The comment describing the Tailwind-like notation is updated to reflect the
+Radix notation. The hardcoded values in the `SEM` object remain unchanged
+(dynamic resolution is out of scope — see the *Rejected alternatives* section).
+
+---
+
+## Out of scope — non-color tokens
+
+`semantic.json` also contains non-color references (`{space.4}`, `{fontSize.md}`,
+`{radius.sm}`, etc.) that don't resolve in `primitives.json` (which contains
+only colors). These references constitute a second structural inconsistency,
+distinct from the Tailwind/Radix inconsistency.
+
+They are not addressed in this ADR:
+- They have no impact on accessibility or conformance
+- Fixing them requires adding spacing, typography, and radius primitives
+- A dedicated ADR (ADR-019) is to be created if the project moves toward
+  dynamic resolution
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Add a full `neutral` scale (0–900) to primitives.json** | Creates duplicates with the existing gray scale for most steps. Only 3 steps are missing — no need to add 8. |
+| **Keep the Tailwind-like notation and add a `color.X.Y` alias in primitives.json** | Introduces an extra layer of indirection. Tailwind references (`blue.700`) have no semantic meaning in a Radix context. |
+| **Migrate build.js to dynamically resolve tokens** | A significant change in scope — the script would need to implement a DTCG reference resolver. Limited added value while the project doesn't use Style Dictionary or Tokens Studio in production. |
+| **Use `{primitive.color.white.1}` (rgba) for white** | The rgba notation creates a format ambiguity in tools that expect hex. `neutral.0 = #ffffff` is more interoperable. |
+| **Accept gray.2 (#f9f9f9) for the hover background instead of #fafafa** | Introduces an unrequired visual change (even if tiny). The value #fafafa is intentional — it matches Tailwind neutral.50 and clearly differentiates the hover background from the page background. |
+
+---
+
+## Consequences
+
+**No visual change** — all resolved values stay identical.
+
+**For token resolvers (Style Dictionary, Tokens Studio):**
+- `{primitive.color.X.Y}` references now resolve correctly
+- The token compilation pipeline can be enabled without manual modification
+
+**For AI agents:**
+- An agent reading `semantic.json` can trace every token to its primitive
+  value via an unambiguous reference
+- No more dependency on an implicit Tailwind→Radix mapping
+
+**Remaining technical debt:**
+- `site/build.js` still hardcodes resolved values in the `SEM` object
+- Non-color tokens in `semantic.json` reference primitives that don't exist
+- Both points are documented but non-blocking for the site's current operation
+
+---
+
+## Full Tailwind→Radix correspondence table
+
+For reference, the full table of equivalences used in this project:
+
+| Tailwind notation (old) | Radix notation (new) | Hex value |
+|------------------------------|--------------------------|------------|
+| `neutral.0` | `neutral.0` (custom) | #ffffff |
+| `neutral.50` (page) | `gray.1` | #fcfcfc |
+| `neutral.50` (hover) | `neutral.50` (custom) | #fafafa |
+| `neutral.100` | `gray.3` | #f0f0f0 |
+| `neutral.200` | `gray.4` | #e8e8e8 |
+| `neutral.300` | `gray.6` | #d9d9d9 |
+| `neutral.500` | `neutral.500` (custom) | #767676 |
+| `neutral.700` | `gray.11` | #646464 |
+| `neutral.900` | `gray.12` | #202020 |
+| `blue.700` | `blue.11` | #0d74ce |
+| `blue.900` | `blue.12` | #113264 |
+| `red.100` | `red.3` | #feebec |
+| `red.700` | `red.11` | #ce2c31 |
+| `green.700` | `green.11` | #18794e |
+
+<!-- FR -->
+
 # ADR-018 — Migration des références sémantiques vers la notation Radix
 
 > **Date :** 2026-05-29
@@ -7,10 +172,6 @@
 > **Chemin logique:** decisions/ADR-018-migration-references-primitives-radix.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-017-correction-contraste-text-disabled.md
-
-> **English summary:** Resolves a structural mismatch where `semantic.json` referenced primitives using Tailwind-like notation (`color.blue.700`) that didn't exist in the Radix-based `primitives.json`. Migrates all semantic color references to valid `{primitive.color.X.Y}` paths and adds a small `neutral` palette for the 3 values with no exact Radix equivalent — no resolved values change, this is purely structural.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

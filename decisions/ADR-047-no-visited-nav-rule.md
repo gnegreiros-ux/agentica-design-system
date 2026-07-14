@@ -1,3 +1,92 @@
+# ADR-047 — System rule: no `:visited` state on navigation
+
+> **Date:** 2026-06-05
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** governance
+> **Logical path:** decisions/ADR-047-no-visited-nav-rule.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** .claude/rules/no-visited-nav.md, .claude/rules/development.md, guidelines/components/link.md, site/build.js
+
+---
+
+## Context
+
+During the site redesign, a pattern flaw was identified: **navigation** elements can
+inherit the browser's `:visited` state (a purple tint, or other color drift), which
+breaks visual consistency and hierarchy. A menu, a tab, a sidebar, a table of contents,
+or a header icon-button is **not "read / unread" content**: its appearance shouldn't
+depend on browsing history.
+
+The site was already neutralizing `:visited` in a **piecemeal, scattered** way (only
+`.top-nav` and `.github-btn`), while other navigation surfaces (`.sidebar`, `.toc`,
+`.footer-links`, `.audit-footer-link`) were not. The explicit human request: **make it a
+system-wide rule**, not just a local website fix.
+
+---
+
+## Decision
+
+Adopt a **`no-visited-nav`** governance rule (see `.claude/rules/no-visited-nav.md`):
+
+> Every **navigation element** realigns its `:visited` color with the unvisited state.
+> The rule applies to **the site, the `agtc-*` components, and consuming applications**.
+
+### Rule scope
+
+| ✅ In scope (no visited state) | ❌ Out of scope (visited state allowed) |
+|-------------------------------|----------------------------------------|
+| Header nav (+ CTA), sidebar, TOC, tabs, breadcrumbs, pagination, menus, header/footer icon-buttons, footer nav links | **Content** links in prose, result/archive lists where "already read" helps the user |
+
+> Sorting criterion: if the element is used to **move around** the product → navigation →
+> no visited state. If it points to a **resource to read** → visited state allowed.
+
+### Reference implementation (site)
+
+A single, commented CSS block in `site/build.js`, neutralizing `:visited` on every
+navigation surface via a **semantic token** (never a hardcoded value), declared
+**before** the `:hover`/`.active` rules (at equal specificity, the later selector wins
+over a visited AND hovered link). The pre-existing piecemeal `:visited` declarations
+(`.top-nav`, `.github-btn`) are removed in favor of this consolidated block.
+
+---
+
+## Accessibility (WCAG 2.2)
+
+Neutral, even beneficial: removing the `:visited` distinction doesn't reduce any useful
+information on navigation (the active/current state is still carried by `.active` +
+`aria-current`). No contrast ratio is degraded — the visited color becomes **identical**
+to the already-validated unvisited color. On **content** links, where `:visited` can aid
+orientation, the rule doesn't apply (WCAG 1.4.1 — not conveying information through color
+alone — is in any case still satisfied by the `.active`/underline states).
+
+---
+
+## Rejected alternatives
+
+- **Keeping the browser's default `:visited` state** on navigation: a purple tint
+  inconsistent with the brand, breaks hierarchy — rejected.
+- **Limiting the fix to the website only** (no system rule): perpetuates the drift in
+  components and consuming applications — contrary to the explicit "whole system" request.
+- **Neutralizing `:visited` globally on every `<a>`** (including content): deprives
+  content/archive links of a sometimes-useful orientation cue — too broad, rejected in
+  favor of a "navigation" scope.
+
+---
+
+## Consequences
+
+- New versioned rule `.claude/rules/no-visited-nav.md`, applicable to every agent and
+  every surface (site + components + apps).
+- `site/build.js`: `:visited` neutralization **consolidated** across 6 navigation
+  surfaces (`top-nav`, `sidebar`, `toc`, `footer-links`, `audit-footer-link`, icon
+  buttons), via semantic tokens. Build: **662 defined · 177 referenced · 0 phantom**.
+- Future components exposing navigation (`agtc-link` used in nav, `agtc-segmented`,
+  future `agtc-tabs`) will need to neutralize `:visited` in their shadow DOM per the same rule.
+- No token added or modified — a purely governance/pattern decision.
+
+<!-- FR -->
+
 # ADR-047 — Règle système : pas d'état `:visited` sur la navigation
 
 > **Date :** 2026-06-05
@@ -7,13 +96,6 @@
 > **Chemin logique:** decisions/ADR-047-no-visited-nav-rule.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** .claude/rules/no-visited-nav.md, .claude/rules/development.md, guidelines/components/link.md, site/build.js
-
-> **English summary:** Establishes a system-wide governance rule: navigation elements (nav,
-> sidebar, TOC, tabs, breadcrumbs, footer links, icon-buttons) must never carry a distinct
-> `:visited` color, since navigation is not "read/unread" content. Content links in prose are
-> unaffected. Consolidates previously scattered, incomplete `:visited` resets in `site/build.js`.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

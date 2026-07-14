@@ -1,3 +1,122 @@
+# ADR-013 — DESIGN.md as a portable contract versioned with the code
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead, Principal Designer, Product Leadership
+> **Type:** contract
+> **Logical path:** decisions/ADR-013-design-md-contrat-portable.md
+> **Read before:** AGENTS.md, DESIGN.md, decisions/ADR-004-gouvernance-humaine.md
+> **Relations:** DESIGN.md, AGENTS.md, .claude/instructions/session-spec.md, decisions/ADR-004-gouvernance-humaine.md
+
+---
+
+## Context
+
+A design system encodes organizational decisions: which values, which principles,
+which governance. These decisions traditionally live in wikis, presentations,
+Notion documents, or in the heads of key team members.
+
+This storage has two major flaws for an agentic system:
+
+**1. Desynchronization from the code**
+A principle documented in Notion isn't linked to the code that implements it.
+An agent reading the code doesn't see the principle. An agent reading Notion
+doesn't see whether the principle is implemented or not.
+
+**2. Inaccessibility to agents**
+An AI agent has no access to Notion, Confluence, or PowerPoint presentations.
+It can read the git repo. If governance decisions aren't in the repo, agents
+operate without those constraints — even if they formally exist elsewhere.
+
+The question was:
+
+> **How do we make the design system's principles and governance accessible to
+> agents, synchronized with the code, and versioned in the same way as tokens?**
+
+---
+
+## Decision
+
+Create `DESIGN.md` as a **portable contract** — a Markdown file at the repo root
+that encodes the principles, token architecture, accessibility rules, and
+governance, in a format readable by both humans and AI agents.
+
+`DESIGN.md` is versioned with the code. Any modification to `DESIGN.md` follows
+the same process as a token modification: PR, review, approval.
+
+The concept is inspired by Google Labs' work (April 2026) on portable
+specifications for agentic design systems — `DESIGN.md` is the local answer to
+the question "how does an agent know the rules of the game?"
+
+**What DESIGN.md contains:**
+- Identity and intent of the system (name, organization, version, owner)
+- Token architecture (the three levels, governance rules)
+- General component rules
+- Non-negotiable accessibility rules
+- The TCR (Token Change Request) process
+- What agents can and cannot do
+
+**What DESIGN.md does not contain:**
+- Token values (in `tokens/*.json`)
+- Component contracts (in `guidelines/components/`)
+- Technical decisions (in `decisions/`)
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Internal wiki (Notion, Confluence)** | Not accessible to agents. Desynchronized from the code by nature — nobody updates the wiki when the code changes. Not versioned with git — no traceability of who changed what and when. |
+| **README.md only** | The README is an introduction to the project, not a governance contract. Mixing the two overloads the README and makes both roles less legible. `DESIGN.md` is a file dedicated to governance. |
+| **Comments in code files** | Not centralized. An agent has to read every file to reconstruct the rules. Not appropriate for principles that apply to the entire system. |
+| **Environment variables or JSON config** | Governance principles are not technical configuration. A JSON config file isn't naturally readable by humans and can't express governance nuance. |
+| **No governance document** | Explicitly rejected. Without `DESIGN.md`, every agent starts with an empty context and reconstructs the rules from the code — with guaranteed errors. The first instruction in `AGENTS.md` is "read DESIGN.md first". |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- `DESIGN.md` is the first file to read (`AGENTS.md` explicitly points to it)
+- An agent that has read `DESIGN.md` knows: the guiding principles, the token
+  structure, the accessibility rules, the TCR process, and its own limits
+- `DESIGN.md` stays stable across sessions — agents find the same contract every
+  time they start, without depending on the memory of the previous session
+
+**For teams:**
+- `DESIGN.md` is the answer to "where is the system's governance?" — a git file
+  URL, not a link to a possibly deprecated wiki
+- Any new person (human or agent) who clones the repo immediately finds the
+  organization's contract in the file
+
+**For governance:**
+- Modifying `DESIGN.md` is an act of governance — traceable in git, subject to review
+- If a rule changes in `DESIGN.md`, the git diff shows exactly what changed, who
+  approved it, and in what context
+- The desynchronization between declared principles and implemented code becomes
+  visible: if `DESIGN.md` says one thing and the code does another, that's a
+  detectable governance bug
+
+**Accepted cost:**
+- `DESIGN.md` must be kept up to date — going stale without updates is worse than
+  having no document
+- The temptation is to put everything in `DESIGN.md` — resist it. Only principles
+  and global governance belong there. Details go in `decisions/`, contracts in
+  `guidelines/`, values in `tokens/`
+
+---
+
+## Incidents or triggers
+
+Foundational decision, inspired by work presented at the AI Design Systems
+Conference 2026. The question that triggered it: "if an agent clones this repo
+tomorrow, what does it know about our rules?" Without `DESIGN.md`, the answer
+was "nothing — it reads the code and guesses." With `DESIGN.md`, the answer is
+"everything it needs to know to work without improvising."
+
+<!-- FR -->
+
 # ADR-013 — DESIGN.md comme contrat portable versionné avec le code
 
 > **Date :** 2026-05-28
@@ -7,10 +126,6 @@
 > **Chemin logique:** decisions/ADR-013-design-md-contrat-portable.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-004-gouvernance-humaine.md
 > **Relations:** DESIGN.md, AGENTS.md, .claude/instructions/session-spec.md, decisions/ADR-004-gouvernance-humaine.md
-
-> **English summary:** Creates `DESIGN.md` as a portable, git-versioned governance contract (principles, token architecture, accessibility rules, the TCR process) instead of relying on a wiki or Notion — surfaces agents can't read. `DESIGN.md` is the first file agents must read, ensuring every session starts from the same stable contract.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

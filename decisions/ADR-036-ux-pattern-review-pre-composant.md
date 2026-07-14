@@ -1,3 +1,112 @@
+# ADR-036 — Review of reference UX patterns before publishing a component
+
+> **Date:** 2026-05-31
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-036-ux-pattern-review-pre-composant.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
+> **Relations:** .claude/rules/ux-patterns-sources.md, .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, .claude/skills/quality-gate.md, .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-029-quality-gate-pre-commit.md
+
+---
+
+## Context
+
+Every component encodes UX decisions — how to display an error state, where to place help
+text, when to validate an entry, how to flag a required field. Without a reference framework,
+these decisions were improvised during construction, with no way for the human to arbitrate
+between recognized patterns, and no record of why a given pattern had been chosen.
+
+The expressed need:
+
+> **Before publishing each component, present the human with the UX patterns suggested by
+> recognized sources — with links — so they can judge and approve which ones to apply; then
+> document that decision everywhere.**
+
+Five reference sources were selected: IF Data Patterns Catalogue, Nielsen Norman Group,
+Dashboard Design Patterns, Interaction Design Foundation, Smashing Magazine
+(detailed in `.claude/rules/ux-patterns-sources.md`).
+
+---
+
+## Decision
+
+Every **new component** — and every **UX-relevant modification** to an existing component —
+goes through a **UX pattern review**: the agent presents candidate patterns from the
+5 sources (with direct links), the human approves which ones to apply, and the decision is
+**documented across 6 surfaces** before publication.
+
+The workflow is encoded in four artifacts:
+
+| Artifact | Role |
+|----------|------|
+| `.claude/rules/ux-patterns-sources.md` | Registry of the 5 sources + review checklist + type→sources matrix + 6 surfaces |
+| `.claude/skills/ux-pattern-review.md` | Executable skill: present → approve → document |
+| `.claude/skills/pipelines/ux-patterns.md` | Blocking quality-gate pipeline (verifies review + approval + 6 surfaces) |
+| `PostToolUse` hook (`.claude/settings.json`) | Reminder when a component or guideline file is created/modified |
+
+Source consultation is **hybrid**: a versioned registry as the base + targeted WebFetch on the
+priority source(s) at review time.
+
+### The 6 propagation surfaces
+
+Guideline (`guidelines/components/<comp>.md`), code (`components/agtc-<comp>.js`),
+Storybook (`<comp>.stories.js`), site (rebuild), component implementation ADR,
+construction log.
+
+### Triggers
+
+- Creating a component → full review mandatory.
+- Relevant modification: new variant/state, validation logic, error/help display,
+  interaction, new type.
+- **Not triggered**: contrast/WCAG fix, typo, rename, refactor with no behavior change (same
+  "decision vs. adjustment" distinction as the ADR-015 amendment).
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Versioned registry alone (no fetch)** | Sources evolve; a frozen registry goes stale. The hybrid approach keeps an auditable base while refreshing as needed. |
+| **Live WebFetch alone at every review** | Slower, network-dependent, and with no auditable record of what was presented. |
+| **No pipeline (manual skill only)** | Without a blocking safeguard in the quality-gate, the review would be forgotten — exactly the problem ADR-015 solves for ADRs. |
+| **Hook on `Write` only** | The user also wants triggering on **relevant modification** of a component; the matcher therefore covers `Write|Edit`, asking the agent to judge relevance. |
+| **Agent decides patterns alone** | Violates the "the human always has the final word" principle. The agent proposes, the human decides. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- When creating/modifying a component, systematically present the patterns (with links) and
+  wait for approval before building.
+- Propagate the decision across the 6 surfaces; the `ux-patterns` pipeline verifies this at the quality gate.
+- The hook is a reminder of the workflow, but the agent must **judge relevance** (a hook can't do that).
+
+**For humans:**
+- An explicit decision point before every component publication — arbitration on
+  recognized patterns rather than implicit choices.
+- Full traceability: every component carries the list of applied patterns and their source.
+
+**Accepted cost:**
+- The hook may fire on non-UX modifications (the agent then ignores the reminder).
+- The review adds a step before construction — accepted as a governance safeguard.
+
+**Retroactive application:**
+- Already-created components (button, input, badge, card, icon) go through the review and receive
+  their documentation across the 6 surfaces.
+
+---
+
+## Incidents or triggers
+
+Explicit request from the Design System Lead: have, before building each component,
+a presentation of the UX patterns suggested by recognized sources, in order to approve the right
+patterns and keep a documented trail everywhere.
+
+<!-- FR -->
+
 # ADR-036 — Revue des patterns UX de référence avant publication d'un composant
 
 > **Date :** 2026-05-31
@@ -7,12 +116,6 @@
 > **Chemin logique:** decisions/ADR-036-ux-pattern-review-pre-composant.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
 > **Relations:** .claude/rules/ux-patterns-sources.md, .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, .claude/skills/quality-gate.md, .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-029-quality-gate-pre-commit.md
-
-> **English summary:** Before publishing any new or meaningfully UX-changed component, an agent
-> must present UX patterns from 5 recognized sources (with links) for human approval, then
-> document the decision across 6 surfaces (guideline, code, story, site, ADR, log).
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

@@ -1,3 +1,114 @@
+# ADR-043 — Implementation of `agtc-link`
+
+> **Date:** 2026-06-04
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-043-agtc-link-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, guidelines/components/link.md, tokens/component.json
+
+---
+
+## Applied reference UX patterns
+
+> Added on 2026-06-04 via the `ux-pattern-review` workflow (ADR-036). Decision: **LK1–LK8 all approved**.
+> Detail and links: `guidelines/components/link.md` § PATTERNS UX DE RÉFÉRENCE.
+
+| # | Pattern | Source |
+|---|---------|--------|
+| LK1 | Underline in running text (beyond color) | NN/g |
+| LK2 | Visible `:focus-visible` | NN/g / WCAG 2.4.7 |
+| LK3 | External link: `rel="noopener noreferrer"` + icon + AT text | WCAG H83 |
+| LK4 | Auto-detect external + override | Coder's Block |
+| LK5 | Descriptive link text | NN/g |
+| LK6 | Link = navigation, button = action | NN/g |
+| LK7 | Visited state — **out of v1 scope** | NN/g |
+| LK8 | Hover cue even without a permanent underline | NN/g |
+
+---
+
+## Context
+
+The site contains ~2700 `<a>` elements and many external links handled by hand
+(`target="_blank" rel="noopener noreferrer"` + icon). `agtc-link` formalizes a consistent,
+accessible **navigation** link. It's the 4th component from the 2026-06-03 gap analysis
+(category B), after table, code-block, and banner.
+
+---
+
+## Decisions
+
+### Decision 1 — Link = navigation; for an action, `agtc-button`
+
+`agtc-link` renders a real `<a href>`. The link/button semantic distinction (NN/g) is a contract:
+a link navigates (has a destination), a button triggers an action. `href` is required.
+
+### Decision 2 — `underline="always"` by default (WCAG 1.4.1)
+
+The project treats accessibility as **non-negotiable**. In running text, a link must not be
+distinguishable by **color alone**: the default is therefore **permanently underlined**.
+`underline="hover"` (nav) and `underline="none"` (contexts where the link is identified some
+other way) remain available, and underline **on hover** to recover the affordance (LK8).
+
+### Decision 3 — Accessible and secure external link (LK3/LK4)
+
+An external link (auto-detected: http(s) to another origin, or forced via `external`) opens in a
+new tab with `rel="noopener noreferrer"` (anti-tabnabbing) **and** a warning: `arrow-up-right`
+icon **+ hidden text "(opens in a new tab)"**. The icon alone is not enough (WCAG H83 — no
+"new window" symbol is universally understood).
+
+### Decision 4 — Warning on generic text (LK5)
+
+If the text content is generic ("click here", "learn more", "link"…), the component emits a
+`console.warn`. This is a development aid, non-blocking (WCAG 2.4.4).
+
+### Decision 5 — "Mix" architecture (consistent with ADR-040/041/042)
+
+`<agtc-link>` component (shadow DOM) **+** `.agtc-link` class for the site's static HTML. Both
+consume `component.link.*`. Migrating the site's `<a>` elements to `.agtc-link` will happen
+during *dogfooding* (category A).
+
+---
+
+## v1 Scope
+
+| Included | Excluded (future evolution) |
+|--------|--------------------------|
+| Tokenized `<a href>`, hover, focus-visible | Distinct visited state |
+| `underline` always/hover/none | "Button-link" variant (→ `agtc-button`) |
+| External: new tab + rel + icon + AT text | Standalone link with dedicated directional arrow |
+| Auto-detect external + override | Preload / prefetch hints |
+| Generic-text warning | Typed download (`download`) |
+
+---
+
+## Rejected alternatives
+
+- **`underline="hover"` by default** (the site's current convention): less safe for WCAG 1.4.1 in running text — `always` retained.
+- **External icon with no AT text**: insufficient (WCAG H83) — hidden text added.
+- **`target="_blank"` with no `rel`**: tabnabbing vulnerability — `noopener noreferrer` applied systematically.
+- **Single link-button component**: blurs navigation/action semantics — kept separate from `agtc-button`.
+
+---
+
+## Consequences
+
+- The site's links will be able to migrate to `.agtc-link` during *dogfooding*, with uniform external-link handling.
+- Any future visited state or arrowed standalone link will create a new ADR.
+
+---
+
+## Tokens added — `component.link.default.*`
+
+| Token | Reference |
+|-------|-----------|
+| `text` | `semantic.color.action.primary` |
+| `text-hover` | `semantic.color.action.primary-hover` |
+| `border-focus` | `semantic.color.border.focus` |
+
+<!-- FR -->
+
 # ADR-043 — Implémentation de `agtc-link`
 
 > **Date :** 2026-06-04
@@ -7,13 +118,6 @@
 > **Chemin logique:** decisions/ADR-043-agtc-link-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, guidelines/components/link.md, tokens/component.json
-
-> **English summary:** Implements agtc-link as a real `<a href>` for navigation, distinct from
-> agtc-button (actions). Defaults to a permanent underline in running text (WCAG 1.4.1 — never
-> color alone), and external links auto-open in a new tab with `rel="noopener noreferrer"`, an
-> icon, and hidden text warning screen reader users.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

@@ -1,3 +1,80 @@
+# ADR-053 — Mobile navigation: sidebar as a sliding drawer and contextual button in the content
+
+> **Date:** 2026-06-10
+> **Status:** ✅ Active
+> **Decision-makers:** Human (approval) · Design System Lead (navigation)
+> **Type:** pattern
+> **Logical path:** decisions/ADR-053-mobile-sidebar-drawer.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** site/build.js, .claude/rules/no-visited-nav.md
+
+---
+
+## Context
+
+On mobile (≤768px), the secondary navigation sidebar (Foundations, Components, Decisions)
+rendered in the normal page flow — **before the content** — because it precedes `<main>` in the
+DOM and the layout switches to `flex-direction: column`. The first visible element was therefore
+the navigation list, not the page title.
+
+Additionally, on pages without a sidebar (home, Tokens, Agents), the drawer-access button was
+present in the header even though it had no effect — it was contextual but positioned globally.
+
+---
+
+## Decision
+
+### 1. Sidebar turned into a sliding drawer (mobile only)
+
+At `max-width: 768px`, the sidebar is repositioned to `position: fixed` (out of flow), sliding in
+from the left via `transform: translateX(-100%)` → `translateX(0)`. It no longer interferes with
+the content's reading order.
+
+Drawer behavior:
+- Opens via the toggle button (see point 2)
+- Closes via: the toggle button, clicking the overlay, the `Escape` key, clicking a navigation link
+- A semi-transparent overlay (`rgba(0,0,0,.40)` + `backdrop-filter: blur(2px)`) covers the content
+- `document.body.overflow: hidden` while open (prevents background scrolling)
+- ARIA: `aria-expanded` on the button, `aria-hidden` on the overlay
+
+### 2. Drawer-access button placed in the content, before the `<h1>`
+
+The `sidebar-toggle` button is rendered **inside `<main>`**, right before the page title — only
+on pages that have a sidebar. It is never present in the header, nor on pages without a sidebar.
+
+Rationale:
+- **Contextual**: visible only where it's useful
+- **Readability**: the header stays identical on every page
+- **Logical sequence**: the user sees the navigation button before the title, and can access it
+  immediately before reading
+
+Button style: `background-subtle` background + border + `panel-left` icon + "Navigation" label
+(FR/EN) — reads as an action, not just an opaque icon.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| Button in the header (always visible) | Present on pages without a sidebar — misleading and useless |
+| Sidebar above the content (initial behavior) | The user reads the navigation before the page — unnecessary cognitive load |
+| Dropdown menu integrated into the mobile top-nav | Confuses primary and secondary navigation |
+
+---
+
+## Consequences
+
+- On desktop (> 768px): no change — the sidebar stays in flow, the button is hidden via
+  `display: none`
+- The drawer JS must be present on every page with a sidebar (injected via `layout()`)
+- Any new page with a sidebar automatically inherits this behavior (conditional rendering in
+  `layout()`)
+- **To watch:** if a page accumulates many sidebar links, consider a per-group accordion (future
+  ADR)
+
+<!-- FR -->
+
 # ADR-053 — Navigation mobile : sidebar en drawer coulissant et bouton contextuel dans le contenu
 
 > **Date :** 2026-06-10
@@ -7,10 +84,6 @@
 > **Chemin logique:** decisions/ADR-053-mobile-sidebar-drawer.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** site/build.js, .claude/rules/no-visited-nav.md
-
-> **English summary:** On mobile (≤768px), the secondary sidebar rendered above the page content because it preceded `<main>` in the DOM. This ADR turns the sidebar into a sliding drawer (fixed position, off-canvas, overlay + Escape/click-outside to close) and moves its toggle button into the content, right before the page's `<h1>`, appearing only on pages that actually have a sidebar.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

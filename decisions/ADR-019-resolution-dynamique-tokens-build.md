@@ -1,3 +1,146 @@
+# ADR-019 — Dynamic token resolution in the build
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-019-resolution-dynamique-tokens-build.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, decisions/ADR-018-migration-references-primitives-radix.md
+
+---
+
+## Context
+
+ADR-018 had documented two remaining technical debts:
+
+1. `site/build.js` hardcoded every semantic value in a static `SEM` object
+2. Non-color tokens in `semantic.json` (`{space.4}`, `{fontSize.md}`, etc.)
+   referenced primitives that didn't exist in `primitives.json`
+
+Both debts needed to be addressed together: one made the other inevitable.
+
+### The debt in `build.js`
+
+```js
+// Before — 37 hardcoded lines, a possible source of drift
+const SEM = {
+  'color-action-primary': '#0d74ce',
+  'space-control-padding-x': '16px',
+  // ...
+};
+```
+
+If a value changed in `primitives.json` or `semantic.json`, it didn't
+automatically propagate to the generated CSS — a human had to manually update
+`build.js`.
+
+### Unresolved non-color references
+
+`semantic.json` used `{space.4}`, `{radius.sm}`, `{fontSize.md}`, etc.
+None of these references existed in `primitives.json` (which contained only
+colors). `build.js` silently worked around this problem with hardcoded values.
+
+---
+
+## Decision
+
+### 1. Add non-color primitives to `primitives.json`
+
+Five new categories added under `primitive` (at the same level as `color`):
+
+| Category | Steps | Values |
+|-----------|-------|---------|
+| `space` | 2, 4, 5, 8 | 8px, 16px, 20px, 32px |
+| `fontSize` | sm, md, xl | 14px, 16px, 24px |
+| `fontWeight` | regular, medium, bold | 400, 500, 700 |
+| `lineHeight` | tight, normal | 1.25, 1.5 |
+| `radius` | sm, md | 6px, 10px |
+
+### 2. Update references in `semantic.json`
+
+All non-color references migrate to `{primitive.X.Y}`:
+
+```json
+"padding-x": { "value": "{primitive.space.4}" }
+"control":   { "value": "{primitive.radius.sm}" }
+"size":      { "value": "{primitive.fontSize.md}" }
+```
+
+All 35 semantic tokens (19 color + 16 non-color) now reference paths that
+resolve within `primitives.json`.
+
+### 3. Dynamic resolver in `build.js`
+
+The hardcoded `SEM` object (37 lines) is replaced by three functions:
+
+```js
+// Walks the token tree by dotted path
+function resolveRef(ref, data) {
+  return ref.split('.').reduce((node, key) => node?.[key], data);
+}
+
+// Resolves a {primitive.X.Y} value → final CSS value
+function resolveValue(val, data) { ... }
+
+// Flattens nested tokens into 'category-sub-name' CSS keys
+function flattenTokens(obj, data, prefix = '') { ... }
+
+const SEM = flattenTokens(semanticData.semantic, primitives);
+```
+
+Resolution happens at build time — any modification in `primitives.json` or
+`semantic.json` automatically propagates to `site/dist/tokens.css`.
+
+### 4. Fix to `extractColorScales`
+
+Added an `if (step === '_readme') continue` guard in the inner loop, to
+protect against documentation entries in color scales.
+
+---
+
+## Output invariant — zero visual change
+
+The 35 resolved values after migration are **strictly identical** to those of
+the hardcoded `SEM` object they replace. Verifiable by diff:
+
+```
+--agtc-semantic-color-action-primary: #0d74ce    ← unchanged
+--agtc-semantic-space-control-padding-x: 16px    ← unchanged
+--agtc-semantic-typography-body-line-height: 1.5 ← unchanged
+```
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Use Style Dictionary** | An external dependency for a build that doesn't need one. Style Dictionary adds non-trivial configuration and an abstraction for a resolver that's ~20 lines of code. A choice consistent with the project's philosophy: no dependency without justification. |
+| **Keep the hardcoded SEM + add primitives** | Fixes the debt in `semantic.json` but leaves `build.js` desynchronized. A token change would still require two manual modifications. |
+| **Multi-level recursive resolver (tokens referencing tokens)** | Not necessary: in this system, semantic tokens only ever reference primitives, never other semantics. The single-level resolver is sufficient and simpler to audit. |
+
+---
+
+## Consequences
+
+**For the build pipeline:**
+- Any modification in `tokens/primitives.json` or `tokens/semantic.json`
+  automatically propagates to `site/dist/tokens.css` on the next build
+- No more silent desynchronization possible between tokens and generated CSS
+
+**For AI agents:**
+- The full resolution chain is now traceable:
+  `semantic.json` → `{primitive.X.Y}` → `primitives.json` → CSS value
+- No "magic" value remains in `build.js`
+
+**Technical debt cleared:**
+- Every reference in `semantic.json` now resolves
+- `build.js` no longer contains hardcoded values for tokens
+- Both debts documented in ADR-018 are closed
+
+<!-- FR -->
+
 # ADR-019 — Résolution dynamique des tokens dans le build
 
 > **Date :** 2026-05-29
@@ -7,10 +150,6 @@
 > **Chemin logique:** decisions/ADR-019-resolution-dynamique-tokens-build.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, decisions/ADR-018-migration-references-primitives-radix.md
-
-> **English summary:** ADR-018 left two technical debts: `site/build.js` hardcoded all semantic token values in a static 37-line object, and non-color semantic references pointed to primitives that didn't exist. This decision adds five new primitive categories (space, fontSize, fontWeight, lineHeight, radius) and replaces the hardcoded object with a dynamic resolver, with zero visual change to the output.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

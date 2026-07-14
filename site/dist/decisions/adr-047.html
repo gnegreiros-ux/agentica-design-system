@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Règle système : pas d'état `:visited` sur la navigation — Agentica</title>
+<title>System rule: no `:visited` state on navigation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Règle système : pas d'état `:visited` sur la navigation — Agentica">
+<meta property="og:title" content="System rule: no `:visited` state on navigation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Règle système : pas d'état `:visited` sur la navigation — Agentica">
+<meta name="twitter:title" content="System rule: no `:visited` state on navigation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Règle système : pas d'état `:visited` sur la navigation</h1>
+  <h1 class="adr-page-title">System rule: no `:visited` state on navigation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,38 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes a system-wide governance rule: navigation elements (nav, sidebar, TOC, tabs, breadcrumbs, footer links, icon-buttons) must never carry a distinct <code>:visited</code> color, since navigation is not "read/unread" content. Content links in prose are unaffected. Consolidates previously scattered, incomplete <code>:visited</code> resets in <code>site/build.js</code>.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>During the site redesign, a pattern flaw was identified: <strong>navigation</strong> elements can inherit the browser's <code>:visited</code> state (a purple tint, or other color drift), which breaks visual consistency and hierarchy. A menu, a tab, a sidebar, a table of contents, or a header icon-button is <strong>not "read / unread" content</strong>: its appearance shouldn't depend on browsing history.</p>
+<p>The site was already neutralizing <code>:visited</code> in a <strong>piecemeal, scattered</strong> way (only <code>.top-nav</code> and <code>.github-btn</code>), while other navigation surfaces (<code>.sidebar</code>, <code>.toc</code>, <code>.footer-links</code>, <code>.audit-footer-link</code>) were not. The explicit human request: <strong>make it a system-wide rule</strong>, not just a local website fix.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt a <strong><code>no-visited-nav</code></strong> governance rule (see <code>.claude/rules/no-visited-nav.md</code>):</p>
+<blockquote><p>Every <strong>navigation element</strong> realigns its <code>:visited</code> color with the unvisited state. The rule applies to **the site, the <code>agtc-*</code> components, and consuming applications**.</p></blockquote>
+<h3>Rule scope</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ In scope (no visited state)</th><th>❌ Out of scope (visited state allowed)</th></tr></thead><tbody><tr><td>Header nav (+ CTA), sidebar, TOC, tabs, breadcrumbs, pagination, menus, header/footer icon-buttons, footer nav links</td><td><strong>Content</strong> links in prose, result/archive lists where "already read" helps the user</td></tr></tbody></table></div>
+<blockquote><p>Sorting criterion: if the element is used to <strong>move around</strong> the product → navigation → no visited state. If it points to a <strong>resource to read</strong> → visited state allowed.</p></blockquote>
+<h3>Reference implementation (site)</h3>
+<p>A single, commented CSS block in <code>site/build.js</code>, neutralizing <code>:visited</code> on every navigation surface via a <strong>semantic token</strong> (never a hardcoded value), declared <strong>before</strong> the <code>:hover</code>/<code>.active</code> rules (at equal specificity, the later selector wins over a visited AND hovered link). The pre-existing piecemeal <code>:visited</code> declarations (<code>.top-nav</code>, <code>.github-btn</code>) are removed in favor of this consolidated block.</p>
+<hr>
+<h2>Accessibility (WCAG 2.2)</h2>
+<p>Neutral, even beneficial: removing the <code>:visited</code> distinction doesn't reduce any useful information on navigation (the active/current state is still carried by <code>.active</code> + <code>aria-current</code>). No contrast ratio is degraded — the visited color becomes <strong>identical</strong> to the already-validated unvisited color. On <strong>content</strong> links, where <code>:visited</code> can aid orientation, the rule doesn't apply (WCAG 1.4.1 — not conveying information through color alone — is in any case still satisfied by the <code>.active</code>/underline states).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Keeping the browser's default <code>:visited</code> state</strong> on navigation: a purple tint</li></ul>
+<p>  inconsistent with the brand, breaks hierarchy — rejected.</p>
+<ul><li><strong>Limiting the fix to the website only</strong> (no system rule): perpetuates the drift in</li></ul>
+<p>  components and consuming applications — contrary to the explicit "whole system" request.</p>
+<ul><li><strong>Neutralizing <code>:visited</code> globally on every <code>&lt;a&gt;</code></strong> (including content): deprives</li></ul>
+<p>  content/archive links of a sometimes-useful orientation cue — too broad, rejected in   favor of a "navigation" scope.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>New versioned rule <code>.claude/rules/no-visited-nav.md</code>, applicable to every agent and</li></ul>
+<p>  every surface (site + components + apps).</p>
+<ul><li><code>site/build.js</code>: <code>:visited</code> neutralization <strong>consolidated</strong> across 6 navigation</li></ul>
+<p>  surfaces (<code>top-nav</code>, <code>sidebar</code>, <code>toc</code>, <code>footer-links</code>, <code>audit-footer-link</code>, icon   buttons), via semantic tokens. Build: <strong>662 defined · 177 referenced · 0 phantom</strong>.</p>
+<ul><li>Future components exposing navigation (<code>agtc-link</code> used in nav, <code>agtc-segmented</code>,</li></ul>
+<p>  future <code>agtc-tabs</code>) will need to neutralize <code>:visited</code> in their shadow DOM per the same rule.</p>
+<ul><li>No token added or modified — a purely governance/pattern decision.</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Au cours du redesign du site, un défaut de pattern a été relevé : les éléments de <strong>navigation</strong> peuvent hériter de l'état <code>:visited</code> du navigateur (teinte violette, ou dérive de couleur), ce qui casse la cohérence visuelle et la hiérarchie. Un menu, un onglet, une sidebar, une table des matières ou un bouton-icône d'en-tête n'est <strong>pas du contenu « lu / non lu »</strong> : son apparence ne doit pas dépendre de l'historique de navigation.</p>
 <p>Le site neutralisait déjà <code>:visited</code> de façon <strong>ponctuelle et dispersée</strong> (uniquement <code>.top-nav</code> et <code>.github-btn</code>), tandis que d'autres surfaces de navigation (<code>.sidebar</code>, <code>.toc</code>, <code>.footer-links</code>, <code>.audit-footer-link</code>) ne l'étaient pas. La demande humaine est explicite : <strong>en faire une règle de portée système entière</strong>, pas seulement une correction locale du site web.</p>
 <hr>
@@ -164,7 +191,7 @@
 <p>  (<code>top-nav</code>, <code>sidebar</code>, <code>toc</code>, <code>footer-links</code>, <code>audit-footer-link</code>, boutons-icônes), via tokens   sémantiques. Build : <strong>662 défini · 177 référencé · 0 fantôme</strong>.</p>
 <ul><li>Les futurs composants exposant de la navigation (<code>agtc-link</code> en usage nav, <code>agtc-segmented</code>, futur</li></ul>
 <p>  <code>agtc-tabs</code>) devront neutraliser <code>:visited</code> dans leur shadow DOM selon la même règle.</p>
-<ul><li>Aucun token ajouté ou modifié — décision purement de gouvernance/pattern.</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Aucun token ajouté ou modifié — décision purement de gouvernance/pattern.</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-046.html" class="agtc-button secondary">← ADR-046</a>
     <a href="adr-048.html" class="agtc-button secondary">ADR-048 →</a>
   </div></main>

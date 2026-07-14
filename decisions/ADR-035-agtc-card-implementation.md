@@ -1,3 +1,128 @@
+# ADR-035 — `agtc-card` implementation
+
+> **Date:** 2026-05-31
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-035-agtc-card-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-034-agtc-badge-implementation.md, tokens/component.json
+
+---
+
+## Reference UX patterns applied
+
+> Added on 2026-06-01 via the `ux-pattern-review` workflow (ADR-036).
+> Decision: **C1, C3, C4 approved; C2 revised** (anti-nesting clickability rule).
+> Details and links: `guidelines/components/card.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| Clustering of related content | Dashboard — grouped layout |
+| Clickable card — C2 revised (1 destination = enclosing link; distinct actions = `::after` overlay or non-interactive container; never nested interactive elements) | Smashing — clickable cards · NN/g |
+| Hierarchy via elevation/shadow, not color alone | Dashboard — composition |
+| Detail-on-demand (the card summarizes) | Dashboard — screenspace |
+
+---
+
+## Context
+
+`agtc-card` is a visual container for grouping related information.
+It's one of the most-used components in interfaces — it structures
+dashboards, result lists, and grouped forms.
+
+Two questions guided the decisions:
+
+1. **Interactivity** — a card can be clickable (link to a detail view) or
+   purely a container. Should this behavior be encoded into the component?
+
+2. **Sections** — header, body, footer are recurring patterns.
+   Should they be structurally enforced or left free via slots?
+
+---
+
+## Decisions
+
+### Decision 1 — No native interactivity in v1
+
+A clickable card is a complex accessibility pattern: the interactive
+element must be `<a>` or `<button>`, not a `<div>` with `onclick`.
+
+**Decision:** `agtc-card` is non-interactive. For a clickable card,
+the consumer places an `<a>` or `<agtc-button>` inside. An `agtc-card-link`
+component could be added in v2 if the need recurs.
+
+**Rejected alternative:** adding a `clickable` attribute with `tabindex="0"`
+and `role="button"` — rejected because a `<div role="button">` with no native
+`<button>` is a WCAG 4.1.2 anti-pattern (interactive elements must use
+semantic HTML elements).
+
+---
+
+### Decision 2 — Named `header` / `footer` slots with automatic separators
+
+The `header` and `footer` slots are detected via `slotchange` +
+`assignedNodes()`. Separators (border) only appear if the slot
+is actually used — avoiding an orphaned border on a card with no header.
+
+Padding on the header/body/footer sections is uniform (same value as
+the `padding` attribute) so the spacing stays visually consistent.
+
+**Exception:** `has-header` and `has-footer` remove the body's padding-top
+when a header is present, and its padding-bottom when a footer is present —
+avoiding double spacing at the joints.
+
+---
+
+### Decision 3 — 3 variants: default / elevated / flat
+
+| Variant | Usage | Visual signal |
+|----------|-------|---------------|
+| `default` | Standard card | Subtle gray border |
+| `elevated` | Highlighted, hierarchy | Soft drop shadow |
+| `flat` | Grouped background, integrated section | Subtle gray background, no border |
+
+The `elevated` shadow (`0 1px 3px rgba(0,0,0,0.10)`) is encoded as a
+component token, `card.elevated.shadow`. There isn't yet a semantic
+elevation token — this token is a proxy until a dedicated elevation
+system is created.
+
+---
+
+### Decision 4 — 4 padding levels: none / sm / md / lg
+
+`none` is indispensable for cards with full-width images.
+`sm` (12px) for compact cards (tables, dense lists).
+`md` (20px, default) for most cases.
+`lg` (24px) for cards with heavy text content.
+
+---
+
+## v1 scope
+
+| Included | Excluded (v2) |
+|--------|------------|
+| 3 variants | `agtc-card-link` (clickable card) |
+| 4 padding levels | Skeleton loading state |
+| header / body / footer slots | Card grid layout helper |
+| Automatic separators | `outlined-accent` variant |
+
+---
+
+## Tokens added to `component.json`
+
+| Token | Value |
+|-------|--------|
+| `--agtc-card-elevated-shadow` | `0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)` |
+| `--agtc-card-elevated-border` | `transparent` |
+| `--agtc-card-flat-background` | gray-3 (#f0f0f0) |
+| `--agtc-card-flat-border` | `transparent` |
+| `--agtc-card-padding-none` | `0px` |
+| `--agtc-card-padding-sm` | `12px` |
+| `--agtc-card-padding-lg` | `24px` |
+
+<!-- FR -->
+
 # ADR-035 — Implémentation de `agtc-card`
 
 > **Date :** 2026-05-31
@@ -7,10 +132,6 @@
 > **Chemin logique:** decisions/ADR-035-agtc-card-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-034-agtc-badge-implementation.md, tokens/component.json
-
-> **English summary:** Documents `agtc-card`: no native interactivity in v1 (a clickable card must wrap an `<a>`/`<agtc-button>`, avoiding the `<div role="button">` WCAG 4.1.2 anti-pattern), auto-detected `header`/`footer` slots with conditional separators and padding adjustments, 3 elevation variants (default/elevated/flat), and 4 padding levels (none/sm/md/lg).
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

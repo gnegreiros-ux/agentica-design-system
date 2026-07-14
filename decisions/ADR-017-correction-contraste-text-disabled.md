@@ -1,3 +1,124 @@
+# ADR-017 — Fixing the contrast of `text.disabled` and adding `background.hover`
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** token
+> **Logical path:** decisions/ADR-017-correction-contraste-text-disabled.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/semantic.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-007-axe-core-accessibilite.md
+
+---
+
+## Context
+
+The WCAG 2.2 audit integrated into the build detected two types of non-conformance:
+
+### 1. Inaccessible value of the `text.disabled` token
+
+The `semantic.color.text.disabled` token referenced `{color.neutral.300}`, resolved to `#d9d9d9`.
+This very light gray produces a contrast ratio of **1.57:1** on a white background — well below
+the AA threshold (4.5:1).
+
+WCAG 1.4.3 exempts inactive UI components from the contrast criterion. However, two problems arose:
+
+- **Incorrect usage**: the `text-disabled` token was applied to non-disabled elements
+  (group labels in the sidebar, pipeline tags). The WCAG exemption therefore didn't apply.
+- **Value too low**: even for genuinely disabled text, maintaining minimal readability
+  is preferable by convention — particularly for users with mild visual impairment not
+  covered by WCAG thresholds.
+
+### 2. Missing `background.hover` token
+
+The hover background for table rows used a hardcoded value (`#eff6ff`,
+a light blue outside the palette). No semantic token covered this usage.
+
+### 3. Pre-existing structural inconsistency (not resolved in this ADR)
+
+`tokens/semantic.json` uses Tailwind-style naming (`neutral.0`–`neutral.900`, `blue.700`),
+while `tokens/primitives.json` uses Radix UI naming (`gray.1`–`gray.12`, `blue.1`–`blue.12`).
+References in `semantic.json` don't resolve in `primitives.json` — `site/build.js`
+works around this with hardcoded values. This inconsistency is documented but
+out of scope for this ADR (see the *Rejected alternatives* section).
+
+---
+
+## Decision
+
+### `text.disabled` token
+
+Value changed from `{color.neutral.300}` → **`{color.neutral.500}`**
+
+| | Before | After |
+|---|---|---|
+| Reference | `{color.neutral.300}` | `{color.neutral.500}` |
+| Resolved value | `#d9d9d9` | `#767676` |
+| Ratio on white | 1.57:1 ❌ | 4.54:1 ✅ |
+| WCAG 1.4.3 (normal text) | Fails | Passes AA |
+
+`neutral.500` corresponds to the median position of a neutral scale (≈ Tailwind `#737373`),
+which is semantically consistent for reduced-emphasis but readable text.
+
+The token's intent is updated to explicitly document:
+- the expected resolved value (`#767676`)
+- the contrast ratio
+- the WCAG 1.4.3 exemption applicable to inactive UI, kept accessible by convention
+
+### `background.hover` token
+
+Added `semantic.color.background.hover` → **`{color.neutral.50}`** (`#fafafa`)
+
+Covers the hover background for tables and lists without resorting to a hardcoded
+value. Replaces the previous use of `#eff6ff` (light blue outside the palette) and
+`background.subtle` (#f0f0f0, too high-contrast for a subtle hover effect).
+
+### Incorrect uses of `text-disabled` fixed
+
+Non-disabled elements that used `text-disabled` were switched to `text-secondary`:
+- `.sidebar-label` (navigation group labels)
+- `.pipeline-tag` (category tags in the pipeline section)
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Keep `#d9d9d9` and invoke the WCAG 1.4.3 exemption** | The exemption didn't apply to the actual usages (sidebar labels, pipeline tags), which aren't inactive UI. Fixing only the usages without changing the token's value would have left the token intrinsically risky. |
+| **Use `{color.neutral.700}` (#646464) as `text.disabled`** | Identical to `text-secondary`. Erases the semantic distinction between secondary text and disabled text. |
+| **Resolve the Tailwind / Radix structural inconsistency in this ADR** | A much broader change in scope: affects every reference in `semantic.json` and requires a coordinated migration of `build.js`, `tokens.css`, and the documentation. Handled separately. |
+| **Add a `gray.10.5` (#767676) primitive to `primitives.json`** | Breaks the consistency of the Radix scale (no half-steps). The value #767676 doesn't exist in Radix UI and would be a hard-to-justify deviation. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- `color.text.disabled` now encodes an accessible-by-default intent
+- The updated intent documents the resolved value and the ratio — an agent can
+  verify conformance without resolving the token chain
+
+**For components:**
+- Any component using `var(--agtc-semantic-color-text-disabled)` automatically
+  benefits from the corrected contrast
+- `var(--agtc-semantic-color-background-hover)` is available for row hover states
+
+**Remaining structural inconsistency:**
+- `tokens/semantic.json` references `{color.neutral.500}`, which doesn't resolve
+  in `tokens/primitives.json` (incompatible naming)
+- `site/build.js` continues to hardcode the resolved values
+- A dedicated ADR for migrating to a unified naming scheme is yet to be created
+
+---
+
+## Incidents or triggers
+
+Detected during the automatic WCAG 2.2 audit (`npm run build`) after deployment
+to GitHub Pages. The audit flagged contrast pairs below the 4.5:1 threshold
+involving `text-disabled` on non-disabled elements.
+
+<!-- FR -->
+
 # ADR-017 — Correction du contraste de `text.disabled` et ajout de `background.hover`
 
 > **Date :** 2026-05-29
@@ -7,10 +128,6 @@
 > **Chemin logique:** decisions/ADR-017-correction-contraste-text-disabled.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, site/build.js, decisions/ADR-008-radix-colors.md, decisions/ADR-007-axe-core-accessibilite.md
-
-> **English summary:** Fixes `text.disabled` (1.57:1 contrast, used incorrectly on non-disabled elements) by changing its reference to resolve to `#767676` (4.54:1, WCAG AA), and adds a `background.hover` token to replace a hardcoded hover color. Also documents a pre-existing Tailwind/Radix naming mismatch in `semantic.json`, resolved later in ADR-018.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

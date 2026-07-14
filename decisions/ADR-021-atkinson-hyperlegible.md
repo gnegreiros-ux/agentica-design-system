@@ -1,3 +1,116 @@
+# ADR-021 — Atkinson Hyperlegible as the primary typeface
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-021-atkinson-hyperlegible.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
+
+---
+
+## Context
+
+The system used Inter (Google Fonts) as its default font — a common choice but with no documented accessibility rationale. The font was not tokenized: the value was hardcoded in `site/build.js` and was not part of the token system.
+
+Two problems needed solving:
+1. No accessibility rationale existed for the typographic choice
+2. Since the font was not a token, agents could not trace it or enforce it
+
+---
+
+## Decision
+
+### Font: Atkinson Hyperlegible
+
+Designed by **Applied Design Works** for the **Braille Institute of America** (2019, royalty-free — Open Font License). Clinically validated to improve legibility for people with low vision.
+
+**Technical differentiators:**
+
+| Ambiguous pair | Inter | Atkinson Hyperlegible |
+|--------------|-------|----------------------|
+| `l` / `1` / `I` | Similar | Deliberately distinct |
+| `O` / `0` | Similar | Deliberately distinct |
+| `b` / `d` / `p` / `q` | Mirrored | Intentional asymmetries |
+| `n` / `u` / `m` | Similar | Accentuated counter-forms |
+
+**Available weights:** Regular (400) and Bold (700) only.
+
+> ⚠️ The `primitive.fontWeight.medium` (500) token has no equivalent in Atkinson Hyperlegible. Browsers round it down to 400 (Regular). This behavior is acceptable and documented — labels and controls remain legible at 400.
+
+### Tokenization
+
+The font is now a primitive token (`primitive.fontFamily.base`) referenced by a semantic token (`semantic.typography.fontFamily`). It is no longer hardcoded in the build.
+
+```json
+// primitives.json
+"fontFamily": {
+  "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif" }
+}
+
+// semantic.json
+"typography": {
+  "fontFamily": { "value": "{primitive.fontFamily.base}" }
+}
+```
+
+### Resolution chain in the build
+
+```
+semantic.typography.fontFamily
+  → {primitive.fontFamily.base}
+  → 'Atkinson Hyperlegible', system-ui, sans-serif
+  → --agtc-semantic-typography-fontFamily in tokens.css
+```
+
+### Google Fonts import
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+```
+
+---
+
+## WCAG rationale
+
+WCAG 2.x does not prescribe a specific font, but success criterion **1.4.8 (Visual Presentation, AAA)** recommends that text be readable without effort. Atkinson Hyperlegible is the most direct response to this principle at the AA+ level.
+
+Braille Institute clinical study (2019): a measured improvement in reading accuracy for users with reduced visual acuity, with no degradation for sighted users.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Inter** | Common choice with no documented accessibility rationale. Ambiguous pairs left unaddressed. |
+| **Lexie Readable** | Less widespread, less maintained, not available on Google Fonts. |
+| **OpenDyslexic** | Aesthetic too distinctive for a general-purpose design system. Effectiveness studies are contested. |
+| **System font stack** | Cross-platform inconsistency. No control over character differentiation. |
+| **Atkinson Hyperlegible Next** | 2024+ version, still experimental. To be reconsidered in v2. |
+
+---
+
+## Consequences
+
+**For the token system:**
+- `primitive.fontFamily.base` and `semantic.typography.fontFamily` added
+- Any future change to the font goes through these tokens (traceable, auditable)
+
+**For AI agents:**
+- The font is now an intent (`semantic.typography.fontFamily`) rather than a hardcoded value
+- Agents can reference and enforce the token in components
+
+**For users:**
+- Better legibility for people with low vision
+- No degradation for anyone else — Atkinson Hyperlegible is a complete workhorse typeface
+
+**Documented limitation:**
+- No 500 weight — `fontWeight.medium` rounds down to 400 in browsers
+
+<!-- FR -->
+
 # ADR-021 — Atkinson Hyperlegible comme police principale
 
 > **Date :** 2026-05-29
@@ -7,10 +120,6 @@
 > **Chemin logique:** decisions/ADR-021-atkinson-hyperlegible.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
-
-> **English summary:** Replaces Inter (chosen with no documented accessibility rationale) with Atkinson Hyperlegible, a font designed for the Braille Institute of America that deliberately disambiguates commonly confused characters (l/1/I, O/0, b/d/p/q) to improve legibility for low-vision users. Tokenized as `primitive.fontFamily.base`; the font has no medium (500) weight, which browsers round down to 400.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

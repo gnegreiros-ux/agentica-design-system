@@ -1,3 +1,119 @@
+# ADR-014 — Choosing Conventional Commits for commit messages
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Tech Lead, Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-014-conventional-commits.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
+> **Relations:** .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-012-audit-tokens-script.md
+
+---
+
+## Context
+
+The git history is one of the system's sources of decision memory. A commit that
+says `fix stuff` conveys no exploitable information — not to a human doing a
+review, not to an agent looking for when a behavior changed, not to a CI
+pipeline deciding whether a change needs governance review.
+
+In an agentic system, commits have an additional role: they are
+machine-readable events. A commit of type `token` can automatically trigger a
+governance review. A commit of type `a11y` can trigger a priority re-run of
+axe-core tests.
+
+The question was:
+
+> **How do we make commit messages exploitable by agents and CI pipelines,
+> while staying readable and frictionless for humans?**
+
+---
+
+## Decision
+
+Adopt the **Conventional Commits** specification with an additional type
+specific to the design system: `token`.
+
+Format: `[type]([scope]): [short description]`
+
+The types allowed in this project:
+
+| Type | Usage | CI trigger |
+|------|-------|------------|
+| `feat` | New component or feature | — |
+| `fix` | Bug fix | — |
+| `token` | Token modification | **Mandatory governance review** |
+| `docs` | Documentation only | — |
+| `a11y` | Accessibility improvement | Priority axe-core re-run |
+| `style` | Style change with no functional impact | — |
+| `refactor` | Refactor with no behavior change | — |
+| `test` | Adding or modifying tests | — |
+| `chore` | Maintenance, dependencies | — |
+| `ci` | CI/CD configuration | — |
+
+The `token` type is a local extension to Conventional Commits. It explicitly
+signals that a token file modification is included — triggering a governance
+review and potentially a TCR.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Free-form commit messages** | Not machine-parsable. An agent looking for "when did `color.action.primary` change?" has to read every commit message. With Conventional Commits, it filters by `token(semantic)`. |
+| **Semantic Versioning in commits (e.g. v1.2.3)** | Versioning each commit individually is heavy and duplicates the information already carried by git tags. Conventional Commits + git tags cover this need without the verbosity. |
+| **Homegrown prefixes** (`[DS]`, `[TOKEN]`, `[FIX]`) | Without a shared specification, prefixes drift quickly: `[DS-fix]`, `[ds fix]`, `[FixDS]`. Conventional Commits is a public specification with validation tooling (`commitlint`) — no need to write and maintain our own. |
+| **Gitmoji** | Visually expressive but hard to filter by machine (`🐛` for fix, `✨` for feat). The team can add emojis as a complement but not as a replacement for the textual type. |
+| **AngularJS commit convention** | Conventional Commits is directly derived from the Angular convention and is its public standardization. Adopting the standard specification rather than a specific framework's version. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- An agent generating a commit must choose the appropriate type — `token` if a
+  `tokens/*.json` file is modified, `a11y` if the change targets accessibility
+- The `token` type is a governance rule encoded in the commit message: an agent
+  writing `token(semantic): ...` knows it triggers a human review
+- Agents can filter the git history by type to answer questions:
+  `git log --grep="^token" -- tokens/semantic.json` → every semantic token change
+
+**For CI/CD:**
+- `commitlint` can validate each commit's format in a pre-commit hook
+- The `token` type can trigger a specific GitHub Action: notification to the
+  Principal Designer, associated TCR check, automatic drift audit
+- The `docs` type is excluded from visual regression test pipelines — no need to
+  run Chromatic for a documentation change
+
+**For humans:**
+- The PR is easier to understand: the title (`token(semantic): add color.feedback.warning`)
+  immediately says which governance applies
+- The changelog generated automatically from commits is structured and readable
+- Searching the history is predictable: `git log --grep="^feat(button)"`
+
+**For system memory (ADR-013):**
+- Commits are a layer of the project's decision memory
+- A commit `token(semantic): add color.feedback.warning` + its associated TCR in
+  `decisions/` form a complete trace: the what (commit), the why (ADR/TCR)
+
+**Accepted cost:**
+- Light friction for contributors unfamiliar with Conventional Commits
+- Commit linting (`commitlint`) can be frustrating in case of a typo in the type
+- The `token` type is a local extension — generic changelog tools don't know it
+  and may ignore it
+
+---
+
+## Incidents or triggers
+
+Foundational decision. The indirect trigger: during tests with generative agents
+on the project's git history, agents couldn't answer "when was this token
+modified?" with free-form commit messages. With Conventional Commits, the same
+question becomes a structured `git log` query.
+
+<!-- FR -->
+
 # ADR-014 — Choix de Conventional Commits pour les messages de commit
 
 > **Date :** 2026-05-28
@@ -7,10 +123,6 @@
 > **Chemin logique:** decisions/ADR-014-conventional-commits.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-012-audit-tokens-script.md
-
-> **English summary:** Adopts Conventional Commits with a project-specific `token` type that signals a mandatory governance review, plus `a11y` for accessibility work. Machine-parsable commit messages let agents and CI answer questions like "when did this token change?" without reading every commit body.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

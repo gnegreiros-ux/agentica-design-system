@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Complétion de la famille de couleurs sémantiques `feedback` — Agentica</title>
+<title>Completion of the `feedback` semantic color family — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Complétion de la famille de couleurs sémantiques `feedback` — Agentica">
+<meta property="og:title" content="Completion of the `feedback` semantic color family — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Complétion de la famille de couleurs sémantiques `feedback` — Agentica">
+<meta name="twitter:title" content="Completion of the `feedback` semantic color family — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Complétion de la famille de couleurs sémantiques `feedback`</h1>
+  <h1 class="adr-page-title">Completion of the `feedback` semantic color family</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,40 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Completes the <code>semantic.color.feedback</code> family so every severity (danger, success, warning, info) exposes all three roles — text, subtle background, border — eliminating the last hardcoded feedback colors (including a previously-missing warning family) in <code>site/build.js</code>.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The site's *dogfooding* (category A) tokenized the hardcoded feedback <strong>text</strong> colors (<code>.icon-no</code>, <code>.icon-ok</code>, pass/fail audit) on 2026-06-04. There remained a debt explicitly logged: the <strong>subtle backgrounds</strong>, <strong>borders</strong>, and the <strong>warning palette</strong> still hardcoded in <code>site/build.js</code>:</p>
+<ul><li><code>.rule-can</code> / <code>.rule-cannot</code> — <code>#ecfdf5</code> / <code>#bbf7d0</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.do-section</code> / <code>.dont-section</code> — <code>#f0fdf4</code> / <code>#86efac</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.audit-badge.pass/.fail</code> — <code>#ecfdf5</code>, <code>#fff1f2</code></li><li><code>.audit-card--pass/--warn/--fail</code> (borders) — <code>#86efac</code>, <code>#fde68a</code>, <code>#fca5a5</code></li><li><code>.audit-card--warn .audit-number</code> — <code>#d97706</code> (<strong>warning, absent from the system</strong>)</li></ul>
+<p>These values could not be routed: the semantic level only exposed <code>danger</code>, <code>danger-subtle</code>, <code>success</code>, <code>info</code> — the <strong>subtle</strong> (background) and <strong>border</strong> variants were missing, as was <strong>the entire <code>warning</code> family</strong>.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Complete the <code>semantic.color.feedback</code> family so it covers the <strong>three roles</strong> of each severity — <strong>text</strong> (<code>-11</code>), <strong>subtle background</strong> (<code>-3</code>), <strong>border</strong> (<code>-6</code>) — across the <strong>four</strong> standard severities: <code>danger</code>, <code>success</code>, <code>warning</code>, <code>info</code>.</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token added</th><th>Primitive</th><th>Role</th></tr></thead><tbody><tr><td><code>feedback.danger-border</code></td><td><code>red.6</code></td><td>Danger border</td></tr><tr><td><code>feedback.success-subtle</code></td><td><code>green.3</code></td><td>Success subtle background</td></tr><tr><td><code>feedback.success-border</code></td><td><code>green.6</code></td><td>Success border</td></tr><tr><td><code>feedback.warning</code></td><td><code>orange.11</code></td><td>Warning text</td></tr><tr><td><code>feedback.warning-subtle</code></td><td><code>orange.3</code></td><td>Warning subtle background</td></tr><tr><td><code>feedback.warning-border</code></td><td><code>orange.6</code></td><td>Warning border</td></tr><tr><td><code>feedback.info-subtle</code></td><td><code>blue.3</code></td><td>Info subtle background</td></tr><tr><td><code>feedback.info-border</code></td><td><code>blue.6</code></td><td>Info border</td></tr></tbody></table></div>
+<blockquote><p><code>danger</code>, <code>danger-subtle</code>, <code>success</code>, <code>info</code> already existed — unchanged.</p></blockquote>
+<p>The choice of steps (<code>-11</code> text / <code>-3</code> background / <code>-6</code> border) follows the Radix convention already in effect in <code>component.badge</code> (ADR-034) and <code>component.banner</code> (ADR-042): cross-component consistency guaranteed.</p>
+<hr>
+<h2>Accessibility (WCAG 2.2)</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pair</th><th>Ratio</th><th>Verdict</th></tr></thead><tbody><tr><td><code>warning</code> (<code>#cc4e00</code>) on white</td><td><strong>4.51:1</strong></td><td>✅ AA normal text</td></tr><tr><td><code>success</code> (<code>#18794e</code>) on <code>success-subtle</code> (<code>#e6f6eb</code>)</td><td>✅</td><td>proven Radix pair (badge)</td></tr><tr><td><code>danger</code> (<code>#ce2c31</code>) on <code>danger-subtle</code> (<code>#feebec</code>)</td><td>✅</td><td>proven Radix pair (badge)</td></tr></tbody></table></div>
+<p>The <code>*-border</code> (<code>-6</code>) tokens are <strong>non-text</strong> (decorative separators/outlines) — exempt from the 4.5:1 requirement (WCAG 1.4.3); they never carry severity information alone (WCAG 1.4.1).</p>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future evolution)</th></tr></thead><tbody><tr><td>8 new feedback semantic tokens (subtle/border + warning family)</td><td>Dedicated <strong>component</strong> tokens (still derived as needed)</td></tr><tr><td>Full symmetry across the 4 severities × 3 roles</td><td>"Solid" variants (full background + light text)</td></tr><tr><td><code>info-subtle</code> / <code>info-border</code> added for <strong>symmetry</strong> (not yet consumed on the site)</td><td>New severities (e.g. <code>neutral</code>)</td></tr></tbody></table></div>
+<p><code>info-subtle</code>/<code>info-border</code> are added for family consistency even though not yet consumed: contract regularity takes precedence, and a future <code>banner info</code> component or site infobox will need them.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Keeping hardcoded colors in <code>build.js</code></strong>: violates <code>tokens-system.md</code> (never a hardcoded</li></ul>
+<p>  value) and <code>feedback_site_dogfooding.md</code> (the site must consume the DS) — rejected.</p>
+<ul><li><strong>Creating ad hoc component tokens</strong> (<code>component.site.audit.*</code>): oversized for generic feedback</li></ul>
+<p>  backgrounds/borders; these roles belong at the <strong>semantic</strong> level.</p>
+<ul><li>**Reusing <code>*-subtle</code> as the border**: a background and a border don't share the same target</li></ul>
+<p>  contrast; <code>-3</code> (background) and <code>-6</code> (border) remain distinct, per Radix.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li><code>site/build.js</code> now routes <strong>all</strong> its feedback surfaces through the semantic level:</li></ul>
+<p>  <code>.rule-can/.rule-cannot</code>, <code>.do-section/.dont-section</code>, <code>.audit-badge</code>, <code>.audit-card--*</code>. The   debt logged on 2026-06-04 is <strong>settled</strong>, zero remaining hardcoded feedback color.</p>
+<ul><li>The <code>feedback</code> family is now <strong>symmetric and predictable</strong>: any agent can route a severity to</li></ul>
+<p>  its three roles without inventing a value.</p>
+<ul><li>Governance: adding <strong>semantic</strong> tokens → <strong>Design System Lead</strong> (human) approval, per</li></ul>
+<p>  <code>tokens-system.md</code>. No primitive or component token modified.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le *dogfooding* du site (catégorie A) a tokenisé les couleurs de <strong>texte</strong> feedback en dur (<code>.icon-no</code>, <code>.icon-ok</code>, audit pass/fail) le 2026-06-04. Restait une dette explicitement consignée au log : les <strong>fonds subtils</strong>, <strong>bordures</strong> et la <strong>palette warning</strong> encore en dur dans <code>site/build.js</code> :</p>
 <ul><li><code>.rule-can</code> / <code>.rule-cannot</code> — <code>#ecfdf5</code> / <code>#bbf7d0</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.do-section</code> / <code>.dont-section</code> — <code>#f0fdf4</code> / <code>#86efac</code>, <code>#fef2f2</code> / <code>#fecaca</code></li><li><code>.audit-badge.pass/.fail</code> — <code>#ecfdf5</code>, <code>#fff1f2</code></li><li><code>.audit-card--pass/--warn/--fail</code> (bordures) — <code>#86efac</code>, <code>#fde68a</code>, <code>#fca5a5</code></li><li><code>.audit-card--warn .audit-number</code> — <code>#d97706</code> (<strong>warning, absent du système</strong>)</li></ul>
 <p>Ces valeurs ne pouvaient pas être routées : le niveau sémantique n'exposait que <code>danger</code>, <code>danger-subtle</code>, <code>success</code>, <code>info</code> — il manquait les variantes <strong>subtle</strong> (fond) et <strong>border</strong>, ainsi que <strong>toute la famille <code>warning</code></strong>.</p>
@@ -166,7 +195,7 @@
 <ul><li>La famille <code>feedback</code> est désormais <strong>symétrique et prévisible</strong> : tout agent peut router une</li></ul>
 <p>  sévérité vers ses trois rôles sans inventer de valeur.</p>
 <ul><li>Gouvernance : ajout de tokens <strong>sémantiques</strong> → approbation <strong>Design System Lead</strong> (humain),</li></ul>
-<p>  conforme à <code>tokens-system.md</code>. Aucun token primitif ni de composant modifié.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  conforme à <code>tokens-system.md</code>. Aucun token primitif ni de composant modifié.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-044.html" class="agtc-button secondary">← ADR-044</a>
     <a href="adr-046.html" class="agtc-button secondary">ADR-046 →</a>
   </div></main>

@@ -1,3 +1,86 @@
+# ADR-051 — Illustration style "Tactile Tech" + semantic palette `color.illustration`
+
+> **Date:** 2026-06-06
+> **Status:** ✅ Active
+> **Decision-makers:** Human (style approval) · Design System Lead (semantic tokens)
+> **Type:** contract
+> **Logical path:** decisions/ADR-051-illustration-style-palette.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** guidelines/foundations/illustration.md, tokens/semantic.json,
+> .claude/rules/ux-patterns-sources.md
+
+---
+
+## Context
+
+The site redesign (2026-06-06 brief) calls for illustrations to visually explain the system's
+concepts (hero, "For every role" section, Pipelines & Workflows showcase). We needed **a single
+coherent, tokenized visual language**, rather than illustrations improvised case by case, and
+compliant with the "never a hardcoded color" rule.
+
+Two sources framed the decision:
+- The article *SaaS illustration styles that convert* — style #1 **"Tactile Tech: Humanizing
+  Complexity"** (https://getillustrations.com/blog/saas-illustration-styles-that-convert/).
+- The prototype's `inspiration/` folder: `color-pattern.jpg` (flat-shape geometry) and
+  `brand-colors.jpg` (palette).
+
+---
+
+## Decision
+
+1. **Style chosen: "Tactile Tech."** Precise geometric vector shapes (overlapping angular flat
+   fills) + grain/stipple/brush texture. Shows the **business outcome**, never UI screenshots.
+   Full spec: `guidelines/foundations/illustration.md` (approved by the human).
+   Product rationale: the tactile imperfection serves the narrative *"the last word is human."*
+
+2. **Addition of the `color.illustration` semantic group** (5 tokens, all backed by existing
+   primitives — no raw value, no primitive modified):
+
+   | Token | Primitive reference | Illustration role |
+   |-------|---------------------|-------------------|
+   | `color.illustration.ink`     | `{primitive.color.mauve.12}`   | dark masses, anchoring |
+   | `color.illustration.accent`  | `{primitive.color.crimson.9}`  | warm focal point, energy |
+   | `color.illustration.brand`   | `{primitive.color.teal.9}`     | brand throughline (= `brand.primary`) |
+   | `color.illustration.neutral` | `{primitive.color.slate.9}`    | secondary masses, depth |
+   | `color.illustration.surface` | `{primitive.color.slate.3}`    | breathing room, light negative space |
+
+   The inspiration palette (`brand-colors.jpg`) was mapped to the closest primitive step, teal
+   already being common to the brand.
+
+---
+
+## Scope
+
+| Included | Excluded |
+|--------|--------|
+| Style decision + `guidelines/foundations/illustration.md` | Production of the final illustrations (pipeline steps 3-4) |
+| 5 `semantic.color.illustration.*` tokens | Dark-mode remapping of the tokens (upcoming dual-theme project) |
+| — | Raster texture tool (grain/brush) — decision still to be made |
+
+---
+
+## Rejected alternatives
+
+- **Introducing raw colors from the inspiration JPG**: contrary to `tokens-system.md` (never a
+  raw value). Mapping onto existing primitives preserves auditability — rejected.
+- **Reusing `viz` (data-viz)**: `viz` targets information-bearing data visualization; illustration
+  is narrative/decorative. Mixing the two would blur intent — rejected.
+- **Another style from the article** (e.g. 3D, isometric): colder/more generic, less aligned with
+  the system's "human" narrative — rejected.
+
+---
+
+## Consequences
+
+- Every future illustration consumes `color.illustration.*` — consistency guaranteed across all
+  surfaces (site + pipelines showcase, merged Phase E/F).
+- Governance: 5 semantic tokens added (Design System Lead). No primitive modified.
+- **To follow up:** (1) remapping the tokens in dark mode during the dual-theme project; (2)
+  decision on the raster texture tool; (3) every illustration produced goes through the axe-core
+  gate (meaning-bearing elements ≥ 3:1) and remains subject to human approval.
+
+<!-- FR -->
+
 # ADR-051 — Style d'illustration « Tactile Tech » + palette sémantique `color.illustration`
 
 > **Date :** 2026-06-06
@@ -8,13 +91,6 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** guidelines/foundations/illustration.md, tokens/semantic.json,
 > .claude/rules/ux-patterns-sources.md
-
-> **English summary:** Establishes "Tactile Tech" as the site's illustration style (geometric
-> shapes + grain texture, showing business outcomes rather than UI screenshots) and adds a
-> 5-token `semantic.color.illustration.*` group, each mapped to existing color primitives with no
-> new raw values.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

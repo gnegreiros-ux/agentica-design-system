@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica</title>
+<title>Dual-mode dark mode: `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica">
+<meta property="og:title" content="Dual-mode dark mode: `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica">
+<meta name="twitter:title" content="Dual-mode dark mode: `semantic.dark.json` + Style Dictionary + Storybook/Chromatic — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Dark mode dual-mode : `semantic.dark.json` + Style Dictionary + Storybook/Chromatic</h1>
+  <h1 class="adr-page-title">Dual-mode dark mode: `semantic.dark.json` + Style Dictionary + Storybook/Chromatic</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,7 +126,95 @@
     </div>
     
   </dl>
-</div><p><strong>Date :</strong> 2026-06-29 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-003 (Style Dictionary), ADR-006 (Chromatic), ADR-009 (Storybook), ADR-058 (thème sombre), ADR-064 (light mode V2)</p>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-06-29 <strong>Status:</strong> Active <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-003 (Style Dictionary), ADR-006 (Chromatic), ADR-009 (Storybook), ADR-058 (dark theme), ADR-064 (V2 light mode)</p>
+<hr>
+<h2>Context</h2>
+<p>Chromatic flagged 10 "Color contrast — Serious" accessibility violations on the <code>Feature Card : Grid</code> story (contrast 1.12). Diagnosis:</p>
+<ul><li><code>dist/tokens/css/all.css</code> contained only a single mode — <code>--agtc-semantic-color-text-primary</code></li></ul>
+<p>  always resolved to <code>#202020</code> (dark gray, light mode), regardless of the browser preference.</p>
+<ul><li>Storybook loaded <code>all.css</code> with no dark-mode override at all → components on a dark</li></ul>
+<p>  background displayed dark text (insufficient contrast).</p>
+<ul><li><code>agtc-feature-card</code> had an <strong>always-dark</strong> background (<code>rgba(12,15,25,.78)</code> —</li></ul>
+<p>  dark-only glassmorphism) but used <code>text.primary</code> instead of <code>text.on-dark</code>.</p>
+<p>Structural cause: Style Dictionary only generated a single CSS file (<code>:root { ... }</code>) with no <code>[data-theme="dark"]</code> counterpart. Dark mode was handled exclusively in <code>site/build.js</code> (Site Dictionary) — invisible to Storybook and Chromatic.</p>
+<p>Reference research conducted on the following sources: dbanks.design, Primer/GitHub, styledictionary.com, Chromatic docs, EightShapes/Nathan Curtis.</p>
+<hr>
+<h2>Decision</h2>
+<h3>1. Delta file: <code>tokens/semantic.dark.json</code></h3>
+<p>New file containing <strong>only the 38 semantic tokens whose value changes</strong> between light mode and dark mode. "Two files, one CSS build" pattern — recommended by Primer (GitHub) and documented on dbanks.design.</p>
+<p>Structure mirrors <code>semantic.json</code>, DTCG-compliant, deltas only:</p>
+<pre class="code-block"><code class="lang-text">tokens/
+  semantic.json        ← light values (reference source)
+  semantic.dark.json   ← dark overrides (38 delta tokens)</code></pre>
+<p>No duplicated values: if a token doesn't appear in <code>semantic.dark.json</code>, it keeps its light value in both modes.</p>
+<h3>2. Second Style Dictionary run → <code>dist/tokens/css/dark.css</code></h3>
+<p><code>style-dictionary/build.cjs</code> registers a <code>css/dark-mode</code> format and runs a second <code>StyleDictionary.extend()</code>:</p>
+<pre class="code-block"><code class="lang-js">// Format — [data-theme="dark"] wrapper
+StyleDictionary.registerFormat({
+  name: 'css/dark-mode',
+  formatter: ({ dictionary }) =&gt; {
+    const vars = dictionary.allTokens
+      .filter(t =&gt; !isReadme(t))
+      .map(t =&gt; `  --${t.name}: ${t.value};`)
+      .join('\n');
+    return `[data-theme="dark"] {\n${vars}\n  color-scheme: dark;\n}\n`;
+  },
+});
+
+// Second run — source: semantic.dark.json only
+const sdDark = StyleDictionary.extend({
+  source: ['tokens/semantic.dark.json'],
+  platforms: {
+    'css-dark': {
+      transformGroup: 'css/agtc',
+      prefix: 'agtc',
+      buildPath: 'dist/tokens/css/',
+      files: [{ destination: 'dark.css', format: 'css/dark-mode' }],
+    },
+  },
+});
+sdDark.buildAllPlatforms();</code></pre>
+<p><code>npm run tokens</code> now produces 5 CSS files: <code>primitives.css</code> · <code>semantic.css</code> · <code>components.css</code> · <code>all.css</code> · <strong><code>dark.css</code></strong></p>
+<h3>3. Storybook — <code>@storybook/addon-themes</code> + <code>dark.css</code> import</h3>
+<p><code>.storybook/preview.js</code>:</p>
+<ul><li>Imports <code>../dist/tokens/css/dark.css</code> after <code>all.css</code></li><li>Decorates all stories with <code>withThemeByDataAttribute</code>:</li></ul>
+<p>  - <code>defaultTheme: 'dark'</code> (consistent with the site)   - <code>attributeName: 'data-theme'</code>   - Available themes: <code>light</code> / <code>dark</code></p>
+<p><code>.storybook/main.js</code>: <code>@storybook/addon-themes</code> added to the addons.</p>
+<h3>4. Chromatic Story Modes — two snapshots per story</h3>
+<p><code>.storybook/modes.js</code> defines <code>allModes</code> (light and dark). <code>parameters.chromatic.modes: allModes</code> set globally in <code>preview.js</code> → Chromatic captures <strong>two independent snapshots per story</strong>, with separate baselines.</p>
+<pre class="code-block"><code class="lang-js">// .storybook/modes.js
+export const allModes = {
+  light: { theme: 'light', backgrounds: { value: '#fcfcfc' } },
+  dark:  { theme: 'dark',  backgrounds: { value: '#0a0c11' } },
+};</code></pre>
+<h3>5. <code>agtc-feature-card</code> token fix</h3>
+<p><code>text.primary</code> → <code>text.on-dark</code> for <code>.heading</code> and <code>text.on-dark-secondary</code> for <code>.body</code>. The card is a glassmorphism component with an always-dark background — the <code>text.primary</code> token (single value, no mode) produced dark text on a dark background (contrast 1.12).</p>
+<h3>6. <code>on-dark</code> convention (amends ADR-046)</h3>
+<p>The <code>text.on-inverse*</code> and <code>border.on-inverse</code> tokens are renamed <code>text.on-dark*</code> and <code>border.on-dark</code>. EightShapes convention: <code>on-dark</code>/<code>on-light</code> is the most direct phrasing for product teams. <code>on-inverse</code> (Material Design 3) is ambiguous about the direction of the inversion.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep a single CSS file + <code>prefers-color-scheme</code> media query</td><td>Incompatible with the existing <code>data-theme</code> toggle (ADR-058); doesn't respond to explicit user preference</td></tr><tr><td>Dark overrides in <code>semantic.json</code> via a custom <code>$dark</code> key</td><td>Outside the DTCG standard; requires an unmaintainable custom parser</td></tr><tr><td>A single <code>StyleDictionary.extend()</code> with conditional merge</td><td>Unjustified complexity; the two-file pattern is the industry reference</td></tr><tr><td>Manual Storybook decorator without <code>@storybook/addon-themes</code></td><td>Loses the visual toggle in the Storybook UI, unusable by product teams</td></tr><tr><td>Chromatic: no configured modes</td><td>Would only test the default mode (dark) → light regressions undetected</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<h3>For product teams</h3>
+<ul><li><code>light</code> / <code>dark</code> toggle visible in the Storybook toolbar → designers and developers</li></ul>
+<p>  see components in both themes with no manual configuration.</p>
+<ul><li>Chromatic now captures <strong>two baselines</strong> per story — light and dark regressions</li></ul>
+<p>  are detected independently.</p>
+<h3>For agents</h3>
+<ul><li><code>dist/tokens/css/dark.css</code> is the <strong>source of truth</strong> for dark overrides — never</li></ul>
+<p>  modify these values directly in <code>site/build.js</code>: modify <code>tokens/semantic.dark.json</code>   then rerun <code>npm run tokens</code>.</p>
+<ul><li>Any new token that <strong>changes value between light and dark</strong> must be added to</li></ul>
+<p>  <code>tokens/semantic.dark.json</code> with its dark value.</p>
+<ul><li>Components with a fixed dark background (glassmorphism) must use <code>text.on-dark</code>,</li></ul>
+<p>  not <code>text.primary</code>, for text.</p>
+<h3>For design-system consumers</h3>
+<ul><li>Load <code>all.css</code> + <code>dark.css</code> to benefit from dual-mode support.</li><li>Apply <code>data-theme="dark"</code> on <code>&lt;html&gt;</code> to activate dark mode.</li></ul>
+<h3>Files affected</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>File</th><th>Change</th></tr></thead><tbody><tr><td><code>tokens/semantic.dark.json</code></td><td>Created — 38 dark delta tokens</td></tr><tr><td><code>dist/tokens/css/dark.css</code></td><td>Generated — <code>[data-theme="dark"] { ... }</code></td></tr><tr><td><code>style-dictionary/build.cjs</code></td><td><code>css/dark-mode</code> format + second <code>sdDark</code> run</td></tr><tr><td><code>.storybook/preview.js</code></td><td><code>dark.css</code> import + <code>withThemeByDataAttribute</code> + Chromatic modes</td></tr><tr><td><code>.storybook/main.js</code></td><td>Added <code>@storybook/addon-themes</code></td></tr><tr><td><code>.storybook/modes.js</code></td><td>Created — <code>allModes</code> light/dark</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Renamed <code>on-inverse</code> → <code>on-dark</code> (all tokens)</td></tr><tr><td><code>components/agtc-feature-card.js</code></td><td><code>text.primary</code> → <code>text.on-dark</code> (contrast 1.12 → ✅)</td></tr></tbody></table></div>
+<hr>
+<h2>Verified result</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td><code>--agtc-semantic-color-text-primary</code></td><td><code>#202020</code> ✅</td><td><code>#edeef0</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-background-page</code></td><td><code>#fcfcfc</code> ✅</td><td><code>#0a0c11</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-action-primary</code></td><td><code>#007a68</code> ✅</td><td><code>#34d3bb</code> ✅</td></tr><tr><td><code>agtc-feature-card</code> Storybook violations</td><td>10 ❌ (contrast 1.12)</td><td><strong>0 ✅</strong></td></tr></tbody></table></div></div><div class="lang-fr"><p><strong>Date :</strong> 2026-06-29 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-003 (Style Dictionary), ADR-006 (Chromatic), ADR-009 (Storybook), ADR-058 (thème sombre), ADR-064 (light mode V2)</p>
 <hr>
 <h2>Contexte</h2>
 <p>Chromatic signalait 10 violations d'accessibilité « Color contrast — Serious » sur la story <code>Feature Card : Grid</code> (contraste 1.12). Diagnostic :</p>
@@ -214,7 +302,7 @@ export const allModes = {
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Fichier</th><th>Changement</th></tr></thead><tbody><tr><td><code>tokens/semantic.dark.json</code></td><td>Créé — 38 tokens delta dark</td></tr><tr><td><code>dist/tokens/css/dark.css</code></td><td>Généré — <code>[data-theme="dark"] { ... }</code></td></tr><tr><td><code>style-dictionary/build.cjs</code></td><td>Format <code>css/dark-mode</code> + second run <code>sdDark</code></td></tr><tr><td><code>.storybook/preview.js</code></td><td>Import <code>dark.css</code> + <code>withThemeByDataAttribute</code> + modes Chromatic</td></tr><tr><td><code>.storybook/main.js</code></td><td>Ajout <code>@storybook/addon-themes</code></td></tr><tr><td><code>.storybook/modes.js</code></td><td>Créé — <code>allModes</code> light/dark</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Renommage <code>on-inverse</code> → <code>on-dark</code> (tous les tokens)</td></tr><tr><td><code>components/agtc-feature-card.js</code></td><td><code>text.primary</code> → <code>text.on-dark</code> (contraste 1.12 → ✅)</td></tr></tbody></table></div>
 <hr>
 <h2>Résultat vérifié</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td><code>--agtc-semantic-color-text-primary</code></td><td><code>#202020</code> ✅</td><td><code>#edeef0</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-background-page</code></td><td><code>#fcfcfc</code> ✅</td><td><code>#0a0c11</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-action-primary</code></td><td><code>#007a68</code> ✅</td><td><code>#34d3bb</code> ✅</td></tr><tr><td><code>agtc-feature-card</code> violations Storybook</td><td>10 ❌ (contraste 1.12)</td><td><strong>0 ✅</strong></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td><code>--agtc-semantic-color-text-primary</code></td><td><code>#202020</code> ✅</td><td><code>#edeef0</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-background-page</code></td><td><code>#fcfcfc</code> ✅</td><td><code>#0a0c11</code> ✅</td></tr><tr><td><code>--agtc-semantic-color-action-primary</code></td><td><code>#007a68</code> ✅</td><td><code>#34d3bb</code> ✅</td></tr><tr><td><code>agtc-feature-card</code> violations Storybook</td><td>10 ❌ (contraste 1.12)</td><td><strong>0 ✅</strong></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-064.html" class="agtc-button secondary">← ADR-064</a>
     <a href="adr-066.html" class="agtc-button secondary">ADR-066 →</a>
   </div></main>

@@ -1,3 +1,80 @@
+# ADR-052 — Conformance to the W3C DTCG standard (Design Tokens Community Group)
+
+> **Date:** 2026-06-06
+> **Status:** ✅ Active
+> **Decision-makers:** Human (approval) · Design System Lead (token format)
+> **Type:** contract
+> **Logical path:** decisions/ADR-052-dtcg-standard-conformance.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json,
+> .claude/rules/tokens-system.md, .claude/skills/pipelines/style-dictionary.md
+
+---
+
+## Context
+
+The system encodes its decisions as design tokens (primitive → semantic → component). The format
+of these files was already de facto aligned with the W3C Community Group's **Design Tokens
+format** (DTCG) — `$value`, `$type`, `$description`, `{group.token}` aliases — and
+`tokens/semantic.json` + `tokens/component.json` already carried the DTCG `$schema`. However, this
+conformance was **not explicitly declared** as a governance decision, nor documented as a binding
+reference, nor publicly visible.
+
+Official source for the standard: **https://www.designtokens.org/**.
+
+---
+
+## Decision
+
+1. **Explicit adoption of the DTCG format as the reference standard** for `tokens/*.json` files.
+   In case of divergence between a local habit and the standard, **the standard prevails**.
+
+2. **Alignment of the 3 token files**: adding the `$schema`
+   (`https://design-tokens.github.io/community-group/format/`) to `tokens/primitives.json` — which
+   did not yet carry it — to reach 3/3 conformant files. Metadata only, **no token value or
+   contract changed**.
+
+3. **Documenting conformance on governance surfaces**:
+   - `.claude/rules/tokens-system.md` — "Reference standard — Design Tokens (W3C DTCG)" section
+     + table of applied conventions.
+   - `DESIGN.md` §2 — "Standard conformance (W3C DTCG)" subsection.
+
+4. **Public declaration on the site**: home page "Open standards" section displaying the
+   **official DTCG logo** and the statement "Agentica follows the DTCG standard," with a link to
+   `designtokens.org` (FR/EN, copy source of truth `site/contenu.md`). Official logo archived,
+   versioned: `Brand/standards/dtcg-logo.svg`.
+
+---
+
+## Scope
+
+| Included | Excluded |
+|--------|--------|
+| Conformance declaration + adding `$schema` to `primitives.json` | Migration of any proprietary format (none in place) |
+| Governance documentation (rule + DESIGN.md) + site declaration | Automated DTCG schema validation in CI (future project) |
+| DTCG logo on the home page + `Brand/standards/` archiving | Modifying token values or contracts |
+
+---
+
+## Rejected alternatives
+
+- **Staying in tacit (undeclared) conformance**: deprives the system of a binding reference and a
+  visible interoperability argument — contrary to the auditability value — rejected.
+- **Defining a proprietary format**: would break interoperability with Style Dictionary and Tokens
+  Studio, and the "stack-agnostic / open standards" argument — rejected.
+
+---
+
+## Consequences
+
+- Interoperability guaranteed with DTCG-compatible tooling (Style Dictionary, Tokens Studio).
+- Any future change to the `tokens/*.json` format must remain conformant with the DTCG standard.
+- Governance: adding `$schema` (metadata) — Design System Lead level, no contract impacted.
+- **To follow up:** add DTCG schema validation to the `style-dictionary` pipeline (currently
+  planned) once it's activated.
+
+<!-- FR -->
+
 # ADR-052 — Conformité au standard W3C DTCG (Design Tokens Community Group)
 
 > **Date :** 2026-06-06
@@ -8,13 +85,6 @@
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json,
 > .claude/rules/tokens-system.md, .claude/skills/pipelines/style-dictionary.md
-
-> **English summary:** Formally declares the W3C DTCG (Design Tokens Community Group) format as
-> the repository's token standard — already followed de facto — and closes the gap by adding the
-> `$schema` field to `tokens/primitives.json` (metadata only, no token values changed). Documents
-> this on governance surfaces and publicly on the site with the official DTCG logo.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

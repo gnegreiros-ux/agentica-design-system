@@ -1,3 +1,104 @@
+# ADR-039 — Implementing `agtc-toggle`
+
+> **Date:** 2026-06-01
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-039-agtc-toggle-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/toggle.md, tokens/component.json
+
+---
+
+## Reference UX patterns applied
+
+> Added 2026-06-01 via the `ux-pattern-review` workflow (ADR-036).
+> Decision: **T1–T7 approved**, state indicated by **knob position alone**.
+> Detail and links: `guidelines/components/toggle.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| `role="switch"` + `aria-checked` | NN/g — toggle switch |
+| Immediate effect (no submit) | NN/g |
+| State via knob position (not color alone) | NN/g · WCAG 1.4.1 |
+| Clearly bounded knob, contrast ≥ 3:1 | NN/g · WCAG 1.4.11 |
+| Concise, front-loaded label describing the "on" state | NN/g |
+| Touch target ≥ 24px | IxDF · WCAG 2.5.8 |
+| Binary only | NN/g |
+
+---
+
+## Context
+
+The toggle complements checkbox/radio: it's the control for **immediate-effect**
+settings. Three questions guided the decisions:
+
+1. **Semantics** — `role="switch"` vs. a plain checkbox.
+2. **State indicator** — position alone vs. adding on/off (I/O) labels.
+3. **"Off" track color** — no neutral-medium semantic token exists.
+
+---
+
+## Decisions
+
+### Decision 1 — Hidden native `<input type="checkbox" role="switch">`
+
+The accessible element is a native checkbox promoted to a `switch` via `role`. It
+provides the role, checked state, keyboard handling (Space), and accessible name (via
+the enclosing `<label>`). The styled track and knob are **decorative** (`aria-hidden`).
+
+**Rejected alternative:** `<div role="switch">` with manual keyboard handling — fragile
+and unnecessary since the native element provides everything (WCAG 4.1.2 anti-pattern).
+
+---
+
+### Decision 2 — State signaled by knob position (non-color indicator)
+
+The knob slides left (off) / right (on). **Position** is an indicator independent of
+color (WCAG 1.4.1); track color (gray → teal) only reinforces it.
+
+**Rejected alternative:** I/O labels within the track. Discarded to stay clean (the
+iOS/Android standard); position alone is sufficient as a non-color indicator.
+
+The knob is **white with a drop shadow**, guaranteeing a contrast ≥ 3:1 against the track
+in both states (WCAG 1.4.11).
+
+---
+
+### Decision 3 — `track-off` = proxy to `primitive.color.gray.9`
+
+No neutral-medium gray semantic token exists. `track-off` references
+`primitive.color.gray.9` (#8d8d8d) directly, chosen to give ~3.3:1 contrast between the
+white knob and the track (WCAG 1.4.11). This is a **component-level proxy** (the same
+approach as `card.elevated.shadow`) until a dedicated semantic token is created —
+governed by the Design System Lead.
+
+---
+
+## v1 scope
+
+| Included | Excluded (v2) |
+|----------|----------------|
+| off/on/hover/focus/disabled states | On/off (I/O) labels in the track |
+| Immediate effect (`agtc-change`) | `sm`/`lg` size |
+| `role="switch"`, Space keyboard | `loading` (async) state |
+
+---
+
+## Tokens added to `component.json`
+
+| Token | Reference |
+|-------|-----------|
+| `--agtc-toggle-default-track-off` | `primitive.color.gray.9` (proxy) |
+| `--agtc-toggle-default-track-off-hover` | `primitive.color.gray.10` (proxy) |
+| `--agtc-toggle-default-track-on` | `semantic.color.action.primary` |
+| `--agtc-toggle-default-track-on-hover` | `semantic.color.action.primary-hover` |
+| `--agtc-toggle-default-knob` | `semantic.color.background.surface` |
+| `--agtc-toggle-default-border-focus` | `semantic.color.border.focus` |
+| `--agtc-toggle-default-label` | `semantic.color.text.primary` |
+
+<!-- FR -->
+
 # ADR-039 — Implémentation de `agtc-toggle`
 
 > **Date :** 2026-06-01
@@ -7,13 +108,6 @@
 > **Chemin logique:** decisions/ADR-039-agtc-toggle-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-037-agtc-checkbox-implementation.md, guidelines/components/toggle.md, tokens/component.json
-
-> **English summary:** Implements agtc-toggle as an immediate-effect switch (`role="switch"` via a
-> visually-hidden native checkbox), signaling state through knob position rather than color alone
-> (WCAG 1.4.1). The "off" track color is a temporary proxy to a raw gray primitive, pending a
-> dedicated semantic token.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

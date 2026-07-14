@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Convention des stories Storybook pour les composants Agentica — Agentica</title>
+<title>Storybook stories convention for Agentica components — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Convention des stories Storybook pour les composants Agentica — Agentica">
+<meta property="og:title" content="Storybook stories convention for Agentica components — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Convention des stories Storybook pour les composants Agentica — Agentica">
+<meta name="twitter:title" content="Storybook stories convention for Agentica components — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Convention des stories Storybook pour les composants Agentica</h1>
+  <h1 class="adr-page-title">Storybook stories convention for Agentica components</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,54 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Defines the mandatory structure for <code>.stories.js</code> files (colocated with each component), a required baseline set of stories (per-variant, Disabled, Loading, AllVariants), and naming conventions — keeping the Storybook catalogue consistent and Chromatic's visual-regression coverage predictable across components.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-009 decides to use Storybook. ADR-032 specifies <strong>how</strong> to write stories in this system — the structure, naming, and mandatory-content convention for each component.</p>
+<p>Without an explicit convention, two problems emerge:</p>
+<p>1. <strong>Inconsistency between components</strong> — each developer or agent structures    their stories differently, making the catalogue unreadable and Chromatic unpredictable. 2. <strong>Incomplete stories</strong> — critical states (loading, disabled, confirming)    aren't systematically documented, creating blind spots in    visual regression testing.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Mandatory structure for a <code>.stories.js</code> file</h3>
+<p>Each component has a <code>[component].stories.js</code> file colocated with <code>[component].js</code> in <code>components/</code>.</p>
+<pre class="code-block"><code class="lang-text">components/
+  agtc-button.js
+  agtc-button.stories.js    ← colocated
+  agtc-icon.js
+  agtc-icon.stories.js</code></pre>
+<h3>Minimum mandatory stories for any component</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Story</th><th>Content</th></tr></thead><tbody><tr><td><code>[Variant]</code> (one per variant)</td><td>Isolated component, default state</td></tr><tr><td><code>Disabled</code></td><td>All variants in the <code>disabled</code> state</td></tr><tr><td><code>Loading</code></td><td>All variants in the <code>loading</code> state (if applicable)</td></tr><tr><td><code>AllVariants</code></td><td>Overview of variants × states — main Chromatic entry point</td></tr></tbody></table></div>
+<h3>Stories specific to <code>agtc-button</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Story</th><th>Reason</th></tr></thead><tbody><tr><td><code>CriticalConfirmFlow</code></td><td>Documents the critical variant's 2-click flow (ADR-031)</td></tr><tr><td><code>WithIconPrefix</code> / <code>WithIconSuffix</code></td><td>Documents the hybrid icon approach (property + slot)</td></tr><tr><td><code>WithCustomSlot</code></td><td>Documents free composition via an SVG slot</td></tr></tbody></table></div>
+<h3>Naming rules</h3>
+<pre class="code-block"><code class="lang-javascript">// ✅ Isolated variant story
+export const Primary = { name: 'Primary — main action', ... };
+
+// ✅ Grouped state story
+export const Disabled = { name: 'States — Disabled (all variants)', ... };
+
+// ✅ Behavior story
+export const CriticalConfirmFlow = { name: 'Critical — confirmation flow (2 clicks)', ... };
+
+// ✅ Overview (always present, Chromatic entry point)
+export const AllVariants = { name: 'Overview — all variants', ... };</code></pre>
+<h3>Storybook configuration</h3>
+<ul><li><strong>Stories path</strong>: <code>components/**/*.stories.@(js|jsx|mjs|ts|tsx)</code> (colocated)</li><li><strong>CSS tokens</strong>: <code>dist/tokens/css/all.css</code> imported in <code>preview.js</code></li><li><strong>a11y addon</strong>: <code>test: 'error'</code> — WCAG violations block in CI (ADR-007)</li><li><strong>vitest addon</strong>: removed from the main config (not yet activated)</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Stories in <code>stories/</code> (separate folder)</strong></td><td>Creates distance between the component and its documentation. A renamed or deleted component leaves an orphaned story with no obvious warning. Colocation forces synchronization.</td></tr><tr><td><strong>One story per state (separate file)</strong></td><td>Excessive fragmentation. Chromatic captures all of a component's stories — grouping states in a single file reduces noise in the review interface.</td></tr><tr><td><strong>Stories in TypeScript (<code>.stories.ts</code>)</strong></td><td>The project uses ES6+ JavaScript for components (ADR-002). Introducing TypeScript only for stories creates a stack inconsistency with no proportional benefit.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For developers and agents:</strong></p>
+<ul><li>Every new component requires its <code>.stories.js</code> with the minimum stories listed above</li><li>This is a merge condition (<code>.claude/rules/development.md</code>) — a PR without a story is incomplete</li><li>Stories are Chromatic's entry point: their structure determines which captures are generated</li></ul>
+<p><strong>For Chromatic (ADR-006):</strong></p>
+<ul><li><code>AllVariants</code> is the main reference story — its rendering is the visual baseline</li><li>Each story isolated by variant makes it possible to pinpoint exactly which variant regressed</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent can verify story coverage by comparing <code>component.json</code>'s variants</li></ul>
+<p>  to the <code>.stories.js</code> file's exports — any variant without a story is a blind spot</p>
+<ul><li>Component/story colocation lets an agent find the story from the component</li></ul>
+<p>  with no prior knowledge of the project structure</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Keeping stories in sync with components is an ongoing discipline</li><li>A story that no longer reflects real behavior is worse than no story</li></ul>
+<p>  (it gives Chromatic reviewers false confidence)</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-009 décide d'utiliser Storybook. ADR-032 précise <strong>comment</strong> écrire les stories dans ce système — la convention de structure, de nommage et de contenu obligatoire pour chaque composant.</p>
 <p>Sans convention explicite, deux problèmes émergent :</p>
 <p>1. <strong>Incohérence entre composants</strong> — chaque développeur ou agent structure ses    stories différemment, rendant le catalogue illisible et Chromatic imprévisible. 2. <strong>Stories incomplètes</strong> — les états critiques (loading, disabled, confirming)    ne sont pas systématiquement documentés, créant des angles morts dans les    tests de régression visuelle.</p>
@@ -180,7 +223,7 @@ export const AllVariants = { name: "Vue d'ensemble — toutes les variantes", ..
 <p>  sans connaissance préalable de la structure du projet</p>
 <p><strong>Coût accepté :</strong></p>
 <ul><li>Maintenir les stories en synchronisation avec les composants est une discipline active</li><li>Une story qui ne reflète plus le comportement réel est pire que pas de story</li></ul>
-<p>  (elle donne une fausse confiance aux reviewers Chromatic)</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  (elle donne une fausse confiance aux reviewers Chromatic)</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-031.html" class="agtc-button secondary">← ADR-031</a>
     <a href="adr-033.html" class="agtc-button secondary">ADR-033 →</a>
   </div></main>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-radio` et `agtc-radio-group` — Agentica</title>
+<title>Implementing `agtc-radio` and `agtc-radio-group` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-radio` et `agtc-radio-group` — Agentica">
+<meta property="og:title" content="Implementing `agtc-radio` and `agtc-radio-group` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-radio` et `agtc-radio-group` — Agentica">
+<meta name="twitter:title" content="Implementing `agtc-radio` and `agtc-radio-group` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-radio` et `agtc-radio-group`</h1>
+  <h1 class="adr-page-title">Implementing `agtc-radio` and `agtc-radio-group`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,32 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Implements <code>agtc-radio-group</code> + <code>agtc-radio</code> as a round-shaped, mutually exclusive control. Because native <code>name</code>-based radio grouping doesn't cross shadow DOM boundaries, a required group container implements the full WAI-ARIA radiogroup pattern (roving focus, arrow-key selection) instead.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
+<blockquote><p>Added 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>R1–R7 approved</strong>, <strong>round</strong> shape, <strong>group + radio</strong> architecture. Detail and links: <code>guidelines/components/radio.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Round shape (square = checkbox)</td><td>NN/g — checkboxes vs radio</td></tr><tr><td>Mutually exclusive selection</td><td>NN/g</td></tr><tr><td>Pre-selecting a sensible default</td><td>NN/g — radio default selection</td></tr><tr><td>Vertical stacking, one option per line</td><td>NN/g</td></tr><tr><td>Clickable label (Fitts)</td><td>NN/g · IxDF</td></tr><tr><td>Touch target ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Arrow-key navigation = selection</td><td>NN/g (WAI-ARIA radiogroup)</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p>The radio is the exclusive counterpart to the checkbox. Three questions guided the decisions:</p>
+<p>1. <strong>Shape</strong> — round (NN/g) vs. square. Unambiguous: round. 2. <strong>Grouping</strong> — how do we guarantee exclusivity across Web Components? 3. <strong>Keyboard</strong> — how do we reproduce native radio behavior (arrows)?</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — Two-component architecture: <code>agtc-radio-group</code> + <code>agtc-radio</code></h3>
+<p><strong>Problem:</strong> <code>&lt;input type="radio"&gt;</code> elements rendered in <strong>separate</strong> shadow DOMs don't form a native group — exclusivity via <code>name</code> doesn't cross shadow-root boundaries.</p>
+<p><strong>Decision:</strong> an <code>agtc-radio-group</code> container (<code>role="radiogroup"</code>) is <strong>mandatory</strong>. It:</p>
+<ul><li>collects the child <code>agtc-radio</code> elements, applies single selection via <code>value</code></li><li>manages <strong>roving focus</strong> (only one radio has <code>tabindex="0"</code>)</li><li>handles the keyboard (arrows select, like a native radio)</li><li>emits <code>agtc-change { value, name }</code></li></ul>
+<p><strong>Rejected alternative:</strong> a standalone <code>agtc-radio</code> coordinated by <code>name</code> via the document. Rejected for weaker accessibility (no <code>role="radiogroup"</code>, no roving arrow-key navigation).</p>
+<hr>
+<h3>Decision 2 — Round shape</h3>
+<p><code>border-radius: 9999px</code>. NN/g: round is the radio convention; square signals a checkbox. Central fill dot (teal) animated via <code>transform: scale</code>.</p>
+<hr>
+<h3>Decision 3 — Full ARIA radiogroup pattern</h3>
+<p>The group implements the WAI-ARIA pattern: <code>role="radiogroup"</code> + <code>aria-label</code>, children <code>role="radio"</code> + <code>aria-checked</code>, roving focus, <code>↓→</code> next / <code>↑←</code> previous (looping, selecting), <code>Space</code> selects. <code>Enter</code> is deliberately <strong>not</strong> handled (reserved for form submission, per the strict WAI-ARIA radio pattern). This faithfully reproduces the behavior of a native group without relying on native grouping, which doesn't work across shadow DOM.</p>
+<hr>
+<h2>v1 scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (v2)</th></tr></thead><tbody><tr><td><code>agtc-radio-group</code> + <code>agtc-radio</code>, round</td><td>Assisted horizontal orientation</td></tr><tr><td>default/hover/focus/selected/disabled states</td><td>Per-option description/help</td></tr><tr><td>Roving focus + arrow-key keyboard</td><td>Group "required" validation</td></tr><tr><td><code>agtc-change</code> event</td><td>—</td></tr></tbody></table></div>
+<hr>
+<h2>Tokens added to <code>component.json</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Semantic reference</th></tr></thead><tbody><tr><td><code>--agtc-radio-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-radio-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-radio-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-radio-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-radio-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>R1–R7 approuvés</strong>, forme <strong>ronde</strong>, architecture <strong>groupe + radio</strong>. Détail et liens : <code>guidelines/components/radio.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Forme ronde (le carré = checkbox)</td><td>NN/g — checkboxes vs radio</td></tr><tr><td>Sélection mutuellement exclusive</td><td>NN/g</td></tr><tr><td>Pré-sélection d'un défaut sensé</td><td>NN/g — radio default selection</td></tr><tr><td>Empilement vertical, une option par ligne</td><td>NN/g</td></tr><tr><td>Label cliquable (Fitts)</td><td>NN/g · IxDF</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Navigation flèches = sélection</td><td>NN/g (WAI-ARIA radiogroup)</td></tr></tbody></table></div>
 <hr>
@@ -158,7 +179,7 @@
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td><code>agtc-radio-group</code> + <code>agtc-radio</code>, ronde</td><td>Orientation horizontale assistée</td></tr><tr><td>États default/hover/focus/selected/disabled</td><td>Description/aide par option</td></tr><tr><td>Focus roving + clavier flèches</td><td>Validation « requis » de groupe</td></tr><tr><td>Événement <code>agtc-change</code></td><td>—</td></tr></tbody></table></div>
 <hr>
 <h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-radio-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-radio-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-radio-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-radio-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-radio-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-radio-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-radio-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-radio-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-radio-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-radio-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-radio-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-037.html" class="agtc-button secondary">← ADR-037</a>
     <a href="adr-039.html" class="agtc-button secondary">ADR-039 →</a>
   </div></main>

@@ -1,3 +1,132 @@
+# ADR-061 — `agtc-top-nav` v1.1: bilingualism, mobile shadow DOM, site integration
+
+> **Date:** 2026-06-15
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** component
+> **Logical path:** decisions/ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md
+> **Read before:** AGENTS.md, DESIGN.md, decisions/ADR-060-agtc-top-nav-implementation.md
+> **Relations:** components/agtc-top-nav.js, site/build.js, decisions/ADR-060-agtc-top-nav-implementation.md
+
+---
+
+## Context
+
+ADR-060 defined the `agtc-top-nav` component (formalization). The next step was its
+actual integration into the site — the first real validation of the component contract.
+
+Three obstacles identified before integration:
+
+1. **Bilingualism** — the component used `label` (language-neutral), but the site has two
+   languages (FR/EN) switched via `data-lang` on `<html>`. The component needed to
+   automatically render in the right language.
+
+2. **Mobile shadow DOM** — the mobile styles (`.top-nav{display:none}`, `.top-nav.open`,
+   responsive `.top-nav a`) lived in `site.css`. They don't penetrate the shadow DOM.
+   They needed to be moved into the component's CSS.
+
+3. **Bundling** — the component uses `import { LitElement, ... } from 'lit'`. The site
+   generates static HTML with no bundler. An IIFE bundle usable without a module system
+   was needed.
+
+Guiding principle: "If the system is missing something needed to power the site, let's
+build it in the system first."
+
+---
+
+## Decision
+
+### 1. Bilingualism via `MutationObserver`
+
+Added a reactive (internal) `_lang` property to the component.
+In `connectedCallback()`, the component:
+- reads `document.documentElement.dataset.lang` to initialize `_lang`
+- installs a `MutationObserver` on `<html>` filtered on `data-lang`
+- updates `_lang` and triggers an automatic re-render on every change
+
+Extended item structure: `{ label?, labelFr?, labelEn?, href, cta? }`
+- `labelFr` shown when `data-lang="fr"` (priority)
+- `labelEn` shown when `data-lang="en"` (priority)
+- `label`: language-neutral fallback
+
+**Reason:** the component handles the language itself — the consumer simply passes both
+variants. No re-binding needed on the site side.
+
+### 2. Mobile CSS in shadow DOM
+
+The mobile CSS was moved **entirely into `agtc-top-nav.js`** via `@media (max-width: 768px)`.
+The component exposes its open state via `:host(.open) nav` (CSS class on the host).
+
+The site JS controls the opening: `topNav.classList.toggle('open')`.
+`aria-controls="site-top-nav"` on the hamburger button points to `<agtc-top-nav id="site-top-nav">`.
+
+**Reason:** the shadow DOM encapsulates the responsive behavior — the component is now
+self-contained (no dependency on `site.css` for its internal states).
+
+### 3. Bundling via esbuild IIFE
+
+Added a `bundleComponents()` function in `site/build.js` (CJS) using
+`child_process.execSync` to call the esbuild binary available via the root
+`node_modules` (a transitive dependency of Vite/Storybook).
+
+Format: `--format=iife --bundle --minify` → self-executing bundle, no import map required.
+Loading: `<script src="${base}components/agtc-top-nav.js" defer></script>` in `<head>`.
+
+Deferred initialization: inline script using
+`customElements.whenDefined('agtc-top-nav').then(init)` to guarantee the element is
+defined before assigning `.items` and `.current`.
+
+**Reason:** a self-contained solution with no new dependency or external CDN —
+consistent with the digital sovereignty principle (ADR-004).
+
+---
+
+## Reference UX patterns
+
+All patterns from ADR-060 apply. No new UX pattern — only technical implementation
+decisions (i18n, bundling, responsive shadow DOM).
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Import map + CDN for Lit** | External CDN dependency — against ADR-004 (digital sovereignty) |
+| **CSS parts (`::part(nav)`)** | The `host.class::part()` syntax doesn't cover the child elements of the parts |
+| **`open` as an HTML attribute (reflect)** | `classList.toggle` is simpler — `:host(.open)` is identical to `:host([open])` for this use case |
+| **Handle language on the site side (re-binding)** | Fragile — would require listening for the language toggle on every page |
+| **Vanilla component (without Lit)** | Two implementations of the same component — impossible to maintain |
+
+---
+
+## Consequences
+
+**For the site:**
+- No more `.top-nav` CSS in `site.css` — the component manages its own CSS
+- The JS active-link selection `document.querySelectorAll('.top-nav a')` is removed
+- The mobile menu JS now targets `document.querySelector('agtc-top-nav')`
+- `aria-controls="site-top-nav"` (formerly `main-nav`) on the hamburger button
+- Build output: `site/dist/components/agtc-top-nav.js` (~21kb, bundled IIFE)
+
+**For the design system:**
+- `components/agtc-top-nav.js` v1.1 — backward compatible (the `label` API still works)
+- `bundleComponents()` in `site/build.js` — extensible to other components
+
+**For agents:**
+- Bilingual items preferred: `{ labelFr, labelEn, href }` — not `{ label }`
+- Mobile handled by the component — do not add `.top-nav*` CSS in `site.css`
+
+---
+
+## Incidents or triggers
+
+Direct follow-up to ADR-060: component formalization → site integration.
+The three obstacles (bilingualism, shadow DOM, bundling) were identified during the
+first integration attempt (2026-06-15).
+
+<!-- FR -->
+
 # ADR-061 — `agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site
 
 > **Date :** 2026-06-15
@@ -7,10 +136,6 @@
 > **Chemin logique:** decisions/ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-060-agtc-top-nav-implementation.md
 > **Relations:** components/agtc-top-nav.js, site/build.js, decisions/ADR-060-agtc-top-nav-implementation.md
-
-> **English summary:** Integrating the newly formalized `agtc-top-nav` component (ADR-060) into the live site surfaced three gaps: the component needed to render bilingual labels automatically, its mobile responsive styles lived in `site.css` and couldn't reach into the shadow DOM, and the site had no bundler for Lit's ES module imports. This ADR adds a `MutationObserver`-driven `_lang` property that watches `data-lang` on `<html>` and re-renders automatically, moves all mobile CSS into the component itself (exposed via a `:host(.open)` state), and introduces an esbuild IIFE bundling step (`bundleComponents()`) so the component can be dropped in with a single `<script defer>` tag, with no external CDN dependency.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

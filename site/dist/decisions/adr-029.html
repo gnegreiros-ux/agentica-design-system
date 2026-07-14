@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Quality Gate pré-commit modulaire — Agentica</title>
+<title>Modular pre-commit quality gate — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Quality Gate pré-commit modulaire — Agentica">
+<meta property="og:title" content="Modular pre-commit quality gate — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Quality Gate pré-commit modulaire — Agentica">
+<meta name="twitter:title" content="Modular pre-commit quality gate — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Quality Gate pré-commit modulaire</h1>
+  <h1 class="adr-page-title">Modular pre-commit quality gate</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,55 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Replaces the monolithic ADR-027 pipeline with a modular quality gate — one independent file per check under <code>.claude/skills/pipelines/</code>, each with explicit triggers and verifiable checks — after ADR-028 (a new font) was implemented without a corresponding ADR being created. The new <code>adr-triggers.md</code> trigger matrix makes such omissions structurally harder to miss.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-027 introduced the concept of a pre-commit impact pipeline. However, the corresponding skill was too generic: it asked to "analyze impact" without precisely defining what that means.</p>
+<p><strong>Triggering incident:</strong> ADR-028 (Atkinson Hyperlegible Mono) was forgotten when the monospace font was added. The architectural decision was implemented without being documented — a direct violation of the system's governance principles.</p>
+<p><strong>Root cause:</strong> a vague checklist ("check for missing ADRs") with no explicit trigger matrix. An agent — or a human — can conscientiously go through a vague list and still miss a non-obvious item.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Replace the monolithic pipeline with a <strong>modular quality gate</strong>:</p>
+<pre class="code-block"><code class="lang-text">.claude/skills/quality-gate.md          ← orchestrator
+.claude/skills/pipelines/
+├── tokens-audit.md                      ← ✅ active
+├── wcag.md                              ← ✅ active
+├── adr-conformity.md                    ← ✅ active
+├── adr-triggers.md                      ← ✅ active (trigger matrix)
+├── docs.md                              ← ✅ active
+├── site.md                              ← ✅ active
+├── commit.md                            ← ✅ active
+├── style-dictionary.md                  ← 🔜 planned
+├── storybook.md                         ← 🔜 planned
+├── chromatic.md                         ← 🔜 planned
+├── axe-core.md                          ← 🔜 planned
+└── playwright.md                        ← 🔜 planned</code></pre>
+<h3>Design principle</h3>
+<p><strong>Each pipeline is independent and has a standard interface:</strong></p>
+<ul><li>Explicit triggers (which files activate it)</li><li>Verifiable checks (no vague intent)</li><li>Clear status (<code>✅ Active</code> or <code>🔜 Planned</code>)</li><li>Execution command (when available)</li></ul>
+<p><strong>Adding a pipeline = creating a file.</strong> No modification of the orchestrator required.</p>
+<h3>Anti-omission ADR rule (the core issue)</h3>
+<p>The <code>adr-triggers.md</code> pipeline contains an explicit <strong>trigger matrix</strong>:</p>
+<blockquote><p>New font → typography ADR required. New component → component ADR required. etc.</p></blockquote>
+<p>This matrix makes forgetting an ADR structurally impossible if the pipeline is followed.</p>
+<hr>
+<h2>Rationale</h2>
+<h3>Why modular?</h3>
+<p>1. <strong>Extensibility</strong>: Style Dictionary, Storybook, Chromatic, axe-core, Playwright will be added progressively. A monolithic architecture would have required rewriting the pipeline on every addition.</p>
+<p>2. <strong>Traceability</strong>: Each pipeline has its own file, versioned separately. If a rule changes (e.g. WCAG 2.2 → 2.3), only one file is modified.</p>
+<p>3. <strong>Clarity for agents</strong>: An agent reads <code>adr-triggers.md</code> and knows exactly when to create an ADR — no room for interpretation.</p>
+<h3>Why stubs for inactive pipelines?</h3>
+<p>Anticipation of the project's evolution. The stubs:</p>
+<ul><li>Document the intent (what will be done)</li><li>Allow immediate activation (the commands are already prepared)</li><li>Clearly signal that these pipelines are not yet blocking</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>A single checklist in one file</strong></td><td>Not extensible. Every added pipeline bloats the main file and creates merge conflicts.</td></tr><tr><td><strong>Automated bash script only</strong></td><td>Human approval is non-negotiable (ADR-004). A script can automate checks but not the decision.</td></tr><tr><td><strong>No structured pipeline</strong></td><td>Proven insufficient — the ADR-028 incident is direct proof.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Systematic reference to <code>quality-gate.md</code> before any commit</li><li>The <code>adr-triggers.md</code> matrix makes a missing ADR detectable</li></ul>
+<p><strong>For the team:</strong></p>
+<ul><li>Adding a new pipeline = creating a file in <code>.claude/skills/pipelines/</code> + a line in <code>quality-gate.md</code></li><li>No modification of existing pipelines required</li></ul>
+<p><strong>For governance:</strong></p>
+<ul><li>Each pipeline is independently auditable</li><li>Stubs explicitly signal what is not yet covered</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-027 a introduit le concept de pipeline d'impact pré-commit. Cependant, la skill correspondante était trop générique : elle demandait d'"analyser l'impact" sans définir précisément ce que cela signifie.</p>
 <p><strong>Incident déclencheur :</strong> ADR-028 (Atkinson Hyperlegible Mono) a été oublié lors de l'ajout de la police monospace. La décision architecturale a été implémentée sans être documentée — violation directe des principes de gouvernance du système.</p>
 <p><strong>Cause racine :</strong> une checklist floue ("vérifier les ADRs manquants") sans matrice de déclenchement explicite. Un agent — ou un humain — peut consciencieusement parcourir une liste vague et manquer quand même un élément non évident.</p>
@@ -181,7 +225,7 @@
 <p><strong>Pour l'équipe :</strong></p>
 <ul><li>Ajouter un nouveau pipeline = créer un fichier dans <code>.claude/skills/pipelines/</code> + une ligne dans <code>quality-gate.md</code></li><li>Aucune modification des pipelines existants requise</li></ul>
 <p><strong>Pour la gouvernance :</strong></p>
-<ul><li>Chaque pipeline est auditable indépendamment</li><li>Les stubs signalent explicitement ce qui n'est pas encore couvert</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Chaque pipeline est auditable indépendamment</li><li>Les stubs signalent explicitement ce qui n'est pas encore couvert</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-028.html" class="agtc-button secondary">← ADR-028</a>
     <a href="adr-030.html" class="agtc-button secondary">ADR-030 →</a>
   </div></main>

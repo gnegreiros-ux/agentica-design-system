@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Atkinson Hyperlegible Mono comme police monospace — Agentica</title>
+<title>Atkinson Hyperlegible Mono as the monospace typeface — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Atkinson Hyperlegible Mono comme police monospace — Agentica">
+<meta property="og:title" content="Atkinson Hyperlegible Mono as the monospace typeface — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Atkinson Hyperlegible Mono comme police monospace — Agentica">
+<meta name="twitter:title" content="Atkinson Hyperlegible Mono as the monospace typeface — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Atkinson Hyperlegible Mono comme police monospace</h1>
+  <h1 class="adr-page-title">Atkinson Hyperlegible Mono as the monospace typeface</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,42 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Atkinson Hyperlegible Mono — the monospace companion to ADR-021's Atkinson Hyperlegible — as the tokenized monospace font (<code>--agtc-font-mono</code>) for code, token names, and ADR numbers, replacing the uncontrollable generic <code>monospace</code> fallback that rendered differently across OS/browsers.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>Since ADR-021, the primary font has been Atkinson Hyperlegible (sans-serif). The system used the generic <code>monospace</code> value as the fallback font for code elements (<code>&lt;code&gt;</code>, token labels, ADR numbers).</p>
+<p>Problems to solve: 1. <code>font-family: monospace</code> is uncontrollable — every OS and browser renders a different result (Courier New, Menlo, Consolas, DejaVu Sans Mono) 2. No accessibility consistency between the body font and the code font 3. The choice was neither tokenized nor documented — invisible to agents</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Font: Atkinson Hyperlegible Mono</h3>
+<p>Designed by <strong>Applied Design Works</strong> for the <strong>Braille Institute of America</strong> — the official monospace companion to Atkinson Hyperlegible. Same design philosophy: maximum differentiation of ambiguous characters, optimized for low vision.</p>
+<p><strong>Technical differentiators:</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Ambiguous pair</th><th>System monospace</th><th>Atkinson Hyperlegible Mono</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Often identical</td><td>Deliberately distinct</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Often identical</td><td>Deliberately distinct</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Mirrored</td><td>Intentional asymmetries</td></tr><tr><td><code>{</code> / <code>(</code> / <code>[</code></td><td>Similar</td><td>Distinct shape and opening</td></tr></tbody></table></div>
+<p><strong>Available weights:</strong> Regular (400) and Bold (700), in roman and italic.</p>
+<h3>Tokenization</h3>
+<p>The font is exposed via a CSS custom property in the build:</p>
+<pre class="code-block"><code class="lang-css">/* :root in site.css */
+--agtc-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;</code></pre>
+<p>The fallback chain guarantees an acceptable result even with no internet connection:</p>
+<ul><li><code>JetBrains Mono</code> — developer-focused, highly legible</li><li><code>Cascadia Code</code> — Windows/VS Code, modern</li><li><code>monospace</code> — last-resort system fallback</li></ul>
+<h3>Google Fonts import</h3>
+<p>Loaded in the same <code>@import</code> as Atkinson Hyperlegible (a single network request):</p>
+<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
+<h3>Elements using <code>--agtc-font-mono</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Element</th><th>Context</th></tr></thead><tbody><tr><td><code>code</code></td><td>All pages — token names, code examples</td></tr><tr><td><code>.adr-num</code></td><td>Decision pages — the <code>ADR-0XX</code> number</td></tr><tr><td><code>.space-label</code></td><td>Spacing page — scale labels</td></tr><tr><td><code>.color-name</code>, <code>.color-value</code></td><td>Color page — hex, token name</td></tr><tr><td><code>.adr-num</code>, <code>.density-card-math</code></td><td>Decision pages — math token formulas</td></tr><tr><td>Inline <code>style="font-family:var(--agtc-font-mono)"</code></td><td>Value cells in token tables</td></tr></tbody></table></div>
+<hr>
+<h2>Rationale</h2>
+<p>Typographic consistency between the body font (Atkinson Hyperlegible) and the code font (Atkinson Hyperlegible Mono) is a quality criterion for a design system. Using a shared family guarantees:</p>
+<ul><li>The same accessibility DNA (ambiguous characters handled the same way)</li><li>The same visual rhythm (similar x-height, compatible letter spacing)</li><li>A single provider (Google Fonts) for both variants</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong><code>monospace</code> (system)</strong></td><td>Uncontrollable cross-platform. No accessibility guarantee.</td></tr><tr><td><strong>JetBrains Mono</strong></td><td>An excellent choice, but a stylistic break from Atkinson Hyperlegible.</td></tr><tr><td><strong>Source Code Pro</strong></td><td>Same issue — no link to the primary body font.</td></tr><tr><td><strong>Fira Code</strong></td><td>Ligatures potentially problematic for agents reading code.</td></tr><tr><td><strong>Atkinson Hyperlegible Next Mono</strong></td><td>Not yet available on Google Fonts as of 2026-05. To be reconsidered in v2.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For the token system:</strong></p>
+<ul><li><code>--agtc-font-mono</code> becomes the mandatory reference for every monospace element</li><li>Hardcoded <code>font-family: monospace</code> is forbidden (detectable via ESLint audit)</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>The monospace font is a traceable decision, not a system default</li><li>Agents can verify that a component uses <code>var(--agtc-font-mono)</code> rather than a hardcoded value</li></ul>
+<p><strong>For users:</strong></p>
+<ul><li>Better legibility of token names and code for people with low vision</li><li>Reinforced visual consistency between body text and code elements</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Depuis ADR-021, la police principale est Atkinson Hyperlegible (sans-serif). Le système utilisait la valeur générique <code>monospace</code> comme police de repli pour les éléments de code (<code>&lt;code&gt;</code>, labels de tokens, numéros ADR).</p>
 <p>Problèmes à résoudre : 1. <code>font-family: monospace</code> est incontrôlable — chaque OS et navigateur rend un résultat différent (Courier New, Menlo, Consolas, DejaVu Sans Mono) 2. Aucune cohérence d'accessibilité entre la police de texte et la police de code 3. Le choix n'était pas tokenisé ni documenté — invisible pour les agents</p>
 <hr>
@@ -168,7 +199,7 @@
 <p><strong>Pour les agents IA :</strong></p>
 <ul><li>La police monospace est une décision traçable, pas un défaut système</li><li>Les agents peuvent vérifier qu'un composant utilise <code>var(--agtc-font-mono)</code> plutôt qu'une valeur hardcodée</li></ul>
 <p><strong>Pour les utilisateurs :</strong></p>
-<ul><li>Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision</li><li>Cohérence visuelle renforcée entre le texte courant et les éléments de code</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Meilleure lisibilité des noms de tokens et du code pour les personnes à basse vision</li><li>Cohérence visuelle renforcée entre le texte courant et les éléments de code</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-027.html" class="agtc-button secondary">← ADR-027</a>
     <a href="adr-029.html" class="agtc-button secondary">ADR-029 →</a>
   </div></main>

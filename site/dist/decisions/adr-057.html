@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) — Agentica</title>
+<title>Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) — Agentica">
+<meta property="og:title" content="Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif) — Agentica">
+<meta name="twitter:title" content="Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Deux contextes d'utilisation : Produit (SaaS) et Marketing (Narratif)</h1>
+  <h1 class="adr-page-title">Two usage contexts: Product (SaaS) and Marketing (Narrative)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,10 +126,36 @@
     </div>
     
   </dl>
-</div><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-025 (densité), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
-<blockquote><p><strong>English summary:</strong> The Agentica site treated marketing pages (home, get-started, agents) and documentation pages identically, with no tonal distinction between "convincing a visitor" and "documenting a component." This ADR formalizes two usage contexts via a <code>data-context</code> attribute on <code>&lt;body&gt;</code>: the default Product (SaaS) mode, and an opt-in Marketing (Narrative) mode with its own <code>semantic.marketing.*</code> tokens (display typography, section-breathing spacing, hero gap) that override spacing/typography on marketing pages only, without touching shared components.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-06-12 <strong>Status:</strong> Accepted <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-025 (density), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
+<hr>
+<h2>Context</h2>
+<p>The Agentica site produced homogeneous pages: marketing pages (home, get-started, agents) used the same spacing and typography patterns as documentation pages (components, foundations). Result: no difference in "tone" between convincing a visitor and documenting a component.</p>
+<p>The <code>Redesign/deux-contextes.md</code> file mandates formalizing two distinct modes. Some foundations already exist implicitly (<code>comfortable</code> density via ADR-025, the <code>typography.hero</code> token at 48px, the illustration palette via ADR-051), but no explicit contract links them to usage contexts.</p>
+<hr>
+<h2>Decision</h2>
+<p>Formalize two usage contexts declared via a <code>data-context</code> attribute on <code>&lt;body&gt;</code>:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribute</th><th>Context</th><th>Intent</th></tr></thead><tbody><tr><td>*(absent)* or <code>data-context="product"</code></td><td>Product Mode (SaaS)</td><td>Enable action — clarity, density, repeatability</td></tr><tr><td><code>data-context="marketing"</code></td><td>Marketing Mode (Narrative)</td><td>Communicate a vision — breathing room, editorial hierarchy</td></tr></tbody></table></div>
+<h3>Tokens added</h3>
+<p><strong>Primitives</strong> (<code>tokens/primitives.json</code>):</p>
+<ul><li><code>primitive.fontSize.6xl</code> — 60px (marketing display title)</li><li><code>primitive.space.24</code> — 96px (section breathing room)</li><li><code>primitive.space.30</code> — 120px (hero gap)</li></ul>
+<p><strong>Semantic</strong> (<code>tokens/semantic.json</code>) — <code>semantic.marketing.*</code> group:</p>
+<ul><li><code>marketing.typography.display.{size, weight, line-height}</code></li><li><code>marketing.typography.eyebrow.{size, weight}</code></li><li><code>marketing.space.section-breathing</code> → <code>primitive.space.24</code> (96px)</li><li><code>marketing.space.hero-gap</code> → <code>primitive.space.30</code> (120px)</li></ul>
+<h3>CSS mode-switching</h3>
+<p>A CSS block activated by <code>[data-context="marketing"]</code> replaces the spacing and hero typography tokens for the pages concerned, without touching components or component tokens.</p>
+<h3>Pages declared as marketing</h3>
+<ul><li><code>index.html</code> (home) — introduces the vision</li><li><code>get-started.html</code> — onboarding, convinces</li><li><code>agents/index.html</code> — explains the agentic system</li></ul>
+<hr>
+<h2>Alternatives considered</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejected because</th></tr></thead><tbody><tr><td>Per-page JSON config file</td><td>Over-engineering for 3 pages; an HTML attribute is readable by both agents and CSS</td></tr><tr><td>Two separate CSS files (product.css / marketing.css)</td><td>Duplication; an attribute is enough to override the variables</td></tr><tr><td>CSS class on <code>&lt;body&gt;</code></td><td>A <code>data-</code> attribute is more semantically correct for a page state (not an interaction state)</td></tr><tr><td>Separate component tokens per mode</td><td>Would violate the approval rule (tokens/component.json) with no real benefit</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<ul><li><strong>Machine-readable rule</strong>: <code>.claude/rules/contexts-utilisation.md</code> — loaded every session.</li><li><strong>Guideline</strong>: <code>guidelines/foundations/contextes.md</code> — human + agent reference.</li><li><strong>DESIGN.md</strong>: section 7 added.</li><li><strong>Site</strong>: <code>foundations/contextes.html</code> added to the sidebar.</li><li><strong>Governance</strong>: <code>semantic.marketing.*</code> tokens follow the semantic-token TCR rule (Design</li></ul>
+<p>  System Lead approval).</p>
+<hr>
+<h2>Conformance</h2>
+<ul><li>Tokens in DTCG format (ADR-052) ✅</li><li>No hardcoded value in the CSS — only <code>var(--agtc-*)</code> references ✅</li><li>The <code>tokens-system.md</code> rule is respected (primitive → semantic, never primitive inside</li></ul>
+<p>  component) ✅</p>
+<ul><li><code>data-context</code> attribute: decorative for agents, functional for CSS ✅</li></ul></div><div class="lang-fr"><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-025 (densité), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
 <hr>
 <h2>Contexte</h2>
 <p>Le site Agentica produit des pages homogènes : les pages marketing (home, get-started, agents) utilisent les mêmes patterns d'espacement et de typographie que les pages documentation (composants, fondations). Résultat : aucune différence de "ton" entre convaincre un visiteur et documenter un composant.</p>
@@ -156,7 +182,7 @@
 <p>  (approbation Design System Lead).</p>
 <hr>
 <h2>Conformité</h2>
-<ul><li>Tokens au format DTCG (ADR-052) ✅</li><li>Aucune valeur en dur dans le CSS — uniquement des références <code>var(--agtc-*)</code> ✅</li><li>La règle <code>tokens-system.md</code> est respectée (primitif → sémantique, jamais primitif dans composant) ✅</li><li>Attribut <code>data-context</code> : décoratif pour les agents, fonctionnel pour le CSS ✅</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Tokens au format DTCG (ADR-052) ✅</li><li>Aucune valeur en dur dans le CSS — uniquement des références <code>var(--agtc-*)</code> ✅</li><li>La règle <code>tokens-system.md</code> est respectée (primitif → sémantique, jamais primitif dans composant) ✅</li><li>Attribut <code>data-context</code> : décoratif pour les agents, fonctionnel pour le CSS ✅</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-056.html" class="agtc-button secondary">← ADR-056</a>
     <a href="adr-058.html" class="agtc-button secondary">ADR-058 →</a>
   </div></main>

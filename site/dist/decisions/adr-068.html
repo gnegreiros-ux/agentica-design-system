@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica</title>
+<title>Extending the `letterSpacing` scale: resolving the site's `--agtc-tracking-*` debt — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica">
+<meta property="og:title" content="Extending the `letterSpacing` scale: resolving the site's `--agtc-tracking-*` debt — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site — Agentica">
+<meta name="twitter:title" content="Extending the `letterSpacing` scale: resolving the site's `--agtc-tracking-*` debt — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">token</span>
   </div>
-  <h1 class="adr-page-title">Extension de l'échelle `letterSpacing` : résorption de la dette `--agtc-tracking-*` du site</h1>
+  <h1 class="adr-page-title">Extending the `letterSpacing` scale: resolving the site's `--agtc-tracking-*` debt</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,10 +126,54 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead (sémantique) — Principal Designer (primitive, nommage)</dd>
+      <dd>Design System Lead (semantic) — Principal Designer (primitive, naming)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-067 created the <code>letterSpacing</code> category (primitive + semantic) with 3 values (<code>normal</code>, <code>wide</code>, <code>widest</code>) to resolve <code>agtc-code-block.js</code>'s debt. Its log entry noted a residual debt <strong>out of scope</strong>: the site (<code>site/build.js</code>) defines its own local scale of 9 <code>--agtc-tracking-*</code> variables, almost all hardcoded values, consumed at <strong>50 call sites</strong> across ~60 CSS selectors (stats, headings, language badges, tables, property labels, overlines).</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Site variable</th><th>Hardcoded value</th><th>Usages</th><th>Overlaps an existing primitive?</th></tr></thead><tbody><tr><td><code>--agtc-tracking-tighter</code></td><td><code>-.03em</code></td><td>8</td><td>❌</td></tr><tr><td><code>--agtc-tracking-tight</code></td><td><code>-.025em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-snug</code></td><td><code>-.02em</code></td><td>6</td><td>❌</td></tr><tr><td><code>--agtc-tracking-heading</code></td><td><code>-.015em</code></td><td>3</td><td>❌</td></tr><tr><td><code>--agtc-tracking-wide</code></td><td><code>.04em</code></td><td>4</td><td>❌ — <strong>name collision</strong> with <code>primitive.letterSpacing.wide</code> (0.06em, a different value)</td></tr><tr><td><code>--agtc-tracking-wider</code></td><td><code>.06em</code></td><td>4</td><td>✅ = <code>primitive.letterSpacing.wide</code> (0.06em)</td></tr><tr><td><code>--agtc-tracking-label</code></td><td><code>.08em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-loose</code></td><td><code>.09em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-overline</code></td><td><code>.1em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-eyebrow</code></td><td>*(already tokenized, ADR-067)*</td><td>5</td><td>✅ = <code>primitive.letterSpacing.widest</code></td></tr></tbody></table></div>
+<p>The blocking point: the site's local name <code>wide</code> (0.04em) designates a <strong>different</strong> value from the token already named <code>wide</code> (0.06em, ADR-067). An automatic fix would have silently changed the visual rendering or created lasting naming confusion — a decision escalated to the human (<code>figma-library-governance.md</code> §1: code is authoritative, but a naming conflict between two local sources of truth isn't a case where the agent decides alone).</p>
+<hr>
+<h2>Decision</h2>
+<h3>1. Naming — <code>relaxed</code> for the site's 0.04em value</h3>
+<p>Human-approved: a new <code>letterSpacing.relaxed</code> primitive (0.04em), rather than renaming the existing <code>wide</code> token or creating a suffixed variant (<code>wide-sm</code> was rejected). <code>relaxed</code> reads naturally on the scale, between <code>normal</code> (0em) and <code>wide</code> (0.06em).</p>
+<h3>2. Scope — primitive + semantic alias for every new value</h3>
+<p>Human-approved: follow the same pattern as ADR-067 for the 7 new values (not just directly-consumed primitives) — every value gets a named intent under <code>semantic.typography.letter-spacing.*</code>.</p>
+<h3>Primitive — <code>tokens/primitives.json</code> → <code>primitive.letterSpacing</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Former site name</th></tr></thead><tbody><tr><td><code>letterSpacing.tighter</code></td><td><code>-0.03em</code></td><td><code>--agtc-tracking-tighter</code></td></tr><tr><td><code>letterSpacing.tight</code></td><td><code>-0.025em</code></td><td><code>--agtc-tracking-tight</code></td></tr><tr><td><code>letterSpacing.snug</code></td><td><code>-0.02em</code></td><td><code>--agtc-tracking-snug</code></td></tr><tr><td><code>letterSpacing.heading</code></td><td><code>-0.015em</code></td><td><code>--agtc-tracking-heading</code></td></tr><tr><td><code>letterSpacing.normal</code></td><td><code>0em</code></td><td>*(ADR-067)*</td></tr><tr><td><code>letterSpacing.relaxed</code></td><td><code>0.04em</code></td><td><code>--agtc-tracking-wide</code> (renamed)</td></tr><tr><td><code>letterSpacing.wide</code></td><td><code>0.06em</code></td><td>*(ADR-067)* — <code>--agtc-tracking-wider</code> maps here</td></tr><tr><td><code>letterSpacing.label</code></td><td><code>0.08em</code></td><td><code>--agtc-tracking-label</code></td></tr><tr><td><code>letterSpacing.loose</code></td><td><code>0.09em</code></td><td><code>--agtc-tracking-loose</code></td></tr><tr><td><code>letterSpacing.overline</code></td><td><code>0.1em</code></td><td><code>--agtc-tracking-overline</code></td></tr><tr><td><code>letterSpacing.widest</code></td><td><code>0.12em</code></td><td>*(ADR-067)* — <code>--agtc-tracking-eyebrow</code></td></tr></tbody></table></div>
+<h3>Semantic — <code>tokens/semantic.json</code> → <code>semantic.typography.letter-spacing</code></h3>
+<p>A 1:1 alias to each primitive above (<code>tighter</code>, <code>tight</code>, <code>snug</code>, <code>heading</code>, <code>relaxed</code>, <code>label</code>, <code>loose</code>, <code>overline</code> added; <code>normal</code>/<code>wide</code> already existed since ADR-067).</p>
+<h3>Site — <code>site/build.js</code></h3>
+<p>The 9 <code>--agtc-tracking-*</code> variables stay in place (none of the ~50 call sites is modified), but their <strong>definition</strong> is repointed to tokens instead of literal values:</p>
+<pre class="code-block"><code class="lang-css">--agtc-tracking-tighter:var(--agtc-semantic-typography-letter-spacing-tighter);
+--agtc-tracking-tight:var(--agtc-semantic-typography-letter-spacing-tight);
+--agtc-tracking-snug:var(--agtc-semantic-typography-letter-spacing-snug);
+--agtc-tracking-heading:var(--agtc-semantic-typography-letter-spacing-heading);
+--agtc-tracking-wide:var(--agtc-semantic-typography-letter-spacing-relaxed);
+--agtc-tracking-wider:var(--agtc-semantic-typography-letter-spacing-wide);
+--agtc-tracking-label:var(--agtc-semantic-typography-letter-spacing-label);
+--agtc-tracking-loose:var(--agtc-semantic-typography-letter-spacing-loose);
+--agtc-tracking-overline:var(--agtc-semantic-typography-letter-spacing-overline);
+--agtc-tracking-eyebrow:var(--agtc-semantic-marketing-typography-eyebrow-letter-spacing); /* unchanged, ADR-067 */</code></pre>
+<p>0 visual change: every variable resolves to exactly the same numeric value as before.</p>
+<hr>
+<h2>Rationale</h2>
+<ul><li>The site's scale wasn't a set of incidental values — 50 call sites make it a genuine,</li></ul>
+<p>  systemic typographic scale, justifying its full promotion to the token level rather than   case-by-case treatment.</p>
+<ul><li>Keeping the <code>--agtc-tracking-*</code> names on the site side (instead of letting them</li></ul>
+<p>  disappear in favor of semantic names) avoids touching the ~50 consuming CSS selectors —   only the definition layer changes, reducing visual regression risk to 10 lines.</p>
+<ul><li>The <code>wide</code> collision (site, 0.04em) vs. <code>wide</code> (token, 0.06em) is resolved via a</li></ul>
+<p>  targeted rename (<code>relaxed</code>) rather than breaking compatibility on either naming side.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Rename the existing <code>wide</code> token (0.06em) to free up the name for the site</td><td>Would break the reference already in production in <code>agtc-code-block.js</code> (ADR-067) for an already-shipped component</td></tr><tr><td><code>wide-sm</code> for the 0.04em value</td><td>Rejected by the human in favor of <code>relaxed</code>, more readable on the scale</td></tr><tr><td>Primitives only, no semantic alias</td><td>Rejected by the human — consistency with the pattern already established by ADR-067 (every value carries a named intent)</td></tr><tr><td>Rename the site's 9 <code>--agtc-tracking-*</code> variables to match token names 1:1</td><td>Would have required touching the ~50 CSS call sites for zero gain (the site names remain readable and stable)</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For agents:</strong> any new label/heading needing letter spacing must consume <code>semantic.typography.letter-spacing.*</code> (or the existing <code>--agtc-tracking-*</code> site variable if the context is already covered) — no hardcoded value remains available as an excuse.</p>
+<p><strong>For the system:</strong> <code>site/build.js</code> no longer has any hardcoded <code>letter-spacing</code> value in its scale definition. The <code>letterSpacing</code> token debt (opened by ADR-067) is closed.</p>
+<p><strong>Build:</strong> <code>npm run tokens</code> regenerated (0 phantom); <code>node site/build.js</code> regenerated — 823 variables defined, 280 referenced, 0 phantom, 101 files.</p>
+<p><strong>Governance:</strong> extension of an existing semantic category → Design System Lead approval; primitives (<code>relaxed</code> naming, primitive+semantic scope) → Principal Designer approval. Both approved by the human on 2026-07-08.</p>
+<p><strong>Figma:</strong> out of scope for this ADR — <code>.claude/instructions/figma-components.md</code> §24 (Monospace presentation typography) references only <code>semantic.typography.mono.family</code> and the <code>code-block</code> badge tokens (ADR-067), not this broader tracking scale. A future Figma effort on the site's headings/badges will need to trace these same tokens before creating anything — same rule: code is authoritative.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-067 a créé la catégorie <code>letterSpacing</code> (primitif + sémantique) avec 3 valeurs (<code>normal</code>, <code>wide</code>, <code>widest</code>) pour résorber la dette de <code>agtc-code-block.js</code>. Son entrée de log notait une dette résiduelle <strong>hors périmètre</strong> : le site (<code>site/build.js</code>) définit sa propre échelle locale de 9 variables <code>--agtc-tracking-*</code>, presque toutes en valeurs codées en dur, consommées à <strong>50 sites d'appel</strong> à travers ~60 sélecteurs CSS (stats, titres, badges de langue, tableaux, labels de propriété, overlines).</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Variable site</th><th>Valeur en dur</th><th>Usages</th><th>Recoupe une primitive existante ?</th></tr></thead><tbody><tr><td><code>--agtc-tracking-tighter</code></td><td><code>-.03em</code></td><td>8</td><td>❌</td></tr><tr><td><code>--agtc-tracking-tight</code></td><td><code>-.025em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-snug</code></td><td><code>-.02em</code></td><td>6</td><td>❌</td></tr><tr><td><code>--agtc-tracking-heading</code></td><td><code>-.015em</code></td><td>3</td><td>❌</td></tr><tr><td><code>--agtc-tracking-wide</code></td><td><code>.04em</code></td><td>4</td><td>❌ — <strong>collision de nom</strong> avec <code>primitive.letterSpacing.wide</code> (0.06em, valeur différente)</td></tr><tr><td><code>--agtc-tracking-wider</code></td><td><code>.06em</code></td><td>4</td><td>✅ = <code>primitive.letterSpacing.wide</code> (0.06em)</td></tr><tr><td><code>--agtc-tracking-label</code></td><td><code>.08em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-loose</code></td><td><code>.09em</code></td><td>1</td><td>❌</td></tr><tr><td><code>--agtc-tracking-overline</code></td><td><code>.1em</code></td><td>9</td><td>❌</td></tr><tr><td><code>--agtc-tracking-eyebrow</code></td><td>*(déjà tokenisé, ADR-067)*</td><td>5</td><td>✅ = <code>primitive.letterSpacing.widest</code></td></tr></tbody></table></div>
 <p>Le point bloquant : le nom local du site <code>wide</code> (0.04em) désigne une valeur <strong>différente</strong> du token déjà nommé <code>wide</code> (0.06em, ADR-067). Une correction automatique aurait silencieusement changé le rendu visuel ou créé une confusion de nommage durable — décision escaladée à l'humain (<code>figma-library-governance.md</code> §1 : le code fait foi, mais un conflit de nommage entre deux sources de vérité locales n'est pas un cas où l'agent tranche seul).</p>
@@ -173,7 +217,7 @@
 <p><strong>Pour le système :</strong> <code>site/build.js</code> n'a plus aucune valeur <code>letter-spacing</code> codée en dur dans sa définition d'échelle. La dette de tokens <code>letterSpacing</code> (ouverte par ADR-067) est fermée.</p>
 <p><strong>Build :</strong> <code>npm run tokens</code> régénéré (0 fantôme) ; <code>node site/build.js</code> régénéré — 823 variables définies, 280 référencées, 0 fantôme, 101 fichiers.</p>
 <p><strong>Gouvernance :</strong> extension de catégorie sémantique existante → approbation Design System Lead ; primitives (nommage <code>relaxed</code>, portée primitive+sémantique) → approbation Principal Designer. Les deux approuvées par l'humain le 2026-07-08.</p>
-<p><strong>Figma :</strong> hors périmètre de cet ADR — <code>.claude/instructions/figma-components.md</code> §24 (typographie de présentation Monospace) référence uniquement <code>semantic.typography.mono.family</code> et les tokens du badge <code>code-block</code> (ADR-067), pas cette échelle de tracking plus large. Un futur chantier Figma sur les titres/badges du site devra tracer ces mêmes tokens avant de créer quoi que ce soit — même règle : le code fait foi.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p><strong>Figma :</strong> hors périmètre de cet ADR — <code>.claude/instructions/figma-components.md</code> §24 (typographie de présentation Monospace) référence uniquement <code>semantic.typography.mono.family</code> et les tokens du badge <code>code-block</code> (ADR-067), pas cette échelle de tracking plus large. Un futur chantier Figma sur les titres/badges du site devra tracer ces mêmes tokens avant de créer quoi que ce soit — même règle : le code fait foi.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-067.html" class="agtc-button secondary">← ADR-067</a>
     <a href="adr-069.html" class="agtc-button secondary">ADR-069 →</a>
   </div></main>

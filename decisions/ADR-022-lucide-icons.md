@@ -1,3 +1,132 @@
+# ADR-022 — Lucide Icons as the icon library
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-022-lucide-icons.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md
+
+---
+
+## Reference UX patterns applied
+
+> Added 2026-06-01 via the `ux-pattern-review` workflow (ADR-036). Decision: **all approved**.
+> `agtc-icon` has no dedicated implementation ADR — its pattern decision is recorded here.
+> Detail and links: `guidelines/components/icon.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| Icon + text when meaning is not universal | NN/g — icon usability |
+| Label mandatory when the icon carries the information | NN/g |
+| Decorative icons hidden from AT (`aria-hidden`) | NN/g |
+| Consistent, non-misleading meaning | IF — transparency |
+
+---
+
+## Context
+
+The design system referenced `<agtc-icon>` in component examples (notably `guidelines/components/button.md`) without any icon system being defined. No icon size token existed. Teams were creating ad hoc solutions (emoji, inline SVG, Tailwind classes) — each one a potential source of drift.
+
+---
+
+## Decision
+
+### Library: Lucide Icons
+
+**Lucide** (a fork of Feather Icons, MIT) is adopted as the system's official icon library.
+
+**Technical characteristics:**
+- 1,500+ icons, full UI coverage
+- Strict geometric consistency: a constant `strokeWidth: 1.5px` across all icons
+- Pure SVG format — no font, no mandatory sprite
+- Tree-shakeable — only the icons actually used are bundled
+- MIT license — no commercial constraint
+
+**Industry adoption:** Linear, Vercel, shadcn/ui, Raycast — a signal of quality and longevity.
+
+### Web Component: `agtc-icon`
+
+A Lit component wraps Lucide and exposes the design system's API:
+
+```javascript
+// Usage
+<agtc-icon name="trash-2" size="control" label="Supprimer"></agtc-icon>
+<agtc-icon name="check" size="inline" decorative></agtc-icon>
+```
+
+**Props:**
+| Prop | Type | Values | Default |
+|------|------|---------|--------|
+| `name` | String | Lucide name (e.g. `"trash-2"`) | — (required) |
+| `size` | String | `"inline"` / `"control"` / `"nav"` | `"control"` |
+| `label` | String | Accessible text | — |
+| `decorative` | Boolean | Purely decorative icon | `false` |
+
+**WCAG 1.1.1 rule:** If `decorative` is absent, `label` is mandatory → `aria-label` is injected. If `decorative` is present → `aria-hidden="true"`.
+
+### Icon size tokens
+
+```json
+// primitives.json
+"iconSize": {
+  "sm": "16px",  // inline — within text
+  "md": "20px",  // control — in a button, input
+  "lg": "24px"   // nav — navigation, emphasis
+}
+
+// semantic.json
+"icon.size.inline":  "{primitive.iconSize.sm}"
+"icon.size.control": "{primitive.iconSize.md}"
+"icon.size.nav":     "{primitive.iconSize.lg}"
+```
+
+### Integration into the documentation site
+
+Lucide is added as an npm dependency in `site/package.json`. The build generates an icon reference page at `site/dist/components/icon.html`.
+
+---
+
+## WCAG rationale
+
+- **1.1.1 (Non-text Content):** Every semantic icon has an `aria-label`. Decorative icons have `aria-hidden="true"`.
+- **1.4.3 (Contrast):** Icons inherit `color: currentColor` — contrast is that of the parent text, always compliant.
+- **2.5.3 (Label in Name):** Icon-only buttons expose their label via `aria-label` on `agtc-icon`.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Material Icons** | Font icon — FOUT issues, more complex accessibility, coupling to Google. |
+| **Heroicons** | Equivalent quality but lower adoption, fewer variants. |
+| **Font Awesome** | Freemium model, proprietary dependency for advanced icons. |
+| **Custom SVG sprite** | Unsustainable manual maintenance for 100+ icons. |
+| **Phosphor Icons** | Equivalent quality but a React-centric ecosystem, less Web Components support. |
+
+---
+
+## Consequences
+
+**For tokens:**
+- `primitive.iconSize` (sm/md/lg) and `semantic.icon.size` (inline/control/nav) added
+
+**For components:**
+- `components/agtc-icon.js` provides the Lit implementation contract
+- `guidelines/components/icon.md` documents usage rules and anti-patterns
+
+**For AI agents:**
+- `size="control"` is a readable intent — the agent understands it as an icon within an interactive control
+- Anti-patterns (icon with no label, hardcoded size) are auditable
+
+**For teams:**
+- End of ad hoc solutions: a single API, a single token, a single library
+- Icon names documented on lucide.dev — the canonical reference
+
+<!-- FR -->
+
 # ADR-022 — Lucide Icons comme bibliothèque d'icônes
 
 > **Date :** 2026-05-29
@@ -7,10 +136,6 @@
 > **Chemin logique:** decisions/ADR-022-lucide-icons.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, components/agtc-icon.js, guidelines/components/icon.md
-
-> **English summary:** Adopts Lucide Icons (MIT-licensed fork of Feather Icons, 1,500+ icons) as the system's official icon library, wrapped in an `agtc-icon` Lit component with three size tokens (inline/control/nav) and mandatory WCAG 1.1.1 labeling — either a `label` (rendered as `aria-label`) or `decorative` (rendered as `aria-hidden`).
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

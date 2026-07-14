@@ -1,3 +1,131 @@
+# ADR-056 — Implementing `agtc-tabs`
+
+> **Date:** 2026-06-12
+> **Status:** ✅ Active
+> **Decision-makers:** Human (approval) · Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-056-agtc-tabs-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** components/agtc-tabs.js, guidelines/components/tabs.md, tokens/component.json, decisions/ADR-047-no-visited-nav.md
+
+---
+
+## Context
+
+Phase D3 of the site redesign: the doc-chrome needs a tabs component to structure component pages
+(e.g. `Overview | Tokens | Best practices`). No `agtc-tabs` existed.
+
+---
+
+## Decisions
+
+### 1. Tab type — in-page + optional `href`
+
+**Decision:** in-page by default (panel change within the DOM), with an optional `href` attribute
+per tab for external navigation links.
+
+**Why:** Most doc-chrome uses are in-page. The optional `href` allows mixed tabs (e.g.
+`Overview | Storybook ↗`) without creating two separate components.
+
+**Source:** NN/g — [Tabs: Used Right](https://www.nngroup.com/articles/tabs-used-right/)
+
+---
+
+### 2. Automatic activation on focus
+
+**Decision:** `activation="auto"` by default — navigating with the arrow keys activates the tab
+immediately. `activation="manual"` available as opt-in (requires Enter/Space).
+
+**Why:** The APG recommends automatic activation when content is preloaded (our case — all panel
+content is in the DOM). Reduces the number of keystrokes.
+
+**Source:** W3C APG — [Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+
+---
+
+### 3. Closable tabs — deferred
+
+**Decision:** Not implemented in D3. No use case identified in the doc-chrome. To be reconsidered
+for a future multi-doc editor.
+
+---
+
+### 4. Orientation — horizontal only
+
+**Decision:** Horizontal tablist (inline list). No vertical orientation in D3.
+
+**Why:** All current uses are horizontal. Vertical orientation will be added if a specific use
+case emerges.
+
+---
+
+### 5. ARIA pattern — tablist / tab / tabpanel
+
+**Decision:** ARIA structure strictly conformant with the W3C APG:
+- `role="tablist"` + `aria-label` on the container
+- `role="tab"` + `aria-selected` + `aria-controls` on each tab
+- `role="tabpanel"` + `aria-labelledby` on each panel
+- Roving tabindex: active tab `tabindex="0"`, others `-1`
+- Keyboard navigation: `ArrowLeft/Right` (circular) · `Home/End` · `Tab` exits the group
+
+---
+
+### 6. no-visited-nav rule — ADR-047
+
+**Decision:** `:visited` neutralized on `.tab` (color = same as `:link`).
+
+**Why:** Tabs are navigation elements — the system-wide ADR-047 rule applies.
+
+---
+
+## Component tokens
+
+| Token | Semantic value |
+|-------|------------------|
+| `tabs.default.tab-text` | `semantic.color.text.secondary` |
+| `tabs.default.tab-text-hover` | `semantic.color.text.primary` |
+| `tabs.default.tab-text-active` | `semantic.color.action.primary` |
+| `tabs.default.indicator` | `semantic.color.action.primary` |
+| `tabs.default.border` | `semantic.color.border.default` |
+| `tabs.default.border-focus` | `semantic.color.border.focus` |
+| `tabs.default.padding-x` | `semantic.space.control.padding-x` |
+| `tabs.default.padding-y` | `semantic.space.control.padding-y` |
+
+---
+
+## Reference UX patterns applied
+
+| Pattern | Source | Applied |
+|---------|--------|----------|
+| Tablist above the panel | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ |
+| In-page tabs (instant change) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ |
+| Automatic activation on focus | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ |
+| Arrow keys + Home/End + roving tabindex | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ |
+| Full tablist/tab/tabpanel ARIA | [W3C APG](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) | ✅ |
+| Labels in natural case (never ALL-CAPS) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ |
+| `:visited` neutralized (navigation) | [ADR-047](decisions/ADR-047-no-visited-nav.md) | ✅ |
+| Optional `href` (navigation tabs) | [NN/g](https://www.nngroup.com/articles/tabs-used-right/) | ✅ |
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|----------------|
+| `role="group"` + `aria-current` (like agtc-segmented) | Tabs change a panel — `tablist` is the correct ARIA pattern |
+| Manual activation by default | The APG recommends auto when content is preloaded |
+| Closable tabs from D3 | No use case in the current doc-chrome |
+
+---
+
+## Consequences
+
+- `agtc-segmented` remains the pattern for immediate-effect settings (≤5 options, no panel).
+- `agtc-tabs` is the pattern for in-page navigation with a content panel.
+- The distinction is documented in both components' guidelines.
+
+<!-- FR -->
+
 # ADR-056 — Implémentation de `agtc-tabs`
 
 > **Date :** 2026-06-12
@@ -7,10 +135,6 @@
 > **Chemin logique:** decisions/ADR-056-agtc-tabs-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** components/agtc-tabs.js, guidelines/components/tabs.md, tokens/component.json, decisions/ADR-047-no-visited-nav.md
-
-> **English summary:** Implements `agtc-tabs` for the site's doc-chrome (e.g. "Overview | Tokens | Best practices"). Decisions: in-page tabs by default with an optional per-tab `href` for external links; automatic activation on arrow-key focus (per the W3C APG, since panel content is preloaded); horizontal orientation only for now; closable tabs deferred (no use case yet); full ARIA tablist/tab/tabpanel pattern with roving tabindex; and `:visited` neutralized per the system-wide no-visited-nav rule (ADR-047).
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

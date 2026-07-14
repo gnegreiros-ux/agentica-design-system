@@ -1,3 +1,186 @@
+# ADR-015 — Automatic ADR reminder hook on critical modifications
+
+> **Date:** 2026-05-28
+> **Last revision:** 2026-05-31
+> **Status:** ✅ Active (amended)
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-015-hook-rappel-adr.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
+> **Relations:** .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md
+
+---
+
+## Context
+
+The `tokens/`, `guidelines/`, and `components/` files contain the design
+system's structuring decisions: token values, component contracts, normative
+documentation. Any modification in these areas should, in principle, be
+accompanied by an ADR or a TCR explaining why.
+
+In practice, documentation was being forgotten. An agent or a human would
+modify `tokens/semantic.json` to add a token, commit, and no ADR would be
+created. The git history kept the _what_ but lost the _why_.
+
+The question was:
+
+> **How do we ensure that a modification in a critical area of the system
+> systematically triggers a reflection on whether an ADR is needed, without
+> blocking the workflow or forcing an ADR for every minor change?**
+
+---
+
+## Decision
+
+Add a `PostToolUse` hook in `.claude/settings.json` that fires after every
+`Write` or `Edit` operation on a file whose path contains `/tokens/`,
+`/guidelines/`, or `/components/`.
+
+The hook injects a reminder into the model's context via `additionalContext`:
+
+```
+ADR REMINDER: The modified file is in a critical area of the design system.
+Immediately ask the user: Would you like to create an ADR
+to document this change? (Yes/No)
+```
+
+This reminder forces Claude to ask the question on every critical modification.
+The user answers Yes or No — no ADR is created without an explicit human decision.
+
+### Configuration (`/.claude/settings.json`)
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{...additionalContext...}' \"$f\"; fi",
+            "statusMessage": "Checking ADR…"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Rule documented only in CLAUDE.md** | A textual rule in a context file depends on the agent correctly reading that file. A hook runs systematically, regardless of the loaded context. |
+| **Blocking hook (non-zero exit)** | Blocking the `Edit` until an ADR is created would be too restrictive: not every change justifies an ADR (typo fix, reformatting). The non-blocking reminder leaves the decision to the human. |
+| **Hook on `git commit` (pre-commit)** | A git hook checks at commit time, too late in the flow: the relevant question should be asked _during_ the modification, while the context is still active. |
+| **System notification (OS notification)** | OS notifications are ignored when working in the terminal. The `additionalContext` is injected directly into Claude's response — impossible to miss. |
+| **Mandatory ADR for every change** | Documentation overload. A primitive token value change from `#3B82F6` to `#3B81F5` doesn't justify a full ADR. The reminder filters through human judgment. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- After every `Edit` or `Write` in a critical area, Claude asks the ADR question
+  without the user having to think about it
+- The hook runs via the Claude Code harness — it doesn't depend on the prompt,
+  the loaded context, or the session's memory
+
+**For humans:**
+- Documentation friction is minimal: a Yes/No question after each change
+- Forgotten ADRs become structurally impossible in the covered areas
+- The behavior is transparent and auditable in `.claude/settings.json`
+
+**Covered areas:**
+- `tokens/` — primitives, semantics, components
+- `guidelines/` — normative documentation for components and foundations
+- `components/` — Web Component implementations
+
+**Areas deliberately not covered:**
+- `.claude/` — internal configuration, not a design decision
+- `src/` — application code, covered by other review processes
+- `decisions/` — ADRs themselves don't trigger a recursive reminder
+
+**Accepted cost:**
+- The reminder shows up even for minor changes (typo fix in a token)
+- The user must explicitly answer No — slight friction for obvious changes
+
+---
+
+## Amendment — 2026-05-31: ADR reminder on `Write` only
+
+### Observed problem
+
+During the development sessions for the `agtc-badge`, `agtc-card` components and
+the WCAG fixes that followed, the hook fired on **every `Edit`** in the critical
+areas — including for bug fixes with no architectural decision involved (fixing
+an insufficient contrast ratio, correcting a typo in a story, adjusting a color
+that failed an axe test).
+
+Concrete result: to fix the badge's 27 WCAG violations (3 text colors to
+replace), the hook interrupted the work **6 times** to ask a question whose
+answer was systematically no. The documentation friction became noise rather
+than a useful safeguard.
+
+### Fundamental distinction
+
+| Type of change | Needs an ADR | Example |
+|-----------------|---------------|---------|
+| **New file** (`Write`) | Yes — it's a creation, therefore a decision | Adding `agtc-badge.js`, creating a token |
+| **Modification** (`Edit`) | Rarely — often a bug fix or an adjustment | Fixing a contrast ratio, renaming a variable |
+
+The question "does this need an ADR?" is relevant when **creating** something
+(new component, new token, new guideline). It's almost always irrelevant when
+**modifying** something that already exists — the original ADR already covers
+the decision.
+
+### Change applied
+
+The `PostToolUse` hook is now split into two entries:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "...ADR reminder..." }]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{ "type": "command", "command": "...construction log..." }]
+      }
+    ]
+  }
+}
+```
+
+- **ADR reminder**: `Write` only — fires on file creation
+- **Construction log**: `Write|Edit` — unchanged, captures every modification
+
+### Accepted cost of the amendment
+
+An `Edit` that genuinely represents a new architectural decision will no longer
+automatically trigger the reminder. Discipline is still required: if a token or
+component modification encodes a non-trivial decision, the human or the agent
+must create the ADR manually. The hook is no longer the sole safeguard for
+modifications.
+
+---
+
+## Incidents or triggers (original version)
+
+Repeated observation: during work sessions on tokens and guidelines, structuring
+modifications were committed with no associated ADR. The git history kept the
+diff but not the justification. This hook is the procedural response to that
+lack of documentation discipline.
+
+<!-- FR -->
+
 # ADR-015 — Hook automatique de rappel ADR sur modifications critiques
 
 > **Date :** 2026-05-28
@@ -8,10 +191,6 @@
 > **Chemin logique:** decisions/ADR-015-hook-rappel-adr.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** .claude/settings.json, decisions/ADR-004-gouvernance-humaine.md, decisions/ADR-014-conventional-commits.md
-
-> **English summary:** Adds a `PostToolUse` hook that reminds the agent to ask "do you want an ADR for this?" whenever `tokens/`, `guidelines/`, or `components/` are touched, since documented rules were being forgotten in practice. A 2026-05-31 amendment restricts the reminder to `Write` (new files) only, since it fired too often on routine `Edit` bug fixes and became noise rather than a safeguard.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

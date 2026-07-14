@@ -1,3 +1,118 @@
+# ADR-050 — Compliant action teal on the real surface: teal.11 `#008573` → `#007a68`
+
+> **Date:** 2026-06-06
+> **Status:** ✅ Active
+> **Decision-makers:** Principal Designer (primitive token value)
+> **Type:** contract
+> **Logical path:** decisions/ADR-050-action-teal-contrast-real-surface.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-048-action-teal-wcag-contrast.md, tokens/primitives.json, tokens/semantic.json, .claude/skills/pipelines/axe-core.md, guidelines/components/button.md
+
+---
+
+## Context
+
+**ADR-048** raised `action.primary` to `teal.11` (`#008573`), certifying it at
+**4.56:1**, a value measured **against pure white `#ffffff`**. But the system's real page
+background is **`gray.1` = `#fcfcfc`** ("App background" token), not pure white.
+
+The **first run of the axe-core gate** (ADR-007, enabled in reporting mode — commit
+`2d84e75`) revealed **76 violations**, with one dominant, **systemic** root cause:
+
+| Pair measured | Real ratio | AA text (4.5:1) |
+|---------------|-----------|------------------|
+| `action.primary` teal.11 `#008573` as **text** on `#fcfcfc` (gray.1) | **4.45:1** | ❌ fails by a hair |
+| White text on primary button teal.11 `#008573` | 4.56:1 | ✅ (borderline) |
+
+The failure is **uniform** everywhere the action teal serves as **text**: active links
+(nav / TOC / sidebar), `secondary`/`ghost` button text, inline code (`td code`), prose
+links. ADR-048's margin (0.06 above threshold) was calibrated against the wrong surface;
+on `#fcfcfc` it drops below the threshold.
+
+> The Radix teal ramp offers **no step** between teal.11 (`#008573`) and teal.12
+> (`#0d3d38`, near-black, 11.75:1). The fix is therefore not an existing step but a
+> **slightly darker action teal** — a **primitive token value** decision (Principal
+> Designer governance), not a CSS patch.
+
+---
+
+## Decision
+
+Retune the **`teal.11`** primitive from `#008573` to **`#007a68`**.
+
+`teal.11` is consumed by only two semantic roles — `action.primary` and `border.focus`
+— which automatically inherit the new value. No other consumer (contained blast radius).
+
+| Token | Before | After | As text on `#fcfcfc` | White text on top |
+|-------|-------|-------|------------------------|--------------------|
+| `primitive.color.teal.11` | `#008573` | **`#007a68`** | 4.45 → **5.14:1** ✅ AA | 4.56 → **5.27:1** ✅ AA |
+| `semantic.action.primary` (→ teal.11) | — | inherits | **5.14:1** ✅ | **5.27:1** ✅ |
+| `semantic.border.focus` (→ teal.11) | — | inherits | **5.14:1** (≥3:1, non-text) ✅ | — |
+| `action.primary-hover` (teal.12 `#0d3d38`) | unchanged | unchanged | 11.75:1 ✅ | — |
+| `brand.primary` (teal.9 `#12a594`, identity) | unchanged | unchanged | — (logotype, exempt) | — |
+
+The retained margin (~0.6 above threshold) is robust to rounding and to any slightly
+tinted surface, while remaining **visibly teal** (no drift toward teal.12's near-black).
+
+---
+
+## Accessibility (WCAG 2.2)
+
+| Element | After (`#007a68`) | Verdict |
+|---------|-------------------|---------|
+| Active link / code / ghost button text (teal as text on `#fcfcfc`) | 5.14:1 | ✅ AA |
+| Primary button text (white on teal.11) | 5.27:1 | ✅ AA |
+| Primary button hover (white on teal.12) | 11.75:1 | ✅ AAA |
+| Focus ring (teal.11 on `#fcfcfc`, non-text) | 5.14:1 | ✅ (≥ 3:1) |
+| "Agentica" wordmark (teal.9, logotype) | — | exempt (WCAG 1.4.3) |
+
+---
+
+## Scope
+
+| Included | Excluded |
+|--------|-------|
+| `primitive.color.teal.11`: `#008573` → `#007a68` | `brand.primary` (teal.9, identity — SVG logo / manifest) |
+| `action.primary` + `border.focus` intents (ref. real surface, ADR-050) | `action.primary-hover` (teal.12, already compliant) |
+| Token code display in `site/build.js` (`#008573` → `#007a68`) | ADR-048 (immutable; this ADR corrects the record) |
+| `axe-core.md` pipeline docs (root cause marked resolved) | Recompiling `dist/` + `site/dist/` (artifacts regenerated at build) |
+
+---
+
+## Rejected alternatives
+
+- **Dedicated off-ramp action primitive** (leave teal.11 = `#008573`, add `teal.action` =
+  `#007a68`): keeps the canonical Radix ramp, but introduces an unnumbered off-scale
+  primitive. Rejected — `teal.11` has only two interactive consumers; retuning it in
+  place is contained and avoids an exception primitive.
+- **Finer value `#007e6c`** (4.87:1): compliant but only ~0.37 of margin — fragile
+  against rounding / marginally darker surfaces. Rejected in favor of a comfortable margin.
+- **Lighten the page background** (`#fcfcfc` → pure white): touches a much broader
+  surface foundation to save a single pair, and displaces the problem. Rejected.
+- **Change nothing, document the debt**: contrary to the non-negotiable WCAG AA value
+  and the button contract ("4.5:1 minimum"). Rejected.
+
+---
+
+## Consequences
+
+- The action teal is AA-compliant **on the real surface** (`#fcfcfc`), not just on
+  theoretical white. The root cause of the 76 violations (the `color-contrast` category)
+  is resolved.
+- Still to address before the axe-core gate can become **blocking**:
+  `aria-prohibited-attr` (decorative `<div>` → `role="img"`) and `label` (×2 controls with
+  no label). Out of scope for this (token) ADR.
+- `guidelines/components/button.md` ("4.5:1 minimum") is now genuinely satisfied on the
+  page background.
+- ADR-048 remains the historical record of the "two teals, two roles" split (brand
+  teal.9 / action teal.11); this ADR-050 **only corrects the action teal's value** and
+  the reference-surface error. ADRs are immutable; **ADR-050 is authoritative** on the
+  value of `teal.11`.
+- Governance: change to a **primitive token value** — **Principal Designer** approval.
+  No token added, no component token modified, no hardcoded value introduced.
+
+<!-- FR -->
+
 # ADR-050 — Teal d'action conforme sur le fond réel : teal.11 `#008573` → `#007a68`
 
 > **Date :** 2026-06-06
@@ -7,13 +122,6 @@
 > **Chemin logique:** decisions/ADR-050-action-teal-contrast-real-surface.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-048-action-teal-wcag-contrast.md, tokens/primitives.json, tokens/semantic.json, .claude/skills/pipelines/axe-core.md, guidelines/components/button.md
-
-> **English summary:** Corrects ADR-048's teal.11 value: it was validated against pure white
-> (#ffffff), but the real page background is `#fcfcfc`, causing the first axe-core run to surface
-> 76 contrast violations. Retunes `primitive.color.teal.11` from `#008573` to `#007a68`, restoring
-> AA compliance (5.14:1) on the actual background with a comfortable safety margin.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 
@@ -47,8 +155,8 @@ sous le seuil.
 
 Retuner le primitif **`teal.11`** de `#008573` à **`#007a68`**.
 
-`teal.11` n'est consommé que par deux rôles sémantiques — `action.primary` et `border.focus` — qui
-héritent automatiquement de la nouvelle valeur. Aucun autre consommateur (rayon d'impact contenu).
+`teal.11` n'est consommé que par deux rôles sémantiques — `action.primary` et `border.focus` —
+qui héritent automatiquement de la nouvelle valeur. Aucun autre consommateur (rayon d'impact contenu).
 
 | Jeton | Avant | Après | En texte sur `#fcfcfc` | Texte blanc dessus |
 |-------|-------|-------|------------------------|--------------------|

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-card` — Agentica</title>
+<title>`agtc-card` implementation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-card` — Agentica">
+<meta property="og:title" content="`agtc-card` implementation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-card` — Agentica">
+<meta name="twitter:title" content="`agtc-card` implementation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-card`</h1>
+  <h1 class="adr-page-title">`agtc-card` implementation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,39 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Documents <code>agtc-card</code>: no native interactivity in v1 (a clickable card must wrap an <code>&lt;a&gt;</code>/<code>&lt;agtc-button&gt;</code>, avoiding the <code>&lt;div role="button"&gt;</code> WCAG 4.1.2 anti-pattern), auto-detected <code>header</code>/<code>footer</code> slots with conditional separators and padding adjustments, 3 elevation variants (default/elevated/flat), and 4 padding levels (none/sm/md/lg).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
+<blockquote><p>Added on 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>C1, C3, C4 approved; C2 revised</strong> (anti-nesting clickability rule). Details and links: <code>guidelines/components/card.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Clustering of related content</td><td>Dashboard — grouped layout</td></tr><tr><td>Clickable card — C2 revised (1 destination = enclosing link; distinct actions = <code>::after</code> overlay or non-interactive container; never nested interactive elements)</td><td>Smashing — clickable cards · NN/g</td></tr><tr><td>Hierarchy via elevation/shadow, not color alone</td><td>Dashboard — composition</td></tr><tr><td>Detail-on-demand (the card summarizes)</td><td>Dashboard — screenspace</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p><code>agtc-card</code> is a visual container for grouping related information. It's one of the most-used components in interfaces — it structures dashboards, result lists, and grouped forms.</p>
+<p>Two questions guided the decisions:</p>
+<p>1. <strong>Interactivity</strong> — a card can be clickable (link to a detail view) or    purely a container. Should this behavior be encoded into the component?</p>
+<p>2. <strong>Sections</strong> — header, body, footer are recurring patterns.    Should they be structurally enforced or left free via slots?</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — No native interactivity in v1</h3>
+<p>A clickable card is a complex accessibility pattern: the interactive element must be <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code>, not a <code>&lt;div&gt;</code> with <code>onclick</code>.</p>
+<p><strong>Decision:</strong> <code>agtc-card</code> is non-interactive. For a clickable card, the consumer places an <code>&lt;a&gt;</code> or <code>&lt;agtc-button&gt;</code> inside. An <code>agtc-card-link</code> component could be added in v2 if the need recurs.</p>
+<p><strong>Rejected alternative:</strong> adding a <code>clickable</code> attribute with <code>tabindex="0"</code> and <code>role="button"</code> — rejected because a <code>&lt;div role="button"&gt;</code> with no native <code>&lt;button&gt;</code> is a WCAG 4.1.2 anti-pattern (interactive elements must use semantic HTML elements).</p>
+<hr>
+<h3>Decision 2 — Named <code>header</code> / <code>footer</code> slots with automatic separators</h3>
+<p>The <code>header</code> and <code>footer</code> slots are detected via <code>slotchange</code> + <code>assignedNodes()</code>. Separators (border) only appear if the slot is actually used — avoiding an orphaned border on a card with no header.</p>
+<p>Padding on the header/body/footer sections is uniform (same value as the <code>padding</code> attribute) so the spacing stays visually consistent.</p>
+<p><strong>Exception:</strong> <code>has-header</code> and <code>has-footer</code> remove the body's padding-top when a header is present, and its padding-bottom when a footer is present — avoiding double spacing at the joints.</p>
+<hr>
+<h3>Decision 3 — 3 variants: default / elevated / flat</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Variant</th><th>Usage</th><th>Visual signal</th></tr></thead><tbody><tr><td><code>default</code></td><td>Standard card</td><td>Subtle gray border</td></tr><tr><td><code>elevated</code></td><td>Highlighted, hierarchy</td><td>Soft drop shadow</td></tr><tr><td><code>flat</code></td><td>Grouped background, integrated section</td><td>Subtle gray background, no border</td></tr></tbody></table></div>
+<p>The <code>elevated</code> shadow (<code>0 1px 3px rgba(0,0,0,0.10)</code>) is encoded as a component token, <code>card.elevated.shadow</code>. There isn't yet a semantic elevation token — this token is a proxy until a dedicated elevation system is created.</p>
+<hr>
+<h3>Decision 4 — 4 padding levels: none / sm / md / lg</h3>
+<p><code>none</code> is indispensable for cards with full-width images. <code>sm</code> (12px) for compact cards (tables, dense lists). <code>md</code> (20px, default) for most cases. <code>lg</code> (24px) for cards with heavy text content.</p>
+<hr>
+<h2>v1 scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (v2)</th></tr></thead><tbody><tr><td>3 variants</td><td><code>agtc-card-link</code> (clickable card)</td></tr><tr><td>4 padding levels</td><td>Skeleton loading state</td></tr><tr><td>header / body / footer slots</td><td>Card grid layout helper</td></tr><tr><td>Automatic separators</td><td><code>outlined-accent</code> variant</td></tr></tbody></table></div>
+<hr>
+<h2>Tokens added to <code>component.json</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody><tr><td><code>--agtc-card-elevated-shadow</code></td><td><code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code></td></tr><tr><td><code>--agtc-card-elevated-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-flat-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-card-flat-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-padding-none</code></td><td><code>0px</code></td></tr><tr><td><code>--agtc-card-padding-sm</code></td><td><code>12px</code></td></tr><tr><td><code>--agtc-card-padding-lg</code></td><td><code>24px</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>C1, C3, C4 approuvés ; C2 révisé</strong> (règle de cliquabilité anti-imbrication). Détail et liens : <code>guidelines/components/card.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Clustering du contenu lié</td><td>Dashboard — grouped layout</td></tr><tr><td>Carte cliquable — C2 révisé (1 destination = lien englobant ; actions distinctes = overlay <code>::after</code> ou conteneur non interactif ; jamais d'interactif imbriqué)</td><td>Smashing — clickable cards · NN/g</td></tr><tr><td>Hiérarchie via élévation/ombre, pas couleur seule</td><td>Dashboard — composition</td></tr><tr><td>Détail-on-demand (la carte résume)</td><td>Dashboard — screenspace</td></tr></tbody></table></div>
 <hr>
@@ -165,7 +193,7 @@
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>3 variantes</td><td><code>agtc-card-link</code> (carte cliquable)</td></tr><tr><td>4 niveaux de padding</td><td>Skeleton loading state</td></tr><tr><td>Slots header / body / footer</td><td>Card grid layout helper</td></tr><tr><td>Séparateurs automatiques</td><td>Variante <code>outlined-accent</code></td></tr></tbody></table></div>
 <hr>
 <h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Valeur</th></tr></thead><tbody><tr><td><code>--agtc-card-elevated-shadow</code></td><td><code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code></td></tr><tr><td><code>--agtc-card-elevated-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-flat-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-card-flat-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-padding-none</code></td><td><code>0px</code></td></tr><tr><td><code>--agtc-card-padding-sm</code></td><td><code>12px</code></td></tr><tr><td><code>--agtc-card-padding-lg</code></td><td><code>24px</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Valeur</th></tr></thead><tbody><tr><td><code>--agtc-card-elevated-shadow</code></td><td><code>0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)</code></td></tr><tr><td><code>--agtc-card-elevated-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-flat-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-card-flat-border</code></td><td><code>transparent</code></td></tr><tr><td><code>--agtc-card-padding-none</code></td><td><code>0px</code></td></tr><tr><td><code>--agtc-card-padding-sm</code></td><td><code>12px</code></td></tr><tr><td><code>--agtc-card-padding-lg</code></td><td><code>24px</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-034.html" class="agtc-button secondary">← ADR-034</a>
     <a href="adr-036.html" class="agtc-button secondary">ADR-036 →</a>
   </div></main>

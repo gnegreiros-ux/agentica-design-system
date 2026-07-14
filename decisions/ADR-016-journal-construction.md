@@ -1,3 +1,124 @@
+# ADR-016 — Automatic kit construction log
+
+> **Date:** 2026-05-28
+> **Status:** ⚠️ Superseded by [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) (2026-07-09)
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-016-journal-construction.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
+> **Relations:** log/kit-construction.md (removed), .claude/hooks/log-kit-construction.sh (removed), .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
+
+> **Deprecation note (2026-07-09):** the mechanism described below (file +
+> `PostToolUse` hook) has been removed. Kit construction tracking now lives
+> in GitHub Projects — see ADR-069. This document remains as the historical
+> record of the original decision, in keeping with the rule "an ADR is never
+> deleted."
+
+---
+
+## Context
+
+An agentic design system accumulates two distinct categories of decisions:
+
+1. **Design decisions** — which colors, which spacing, which variants.
+   These decisions are tracked in `tokens/`, `guidelines/`, `components/`, and in the ADRs.
+
+2. **Kit construction decisions** — how the system works as a tool: the rules
+   for agents (`.claude/`), automation hooks, governance contracts
+   (`decisions/`), root files (`AGENTS.md`, `DESIGN.md`).
+
+The second category was invisible. Git commits capture the _what_, but not the
+timeline of actions — when a hook was added, when a rule was modified, in what
+order the kit was assembled. For an agent picking up work mid-construction,
+this lack of a log makes reconstructing the context difficult.
+
+The question was:
+
+> **How do we make the construction of the kit itself observable, without
+> depending on session memory or an exhaustive reading of the git history?**
+
+---
+
+## Decision
+
+Set up an automatic construction log:
+
+- **File**: `log/kit-construction.md` — a timestamped chronological table
+- **Script**: `.claude/hooks/log-kit-construction.sh` — runs after every `Write` or `Edit`
+- **Trigger**: files in `.claude/`, `decisions/`, `AGENTS.md`, `DESIGN.md`
+- **Mode**: asynchronous (`async: true`) — doesn't block the workflow
+
+Entry format:
+
+```
+| 2026-05-28 16:34 | Created  | `decisions/ADR-015-hook-rappel-adr.md` |
+| 2026-05-28 16:35 | Modified | `.claude/settings.json` |
+```
+
+The `Created` / `Modified` distinction is inferred from the tool called: `Write` = Created, `Edit` = Modified.
+
+---
+
+## Scope — what is logged and what isn't
+
+| Area | Logged | Reason |
+|------|--------|--------|
+| `.claude/` | ✅ | Configuration, rules, hooks — kit construction |
+| `decisions/` | ✅ | ADRs — architectural decisions about the kit |
+| `AGENTS.md`, `DESIGN.md` | ✅ | Founding contracts of the kit |
+| `tokens/` | ❌ | Design system content — out of scope |
+| `guidelines/` | ❌ | Design system content — out of scope |
+| `components/` | ❌ | Design system content — out of scope |
+| `log/` | ❌ | The log doesn't log itself |
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Git log as the log** | `git log` lists commits, not individual actions. A session can produce dozens of edits between two commits. The log captures intra-commit granularity. |
+| **Manual log** | Depends on human or agent discipline. A hook is structurally reliable — it runs regardless of who makes the modification. |
+| **Log in a `.claude/` file (unversioned)** | An unversioned log isn't shareable and disappears if the folder is recreated. `log/kit-construction.md` is committed with the rest of the kit. |
+| **Blocking (synchronous) hook** | Writing to a log file shouldn't slow down the workflow. `async: true` guarantees Claude doesn't wait for the script to finish. |
+| **Rich entries (reason for change, author)** | A hook can't infer the intent behind a modification. Only observable facts (file, timestamp, tool) are recorded. The _why_ belongs to the ADRs and commit messages. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- An agent picking up a session can read `log/kit-construction.md` to
+  understand what was recently done, without reconstructing the git history
+- The log distinguishes kit construction (this file) from content modifications
+  (tokens, guidelines) — two separate registers for two distinct types of activity
+
+**For humans:**
+- Immediate observability: `cat log/kit-construction.md` gives a readable timeline
+- Retroactivity is possible: entries prior to the hook can be added manually or
+  by an initialization agent
+
+**Relation to ADR-015:**
+- ADR-015 (ADR reminder hook) watches `tokens/`, `guidelines/`, `components/` — the content
+- ADR-016 (this log) watches `.claude/`, `decisions/`, `AGENTS.md`, `DESIGN.md` — the kit
+- Both hooks coexist on the same `PostToolUse Write|Edit` event, without interference
+
+**Accepted cost:**
+- The project's absolute path is encoded in the script — must be adapted if the
+  repo is moved
+- The log grows indefinitely; annual or major-version rotation is worth
+  considering
+
+---
+
+## Incidents or triggers
+
+Observed while assembling the kit: after several work sessions, it was
+difficult to answer "what was set up today?" without rereading the entire git
+history. The automatic log makes this question trivial.
+
+<!-- FR -->
+
 # ADR-016 — Journal de construction automatique du kit
 
 > **Date :** 2026-05-28
@@ -7,10 +128,6 @@
 > **Chemin logique:** decisions/ADR-016-journal-construction.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/git-workflow.md
 > **Relations:** log/kit-construction.md (retiré), .claude/hooks/log-kit-construction.sh (retiré), .claude/settings.json, decisions/ADR-015-hook-rappel-adr.md, decisions/ADR-014-conventional-commits.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
-
-> **English summary:** Originally set up an automatic, hook-driven construction log (`log/kit-construction.md`) distinct from git history, to track changes to `.claude/`, `decisions/`, and root contract files. Superseded 2026-07-09 by ADR-069 — kit-tracking now lives in GitHub Projects instead of a local log file.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 > **Note de dépréciation (2026-07-09) :** le mécanisme décrit ci-dessous (fichier +
 > hook `PostToolUse`) a été retiré. Le suivi de la construction du kit vit désormais

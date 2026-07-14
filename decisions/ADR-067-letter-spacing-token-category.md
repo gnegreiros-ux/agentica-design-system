@@ -1,3 +1,122 @@
+# ADR-067 — New token category: `letterSpacing`
+
+> **Date:** 2026-07-08
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead (semantic) — Principal Designer (primitive)
+> **Type:** token
+> **Logical path:** decisions/ADR-067-letter-spacing-token-category.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
+> **Relations:** tokens/primitives.json (primitive.letterSpacing), tokens/semantic.json (semantic.typography.letter-spacing), components/agtc-code-block.js, guidelines/components/code-block.md
+
+---
+
+## Context
+
+Token debt audit on `components/agtc-code-block.js` (language indicator, ~line 79-81):
+three typography values hardcoded, in violation of `.claude/rules/tokens-system.md`:
+
+| Hardcoded value | Location |
+|---------------|-------------|
+| `line-height: 1.6` | Code body (`code`, `::slotted(code)`) |
+| `font-weight: 600` | `.language` (language indicator, e.g. `HTML`, `JSON`) |
+| `letter-spacing: 0.06em` | `.language` |
+
+The first point (`line-height: 1.6`) was a mechanical fix: `primitive.lineHeight.reading`
+already equaled `1.6` and a semantic alias (`semantic.typography.detail.line-height`)
+already existed — no new token, direct wiring.
+
+The second point (`font-weight: 600`) has no primitive at `600` — only `regular:400`,
+`medium:500`, `bold:700`. Presented to the human, who chose to **reuse `medium` (500)**
+rather than add a `semibold:600` primitive — accepting a minor visual change to the
+language badge rather than expanding the weight scale. Wired to
+`semantic.typography.label.weight` (already used elsewhere, e.g.
+`component.top-nav.tab.font-weight`).
+
+The third point (`letter-spacing: 0.06em`) had **no existing category** — neither
+primitive nor semantic. This is the subject of this ADR.
+
+---
+
+## Decision
+
+Create the `letterSpacing` category at the first two levels of the token hierarchy:
+
+### Primitive — `tokens/primitives.json` → `primitive.typography.letterSpacing`
+
+| Token | Value | Description |
+|-------|--------|--------------|
+| `letterSpacing.normal` | `0em` | Default — body text, labels, details |
+| `letterSpacing.wide` | `0.06em` | Widened — small-caps labels (compensates for reduced legibility of uppercase text) |
+
+### Semantic — `tokens/semantic.json` → `semantic.typography.letter-spacing`
+
+| Token | Alias | Intent |
+|-------|-------|-----------|
+| `letter-spacing.normal` | `{primitive.letterSpacing.normal}` | Default — body text, labels, details in normal case |
+| `letter-spacing.wide` | `{primitive.letterSpacing.wide}` | Small-caps labels (code language indicator, marketing eyebrow) where the spacing compensates for the reduced legibility of uppercase text |
+
+Generated CSS variable: `--agtc-semantic-typography-letter-spacing-wide` (Style
+Dictionary, `--agtc-semantic-[group]-[role]` convention).
+
+### Immediate consumer
+
+`components/agtc-code-block.js` (`.language`):
+
+```css
+.language {
+  text-transform: uppercase;
+  letter-spacing: var(--agtc-semantic-typography-letter-spacing-wide, 0.06em);
+  font-weight: var(--agtc-semantic-typography-label-weight, 500);
+  flex-shrink: 0;
+}
+```
+
+---
+
+## Rationale
+
+- `0.06em` is a standard letter-spacing value for small uppercase text (compensates for
+  the legibility loss caused by `text-transform:uppercase`) — a pattern potentially
+  repeated elsewhere (e.g. `semantic.typography.marketing.eyebrow`, which already
+  mentions "wide letter-spacing" in its `$intent` with no dedicated token — pre-existing
+  debt not addressed by this ADR, to be fixed in a future dedicated audit).
+- Creating the category now, rather than a local hardcoded value, avoids repeating the
+  same debt in the next component that needs the same spacing (marketing eyebrow, badges).
+- Cross-team impact: a new token category, visible to every agent and designer who
+  consumes `tokens/semantic.json` → triggers the ADR trigger (`pipelines/adr-triggers.md`,
+  "semantic token change" rule).
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| Keep `0.06em` hardcoded with a comment | Violates `tokens-system.md` — this was precisely the debt being fixed |
+| Add `letter-spacing.wide` only at the component level (`component.code-block.language.letter-spacing`) | Skips the semantic level (ADR-001); the "wide spacing for uppercase" intent is reusable beyond the code-block (marketing eyebrow) |
+| Add `primitive.fontWeight.semibold: 600` to preserve the badge's exact visual rendering | Rejected by the human — `medium` (500) is sufficient, avoids expanding the weight scale for a single consumer |
+
+---
+
+## Consequences
+
+**For agents:** any future small-caps label (badges, eyebrow) must consume
+`semantic.typography.letter-spacing.wide` rather than a hardcoded value.
+
+**For the system:** `agtc-code-block.js` no longer has any hardcoded typography value.
+Residual debt identified but **out of scope** for this ADR:
+`semantic.typography.marketing.eyebrow` mentions wide letter-spacing in its `$intent`
+with no wired token — to be audited separately.
+
+**Build:** `npm run tokens` regenerated (0 ghosts); `node site/build.js` regenerated
+(`site/dist/tokens.css` — 814 variables defined, 270 referenced, 0 ghosts).
+
+**Governance:** new semantic category → Design System Lead approval; primitive →
+Principal Designer approval. Both approved by the human on 2026-07-08 (see decision
+above on the `medium` vs. new `semibold` primitive choice).
+
+<!-- FR -->
+
 # ADR-067 — Nouvelle catégorie de token : `letterSpacing`
 
 > **Date :** 2026-07-08

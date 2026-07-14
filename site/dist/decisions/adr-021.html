@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Atkinson Hyperlegible comme police principale — Agentica</title>
+<title>Atkinson Hyperlegible as the primary typeface — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Atkinson Hyperlegible comme police principale — Agentica">
+<meta property="og:title" content="Atkinson Hyperlegible as the primary typeface — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Atkinson Hyperlegible comme police principale — Agentica">
+<meta name="twitter:title" content="Atkinson Hyperlegible as the primary typeface — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Atkinson Hyperlegible comme police principale</h1>
+  <h1 class="adr-page-title">Atkinson Hyperlegible as the primary typeface</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,52 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Replaces Inter (chosen with no documented accessibility rationale) with Atkinson Hyperlegible, a font designed for the Braille Institute of America that deliberately disambiguates commonly confused characters (l/1/I, O/0, b/d/p/q) to improve legibility for low-vision users. Tokenized as <code>primitive.fontFamily.base</code>; the font has no medium (500) weight, which browsers round down to 400.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The system used Inter (Google Fonts) as its default font — a common choice but with no documented accessibility rationale. The font was not tokenized: the value was hardcoded in <code>site/build.js</code> and was not part of the token system.</p>
+<p>Two problems needed solving: 1. No accessibility rationale existed for the typographic choice 2. Since the font was not a token, agents could not trace it or enforce it</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>Font: Atkinson Hyperlegible</h3>
+<p>Designed by <strong>Applied Design Works</strong> for the <strong>Braille Institute of America</strong> (2019, royalty-free — Open Font License). Clinically validated to improve legibility for people with low vision.</p>
+<p><strong>Technical differentiators:</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Ambiguous pair</th><th>Inter</th><th>Atkinson Hyperlegible</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Similar</td><td>Deliberately distinct</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Similar</td><td>Deliberately distinct</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Mirrored</td><td>Intentional asymmetries</td></tr><tr><td><code>n</code> / <code>u</code> / <code>m</code></td><td>Similar</td><td>Accentuated counter-forms</td></tr></tbody></table></div>
+<p><strong>Available weights:</strong> Regular (400) and Bold (700) only.</p>
+<blockquote><p>⚠️ The <code>primitive.fontWeight.medium</code> (500) token has no equivalent in Atkinson Hyperlegible. Browsers round it down to 400 (Regular). This behavior is acceptable and documented — labels and controls remain legible at 400.</p></blockquote>
+<h3>Tokenization</h3>
+<p>The font is now a primitive token (<code>primitive.fontFamily.base</code>) referenced by a semantic token (<code>semantic.typography.fontFamily</code>). It is no longer hardcoded in the build.</p>
+<pre class="code-block"><code class="lang-json">// primitives.json
+"fontFamily": {
+  "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif" }
+}
+
+// semantic.json
+"typography": {
+  "fontFamily": { "value": "{primitive.fontFamily.base}" }
+}</code></pre>
+<h3>Resolution chain in the build</h3>
+<pre class="code-block"><code class="lang-text">semantic.typography.fontFamily
+  → {primitive.fontFamily.base}
+  → 'Atkinson Hyperlegible', system-ui, sans-serif
+  → --agtc-semantic-typography-fontFamily in tokens.css</code></pre>
+<h3>Google Fonts import</h3>
+<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
+<hr>
+<h2>WCAG rationale</h2>
+<p>WCAG 2.x does not prescribe a specific font, but success criterion <strong>1.4.8 (Visual Presentation, AAA)</strong> recommends that text be readable without effort. Atkinson Hyperlegible is the most direct response to this principle at the AA+ level.</p>
+<p>Braille Institute clinical study (2019): a measured improvement in reading accuracy for users with reduced visual acuity, with no degradation for sighted users.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Inter</strong></td><td>Common choice with no documented accessibility rationale. Ambiguous pairs left unaddressed.</td></tr><tr><td><strong>Lexie Readable</strong></td><td>Less widespread, less maintained, not available on Google Fonts.</td></tr><tr><td><strong>OpenDyslexic</strong></td><td>Aesthetic too distinctive for a general-purpose design system. Effectiveness studies are contested.</td></tr><tr><td><strong>System font stack</strong></td><td>Cross-platform inconsistency. No control over character differentiation.</td></tr><tr><td><strong>Atkinson Hyperlegible Next</strong></td><td>2024+ version, still experimental. To be reconsidered in v2.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For the token system:</strong></p>
+<ul><li><code>primitive.fontFamily.base</code> and <code>semantic.typography.fontFamily</code> added</li><li>Any future change to the font goes through these tokens (traceable, auditable)</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>The font is now an intent (<code>semantic.typography.fontFamily</code>) rather than a hardcoded value</li><li>Agents can reference and enforce the token in components</li></ul>
+<p><strong>For users:</strong></p>
+<ul><li>Better legibility for people with low vision</li><li>No degradation for anyone else — Atkinson Hyperlegible is a complete workhorse typeface</li></ul>
+<p><strong>Documented limitation:</strong></p>
+<ul><li>No 500 weight — <code>fontWeight.medium</code> rounds down to 400 in browsers</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le système utilisait Inter (Google Fonts) comme police par défaut — choix courant mais sans justification d'accessibilité documentée. La police n'était pas tokenisée : la valeur était hardcodée dans <code>site/build.js</code> et ne faisait pas partie du système de tokens.</p>
 <p>Deux problèmes à résoudre : 1. Aucun argumentaire d'accessibilité pour le choix typographique 2. La police n'étant pas un token, les agents ne pouvaient pas la tracer ni la faire respecter</p>
 <hr>
@@ -178,7 +219,7 @@
 <p><strong>Pour les utilisateurs :</strong></p>
 <ul><li>Meilleure lisibilité pour les personnes à basse vision</li><li>Aucune dégradation pour les autres — Atkinson Hyperlegible est une police de labeur complète</li></ul>
 <p><strong>Limitation documentée :</strong></p>
-<ul><li>Pas de graisse 500 — <code>fontWeight.medium</code> s'arrondit à 400 dans les navigateurs</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>Pas de graisse 500 — <code>fontWeight.medium</code> s'arrondit à 400 dans les navigateurs</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-020.html" class="agtc-button secondary">← ADR-020</a>
     <a href="adr-022.html" class="agtc-button secondary">ADR-022 →</a>
   </div></main>

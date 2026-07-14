@@ -1,3 +1,152 @@
+# ADR-040 — Implementing `agtc-table`
+
+> **Date:** 2026-06-03
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-040-agtc-table-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/table.md, tokens/component.json
+
+---
+
+## Reference UX patterns applied
+
+> Added 2026-06-03 via the `ux-pattern-review` workflow (ADR-036). Decision: **T1–T10 all approved**.
+> Detail and links: `guidelines/components/table.md` § REFERENCE UX PATTERNS.
+
+| # | Pattern | Source |
+|---|---------|--------|
+| T1 | Semantic HTML + `scope="col"` | Smashing — Table Patterns |
+| T2 | `<caption>` (hideable) | Smashing |
+| T3 | Text left-aligned, numeric right-aligned | NN/g — Data Tables |
+| T4 | Row separators (optional zebra striping) | NN/g |
+| T5 | Row hover | NN/g |
+| T6 | Sticky header (optional) | NN/g · Smashing |
+| T7 | Horizontal scroll + overflow indicator | Smashing |
+| T8 | 1st column = readable identifier | NN/g |
+| T9 | `compact` density by default | Dashboard Design Patterns |
+| T10 | Sort/filter/pagination — **door left open, out of v1** | NN/g |
+
+---
+
+## Context
+
+`agtc-table` is the **most used component on the generated site**: 692 occurrences of
+`token-row`/`token-table` (token tables: CSS token → reference → value → intent), plus
+comparison tables and DOs/DON'Ts tables. The gap analysis of 2026-06-03 identified it as
+the first component to build from the site's actual needs.
+
+Observation at creation time: the site's original HTML has **neither `scope` on `<th>`
+nor `<caption>`** — an accessibility gap this component fills.
+
+The table is **read-only**: documentation tables don't need editing, sorting, or
+pagination. We avoid speculative design while keeping the door open.
+
+---
+
+## Decisions
+
+### Decision 1 — "Mix" architecture: data-driven component **+** light-DOM class
+
+Two forms consuming the **same** `component.table.*` tokens:
+
+1. **`<agtc-table>`** (Lit, shadow DOM) — driven by `.columns`/`.rows`. For apps, JS
+   contexts, and Storybook. Consistent with other components (shadow DOM + `static styles`).
+2. **`.agtc-table`** (CSS class) — applied to a real, hand-written `<table>`. For the
+   **static site**, which must remain resilient: displaying a table must **not** depend
+   on JS.
+
+Why not a single mechanism?
+- An all-shadow-DOM data-driven approach would make the site **JS-dependent** to display
+  its tables — a resilience regression (the site is currently pure static HTML).
+- *Slotting* a full `<table>` into a shadow DOM doesn't allow styling `th`/`td`
+  (`::slotted` doesn't reach descendants). The light-DOM class works around this
+  limitation and handles **rich cell content** (e.g., `<code>`), which the data-driven
+  API (escaped text) doesn't cover.
+
+### Decision 2 — Read-only; sort/filter/pagination out of scope, but an extensible API
+
+v1 implements **neither sorting, filtering, nor pagination** (T10). The site's actual
+need is static tables. But a future need was confirmed by the user: the `columns`/`rows`
+API is chosen **precisely** to accommodate them without a breaking change (future
+`column.sortable`, `@sort` event, toolbar slot). No dead property ships in v1, to avoid a
+misleading API.
+
+### Decision 3 — `table` tokens in `component.json`, `default.*` structure + paddings
+
+Colors and radius live under `table.default.*`; paddings (horizontal, compact/comfortable
+vertical) sit at the `table.*` level. This separation allows changing density without
+touching colors. Compliant with the three levels (ADR-001): every token points to a
+semantic token (`background.subtle`, `border.default`, `background.hover`…), no raw value.
+
+### Decision 4 — Accessible by default: `scope`, `<caption>`, numeric alignment
+
+`<th scope="col">` systematically; `<caption>` recommended (console warning if absent),
+visually hideable via `caption-hidden`; numeric columns right-aligned (`align="end"`) for
+vertical scanning. Fills the gaps in the original HTML.
+
+### Decision 5 — Row separators by default, zebra striping optional (T4)
+
+User decision: **row separators** by default (understated, suited to dense token
+tables), **zebra striping** available via the `striped` attribute.
+
+### Decision 6 — `compact` density by default (T9)
+
+Token tables are dense; `compact` is the default, `comfortable` available via `density`.
+
+---
+
+## v1 scope
+
+| Included | Excluded (door left open) |
+|----------|------------------------|
+| Data-driven component (`columns`/`rows`) | Sort / filter / pagination |
+| `.agtc-table` class (light DOM, rich content) | Inline cell editing |
+| `caption` + `caption-hidden`, `scope="col"` | Row selection / bulk actions |
+| Per-column alignment (`start`/`end`/`center`) | Resizable / reorderable columns |
+| `striped`, `sticky-header`, `density` | Multi-level header / colspan |
+| Horizontal scroll + overflow indicator | Rich HTML cells via the data-driven API (→ use the class) |
+
+---
+
+## Rejected alternatives
+
+- **All-shadow-DOM data-driven only**: makes the site JS-dependent for its tables (regression).
+- **All-CSS-class only**: no data-driven API for apps; no clean Storybook story.
+- **Slotting a `<table>` into shadow DOM**: impossible to style slotted `th`/`td`.
+- **Shipping a no-op `sortable`** to "flag" T10: a misleading API; documenting extensibility preferred instead.
+
+---
+
+## Consequences
+
+- The site will be able to migrate its `token-table`/`token-row` elements to
+  `.agtc-table` during the *dogfooding* step (category A of the gap analysis), with no
+  JS dependency.
+- Any future addition of sort/filter/pagination will require a new ADR (governance).
+
+---
+
+## Tokens added to `component.json`
+
+| Token | Semantic reference |
+|-------|----------------------|
+| `--agtc-table-default-header-background` | `semantic.color.background.subtle` |
+| `--agtc-table-default-header-text` | `semantic.color.text.secondary` |
+| `--agtc-table-default-cell-text` | `semantic.color.text.primary` |
+| `--agtc-table-default-border` | `semantic.color.border.default` |
+| `--agtc-table-default-row-hover` | `semantic.color.background.hover` |
+| `--agtc-table-default-stripe` | `semantic.color.background.subtle` |
+| `--agtc-table-default-caption-text` | `semantic.color.text.secondary` |
+| `--agtc-table-default-radius` | `semantic.radius.card` |
+| `--agtc-table-default-font-size` | `semantic.typography.label.size` |
+| `--agtc-table-padding-x` | `primitive.space.3` |
+| `--agtc-table-padding-y-compact` | `primitive.space.2` |
+| `--agtc-table-padding-y-comfortable` | `primitive.space.3` |
+
+<!-- FR -->
+
 # ADR-040 — Implémentation de `agtc-table`
 
 > **Date :** 2026-06-03
@@ -7,14 +156,6 @@
 > **Chemin logique:** decisions/ADR-040-agtc-table-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/table.md, tokens/component.json
-
-> **English summary:** Implements agtc-table — the site's most-used pattern (692 token-table
-> occurrences) — as a "mix" architecture: a data-driven Lit component for apps/Storybook, plus a
-> `.agtc-table` CSS class for the site's static HTML (so displaying a table never depends on JS).
-> Read-only in v1; sorting/filtering/pagination are deferred but designed for via an extensible
-> `columns`/`rows` API.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

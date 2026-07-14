@@ -1,3 +1,180 @@
+# ADR-059 — Closing the 3-level hierarchy: intermediate semantic tokens
+
+> **Date:** 2026-06-15
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** governance
+> **Logical path:** decisions/ADR-059-semantic-tokens-hierarchy-completion.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
+> **Relations:** tokens/semantic.json, site/build.js (COMP object), decisions/ADR-045-feedback-color-family-completion.md, decisions/ADR-046-inverse-surfaces-shadows-tokens.md
+
+---
+
+## Context
+
+ADR-001 sets out the fundamental rule:
+
+```
+Primitive tokens → Semantic tokens → Component tokens
+```
+
+A systematic audit of the COMP object in `site/build.js` revealed that **~20 component tokens**
+referenced primitives directly, skipping the semantic level:
+
+| Component token | Referenced primitive (violation) |
+|--------------------|-------------------------------|
+| `badge-brand-text` | `primitive.color.teal.12` |
+| `badge-success-background` | `primitive.color.green.3` |
+| `badge-warning-background` | `primitive.color.orange.3` |
+| `badge-warning-text` | `primitive.color.orange.12` |
+| `badge-info-background` | `primitive.color.blue.3` |
+| `badge-info-text` | `primitive.color.blue.12` |
+| `banner-info-background` | `primitive.color.blue.3` |
+| `banner-success-background` | `primitive.color.green.3` |
+| `banner-warning-background` | `primitive.color.orange.3` |
+| `banner-warning-accent` | `primitive.color.orange.11` |
+| `code-block-default-background` | `primitive.color.gray.12` |
+| `code-block-default-text` | `primitive.color.gray.4` |
+| `code-block-default-meta-text` | `primitive.color.gray.8` |
+| `code-block-default-copy-background` | `primitive.color.gray.11` |
+| `code-block-default-copy-background-hover` | `primitive.color.gray.10` |
+| `code-block-default-copy-text` | `primitive.color.gray.1` |
+| `toggle-default-track-off` | `primitive.color.gray.9` |
+| `toggle-default-track-off-hover` | `primitive.color.gray.10` |
+| `card-padding-sm` | `primitive.space.3` |
+| `card-padding-lg` | `primitive.space.6` |
+| `badge-md-padding-x`, `table-padding-x` | `primitive.space.3` |
+| `badge-md-padding-y` | `primitive.space.1` |
+| `badge-sm-padding-x` | `primitive.space.2` |
+| `badge-sm-padding-y` | `"2px"` (hardcoded) |
+| `code-block-default-padding-x`, `banner-padding-x` | `primitive.space.5` |
+| `code-block-default-padding-y`, `banner-padding-y` | `primitive.space.4` |
+
+Consequence: changing the "dark code background" color required searching for every occurrence
+of `gray.12` in COMP, instead of modifying a single `background.code` semantic token that
+propagated everywhere. The intent ("code background") was invisible.
+
+The audit also identified **3 immediate CSS violations** unrelated to tokens:
+- Hex fallbacks inside `var(,fallback)` (e.g. `var(--agtc-...,#646464)`) in `[data-theme="light"]`
+- `font-size:0.85rem` outside a token on `.audit-contrast-table`
+- `filter:drop-shadow(rgba...)` outside a token on `.platform-logo-item img`
+
+> **Post-incident note, 2026-06-15:** the audit initially classified the `color:#hex;color:var(...)`
+> pairs in the `:visited` rules as "obsolete IE11 fallbacks" — that was a mistake. These literal
+> values are a Safari compatibility necessity: WebKit blocks `var()` resolution inside `:visited`
+> to prevent history sniffing. They were removed and then restored the same day. See
+> `no-visited-nav.md` §Safari exception and ADR-047.
+
+---
+
+## Decision
+
+### Part 1 — 18 new semantic tokens
+
+Create the missing intermediate tokens in `tokens/semantic.json`, grouped by family:
+
+#### Brand color
+| Semantic token | Primitive | Intent |
+|-----------------|----------|-----------|
+| `color.brand.primary-text` | `teal.12` | Brand text on a light subtle background (brand badge) — 12:1 on white |
+
+#### Feedback color (text on subtle background)
+| Semantic token | Primitive | Intent |
+|-----------------|----------|-----------|
+| `color.feedback.info-text` | `blue.12` | Information text on subtle background (info badge/banner) |
+| `color.feedback.warning-text` | `orange.12` | Warning text on subtle background (warning badge/banner) |
+
+> `feedback.success-subtle`, `feedback.warning-subtle`, `feedback.warning`, `feedback.info-subtle`
+> already existed (ADR-045) — COMP wasn't using them.
+
+#### Code surface
+| Semantic token | Primitive | Intent |
+|-----------------|----------|-----------|
+| `color.background.code` | `gray.12` | Code block background — dark surface dedicated to source code |
+| `color.background.code-raised` | `gray.11` | Raised background on code surface (copy button at rest) |
+| `color.background.code-raised-hover` | `gray.10` | Raised background on code surface, hovered |
+
+#### Text on code surface
+| Semantic token | Primitive | Intent |
+|-----------------|----------|-----------|
+| `color.text.on-code` | `gray.4` | Source code body on dark surface |
+| `color.text.on-code-muted` | `gray.8` | Metadata on code surface (language, line number) |
+| `color.text.on-code-strong` | `gray.1` | Copy button — maximum contrast on code surface |
+
+#### Toggle control
+| Semantic token | Primitive | Intent |
+|-----------------|----------|-----------|
+| `color.control.track-off` | `gray.9` | Toggle track in the off state |
+| `color.control.track-off-hover` | `gray.10` | Inactive toggle track, hovered |
+
+#### Component spacing (2px → 24px scale)
+| Semantic token | Primitive | Value | Consumers |
+|-----------------|----------|--------|---------------|
+| `space.component.padding-2xs` | `space.0` | 2px | `badge.sm` vertical padding |
+| `space.component.padding-xs` | `space.1` | 4px | `badge.md` vertical padding |
+| `space.component.padding-sm` | `space.2` | 8px | `badge.sm` horizontal padding, compact table cells |
+| `space.component.padding-md` | `space.3` | 12px | `badge.md` horizontal padding, table cells, compact `card` |
+| `space.component.padding-lg` | `space.4` | 16px | vertical padding for code blocks/banners |
+| `space.component.padding-xl` | `space.5` | 20px | horizontal padding for code blocks/banners |
+| `space.component.padding-2xl` | `space.6` | 24px | `card-padding-lg` |
+
+### Part 2 — 4 CSS fixes
+
+| Location | Violation | Fix |
+|-------|-----------|------------|
+| `[data-theme="light"]` (3 rules) | `var(--agtc-...,#646464)` — fallback inside var() | Hex fallback removed |
+| `.audit-contrast-table` | `font-size:0.85rem` outside a token | `var(--agtc-semantic-typography-label-size)` |
+| `.platform-logo-item img` | `filter:drop-shadow(rgba...)` outside a token | New `--agtc-drop-shadow-sm` in `:root` |
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Keep primitives in COMP** | Violates ADR-001 (non-negotiable hierarchy) — agents don't see the intent |
+| **Create direct aliases in COMP with no semantic layer** (`code-bg: primitive.gray.12`) | Intent stays hidden; a second component consuming the same background has no shared token |
+| **Reuse `background.inverse`** for the code background | `background.inverse` = `neutral.950` (generic dark surfaces: stats, footer). `background.code` = `gray.12` (surface dedicated to code) — close values but different intent |
+| **Name the spacings by value** (`padding-12`, `padding-16`) | Names the value, not the function. `space.component.padding-md` expresses relative density, not the absolute value |
+| **Fix only the most visible violations** | The audit was systematic; fixing selectively would have left invisible debt in COMP |
+
+---
+
+## Consequences
+
+**For agents:** every component token is now traceable back to a semantic intent. To change the
+color of every code background, it's enough to change `background.code` in `semantic.json`. To
+adjust components' compact spacing, `space.component.padding-md`.
+
+**For the system:** the COMP object in `site/build.js` no longer contains any direct reference
+to `--agtc-primitive-*`. Validated by grep: 0 occurrences after the fix.
+
+**Build metrics:**
+
+| Before | After |
+|-------|-------|
+| 756 tokens defined | 774 tokens defined (+18) |
+| ~20 hierarchy violations | 0 hierarchy violations |
+| 4 CSS violations | 0 CSS violations |
+| 0 ghosts | 0 ghosts |
+
+**Governance:** adding semantic tokens → **Design System Lead** approval, per
+`tokens-system.md`. No primitive or component token modified (component tokens now point to the
+new semantic tokens, but their resolved values are identical — 0 visual change).
+
+---
+
+## Incidents or triggers
+
+Systematic audit triggered by the `tokens-system.md` rule:
+> *"Level 1 — Primitives: Never used directly in components. Always through a semantic token."*
+
+The violation had been known since the COMP object was built (comment in `tokensCSS()`:
+*"Primitive spacings — referenced by certain component tokens"*) but no intermediate semantic
+token had yet been created for these concepts.
+
+<!-- FR -->
+
 # ADR-059 — Fermeture de la hiérarchie 3 niveaux : tokens sémantiques intermédiaires
 
 > **Date :** 2026-06-15
@@ -7,10 +184,6 @@
 > **Chemin logique:** decisions/ADR-059-semantic-tokens-hierarchy-completion.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** tokens/semantic.json, site/build.js (COMP object), decisions/ADR-045-feedback-color-family-completion.md, decisions/ADR-046-inverse-surfaces-shadows-tokens.md
-
-> **English summary:** A systematic audit of the component-token object (`COMP`) in `site/build.js` found roughly 20 component tokens referencing primitive tokens directly, skipping the semantic layer required by ADR-001, plus 4 unrelated hardcoded CSS violations. This ADR closes the three-level hierarchy by adding 18 new intermediate semantic tokens (brand/feedback text colors, code-surface colors, toggle-track colors, a component spacing scale) and fixing the 4 CSS violations — leaving zero direct primitive references in the COMP object, with no visual change since resolved values stay identical.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

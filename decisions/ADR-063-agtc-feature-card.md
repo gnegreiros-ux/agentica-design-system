@@ -1,3 +1,87 @@
+# ADR-063 — `agtc-feature-card` component: editorial card V2
+
+**Date:** 2026-06-25
+**Status:** Accepted
+**Decision-makers:** Guilherme Negreiros (Principal Designer)
+**Tags:** component, v2, marketing, accessibility
+
+---
+
+## Context
+
+The V2 redesign introduces a "Value by role" section on the home page and editorial blocks
+on the secondary marketing pages. These elements require a reusable component with:
+- A functional icon (a signal before the heading is read)
+- A short heading
+- A body of text
+- A visual interactivity affordance (animated border-bottom on hover)
+
+The `.v2-role-card` CSS class already existed in `site/build.js` but with no component
+encapsulation. The UX review confirmed the need for a formal Web Component.
+
+---
+
+## Decision
+
+Create `agtc-feature-card` (Lit) with:
+- `heading` attribute (title)
+- `heading-level` attribute 1-6, default 3 (P5 — hierarchical flexibility)
+- `variant` attribute: `"default"` | `"marketing"` (P6 — contextual variant)
+- Named `icon` slot for a 20×20 SVG (P1 — icon + title duo)
+- Default slot for the body
+- `prefers-reduced-motion` in the shadow CSS (P7 — priority)
+- `role="heading"` + dynamic `aria-level` (P8 — SR accessibility)
+
+---
+
+## UX patterns applied (review 2026-06-25)
+
+| # | Pattern | Source | Decision |
+|---|---------|--------|----------|
+| P1 | Icon + title duo | [NN/g — Icons & Indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ Applied |
+| P2 | Controlled interactivity affordance | [IxDF — UI Patterns](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ Applied |
+| P3 | Non-interactivity by default | [Smashing — Card patterns](https://www.smashingmagazine.com/category/design-patterns/) | ✅ Applied |
+| P4 | Touch targets ≥ 24×24px (WCAG 2.5.8) | [IxDF — Touch Targets](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ Compliant |
+| P5 | Flexible heading level | [NN/g — Visual Hierarchy](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ `heading-level` attribute |
+| P6 | Contextual variant | [Dashboard Design Patterns](https://dashboarddesignpatterns.github.io/patterns.html) | ✅ default / marketing |
+| P7 | `prefers-reduced-motion` | [IxDF — Accessibility](https://ixdf.org/literature/topics/ui-design-patterns) | ✅ Priority — border visible from the start |
+| P8 | Accessible markup | [IF — Data Patterns](https://catalogue.projectsbyif.com/) | ✅ role + aria-level |
+
+---
+
+## Alternatives considered
+
+**Option A — pure CSS (`.v2-role-card` class)**: rejected. No encapsulation, no attribute
+contract, no guarantee of correct usage by agents or teams.
+
+**Option B — Lit with a native `<h3>` heading**: rejected. Hardcoded heading level —
+potential jump depending on the page context (P5).
+
+**Option C — Lit with flexible `heading-level`** (chosen): `role="heading"` + dynamic
+`aria-level`. Compatible with any page context.
+
+---
+
+## Consequences
+
+- `agtc-feature-card` is registered in `components/index.js` and bundled into `agtc.js`
+- The guideline is at `guidelines/components/feature-card.md`
+- The Storybook story is at `components/agtc-feature-card.stories.js`
+- The `.v2-role-card` class in `site/build.js` remains for the home page (static HTML) —
+  migration to `<agtc-feature-card>` to be planned in a dedicated project
+- Any modification of the variant or behavior requires a new UX review
+
+---
+
+## Files affected
+
+- `components/agtc-feature-card.js` — new
+- `components/agtc-feature-card.stories.js` — new
+- `components/index.js` — import added
+- `guidelines/components/feature-card.md` — new guideline
+
+<!-- FR -->
+
 # ADR-063 — Composant `agtc-feature-card` : carte éditoriale V2
 
 **Date :** 2026-06-25

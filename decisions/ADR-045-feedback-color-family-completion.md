@@ -1,3 +1,108 @@
+# ADR-045 — Completion of the `feedback` semantic color family
+
+> **Date:** 2026-06-05
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-045-feedback-color-family-completion.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/semantic.json, tokens/primitives.json, .claude/rules/tokens-system.md, .claude/rules/feedback_site_dogfooding.md, site/build.js
+
+---
+
+## Context
+
+The site's *dogfooding* (category A) tokenized the hardcoded feedback **text** colors
+(`.icon-no`, `.icon-ok`, pass/fail audit) on 2026-06-04. There remained a debt explicitly logged:
+the **subtle backgrounds**, **borders**, and the **warning palette** still hardcoded in
+`site/build.js`:
+
+- `.rule-can` / `.rule-cannot` — `#ecfdf5` / `#bbf7d0`, `#fef2f2` / `#fecaca`
+- `.do-section` / `.dont-section` — `#f0fdf4` / `#86efac`, `#fef2f2` / `#fecaca`
+- `.audit-badge.pass/.fail` — `#ecfdf5`, `#fff1f2`
+- `.audit-card--pass/--warn/--fail` (borders) — `#86efac`, `#fde68a`, `#fca5a5`
+- `.audit-card--warn .audit-number` — `#d97706` (**warning, absent from the system**)
+
+These values could not be routed: the semantic level only exposed `danger`, `danger-subtle`,
+`success`, `info` — the **subtle** (background) and **border** variants were missing, as was
+**the entire `warning` family**.
+
+---
+
+## Decision
+
+Complete the `semantic.color.feedback` family so it covers the **three roles** of each severity
+— **text** (`-11`), **subtle background** (`-3`), **border** (`-6`) — across the **four**
+standard severities: `danger`, `success`, `warning`, `info`.
+
+| Semantic token added | Primitive | Role |
+|-------------------------|----------|------|
+| `feedback.danger-border` | `red.6` | Danger border |
+| `feedback.success-subtle` | `green.3` | Success subtle background |
+| `feedback.success-border` | `green.6` | Success border |
+| `feedback.warning` | `orange.11` | Warning text |
+| `feedback.warning-subtle` | `orange.3` | Warning subtle background |
+| `feedback.warning-border` | `orange.6` | Warning border |
+| `feedback.info-subtle` | `blue.3` | Info subtle background |
+| `feedback.info-border` | `blue.6` | Info border |
+
+> `danger`, `danger-subtle`, `success`, `info` already existed — unchanged.
+
+The choice of steps (`-11` text / `-3` background / `-6` border) follows the Radix convention
+already in effect in `component.badge` (ADR-034) and `component.banner` (ADR-042): cross-component
+consistency guaranteed.
+
+---
+
+## Accessibility (WCAG 2.2)
+
+| Pair | Ratio | Verdict |
+|-------|-------|---------|
+| `warning` (`#cc4e00`) on white | **4.51:1** | ✅ AA normal text |
+| `success` (`#18794e`) on `success-subtle` (`#e6f6eb`) | ✅ | proven Radix pair (badge) |
+| `danger` (`#ce2c31`) on `danger-subtle` (`#feebec`) | ✅ | proven Radix pair (badge) |
+
+The `*-border` (`-6`) tokens are **non-text** (decorative separators/outlines) — exempt from the
+4.5:1 requirement (WCAG 1.4.3); they never carry severity information alone (WCAG 1.4.1).
+
+---
+
+## Scope
+
+| Included | Excluded (future evolution) |
+|--------|--------------------------|
+| 8 new feedback semantic tokens (subtle/border + warning family) | Dedicated **component** tokens (still derived as needed) |
+| Full symmetry across the 4 severities × 3 roles | "Solid" variants (full background + light text) |
+| `info-subtle` / `info-border` added for **symmetry** (not yet consumed on the site) | New severities (e.g. `neutral`) |
+
+`info-subtle`/`info-border` are added for family consistency even though not yet consumed: contract
+regularity takes precedence, and a future `banner info` component or site infobox will need them.
+
+---
+
+## Rejected alternatives
+
+- **Keeping hardcoded colors in `build.js`**: violates `tokens-system.md` (never a hardcoded
+  value) and `feedback_site_dogfooding.md` (the site must consume the DS) — rejected.
+- **Creating ad hoc component tokens** (`component.site.audit.*`): oversized for generic feedback
+  backgrounds/borders; these roles belong at the **semantic** level.
+- **Reusing `*-subtle` as the border**: a background and a border don't share the same target
+  contrast; `-3` (background) and `-6` (border) remain distinct, per Radix.
+
+---
+
+## Consequences
+
+- `site/build.js` now routes **all** its feedback surfaces through the semantic level:
+  `.rule-can/.rule-cannot`, `.do-section/.dont-section`, `.audit-badge`, `.audit-card--*`. The
+  debt logged on 2026-06-04 is **settled**, zero remaining hardcoded feedback color.
+- The `feedback` family is now **symmetric and predictable**: any agent can route a severity to
+  its three roles without inventing a value.
+- Governance: adding **semantic** tokens → **Design System Lead** (human) approval, per
+  `tokens-system.md`. No primitive or component token modified.
+
+<!-- FR -->
+
 # ADR-045 — Complétion de la famille de couleurs sémantiques `feedback`
 
 > **Date :** 2026-06-05
@@ -7,13 +112,6 @@
 > **Chemin logique:** decisions/ADR-045-feedback-color-family-completion.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, .claude/rules/tokens-system.md, .claude/rules/feedback_site_dogfooding.md, site/build.js
-
-> **English summary:** Completes the `semantic.color.feedback` family so every severity (danger,
-> success, warning, info) exposes all three roles — text, subtle background, border — eliminating
-> the last hardcoded feedback colors (including a previously-missing warning family) in
-> `site/build.js`.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

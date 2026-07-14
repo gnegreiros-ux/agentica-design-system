@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Redesign du site : thème sombre et tokens d'extension CSS — Agentica</title>
+<title>Site redesign: dark theme and CSS extension tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Redesign du site : thème sombre et tokens d'extension CSS — Agentica">
+<meta property="og:title" content="Site redesign: dark theme and CSS extension tokens — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Redesign du site : thème sombre et tokens d'extension CSS — Agentica">
+<meta name="twitter:title" content="Site redesign: dark theme and CSS extension tokens — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Redesign du site : thème sombre et tokens d'extension CSS</h1>
+  <h1 class="adr-page-title">Site redesign: dark theme and CSS extension tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,10 +126,34 @@
     </div>
     
   </dl>
-</div><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-051 (illustration), ADR-052 (DTCG), ADR-057 (deux contextes), <code>Redesign/AI anti-patters.md</code>, <code>site/build.js</code></p>
-<blockquote><p><strong>English summary:</strong> A standalone redesign mockup introduced a dark theme, CSS extension tokens (shadows, gradients, an extended type scale), and several animations. This ADR adopts the dark theme via a <code>data-theme</code> attribute (overriding only semantic tokens, never primitives or component tokens), formalizes the extension tokens in <code>site/build.js</code> outside the governed <code>tokens/*.json</code> pipeline, and arbitrates the animations against the project's AI anti-patterns list — keeping the hero gradient, 3D token-layer visualization, and stat counters, but removing scroll-triggered reveals, decorative particles, and button glow.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-06-12 <strong>Status:</strong> Accepted <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-051 (illustration), ADR-052 (DTCG), ADR-057 (two contexts), <code>Redesign/AI anti-patters.md</code>, <code>site/build.js</code></p>
+<hr>
+<h2>Context</h2>
+<p>The <code>Redesign/</code> folder contains a complete reference mockup (index.html, color.html, site.css, tokens.css, site.js) prepared outside the build system. It introduces: a dark theme, a redesigned hero with a 3D visualization of the three token levels, CSS extension tokens (shadows, gradients, type scale) and animations.</p>
+<p>The site had neither a dark theme nor formalized shadow/gradient tokens. The mockup also contained animations conflicting with <code>Redesign/AI anti-patters.md</code> (scroll reveals, particles).</p>
+<hr>
+<h2>Decision</h2>
+<h3>1. Dark theme — <code>data-theme</code> on <code>&lt;html&gt;</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribute</th><th>Theme</th></tr></thead><tbody><tr><td><code>data-theme="light"</code></td><td>Light (default)</td></tr><tr><td><code>data-theme="dark"</code></td><td>Dark</td></tr></tbody></table></div>
+<ul><li>Initialization: <code>prefers-color-scheme</code>, persistence via <code>localStorage['agtc-theme']</code>.</li><li>Toggle: <code>.theme-toggle</code> button in the header (sun/moon), bilingual <code>aria-label</code>.</li><li>The <code>:root[data-theme="dark"]</code> block overrides <strong>only semantic tokens</strong></li></ul>
+<p>  (<code>--agtc-semantic-color-*</code>, shadows). Primitives and component tokens do not change.</p>
+<h3>2. CSS extension tokens (<code>tokensCSS()</code> in <code>site/build.js</code>)</h3>
+<p>Site-specific tokens, outside <code>tokens/*.json</code> (not governed by the Style Dictionary pipeline):</p>
+<ul><li>Spacing scale <code>--agtc-space-1..10</code>, <code>--agtc-header-height</code>, <code>--agtc-content-max</code></li><li>Shadows <code>--agtc-shadow-{sm,md,lg,glow}</code> (glow <strong>never</strong> on buttons — anti-pattern)</li><li>Gradients <code>--agtc-gradient-{brand,text,text-light,aurora}</code> + <code>--agtc-surface-grid</code></li><li>Accent (pink) and secondary (plum) palette — brand primitives</li><li>Type scale <code>--agtc-font-size-{detail..display}</code>, line-heights</li></ul>
+<p><strong>Governance rule:</strong> these extension tokens <strong>never</strong> redefine a value already present in <code>tokens/semantic.json</code> for the light theme — the JSON tokens are authoritative. Any promotion of an extension token to <code>tokens/*.json</code> follows the normal TCR flow.</p>
+<h3>3. Animations — arbitrated against the anti-patterns</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Animation</th><th>Decision</th><th>Rationale</th></tr></thead><tbody><tr><td><code>auroraDrift</code> (hero background)</td><td>✅ Kept</td><td>Max 1 gradient/page, a key moment</td></tr><tr><td><code>planeFloat</code> (3D token layers)</td><td>✅ Kept</td><td>Represents the actual product, not decorative</td></tr><tr><td><code>pulse</code> (hero badge)</td><td>✅ Kept</td><td>Discreet micro-signal</td></tr><tr><td>Scroll reveals (<code>.reveal</code> + IntersectionObserver)</td><td>❌ Removed</td><td>Scroll-triggered anti-pattern</td></tr><tr><td>Particles (<code>floatUp</code>, <code>.hero-particles</code>)</td><td>❌ Removed</td><td>"Cosmic" decorative anti-pattern</td></tr><tr><td>Glow on primary button</td><td>❌ Removed</td><td>Colored shadow > 4px</td></tr><tr><td><code>[data-count]</code> counters (stat-band)</td><td>✅ Kept</td><td>Functional, limited IntersectionObserver, fires once only</td></tr></tbody></table></div>
+<p>All animations respect <code>prefers-reduced-motion: reduce</code>.</p>
+<h3>4. Home hero — 3D layer stack</h3>
+<p>2-column grid: unchanged copy (<code>contenu.md</code> = source of truth) + 3 3D planes showing the actual chain <code>primitive.color.teal.11 → color.action.primary → button.primary.background</code>. The hero buttons remain <code>agtc-button</code> (dogfooding — the site consumes the system).</p>
+<hr>
+<h2>Alternatives considered</h2>
+<p>1. <strong>Dark mode via JSON tokens + multi-theme Style Dictionary</strong> — rejected for now: requires    reworking the compilation pipeline; the semantic-override CSS block gives the same visual    result and remains migratable to the pipeline later. 2. <strong>Adopting the mockup as-is (with reveals and particles)</strong> — rejected: direct conflict with    <code>Redesign/AI anti-patters.md</code>. 3. <strong>The mockup's <code>.ds-btn</code> classes</strong> — rejected: the site consumes the existing <code>agtc-button</code>    (site = first consumer principle).</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>✅ 4 working combinations: light/dark × product/marketing</li><li>✅ 0 CSS ghosts at build, green CI (Build, axe-core, Chromatic)</li><li>⚠️ The extension tokens live in <code>site/build.js</code> — accepted debt until a possible TCR</li></ul>
+<p>  promotion to <code>tokens/*.json</code></p>
+<ul><li>⚠️ The dark theme is not applied to component Chromatic captures (out of the site's scope)</li></ul></div><div class="lang-fr"><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-051 (illustration), ADR-052 (DTCG), ADR-057 (deux contextes), <code>Redesign/AI anti-patters.md</code>, <code>site/build.js</code></p>
 <hr>
 <h2>Contexte</h2>
 <p>Le dossier <code>Redesign/</code> contient une maquette de référence complète (index.html, color.html, site.css, tokens.css, site.js) préparée hors du système de build. Elle introduit : un thème sombre, un hero redessiné avec visualisation 3D des trois niveaux de tokens, des tokens CSS d'extension (ombres, gradients, échelle typographique) et des animations.</p>
@@ -156,7 +180,7 @@
 <h2>Conséquences</h2>
 <ul><li>✅ 4 combinaisons fonctionnelles : light/dark × produit/marketing</li><li>✅ 0 fantôme CSS au build, CI verte (Build, axe-core, Chromatic)</li><li>⚠️ Les tokens d'extension vivent dans <code>site/build.js</code> — dette assumée jusqu'à une éventuelle</li></ul>
 <p>  promotion TCR vers <code>tokens/*.json</code></p>
-<ul><li>⚠️ Le thème sombre n'est pas appliqué aux captures Chromatic des composants (hors scope site)</li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<ul><li>⚠️ Le thème sombre n'est pas appliqué aux captures Chromatic des composants (hors scope site)</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-057.html" class="agtc-button secondary">← ADR-057</a>
     <a href="adr-059.html" class="agtc-button secondary">ADR-059 →</a>
   </div></main>

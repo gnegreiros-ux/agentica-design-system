@@ -1,3 +1,126 @@
+# ADR-020 — 4px grid as the systemic dimensional scale
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-020-grille-4px.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/foundations/spacing.md
+
+---
+
+## Context
+
+The project had used 4 primitive spacing values from the outset (8, 16, 20, 32 px) —
+all multiples of 4 — without this decision being formally documented or the full
+scale defined. This ADR formalizes the implicit decision and completes the scale.
+
+### Situation before
+
+```json
+"space": {
+  "2": "8px",
+  "4": "16px",
+  "5": "20px",
+  "8": "32px"
+}
+```
+
+Only four values, named by their multiplier without the base module (4px) being
+explicitly declared. Any new spacing value required an ad hoc decision with no
+normative reference.
+
+---
+
+## Decision
+
+### Base module: 4px
+
+Every dimensional value in the system is a multiple of 4px. This module is the
+smallest allowed increment.
+
+```
+1 unit = 4px
+```
+
+### Full spacing primitive scale
+
+| Token | Value | Multiplier | Typical usage |
+|-------|--------|----------------|-----------|
+| `primitive.space.1`  | 4px  | 4 × 1  | Micro — separator, minimal internal gap |
+| `primitive.space.2`  | 8px  | 4 × 2  | Small — vertical control padding |
+| `primitive.space.3`  | 12px | 4 × 3  | Intermediate |
+| `primitive.space.4`  | 16px | 4 × 4  | Standard — horizontal control padding |
+| `primitive.space.5`  | 20px | 4 × 5  | Medium |
+| `primitive.space.6`  | 24px | 4 × 6  | Large intermediate |
+| `primitive.space.8`  | 32px | 4 × 8  | Large — separation between components |
+| `primitive.space.10` | 40px | 4 × 10 | Very large |
+| `primitive.space.12` | 48px | 4 × 12 | Macro |
+| `primitive.space.16` | 64px | 4 × 16 | Macro — separation between page sections |
+
+The 4 existing values (2, 4, 5, 8) remain unchanged — full backward compatibility.
+
+### Extension rule
+
+If a new spacing value is required, it must be a multiple of 4. If the value
+doesn't exist in the primitive scale, create the missing token rather than use
+an arbitrary value.
+
+---
+
+## Rationale
+
+### Why 4px?
+
+**Industry convergence:** Material Design (Google), Polaris (Shopify), Atlassian
+Design System, Carbon (IBM), Spectrum (Adobe) — all use a 4px or 8px grid (8px
+being simply a subset of 4px at double spacing).
+
+**Natural alignment:** High-density screens (2×, 3×) divide whole pixels into
+sub-pixels. A 4px grid guarantees that every value stays a whole number at every
+display density.
+
+**Decision consistency:** With a 4px grid, designers and agents don't have to
+arbitrate between close values (14px vs 16px). The grid decides: it's 12px or
+16px, not 14px.
+
+**Automated audit:** audit-tokens.js can detect any spacing value that isn't a
+multiple of 4 and flag it as drift.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **8px grid** | Too coarse for micro-spacing (a badge's internal gap, a tag's padding). 4px offers more flexibility without chaos. |
+| **Fibonacci scale (4, 8, 12, 20, 32...)** | Memorization complexity with no demonstrable visual benefit for this project. |
+| **T-shirt scale (xs/sm/md/lg/xl)** | Opaque to agents — `space.4` (16px, 4×4) is more traceable than `space.md` (an arbitrary value). |
+| **Keep the 4 existing values** | Insufficient: teams create ad hoc values outside the grid as soon as a step is missing. |
+
+---
+
+## Consequences
+
+**For tokens:**
+- `primitive.space` goes from 4 to 10 values
+- All existing semantic references remain valid (no path changes)
+- 6 new primitives available for future semantic tokens
+
+**For AI agents:**
+- Any spacing request can be resolved by referencing the scale
+- Drift (hardcoded px, off-grid values) is detectable by audit
+
+**For teams:**
+- Memorable rule: "if it's not in the table, it's not in the system"
+- Spacing decisions are reduced to picking a step, not a value
+
+**Debt cleared:**
+- The implicit decision to use a 4px grid is now formalized and traceable
+
+<!-- FR -->
+
 # ADR-020 — Grille 4px comme échelle dimensionnelle systémique
 
 > **Date :** 2026-05-29
@@ -7,10 +130,6 @@
 > **Chemin logique:** decisions/ADR-020-grille-4px.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/foundations/spacing.md
-
-> **English summary:** Formalizes the 4px spacing grid that was already in informal use, completing the scale from 4 to 10 values (4px through 64px). Every spacing value must be a multiple of 4px; new values are added to the primitive scale rather than created ad hoc.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

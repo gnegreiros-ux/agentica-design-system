@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Surfaces inversées, ombres et jetons décoratifs — Agentica</title>
+<title>Inverse surfaces, shadows, and decorative tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Surfaces inversées, ombres et jetons décoratifs — Agentica">
+<meta property="og:title" content="Inverse surfaces, shadows, and decorative tokens — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Surfaces inversées, ombres et jetons décoratifs — Agentica">
+<meta name="twitter:title" content="Inverse surfaces, shadows, and decorative tokens — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Surfaces inversées, ombres et jetons décoratifs</h1>
+  <h1 class="adr-page-title">Inverse surfaces, shadows, and decorative tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,50 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adds two near-black primitives and 11 semantic tokens for inverse/dark surfaces, on-inverse text, decorative borders, and shadows — eliminating the remaining hardcoded dark-surface and shadow values in <code>site/build.js</code>. Also fixes two footer/link colors that were failing WCAG AA contrast.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>After completing the <code>feedback</code> family (ADR-045), <code>site/build.js</code> still had a debt of hardcoded colors with no semantic equivalent: <strong>dark surfaces</strong> (stats banner, footer, tooltips), <strong>white text/borders on a dark background</strong>, <strong>shadows</strong> (<code>box-shadow</code>), and a <strong>decorative bar</strong> for spacing visualization. None of these values could be routed: the semantic level exposed no inverse surface, no "on-inverse" text, no shadow, and no visualization token.</p>
+<p>Key discovery: the <strong>alpha scales already existed</strong> at the primitive level (<code>color.white.*</code> = alpha white, <code>color.black.*</code> = alpha black, Radix-style) but were <strong>never consumed</strong>. They provide exactly the values needed for text/shadows on a dark background.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>1 — Two "near-black" primitives (inverse surfaces)</h3>
+<p>No primitive darker than <code>gray.12</code> (#202020) existed. Two neutral anchors added (Tailwind neutral-900/950 convention):</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Primitive</th><th>Value</th><th>Role</th></tr></thead><tbody><tr><td><code>neutral.900</code></td><td><code>#1a1e24</code></td><td>Raised dark surface (tooltip/popover)</td></tr><tr><td><code>neutral.950</code></td><td><code>#0f1117</code></td><td>Deepest dark surface (banner, footer)</td></tr></tbody></table></div>
+<h3>2 — Semantic tokens (referencing existing primitives)</h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Reference</th><th>Role</th></tr></thead><tbody><tr><td><code>color.background.inverse</code></td><td><code>neutral.950</code></td><td>Stats banner, footer</td></tr><tr><td><code>color.background.inverse-raised</code></td><td><code>neutral.900</code></td><td>Palette tooltips</td></tr><tr><td><code>color.text.on-inverse</code></td><td><code>white.1</code> (#fff)</td><td>Strong text / hovered link on a dark background</td></tr><tr><td><code>color.text.on-inverse-secondary</code></td><td><code>white.8</code> (.75)</td><td>Links on a dark background — <strong>10.8:1</strong></td></tr><tr><td><code>color.text.on-inverse-muted</code></td><td><code>white.10</code> (.52)</td><td>Muted text — <strong>AA floor, 5.69:1</strong></td></tr><tr><td><code>color.border.on-inverse</code></td><td><code>white.12</code> (.18)</td><td>Separator on a dark background (non-text)</td></tr><tr><td><code>color.border.swatch</code></td><td><code>black.2</code> (.10)</td><td>Outline of color swatches (non-text)</td></tr><tr><td><code>color.viz.scale-bar</code></td><td><code>red.6</code></td><td>Decorative bar in the spacing demo (non-semantic)</td></tr><tr><td><code>shadow.header</code></td><td><code>0 2px 24px rgba(0,0,0,.12)</code></td><td>Fixed header shadow</td></tr><tr><td><code>shadow.raised</code></td><td><code>0 4px 16px rgba(0,0,0,.10)</code></td><td>Dropdown menus, mobile nav</td></tr><tr><td><code>shadow.card-hover</code></td><td><code>0 4px 16px rgba(13,116,206,.10)</code></td><td>Brand-tinted card lift</td></tr></tbody></table></div>
+<blockquote><p>Shadows are <code>$type: "other"</code> composites carrying literal <code>rgba</code> values — the <strong>same convention as the pre-existing <code>component.card.elevated.shadow</code> token</strong>. The debt being resolved is the <strong>consumer's</strong> (the site's): the value now lives in a named layer.</p></blockquote>
+<hr>
+<h2>Accessibility (WCAG 2.2) — a fix along the way</h2>
+<p>Contrasts measured against <code>background.inverse</code> (#0f1117):</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Alpha</th><th>Ratio</th><th>Verdict</th></tr></thead><tbody><tr><td><code>text.on-inverse</code></td><td>1.00</td><td>19.6:1</td><td>✅ AAA</td></tr><tr><td><code>text.on-inverse-secondary</code></td><td>.75</td><td><strong>10.8:1</strong></td><td>✅ AAA</td></tr><tr><td><code>text.on-inverse-muted</code></td><td>.52</td><td><strong>5.69:1</strong></td><td>✅ AA (floor retained)</td></tr></tbody></table></div>
+<p><strong>Fix:</strong> the footer credit (<code>.footer-credit</code> at white .35) and the audit footer link (<code>.audit-footer-link</code> at white .30) were <strong>failing AA</strong> (~3:1) before this work. Tokenizing them to <code>text.on-inverse-muted</code> (.52) brings them to <strong>5.69:1</strong> — compliant. This is a case of <strong>governed self-healing</strong>: a detected drift, corrected with human approval.</p>
+<p>The <code>border.on-inverse</code> (.18) and <code>border.swatch</code> (.10) tokens are <strong>non-text</strong> (separators / decorative outlines) — exempt from the 4.5:1 requirement (WCAG 1.4.3). <code>viz.scale-bar</code> is purely decorative and carries no information (the spacing value is given by the adjacent label).</p>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td>2 neutral primitives + 11 semantic tokens (inverse, on-inverse, swatch, viz, shadow)</td><td>Global site dark mode (out of scope)</td></tr><tr><td><code>site/build.js</code> migration: stats banner, footer, header, mobile nav, tooltips, nav-card hover, swatches, spacing bar</td><td><code>toggle</code> demo (see residual debt below)</td></tr></tbody></table></div>
+<h3>Accepted residual debt (out of scope, documented)</h3>
+<p>The <strong>illustrative demo of the <code>toggle</code> component</strong> (<code>buildToggle()</code>) still uses <code>#8d8d8d</code> (= exact <code>gray.9</code>) for the OFF rail and <code>rgba(0,0,0,.25)</code> for the knob shadow — a shortcut <strong>already annotated "(proxy)"</strong> in the page's token table. This is *demo dogfooding* debt (the demo should consume the <code>component.toggle.*</code> contract), distinct from the surfaces/shadows effort. The site doesn't emit the <code>--agtc-component-toggle-*</code> variables (not consumed elsewhere): routing them would require separate work. <strong>Deferred</strong> to a component-demo dogfooding pass.</p>
+<h3>Legitimately still hardcoded (exempt)</h3>
+<p>The SVG logo (<code>#12A594</code>), <strong>token-value displays</strong> (doc tables showing the resolved hex), <strong>code examples</strong> (the <code>color: #0d74ce</code> anti-pattern), and <code>manifest.json</code> (<code>theme_color</code>).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Preserving the exact alpha whites</strong> (.35/.30) in the footer: perpetuates a WCAG</li></ul>
+<p>  failure — rejected in favor of the <code>on-inverse-muted</code> AA floor.</p>
+<ul><li><strong>Reusing <code>brand.secondary</code></strong> (#463239) for dark surfaces: that's a brand brown, not a</li></ul>
+<p>  neutral — unsuited to a neutral footer.</p>
+<ul><li><strong>Shadow tokens via alpha-primitive interpolation</strong>: Style Dictionary doesn't cleanly</li></ul>
+<p>  interpolate <code>rgba</code> inside a composite string; the existing <code>$type: other</code> convention is kept.</p>
+<ul><li><strong>Tokenizing the toggle demo in this batch</strong>: would create phantom variables or inflate</li></ul>
+<p>  the token surface for a single demo — deferred (see residual debt).</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li><code>site/build.js</code> no longer contains any hardcoded dark surface, shadow, or decorative</li></ul>
+<p>  border (aside from the documented toggle residual). Build: <strong>655 defined · 173   referenced · 0 phantom</strong>.</p>
+<ul><li>The <code>white.*</code> / <code>black.*</code> scales (orphaned until now) are now **consumed via the</li></ul>
+<p>  semantic layer** — ending their status as dead primitives.</p>
+<ul><li>The system now has a reusable <strong>"inverse surface"</strong> foundation (future dark mode,</li></ul>
+<p>  banners, component tooltips) and a named <strong>shadow scale</strong>.</p>
+<ul><li>Governance: 2 primitives (Principal Designer approval) + 11 semantic tokens (Design</li></ul>
+<p>  System Lead). No component token modified.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Après la complétion de la famille <code>feedback</code> (ADR-045), il restait dans <code>site/build.js</code> une dette de couleurs en dur sans équivalent sémantique : <strong>surfaces sombres</strong> (bandeau de stats, pied de page, tooltips), <strong>textes/bordures blancs sur fond sombre</strong>, <strong>ombres</strong> (<code>box-shadow</code>) et une <strong>barre décorative</strong> de visualisation d'espacement. Aucune de ces valeurs ne pouvait être routée : le niveau sémantique n'exposait ni surface inversée, ni texte « on-inverse », ni ombre, ni jeton de visualisation.</p>
 <p>Découverte clé : les <strong>échelles d'alpha existaient déjà</strong> au niveau primitif (<code>color.white.*</code> = blanc alpha, <code>color.black.*</code> = noir alpha, façon Radix) mais n'étaient <strong>jamais consommées</strong>. Elles fournissent exactement les valeurs nécessaires aux textes/ombres sur fond sombre.</p>
 <hr>
@@ -176,7 +215,7 @@
 <ul><li>Le système dispose d'un socle <strong>« surface inversée »</strong> réutilisable (futur mode sombre, bandeaux,</li></ul>
 <p>  tooltips de composants) et d'une <strong>échelle d'ombres</strong> nommée.</p>
 <ul><li>Gouvernance : 2 primitifs (approbation Principal Designer) + 11 sémantiques (Design System Lead).</li></ul>
-<p>  Aucun jeton de composant modifié.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  Aucun jeton de composant modifié.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-045.html" class="agtc-button secondary">← ADR-045</a>
     <a href="adr-047.html" class="agtc-button secondary">ADR-047 →</a>
   </div></main>

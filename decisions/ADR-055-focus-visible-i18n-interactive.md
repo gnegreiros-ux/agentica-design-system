@@ -1,3 +1,107 @@
+# ADR-055 — Systematic visible focus and i18n of interactive elements
+
+> **Date:** 2026-06-10
+> **Status:** ✅ Active
+> **Decision-makers:** Human (approval) · Design System Lead (accessibility)
+> **Type:** contract
+> **Logical path:** decisions/ADR-055-focus-visible-i18n-interactive.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Relations:** site/build.js, .claude/rules/development.md
+
+---
+
+## Context
+
+A WCAG 2.1 AA audit of the site identified several gaps in interactive elements:
+
+1. **Missing `:focus-visible`** on several site UI components: sidebar links, token explorer
+   tabs, TOC links, navigation cards (`nav-card`), `menu-toggle` and `sidebar-toggle` buttons.
+   Only the `back-to-top` and `code-copy` buttons had one.
+
+2. **Search input**: `outline: none` alone with no sufficient visual compensation — the
+   `border-color` change on focus was subtle and did not meet WCAG 2.4.7.
+
+3. **"Copy" button**: static label in French only, not updated when switching FR ↔ EN language —
+   inconsistent with the rest of the bilingual site.
+
+4. **"21 WCAG 2.1 AA" stat**: ambiguous label, interpretable as a score or a violation count —
+   did not clearly communicate what it measured.
+
+---
+
+## Decisions
+
+### 1. `:focus-visible` on every interactive element
+
+Rule extended to: `.sidebar a`, `.nav-card`, `.exp-tab`, `.toc a`, `.menu-toggle`,
+`.sidebar-toggle`, `.explorer-search`.
+
+Pattern applied uniformly:
+```css
+/* Navigation links */
+.sidebar a:focus-visible {
+  outline: none;
+  background: var(--agtc-semantic-color-background-subtle);
+  color: var(--agtc-semantic-color-text-primary);
+}
+
+/* Buttons */
+.menu-toggle:focus-visible,
+.sidebar-toggle:focus-visible {
+  outline: 2px solid var(--agtc-semantic-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Input */
+.explorer-search:focus-visible {
+  outline: none;
+  border-color: var(--agtc-semantic-color-border-focus);
+  box-shadow: 0 0 0 3px var(--agtc-semantic-color-action-focus-ring);
+}
+```
+
+All styles go through **semantic tokens** — no hardcoded value (`tokens-system.md` rule).
+
+### 2. i18n of the "Copy" button
+
+The button's text is computed dynamically from
+`document.documentElement.getAttribute('data-lang')` at two moments:
+- **On initialization** (DOMContentLoaded): shows "Copier" or "Copy" depending on the active
+  language
+- **On language change**: every `.code-copy` button not in the "Copied!" state is updated in
+  real time
+
+State after click: "Copié !" (FR) / "Copied!" (EN) — resets after 1.6s.
+
+### 3. Clarifying the WCAG stat label
+
+"21 WCAG 2.1 AA" → "21 critères WCAG 2.1 AA couverts" (FR) / "21 WCAG 2.1 AA criteria covered"
+(EN) — explicit, unambiguous measurement.
+
+---
+
+## Normative reference
+
+| WCAG criterion | Title | Decision covered |
+|---|---|---|
+| 2.4.7 (AA) | Focus Visible | `:focus-visible` on all interactive elements |
+| 2.4.11 (AA, 2.2) | Focus Appearance | 2px `outline` + 2px offset |
+| 3.1.2 (AA) | Language of Parts | Synchronized FR/EN labels |
+
+---
+
+## Consequences
+
+- Any new interactive element added to the site **must** define a `:focus-visible` style before
+  merge — verifiable via the axe-core audit (`wcag.md` pipeline)
+- The pattern `outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px`
+  is the canonical default for buttons
+- Navigation links use the "background change" pattern (no outline) to avoid a visual conflict
+  with the active-state `border-left`
+- Any new interactive element with visible text must be bilingual if the site is bilingual
+
+<!-- FR -->
+
 # ADR-055 — Focus visible systématique et i18n des éléments interactifs
 
 > **Date :** 2026-06-10
@@ -7,10 +111,6 @@
 > **Chemin logique:** decisions/ADR-055-focus-visible-i18n-interactive.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** site/build.js, .claude/rules/development.md
-
-> **English summary:** A WCAG 2.1 AA audit found several gaps: missing `:focus-visible` on sidebar links, tabs, TOC links, nav cards, and toggle buttons; an insufficient focus indicator on the search input; a copy button label that never updated when switching FR/EN; and an ambiguous "21 WCAG 2.1 AA" stat label. This ADR adds `:focus-visible` (via semantic tokens) across all interactive elements, makes the copy button's label reactive to the active language, and clarifies the stat label to "21 WCAG 2.1 AA criteria covered."
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

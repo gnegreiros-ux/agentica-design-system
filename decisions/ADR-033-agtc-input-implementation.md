@@ -1,3 +1,157 @@
+# ADR-033 — `agtc-input` implementation
+
+> **Date:** 2026-05-31
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-033-agtc-input-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/development.md
+> **Relations:** decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-002-lit-web-components.md, tokens/component.json
+
+---
+
+## Context
+
+`agtc-input` is the system's second component. It covers text entry
+in forms — the most frequent entry point for user data.
+
+Three constraints guided the decisions:
+
+1. **Accessibility** — a text field with no visible label is inaccessible
+   (WCAG 1.3.1). Every state (error, disabled, read-only) must be
+   communicated to the accessibility tree, not just visually.
+
+2. **Shadow DOM** — the `<label for="id">` association doesn't cross
+   Shadow DOM boundaries. The implementation must work around this limitation.
+
+3. **Consistency with `agtc-button`** — same hybrid icon approach (property +
+   slot), same event conventions, same token structure.
+
+---
+
+## Decisions
+
+### Decision 1 — Label and input colocated in the Shadow DOM
+
+**Problem:** An external `<label for="id">` can't point to an `<input>`
+inside the Shadow DOM.
+
+**Decision:** The label is rendered inside the Shadow DOM with a `for`
+pointing to the internal `id` of the `<input>`. A static counter guarantees
+id uniqueness across instances.
+
+**Rejected alternative:** `aria-label` on the input instead of a visible label.
+Rejected: violates WCAG 1.3.1 (the label must be persistent and visible, not only
+declared for AT).
+
+---
+
+### Decision 2 — Focus ring on the `.control` wrapper, not on the input
+
+**Problem:** The native input has `outline: none` to allow custom styling.
+Focus must remain visible (WCAG 2.4.7).
+
+**Decision:** The `.control` wrapper carries the focus ring via `:focus-within`.
+`outline: 2.5px solid` + `outline-offset: 2px` — identical to `agtc-button`.
+
+**Justification:** The focus ring on the wrapper is visually cleaner
+(frames the whole control including icons) and remains WCAG compliant
+because the focus indicator is clearly visible.
+
+---
+
+### Decision 3 — `aria-describedby` for helper-text and error-message
+
+The ids `{_id}-helper` and `{_id}-error` are always present in the DOM.
+`aria-describedby` is built dynamically: only the relevant ids
+are included depending on the component's state.
+
+The error message carries `role="alert"` to announce the error to screen
+readers as soon as it appears, with no need to navigate to the element.
+
+---
+
+### Decision 4 — Native show/hide toggle for `type="password"`
+
+An internal button is rendered automatically when `type="password"`. It toggles
+the input's `type` attribute between `password` and `text`.
+
+**Justification:** Letting the user verify what they typed is an
+accessibility requirement (avoids errors on masked passwords).
+The button's aria-label switches between "Show password" and
+"Hide password".
+
+The `suffix` slot remains available for free composition if the consumer
+wants to replace the native toggle.
+
+---
+
+### Decision 5 — `live()` directive for value synchronization
+
+The input uses `.value="${live(this.value)}"` to synchronize the Lit
+property's value with the input's native value across re-renders.
+
+Without `live()`, Lit doesn't update the native value if the user has
+started typing (DOM drift). `live()` always compares against the current
+DOM value, guaranteeing consistency.
+
+---
+
+### Decision 6 — Removal of native spinners on `type="number"`
+
+The native CSS spinners (`-webkit-inner-spin-button`) are removed.
+Control of the numeric value happens via keyboard (`↑`/`↓`) and direct input.
+
+**Justification:** Native spinners are visually inconsistent across
+browsers and can't be styled with the system's tokens.
+
+---
+
+## Reference UX patterns applied
+
+> Added on 2026-06-01 via the `ux-pattern-review` workflow (ADR-036). Design System Lead
+> decision: **all patterns approved**. Details and links in
+> `guidelines/components/input.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| Validation `onBlur`, re-validation while typing once in error | NN/g — How to Report Errors in Forms |
+| Inline error + `role="alert"` | NN/g — Error-Message Guidelines |
+| Constructive error message | NN/g — Error-Message Guidelines |
+| Persistent help text via `aria-describedby` | NN/g |
+| Required marker `*` + `aria-required` | NN/g — Forms |
+| Forgiving format (`tel`/`number`) | IxDF — forgiving formats |
+| Visible label always present | NN/g |
+| Anti hostile patterns (no clearing the field on error) | NN/g — Hostile Patterns in Error Messages |
+
+---
+
+## Version 1.0 scope
+
+| Included | Excluded (future version) |
+|--------|------------------------|
+| 7 native types | `type="date"`, `type="file"` |
+| States: default / focus / invalid / disabled / readonly | Success state (positive validation) |
+| Prefix/suffix icons (hybrid prop+slot) | Character counter |
+| Built-in password toggle | Custom suggestions / autocomplete |
+| helper-text + error-message | Multiline field (`agtc-textarea`) |
+
+---
+
+## Tokens used
+
+| Token | Usage |
+|-------|-------|
+| `--agtc-input-default-*` | Component tokens compiled from `tokens/component.json` |
+| `--agtc-semantic-color-feedback-danger` | Error message color |
+| `--agtc-semantic-color-background-subtle` | Disabled state background |
+| `--agtc-semantic-color-text-disabled` | Disabled state text |
+| `--agtc-semantic-color-text-secondary` | Helper text + icons |
+| `--agtc-semantic-typography-body-*` | Typography of the entered value |
+| `--agtc-semantic-typography-label-*` | Typography of the label, helper, error |
+
+<!-- FR -->
+
 # ADR-033 — Implémentation de `agtc-input`
 
 > **Date :** 2026-05-31
@@ -7,10 +161,6 @@
 > **Chemin logique:** decisions/ADR-033-agtc-input-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/development.md
 > **Relations:** decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-002-lit-web-components.md, tokens/component.json
-
-> **English summary:** Documents key implementation decisions for `agtc-input`: the label is rendered inside the Shadow DOM (native `for`/`id` association can't cross shadow boundaries), the focus ring lives on the `.control` wrapper via `:focus-within`, `aria-describedby` is built dynamically for helper/error text with `role="alert"` on errors, a built-in show/hide toggle covers `type="password"`, and Lit's `live()` directive keeps the input's DOM value in sync during re-renders.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

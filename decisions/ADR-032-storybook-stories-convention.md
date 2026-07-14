@@ -1,3 +1,122 @@
+# ADR-032 — Storybook stories convention for Agentica components
+
+> **Date:** 2026-05-30
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-032-storybook-stories-convention.md
+> **Read before:** AGENTS.md, DESIGN.md, decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md
+> **Relations:** decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-031-agtc-button-implementation.md, .claude/rules/development.md
+
+---
+
+## Context
+
+ADR-009 decides to use Storybook. ADR-032 specifies **how** to write stories
+in this system — the structure, naming, and mandatory-content convention
+for each component.
+
+Without an explicit convention, two problems emerge:
+
+1. **Inconsistency between components** — each developer or agent structures
+   their stories differently, making the catalogue unreadable and Chromatic unpredictable.
+2. **Incomplete stories** — critical states (loading, disabled, confirming)
+   aren't systematically documented, creating blind spots in
+   visual regression testing.
+
+---
+
+## Decision
+
+### Mandatory structure for a `.stories.js` file
+
+Each component has a `[component].stories.js` file colocated with
+`[component].js` in `components/`.
+
+```
+components/
+  agtc-button.js
+  agtc-button.stories.js    ← colocated
+  agtc-icon.js
+  agtc-icon.stories.js
+```
+
+### Minimum mandatory stories for any component
+
+| Story | Content |
+|-------|---------|
+| `[Variant]` (one per variant) | Isolated component, default state |
+| `Disabled` | All variants in the `disabled` state |
+| `Loading` | All variants in the `loading` state (if applicable) |
+| `AllVariants` | Overview of variants × states — main Chromatic entry point |
+
+### Stories specific to `agtc-button`
+
+| Story | Reason |
+|-------|--------|
+| `CriticalConfirmFlow` | Documents the critical variant's 2-click flow (ADR-031) |
+| `WithIconPrefix` / `WithIconSuffix` | Documents the hybrid icon approach (property + slot) |
+| `WithCustomSlot` | Documents free composition via an SVG slot |
+
+### Naming rules
+
+```javascript
+// ✅ Isolated variant story
+export const Primary = { name: 'Primary — main action', ... };
+
+// ✅ Grouped state story
+export const Disabled = { name: 'States — Disabled (all variants)', ... };
+
+// ✅ Behavior story
+export const CriticalConfirmFlow = { name: 'Critical — confirmation flow (2 clicks)', ... };
+
+// ✅ Overview (always present, Chromatic entry point)
+export const AllVariants = { name: 'Overview — all variants', ... };
+```
+
+### Storybook configuration
+
+- **Stories path**: `components/**/*.stories.@(js|jsx|mjs|ts|tsx)` (colocated)
+- **CSS tokens**: `dist/tokens/css/all.css` imported in `preview.js`
+- **a11y addon**: `test: 'error'` — WCAG violations block in CI (ADR-007)
+- **vitest addon**: removed from the main config (not yet activated)
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Stories in `stories/` (separate folder)** | Creates distance between the component and its documentation. A renamed or deleted component leaves an orphaned story with no obvious warning. Colocation forces synchronization. |
+| **One story per state (separate file)** | Excessive fragmentation. Chromatic captures all of a component's stories — grouping states in a single file reduces noise in the review interface. |
+| **Stories in TypeScript (`.stories.ts`)** | The project uses ES6+ JavaScript for components (ADR-002). Introducing TypeScript only for stories creates a stack inconsistency with no proportional benefit. |
+
+---
+
+## Consequences
+
+**For developers and agents:**
+- Every new component requires its `.stories.js` with the minimum stories listed above
+- This is a merge condition (`.claude/rules/development.md`) — a PR without a story is incomplete
+- Stories are Chromatic's entry point: their structure determines which captures are generated
+
+**For Chromatic (ADR-006):**
+- `AllVariants` is the main reference story — its rendering is the visual baseline
+- Each story isolated by variant makes it possible to pinpoint exactly which variant regressed
+
+**For AI agents:**
+- An agent can verify story coverage by comparing `component.json`'s variants
+  to the `.stories.js` file's exports — any variant without a story is a blind spot
+- Component/story colocation lets an agent find the story from the component
+  with no prior knowledge of the project structure
+
+**Accepted cost:**
+- Keeping stories in sync with components is an ongoing discipline
+- A story that no longer reflects real behavior is worse than no story
+  (it gives Chromatic reviewers false confidence)
+
+<!-- FR -->
+
 # ADR-032 — Convention des stories Storybook pour les composants Agentica
 
 > **Date :** 2026-05-30
@@ -7,10 +126,6 @@
 > **Chemin logique:** decisions/ADR-032-storybook-stories-convention.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md
 > **Relations:** decisions/ADR-009-storybook.md, decisions/ADR-006-chromatic-tests-visuels.md, decisions/ADR-031-agtc-button-implementation.md, .claude/rules/development.md
-
-> **English summary:** Defines the mandatory structure for `.stories.js` files (colocated with each component), a required baseline set of stories (per-variant, Disabled, Loading, AllVariants), and naming conventions — keeping the Storybook catalogue consistent and Chromatic's visual-regression coverage predictable across components.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

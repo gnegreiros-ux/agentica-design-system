@@ -1,13 +1,366 @@
+# ADR-031 — agtc-button: Lit Web Component implementation
+
+**Date:** 2026-05-30
+**Status:** Accepted
+**Decision-makers:** Guilherme Negreiros
+**Scope:** `agtc-button` component — implementation contract
+
+---
+
+## Reference UX patterns applied
+
+> Added on 2026-06-01 via the `ux-pattern-review` workflow (ADR-036). Decision: **all approved**.
+> Details and links: `guidelines/components/button.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| A single primary action per context | IxDF — clear primary action |
+| Explicit confirmation for `critical` | NN/g — error prevention |
+| Width preserved during `loading` | Smashing |
+| Never disable without stating why | Smashing — hidden vs disabled |
+| Label describing the consequence | NN/g |
+
+---
+
+## Context
+
+The design system has a complete button component contract (`tokens/component.json`,
+`guidelines/components/button.md`, `.claude/rules/components/button.md`). This ADR documents
+the technical decisions made to turn that contract into a functional Lit Web Component.
+
+---
+
+## Decisions
+
+### 1. Confirmation pattern for the `critical` variant
+
+**Problem:** The absolute rule requires confirmation before any critical action
+(`requiresConfirmation: true` in the token). How do we implement this in a Web Component
+without depending on an external modal system?
+
+**Decision: inline double-click with automatic reset.**
+
+```
+1st click → _confirming = true → agtc-confirm-request event → label becomes "Confirm?"
+  ├─ 2nd click  → action confirmed, agtc-confirm + agtc-click events → reset
+  ├─ blur       → reset (the user left the button)
+  ├─ Escape     → reset (the user explicitly cancels)
+  └─ 3s timeout → automatic reset (prevents "zombie" confirmations)
+```
+
+**Reason:** A 100% self-contained solution, with no external dependency. The `critical`
+variant always enforces this pattern — it isn't conditional on an attribute. The token
+`requiresConfirmation: true` is a governance contract read by agents, not
+a runtime flag.
+
+**Exposed events:**
+- `agtc-confirm-request` — 1st click, so the host can display an external UI
+- `agtc-confirm` — actual confirmation (2nd click)
+- `agtc-click` — any confirmed click (all variants)
+
+### 2. Width preservation during loading
+
+**Problem:** The contract rule states "Width preserved during async states (loading)."
+A spinner replacing the text would change the button's size.
+
+**Decision: `visibility: hidden` on `.label` + spinner with `position: absolute; inset: 0; margin: auto`.**
+
+```css
+button.loading .label { visibility: hidden; }   /* visually hides it, preserves the layout */
+.spinner { position: absolute; inset: 0; margin: auto; display: none; }
+button.loading .spinner { display: block; }      /* centered, floating spinner */
+```
+
+`visibility: hidden` (unlike `display: none` or `opacity: 0`) preserves
+the space occupied by the text. The spinner floats on top without altering the size.
+
+**Loading accessibility:**
+- `aria-busy="true"` on the `<button>`
+- `aria-hidden="true"` on `.label` (the visible text is hidden)
+- `<span class="sr-only">${loadingLabel}</span>` for screen readers
+- `loadingLabel` is a configurable attribute (default: "In progress…")
+
+### 3. CSS tokens — shared padding and radius
+
+**Problem:** `tokens/component.json` only defines the `padding-x`, `padding-y`,
+`radius` tokens for the `primary` variant. The `secondary`, `ghost`, `critical`
+variants don't have their own dimension tokens.
+
+**Decision: all variants reuse the primary tokens for dimensions.**
+
+```css
+/* Applied to all variants */
+padding: var(--agtc-button-primary-padding-y) var(--agtc-button-primary-padding-x);
+border-radius: var(--agtc-button-primary-radius);
+```
+
+**Reason:** The `primary` tokens point to semantic tokens
+(`--agtc-semantic-space-control-padding-x`, `--agtc-semantic-radius-control`).
+All variants share the same control geometry — that's intentional.
+Adding redundant per-variant tokens would be duplication with no value.
+
+If a variant needed a different geometry, new component tokens
+would be created at that point.
+
+### 4. Typography — the `label` token
+
+Buttons use `--agtc-semantic-typography-label-*` (size `sm`, weight `medium`).
+This choice is semantically correct: a button is an action label, not body text.
+
+### 5. Hover on `critical.confirming`
+
+When the button is in the confirming state (after the 1st click), hover no longer
+shows the subtle danger background — it keeps the solid danger background:
+
+```css
+button.critical.confirming:not(:disabled):hover {
+  background: var(--agtc-button-critical-background);
+  color: var(--agtc-button-critical-text);
+}
+```
+
+**Reason:** The confirming state must signal to the user that a 2nd click will trigger
+an irreversible action. Showing the subtle background (which signals a "resting state")
+would be a misleading visual cue.
+
+### 6. Attribute reflection (`reflect: true`)
+
+`variant`, `disabled`, `loading`, `icon-only` are reflected onto the host (`reflect: true`).
+This enables:
+- `:host([disabled])` → `pointer-events: none` (belt and suspenders in addition to the native `disabled`)
+- External CSS selectors on `agtc-button[variant="critical"]`
+- State inspection by AI agents via `element.getAttribute('variant')`
+
+### 7. Icon support — named slots and `display: contents`
+
+**Problem:** How do we integrate icons before/after the text without coupling the component
+to a specific icon system, and without creating stray gaps when the slots are empty?
+
+**Decision: two named slots (`prefix` / `suffix`) with `display: contents`.**
+
+```html
+<slot name="prefix"></slot>  <!-- icon before -->
+<span class="label"><slot></slot></span>  <!-- text -->
+<slot name="suffix"></slot>  <!-- icon after -->
+```
+
+```css
+slot[name="prefix"],
+slot[name="suffix"] {
+  display: contents; /* transparent to the flex layout */
+}
+```
+
+`display: contents` makes the `<slot>` invisible to the layout: the slotted element
+(e.g. `<agtc-icon>`) becomes a direct flex item of the `<button>`. An empty slot
+generates neither a box nor a stray gap — the behavior is identical to the slot's absence.
+
+**Reason:** Named slots are agnostic to the icon system. Any
+element can be slotted (SVG, `<agtc-icon>`, image). The button's CSS `gap`
+only applies between flex items that are actually present.
+
+### 8. `.content` wrapper for loading with icons
+
+**Problem:** With the addition of icon slots, `visibility: hidden` on `.label`
+alone is no longer sufficient — the icons stayed visible during loading.
+
+**Decision: a `.content { display: contents }` wrapper enclosing prefix + label + suffix.**
+
+```css
+.content { display: contents; }
+button.loading .content { visibility: hidden; }
+```
+
+`visibility: hidden` is an inherited property. Even on a `display: contents` element
+(which has no box of its own), it propagates to children through the CSS cascade.
+The children (icons + text) inherit `visibility: hidden`, are visually hidden
+and removed from the accessibility tree, but keep their flex boxes — the button's
+width is preserved.
+
+The spinner remains visible because it sits outside `.content` (a sibling in the shadow DOM).
+
+### 10. Hybrid icon approach — properties + slots
+
+**Problem:** Named slots (decision 7) are ideal in a standard Web Component but
+create two concrete incompatibilities:
+- **Figma Code Connect** generates flat code (`<agtc-button icon="plus">`) — it can't
+  generate nested HTML with slots.
+- **React < 19**: in JSX, `slot="prefix"` doesn't work natively on children
+  because JSX doesn't produce real DOM nodes before rendering.
+
+**Decision: `icon` and `icon-suffix` properties as a fallback for the named slots.**
+
+```javascript
+// Property → Figma Code Connect, React, all frameworks
+<agtc-button icon="plus">Add</agtc-button>
+<agtc-button variant="secondary" icon-suffix="arrow-right">Continue</agtc-button>
+<agtc-button icon-only icon="x" label="Close"></agtc-button>
+
+// Slot → advanced composition, custom SVG, out-of-system cases
+<agtc-button>
+  <agtc-icon slot="prefix" name="plus"></agtc-icon>
+  Add
+</agtc-button>
+```
+
+**Mechanism: native Web Component slot fallback content.**
+
+In standard HTML, the content inside a `<slot>` is fallback content —
+it's displayed only if no node is assigned to that slot from the light DOM.
+
+```html
+<!-- Component's Shadow DOM -->
+<slot name="prefix">
+  <!-- Rendered if no slot="prefix" exists in the light DOM -->
+  <agtc-icon name="${this.icon}" size="control"></agtc-icon>
+</slot>
+```
+
+- `icon="plus"` → no slotted node → the `<agtc-icon name="plus">` fallback is displayed
+- `<agtc-icon slot="prefix">` → a slotted node is provided → the fallback is ignored, slot content is displayed
+- Both at once: slotted content always takes priority
+
+**Prerequisite:** `agtc-icon` must be registered by the consumer before using
+the `icon` / `icon-suffix` properties. The slots accept any HTML element.
+
+**Framework compatibility:**
+
+| Framework | `icon="..."` property | `slot="prefix"` slot |
+|-----------|----------------------|----------------------|
+| Native HTML | ✅ | ✅ |
+| React 18 | ✅ | ⚠️ needs `ref` + `setAttribute` |
+| React 19 | ✅ | ✅ |
+| Angular | ✅ | ✅ |
+| Vue 3 | ✅ | ✅ |
+| Svelte | ✅ | ✅ |
+| Figma Code Connect | ✅ | ❌ |
+
+### 12. `icon-only` mode — square padding and mandatory accessibility
+
+**Problem:** A button with no visible text must have equal padding and an accessible
+label. How do we enforce this without excessive complexity?
+
+**Decision: boolean `icon-only` attribute + mandatory `label` property.**
+
+```css
+button.icon-only {
+  padding: var(--agtc-button-primary-padding-y); /* same value on all 4 sides */
+}
+```
+
+```javascript
+updated() {
+  if (this.iconOnly && !this.label) {
+    console.warn('[agtc-button] icon-only without label="" — inaccessible (WCAG 1.1.1).');
+  }
+}
+```
+
+The `label` property is forwarded to `aria-label` on the internal `<button>`.
+It automatically switches to `loadingLabel` while loading.
+
+**Reason:** `aria-label` on the `<agtc-button>` host wouldn't be read by assistive
+technologies (it applies to the custom element, not to the `<button>` inside the shadow DOM).
+Forwarding to the internal `<button>` is mandatory for accessibility.
+
+---
+
+## Events
+
+| Event | When | `detail` |
+|-----------|-------|----------|
+| `agtc-click` | Any validated click (not disabled, not loading) | `{ variant }` |
+| `agtc-confirm-request` | 1st click on critical | — |
+| `agtc-confirm` | 2nd click on critical (action confirmed) | — |
+
+All events: `bubbles: true, composed: true` (they cross the Shadow DOM).
+
+---
+
+## Usage
+
+```html
+<!-- Primary — main action -->
+<agtc-button>Submit request</agtc-button>
+
+<!-- Secondary -->
+<agtc-button variant="secondary">Cancel</agtc-button>
+
+<!-- Ghost -->
+<agtc-button variant="ghost">Learn more</agtc-button>
+
+<!-- Critical — 2-click confirmation, auto-reset after 3s or blur/Escape -->
+<agtc-button variant="critical">Permanently delete the folder</agtc-button>
+
+<!-- Loading — width preserved, aria-busy, configurable SR label -->
+<agtc-button loading loading-label="Sending…">Submit</agtc-button>
+
+<!-- Disabled -->
+<agtc-button disabled>Unavailable</agtc-button>
+
+<!-- Submit in a form -->
+<agtc-button type="submit">Validate</agtc-button>
+
+<!-- Icon before the text (prefix slot) -->
+<agtc-button>
+  <agtc-icon slot="prefix" name="plus"></agtc-icon>
+  Add an item
+</agtc-button>
+
+<!-- Icon after the text (suffix slot) -->
+<agtc-button variant="secondary">
+  Continue
+  <agtc-icon slot="suffix" name="arrow-right"></agtc-icon>
+</agtc-button>
+
+<!-- Icon before AND after -->
+<agtc-button variant="ghost">
+  <agtc-icon slot="prefix" name="download"></agtc-icon>
+  Download the report
+  <agtc-icon slot="suffix" name="external-link"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only — label="" mandatory (WCAG 1.1.1) -->
+<agtc-button icon-only label="Close the panel">
+  <agtc-icon slot="prefix" name="x"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only critical -->
+<agtc-button variant="critical" icon-only label="Permanently delete">
+  <agtc-icon slot="prefix" name="trash-2"></agtc-icon>
+</agtc-button>
+
+<!-- Icon-only loading — aria-label switches to loadingLabel -->
+<agtc-button icon-only label="Save" loading loading-label="Saving…">
+  <agtc-icon slot="prefix" name="save"></agtc-icon>
+</agtc-button>
+```
+
+```javascript
+// Listening for events
+document.querySelector('agtc-button[variant="critical"]')
+  .addEventListener('agtc-confirm', () => {
+    // The user has confirmed — execute the irreversible action
+  });
+```
+
+---
+
+## What is NOT in this component
+
+- **`<a>` rendering** — for links, use native `<a>` or a future `<agtc-link>`
+- **Confirmation modal** — `agtc-confirm-request` lets the host display its own UI if needed
+- **Audit log** — the host's responsibility, on the `agtc-confirm` event
+- **Tooltip on icon-only** — to be implemented at the host level; the component is limited to the `aria-label`
+
+<!-- FR -->
+
 # ADR-031 — agtc-button : implémentation Web Component Lit
 
 **Date :** 2026-05-30
 **Statut :** Accepté
 **Décideurs :** Guilherme Negreiros
 **Scope :** Composant `agtc-button` — contrat d'implémentation
-
-> **English summary:** Documents the Lit implementation of `agtc-button`: a self-contained two-click confirmation flow for the `critical` variant (no external modal dependency, auto-reset on blur/Escape/3s timeout), a width-preserving loading state via `visibility: hidden`, dimension tokens shared across all variants, and a hybrid icon API (property fallback plus named slots) for cross-framework and Figma Code Connect compatibility.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

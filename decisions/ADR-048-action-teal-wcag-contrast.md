@@ -1,3 +1,114 @@
+# ADR-048 — Accessible interactive teal: `action.primary` teal.9 → teal.11
+
+> **Date:** 2026-06-05
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-048-action-teal-wcag-contrast.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/semantic.json, decisions/ADR-024-brand-palette-migration.md, guidelines/components/button.md, site/build.js
+
+---
+
+## Context
+
+The site redesign (highlighting the "Get Started" CTA as the primary button) revealed a
+**pre-existing, systemic WCAG AA non-compliance**: the action color `action.primary` was
+`teal.9` (`#12a594`), and the primary button places **white text** on top of it.
+
+| teal.9 usage | Pair | Ratio | AA text (4.5:1) |
+|------------------|-------|-------|------------------|
+| Primary button (hero CTA, nav-cta) | white on teal.9 | **3.07:1** | ❌ fail |
+| Primary button hover | white on teal.10 (`#0d9b8a`) | **3.46:1** | ❌ fail |
+| Active link (nav / TOC / sidebar) | teal.9 as **text** on white | **3.07:1** | ❌ fail |
+| Focus ring (`border.focus`) | teal.9 on white | 3.07:1 | ✅ (non-text, 3:1 required) |
+
+> Since the contrast is **symmetric**, the claim in **ADR-024 (line 109)** — "teal.9 =
+> 4.6:1 on white" — is **factually incorrect**: the 4.6:1 value corresponds to
+> **teal.11** (`#008573`), not teal.9. Yet the `guidelines/components/button.md` contract
+> requires "4.5:1 minimum." The flagship button was thus violating its own contract.
+
+---
+
+## Decision
+
+Separate the **identity teal (brand)** from the **interactive teal (action)**, and
+raise the latter to an AA-compliant step.
+
+| Semantic token | Before | After | White text / on white |
+|------------------|-------|-------|--------------------------|
+| `color.action.primary` | teal.9 `#12a594` | **teal.11 `#008573`** | **4.56:1** ✅ AA |
+| `color.action.primary-hover` | teal.10 `#0d9b8a` | **teal.12 `#0d3d38`** | 12.06:1 ✅ (darkened) |
+| `color.border.focus` | teal.9 | **teal.11 `#008573`** | 4.56:1 ✅ (unified with action) |
+| `color.brand.primary` | teal.9 `#12a594` | **teal.9 (unchanged)** | identity / logotype |
+
+### Principle: two teals, two roles
+
+- **`brand.primary` = teal.9** — the **identity** color. Matches the SVG logo
+  (`#12A594`, hardcoded) and the manifest's `theme_color`. Logotype/brand usage, exempt
+  from contrast requirements (WCAG 1.4.3).
+- **`action.primary` = teal.11** — the **interactive affordance** color (buttons, active
+  links, focus). Must be accessible: white text on top **and** teal as text on white =
+  4.56:1.
+
+> This separation resolves the underlying tension: a **single** value couldn't
+> simultaneously be the vivid brand hue (teal.9) **and** an accessible action
+> background/text. ADR-024 had merged them.
+
+---
+
+## Accessibility (WCAG 2.2)
+
+| Element | After | Verdict |
+|---------|-------|---------|
+| Primary button text (white / teal.11) | 4.56:1 | ✅ AA |
+| Primary button hover (white / teal.12) | 12.06:1 | ✅ AAA |
+| Active link (teal.11 text / white) | 4.56:1 | ✅ AA |
+| Focus ring (teal.11 / white, non-text) | 4.56:1 | ✅ (≥ 3:1) |
+| "Agentica" wordmark (teal.9, logotype) | — | exempt (WCAG 1.4.3) |
+
+Hover works via a **marked darkening** (teal.11 → teal.12): the only darker teal step
+guaranteeing 4.5:1 with white text. The direction is correct (darkens on hover); the
+design could later introduce an intermediate step for a softer transition if desired.
+
+---
+
+## Scope
+
+| Included | Excluded |
+|--------|-------|
+| `action.primary`, `action.primary-hover`, `border.focus` → accessible interactive teal | `brand.primary` (identity, stays teal.9) |
+| Updating the token's code display in `site/build.js` (`#12A594` → `#008573`) | SVG logo and `manifest.theme_color` (identity, stay `#12A594`) |
+| Correcting the ADR-024 contrast error (documented here) | Educational pipeline diagram (`blue.11`/`#0d74ce`, illustrative — out of scope) |
+
+---
+
+## Rejected alternatives
+
+- **Keep teal.9, switch the button text to dark (gray.12)**: 5.30:1 ✅ for the button,
+  but **doesn't fix** active links (teal.9 as text on white stays at 3.07:1) and gives an
+  unusual look (dark text on a vivid teal). A partial fix — rejected.
+- **Also move `brand.primary` to teal.11**: misaligns the brand from the SVG logo
+  (`#12A594`) — rejected; identity must stay faithful to the wordmark.
+- **Change nothing, document the debt**: contrary to the non-negotiable accessibility
+  value (WCAG AA) and the button's explicit contract (4.5:1) — rejected.
+
+---
+
+## Consequences
+
+- Every primary button, active link, and focus ring in the system now passes **WCAG
+  AA**. Build: **662 defined · 177 referenced · 0 phantom**.
+- The system now distinguishes **identity teal** (teal.9) from **action teal**
+  (teal.11) — a sounder, reusable architectural foundation.
+- `guidelines/components/button.md` ("4.5:1 minimum") is now **actually** satisfied.
+- The ADR-024 contrast error is corrected and traced here (ADRs are immutable; this
+  ADR is authoritative on the value of `action.primary`).
+- Governance: change to **semantic tokens** (action/border) — Design System Lead
+  approval. No primitive added, no component token modified, no hardcoded value introduced.
+
+<!-- FR -->
+
 # ADR-048 — Teal interactif accessible : `action.primary` teal.9 → teal.11
 
 > **Date :** 2026-06-05
@@ -7,13 +118,6 @@
 > **Chemin logique:** decisions/ADR-048-action-teal-wcag-contrast.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, decisions/ADR-024-brand-palette-migration.md, guidelines/components/button.md, site/build.js
-
-> **English summary:** Fixes a systemic WCAG AA contrast failure: `action.primary` was teal.9
-> (3.07:1 with white text), violating the button contract's own 4.5:1 requirement — and correcting
-> an inaccurate claim in ADR-024. Splits the identity teal (`brand.primary`, unchanged teal.9) from
-> a new accessible interactive teal (`action.primary` = teal.11, 4.56:1).
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

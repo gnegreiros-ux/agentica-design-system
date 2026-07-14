@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Conformité au standard W3C DTCG (Design Tokens Community Group) — Agentica</title>
+<title>Conformance to the W3C DTCG standard (Design Tokens Community Group) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Conformité au standard W3C DTCG (Design Tokens Community Group) — Agentica">
+<meta property="og:title" content="Conformance to the W3C DTCG standard (Design Tokens Community Group) — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Conformité au standard W3C DTCG (Design Tokens Community Group) — Agentica">
+<meta name="twitter:title" content="Conformance to the W3C DTCG standard (Design Tokens Community Group) — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Conformité au standard W3C DTCG (Design Tokens Community Group)</h1>
+  <h1 class="adr-page-title">Conformance to the W3C DTCG standard (Design Tokens Community Group)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,31 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Humain (approbation) · Design System Lead (format des tokens)</dd>
+      <dd>Human (approval) · Design System Lead (token format)</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Formally declares the W3C DTCG (Design Tokens Community Group) format as the repository's token standard — already followed de facto — and closes the gap by adding the <code>$schema</code> field to <code>tokens/primitives.json</code> (metadata only, no token values changed). Documents this on governance surfaces and publicly on the site with the official DTCG logo.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The system encodes its decisions as design tokens (primitive → semantic → component). The format of these files was already de facto aligned with the W3C Community Group's <strong>Design Tokens format</strong> (DTCG) — <code>$value</code>, <code>$type</code>, <code>$description</code>, <code>{group.token}</code> aliases — and <code>tokens/semantic.json</code> + <code>tokens/component.json</code> already carried the DTCG <code>$schema</code>. However, this conformance was <strong>not explicitly declared</strong> as a governance decision, nor documented as a binding reference, nor publicly visible.</p>
+<p>Official source for the standard: <strong>https://www.designtokens.org/</strong>.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>1. <strong>Explicit adoption of the DTCG format as the reference standard</strong> for <code>tokens/*.json</code> files.    In case of divergence between a local habit and the standard, <strong>the standard prevails</strong>.</p>
+<p>2. <strong>Alignment of the 3 token files</strong>: adding the <code>$schema</code>    (<code>https://design-tokens.github.io/community-group/format/</code>) to <code>tokens/primitives.json</code> — which    did not yet carry it — to reach 3/3 conformant files. Metadata only, <strong>no token value or    contract changed</strong>.</p>
+<p>3. <strong>Documenting conformance on governance surfaces</strong>:    - <code>.claude/rules/tokens-system.md</code> — "Reference standard — Design Tokens (W3C DTCG)" section      + table of applied conventions.    - <code>DESIGN.md</code> §2 — "Standard conformance (W3C DTCG)" subsection.</p>
+<p>4. <strong>Public declaration on the site</strong>: home page "Open standards" section displaying the    <strong>official DTCG logo</strong> and the statement "Agentica follows the DTCG standard," with a link to    <code>designtokens.org</code> (FR/EN, copy source of truth <code>site/contenu.md</code>). Official logo archived,    versioned: <code>Brand/standards/dtcg-logo.svg</code>.</p>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td>Conformance declaration + adding <code>$schema</code> to <code>primitives.json</code></td><td>Migration of any proprietary format (none in place)</td></tr><tr><td>Governance documentation (rule + DESIGN.md) + site declaration</td><td>Automated DTCG schema validation in CI (future project)</td></tr><tr><td>DTCG logo on the home page + <code>Brand/standards/</code> archiving</td><td>Modifying token values or contracts</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Staying in tacit (undeclared) conformance</strong>: deprives the system of a binding reference and a</li></ul>
+<p>  visible interoperability argument — contrary to the auditability value — rejected.</p>
+<ul><li><strong>Defining a proprietary format</strong>: would break interoperability with Style Dictionary and Tokens</li></ul>
+<p>  Studio, and the "stack-agnostic / open standards" argument — rejected.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>Interoperability guaranteed with DTCG-compatible tooling (Style Dictionary, Tokens Studio).</li><li>Any future change to the <code>tokens/*.json</code> format must remain conformant with the DTCG standard.</li><li>Governance: adding <code>$schema</code> (metadata) — Design System Lead level, no contract impacted.</li><li><strong>To follow up:</strong> add DTCG schema validation to the <code>style-dictionary</code> pipeline (currently</li></ul>
+<p>  planned) once it's activated.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le système encode ses décisions sous forme de design tokens (primitif → sémantique → composant). Le format de ces fichiers était déjà aligné de facto sur le <strong>format Design Tokens</strong> du W3C Community Group (DTCG) — <code>$value</code>, <code>$type</code>, <code>$description</code>, alias <code>{group.token}</code> — et <code>tokens/semantic.json</code> + <code>tokens/component.json</code> portaient déjà le <code>$schema</code> DTCG. Cette conformité n'était toutefois <strong>pas déclarée explicitement</strong> comme une décision de gouvernance, ni documentée comme référence opposable, ni visible publiquement.</p>
 <p>Source officielle du standard : <strong>https://www.designtokens.org/</strong>.</p>
 <hr>
@@ -154,7 +171,7 @@
 <hr>
 <h2>Conséquences</h2>
 <ul><li>Interopérabilité garantie avec l'outillage compatible DTCG (Style Dictionary, Tokens Studio).</li><li>Tout futur changement de format des <code>tokens/*.json</code> doit rester conforme au standard DTCG.</li><li>Gouvernance : ajout de <code>$schema</code> (métadonnée) — niveau Design System Lead, aucun contrat impacté.</li><li><strong>À suivre :</strong> ajouter une validation de schéma DTCG dans le pipeline <code>style-dictionary</code></li></ul>
-<p>  (actuellement planifié) lors de son activation.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  (actuellement planifié) lors de son activation.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-051.html" class="agtc-button secondary">← ADR-051</a>
     <a href="adr-053.html" class="agtc-button secondary">ADR-053 →</a>
   </div></main>

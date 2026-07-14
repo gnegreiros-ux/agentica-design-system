@@ -1,3 +1,116 @@
+# ADR-028 — Atkinson Hyperlegible Mono as the monospace typeface
+
+> **Date:** 2026-05-30
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-028-atkinson-hyperlegible-mono.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** ADR-021-atkinson-hyperlegible.md, tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
+
+---
+
+## Context
+
+Since ADR-021, the primary font has been Atkinson Hyperlegible (sans-serif). The system used the generic `monospace` value as the fallback font for code elements (`<code>`, token labels, ADR numbers).
+
+Problems to solve:
+1. `font-family: monospace` is uncontrollable — every OS and browser renders a different result (Courier New, Menlo, Consolas, DejaVu Sans Mono)
+2. No accessibility consistency between the body font and the code font
+3. The choice was neither tokenized nor documented — invisible to agents
+
+---
+
+## Decision
+
+### Font: Atkinson Hyperlegible Mono
+
+Designed by **Applied Design Works** for the **Braille Institute of America** — the official monospace companion to Atkinson Hyperlegible. Same design philosophy: maximum differentiation of ambiguous characters, optimized for low vision.
+
+**Technical differentiators:**
+
+| Ambiguous pair | System monospace | Atkinson Hyperlegible Mono |
+|--------------|-------------------|---------------------------|
+| `l` / `1` / `I` | Often identical | Deliberately distinct |
+| `O` / `0` | Often identical | Deliberately distinct |
+| `b` / `d` / `p` / `q` | Mirrored | Intentional asymmetries |
+| `{` / `(` / `[` | Similar | Distinct shape and opening |
+
+**Available weights:** Regular (400) and Bold (700), in roman and italic.
+
+### Tokenization
+
+The font is exposed via a CSS custom property in the build:
+
+```css
+/* :root in site.css */
+--agtc-font-mono: 'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
+```
+
+The fallback chain guarantees an acceptable result even with no internet connection:
+- `JetBrains Mono` — developer-focused, highly legible
+- `Cascadia Code` — Windows/VS Code, modern
+- `monospace` — last-resort system fallback
+
+### Google Fonts import
+
+Loaded in the same `@import` as Atkinson Hyperlegible (a single network request):
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+```
+
+### Elements using `--agtc-font-mono`
+
+| Element | Context |
+|---------|----------|
+| `code` | All pages — token names, code examples |
+| `.adr-num` | Decision pages — the `ADR-0XX` number |
+| `.space-label` | Spacing page — scale labels |
+| `.color-name`, `.color-value` | Color page — hex, token name |
+| `.adr-num`, `.density-card-math` | Decision pages — math token formulas |
+| Inline `style="font-family:var(--agtc-font-mono)"` | Value cells in token tables |
+
+---
+
+## Rationale
+
+Typographic consistency between the body font (Atkinson Hyperlegible) and the code font (Atkinson Hyperlegible Mono) is a quality criterion for a design system. Using a shared family guarantees:
+
+- The same accessibility DNA (ambiguous characters handled the same way)
+- The same visual rhythm (similar x-height, compatible letter spacing)
+- A single provider (Google Fonts) for both variants
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **`monospace` (system)** | Uncontrollable cross-platform. No accessibility guarantee. |
+| **JetBrains Mono** | An excellent choice, but a stylistic break from Atkinson Hyperlegible. |
+| **Source Code Pro** | Same issue — no link to the primary body font. |
+| **Fira Code** | Ligatures potentially problematic for agents reading code. |
+| **Atkinson Hyperlegible Next Mono** | Not yet available on Google Fonts as of 2026-05. To be reconsidered in v2. |
+
+---
+
+## Consequences
+
+**For the token system:**
+- `--agtc-font-mono` becomes the mandatory reference for every monospace element
+- Hardcoded `font-family: monospace` is forbidden (detectable via ESLint audit)
+
+**For AI agents:**
+- The monospace font is a traceable decision, not a system default
+- Agents can verify that a component uses `var(--agtc-font-mono)` rather than a hardcoded value
+
+**For users:**
+- Better legibility of token names and code for people with low vision
+- Reinforced visual consistency between body text and code elements
+
+<!-- FR -->
+
 # ADR-028 — Atkinson Hyperlegible Mono comme police monospace
 
 > **Date :** 2026-05-30
@@ -7,10 +120,6 @@
 > **Chemin logique:** decisions/ADR-028-atkinson-hyperlegible-mono.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** ADR-021-atkinson-hyperlegible.md, tokens/primitives.json, tokens/semantic.json, site/build.js, guidelines/foundations/typography.md
-
-> **English summary:** Adopts Atkinson Hyperlegible Mono — the monospace companion to ADR-021's Atkinson Hyperlegible — as the tokenized monospace font (`--agtc-font-mono`) for code, token names, and ADR numbers, replacing the uncontrollable generic `monospace` fallback that rendered differently across OS/browsers.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

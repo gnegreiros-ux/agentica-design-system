@@ -1,3 +1,118 @@
+# ADR-060 — Implementing `agtc-top-nav`
+
+> **Date:** 2026-06-15
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** component
+> **Logical path:** decisions/ADR-060-agtc-top-nav-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-047-no-visited-nav-rule.md
+> **Relations:** tokens/component.json, components/agtc-top-nav.js, guidelines/components/top-nav.md, decisions/ADR-056-agtc-tabs-implementation.md
+
+---
+
+## Context
+
+The Agentica site is the design system's living laboratory — every site feature is an
+opportunity to build and validate a real component before formalizing it.
+
+The site's main navigation (`site/build.js`) was implemented as static HTML generated
+by JavaScript, with CSS styles defined directly in terms of semantic tokens (with no
+component-level layer). Several problems had accumulated across sessions:
+
+- `:visited` kept the browser's default color (flagged 3 times — ADR-047, 2026-06-06, 2026-06-15)
+- `:active` wasn't defined → browser default color
+- `.active` used a persistent filled background → looked like a toggled button
+- `:focus-visible` absent → keyboard navigation non-compliant with WCAG 2.4.7
+- `aria-current="page"` absent → screen readers blind to the current page (WCAG 4.1.2)
+- No component token → design decisions lived directly in the site's CSS
+
+The decision to formalize `agtc-top-nav` as a DS component follows the founding
+principle: the site consumes the design system, not the other way around.
+
+---
+
+## Decision
+
+Create the `agtc-top-nav` component (a Lit Web Component) encapsulating the main
+horizontal navigation with a full-height tab visual pattern, and formalize it in the
+design system before applying it to the site.
+
+### Key technical decisions
+
+**`<nav>`, not `role="tablist"`**
+
+Despite a visual appearance similar to tabs, `agtc-top-nav` uses inter-page links. The
+correct ARIA pattern is `<nav aria-label="...">` + `<a aria-current="page">`, not
+`role="tablist"`, which would imply in-page content panels and arrow-key navigation.
+
+**Full-height tab pattern**
+
+Each link occupies the full height of the header (64px) via `align-self:stretch`. The
+active state is indicated by a `border-bottom:2px solid action-primary` positioned at the
+bottom of the header — not by a filled background (which would mimic a toggled button).
+
+**Separate CTA button**
+
+The "Get Started" link (`cta:true`) breaks from the tab pattern: `height:auto;
+align-self:center; border-radius:control; margin-left:8px`. It's an adoption action,
+visually a button.
+
+**18 component tokens**
+
+Every visual decision is captured in `tokens/component.json` under `top-nav.*`: 11
+tokens for the tabs, 7 tokens for the CTA. The component's and the site's CSS reference
+only `--agtc-component-top-nav-*`.
+
+---
+
+## Reference UX patterns applied
+
+| Pattern | Source | Decision |
+|---------|--------|----------|
+| `<nav aria-label>` landmark | W3C WAI APG | `nav-label` mandatory, exposed prop |
+| `aria-current="page"` | WCAG 2.4.4 / 4.1.2 | Automatically computed from `current` (pathname) |
+| Border-bottom indicator | NN/g — horizontal nav | 2px at the bottom of the full-height tab |
+| No `role="tablist"` | W3C APG Tabs Pattern | Inter-page nav ≠ in-page tabs |
+| Distinct CTA (pill button) | IxDF — clear primary action | `cta:true` → border-radius + filled background |
+| `:visited` neutralized | ADR-047 | Inside shadow DOM via `a:visited { color: var(…) }` |
+| Mobile hamburger | NN/g — mobile nav | Handled by the site (out of scope for component v1.0) |
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Keep the static HTML** | No reusability, design decisions scattered across the site's CSS |
+| **Use `agtc-tabs` with `href`** | `agtc-tabs` has `role="tablist"` — incorrect ARIA semantics for inter-page navigation |
+| **Filled background for the active link** | Looks like a toggled button (pill) — NN/g recommends a line indicator for horizontal navs |
+| **Arrow-key navigation** | Reserved for ARIA `tablist` — misleading for links |
+| **Bake bilingualism into the component** | The component is language-agnostic — language is handled on the consumer side (the site) |
+
+---
+
+## Consequences
+
+**For the site:** The site's CSS now references `--agtc-component-top-nav-*` instead of
+direct semantic tokens. The Lit component can be used to replace the generated HTML in
+phase 2 of integration.
+
+**For the design system:** 18 new component tokens in `tokens/component.json`. Build:
+792 tokens defined (+18), 0 phantom.
+
+**For agents:** Any visual change to the top nav goes through `tokens/component.json`
+(and a TCR). The component is the contract — not the site's CSS.
+
+---
+
+## Incidents or triggers
+
+Navigation fixed 6 times in a single day (2026-06-15) before the decision to formalize
+the component: Safari `:visited` (×3), missing `:active`, button-like `.active`, missing
+`:focus-visible`, missing `aria-current`. The recurrence of fixes triggered the formalization.
+
+<!-- FR -->
+
 # ADR-060 — Implémentation de `agtc-top-nav`
 
 > **Date :** 2026-06-15
@@ -7,10 +122,6 @@
 > **Chemin logique:** decisions/ADR-060-agtc-top-nav-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-047-no-visited-nav-rule.md
 > **Relations:** tokens/component.json, components/agtc-top-nav.js, guidelines/components/top-nav.md, decisions/ADR-056-agtc-tabs-implementation.md
-
-> **English summary:** The site's main navigation was hand-rolled HTML/CSS that had accumulated repeated bugs: unstyled `:visited`/`:active`, a filled "active" state that looked like a toggled button, missing `:focus-visible` and `aria-current`, and no component-token layer. This ADR formalizes `agtc-top-nav` as a Lit Web Component using `<nav>` + `aria-current="page"` (not `role="tablist"`, since it links between pages rather than switching in-page panels), a full-height tab visual pattern with a bottom-border active indicator, a separate CTA link style, and 18 new component tokens — making the component, not the site's CSS, the source of truth for the nav's design.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

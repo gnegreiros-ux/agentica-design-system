@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>`agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site — Agentica</title>
+<title>`agtc-top-nav` v1.1: bilingualism, mobile shadow DOM, site integration — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="`agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site — Agentica">
+<meta property="og:title" content="`agtc-top-nav` v1.1: bilingualism, mobile shadow DOM, site integration — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="`agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site — Agentica">
+<meta name="twitter:title" content="`agtc-top-nav` v1.1: bilingualism, mobile shadow DOM, site integration — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">component</span>
   </div>
-  <h1 class="adr-page-title">`agtc-top-nav` v1.1 : bilinguisme, mobile shadow DOM, intégration site</h1>
+  <h1 class="adr-page-title">`agtc-top-nav` v1.1: bilingualism, mobile shadow DOM, site integration</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,47 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Integrating the newly formalized <code>agtc-top-nav</code> component (ADR-060) into the live site surfaced three gaps: the component needed to render bilingual labels automatically, its mobile responsive styles lived in <code>site.css</code> and couldn't reach into the shadow DOM, and the site had no bundler for Lit's ES module imports. This ADR adds a <code>MutationObserver</code>-driven <code>_lang</code> property that watches <code>data-lang</code> on <code>&lt;html&gt;</code> and re-renders automatically, moves all mobile CSS into the component itself (exposed via a <code>:host(.open)</code> state), and introduces an esbuild IIFE bundling step (<code>bundleComponents()</code>) so the component can be dropped in with a single <code>&lt;script defer&gt;</code> tag, with no external CDN dependency.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-060 defined the <code>agtc-top-nav</code> component (formalization). The next step was its actual integration into the site — the first real validation of the component contract.</p>
+<p>Three obstacles identified before integration:</p>
+<p>1. <strong>Bilingualism</strong> — the component used <code>label</code> (language-neutral), but the site has two    languages (FR/EN) switched via <code>data-lang</code> on <code>&lt;html&gt;</code>. The component needed to    automatically render in the right language.</p>
+<p>2. <strong>Mobile shadow DOM</strong> — the mobile styles (<code>.top-nav{display:none}</code>, <code>.top-nav.open</code>,    responsive <code>.top-nav a</code>) lived in <code>site.css</code>. They don't penetrate the shadow DOM.    They needed to be moved into the component's CSS.</p>
+<p>3. <strong>Bundling</strong> — the component uses <code>import { LitElement, ... } from 'lit'</code>. The site    generates static HTML with no bundler. An IIFE bundle usable without a module system    was needed.</p>
+<p>Guiding principle: "If the system is missing something needed to power the site, let's build it in the system first."</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3>1. Bilingualism via <code>MutationObserver</code></h3>
+<p>Added a reactive (internal) <code>_lang</code> property to the component. In <code>connectedCallback()</code>, the component:</p>
+<ul><li>reads <code>document.documentElement.dataset.lang</code> to initialize <code>_lang</code></li><li>installs a <code>MutationObserver</code> on <code>&lt;html&gt;</code> filtered on <code>data-lang</code></li><li>updates <code>_lang</code> and triggers an automatic re-render on every change</li></ul>
+<p>Extended item structure: <code>{ label?, labelFr?, labelEn?, href, cta? }</code></p>
+<ul><li><code>labelFr</code> shown when <code>data-lang="fr"</code> (priority)</li><li><code>labelEn</code> shown when <code>data-lang="en"</code> (priority)</li><li><code>label</code>: language-neutral fallback</li></ul>
+<p><strong>Reason:</strong> the component handles the language itself — the consumer simply passes both variants. No re-binding needed on the site side.</p>
+<h3>2. Mobile CSS in shadow DOM</h3>
+<p>The mobile CSS was moved <strong>entirely into <code>agtc-top-nav.js</code></strong> via <code>@media (max-width: 768px)</code>. The component exposes its open state via <code>:host(.open) nav</code> (CSS class on the host).</p>
+<p>The site JS controls the opening: <code>topNav.classList.toggle('open')</code>. <code>aria-controls="site-top-nav"</code> on the hamburger button points to <code>&lt;agtc-top-nav id="site-top-nav"&gt;</code>.</p>
+<p><strong>Reason:</strong> the shadow DOM encapsulates the responsive behavior — the component is now self-contained (no dependency on <code>site.css</code> for its internal states).</p>
+<h3>3. Bundling via esbuild IIFE</h3>
+<p>Added a <code>bundleComponents()</code> function in <code>site/build.js</code> (CJS) using <code>child_process.execSync</code> to call the esbuild binary available via the root <code>node_modules</code> (a transitive dependency of Vite/Storybook).</p>
+<p>Format: <code>--format=iife --bundle --minify</code> → self-executing bundle, no import map required. Loading: <code>&lt;script src="${base}components/agtc-top-nav.js" defer&gt;&lt;/script&gt;</code> in <code>&lt;head&gt;</code>.</p>
+<p>Deferred initialization: inline script using <code>customElements.whenDefined('agtc-top-nav').then(init)</code> to guarantee the element is defined before assigning <code>.items</code> and <code>.current</code>.</p>
+<p><strong>Reason:</strong> a self-contained solution with no new dependency or external CDN — consistent with the digital sovereignty principle (ADR-004).</p>
+<hr>
+<h2>Reference UX patterns</h2>
+<p>All patterns from ADR-060 apply. No new UX pattern — only technical implementation decisions (i18n, bundling, responsive shadow DOM).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Import map + CDN for Lit</strong></td><td>External CDN dependency — against ADR-004 (digital sovereignty)</td></tr><tr><td><strong>CSS parts (<code>::part(nav)</code>)</strong></td><td>The <code>host.class::part()</code> syntax doesn't cover the child elements of the parts</td></tr><tr><td><strong><code>open</code> as an HTML attribute (reflect)</strong></td><td><code>classList.toggle</code> is simpler — <code>:host(.open)</code> is identical to <code>:host([open])</code> for this use case</td></tr><tr><td><strong>Handle language on the site side (re-binding)</strong></td><td>Fragile — would require listening for the language toggle on every page</td></tr><tr><td><strong>Vanilla component (without Lit)</strong></td><td>Two implementations of the same component — impossible to maintain</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For the site:</strong></p>
+<ul><li>No more <code>.top-nav</code> CSS in <code>site.css</code> — the component manages its own CSS</li><li>The JS active-link selection <code>document.querySelectorAll('.top-nav a')</code> is removed</li><li>The mobile menu JS now targets <code>document.querySelector('agtc-top-nav')</code></li><li><code>aria-controls="site-top-nav"</code> (formerly <code>main-nav</code>) on the hamburger button</li><li>Build output: <code>site/dist/components/agtc-top-nav.js</code> (~21kb, bundled IIFE)</li></ul>
+<p><strong>For the design system:</strong></p>
+<ul><li><code>components/agtc-top-nav.js</code> v1.1 — backward compatible (the <code>label</code> API still works)</li><li><code>bundleComponents()</code> in <code>site/build.js</code> — extensible to other components</li></ul>
+<p><strong>For agents:</strong></p>
+<ul><li>Bilingual items preferred: <code>{ labelFr, labelEn, href }</code> — not <code>{ label }</code></li><li>Mobile handled by the component — do not add <code>.top-nav*</code> CSS in <code>site.css</code></li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Direct follow-up to ADR-060: component formalization → site integration. The three obstacles (bilingualism, shadow DOM, bundling) were identified during the first integration attempt (2026-06-15).</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>ADR-060 a défini le composant <code>agtc-top-nav</code> (formalisation). L'étape suivante était l'intégration effective dans le site — première validation réelle du contrat composant.</p>
 <p>Trois obstacles identifiés avant intégration :</p>
 <p>1. <strong>Bilinguisme</strong> — le composant utilisait <code>label</code> (langue neutre), mais le site a deux langues    (FR/EN) commutées via <code>data-lang</code> sur <code>&lt;html&gt;</code>. Il fallait que le composant gère    automatiquement le rendu dans la bonne langue.</p>
@@ -173,7 +209,7 @@
 <ul><li>Items bilinguaux préférés : <code>{ labelFr, labelEn, href }</code> — pas <code>{ label }</code></li><li>Mobile géré par le composant — ne pas ajouter de CSS <code>.top-nav*</code> dans <code>site.css</code></li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Suite directe de ADR-060 : formalisation du composant → intégration site. Les trois obstacles (bilinguisme, shadow DOM, bundling) ont été identifiés lors de la première tentative d'intégration (2026-06-15).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Suite directe de ADR-060 : formalisation du composant → intégration site. Les trois obstacles (bilinguisme, shadow DOM, bundling) ont été identifiés lors de la première tentative d'intégration (2026-06-15).</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-060.html" class="agtc-button secondary">← ADR-060</a>
     <a href="adr-062.html" class="agtc-button secondary">ADR-062 →</a>
   </div></main>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-table` — Agentica</title>
+<title>Implementing `agtc-table` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-table` — Agentica">
+<meta property="og:title" content="Implementing `agtc-table` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-table` — Agentica">
+<meta name="twitter:title" content="Implementing `agtc-table` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-table`</h1>
+  <h1 class="adr-page-title">Implementing `agtc-table`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,48 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Implements agtc-table — the site's most-used pattern (692 token-table occurrences) — as a "mix" architecture: a data-driven Lit component for apps/Storybook, plus a <code>.agtc-table</code> CSS class for the site's static HTML (so displaying a table never depends on JS). Read-only in v1; sorting/filtering/pagination are deferred but designed for via an extensible <code>columns</code>/<code>rows</code> API.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
+<blockquote><p>Added 2026-06-03 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>T1–T10 all approved</strong>. Detail and links: <code>guidelines/components/table.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>T1</td><td>Semantic HTML + <code>scope="col"</code></td><td>Smashing — Table Patterns</td></tr><tr><td>T2</td><td><code>&lt;caption&gt;</code> (hideable)</td><td>Smashing</td></tr><tr><td>T3</td><td>Text left-aligned, numeric right-aligned</td><td>NN/g — Data Tables</td></tr><tr><td>T4</td><td>Row separators (optional zebra striping)</td><td>NN/g</td></tr><tr><td>T5</td><td>Row hover</td><td>NN/g</td></tr><tr><td>T6</td><td>Sticky header (optional)</td><td>NN/g · Smashing</td></tr><tr><td>T7</td><td>Horizontal scroll + overflow indicator</td><td>Smashing</td></tr><tr><td>T8</td><td>1st column = readable identifier</td><td>NN/g</td></tr><tr><td>T9</td><td><code>compact</code> density by default</td><td>Dashboard Design Patterns</td></tr><tr><td>T10</td><td>Sort/filter/pagination — <strong>door left open, out of v1</strong></td><td>NN/g</td></tr></tbody></table></div>
 <hr>
-<h2>Patterns UX de référence appliqués</h2>
+<h2>Context</h2>
+<p><code>agtc-table</code> is the <strong>most used component on the generated site</strong>: 692 occurrences of <code>token-row</code>/<code>token-table</code> (token tables: CSS token → reference → value → intent), plus comparison tables and DOs/DON'Ts tables. The gap analysis of 2026-06-03 identified it as the first component to build from the site's actual needs.</p>
+<p>Observation at creation time: the site's original HTML has <strong>neither <code>scope</code> on <code>&lt;th&gt;</code> nor <code>&lt;caption&gt;</code></strong> — an accessibility gap this component fills.</p>
+<p>The table is <strong>read-only</strong>: documentation tables don't need editing, sorting, or pagination. We avoid speculative design while keeping the door open.</p>
+<hr>
+<h2>Decisions</h2>
+<h3>Decision 1 — "Mix" architecture: data-driven component <strong>+</strong> light-DOM class</h3>
+<p>Two forms consuming the <strong>same</strong> <code>component.table.*</code> tokens:</p>
+<p>1. <strong><code>&lt;agtc-table&gt;</code></strong> (Lit, shadow DOM) — driven by <code>.columns</code>/<code>.rows</code>. For apps, JS    contexts, and Storybook. Consistent with other components (shadow DOM + <code>static styles</code>). 2. <strong><code>.agtc-table</code></strong> (CSS class) — applied to a real, hand-written <code>&lt;table&gt;</code>. For the    <strong>static site</strong>, which must remain resilient: displaying a table must <strong>not</strong> depend    on JS.</p>
+<p>Why not a single mechanism?</p>
+<ul><li>An all-shadow-DOM data-driven approach would make the site <strong>JS-dependent</strong> to display</li></ul>
+<p>  its tables — a resilience regression (the site is currently pure static HTML).</p>
+<ul><li>*Slotting* a full <code>&lt;table&gt;</code> into a shadow DOM doesn't allow styling <code>th</code>/<code>td</code></li></ul>
+<p>  (<code>::slotted</code> doesn't reach descendants). The light-DOM class works around this   limitation and handles <strong>rich cell content</strong> (e.g., <code>&lt;code&gt;</code>), which the data-driven   API (escaped text) doesn't cover.</p>
+<h3>Decision 2 — Read-only; sort/filter/pagination out of scope, but an extensible API</h3>
+<p>v1 implements <strong>neither sorting, filtering, nor pagination</strong> (T10). The site's actual need is static tables. But a future need was confirmed by the user: the <code>columns</code>/<code>rows</code> API is chosen <strong>precisely</strong> to accommodate them without a breaking change (future <code>column.sortable</code>, <code>@sort</code> event, toolbar slot). No dead property ships in v1, to avoid a misleading API.</p>
+<h3>Decision 3 — <code>table</code> tokens in <code>component.json</code>, <code>default.*</code> structure + paddings</h3>
+<p>Colors and radius live under <code>table.default.*</code>; paddings (horizontal, compact/comfortable vertical) sit at the <code>table.*</code> level. This separation allows changing density without touching colors. Compliant with the three levels (ADR-001): every token points to a semantic token (<code>background.subtle</code>, <code>border.default</code>, <code>background.hover</code>…), no raw value.</p>
+<h3>Decision 4 — Accessible by default: <code>scope</code>, <code>&lt;caption&gt;</code>, numeric alignment</h3>
+<p><code>&lt;th scope="col"&gt;</code> systematically; <code>&lt;caption&gt;</code> recommended (console warning if absent), visually hideable via <code>caption-hidden</code>; numeric columns right-aligned (<code>align="end"</code>) for vertical scanning. Fills the gaps in the original HTML.</p>
+<h3>Decision 5 — Row separators by default, zebra striping optional (T4)</h3>
+<p>User decision: <strong>row separators</strong> by default (understated, suited to dense token tables), <strong>zebra striping</strong> available via the <code>striped</code> attribute.</p>
+<h3>Decision 6 — <code>compact</code> density by default (T9)</h3>
+<p>Token tables are dense; <code>compact</code> is the default, <code>comfortable</code> available via <code>density</code>.</p>
+<hr>
+<h2>v1 scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (door left open)</th></tr></thead><tbody><tr><td>Data-driven component (<code>columns</code>/<code>rows</code>)</td><td>Sort / filter / pagination</td></tr><tr><td><code>.agtc-table</code> class (light DOM, rich content)</td><td>Inline cell editing</td></tr><tr><td><code>caption</code> + <code>caption-hidden</code>, <code>scope="col"</code></td><td>Row selection / bulk actions</td></tr><tr><td>Per-column alignment (<code>start</code>/<code>end</code>/<code>center</code>)</td><td>Resizable / reorderable columns</td></tr><tr><td><code>striped</code>, <code>sticky-header</code>, <code>density</code></td><td>Multi-level header / colspan</td></tr><tr><td>Horizontal scroll + overflow indicator</td><td>Rich HTML cells via the data-driven API (→ use the class)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>All-shadow-DOM data-driven only</strong>: makes the site JS-dependent for its tables (regression).</li><li><strong>All-CSS-class only</strong>: no data-driven API for apps; no clean Storybook story.</li><li><strong>Slotting a <code>&lt;table&gt;</code> into shadow DOM</strong>: impossible to style slotted <code>th</code>/<code>td</code>.</li><li><strong>Shipping a no-op <code>sortable</code></strong> to "flag" T10: a misleading API; documenting extensibility preferred instead.</li></ul>
+<hr>
+<h2>Consequences</h2>
+<ul><li>The site will be able to migrate its <code>token-table</code>/<code>token-row</code> elements to</li></ul>
+<p>  <code>.agtc-table</code> during the *dogfooding* step (category A of the gap analysis), with no   JS dependency.</p>
+<ul><li>Any future addition of sort/filter/pagination will require a new ADR (governance).</li></ul>
+<hr>
+<h2>Tokens added to <code>component.json</code></h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Semantic reference</th></tr></thead><tbody><tr><td><code>--agtc-table-default-header-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-header-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-cell-text</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-table-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-table-default-row-hover</code></td><td><code>semantic.color.background.hover</code></td></tr><tr><td><code>--agtc-table-default-stripe</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-caption-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-radius</code></td><td><code>semantic.radius.card</code></td></tr><tr><td><code>--agtc-table-default-font-size</code></td><td><code>semantic.typography.label.size</code></td></tr><tr><td><code>--agtc-table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>--agtc-table-padding-y-compact</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>--agtc-table-padding-y-comfortable</code></td><td><code>primitive.space.3</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>T1–T10 tous approuvés</strong>. Détail et liens : <code>guidelines/components/table.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>T1</td><td>HTML sémantique + <code>scope="col"</code></td><td>Smashing — Table Patterns</td></tr><tr><td>T2</td><td><code>&lt;caption&gt;</code> (masquable)</td><td>Smashing</td></tr><tr><td>T3</td><td>Alignement texte/gauche, numérique/droite</td><td>NN/g — Data Tables</td></tr><tr><td>T4</td><td>Séparateurs de lignes (zébrage en option)</td><td>NN/g</td></tr><tr><td>T5</td><td>Survol de ligne</td><td>NN/g</td></tr><tr><td>T6</td><td>En-tête figé (optionnel)</td><td>NN/g · Smashing</td></tr><tr><td>T7</td><td>Scroll horizontal + indicateur d'overflow</td><td>Smashing</td></tr><tr><td>T8</td><td>1ʳᵉ colonne = identifiant lisible</td><td>NN/g</td></tr><tr><td>T9</td><td>Densité <code>compact</code> par défaut</td><td>Dashboard Design Patterns</td></tr><tr><td>T10</td><td>Tri/filtre/pagination — <strong>porte ouverte, hors v1</strong></td><td>NN/g</td></tr></tbody></table></div>
 <hr>
@@ -174,7 +211,7 @@
 <ul><li>Tout ajout de tri/filtre/pagination devra créer un nouvel ADR (gouvernance).</li></ul>
 <hr>
 <h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-table-default-header-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-header-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-cell-text</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-table-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-table-default-row-hover</code></td><td><code>semantic.color.background.hover</code></td></tr><tr><td><code>--agtc-table-default-stripe</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-caption-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-radius</code></td><td><code>semantic.radius.card</code></td></tr><tr><td><code>--agtc-table-default-font-size</code></td><td><code>semantic.typography.label.size</code></td></tr><tr><td><code>--agtc-table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>--agtc-table-padding-y-compact</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>--agtc-table-padding-y-comfortable</code></td><td><code>primitive.space.3</code></td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-table-default-header-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-header-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-cell-text</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-table-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-table-default-row-hover</code></td><td><code>semantic.color.background.hover</code></td></tr><tr><td><code>--agtc-table-default-stripe</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>--agtc-table-default-caption-text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>--agtc-table-default-radius</code></td><td><code>semantic.radius.card</code></td></tr><tr><td><code>--agtc-table-default-font-size</code></td><td><code>semantic.typography.label.size</code></td></tr><tr><td><code>--agtc-table-padding-x</code></td><td><code>primitive.space.3</code></td></tr><tr><td><code>--agtc-table-padding-y-compact</code></td><td><code>primitive.space.2</code></td></tr><tr><td><code>--agtc-table-padding-y-comfortable</code></td><td><code>primitive.space.3</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-039.html" class="agtc-button secondary">← ADR-039</a>
     <a href="adr-041.html" class="agtc-button secondary">ADR-041 →</a>
   </div></main>

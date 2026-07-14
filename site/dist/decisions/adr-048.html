@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Teal interactif accessible : `action.primary` teal.9 → teal.11 — Agentica</title>
+<title>Accessible interactive teal: `action.primary` teal.9 → teal.11 — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Teal interactif accessible : `action.primary` teal.9 → teal.11 — Agentica">
+<meta property="og:title" content="Accessible interactive teal: `action.primary` teal.9 → teal.11 — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Teal interactif accessible : `action.primary` teal.9 → teal.11 — Agentica">
+<meta name="twitter:title" content="Accessible interactive teal: `action.primary` teal.9 → teal.11 — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Teal interactif accessible : `action.primary` teal.9 → teal.11</h1>
+  <h1 class="adr-page-title">Accessible interactive teal: `action.primary` teal.9 → teal.11</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,45 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Fixes a systemic WCAG AA contrast failure: <code>action.primary</code> was teal.9 (3.07:1 with white text), violating the button contract's own 4.5:1 requirement — and correcting an inaccurate claim in ADR-024. Splits the identity teal (<code>brand.primary</code>, unchanged teal.9) from a new accessible interactive teal (<code>action.primary</code> = teal.11, 4.56:1).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The site redesign (highlighting the "Get Started" CTA as the primary button) revealed a <strong>pre-existing, systemic WCAG AA non-compliance</strong>: the action color <code>action.primary</code> was <code>teal.9</code> (<code>#12a594</code>), and the primary button places <strong>white text</strong> on top of it.</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>teal.9 usage</th><th>Pair</th><th>Ratio</th><th>AA text (4.5:1)</th></tr></thead><tbody><tr><td>Primary button (hero CTA, nav-cta)</td><td>white on teal.9</td><td><strong>3.07:1</strong></td><td>❌ fail</td></tr><tr><td>Primary button hover</td><td>white on teal.10 (<code>#0d9b8a</code>)</td><td><strong>3.46:1</strong></td><td>❌ fail</td></tr><tr><td>Active link (nav / TOC / sidebar)</td><td>teal.9 as <strong>text</strong> on white</td><td><strong>3.07:1</strong></td><td>❌ fail</td></tr><tr><td>Focus ring (<code>border.focus</code>)</td><td>teal.9 on white</td><td>3.07:1</td><td>✅ (non-text, 3:1 required)</td></tr></tbody></table></div>
+<blockquote><p>Since the contrast is <strong>symmetric</strong>, the claim in <strong>ADR-024 (line 109)</strong> — "teal.9 = 4.6:1 on white" — is <strong>factually incorrect</strong>: the 4.6:1 value corresponds to <strong>teal.11</strong> (<code>#008573</code>), not teal.9. Yet the <code>guidelines/components/button.md</code> contract requires "4.5:1 minimum." The flagship button was thus violating its own contract.</p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Separate the <strong>identity teal (brand)</strong> from the <strong>interactive teal (action)</strong>, and raise the latter to an AA-compliant step.</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Semantic token</th><th>Before</th><th>After</th><th>White text / on white</th></tr></thead><tbody><tr><td><code>color.action.primary</code></td><td>teal.9 <code>#12a594</code></td><td><strong>teal.11 <code>#008573</code></strong></td><td><strong>4.56:1</strong> ✅ AA</td></tr><tr><td><code>color.action.primary-hover</code></td><td>teal.10 <code>#0d9b8a</code></td><td><strong>teal.12 <code>#0d3d38</code></strong></td><td>12.06:1 ✅ (darkened)</td></tr><tr><td><code>color.border.focus</code></td><td>teal.9</td><td><strong>teal.11 <code>#008573</code></strong></td><td>4.56:1 ✅ (unified with action)</td></tr><tr><td><code>color.brand.primary</code></td><td>teal.9 <code>#12a594</code></td><td><strong>teal.9 (unchanged)</strong></td><td>identity / logotype</td></tr></tbody></table></div>
+<h3>Principle: two teals, two roles</h3>
+<ul><li><strong><code>brand.primary</code> = teal.9</strong> — the <strong>identity</strong> color. Matches the SVG logo</li></ul>
+<p>  (<code>#12A594</code>, hardcoded) and the manifest's <code>theme_color</code>. Logotype/brand usage, exempt   from contrast requirements (WCAG 1.4.3).</p>
+<ul><li><strong><code>action.primary</code> = teal.11</strong> — the <strong>interactive affordance</strong> color (buttons, active</li></ul>
+<p>  links, focus). Must be accessible: white text on top <strong>and</strong> teal as text on white =   4.56:1.</p>
+<blockquote><p>This separation resolves the underlying tension: a <strong>single</strong> value couldn't simultaneously be the vivid brand hue (teal.9) <strong>and</strong> an accessible action background/text. ADR-024 had merged them.</p></blockquote>
+<hr>
+<h2>Accessibility (WCAG 2.2)</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Element</th><th>After</th><th>Verdict</th></tr></thead><tbody><tr><td>Primary button text (white / teal.11)</td><td>4.56:1</td><td>✅ AA</td></tr><tr><td>Primary button hover (white / teal.12)</td><td>12.06:1</td><td>✅ AAA</td></tr><tr><td>Active link (teal.11 text / white)</td><td>4.56:1</td><td>✅ AA</td></tr><tr><td>Focus ring (teal.11 / white, non-text)</td><td>4.56:1</td><td>✅ (≥ 3:1)</td></tr><tr><td>"Agentica" wordmark (teal.9, logotype)</td><td>—</td><td>exempt (WCAG 1.4.3)</td></tr></tbody></table></div>
+<p>Hover works via a <strong>marked darkening</strong> (teal.11 → teal.12): the only darker teal step guaranteeing 4.5:1 with white text. The direction is correct (darkens on hover); the design could later introduce an intermediate step for a softer transition if desired.</p>
+<hr>
+<h2>Scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td><code>action.primary</code>, <code>action.primary-hover</code>, <code>border.focus</code> → accessible interactive teal</td><td><code>brand.primary</code> (identity, stays teal.9)</td></tr><tr><td>Updating the token's code display in <code>site/build.js</code> (<code>#12A594</code> → <code>#008573</code>)</td><td>SVG logo and <code>manifest.theme_color</code> (identity, stay <code>#12A594</code>)</td></tr><tr><td>Correcting the ADR-024 contrast error (documented here)</td><td>Educational pipeline diagram (<code>blue.11</code>/<code>#0d74ce</code>, illustrative — out of scope)</td></tr></tbody></table></div>
+<hr>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Keep teal.9, switch the button text to dark (gray.12)</strong>: 5.30:1 ✅ for the button,</li></ul>
+<p>  but <strong>doesn't fix</strong> active links (teal.9 as text on white stays at 3.07:1) and gives an   unusual look (dark text on a vivid teal). A partial fix — rejected.</p>
+<ul><li><strong>Also move <code>brand.primary</code> to teal.11</strong>: misaligns the brand from the SVG logo</li></ul>
+<p>  (<code>#12A594</code>) — rejected; identity must stay faithful to the wordmark.</p>
+<ul><li><strong>Change nothing, document the debt</strong>: contrary to the non-negotiable accessibility</li></ul>
+<p>  value (WCAG AA) and the button's explicit contract (4.5:1) — rejected.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>Every primary button, active link, and focus ring in the system now passes **WCAG</li></ul>
+<p>  AA<strong>. Build: </strong>662 defined · 177 referenced · 0 phantom**.</p>
+<ul><li>The system now distinguishes <strong>identity teal</strong> (teal.9) from <strong>action teal</strong></li></ul>
+<p>  (teal.11) — a sounder, reusable architectural foundation.</p>
+<ul><li><code>guidelines/components/button.md</code> ("4.5:1 minimum") is now <strong>actually</strong> satisfied.</li><li>The ADR-024 contrast error is corrected and traced here (ADRs are immutable; this</li></ul>
+<p>  ADR is authoritative on the value of <code>action.primary</code>).</p>
+<ul><li>Governance: change to <strong>semantic tokens</strong> (action/border) — Design System Lead</li></ul>
+<p>  approval. No primitive added, no component token modified, no hardcoded value introduced.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le redesign du site (mise en évidence du CTA « Démarrer » comme bouton primaire) a révélé une <strong>non-conformité WCAG AA préexistante et systémique</strong> : la couleur d'action <code>action.primary</code> était <code>teal.9</code> (<code>#12a594</code>), et le bouton primaire pose du <strong>texte blanc</strong> dessus.</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Usage de teal.9</th><th>Paire</th><th>Ratio</th><th>AA texte (4.5:1)</th></tr></thead><tbody><tr><td>Bouton primaire (CTA hero, nav-cta)</td><td>blanc sur teal.9</td><td><strong>3.07:1</strong></td><td>❌ échec</td></tr><tr><td>Survol bouton primaire</td><td>blanc sur teal.10 (<code>#0d9b8a</code>)</td><td><strong>3.46:1</strong></td><td>❌ échec</td></tr><tr><td>Lien actif (nav / TOC / sidebar)</td><td>teal.9 en <strong>texte</strong> sur blanc</td><td><strong>3.07:1</strong></td><td>❌ échec</td></tr><tr><td>Anneau de focus (<code>border.focus</code>)</td><td>teal.9 sur blanc</td><td>3.07:1</td><td>✅ (non-textuel, 3:1 requis)</td></tr></tbody></table></div>
 <blockquote><p>Le contraste étant <strong>symétrique</strong>, l'affirmation de l'<strong>ADR-024 (ligne 109)</strong> — « teal.9 = 4.6:1 sur blanc » — est <strong>factuellement erronée</strong> : la valeur 4.6:1 correspond à <strong>teal.11</strong> (<code>#008573</code>), pas à teal.9. Le contrat <code>guidelines/components/button.md</code> exige pourtant « 4.5:1 minimum ». Le bouton phare violait donc son propre contrat.</p></blockquote>
@@ -171,7 +205,7 @@
 <ul><li><code>guidelines/components/button.md</code> (« 4.5:1 minimum ») est désormais <strong>réellement</strong> satisfait.</li><li>L'erreur de contraste de l'ADR-024 est corrigée et tracée ici (les ADR sont immuables ; cet ADR</li></ul>
 <p>  fait foi sur la valeur de <code>action.primary</code>).</p>
 <ul><li>Gouvernance : changement de <strong>jetons sémantiques</strong> (action/border) — approbation Design System</li></ul>
-<p>  Lead. Aucun primitif ajouté, aucun jeton de composant modifié, aucune valeur en dur introduite.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  Lead. Aucun primitif ajouté, aucun jeton de composant modifié, aucune valeur en dur introduite.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-047.html" class="agtc-button secondary">← ADR-047</a>
     <a href="adr-049.html" class="agtc-button secondary">ADR-049 →</a>
   </div></main>

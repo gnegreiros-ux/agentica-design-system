@@ -1,3 +1,122 @@
+# ADR-037 — Implementing `agtc-checkbox`
+
+> **Date:** 2026-06-01
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-037-agtc-checkbox-implementation.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/checkbox.md, tokens/component.json
+
+---
+
+## Reference UX patterns applied
+
+> Added 2026-06-01 via the `ux-pattern-review` workflow (ADR-036).
+> Decision: **CB1 through CB7 approved**, **square** shape retained, **indeterminate** state included.
+> Detail and links: `guidelines/components/checkbox.md` § REFERENCE UX PATTERNS.
+
+| Pattern | Source |
+|---------|--------|
+| Checkbox (not toggle) for an independent item | NN/g — checkbox vs toggle |
+| Square shape (round signals a radio) | NN/g — checkboxes |
+| Clickable label (box or text, Fitts's law) | NN/g · IxDF |
+| Touch target ≥ 24px | IxDF · WCAG 2.5.8 |
+| Fully visible states | NN/g |
+| Positive label (no negation) | NN/g |
+| No pre-checked consent | IxDF |
+| Native ARIA semantics | NN/g |
+
+---
+
+## Context
+
+The ToDo app reference surfaced the only atomic DS component missing for this type of
+interface: the checkbox. Card, input, button, and icon already exist.
+
+Three questions guided the decisions:
+
+1. **Shape** — the ToDo mockup shows circles, but NN/g recommends a square.
+2. **Technical element** — custom-styled box vs. a hidden native `<input>`.
+3. **State scope** — should `indeterminate` be included as early as v1?
+
+---
+
+## Decisions
+
+### Decision 1 — Square shape only
+
+NN/g is explicit: *"A checkbox should be a small square."* A circle conventionally
+signals a radio button; using it for a checkbox is misleading.
+
+**Decision:** **square** shape (`semantic.radius.control` radius). The round appearance
+of the reference mockup is **discarded** in favor of the usability convention.
+
+**Rejected alternative:** a `shape="round"` attribute. Rejected to avoid encouraging a
+deviation from convention as early as v1; can be reopened via governance if a recurring
+need emerges.
+
+---
+
+### Decision 2 — Hidden native `<input type="checkbox">` + decorative styled box
+
+The accessible element is a real `<input type="checkbox">` (role, checked state, native
+keyboard handling via Space, accessible name via the implicit enclosing `<label>`). It is
+**visually hidden** but remains in the accessibility tree. The visible box (`.box` + SVG)
+is **decorative** (`aria-hidden`).
+
+**Rejected alternative:** `<div role="checkbox" tabindex="0">` with manual keyboard
+handling — a WCAG 4.1.2 anti-pattern (reimplementing a native control is fragile and
+costly for a11y).
+
+---
+
+### Decision 3 — `indeterminate` state included in v1
+
+`indeterminate` anticipates the "select all" pattern for a group (partially checked
+parent). It is only expressed via the **DOM property** `input.indeterminate` (never an
+HTML attribute), synchronized in `updated()`, and exposes `aria-checked="mixed"` through
+the native element.
+
+Checking or unchecking automatically clears the indeterminate state.
+
+---
+
+### Decision 4 — Clickable label and ≥ 24px target
+
+The `<label>` encloses the box and the text: clicking either toggles the state (Fitts's
+law). The `.root` interactive zone has `min-height: 24px` to satisfy WCAG 2.5.8 (Target
+Size Minimum). The visual box size is 20px (`semantic.icon.size.control`).
+
+---
+
+## v1 scope
+
+| Included | Excluded (v2) |
+|----------|----------------|
+| default/hover/focus/checked/indeterminate/disabled states | `shape="round"` variant |
+| Label via attribute or slot | `agtc-radio` (exclusive choice) |
+| `agtc-change` event | `agtc-toggle` (immediate on/off effect) |
+| `required` + `aria-required` | `agtc-checkbox-group` group (select-all handling) |
+
+---
+
+## Tokens added to `component.json`
+
+| Token | Semantic reference |
+|-------|----------------------|
+| `--agtc-checkbox-default-background` | `semantic.color.background.surface` |
+| `--agtc-checkbox-default-border` | `semantic.color.border.default` |
+| `--agtc-checkbox-default-border-hover` | `semantic.color.action.primary` |
+| `--agtc-checkbox-default-border-focus` | `semantic.color.border.focus` |
+| `--agtc-checkbox-default-fill` | `semantic.color.action.primary` |
+| `--agtc-checkbox-default-fill-hover` | `semantic.color.action.primary-hover` |
+| `--agtc-checkbox-default-check` | `semantic.color.text.on-action` |
+| `--agtc-checkbox-default-label` | `semantic.color.text.primary` |
+| `--agtc-checkbox-default-radius` | `semantic.radius.control` |
+
+<!-- FR -->
+
 # ADR-037 — Implémentation de `agtc-checkbox`
 
 > **Date :** 2026-06-01
@@ -7,12 +126,6 @@
 > **Chemin logique:** decisions/ADR-037-agtc-checkbox-implementation.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/checkbox.md, tokens/component.json
-
-> **English summary:** Implements agtc-checkbox as a square control (not round, to avoid radio
-> confusion) using a visually-hidden native `<input type="checkbox">` for accessibility, with an
-> `indeterminate` state exposed via the DOM property, a clickable label, and a ≥24px touch target.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

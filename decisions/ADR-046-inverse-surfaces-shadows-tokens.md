@@ -1,3 +1,138 @@
+# ADR-046 — Inverse surfaces, shadows, and decorative tokens
+
+> **Date:** 2026-06-05
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-046-inverse-surfaces-shadows-tokens.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** tokens/primitives.json, tokens/semantic.json, .claude/rules/feedback_site_dogfooding.md, decisions/ADR-045-feedback-color-family-completion.md, site/build.js
+
+---
+
+## Context
+
+After completing the `feedback` family (ADR-045), `site/build.js` still had a debt of
+hardcoded colors with no semantic equivalent: **dark surfaces** (stats banner, footer,
+tooltips), **white text/borders on a dark background**, **shadows** (`box-shadow`), and a
+**decorative bar** for spacing visualization. None of these values could be routed: the
+semantic level exposed no inverse surface, no "on-inverse" text, no shadow, and no
+visualization token.
+
+Key discovery: the **alpha scales already existed** at the primitive level
+(`color.white.*` = alpha white, `color.black.*` = alpha black, Radix-style) but were
+**never consumed**. They provide exactly the values needed for text/shadows on a dark background.
+
+---
+
+## Decision
+
+### 1 — Two "near-black" primitives (inverse surfaces)
+
+No primitive darker than `gray.12` (#202020) existed. Two neutral anchors added
+(Tailwind neutral-900/950 convention):
+
+| Primitive | Value | Role |
+|----------|--------|------|
+| `neutral.900` | `#1a1e24` | Raised dark surface (tooltip/popover) |
+| `neutral.950` | `#0f1117` | Deepest dark surface (banner, footer) |
+
+### 2 — Semantic tokens (referencing existing primitives)
+
+| Semantic token | Reference | Role |
+|------------------|-----------|------|
+| `color.background.inverse` | `neutral.950` | Stats banner, footer |
+| `color.background.inverse-raised` | `neutral.900` | Palette tooltips |
+| `color.text.on-inverse` | `white.1` (#fff) | Strong text / hovered link on a dark background |
+| `color.text.on-inverse-secondary` | `white.8` (.75) | Links on a dark background — **10.8:1** |
+| `color.text.on-inverse-muted` | `white.10` (.52) | Muted text — **AA floor, 5.69:1** |
+| `color.border.on-inverse` | `white.12` (.18) | Separator on a dark background (non-text) |
+| `color.border.swatch` | `black.2` (.10) | Outline of color swatches (non-text) |
+| `color.viz.scale-bar` | `red.6` | Decorative bar in the spacing demo (non-semantic) |
+| `shadow.header` | `0 2px 24px rgba(0,0,0,.12)` | Fixed header shadow |
+| `shadow.raised` | `0 4px 16px rgba(0,0,0,.10)` | Dropdown menus, mobile nav |
+| `shadow.card-hover` | `0 4px 16px rgba(13,116,206,.10)` | Brand-tinted card lift |
+
+> Shadows are `$type: "other"` composites carrying literal `rgba` values — the **same
+> convention as the pre-existing `component.card.elevated.shadow` token**. The debt being
+> resolved is the **consumer's** (the site's): the value now lives in a named layer.
+
+---
+
+## Accessibility (WCAG 2.2) — a fix along the way
+
+Contrasts measured against `background.inverse` (#0f1117):
+
+| Token | Alpha | Ratio | Verdict |
+|-------|-------|-------|---------|
+| `text.on-inverse` | 1.00 | 19.6:1 | ✅ AAA |
+| `text.on-inverse-secondary` | .75 | **10.8:1** | ✅ AAA |
+| `text.on-inverse-muted` | .52 | **5.69:1** | ✅ AA (floor retained) |
+
+**Fix:** the footer credit (`.footer-credit` at white .35) and the audit footer link
+(`.audit-footer-link` at white .30) were **failing AA** (~3:1) before this work.
+Tokenizing them to `text.on-inverse-muted` (.52) brings them to **5.69:1** — compliant.
+This is a case of **governed self-healing**: a detected drift, corrected with human approval.
+
+The `border.on-inverse` (.18) and `border.swatch` (.10) tokens are **non-text**
+(separators / decorative outlines) — exempt from the 4.5:1 requirement (WCAG 1.4.3).
+`viz.scale-bar` is purely decorative and carries no information (the spacing value is
+given by the adjacent label).
+
+---
+
+## Scope
+
+| Included | Excluded |
+|--------|-------|
+| 2 neutral primitives + 11 semantic tokens (inverse, on-inverse, swatch, viz, shadow) | Global site dark mode (out of scope) |
+| `site/build.js` migration: stats banner, footer, header, mobile nav, tooltips, nav-card hover, swatches, spacing bar | `toggle` demo (see residual debt below) |
+
+### Accepted residual debt (out of scope, documented)
+
+The **illustrative demo of the `toggle` component** (`buildToggle()`) still uses
+`#8d8d8d` (= exact `gray.9`) for the OFF rail and `rgba(0,0,0,.25)` for the knob shadow —
+a shortcut **already annotated "(proxy)"** in the page's token table. This is *demo
+dogfooding* debt (the demo should consume the `component.toggle.*` contract), distinct
+from the surfaces/shadows effort. The site doesn't emit the `--agtc-component-toggle-*`
+variables (not consumed elsewhere): routing them would require separate work.
+**Deferred** to a component-demo dogfooding pass.
+
+### Legitimately still hardcoded (exempt)
+
+The SVG logo (`#12A594`), **token-value displays** (doc tables showing the resolved
+hex), **code examples** (the `color: #0d74ce` anti-pattern), and `manifest.json`
+(`theme_color`).
+
+---
+
+## Rejected alternatives
+
+- **Preserving the exact alpha whites** (.35/.30) in the footer: perpetuates a WCAG
+  failure — rejected in favor of the `on-inverse-muted` AA floor.
+- **Reusing `brand.secondary`** (#463239) for dark surfaces: that's a brand brown, not a
+  neutral — unsuited to a neutral footer.
+- **Shadow tokens via alpha-primitive interpolation**: Style Dictionary doesn't cleanly
+  interpolate `rgba` inside a composite string; the existing `$type: other` convention is kept.
+- **Tokenizing the toggle demo in this batch**: would create phantom variables or inflate
+  the token surface for a single demo — deferred (see residual debt).
+
+---
+
+## Consequences
+
+- `site/build.js` no longer contains any hardcoded dark surface, shadow, or decorative
+  border (aside from the documented toggle residual). Build: **655 defined · 173
+  referenced · 0 phantom**.
+- The `white.*` / `black.*` scales (orphaned until now) are now **consumed via the
+  semantic layer** — ending their status as dead primitives.
+- The system now has a reusable **"inverse surface"** foundation (future dark mode,
+  banners, component tooltips) and a named **shadow scale**.
+- Governance: 2 primitives (Principal Designer approval) + 11 semantic tokens (Design
+  System Lead). No component token modified.
+
+<!-- FR -->
+
 # ADR-046 — Surfaces inversées, ombres et jetons décoratifs
 
 > **Date :** 2026-06-05
@@ -7,13 +142,6 @@
 > **Chemin logique:** decisions/ADR-046-inverse-surfaces-shadows-tokens.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, .claude/rules/feedback_site_dogfooding.md, decisions/ADR-045-feedback-color-family-completion.md, site/build.js
-
-> **English summary:** Adds two near-black primitives and 11 semantic tokens for inverse/dark
-> surfaces, on-inverse text, decorative borders, and shadows — eliminating the remaining hardcoded
-> dark-surface and shadow values in `site/build.js`. Also fixes two footer/link colors that were
-> failing WCAG AA contrast.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

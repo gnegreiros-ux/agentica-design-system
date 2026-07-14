@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Revue des patterns UX de référence avant publication d'un composant — Agentica</title>
+<title>Review of reference UX patterns before publishing a component — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Revue des patterns UX de référence avant publication d'un composant — Agentica">
+<meta property="og:title" content="Review of reference UX patterns before publishing a component — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Revue des patterns UX de référence avant publication d'un composant — Agentica">
+<meta name="twitter:title" content="Review of reference UX patterns before publishing a component — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Revue des patterns UX de référence avant publication d'un composant</h1>
+  <h1 class="adr-page-title">Review of reference UX patterns before publishing a component</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,45 @@
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Before publishing any new or meaningfully UX-changed component, an agent must present UX patterns from 5 recognized sources (with links) for human approval, then document the decision across 6 surfaces (guideline, code, story, site, ADR, log).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>Every component encodes UX decisions — how to display an error state, where to place help text, when to validate an entry, how to flag a required field. Without a reference framework, these decisions were improvised during construction, with no way for the human to arbitrate between recognized patterns, and no record of why a given pattern had been chosen.</p>
+<p>The expressed need:</p>
+<blockquote><p><strong>Before publishing each component, present the human with the UX patterns suggested by recognized sources — with links — so they can judge and approve which ones to apply; then document that decision everywhere.</strong></p></blockquote>
+<p>Five reference sources were selected: IF Data Patterns Catalogue, Nielsen Norman Group, Dashboard Design Patterns, Interaction Design Foundation, Smashing Magazine (detailed in <code>.claude/rules/ux-patterns-sources.md</code>).</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Every <strong>new component</strong> — and every <strong>UX-relevant modification</strong> to an existing component — goes through a <strong>UX pattern review</strong>: the agent presents candidate patterns from the 5 sources (with direct links), the human approves which ones to apply, and the decision is <strong>documented across 6 surfaces</strong> before publication.</p>
+<p>The workflow is encoded in four artifacts:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Artifact</th><th>Role</th></tr></thead><tbody><tr><td><code>.claude/rules/ux-patterns-sources.md</code></td><td>Registry of the 5 sources + review checklist + type→sources matrix + 6 surfaces</td></tr><tr><td><code>.claude/skills/ux-pattern-review.md</code></td><td>Executable skill: present → approve → document</td></tr><tr><td><code>.claude/skills/pipelines/ux-patterns.md</code></td><td>Blocking quality-gate pipeline (verifies review + approval + 6 surfaces)</td></tr><tr><td><code>PostToolUse</code> hook (<code>.claude/settings.json</code>)</td><td>Reminder when a component or guideline file is created/modified</td></tr></tbody></table></div>
+<p>Source consultation is <strong>hybrid</strong>: a versioned registry as the base + targeted WebFetch on the priority source(s) at review time.</p>
+<h3>The 6 propagation surfaces</h3>
+<p>Guideline (<code>guidelines/components/&lt;comp&gt;.md</code>), code (<code>components/agtc-&lt;comp&gt;.js</code>), Storybook (<code>&lt;comp&gt;.stories.js</code>), site (rebuild), component implementation ADR, construction log.</p>
+<h3>Triggers</h3>
+<ul><li>Creating a component → full review mandatory.</li><li>Relevant modification: new variant/state, validation logic, error/help display,</li></ul>
+<p>  interaction, new type.</p>
+<ul><li><strong>Not triggered</strong>: contrast/WCAG fix, typo, rename, refactor with no behavior change (same</li></ul>
+<p>  "decision vs. adjustment" distinction as the ADR-015 amendment).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Versioned registry alone (no fetch)</strong></td><td>Sources evolve; a frozen registry goes stale. The hybrid approach keeps an auditable base while refreshing as needed.</td></tr><tr><td><strong>Live WebFetch alone at every review</strong></td><td>Slower, network-dependent, and with no auditable record of what was presented.</td></tr><tr><td><strong>No pipeline (manual skill only)</strong></td><td>Without a blocking safeguard in the quality-gate, the review would be forgotten — exactly the problem ADR-015 solves for ADRs.</td></tr><tr><td><strong>Hook on <code>Write</code> only</strong></td><td>The user also wants triggering on <strong>relevant modification</strong> of a component; the matcher therefore covers `Write</td><td>Edit`, asking the agent to judge relevance.</td></tr><tr><td><strong>Agent decides patterns alone</strong></td><td>Violates the "the human always has the final word" principle. The agent proposes, the human decides.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>When creating/modifying a component, systematically present the patterns (with links) and</li></ul>
+<p>  wait for approval before building.</p>
+<ul><li>Propagate the decision across the 6 surfaces; the <code>ux-patterns</code> pipeline verifies this at the quality gate.</li><li>The hook is a reminder of the workflow, but the agent must <strong>judge relevance</strong> (a hook can't do that).</li></ul>
+<p><strong>For humans:</strong></p>
+<ul><li>An explicit decision point before every component publication — arbitration on</li></ul>
+<p>  recognized patterns rather than implicit choices.</p>
+<ul><li>Full traceability: every component carries the list of applied patterns and their source.</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>The hook may fire on non-UX modifications (the agent then ignores the reminder).</li><li>The review adds a step before construction — accepted as a governance safeguard.</li></ul>
+<p><strong>Retroactive application:</strong></p>
+<ul><li>Already-created components (button, input, badge, card, icon) go through the review and receive</li></ul>
+<p>  their documentation across the 6 surfaces.</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Explicit request from the Design System Lead: have, before building each component, a presentation of the UX patterns suggested by recognized sources, in order to approve the right patterns and keep a documented trail everywhere.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Chaque composant encode des décisions UX — comment afficher un état d'erreur, où placer un texte d'aide, à quel moment valider une saisie, comment signaler un champ obligatoire. Sans référentiel, ces décisions étaient improvisées au moment de la construction, sans que l'humain puisse arbitrer entre des patterns reconnus, et sans trace de pourquoi tel pattern avait été retenu.</p>
 <p>Le besoin exprimé :</p>
 <blockquote><p><strong>Avant la publication de chaque composant, présenter à l'humain les patterns UX suggérés par des sources reconnues — avec liens — afin qu'il juge et approuve lesquels appliquer ; puis documenter cette décision partout.</strong></p></blockquote>
@@ -171,7 +205,7 @@
 <p>  leur documentation sur les 6 surfaces.</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Demande explicite du Design System Lead : disposer, avant la construction de chaque composant, d'une présentation des patterns UX suggérés par des sources reconnues, afin d'approuver les bons patterns et de garder une trace documentée partout.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Demande explicite du Design System Lead : disposer, avant la construction de chaque composant, d'une présentation des patterns UX suggérés par des sources reconnues, afin d'approuver les bons patterns et de garder une trace documentée partout.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-035.html" class="agtc-button secondary">← ADR-035</a>
     <a href="adr-037.html" class="agtc-button secondary">ADR-037 →</a>
   </div></main>

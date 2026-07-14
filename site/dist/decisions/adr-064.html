@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Mode clair V2 : implémentation et correction du découplage dark/light — Agentica</title>
+<title>V2 light mode: implementation and dark/light decoupling fix — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Mode clair V2 : implémentation et correction du découplage dark/light — Agentica">
+<meta property="og:title" content="V2 light mode: implementation and dark/light decoupling fix — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Mode clair V2 : implémentation et correction du découplage dark/light — Agentica">
+<meta name="twitter:title" content="V2 light mode: implementation and dark/light decoupling fix — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Mode clair V2 : implémentation et correction du découplage dark/light</h1>
+  <h1 class="adr-page-title">V2 light mode: implementation and dark/light decoupling fix</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,7 +126,42 @@
     </div>
     
   </dl>
-</div><p><strong>Date :</strong> 2026-06-25 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-058 (thème sombre — amendé), <code>site/build.js</code>, <code>tokens/semantic.json</code></p>
+</div><div class="lang-en"><p><strong>Date:</strong> 2026-06-25 <strong>Status:</strong> Active <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-058 (dark theme — amended), <code>site/build.js</code>, <code>tokens/semantic.json</code></p>
+<hr>
+<h2>Context</h2>
+<p>ADR-058 (2026-06-12) defined the dark-theme system via <code>data-theme</code> on <code>&lt;html&gt;</code>. The 2026-06-25 session adopted the complete V2 redesign (<code>class="v2-page"</code>) across all pages.</p>
+<p>Three problems were discovered during the audit:</p>
+<p>1. <strong>Hardcoded <code>color-scheme:dark</code></strong> on <code>body.v2-page</code> — the browser's color scheme (form    controls, scrollbars) stayed dark even when <code>data-theme="light"</code> was active. 2. <strong><code>background:var(--agtc-semantic-color-background-inverse)</code></strong> on body, header, docs panel,    footer — always dark (<code>#120c0f</code>/<code>#0f1117</code>) regardless of the theme. 3. **Non-adaptive <code>--v2-*</code> variables**: <code>--v2-text</code> = <code>text-on-inverse</code> (white),    <code>--v2-muted</code> = <code>text-on-inverse-muted</code>, <code>--v2-line</code> = <code>surface-glass-border</code> (<code>rgba(255,255,255,.10)</code>)    — all hardcoded for a dark background.</p>
+<p>Consequence: the theme toggle button existed but had no real visual effect on the V2 pages. The pages were de-facto dark-only despite the token system.</p>
+<hr>
+<h2>Decision</h2>
+<h3>1. Removal of <code>color-scheme:dark</code> from <code>body.v2-page</code></h3>
+<p>Removed. The <code>color-scheme</code> property is already correctly handled by <code>tokens.css</code>:</p>
+<ul><li><code>:root { color-scheme: light; }</code> (default)</li><li><code>:root[data-theme="dark"] { color-scheme: dark; }</code></li></ul>
+<p>No duplication in <code>site.css</code>.</p>
+<h3>2. Adaptive backgrounds — <code>background-inverse</code> → <code>background-page</code></h3>
+<p><code>background-page</code> resolves differently depending on the theme:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Theme</th><th>Resolved value</th></tr></thead><tbody><tr><td>dark</td><td><code>#0a0c11</code></td></tr><tr><td>light</td><td><code>#fcfcfc</code></td></tr></tbody></table></div>
+<p>Replacements: <code>body.v2-page</code>, <code>.v2-header</code>, <code>.v2-docs-panel &gt; div</code>, <code>.v2-footer</code>, mobile <code>.v2-nav.is-open</code>.</p>
+<h3>3. <code>--v2-*</code> variables: dark default, <code>[data-theme="light"]</code> override</h3>
+<p>The variables remain defined for dark in <code>:root</code> (since all pages have <code>data-theme="dark"</code> by default). A <code>[data-theme="light"]</code> block reassigns them:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Variable</th><th>Dark (<code>:root</code>)</th><th>Light (<code>[data-theme="light"]</code>)</th></tr></thead><tbody><tr><td><code>--v2-text</code></td><td><code>text-on-inverse</code></td><td><code>text-primary</code></td></tr><tr><td><code>--v2-muted</code></td><td><code>text-on-inverse-muted</code></td><td><code>text-secondary</code></td></tr><tr><td><code>--v2-faint</code></td><td><code>text-on-inverse-muted</code></td><td><code>text-disabled</code></td></tr><tr><td><code>--v2-surface</code></td><td><code>color-mix(background-surface 74%)</code></td><td><code>background-subtle</code></td></tr><tr><td><code>--v2-surface-strong</code></td><td><code>color-mix(background-inverse 86%)</code></td><td><code>background-surface</code></td></tr><tr><td><code>--v2-line</code></td><td><code>surface-glass-border</code></td><td><code>border-default</code></td></tr></tbody></table></div>
+<h3>4. V2 components — light mode overrides</h3>
+<p>Elements requiring an explicit override (hardcoded dark rgba values):</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Component</th><th>Dark</th><th>Light</th></tr></thead><tbody><tr><td><code>.v2-role-card</code></td><td><code>rgba(12,15,25,.78)</code></td><td><code>background-surface</code> + <code>shadow-card</code></td></tr><tr><td><code>.v2-signal-stack span</code></td><td><code>rgba(255,255,255,.055)</code></td><td><code>background-subtle</code></td></tr><tr><td><code>.v2-quality</code></td><td><code>rgba(255,255,255,.03)</code></td><td><code>rgba(0,0,0,.015)</code></td></tr><tr><td><code>.v2-button-secondary</code></td><td>white glass rgba</td><td><code>background-surface</code> + <code>border-default</code></td></tr><tr><td><code>.v2-button-ghost</code></td><td>white glass rgba</td><td><code>text-secondary</code></td></tr><tr><td><code>.v2-docs-panel</code></td><td>aurora + glass</td><td><code>background-surface</code> + <code>shadow-raised</code></td></tr><tr><td>Aurora body</td><td>3 radials (teal 26%, rose 20%, brown 40%)</td><td>2 radials (teal 7%, rose 6%)</td></tr><tr><td><code>.v2-kicker</code></td><td><code>color-mix(v2-teal 72%, white)</code></td><td><code>action-primary</code> direct</td></tr></tbody></table></div>
+<p>Visited links: double hex/<code>var()</code> declaration per ADR-047/ADR-059 (Safari <code>:visited</code>).</p>
+<h3>5. Amendment to ADR-058 — page default</h3>
+<p>ADR-058 §1 states "light (default)". The previous session (2026-06-24) hardcoded <code>data-theme="dark"</code> on every <code>&lt;html&gt;</code> to align the initial render with the V2 design with no flash (FOUC). The JS reads <code>localStorage</code> then <code>prefers-color-scheme</code> — the toggle works.</p>
+<p><strong>This behavior is confirmed.</strong> Pages start dark; the system preference or the user toggle switches to light. ADR-058 is amended on this point by the present ADR.</p>
+<hr>
+<h2>Alternatives considered</h2>
+<p>1. <strong>Keep the pages dark-only (remove the toggle)</strong> — Rejected: loses accessibility for    users who prefer light mode and future AA compliance (SC 1.4.3 on both themes). 2. <strong>Create two sets of V2 CSS (dark.css / light.css)</strong> — Rejected: double maintenance.    The <code>--v2-*</code> variables with <code>[data-theme]</code> override are cheaper. 3. <strong>Move the v2 tokens into <code>tokens/semantic.json</code></strong> — Deferred; the <code>--v2-*</code> are site    variables, not system tokens. Promotion possible via TCR if the patterns stabilize    across other projects.</p>
+<hr>
+<h2>Consequences</h2>
+<ul><li>✅ 4 working combinations confirmed: dark/light × marketing/product</li><li>✅ 0 WCAG 2.2 violations (111 pages · 1541 checks) — contrast ratios verified in both</li></ul>
+<p>  themes (measured minimum: <code>action-primary</code> / <code>background-page</code> = 4.65:1)</p>
+<ul><li>✅ <code>scroll-padding-top: calc(var(--agtc-header-height,64px) + 12px)</code> in place (SC 2.4.11)</li><li>✅ Safari <code>:visited</code>: hex fallback kept on all V2 navigation links</li><li>⚠️ The <code>--agtc-surface-glass*</code> tokens have no light counterpart in <code>tokens.css</code> —</li></ul>
+<p>   components that use them directly (docs panel, buttons) require an explicit    <code>[data-theme="light"]</code> override. Debt documented; resolution via TCR if needed.</p></div><div class="lang-fr"><p><strong>Date :</strong> 2026-06-25 <strong>Statut :</strong> Actif <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-058 (thème sombre — amendé), <code>site/build.js</code>, <code>tokens/semantic.json</code></p>
 <hr>
 <h2>Contexte</h2>
 <p>ADR-058 (2026-06-12) a défini le système de thème sombre via <code>data-theme</code> sur <code>&lt;html&gt;</code>. La session du 2026-06-25 a adopté le redesign V2 complet (<code>class="v2-page"</code>) sur toutes les pages.</p>
@@ -161,7 +196,7 @@
 <ul><li>✅ 4 combinaisons fonctionnelles confirmées : dark/light × marketing/produit</li><li>✅ 0 violation WCAG 2.2 (111 pages · 1541 vérifications) — ratios contraste vérifiés</li></ul>
 <p>  dans les deux thèmes (minimum mesuré : <code>action-primary</code> / <code>background-page</code> = 4.65:1)</p>
 <ul><li>✅ <code>scroll-padding-top: calc(var(--agtc-header-height,64px) + 12px)</code> en place (SC 2.4.11)</li><li>✅ Safari <code>:visited</code> : hex fallback conservé sur tous les liens de navigation V2</li><li>⚠️ Les tokens <code>--agtc-surface-glass*</code> n'ont pas de pendant light dans <code>tokens.css</code> —</li></ul>
-<p>   les composants qui les utilisent directement (docs panel, buttons) nécessitent une surcharge    explicite <code>[data-theme="light"]</code>. Dette documentée ; résolution via TCR si besoin.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>   les composants qui les utilisent directement (docs panel, buttons) nécessitent une surcharge    explicite <code>[data-theme="light"]</code>. Dette documentée ; résolution via TCR si besoin.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-063.html" class="agtc-button secondary">← ADR-063</a>
     <a href="adr-065.html" class="agtc-button secondary">ADR-065 →</a>
   </div></main>

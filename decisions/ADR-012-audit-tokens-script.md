@@ -1,3 +1,130 @@
+# ADR-012 — Drift detection via an audit script (audit-tokens.js)
+
+> **Date:** 2026-05-28
+> **Status:** ✅ Active
+> **Decision-makers:** Tech Lead, Design System Lead
+> **Type:** contract
+> **Logical path:** decisions/ADR-012-audit-tokens-script.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
+> **Relations:** scripts/audit-tokens.js, tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md
+
+---
+
+## Context
+
+ADR-001 forbids hardcoded values and primitive tokens in components.
+ADR-004 establishes that agents detect drift, humans fix it.
+
+But drift detection can't rely solely on human vigilance during code reviews.
+In an agentic system, drift can be introduced at any time, by a human or by an
+agent, silently.
+
+Four types of drift were identified as priorities:
+
+| Type | Description | Example |
+|------|-------------|---------|
+| **Orphaned token** | Defined in `component.json`, never used in the code | `button.ghost.border` not referenced |
+| **Phantom token** | Used in the code, absent from `semantic.json` | `var(--agtc-semantic-color-action-secondary)` doesn't exist |
+| **Hardcoded value** | Arbitrary hex, RGB, px in the code | `color: #3B82F6` instead of `var(--ds-color-action-primary)` |
+| **Direct primitive** | Primitive token used in a component | `var(--agtc-primitive-color-blue-9)` in a Web Component |
+
+The question was:
+
+> **How do we detect these four types of drift automatically, reproducibly,
+> and in a way that blocks CI — without depending on an external tool?**
+
+---
+
+## Decision
+
+Development of an internal audit script: `scripts/audit-tokens.js`.
+
+The script is deliberately minimal — a single dependency-free Node.js file,
+directly executable with `node scripts/audit-tokens.js`.
+
+It runs four sequential audits:
+
+1. **Orphaned tokens** — compares `component.json` against usages in the source code
+2. **Phantom tokens** — detects `var(--agtc-semantic-*)` with no equivalent in `semantic.json`
+3. **Hardcoded values** — regex on hex, rgb, hsl, Tailwind arbitrary values, inline px
+4. **Three-layer structure** — verifies that cross-layer references are resolvable
+
+Three execution modes:
+```bash
+node scripts/audit-tokens.js              # console report
+node scripts/audit-tokens.js --fix-report # + generates audit-report.json
+node scripts/audit-tokens.js --ci         # exit 1 on critical violations
+```
+
+In `--ci` mode, only `error`-level violations block (phantom tokens, hex values,
+unresolved references). `warning`-level violations (orphaned tokens, inline px)
+pass CI but are flagged — they require a fix in a dedicated ticket.
+
+---
+
+## Why an internal script rather than an external tool
+
+The decision to develop this script in-house rather than adopt an existing tool
+is itself an architectural decision worth documenting.
+
+The script knows the project's structure exactly: the three JSON files, the
+`--ds-` CSS prefix, the `primitive`/`semantic`/`component` levels. A generic tool
+would need to be configured to reproduce this knowledge, with a risk of
+desynchronization at every evolution of the system.
+
+The script is also a **readable contract**: an agent can read `audit-tokens.js`
+and understand exactly which patterns are considered drift in this project.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **ESLint only** | ESLint analyzes code statically but can't cross-reference the code with the content of the token JSON files. Detecting that a `var(--agtc-semantic-color-action-secondary)` is a phantom requires reading `semantic.json` at runtime — which ESLint doesn't do. |
+| **Third-party token governance tool (Token Health, Theo Validator)** | Tools that are immature or too tightly coupled to a specific ecosystem. None simultaneously covers the project's four types of drift in a single command. External dependency for a critical governance function. |
+| **Lint in Storybook / Chromatic** | These tools audit visual rendering and accessibility. They don't read the token JSON files or compare CSS usages with definitions — not their role. |
+| **Manual pre-PR review** | Not reproducible. A rushed developer forgets to check. An agent generates code without checking. The script runs automatically in CI — no risk of forgetting. |
+| **GitHub Actions rules based on grep** | Possible for hardcoded hex (`grep -r '#[0-9a-fA-F]'`), but can't detect phantom or orphaned tokens without cross-referencing logic against the JSON. Each rule would be a separate step — less maintainable than a unified script. |
+
+---
+
+## Consequences
+
+**For CI/CD:**
+- `audit-tokens.js --ci` runs after `style-dictionary build` on every PR
+- `exit 1` on a critical violation blocks the merge — at the same level as a unit test
+- The `audit-report.json` report is saved as a CI artifact for traceability
+
+**For AI agents:**
+- An agent generating code knows the PR will go through this script
+- The drift patterns detected (`DRIFT_PATTERNS` in the script) are the machine
+  contract of what's forbidden — directly readable in `audit-tokens.js`
+- An agent can run the script locally before submitting a PR to self-validate
+  its output: `node scripts/audit-tokens.js --fix-report`
+
+**For governance:**
+- The four types of drift detected correspond to the prohibitions in ADR-001
+- The script makes these prohibitions enforceable, not just declared
+- Any drift not detected by the script = a gap to fix in `DRIFT_PATTERNS`
+
+**Accepted cost:**
+- The script must be updated if the token naming system evolves
+- It doesn't detect drift in Figma files (out of scope — see ADR-011)
+- Orphaned-token detection depends on the coverage of the scanned source files —
+  a component used only in an external app won't be seen
+
+---
+
+## Incidents or triggers
+
+Foundational decision. Motivated by the observation that token rules without
+automated verification are dead rules: they exist in the documentation,
+developers know them, and they still get violated under delivery pressure.
+The script turns a declarative rule into an enforceable constraint.
+
+<!-- FR -->
+
 # ADR-012 — Détection de dérive par script d'audit (audit-tokens.js)
 
 > **Date :** 2026-05-28
@@ -7,10 +134,6 @@
 > **Chemin logique:** decisions/ADR-012-audit-tokens-script.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, decisions/ADR-001-trois-niveaux-tokens.md
 > **Relations:** scripts/audit-tokens.js, tokens/primitives.json, tokens/semantic.json, tokens/component.json, .claude/rules/git-workflow.md, decisions/ADR-004-gouvernance-humaine.md
-
-> **English summary:** Introduces `scripts/audit-tokens.js`, a dependency-free internal script that detects four types of token drift (orphaned, phantom, hardcoded values, direct primitive use) and can block CI in `--ci` mode. It was built in-house rather than adopting an external tool because it needs project-specific knowledge (the three JSON files, the `--ds-` prefix, the three levels) that a generic linter can't reproduce.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

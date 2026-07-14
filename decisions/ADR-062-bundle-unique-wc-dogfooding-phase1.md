@@ -1,3 +1,128 @@
+# ADR-062 — Single `agtc.js` bundle + Web Components dogfooding Phase 1
+
+> **Date:** 2026-06-15
+> **Status:** ✅ Active
+> **Decision-makers:** Design System Lead
+> **Type:** architecture
+> **Logical path:** decisions/ADR-062-bundle-unique-wc-dogfooding-phase1.md
+> **Read before:** AGENTS.md, DESIGN.md, decisions/ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md
+> **Relations:** components/index.js, site/build.js, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-043-agtc-link-implementation.md, decisions/ADR-044-agtc-segmented-implementation.md
+
+---
+
+## Context
+
+ADR-061 introduced esbuild IIFE bundling for `agtc-top-nav` into an individual file.
+The next step (Phase 1 of the "Web Components / Styles / Spacing" plan) was:
+
+1. **Single bundle** — replace the N individual files with a single `agtc.js` grouping
+   all 16 components. Reduce the `<head>` entry-point surface (one `<script defer>`).
+
+2. **Dogfooding Phase 1** — the documentation pages used `<button class="agtc-button">`,
+   `<div class="agtc-banner">`, `<span class="agtc-badge">`, `<a class="agtc-link">` and
+   `<div class="agtc-segmented">` simulated in CSS. They needed to consume the real WCs.
+
+Guiding principle: "The site MUST consume the design system — in the event of a
+discrepancy, the component is the source of truth."
+
+---
+
+## Decision
+
+### 1. `components/index.js` — single entry point
+
+Created a `components/index.js` file importing all components in dependency order
+(`agtc-icon` first, a dependency of all the others).
+
+esbuild bundles this entry point into an IIFE: `components/index.js` → `site/dist/components/agtc.js`.
+
+**Reason:** a single `<script defer src="${base}components/agtc.js">` in `<head>`, all
+Custom Elements registered at once, no risk of partial loading.
+
+### 2. Replacing CSS simulations with real WCs
+
+| Doc page | Element replaced | WC used |
+|------------|-----------------|------------|
+| `button.html` | `<button class="agtc-button">` (12 occurrences) | `<agtc-button variant="...">` |
+| `banner.html` | `<div class="agtc-banner">` (demo) | `<agtc-banner variant="...">` |
+| `badge.html` | `<span>` inline style (demo) | `<agtc-badge variant="..." size="...">` |
+| `link.html` | `<a class="agtc-link">` (3 demo) | `<agtc-link href="..." [external\|underline]>` |
+| `segmented.html` | `<div class="agtc-segmented">` (demo) | `<agtc-segmented label="..." options='...' value="...">` |
+| All pages | `contributionBanner()` | `<agtc-banner variant="brand" icon="github">` |
+| `get-started.html` | 2 × `<div class="agtc-banner">` | `<agtc-banner variant="info/brand">` |
+| `decisions/index.html` | `<span class="agtc-badge success sm">` (61 lines) | `<agtc-badge variant="success" size="sm" icon="circle-check">` |
+| Individual ADRs | class-based `statusBadge` | `<agtc-badge variant="success" size="sm" icon="circle-check">` |
+
+### 3. Exception maintained — stylistically primary links
+
+The `<a class="agtc-button primary" href="...">` in the hero and navigation sections
+intentionally remain a CSS class: `agtc-button` renders a `<button>`, not an `<a>`.
+This pattern is semantically correct (ADR-031, confirmed in ADR-061).
+
+### 4. Exception maintained — lang-switch
+
+`<div class="agtc-segmented lang-switch">` in `layout()`: coupled custom JS
+(`data-lang` on `<html>`, `localStorage`). Migration to `<agtc-segmented>` planned
+for Phase 2 with adaptation of the language-toggle JS.
+
+---
+
+## Techniques used
+
+**`agtc-segmented` with JSON options as an attribute:**
+Lit v3 converts `{ type: Array }` via `JSON.parse()` from the HTML attribute.
+```html
+<agtc-segmented label="Langue"
+  options='[{"value":"fr","label":"FR"},{"value":"en","label":"EN"}]'
+  value="fr">
+</agtc-segmented>
+```
+
+**`agtc-link external` for external links:**
+The `external` attribute on `<agtc-link>` automatically adds the arrow-up-right icon
+and the `<span class="visually-hidden"> (opens in a new tab)</span>`.
+The manual `extIcon` variable is removed.
+
+**`agtc-banner` with `<slot>` for bilingualism:**
+The `heading` attribute is a string — for bilingual headings, `<strong>` is passed in
+the default slot rather than using the `heading` attribute.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **N individual files** (`agtc-button.js`, `agtc-banner.js`…) | N HTTP requests, N `<script defer>` in `<head>`, risk of a race condition between loads |
+| **CDN for Lit** + native modules | Against ADR-004 (digital sovereignty) and ADR-061 |
+| **Keep the CSS simulations** for demos | Against the dogfooding principle — the component page must show the real component |
+
+---
+
+## Consequences
+
+**For the site:**
+- `site/dist/components/agtc.js` (~526kb, all Lit components bundled)
+- A single `<script defer>` in each page (simplifies `<head>`)
+- The documentation pages now show the real, interactive WCs (critical with confirmation, interactive segmented, etc.)
+
+**For the design system:**
+- `components/index.js` becomes the official entry point for consumers without a bundler
+- `bundleComponents()` in `site/build.js` simplified (1 bundle instead of N)
+
+**For agents:**
+- Adding a component = adding `import './agtc-<name>.js'` to `components/index.js`
+- No change to the build sequence
+
+---
+
+## Incidents or triggers
+
+Direct follow-up to ADR-061 (individual `agtc-top-nav` bundle) + user directive
+"Web components / Styles / Spacing" defining the three phases of the site refactor (2026-06-15).
+
+<!-- FR -->
+
 # ADR-062 — Bundle unique `agtc.js` + dogfooding Web Components Phase 1
 
 > **Date :** 2026-06-15
@@ -7,10 +132,6 @@
 > **Chemin logique:** decisions/ADR-062-bundle-unique-wc-dogfooding-phase1.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, decisions/ADR-061-agtc-top-nav-v1-1-bilinguisme-mobile-integration.md
 > **Relations:** components/index.js, site/build.js, decisions/ADR-031-agtc-button-implementation.md, decisions/ADR-042-agtc-banner-implementation.md, decisions/ADR-034-agtc-badge-implementation.md, decisions/ADR-043-agtc-link-implementation.md, decisions/ADR-044-agtc-segmented-implementation.md
-
-> **English summary:** Following the per-component bundling introduced for `agtc-top-nav` (ADR-061), this ADR completes Phase 1 of the site's Web Components rollout: a single `components/index.js` entry point bundles all 16 components into one `agtc.js` file (one `<script defer>` instead of many), and the documentation pages replace their CSS-simulated `.agtc-button`/`.agtc-banner`/`.agtc-badge`/`.agtc-link`/`.agtc-segmented` markup with the real Web Components — enforcing the "the site must consume the design system" principle, with two deliberate exceptions (button-styled links, and the language-switch segmented control) kept as-is for now.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

@@ -1,3 +1,169 @@
+# ADR-026 — Figma synchronization strategy for custom brand palettes
+
+> **Date:** 2026-05-29
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros — Design System Lead, Principal Designer
+> **Type:** contract
+> **Logical path:** decisions/ADR-026-sync-figma-palettes-custom.md
+> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Relations:** decisions/ADR-011-tokens-studio.md, decisions/ADR-024-brand-palette-teal-accent-secondary.md, tokens/primitives.json, tokens/semantic.json
+
+---
+
+## Context
+
+ADR-024 introduced two custom brand palettes (rose-coral `accent` and bordeaux `secondary`) into `tokens/primitives.json`. Unlike the Radix UI palettes already present (Teal, Blue, Red, etc.), these palettes:
+
+1. **Are not on Figma Community** — Tokens Studio cannot import them from an official shared file
+2. **Have no external reference documentation** — users must understand each step from the JSON alone
+3. **Can evolve** — the hex values are design decisions, not constants inherited from a third-party system
+
+The question raised in ADR-024's debt log:
+
+> How are custom palettes synchronized with Figma reliably, in a governed way, without creating a second source of truth?
+
+---
+
+## Decision
+
+### Principle: the same pipeline as the Radix palettes
+
+The custom palettes (`accent`, `secondary`) are handled **exactly like the Radix palettes** in the sync pipeline. There is no special process for them.
+
+```
+tokens/primitives.json
+  ↓ (Tokens Studio reads this file)
+Figma Variables — "Primitives" collection
+  ↓ (designers use it via semantic tokens)
+Figma Variables — "Semantic" + "Component" collections
+```
+
+Tokens Studio makes no distinction between a Radix palette and a custom palette — it reads the JSON and maps tokens to Figma Variables based on the file's structure.
+
+---
+
+### Tokens Studio configuration
+
+**Target Figma collection**: `Primitives` (the same collection as `primitive.color.teal`, `primitive.color.blue`, etc.)
+
+**Automatic naming in Figma**:
+- `primitive/color/accent/1` → Figma variable `accent/1`
+- `primitive/color/accent/9` → Figma variable `accent/9`
+- `primitive/color/secondary/9` → Figma variable `secondary/9`
+- etc.
+
+`_readme` tokens (type `other`) are ignored by Tokens Studio on import — they do not generate Figma variables. They exist solely to document the JSON for agents and developers.
+
+**Import order** (unchanged since ADR-011):
+1. `primitives.json` → `Primitives` collection
+2. `semantic.json` → `Semantic` collection
+3. `component.json` → `Component` collection
+
+---
+
+### When custom values change
+
+Any modification of a custom palette's hex values follows the standard process:
+
+1. Open a `token(primitives)` PR on a `token/brand-palette-update` branch
+2. Modify the values in `tokens/primitives.json`
+3. Mandatory approval from the **Principal Designer** (governance rule ADR-001, ADR-004)
+4. Merge → the Tokens Studio sync pipeline detects the change on the next pull from Figma
+
+Designers **do not modify** values directly in Figma. If a hue doesn't work, they open an issue / submit a PR — not a local Figma variable edit.
+
+---
+
+### Documenting steps in Figma
+
+Figma variable descriptions (the `description` field in Tokens Studio) are populated from each JSON token's `$description` field. Designers see directly in the Figma panel:
+
+| Figma variable | Automatic description |
+|---------------|------------------------|
+| `accent/9`    | Solid background — brand accent / secondary CTA |
+| `accent/11`   | Accent text — 7.1:1 on white (WCAG AA+AAA) |
+| `secondary/9` | Solid dark background — 12.2:1 with white text |
+| `secondary/12`| High-contrast text — 13.8:1 on white (WCAG AAA) |
+
+The per-step usage rule (inherited from the Radix convention — steps 1-2 backgrounds, 9-10 solids, 11-12 text) applies to the custom palettes as well. It is documented in the `_readme` field of each palette in `primitives.json`.
+
+---
+
+### Validation after sync
+
+After each custom palette update in Figma, the Principal Designer validates:
+
+- [ ] All 12 steps of each palette appear in the `Primitives` collection
+- [ ] The `semantic/color/brand/*` semantic tokens correctly resolve their aliases
+- [ ] No orphaned Figma variable (broken alias) in the `Semantic` or `Component` collections
+- [ ] Variable descriptions match the JSON's `$description` values
+
+---
+
+### What an agent may do
+
+```
+✅ Modify hex values in tokens/primitives.json via PR
+✅ Add a new intermediate step (e.g. accent/9-5) if justified
+✅ Update the $description fields to improve Figma documentation
+❌ Modify Figma variables directly (never — the direction is JSON → Figma)
+❌ Create a new palette without an ADR and Principal Designer approval
+```
+
+---
+
+## Rationale
+
+### Why not create a separate Figma collection for the custom palettes?
+
+A `Brand` collection separate from `Primitives`:
+- Introduces an asymmetry between the Figma structure and the JSON structure (where everything lives in `primitives.json`)
+- Complicates the Tokens Studio import rules (order, alias resolution)
+- Provides no benefit to agents — who work on the JSON, not on Figma
+
+Keeping everything in the `Primitives` collection preserves consistency between JSON and Figma.
+
+### Why don't `_readme` entries create Figma variables?
+
+Tokens Studio ignores tokens of type `other` when importing variables (they are not design values — no usable `$value`). This behavior is documented and intentional. `_readme` entries are a documentation pattern internal to the JSON.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| **Create the custom palettes manually in Figma** | Creates a second source of truth outside the repo. Drift is guaranteed at the next update. |
+| **Host the custom palettes in a separate JSON file** | Fragments `primitives.json` with no benefit — Tokens Studio can manage a single file for all primitives. |
+| **Use Figma Styles (not Variables)** | Figma Styles do not support aliases/references — semantic tokens could not point to the primitives. Figma Variables is the right mechanism. |
+| **Wait for a Radix fork** | The custom colors do not correspond to any existing Radix palette. Waiting for a hypothetical similar Radix palette is not actionable. |
+
+---
+
+## Consequences
+
+**Immediate:**
+- The `accent` and `secondary` palettes are available in Figma on the next Tokens Studio pull from the repo
+- No additional configuration required — they appear automatically in the `Primitives` collection
+
+**For designers:**
+- Same workflow as for Radix palettes — nothing new to learn
+- Step descriptions are visible directly in the Figma Variables panel
+- Any request to change a hue goes through a PR, not a local Figma edit
+
+**For AI agents:**
+- Agents continue to work exclusively on the JSON files
+- Figma sync is transparent to agents — it does not change token usage rules
+
+**For governance:**
+- A custom palette with no ADR = drift — audit-tokens.js can detect tokens with no associated documentation
+- Any new custom palette triggers the creation of an ADR + Principal Designer approval
+
+**Debt resolved:**
+- The debt documented in ADR-024 ("a separate ADR must document the Figma sync strategy for custom palettes") is resolved by this ADR.
+
+<!-- FR -->
+
 # ADR-026 — Stratégie de synchronisation Figma pour les palettes de marque custom
 
 > **Date :** 2026-05-29
@@ -7,10 +173,6 @@
 > **Chemin logique:** decisions/ADR-026-sync-figma-palettes-custom.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
 > **Relations:** decisions/ADR-011-tokens-studio.md, decisions/ADR-024-brand-palette-teal-accent-secondary.md, tokens/primitives.json, tokens/semantic.json
-
-> **English summary:** Custom brand palettes (accent, secondary) introduced in ADR-024 follow the exact same Tokens Studio → Figma Variables sync pipeline as the existing Radix palettes, living in the same "Primitives" collection with no special-case process. Designers never edit Figma variables directly — every palette change flows through a PR with mandatory Principal Designer approval.
->
-> *The original French version follows below — preserved unaltered as the historical record.*
 
 ---
 

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-input` — Agentica</title>
+<title>`agtc-input` implementation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-input` — Agentica">
+<meta property="og:title" content="`agtc-input` implementation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-input` — Agentica">
+<meta name="twitter:title" content="`agtc-input` implementation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-input`</h1>
+  <h1 class="adr-page-title">`agtc-input` implementation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,50 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Documents key implementation decisions for <code>agtc-input</code>: the label is rendered inside the Shadow DOM (native <code>for</code>/<code>id</code> association can't cross shadow boundaries), the focus ring lives on the <code>.control</code> wrapper via <code>:focus-within</code>, <code>aria-describedby</code> is built dynamically for helper/error text with <code>role="alert"</code> on errors, a built-in show/hide toggle covers <code>type="password"</code>, and Lit's <code>live()</code> directive keeps the input's DOM value in sync during re-renders.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p><code>agtc-input</code> is the system's second component. It covers text entry in forms — the most frequent entry point for user data.</p>
+<p>Three constraints guided the decisions:</p>
+<p>1. <strong>Accessibility</strong> — a text field with no visible label is inaccessible    (WCAG 1.3.1). Every state (error, disabled, read-only) must be    communicated to the accessibility tree, not just visually.</p>
+<p>2. <strong>Shadow DOM</strong> — the <code>&lt;label for="id"&gt;</code> association doesn't cross    Shadow DOM boundaries. The implementation must work around this limitation.</p>
+<p>3. <strong>Consistency with <code>agtc-button</code></strong> — same hybrid icon approach (property +    slot), same event conventions, same token structure.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decisions</h2>
+<h3>Decision 1 — Label and input colocated in the Shadow DOM</h3>
+<p><strong>Problem:</strong> An external <code>&lt;label for="id"&gt;</code> can't point to an <code>&lt;input&gt;</code> inside the Shadow DOM.</p>
+<p><strong>Decision:</strong> The label is rendered inside the Shadow DOM with a <code>for</code> pointing to the internal <code>id</code> of the <code>&lt;input&gt;</code>. A static counter guarantees id uniqueness across instances.</p>
+<p><strong>Rejected alternative:</strong> <code>aria-label</code> on the input instead of a visible label. Rejected: violates WCAG 1.3.1 (the label must be persistent and visible, not only declared for AT).</p>
+<hr>
+<h3>Decision 2 — Focus ring on the <code>.control</code> wrapper, not on the input</h3>
+<p><strong>Problem:</strong> The native input has <code>outline: none</code> to allow custom styling. Focus must remain visible (WCAG 2.4.7).</p>
+<p><strong>Decision:</strong> The <code>.control</code> wrapper carries the focus ring via <code>:focus-within</code>. <code>outline: 2.5px solid</code> + <code>outline-offset: 2px</code> — identical to <code>agtc-button</code>.</p>
+<p><strong>Justification:</strong> The focus ring on the wrapper is visually cleaner (frames the whole control including icons) and remains WCAG compliant because the focus indicator is clearly visible.</p>
+<hr>
+<h3>Decision 3 — <code>aria-describedby</code> for helper-text and error-message</h3>
+<p>The ids <code>{_id}-helper</code> and <code>{_id}-error</code> are always present in the DOM. <code>aria-describedby</code> is built dynamically: only the relevant ids are included depending on the component's state.</p>
+<p>The error message carries <code>role="alert"</code> to announce the error to screen readers as soon as it appears, with no need to navigate to the element.</p>
+<hr>
+<h3>Decision 4 — Native show/hide toggle for <code>type="password"</code></h3>
+<p>An internal button is rendered automatically when <code>type="password"</code>. It toggles the input's <code>type</code> attribute between <code>password</code> and <code>text</code>.</p>
+<p><strong>Justification:</strong> Letting the user verify what they typed is an accessibility requirement (avoids errors on masked passwords). The button's aria-label switches between "Show password" and "Hide password".</p>
+<p>The <code>suffix</code> slot remains available for free composition if the consumer wants to replace the native toggle.</p>
+<hr>
+<h3>Decision 5 — <code>live()</code> directive for value synchronization</h3>
+<p>The input uses <code>.value="${live(this.value)}"</code> to synchronize the Lit property's value with the input's native value across re-renders.</p>
+<p>Without <code>live()</code>, Lit doesn't update the native value if the user has started typing (DOM drift). <code>live()</code> always compares against the current DOM value, guaranteeing consistency.</p>
+<hr>
+<h3>Decision 6 — Removal of native spinners on <code>type="number"</code></h3>
+<p>The native CSS spinners (<code>-webkit-inner-spin-button</code>) are removed. Control of the numeric value happens via keyboard (<code>↑</code>/<code>↓</code>) and direct input.</p>
+<p><strong>Justification:</strong> Native spinners are visually inconsistent across browsers and can't be styled with the system's tokens.</p>
+<hr>
+<h2>Reference UX patterns applied</h2>
+<blockquote><p>Added on 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Design System Lead decision: <strong>all patterns approved</strong>. Details and links in <code>guidelines/components/input.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Validation <code>onBlur</code>, re-validation while typing once in error</td><td>NN/g — How to Report Errors in Forms</td></tr><tr><td>Inline error + <code>role="alert"</code></td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Constructive error message</td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Persistent help text via <code>aria-describedby</code></td><td>NN/g</td></tr><tr><td>Required marker <code>*</code> + <code>aria-required</code></td><td>NN/g — Forms</td></tr><tr><td>Forgiving format (<code>tel</code>/<code>number</code>)</td><td>IxDF — forgiving formats</td></tr><tr><td>Visible label always present</td><td>NN/g</td></tr><tr><td>Anti hostile patterns (no clearing the field on error)</td><td>NN/g — Hostile Patterns in Error Messages</td></tr></tbody></table></div>
+<hr>
+<h2>Version 1.0 scope</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future version)</th></tr></thead><tbody><tr><td>7 native types</td><td><code>type="date"</code>, <code>type="file"</code></td></tr><tr><td>States: default / focus / invalid / disabled / readonly</td><td>Success state (positive validation)</td></tr><tr><td>Prefix/suffix icons (hybrid prop+slot)</td><td>Character counter</td></tr><tr><td>Built-in password toggle</td><td>Custom suggestions / autocomplete</td></tr><tr><td>helper-text + error-message</td><td>Multiline field (<code>agtc-textarea</code>)</td></tr></tbody></table></div>
+<hr>
+<h2>Tokens used</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Component tokens compiled from <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Error message color</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Disabled state background</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Disabled state text</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icons</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typography of the entered value</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typography of the label, helper, error</td></tr></tbody></table></div></div><div class="lang-fr"><h2>Contexte</h2>
 <p><code>agtc-input</code> est le deuxième composant du système. Il couvre la saisie de texte dans les formulaires — le point d'entrée le plus fréquent des données utilisateur.</p>
 <p>Trois contraintes ont guidé les décisions :</p>
 <p>1. <strong>Accessibilité</strong> — un champ de saisie sans label visible est inaccessible    (WCAG 1.3.1). Chaque état (erreur, désactivé, lecture seule) doit être    communiqué à l'arbre d'accessibilité, pas seulement visuellement.</p>
@@ -176,7 +215,7 @@
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (version future)</th></tr></thead><tbody><tr><td>7 types natifs</td><td><code>type="date"</code>, <code>type="file"</code></td></tr><tr><td>États : default / focus / invalid / disabled / readonly</td><td>État success (validation positive)</td></tr><tr><td>Icônes prefix/suffix (hybride prop+slot)</td><td>Compteur de caractères</td></tr><tr><td>Toggle password intégré</td><td>Suggestions / autocomplete custom</td></tr><tr><td>helper-text + error-message</td><td>Champ multiligne (<code>agtc-textarea</code>)</td></tr></tbody></table></div>
 <hr>
 <h2>Tokens utilisés</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Tokens composant compilés depuis <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Couleur message d'erreur</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Fond état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Texte état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icônes</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typographie de la valeur saisie</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typographie du label, helper, erreur</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Tokens composant compilés depuis <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Couleur message d'erreur</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Fond état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Texte état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icônes</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typographie de la valeur saisie</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typographie du label, helper, erreur</td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-032.html" class="agtc-button secondary">← ADR-032</a>
     <a href="adr-034.html" class="agtc-button secondary">ADR-034 →</a>
   </div></main>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Nouvelle catégorie de token : `letterSpacing` — Agentica</title>
+<title>New token category: `letterSpacing` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Nouvelle catégorie de token : `letterSpacing` — Agentica">
+<meta property="og:title" content="New token category: `letterSpacing` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Nouvelle catégorie de token : `letterSpacing` — Agentica">
+<meta name="twitter:title" content="New token category: `letterSpacing` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">token</span>
   </div>
-  <h1 class="adr-page-title">Nouvelle catégorie de token : `letterSpacing`</h1>
+  <h1 class="adr-page-title">New token category: `letterSpacing`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,10 +126,48 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead (sémantique) — Principal Designer (primitive)</dd>
+      <dd>Design System Lead (semantic) — Principal Designer (primitive)</dd>
     </div>
   </dl>
-</div><h2>Contexte</h2>
+</div><div class="lang-en"><h2>Context</h2>
+<p>Token debt audit on <code>components/agtc-code-block.js</code> (language indicator, ~line 79-81): three typography values hardcoded, in violation of <code>.claude/rules/tokens-system.md</code>:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Hardcoded value</th><th>Location</th></tr></thead><tbody><tr><td><code>line-height: 1.6</code></td><td>Code body (<code>code</code>, <code>::slotted(code)</code>)</td></tr><tr><td><code>font-weight: 600</code></td><td><code>.language</code> (language indicator, e.g. <code>HTML</code>, <code>JSON</code>)</td></tr><tr><td><code>letter-spacing: 0.06em</code></td><td><code>.language</code></td></tr></tbody></table></div>
+<p>The first point (<code>line-height: 1.6</code>) was a mechanical fix: <code>primitive.lineHeight.reading</code> already equaled <code>1.6</code> and a semantic alias (<code>semantic.typography.detail.line-height</code>) already existed — no new token, direct wiring.</p>
+<p>The second point (<code>font-weight: 600</code>) has no primitive at <code>600</code> — only <code>regular:400</code>, <code>medium:500</code>, <code>bold:700</code>. Presented to the human, who chose to <strong>reuse <code>medium</code> (500)</strong> rather than add a <code>semibold:600</code> primitive — accepting a minor visual change to the language badge rather than expanding the weight scale. Wired to <code>semantic.typography.label.weight</code> (already used elsewhere, e.g. <code>component.top-nav.tab.font-weight</code>).</p>
+<p>The third point (<code>letter-spacing: 0.06em</code>) had <strong>no existing category</strong> — neither primitive nor semantic. This is the subject of this ADR.</p>
+<hr>
+<h2>Decision</h2>
+<p>Create the <code>letterSpacing</code> category at the first two levels of the token hierarchy:</p>
+<h3>Primitive — <code>tokens/primitives.json</code> → <code>primitive.typography.letterSpacing</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Description</th></tr></thead><tbody><tr><td><code>letterSpacing.normal</code></td><td><code>0em</code></td><td>Default — body text, labels, details</td></tr><tr><td><code>letterSpacing.wide</code></td><td><code>0.06em</code></td><td>Widened — small-caps labels (compensates for reduced legibility of uppercase text)</td></tr></tbody></table></div>
+<h3>Semantic — <code>tokens/semantic.json</code> → <code>semantic.typography.letter-spacing</code></h3>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Alias</th><th>Intent</th></tr></thead><tbody><tr><td><code>letter-spacing.normal</code></td><td><code>{primitive.letterSpacing.normal}</code></td><td>Default — body text, labels, details in normal case</td></tr><tr><td><code>letter-spacing.wide</code></td><td><code>{primitive.letterSpacing.wide}</code></td><td>Small-caps labels (code language indicator, marketing eyebrow) where the spacing compensates for the reduced legibility of uppercase text</td></tr></tbody></table></div>
+<p>Generated CSS variable: <code>--agtc-semantic-typography-letter-spacing-wide</code> (Style Dictionary, <code>--agtc-semantic-[group]-[role]</code> convention).</p>
+<h3>Immediate consumer</h3>
+<p><code>components/agtc-code-block.js</code> (<code>.language</code>):</p>
+<pre class="code-block"><code class="lang-css">.language {
+  text-transform: uppercase;
+  letter-spacing: var(--agtc-semantic-typography-letter-spacing-wide, 0.06em);
+  font-weight: var(--agtc-semantic-typography-label-weight, 500);
+  flex-shrink: 0;
+}</code></pre>
+<hr>
+<h2>Rationale</h2>
+<ul><li><code>0.06em</code> is a standard letter-spacing value for small uppercase text (compensates for</li></ul>
+<p>  the legibility loss caused by <code>text-transform:uppercase</code>) — a pattern potentially   repeated elsewhere (e.g. <code>semantic.typography.marketing.eyebrow</code>, which already   mentions "wide letter-spacing" in its <code>$intent</code> with no dedicated token — pre-existing   debt not addressed by this ADR, to be fixed in a future dedicated audit).</p>
+<ul><li>Creating the category now, rather than a local hardcoded value, avoids repeating the</li></ul>
+<p>  same debt in the next component that needs the same spacing (marketing eyebrow, badges).</p>
+<ul><li>Cross-team impact: a new token category, visible to every agent and designer who</li></ul>
+<p>  consumes <code>tokens/semantic.json</code> → triggers the ADR trigger (<code>pipelines/adr-triggers.md</code>,   "semantic token change" rule).</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep <code>0.06em</code> hardcoded with a comment</td><td>Violates <code>tokens-system.md</code> — this was precisely the debt being fixed</td></tr><tr><td>Add <code>letter-spacing.wide</code> only at the component level (<code>component.code-block.language.letter-spacing</code>)</td><td>Skips the semantic level (ADR-001); the "wide spacing for uppercase" intent is reusable beyond the code-block (marketing eyebrow)</td></tr><tr><td>Add <code>primitive.fontWeight.semibold: 600</code> to preserve the badge's exact visual rendering</td><td>Rejected by the human — <code>medium</code> (500) is sufficient, avoids expanding the weight scale for a single consumer</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For agents:</strong> any future small-caps label (badges, eyebrow) must consume <code>semantic.typography.letter-spacing.wide</code> rather than a hardcoded value.</p>
+<p><strong>For the system:</strong> <code>agtc-code-block.js</code> no longer has any hardcoded typography value. Residual debt identified but <strong>out of scope</strong> for this ADR: <code>semantic.typography.marketing.eyebrow</code> mentions wide letter-spacing in its <code>$intent</code> with no wired token — to be audited separately.</p>
+<p><strong>Build:</strong> <code>npm run tokens</code> regenerated (0 ghosts); <code>node site/build.js</code> regenerated (<code>site/dist/tokens.css</code> — 814 variables defined, 270 referenced, 0 ghosts).</p>
+<p><strong>Governance:</strong> new semantic category → Design System Lead approval; primitive → Principal Designer approval. Both approved by the human on 2026-07-08 (see decision above on the <code>medium</code> vs. new <code>semibold</code> primitive choice).</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Audit de dette de tokens sur <code>components/agtc-code-block.js</code> (indicateur de langue, ~ligne 79-81) : trois valeurs de typographie codées en dur, en violation de <code>.claude/rules/tokens-system.md</code> :</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Valeur en dur</th><th>Emplacement</th></tr></thead><tbody><tr><td><code>line-height: 1.6</code></td><td>Corps du code (<code>code</code>, <code>::slotted(code)</code>)</td></tr><tr><td><code>font-weight: 600</code></td><td><code>.language</code> (indicateur de langue, ex. <code>HTML</code>, <code>JSON</code>)</td></tr><tr><td><code>letter-spacing: 0.06em</code></td><td><code>.language</code></td></tr></tbody></table></div>
 <p>Le premier point (<code>line-height: 1.6</code>) était une correction mécanique : <code>primitive.lineHeight.reading</code> valait déjà <code>1.6</code> et un alias sémantique (<code>semantic.typography.detail.line-height</code>) existait déjà — pas de nouveau token, câblage direct.</p>
@@ -167,7 +205,7 @@
 <p><strong>Pour les agents :</strong> toute future étiquette en petites majuscules (badges, eyebrow) doit consommer <code>semantic.typography.letter-spacing.wide</code> plutôt qu'une valeur en dur.</p>
 <p><strong>Pour le système :</strong> <code>agtc-code-block.js</code> n'a plus aucune valeur de typographie codée en dur. Dette résiduelle identifiée mais <strong>hors périmètre</strong> de cet ADR : <code>semantic.typography.marketing.eyebrow</code> mentionne un letter-spacing large dans son <code>$intent</code> sans token câblé — à auditer séparément.</p>
 <p><strong>Build :</strong> <code>npm run tokens</code> régénéré (0 fantôme) ; <code>node site/build.js</code> régénéré (<code>site/dist/tokens.css</code> — 814 variables définies, 270 référencées, 0 fantôme).</p>
-<p><strong>Gouvernance :</strong> nouvelle catégorie sémantique → approbation Design System Lead ; primitive → approbation Principal Designer. Les deux approuvées par l'humain le 2026-07-08 (voir décision ci-dessus sur le choix <code>medium</code> vs nouvelle primitive <code>semibold</code>).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p><strong>Gouvernance :</strong> nouvelle catégorie sémantique → approbation Design System Lead ; primitive → approbation Principal Designer. Les deux approuvées par l'humain le 2026-07-08 (voir décision ci-dessus sur le choix <code>medium</code> vs nouvelle primitive <code>semibold</code>).</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-066.html" class="agtc-button secondary">← ADR-066</a>
     <a href="adr-068.html" class="agtc-button secondary">ADR-068 →</a>
   </div></main>

@@ -1,3 +1,226 @@
+# ADR-066 — Playwright testing strategy: two distinct scopes
+
+**Date:** 2026-07-02
+**Status:** Active
+**Author:** Guilherme Negreiros
+**Relations:** ADR-006 (Chromatic), ADR-007 (axe-core), ADR-009 (Storybook), ADR-004 (human governance)
+
+---
+
+## Context
+
+The Chromatic free monthly snapshot limit was reached on 2026-07-01 (period
+2026-06-30 → 2026-07-31). The next paid plan costs ~149 USD/month (~205 CAD) and would
+require a formal RFP process in the targeted government context (RAMQ).
+
+In addition, Chromatic sends screenshots to Chromatic Inc.'s infrastructure (outside
+Quebec), which raises data-sovereignty constraints for government teams.
+
+While exploring a replacement, two distinct use cases were identified — with different
+needs, owners, and repositories — that call for an explicit architecture decision rather
+than a simple tool substitution.
+
+---
+
+## The two testing scopes
+
+### Scope 1 — DS team (this repository)
+
+The team that maintains the design system tests its own deliverables:
+
+| Dimension | Detail |
+|-----------|--------|
+| **Repository** | `agentic-design-system` (this repository) |
+| **Trigger** | Commit on `tokens/`, `components/`, `site/` |
+| **What constitutes a failure** | A DS component has visually or functionally regressed |
+| **Visual source of truth** | The components as defined by the DS |
+| **Who approves diffs** | DS Lead (Guilherme Negreiros) |
+| **Scope** | `site/dist/` pages, `agtc-*` components, foundations |
+
+### Scope 2 — Consuming product teams
+
+Teams that use the DS in their own product test their own product:
+
+| Dimension | Detail |
+|-----------|--------|
+| **Repository** | Each team's product repositories (outside this repository) |
+| **Trigger** | Product commit, or a DS version bump in their `package.json` |
+| **What constitutes a failure** | The product UI is broken after use or a DS upgrade |
+| **Visual source of truth** | The product UI as approved by their designer |
+| **Who approves diffs** | The product team itself |
+| **Scope** | Their application, their pages, their user journeys |
+
+> **Principle:** the DS cannot and must not test the products that consume it.
+> That would create an inverted coupling — the DS depending on product decisions —
+> and would be impossible to maintain. The DS provides tools, not tests.
+
+---
+
+## Decision
+
+### 1. Playwright replaces Chromatic for the DS scope
+
+**Tool:** Playwright `^1.60.0` (already in `devDependencies`).
+
+**Advantages vs Chromatic:**
+
+| Criterion | Chromatic | Playwright |
+|---------|-----------|------------|
+| Cost | ~205 CAD/month | 0 CAD |
+| Data | Sent to Chromatic Inc. | Stays within internal CI infra |
+| Browsers | Chromium only | Chromium + Firefox + WebKit |
+| Quotas | 35,000 snapshots/month (free) | Unlimited |
+| RAMQ RFP | Required at ~149 USD/month | Not required |
+| Approval interface | Chromatic web UI | Local HTML report (`playwright-report/`) |
+
+The only advantage lost: Chromatic's web-based approval interface (a dedicated UI for
+designers). Replaced by the Playwright HTML report — less visual, acceptable for the
+current phase.
+
+**DS test architecture:**
+
+```
+tests/
+  visual/
+    snapshots/              ← reference PNGs committed to the repo
+    home.spec.js            ← home page regressions (light/dark, desktop/mobile)
+    documentation.spec.js   ← doc pages + foundations regressions
+    components/
+      button.spec.js        ← button component page regression
+  functional/
+    nav.spec.js             ← mega menu, mobile menu, theme toggle
+    sidebar.spec.js         ← docs sidebar, TOC, active state
+playwright.config.js
+```
+
+**Key configuration:**
+
+- `baseURL: http://localhost:8080` — site served via `npx serve site/dist`
+- Browsers: Chromium, Firefox, WebKit
+- Microsoft Docker image (`mcr.microsoft.com/playwright`) in CI — guarantees
+  deterministic diffs between Linux CI and local macOS (avoids false-positive
+  typographic diffs)
+- `reducedMotion: 'reduce'` — disables animations during captures
+- `update_snapshots`: **never automatic** — explicit human approval required (ADR-004)
+
+**CI workflow (`.github/workflows/playwright.yml`):**
+
+```yaml
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        type: boolean
+        default: false
+        description: "Regenerate reference snapshots (human approval required)"
+```
+
+The `update_snapshots` flag can only be enabled manually via `workflow_dispatch`.
+Enabling this flag automatically on push would destroy the test's value (always green =
+detects nothing). This rule is aligned with the "the human always has the final word"
+principle (ADR-004).
+
+**Update reminder mechanism:**
+
+Three layered mechanisms:
+1. **pre-push git hook** (`.githooks/pre-push`) — console message when `components/` or `tokens/` changed
+2. **CI log message** — a step displayed when a diff is detected
+3. *(Optional)* **Automatic GitHub issue** — a `visual-review` issue for teams with non-dev designers
+
+### 2. The DS provides a test kit for consuming teams
+
+The DS **does not test consumer products** — it provides them with tools to test
+themselves. This kit is delivered as documentation and sample code in this repository.
+
+**Kit contents (to be implemented in phase 2):**
+
+| Deliverable | Location | Description |
+|----------|-------------|-------------|
+| Playwright fixtures | `tests/consumer-kit/fixtures.js` | `withDSTheme(page, 'dark')`, `waitForDSReady(page)` |
+| Setup example | `tests/consumer-kit/example.spec.js` | Minimal test showing how to test a DS component in a product context |
+| Documentation | `guidelines/foundations/testing.md` | "Testing your product with the DS" guide |
+
+**Kit principle:** product teams copy or import the fixtures into their own
+repository. The DS doesn't know their product — it provides test primitives, not tests.
+
+### 3. axe-core integration into Playwright (phase 2)
+
+The existing `axe.yml` workflow already uses Playwright internally (Chromium). It will
+be merged into the Playwright workflow in phase 2 via `@axe-core/playwright` (already
+in `devDependencies`), resulting in a single CI workflow instead of two.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------|
+| Keep Chromatic (paid plan) | ~205 CAD/month → RAMQ RFP; data outside Quebec |
+| Percy / Applitools | Same problem: external SaaS, cost, data outside infra |
+| Storybook Visual Tests (Chromatic addon) | Depends on Chromatic; same limit |
+| BackstopJS | Less maintained, no native multi-browser support, DX inferior to Playwright |
+| Test consuming products from this repository | Inverted coupling (DS depends on products); impossible to maintain; each team owns its own tests |
+| A single "merged" DS + product scope | Confusion of responsibilities; a product failure would block the DS CI |
+
+---
+
+## Consequences
+
+### For the DS team
+
+- The reference PNG snapshots are committed to `tests/visual/snapshots/` — they are
+  part of the repository and visible via `git diff` like any other file.
+- Any intentional visual change (redesign, new token) requires a manually triggered
+  `--update-snapshots`, followed by a snapshot-update commit.
+- The Microsoft Docker image guarantees that detected diffs are real regressions, not
+  rendering artifacts between OSes.
+
+### For product teams
+
+- They are responsible for their own visual tests in their own repositories.
+- The DS provides them a kit (fixtures + example) to get started quickly.
+- The component guidelines document the expected, testable behaviors.
+
+### For agents
+
+- `tests/visual/snapshots/` contains binary PNG files — never modify these files
+  manually, only via `--update-snapshots`.
+- Do not add tests that test hypothetical consumer products in this repository.
+- The `playwright.yml` workflow must always build the site before the tests:
+  `node site/build.js` → `npx playwright test`.
+
+### Files affected / created
+
+| File | Status | Description |
+|---------|--------|-------------|
+| `playwright.config.js` | Created | Playwright configuration (multi-browser, baseURL, Docker) |
+| `tests/visual/home.spec.js` | Created | Home page regressions |
+| `tests/visual/documentation.spec.js` | Created | Doc pages + foundations regressions |
+| `tests/visual/components/button.spec.js` | Created | Button page regression |
+| `tests/functional/nav.spec.js` | To create | Navigation functional tests |
+| `tests/functional/sidebar.spec.js` | To create | Sidebar functional tests |
+| `.github/workflows/playwright.yml` | To create | Playwright CI workflow |
+| `.githooks/pre-push` | To create | Local reminder hook |
+| `.github/workflows/chromatic.yml` | Modified | Push disabled (2026-07-01) |
+
+---
+
+## Expected outcome
+
+| Metric | Chromatic (before) | Playwright (target) |
+|----------|------------------|-------------------|
+| Monthly cost | ~205 CAD | 0 CAD |
+| Data | Chromatic Inc. (external) | Internal CI only |
+| Browsers covered | 1 (Chromium) | 3 (Chromium + Firefox + WebKit) |
+| Quotas | 35,000 snapshots/month | Unlimited |
+| Themes tested | light + dark (modes) | light + dark (per spec) |
+| Breakpoints | Desktop only | Desktop + Tablet + Mobile |
+| Diff approval | Chromatic web interface | `workflow_dispatch` + commit |
+
+<!-- FR -->
+
 # ADR-066 — Stratégie de tests Playwright : deux périmètres distincts
 
 **Date :** 2026-07-02

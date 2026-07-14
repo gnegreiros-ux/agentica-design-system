@@ -1,3 +1,105 @@
+# ADR-070 — English as the repository's default language (community translation)
+
+> **Date:** 2026-07-10
+> **Status:** ✅ Active
+> **Decision-makers:** Guilherme Negreiros (Design System Lead)
+> **Type:** contract
+> **Logical path:** decisions/ADR-070-anglais-langue-par-defaut.md
+> **Read before:** AGENTS.md, DESIGN.md, README.md
+> **Relations:** .claude/rules/project-overview.md, README.md, AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md, How-to-sans-agents.md
+
+---
+
+## Context
+
+The Agentica repository was written entirely in French — root documentation (README,
+AGENTS.md, DESIGN.md, How-to guides), guidelines, `.claude/` rules, architectural
+decisions (`decisions/`). The stated goal is to share the project with the international
+design systems community (Storybook, Figma Community, publications like Design Systems
+Collective) — an overwhelmingly English-speaking readership.
+
+The public site (`site/`) already has a working bilingual FR/EN system (`lang-fr`/`lang-en`
+spans, toggled via `.lang-btn`) from an earlier effort (2026-05-29). This system only
+covers the generated site, not the repository's own markdown files — which are what an
+external contributor reads first on GitHub.
+
+---
+
+## Decision
+
+English becomes the repository's default language. Migration is split into 6 initiatives
+in GitHub Projects (Domain Governance/Site/Components, all linked to the parent ticket
+"Full translation of the repository to English"):
+
+| # | Scope | Strategy | Priority |
+|---|-----------|-----------|----------|
+| 1 | Root documentation (README, How-to-*, AGENTS.md, DESIGN.md) | English **replaces** French — no FR version kept in these files | P1 |
+| 2 | Public site (`site/contenu.md`, `site/build.js`) | Switch the existing bilingual system's default to EN — FR remains available via the selector | P1 |
+| 3 | `guidelines/` (24 files) | English **replaces** French — same strategy as initiative 1, no FR version kept | P2 |
+| 4 | `.claude/` (rules, instructions, skills — 38 agent-facing files) | English **replaces** French — same strategy as initiatives 1 and 3, no FR version kept | P2 |
+| 5 | `decisions/` (70 ADRs, historical log) | A lightweight strategy was initially considered (an EN summary up top) rather than a full retroactive translation — to be validated | P3 |
+| 6 | Component code comments (`agtc-*.js`, `*.stories.js`) | Full translation — comments, CONTRACT blocks, `console.warn` warnings, **and** Storybook `description` strings (user-facing); the `agtc-top-nav` component's `labelFr`/`labelEn` pairs are kept as-is (a real bilingual site feature, not residual content) | P3 |
+
+This initiative 1 (root documentation) is the first delivered by this decision — a full
+replacement of French with English, with no French version kept in parallel (an explicit
+decision: avoid the double-maintenance debt of two complete copies).
+
+File paths (`.claude/rules/contexts-utilisation.md`, etc.) are **not** renamed during
+this translation — only the content changes, not the file names, so as not to break
+cross-references throughout the repository.
+
+> **Note (ADR-071, 2026-07-13):** initiative 5's lightweight strategy (an EN summary up
+> top, French body preserved) was implemented first, then superseded by a full retroactive
+> translation of all 70 ADRs — see ADR-071, which establishes English as the sole
+> language for all future content while extending full bilingual treatment to every
+> already-existing ADR.
+
+---
+
+## Rejected alternatives
+
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
+| **Bilingual FR+EN on every root file** (`.md` + `.fr.md`) | Doubles the maintenance load of every future governance change; the site already keeps genuine bilingualism where it matters most (visited public content), root docs can afford a clean-cut choice. |
+| **Translate only the site, keep governance docs in French** | An external contributor opening the repo on GitHub reads `README.md`/`AGENTS.md` before even reaching the site — leaving these files in French breaks the community-sharing goal from the very first impression. |
+| **Translate everything in a single monolithic initiative** | 860+ lines for root docs alone, ~2000 lines for `.claude/`, 70 ADRs — a single initiative would be unmanageable and unverifiable; splitting into 6 prioritized sub-initiatives (external visibility first) is already recorded in GitHub Projects. |
+
+---
+
+## Consequences
+
+**For AI agents:**
+- `AGENTS.md`, `DESIGN.md`, and the `How-to-*.md` guides are now in English — any future
+  modification to these files is done in English, unless explicitly decided otherwise.
+- `.claude/rules/*.md` files remain in French until initiative #4 — an agent will
+  therefore read a mix of EN (router, contract) / FR (detailed rules) during the
+  transition. No functional ambiguity: file names and paths don't change.
+- The user's global conversation preferences (responding in French in conversation) are
+  independent of the language of the content versioned in the repository — no contradiction.
+
+**For humans:**
+- The repository becomes readable by an external, non-French-speaking contributor as
+  soon as they open the README.
+- Loss of the French version of these 6 files in the repository (recoverable via git
+  history if needed — no separate archive created, unlike the `Redesign/` folder, which
+  contained non-recreatable binary assets).
+
+**Accepted cost:**
+- During the transition period (initiatives #3 through #6 not yet completed), the
+  repository is bilingual de facto by zone rather than by file — accepted as an
+  intermediate state, not an end state.
+
+---
+
+## Incidents or triggers
+
+Explicit user request on 2026-07-09 as part of building a governance backlog (alongside
+repository cleanup and Figma governance): "Full translation of the repository to
+English. English needs to become the default language so I can share the project with
+the international community."
+
+<!-- FR -->
+
 # ADR-070 — Anglais comme langue par défaut du dépôt (traduction communautaire)
 
 > **Date :** 2026-07-10

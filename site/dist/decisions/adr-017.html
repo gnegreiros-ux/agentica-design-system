@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Correction du contraste de `text.disabled` et ajout de `background.hover` — Agentica</title>
+<title>Fixing the contrast of `text.disabled` and adding `background.hover` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Correction du contraste de `text.disabled` et ajout de `background.hover` — Agentica">
+<meta property="og:title" content="Fixing the contrast of `text.disabled` and adding `background.hover` — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Correction du contraste de `text.disabled` et ajout de `background.hover` — Agentica">
+<meta name="twitter:title" content="Fixing the contrast of `text.disabled` and adding `background.hover` — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">token</span>
   </div>
-  <h1 class="adr-page-title">Correction du contraste de `text.disabled` et ajout de `background.hover`</h1>
+  <h1 class="adr-page-title">Fixing the contrast of `text.disabled` and adding `background.hover`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,52 @@
       <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Fixes <code>text.disabled</code> (1.57:1 contrast, used incorrectly on non-disabled elements) by changing its reference to resolve to <code>#767676</code> (4.54:1, WCAG AA), and adds a <code>background.hover</code> token to replace a hardcoded hover color. Also documents a pre-existing Tailwind/Radix naming mismatch in <code>semantic.json</code>, resolved later in ADR-018.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The WCAG 2.2 audit integrated into the build detected two types of non-conformance:</p>
+<h3>1. Inaccessible value of the <code>text.disabled</code> token</h3>
+<p>The <code>semantic.color.text.disabled</code> token referenced <code>{color.neutral.300}</code>, resolved to <code>#d9d9d9</code>. This very light gray produces a contrast ratio of <strong>1.57:1</strong> on a white background — well below the AA threshold (4.5:1).</p>
+<p>WCAG 1.4.3 exempts inactive UI components from the contrast criterion. However, two problems arose:</p>
+<ul><li><strong>Incorrect usage</strong>: the <code>text-disabled</code> token was applied to non-disabled elements</li></ul>
+<p>  (group labels in the sidebar, pipeline tags). The WCAG exemption therefore didn't apply.</p>
+<ul><li><strong>Value too low</strong>: even for genuinely disabled text, maintaining minimal readability</li></ul>
+<p>  is preferable by convention — particularly for users with mild visual impairment not   covered by WCAG thresholds.</p>
+<h3>2. Missing <code>background.hover</code> token</h3>
+<p>The hover background for table rows used a hardcoded value (<code>#eff6ff</code>, a light blue outside the palette). No semantic token covered this usage.</p>
+<h3>3. Pre-existing structural inconsistency (not resolved in this ADR)</h3>
+<p><code>tokens/semantic.json</code> uses Tailwind-style naming (<code>neutral.0</code>–<code>neutral.900</code>, <code>blue.700</code>), while <code>tokens/primitives.json</code> uses Radix UI naming (<code>gray.1</code>–<code>gray.12</code>, <code>blue.1</code>–<code>blue.12</code>). References in <code>semantic.json</code> don't resolve in <code>primitives.json</code> — <code>site/build.js</code> works around this with hardcoded values. This inconsistency is documented but out of scope for this ADR (see the *Rejected alternatives* section).</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<h3><code>text.disabled</code> token</h3>
+<p>Value changed from <code>{color.neutral.300}</code> → <strong><code>{color.neutral.500}</code></strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Reference</td><td><code>{color.neutral.300}</code></td><td><code>{color.neutral.500}</code></td></tr><tr><td>Resolved value</td><td><code>#d9d9d9</code></td><td><code>#767676</code></td></tr><tr><td>Ratio on white</td><td>1.57:1 ❌</td><td>4.54:1 ✅</td></tr><tr><td>WCAG 1.4.3 (normal text)</td><td>Fails</td><td>Passes AA</td></tr></tbody></table></div>
+<p><code>neutral.500</code> corresponds to the median position of a neutral scale (≈ Tailwind <code>#737373</code>), which is semantically consistent for reduced-emphasis but readable text.</p>
+<p>The token's intent is updated to explicitly document:</p>
+<ul><li>the expected resolved value (<code>#767676</code>)</li><li>the contrast ratio</li><li>the WCAG 1.4.3 exemption applicable to inactive UI, kept accessible by convention</li></ul>
+<h3><code>background.hover</code> token</h3>
+<p>Added <code>semantic.color.background.hover</code> → <strong><code>{color.neutral.50}</code></strong> (<code>#fafafa</code>)</p>
+<p>Covers the hover background for tables and lists without resorting to a hardcoded value. Replaces the previous use of <code>#eff6ff</code> (light blue outside the palette) and <code>background.subtle</code> (#f0f0f0, too high-contrast for a subtle hover effect).</p>
+<h3>Incorrect uses of <code>text-disabled</code> fixed</h3>
+<p>Non-disabled elements that used <code>text-disabled</code> were switched to <code>text-secondary</code>:</p>
+<ul><li><code>.sidebar-label</code> (navigation group labels)</li><li><code>.pipeline-tag</code> (category tags in the pipeline section)</li></ul>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Keep <code>#d9d9d9</code> and invoke the WCAG 1.4.3 exemption</strong></td><td>The exemption didn't apply to the actual usages (sidebar labels, pipeline tags), which aren't inactive UI. Fixing only the usages without changing the token's value would have left the token intrinsically risky.</td></tr><tr><td><strong>Use <code>{color.neutral.700}</code> (#646464) as <code>text.disabled</code></strong></td><td>Identical to <code>text-secondary</code>. Erases the semantic distinction between secondary text and disabled text.</td></tr><tr><td><strong>Resolve the Tailwind / Radix structural inconsistency in this ADR</strong></td><td>A much broader change in scope: affects every reference in <code>semantic.json</code> and requires a coordinated migration of <code>build.js</code>, <code>tokens.css</code>, and the documentation. Handled separately.</td></tr><tr><td><strong>Add a <code>gray.10.5</code> (#767676) primitive to <code>primitives.json</code></strong></td><td>Breaks the consistency of the Radix scale (no half-steps). The value #767676 doesn't exist in Radix UI and would be a hard-to-justify deviation.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li><code>color.text.disabled</code> now encodes an accessible-by-default intent</li><li>The updated intent documents the resolved value and the ratio — an agent can</li></ul>
+<p>  verify conformance without resolving the token chain</p>
+<p><strong>For components:</strong></p>
+<ul><li>Any component using <code>var(--agtc-semantic-color-text-disabled)</code> automatically</li></ul>
+<p>  benefits from the corrected contrast</p>
+<ul><li><code>var(--agtc-semantic-color-background-hover)</code> is available for row hover states</li></ul>
+<p><strong>Remaining structural inconsistency:</strong></p>
+<ul><li><code>tokens/semantic.json</code> references <code>{color.neutral.500}</code>, which doesn't resolve</li></ul>
+<p>  in <code>tokens/primitives.json</code> (incompatible naming)</p>
+<ul><li><code>site/build.js</code> continues to hardcode the resolved values</li><li>A dedicated ADR for migrating to a unified naming scheme is yet to be created</li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Detected during the automatic WCAG 2.2 audit (<code>npm run build</code>) after deployment to GitHub Pages. The audit flagged contrast pairs below the 4.5:1 threshold involving <code>text-disabled</code> on non-disabled elements.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'audit WCAG 2.2 intégré au build a détecté deux types de non-conformités :</p>
 <h3>1. Valeur du token <code>text.disabled</code> inaccessible</h3>
 <p>Le token <code>semantic.color.text.disabled</code> référençait <code>{color.neutral.300}</code>, résolu en <code>#d9d9d9</code>. Ce gris très clair produit un ratio de contraste de <strong>1.57:1</strong> sur fond blanc — bien en dessous du seuil AA (4.5:1).</p>
@@ -178,7 +219,7 @@
 <ul><li><code>site/build.js</code> continue de hardcoder les valeurs résolues</li><li>Un ADR dédié à la migration vers une nomenclature unifiée est à créer</li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Détection lors de l'audit WCAG 2.2 automatique (<code>npm run build</code>) après déploiement sur GitHub Pages. L'audit a signalé des paires de contraste sous le seuil 4.5:1 impliquant <code>text-disabled</code> sur des éléments non désactivés.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Détection lors de l'audit WCAG 2.2 automatique (<code>npm run build</code>) après déploiement sur GitHub Pages. L'audit a signalé des paires de contraste sous le seuil 4.5:1 impliquant <code>text-disabled</code> sur des éléments non désactivés.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-016.html" class="agtc-button secondary">← ADR-016</a>
     <a href="adr-018.html" class="agtc-button secondary">ADR-018 →</a>
   </div></main>
