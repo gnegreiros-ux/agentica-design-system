@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Playwright pour les tests E2E et d'accessibilité — Agentica</title>
+<title>Choosing Playwright for E2E and accessibility testing — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Playwright pour les tests E2E et d'accessibilité — Agentica">
+<meta property="og:title" content="Choosing Playwright for E2E and accessibility testing — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Playwright pour les tests E2E et d'accessibilité — Agentica">
+<meta name="twitter:title" content="Choosing Playwright for E2E and accessibility testing — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Playwright pour les tests E2E et d'accessibilité</h1>
+  <h1 class="adr-page-title">Choosing Playwright for E2E and accessibility testing</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,53 @@
       <dd>Tech Lead, Design System Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Playwright for E2E and interaction accessibility tests that neither axe-core nor Chromatic can cover — full keyboard navigation, focus traps, and multi-step behaviors like the <code>critical</code> button's confirmation flow. Playwright tests are the executable contract for component *behavior*, complementing the static <code>.md</code> contracts.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>axe-core (ADR-007) audits components at the level of their semantic structure. Chromatic (ADR-006) audits their visual appearance in isolation. Neither tests a component's behavior in a real user journey: full keyboard navigation, focus-trap handling in a modal, or the correct triggering of a <code>critical</code> button's confirmation pattern.</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we test the interactions and full journeys that neither axe-core nor Chromatic can cover — in particular the keyboard behaviors and action sequences required by component contracts?</strong></p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Playwright</strong> (Microsoft) for E2E tests and accessibility interaction tests, as a complement to axe-core.</p>
+<p>Playwright covers two cases the other tools can't address:</p>
+<p><strong>1. Accessibility interaction tests</strong> axe-core audits the static ARIA structure. Playwright tests dynamic behavior: does the <code>Tab</code> key move in the correct order? Does <code>Escape</code> close the right element? Does the screen-reader announcement fire after the action?</p>
+<pre class="code-block"><code class="lang-javascript">// Example: testing the critical button
+test('critical button requires confirmation before action', async ({ page }) =&gt; {
+  await page.click('agtc-button[variant="critical"]');
+  await expect(page.locator('[role="dialog"]')).toBeVisible(); // confirmation dialog
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[role="dialog"]')).not.toBeVisible();
+});</code></pre>
+<p><strong>2. axe-core integration into full journeys</strong> Via <code>@axe-core/playwright</code>, axe-core can be run on entire pages in a real context — not just on isolated components in Storybook. Violations that only appear in an integration context are thus detected.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Cypress</strong></td><td>An excellent E2E tool, but slower and heavier than Playwright for Web Component tests. Less mature Web Component support. Playwright's API is closer to the native browser, an advantage for testing Shadow DOM and Custom Elements.</td></tr><tr><td><strong>Jest + Testing Library</strong></td><td>Excellent for React/Vue component unit tests. But JSDOM tests don't simulate a real browser — Web Components' Shadow DOM isn't natively supported. Keyboard accessibility tests in JSDOM are unreliable.</td></tr><tr><td><strong>WebDriverIO</strong></td><td>A wrapper around WebDriver/DevTools. More verbose than Playwright, more complex configuration. Playwright offers the same capabilities with a more modern API and better multi-browser support.</td></tr><tr><td><strong>Puppeteer</strong></td><td>Developed by Google, Chrome-only. Playwright supports Chrome, Firefox, and Safari in parallel — a broader guarantee of components' cross-browser compatibility.</td></tr><tr><td><strong>Manual testing only</strong></td><td>Not automatable in CI. Fully checking keyboard navigation for every component in every variant is unrealistic to verify manually on every PR.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For CI/CD:</strong></p>
+<ul><li>Playwright tests run after the Storybook build — they test components within</li></ul>
+<p>  their stories to ensure the isolated context</p>
+<ul><li>The <code>--grep a11y</code> tag allows running only the accessibility tests</li></ul>
+<p>  (referenced in <code>How-to-devs.md</code>)</p>
+<ul><li>In CI mode, axe-core violations via Playwright block the merge the same way</li></ul>
+<p>  violations detected in Storybook do</p>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Playwright tests are the executable contract for components' <strong>behaviors</strong></li><li>An agent that generates a <code>critical</code> button implementation with no</li></ul>
+<p>  confirmation pattern will see the corresponding Playwright test fail —   automatic feedback with no human intervention</p>
+<ul><li>Agents can read Playwright tests to understand a component's expected</li></ul>
+<p>  behaviors (a complement to the <code>.md</code> contract)</p>
+<p><strong>For developers:</strong></p>
+<ul><li>Interaction tests partially replace behavioral documentation: the test states</li></ul>
+<p>  exactly what the component must do, not just what it must be</p>
+<ul><li>Playwright generates execution traces (screenshots + video) on failure —</li></ul>
+<p>  eases debugging without manual reproduction</p>
+<p><strong>Scope vs. axe-core (ADR-007):</strong></p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>axe-core (Storybook)</th><th>Playwright + axe-core</th></tr></thead><tbody><tr><td><strong>Context</strong></td><td>Isolated component</td><td>Full page / journey</td></tr><tr><td><strong>Interactions</strong></td><td>Static</td><td>Dynamic (click, keyboard, focus)</td></tr><tr><td><strong>Speed</strong></td><td>Fast</td><td>Slower (real browser)</td></tr><tr><td><strong>Trigger</strong></td><td>Development + PR</td><td>PR + pre-deploy</td></tr></tbody></table></div>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Playwright tests are the slowest in the CI pipeline (full browser rendering)</li><li>Every critical component behavior must be explicitly tested — no automatic</li></ul>
+<p>  coverage the way axe-core provides</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision. The <code>critical</code> button's confirmation pattern (ADR-005) is the flagship use case: axe-core validates that the confirmation dialog has a correct ARIA role, but only Playwright can verify it actually appears when the button is clicked.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>axe-core (ADR-007) audite les composants au niveau de leur structure sémantique. Chromatic (ADR-006) audite leur apparence visuelle en isolation. Aucun des deux ne teste le comportement d'un composant dans un parcours utilisateur réel : la navigation clavier complète, la gestion du focus trap dans une modale, ou le déclenchement correct du pattern de confirmation d'un bouton <code>critical</code>.</p>
 <p>La question posée était :</p>
 <blockquote><p><strong>Comment tester les interactions et parcours complets que ni axe-core ni Chromatic ne peuvent couvrir — notamment les comportements clavier et les séquences d'actions requises par les contrats de composants ?</strong></p></blockquote>
@@ -179,7 +221,7 @@ test('critical button requires confirmation before action', async ({ page }) =&g
 <p>  pas de couverture automatique comme avec axe-core</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Le pattern de confirmation du bouton <code>critical</code> (ADR-005) est le cas d'usage emblématique : axe-core valide que le dialog de confirmation a un rôle ARIA correct, mais seul Playwright peut vérifier qu'il s'affiche effectivement quand le bouton est cliqué.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice. Le pattern de confirmation du bouton <code>critical</code> (ADR-005) est le cas d'usage emblématique : axe-core valide que le dialog de confirmation a un rôle ARIA correct, mais seul Playwright peut vérifier qu'il s'affiche effectivement quand le bouton est cliqué.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-009.html" class="agtc-button secondary">← ADR-009</a>
     <a href="adr-011.html" class="agtc-button secondary">ADR-011 →</a>
   </div></main>

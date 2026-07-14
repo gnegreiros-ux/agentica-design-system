@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Style Dictionary pour la compilation des tokens — Agentica</title>
+<title>Choosing Style Dictionary for token compilation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Style Dictionary pour la compilation des tokens — Agentica">
+<meta property="og:title" content="Choosing Style Dictionary for token compilation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Style Dictionary pour la compilation des tokens — Agentica">
+<meta name="twitter:title" content="Choosing Style Dictionary for token compilation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Style Dictionary pour la compilation des tokens</h1>
+  <h1 class="adr-page-title">Choosing Style Dictionary for token compilation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,44 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Style Dictionary to compile the three JSON token source files into platform-specific outputs (CSS, JS, iOS, Android) from a single reproducible, CI-automatable command. The <code>config.json</code> structure lets agents predict generated file paths and CSS variable names without reading the output.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>ADR-001 establishes that tokens are defined in JSON across three source files. These JSON files aren't directly consumable by target platforms:</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Platform</th><th>Expected format</th></tr></thead><tbody><tr><td>Web (CSS)</td><td><code>--ds-*</code> Custom Properties in <code>.css</code> files</td></tr><tr><td>JavaScript</td><td>Exportable ES6 constants</td></tr><tr><td>iOS</td><td>A Swift <code>DesignTokens</code> class</td></tr><tr><td>Android</td><td><code>colors.xml</code> and <code>dimens.xml</code> XML files</td></tr></tbody></table></div>
+<p>The question was:</p>
+<blockquote><p><strong>How do we turn a single JSON source of truth into multi-platform outputs in a reproducible, versionable, CI/CD-automatable way?</strong></p></blockquote>
+<p>Constraints:</p>
+<ul><li>A single command must generate everything (<code>npx style-dictionary build</code>)</li><li>The config must be readable by agents so they understand the structure of <code>dist/</code></li><li>The tool must be actively maintained and support token standards (W3C Design Tokens)</li></ul>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Style Dictionary</strong> (Amazon) as the token compilation pipeline.</p>
+<p>The configuration in <code>style-dictionary/config.json</code> declares:</p>
+<ul><li><strong>Sources</strong>: <code>tokens/primitives.json</code>, <code>tokens/semantic.json</code>, <code>tokens/component.json</code></li><li><strong>Platforms</strong>: <code>css</code>, <code>js</code>, <code>ios</code>, <code>android</code></li><li><strong>Outputs</strong>: <code>dist/css/</code>, <code>dist/js/</code>, <code>dist/ios/</code>, <code>dist/android/</code></li></ul>
+<p>Each platform has its native <code>transformGroup</code> — Style Dictionary handles naming, value, and format transformations with no custom code.</p>
+<p>Filtering by the <code>level</code> attribute (primitive / semantic / component) lets us generate separate CSS files per layer, avoiding loading primitive tokens into applications that don't need them.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Custom in-house transformation scripts</strong></td><td>Permanent maintenance, no handling of value transformations (px → pt for iOS, hex → rgba, etc.), no community support. Reinventing an already well-built wheel.</td></tr><tr><td><strong>Theo (Salesforce)</strong></td><td>Minimally maintained since 2022. Fewer native output formats. Significantly smaller community.</td></tr><tr><td><strong>Diez</strong></td><td>More complex architecture (token server, per-platform SDK). Overkill for a project that wants to stay close to W3C standards. Less suited to simple CI integration.</td></tr><tr><td><strong>Direct export from Tokens Studio (Figma)</strong></td><td>Couples the source of truth to Figma. Breaks digital sovereignty — the source becomes Figma, not the repo. Agents have no access to Figma. Not automatable without a paid plugin.</td></tr><tr><td><strong>Manual compilation at build time</strong></td><td>Not reproducible. Every developer could get different outputs depending on their environment. Incompatible with a reliable CI/CD.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For developers:</strong></p>
+<ul><li>A single command compiles all platforms: <code>npx style-dictionary build --config style-dictionary/config.json</code></li><li>Outputs in <code>dist/</code> are gitignored — they regenerate on every build</li><li>Adding a new platform (e.g. Flutter) = adding a block in <code>config.json</code>, not editing token code</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>The structure of <code>dist/</code> is predictable and documented by <code>config.json</code></li><li>An agent can read <code>config.json</code> to know exactly which files exist in <code>dist/</code> without reading them</li><li>Generated CSS token names (<code>--agtc-primitive-color-blue-700</code>) are mechanically derived</li></ul>
+<p>  from the source JSON — an agent can predict a token's CSS name from its JSON path</p>
+<p><strong>For CI/CD:</strong></p>
+<ul><li>The <code>audit-tokens.js</code> script runs after <code>style-dictionary build</code> to detect orphaned,</li></ul>
+<p>  phantom, and hardcoded-value tokens</p>
+<ul><li>In <code>--ci</code> mode, the command returns <code>exit 1</code> if violations are detected — blocking the merge</li></ul>
+<p><strong>For Figma / Tokens Studio:</strong></p>
+<ul><li>Tokens Studio reads the same source JSON files — Style Dictionary and Figma share</li></ul>
+<p>  the same source of truth without duplication</p>
+<ul><li>The update flow stays: JSON → Style Dictionary → <code>dist/</code> + Tokens Studio sync</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Dependency on an Amazon tool (mitigated by its wide adoption and W3C alignment)</li><li><code>style-dictionary/config.json</code> must be maintained as target platforms evolve</li><li>Custom transformations (e.g. a semantic token referencing a primitive) require a</li></ul>
+<p>  custom <code>transform</code> if the default behavior isn't enough</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>No production incident. Decision made while setting up the initial architecture. Style Dictionary is used by Salesforce, Adobe, GitHub, and Shopify for the same need — sufficient external validation to rule out adoption risk.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>L'ADR-001 établit que les tokens sont définis en JSON dans trois fichiers sources. Ces fichiers JSON ne sont pas consommables directement par les plateformes cibles :</p>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Plateforme</th><th>Format attendu</th></tr></thead><tbody><tr><td>Web (CSS)</td><td>Custom Properties <code>--ds-*</code> dans des fichiers <code>.css</code></td></tr><tr><td>JavaScript</td><td>Constantes ES6 exportables</td></tr><tr><td>iOS</td><td>Classe Swift <code>DesignTokens</code></td></tr><tr><td>Android</td><td>Fichiers XML <code>colors.xml</code> et <code>dimens.xml</code></td></tr></tbody></table></div>
 <p>La question posée était :</p>
@@ -170,7 +203,7 @@
 <p>  nécessitent un <code>transform</code> custom si le comportement par défaut ne suffit pas</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Aucun incident en production. Décision prise lors de la mise en place de l'architecture initiale. Style Dictionary est utilisé par Salesforce, Adobe, GitHub et Shopify pour le même besoin — validation externe suffisante pour écarter le risque d'adoption.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Aucun incident en production. Décision prise lors de la mise en place de l'architecture initiale. Style Dictionary est utilisé par Salesforce, Adobe, GitHub et Shopify pour le même besoin — validation externe suffisante pour écarter le risque d'adoption.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-002.html" class="agtc-button secondary">← ADR-002</a>
     <a href="adr-004.html" class="agtc-button secondary">ADR-004 →</a>
   </div></main>

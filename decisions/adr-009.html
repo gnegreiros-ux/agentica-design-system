@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Storybook pour la documentation des composants — Agentica</title>
+<title>Choosing Storybook for component documentation — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta property="og:title" content="Choosing Storybook for component documentation — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Storybook pour la documentation des composants — Agentica">
+<meta name="twitter:title" content="Choosing Storybook for component documentation — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Storybook pour la documentation des composants</h1>
+  <h1 class="adr-page-title">Choosing Storybook for component documentation</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,49 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Storybook as the component documentation and development canvas, serving as the entry point for Chromatic visual testing and the axe-core a11y addon. Stories are machine-readable — an agent can check that every variant defined in <code>component.json</code> has a corresponding story, and treat a missing story as "not agent-ready."</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>A design system with no isolated preview environment has two structural problems: components can only be tested by integrating them into a real application, and documentation is separate from the component it describes.</p>
+<p>For an agentic system, a third problem is added: agents need a structured catalog of components with their variants, states, and properties, accessible in a standardized form. Narrative documentation in a wiki isn't machine-analyzable.</p>
+<p>The question was:</p>
+<blockquote><p><strong>How do we simultaneously provide an isolated development environment, living documentation synchronized with the code, and a structured catalog accessible to agents?</strong></p></blockquote>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Storybook</strong> as the documentation platform and development canvas.</p>
+<p>Every component is documented via <strong>stories</strong> — <code>.stories.js</code> files that describe each variant and state of the component in isolation:</p>
+<pre class="code-block"><code class="lang-javascript">// button.stories.js
+export default { title: 'Components/Button', component: 'agtc-button' };
+export const Primary = { args: { variant: 'primary', label: 'Submit' } };
+export const Critical = { args: { variant: 'critical', label: 'Permanently delete' } };</code></pre>
+<p>Storybook serves three simultaneous roles in the system:</p>
+<p>1. <strong>Development canvas</strong> — every component is developed and tested in    isolation, with no dependency on a host application 2. <strong>Living documentation</strong> — stories are the source of truth for components'    actual behavior, always synchronized with the code 3. <strong>Bridge to Chromatic</strong> — Storybook is the entry point for the Chromatic    pipeline (ADR-006): every story is automatically captured for visual    regression testing</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Static documentation (Markdown + MDX only)</strong></td><td>Describes the component without showing it. A developer has to integrate the component into their project to see whether it behaves as documented. No link between documentation and executable code.</td></tr><tr><td><strong>Styleguidist</strong></td><td>Similar to Storybook but less adopted, fewer integrations (no native Chromatic, no axe-core addon). The Storybook ecosystem is significantly richer for Web Components.</td></tr><tr><td><strong>Figma as the only preview source</strong></td><td>Figma shows the design, not the real component. A component can be visually compliant in Figma and dysfunctional in code. Storybook runs the real component in a browser.</td></tr><tr><td><strong>Internal demo page</strong></td><td>An HTML page listing the components. Not maintainable at scale, no structure for variants and states, no CI/CD integration, no accessibility addon.</td></tr><tr><td><strong>No interactive documentation</strong></td><td>Explicitly rejected: a design system with no preview canvas forces consuming teams to integrate components blindly. The integration error rate is directly tied to the quality of the interactive documentation.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For developers:</strong></p>
+<ul><li>Every new component or variant requires a corresponding story — this is a PR</li></ul>
+<p>  rule (<code>.claude/rules/development.md</code>)</p>
+<ul><li>Development happens in Storybook first, then integration into the application</li><li>Storybook's hot reload immediately reflects CSS token changes</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>The story structure is machine-readable: an agent can list every documented</li></ul>
+<p>  variant of a component by reading the <code>.stories.js</code> file</p>
+<ul><li>Story args (<code>variant</code>, <code>disabled</code>, <code>loading</code>) map directly to the properties</li></ul>
+<p>  declared in the Web Component (<code>static properties</code>) — guaranteed consistency</p>
+<ul><li>An agent can verify a story exists for every variant defined in</li></ul>
+<p>  <code>component.json</code> — a missing story = a component that isn't agent-ready (see   the <code>ai-component-metadata</code> skill)</p>
+<p><strong>For Chromatic (ADR-006):</strong></p>
+<ul><li>Storybook is Chromatic's mandatory entry point — no story, no visual capture</li><li>The <code>@storybook/addon-a11y</code> addon (axe-core) audits every story in real time</li></ul>
+<p>  during development, before the commit</p>
+<p><strong>For consuming teams:</strong></p>
+<ul><li>The published Storybook is the system's official documentation</li><li>Teams can see and interact with every variant without installing dependencies</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Every component requires a <code>.stories.js</code> file to maintain — debt accrues if</li></ul>
+<p>  stories aren't updated alongside the component</p>
+<ul><li>Storybook build added to the CI pipeline (a few extra minutes)</li></ul>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision. Storybook is the de facto standard for component-based design systems (GitHub, Shopify, Atlassian, IBM all use it). Native integration with Chromatic, axe-core, and Web Components confirmed the choice.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Un système de design sans environnement de prévisualisation isolé a deux problèmes structurels : les composants ne peuvent être testés qu'en les intégrant dans une application réelle, et la documentation est séparée du composant qu'elle décrit.</p>
 <p>Pour un système agentique, un troisième problème s'ajoute : les agents ont besoin d'un catalogue structuré de composants avec leurs variantes, états, et propriétés accessibles sous une forme standardisée. Une documentation narrative dans un wiki n'est pas analysable par machine.</p>
 <p>La question posée était :</p>
@@ -175,7 +213,7 @@ export const Critical = { args: { variant: 'critical', label: 'Supprimer défini
 <ul><li>Build Storybook ajouté au pipeline CI (quelques minutes supplémentaires)</li></ul>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Storybook est le standard de facto pour les design systems basés sur des composants (GitHub, Shopify, Atlassian, IBM l'utilisent tous). L'intégration native avec Chromatic, axe-core et Web Components a confirmé le choix.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice. Storybook est le standard de facto pour les design systems basés sur des composants (GitHub, Shopify, Atlassian, IBM l'utilisent tous). L'intégration native avec Chromatic, axe-core et Web Components a confirmé le choix.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-008.html" class="agtc-button secondary">← ADR-008</a>
     <a href="adr-010.html" class="agtc-button secondary">ADR-010 →</a>
   </div></main>

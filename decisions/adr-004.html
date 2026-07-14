@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Gouvernance humaine : le dernier mot est toujours humain — Agentica</title>
+<title>Human governance: the human always has the final word — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Gouvernance humaine : le dernier mot est toujours humain — Agentica">
+<meta property="og:title" content="Human governance: the human always has the final word — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Gouvernance humaine : le dernier mot est toujours humain — Agentica">
+<meta name="twitter:title" content="Human governance: the human always has the final word — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Gouvernance humaine : le dernier mot est toujours humain</h1>
+  <h1 class="adr-page-title">Human governance: the human always has the final word</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -126,14 +126,67 @@
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead, Principal Designer, Direction produit</dd>
+      <dd>Design System Lead, Principal Designer, Product Leadership</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Establishes "the human always has the final word" as a non-negotiable governance rule, driven by accessibility, brand, and irreversibility risks that agents cannot reliably self-assess. Agents may read, analyze, and propose freely, but merging, pushing to protected branches, and modifying component tokens always require explicit human approval.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>This design system is designed to be used by AI agents. That reality raises a fundamental governance question that most teams avoid stating explicitly:</p>
+<blockquote><p><strong>How far can an agent go without human approval?</strong></p></blockquote>
+<p>The question isn't technical. It's organizational, ethical, and legal.</p>
+<p>Three types of risk guided the thinking:</p>
+<p><strong>1. Accessibility risk</strong> An agent that changes a color token can drop a contrast ratio from 4.5:1 to 3.8:1 — below the WCAG AA threshold. The component stays visually consistent, CI doesn't break, but the interface becomes inaccessible to low-vision users. This kind of drift is invisible without human eyes on it.</p>
+<p><strong>2. Brand risk</strong> Semantic tokens encode brand intent (<code>color.action.primary</code>, <code>color.feedback.danger</code>). An agent can rename or rework these intentions in a way that's locally coherent but inconsistent with the organization's brand strategy. No automated test detects that a blue has changed meaning.</p>
+<p><strong>3. Irreversibility risk</strong> Some decisions are hard to undo once deployed: a deleted component that consuming teams rely on, a renamed token with no deprecation period, a <code>critical</code> behavior changed without an audit. An agent's speed amplifies the impact of a bad judgment call.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt the principle <strong>"the human always has the final word"</strong> as a non-negotiable, non-bypassable governance rule.</p>
+<p>This principle translates into explicit action boundaries:</p>
+<h3>What an agent CAN do without approval</h3>
+<pre class="code-block"><code class="lang-text">✅ Read every file in the system
+✅ Analyze drift (hardcoded tokens, deprecated tokens, accessibility violations)
+✅ Generate code from existing tokens
+✅ Create a feature/, fix/, or docs/ branch
+✅ Make commits on a non-protected branch
+✅ Open a PR with a complete description
+✅ Produce reports and recommendations</code></pre>
+<h3>What an agent CANNOT do without explicit approval</h3>
+<pre class="code-block"><code class="lang-text">❌ Merge a PR (into main or develop)
+❌ Push directly to main or develop
+❌ Modify tokens/component.json
+❌ Delete a token (any layer)
+❌ Rename a semantic token
+❌ Deploy to production
+❌ Ignore a critical accessibility violation</code></pre>
+<h3>The escalation rule</h3>
+<p>Any change touching:</p>
+<ul><li>a semantic token → TCR required</li><li>a component contract → Principal Designer approval</li><li>a <code>critical</code> behavior → Principal Designer + Security approval</li></ul>
+<p>When in doubt: <strong>escalate. Never improvise.</strong></p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Full agent autonomy</strong> (merge without review)</td><td>No traceability of the intent behind a change. An agent optimizes for local consistency, not organizational strategy. Legal risk: who is liable for an inaccessible interface deployed by an agent?</td></tr><tr><td><strong>No agents</strong> (humans only)</td><td>Misses the real gains: large-scale drift detection, compliant code generation, automatic compliance reports. The goal isn't to exclude agents but to govern them.</td></tr><tr><td><strong>Autonomous agents on primitive tokens only</strong></td><td>Seemingly safe, but primitives are the foundation of everything. Changing <code>blue-700</code> without human review can silently break dozens of components through the semantic and component layers.</td></tr><tr><td><strong>Confidence-score-based autonomy</strong> (agent authorized if confidence > 95%)</td><td>An LLM's confidence score doesn't measure organizational risk. An agent can be "certain" about a token rename that breaks an undocumented team contract. Technical confidence doesn't replace human judgment.</td></tr><tr><td><strong>Lightweight async review</strong> (approval by an AI review bot)</td><td>Displaces the problem instead of solving it. An AI approving another AI removes the human eye. Self-validation loops are a documented blind spot of agentic systems.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For teams:</strong></p>
+<ul><li>Agents produce work that humans evaluate — not the other way around</li><li>Every impactful decision is traceable in git, in ADRs, in TCRs</li><li>Adoption by product teams is easier: they know no agent can deploy without a</li></ul>
+<p>  human having seen the change</p>
+<p><strong>For agents:</strong></p>
+<ul><li>Boundaries are explicit, unambiguous, verifiable in the rules</li><li>An agent that hits a boundary knows what to do: escalate, not improvise</li><li>This constraint improves output quality: the agent knows a human will review,</li></ul>
+<p>  which incentivizes documented, justified work</p>
+<p><strong>For token governance:</strong></p>
+<ul><li>The Token Change Request (TCR) is the formal approval mechanism</li><li>Any semantic token change without an approved TCR = governance violation</li><li>The history of TCRs constitutes the system's decision memory (see <code>decisions/</code>)</li></ul>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Reduced velocity on changes that require approval</li><li>Intentional friction: any decision to bypass governance must be conscious and</li></ul>
+<p>  documented — never silent</p>
+<ul><li>This cost is judged lower than the cost of an accessibility, brand, or compliance</li></ul>
+<p>  incident caused by unsupervised autonomous action</p>
+<hr>
+<h2>Note on the evolution of this principle</h2>
+<p>This principle isn't distrust of AI agents. It's a recognition that trust is built progressively.</p>
+<p>As the system accumulates evidence of reliability — ADRs, validated TCRs, clean compliance reports — agents' action boundaries can be revisited and widened by explicit human decision.</p>
+<p>Any widening of agent autonomy will be the subject of an ADR that partially or fully replaces this one.</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Foundational decision, made before any incident. Motivated by the experience of teams that granted too much autonomy to interface agents: undetected visual drift over several sprints, tokens renamed with no deprecation period, components deleted in production with no impact audit on consuming teams.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Ce système de design est conçu pour être utilisé par des agents IA. Cette réalité pose une question de gouvernance fondamentale que la plupart des équipes évitent de formuler explicitement :</p>
 <blockquote><p><strong>Jusqu'où un agent peut-il aller sans approbation humaine ?</strong></p></blockquote>
 <p>La question n'est pas technique. Elle est organisationnelle, éthique et légale.</p>
@@ -190,7 +243,7 @@
 <p>Tout élargissement de l'autonomie des agents fera l'objet d'un ADR qui remplacera partiellement ou totalement celui-ci.</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice, prise avant tout incident. Motivée par les retours d'expérience d'équipes ayant accordé trop d'autonomie à des agents d'interface : dérive visuelle non détectée pendant plusieurs sprints, tokens renommés sans période de dépréciation, composants supprimés en production sans audit d'impact sur les équipes consommatrices.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Décision fondatrice, prise avant tout incident. Motivée par les retours d'expérience d'équipes ayant accordé trop d'autonomie à des agents d'interface : dérive visuelle non détectée pendant plusieurs sprints, tokens renommés sans période de dépréciation, composants supprimés en production sans audit d'impact sur les équipes consommatrices.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-003.html" class="agtc-button secondary">← ADR-003</a>
     <a href="adr-005.html" class="agtc-button secondary">ADR-005 →</a>
   </div></main>

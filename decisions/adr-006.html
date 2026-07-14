@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Chromatic pour les tests de régression visuelle — Agentica</title>
+<title>Choosing Chromatic for visual regression testing — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Chromatic pour les tests de régression visuelle — Agentica">
+<meta property="og:title" content="Choosing Chromatic for visual regression testing — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Chromatic pour les tests de régression visuelle — Agentica">
+<meta name="twitter:title" content="Choosing Chromatic for visual regression testing — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Chromatic pour les tests de régression visuelle</h1>
+  <h1 class="adr-page-title">Choosing Chromatic for visual regression testing</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,51 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Chromatic, integrated with Storybook and CI, to catch silent visual regressions that unit and accessibility tests miss. Every PR triggers a pixel-comparison capture against the approved baseline, and any visual diff requires explicit human approval before merge — agents cannot approve Chromatic captures themselves (see ADR-004).</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>A design system ships visual contracts. A modified token, a poorly encapsulated Shadow DOM style, or an overridden CSS property can introduce a silent visual regression — the code compiles, unit tests pass, but the component no longer looks like it should.</p>
+<p>This risk is amplified in an agentic system: an agent that modifies code can introduce visual drift without any functional test detecting it.</p>
+<p>Three questions guided the choice:</p>
+<p><strong>1. How do we capture the visual reference state of every component?</strong> Unit tests verify behavior. Accessibility tests verify attributes. Neither captures what the user actually sees.</p>
+<p><strong>2. How do we integrate visual review into the existing PR workflow?</strong> A tool that produces captures outside the git workflow will be ignored. Visual review must block the merge if a regression is detected, the same way a failing unit test does.</p>
+<p><strong>3. How do we make visual regressions auditable?</strong> ADR-004 establishes that every decision must be traceable. An approved visual regression (intentional change) must be distinguished from an unapproved one (bug). This distinction must be versioned.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Chromatic</strong> as the visual regression testing platform, integrated directly with Storybook and the CI/CD pipeline.</p>
+<p>Chromatic works in three stages:</p>
+<p>1. <strong>Capture</strong> — on every PR, Chromatic renders each Storybook story in a real    browser and takes a pixel-perfect capture of every variant and state 2. <strong>Comparison</strong> — captures are compared against the approved baseline (the    last merge to <code>main</code>) 3. <strong>Decision</strong> — any pixel deviation triggers a mandatory human review in the    Chromatic interface before the CI check passes</p>
+<p>The baseline is stored in the Chromatic cloud, versioned by commit. Approving a visual change is an explicit, traceable human action.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Percy (BrowserStack)</strong></td><td>Functionally similar to Chromatic but with no native Storybook integration. Requires configuring a separate runner to capture stories. Chromatic is built by the Storybook team — the integration is native and frictionless.</td></tr><tr><td><strong>Playwright visual comparisons</strong> (<code>toHaveScreenshot</code>)</td><td>An excellent general-purpose tool, but geared toward full user journeys. Capturing every story in every variant and state requires writing a test per combination. Chromatic does this automatically from existing stories, with no extra code.</td></tr><tr><td><strong>Jest + jest-image-snapshot</strong></td><td>Local comparison only. Baselines live in the repo (large PNG files in git). No review interface — a developer must compare two images manually. Not suited to a collaborative PR workflow.</td></tr><tr><td><strong>Loki</strong></td><td>Open source, based on Storybook. Requires self-hosting a comparison infrastructure. Digital sovereignty is a project principle (ADR-004), but Chromatic is acceptable here: captures are CI artifacts, not brand or governance data.</td></tr><tr><td><strong>Manual visual review</strong></td><td>Doesn't scale. With 4 variants × 6 states = 24 combinations for <code>button</code> alone, an exhaustive manual review per PR is unrealistic. It will be systematically shortened under delivery pressure.</td></tr><tr><td><strong>No visual testing</strong></td><td>Explicitly accepted as a risk in certain phases. Rejected here because the system ships visual contracts to other teams. An undetected regression in <code>agtc-button</code> impacts every consuming application simultaneously.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For the PR workflow:</strong></p>
+<ul><li>Every PR automatically triggers a Chromatic capture of every story</li><li>A visual deviation blocks the merge until explicit human approval in Chromatic</li><li>Intentional visual changes (a new variant, a spacing adjustment) are approved</li></ul>
+<p>  and become the new baseline — an action traced by commit</p>
+<p><strong>For AI agents:</strong></p>
+<ul><li>An agent that modifies code knows every visual output will be captured and compared</li><li>This constraint improves the quality of agent-generated PRs: the expected</li></ul>
+<p>  visual change must be described in the PR description so the reviewer knows   what to approve in Chromatic</p>
+<ul><li>Agents cannot approve Chromatic captures themselves — that is a human action</li></ul>
+<p>  (see ADR-004: agent autonomy boundaries)</p>
+<p><strong>For auditability:</strong></p>
+<ul><li>The Chromatic baseline history forms a visual log of the system: one can see</li></ul>
+<p>  exactly at which commit <code>agtc-button</code> changed appearance, and why</p>
+<ul><li>This log complements the ADRs (textual decisions) with a visual trace</li></ul>
+<p><strong>For consuming teams:</strong></p>
+<ul><li>Visual regressions are caught before merge, not after deployment</li><li>Consuming teams can review Chromatic captures in PRs to assess the visual</li></ul>
+<p>  impact of an update before adopting it</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>Dependency on a paid cloud service (Chromatic is freemium with a snapshot limit)</li><li>Captures are hosted by Chromatic, not in the repo — acceptable since they are</li></ul>
+<p>  CI artifacts, not sources of truth</p>
+<ul><li>Initial setup: connect Chromatic to the repo, configure the CI token, define</li></ul>
+<p>  stories as the entry point</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>Decision made upstream, motivated by a recurring pattern in design systems without visual testing: a global semantic token change (<code>color.action.primary</code>) passes every functional test but changes the appearance of 12 components simultaneously. Without Chromatic, this kind of regression is only discovered in production or during a random manual review.</p>
+<hr>
+<h2>Implementation</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Date</th><th>Event</th></tr></thead><tbody><tr><td>2026-05-28</td><td>Decision adopted (ADR-006)</td></tr><tr><td>2026-06-01</td><td><strong>Activation</strong> — <code>chromatic.md</code> pipeline → Active, <code>.github/workflows/chromatic.yml</code> CI workflow added</td></tr></tbody></table></div>
+<p><strong>Token management.</strong> <code>CHROMATIC_PROJECT_TOKEN</code> lives exclusively in GitHub secrets — never in clear text in the repo (not in <code>package.json</code>, not in a workflow). The initial token had been committed in clear text (commit <code>ba30858</code>); it was <strong>regenerated</strong> on chromatic.com during activation, revoking the value exposed in the git history. Any future rotation follows the same protocol: regenerate on chromatic.com, then update the GitHub secret.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Un système de design livre des contrats visuels. Un token modifié, un style Shadow DOM mal encapsulé, ou une propriété CSS surchargée peuvent introduire une régression visuelle silencieuse — le code compile, les tests unitaires passent, mais le composant ne ressemble plus à ce qu'il devrait.</p>
 <p>Ce risque est amplifié dans un système agentique : un agent qui modifie du code peut introduire une dérive visuelle sans qu'aucun test fonctionnel ne la détecte.</p>
 <p>Trois questions ont guidé le choix :</p>
@@ -177,7 +217,7 @@
 <hr>
 <h2>Mise en œuvre</h2>
 <div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Date</th><th>Événement</th></tr></thead><tbody><tr><td>2026-05-28</td><td>Décision adoptée (ADR-006)</td></tr><tr><td>2026-06-01</td><td><strong>Activation</strong> — pipeline <code>chromatic.md</code> → Actif, workflow CI <code>.github/workflows/chromatic.yml</code> ajouté</td></tr></tbody></table></div>
-<p><strong>Gestion du token.</strong> Le <code>CHROMATIC_PROJECT_TOKEN</code> vit exclusivement dans les secrets GitHub — jamais en clair dans le dépôt (ni <code>package.json</code>, ni workflow). Le token initial avait été committé en clair (commit <code>ba30858</code>) ; il a été <strong>régénéré</strong> sur chromatic.com lors de l'activation, révoquant la valeur exposée dans l'historique git. Toute rotation future suit le même protocole : régénérer sur chromatic.com puis mettre à jour le secret GitHub.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p><strong>Gestion du token.</strong> Le <code>CHROMATIC_PROJECT_TOKEN</code> vit exclusivement dans les secrets GitHub — jamais en clair dans le dépôt (ni <code>package.json</code>, ni workflow). Le token initial avait été committé en clair (commit <code>ba30858</code>) ; il a été <strong>régénéré</strong> sur chromatic.com lors de l'activation, révoquant la valeur exposée dans l'historique git. Toute rotation future suit le même protocole : régénérer sur chromatic.com puis mettre à jour le secret GitHub.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-005.html" class="agtc-button secondary">← ADR-005</a>
     <a href="adr-007.html" class="agtc-button secondary">ADR-007 →</a>
   </div></main>

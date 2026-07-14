@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choix de Lit pour les Web Components — Agentica</title>
+<title>Choosing Lit for Web Components — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choix de Lit pour les Web Components — Agentica">
+<meta property="og:title" content="Choosing Lit for Web Components — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Choix de Lit pour les Web Components — Agentica">
+<meta name="twitter:title" content="Choosing Lit for Web Components — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,7 +118,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Choix de Lit pour les Web Components</h1>
+  <h1 class="adr-page-title">Choosing Lit for Web Components</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -129,11 +129,41 @@
       <dd>Design System Lead, Tech Lead</dd>
     </div>
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Adopts Lit as a lightweight abstraction over native Web Components so components work identically across React, Angular, Vue, and vanilla HTML without imposing a framework. Lit's declarative properties make component contracts machine-readable, letting agents inspect and generate components from a standardized template.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
+</div><div class="lang-en"><h2>Context</h2>
+<p>The design system must serve multiple teams using different frameworks (React, Angular, Vue, vanilla JS). The question was:</p>
+<blockquote><p><strong>How do we ship UI components that work everywhere without imposing a framework?</strong></p></blockquote>
+<p>Two non-negotiable constraints guided the choice:</p>
+<p>1. <strong>Universal portability</strong> — an <code>agtc-button</code> component must work identically in a    React app, an Angular app, or a static HTML page, with no adaptation. 2. <strong>Machine-readable contract</strong> — components must expose their properties (<code>variant</code>,    <code>disabled</code>, <code>loading</code>) in a structured way so AI agents can inspect and generate    them correctly.</p>
+<p>Native Web Components (a W3C standard) satisfy constraint 1 natively. But writing them in vanilla JS is verbose and doesn't handle reactivity elegantly. A low-level tool was needed to cut the boilerplate without adding a heavy dependency.</p>
 <hr>
-<h2>Contexte</h2>
+<h2>Decision</h2>
+<p>Adopt <strong>Lit</strong> (Google) as a lightweight abstraction layer over native Web Components.</p>
+<p>Lit is not a framework — it's a minimal library (~5 kb gzipped) that adds:</p>
+<ul><li>Reactive property declaration (<code>static properties</code>)</li><li>Declarative templates via the <code>html</code> tagged literal</li><li>Encapsulated styles via Shadow DOM with the <code>css</code> tagged literal</li><li>A simplified lifecycle (<code>connectedCallback</code>, <code>updated</code>, etc.)</li></ul>
+<p>Compiled components are real W3C Custom Elements — Lit disappears at runtime from the consumer's point of view.</p>
+<hr>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Vanilla Web Components (no Lit)</strong></td><td>Excessive verbosity: manual Shadow DOM handling, observed attributes, reactivity. High maintenance cost per component.</td></tr><tr><td><strong>React (exported components)</strong></td><td>Framework coupling. A React component can't be used in Angular without a wrapper. Contradicts the universal-portability principle.</td></tr><tr><td><strong>Stencil.js</strong></td><td>More complex build pipeline, framework-specific code generation. Adds a compilation step Lit doesn't require.</td></tr><tr><td><strong>Angular Elements</strong></td><td>Angular dependency baked into the bundles. Too large for multi-framework use.</td></tr><tr><td><strong>Vue web components</strong></td><td>Same problem as Angular Elements — the Vue runtime is embedded.</td></tr><tr><td><strong>An existing component library (MUI, Radix, etc.)</strong></td><td>These libraries are implementations, not token systems. They impose their own visual conventions and break the design system's sovereignty.</td></tr></tbody></table></div>
+<hr>
+<h2>Consequences</h2>
+<p><strong>For consuming developers:</strong></p>
+<ul><li>Universal import: <code>&lt;agtc-button variant="primary"&gt;</code> works in any HTML context</li><li>Optional framework wrappers (React, Angular) can be auto-generated</li><li>No peer dependency to install — the Custom Element is self-contained</li></ul>
+<p><strong>For AI agents:</strong></p>
+<ul><li>Properties declared in <code>static properties</code> are inspectable and documentable</li><li>The <code>variant: { type: String }</code> pattern is machine-readable — an agent can list</li></ul>
+<p>  allowed variants without parsing CSS or JSX</p>
+<ul><li>A Lit component's structure is standardized: an agent can generate a new</li></ul>
+<p>  component by following the template in <code>.claude/rules/development.md</code></p>
+<p><strong>For token governance:</strong></p>
+<ul><li>Shadow DOM encapsulates styles — no global style can override a component</li></ul>
+<p>  except through CSS Custom Properties (<code>var(--ds-[token])</code>)</p>
+<ul><li>This encapsulation forces token usage: it's impossible to style <code>agtc-button</code></li></ul>
+<p>  from the outside other than by changing a CSS Custom Property defined in the system</p>
+<p><strong>Accepted cost:</strong></p>
+<ul><li>A learning curve on the Lit API for developers unfamiliar with it</li><li>Shadow DOM complicates some test patterns (querySelector from the outside)</li><li>Dependency on a Google project — the deprioritization risk is mitigated by Lit</li></ul>
+<p>  following W3C standards and components remaining functional without Lit</p>
+<hr>
+<h2>Incidents or triggers</h2>
+<p>No production incident. Decision made upstream during architecture design. Reference: a Web Components + Lit presentation at the AI Design Systems Conference 2026 (Into Design Systems) — external validation of the pattern for agentic systems.</p></div><div class="lang-fr"><h2>Contexte</h2>
 <p>Le système de design doit servir plusieurs équipes utilisant des frameworks différents (React, Angular, Vue, vanilla JS). La question posée était :</p>
 <blockquote><p><strong>Comment livrer des composants UI qui fonctionnent partout sans imposer un framework ?</strong></p></blockquote>
 <p>Deux contraintes non négociables orientaient le choix :</p>
@@ -167,7 +197,7 @@
 <p>  Lit suit les standards W3C et que les composants resteraient fonctionnels sans Lit</p>
 <hr>
 <h2>Incidents ou déclencheurs</h2>
-<p>Aucun incident en production. Décision prise en amont lors de la conception de l'architecture. Référence : présentation de Web Components + Lit à l'AI Design Systems Conference 2026 (Into Design Systems) — validation externe du pattern pour les systèmes agentiques.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Aucun incident en production. Décision prise en amont lors de la conception de l'architecture. Référence : présentation de Web Components + Lit à l'AI Design Systems Conference 2026 (Into Design Systems) — validation externe du pattern pour les systèmes agentiques.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-001.html" class="agtc-button secondary">← ADR-001</a>
     <a href="adr-003.html" class="agtc-button secondary">ADR-003 →</a>
   </div></main>
