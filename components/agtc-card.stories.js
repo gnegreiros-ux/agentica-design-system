@@ -106,8 +106,8 @@ export const WithHeaderAndFooter = {
         </div>
 
         <div style="display:flex;flex-direction:column;gap:var(--agtc-semantic-space-control-gap);">
-          <p style="margin:0;font-size:0.875rem;color:#444;">Guilherme Negreiros</p>
-          <p style="margin:0;font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);">Design System Lead</p>
+          <p style="margin:0;color:#444;">Guilherme Negreiros</p>
+          <small style="color:var(--agtc-semantic-color-text-secondary);">Design System Lead</small>
         </div>
 
         <div slot="footer" style="display:flex;justify-content:flex-end;gap:var(--agtc-semantic-space-control-gap);">

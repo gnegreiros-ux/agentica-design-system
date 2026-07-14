@@ -97,6 +97,9 @@ class AgtcRadio extends LitElement {
     :host([checked]) .control {
       border-color: var(--agtc-component-radio-default-fill);
     }
+    :host([checked]:hover:not([disabled])) .control {
+      border-color: var(--agtc-component-radio-default-fill-hover);
+    }
 
     .dot {
       position: absolute;
@@ -110,6 +113,9 @@ class AgtcRadio extends LitElement {
       transition: transform 0.12s;
     }
     :host([checked]) .dot { transform: scale(1); }
+    :host([checked]:hover:not([disabled])) .dot {
+      background: var(--agtc-component-radio-default-fill-hover);
+    }
 
     .label-text {
       font-size: var(--agtc-semantic-typography-body-size);

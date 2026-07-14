@@ -89,6 +89,7 @@ Allow choosing **exactly one** option in a mutually exclusive set.
 | Border hover | `component.radio.default.border-hover` |
 | Border focus | `component.radio.default.border-focus` |
 | Selected dot | `component.radio.default.fill` |
+| Selected dot hover | `component.radio.default.fill-hover` |
 | Label | `component.radio.default.label` |
 
 > Size: `--agtc-semantic-icon-size-control` (20px). Round shape: `border-radius: 9999px`.

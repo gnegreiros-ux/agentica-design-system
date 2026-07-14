@@ -92,6 +92,11 @@ The card's typography follows the usage context declared via `data-context` on `
 | Body | `component.card.typography.body.size` (14px) | `component.card.typography.marketing.body.size` (16px) |
 | Meta / secondary label | `component.card.typography.meta.size` (12px) | `component.card.typography.marketing.meta.size` (14px) |
 
+**Markup convention (Web Component, SaaS/Product context):** the component styles plain
+slotted HTML tags directly — `<h1>`–`<h6>` for the title (size + weight + line-height),
+`<p>` for the body (size + weight + line-height), `<small>` for the meta/secondary label
+(size + weight). No custom class or named slot is needed for these three roles.
+
 **Rule:** use `component.card.typography.marketing.*` only on pages with `data-context="marketing"` (`index.html`, `get-started.html`, `agents/index.html`). Never apply these tokens on a component documentation page.
 
 Marketing overrides are applied via `[data-context="marketing"] .card-title { font-size: var(--agtc-component-card-typography-marketing-title-size) }` in `siteCSS()` — the tokens cascade automatically without modifying the Web Component.
