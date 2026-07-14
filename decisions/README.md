@@ -25,36 +25,37 @@ decisions that were already settled.
 ```markdown
 # ADR-[NNN] — [Short title]
 
-> **Date :** YYYY-MM-DD
-> **Statut :** [proposed | active | superseded by ADR-NNN | deprecated]
-> **Décideurs :** [names or roles]
+> **Date:** YYYY-MM-DD
+> **Status:** [proposed | active | superseded by ADR-NNN | deprecated]
+> **Decision-makers:** [names or roles]
 
-## Contexte
+## Context
 
 [What problem or need triggered this decision?]
 
-## Décision
+## Decision
 
 [What decision was made, in one direct sentence.]
 
-## Alternatives rejetées
+## Rejected alternatives
 
-| Alternative | Raison du rejet |
-|-------------|-----------------|
+| Alternative | Reason for rejection |
+|-------------|-----------------------|
 | [option A]  | [why not]  |
 
-## Conséquences
+## Consequences
 
 [What does this decision concretely mean for agents, developers, designers?]
 
-## Incidents ou déclencheurs
+## Incidents or triggers
 
 [If this decision was triggered by a real incident, note it here.]
 ```
 
-> Note: the ADR body template above keeps its original French field/section labels
-> (`Date`, `Statut`, `Décideurs`, `Contexte`, `Décision`, etc.) — see the note in
-> "Translation strategy" below for why.
+> Note: this template applies to every ADR from ADR-071 onward (English-only, see
+> ADR-071). ADR-001 through ADR-070 predate it and still carry the original French
+> field/section labels (`Date :`, `Statut :`, `Décideurs :`, `Contexte`, `Décision`,
+> etc.) in their French section — see "Translation strategy" below.
 
 ---
 
@@ -132,17 +133,20 @@ decisions that were already settled.
 | [ADR-068](ADR-068-letter-spacing-scale-extension.md) | Extending the `letterSpacing` scale — resolving site `--agtc-tracking-*` debt | 2026-07-08 | ✅ Active |
 | [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) | Migrating project tracking to GitHub Projects (replaces ADR-016) | 2026-07-09 | ✅ Active |
 | [ADR-070](ADR-070-anglais-langue-par-defaut.md) | English as the repository's default language (community translation) | 2026-07-10 | ✅ Active |
+| [ADR-071](ADR-071-english-only-future-content.md) | English as the sole language for all future content (extends ADR-070) | 2026-07-14 | ✅ Active |
 
 ---
 
-## Translation strategy for this folder (ADR-070, phase 5/6)
+## Translation strategy for this folder (ADR-071, supersedes the ADR-070 phase-5 approach)
 
-> As of 2026-07-10, each ADR above carries a short **English summary** block right after
-> its frontmatter. The original French body — including the `Contexte`/`Décision`/
-> `Alternatives rejetées`/`Conséquences` section labels — is preserved unaltered as the
-> historical record of the decision exactly as it was approved at the time. This is a
-> deliberate lightweight strategy (not a full retroactive translation) given the volume
-> (70 ADRs) and the low value of rewriting a dated historical log word for word.
+> As of 2026-07-14, ADR-001 through ADR-070 are being retroactively given a **full**
+> English translation, superseding the earlier lightweight-summary approach: both the
+> English and French versions live in the same source file, and the site toggles between
+> them with the same `lang-fr`/`lang-en` mechanism used everywhere else on the site
+> (see ADR-071). This translation is executed in batches — until an individual ADR's turn
+> comes up, it may still carry only the short English summary from the earlier approach;
+> that is expected transitional state, not a defect. ADR-071 and every ADR after it are
+> **English-only** — no French version is produced for new decisions going forward.
 
 ---
 

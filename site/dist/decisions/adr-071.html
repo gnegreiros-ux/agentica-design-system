@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implémentation de `agtc-badge` — Agentica</title>
+<title>English as the sole language for all future content — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implémentation de `agtc-badge` — Agentica">
+<meta property="og:title" content="English as the sole language for all future content — Agentica">
 <meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Implémentation de `agtc-badge` — Agentica">
+<meta name="twitter:title" content="English as the sole language for all future content — Agentica">
 <meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,61 +114,55 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-034</code>
+    <code class="adr-number">ADR-071</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implémentation de `agtc-badge`</h1>
+  <h1 class="adr-page-title">English as the sole language for all future content</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-31</dd>
+      <dd>2026-07-14</dd>
     </div>
-    <div class="adr-meta-item">
-      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
-    </div>
+    
   </dl>
-</div><blockquote><p><strong>English summary:</strong> Documents <code>agtc-badge</code>: 6 semantic variants (no solid style in v1, subtle background offers better contrast), a flat token structure separating color-by-variant from size-by-scale, a pill radius (9999px) encoded as a component token rather than a shared semantic one, and <code>role="status"</code> by default to cover both static and dynamic (counter) use cases.</p></blockquote>
-<p>></p>
-<blockquote><p>*The original French version follows below — preserved unaltered as the historical record.*</p></blockquote>
-<hr>
-<h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. Détail et liens : <code>guidelines/components/badge.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Statut pas encodé uniquement par la couleur (recommandé icône/libellé pour danger/warning)</td><td>NN/g — indicators</td></tr><tr><td><code>role="status"</code> pour annoncer les changements aux AT</td><td>NN/g</td></tr><tr><td>Mapping sémantique cohérent (traffic-light)</td><td>Dashboard — color/semantic</td></tr><tr><td>Badge non interactif — encapsuler si cliquable</td><td>NN/g</td></tr></tbody></table></div>
-<hr>
-<h2>Contexte</h2>
-<p><code>agtc-badge</code> est un label non interactif qui encode une information de statut, de catégorie ou de compteur. Il est utilisé dans les cartes, les tableaux, les listes et les en-têtes de composants.</p>
-<p>Trois questions ont guidé les décisions :</p>
-<p>1. <strong>Combien de variantes sémantiques ?</strong> — Les badges portent une intention    (succès, danger, info) qui doit être lisible par les agents comme par les    humains. Une palette de 6 couvre les cas courants sans surcharger le système.</p>
-<p>2. <strong>Forme pill ou rectangle ?</strong> — Le pill (radius 9999px) est la convention    dominante pour les badges d'état. Il différencie visuellement le badge    des boutons et des inputs (radius 6px).</p>
-<p>3. <strong>Rôle ARIA ?</strong> — Un badge statique n'a pas besoin de <code>role</code>. Un badge    dynamique (compteur mis à jour) bénéficie de <code>role="status"</code>. On adopte    <code>role="status"</code> par défaut pour couvrir les deux cas.</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — 6 variantes sémantiques, pas de variante <code>solid</code></h3>
-<p>Les 6 variantes (<code>neutral</code>, <code>brand</code>, <code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>) couvrent tous les états d'une interface : état neutre, identité de marque, retour positif, avertissement, erreur, information.</p>
-<p>La version 1 n'inclut pas de style <code>solid</code> (fond plein + texte blanc). Raison : le style subtil (fond clair + texte foncé) offre un meilleur contraste WCAG dans la majorité des contextes. Le style <code>solid</code> sera ajouté si un besoin concret émerge (éviter la conception spéculative).</p>
-<h3>Décision 2 — Tokens badge dans <code>component.json</code> avec structure plate</h3>
-<p>Les couleurs sont encodées par variante (<code>badge.neutral.*</code>, <code>badge.brand.*</code>…) et les dimensions par taille (<code>badge.md.*</code>, <code>badge.sm.*</code>).</p>
-<p>Cette séparation permet de changer la couleur d'une variante sans affecter les dimensions, et vice versa — conformément au principe des trois niveaux (ADR-001).</p>
-<h3>Décision 3 — Radius pill (9999px) encodé comme token composant</h3>
-<p><code>9999px</code> est une valeur intentionnellement exagérée pour obtenir une forme pill indépendamment de la hauteur du composant. Cette valeur est un token composant (<code>badge.md.radius</code> et <code>badge.sm.radius</code>) — pas une valeur en dur dans le CSS.</p>
-<p>Il n'existe pas de token sémantique <code>radius.pill</code> car le pill est une décision spécifique au badge, pas un contrat partagé entre composants.</p>
-<h3>Décision 4 — <code>role="status"</code> par défaut</h3>
-<p><code>role="status"</code> permet aux lecteurs d'écran d'annoncer les changements de contenu (ex : compteur qui passe de 3 à 4). Pour un badge purement statique, ce rôle est inoffensif. Pour un badge dynamique, il est nécessaire.</p>
-<p>Le contenu du slot est annoncé via le contenu textuel — pas besoin d'<code>aria-live</code> supplémentaire car <code>role="status"</code> implique <code>aria-live="polite"</code>.</p>
-<h3>Décision 5 — Pas d'interactivité</h3>
-<p><code>agtc-badge</code> est un <code>&lt;span&gt;</code> non interactif. Si un badge doit déclencher une action (ex : badge "×" pour supprimer un tag), utiliser <code>agtc-button variant="ghost"</code> avec un badge custom via slot, ou créer un composant <code>agtc-tag</code> dédié.</p>
-<h3>Décision 6 — Correction du script tokens (CJS → <code>.cjs</code>)</h3>
-<p>L'ajout de <code>"type": "module"</code> dans <code>package.json</code> (Phase 3 — Storybook) a cassé le script Style Dictionary qui utilisait <code>require()</code> CommonJS. Résolu en renommant <code>style-dictionary/build.js</code> → <code>style-dictionary/build.cjs</code> et en mettant à jour les scripts <code>package.json</code>. La logique du script est inchangée.</p>
-<hr>
-<h2>Périmètre v1</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (version future)</th></tr></thead><tbody><tr><td>6 variantes subtil</td><td>Style <code>solid</code> (fond plein)</td></tr><tr><td>2 tailles sm / md</td><td>Taille <code>lg</code></td></tr><tr><td>Icône prefix</td><td>Badge "×" removable (→ <code>agtc-tag</code>)</td></tr><tr><td>Icon-only + label WCAG</td><td>Compteur animé</td></tr></tbody></table></div>
-<hr>
-<h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Valeur résolue</th></tr></thead><tbody><tr><td><code>--agtc-badge-neutral-background</code></td><td>gray-3 (#f0f0f0)</td></tr><tr><td><code>--agtc-badge-neutral-text</code></td><td>gray-11 (#646464)</td></tr><tr><td><code>--agtc-badge-brand-background</code></td><td>teal-3 (#e0f8f3)</td></tr><tr><td><code>--agtc-badge-brand-text</code></td><td>teal-11 (#008573)</td></tr><tr><td><code>--agtc-badge-success-background</code></td><td>green-3 (#e6f6eb)</td></tr><tr><td><code>--agtc-badge-success-text</code></td><td>green-11 (#18794e)</td></tr><tr><td><code>--agtc-badge-warning-background</code></td><td>orange-3 (#ffefd6)</td></tr><tr><td><code>--agtc-badge-warning-text</code></td><td>orange-11 (#cc4e00)</td></tr><tr><td><code>--agtc-badge-danger-background</code></td><td>red-3 (feedback-danger-subtle)</td></tr><tr><td><code>--agtc-badge-danger-text</code></td><td>red-11 (feedback-danger)</td></tr><tr><td><code>--agtc-badge-info-background</code></td><td>blue-3 (#e6f4fe)</td></tr><tr><td><code>--agtc-badge-info-text</code></td><td>blue-11 (#0d74ce)</td></tr><tr><td><code>--agtc-badge-md-radius</code></td><td>9999px</td></tr><tr><td><code>--agtc-badge-sm-radius</code></td><td>9999px</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-033.html" class="agtc-button secondary">← ADR-033</a>
-    <a href="adr-035.html" class="agtc-button secondary">ADR-035 →</a>
+</div><h2>Context</h2>
+<p>ADR-070 (2026-07-10) made English the default language for the repository's existing content, migrated across 6 chantiers (root docs, public site, guidelines, <code>.claude/</code>, decisions, component code). All 6 chantiers completed 2026-07-14. Chantier 5 (<code>decisions/</code>) deliberately used a lightweight strategy for the 70 existing ADRs: a short English summary at the top, with the full French body preserved unaltered as the historical record — explicitly chosen over full retroactive translation, given the volume and the framing of ADRs as a dated historical log.</p>
+<p>With the migration complete, the Design System Lead expressed a broader, permanent intent that goes beyond the one-time migration ADR-070 covered: Agentica should be adoptable by design system teams anywhere, not only French-speaking ones. This requires a standing language policy for content created <strong>from now on</strong>, not just a retroactive cleanup of what already existed — a decision ADR-070 did not make, since it was scoped to migrating existing content.</p>
+<h2>Decision</h2>
+<p>1. <strong>All new repository content is authored in English only</strong>, effective immediately —    ADRs, guidelines, rules, instructions, skills, code comments, commit messages,    everything. No French draft or French version is produced for new content.</p>
+<p>2. <strong>Exception: the public website (<code>site/</code>) and its generated documentation stay    bilingual FR/EN, English by default.</strong> This is the only part of the project where    French continues to be actively maintained going forward — it is the direct-facing    surface for the project's current French-speaking users, and the existing    <code>lang-fr</code>/<code>lang-en</code> toggle mechanism makes the incremental cost of keeping it    near-zero.</p>
+<p>3. <strong>ADRs created before this decision (ADR-001 through ADR-070) are retroactively    given a full English translation</strong>, superseding chantier 5's lightweight-summary    strategy. Both the English and French versions live in the same source file, structured    so the site can toggle between them using the same mechanism as the rest of the site    (see point 5). This translation is tracked and executed as a separate, batched    follow-up effort — it does not block this ADR from taking effect for new content.</p>
+<p>4. <strong>ADRs created from this decision onward (ADR-071 and beyond) are English-only.</strong>    No French section is required or maintained for them.</p>
+<p>5. <strong>The website renders each ADR's language dynamically</strong> via the existing <code>data-lang</code>    attribute and <code>.lang-fr</code>/<code>.lang-en</code> CSS toggle — the same mechanism already used across    1,249+ span pairs elsewhere on the site — rather than showing both languages    sequentially on one scroll (chantier 5's current pattern) or generating separate    per-language URLs per ADR. <code>site/build.js</code>'s ADR rendering (<code>loadADRs()</code>, <code>buildADR()</code>)    is updated to parse each ADR's English and French blocks separately and wrap them    accordingly. This is a separate, tracked implementation task following this ADR.</p>
+<h2>Rationale</h2>
+<ul><li>A design system's credibility with international teams depends on being legible</li></ul>
+<p>  without translation friction — English is the de facto standard for open-source design   system tooling and documentation.</p>
+<ul><li>Keeping the *site* bilingual (rather than dropping French everywhere) preserves</li></ul>
+<p>  accessibility for the project's existing French-speaking users and stakeholders, at   near-zero incremental cost since the toggle infrastructure already exists and is   already exercised across the whole site.</p>
+<ul><li>Splitting "future = English only" from "past = fully bilingual" avoids two costly</li></ul>
+<p>  extremes: perpetually translating every future ADR into French forever, or abandoning   the French readership of 70 already-written historical decisions overnight.</p>
+<ul><li>Reusing the site's existing lang-toggle mechanism for ADR pages — instead of inventing</li></ul>
+<p>  per-language URLs or a literal side-by-side markdown dump — keeps one i18n architecture   for the whole site instead of two parallel ones to maintain.</p>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep chantier 5's lightweight EN-summary-only strategy for existing ADRs</td><td>A reader relying only on the summary never gets the full rationale or rejected alternatives — often the most valuable part of an ADR — undermining the international-adoption goal this decision is meant to serve.</td></tr><tr><td>Full bilingual maintenance forever (every future ADR gets a French version too)</td><td>Reintroduces exactly the double-maintenance debt ADR-070 explicitly avoided for root docs, guidelines, and <code>.claude/</code>.</td></tr><tr><td>Drop French entirely, including from the site</td><td>The site is the direct-facing surface for the project's current stakeholders; removing French there provides no benefit toward international adoption and actively harms current users for a marginal simplification.</td></tr><tr><td>Separate per-language URLs for ADR pages (e.g. <code>/fr/adr-018.html</code>)</td><td>Inconsistent with the single-URL span-toggle pattern used everywhere else on the site; doubles the sitemap and internal cross-linking logic for a niche, already-on-site audience where the SEO benefit of separate URLs doesn't apply.</td></tr></tbody></table></div>
+<h2>Consequences</h2>
+<p><strong>For AI agents:</strong></p>
+<ul><li>From this ADR forward, generate all new decisions, rules, guidelines, and code comments</li></ul>
+<p>  in English only, with no French counterpart — unless the file lives under <code>site/</code>   (site copy, <code>site/contenu.md</code>), where FR/EN span-pairing remains mandatory per   <code>.claude/rules/contexts-utilisation.md</code> and the existing bilingual system.</p>
+<ul><li>ADR-001 through ADR-070 are being retroactively fully translated as a separate, batched</li></ul>
+<p>  effort. Until an individual ADR's turn comes up in that batch, it still carries only   chantier 5's lightweight EN summary — that is expected transitional state, not a defect.</p>
+<ul><li><code>site/build.js</code>'s <code>loadADRs()</code>/<code>buildADR()</code> need updating to parse a per-ADR EN/FR split</li></ul>
+<p>  and wrap each language in the existing <code>.lang-en</code>/<code>.lang-fr</code> toggle classes, and   <code>loadADRs()</code>'s metadata regexes (currently matching the French field label   the French "Décideurs" label) need to also match the English equivalent for ADRs that no longer   carry a French section.</p>
+<ul><li><code>decisions/README.md</code>'s "Translation strategy for this folder" section is rewritten to</li></ul>
+<p>  reflect this decision, superseding the chantier-5 rationale it currently documents.</p>
+<p><strong>For humans:</strong></p>
+<ul><li>Any new ADR is written directly in English — no French draft, no translation pass.</li><li>Historical ADRs remain available in French for readers who need it, but French is no</li></ul>
+<p>  longer the primary or canonical language of the project going forward.</p>
+<h2>Incidents or triggers</h2>
+<p>Explicit direction from Guilherme Negreiros (Design System Lead), 2026-07-14, immediately following the completion of ADR-070's 6 translation chantiers: *"Mon intention c'est qu'Agentica puisse être adoptée par des équipes du monde entier, pas seulement les francophones. À partir de maintenant tout doit être fait en anglais [...] Seulement les ADR déjà créés auront les deux langues, les prochains seront seulement en anglais."*</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-070.html" class="agtc-button secondary">← ADR-070</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
 </div>
