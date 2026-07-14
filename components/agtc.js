@@ -901,6 +901,9 @@
     :host([checked]) .control {
       border-color: var(--agtc-component-radio-default-fill);
     }
+    :host([checked]:hover:not([disabled])) .control {
+      border-color: var(--agtc-component-radio-default-fill-hover);
+    }
 
     .dot {
       position: absolute;
@@ -914,6 +917,9 @@
       transition: transform 0.12s;
     }
     :host([checked]) .dot { transform: scale(1); }
+    :host([checked]:hover:not([disabled])) .dot {
+      background: var(--agtc-component-radio-default-fill-hover);
+    }
 
     .label-text {
       font-size: var(--agtc-semantic-typography-body-size);
@@ -1130,19 +1136,31 @@
          Defaults match the Product SaaS context (14px/14px/12px).
          In Marketing context (data-context="marketing" on <body>), the site overrides
          these tokens via --agtc-component-card-typography-marketing-* in siteCSS(). */
-      --card-title-size:  var(--agtc-component-card-typography-title-size,   var(--agtc-semantic-typography-label-size));
-      --card-title-weight:var(--agtc-component-card-typography-title-weight,  var(--agtc-primitive-fontWeight-bold));
-      --card-body-size:   var(--agtc-component-card-typography-body-size,    var(--agtc-semantic-typography-label-size));
-      --card-meta-size:   var(--agtc-component-card-typography-meta-size,    var(--agtc-semantic-typography-detail-size));
+      --card-title-size:       var(--agtc-component-card-typography-title-size,        var(--agtc-semantic-typography-label-size));
+      --card-title-weight:     var(--agtc-component-card-typography-title-weight,      var(--agtc-primitive-fontWeight-bold));
+      --card-title-line-height:var(--agtc-component-card-typography-title-line-height, var(--agtc-semantic-typography-label-bold-line-height));
+      --card-body-size:        var(--agtc-component-card-typography-body-size,         var(--agtc-semantic-typography-label-size));
+      --card-body-weight:      var(--agtc-component-card-typography-body-weight,       var(--agtc-semantic-typography-label-weight));
+      --card-body-line-height: var(--agtc-component-card-typography-body-line-height,  var(--agtc-semantic-typography-body-line-height));
+      --card-meta-size:        var(--agtc-component-card-typography-meta-size,         var(--agtc-semantic-typography-detail-size));
+      --card-meta-weight:      var(--agtc-component-card-typography-meta-weight,       var(--agtc-semantic-typography-detail-weight));
     }
 
     /* ── Typography of direct slotted elements ─────────────────────────────── */
     ::slotted(h1),::slotted(h2),::slotted(h3),::slotted(h4),::slotted(h5),::slotted(h6){
       font-size: var(--card-title-size);
       font-weight: var(--card-title-weight);
+      line-height: var(--card-title-line-height);
     }
     ::slotted(p){
       font-size: var(--card-body-size);
+      font-weight: var(--card-body-weight);
+      line-height: var(--card-body-line-height);
+    }
+    /* Meta / secondary label — <small> is the semantic HTML tag for side notes */
+    ::slotted(small){
+      font-size: var(--card-meta-size);
+      font-weight: var(--card-meta-weight);
     }
 
     /* ── Base ──────────────────────────────────────────────────────────────── */
