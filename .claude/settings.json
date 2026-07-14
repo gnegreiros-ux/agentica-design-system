@@ -6,8 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"RAPPEL ADR: Le fichier modifie est dans une zone critique du systeme de design (%s). Demande immediatement a l utilisateur: Souhaitez-vous creer un ADR pour documenter ce changement ? (Oui/Non)\"}}' \"$f\"; fi",
-            "statusMessage": "Vérification ADR…"
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '/(tokens|guidelines|components)/'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"ADR REMINDER: The modified file is in a critical area of the design system (%s). Immediately ask the user: Would you like to create an ADR to document this change? (Yes/No)\"}}' \"$f\"; fi",
+            "statusMessage": "Checking ADR…"
           }
         ]
       },
@@ -16,8 +16,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '(/components/agtc-[^/]*\\.js$|/guidelines/components/[^/]*\\.md$)' && ! echo \"$f\" | grep -q '\\.stories\\.'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"RAPPEL UX PATTERNS: composant cree ou modifie (%s). SI le changement touche un comportement UX (variante, etat, validation, affichage erreur/aide, interaction, nouveau type): execute le skill ux-pattern-review, presente les patterns de reference AVEC LIENS a approuver, puis documente la decision sur les 6 surfaces (guideline, code, story, site, ADR, log). Sinon, ignore ce rappel.\"}}' \"$f\"; fi",
-            "statusMessage": "Vérification patterns UX…"
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); if echo \"$f\" | grep -qE '(/components/agtc-[^/]*\\.js$|/guidelines/components/[^/]*\\.md$)' && ! echo \"$f\" | grep -q '\\.stories\\.'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"UX PATTERNS REMINDER: component created or modified (%s). IF the change affects UX behavior (variant, state, validation, error/help display, interaction, new type): run the ux-pattern-review skill, present the reference patterns WITH LINKS for approval, then document the decision across the 6 surfaces (guideline, code, story, site, ADR, log). Otherwise, ignore this reminder.\"}}' \"$f\"; fi",
+            "statusMessage": "Checking UX patterns…"
           }
         ]
       }
