@@ -1,5 +1,5 @@
 # Agentica — AI Brief
-> Agentic design system. Version 1.0.0. Site: https://designsystem.gnegreiros.com
+> Agentic design system. Version 1.0.0. Site: https://agentica.design
 > Last updated: 2026-06-30. Author: Guilherme Negreiros.
 
 ## How to use this brief
@@ -12,7 +12,7 @@ Copy this entire file and paste it as the first message to your AI (Claude, Copi
 
 **Name:** Agentica (technical prefix: agtc)
 **Organization:** GNegreiros.com
-**Site:** https://designsystem.gnegreiros.com
+**Site:** https://agentica.design
 
 **Mission:** Encode interface decisions in a format readable by both humans and AI agents — to guarantee consistency, accessibility, and digital sovereignty.
 

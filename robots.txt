@@ -4,4 +4,4 @@ Allow: /
 # Pages internes — non indexées
 Disallow: /audit.html
 
-Sitemap: https://designsystem.gnegreiros.com/sitemap.xml
+Sitemap: https://agentica.design/sitemap.xml
