@@ -2768,6 +2768,7 @@ body[data-context="marketing"] .role-card::after{
 }
 .stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--site-text)}
 .stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);margin-top:.25rem}
+.stat-note{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);font-style:italic;margin-top:.15rem}
 
 /* Responsive */
 @media(max-width:980px){
@@ -3452,23 +3453,29 @@ function sidebarFoundations(base, current) {
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span>${links}</div>`;
 }
 
+// Single source of truth for the documented component pages — used by the sidebar
+// AND by the home page stat (avoids reusing the component-TOKEN count, a different number).
+const COMPONENT_PAGES = [
+  ['button.html','Button'],
+  ['icon.html',  'Icon'],
+  ['input.html', 'Input'],
+  ['badge.html', 'Badge'],
+  ['card.html',  'Card'],
+  ['checkbox.html', 'Checkbox'],
+  ['radio.html', 'Radio'],
+  ['toggle.html', 'Toggle'],
+  ['table.html', 'Table'],
+  ['code-block.html', 'Code Block'],
+  ['banner.html', 'Banner'],
+  ['link.html', 'Link'],
+  ['segmented.html', 'Segmented'],
+  ['tabs.html',      'Tabs'],
+];
+
 function sidebarComponents(base, current) {
   const links = [
     ['index.html', '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
-    ['button.html','Button'],
-    ['icon.html',  'Icon'],
-    ['input.html', 'Input'],
-    ['badge.html', 'Badge'],
-    ['card.html',  'Card'],
-    ['checkbox.html', 'Checkbox'],
-    ['radio.html', 'Radio'],
-    ['toggle.html', 'Toggle'],
-    ['table.html', 'Table'],
-    ['code-block.html', 'Code Block'],
-    ['banner.html', 'Banner'],
-    ['link.html', 'Link'],
-    ['segmented.html', 'Segmented'],
-    ['tabs.html',      'Tabs'],
+    ...COMPONENT_PAGES,
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -3588,7 +3595,7 @@ function buildHome(adrs) {
       <div class="hero-stats" role="list" aria-label="System statistics / Statistiques du système">
         <div role="listitem"><span class="stat-num">${totalTokens}+</span><span class="stat-label">tokens</span></div>
         <div role="listitem"><span class="stat-num">${adrs.length}</span><span class="stat-label">ADRs</span></div>
-        <div role="listitem"><span class="stat-num">${compCount}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+        <div role="listitem"><span class="stat-num">${COMPONENT_PAGES.length}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span><span class="stat-note"><span class="lang-fr">en construction, comme Agentica</span><span class="lang-en">under construction, like Agentica</span></span></div>
         <div role="listitem"><span class="stat-num">10</span><span class="stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
