@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "level": "semantic",
-    "description": "Overrides dark mode — tokens dont la valeur change sous [data-theme='dark']. Contient UNIQUEMENT les deltas vs semantic.json (mode clair). Source de référence : site/build.js :root[data-theme='dark']. Voir ADR-065."
+    "description": "Dark mode overrides — tokens whose value changes under [data-theme='dark']. Contains ONLY the deltas vs. semantic.json (light mode). Reference source: site/build.js :root[data-theme='dark']. See ADR-065."
   },
   "semantic": {
     "color": {
@@ -20,7 +20,7 @@
         "primary-disabled": {
           "$value": "#33373d",
           "$type": "color",
-          "$intent": "Action désactivée dark — WCAG 1.4.3 exempte les états inactifs"
+          "$intent": "Disabled action, dark — WCAG 1.4.3 exempts inactive states"
         }
       },
       "feedback": {
@@ -37,17 +37,17 @@
         "success": {
           "$value": "#3dd68c",
           "$type": "color",
-          "$intent": "Succès dark — vert clair accessible"
+          "$intent": "Success, dark — accessible light green"
         },
         "success-subtle": {
           "$value": "#132d21",
           "$type": "color",
-          "$intent": "Fond subtil succès dark"
+          "$intent": "Subtle success background, dark"
         },
         "info": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Info dark — teal clair (même teinte que action.primary dark)"
+          "$intent": "Info, dark — light teal (same hue as action.primary dark)"
         },
         "info-subtle": {
           "$value": "#0f2925",
@@ -84,7 +84,7 @@
         "primary": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Marque primaire dark — teal clair identité"
+          "$intent": "Primary brand, dark — light teal identity"
         },
         "primary-subtle": {
           "$value": "#0d2924",
@@ -109,29 +109,29 @@
         "secondary": {
           "$value": "#6b4b56",
           "$type": "color",
-          "$intent": "Couleur secondaire de marque dark"
+          "$intent": "Secondary brand color, dark"
         },
         "secondary-text": {
           "$value": "#edd9df",
           "$type": "color",
-          "$intent": "Texte secondaire de marque dark"
+          "$intent": "Secondary brand text, dark"
         }
       },
       "background": {
         "page": {
           "$value": "#0a0c11",
           "$type": "color",
-          "$intent": "Fond de page dark — base la plus sombre"
+          "$intent": "Page background, dark — the darkest base"
         },
         "surface": {
           "$value": "#13161d",
           "$type": "color",
-          "$intent": "Surface élevée dark — cartes, panneaux"
+          "$intent": "Raised surface, dark — cards, panels"
         },
         "subtle": {
           "$value": "#1b1f27",
           "$type": "color",
-          "$intent": "Fond subtil dark — sections en retrait, zèbre tableau"
+          "$intent": "Subtle background, dark — recessed sections, table zebra striping"
         },
         "hover": {
           "$value": "#232833",
@@ -141,7 +141,7 @@
         "inverse": {
           "$value": "#120c0f",
           "$type": "color",
-          "$intent": "Surface inversée dark — footer, sections accent"
+          "$intent": "Inverse surface, dark — footer, accent sections"
         }
       },
       "text": {
@@ -158,39 +158,39 @@
         "disabled": {
           "$value": "#6b7280",
           "$type": "color",
-          "$intent": "Texte désactivé dark — WCAG 1.4.3 exempte"
+          "$intent": "Disabled text, dark — WCAG 1.4.3 exempt"
         },
         "on-action": {
           "$value": "#04201c",
           "$type": "color",
-          "$intent": "Texte sur bouton primaire dark — vert très sombre pour contraste maximal sur teal clair"
+          "$intent": "Text on primary button, dark — very dark green for maximum contrast on light teal"
         },
         "on-dark": {
           "$value": "rgba(255,255,255,0.92)",
           "$type": "color",
-          "$intent": "Texte fort sur surface sombre dark — légèrement transparent (0.92 vs 1.00 en light)"
+          "$intent": "Strong text on a dark surface, dark mode — slightly transparent (0.92 vs. 1.00 in light)"
         },
         "on-dark-muted": {
           "$value": "rgba(255,255,255,0.62)",
           "$type": "color",
-          "$intent": "Texte atténué sur surface sombre dark"
+          "$intent": "Muted text on a dark surface, dark mode"
         },
         "on-danger": {
           "$value": "#3d0f0f",
           "$type": "color",
-          "$intent": "Texte sur fond danger dark — fond danger est rose clair (#ff9592), texte doit être foncé"
+          "$intent": "Text on danger background, dark — the danger background is light pink (#ff9592), text must be dark"
         }
       },
       "border": {
         "default": {
           "$value": "#272c36",
           "$type": "color",
-          "$intent": "Bordure standard dark — séparateurs, contours de champ"
+          "$intent": "Standard border, dark — separators, field outlines"
         },
         "focus": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Bordure focus dark — teal clair pour accessibilité clavier"
+          "$intent": "Focus border, dark — light teal for keyboard accessibility"
         },
         "danger": {
           "$value": "#ff9592",
@@ -202,7 +202,7 @@
         "ink": {
           "$value": "#14121a",
           "$type": "color",
-          "$intent": "Masses sombres des illustrations dark — ancrage du contraste"
+          "$intent": "Dark masses of dark-mode illustrations — contrast anchor"
         }
       }
     }

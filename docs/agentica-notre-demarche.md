@@ -1,107 +1,106 @@
-# Agentica — Comment nous avons construit ce système de design
-**Un document pour nos collègues designers, conseillers CX et gestionnaires**
+# Agentica — How we built this design system
+**A document for our fellow designers, CX consultants, and managers**
 
 ---
 
-## Pourquoi ce document ?
+## Why this document?
 
-Ce système de design a été construit différemment des autres.
-Pas parce qu'on voulait faire compliqué — mais parce qu'on avait un problème nouveau à résoudre.
+This design system was built differently from others.
+Not because we wanted to make things complicated — but because we had a new problem to solve.
 
-Ce document explique la démarche, les étapes, et les choix qu'on a faits,
-dans un langage que tout le monde peut comprendre.
-
----
-
-## Le problème de départ
-
-Les systèmes de design existent depuis longtemps. Ils regroupent les composants visuels
-d'une organisation (boutons, formulaires, couleurs, typo) pour que toutes les équipes
-les utilisent de la même façon.
-
-Mais aujourd'hui, les équipes travaillent avec des **agents IA** — des assistants comme
-Claude ou Copilot — qui génèrent du code, proposent des designs, et font des modifications
-automatiques.
-
-Et là, un problème est apparu :
-
-> **Les agents inventent.** Quand ils ne comprennent pas l'intention derrière une décision,
-> ils improvisent. Un agent qui voit `#3B82F6` ne sait pas si c'est une couleur d'action,
-> de décoration ou d'alerte. Il devine. Et parfois, il se trompe.
-
-La question qu'on s'est posée :
-
-> Comment construire un système de design que les agents comprennent vraiment,
-> sans perdre le contrôle humain sur les décisions importantes ?
+This document explains the approach, the steps, and the choices we made,
+in language everyone can understand.
 
 ---
 
-## L'idée centrale
+## The starting problem
 
-Agentica est un **système de design conçu pour être lu par les humains ET par les agents IA.**
+Design systems have been around for a long time. They bring together an organization's
+visual components (buttons, forms, colors, type) so every team
+uses them the same way.
 
-Chaque décision est explicitée. Chaque règle est documentée. Chaque composant a un "contrat"
-qui explique pourquoi il existe, comment il fonctionne, et ce qu'on ne peut pas changer sans approbation.
+But today, teams work with **AI agents** — assistants like
+Claude or Copilot — that generate code, propose designs, and make
+automatic changes.
 
-**Le principe fondateur, en une phrase :**
+And that's where a problem showed up:
+
+> **Agents make things up.** When they don't understand the intent behind a decision,
+> they improvise. An agent that sees `#3B82F6` doesn't know whether it's an action color,
+> a decorative one, or an alert. It guesses. And sometimes it gets it wrong.
+
+The question we asked ourselves:
+
+> How do we build a design system that agents truly understand,
+> without losing human control over important decisions?
+
+---
+
+## The central idea
+
+Agentica is a **design system built to be read by humans AND by AI agents.**
+
+Every decision is made explicit. Every rule is documented. Every component has a "contract"
+that explains why it exists, how it works, and what can't be changed without approval.
+
+**The founding principle, in one sentence:**
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                                                         │
-│   Les agents proposent, détectent et exécutent.         │
-│   Le dernier mot est toujours humain.                   │
+│   Agents propose, detect, and execute.                  │
+│   The last word is always human.                        │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## La démarche en 5 étapes
+## The approach, in 5 steps
 
-### Étape 1 — Poser les fondations (28 mai 2026)
+### Step 1 — Laying the foundations (May 28, 2026)
 
-Avant d'écrire une seule ligne de code ou de créer un seul composant,
-on a posé les règles du jeu.
+Before writing a single line of code or creating a single component,
+we set the rules of the game.
 
-**Deux documents fondateurs ont été créés :**
+**Two founding documents were created:**
 
-- `DESIGN.md` — le *contrat de marque* : qui sommes-nous, quels sont nos principes,
-  comment on prend les décisions
-- `AGENTS.md` — le *guide pour les agents* : ce qu'ils peuvent faire, ce qu'ils ne peuvent
-  pas faire, et qui appelle qui quand un doute apparaît
+- `DESIGN.md` — the *brand contract*: who we are, what our principles are,
+  how we make decisions
+- `AGENTS.md` — the *guide for agents*: what they can do, what they can't
+  do, and who to call when a doubt comes up
 
-Ces deux fichiers sont la *constitution* du système. Tout agent qui travaille sur Agentica
-les lit en premier.
+These two files are the system's *constitution*. Any agent working on Agentica
+reads them first.
 
 ```
   ┌──────────────────┐     ┌──────────────────┐
   │    DESIGN.md     │     │    AGENTS.md      │
   │                  │     │                  │
-  │  Qui sommes-     │     │  Ce que les      │
-  │  nous, nos       │     │  agents peuvent  │
-  │  principes,      │     │  et ne peuvent   │
-  │  notre identité  │     │  pas faire       │
+  │  Who we are,     │     │  What agents     │
+  │  our principles, │     │  can and         │
+  │  our identity    │     │  cannot do       │
   └──────────────────┘     └──────────────────┘
           │                         │
           └────────────┬────────────┘
                        │
-                  Source de vérité
-               pour humains et agents
+                  Source of truth
+               for humans and agents
 ```
 
 ---
 
-### Étape 2 — Inventer un langage partagé (28-29 mai)
+### Step 2 — Inventing a shared language (May 28-29)
 
-La grande découverte : pour qu'un agent comprenne l'*intention* derrière une couleur
-ou un espacement, il faut lui donner des **noms qui ont du sens**, pas juste des valeurs.
+The big discovery: for an agent to understand the *intent* behind a color
+or a spacing value, you have to give it **names that carry meaning**, not just raw values.
 
-On a donc créé une architecture en **3 niveaux de tokens** :
+So we created a **3-level token architecture**:
 
 ```
-  NIVEAU 1             NIVEAU 2             NIVEAU 3
-  Valeurs brutes  →    Intention UX   →    Contrats UI
-  (les faits)          (le sens)           (les règles)
+  LEVEL 1               LEVEL 2              LEVEL 3
+  Raw values      →     UX intent      →     UI contracts
+  (the facts)           (the meaning)        (the rules)
 
   ┌─────────────┐    ┌──────────────┐    ┌──────────────┐
   │             │    │              │    │              │
@@ -114,73 +113,73 @@ On a donc créé une architecture en **3 niveaux de tokens** :
   primitives.json    semantic.json       component.json
 ```
 
-**Pourquoi c'est important ?**
+**Why does this matter?**
 
-Quand un agent voit `color.action.primary`, il comprend immédiatement :
-*"Cette couleur est réservée aux actions principales de l'utilisateur."*
+When an agent sees `color.action.primary`, it immediately understands:
+*"This color is reserved for the user's primary actions."*
 
-Quand il voit `#3B82F6`, il ne sait rien. Il improvise.
+When it sees `#3B82F6`, it knows nothing. It improvises.
 
-**La règle absolue :** les valeurs brutes ne vont jamais directement dans les composants.
-Tout passe par la couche du milieu — la couche sémantique.
+**The absolute rule:** raw values never go directly into components.
+Everything passes through the middle layer — the semantic layer.
 
 ---
 
-### Étape 3 — Construire les fondations visuelles (29 mai)
+### Step 3 — Building the visual foundations (May 29)
 
-Avec le langage en place, on a posé les bases visuelles du système :
+With the language in place, we laid down the system's visual foundations:
 
-| Décision | Pourquoi |
+| Decision | Why |
 |----------|----------|
-| **Police Atkinson Hyperlegible** | Conçue pour l'accessibilité — meilleure lisibilité pour les personnes malvoyantes ou dyslexiques |
-| **Grille de 4px** | Tous les espacements sont des multiples de 4 — cohérence mathématique automatique |
-| **Icônes Lucide** | Bibliothèque open source, constante, lisible par les agents |
-| **Palette teal (sarcelle)** | Couleur d'action principale, testée WCAG AA (contraste suffisant pour l'accessibilité) |
-| **Échelle typographique Minor Third** | Progression mathématique harmonieuse de xs à 5xl |
+| **Atkinson Hyperlegible font** | Designed for accessibility — better readability for people with low vision or dyslexia |
+| **4px grid** | Every spacing value is a multiple of 4 — automatic mathematical consistency |
+| **Lucide icons** | Open-source library, consistent, readable by agents |
+| **Teal palette** | Primary action color, WCAG AA tested (sufficient contrast for accessibility) |
+| **Minor Third typographic scale** | Harmonious mathematical progression from xs to 5xl |
 
-Ces choix ne sont pas arbitraires. Chacun a un **ADR** — un *Architecture Decision Record* —
-qui explique pourquoi on a choisi cette option plutôt qu'une autre, et quelles alternatives
-ont été rejetées et pourquoi.
+These choices aren't arbitrary. Each one has an **ADR** — an *Architecture Decision Record* —
+that explains why we chose this option over another, and which alternatives
+were rejected and why.
 
-> Un ADR, c'est la mémoire écrite d'une décision. Pas juste *quoi* on a décidé,
-> mais *pourquoi*, et ce qu'on a écarté.
+> An ADR is the written memory of a decision. Not just *what* we decided,
+> but *why*, and what we ruled out.
 
 ---
 
-### Étape 4 — Construire les composants (30 mai – 5 juin)
+### Step 4 — Building the components (May 30 – June 5)
 
-Avec les fondations en place, on a construit les composants un à un.
+With the foundations in place, we built the components one by one.
 
-Mais **chaque composant suit un processus en 4 temps** :
+But **every component follows a 4-step process**:
 
 ```
   ┌─────────────────────────────────────────────────────────┐
   │                                                         │
-  │  1. REVUE UX       Quels patterns reconnus existent     │
-  │                    pour ce type de composant ?          │
+  │  1. UX REVIEW      What recognized patterns exist       │
+  │                    for this type of component?          │
   │                    (Nielsen, IF Patterns, IxDF...)      │
   │                            │                           │
   │                            ▼                           │
-  │  2. CONTRAT        Rédiger le "contrat" du composant :  │
-  │                    intention, variantes, accessibilité  │
+  │  2. CONTRACT       Write the component's "contract":    │
+  │                    intent, variants, accessibility      │
   │                            │                           │
   │                            ▼                           │
-  │  3. CONSTRUCTION   Coder + documenter dans Storybook   │
+  │  3. BUILD          Code + document in Storybook         │
   │                            │                           │
   │                            ▼                           │
-  │  4. APPROBATION    Validation humaine avant publication │
+  │  4. APPROVAL       Human validation before publishing   │
   │                                                         │
   └─────────────────────────────────────────────────────────┘
 ```
 
-**Les composants construits jusqu'ici :**
+**The components built so far:**
 
 ```
-  Formulaires      Navigation       Contenu          Feedback
+  Forms            Navigation       Content          Feedback
   ───────────      ──────────       ───────          ────────
   Button           Link             Card             Banner
   Input            Segmented        Table            Badge
-  Checkbox         (sélecteur)      Code Block       (étiquette)
+  Checkbox         (selector)       Code Block       (label)
   Radio
   Toggle
   Icon
@@ -188,137 +187,138 @@ Mais **chaque composant suit un processus en 4 temps** :
 
 ---
 
-### Étape 5 — Mettre en place les gardes-fous (30 mai – 8 juin)
+### Step 5 — Putting guardrails in place (May 30 – June 8)
 
-Un système de design sans surveillance, c'est un système qui dérive.
-Les équipes créent des variations locales, les agents inventent des valeurs,
-et en quelques mois, plus personne n'utilise le vrai système.
+A design system with no monitoring is a system that drifts.
+Teams create local variations, agents make up values,
+and within a few months, no one is using the real system anymore.
 
-On a donc mis en place des **gardes-fous automatiques** :
+So we put **automatic guardrails** in place:
 
 ```
-  À chaque modification de code...
+  On every code change...
 
   ┌─────────────────────────────────────────────────────────┐
   │                                                         │
-  │  audit-tokens     Détecte les couleurs et espacements   │
-  │                   écrits "en dur" (non tokenisés)       │
+  │  audit-tokens     Detects colors and spacing            │
+  │                   values written "hardcoded"            │
+  │                   (not tokenized)                       │
   │                                                         │
-  │  axe-core         Vérifie l'accessibilité — contraste,  │
-  │                   navigation clavier, ARIA              │
+  │  axe-core         Checks accessibility — contrast,      │
+  │                   keyboard navigation, ARIA             │
   │                                                         │
-  │  Chromatic        Prend des captures d'écran et         │
-  │                   détecte les régressions visuelles     │
+  │  Chromatic        Takes screenshots and                 │
+  │                   detects visual regressions             │
   │                                                         │
-  │  Playwright       Tests d'interaction utilisateur       │
+  │  Playwright       User interaction tests                │
   │                                                         │
   └─────────────────────────────────────────────────────────┘
               │
               ▼
-       Si une violation est détectée :
-       le code ne peut PAS être mergé.
-       Un humain doit examiner et approuver.
+       If a violation is detected:
+       the code CANNOT be merged.
+       A human must review and approve.
 ```
 
 ---
 
-## La gouvernance : qui fait quoi ?
+## Governance: who does what?
 
-C'est peut-être la décision la plus importante du projet.
+This is perhaps the project's most important decision.
 
 ```
   ┌──────────────────────────────────────────────────────────────┐
   │                                                              │
-  │  Ce qu'un agent IA PEUT faire :                              │
+  │  What an AI agent CAN do:                                    │
   │                                                              │
-  │    ✓  Lire tous les contrats et tokens                       │
-  │    ✓  Générer du code en respectant les tokens               │
-  │    ✓  Détecter les dérives (valeurs en dur, tokens périmés)  │
-  │    ✓  Ouvrir une proposition de correction (Pull Request)    │
-  │    ✓  Produire des rapports d'accessibilité                  │
+  │    ✓  Read every contract and token                          │
+  │    ✓  Generate code that respects the tokens                 │
+  │    ✓  Detect drift (hardcoded values, stale tokens)           │
+  │    ✓  Open a proposed fix (Pull Request)                     │
+  │    ✓  Produce accessibility reports                           │
   │                                                              │
   ├──────────────────────────────────────────────────────────────┤
   │                                                              │
-  │  Ce qu'un agent IA NE PEUT PAS faire sans approbation :      │
+  │  What an AI agent CANNOT do without approval:                │
   │                                                              │
-  │    ✗  Modifier un token sémantique (couche d'intention)      │
-  │    ✗  Changer un contrat de composant                        │
-  │    ✗  Supprimer quoi que ce soit                             │
-  │    ✗  Déployer en production                                 │
-  │    ✗  Ignorer une violation d'accessibilité                  │
+  │    ✗  Modify a semantic token (the intent layer)             │
+  │    ✗  Change a component contract                            │
+  │    ✗  Delete anything at all                                 │
+  │    ✗  Deploy to production                                   │
+  │    ✗  Ignore an accessibility violation                      │
   │                                                              │
   └──────────────────────────────────────────────────────────────┘
 ```
 
-**Pourquoi cette limite ?**
+**Why this boundary?**
 
-Un agent peut être "certain" d'un changement qui casse quelque chose
-qu'il ne comprend pas — un contrat d'équipe non documenté, une stratégie
-de marque, un engagement légal d'accessibilité. La confiance technique
-ne remplace pas le jugement humain.
+An agent can be "certain" about a change that breaks something
+it doesn't understand — an undocumented team agreement, a brand
+strategy, a legal accessibility commitment. Technical confidence
+doesn't replace human judgment.
 
 ---
 
-## Ce que ça change concrètement
+## What this changes in practice
 
-| Avant Agentica | Avec Agentica |
+| Before Agentica | With Agentica |
 |----------------|---------------|
-| Un agent invente des noms de tokens | Il lit les contrats, il comprend l'intention |
-| Un changement de couleur casse 30 composants | La couche sémantique absorbe le changement |
-| Les dérives sont découvertes en production | Détection automatique avant chaque merge |
-| Les décisions de design sont dans des têtes | Chaque décision a un ADR — traçable pour toujours |
-| Le mode sombre nécessite de tout refaire | Il suffit de remapper les tokens sémantiques |
+| An agent makes up token names | It reads the contracts, it understands the intent |
+| A color change breaks 30 components | The semantic layer absorbs the change |
+| Drift is discovered in production | Automatic detection before every merge |
+| Design decisions live in people's heads | Every decision has an ADR — traceable forever |
+| Dark mode requires redoing everything | Just remap the semantic tokens |
 
 ---
 
-## La chronologie en un coup d'oeil
+## The timeline at a glance
 
 ```
-  Mai 28          Mai 29          Mai 30          Juin 1-8
+  May 28          May 29          May 30          Jun 1-8
   ────────        ────────        ────────        ────────
-  Fondations      Visuels         Construction    Composants
-  DESIGN.md       Tokens          Brand           suite
-  AGENTS.md       sémantiques     "Agentica"      Gardes-fous
-  52 règles       Typographie     Identité        Tests auto
-  ADR-001→016     Couleurs        Composants      Conformité
-                  Grille 4px      initiaux        W3C DTCG
+  Foundations     Visuals         Build           Components
+  DESIGN.md       Semantic        Brand           continued
+  AGENTS.md       tokens          "Agentica"      Guardrails
+  52 rules        Typography      Identity        Automated tests
+  ADR-001→016     Colors          Initial         W3C DTCG
+                  4px grid        components      compliance
 ```
 
-**Du 28 mai au 8 juin 2026 — 11 jours de construction.**
-52 décisions documentées. 14 composants. 1 site de documentation.
+**From May 28 to June 8, 2026 — 11 days of building.**
+52 decisions documented. 14 components. 1 documentation site.
 
 ---
 
-## Ce que ce système n'est pas
+## What this system is not
 
-- Ce n'est pas une bibliothèque de composants "prête à l'emploi"
-- Ce n'est pas un remplacement de Figma
-- Ce n'est pas un outil autonome
+- It's not a "ready-to-use" component library
+- It's not a Figma replacement
+- It's not an autonomous tool
 
-**C'est une fondation.** Un gabarit de gouvernance formalisé, un contrat
-lisible par les humains ET par les agents, un point de départ à adapter
-à n'importe quelle organisation.
-
----
-
-## Ce qu'on vise ensuite
-
-Agentica est une base. La confiance entre humains et agents se construit
-progressivement. À mesure que le système accumule des preuves de fiabilité
-— décisions documentées, tests verts, audits propres — les frontières
-d'action des agents pourront être élargies, par décision humaine explicite,
-documentée dans un ADR.
-
-**L'objectif final :**
-
-> Un système où les agents font le travail répétitif et détectent les dérives,
-> pendant que les humains se concentrent sur les décisions stratégiques,
-> créatives et organisationnelles.
+**It's a foundation.** A formalized governance template, a contract
+readable by both humans AND agents, a starting point to adapt
+to any organization.
 
 ---
 
-*Document rédigé à partir des 52 ADRs, du journal de construction,
-et de l'historique git du projet Agentica — juin 2026.*
+## What we're aiming for next
 
-*Auteur du système : Guilherme Negreiros*
-*Site de documentation : https://designsystem.gnegreiros.com*
+Agentica is a base. Trust between humans and agents is built
+progressively. As the system accumulates evidence of reliability
+— documented decisions, green tests, clean audits — agents'
+action boundaries can be widened, by explicit human decision,
+documented in an ADR.
+
+**The end goal:**
+
+> A system where agents do the repetitive work and detect drift,
+> while humans focus on strategic, creative,
+> and organizational decisions.
+
+---
+
+*Document written from the 52 ADRs, the construction log,
+and the git history of the Agentica project — June 2026.*
+
+*System author: Guilherme Negreiros*
+*Documentation site: https://designsystem.gnegreiros.com*

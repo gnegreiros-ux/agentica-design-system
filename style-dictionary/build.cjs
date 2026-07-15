@@ -67,8 +67,8 @@ StyleDictionary.registerTransformGroup({
 });
 
 // ─── FORMAT: CSS dark mode — [data-theme="dark"] wrapper ───────────────────
-// Génère uniquement les overrides dark (deltas vs mode clair).
-// Chargé après all.css : les variables light sont redéfinies pour le sélecteur dark.
+// Generates only the dark overrides (deltas vs. light mode).
+// Loaded after all.css: light variables are redefined for the dark selector.
 StyleDictionary.registerFormat({
   name: 'css/dark-mode',
   formatter: ({ dictionary }) => {
@@ -303,11 +303,11 @@ const sd = StyleDictionary.extend({
 
 sd.buildAllPlatforms();
 
-// ─── BUILD 2 : dark mode overrides ─────────────────────────────────────────
-// Source : tokens/semantic.dark.json uniquement (deltas vs mode clair).
-// Sortie : dist/tokens/css/dark.css sous [data-theme="dark"].
-// Chargé après all.css dans Storybook et les consommateurs — les variables
-// light sont redéfinies pour le sélecteur dark uniquement.
+// ─── BUILD 2: dark mode overrides ──────────────────────────────────────────
+// Source: tokens/semantic.dark.json only (deltas vs. light mode).
+// Output: dist/tokens/css/dark.css under [data-theme="dark"].
+// Loaded after all.css in Storybook and consumers — light variables are
+// redefined only for the dark selector.
 const sdDark = StyleDictionary.extend({
   source: ['tokens/semantic.dark.json'],
   platforms: {

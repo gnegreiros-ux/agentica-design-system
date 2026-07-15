@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * audit-tokens.js — Audit du système de tokens
- * Équipe design system — usage interne
+ * audit-tokens.js — Token system audit
+ * Design system team — internal use
  *
- * Détecte :
- *   1. Tokens orphelins   — définis dans component.json mais jamais utilisés dans le code
- *   2. Tokens fantômes    — utilisés dans le code mais non définis dans semantic.json
- *   3. Valeurs hardcodées — hex, rgb, px arbitraires dans le code (vecteurs de dérive IA)
- *   4. Références directes à des primitifs dans des composants
+ * Detects:
+ *   1. Orphaned tokens  — defined in component.json but never used in code
+ *   2. Phantom tokens   — used in code but not defined in semantic.json
+ *   3. Hardcoded values — arbitrary hex, rgb, px in code (AI drift vectors)
+ *   4. Direct references to primitives in components
  *
- * Usage :
+ * Usage:
  *   node scripts/audit-tokens.js
- *   node scripts/audit-tokens.js --fix-report          → génère un rapport JSON
- *   node scripts/audit-tokens.js --ci                  → exit 1 si violations critiques
- *   node scripts/audit-tokens.js --src-dir <chemin>    → analyse un répertoire source spécifique
+ *   node scripts/audit-tokens.js --fix-report          → generates a JSON report
+ *   node scripts/audit-tokens.js --ci                  → exit 1 on critical violations
+ *   node scripts/audit-tokens.js --src-dir <path>       → analyzes a specific source directory
  */
 
 import fs from 'fs';
@@ -42,20 +42,20 @@ const CONFIG = {
   fixReport:   process.argv.includes('--fix-report'),
 };
 
-// Extensions de fichiers source à analyser
+// Source file extensions to analyze
 const SOURCE_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.html', '.md'];
 
-// Patterns de dérive à détecter dans le code source
+// Drift patterns to detect in source code
 const DRIFT_PATTERNS = [
-  { name: 'hex-color',       regex: /#[0-9a-fA-F]{3,8}\b/g,           severity: 'error',   message: 'Couleur hex en dur' },
-  { name: 'rgb-color',       regex: /rgb\s*\([^)]+\)/g,                severity: 'error',   message: 'Valeur rgb() en dur' },
-  { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Valeur hsl() en dur' },
+  { name: 'hex-color',       regex: /#[0-9a-fA-F]{3,8}\b/g,           severity: 'error',   message: 'Hardcoded hex color' },
+  { name: 'rgb-color',       regex: /rgb\s*\([^)]+\)/g,                severity: 'error',   message: 'Hardcoded rgb() value' },
+  { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Hardcoded hsl() value' },
   { name: 'tailwind-arbitrary', regex: /(?:p|m|text|bg|border)-\[[\d.]+(?:px|rem|em)[^\]]*\]/g, severity: 'error', message: 'Tailwind arbitrary value' },
-  { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Valeur px inline sans token' },
-  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'warning', message: 'Token primitif utilisé directement' },
+  { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Inline px value with no token' },
+  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'warning', message: 'Primitive token used directly' },
 ];
 
-// ─── Utilitaires ──────────────────────────────────────────────────────────────
+// ─── Utilities ──────────────────────────────────────────────────────────────
 
 const RESET  = '\x1b[0m';
 const RED    = '\x1b[31m';
@@ -70,21 +70,21 @@ function warn(msg)       { console.log(`${YELLOW}  ⚠${RESET} ${msg}`); }
 function error(msg)      { console.log(`${RED}  ✗${RESET} ${msg}`); }
 function section(title)  { console.log(`\n${BOLD}${CYAN}── ${title} ${RESET}`); }
 
-// Charger un fichier JSON tokens
+// Load a tokens JSON file
 function loadTokens(filename) {
   const filepath = path.join(CONFIG.tokensDir, filename);
   if (!fs.existsSync(filepath)) {
-    warn(`Fichier tokens introuvable : ${filename}`);
+    warn(`Tokens file not found: ${filename}`);
     return {};
   }
   return JSON.parse(fs.readFileSync(filepath, 'utf8'));
 }
 
-// Extraire récursivement toutes les clés de token (chemin pointé)
+// Recursively extract every token key (dotted path)
 function extractTokenKeys(obj, prefix = '') {
   const keys = [];
   for (const [key, value] of Object.entries(obj)) {
-    if (key.startsWith('$')) continue; // métadonnées
+    if (key.startsWith('$')) continue; // metadata
     const fullKey = prefix ? `${prefix}.${key}` : key;
     if (value && typeof value === 'object' && value.$value !== undefined) {
       keys.push(fullKey);
@@ -95,11 +95,12 @@ function extractTokenKeys(obj, prefix = '') {
   return keys;
 }
 
-// Collecte les noms de variables CSS générés pour un arbre de tokens, en reproduisant
-// la transform kebab de Style Dictionary (segments de chemin joints par '-'). Construit
-// dans le sens direct (arbre → nom de variable) car la conversion inverse est ambiguë :
-// un tiret dans le nom généré peut être une frontière de segment OU un tiret interne au
-// nom d'un segment (ex. "label-bold", "line-height" sont chacun UN seul segment).
+// Collects the generated CSS variable names for a token tree, reproducing
+// Style Dictionary's kebab transform (path segments joined by '-'). Built
+// in the forward direction (tree → variable name) because the reverse
+// conversion is ambiguous: a hyphen in the generated name can be a segment
+// boundary OR a hyphen internal to a segment's name (e.g. "label-bold",
+// "line-height" are each a SINGLE segment).
 function collectCssVarNames(obj, cssPrefix, pathParts = []) {
   const names = [];
   for (const [key, value] of Object.entries(obj)) {
@@ -114,7 +115,7 @@ function collectCssVarNames(obj, cssPrefix, pathParts = []) {
   return names;
 }
 
-// Récupérer tous les fichiers source récursivement
+// Recursively fetch all source files
 function getSourceFiles(dir) {
   if (!fs.existsSync(dir)) return [];
   const files = [];
@@ -132,12 +133,12 @@ function getSourceFiles(dir) {
 // ─── Audits ───────────────────────────────────────────────────────────────────
 
 function auditOrphanedTokens(componentTokens, sourceFiles) {
-  section('1. Tokens orphelins (définis mais jamais utilisés)');
+  section('1. Orphaned tokens (defined but never used)');
   const allComponentKeys = extractTokenKeys(componentTokens);
   const orphaned = [];
 
   for (const tokenKey of allComponentKeys) {
-    // Convertir en pattern CSS var : button.primary.background → --agtc-component-button-primary-background
+    // Convert to CSS var pattern: button.primary.background → --agtc-component-button-primary-background
     const cssVar = TOKEN_PREFIXES.component + tokenKey.replace(/\./g, '-');
     const used = sourceFiles.some(file => {
       const content = fs.readFileSync(file, 'utf8');
@@ -147,21 +148,21 @@ function auditOrphanedTokens(componentTokens, sourceFiles) {
   }
 
   if (orphaned.length === 0) {
-    ok(`Aucun token orphelin détecté (${allComponentKeys.length} tokens vérifiés)`);
+    ok(`No orphaned tokens detected (${allComponentKeys.length} tokens checked)`);
   } else {
-    orphaned.forEach(t => warn(`Orphelin : ${t.token}  →  ${t.cssVar}`));
+    orphaned.forEach(t => warn(`Orphaned: ${t.token}  →  ${t.cssVar}`));
   }
   return orphaned;
 }
 
 function auditPhantomTokens(semanticTokens, sourceFiles) {
-  section('2. Tokens fantômes (utilisés dans le code mais non définis)');
+  section('2. Phantom tokens (used in code but not defined)');
   // semantic.json nests everything under a top-level "semantic" key (DTCG $schema/$metadata
   // wrapper) — collectCssVarNames strips it via semanticTokens.semantic.
   const definedVars = new Set(collectCssVarNames(semanticTokens.semantic || semanticTokens, TOKEN_PREFIXES.semantic));
   const phantoms = [];
 
-  // Chercher toutes les références --agtc-semantic-* dans les sources
+  // Search for every --agtc-semantic-* reference in the sources
   const semanticVarRegex = new RegExp('var\\(' + TOKEN_PREFIXES.semantic + '([\\w-]+)\\)', 'g');
   for (const file of sourceFiles) {
     const content = fs.readFileSync(file, 'utf8');
@@ -175,9 +176,9 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   }
 
   if (phantoms.length === 0) {
-    ok('Aucun token fantôme détecté');
+    ok('No phantom tokens detected');
   } else {
-    phantoms.forEach(p => error(`Fantôme : ${p.cssVar}  dans  ${p.file}`));
+    phantoms.forEach(p => error(`Phantom: ${p.cssVar}  in  ${p.file}`));
   }
   return phantoms;
 }
@@ -191,7 +192,7 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
 const COLOR_EXCEPTION_LINE = /vFill\(|var\(--[\w-]+\s*,\s*#|:visited\s*(,|\{)|\w*[Tt]ok:\s*["']|["'](color|component)\/[\w-]+["']/;
 
 function auditHardcodedValues(sourceFiles) {
-  section('3. Valeurs hardcodées (vecteurs de dérive IA)');
+  section('3. Hardcoded values (AI drift vectors)');
   const violations = [];
   const colorPatternNames = new Set(['hex-color', 'rgb-color', 'hsl-color']);
 
@@ -222,7 +223,7 @@ function auditHardcodedValues(sourceFiles) {
   const warnings = violations.filter(v => v.severity === 'warning');
 
   if (violations.length === 0) {
-    ok('Aucune valeur hardcodée détectée');
+    ok('No hardcoded values detected');
   } else {
     errors.forEach(v =>
       error(`[${v.type}] ${v.file}:${v.line}  →  "${v.value}"  (${v.message})`)
@@ -235,14 +236,14 @@ function auditHardcodedValues(sourceFiles) {
 }
 
 function auditTokenStructure(primitives, semantic, component) {
-  section('4. Structure des tokens (cohérence des trois couches)');
+  section('4. Token structure (three-layer consistency)');
   const issues = [];
 
-  // Vérifier que les tokens sémantiques référencent bien des primitifs existants
+  // Verify that semantic tokens do reference existing primitives
   const primitiveKeys = extractTokenKeys(primitives);
   const semanticEntries = extractTokenKeys(semantic);
 
-  // Vérifier que les tokens de composant référencent des sémantiques existants
+  // Verify that component tokens reference existing semantics
   const componentKeys = extractTokenKeys(component);
   const semanticKeys  = extractTokenKeys(semantic);
 
@@ -258,7 +259,7 @@ function auditTokenStructure(primitives, semantic, component) {
             ? primitiveKeys.some(k => k === refKey)
             : (semanticKeys.some(k => k === refKey) || refKey === 'transparent');
           if (!isDefined) {
-            warn(`Référence non résolue dans ${layer} : {${refKey}}`);
+            warn(`Unresolved reference in ${layer}: {${refKey}}`);
             issues.push({ layer, ref: refKey });
             refErrors++;
           }
@@ -273,12 +274,12 @@ function auditTokenStructure(primitives, semantic, component) {
   checkRefs(component,  'component');
 
   if (refErrors === 0) {
-    ok(`Structure cohérente — ${semanticEntries.length} tokens sémantiques, ${componentKeys.length} tokens de composant`);
+    ok(`Consistent structure — ${semanticEntries.length} semantic tokens, ${componentKeys.length} component tokens`);
   }
   return issues;
 }
 
-// ─── Rapport ──────────────────────────────────────────────────────────────────
+// ─── Report ──────────────────────────────────────────────────────────────────
 
 function generateReport(results) {
   const report = {
@@ -294,38 +295,38 @@ function generateReport(results) {
   };
 
   fs.writeFileSync(CONFIG.outputFile, JSON.stringify(report, null, 2));
-  log(`\n${CYAN}Rapport écrit :${RESET} audit-report.json`);
+  log(`\n${CYAN}Report written:${RESET} audit-report.json`);
   return report;
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 function main() {
-  log(`\n${BOLD}Audit — Système de tokens${RESET}`);
+  log(`\n${BOLD}Audit — Token system${RESET}`);
   log(`${CYAN}${'─'.repeat(40)}${RESET}`);
 
-  // Charger les tokens
+  // Load the tokens
   const primitives = loadTokens('primitives.json');
   const semantic   = loadTokens('semantic.json');
   const component  = loadTokens('component.json');
 
-  // Récupérer les fichiers source — priorité : --src-dir > src/ > racine
+  // Fetch the source files — priority: --src-dir > src/ > root
   const srcDir     = CONFIG.sourceDir || path.resolve(__dirname, '../src');
   const rootDir    = path.resolve(__dirname, '..');
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f => !f.includes('node_modules') && !f.includes('dist'));
 
-  log(`${CYAN}Fichiers analysés :${RESET} ${sourceFiles.length}`);
+  log(`${CYAN}Files analyzed:${RESET} ${sourceFiles.length}`);
 
-  // Lancer les audits
+  // Run the audits
   const orphaned       = auditOrphanedTokens(component, sourceFiles);
   const phantoms       = auditPhantomTokens(semantic, sourceFiles);
   const violations     = auditHardcodedValues(sourceFiles);
   const structureIssues = auditTokenStructure(primitives, semantic, component);
 
-  // Résumé
-  section('Résumé');
+  // Summary
+  section('Summary');
   const criticalCount = phantoms.length +
     violations.filter(v => v.severity === 'error').length +
     structureIssues.length;
@@ -333,21 +334,21 @@ function main() {
     violations.filter(v => v.severity === 'warning').length;
 
   if (criticalCount === 0 && warnCount === 0) {
-    log(`\n${GREEN}${BOLD}  ✓ Système propre — aucune dérive détectée${RESET}\n`);
+    log(`\n${GREEN}${BOLD}  ✓ Clean system — no drift detected${RESET}\n`);
   } else {
-    if (criticalCount > 0) error(`${criticalCount} violation(s) critique(s) détectée(s)`);
-    if (warnCount > 0)     warn(`${warnCount} avertissement(s)`);
+    if (criticalCount > 0) error(`${criticalCount} critical violation(s) detected`);
+    if (warnCount > 0)     warn(`${warnCount} warning(s)`);
     log('');
   }
 
-  // Rapport JSON
+  // JSON report
   if (CONFIG.fixReport) {
     generateReport({ orphaned, phantoms, violations, structureIssues });
   }
 
-  // Mode CI — exit 1 si violations critiques
+  // CI mode — exit 1 on critical violations
   if (CONFIG.ciMode && criticalCount > 0) {
-    log(`${RED}CI : échec — corriger les violations critiques avant de merger.${RESET}\n`);
+    log(`${RED}CI: failed — fix critical violations before merging.${RESET}\n`);
     process.exit(1);
   }
 }

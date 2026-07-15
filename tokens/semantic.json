@@ -2,10 +2,10 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "level": "semantic",
-    "description": "Traduction des primitives en langage métier. Encode l'INTENTION, pas la valeur. Lisible par les humains et les agents IA.",
+    "description": "Translation of primitives into business language. Encodes INTENT, not value. Readable by humans and AI agents.",
     "version": "1.0.0",
-    "rule": "Les agents comprennent la FONCTION, pas la valeur. color.feedback.danger est une intention. red-700 est une valeur décorative.",
-    "_extensions-convention": "Les champs $extensions['com.agentica.usage'] sont des métadonnées agent-ready (DTCG W3C). Champs : role (rôle sémantique), use[] (usages autorisés), doNotUse (contre-indications explicites), components[] (composants consommateurs), decision (ADR de référence). Ces champs sont ignorés par Style Dictionary à la compilation — comportement attendu. Voir ADR-052."
+    "rule": "Agents understand FUNCTION, not value. color.feedback.danger is an intent. red-700 is a decorative value.",
+    "_extensions-convention": "The $extensions['com.agentica.usage'] fields are agent-ready metadata (DTCG W3C). Fields: role (semantic role), use[] (allowed usages), doNotUse (explicit contraindications), components[] (consuming components), decision (reference ADR). These fields are ignored by Style Dictionary at compile time — expected behavior. See ADR-052."
   },
   "semantic": {
     "color": {
@@ -13,15 +13,29 @@
         "primary": {
           "$value": "{primitive.color.teal.11}",
           "$type": "color",
-          "$intent": "Action principale — CTA, bouton primaire. Teal interactif accessible : en texte sur le fond de page gray.1 #fcfcfc = 5.14:1 ; texte blanc dessus = 5.27:1 (WCAG AA). Distinct du teal d'identité brand.primary (teal.9). Voir ADR-050 (corrige ADR-048).",
-          "$description": "Couleur d'action principale — CTA, boutons primaires, liens interactifs. Teal accessible (5.14:1 sur fond page, 5.27:1 texte blanc). PIÈGE : brand.primary = teal.9 (identité marque) ≠ action.primary = teal.11 (interactif accessible).",
+          "$intent": "Primary action — CTA, primary button. Accessible interactive teal: as text on the gray.1 #fcfcfc page background = 5.14:1; white text on top = 5.27:1 (WCAG AA). Distinct from the brand.primary identity teal (teal.9). See ADR-050 (corrects ADR-048).",
+          "$description": "Primary action color — CTA, primary buttons, interactive links. Accessible teal (5.14:1 on page background, 5.27:1 white text). PITFALL: brand.primary = teal.9 (brand identity) ≠ action.primary = teal.11 (accessible interactive).",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "action-primary",
-              "use": ["Button[variant=primary]", "Link[default]", "Tabs[active-indicator]", "Checkbox[fill]", "Radio[fill]", "Toggle[track-on]"],
-              "doNotUse": "Éléments décoratifs, fonds de surface, états désactivés. Jamais sur fond sombre sans vérifier le contraste. Ne pas confondre avec brand.primary (teal.9) qui est l'identité marque, pas l'action interactive.",
-              "components": ["Button[variant=primary]", "Link[default]", "Tabs[active]", "Checkbox[checked]", "Radio[checked]", "Toggle[on]"],
+              "use": [
+                "Button[variant=primary]",
+                "Link[default]",
+                "Tabs[active-indicator]",
+                "Checkbox[fill]",
+                "Radio[fill]",
+                "Toggle[track-on]"
+              ],
+              "doNotUse": "Decorative elements, surface backgrounds, disabled states. Never on a dark background without checking contrast. Do not confuse with brand.primary (teal.9), which is brand identity, not interactive action.",
+              "components": [
+                "Button[variant=primary]",
+                "Link[default]",
+                "Tabs[active]",
+                "Checkbox[checked]",
+                "Radio[checked]",
+                "Toggle[on]"
+              ],
               "decision": "ADR-050"
             }
           }
@@ -29,15 +43,23 @@
         "primary-hover": {
           "$value": "{primitive.color.teal.12}",
           "$type": "color",
-          "$intent": "État survol de l'action principale — assombrissement (texte blanc = 12:1). Voir ADR-048.",
-          "$description": "État survol/focus de l'action principale — teal assombri (teal.12, texte blanc 12:1). Usage exclusif : retour visuel au survol ou au focus, jamais au repos.",
+          "$intent": "Primary action hover state — darkened (white text = 12:1). See ADR-048.",
+          "$description": "Primary action hover/focus state — darkened teal (teal.12, white text 12:1). Exclusive use: visual feedback on hover or focus, never at rest.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "action-primary-hover",
-              "use": ["Button[variant=primary]:hover", "Button[variant=primary]:focus-visible", "Link:hover"],
-              "doNotUse": "État au repos — jamais appliqué sans interaction utilisateur. Ne jamais utiliser comme fond statique d'un bouton ou d'un lien.",
-              "components": ["Button[variant=primary]:hover", "Link:hover", "Checkbox:hover"],
+              "use": [
+                "Button[variant=primary]:hover",
+                "Button[variant=primary]:focus-visible",
+                "Link:hover"
+              ],
+              "doNotUse": "Resting state — never applied without user interaction. Never use as the static background of a button or link.",
+              "components": [
+                "Button[variant=primary]:hover",
+                "Link:hover",
+                "Checkbox:hover"
+              ],
               "decision": "ADR-050"
             }
           }
@@ -45,15 +67,19 @@
         "primary-disabled": {
           "$value": "{primitive.color.gray.6}",
           "$type": "color",
-          "$intent": "Action principale désactivée — fond bouton inactif (WCAG 1.4.3 exempt)",
-          "$description": "Fond d'action principale à l'état désactivé. Grisé volontairement — WCAG 1.4.3 exempte les composants inactifs. Jamais sur un élément cliquable.",
+          "$intent": "Disabled primary action — inactive button background (WCAG 1.4.3 exempt)",
+          "$description": "Primary action background in the disabled state. Intentionally grayed out — WCAG 1.4.3 exempts inactive components. Never on a clickable element.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "action-disabled",
-              "use": ["Button[variant=primary][disabled]"],
-              "doNotUse": "Bouton interactif, état au repos, fond de surface neutre. Jamais utilisé sur un élément recevant les interactions utilisateur.",
-              "components": ["Button[variant=primary][disabled]"],
+              "use": [
+                "Button[variant=primary][disabled]"
+              ],
+              "doNotUse": "Interactive button, resting state, neutral surface background. Never used on an element receiving user interactions.",
+              "components": [
+                "Button[variant=primary][disabled]"
+              ],
               "decision": "ADR-048"
             }
           }
@@ -64,14 +90,26 @@
           "$value": "{primitive.color.red.11}",
           "$type": "color",
           "$intent": "Erreur, action destructrice, alerte critique",
-          "$description": "Couleur de danger système — erreurs, actions destructrices, alertes critiques. Rouge accessible en texte (haut contraste). PIÈGE : distinct de brand.accent (crimson.9) qui est rouge vif de marque, pas un état d'erreur.",
+          "$description": "System danger color — errors, destructive actions, critical alerts. Accessible red as text (high contrast). PITFALL: distinct from brand.accent (crimson.9), which is a vivid brand red, not an error state.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "danger",
-              "use": ["Button[variant=critical]", "Input[invalid]", "Alert[type=error]", "Badge[variant=danger]", "Banner[variant=danger]"],
-              "doNotUse": "Éléments décoratifs, moments de marque, graphiques non-sémantiques. Ne jamais utiliser pour l'action primaire. PIÈGE DES DEUX ROUGES : brand.accent (crimson.9) est rouge vif mais = identité marque ≠ danger. Les confondre est une erreur sémantique grave.",
-              "components": ["Button[variant=critical]", "Alert[type=error]", "Input[invalid]", "Badge[variant=danger]", "Banner[variant=danger]"],
+              "use": [
+                "Button[variant=critical]",
+                "Input[invalid]",
+                "Alert[type=error]",
+                "Badge[variant=danger]",
+                "Banner[variant=danger]"
+              ],
+              "doNotUse": "Decorative elements, brand moments, non-semantic graphics. Never use for the primary action. THE TWO-REDS PITFALL: brand.accent (crimson.9) is a vivid red but = brand identity ≠ danger. Confusing them is a serious semantic error.",
+              "components": [
+                "Button[variant=critical]",
+                "Alert[type=error]",
+                "Input[invalid]",
+                "Badge[variant=danger]",
+                "Banner[variant=danger]"
+              ],
               "decision": "ADR-005"
             }
           }
@@ -79,25 +117,34 @@
         "danger-subtle": {
           "$value": "{primitive.color.red.3}",
           "$type": "color",
-          "$intent": "Fond subtil pour état danger"
+          "$intent": "Subtle background for the danger state"
         },
         "danger-border": {
           "$value": "{primitive.color.red.6}",
           "$type": "color",
-          "$intent": "Bordure pour état danger (ADR-045)"
+          "$intent": "Border for the danger state (ADR-045)"
         },
         "success": {
           "$value": "{primitive.color.green.11}",
           "$type": "color",
-          "$intent": "Confirmation, succès, validation",
-          "$description": "Couleur de succès système — confirmation, validation réussie, état positif. Vert accessible en texte.",
+          "$intent": "Confirmation, success, validation",
+          "$description": "System success color — confirmation, successful validation, positive state. Accessible green as text.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "success",
-              "use": ["Alert[type=success]", "Badge[variant=success]", "Input[valid-indicator]", "Banner[variant=success]"],
-              "doNotUse": "Action principale, bouton CTA. Ne jamais remplacer action.primary par feedback.success pour une action 'positive' — la sémantique de couleur ne se substitue pas au rôle fonctionnel.",
-              "components": ["Alert[type=success]", "Badge[variant=success]", "Banner[variant=success]"],
+              "use": [
+                "Alert[type=success]",
+                "Badge[variant=success]",
+                "Input[valid-indicator]",
+                "Banner[variant=success]"
+              ],
+              "doNotUse": "Primary action, CTA button. Never replace action.primary with feedback.success for a 'positive' action — color semantics don't substitute for functional role.",
+              "components": [
+                "Alert[type=success]",
+                "Badge[variant=success]",
+                "Banner[variant=success]"
+              ],
               "decision": "ADR-045"
             }
           }
@@ -105,12 +152,12 @@
         "success-subtle": {
           "$value": "{primitive.color.green.3}",
           "$type": "color",
-          "$intent": "Fond subtil pour état succès (ADR-045)"
+          "$intent": "Subtle background for the success state (ADR-045)"
         },
         "success-border": {
           "$value": "{primitive.color.green.6}",
           "$type": "color",
-          "$intent": "Bordure pour état succès (ADR-045)"
+          "$intent": "Border for the success state (ADR-045)"
         },
         "warning": {
           "$value": "{primitive.color.orange.11}",
@@ -120,25 +167,34 @@
         "warning-subtle": {
           "$value": "{primitive.color.orange.3}",
           "$type": "color",
-          "$intent": "Fond subtil pour état avertissement (ADR-045)"
+          "$intent": "Subtle background for the warning state (ADR-045)"
         },
         "warning-border": {
           "$value": "{primitive.color.orange.6}",
           "$type": "color",
-          "$intent": "Bordure pour état avertissement (ADR-045)"
+          "$intent": "Border for the warning state (ADR-045)"
         },
         "info": {
           "$value": "{primitive.color.blue.11}",
           "$type": "color",
           "$intent": "Information neutre, aide contextuelle",
-          "$description": "Couleur d'information neutre — aide contextuelle, statuts informatifs non-urgents. Bleu accessible en texte. PIÈGE : peut sembler interactif (bleu) mais ne déclenche aucune action.",
+          "$description": "Neutral information color — contextual help, non-urgent informational statuses. Accessible blue as text. PITFALL: can appear interactive (blue) but triggers no action.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "info",
-              "use": ["Alert[type=info]", "Badge[variant=info]", "Banner[variant=info]", "Tooltip"],
-              "doNotUse": "Action principale — ne pas confondre bleu info (informatif) avec action.primary (teal interactif). Le bleu info porte une information, pas une invitation à agir.",
-              "components": ["Alert[type=info]", "Badge[variant=info]", "Banner[variant=info]"],
+              "use": [
+                "Alert[type=info]",
+                "Badge[variant=info]",
+                "Banner[variant=info]",
+                "Tooltip"
+              ],
+              "doNotUse": "Primary action — don't confuse informational blue (info) with action.primary (interactive teal). Info blue carries information, not an invitation to act.",
+              "components": [
+                "Alert[type=info]",
+                "Badge[variant=info]",
+                "Banner[variant=info]"
+              ],
               "decision": "ADR-045"
             }
           }
@@ -146,12 +202,12 @@
         "info-subtle": {
           "$value": "{primitive.color.blue.3}",
           "$type": "color",
-          "$intent": "Fond subtil pour information (ADR-045)"
+          "$intent": "Subtle background for information (ADR-045)"
         },
         "info-border": {
           "$value": "{primitive.color.blue.6}",
           "$type": "color",
-          "$intent": "Bordure pour information (ADR-045)"
+          "$intent": "Border for information (ADR-045)"
         },
         "info-text": {
           "$value": "{primitive.color.blue.12}",
@@ -168,15 +224,21 @@
         "page": {
           "$value": "{primitive.color.gray.1}",
           "$type": "color",
-          "$intent": "Fond de page principale",
-          "$description": "Fond de page principale — surface de plus bas niveau dans la hiérarchie d'élévation (gray.1 = #fcfcfc). Jamais pour une surface de composant imbriquée.",
+          "$intent": "Main page background",
+          "$description": "Main page background — the lowest-level surface in the elevation hierarchy (gray.1 = #fcfcfc). Never for a nested component surface.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "background-page",
-              "use": ["html", "body", "page-root"],
-              "doNotUse": "Surface de composant (carte, modal, panneau) — utiliser background.surface. Ne jamais appliquer à une carte imbriquée dans une autre carte (crée une inversion involontaire de la hiérarchie d'élévation).",
-              "components": ["page-root"],
+              "use": [
+                "html",
+                "body",
+                "page-root"
+              ],
+              "doNotUse": "Component surface (card, modal, panel) — use background.surface. Never apply to a card nested inside another card (creates an unintended inversion of the elevation hierarchy).",
+              "components": [
+                "page-root"
+              ],
               "decision": "ADR-008"
             }
           }
@@ -184,7 +246,7 @@
         "surface": {
           "$value": "{primitive.color.neutral.0}",
           "$type": "color",
-          "$intent": "Fond de carte, panneau, modal"
+          "$intent": "Card, panel, modal background"
         },
         "subtle": {
           "$value": "{primitive.color.gray.3}",
@@ -194,45 +256,49 @@
         "hover": {
           "$value": "{primitive.color.neutral.50}",
           "$type": "color",
-          "$intent": "Fond au survol (tableaux, listes)"
+          "$intent": "Hover background (tables, lists)"
         },
         "inverse": {
           "$value": "{primitive.color.neutral.950}",
           "$type": "color",
-          "$intent": "Surface sombre inversée — bandeau de stats, pied de page (ADR-046)"
+          "$intent": "Inverse dark surface — stats banner, footer (ADR-046)"
         },
         "inverse-raised": {
           "$value": "{primitive.color.neutral.900}",
           "$type": "color",
-          "$intent": "Surface sombre surélevée sur fond inversé — tooltips, popovers (ADR-046)"
+          "$intent": "Raised dark surface on an inverse background — tooltips, popovers (ADR-046)"
         },
         "code": {
           "$value": "{primitive.color.gray.12}",
           "$type": "color",
-          "$intent": "Fond de bloc de code — surface sombre dédiée au code source"
+          "$intent": "Code block background — dark surface dedicated to source code"
         },
         "code-raised": {
           "$value": "{primitive.color.gray.11}",
           "$type": "color",
-          "$intent": "Fond surélevé sur surface code — bouton copier au repos"
+          "$intent": "Raised background on the code surface — copy button at rest"
         },
         "code-raised-hover": {
           "$value": "{primitive.color.gray.10}",
           "$type": "color",
-          "$intent": "Fond surélevé sur surface code au survol — bouton copier hover"
+          "$intent": "Raised background on the code surface on hover — copy button hover"
         },
         "overlay-dark": {
           "$value": "rgba(12, 15, 25, 0.78)",
           "$type": "color",
           "$intent": "Fond glassmorphism sombre — carte translucide sur fond marketing (feature-card)",
-          "$description": "Fond semi-transparent sombre pour cartes en verre dépoli (à associer à backdrop-filter:blur()). Valeur littérale non aliasée à une primitive, au même titre que overlay.scrim/dark/medium/subtle — aucune primitive existante ne couvre ce ton + cette opacité. Dette de tokens corrigée (audit Figma du 2026-07-07) : remplace une valeur codée en dur dans agtc-feature-card.js.",
+          "$description": "Semi-transparent dark background for frosted-glass cards (pair with backdrop-filter:blur()). A literal value not aliased to a primitive, like overlay.scrim/dark/medium/subtle — no existing primitive covers this hue + opacity. Token debt fixed (Figma audit of 2026-07-07): replaces a hardcoded value in agtc-feature-card.js.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "background-overlay-dark",
-              "use": ["agtc-feature-card"],
-              "doNotUse": "Fond de section entière — utiliser background.inverse. Sans backdrop-filter — l'effet dépoli fait partie de l'intention.",
-              "components": ["agtc-feature-card"]
+              "use": [
+                "agtc-feature-card"
+              ],
+              "doNotUse": "Background of an entire section — use background.inverse. Without backdrop-filter — the frosted effect is part of the intent.",
+              "components": [
+                "agtc-feature-card"
+              ]
             }
           }
         }
@@ -241,48 +307,58 @@
         "scrim": {
           "$value": "rgba(15, 17, 23, 0.65)",
           "$type": "color",
-          "$intent": "Fond sombre semi-transparent — container de texte sur illustration (glassmorphism). L'image reste visible à 35% à travers le verre dépoli.",
-          "$description": "Utilisé comme background du container .rd-cinematic-body et .hero-content-w dans le pattern cinematic. Base : background.inverse (#0f1117) à 65% d'opacité. Associer à backdrop-filter:blur(10px) pour l'effet verre dépoli. Ratio 65% : image visible, texte blanc lisible (WCAG AA garanti par le blur qui uniformise le fond).",
+          "$intent": "Semi-transparent dark background — text container over an illustration (glassmorphism). The image stays 35% visible through the frosted glass.",
+          "$description": "Used as the background of the .rd-cinematic-body and .hero-content-w containers in the cinematic pattern. Base: background.inverse (#0f1117) at 65% opacity. Pair with backdrop-filter:blur(10px) for the frosted-glass effect. 65% ratio: image visible, white text readable (WCAG AA guaranteed by the blur, which evens out the background).",
           "$extensions": {
             "com.agentica.usage": {
               "role": "overlay-scrim",
-              "use": ["rd-cinematic-body", "hero-content-w"],
-              "doNotUse": "Fond de section entière — utiliser background.inverse. Fond sans backdrop-filter — l'effet dépoli est essentiel à l'intention."
+              "use": [
+                "rd-cinematic-body",
+                "hero-content-w"
+              ],
+              "doNotUse": "Background of an entire section — use background.inverse. Background with no backdrop-filter — the frosted effect is essential to the intent."
             }
           }
         },
         "dark": {
           "$value": "rgba(15, 17, 23, 0.88)",
           "$type": "color",
-          "$intent": "Scrim fort — gradient cinematic côté texte (zone de 0% à 28%).",
-          "$description": "Valeur initiale du gradient rd-bg-fade. Le texte en blanc sur ce fond atteint un ratio ≥ 7:1 (WCAG AAA)."
+          "$intent": "Strong scrim — cinematic gradient on the text side (0% to 28% zone).",
+          "$description": "Initial value of the rd-bg-fade gradient. White text on this background reaches a ratio ≥ 7:1 (WCAG AAA)."
         },
         "medium": {
           "$value": "rgba(15, 17, 23, 0.50)",
           "$type": "color",
-          "$intent": "Scrim moyen — zone de transition du gradient cinematic (50%).",
-          "$description": "Valeur centrale du gradient rd-bg-fade — assure la continuité visuelle entre la zone texte et l'illustration."
+          "$intent": "Medium scrim — transition zone of the cinematic gradient (50%).",
+          "$description": "Central value of the rd-bg-fade gradient — ensures visual continuity between the text zone and the illustration."
         },
         "subtle": {
           "$value": "rgba(15, 17, 23, 0.18)",
           "$type": "color",
-          "$intent": "Scrim léger — bord du gradient cinematic (68%), laisse l'illustration transparaître.",
-          "$description": "Valeur finale du gradient rd-bg-fade avant la zone entièrement transparente."
+          "$intent": "Light scrim — edge of the cinematic gradient (68%), lets the illustration show through.",
+          "$description": "Final value of the rd-bg-fade gradient before the fully transparent zone."
         }
       },
       "text": {
         "primary": {
           "$value": "{primitive.color.gray.12}",
           "$type": "color",
-          "$intent": "Texte principal, haute lisibilité",
-          "$description": "Texte principal haute lisibilité — corps de texte, titres, labels importants. Contraste maximal sur fond de page (gray.12 sur gray.1 = 16:1).",
+          "$intent": "Primary text, high readability",
+          "$description": "High-readability primary text — body text, headings, important labels. Maximum contrast on the page background (gray.12 on gray.1 = 16:1).",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "text-primary",
-              "use": ["body-text", "headings", "form-labels", "table-cell-text"],
-              "doNotUse": "Texte sur fond sombre (surface inverse) — contraste insuffisant. Sur background.inverse, utiliser text.on-dark. Jamais pour texte désactivé — utiliser text.disabled.",
-              "components": ["tous les composants avec texte principal"],
+              "use": [
+                "body-text",
+                "headings",
+                "form-labels",
+                "table-cell-text"
+              ],
+              "doNotUse": "Text on a dark background (inverse surface) — insufficient contrast. On background.inverse, use text.on-dark. Never for disabled text — use text.disabled.",
+              "components": [
+                "every component with primary text"
+              ],
               "decision": "ADR-008"
             }
           }
@@ -290,15 +366,26 @@
         "secondary": {
           "$value": "{primitive.color.gray.11}",
           "$type": "color",
-          "$intent": "Texte secondaire, labels, métadonnées",
-          "$description": "Texte secondaire, labels, métadonnées — plus clair que text.primary. WCAG AA sur fond page. Jamais pour contenu critique ou messages d'erreur.",
+          "$intent": "Secondary text, labels, metadata",
+          "$description": "Secondary text, labels, metadata — lighter than text.primary. WCAG AA on the page background. Never for critical content or error messages.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "text-secondary",
-              "use": ["helper-text", "form-descriptions", "table-captions", "metadata", "nav-links-default"],
-              "doNotUse": "Contenu critique (messages d'erreur, données importantes, titres de page) — utiliser text.primary. Ne jamais utiliser pour le corps principal d'un formulaire ou d'une alerte d'erreur.",
-              "components": ["Input[placeholder]", "Table[caption]", "Badge[neutral]", "Top-nav[link-default]"],
+              "use": [
+                "helper-text",
+                "form-descriptions",
+                "table-captions",
+                "metadata",
+                "nav-links-default"
+              ],
+              "doNotUse": "Critical content (error messages, important data, page titles) — use text.primary. Never use for the main body of a form or an error alert.",
+              "components": [
+                "Input[placeholder]",
+                "Table[caption]",
+                "Badge[neutral]",
+                "Top-nav[link-default]"
+              ],
               "decision": "ADR-008"
             }
           }
@@ -306,7 +393,7 @@
         "disabled": {
           "$value": "{primitive.color.neutral.500}",
           "$type": "color",
-          "$intent": "Texte désactivé — 4.54:1 sur blanc (WCAG 1.4.3 exempte les UI inactives, maintenu accessible par convention)"
+          "$intent": "Disabled text — 4.54:1 on white (WCAG 1.4.3 exempts inactive UI, kept accessible by convention)"
         },
         "on-action": {
           "$value": "{primitive.color.neutral.0}",
@@ -321,27 +408,27 @@
         "on-dark": {
           "$value": "{primitive.color.white.1}",
           "$type": "color",
-          "$intent": "Texte fort sur surface inversée — titres, liens survolés (#fff, ADR-046)"
+          "$intent": "Strong text on an inverse surface — headings, hovered links (#fff, ADR-046)"
         },
         "on-dark-secondary": {
           "$value": "{primitive.color.white.8}",
           "$type": "color",
-          "$intent": "Texte secondaire sur surface inversée — liens (10.8:1 sur neutral.950, ADR-046)"
+          "$intent": "Secondary text on an inverse surface — links (10.8:1 on neutral.950, ADR-046)"
         },
         "on-dark-muted": {
           "$value": "{primitive.color.white.10}",
           "$type": "color",
-          "$intent": "Texte atténué sur surface inversée — plancher AA (5.69:1 sur neutral.950, ADR-046)"
+          "$intent": "Muted text on an inverse surface — AA floor (5.69:1 on neutral.950, ADR-046)"
         },
         "on-code": {
           "$value": "{primitive.color.gray.4}",
           "$type": "color",
-          "$intent": "Texte sur surface code sombre — corps du code source"
+          "$intent": "Text on the dark code surface — source code body"
         },
         "on-code-muted": {
           "$value": "{primitive.color.gray.8}",
           "$type": "color",
-          "$intent": "Texte secondaire sur surface code — métadonnées (langue, numéro de ligne)"
+          "$intent": "Secondary text on the code surface — metadata (language, line number)"
         },
         "on-code-strong": {
           "$value": "{primitive.color.gray.1}",
@@ -358,15 +445,20 @@
         "focus": {
           "$value": "{primitive.color.teal.11}",
           "$type": "color",
-          "$intent": "Bordure focus — accessibilité clavier. Teal interactif accessible, unifié avec action.primary (5.14:1 sur gray.1 #fcfcfc ; non textuel, ≥3:1 requis). Voir ADR-050 (corrige ADR-048).",
-          "$description": "Anneau de focus clavier — accessibilité navigation sans souris. Unifié avec action.primary (5.14:1 sur gray.1, ≥3:1 requis WCAG 1.4.11). Réservé exclusivement à :focus-visible.",
+          "$intent": "Focus border — keyboard accessibility. Accessible interactive teal, unified with action.primary (5.14:1 on gray.1 #fcfcfc; non-text, ≥3:1 required). See ADR-050 (corrects ADR-048).",
+          "$description": "Keyboard focus ring — accessibility for mouse-free navigation. Unified with action.primary (5.14:1 on gray.1, ≥3:1 required by WCAG 1.4.11). Reserved exclusively for :focus-visible.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "focus-ring",
-              "use": [":focus-visible outline", "keyboard-navigation-indicator"],
-              "doNotUse": "Bordure décorative, séparateur, bordure de carte ou d'input au repos. Jamais appliqué en CSS sans le pseudo-sélecteur :focus-visible — border.focus sans :focus-visible est une violation d'accessibilité.",
-              "components": ["tous les composants interactifs via :focus-visible"],
+              "use": [
+                ":focus-visible outline",
+                "keyboard-navigation-indicator"
+              ],
+              "doNotUse": "Decorative border, separator, card or input border at rest. Never applied in CSS without the :focus-visible pseudo-selector — border.focus without :focus-visible is an accessibility violation.",
+              "components": [
+                "every interactive component via :focus-visible"
+              ],
               "decision": "ADR-055"
             }
           }
@@ -374,30 +466,34 @@
         "danger": {
           "$value": "{primitive.color.red.11}",
           "$type": "color",
-          "$intent": "Bordure état erreur"
+          "$intent": "Error-state border"
         },
         "on-dark": {
           "$value": "{primitive.color.white.12}",
           "$type": "color",
-          "$intent": "Séparateur sur surface inversée — non textuel (ADR-046)"
+          "$intent": "Separator on an inverse surface — non-text (ADR-046)"
         },
         "swatch": {
           "$value": "{primitive.color.black.2}",
           "$type": "color",
-          "$intent": "Filet de contour des échantillons de couleur sur fond clair — non textuel (ADR-046)"
+          "$intent": "Outline of color swatches on a light background — non-text (ADR-046)"
         },
         "overlay-dark": {
           "$value": "rgba(255, 255, 255, 0.06)",
           "$type": "color",
-          "$intent": "Bordure très subtile — délimite une carte glassmorphism sombre (feature-card), non textuel",
-          "$description": "Bordure fine (6% opacité blanche) pour délimiter une carte translucide sur fond sombre marketing, à associer à background.overlay-dark. Valeur littérale non aliasée à une primitive — l'échelle white s'arrête à white.12 (18% d'opacité), aucun palier n'existe à 6%. Dette de tokens corrigée (audit Figma du 2026-07-07) : remplace une valeur codée en dur dans agtc-feature-card.js.",
+          "$intent": "Very subtle border — outlines a dark glassmorphism card (feature-card), non-text",
+          "$description": "Thin border (6% white opacity) to outline a translucent card on a dark marketing background, paired with background.overlay-dark. A literal value not aliased to a primitive — the white scale stops at white.12 (18% opacity), no step exists at 6%. Token debt fixed (Figma audit of 2026-07-07): replaces a hardcoded value in agtc-feature-card.js.",
           "$deprecated": false,
           "$extensions": {
             "com.agentica.usage": {
               "role": "border-overlay-dark",
-              "use": ["agtc-feature-card"],
-              "doNotUse": "Bordure standard sur fond clair — utiliser border.default. Élément textuel — cette bordure est non-textuelle et décorative uniquement.",
-              "components": ["agtc-feature-card"]
+              "use": [
+                "agtc-feature-card"
+              ],
+              "doNotUse": "Standard border on a light background — use border.default. Textual element — this border is non-text and decorative only.",
+              "components": [
+                "agtc-feature-card"
+              ]
             }
           }
         }
@@ -406,36 +502,36 @@
         "scale-bar": {
           "$value": "{primitive.color.red.6}",
           "$type": "color",
-          "$intent": "Barre décorative de visualisation d'échelle (démo d'espacement) — non sémantique, non porteuse d'information (ADR-046)"
+          "$intent": "Decorative scale-visualization bar (spacing demo) — non-semantic, carries no information (ADR-046)"
         }
       },
       "control": {
         "track-off": {
           "$value": "{primitive.color.gray.9}",
           "$type": "color",
-          "$intent": "Piste de toggle à l'état inactif (off)"
+          "$intent": "Toggle track in the inactive (off) state"
         },
         "track-off-hover": {
           "$value": "{primitive.color.gray.10}",
           "$type": "color",
-          "$intent": "Piste de toggle inactive au survol"
+          "$intent": "Inactive toggle track on hover"
         }
       },
       "illustration": {
         "ink": {
           "$value": "{primitive.color.mauve.12}",
           "$type": "color",
-          "$intent": "Illustration « Tactile Tech » — masses sombres, ancrage du contraste (ADR-051)"
+          "$intent": "\"Tactile Tech\" illustration — dark masses, contrast anchor (ADR-051)"
         },
         "accent": {
           "$value": "{primitive.color.crimson.9}",
           "$type": "color",
-          "$intent": "Illustration — point focal chaud, énergie (ADR-051)"
+          "$intent": "Illustration — warm focal point, energy (ADR-051)"
         },
         "brand": {
           "$value": "{primitive.color.teal.9}",
           "$type": "color",
-          "$intent": "Illustration — fil conducteur marque, lien visuel au produit (ADR-051)"
+          "$intent": "Illustration — brand throughline, visual link to the product (ADR-051)"
         },
         "neutral": {
           "$value": "{primitive.color.slate.9}",
@@ -445,19 +541,19 @@
         "surface": {
           "$value": "{primitive.color.slate.3}",
           "$type": "color",
-          "$intent": "Illustration — respiration, négatif clair (ADR-051)"
+          "$intent": "Illustration — breathing room, light negative space (ADR-051)"
         }
       },
       "brand": {
         "primary": {
           "$value": "{primitive.color.teal.9}",
           "$type": "color",
-          "$intent": "Couleur de marque primaire — identité, CTA principal"
+          "$intent": "Primary brand color — identity, main CTA"
         },
         "primary-hover": {
           "$value": "{primitive.color.teal.10}",
           "$type": "color",
-          "$intent": "Survol de la couleur primaire"
+          "$intent": "Hover of the primary color"
         },
         "primary-text": {
           "$value": "{primitive.color.teal.12}",
@@ -467,7 +563,7 @@
         "primary-subtle": {
           "$value": "{primitive.color.teal.3}",
           "$type": "color",
-          "$intent": "Fond subtil primaire — chips, tags, badges légers"
+          "$intent": "Subtle primary background — chips, tags, light badges"
         },
         "accent": {
           "$value": "{primitive.color.accent.9}",
@@ -477,7 +573,7 @@
         "accent-hover": {
           "$value": "{primitive.color.accent.10}",
           "$type": "color",
-          "$intent": "Survol de l'accent"
+          "$intent": "Hover of the accent"
         },
         "accent-subtle": {
           "$value": "{primitive.color.accent.3}",
@@ -492,12 +588,12 @@
         "secondary": {
           "$value": "{primitive.color.secondary.9}",
           "$type": "color",
-          "$intent": "Couleur secondaire de marque — fond solide dark (12.2:1 avec blanc)"
+          "$intent": "Secondary brand color — solid dark background (12.2:1 with white)"
         },
         "secondary-hover": {
           "$value": "{primitive.color.secondary.10}",
           "$type": "color",
-          "$intent": "Survol de la couleur secondaire"
+          "$intent": "Hover of the secondary color"
         },
         "secondary-text": {
           "$value": "{primitive.color.secondary.12}",
@@ -507,26 +603,34 @@
         "logo-black": {
           "$value": "{primitive.color.brand.black}",
           "$type": "color",
-          "$intent": "Noir du logo Agentica — version monochrome / fond clair. Réservé aux éléments d'identité de marque (logo, wordmark).",
+          "$intent": "Black of the Agentica logo — monochrome version / light background. Reserved for brand identity elements (logo, wordmark).",
           "$extensions": {
             "com.agentica.usage": {
               "role": "brand-logo-black",
-              "use": ["logo", "wordmark", "icône de marque sur fond clair"],
-              "doNotUse": "Texte courant (utiliser text.primary), fond de page. Jamais pour un composant UI générique.",
-              "decision": "identité-logo"
+              "use": [
+                "logo",
+                "wordmark",
+                "brand icon on a light background"
+              ],
+              "doNotUse": "Regular text (use text.primary), page background. Never for a generic UI component.",
+              "decision": "logo-identity"
             }
           }
         },
         "logo-gray": {
           "$value": "{primitive.color.brand.gray}",
           "$type": "color",
-          "$intent": "Gris du logo Agentica (#6B7280) — version atténuée, baseline marque. Réservé aux éléments d'identité (logo dégradé, picto secondaire).",
+          "$intent": "Gray of the Agentica logo (#6B7280) — muted version, brand baseline. Reserved for identity elements (faded logo, secondary pictogram).",
           "$extensions": {
             "com.agentica.usage": {
               "role": "brand-logo-gray",
-              "use": ["logo variante grise", "icône de marque atténuée", "élément graphique brand secondaire"],
-              "doNotUse": "Texte secondaire (utiliser text.secondary), bordures. Jamais pour un composant UI générique.",
-              "decision": "identité-logo"
+              "use": [
+                "logo variante grise",
+                "muted brand icon",
+                "secondary brand graphic element"
+              ],
+              "doNotUse": "Secondary text (use text.secondary), borders. Never for a generic UI component.",
+              "decision": "logo-identity"
             }
           }
         }
@@ -536,45 +640,45 @@
       "header": {
         "$value": "0 2px 24px rgba(0,0,0,0.12)",
         "$type": "other",
-        "$intent": "Ombre de l'en-tête fixe — séparation du contenu défilant (ADR-046)"
+        "$intent": "Fixed header shadow — separation from scrolling content (ADR-046)"
       },
       "raised": {
         "$value": "0 4px 16px rgba(0,0,0,0.10)",
         "$type": "other",
-        "$intent": "Ombre d'élément surélevé — menus déroulants, nav mobile (ADR-046)"
+        "$intent": "Raised-element shadow — dropdown menus, mobile nav (ADR-046)"
       },
       "card-hover": {
         "$value": "0 4px 16px rgba(13,116,206,0.10)",
         "$type": "other",
-        "$intent": "Ombre de survol de carte — lift teinté marque (action.primary, ADR-046)"
+        "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)"
       },
       "card": {
         "$value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)",
         "$type": "other",
-        "$intent": "Ombre de carte au repos — élévation légère. Solde le résidu d'ADR-046 (consommée par component.card.elevated). Voir ADR-049."
+        "$intent": "Resting card shadow — light elevation. Resolves the ADR-046 residual debt (consumed by component.card.elevated). See ADR-049."
       }
     },
     "space": {
       "density": {
         "_readme": {
-          "$value": "Trois groupes explicites (compact/normal/comfortable). compact utilise floor(), comfortable utilise ceil(), tous deux divisés par primitive.density.grid-unit (4) pour garantir l'alignement 4px. Technique : Sam's math equations in Tokens Studio. Voir ADR-025.",
+          "$value": "Three explicit groups (compact/normal/comfortable). compact uses floor(), comfortable uses ceil(), both divided by primitive.density.grid-unit (4) to guarantee 4px alignment. Technique: Sam's math equations in Tokens Studio. See ADR-025.",
           "$type": "other"
         },
         "factor": {
           "compact": {
             "$value": "{primitive.density.factor.compact}",
             "$type": "number",
-            "$intent": "0.75 — scaling vers le bas, floor() pour alignement grille"
+            "$intent": "0.75 — scaling down, floor() for grid alignment"
           },
           "normal": {
             "$value": "{primitive.density.factor.normal}",
             "$type": "number",
-            "$intent": "1.0 — pas de calcul, valeurs primitives directes"
+            "$intent": "1.0 — no calculation, direct primitive values"
           },
           "comfortable": {
             "$value": "{primitive.density.factor.comfortable}",
             "$type": "number",
-            "$intent": "1.25 — scaling vers le haut, ceil() pour alignement grille"
+            "$intent": "1.25 — scaling up, ceil() for grid alignment"
           }
         }
       },
@@ -582,7 +686,7 @@
         "padding-2xs": {
           "$value": "{primitive.space.0}",
           "$type": "dimension",
-          "$intent": "2px — Micro-espacement sub-grille : badge.sm padding vertical (réservé aux éléments ultra-compacts)"
+          "$intent": "2px — Sub-grid micro-spacing: badge.sm vertical padding (reserved for ultra-compact elements)"
         },
         "padding-xs": {
           "$value": "{primitive.space.1}",
@@ -602,12 +706,12 @@
         "padding-lg": {
           "$value": "{primitive.space.4}",
           "$type": "dimension",
-          "$intent": "16px — Espacement généreux : padding vertical blocs code et bannières"
+          "$intent": "16px — Generous spacing: vertical padding for code blocks and banners"
         },
         "padding-xl": {
           "$value": "{primitive.space.5}",
           "$type": "dimension",
-          "$intent": "20px — Espacement horizontal large : padding-x blocs code et bannières"
+          "$intent": "20px — Large horizontal spacing: padding-x for code blocks and banners"
         },
         "padding-2xl": {
           "$value": "{primitive.space.6}",
@@ -619,46 +723,46 @@
         "padding-x": {
           "$value": "{primitive.space.4}",
           "$type": "dimension",
-          "$intent": "16px — Espacement horizontal des contrôles (densité normale). Voir space.compact ou space.comfortable pour les autres densités."
+          "$intent": "16px — Horizontal spacing of controls (normal density). See space.compact or space.comfortable for other densities."
         },
         "padding-y": {
           "$value": "{primitive.space.2}",
           "$type": "dimension",
-          "$intent": "8px — Espacement vertical des contrôles (densité normale)."
+          "$intent": "8px — Vertical spacing of controls (normal density)."
         },
         "gap": {
           "$value": "{primitive.space.2}",
           "$type": "dimension",
-          "$intent": "8px — Écart interne entre éléments d'un contrôle (densité normale)."
+          "$intent": "8px — Internal gap between elements of a control (normal density)."
         }
       },
       "layout": {
         "section": {
           "$value": "{primitive.space.8}",
           "$type": "dimension",
-          "$intent": "32px — Espacement entre sections de page (densité normale)."
+          "$intent": "32px — Spacing between page sections (normal density)."
         },
         "component": {
           "$value": "{primitive.space.5}",
           "$type": "dimension",
-          "$intent": "20px — Espacement entre composants (densité normale)."
+          "$intent": "20px — Spacing between components (normal density)."
         },
         "page-gutter": {
           "$value": "{primitive.space.20}",
           "$type": "dimension",
-          "$intent": "80px — Gouttière horizontale des sections de page documentation (layout 1440px). Voir ADR-052."
+          "$intent": "80px — Horizontal gutter of documentation page sections (1440px layout). See ADR-052."
         }
       },
       "compact": {
         "_readme": {
-          "$value": "Densité compacte — floor(valeur × 0.75 / 4) × 4. Toutes les valeurs sont des multiples de 4px. Usage : dashboards, tableaux, outils data-dense.",
+          "$value": "Compact density — floor(value × 0.75 / 4) × 4. All values are multiples of 4px. Usage: dashboards, tables, data-dense tools.",
           "$type": "other"
         },
         "control": {
           "padding-x": {
             "$value": "floor({primitive.space.4} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
             "$type": "dimension",
-            "$intent": "12px — padding-x compact (16 × 0.75 = 12, déjà sur grille)"
+            "$intent": "12px — compact padding-x (16 × 0.75 = 12, already on grid)"
           },
           "padding-y": {
             "$value": "floor({primitive.space.2} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
@@ -675,7 +779,7 @@
           "section": {
             "$value": "floor({primitive.space.8} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
             "$type": "dimension",
-            "$intent": "24px — section compact (32 × 0.75 = 24, déjà sur grille)"
+            "$intent": "24px — compact section (32 × 0.75 = 24, already on grid)"
           },
           "component": {
             "$value": "floor({primitive.space.5} * {semantic.space.density.factor.compact} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
@@ -686,14 +790,14 @@
       },
       "comfortable": {
         "_readme": {
-          "$value": "Densité confortable — ceil(valeur × 1.25 / 4) × 4. Toutes les valeurs sont des multiples de 4px. Usage : marketing, onboarding, pages de lecture.",
+          "$value": "Comfortable density — ceil(value × 1.25 / 4) × 4. All values are multiples of 4px. Usage: marketing, onboarding, reading pages.",
           "$type": "other"
         },
         "control": {
           "padding-x": {
             "$value": "ceil({primitive.space.4} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
             "$type": "dimension",
-            "$intent": "20px — padding-x comfortable (16 × 1.25 = 20, déjà sur grille)"
+            "$intent": "20px — comfortable padding-x (16 × 1.25 = 20, already on grid)"
           },
           "padding-y": {
             "$value": "ceil({primitive.space.2} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
@@ -710,7 +814,7 @@
           "section": {
             "$value": "ceil({primitive.space.8} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
             "$type": "dimension",
-            "$intent": "40px — section comfortable (32 × 1.25 = 40, déjà sur grille)"
+            "$intent": "40px — comfortable section (32 × 1.25 = 40, already on grid)"
           },
           "component": {
             "$value": "ceil({primitive.space.5} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit}",
@@ -724,19 +828,19 @@
       "control": {
         "$value": "{primitive.radius.sm}",
         "$type": "dimension",
-        "$intent": "Rayon pour contrôles interactifs (boutons, inputs)"
+        "$intent": "Radius for interactive controls (buttons, inputs)"
       },
       "card": {
         "$value": "{primitive.radius.md}",
         "$type": "dimension",
-        "$intent": "Rayon pour conteneurs (cartes, panneaux)"
+        "$intent": "Radius for containers (cards, panels)"
       }
     },
     "typography": {
       "fontFamily": {
         "$value": "{primitive.fontFamily.base}",
         "$type": "fontFamily",
-        "$intent": "Police système — Atkinson Hyperlegible pour lisibilité maximale (basse vision, WCAG)"
+        "$intent": "System font — Atkinson Hyperlegible for maximum readability (low vision, WCAG)"
       },
       "mono": {
         "family": {
@@ -764,12 +868,12 @@
         "size": {
           "$value": "{primitive.fontSize.xs}",
           "$type": "dimension",
-          "$intent": "12px — Emphase sur une annotation (ex. eyebrow de section, badge) — même taille que detail, poids renforcé"
+          "$intent": "12px — Emphasis on an annotation (e.g. a section eyebrow, badge) — same size as detail, stronger weight"
         },
         "weight": {
           "$value": "{primitive.fontWeight.bold}",
           "$type": "fontWeight",
-          "$intent": "Bold — distinct de detail.weight (regular) : réservé aux petites annotations qui nécessitent une emphase (labels de section, badges d'état)"
+          "$intent": "Bold — distinct from detail.weight (regular): reserved for small annotations that need emphasis (section labels, status badges)"
         },
         "line-height": {
           "$value": "{primitive.lineHeight.reading}",
@@ -780,7 +884,7 @@
         "size": {
           "$value": "{primitive.fontSize.sm}",
           "$type": "dimension",
-          "$intent": "14px — Labels de formulaire, métadonnées, tags"
+          "$intent": "14px — Form labels, metadata, tags"
         },
         "weight": {
           "$value": "{primitive.fontWeight.medium}",
@@ -795,12 +899,12 @@
         "size": {
           "$value": "{primitive.fontSize.sm}",
           "$type": "dimension",
-          "$intent": "14px — Emphase sur libellé (ex. texte de bouton) — même taille que label, poids renforcé"
+          "$intent": "14px — Emphasis on a label (e.g. button text) — same size as label, stronger weight"
         },
         "weight": {
           "$value": "{primitive.fontWeight.bold}",
           "$type": "fontWeight",
-          "$intent": "Bold — distinct de label.weight (medium) : réservé aux libellés qui nécessitent une emphase visuelle forte (CTA)"
+          "$intent": "Bold — distinct from label.weight (medium): reserved for labels that need strong visual emphasis (CTA)"
         },
         "line-height": {
           "$value": "{primitive.lineHeight.reading}",
@@ -811,7 +915,7 @@
         "size": {
           "$value": "{primitive.fontSize.base}",
           "$type": "dimension",
-          "$intent": "16px — Corps de texte principal"
+          "$intent": "16px — Main body text"
         },
         "weight": {
           "$value": "{primitive.fontWeight.regular}",
@@ -823,14 +927,44 @@
         }
       },
       "heading": {
-        "5": {
+        "1": {
           "size": {
-            "$value": "{primitive.fontSize.lg}",
+            "$value": "{primitive.fontSize.4xl}",
             "$type": "dimension",
-            "$intent": "20px — H5, sous-titres de section"
+            "$intent": "40px — H1 principal"
           },
           "weight": {
-            "$value": "{primitive.fontWeight.medium}",
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight"
+          },
+          "line-height": {
+            "$value": "{primitive.lineHeight.display}",
+            "$type": "number"
+          }
+        },
+        "2": {
+          "size": {
+            "$value": "{primitive.fontSize.3xl}",
+            "$type": "dimension",
+            "$intent": "32px — H2"
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
+            "$type": "fontWeight"
+          },
+          "line-height": {
+            "$value": "{primitive.lineHeight.display}",
+            "$type": "number"
+          }
+        },
+        "3": {
+          "size": {
+            "$value": "{primitive.fontSize.2xl}",
+            "$type": "dimension",
+            "$intent": "28px — H3"
+          },
+          "weight": {
+            "$value": "{primitive.fontWeight.bold}",
             "$type": "fontWeight"
           },
           "line-height": {
@@ -853,48 +987,18 @@
             "$type": "number"
           }
         },
-        "3": {
+        "5": {
           "size": {
-            "$value": "{primitive.fontSize.2xl}",
+            "$value": "{primitive.fontSize.lg}",
             "$type": "dimension",
-            "$intent": "28px — H3"
+            "$intent": "20px — H5, section subtitles"
           },
           "weight": {
-            "$value": "{primitive.fontWeight.bold}",
+            "$value": "{primitive.fontWeight.medium}",
             "$type": "fontWeight"
           },
           "line-height": {
             "$value": "{primitive.lineHeight.heading}",
-            "$type": "number"
-          }
-        },
-        "2": {
-          "size": {
-            "$value": "{primitive.fontSize.3xl}",
-            "$type": "dimension",
-            "$intent": "32px — H2"
-          },
-          "weight": {
-            "$value": "{primitive.fontWeight.bold}",
-            "$type": "fontWeight"
-          },
-          "line-height": {
-            "$value": "{primitive.lineHeight.display}",
-            "$type": "number"
-          }
-        },
-        "1": {
-          "size": {
-            "$value": "{primitive.fontSize.4xl}",
-            "$type": "dimension",
-            "$intent": "40px — H1 principal"
-          },
-          "weight": {
-            "$value": "{primitive.fontWeight.bold}",
-            "$type": "fontWeight"
-          },
-          "line-height": {
-            "$value": "{primitive.lineHeight.display}",
             "$type": "number"
           }
         }
@@ -918,47 +1022,47 @@
         "tighter": {
           "$value": "{primitive.letterSpacing.tighter}",
           "$type": "dimension",
-          "$intent": "Très resserré — grands nombres/chiffres display (stats, KPI) (ADR-068)"
+          "$intent": "Very tight — large display numbers/digits (stats, KPIs) (ADR-068)"
         },
         "tight": {
           "$value": "{primitive.letterSpacing.tight}",
           "$type": "dimension",
-          "$intent": "Resserré — titres h1 hors hero (ADR-068)"
+          "$intent": "Tight — h1 headings outside the hero (ADR-068)"
         },
         "snug": {
           "$value": "{primitive.letterSpacing.snug}",
           "$type": "dimension",
-          "$intent": "Légèrement resserré — logo, nombres de stats secondaires, titres de section home (ADR-068)"
+          "$intent": "Slightly tight — logo, secondary stat numbers, home section headings (ADR-068)"
         },
         "heading": {
           "$value": "{primitive.letterSpacing.heading}",
           "$type": "dimension",
-          "$intent": "Resserrement discret — titres h2, titres de page ADR (ADR-068)"
+          "$intent": "Subtle tightening — h2 headings, ADR page titles (ADR-068)"
         },
         "normal": {
           "$value": "{primitive.letterSpacing.normal}",
           "$type": "dimension",
-          "$intent": "Défaut — corps de texte, labels, détails en casse normale"
+          "$intent": "Default — body text, labels, normal-case details"
         },
         "relaxed": {
           "$value": "{primitive.letterSpacing.relaxed}",
           "$type": "dimension",
-          "$intent": "Légèrement élargi — boutons de langue, en-têtes de tableau de contraste (ADR-068)"
+          "$intent": "Slightly wide — language buttons, contrast table headers (ADR-068)"
         },
         "wide": {
           "$value": "{primitive.letterSpacing.wide}",
           "$type": "dimension",
-          "$intent": "Élargi — étiquettes en petites majuscules (ex. indicateur de langue de code, eyebrow) où l'espacement compense la réduction de lisibilité du texte en capitales"
+          "$intent": "Wide — small-caps labels (e.g. code language indicator, eyebrow) where spacing compensates for the reduced readability of uppercase text"
         },
         "label": {
           "$value": "{primitive.letterSpacing.label}",
           "$type": "dimension",
-          "$intent": "Élargi — labels de propriété/métadonnée en majuscules (ADR-068)"
+          "$intent": "Wide — uppercase property/metadata labels (ADR-068)"
         },
         "loose": {
           "$value": "{primitive.letterSpacing.loose}",
           "$type": "dimension",
-          "$intent": "Très élargi — étiquette d'audience en majuscules (ADR-068)"
+          "$intent": "Very wide — uppercase audience label (ADR-068)"
         },
         "overline": {
           "$value": "{primitive.letterSpacing.overline}",
@@ -972,28 +1076,28 @@
         "inline": {
           "$value": "{primitive.iconSize.sm}",
           "$type": "dimension",
-          "$intent": "Icône dans un texte ou label"
+          "$intent": "Icon within text or a label"
         },
         "control": {
           "$value": "{primitive.iconSize.md}",
           "$type": "dimension",
-          "$intent": "Icône dans un contrôle interactif"
+          "$intent": "Icon within an interactive control"
         },
         "nav": {
           "$value": "{primitive.iconSize.lg}",
           "$type": "dimension",
-          "$intent": "Icône de navigation ou d'emphase"
+          "$intent": "Navigation or emphasis icon"
         },
         "feature": {
           "$value": "{primitive.iconSize.xl}",
           "$type": "dimension",
-          "$intent": "32px — Icône de card feature, section marketing. Minimum requis en data-context='marketing'. Grille 4px : 8×4."
+          "$intent": "32px — Feature card icon, marketing section. Minimum required under data-context='marketing'. 4px grid: 8×4."
         }
       }
     },
     "marketing": {
       "_readme": {
-        "$value": "Tokens réservés au contexte Marketing Narratif (data-context=marketing). Voir .claude/rules/contexts-utilisation.md et ADR-057.",
+        "$value": "Tokens reserved for the Narrative Marketing context (data-context=marketing). See .claude/rules/contexts-utilisation.md and ADR-057.",
         "$type": "other"
       },
       "typography": {
@@ -1001,7 +1105,7 @@
           "size": {
             "$value": "{primitive.fontSize.6xl}",
             "$type": "dimension",
-            "$intent": "60px — Titre d'accroche marketing : homepage hero, landing page. Jamais dans un contexte Produit."
+            "$intent": "60px — Marketing hook title: homepage hero, landing page. Never in a Product context."
           },
           "weight": {
             "$value": "{primitive.fontWeight.bold}",
@@ -1016,7 +1120,7 @@
           "size": {
             "$value": "{primitive.fontSize.xs}",
             "$type": "dimension",
-            "$intent": "12px — Étiquette courte au-dessus d'un titre hero. Marketing uniquement."
+            "$intent": "12px — Short label above a hero title. Marketing only."
           },
           "weight": {
             "$value": "{primitive.fontWeight.bold}",
@@ -1025,7 +1129,7 @@
           "letter-spacing": {
             "$value": "{primitive.letterSpacing.widest}",
             "$type": "dimension",
-            "$intent": "Espacement large — compense la lisibilité réduite du texte en petites majuscules sur l'étiquette eyebrow (ADR-067)"
+            "$intent": "Wide spacing — compensates for the reduced readability of small-caps text on the eyebrow label (ADR-067)"
           }
         }
       },
@@ -1033,12 +1137,12 @@
         "section-breathing": {
           "$value": "{primitive.space.24}",
           "$type": "dimension",
-          "$intent": "96px — Respiration ample entre sections marketing. Contraste avec la densité Produit (32px)."
+          "$intent": "96px — Generous breathing room between marketing sections. Contrasts with Product density (32px)."
         },
         "hero-gap": {
           "$value": "{primitive.space.30}",
           "$type": "dimension",
-          "$intent": "120px — Espace vertical du bloc hero marketing. Jamais en contexte Produit."
+          "$intent": "120px — Vertical spacing of the marketing hero block. Never in a Product context."
         }
       }
     }

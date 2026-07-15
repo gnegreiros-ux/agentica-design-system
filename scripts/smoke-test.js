@@ -1,10 +1,10 @@
-// Smoke test anti-régression — vérifie que les composants clés ont leurs tokens CSS résolus.
-// Détecte les régressions comme "agtc-button a perdu tout son style" en vérifiant
-// que les propriétés CSS calculées des Shadow DOM sont non-vides et non-transparentes.
+// Anti-regression smoke test — verifies that key components have their CSS tokens resolved.
+// Detects regressions like "agtc-button lost all its styling" by checking
+// that computed Shadow DOM CSS properties are non-empty and non-transparent.
 //
-// CLI :
+// CLI:
 //   node scripts/smoke-test.js
-//   node scripts/smoke-test.js --report-only   → rapport sans blocage (exit 0)
+//   node scripts/smoke-test.js --report-only   → report with no blocking (exit 0)
 
 import { chromium } from 'playwright';
 import { writeFileSync } from 'node:fs';
@@ -14,13 +14,13 @@ import { pathToFileURL } from 'node:url';
 const DIST = join(process.cwd(), 'site', 'dist');
 const REPORT_ONLY = process.argv.includes('--report-only');
 
-// ── Contrats de composants — ce qui DOIT être résolu ──────────────────────
-// Chaque entrée : { page, component, selector (dans shadow DOM), property, check }
+// ── Component contracts — what MUST be resolved ────────────────────────────
+// Each entry: { page, component, selector (inside shadow DOM), property, check }
 // check: 'non-empty' | 'non-transparent' | (value) => boolean
 const CONTRACTS = [
   // ── agtc-button ──────────────────────────────────────────────────────────
   {
-    label: 'agtc-button primary — background non-transparent',
+    label: 'agtc-button primary — non-transparent background',
     page: 'components/button.html',
     host: 'agtc-button[variant="primary"]',
     shadowSelector: 'button.primary',
@@ -28,7 +28,7 @@ const CONTRACTS = [
     check: v => v !== '' && v !== 'rgba(0, 0, 0, 0)' && v !== 'transparent',
   },
   {
-    label: 'agtc-button primary — couleur de texte non-vide',
+    label: 'agtc-button primary — non-empty text color',
     page: 'components/button.html',
     host: 'agtc-button[variant="primary"]',
     shadowSelector: 'button.primary',
@@ -36,7 +36,7 @@ const CONTRACTS = [
     check: v => v !== '' && v !== 'rgba(0, 0, 0, 0)',
   },
   {
-    label: 'agtc-button secondary — border non-transparent',
+    label: 'agtc-button secondary — non-transparent border',
     page: 'components/button.html',
     host: 'agtc-button[variant="secondary"]',
     shadowSelector: 'button.secondary',
@@ -44,7 +44,7 @@ const CONTRACTS = [
     check: v => v !== '' && v !== 'rgba(0, 0, 0, 0)',
   },
   {
-    label: 'agtc-button critical — background non-transparent',
+    label: 'agtc-button critical — non-transparent background',
     page: 'components/button.html',
     host: 'agtc-button[variant="critical"]',
     shadowSelector: 'button.critical',
@@ -53,7 +53,7 @@ const CONTRACTS = [
   },
   // ── agtc-badge ───────────────────────────────────────────────────────────
   {
-    label: 'agtc-badge success — background non-transparent',
+    label: 'agtc-badge success — non-transparent background',
     page: 'components/badge.html',
     host: 'agtc-badge[variant="success"]',
     shadowSelector: 'span.badge',
@@ -62,7 +62,7 @@ const CONTRACTS = [
   },
   // ── agtc-banner ──────────────────────────────────────────────────────────
   {
-    label: 'agtc-banner info — background non-transparent',
+    label: 'agtc-banner info — non-transparent background',
     page: 'components/banner.html',
     host: 'agtc-banner[variant="info"]',
     shadowSelector: '.banner',
@@ -86,14 +86,14 @@ const context = await browser.newContext({ viewport: { width: 1280, height: 900 
 const results = [];
 let failures = 0;
 
-console.log('smoke-test — anti-régression composants\n');
+console.log('smoke-test — component anti-regression\n');
 
 for (const contract of CONTRACTS) {
   const page = await context.newPage();
   const url  = pathToFileURL(join(DIST, contract.page)).href;
   await page.goto(url, { waitUntil: 'load' });
 
-  // Attendre que le custom element soit défini et upgradé
+  // Wait for the custom element to be defined and upgraded
   await page.waitForFunction(
     host => customElements.get(host.split('[')[0]) !== undefined,
     contract.host,
@@ -125,7 +125,7 @@ for (const contract of CONTRACTS) {
   console.log(`${status} ${contract.label}`);
   if (!pass) {
     failures++;
-    const reason = error || (value.startsWith('__') ? value : `valeur obtenue: "${value}"`);
+    const reason = error || (value.startsWith('__') ? value : `value obtained: "${value}"`);
     console.log(`    → ${reason}`);
   }
 
@@ -139,15 +139,15 @@ writeFileSync(
   JSON.stringify({ generatedAt: new Date().toISOString(), results, failures }, null, 2)
 );
 
-console.log(`\n— ${CONTRACTS.length} contrats · ${failures} échec(s)`);
-console.log('Rapport : smoke-report.json');
+console.log(`\n— ${CONTRACTS.length} contracts · ${failures} failure(s)`);
+console.log('Report: smoke-report.json');
 
 if (failures > 0) {
   if (REPORT_ONLY) {
-    console.warn(`\n⚠ ${failures} contrat(s) de composant non respecté(s) — corriger avant merge.`);
+    console.warn(`\n⚠ ${failures} component contract(s) not respected — fix before merging.`);
     process.exit(0);
   }
-  console.error(`\n✗ ÉCHEC — régression détectée sur ${failures} composant(s).`);
+  console.error(`\n✗ FAILED — regression detected in ${failures} component(s).`);
   process.exit(1);
 }
-console.log('\n✓ Tous les contrats de composants sont respectés.');
+console.log('\n✓ All component contracts are respected.');

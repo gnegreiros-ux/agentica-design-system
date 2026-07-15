@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Documentation — régressions visuelles', () => {
+test.describe('Documentation — visual regressions', () => {
   for (const theme of ['light', 'dark']) {
     test(`page documentation — ${theme}`, async ({ page }) => {
       await page.goto('/documentation.html');

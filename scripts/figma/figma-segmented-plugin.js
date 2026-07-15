@@ -46,11 +46,11 @@
     };
   }
 
-  // Fond canevas #535353 (règle §13)
-  // Exception §0 : page.backgrounds ne supporte pas setBoundVariableForPaint
+  // Canvas background #535353 (rule §13)
+  // Exception §0: page.backgrounds doesn't support setBoundVariableForPaint
   pg.backgrounds = [{ type: "SOLID", color: hex("#535353") }];
 
-  // vFill : toujours token sémantique + fallback (règle §0)
+  // vFill: always a semantic token + fallback (rule §0)
   function vFill(tok, fb) {
     var v = VARS[tok];
     var p = { type: "SOLID", color: hex(fb) };
@@ -59,7 +59,7 @@
     catch (e) { return [p]; }
   }
 
-  // bv : lier une propriété float à une Variable
+  // bv: bind a float property to a Variable
   function bv(node, prop, tok, fallback) {
     var v = VARS[tok];
     if (v) {
@@ -147,18 +147,18 @@
 
   // ── 5. ComponentSet Segmented ────────────────────────────────────────────
   //
-  // Structure :
-  //   Tab=1..3, State=Default  — chaque segment actif tour à tour
-  //   Tab=1,    State=Hover    — tab 1 actif, survol sur tab 2
-  //   Tab=1,    State=Focus    — anneau focus sur le conteneur
-  //   Tab=1,    State=Disabled — tout désactivé (opacité 40%)
+  // Structure:
+  //   Tab=1..3, State=Default  — each segment active in turn
+  //   Tab=1,    State=Hover    — tab 1 active, hover on tab 2
+  //   Tab=1,    State=Focus    — focus ring on the container
+  //   Tab=1,    State=Disabled — everything disabled (40% opacity)
   //
-  // Conteneur   : color/background/subtle  cornerRadius 10  padding 4
-  // Seg actif   : color/action/primary     cornerRadius 7   shadow légère
-  // Seg inactif : transparent              texte secondary
-  // Seg hover   : overlay 6% noir
+  // Container      : color/background/subtle  cornerRadius 10  padding 4
+  // Active segment : color/action/primary     cornerRadius 7   light shadow
+  // Inactive segment: transparent             secondary text
+  // Hover segment  : 6% black overlay
 
-  var TABS = ["Journée", "Semaine", "Mois"];
+  var TABS = ["Day", "Week", "Month"];
 
   var variants = [
     { name: "Tab=1, State=Default",  active: 0, hoverIdx: -1, focus: false, disabled: false },
@@ -231,7 +231,7 @@
 
   var cs = figma.combineAsVariants(comps, pg);
   cs.name = "Segmented";
-  cs.x = 0; cs.y = 3000; // hors flux — règle §15 (showcase via instances)
+  cs.x = 0; cs.y = 3000; // out of flow — rule §15 (showcase via instances)
 
   // ── 6. Page-wrapper ──────────────────────────────────────────────────────
   var wrapper = figma.createFrame();
@@ -260,7 +260,7 @@
   sHeader.paddingLeft = 80; sHeader.paddingRight = 80;
   sHeader.clipsContent = true;
 
-  // Décorations gradient (exception §0 — gradientStops, fallback hex commenté)
+  // Gradient decorations (exception §0 — gradientStops, hex fallback in comment)
   var decoGrad = figma.createFrame();
   decoGrad.name = "_deco-gradient";
   decoGrad.resize(800, 320);
@@ -282,7 +282,7 @@
   blob1.name = "_deco-blob-lg";
   blob1.resize(340, 340);
   blob1.fills = vFill("color/action/primary", "#007A68");
-  blob1.opacity = 0.07; // opacité nœud — exception §0
+  blob1.opacity = 0.07; // node opacity — exception §0
   blob1.layoutPositioning = "ABSOLUTE";
   blob1.x = 1160; blob1.y = -120;
   sHeader.appendChild(blob1);
@@ -298,9 +298,9 @@
 
   sHeader.appendChild(mkI("Segmented", "Bold", 32, "color/text/primary", "#202020"));
   sHeader.appendChild(mkT(
-    "Contrôle de sélection exclusive parmi 2 à 5 options mutuellement exclusives. " +
-    "Idéal pour basculer entre des vues ou des modes dans un espace compact. " +
-    "Une option est toujours active — jamais d'état sans sélection.",
+    "An exclusive-selection control among 2 to 5 mutually exclusive options. " +
+    "Ideal for switching between views or modes in a compact space. " +
+    "One option is always active — never a no-selection state.",
     "Regular", 16, "color/text/secondary", "#646464"
   ));
   sHeader.appendChild(mkLinksRow([
@@ -316,7 +316,7 @@
   var sShowcase = mkSection("section-showcase", "color/background/subtle", "#f0f0f0");
   sShowcase.clipsContent = true;
 
-  // Grille de points décoratifs
+  // Decorative dot grid
   for (var dc = 0; dc < 20; dc++) {
     for (var dr = 0; dr < 8; dr++) {
       var dot = figma.createEllipse();
@@ -330,9 +330,9 @@
     }
   }
 
-  sShowcase.appendChild(mkI("Aperçu des variantes", "Bold", 14, "color/text/primary", "#202020"));
+  sShowcase.appendChild(mkI("Variant preview", "Bold", 14, "color/text/primary", "#202020"));
 
-  // Instances row WRAP — règle §15
+  // Instances row WRAP — rule §15
   var instRow = figma.createFrame();
   instRow.name = "instances-row";
   instRow.layoutMode = "HORIZONTAL";
@@ -367,15 +367,15 @@
   instRow.layoutSizingHorizontal = "FILL";
   wrapper.appendChild(sShowcase);
 
-  // ── 6.3 États ────────────────────────────────────────────────────────────
+  // ── 6.3 States ───────────────────────────────────────────────────────────
   var sStates = mkSection("section-states", "color/background/surface", "#FFFFFF");
-  sStates.appendChild(mkI("États", "Bold", 20, "color/text/primary", "#202020"));
+  sStates.appendChild(mkI("States", "Bold", 20, "color/text/primary", "#202020"));
 
   var statesData = [
-    { state: "Default",  desc: "Option sélectionnée courante. Segment actif : fond color/action/primary, texte color/text/on-action, ombre légère. Segments inactifs : transparent, texte color/text/secondary." },
-    { state: "Hover",    desc: "Survol d'un segment inactif : overlay 6% noir. Pas d'état hover sur le segment déjà actif — il reste inchangé." },
-    { state: "Focus",    desc: "Navigation clavier (Tab, flèches) : anneau de focus 2px blanc + 4px color/border/focus sur le conteneur entier. Conforme WCAG 2.4.11 (focus apparence)." },
-    { state: "Disabled", desc: "Toutes les options désactivées : opacité 40%, cursor not-allowed, aria-disabled='true'. L'état actif reste visible pour indiquer la valeur courante." }
+    { state: "Default",  desc: "Currently selected option. Active segment: color/action/primary background, color/text/on-action text, light shadow. Inactive segments: transparent, color/text/secondary text." },
+    { state: "Hover",    desc: "Hovering an inactive segment: 6% black overlay. No hover state on the already-active segment — it stays unchanged." },
+    { state: "Focus",    desc: "Keyboard navigation (Tab, arrows): 2px white focus ring + 4px color/border/focus around the whole container. WCAG 2.4.11 compliant (focus appearance)." },
+    { state: "Disabled", desc: "All options disabled: 40% opacity, cursor not-allowed, aria-disabled='true'. The active state stays visible to indicate the current value." }
   ];
 
   var stTable = figma.createFrame();
@@ -445,17 +445,17 @@
 
   // ── 6.4 Tokens ───────────────────────────────────────────────────────────
   var sTokens = mkSection("section-tokens", "color/background/subtle", "#f0f0f0");
-  sTokens.appendChild(mkI("Tokens utilisés", "Bold", 20, "color/text/primary", "#202020"));
+  sTokens.appendChild(mkI("Tokens used", "Bold", 20, "color/text/primary", "#202020"));
 
   var tokData = [
-    { token: "color/background/subtle",  role: "Fond du conteneur (piste)" },
-    { token: "color/action/primary",     role: "Fond segment actif" },
-    { token: "color/action/primary-hover", role: "Fond segment actif au survol" },
-    { token: "color/text/on-action",     role: "Texte du segment actif" },
-    { token: "color/text/secondary",     role: "Texte des segments inactifs" },
-    { token: "color/border/focus",       role: "Anneau de focus (2px + 4px spread)" },
-    { token: "space/control/padding-x",  role: "Padding horizontal de chaque segment (16px)" },
-    { token: "space/control/padding-y",  role: "Padding vertical de chaque segment (7px)" }
+    { token: "color/background/subtle",  role: "Container (track) background" },
+    { token: "color/action/primary",     role: "Active segment background" },
+    { token: "color/action/primary-hover", role: "Active segment background on hover" },
+    { token: "color/text/on-action",     role: "Active segment text" },
+    { token: "color/text/secondary",     role: "Inactive segments text" },
+    { token: "color/border/focus",       role: "Focus ring (2px + 4px spread)" },
+    { token: "space/control/padding-x",  role: "Horizontal padding of each segment (16px)" },
+    { token: "space/control/padding-y",  role: "Vertical padding of each segment (7px)" }
   ];
 
   var tokTable = figma.createFrame();
@@ -478,7 +478,7 @@
   tokHead.fills = vFill("color/background/subtle", "#f0f0f0");
   tokHead.itemSpacing = 0;
 
-  [{ w: 460, label: "Token sémantique" }, { w: 820, label: "Rôle dans le composant" }].forEach(function (col) {
+  [{ w: 460, label: "Semantic token" }, { w: 820, label: "Role in the component" }].forEach(function (col) {
     var cell = figma.createFrame();
     cell.layoutMode = "HORIZONTAL"; cell.resize(col.w, 40);
     cell.primaryAxisSizingMode = "FIXED"; cell.counterAxisSizingMode = "AUTO";
@@ -549,12 +549,12 @@
 
   var dosItems = [
     {
-      do:   { badge: "✅  DO",   example: "2 à 5 options, libellés courts",    desc: "Le Segmented fonctionne bien pour 2-5 choix mutuellement exclusifs. Libellés courts (1-2 mots) pour que chaque segment reste lisible." },
-      dont: { badge: "❌  DON'T", example: "7 segments ou libellés longs",      desc: "Au-delà de 5 segments, utiliser un Select ou un Tab nav. Les libellés trop longs compressent les segments et cassent la lisibilité." }
+      do:   { badge: "✅  DO",   example: "2 to 5 options, short labels",    desc: "Segmented works well for 2-5 mutually exclusive choices. Short labels (1-2 words) keep each segment readable." },
+      dont: { badge: "❌  DON'T", example: "7 segments or long labels",      desc: "Beyond 5 segments, use a Select or a Tab nav instead. Labels that are too long compress the segments and break readability." }
     },
     {
-      do:   { badge: "✅  DO",   example: "Une option toujours sélectionnée",  desc: "Comme un radio group, le Segmented maintient toujours une valeur active. C'est un choix entre états, pas une action déclenchable." },
-      dont: { badge: "❌  DON'T", example: "Utiliser pour des actions (Submit, Annuler)", desc: "Le Segmented représente un état persistant, pas une action. Pour déclencher une action, utiliser Button ou Link." }
+      do:   { badge: "✅  DO",   example: "One option always selected",  desc: "Like a radio group, Segmented always maintains an active value. It's a choice between states, not a triggerable action." },
+      dont: { badge: "❌  DON'T", example: "Using it for actions (Submit, Cancel)", desc: "Segmented represents a persistent state, not an action. To trigger an action, use Button or Link." }
     }
   ];
 
@@ -573,16 +573,16 @@
 
   wrapper.appendChild(sDos);
 
-  // ── 6.6 Règles a11y ──────────────────────────────────────────────────────
+  // ── 6.6 a11y rules ────────────────────────────────────────────────────────
   var sA11y = mkSection("section-a11y", "color/background/subtle", "#f0f0f0");
-  sA11y.appendChild(mkI("Accessibilité", "Bold", 20, "color/text/primary", "#202020"));
+  sA11y.appendChild(mkI("Accessibility", "Bold", 20, "color/text/primary", "#202020"));
 
   var a11yItems = [
-    { rule: "ARIA",          desc: 'role="tablist" sur le conteneur · role="tab" sur chaque segment · aria-selected="true/false" · tabindex="0" sur l\'actif, tabindex="-1" sur les autres' },
-    { rule: "Clavier",       desc: "Tab : entrer/quitter le composant · Flèches ←→ : naviguer entre les segments · Home/End : premier/dernier segment" },
-    { rule: "Focus visible", desc: 'Anneau 2px blanc + 4px color/border/focus sur le conteneur (conforme WCAG 2.4.11). Jamais outline:none sans compensation.' },
-    { rule: "Contraste",     desc: "Texte actif : blanc sur #007A68 = 5.3:1 ✅ AA · Texte inactif : #646464 sur #f0f0f0 = 5.7:1 ✅ AA · Badge état : visible dans les deux modes" },
-    { rule: "Disabled",      desc: 'aria-disabled="true" sur le conteneur · Ne pas supprimer du DOM — opacité 40% + pointer-events:none en CSS uniquement' }
+    { rule: "ARIA",          desc: 'role="tablist" on the container · role="tab" on each segment · aria-selected="true/false" · tabindex="0" on the active one, tabindex="-1" on the others' },
+    { rule: "Keyboard",      desc: "Tab: enter/exit the component · Arrow keys ←→: navigate between segments · Home/End: first/last segment" },
+    { rule: "Visible focus", desc: '2px white ring + 4px color/border/focus on the container (WCAG 2.4.11 compliant). Never outline:none with no compensation.' },
+    { rule: "Contrast",      desc: "Active text: white on #007A68 = 5.3:1 ✅ AA · Inactive text: #646464 on #f0f0f0 = 5.7:1 ✅ AA · State badge: visible in both modes" },
+    { rule: "Disabled",      desc: 'aria-disabled="true" on the container · Don\'t remove from the DOM — 40% opacity + pointer-events:none in CSS only' }
   ];
 
   var a11yTable = figma.createFrame();
@@ -605,7 +605,7 @@
   a11yHead.fills = vFill("color/background/subtle", "#f0f0f0");
   a11yHead.itemSpacing = 0;
 
-  [{ w: 160, label: "Aspect" }, { w: 1120, label: "Règle" }].forEach(function (col) {
+  [{ w: 160, label: "Aspect" }, { w: 1120, label: "Rule" }].forEach(function (col) {
     var cell = figma.createFrame();
     cell.layoutMode = "HORIZONTAL"; cell.resize(col.w, 40);
     cell.primaryAxisSizingMode = "FIXED"; cell.counterAxisSizingMode = "AUTO";
@@ -658,6 +658,6 @@
 
   // ── 7. Viewport ──────────────────────────────────────────────────────────
   figma.viewport.scrollAndZoomIntoView([wrapper]);
-  figma.closePlugin("✅ Segmented — page Components / Segmented créée");
+  figma.closePlugin("✅ Segmented — Components / Segmented page created");
 
 })();

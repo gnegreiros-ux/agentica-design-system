@@ -1,5 +1,5 @@
 {
-  "_note": "Ce fichier est une référence de documentation. L'exécutable est build.js — il enregistre les parseurs et formats custom avant d'étendre cette config.",
+  "_note": "This file is a documentation reference. The executable is build.js — it registers the custom parsers and formats before extending this config.",
   "source": [
     "tokens/primitives.json",
     "tokens/semantic.json",

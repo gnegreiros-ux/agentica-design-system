@@ -1,7 +1,7 @@
 'use strict';
 /**
- * Fonctions d'audit WCAG 2.2 partagées entre audit-a11y.js (CLI) et build.js (page /audit).
- * N'exécute rien — exporte uniquement des fonctions pures.
+ * WCAG 2.2 audit functions shared between audit-a11y.js (CLI) and build.js (the /audit page).
+ * Runs nothing — exports pure functions only.
  */
 
 const fs   = require('fs');
@@ -13,7 +13,7 @@ function getSiteCSS() {
   return fs.readFileSync(path.join(DIST, 'site.css'), 'utf8');
 }
 
-// ─── CONTRASTE ──────────────────────────────────────────────────────────────
+// ─── CONTRAST ───────────────────────────────────────────────────────────────
 function lum(hex) {
   const h = hex.replace('#', '');
   const [r, g, b] = [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
@@ -31,24 +31,24 @@ function cr(a, b) {
 // has no meaning here. Keep these values in sync with tokens/semantic.json by
 // hand when a referenced color changes.
 const CONTRAST_PAIRS = [
-  ['#ffffff', '#007a68', 'Button primary — texte sur fond (action.primary)',  4.5],
-  ['#202020', '#fcfcfc', 'Corps de texte sur fond de page',                  4.5],
-  ['#202020', '#ffffff', 'Corps de texte sur surface',                       4.5],
-  ['#646464', '#ffffff', 'Texte secondaire sur surface',                     4.5],
-  ['#646464', '#fcfcfc', 'Texte secondaire sur fond de page',                4.5],
-  ['#ffffff', '#ce2c31', 'Bouton critical — texte sur fond',                 4.5],
-  ['#0d74ce', '#ffffff', 'Lien / sidebar actif — texte sur surface',         4.5],
-  ['#0d74ce', '#fcfcfc', 'Lien sur fond de page',                           4.5],
-  ['#0d74ce', '#fafafa', 'Lien sur ligne hover',                            4.5],
-  ['#18794e', '#ecfdf5', 'Badge succès — texte sur fond (UI 1.4.11)',       3.0],
-  ['#0d74ce', '#e8e8e8', 'Anneau focus sur bordure par défaut (1.4.11)',    3.0],
-  ['#202020', '#f0f0f0', 'Texte sur fond subtil',                           4.5],
-  ['#646464', '#f0f0f0', 'Texte secondaire sur fond subtil',                4.5],
-  ['#767676', '#ffffff', 'Texte désactivé sur surface',                     4.5],
-  ['#767676', '#fcfcfc', 'Texte désactivé sur fond page — exempt 1.4.3',   1.0],
+  ['#ffffff', '#007a68', 'Button primary — text on background (action.primary)',  4.5],
+  ['#202020', '#fcfcfc', 'Body text on page background',                         4.5],
+  ['#202020', '#ffffff', 'Body text on surface',                                 4.5],
+  ['#646464', '#ffffff', 'Secondary text on surface',                            4.5],
+  ['#646464', '#fcfcfc', 'Secondary text on page background',                    4.5],
+  ['#ffffff', '#ce2c31', 'Critical button — text on background',                 4.5],
+  ['#0d74ce', '#ffffff', 'Link / active sidebar — text on surface',              4.5],
+  ['#0d74ce', '#fcfcfc', 'Link on page background',                             4.5],
+  ['#0d74ce', '#fafafa', 'Link on hovered row',                                 4.5],
+  ['#18794e', '#ecfdf5', 'Success badge — text on background (UI 1.4.11)',      3.0],
+  ['#0d74ce', '#e8e8e8', 'Focus ring on default border (1.4.11)',               3.0],
+  ['#202020', '#f0f0f0', 'Text on subtle background',                           4.5],
+  ['#646464', '#f0f0f0', 'Secondary text on subtle background',                 4.5],
+  ['#767676', '#ffffff', 'Disabled text on surface',                            4.5],
+  ['#767676', '#fcfcfc', 'Disabled text on page background — 1.4.3 exempt',    1.0],
 ];
 
-// ─── PARSEUR HTML MINIMAL ───────────────────────────────────────────────────
+// ─── MINIMAL HTML PARSER ────────────────────────────────────────────────────
 function allTags(html, tag) {
   const re = new RegExp(`<${tag}(\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>|<${tag}(\\s[^>]*)?/?>`, 'gi');
   return [...html.matchAll(re)].map(m => m[0]);
@@ -64,7 +64,7 @@ function innerText(tag) {
   return tag.replace(/<[^>]+>/g, '').trim();
 }
 
-// ─── ANALYSE D'UNE PAGE ─────────────────────────────────────────────────────
+// ─── SINGLE-PAGE ANALYSIS ───────────────────────────────────────────────────
 function auditPage(html, file, SITE_CSS) {
   const violations = [];
   const warnings   = [];
@@ -74,85 +74,85 @@ function auditPage(html, file, SITE_CSS) {
   function warn(criterion, msg) { warnings.push({ criterion, msg, file }); }
   function pass(criterion, msg) { passed.push({ criterion, msg }); }
 
-  // 3.1.1 Langue
+  // 3.1.1 Language
   const langMatch = html.match(/<html[^>]+lang="([^"]*)"/i);
-  if (!langMatch) fail('3.1.1', 'Attribut lang manquant sur <html>');
-  else if (!langMatch[1]) fail('3.1.1', 'Attribut lang vide sur <html>');
+  if (!langMatch) fail('3.1.1', 'Missing lang attribute on <html>');
+  else if (!langMatch[1]) fail('3.1.1', 'Empty lang attribute on <html>');
   else pass('3.1.1', `lang="${langMatch[1]}"`);
 
-  // 2.4.2 Titre
+  // 2.4.2 Title
   const titleMatch = html.match(/<title>([^<]*)<\/title>/i);
-  if (!titleMatch || !titleMatch[1].trim()) fail('2.4.2', '<title> absent ou vide');
+  if (!titleMatch || !titleMatch[1].trim()) fail('2.4.2', 'Missing or empty <title>');
   else pass('2.4.2', `title="${titleMatch[1].trim().slice(0, 60)}"`);
 
   // 2.4.1 Skip link
-  if (!html.includes('skip-link')) fail('2.4.1', 'Pas de lien d\'évitement (skip link)');
-  else pass('2.4.1', 'Lien d\'évitement présent');
+  if (!html.includes('skip-link')) fail('2.4.1', 'No skip link');
+  else pass('2.4.1', 'Skip link present');
 
   // 4.1.1 Landmarks
-  if (!html.match(/<main[\s>]/i)) fail('4.1.1', 'Pas d\'élément <main>');
-  else pass('4.1.1', '<main> présent');
-  if (!html.match(/<header[\s>]/i)) warn('1.3.1', 'Pas d\'élément <header>');
-  if (!html.match(/<nav[\s>]/i))    warn('1.3.1', 'Pas d\'élément <nav>');
+  if (!html.match(/<main[\s>]/i)) fail('4.1.1', 'No <main> element');
+  else pass('4.1.1', '<main> present');
+  if (!html.match(/<header[\s>]/i)) warn('1.3.1', 'No <header> element');
+  if (!html.match(/<nav[\s>]/i))    warn('1.3.1', 'No <nav> element');
 
   const mainEl = html.match(/<main[^>]*>/i)?.[0] || '';
-  if (mainEl && !mainEl.includes('role')) pass('4.1.2', '<main> fournit role=main implicite');
+  if (mainEl && !mainEl.includes('role')) pass('4.1.2', '<main> provides implicit role=main');
 
   // 1.1.1 Alt text
   const imgs = html.match(/<img[^>]*>/gi) || [];
   imgs.forEach(img => {
-    if (!hasAttr(img, 'alt')) fail('1.1.1', `<img> sans alt : ${img.slice(0, 80)}`);
+    if (!hasAttr(img, 'alt')) fail('1.1.1', `<img> with no alt: ${img.slice(0, 80)}`);
   });
-  if (imgs.length === 0) pass('1.1.1', 'Aucune image — N/A');
+  if (imgs.length === 0) pass('1.1.1', 'No images — N/A');
 
-  // 4.1.2 Boutons
+  // 4.1.2 Buttons
   const buttons = allTags(html, 'button');
   buttons.forEach(btn => {
     const text            = innerText(btn);
     const ariaLabel       = attr(btn, 'aria-label');
     const ariaLabelledBy  = attr(btn, 'aria-labelledby');
     if (!text && !ariaLabel && !ariaLabelledBy) {
-      fail('4.1.2', `<button> sans nom accessible : ${btn.slice(0, 80)}`);
+      fail('4.1.2', `<button> with no accessible name: ${btn.slice(0, 80)}`);
     }
   });
-  if (buttons.length > 0) pass('4.1.2', `${buttons.length} bouton(s) vérifiés`);
+  if (buttons.length > 0) pass('4.1.2', `${buttons.length} button(s) checked`);
 
-  // 4.1.2 Liens
+  // 4.1.2 Links
   const links = allTags(html, 'a');
   let ambiguousLinks = 0;
   links.forEach(a => {
     const text      = innerText(a).toLowerCase();
     const ariaLabel = attr(a, 'aria-label');
     if (!text && !ariaLabel && !hasAttr(a, 'aria-labelledby')) {
-      fail('4.1.2', `<a> sans texte ni aria-label : ${a.slice(0, 80)}`);
+      fail('4.1.2', `<a> with no text or aria-label: ${a.slice(0, 80)}`);
     }
     const AMBIGUOUS = ['cliquez ici', 'ici', 'en savoir plus', 'lire la suite', 'click here'];
     if (!ariaLabel && AMBIGUOUS.includes(text)) {
-      warn('2.4.4', `Texte de lien ambigu : "${text}"`);
+      warn('2.4.4', `Ambiguous link text: "${text}"`);
       ambiguousLinks++;
     }
   });
-  if (ambiguousLinks === 0 && links.length > 0) pass('2.4.4', `${links.length} lien(s) — textes non ambigus`);
+  if (ambiguousLinks === 0 && links.length > 0) pass('2.4.4', `${links.length} link(s) — unambiguous text`);
 
-  // 2.4.6 Hiérarchie des titres
+  // 2.4.6 Heading hierarchy
   const headings = [...html.matchAll(/<h([1-6])[^>]*>/gi)].map(m => parseInt(m[1]));
   let prevLevel = 0;
   let headingErrors = 0;
   headings.forEach(level => {
     if (level > prevLevel + 1 && prevLevel !== 0) {
-      warn('2.4.6', `Saut de niveau : h${prevLevel} → h${level}`);
+      warn('2.4.6', `Level skip: h${prevLevel} → h${level}`);
       headingErrors++;
     }
     prevLevel = level;
   });
-  if (headingErrors === 0 && headings.length > 0) pass('2.4.6', `${headings.length} titre(s) — hiérarchie correcte`);
+  if (headingErrors === 0 && headings.length > 0) pass('2.4.6', `${headings.length} heading(s) — correct hierarchy`);
 
-  // 1.3.1 Tableaux
+  // 1.3.1 Tables
   const tables = allTags(html, 'table');
   tables.forEach(table => {
-    if (!table.includes('<th') && table.includes('<td')) warn('1.3.1', 'Tableau sans <th>');
+    if (!table.includes('<th') && table.includes('<td')) warn('1.3.1', 'Table with no <th>');
   });
-  if (tables.length > 0) pass('1.3.1', `${tables.length} tableau(x) vérifiés`);
+  if (tables.length > 0) pass('1.3.1', `${tables.length} table(s) checked`);
 
   // 3.3.2 Labels
   const inputs = html.match(/<input[^>]*>/gi) || [];
@@ -164,57 +164,57 @@ function auditPage(html, file, SITE_CSS) {
     const ariaLabelledBy= attr(input, 'aria-labelledby');
     const hasLabel      = id && html.includes(`for="${id}"`);
     if (!hasLabel && !ariaLabel && !ariaLabelledBy) {
-      warn('3.3.2', `<input type="${type}"> sans label (id=${id || 'absent'})`);
+      warn('3.3.2', `<input type="${type}"> with no label (id=${id || 'missing'})`);
     }
   });
 
   // 2.4.7 Focus visible
-  if (SITE_CSS.includes(':focus-visible')) pass('2.4.7', ':focus-visible défini dans site.css');
-  else fail('2.4.7', ':focus-visible absent du CSS');
+  if (SITE_CSS.includes(':focus-visible')) pass('2.4.7', ':focus-visible defined in site.css');
+  else fail('2.4.7', ':focus-visible missing from CSS');
 
-  // 2.4.11 Focus non masqué
+  // 2.4.11 Focus not obscured
   const stickyHeader = SITE_CSS.match(/\.site-header\s*\{[^}]*position:\s*fixed/s);
   if (stickyHeader) {
     if (SITE_CSS.includes('scroll-padding') || SITE_CSS.includes('scroll-margin')) {
-      pass('2.4.11', 'Header fixe + scroll-padding présent');
+      pass('2.4.11', 'Fixed header + scroll-padding present');
     } else {
-      warn('2.4.11', 'Header fixe sans scroll-padding-top — focus potentiellement masqué');
+      warn('2.4.11', 'Fixed header with no scroll-padding-top — focus potentially obscured');
     }
   }
 
-  // 2.4.13 Apparence du focus
+  // 2.4.13 Focus appearance
   const focusOutline = SITE_CSS.match(/focus-visible\s*\{[^}]*outline:\s*(\d+)px/);
   if (focusOutline) {
     const px = parseInt(focusOutline[1]);
-    if (px >= 2) pass('2.4.13', `outline: ${px}px sur :focus-visible (≥ 2px requis)`);
-    else fail('2.4.13', `outline: ${px}px — inférieur aux 2px requis par WCAG 2.2`);
+    if (px >= 2) pass('2.4.13', `outline: ${px}px on :focus-visible (≥ 2px required)`);
+    else fail('2.4.13', `outline: ${px}px — below the 2px required by WCAG 2.2`);
   } else {
-    warn('2.4.13', ':focus-visible outline non détecté — vérification manuelle requise');
+    warn('2.4.13', ':focus-visible outline not detected — manual check required');
   }
 
-  // 2.5.8 Taille des cibles
+  // 2.5.8 Target size
   const btnPaddingY = SITE_CSS.match(/\.ds-btn\s*\{[^}]*padding/s);
-  if (btnPaddingY) pass('2.5.8', 'Boutons .ds-btn : hauteur ≈ 36px (> 24px minimum)');
+  if (btnPaddingY) pass('2.5.8', '.ds-btn buttons: height ≈ 36px (> 24px minimum)');
 
-  // 2.5.3 Label dans le nom
+  // 2.5.3 Label in name
   const btnsWithAriaLabel = [...html.matchAll(/<button[^>]+aria-label="([^"]*)"[^>]*>([^<]*)</gi)];
   btnsWithAriaLabel.forEach(m => {
     const ariaLabel   = m[1].toLowerCase();
     const visibleText = m[2].toLowerCase().trim();
     if (visibleText && !ariaLabel.includes(visibleText)) {
-      warn('2.5.3', `aria-label "${m[1]}" ne contient pas le texte visible "${m[2].trim()}"`);
+      warn('2.5.3', `aria-label "${m[1]}" doesn't contain the visible text "${m[2].trim()}"`);
     }
   });
 
-  // 4.1.2 ARIA valides
+  // 4.1.2 Valid ARIA
   const ariaSelectedElems = [...html.matchAll(/aria-selected="([^"]*)"/gi)];
   ariaSelectedElems.forEach(m => {
     if (!['true', 'false'].includes(m[1])) {
-      fail('4.1.2', `aria-selected="${m[1]}" — doit être "true" ou "false"`);
+      fail('4.1.2', `aria-selected="${m[1]}" — must be "true" or "false"`);
     }
   });
 
-  // IDs uniques — strip <pre>/<code> pour éviter les faux positifs dans les exemples de code
+  // Unique IDs — strip <pre>/<code> to avoid false positives in code examples
   const htmlForIds = html
     .replace(/<pre[\s\S]*?<\/pre>/gi, '<pre></pre>')
     .replace(/<code[\s\S]*?<\/code>/gi, '<code></code>');
@@ -222,17 +222,17 @@ function auditPage(html, file, SITE_CSS) {
   const idCounts = {};
   idMatches.forEach(id => { idCounts[id] = (idCounts[id] || 0) + 1; });
   Object.entries(idCounts).forEach(([id, count]) => {
-    if (count > 1) fail('4.1.1', `id="${id}" dupliqué (${count} fois)`);
+    if (count > 1) fail('4.1.1', `id="${id}" duplicated (${count} times)`);
   });
   const uniqueIds = Object.keys(idCounts).filter(k => idCounts[k] === 1);
   if (uniqueIds.length > 0 && Object.values(idCounts).every(c => c === 1)) {
-    pass('4.1.1', `${uniqueIds.length} ID(s) — tous uniques`);
+    pass('4.1.1', `${uniqueIds.length} ID(s) — all unique`);
   }
 
   return { violations, warnings, passed };
 }
 
-// ─── AUDIT DES CONTRASTES ────────────────────────────────────────────────────
+// ─── CONTRAST AUDIT ─────────────────────────────────────────────────────────
 function auditContrast() {
   return CONTRAST_PAIRS.map(([fg, bg, label, required]) => ({
     fg, bg, label, required,
@@ -241,7 +241,7 @@ function auditContrast() {
   }));
 }
 
-// ─── COLLECTE DES PAGES ──────────────────────────────────────────────────────
+// ─── PAGE COLLECTION ────────────────────────────────────────────────────────
 function collectPages(excludeFile) {
   const pages = [];
   function walk(dir) {
@@ -255,7 +255,7 @@ function collectPages(excludeFile) {
   return pages;
 }
 
-// ─── EXÉCUTION COMPLÈTE ──────────────────────────────────────────────────────
+// ─── FULL RUN ───────────────────────────────────────────────────────────────
 function runAudit({ excludeFile } = {}) {
   const SITE_CSS = getSiteCSS();
   const pages    = collectPages(excludeFile);
@@ -279,7 +279,7 @@ function runAudit({ excludeFile } = {}) {
     allWarnings.push(...result.warnings.map(w => ({ ...w, file: rel })));
   });
 
-  // Contraste
+  // Contrast
   const contrastResults = auditContrast();
   const failedContrast  = contrastResults.filter(r => !r.pass);
   totalViolations += failedContrast.length;
@@ -303,7 +303,7 @@ function runAudit({ excludeFile } = {}) {
   };
 }
 
-// ─── CRITÈRES MANUELS ────────────────────────────────────────────────────────
+// ─── MANUAL CRITERIA ────────────────────────────────────────────────────────
 const MANUAL_CHECKS = [
   { criterion: '1.4.1',  titleFr: 'Usage de la couleur',          titleEn: 'Use of Colour',
     descFr: 'Les erreurs ne sont pas signalées par la couleur seule (texte + icône + couleur).',

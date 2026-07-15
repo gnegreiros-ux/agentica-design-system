@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Composant Button — régressions visuelles', () => {
+test.describe('Button component — visual regressions', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/components/button.html');
     await page.waitForLoadState('networkidle');

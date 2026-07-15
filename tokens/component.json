@@ -2,33 +2,33 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$metadata": {
     "level": "component",
-    "description": "Contrats UI exécutables. Encodage des décisions UI et comportementales. Base des contrats institutionnels.",
+    "description": "Executable UI contracts. Encoding of UI and behavioral decisions. The foundation of institutional contracts.",
     "version": "1.0.0",
-    "rule": "Toute modification requiert une approbation formelle (TCR). Ces tokens sont des contrats organisationnels.",
-    "_extensions-convention": "Les champs $extensions['com.agentica.usage'] sont des métadonnées agent-ready (DTCG W3C). Champs : role, doNotUse (contre-indications croisées entre variantes), decision (ADR). Ces champs sont ignorés par Style Dictionary à la compilation — comportement attendu. Voir ADR-052."
+    "rule": "Any modification requires formal approval (TCR). These tokens are organizational contracts.",
+    "_extensions-convention": "The $extensions['com.agentica.usage'] fields are agent-ready metadata (DTCG W3C). Fields: role, doNotUse (cross-variant contraindications), decision (ADR). These fields are ignored by Style Dictionary at compile time — expected behavior. See ADR-052."
   },
   "button": {
     "$metadata": {
-      "intent": "Déclencher une action utilisateur",
+      "intent": "Trigger a user action",
       "owner": "design-system-team",
       "contract": "guidelines/components/button.md"
     },
     "font-size": {
       "$value": "{semantic.typography.label-bold.size}",
       "$type": "dimension",
-      "$intent": "Taille du libellé — partagée par toutes les variantes"
+      "$intent": "Label size — shared by every variant"
     },
     "font-weight": {
       "$value": "{semantic.typography.label-bold.weight}",
       "$type": "fontWeight",
-      "$intent": "Emphase forte du libellé — partagée par toutes les variantes (CTA)"
+      "$intent": "Strong label emphasis — shared by every variant (CTA)"
     },
     "primary": {
-      "$description": "Bouton d'action principale — maximum 1 par section ou formulaire. Jamais pour actions destructrices.",
+      "$description": "Primary action button — maximum 1 per section or form. Never for destructive actions.",
       "$extensions": {
         "com.agentica.usage": {
           "role": "button-primary",
-          "doNotUse": "Actions destructrices ou irréversibles — utiliser button.critical. Jamais deux Button[primary] dans la même section (hiérarchie cassée). Ne jamais styler des boutons d'action positive (ex: 'Enregistrer') avec la couleur danger.",
+          "doNotUse": "Destructive or irreversible actions — use button.critical. Never two Button[primary] in the same section (broken hierarchy). Never style positive-action buttons (e.g. 'Save') with the danger color.",
           "decision": "ADR-005"
         }
       },
@@ -62,11 +62,11 @@
       }
     },
     "critical": {
-      "$description": "Bouton d'action critique/destructrice — rouge danger. Requiert une confirmation obligatoire avant exécution. Ne jamais utiliser pour des actions réversibles.",
+      "$description": "Critical/destructive action button — danger red. Requires mandatory confirmation before execution. Never use for reversible actions.",
       "$extensions": {
         "com.agentica.usage": {
           "role": "button-critical",
-          "doNotUse": "Actions normales non-destructrices — utiliser button.primary. Ne jamais appliquer à un bouton sans pattern de confirmation affiché. Ne jamais styler des boutons critiques avec les tokens button.primary (mélange de sémantiques).",
+          "doNotUse": "Normal, non-destructive actions — use button.primary. Never apply to a button with no visible confirmation pattern. Never style critical buttons with button.primary tokens (mixed semantics).",
           "decision": "ADR-005"
         }
       },
@@ -75,7 +75,7 @@
         "prevents-double-click": true,
         "audit-log": true,
         "min-contrast": "4.5:1",
-        "rule": "Toute action irréversible DOIT utiliser cette variante. Ne jamais utiliser primary pour des actions destructrices."
+        "rule": "Any irreversible action MUST use this variant. Never use primary for destructive actions."
       },
       "background": {
         "$value": "{semantic.color.feedback.danger}",
@@ -133,7 +133,7 @@
   },
   "input": {
     "$metadata": {
-      "intent": "Permettre la saisie de données par l'utilisateur",
+      "intent": "Allow the user to enter data",
       "owner": "design-system-team"
     },
     "default": {
@@ -177,7 +177,7 @@
   },
   "badge": {
     "$metadata": {
-      "intent": "Indiquer un statut, une catégorie ou un compteur.",
+      "intent": "Indicate a status, category, or counter.",
       "owner": "design-system-team"
     },
     "neutral": {
@@ -303,7 +303,7 @@
   },
   "card": {
     "$metadata": {
-      "intent": "Regrouper des informations liées dans un conteneur visuel distinct",
+      "intent": "Group related information in a distinct visual container",
       "owner": "design-system-team"
     },
     "default": {
@@ -362,18 +362,18 @@
     },
     "typography": {
       "$metadata": {
-        "intent": "Typographie systémique de la card — deux contextes : Produit SaaS (défaut) et Marketing (data-context='marketing')"
+        "intent": "The card's systemic typography — two contexts: Product SaaS (default) and Marketing (data-context='marketing')"
       },
       "title": {
         "size": {
           "$value": "{semantic.typography.label.size}",
           "$type": "dimension",
-          "$intent": "14px — Titre de carte en contexte Produit SaaS"
+          "$intent": "14px — Card title in Product SaaS context"
         },
         "weight": {
           "$value": "{semantic.typography.heading.4.weight}",
           "$type": "fontWeight",
-          "$intent": "Bold pour distinguer visuellement le titre"
+          "$intent": "Bold to visually distinguish the title"
         },
         "line-height": {
           "$value": "{semantic.typography.label-bold.line-height}",
@@ -384,7 +384,7 @@
         "size": {
           "$value": "{semantic.typography.label.size}",
           "$type": "dimension",
-          "$intent": "14px — Corps de carte en contexte Produit SaaS"
+          "$intent": "14px — Card body in Product SaaS context"
         },
         "weight": {
           "$value": "{semantic.typography.label.weight}",
@@ -399,7 +399,7 @@
         "size": {
           "$value": "{semantic.typography.detail.size}",
           "$type": "dimension",
-          "$intent": "12px — Méta-informations, rôles, labels secondaires"
+          "$intent": "12px — Meta information, roles, secondary labels"
         },
         "weight": {
           "$value": "{semantic.typography.detail.weight}",
@@ -408,25 +408,25 @@
       },
       "marketing": {
         "$metadata": {
-          "intent": "Surcharges typographiques pour data-context='marketing' — jamais utilisées hors marketing"
+          "intent": "Typography overrides for data-context='marketing' — never used outside marketing"
         },
         "title": {
           "size": {
             "$value": "{semantic.typography.heading.5.size}",
             "$type": "dimension",
-            "$intent": "20px — Titre de carte en contexte Marketing (heading-5)"
+            "$intent": "20px — Card title in Marketing context (heading-5)"
           },
           "weight": {
             "$value": "{semantic.typography.heading.4.weight}",
             "$type": "fontWeight",
-            "$intent": "Bold pour impact éditorial"
+            "$intent": "Bold for editorial impact"
           }
         },
         "hero-title": {
           "size": {
             "$value": "{semantic.typography.heading.5.size}",
             "$type": "dimension",
-            "$intent": "20px — Titre de carte prominente en contexte Marketing (audience, features)"
+            "$intent": "20px — Prominent card title in Marketing context (audience, features)"
           },
           "weight": {
             "$value": "{semantic.typography.hero.weight}",
@@ -437,14 +437,14 @@
           "size": {
             "$value": "{semantic.typography.body.size}",
             "$type": "dimension",
-            "$intent": "16px — Corps de carte en contexte Marketing"
+            "$intent": "16px — Card body in Marketing context"
           }
         },
         "meta": {
           "size": {
             "$value": "{semantic.typography.label.size}",
             "$type": "dimension",
-            "$intent": "14px — Méta de carte en contexte Marketing (labels, rôles)"
+            "$intent": "14px — Card meta in Marketing context (labels, roles)"
           }
         }
       }
@@ -452,7 +452,7 @@
   },
   "checkbox": {
     "$metadata": {
-      "intent": "Sélection binaire indépendante — cocher/décocher une option ou marquer une tâche faite",
+      "intent": "Independent binary selection — check/uncheck an option or mark a task done",
       "owner": "design-system-team"
     },
     "default": {
@@ -496,7 +496,7 @@
   },
   "radio": {
     "$metadata": {
-      "intent": "Sélection mutuellement exclusive — exactement un choix dans un groupe",
+      "intent": "Mutually exclusive selection — exactly one choice within a group",
       "owner": "design-system-team"
     },
     "default": {
@@ -532,7 +532,7 @@
   },
   "toggle": {
     "$metadata": {
-      "intent": "Réglage binaire à effet immédiat (on/off) — préférer à la checkbox quand le changement s'applique instantanément",
+      "intent": "Binary setting with immediate effect (on/off) — prefer over the checkbox when the change applies instantly",
       "owner": "design-system-team"
     },
     "default": {
@@ -568,7 +568,7 @@
   },
   "table": {
     "$metadata": {
-      "intent": "Présenter des données tabulaires de façon lisible, scannable et accessible — lecture seule",
+      "intent": "Present tabular data in a readable, scannable, accessible way — read-only",
       "owner": "design-system-team"
     },
     "default": {
@@ -624,7 +624,7 @@
   },
   "link": {
     "$metadata": {
-      "intent": "Lien de navigation textuel — inline ou standalone, interne ou externe",
+      "intent": "Textual navigation link — inline or standalone, internal or external",
       "owner": "design-system-team"
     },
     "default": {
@@ -644,7 +644,7 @@
   },
   "segmented": {
     "$metadata": {
-      "intent": "Contrôle segmenté mono-sélection à effet immédiat (2–5 options courtes)",
+      "intent": "Single-select segmented control with immediate effect (2-5 short options)",
       "owner": "design-system-team"
     },
     "default": {
@@ -680,7 +680,7 @@
   },
   "banner": {
     "$metadata": {
-      "intent": "Message inline contextuel (callout/alerte) — info, succès, avertissement, erreur",
+      "intent": "Contextual inline message (callout/alert) — info, success, warning, error",
       "owner": "design-system-team"
     },
     "neutral": {
@@ -778,7 +778,7 @@
   },
   "code-block": {
     "$metadata": {
-      "intent": "Afficher un extrait de code en lecture seule, copiable, avec indicateur de langue — surface sombre",
+      "intent": "Display a read-only, copyable code snippet with a language indicator — dark surface",
       "owner": "design-system-team"
     },
     "default": {
@@ -830,7 +830,7 @@
   },
   "tabs": {
     "$metadata": {
-      "intent": "Navigation par onglets in-page avec panneau associé",
+      "intent": "In-page tabbed navigation with an associated panel",
       "owner": "design-system-team",
       "contract": "guidelines/components/tabs.md"
     },
@@ -871,7 +871,7 @@
   },
   "top-nav": {
     "$metadata": {
-      "intent": "Navigation principale horizontale — pattern tabs visuels full-height, liens inter-pages. Visuellement similaire aux tabs mais sémantiquement role=navigation + aria-current=page.",
+      "intent": "Main horizontal navigation — full-height visual tab pattern, inter-page links. Visually similar to tabs but semantically role=navigation + aria-current=page.",
       "owner": "design-system-team",
       "contract": "guidelines/components/top-nav.md"
     },
@@ -879,94 +879,94 @@
       "color": {
         "$value": "{semantic.color.text.secondary}",
         "$type": "color",
-        "$intent": "Couleur du lien de navigation au repos"
+        "$intent": "Navigation link color at rest"
       },
       "color-hover": {
         "$value": "{semantic.color.text.primary}",
         "$type": "color",
-        "$intent": "Couleur au survol — renforcement sans fond pill"
+        "$intent": "Hover color — reinforcement with no pill background"
       },
       "background-hover": {
         "$value": "{semantic.color.background.subtle}",
         "$type": "color",
-        "$intent": "Fond au survol — feedback de zone, pas d'effet bouton"
+        "$intent": "Hover background — zone feedback, not a button effect"
       },
       "color-active": {
         "$value": "{semantic.color.action.primary}",
         "$type": "color",
-        "$intent": "Couleur du lien correspondant à la page courante (aria-current=page)"
+        "$intent": "Color of the link matching the current page (aria-current=page)"
       },
       "indicator-color": {
         "$value": "{semantic.color.action.primary}",
         "$type": "color",
-        "$intent": "Couleur de l'indicateur border-bottom de la page active"
+        "$intent": "Color of the active page's bottom-border indicator"
       },
       "indicator-width": {
         "$value": "2px",
         "$type": "dimension",
-        "$intent": "Épaisseur de l'indicateur — positionnée au bas du header pleine hauteur"
+        "$intent": "Indicator thickness — positioned at the bottom of the full-height header"
       },
       "padding-x": {
         "$value": "14px",
         "$type": "dimension",
-        "$intent": "Espacement horizontal des liens — zone de clic confortable (différent du control-padding-x standard)"
+        "$intent": "Horizontal spacing of links — comfortable click zone (different from the standard control-padding-x)"
       },
       "font-size": {
         "$value": "{semantic.typography.label.size}",
         "$type": "dimension",
-        "$intent": "Taille de corps des liens de navigation"
+        "$intent": "Body size of navigation links"
       },
       "font-weight": {
         "$value": "{semantic.typography.label.weight}",
         "$type": "fontWeight",
-        "$intent": "Graisse par défaut des liens"
+        "$intent": "Default weight of links"
       },
       "font-weight-active": {
         "$value": "{semantic.typography.label-bold.weight}",
         "$type": "fontWeight",
-        "$intent": "Graisse de la page active — renforce la lisibilité sans fond rempli"
+        "$intent": "Weight of the active page — reinforces readability with no filled background"
       },
       "focus-ring": {
         "$value": "{semantic.color.border.focus}",
         "$type": "color",
-        "$intent": "Couleur du ring de focus clavier (WCAG 2.4.7)"
+        "$intent": "Keyboard focus ring color (WCAG 2.4.7)"
       }
     },
     "cta": {
       "gap": {
         "$value": "8px",
         "$type": "dimension",
-        "$intent": "Séparation visuelle entre les tabs de navigation et le bouton CTA d'adoption"
+        "$intent": "Visual separation between the nav tabs and the adoption CTA button"
       },
       "background": {
         "$value": "{semantic.color.action.primary}",
         "$type": "color",
-        "$intent": "Fond du bouton CTA — reste un bouton, distinct du pattern tab"
+        "$intent": "CTA button background — stays a button, distinct from the tab pattern"
       },
       "background-hover": {
         "$value": "{semantic.color.action.primary-hover}",
         "$type": "color",
-        "$intent": "Fond du bouton CTA au survol"
+        "$intent": "CTA button background on hover"
       },
       "color": {
         "$value": "{semantic.color.text.on-action}",
         "$type": "color",
-        "$intent": "Texte du bouton CTA sur fond action-primary"
+        "$intent": "CTA button text on the action-primary background"
       },
       "padding-x": {
         "$value": "{semantic.space.control.padding-x}",
         "$type": "dimension",
-        "$intent": "Espacement horizontal du CTA — aligné sur le standard control"
+        "$intent": "CTA horizontal spacing — aligned with the control standard"
       },
       "padding-y": {
         "$value": "{semantic.space.control.padding-y}",
         "$type": "dimension",
-        "$intent": "Espacement vertical du CTA"
+        "$intent": "CTA vertical spacing"
       },
       "radius": {
         "$value": "{semantic.radius.control}",
         "$type": "dimension",
-        "$intent": "Arrondi du CTA — marque sa nature de bouton vs les tabs plats"
+        "$intent": "CTA corner radius — marks its nature as a button vs. the flat tabs"
       }
     }
   }

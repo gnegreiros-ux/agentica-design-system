@@ -49,8 +49,8 @@ const preview = {
       },
     },
     chromatic: {
-      // Capture light + dark en parallèle pour chaque story.
-      // Référence : https://www.chromatic.com/docs/modes/
+      // Captures light + dark in parallel for each story.
+      // Reference: https://www.chromatic.com/docs/modes/
       modes: allModes,
     },
   },

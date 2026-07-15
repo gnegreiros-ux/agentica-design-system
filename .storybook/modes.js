@@ -1,9 +1,9 @@
-// Chromatic Story Modes — capture deux snapshots par story (light + dark).
-// Référence : https://www.chromatic.com/docs/modes/
-// Usage dans une story :
+// Chromatic Story Modes — captures two snapshots per story (light + dark).
+// Reference: https://www.chromatic.com/docs/modes/
+// Usage in a story:
 //   import { allModes } from '../.storybook/modes.js';
 //   export const MyStory = { parameters: { chromatic: { modes: allModes } } };
-// Ou globalement dans preview.js (paramètre chromatic.modes au niveau global).
+// Or globally in preview.js (chromatic.modes parameter at the global level).
 
 export const allModes = {
   light: {

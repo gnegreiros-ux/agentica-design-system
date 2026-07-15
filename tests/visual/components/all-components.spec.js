@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-// Régressions visuelles de toutes les pages composants (sauf button.html, déjà couvert)
+// Visual regressions for every component page (except button.html, already covered)
 const PAGES = [
   'badge', 'banner', 'card', 'checkbox', 'code-block',
   'icon', 'input', 'link', 'radio', 'segmented',
@@ -8,7 +8,7 @@ const PAGES = [
 ];
 
 for (const name of PAGES) {
-  test.describe(`${name} — régressions visuelles`, () => {
+  test.describe(`${name} — visual regressions`, () => {
     for (const theme of ['light', 'dark']) {
       test(`page ${name} — ${theme}`, async ({ page }) => {
         await page.goto(`/components/${name}.html`);

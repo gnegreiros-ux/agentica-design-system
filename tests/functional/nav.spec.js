@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Navigation — tests fonctionnels', () => {
+test.describe('Navigation — functional tests', () => {
   // --- Mega menu (docs-panel) ---
-  // Testé sur /documentation.html : la home masque certains éléments du header (data-page="home")
+  // Tested on /documentation.html: the home page hides some header elements (data-page="home")
 
   test.describe('docs-panel', () => {
     test.beforeEach(async ({ page }) => {
@@ -10,39 +10,39 @@ test.describe('Navigation — tests fonctionnels', () => {
       await page.waitForLoadState('networkidle');
     });
 
-    test('fermé par défaut', async ({ page }) => {
-      // Le panel utilise la classe CSS is-open, pas l'attribut hidden, pour l'état ouvert
+    test('closed by default', async ({ page }) => {
+      // The panel uses the is-open CSS class, not the hidden attribute, for the open state
       await expect(page.locator('[data-docs-panel]')).not.toHaveClass(/is-open/);
     });
 
-    test('s\'ouvre au survol du docs-trigger', async ({ page }) => {
-      // Le trigger ouvre via mouseenter (UX hover), pas via click
-      // click → closeDocs() (navigation vers documentation.html)
+    test('opens on hover of docs-trigger', async ({ page }) => {
+      // The trigger opens via mouseenter (UX hover), not via click
+      // click → closeDocs() (navigation to documentation.html)
       const trigger = page.locator('[data-docs-trigger]');
       const panel = page.locator('[data-docs-panel]');
 
       await trigger.hover();
-      await page.waitForTimeout(100); // rAF + transition CSS
+      await page.waitForTimeout(100); // rAF + CSS transition
 
       await expect(panel).toHaveClass(/is-open/);
       await expect(trigger).toHaveAttribute('aria-expanded', 'true');
     });
 
-    test('se ferme au clic en dehors du panel', async ({ page }) => {
-      // Le trigger ouvre via mouseenter, ferme uniquement via clic extérieur ou Escape
+    test('closes on click outside the panel', async ({ page }) => {
+      // The trigger opens via mouseenter, closes only via outside click or Escape
       const trigger = page.locator('[data-docs-trigger]');
       const panel = page.locator('[data-docs-panel]');
 
       await trigger.hover();
       await expect(panel).toHaveClass(/is-open/);
 
-      // Clic en dehors du panel (coin haut-gauche de la page)
+      // Click outside the panel (top-left corner of the page)
       await page.mouse.click(10, 10);
       await expect(panel).not.toHaveClass(/is-open/);
       await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     });
 
-    test('se ferme avec Escape', async ({ page }) => {
+    test('closes with Escape', async ({ page }) => {
       const trigger = page.locator('[data-docs-trigger]');
       const panel = page.locator('[data-docs-panel]');
 
@@ -55,27 +55,27 @@ test.describe('Navigation — tests fonctionnels', () => {
     });
   });
 
-  // --- Menu mobile ---
+  // --- Mobile menu ---
 
-  test.describe('menu mobile', () => {
+  test.describe('mobile menu', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/');
       await page.waitForLoadState('networkidle');
     });
 
-    test('bouton présent dans le DOM en desktop', async ({ page }) => {
+    test('button present in the DOM on desktop', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await expect(page.locator('[data-menu-toggle]')).toBeAttached();
     });
 
-    test('s\'ouvre sur mobile (375px)', async ({ page }) => {
+    test('opens on mobile (375px)', async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 812 });
       await page.locator('[data-menu-toggle]').click();
       await expect(page.locator('[data-menu-toggle]')).toHaveAttribute('aria-expanded', 'true');
       await expect(page.locator('[data-main-nav]')).toBeVisible();
     });
 
-    test('se ferme au second clic (mobile)', async ({ page }) => {
+    test('closes on second click (mobile)', async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 812 });
       const btn = page.locator('[data-menu-toggle]');
 
@@ -87,9 +87,9 @@ test.describe('Navigation — tests fonctionnels', () => {
     });
   });
 
-  // --- Bascule de thème ---
-  // La home masque le theme-toggle via [data-page="home"] .theme-toggle { display:none }
-  // → tests sur documentation.html
+  // --- Theme toggle ---
+  // The home page hides the theme-toggle via [data-page="home"] .theme-toggle { display:none }
+  // → tests on documentation.html
 
   test.describe('theme toggle', () => {
     test.beforeEach(async ({ page }) => {
@@ -97,7 +97,7 @@ test.describe('Navigation — tests fonctionnels', () => {
       await page.waitForLoadState('networkidle');
     });
 
-    test('bascule de dark à light', async ({ page }) => {
+    test('switches from dark to light', async ({ page }) => {
       await page.evaluate(() =>
         document.documentElement.setAttribute('data-theme', 'dark')
       );
@@ -105,7 +105,7 @@ test.describe('Navigation — tests fonctionnels', () => {
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
     });
 
-    test('bascule de light à dark', async ({ page }) => {
+    test('switches from light to dark', async ({ page }) => {
       await page.evaluate(() =>
         document.documentElement.setAttribute('data-theme', 'light')
       );
@@ -113,14 +113,14 @@ test.describe('Navigation — tests fonctionnels', () => {
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
     });
 
-    test('persiste dans localStorage', async ({ page }) => {
+    test('persists in localStorage', async ({ page }) => {
       await page.locator('[data-theme-toggle]').click();
       const stored = await page.evaluate(() => localStorage.getItem('agtc-theme'));
       expect(['light', 'dark']).toContain(stored);
     });
   });
 
-  // --- Bouton back-to-top ---
+  // --- Back-to-top button ---
 
   test.describe('back-to-top', () => {
     test.beforeEach(async ({ page }) => {
@@ -128,13 +128,13 @@ test.describe('Navigation — tests fonctionnels', () => {
       await page.waitForLoadState('networkidle');
     });
 
-    test('n\'a pas la classe is-visible en haut de page', async ({ page }) => {
-      // Le JS gère la visibilité via .is-visible (seuil = innerHeight)
+    test('does not have the is-visible class at the top of the page', async ({ page }) => {
+      // The JS handles visibility via .is-visible (threshold = innerHeight)
       const btn = page.locator('[data-back-to-top]');
       await expect(btn).not.toHaveClass(/is-visible/);
     });
 
-    test('obtient la classe is-visible après scroll (> innerHeight)', async ({ page }) => {
+    test('gets the is-visible class after scrolling (> innerHeight)', async ({ page }) => {
       await page.evaluate(() => window.scrollBy(0, window.innerHeight + 50));
       await page.waitForTimeout(400);
       await expect(page.locator('[data-back-to-top]')).toHaveClass(/is-visible/);

@@ -1,9 +1,9 @@
-// Agentica Builder — Phase 3 : Toggle, Checkbox, Radio, Segmented
-// Colle ce fichier dans code.js de ton plugin local Figma
+// Agentica Builder — Phase 3: Toggle, Checkbox, Radio, Segmented
+// Paste this file into code.js of your local Figma plugin
 
 (async function () {
 
-  // ── 1. Polices ──────────────────────────────────────────
+  // ── 1. Fonts ──────────────────────────────────────────────
   var FA = "Atkinson Hyperlegible";
   var fam = FA, fb = "Bold", fr = "Regular";
   try {
@@ -23,7 +23,7 @@
   });
   if (pg) await figma.setCurrentPageAsync(pg);
 
-  // ── 3. Utilitaires ──────────────────────────────────────
+  // ── 3. Utilities ──────────────────────────────────────────
   function C(h) {
     return {
       r: parseInt(h.slice(1, 3), 16) / 255,
@@ -65,8 +65,8 @@
     catch (e) { return [p]; }
   }
 
-  // tok optionnel : si fourni, la couleur est liée à la Variable Figma correspondante
-  // (fallback vers color en cas d'absence — règle §0 figma-components.md)
+  // tok optional: if provided, the color is bound to the corresponding Figma Variable
+  // (falls back to color if absent — rule §0 figma-components.md)
   function txt(chars, size, style, color, tok) {
     var t = figma.createText();
     t.fontName = { family: fam, style: style }; // fontName AVANT characters
@@ -170,7 +170,7 @@
     box.cornerRadius = 6;
     box.fills = vFill(d.fillTok, d.fill || "#ffffff");
 
-    // Auto-layout sur box pour centrer coche/barre
+    // Auto-layout on box to center the checkmark/bar
     if (d.ck === "True" || d.ck === "Indeterminate") {
       box.layoutMode = "HORIZONTAL";
       box.primaryAxisAlignItems = "CENTER";

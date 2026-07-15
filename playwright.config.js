@@ -18,17 +18,17 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:8080',
     trace: 'on-first-retry',
-    // Désactive les animations pour des screenshots déterministes
+    // Disables animations for deterministic screenshots
     reducedMotion: 'reduce',
   },
 
   projects: [
-    // Chromium : tests visuels + fonctionnels (snapshots de référence = Chromium uniquement)
+    // Chromium: visual + functional tests (reference snapshots = Chromium only)
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    // Firefox et WebKit : tests fonctionnels et accessibilité seulement (pas de snapshots visuels)
+    // Firefox and WebKit: functional and accessibility tests only (no visual snapshots)
     { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: '**/visual/**' },
     { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: '**/visual/**' },
-    // Breakpoints responsive — visuel mobile sur Chromium uniquement
+    // Responsive breakpoints — mobile visual on Chromium only
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 5'] },
@@ -36,7 +36,7 @@ export default defineConfig({
     },
   ],
 
-  // Serveur local — construit par le workflow CI avant le test
+  // Local server — built by the CI workflow before the test
   webServer: {
     command: 'npx serve site/dist -p 8080 --no-clipboard',
     url: 'http://localhost:8080',

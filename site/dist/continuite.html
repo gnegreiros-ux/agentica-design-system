@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Continuité sans agents IA — Agentica</title>
+<title>Continuity without AI agents — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Continuité sans agents IA — Agentica">
-<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:title" content="Continuity without AI agents — Agentica">
+<meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
@@ -17,8 +17,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
-<meta name="twitter:title" content="Continuité sans agents IA — Agentica">
-<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:title" content="Continuity without AI agents — Agentica">
+<meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -147,10 +147,10 @@
     <th><span class="lang-fr">Tâche</span><span class="lang-en">Task</span></th>
     <th><span class="lang-fr">Commande</span><span class="lang-en">Command</span></th>
   </tr></thead>
-  <tbody><tr><td>Compiler les tokens</td><td><code>npm run tokens</code></td></tr><tr><td>Rebuild du site</td><td><code>node site/build.js</code></td></tr><tr><td>Audit tokens</td><td><code>node scripts/audit-tokens.js --ci</code></td></tr><tr><td>Audit accessibilité</td><td><code>npm run axe</code></td></tr><tr><td>Tests visuels/E2E</td><td><code>npx playwright test --project=chromium</code></td></tr><tr><td>Tests Chromatic</td><td><code>npm run chromatic</code></td></tr></tbody>
+  <tbody><tr><td>Compile the tokens</td><td><code>npm run tokens</code></td></tr><tr><td>Rebuild the site</td><td><code>node site/build.js</code></td></tr><tr><td>Audit tokens</td><td><code>node scripts/audit-tokens.js --ci</code></td></tr><tr><td>Accessibility audit</td><td><code>npm run axe</code></td></tr><tr><td>Visual/E2E tests</td><td><code>npx playwright test --project=chromium</code></td></tr><tr><td>Chromatic tests</td><td><code>npm run chromatic</code></td></tr></tbody>
 </table></div>
 <pre class="code-block"><code class="lang-bash">bash scripts/continuity/1-1-outils-existants.sh
-# --skip-visual pour sauter Playwright/Chromatic (services externes)</code></pre>
+# --skip-visual to skip Playwright/Chromatic (external services)</code></pre>
 <p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-1-outils-existants.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">1.2 Quality gate manuel</span><span class="lang-en">1.2 Manual quality gate</span></h3>
@@ -159,7 +159,7 @@
   <span class="lang-en">The 8 pipelines from <code>quality-gate.md</code> translated into human steps: token consistency, WCAG, UX pattern review, ADR conformity, missing-ADR triggers, documentation, site rebuild, commit. Steps 3 and 5 are pure human judgment — no script can replace them, only remind that they must happen and block until confirmed.</span>
 </p>
 <pre class="code-block"><code class="lang-bash">bash scripts/continuity/1-2-quality-gate-manuel.sh
-# Bloque tant que chaque étape n'est pas confirmée (y/n)</code></pre>
+# Blocks until each step is confirmed (y/n)</code></pre>
 <p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/1-2-quality-gate-manuel.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">1.3 Gouvernance Figma sans script Plugin API</span><span class="lang-en">1.3 Figma governance without a Plugin API script</span></h3>
@@ -190,11 +190,11 @@
   <span class="lang-fr">Valeurs en dur : lancer l'audit de tokens sur votre propre projet, ou revue visuelle manuelle contre <code>tokens-system.md</code>. Pattern UX : consulter directement les 5 sources publiques de <code>ux-patterns-sources.md</code> et documenter le choix vous-même. Accessibilité : WebAIM Contrast Checker et l'extension navigateur axe DevTools.</span>
   <span class="lang-en">Hardcoded values: run the token audit against your own project, or a manual visual review against <code>tokens-system.md</code>. UX pattern: consult the 5 public sources from <code>ux-patterns-sources.md</code> directly and document the choice yourself. Accessibility: WebAIM Contrast Checker and the axe DevTools browser extension.</span>
 </p>
-<pre class="code-block"><code class="lang-bash"># Vérifier l'installation d'un clone Agentica
-bash scripts/continuity/2-1-installation-produit.sh &lt;chemin-du-clone&gt;
+<pre class="code-block"><code class="lang-bash"># Verify the installation of an Agentica clone
+bash scripts/continuity/2-1-installation-produit.sh &lt;clone-path&gt;
 
-# Auditer un projet consommateur contre les tokens
-bash scripts/continuity/2-2-checklist-produit.sh &lt;chemin-du-projet&gt;</code></pre>
+# Audit a consuming project against the tokens
+bash scripts/continuity/2-2-checklist-produit.sh &lt;project-path&gt;</code></pre>
 <p><a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity/2-2-checklist-produit.sh" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">2.3 Garde-fou anti-contournement</span><span class="lang-en">2.3 Anti-bypass safeguard</span></h3>
@@ -227,7 +227,7 @@ bash scripts/continuity/2-2-checklist-produit.sh &lt;chemin-du-projet&gt;</code>
   <a href="documentation.html" class="agtc-button secondary"><span class="lang-fr">Explorer la documentation</span><span class="lang-en">Explore documentation</span></a>
   <a href="https://github.com/gnegreiros-ux/agentic-design-system/blob/main/scripts/continuity" target="_blank" rel="noopener noreferrer" class="agtc-button ghost"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Scripts de continuité</span><span class="lang-en">Continuity scripts</span></a>
 </div></main>
-  <nav class="toc" id="page-toc" aria-label="Table des matières"></nav>
+  <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
 
 <footer class="site-footer" role="contentinfo">

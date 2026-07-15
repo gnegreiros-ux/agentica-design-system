@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// Intégration axe-core dans Playwright (ADR-007 + ADR-066).
-// Remplace le workflow axe.yml (déprécié) — les violations a11y apparaissent
-// désormais dans le rapport HTML Playwright avec les tests visuels et fonctionnels.
-// Périmètre : pages critiques (home, doc, composants) en light + dark.
-// L'audit complet (toutes pages × 3 contextes → axe-report.json) reste dans
-// scripts/axe-audit.js pour les sessions de burn-down manuelles.
+// axe-core integration in Playwright (ADR-007 + ADR-066).
+// Replaces the axe.yml workflow (deprecated) — a11y violations now appear
+// in the Playwright HTML report alongside the visual and functional tests.
+// Scope: critical pages (home, docs, components) in light + dark.
+// The full audit (every page × 3 contexts → axe-report.json) remains in
+// scripts/axe-audit.js for manual burn-down sessions.
 
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
@@ -26,14 +26,14 @@ const PAGES = [
 function buildAxe(page) {
   return new AxeBuilder({ page })
     .withTags(WCAG_TAGS)
-    // Logo et hero-name : logotypes/marques, exonérés du ratio WCAG 1.4.3
+    // Logo and hero-name: logotypes/brand marks, exempt from the WCAG 1.4.3 ratio
     .exclude('.logo')
     .exclude('.hero-name');
 }
 
-test.describe('Accessibilité WCAG AA — light', () => {
+test.describe('WCAG AA accessibility — light', () => {
   for (const { path, label } of PAGES) {
-    test(`${label} — 0 violation critique/serious`, async ({ page }) => {
+    test(`${label} — 0 critical/serious violations`, async ({ page }) => {
       await page.goto(path);
       await page.waitForLoadState('networkidle');
 
@@ -46,7 +46,7 @@ test.describe('Accessibilité WCAG AA — light', () => {
         const msg = blocking.map(v =>
           `[${v.impact}] ${v.id} — ${v.help}\n  ${v.nodes.slice(0,3).map(n => n.target.join(' ')).join('\n  ')}`
         ).join('\n\n');
-        expect.soft(blocking, `Violations a11y sur ${path}:\n${msg}`).toHaveLength(0);
+        expect.soft(blocking, `a11y violations on ${path}:\n${msg}`).toHaveLength(0);
       }
 
       expect(blocking).toHaveLength(0);
@@ -54,14 +54,14 @@ test.describe('Accessibilité WCAG AA — light', () => {
   }
 });
 
-test.describe('Accessibilité WCAG AA — dark', () => {
+test.describe('WCAG AA accessibility — dark', () => {
   test.use({
-    // Injecte le thème sombre avant le chargement de la page
+    // Inject the dark theme before the page loads
     storageState: undefined,
   });
 
   for (const { path, label } of PAGES) {
-    test(`${label} dark — 0 violation critique/serious`, async ({ page }) => {
+    test(`${label} dark — 0 critical/serious violations`, async ({ page }) => {
       await page.addInitScript(() => {
         try { localStorage.setItem('agtc-theme', 'dark'); } catch (_) {}
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -79,7 +79,7 @@ test.describe('Accessibilité WCAG AA — dark', () => {
         const msg = blocking.map(v =>
           `[${v.impact}] ${v.id} — ${v.help}\n  ${v.nodes.slice(0,3).map(n => n.target.join(' ')).join('\n  ')}`
         ).join('\n\n');
-        expect.soft(blocking, `Violations a11y sur ${path} (dark):\n${msg}`).toHaveLength(0);
+        expect.soft(blocking, `a11y violations on ${path} (dark):\n${msg}`).toHaveLength(0);
       }
 
       expect(blocking).toHaveLength(0);

@@ -1,24 +1,24 @@
-// Audit d'accessibilité automatisé (axe-core via Playwright) — applique ADR-007.
-// Scanne toutes les pages générées dans site/dist/ sur 3 contextes :
+// Automated accessibility audit (axe-core via Playwright) — applies ADR-007.
+// Scans every generated page in site/dist/ across 3 contexts:
 //   desktop-light (1280×900), mobile-light (375×812), desktop-dark (1280×900 + dark theme)
-// Bloque (exit 1) sur toute violation d'impact `critical` ou `serious`.
-// Les violations `moderate`/`minor` sont rapportées mais non bloquantes.
-// Rapport complet écrit dans axe-report.json.
+// Blocks (exit 1) on any violation with `critical` or `serious` impact.
+// `moderate`/`minor` violations are reported but non-blocking.
+// Full report written to axe-report.json.
 //
-// POURQUOI ce niveau « site » : le site généré est l'artefact vivant qui consomme
-// les tokens et les composants (principe de dogfooding) — un défaut de contraste ou
-// d'ARIA y est observable en conditions réelles de rendu. Aurait détecté
-// automatiquement la régression de contraste teal corrigée par ADR-048.
+// WHY this "site" level: the generated site is the living artifact that consumes
+// the tokens and components (dogfooding principle) — a contrast or ARIA defect
+// is observable there under real rendering conditions. Would have automatically
+// detected the teal contrast regression fixed by ADR-048.
 //
-// CLI :
-//   node scripts/axe-audit.js                           → 3 contextes (défaut)
-//   node scripts/axe-audit.js --desktop                 → desktop-light seulement
-//   node scripts/axe-audit.js --mobile                  → mobile-light seulement
-//   node scripts/axe-audit.js --dark                    → desktop-dark seulement
-//   node scripts/axe-audit.js --dist <chemin>           → répertoire dist alternatif
-//   node scripts/axe-audit.js --ci                      → bloque sur violation (défaut)
-//   node scripts/axe-audit.js --report-only             → rapport sans blocage
-//   node scripts/axe-audit.js --exclude ".sel1,.sel2"   → sélecteurs supplémentaires à exclure
+// CLI:
+//   node scripts/axe-audit.js                           → 3 contexts (default)
+//   node scripts/axe-audit.js --desktop                 → desktop-light only
+//   node scripts/axe-audit.js --mobile                  → mobile-light only
+//   node scripts/axe-audit.js --dark                    → desktop-dark only
+//   node scripts/axe-audit.js --dist <path>              → alternate dist directory
+//   node scripts/axe-audit.js --ci                      → block on violation (default)
+//   node scripts/axe-audit.js --report-only             → report with no blocking
+//   node scripts/axe-audit.js --exclude ".sel1,.sel2"   → extra selectors to exclude
 
 import { chromium } from 'playwright';
 import axePkg from '@axe-core/playwright';
@@ -39,7 +39,7 @@ const EXTRA_EXCLUDES = _excludeArg !== -1
   ? process.argv[_excludeArg + 1].split(',').map(s => s.trim())
   : [];
 
-// ── Contextes de test ──────────────────────────────────────────────────────
+// ── Test contexts ───────────────────────────────────────────────────────────
 const ALL_CONTEXTS = [
   { id: 'desktop-light', label: 'Desktop 1280px — Light', viewport: { width: 1280, height: 900 }, theme: 'light' },
   { id: 'mobile-light',  label: 'Mobile  375px  — Light', viewport: { width: 375,  height: 812 }, theme: 'light' },
@@ -54,7 +54,7 @@ const CONTEXTS = onlyDesktop ? [ALL_CONTEXTS[0]]
                : onlyDark    ? [ALL_CONTEXTS[2]]
                : ALL_CONTEXTS;
 
-// ── Pages HTML ──────────────────────────────────────────────────────────────
+// ── HTML pages ───────────────────────────────────────────────────────────────
 function htmlFiles(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
@@ -66,7 +66,7 @@ function htmlFiles(dir) {
 }
 
 const pages = htmlFiles(DIST);
-console.log(`axe-core — ${pages.length} pages × ${CONTEXTS.length} contexte(s) (ADR-007)\n`);
+console.log(`axe-core — ${pages.length} pages × ${CONTEXTS.length} context(s) (ADR-007)\n`);
 
 const browser = await chromium.launch();
 const report  = { generatedAt: new Date().toISOString(), contexts: [], summary: {} };
@@ -77,13 +77,13 @@ for (const ctx of CONTEXTS) {
   console.log(`\n── ${ctx.label} ${'─'.repeat(Math.max(0, 44 - ctx.label.length))}`);
 
   const bContext = await browser.newContext({ viewport: ctx.viewport });
-  // Injecte le thème avant tout script de page (addInitScript s'exécute avant DOMContentLoaded)
+  // Inject the theme before any page script runs (addInitScript executes before DOMContentLoaded)
   await bContext.addInitScript(theme => {
     try { localStorage.setItem('agtc-theme', theme); } catch (_) {}
     document.documentElement.setAttribute('data-theme', theme);
   }, ctx.theme);
-  // Note: emulateMedia sur BrowserContext pas disponible dans cette version de Playwright.
-  // Le data-theme="dark" injecté via addInitScript suffit pour les composants Lit et CSS tokens.
+  // Note: emulateMedia on BrowserContext isn't available in this Playwright version.
+  // The data-theme="dark" injected via addInitScript is enough for Lit components and CSS tokens.
 
   const ctxReport = { context: ctx.id, label: ctx.label, pages: [] };
   let ctxBlocking = 0;
@@ -94,7 +94,7 @@ for (const ctx of CONTEXTS) {
     const page = await bContext.newPage();
     await page.goto(pathToFileURL(file).href, { waitUntil: 'load' });
 
-    // .logo et .hero-name exclus : nom de marque / logotype (WCAG 1.4.3 exempt).
+    // .logo and .hero-name excluded: brand name / logotype (WCAG 1.4.3 exempt).
     let _builder = new AxeBuilder({ page }).exclude('.logo').exclude('.hero-name');
     for (const sel of EXTRA_EXCLUDES) _builder = _builder.exclude(sel);
     const results = await _builder.withTags(WCAG_TAGS).analyze();
@@ -119,16 +119,16 @@ for (const ctx of CONTEXTS) {
     if (blocking.length) {
       console.log(`  ✗ ${rel}`);
       for (const v of blocking) {
-        console.log(`      [${v.impact}] ${v.id} — ${v.help} (${v.nodes.length} nœud·s)`);
+        console.log(`      [${v.impact}] ${v.id} — ${v.help} (${v.nodes.length} node·s)`);
         console.log(`        ${v.helpUrl}`);
         for (const n of v.nodes.slice(0, 3)) console.log(`        → ${n.target.join(' ')}`);
       }
     } else {
-      console.log(`  ✓ ${rel}${moderate.length ? `  (${moderate.length} modéré·s)` : ''}`);
+      console.log(`  ✓ ${rel}${moderate.length ? `  (${moderate.length} moderate)` : ''}`);
     }
   }
 
-  console.log(`  — ${ctxBlocking} bloquantes · ${ctxModerate} modérées`);
+  console.log(`  — ${ctxBlocking} blocking · ${ctxModerate} moderate`);
   ctxReport.summary = { pages: pages.length, blocking: ctxBlocking, moderate: ctxModerate };
   report.contexts.push(ctxReport);
   await bContext.close();
@@ -144,8 +144,8 @@ report.summary = {
 };
 writeFileSync(join(process.cwd(), 'axe-report.json'), JSON.stringify(report, null, 2));
 
-console.log(`\n══ TOTAL — ${CONTEXTS.length} contexte(s) · ${pages.length} pages · ${blockingTotal} bloquantes · ${moderateTotal} modérées`);
-console.log('Rapport : axe-report.json');
+console.log(`\n══ TOTAL — ${CONTEXTS.length} context(s) · ${pages.length} pages · ${blockingTotal} blocking · ${moderateTotal} moderate`);
+console.log('Report: axe-report.json');
 
 const isBlocking = process.argv.includes('--report-only')
   ? false
@@ -153,10 +153,10 @@ const isBlocking = process.argv.includes('--report-only')
 
 if (blockingTotal > 0) {
   if (isBlocking) {
-    console.error(`\n✗ ÉCHEC — ${blockingTotal} violation(s) critique/serious. Correction humaine requise (ADR-007).`);
+    console.error(`\n✗ FAILED — ${blockingTotal} critical/serious violation(s). Human fix required (ADR-007).`);
     process.exit(1);
   }
-  console.warn(`\n⚠ MODE RAPPORT — ${blockingTotal} violation(s) à résorber.`);
+  console.warn(`\n⚠ REPORT MODE — ${blockingTotal} violation(s) to resolve.`);
   process.exit(0);
 }
-console.log('\n✓ 0 violation critique/serious — WCAG AA respecté sur tous les contextes.');
+console.log('\n✓ 0 critical/serious violations — WCAG AA respected across every context.');

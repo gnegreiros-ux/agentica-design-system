@@ -1,20 +1,20 @@
 import { test, expect } from '@playwright/test';
 
-// Tests sur segmented.html — 2 vraies instances <agtc-segmented> présentes
+// Tests on segmented.html — 2 real <agtc-segmented> instances present
 
-test.describe('agtc-segmented — fonctionnel', () => {
+test.describe('agtc-segmented — functional', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/components/segmented.html');
     await page.waitForLoadState('networkidle');
   });
 
-  // --- Rendu ---
+  // --- Rendering ---
 
-  test('les instances sont dans le DOM', async ({ page }) => {
+  test('instances are in the DOM', async ({ page }) => {
     await expect(page.locator('agtc-segmented').first()).toBeAttached();
   });
 
-  test('les options sont rendues comme boutons dans le shadow DOM', async ({ page }) => {
+  test('options are rendered as buttons in the shadow DOM', async ({ page }) => {
     const seg = page.locator('agtc-segmented').first();
     const buttonCount = await seg.evaluate((el) =>
       el.shadowRoot?.querySelectorAll('button').length ?? 0
@@ -22,14 +22,14 @@ test.describe('agtc-segmented — fonctionnel', () => {
     expect(buttonCount).toBeGreaterThan(1);
   });
 
-  // --- Valeur initiale ---
+  // --- Initial value ---
 
-  test('la valeur initiale est reflétée sur le host', async ({ page }) => {
+  test('the initial value is reflected on the host', async ({ page }) => {
     const value = await page.locator('agtc-segmented').first().getAttribute('value');
     expect(value).toBeTruthy();
   });
 
-  test('l\'option initiale a aria-current ou aria-pressed', async ({ page }) => {
+  test('the initial option has aria-current or aria-pressed', async ({ page }) => {
     const seg = page.locator('agtc-segmented').first();
     const currentBtn = await seg.evaluate((el) => {
       const btns = el.shadowRoot?.querySelectorAll('button') ?? [];
@@ -44,11 +44,11 @@ test.describe('agtc-segmented — fonctionnel', () => {
     expect(currentBtn).toBeTruthy();
   });
 
-  // --- Sélection ---
+  // --- Selection ---
 
-  test('cliquer une option change la valeur (propriété JS)', async ({ page }) => {
+  test('clicking an option changes the value (JS property)', async ({ page }) => {
     const seg = page.locator('agtc-segmented').first();
-    // .value est une propriété Lit (reflect:false) — lire via evaluate(), pas getAttribute()
+    // .value is a Lit property (reflect:false) — read via evaluate(), not getAttribute()
     const initialValue = await seg.evaluate((el) => el.value);
 
     await seg.evaluate((el) => {
@@ -61,12 +61,12 @@ test.describe('agtc-segmented — fonctionnel', () => {
     expect(newValue).not.toBe(initialValue);
   });
 
-  test('cliquer une option émet un événement change', async ({ page }) => {
+  test('clicking an option emits a change event', async ({ page }) => {
     const seg = page.locator('agtc-segmented').first();
     let eventFired = false;
 
     await page.exposeFunction('onSegChange', () => { eventFired = true; });
-    // Le composant émet 'change' (CustomEvent natif), pas 'agtc-change'
+    // The component emits 'change' (native CustomEvent), not 'agtc-change'
     await seg.evaluate((el) =>
       el.addEventListener('change', () => window.onSegChange())
     );
@@ -82,7 +82,7 @@ test.describe('agtc-segmented — fonctionnel', () => {
 
   // --- Keyboard nav ---
 
-  test('keyboard — focus sur le premier bouton', async ({ page }) => {
+  test('keyboard — focus on the first button', async ({ page }) => {
     const seg = page.locator('agtc-segmented').first();
     await seg.evaluate((el) => {
       el.shadowRoot?.querySelector('button')?.focus();

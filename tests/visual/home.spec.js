@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Home — régressions visuelles', () => {
+test.describe('Home — visual regressions', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    // Attendre que les illustrations lazy soient potentiellement visibles
+    // Wait for lazy illustrations to potentially become visible
     await page.waitForLoadState('networkidle');
   });
 
-  test('light mode — pleine page', async ({ page }) => {
+  test('light mode — full page', async ({ page }) => {
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
     await expect(page).toHaveScreenshot('home-light.png', { fullPage: true });
   });
 
-  test('dark mode — pleine page', async ({ page }) => {
+  test('dark mode — full page', async ({ page }) => {
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
     await expect(page).toHaveScreenshot('home-dark.png', { fullPage: true });
   });

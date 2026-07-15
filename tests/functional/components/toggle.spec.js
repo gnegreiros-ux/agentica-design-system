@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-// toggle.html n'a pas d'instance <agtc-toggle> dans le HTML statique.
-// Le composant est chargé via agtc.js — on l'injecte via evaluate().
+// toggle.html has no <agtc-toggle> instance in the static HTML.
+// The component is loaded via agtc.js — we inject it via evaluate().
 
-test.describe('agtc-toggle — fonctionnel', () => {
+test.describe('agtc-toggle — functional', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/components/toggle.html');
     await page.waitForLoadState('networkidle');
@@ -16,7 +16,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
 
       const t1 = document.createElement('agtc-toggle');
       t1.id = 'toggle-off';
-      t1.label = 'Mode sombre';
+      t1.label = 'Dark mode';
       t1.name = 'dark-mode';
 
       const t2 = document.createElement('agtc-toggle');
@@ -27,7 +27,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
 
       const t3 = document.createElement('agtc-toggle');
       t3.id = 'toggle-disabled';
-      t3.label = 'Synchronisation';
+      t3.label = 'Sync';
       t3.name = 'sync';
       t3.disabled = true;
 
@@ -40,21 +40,21 @@ test.describe('agtc-toggle — fonctionnel', () => {
     await page.waitForTimeout(100);
   });
 
-  // --- État initial ---
+  // --- Initial state ---
 
-  test('toggle off — checked est false par défaut', async ({ page }) => {
+  test('toggle off — checked is false by default', async ({ page }) => {
     const checked = await page.locator('#toggle-off').evaluate((el) => el.checked);
     expect(checked).toBe(false);
   });
 
-  test('toggle on — checked est true', async ({ page }) => {
+  test('toggle on — checked is true', async ({ page }) => {
     const checked = await page.locator('#toggle-on').evaluate((el) => el.checked);
     expect(checked).toBe(true);
   });
 
   // --- Interaction ---
 
-  test('clic bascule checked de false à true', async ({ page }) => {
+  test('click toggles checked from false to true', async ({ page }) => {
     await page.locator('#toggle-off').evaluate((el) => {
       el.shadowRoot?.querySelector('input')?.click();
     });
@@ -63,7 +63,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(checked).toBe(true);
   });
 
-  test('clic bascule checked de true à false', async ({ page }) => {
+  test('click toggles checked from true to false', async ({ page }) => {
     await page.locator('#toggle-on').evaluate((el) => {
       el.shadowRoot?.querySelector('input')?.click();
     });
@@ -72,7 +72,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(checked).toBe(false);
   });
 
-  test('clic émet un événement agtc-change', async ({ page }) => {
+  test('click emits an agtc-change event', async ({ page }) => {
     let eventValue = null;
     await page.exposeFunction('onToggleChange', (val) => { eventValue = val; });
     await page.locator('#toggle-off').evaluate((el) =>
@@ -85,13 +85,13 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(eventValue).toBe(true);
   });
 
-  // --- État disabled ---
+  // --- Disabled state ---
 
-  test('disabled — le composant a l\'attribut disabled', async ({ page }) => {
+  test('disabled — the component has the disabled attribute', async ({ page }) => {
     await expect(page.locator('#toggle-disabled')).toHaveAttribute('disabled');
   });
 
-  test('disabled — le input interne est disabled', async ({ page }) => {
+  test('disabled — the inner input is disabled', async ({ page }) => {
     const inputDisabled = await page.locator('#toggle-disabled').evaluate((el) => {
       const input = el.shadowRoot?.querySelector('input');
       return input?.disabled ?? false;
@@ -99,7 +99,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(inputDisabled).toBe(true);
   });
 
-  test('disabled — clic ne change pas l\'état', async ({ page }) => {
+  test('disabled — click doesn\'t change the state', async ({ page }) => {
     await page.locator('#toggle-disabled').evaluate((el) => {
       el.shadowRoot?.querySelector('input')?.click();
     });
@@ -108,9 +108,9 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(checked).toBe(false);
   });
 
-  // --- Accessibilité ---
+  // --- Accessibility ---
 
-  test('le input interne est de type checkbox ou role switch', async ({ page }) => {
+  test('the inner input is type checkbox or role switch', async ({ page }) => {
     const role = await page.locator('#toggle-off').evaluate((el) => {
       const input = el.shadowRoot?.querySelector('input');
       return input?.getAttribute('role') ?? input?.type;
@@ -118,7 +118,7 @@ test.describe('agtc-toggle — fonctionnel', () => {
     expect(['switch', 'checkbox']).toContain(role);
   });
 
-  test('un label est associé à l\'input', async ({ page }) => {
+  test('a label is associated with the input', async ({ page }) => {
     const hasLabel = await page.locator('#toggle-off').evaluate((el) => {
       const label = el.shadowRoot?.querySelector('label');
       const input = el.shadowRoot?.querySelector('input');

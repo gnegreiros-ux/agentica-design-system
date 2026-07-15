@@ -15,9 +15,9 @@ const { runAudit, MANUAL_CHECKS } = require('./audit-lib');
 
 const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); };
 
-// ─── COMPOSANTS WEB ────────────────────────────────────────────────────────
-// Bundle chaque Web Component Lit avec ses dépendances (esbuild, IIFE).
-// Le site charge les bundles via <script defer> — pas de bundler côté site.
+// ─── WEB COMPONENTS ─────────────────────────────────────────────────────────
+// Bundles each Lit Web Component with its dependencies (esbuild, IIFE).
+// The site loads the bundles via <script defer> — no bundler on the site side.
 function bundleComponents() {
   // site/node_modules (CI: npm ci in site/) takes priority over root node_modules (dev: transitive via Storybook)
   const esbuildBin = fs.existsSync(path.join(__dirname, 'node_modules', '.bin', 'esbuild'))
@@ -27,7 +27,7 @@ function bundleComponents() {
   const out   = path.join(DIST, 'components', 'agtc.js');
   ensureDir(path.dirname(out));
   if (fs.existsSync(entry)) {
-    // NODE_PATH: dit à esbuild où chercher lit/lucide — site/node_modules en priorité (CI), root/node_modules en fallback (dev)
+    // NODE_PATH: tells esbuild where to look for lit/lucide — site/node_modules first (CI), root/node_modules as fallback (dev)
     const nodePath = [
       path.join(__dirname, 'node_modules'),
       path.join(ROOT, 'node_modules'),
@@ -369,7 +369,7 @@ const PIPELINES = [
     checks_en: ['No hex value (#RRGGBB) in components/ or site/build.js','No hardcoded font-size in px in site/build.js','No hardcoded font-family (outside var())','All {primitive.X.Y} references resolved in primitives.json','All var(--agtc-semantic-…) resolved in semantic.json','Every spacing token = multiple of 4px (ADR-020)','Font-sizes on Minor Third scale only (ADR-023)','Any component.json change → Principal Designer approval required'],
     trigger_table_fr: [['tokens/primitives.json','Oui — vérification complète'],['tokens/semantic.json','Oui — vérification complète'],['tokens/component.json','Oui — approbation Principal Designer requise'],['site/build.js','Oui — vérification valeurs hardcodées'],['components/*.js','Oui — vérification tokens de composant']],
     trigger_table_en: [['tokens/primitives.json','Yes — full check'],['tokens/semantic.json','Yes — full check'],['tokens/component.json','Yes — Principal Designer approval required'],['site/build.js','Yes — check for hardcoded values'],['components/*.js','Yes — check component tokens']],
-    command: 'node scripts/audit-tokens.js --ci\n# exit 1 si violations critiques\n# exit 0 si propre (warnings tolérés)',
+    command: 'node scripts/audit-tokens.js --ci\n# exit 1 if critical violations\n# exit 0 if clean (warnings tolerated)',
   },
   {
     id: 'wcag', icon: 'eye', status: 'active', blocking: true, order: 2,
@@ -516,7 +516,7 @@ const PIPELINES = [
     checks_en: ['Format: type(scope): short description in lowercase (ADR-014)','Valid types: feat · fix · token · docs · a11y · style · refactor · test · chore · ci','Forbidden messages: "update", "fix", "wip", "changes", "misc"','One coherent commit per session — no partial commit','No .env or secret files in staged files','No /Users/[name]/ path in staged files','--no-verify forbidden — diagnose and fix failing hooks','Immediate push after commit — origin/main up to date'],
     trigger_table_fr: [['Tout commit','Systématique — dernier pipeline'],['Message de commit','Format Conventional Commits requis (ADR-014)'],['Fichiers staged','Vérification chemins locaux /Users/ + scan anti-secrets (.env, credentials)']],
     trigger_table_en: [['Every commit','Systematic — last pipeline'],['Commit message','Conventional Commits format required (ADR-014)'],['Staged files','Check for /Users/ local paths + anti-secrets scan (.env, credentials)']],
-    command: 'git add [fichiers spécifiques]\ngit diff --staged\ngit commit -m "$(cat <<\'EOF\'\ntype(scope): description\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n)"\ngit push',
+    command: 'git add [specific files]\ngit diff --staged\ngit commit -m "$(cat <<\'EOF\'\ntype(scope): description\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n)"\ngit push',
   },
   {
     id: 'chromatic', icon: 'camera', status: 'active', blocking: true, order: 9,
@@ -537,7 +537,7 @@ const PIPELINES = [
     checks_en: ['Chromatic exit 0 or visual changes explicitly approved','No unintentional regression on existing components','Captures of all states: default, hover, focus, disabled, loading','CHROMATIC_PROJECT_TOKEN as environment variable (never in plain text in repo)','CI workflow .github/workflows/chromatic.yml active'],
     trigger_table_fr: [['components/agtc-*.js','Oui — capture + comparaison baseline'],['tokens/*.json','Oui — impact visuel potentiel'],[ '.storybook/','Oui — configuration des captures'],['site/build.js','Non — pas de stories Storybook']],
     trigger_table_en: [['components/agtc-*.js','Yes — capture + baseline comparison'],['tokens/*.json','Yes — potential visual impact'],['.storybook/','Yes — capture configuration'],['site/build.js','No — no Storybook stories']],
-    command: 'export CHROMATIC_PROJECT_TOKEN=chpt_xxx\nnpm run chromatic\n# CI : secret GitHub CHROMATIC_PROJECT_TOKEN injecté automatiquement',
+    command: 'export CHROMATIC_PROJECT_TOKEN=chpt_xxx\nnpm run chromatic\n# CI: CHROMATIC_PROJECT_TOKEN GitHub secret injected automatically',
   },
   {
     id: 'axe-core', icon: 'check-circle', status: 'active', blocking: false, order: 10,
@@ -558,7 +558,7 @@ const PIPELINES = [
     checks_en: ['node scripts/axe-audit.js exit 0 on all pages','No critical or serious level violations','Full report available in axe-report.json','Logotype excluded from contrast audit (exempt WCAG 1.4.3)','0 active violations since burn-down of 2026-06-06'],
     trigger_table_fr: [['components/agtc-*.js','Oui — audit axe sur le composant'],['site/build.js (CSS)','Oui — impact potentiel accessibilité'],['tokens/ (couleurs)','Oui — contraste potentiellement impacté']],
     trigger_table_en: [['components/agtc-*.js','Yes — axe audit on component'],['site/build.js (CSS)','Yes — potential accessibility impact'],['tokens/ (colors)','Yes — contrast potentially impacted']],
-    command: 'npm run axe\n# ou : node scripts/axe-audit.js\n# Rapport → axe-report.json\n# CI : .github/workflows/axe.yml (artefact uploadé)',
+    command: 'npm run axe\n# or: node scripts/axe-audit.js\n# Report → axe-report.json\n# CI: .github/workflows/axe.yml (artifact uploaded)',
   },
   {
     id: 'style-dictionary', icon: 'layers', status: 'planned', blocking: false, order: 11,
@@ -600,7 +600,7 @@ const PIPELINES = [
     checks_en: ['Main navigation — all links functional','FR ↔ EN toggle — content changes correctly','Token explorer filter — consistent results','Skip-link button — focus positioned on #main-content','Each component — hover, focus, disabled states keyboard accessible'],
     trigger_table_fr: [['site/build.js','Oui — parcours navigation + bascule langue'],['components/','Oui — navigation clavier + audit axe']],
     trigger_table_en: [['site/build.js','Yes — navigation journeys + language toggle'],['components/','Yes — keyboard navigation + axe audit']],
-    command: 'npx playwright test\n# Activation :\n# npm install @playwright/test && npx playwright install\n# Créer tests/ avec les specs (ADR-010)',
+    command: 'npx playwright test\n# Activation:\n# npm install @playwright/test && npx playwright install\n# Create tests/ with specs (ADR-010)',
   },
   {
     id: 'storybook', icon: 'book-open', status: 'planned', blocking: false, order: 13,
@@ -621,7 +621,7 @@ const PIPELINES = [
     checks_en: ['Every components/agtc-[name].js has a stories/agtc-[name].stories.js','Variants in story = variants in tokens/component.json','Storybook build exit 0 (no errors)','No hardcoded value import in stories','parameters.docs.description.component filled (applied UX patterns)'],
     trigger_table_fr: [['components/agtc-*.js','Oui — vérification story + build'],['tokens/component.json','Oui — cohérence variantes story/tokens']],
     trigger_table_en: [['components/agtc-*.js','Yes — story check + build'],['tokens/component.json','Yes — story/tokens variant consistency']],
-    command: 'npx storybook build\n# Activation :\n# npx storybook@latest init (configurer pour Web Components / Lit)\n# ADR-009 prévu — vérifier et activer',
+    command: 'npx storybook build\n# Activation:\n# npx storybook@latest init (configure for Web Components / Lit)\n# ADR-009 planned — verify and activate',
   },
 ];
 
@@ -631,8 +631,8 @@ function tokensCSS() {
   for (const [scale, steps] of Object.entries(COLOR_SCALES))
     for (const [step, { value }] of Object.entries(steps))
       lines.push(`  --agtc-primitive-color-${scale}-${step}: ${value};`);
-  // Espacements primitifs — référencés par certains tokens composant (badge, card)
-  lines.push('\n  /* ── Primitive spacing — grille 4px ── */');
+  // Primitive spacing — referenced by some component tokens (badge, card)
+  lines.push('\n  /* ── Primitive spacing — 4px grid ── */');
   for (const [step, tok] of Object.entries(primitives.primitive?.space || {}))
     lines.push(`  --agtc-primitive-space-${step}: ${tok.$value};`);
   lines.push('\n  /* ── Semantic tokens — UX intentions ── */');
@@ -2851,7 +2851,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Theme toggle ─────────────────────────────────────────
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
-  // Page d'accueil — toujours en dark mode (toggle masqué)
+  // Home page — always dark mode (toggle hidden)
   const isHome = document.documentElement.dataset.page === 'home';
   document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
@@ -2873,7 +2873,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Animated counters — stat-band uniquement (fonctionnel, pas décoratif) ──
+  // ── Animated counters — stat-band only (functional, not decorative) ──
   const reduceMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   const statBand = document.querySelector('.stat-band');
   if (statBand && 'IntersectionObserver' in window) {
@@ -2903,9 +2903,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
-  // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
-  // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
-  // ni les démos segmented de la page composant).
+  // Language toggle — consumes the .agtc-segmented control (ADR-044).
+  // .lang-switch button selector: targets the header switcher (not <html data-lang>
+  // nor the segmented demos on the component page).
   document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.setAttribute('aria-current', btn.dataset.lang === savedLang ? 'true' : 'false');
     btn.addEventListener('click', () => {
@@ -2991,7 +2991,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Active sidebar links ──────────────────────────────────
-  // Note : agtc-top-nav gère aria-current="page" en interne (ADR-060).
+  // Note: agtc-top-nav handles aria-current="page" internally (ADR-060).
   const p = window.location.pathname;
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) {
@@ -3090,8 +3090,8 @@ document.addEventListener('DOMContentLoaded', () => {
     search.addEventListener('search', runFilter);
   }
 
-  // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
-  // Région live unique partagée pour annoncer « Copié ! » aux lecteurs d'écran.
+  // ── Code blocks: language label + accessible copy button (ADR-041) ──────────
+  // Single shared live region to announce "Copied!" to screen readers.
   let copyLive = document.getElementById('agtc-copy-live');
   if (!copyLive) {
     copyLive = document.createElement('span');
@@ -3105,7 +3105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre.code-block').forEach(pre => {
     const code = pre.querySelector('code');
 
-    // Label de langue depuis la classe lang-xxx (CD5)
+    // Language label from the lang-xxx class (CD5)
     const langClass = [...(code?.classList || [])].find(c => c.startsWith('lang-'));
     const lang = langClass ? langClass.slice(5) : '';
     if (lang) {
@@ -3135,7 +3135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Reveal au défilement ─────────────────────────────────
+  // ── Reveal on scroll ──────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
     if ('IntersectionObserver' in window && !reduceMotion) {
@@ -3219,8 +3219,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
-  // Les SVG sont chargés et injectés inline → CSS custom properties (dark mode) conservées.
+  // ── Lazy-load of SVG illustrations (P1 perf — outside the initial HTML) ──
+  // SVGs are loaded and injected inline → CSS custom properties (dark mode) preserved.
   const lazyIllusEls = document.querySelectorAll('.illus-lazy[data-svg]');
   if (lazyIllusEls.length && 'IntersectionObserver' in window) {
     const illusObs = new IntersectionObserver(entries => {
@@ -3240,16 +3240,16 @@ document.addEventListener('DOMContentLoaded', () => {
 `; }
 
 // ─── HTML LAYOUT ───────────────────────────────────────────────────────────
-// Storybook publié par Chromatic (branche main, toujours la dernière baseline).
-// appId = 6a1c1e665ec5fe8fc0540983 ; permalien stable vérifié (HTTP 200).
+// Storybook published by Chromatic (main branch, always the latest baseline).
+// appId = 6a1c1e665ec5fe8fc0540983; stable permalink verified (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
 const SITE_URL      = 'https://designsystem.gnegreiros.com';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
   const base = depth > 0 ? '../' : '';
-  // DÉMARRER = CTA (cta:true) — action primaire d'adoption (ADR-060).
-  // Items définis ici, passés au composant agtc-top-nav via script inline.
+  // GET STARTED = CTA (cta:true) — primary adoption action (ADR-060).
+  // Items defined here, passed to the agtc-top-nav component via an inline script.
   const navItems = JSON.stringify([
     { labelFr:'Accueil',        labelEn:'Home',           href:`${base}index.html` },
     { labelFr:'Pourquoi',       labelEn:'Why',            href:`${base}index.html#pourquoi` },
@@ -3261,10 +3261,10 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   ]);
 
   const sidebarHtml = sidebar
-    ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Navigation secondaire">${sidebar}</aside>`
+    ? `<aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Secondary navigation / Navigation secondaire">${sidebar}</aside>`
     : '';
-  const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table des matières"></nav>` : '';
-  // Pages avec sidebar → toujours .layout (flex). home-layout est réservé à la home sans sidebar.
+  const tocHtml = !fullWidth ? `<nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>` : '';
+  // Pages with a sidebar → always .layout (flex). home-layout is reserved for the sidebar-less home page.
   const outerClass = (fullWidth && !sidebar) ? 'home-layout' : 'layout';
 
   const auditHref = (depth > 0 ? '../'.repeat(depth) : '') + 'audit.html';
@@ -3319,13 +3319,13 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
 <title>${docTitle}</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
 <meta property="og:title" content="${docTitle}">
-<meta property="og:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
@@ -3334,7 +3334,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="twitter:domain" content="designsystem.gnegreiros.com">
 <meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
 <meta name="twitter:title" content="${docTitle}">
-<meta name="twitter:description" content="Agentica — système de design conçu pour les humains qui décident et les agents IA qui exécutent. Tokens, composants, gouvernance et WCAG 2.1.">
+<meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -3427,7 +3427,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
 <div class="${outerClass}" id="main-content"${context === 'marketing' ? ' data-context="marketing"' : ''}>
   ${sidebarHtml}
-  <main class="${!fullWidth ? 'content' : sidebar ? 'page-content' : ''}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
+  <main class="${!fullWidth ? 'content' : sidebar ? 'page-content' : ''}" role="main">${sidebar ? `<button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden>${icon('panel-left', 20)}<span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>` : ''}${body}</main>
   ${tocHtml}
 </div>
 ${footer}
@@ -3479,7 +3479,7 @@ function sidebarDecisions(base, adrs) {
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="${base}decisions/index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a>${links}${more}</div>`;
 }
 
-// Variante pour les pages déjà dans decisions/ — liens relatifs sans préfixe
+// Variant for pages already inside decisions/ — relative links with no prefix
 function sidebarDecisionsLocal(adrs) {
   const links = adrs.map(a => `<a href="${a.slug}.html">ADR-${String(a.num).padStart(3,'0')}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a>${links}</div>`;
@@ -3487,10 +3487,10 @@ function sidebarDecisionsLocal(adrs) {
 
 function sidebarTokens(base, current) {
   const links = [
-    ['#primitifs',   'Primitifs'],
-    ['#semantiques', 'Sémantiques'],
-    ['#composants',  'Composants'],
-  ].map(([h,l]) => `<a href="${base}tokens/index.html${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
+    ['#primitifs',   'Primitives',  'Primitives'],
+    ['#semantiques', 'Sémantiques', 'Semantic'],
+    ['#composants',  'Composants',  'Component'],
+  ].map(([h,fr,en]) => `<a href="${base}tokens/index.html${h}"${current===h?' class="active"':''}><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label">Tokens</span>${links}</div>`;
 }
 
@@ -3506,10 +3506,10 @@ function sidebarPipelines(base, current) {
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Pipelines</span><span class="lang-en">Pipelines</span></span><a href="${base}pipelines/index.html"${current === 'index.html' ? ' class="active"' : ''}><span class="lang-fr">Vue d'ensemble</span><span class="lang-en">Overview</span></a>${[...orchestrator, ...active, ...planned].map(link).join('')}</div>`;
 }
 
-// Section « Patterns UX de référence » — lue depuis la guideline markdown du composant
-// (source unique de vérité). Extrait la section "## UX Patterns Reference" (titre EN depuis
-// la traduction ADR-070) et la rend via parseMd, comme la page icon. Voir workflow
-// ux-pattern-review / ADR-036.
+// "Reference UX Patterns" section — read from the component's markdown guideline
+// (single source of truth). Extracts the "## UX Patterns Reference" section (EN title from
+// the ADR-070 translation) and renders it via parseMd, like the icon page. See the
+// ux-pattern-review workflow / ADR-036.
 function uxPatternsFromMd(comp) {
   const md = read(path.join(ROOT, `guidelines/components/${comp}.md`));
   const lines = md.split('\n');
@@ -3518,7 +3518,7 @@ function uxPatternsFromMd(comp) {
   let end = start + 1;
   while (end < lines.length && !/^##\s+/.test(lines[end])) end++;
   const section = lines.slice(start, end);
-  // retirer lignes vides / séparateurs en fin de section
+  // remove trailing blank lines / separators at the end of the section
   while (section.length && (section[section.length - 1].trim() === '' || /^-{3,}$/.test(section[section.length - 1].trim()))) section.pop();
   return parseMd(section.join('\n'));
 }
@@ -3585,7 +3585,7 @@ function buildHome(adrs) {
           <span class="lang-en">Explore the documentation</span>
         </a>
       </div>
-      <div class="hero-stats" role="list" aria-label="Statistiques du système">
+      <div class="hero-stats" role="list" aria-label="System statistics / Statistiques du système">
         <div role="listitem"><span class="stat-num">${totalTokens}+</span><span class="stat-label">tokens</span></div>
         <div role="listitem"><span class="stat-num">${adrs.length}</span><span class="stat-label">ADRs</span></div>
         <div role="listitem"><span class="stat-num">${compCount}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
@@ -3847,7 +3847,7 @@ function buildHome(adrs) {
 
 `;
 
-  write(path.join(DIST, 'index.html'), layout({ title: 'Accueil', pageTitle: 'Agentica — Le système de décisions pour les humains et les agents IA', depth: 0, fullWidth: true, context: 'marketing', homePage: true, body }));
+  write(path.join(DIST, 'index.html'), layout({ title: 'Home', pageTitle: 'Agentica — The decision system for humans and AI agents', depth: 0, fullWidth: true, context: 'marketing', homePage: true, body }));
 }
 
 // ─── PAGES SECONDAIRES V2 ────────────────────────────────────────────────────
@@ -3869,7 +3869,7 @@ function sidebarSite(base, current) {
     ['continuite.html', '<span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span>'],
   ];
   const a = (href, label) => `<a href="${base}${href}"${current === href ? ' class="active" aria-current="page"' : ''}>${label}</a>`;
-  // Retourne uniquement le contenu interne — layout() ajoute le <aside> (identique à sidebarFoundations/sidebarComponents)
+  // Returns only the inner content — layout() adds the <aside> (same as sidebarFoundations/sidebarComponents)
   return `<div class="sidebar-group"><span class="sidebar-label">Agentica</span>${links.map(([href, label]) => a(href, label)).join('')}</div><div class="sidebar-group"><span class="sidebar-label">Documentation</span>${docLinks.map(([href, label]) => a(href, label)).join('')}</div>`;
 }
 
@@ -3937,7 +3937,7 @@ function buildPourquoi() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Pourquoi', pageTitle: 'Pourquoi Agentica — Le système de décisions', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'pourquoi.html'), body }));
+  write(path.join(DIST, 'pourquoi.html'), layout({ title: 'Why', pageTitle: 'Why Agentica — The decision system', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'pourquoi.html'), body }));
 }
 
 function buildArchitecture() {
@@ -3996,7 +3996,7 @@ function buildArchitecture() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Source unique de vérité', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'architecture.html'), body }));
+  write(path.join(DIST, 'architecture.html'), layout({ title: 'Architecture', pageTitle: 'Architecture — Single source of truth', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'architecture.html'), body }));
 }
 
 function buildQualite() {
@@ -4063,7 +4063,7 @@ function buildQualite() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'qualite.html'), layout({ title: 'Qualité', pageTitle: 'Qualité — Propriété structurelle du système', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'qualite.html'), body }));
+  write(path.join(DIST, 'qualite.html'), layout({ title: 'Quality', pageTitle: 'Quality — A structural property of the system', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'qualite.html'), body }));
 }
 
 function buildIA() {
@@ -4122,7 +4122,7 @@ function buildIA() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'ia.html'), layout({ title: 'IA', pageTitle: 'Intelligence artificielle — Contrôle humain dans Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'ia.html'), body }));
+  write(path.join(DIST, 'ia.html'), layout({ title: 'AI', pageTitle: 'Artificial intelligence — Human control in Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'ia.html'), body }));
 }
 
 function buildDocumentation() {
@@ -4196,7 +4196,7 @@ function buildDocumentation() {
   </div>
 </section>
 `;
-  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Portail Agentica', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'documentation.html'), body }));
+  write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Agentica Portal', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'documentation.html'), body }));
 }
 
 // ─── PAGE: CONTINUITÉ SANS AGENTS IA ────────────────────────────────────────
@@ -4206,24 +4206,24 @@ function buildContinuite() {
   const HOWTO = `${REPO}/blob/main/How-to-sans-agents.md`;
 
   const outilsCode = esc(`bash scripts/continuity/1-1-outils-existants.sh
-# --skip-visual pour sauter Playwright/Chromatic (services externes)`);
+# --skip-visual to skip Playwright/Chromatic (external services)`);
 
   const gateCode = esc(`bash scripts/continuity/1-2-quality-gate-manuel.sh
-# Bloque tant que chaque étape n'est pas confirmée (y/n)`);
+# Blocks until each step is confirmed (y/n)`);
 
-  const produitCode = esc(`# Vérifier l'installation d'un clone Agentica
-bash scripts/continuity/2-1-installation-produit.sh <chemin-du-clone>
+  const produitCode = esc(`# Verify the installation of an Agentica clone
+bash scripts/continuity/2-1-installation-produit.sh <clone-path>
 
-# Auditer un projet consommateur contre les tokens
-bash scripts/continuity/2-2-checklist-produit.sh <chemin-du-projet>`);
+# Audit a consuming project against the tokens
+bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
 
   const outilsRows = [
-    ['Compiler les tokens', 'npm run tokens'],
-    ['Rebuild du site', 'node site/build.js'],
+    ['Compile the tokens', 'npm run tokens'],
+    ['Rebuild the site', 'node site/build.js'],
     ['Audit tokens', 'node scripts/audit-tokens.js --ci'],
-    ['Audit accessibilité', 'npm run axe'],
-    ['Tests visuels/E2E', 'npx playwright test --project=chromium'],
-    ['Tests Chromatic', 'npm run chromatic'],
+    ['Accessibility audit', 'npm run axe'],
+    ['Visual/E2E tests', 'npx playwright test --project=chromium'],
+    ['Chromatic tests', 'npm run chromatic'],
   ].map(([task, cmd]) => `<tr><td>${task}</td><td><code>${cmd}</code></td></tr>`).join('');
 
   const body = `
@@ -4338,8 +4338,8 @@ bash scripts/continuity/2-2-checklist-produit.sh <chemin-du-projet>`);
 </div>`;
 
   write(path.join(DIST, 'continuite.html'), layout({
-    title: 'Continuité',
-    pageTitle: 'Continuité sans agents IA — Agentica',
+    title: 'Continuity',
+    pageTitle: 'Continuity without AI agents — Agentica',
     depth: 0,
     sidebar: null,
     fullWidth: false,
@@ -4402,7 +4402,7 @@ function buildFoundationsIndex() {
 `;
 
   write(path.join(DIST, 'foundations/index.html'), layout({
-    title: 'Fondations', depth: 1,
+    title: 'Foundations', depth: 1,
     sidebar: sidebarFoundations('../','index.html'),
     body: body + contributionBanner()
   }));
@@ -4468,7 +4468,7 @@ function buildColor() {
 
   const palette = Object.entries(COLOR_SCALES).map(([scale, steps]) => {
     const swatches = Object.entries(steps).map(([step, { value, desc }]) =>
-      `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="${scale} étape ${step}: ${value}"></div>`
+      `<div class="palette-step" role="img" style="background:${value}" title="${step}: ${value} — ${desc}" aria-label="${scale} step ${step}: ${value}"></div>`
     ).join('');
     return `<div class="palette-section"><div class="palette-scale-name">${scale}</div><div class="palette-steps">${swatches}</div></div>`;
   }).join('');
@@ -4547,7 +4547,7 @@ function buildColor() {
   <span class="lang-fr">Ces ${semanticColors.length} tokens encodent les intentions UX. Chaque composant les référence — jamais les primitives directement.</span>
   <span class="lang-en">These ${semanticColors.length} tokens encode UX intentions. Every component references them — never the primitives directly.</span>
 </p>
-<input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Rechercher un token sémantique" autocomplete="off" spellcheck="false">
+<input class="explorer-search" type="search" id="token-search" placeholder="Rechercher un token… / Search a token…" aria-label="Search a semantic token / Rechercher un token sémantique" autocomplete="off" spellcheck="false">
 <p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
 <div class="token-section">
 <table class="token-table"><colgroup><col style="width:8%"><col style="width:44%"><col style="width:16%"><col style="width:32%"></colgroup>
@@ -4563,7 +4563,7 @@ function buildColor() {
 `;
 
   write(path.join(DIST, 'foundations/color.html'), layout({
-    title: 'Couleur', depth: 1,
+    title: 'Color', depth: 1,
     sidebar: sidebarFoundations('../','color.html'),
     body: body + contributionBanner()
   }));
@@ -4673,7 +4673,7 @@ function buildSpacing() {
 `;
 
   write(path.join(DIST, 'foundations/spacing.html'), layout({
-    title: 'Espacement', depth: 1,
+    title: 'Spacing', depth: 1,
     sidebar: sidebarFoundations('../','spacing.html'),
     body: body + contributionBanner()
   }));
@@ -4818,7 +4818,7 @@ function buildTypography() {
 `;
 
   write(path.join(DIST, 'foundations/typography.html'), layout({
-    title: 'Typographie', depth: 1,
+    title: 'Typography', depth: 1,
     sidebar: sidebarFoundations('../','typography.html'),
     body: body + contributionBanner()
   }));
@@ -4896,7 +4896,7 @@ function buildIconsFoundation() {
 `;
 
   write(path.join(DIST, 'foundations/icons.html'), layout({
-    title: 'Icônes', depth: 1,
+    title: 'Icons', depth: 1,
     sidebar: sidebarFoundations('../','icons.html'),
     body: body + contributionBanner()
   }));
@@ -5038,7 +5038,7 @@ function buildComponentsIndex() {
 `;
 
   write(path.join(DIST, 'components/index.html'), layout({
-    title: 'Composants', depth: 1,
+    title: 'Components', depth: 1,
     sidebar: sidebarComponents('../','index.html'),
     body: body + contributionBanner()
   }));
@@ -5122,21 +5122,21 @@ function buildButton() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Icon-only — <code>label</code> obligatoire (WCAG 1.1.1)</span><span class="lang-en">Icon-only — <code>label</code> required (WCAG 1.1.1)</span></span>
     <div class="demo-row">
-      <agtc-button variant="primary" icon="plus" icon-only label="Ajouter"></agtc-button>
-      <agtc-button variant="secondary" icon="pencil" icon-only label="Modifier"></agtc-button>
-      <agtc-button variant="ghost" icon="settings" icon-only label="Paramètres"></agtc-button>
-      <agtc-button variant="critical" icon="trash-2" icon-only label="Supprimer définitivement"></agtc-button>
+      <agtc-button variant="primary" icon="plus" icon-only label="Add"></agtc-button>
+      <agtc-button variant="secondary" icon="pencil" icon-only label="Edit"></agtc-button>
+      <agtc-button variant="ghost" icon="settings" icon-only label="Settings"></agtc-button>
+      <agtc-button variant="critical" icon="trash-2" icon-only label="Delete permanently"></agtc-button>
     </div>
   </div>
 </div>
-<pre class="code-block"><code class="lang-html">&lt;!-- Propriété icon — Figma Code Connect, React et tous les frameworks --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- icon property — Figma Code Connect, React, and every framework --&gt;
 &lt;agtc-button icon="plus"&gt;<span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>&lt;/agtc-button&gt;
 &lt;agtc-button variant="secondary" icon-suffix="arrow-right"&gt;<span class="lang-fr">Continuer</span><span class="lang-en">Continue</span>&lt;/agtc-button&gt;
 
-&lt;!-- Icon-only — label="" obligatoire --&gt;
+&lt;!-- Icon-only — label="" mandatory --&gt;
 &lt;agtc-button icon-only icon="x" label="<span class="lang-fr">Fermer le panneau</span><span class="lang-en">Close panel</span>"&gt;&lt;/agtc-button&gt;
 
-&lt;!-- Slot — composition avancée, SVG custom --&gt;
+&lt;!-- Slot — advanced composition, custom SVG --&gt;
 &lt;agtc-button&gt;
   &lt;agtc-icon slot="prefix" name="plus"&gt;&lt;/agtc-icon&gt;
   <span class="lang-fr">Ajouter un élément</span><span class="lang-en">Add item</span>
@@ -5194,7 +5194,7 @@ function buildButton() {
 <h2><span class="lang-fr">Implémentation — Lit Web Component</span><span class="lang-en">Implementation — Lit Web Component</span></h2>
 <pre class="code-block"><code class="lang-javascript">import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-// agtc-icon doit être enregistré par le consommateur pour les propriétés icon/icon-suffix
+// agtc-icon must be registered by the consumer for the icon/icon-suffix properties
 // import './agtc-icon.js';
 
 class AgtcButton extends LitElement {
@@ -5203,9 +5203,9 @@ class AgtcButton extends LitElement {
     disabled:   { type: Boolean, reflect: true },
     loading:    { type: Boolean, reflect: true },
     iconOnly:   { type: Boolean, reflect: true, attribute: 'icon-only' },
-    icon:       { type: String },                 // nom d'icône Lucide (prefix)
-    iconSuffix: { type: String,  attribute: 'icon-suffix' }, // nom d'icône (suffix)
-    label:      { type: String },                 // aria-label — obligatoire pour icon-only
+    icon:       { type: String },                 // Lucide icon name (prefix)
+    iconSuffix: { type: String,  attribute: 'icon-suffix' }, // icon name (suffix)
+    label:      { type: String },                 // aria-label — mandatory for icon-only
     loadingLabel: { type: String, attribute: 'loading-label' },
   };
 
@@ -5509,10 +5509,10 @@ function buildInput() {
   error-message="<span class="lang-fr">Format invalide</span><span class="lang-en">Invalid format</span>"
 &gt;&lt;/agtc-input&gt;
 
-&lt;!-- Mot de passe avec toggle intégré --&gt;
+&lt;!-- Password with built-in toggle --&gt;
 &lt;agtc-input label="<span class="lang-fr">Mot de passe</span><span class="lang-en">Password</span>" type="password" required&gt;&lt;/agtc-input&gt;
 
-&lt;!-- Avec icône --&gt;
+&lt;!-- With icon --&gt;
 &lt;agtc-input label="<span class="lang-fr">Rechercher</span><span class="lang-en">Search</span>" type="search" icon="search"&gt;&lt;/agtc-input&gt;</code></pre>
 
 <h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
@@ -5621,10 +5621,10 @@ function buildBadge() {
 &lt;agtc-badge variant="info"&gt;<span class="lang-fr">En cours</span><span class="lang-en">In progress</span>&lt;/agtc-badge&gt;
 &lt;agtc-badge variant="brand"&gt;Beta&lt;/agtc-badge&gt;
 
-&lt;!-- Taille sm --&gt;
+&lt;!-- sm size --&gt;
 &lt;agtc-badge size="sm" variant="neutral"&gt;Draft&lt;/agtc-badge&gt;
 
-&lt;!-- Avec icône --&gt;
+&lt;!-- With icon --&gt;
 &lt;agtc-badge variant="success" icon="check"&gt;<span class="lang-fr">Approuvé</span><span class="lang-en">Approved</span>&lt;/agtc-badge&gt;
 
 &lt;!-- Icon-only — label obligatoire --&gt;
@@ -5732,7 +5732,7 @@ function buildCard() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Défaut --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Default --&gt;
 &lt;agtc-card&gt;
   &lt;p&gt;<span class="lang-fr">Contenu de la carte.</span><span class="lang-en">Card content.</span>&lt;/p&gt;
 &lt;/agtc-card&gt;
@@ -5788,7 +5788,7 @@ function buildCard() {
 
 // ─── PAGE: CHECKBOX ──────────────────────────────────────────────────────────
 function buildCheckbox() {
-  // Rendu statique tokenisé d'une case (carrée). state: 'default' | 'checked' | 'indeterminate' | 'disabled' | 'disabled-checked'
+  // Static tokenized rendering of a (square) box. state: 'default' | 'checked' | 'indeterminate' | 'disabled' | 'disabled-checked'
   const BOX = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:var(--agtc-semantic-radius-control);flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
   const GLYPH = 'width:78%;height:78%;fill:none;stroke:var(--agtc-semantic-color-text-on-action);stroke-width:3;stroke-linecap:round;stroke-linejoin:round';
   function box(state) {
@@ -5868,13 +5868,13 @@ function buildCheckbox() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Basique --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Basic --&gt;
 &lt;agtc-checkbox label="<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>" name="newsletter"&gt;&lt;/agtc-checkbox&gt;
 
-&lt;!-- Cochée --&gt;
+&lt;!-- Checked --&gt;
 &lt;agtc-checkbox label="<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>" checked&gt;&lt;/agtc-checkbox&gt;
 
-&lt;!-- Parent d'un groupe « tout cocher » --&gt;
+&lt;!-- Parent of a "select all" group --&gt;
 &lt;agtc-checkbox label="<span class="lang-fr">Tout sélectionner</span><span class="lang-en">Select all</span>" indeterminate&gt;&lt;/agtc-checkbox&gt;
 
 &lt;!-- Texte en slot --&gt;
@@ -5995,7 +5995,7 @@ function buildToggle() {
   function toggle(on, dim) {
     const track = on ? 'var(--agtc-component-toggle-default-track-on)' : 'var(--agtc-component-toggle-default-track-off)';
     const x = on ? '18px' : '2px';
-    // Ombre du curseur en dur : reflète fidèlement le composant agtc-toggle (délimiteur WCAG 1.4.11, non tokenisé dans le contrat).
+    // Hardcoded knob shadow: faithfully mirrors the agtc-toggle component (WCAG 1.4.11 delimiter, not tokenized in the contract).
     return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:var(--agtc-semantic-radius-pill);background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
   }
   function row(on, label, dim) {
@@ -6090,7 +6090,7 @@ function buildTable() {
     ['table-padding-y-comfortable',     'primitive.space.3',                 '12px'],
   ];
 
-  // Démo : vrai <table class="agtc-table"> — côté light DOM du mix, sans JS.
+  // Demo: a real <table class="agtc-table"> — the light-DOM side of the mix, no JS.
   const demoTable = (striped) => `
     <table class="agtc-table${striped ? ' striped' : ''}">
       <caption class="visually-hidden"><span class="lang-fr">Exemple de tokens d'espacement</span><span class="lang-en">Spacing token example</span></caption>
@@ -6145,23 +6145,23 @@ function buildTable() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Composant piloté par données --&gt;
-&lt;agtc-table caption="Tokens du badge" caption-hidden&gt;&lt;/agtc-table&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Data-driven component --&gt;
+&lt;agtc-table caption="Badge tokens" caption-hidden&gt;&lt;/agtc-table&gt;
 &lt;script&gt;
   const t = document.querySelector('agtc-table');
   t.columns = [
-    { label: 'Token CSS', align: 'start', width: '46%' },
-    { label: 'Référence', align: 'start' },
-    { label: 'Valeur',    align: 'end' },
+    { label: 'CSS token', align: 'start', width: '46%' },
+    { label: 'Reference', align: 'start' },
+    { label: 'Value',    align: 'end' },
   ];
   t.rows = [
     ['--agtc-badge-neutral-background', 'semantic.color.background.subtle', '#f0f0f0'],
   ];
 &lt;/script&gt;
 
-&lt;!-- Classe sur un table statique (light DOM, sans JS) --&gt;
+&lt;!-- Class on a static table (light DOM, no JS) --&gt;
 &lt;table class="agtc-table striped"&gt;
-  &lt;caption class="visually-hidden"&gt;Tokens du badge&lt;/caption&gt;
+  &lt;caption class="visually-hidden"&gt;Badge tokens&lt;/caption&gt;
   &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Token&lt;/th&gt;&lt;th scope="col" class="num"&gt;Value&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
   &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;--agtc-badge-neutral-text&lt;/code&gt;&lt;/td&gt;&lt;td class="num"&gt;#646464&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
@@ -6220,8 +6220,8 @@ function buildCodeBlock() {
   <span class="lang-fr">Ce bloc ci-dessous est un <code>pre.code-block</code> réel — label de langue en haut à gauche, bouton « Copier » accessible en haut à droite.</span>
   <span class="lang-en">The block below is a real <code>pre.code-block</code> — language label top-left, accessible "Copy" button top-right.</span>
 </p>
-<pre class="code-block"><code class="lang-html">&lt;agtc-code-block language="html" filename="exemple.html"&gt;
-  &lt;code&gt;&lt;agtc-badge variant="success"&gt;Validé&lt;/agtc-badge&gt;&lt;/code&gt;
+<pre class="code-block"><code class="lang-html">&lt;agtc-code-block language="html" filename="example.html"&gt;
+  &lt;code&gt;&lt;agtc-badge variant="success"&gt;Approved&lt;/agtc-badge&gt;&lt;/code&gt;
 &lt;/agtc-code-block&gt;</code></pre>
 
 <h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
@@ -6247,13 +6247,13 @@ function buildCodeBlock() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Composant slotté --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Slotted component --&gt;
 &lt;agtc-code-block language="javascript" filename="agtc-badge.js"&gt;
   &lt;code&gt;import { LitElement } from 'lit';&lt;/code&gt;
 &lt;/agtc-code-block&gt;
 
-&lt;!-- Classe sur HTML statique (site) --&gt;
-&lt;pre class="code-block"&gt;&lt;code class="lang-html"&gt;&amp;lt;agtc-badge&amp;gt;Validé&amp;lt;/agtc-badge&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre>
+&lt;!-- Class on static HTML (site) --&gt;
+&lt;pre class="code-block"&gt;&lt;code class="lang-html"&gt;&amp;lt;agtc-badge&amp;gt;Approved&amp;lt;/agtc-badge&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre>
 
 <h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
@@ -6344,18 +6344,18 @@ function buildBanner() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;agtc-banner variant="warning" heading="Attention"&gt;
+<pre class="code-block"><code class="lang-html">&lt;agtc-banner variant="warning" heading="Warning"&gt;
   <span class="lang-fr">Cette action affectera 3 fichiers liés.</span><span class="lang-en">This action will affect 3 linked files.</span>
 &lt;/agtc-banner&gt;
 
-&lt;!-- Avec actions + dismissible --&gt;
-&lt;agtc-banner variant="brand" heading="Contribuer" dismissible&gt;
+&lt;!-- With actions + dismissible --&gt;
+&lt;agtc-banner variant="brand" heading="Contribute" dismissible&gt;
   <span class="lang-fr">Ce système est ouvert aux contributions.</span><span class="lang-en">This system welcomes contributions.</span>
   &lt;span slot="actions"&gt;&lt;a href="…"&gt;<span class="lang-fr">Voir sur GitHub →</span><span class="lang-en">View on GitHub →</span>&lt;/a&gt;&lt;/span&gt;
 &lt;/agtc-banner&gt;
 
-&lt;!-- Notification dynamique (insérée par JS) --&gt;
-&lt;agtc-banner variant="danger" live="assertive" heading="Erreur"&gt;…&lt;/agtc-banner&gt;</code></pre>
+&lt;!-- Dynamic notification (inserted by JS) --&gt;
+&lt;agtc-banner variant="danger" live="assertive" heading="Error"&gt;…&lt;/agtc-banner&gt;</code></pre>
 
 <h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
 <div class="dos-donts">
@@ -6393,7 +6393,7 @@ function buildLink() {
     ['link-default-border-focus', 'semantic.color.border.focus',         SEM['color-border-focus']],
   ];
 
-  // Démo : vrais <agtc-link> — shadow DOM, external gère l'icône et le visually-hidden automatiquement.
+  // Demo: real <agtc-link> — shadow DOM, external automatically handles the icon and the visually-hidden text.
 
   const body = `
 <h1>Link</h1>
@@ -6433,13 +6433,13 @@ function buildLink() {
 </ul>
 
 <h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
-<pre class="code-block"><code class="lang-html">&lt;!-- Inline (souligné par défaut) --&gt;
+<pre class="code-block"><code class="lang-html">&lt;!-- Inline (underlined by default) --&gt;
 &lt;agtc-link href="/guidelines/link"&gt;<span class="lang-fr">guideline</span><span class="lang-en">guideline</span>&lt;/agtc-link&gt;
 
-&lt;!-- Externe (nouvel onglet, sécurisé, annoncé) --&gt;
+&lt;!-- External (new tab, secure, announced) --&gt;
 &lt;agtc-link href="https://lucide.dev" external&gt;Lucide&lt;/agtc-link&gt;
 
-&lt;!-- Nav (soulignement au survol) --&gt;
+&lt;!-- Nav (underline on hover) --&gt;
 &lt;agtc-link href="/components" underline="hover"&gt;<span class="lang-fr">Composants</span><span class="lang-en">Components</span>&lt;/agtc-link&gt;</code></pre>
 
 <h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
@@ -6481,7 +6481,7 @@ function buildSegmented() {
     ['segmented-default-radius',             'semantic.radius.control',          SEM['radius-control']],
   ];
 
-  // Démo : vrais <agtc-segmented> — options via attribut JSON (Lit Array converter).
+  // Demo: real <agtc-segmented> — options via a JSON attribute (Lit Array converter).
   const seg = (label, opts, val) => {
     const options = JSON.stringify(opts.map(l => ({ value: l.toLowerCase(), label: l })));
     return `<agtc-segmented label="${label}" options='${options}' value="${val}"></agtc-segmented>`;
@@ -6497,7 +6497,7 @@ function buildSegmented() {
 <h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
 <div class="demo-box" style="display:flex;gap:var(--agtc-space-5);flex-wrap:wrap;align-items:center">
   ${seg('Langue', ['FR', 'EN'], 'fr')}
-  ${seg('Densité', ['Compact', 'Normal', 'Confort'], 'normal')}
+  ${seg('Density', ['Compact', 'Normal', 'Comfortable'], 'normal')}
 </div>
 
 <h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
@@ -6582,7 +6582,7 @@ function buildTabs() {
     ['tabs-default-padding-y',       'semantic.space.control.padding-y', SEM['space-control-padding-y']],
   ];
 
-  // Démo statique : tablist HTML pur (sans Web Component)
+  // Static demo: plain HTML tablist (no Web Component)
   const demoTab = (label, active) =>
     `<button role="tab" class="demo-tab${active ? ' demo-tab--active' : ''}" aria-selected="${active ? 'true' : 'false'}" type="button">${label}</button>`;
 
@@ -6753,7 +6753,7 @@ function buildTokens() {
   </div>
 </div>
 
-<input class="explorer-search" type="search" id="token-search" placeholder="Filtrer les tokens (ex: button, color, action…)" aria-label="Rechercher des tokens" autocomplete="off" spellcheck="false">
+<input class="explorer-search" type="search" id="token-search" placeholder="Filter tokens (e.g. button, color, action…) / Filtrer les tokens" aria-label="Search tokens / Rechercher des tokens" autocomplete="off" spellcheck="false">
 <p class="token-search-status" id="token-search-status" aria-live="polite" aria-atomic="true"></p>
 
 <div class="token-section" id="section-primitifs">
@@ -6922,7 +6922,7 @@ function buildContextes() {
 `;
 
   write(path.join(DIST, 'foundations/contextes.html'), layout({
-    title: 'Contextes',
+    title: 'Contexts',
     depth: 1,
     sidebar: sidebarFoundations('../', 'contextes.html'),
     body: body + contributionBanner()
@@ -6985,7 +6985,7 @@ function buildDecisionsIndex(adrs) {
 `;
 
   write(path.join(DIST, 'decisions/index.html'), layout({
-    title: 'Décisions (ADRs)', depth: 1,
+    title: 'Decisions (ADRs)', depth: 1,
     sidebar: sidebarDecisionsLocal(adrs),
     body: body + contributionBanner()
   }));
@@ -7169,7 +7169,7 @@ color: var(--agtc-primitive-color-blue-11);</code></pre>
 `;
 
   write(path.join(DIST, 'agents/index.html'), layout({
-    title: 'Pour les agents IA', depth: 1,
+    title: 'For AI Agents', depth: 1,
     sidebar: null,
     context: 'marketing',
     body: body + contributionBanner()
@@ -7293,7 +7293,7 @@ ${commandBlock}
 `;
 
   write(path.join(DIST, `pipelines/${p.id}.html`), layout({
-    title: p.title_fr, depth: 1,
+    title: p.title_en, depth: 1,
     sidebar: sidebarPipelines('../', p.id + '.html'),
     body: body + contributionBanner(),
   }));
@@ -7313,10 +7313,10 @@ function buildRobotsAndSitemap(adrs) {
     '',
   ].join('\n'));
 
-  // sitemap.xml — toutes les pages publiques
+  // sitemap.xml — every public page
   const today = new Date().toISOString().split('T')[0];
 
-  // Pages statiques (fréquence + priorité)
+  // Static pages (frequency + priority)
   const staticPages = [
     ['',                          'weekly',  '1.0'],
     ['get-started.html',          'monthly', '0.9'],
@@ -7391,10 +7391,10 @@ function loadADRs() {
   }).sort((a,b) => a.num - b.num);
 }
 
-// ─── PAGE: DÉMARRER (Get started) ───────────────────────────────────────────
-// Sert les 3 objectifs du site : promouvoir (chemin d'adoption), documenter
-// (comment consommer les tokens/composants), exemple vivant (bâtie 100 % avec
-// les composants dogfoodés : agtc-banner, code-block, info-card, tables, button).
+// ─── PAGE: GET STARTED ───────────────────────────────────────────────────────
+// Serves the site's 3 goals: promote (adoption path), document
+// (how to consume the tokens/components), living example (built 100% with
+// dogfooded components: agtc-banner, code-block, info-card, tables, button).
 function buildGetStarted() {
   const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
 
@@ -7404,10 +7404,10 @@ git clone ${REPO}.git
 # Compiled tokens live in dist/tokens/:
 #   css/  js/  tailwind/  angular/  ios/  android/`);
 
-  const cssCode = esc(`<!-- Importer les variables CSS générées -->
+  const cssCode = esc(`<!-- Import the generated CSS variables -->
 <link rel="stylesheet" href="dist/tokens/css/all.css">
 
-<!-- Ajouter dark.css pour le support du mode sombre -->
+<!-- Add dark.css for dark mode support -->
 <link rel="stylesheet" href="dist/tokens/css/dark.css">`);
 
   const cssUseCode = esc(`/* Consume by INTENT — never hardcode values */
@@ -7419,26 +7419,26 @@ git clone ${REPO}.git
   border-radius: var(--agtc-semantic-radius-control);
 }`);
 
-  const darkHtmlCode = esc(`<!-- Mode sombre actif par défaut — toggle JS ou préférence système -->
+  const darkHtmlCode = esc(`<!-- Dark mode active by default — JS toggle or system preference -->
 <html data-theme="dark">
 
-<!-- Mode clair actif par défaut -->
+<!-- Light mode active by default -->
 <html data-theme="light">`);
 
-  const darkJsCode = esc(`// Lire la préférence stockée ou la préférence système
+  const darkJsCode = esc(`// Read the stored preference or the system preference
 const stored = localStorage.getItem('agtc-theme');
 const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 document.documentElement.setAttribute('data-theme', stored ?? preferred);
 
-// Basculer au clic
+// Toggle on click
 toggleBtn.addEventListener('click', () => {
   const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('agtc-theme', next);
 });`);
 
-  const darkOnDarkCode = esc(`/* Composant à fond toujours sombre (glassmorphism, overlay) :
-   utiliser text.on-dark, PAS text.primary */
+  const darkOnDarkCode = esc(`/* Component with an always-dark background (glassmorphism, overlay):
+   use text.on-dark, NOT text.primary */
 .card-glass .title {
   color: var(--agtc-semantic-color-text-on-dark);          /* ✅ */
   /* color: var(--agtc-semantic-color-text-primary); */    /* ❌ contraste insuffisant */
@@ -7450,7 +7450,7 @@ toggleBtn.addEventListener('click', () => {
 <agtc-button variant="primary">Save</agtc-button>
 <agtc-button variant="critical">Delete folder</agtc-button>`);
 
-  // logo : nom de fichier dans integrations/ (couleur de marque)
+  // logo: file name inside integrations/ (brand color)
   const platforms = [
     ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
     ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
@@ -7577,8 +7577,8 @@ toggleBtn.addEventListener('click', () => {
 </div>`;
 
   write(path.join(DIST, 'get-started.html'), layout({
-    title: 'Démarrer',
-    pageTitle: 'Démarrer avec Agentica',
+    title: 'Get started',
+    pageTitle: 'Get started with Agentica',
     depth: 0,
     sidebar: null,
     fullWidth: false,
@@ -7747,7 +7747,7 @@ ${contributionBanner()}
 // ─── PAGE: AUDIT ────────────────────────────────────────────────────────────
 function buildAudit() {
   const auditFile = path.join(DIST, 'audit.html');
-  // On exclut audit.html lui-même de l'analyse (il n'existe pas encore à ce stade)
+  // Exclude audit.html itself from the analysis (it doesn't exist yet at this stage)
   const r = runAudit({ excludeFile: auditFile });
 
   const dateStr = r.timestamp.toLocaleDateString('fr-CA', {
@@ -7765,7 +7765,7 @@ function buildAudit() {
   const badgeCls = passing ? 'pass' : 'fail';
   const badgeIconName = passing ? 'shield-check' : 'shield-alert';
 
-  // ── Cartes résumé ──────────────────────────────────────────────────────────
+  // ── Summary cards ────────────────────────────────────────────────────────────
   const cards = `
 <div class="audit-cards">
   <div class="audit-card">
@@ -7790,7 +7790,7 @@ function buildAudit() {
   </div>
 </div>`;
 
-  // ── Tableau de contraste ──────────────────────────────────────────────────
+  // ── Contrast table ───────────────────────────────────────────────────────
   const contrastRows = r.contrastResults.map(c => {
     const ratio = c.ratio;
     const ok    = c.pass;
@@ -7806,7 +7806,7 @@ function buildAudit() {
   }).join('');
 
   const contrastTable = `
-<table class="audit-contrast-table" aria-label="Résultats des ratios de contraste WCAG">
+<table class="audit-contrast-table" aria-label="WCAG contrast ratio results / Résultats des ratios de contraste WCAG">
   <colgroup>
     <col style="width:110px">
     <col style="width:110px">
@@ -7826,10 +7826,10 @@ function buildAudit() {
   <tbody>${contrastRows}</tbody>
 </table>`;
 
-  // ── Violations (si présentes) ─────────────────────────────────────────────
+  // ── Violations (if present) ─────────────────────────────────────────────────
   let violationsSection = '';
   if (r.allViolations.length > 0) {
-    // escMsg : les guillemets des messages (ex: id="x") → &quot; pour éviter les faux positifs dans audit-lib
+    // escMsg: message quotes (e.g. id="x") → &quot; to avoid false positives in audit-lib
     const escMsg = s => esc(s).replace(/"/g, '&quot;');
     const rows = r.allViolations.map(v =>
       `<li style="padding:var(--agtc-space-2) 0;border-bottom:1px solid var(--agtc-semantic-color-border-default);font-size:0.85rem">
@@ -7844,7 +7844,7 @@ function buildAudit() {
 </div>`;
   }
 
-  // ── Liste des vérifications manuelles ─────────────────────────────────────
+  // ── List of manual checks ───────────────────────────────────────────────────
   const manualItems = MANUAL_CHECKS.map(({ criterion, titleFr, titleEn, descFr, descEn }) => `
   <li class="audit-manual-item">
     <span class="audit-manual-crit">SC ${criterion}</span>
@@ -7917,12 +7917,12 @@ function buildAudit() {
 }
 
 // ─── MAIN BUILD ─────────────────────────────────────────────────────────────
-// ─── VALIDATION : variables CSS fantômes ─────────────────────────────────────
-// Garde-fou anti-régression. Toute `var(--agtc-…)` référencée dans le CSS/HTML
-// généré DOIT avoir une définition (`--agtc-…:`) quelque part dans la sortie.
-// Une référence orpheline échoue SILENCIEUSEMENT en CSS (la propriété est
-// ignorée) — c'est exactement le bug du padding nul des badges (2026-06-02,
-// `--agtc-primitive-space-3` jamais émis). Ce check fait échouer le build.
+// ─── VALIDATION: phantom CSS variables ───────────────────────────────────────
+// Anti-regression guardrail. Any `var(--agtc-…)` referenced in the generated
+// CSS/HTML MUST have a definition (`--agtc-…:`) somewhere in the output.
+// An orphaned reference fails SILENTLY in CSS (the property is
+// ignored) — this is exactly the badge zero-padding bug (2026-06-02,
+// `--agtc-primitive-space-3` never emitted). This check fails the build.
 function validateCssVars() {
   const cssFiles = [], htmlFiles = [];
   (function walk(dir) {
@@ -7934,8 +7934,8 @@ function validateCssVars() {
     }
   })(DIST);
 
-  // Définitions : uniquement dans les .css (tokens.css, site.css) — c'est là que
-  // vivent toutes les `--agtc-…: …`.
+  // Definitions: only in the .css files (tokens.css, site.css) — that's where
+  // every `--agtc-…: …` lives.
   const defined = new Set();
   const defRe = /(--agtc-[a-z0-9-]+)\s*:/gi;
   for (const fp of cssFiles) {
@@ -7943,8 +7943,8 @@ function validateCssVars() {
     while ((m = defRe.exec(css))) defined.add(m[1]);
   }
 
-  // Références SANS fallback uniquement : `var(--x)` fermé directement par `)`.
-  // `var(--x, …)` ne panne pas silencieusement (fallback), on l'ignore.
+  // References with NO fallback only: `var(--x)` closed directly by `)`.
+  // `var(--x, …)` doesn't fail silently (has a fallback), so it's ignored.
   const referenced = new Map(); // nom -> fichier exemple
   const refRe = /var\(\s*(--agtc-[a-z0-9-]+)\s*\)/gi;
   const collectRefs = (text, fp) => {
@@ -7953,8 +7953,8 @@ function validateCssVars() {
   };
   for (const fp of cssFiles) collectRefs(fs.readFileSync(fp, 'utf8'), fp);
   for (const fp of htmlFiles) {
-    // Exclure les exemples de code affichés (<pre>/<code>) — ce n'est pas du style
-    // appliqué mais de la documentation montrant les vrais noms de tokens.
+    // Exclude displayed code examples (<pre>/<code>) — this isn't applied
+    // styling but documentation showing the real token names.
     const html = fs.readFileSync(fp, 'utf8')
       .replace(/<pre\b[\s\S]*?<\/pre>/gi, '')
       .replace(/<code\b[\s\S]*?<\/code>/gi, '');
@@ -7974,195 +7974,195 @@ function validateCssVars() {
 // ── AI Brief ──────────────────────────────────────────────────────────────────
 function aiBriefContent() {
   return `# Agentica — AI Brief
-> Système de design agentique. Version 1.0.0. Site : https://designsystem.gnegreiros.com
-> Mis à jour : 2026-06-30. Auteur : Guilherme Negreiros.
+> Agentic design system. Version 1.0.0. Site: https://designsystem.gnegreiros.com
+> Last updated: 2026-06-30. Author: Guilherme Negreiros.
 
-## Comment utiliser ce brief
+## How to use this brief
 
-Copiez l'intégralité de ce fichier et collez-le comme premier message dans votre IA (Claude, Copilot, ChatGPT, Gemini…). Toutes les questions suivantes sur Agentica recevront des réponses précises et conformes aux décisions versionnées.
-
----
-
-## 1. Identité et mission
-
-**Nom :** Agentica (préfixe technique : agtc)
-**Organisation :** GNegreiros.com
-**Site :** https://designsystem.gnegreiros.com
-
-**Mission :** Encoder les décisions d'interface dans un format lisible par les humains et les agents IA — pour garantir cohérence, accessibilité et souveraineté numérique.
-
-**Principes directeurs :**
-1. Le dernier mot est humain. Les agents proposent, les humains approuvent.
-2. Si ce n'est pas un token, ce n'est pas une décision — toute valeur locale est une dette.
-3. La documentation instruit les machines, pas seulement les humains.
-4. Souveraineté numérique : outils, données et décisions restent sous contrôle organisationnel.
+Copy this entire file and paste it as the first message to your AI (Claude, Copilot, ChatGPT, Gemini…). All following questions about Agentica will get accurate answers consistent with the versioned decisions.
 
 ---
 
-## 2. Architecture des tokens (3 niveaux — règle absolue)
+## 1. Identity and mission
+
+**Name:** Agentica (technical prefix: agtc)
+**Organization:** GNegreiros.com
+**Site:** https://designsystem.gnegreiros.com
+
+**Mission:** Encode interface decisions in a format readable by both humans and AI agents — to guarantee consistency, accessibility, and digital sovereignty.
+
+**Guiding principles:**
+1. The human always has the final word. Agents propose, humans approve.
+2. If it isn't a token, it isn't a decision — any local value is debt.
+3. Documentation instructs machines, not just humans.
+4. Digital sovereignty: tools, data, and decisions stay under organizational control.
+
+---
+
+## 2. Token architecture (3 levels — absolute rule)
 
 \`\`\`
-Primitifs → Sémantiques → Composant
-(valeurs brutes)  (intention UX)  (contrats UI)
+Primitives → Semantic → Component
+(raw values)  (UX intent)  (UI contracts)
 \`\`\`
 
-| Niveau | Fichier source | Exemple |
+| Level | Source file | Example |
 |--------|---------------|---------|
-| Primitif | tokens/primitives.json | color.teal.9 = #34d3bb |
-| Sémantique | tokens/semantic.json | color.action.primary → teal.9 |
-| Composant | tokens/component.json | button.critical.requiresConfirmation = true |
+| Primitive | tokens/primitives.json | color.teal.9 = #34d3bb |
+| Semantic | tokens/semantic.json | color.action.primary → teal.9 |
+| Component | tokens/component.json | button.critical.requiresConfirmation = true |
 
-**Règles absolues (violations = dette immédiate) :**
-- JAMAIS de valeur en dur (couleur, espacement, radius) dans le code
-- Les tokens primitifs ne s'utilisent JAMAIS directement dans un composant
-- Les tokens sémantiques encodent l'INTENTION (ex: \`color.action.primary\`), pas la valeur (ex: \`teal\`)
-- Les tokens de composant sont des contrats — toute modification exige une approbation humaine
+**Absolute rules (violations = immediate debt):**
+- NEVER a hardcoded value (color, spacing, radius) in code
+- Primitive tokens are NEVER used directly in a component
+- Semantic tokens encode INTENT (e.g. \`color.action.primary\`), not the value (e.g. \`teal\`)
+- Component tokens are contracts — any change requires human approval
 
-**Convention de nommage CSS :**
+**CSS naming convention:**
 \`\`\`
---agtc-[niveau]-[catégorie]-[composant]-[variante]-[propriété]
+--agtc-[level]-[category]-[component]-[variant]-[property]
 
 --agtc-primitive-color-teal-9: #34d3bb
 --agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9)
 --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary)
 \`\`\`
 
-**Standard :** Format W3C DTCG (Design Tokens Community Group) — https://www.designtokens.org/
+**Standard:** W3C DTCG format (Design Tokens Community Group) — https://www.designtokens.org/
 
 ---
 
-## 3. Composants disponibles (17 Web Components Lit)
+## 3. Available components (17 Lit Web Components)
 
-| Composant | Usage principal |
+| Component | Primary usage |
 |-----------|----------------|
-| agtc-button | Action principale, secondaire, critique, fantôme |
-| agtc-input | Champ de saisie texte, email, password |
-| agtc-badge | Étiquette statut (success/warning/danger/info/neutral/brand) |
-| agtc-banner | Message informatif inline (6 variantes, dismissible) |
-| agtc-card | Conteneur composable pour contenu structuré |
-| agtc-feature-card | Carte marketing glassmorphism avec icône et titre |
-| agtc-checkbox | Case à cocher avec états indeterminate |
-| agtc-radio / agtc-radio-group | Sélection exclusive dans un groupe |
-| agtc-toggle | Interrupteur binaire avec retour visuel immédiat |
-| agtc-table | Tableau de données lisible en lecture seule |
-| agtc-code-block | Bloc de code avec copie accessible (aria-live) |
-| agtc-tabs | Navigation par onglets avec aria-selected |
-| agtc-segmented | Contrôle segmenté mono-sélection (ex: langue, densité) |
-| agtc-link | Lien avec détection automatique externe (noopener + icône) |
-| agtc-icon | Icône Lucide tokenisée |
-| agtc-top-nav | Navigation principale, tabs visuels full-height |
+| agtc-button | Primary, secondary, critical, ghost action |
+| agtc-input | Text, email, password entry field |
+| agtc-badge | Status label (success/warning/danger/info/neutral/brand) |
+| agtc-banner | Inline informational message (6 variants, dismissible) |
+| agtc-card | Composable container for structured content |
+| agtc-feature-card | Glassmorphism marketing card with icon and title |
+| agtc-checkbox | Checkbox with indeterminate states |
+| agtc-radio / agtc-radio-group | Exclusive selection within a group |
+| agtc-toggle | Binary switch with immediate visual feedback |
+| agtc-table | Readable, read-only data table |
+| agtc-code-block | Code block with accessible copy (aria-live) |
+| agtc-tabs | Tabbed navigation with aria-selected |
+| agtc-segmented | Single-select segmented control (e.g. language, density) |
+| agtc-link | Link with automatic external detection (noopener + icon) |
+| agtc-icon | Tokenized Lucide icon |
+| agtc-top-nav | Main navigation, full-height visual tabs |
 
-### Règles critiques — agtc-button
+### Critical rules — agtc-button
 
-- Maximum 1 bouton \`primary\` par section ou formulaire
-- La variante \`critical\` EXIGE un pattern de confirmation (token requiresConfirmation: true)
-- Libellé explicite obligatoire — jamais "OK" ou "Confirmer" seul sur une action critique
-- Largeur préservée pendant les états async (loading)
-- Variantes autorisées : \`primary\` | \`secondary\` | \`critical\` | \`ghost\`
-- INTERDIT : inventer une variante (\`danger\`, \`destructive\`) — escalader à un humain
+- Maximum 1 \`primary\` button per section or form
+- The \`critical\` variant REQUIRES a confirmation pattern (requiresConfirmation: true token)
+- An explicit label is mandatory — never "OK" or "Confirm" alone on a critical action
+- Width preserved during async (loading) states
+- Allowed variants: \`primary\` | \`secondary\` | \`critical\` | \`ghost\`
+- FORBIDDEN: inventing a variant (\`danger\`, \`destructive\`) — escalate to a human
 
 ---
 
-## 4. Accessibilité — WCAG 2.1 AA (non négociable)
+## 4. Accessibility — WCAG 2.1 AA (non-negotiable)
 
-| Règle | Standard | Token |
+| Rule | Standard | Token |
 |-------|----------|-------|
-| Contraste texte normal | 4.5:1 minimum | color.text.primary sur color.background.page |
-| Contraste texte large | 3.0:1 minimum | — |
-| Focus visible | Obligatoire sur tous les interactifs | color.border.focus |
-| Navigation clavier | 100% des interactions | — |
-| ARIA | Obligatoire sur tous les composants | aria-label, aria-describedby, aria-expanded |
-| Cibles tactiles | ≥ 24×24px (WCAG 2.5.8) | — |
+| Normal text contrast | 4.5:1 minimum | color.text.primary on color.background.page |
+| Large text contrast | 3.0:1 minimum | — |
+| Visible focus | Mandatory on every interactive element | color.border.focus |
+| Keyboard navigation | 100% of interactions | — |
+| ARIA | Mandatory on every component | aria-label, aria-describedby, aria-expanded |
+| Touch targets | ≥ 24×24px (WCAG 2.5.8) | — |
 
-Tests automatisés : axe-core (CI bloquant) + Playwright (E2E).
+Automated tests: axe-core (blocking in CI) + Playwright (E2E).
 
 ---
 
-## 5. Gouvernance des tokens (Token Change Request)
+## 5. Token governance (Token Change Request)
 
-| Type de changement | Qui peut le faire | Approbation requise |
+| Change type | Who can make it | Approval required |
 |---|---|---|
-| Valeur d'un token primitif | Dev ou agent | Principal Designer |
-| Ajout d'un token sémantique | Dev ou agent (via PR) | Design System Lead |
-| Modification d'un token de composant | Humain seulement | Principal Designer |
-| Suppression de token | Humain seulement | Principal Designer + audit d'impact |
+| Primitive token value | Dev or agent | Principal Designer |
+| Adding a semantic token | Dev or agent (via PR) | Design System Lead |
+| Modifying a component token | Human only | Principal Designer |
+| Deleting a token | Human only | Principal Designer + impact audit |
 
-Flux TCR : identifier → documenter → évaluer l'impact → approuver → modifier → compiler → tester → communiquer.
-
----
-
-## 6. Contextes éditoriaux
-
-**Mode Produit** (défaut, sans attribut) :
-- Espacement normal, typographie max heading.1 (40px), grille régulière
-- Usage : documentation de composants, tokens, décisions
-
-**Mode Marketing** (\`data-context="marketing"\`) :
-- Espacement sections 96px, gap hero 120px, typographie display (60px)
-- Usage : pages de conviction et d'onboarding
-
-Pages marketing : index.html, get-started.html, agents/index.html
-Toutes les autres pages sont en mode Produit.
+TCR flow: identify → document → assess impact → approve → modify → compile → test → communicate.
 
 ---
 
-## 7. Décisions architecturales clés — 65 ADRs (au 2026-06-30)
+## 6. Editorial contexts
 
-| ADR | Décision | Impact |
+**Product Mode** (default, no attribute):
+- Normal spacing, typography capped at heading.1 (40px), regular grid
+- Usage: component, token, and decision documentation
+
+**Marketing Mode** (\`data-context="marketing"\`):
+- 96px section spacing, 120px hero gap, display typography (60px)
+- Usage: conviction and onboarding pages
+
+Marketing pages: index.html, get-started.html, agents/index.html
+Every other page is in Product mode.
+
+---
+
+## 7. Key architectural decisions — 65 ADRs (as of 2026-06-30)
+
+| ADR | Decision | Impact |
 |-----|----------|--------|
-| ADR-001 | Architecture 3 niveaux de tokens | Non négociable — fondation du système |
-| ADR-004 | Gouvernance humaine — le dernier mot est toujours humain | Tous les agents |
-| ADR-005 | Variante \`critical\` remplace \`danger\` pour les actions irréversibles | agtc-button |
-| ADR-021 | Atkinson Hyperlegible comme police principale | Typographie |
-| ADR-047 | Jamais d'état :visited sur les éléments de navigation | CSS global |
-| ADR-052 | Conformité W3C DTCG — standard de facto pour les tokens | tokens/*.json |
-| ADR-057 | Deux contextes éditoriaux : Produit vs Marketing | Layout site |
-| ADR-059 | Fermeture de la hiérarchie 3 niveaux (18 tokens sémantiques ajoutés) | Tokens |
-| ADR-065 | Dark mode dual-mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |
+| ADR-001 | Three-level token architecture | Non-negotiable — the system's foundation |
+| ADR-004 | Human governance — the human always has the final word | All agents |
+| ADR-005 | The \`critical\` variant replaces \`danger\` for irreversible actions | agtc-button |
+| ADR-021 | Atkinson Hyperlegible as the main font | Typography |
+| ADR-047 | Never a :visited state on navigation elements | Global CSS |
+| ADR-052 | W3C DTCG compliance — the de facto token standard | tokens/*.json |
+| ADR-057 | Two editorial contexts: Product vs. Marketing | Site layout |
+| ADR-059 | Closing the three-level hierarchy (18 semantic tokens added) | Tokens |
+| ADR-065 | Dual-mode dark mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |
 
 ---
 
-## 8. Ce qu'un agent peut et ne peut pas faire
+## 8. What an agent can and cannot do
 
-| ✅ Autorisé | ❌ Interdit sans approbation |
+| ✅ Allowed | ❌ Forbidden without approval |
 |---|---|
-| Lire et appliquer les contrats de composants | Modifier tokens/component.json |
-| Générer du code depuis les tokens sémantiques | Utiliser des valeurs en dur |
-| Détecter les dérives et proposer des corrections | Merger sur main ou develop |
-| Créer des branches fix/ docs/ feature/ | Pusher directement sur main |
-| Ouvrir une PR avec description complète | Déployer en production seul |
-| Ajouter ou modifier un token sémantique (via PR) | Supprimer un token |
+| Read and apply component contracts | Modify tokens/component.json |
+| Generate code from semantic tokens | Use hardcoded values |
+| Detect drift and propose fixes | Merge to main or develop |
+| Create fix/ docs/ feature/ branches | Push directly to main |
+| Open a PR with a complete description | Deploy to production alone |
+| Add or modify a semantic token (via PR) | Delete a token |
 
 ---
 
-## 9. Pile technologique
+## 9. Tech stack
 
-| Couche | Technologie |
+| Layer | Technology |
 |--------|-------------|
 | Web Components | Lit (Google) |
-| Compilation tokens | Style Dictionary (W3C DTCG) |
-| Tests visuels | Chromatic (Storybook) |
-| Tests accessibilité | axe-core (CI bloquant) |
-| Tests E2E | Playwright |
+| Token compilation | Style Dictionary (W3C DTCG) |
+| Visual tests | Chromatic (Storybook) |
+| Accessibility tests | axe-core (blocking in CI) |
+| E2E tests | Playwright |
 | Documentation | Storybook |
-| Sync Figma | Tokens Studio |
-| Générateur site | Node.js custom (site/build.js) |
+| Figma sync | Tokens Studio |
+| Site generator | Custom Node.js (site/build.js) |
 | CI/CD | GitHub Actions |
 
 ---
 
-*Ce brief est généré automatiquement depuis les sources versionnées d'Agentica.*
-*Toute modification passe par le dépôt : https://github.com/gnegreiros-ux/agentic-design-system*
+*This brief is automatically generated from Agentica's versioned sources.*
+*Any change goes through the repository: https://github.com/gnegreiros-ux/agentic-design-system*
 `;
 }
 
 function buildAiBrief() {
   const brief = aiBriefContent();
 
-  // Génère context.md comme fichier statique téléchargeable
+  // Generates context.md as a static downloadable file
   write(path.join(DIST, 'context.md'), brief);
 
-  // Échappe pour l'injecter en JSON dans la page
+  // Escape to inject it as JSON into the page
   const briefEscaped = JSON.stringify(brief);
 
   const body = `
@@ -8304,7 +8304,7 @@ function buildAiBrief() {
 
   write(path.join(DIST, 'ai-brief.html'), layout({
     title: 'AI Brief',
-    pageTitle: 'Agentica AI Brief — Contexte structuré pour les agents IA',
+    pageTitle: 'Agentica AI Brief — Structured context for AI agents',
     depth: 0,
     body
   }));
@@ -8325,12 +8325,12 @@ function build() {
   write(path.join(DIST, 'site.js'), siteJS());
   bundleComponents();
 
-  // Copie de l'image sociale (OG image)
+  // Copy the social image (OG image)
   const socialSrc = path.join(__dirname, '..', 'Brand', 'agentica-social-image.png');
   const socialDst = path.join(DIST, 'social.png');
   if (fs.existsSync(socialSrc)) fs.copyFileSync(socialSrc, socialDst);
 
-  // Favicons depuis Brand/Favicon/
+  // Favicons from Brand/Favicon/
   const brandFaviconDir = path.join(__dirname, '..', 'Brand', 'Favicon');
   ['favicon.ico','favicon-16x16.png','favicon-32x32.png','apple-touch-icon.png','android-chrome-192x192.png','android-chrome-512x512.png'].forEach(f => {
     const src = path.join(brandFaviconDir, f);
@@ -8348,44 +8348,44 @@ function build() {
     display: 'standalone'
   }, null, 2));
 
-  // Logo SVG depuis Brand/logo/
+  // SVG logo from Brand/logo/
   const logoSrc = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - teal.svg');
   if (fs.existsSync(logoSrc)) fs.copyFileSync(logoSrc, path.join(DIST, 'logo.svg'));
 
-  // Illustrations SVG — copiées dans dist/img/ et chargées lazily (P1 perf)
+  // SVG illustrations — copied to dist/img/ and lazy-loaded (P1 perf)
   ensureDir(path.join(DIST, 'img'));
 
-  // Logo complet color white (symbol + wordmark) pour header et footer
+  // Full color-white logo (symbol + wordmark) for the header and footer
   const logoColorWhite = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color white.svg');
   if (fs.existsSync(logoColorWhite)) fs.copyFileSync(logoColorWhite, path.join(DIST, 'img', 'logo-color-white.svg'));
 
   const logoColor = path.join(__dirname, '..', 'Brand', 'logo', 'Logo Agentica - color.svg');
   if (fs.existsSync(logoColor)) fs.copyFileSync(logoColor, path.join(DIST, 'img', 'logo-color.svg'));
 
-  // Anciens diagrammes SVG (pipeline-tokens, human-last-word, multi-platform) : remplacés
-  // par les illustrations PNG ci-dessous — retirer les copies orphelines si présentes.
+  // Old SVG diagrams (pipeline-tokens, human-last-word, multi-platform): replaced
+  // by the PNG illustrations below — remove orphaned copies if present.
   ['pipeline-tokens.svg', 'human-last-word.svg', 'multi-platform.svg'].forEach(f => {
     const orphan = path.join(DIST, 'img', f);
     if (fs.existsSync(orphan)) fs.rmSync(orphan);
   });
 
-  // Illustrations PNG (redesign narratif) — source : Brand/illustrations/
-  // Seuls les fichiers IMG-*.png vont vers dist/img (les affiches de marque restent dans Brand/).
+  // PNG illustrations (narrative redesign) — source: Brand/illustrations/
+  // Only IMG-*.png files go to dist/img (brand posters stay in Brand/).
   const illusSrc = path.join(__dirname, '..', 'Brand', 'illustrations');
   if (fs.existsSync(illusSrc)) {
     const brandPngs = new Set(
       fs.readdirSync(illusSrc).filter(f => f.startsWith('IMG-') && f.endsWith('.png'))
     );
-    // Copier les nouvelles illustrations
+    // Copy the new illustrations
     brandPngs.forEach(f => fs.copyFileSync(path.join(illusSrc, f), path.join(DIST, 'img', f)));
-    // Supprimer les orphelins (IMG-*.png dans dist qui n'existent plus dans Brand/illustrations)
+    // Remove orphans (IMG-*.png in dist that no longer exist in Brand/illustrations)
     fs.readdirSync(path.join(DIST, 'img'))
       .filter(f => f.startsWith('IMG-') && f.endsWith('.png') && !brandPngs.has(f))
       .forEach(f => fs.rmSync(path.join(DIST, 'img', f)));
   }
 
-  // Logos d'intégration (frameworks / plateformes / outils) depuis Brand/integrations/
-  // Affichés dans leurs couleurs de marque officielles → copiés tels quels, servis via <img>.
+  // Integration logos (frameworks / platforms / tools) from Brand/integrations/
+  // Shown in their official brand colors → copied as-is, served via <img>.
   const integrationsSrc = path.join(__dirname, '..', 'Brand', 'integrations');
   if (fs.existsSync(integrationsSrc)) {
     const integrationsDst = path.join(DIST, 'integrations');
@@ -8434,7 +8434,7 @@ function build() {
   PIPELINES.forEach(p => buildPipelinePage(p));
   buildAiBrief();
   buildRobotsAndSitemap(adrs);
-  buildAudit();  // doit être appelé en dernier — analyse les pages déjà générées
+  buildAudit();  // must be called last — analyzes the pages already generated
 
   validateCssVars();  // garde-fou : aucune var(--agtc-…) orpheline dans la sortie
 

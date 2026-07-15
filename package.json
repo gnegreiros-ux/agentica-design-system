@@ -1,7 +1,7 @@
 {
   "name": "@agentica/design-system",
   "version": "0.1.0",
-  "description": "Agentica — Système de design agentique",
+  "description": "Agentica — Agentic design system",
   "private": true,
   "type": "module",
   "scripts": {
