@@ -1,0 +1,337 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/home.spec.js >> Home — visual regressions >> hero above-the-fold — light
+- Location: tests/visual/home.spec.js:20:3
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  36373 pixels (ratio 0.03 of all image pixels) are different.
+
+  Snapshot: home-hero-light.png
+
+Call log:
+  - Expect "toHaveScreenshot(home-hero-light.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - 36373 pixels (ratio 0.03 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - 36373 pixels (ratio 0.03 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: index.html
+      - img [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: qualite.html
+      - link "IA" [ref=e11] [cursor=pointer]:
+        - /url: ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: pourquoi.html
+            - link "Foundations":
+              - /url: foundations/index.html
+            - link "Human control":
+              - /url: ia.html
+            - link "Single source of truth":
+              - /url: architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: foundations/index.html
+            - link "Components":
+              - /url: components/index.html
+            - link "Tokens":
+              - /url: tokens/index.html
+            - link "Decisions":
+              - /url: decisions/index.html
+            - link "Agents":
+              - /url: agents/index.html
+            - link "Pipelines":
+              - /url: pipelines/index.html
+            - link "Continuity":
+              - /url: continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentic-design-system
+            - link "Audit":
+              - /url: audit.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - group "Language" [ref=e16]:
+        - button "FR" [ref=e17] [cursor=pointer]
+        - button "EN" [ref=e18] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e19] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e20]
+      - link "GitHub — Code source du projet" [ref=e22] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentic-design-system
+  - main [ref=e24]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - paragraph [ref=e28]: Decision system
+        - heading "The decision system for humans and AI agents" [level=1] [ref=e29]
+        - paragraph [ref=e30]: Agentica turns UX, UI, accessibility, architecture and governance decisions into structured, durable knowledge that humans and AI agents can understand.
+        - generic [ref=e31]:
+          - link "Discover the vision" [ref=e32] [cursor=pointer]:
+            - /url: pourquoi.html
+            - generic [ref=e33]: Discover the vision
+          - link "Explore the documentation" [ref=e34] [cursor=pointer]:
+            - /url: documentation.html
+            - generic [ref=e35]: Explore the documentation
+        - list "System statistics / Statistiques du système" [ref=e36]:
+          - listitem [ref=e37]:
+            - generic [ref=e38]: 801+
+            - generic [ref=e39]: tokens
+          - listitem [ref=e40]:
+            - generic [ref=e41]: "71"
+            - generic [ref=e42]: ADRs
+          - listitem [ref=e43]:
+            - generic [ref=e44]: "14"
+            - generic [ref=e45]: components
+            - generic [ref=e46]: under construction, like Agentica
+          - listitem [ref=e47]:
+            - generic [ref=e48]: "10"
+            - generic [ref=e49]: quality gates
+      - figure [ref=e50]
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: The problem
+        - heading "Teams accumulate invisible decisions" [level=2] [ref=e55]
+        - paragraph [ref=e56]: Decisions scatter across Figma, GitHub, Storybook, Slack and Confluence. UX debt accumulates in silence. Documentation becomes outdated. Experts become indispensable. AI remains out of reach.
+      - figure [ref=e57]
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - paragraph [ref=e61]: Humans and AI agents
+        - heading "Designed for humans. Ready for AI agents." [level=2] [ref=e62]
+        - paragraph [ref=e63]: Humans understand, decide, approve and govern. Agents detect, analyze, propose and automate. Humans always keep the final word.
+      - figure [ref=e64]
+    - generic [ref=e66]:
+      - figure [ref=e67]
+      - generic [ref=e68]:
+        - paragraph [ref=e69]: Knowledge
+        - heading "Knowledge is a strategic asset" [level=2] [ref=e70]
+        - paragraph [ref=e71]: Frameworks evolve. Tools change. Technologies disappear. Knowledge must survive. Agentica structures it to remain readable tomorrow — by humans and AI agents alike.
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - paragraph [ref=e75]: Architecture
+        - heading "One single source of truth" [level=2] [ref=e76]
+        - paragraph [ref=e77]: One source feeds foundations, semantic contracts, components and applications. Four levels. One decision chain.
+      - figure [ref=e78]
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - paragraph [ref=e82]: For every role
+        - heading "Different value for every role" [level=2] [ref=e83]
+      - generic [ref=e84]:
+        - article [ref=e85]:
+          - heading "Organization" [level=3] [ref=e86]
+          - paragraph [ref=e87]: A shared decision memory, readable and governable.
+        - article [ref=e88]:
+          - heading "Managers" [level=3] [ref=e89]
+          - paragraph [ref=e90]: Visible trade-offs, traceable and tied to value.
+        - article [ref=e91]:
+          - heading "Product leads" [level=3] [ref=e92]
+          - paragraph [ref=e93]: Product choices connected to evidence and constraints.
+        - article [ref=e94]:
+          - heading "Designers" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Design intentions preserved beyond the screens.
+        - article [ref=e97]:
+          - heading "Developers" [level=3] [ref=e98]
+          - paragraph [ref=e99]: Explicit contracts to build without guessing.
+    - generic [ref=e101]:
+      - generic [ref=e102]:
+        - paragraph [ref=e103]: Quality
+        - heading "Quality is built into the system" [level=2] [ref=e104]
+        - paragraph [ref=e105]: Accessibility, visual regressions, documentation, ADRs and consistency are not added after the fact. They are part of the system. Nothing enters without control.
+      - generic [ref=e106]:
+        - generic [ref=e108]: WCAG 2.1 Accessibility
+        - generic [ref=e110]: Visual regressions
+        - generic [ref=e112]: Documentation
+        - generic [ref=e113]: ADRs
+        - generic [ref=e115]: Token consistency
+    - generic [ref=e117]:
+      - generic [ref=e118]:
+        - paragraph [ref=e119]: Traceability
+        - heading "Every decision has a memory" [level=2] [ref=e120]
+        - paragraph [ref=e121]: Behind every button, every color, every accessibility rule lies a decision. Agentica preserves its context, alternatives and trade-offs — so nobody reinvents what has already been resolved.
+        - link "View all 71 ADRs →" [ref=e123] [cursor=pointer]:
+          - /url: decisions/index.html
+          - generic [ref=e124]: View all 71 ADRs →
+      - figure [ref=e125]
+    - generic [ref=e127]:
+      - figure [ref=e128]
+      - generic [ref=e129]:
+        - paragraph [ref=e130]: Artificial intelligence
+        - heading "Automate without giving up control" [level=2] [ref=e131]
+        - paragraph [ref=e132]: Agents can generate, detect, document and propose. They cannot approve, deploy or bypass governance.
+    - generic [ref=e134]:
+      - generic [ref=e135]:
+        - paragraph [ref=e136]: Durability
+        - heading "Build for today. Preserve for tomorrow." [level=2] [ref=e137]
+        - paragraph [ref=e138]: Agentica is built on W3C open standards. Its components are native Web Components — portable, framework-independent. Its decisions outlive the tools.
+        - paragraph [ref=e139]: "Zero hidden dependency. Zero lock-in. Agentica runs with AI agents — never because of them. The day they stop, your design system keeps running: documented, scripted and tested to prove it."
+        - link "View the continuity plan →" [ref=e141] [cursor=pointer]:
+          - /url: continuite.html
+          - generic [ref=e142]: View the continuity plan →
+      - figure [ref=e143]
+    - generic [ref=e145]:
+      - generic [ref=e146]:
+        - paragraph [ref=e147]: Agentica
+        - heading "Ready to explore Agentica?" [level=2] [ref=e148]
+        - paragraph [ref=e149]: Turn decisions into durable knowledge that humans and AI agents can read.
+        - generic [ref=e150]:
+          - link "Get started" [ref=e151] [cursor=pointer]:
+            - /url: get-started.html
+            - generic [ref=e152]: Get started
+          - link "Explore components" [ref=e153] [cursor=pointer]:
+            - /url: components/index.html
+            - generic [ref=e154]: Explore components
+          - link "GitHub →" [ref=e155] [cursor=pointer]:
+            - /url: https://github.com/gnegreiros-ux/agentic-design-system
+      - figure [ref=e156]
+  - contentinfo [ref=e157]:
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - link "Agentica — Accueil" [ref=e160] [cursor=pointer]:
+          - /url: index.html
+          - img [ref=e161]
+        - link "Guilherme Negreiros" [ref=e162] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e163]
+          - text: Guilherme Negreiros
+      - generic [ref=e167]:
+        - generic [ref=e168]: Navigation
+        - link "Home" [ref=e169] [cursor=pointer]:
+          - /url: index.html
+        - link "Why" [ref=e170] [cursor=pointer]:
+          - /url: pourquoi.html
+        - link "Architecture" [ref=e171] [cursor=pointer]:
+          - /url: architecture.html
+        - link "Quality" [ref=e172] [cursor=pointer]:
+          - /url: qualite.html
+        - link "IA" [ref=e173] [cursor=pointer]:
+          - /url: ia.html
+      - generic [ref=e174]:
+        - generic [ref=e175]: Documentation
+        - link "Understand" [ref=e176] [cursor=pointer]:
+          - /url: pourquoi.html
+        - link "Get started" [ref=e177] [cursor=pointer]:
+          - /url: get-started.html
+        - link "Foundations" [ref=e178] [cursor=pointer]:
+          - /url: foundations/index.html
+        - link "Components" [ref=e179] [cursor=pointer]:
+          - /url: components/index.html
+        - link "Tokens" [ref=e180] [cursor=pointer]:
+          - /url: tokens/index.html
+        - link "Decisions" [ref=e181] [cursor=pointer]:
+          - /url: decisions/index.html
+        - link "Continuity" [ref=e182] [cursor=pointer]:
+          - /url: continuite.html
+        - link "Changelog" [ref=e183] [cursor=pointer]:
+          - /url: changelog.html
+      - generic [ref=e184]:
+        - generic [ref=e185]: Explorer
+        - link "Storybook" [ref=e186] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e187] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentic-design-system
+        - link "Audit" [ref=e188] [cursor=pointer]:
+          - /url: audit.html
+        - link "AI Brief" [ref=e189] [cursor=pointer]:
+          - /url: ai-brief.html
+    - generic [ref=e190]:
+      - generic [ref=e191]: © 2026 Guilherme Negreiros
+      - generic [ref=e192]: Built with Claude Code.
+  - button "Retour en haut" [ref=e193] [cursor=pointer]:
+    - img [ref=e194]
+    - generic [ref=e196]: Top
+  - status [ref=e197]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | test.describe('Home — visual regressions', () => {
+  4  |   test.beforeEach(async ({ page }) => {
+  5  |     await page.goto('/');
+  6  |     // Wait for lazy illustrations to potentially become visible
+  7  |     await page.waitForLoadState('networkidle');
+  8  |   });
+  9  | 
+  10 |   test('light mode — full page', async ({ page }) => {
+  11 |     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
+  12 |     await expect(page).toHaveScreenshot('home-light.png', { fullPage: true });
+  13 |   });
+  14 | 
+  15 |   test('dark mode — full page', async ({ page }) => {
+  16 |     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+  17 |     await expect(page).toHaveScreenshot('home-dark.png', { fullPage: true });
+  18 |   });
+  19 | 
+  20 |   test('hero above-the-fold — light', async ({ page }) => {
+  21 |     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
+  22 |     await page.setViewportSize({ width: 1440, height: 900 });
+> 23 |     await expect(page).toHaveScreenshot('home-hero-light.png', {
+     |                        ^ Error: expect(page).toHaveScreenshot(expected) failed
+  24 |       clip: { x: 0, y: 0, width: 1440, height: 900 },
+  25 |     });
+  26 |   });
+  27 | 
+  28 |   test('hero above-the-fold — dark', async ({ page }) => {
+  29 |     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+  30 |     await page.setViewportSize({ width: 1440, height: 900 });
+  31 |     await expect(page).toHaveScreenshot('home-hero-dark.png', {
+  32 |       clip: { x: 0, y: 0, width: 1440, height: 900 },
+  33 |     });
+  34 |   });
+  35 | 
+  36 |   test('mobile 375px — light', async ({ page }) => {
+  37 |     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
+  38 |     await page.setViewportSize({ width: 375, height: 812 });
+  39 |     await expect(page).toHaveScreenshot('home-mobile-light.png', { fullPage: true });
+  40 |   });
+  41 | });
+  42 | 
+```
