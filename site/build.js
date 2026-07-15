@@ -2766,9 +2766,9 @@ body[data-context="marketing"] .role-card::after{
   display:flex;flex-wrap:wrap;gap:2rem;margin-top:2.5rem;
   padding-top:2rem;border-top:1px solid var(--site-line);
 }
+.hero-stats>div{text-align:center}
 .stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--site-text)}
 .stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);margin-top:.25rem}
-.stat-note{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);font-style:italic;margin-top:.15rem}
 
 /* Responsive */
 @media(max-width:980px){
@@ -3593,9 +3593,9 @@ function buildHome(adrs) {
         </a>
       </div>
       <div class="hero-stats" role="list" aria-label="System statistics / Statistiques du système">
-        <div role="listitem"><span class="stat-num">${totalTokens}+</span><span class="stat-label">tokens</span></div>
-        <div role="listitem"><span class="stat-num">${adrs.length}</span><span class="stat-label">ADRs</span></div>
-        <div role="listitem"><span class="stat-num">${COMPONENT_PAGES.length}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span><span class="stat-note"><span class="lang-fr">en construction, comme Agentica</span><span class="lang-en">under construction, like Agentica</span></span></div>
+        <div role="listitem"><span class="stat-num">${Math.floor(totalTokens/100)*100}+</span><span class="stat-label">tokens</span></div>
+        <div role="listitem"><span class="stat-num">${Math.floor(adrs.length/10)*10}+</span><span class="stat-label">ADRs</span></div>
+        <div role="listitem"><span class="stat-num">${COMPONENT_PAGES.length}</span><span class="stat-label"><span class="lang-fr">composants (WIP)</span><span class="lang-en">components (WIP)</span></span></div>
         <div role="listitem"><span class="stat-num">10</span><span class="stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
