@@ -321,4 +321,4 @@ documented in an ADR.
 and the git history of the Agentica project — June 2026.*
 
 *System author: Guilherme Negreiros*
-*Documentation site: https://designsystem.gnegreiros.com*
+*Documentation site: https://agentica.design*

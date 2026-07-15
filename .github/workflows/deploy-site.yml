@@ -46,4 +46,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: site/dist
           publish_branch: gh-pages
-          cname: designsystem.gnegreiros.com
+          cname: agentica.design

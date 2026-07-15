@@ -2768,6 +2768,7 @@ body[data-context="marketing"] .role-card::after{
 }
 .stat-num{display:block;font-size:var(--agtc-semantic-typography-heading-2-size,2rem);font-weight:var(--agtc-semantic-fontWeight-bold,700);color:var(--site-text)}
 .stat-label{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);margin-top:.25rem}
+.stat-note{display:block;font-size:var(--agtc-semantic-typography-detail-size);color:var(--site-muted);font-style:italic;margin-top:.15rem}
 
 /* Responsive */
 @media(max-width:980px){
@@ -3243,7 +3244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Storybook published by Chromatic (main branch, always the latest baseline).
 // appId = 6a1c1e665ec5fe8fc0540983; stable permalink verified (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
-const SITE_URL      = 'https://designsystem.gnegreiros.com';
+const SITE_URL      = 'https://agentica.design';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
@@ -3326,16 +3327,16 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="og:site_name" content="Agentica">
 <meta property="og:title" content="${docTitle}">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
-<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
-<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta property="og:url" content="https://agentica.design/">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="designsystem.gnegreiros.com">
-<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta property="twitter:domain" content="agentica.design">
+<meta property="twitter:url" content="https://agentica.design/">
 <meta name="twitter:title" content="${docTitle}">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
-<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -3452,23 +3453,29 @@ function sidebarFoundations(base, current) {
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></span>${links}</div>`;
 }
 
+// Single source of truth for the documented component pages — used by the sidebar
+// AND by the home page stat (avoids reusing the component-TOKEN count, a different number).
+const COMPONENT_PAGES = [
+  ['button.html','Button'],
+  ['icon.html',  'Icon'],
+  ['input.html', 'Input'],
+  ['badge.html', 'Badge'],
+  ['card.html',  'Card'],
+  ['checkbox.html', 'Checkbox'],
+  ['radio.html', 'Radio'],
+  ['toggle.html', 'Toggle'],
+  ['table.html', 'Table'],
+  ['code-block.html', 'Code Block'],
+  ['banner.html', 'Banner'],
+  ['link.html', 'Link'],
+  ['segmented.html', 'Segmented'],
+  ['tabs.html',      'Tabs'],
+];
+
 function sidebarComponents(base, current) {
   const links = [
     ['index.html', '<span class="lang-fr">Vue d\'ensemble</span><span class="lang-en">Overview</span>'],
-    ['button.html','Button'],
-    ['icon.html',  'Icon'],
-    ['input.html', 'Input'],
-    ['badge.html', 'Badge'],
-    ['card.html',  'Card'],
-    ['checkbox.html', 'Checkbox'],
-    ['radio.html', 'Radio'],
-    ['toggle.html', 'Toggle'],
-    ['table.html', 'Table'],
-    ['code-block.html', 'Code Block'],
-    ['banner.html', 'Banner'],
-    ['link.html', 'Link'],
-    ['segmented.html', 'Segmented'],
-    ['tabs.html',      'Tabs'],
+    ...COMPONENT_PAGES,
   ].map(([h,l]) => `<a href="${base}components/${h}"${current===h?' class="active"':''}>${l}</a>`).join('');
   return `<div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></span>${links}</div>`;
 }
@@ -3588,7 +3595,7 @@ function buildHome(adrs) {
       <div class="hero-stats" role="list" aria-label="System statistics / Statistiques du système">
         <div role="listitem"><span class="stat-num">${totalTokens}+</span><span class="stat-label">tokens</span></div>
         <div role="listitem"><span class="stat-num">${adrs.length}</span><span class="stat-label">ADRs</span></div>
-        <div role="listitem"><span class="stat-num">${compCount}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span></div>
+        <div role="listitem"><span class="stat-num">${COMPONENT_PAGES.length}</span><span class="stat-label"><span class="lang-fr">composants</span><span class="lang-en">components</span></span><span class="stat-note"><span class="lang-fr">en construction, comme Agentica</span><span class="lang-en">under construction, like Agentica</span></span></div>
         <div role="listitem"><span class="stat-num">10</span><span class="stat-label"><span class="lang-fr">gates qualité</span><span class="lang-en">quality gates</span></span></div>
       </div>
     </div>
@@ -7974,7 +7981,7 @@ function validateCssVars() {
 // ── AI Brief ──────────────────────────────────────────────────────────────────
 function aiBriefContent() {
   return `# Agentica — AI Brief
-> Agentic design system. Version 1.0.0. Site: https://designsystem.gnegreiros.com
+> Agentic design system. Version 1.0.0. Site: https://agentica.design
 > Last updated: 2026-06-30. Author: Guilherme Negreiros.
 
 ## How to use this brief
@@ -7987,7 +7994,7 @@ Copy this entire file and paste it as the first message to your AI (Claude, Copi
 
 **Name:** Agentica (technical prefix: agtc)
 **Organization:** GNegreiros.com
-**Site:** https://designsystem.gnegreiros.com
+**Site:** https://agentica.design
 
 **Mission:** Encode interface decisions in a format readable by both humans and AI agents — to guarantee consistency, accessibility, and digital sovereignty.
 
