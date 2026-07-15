@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Theme toggle ─────────────────────────────────────────
   const prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
   const savedTheme = localStorage.getItem('agtc-theme') || (prefersDark ? 'dark' : 'light');
-  // Page d'accueil — toujours en dark mode (toggle masqué)
+  // Home page — always dark mode (toggle hidden)
   const isHome = document.documentElement.dataset.page === 'home';
   document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Animated counters — stat-band uniquement (fonctionnel, pas décoratif) ──
+  // ── Animated counters — stat-band only (functional, not decorative) ──
   const reduceMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   const statBand = document.querySelector('.stat-band');
   if (statBand && 'IntersectionObserver' in window) {
@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
-  // Bascule de langue — consomme le contrôle .agtc-segmented (ADR-044).
-  // Sélecteur .lang-switch button : cible le switcher du header (pas <html data-lang>
-  // ni les démos segmented de la page composant).
+  // Language toggle — consumes the .agtc-segmented control (ADR-044).
+  // .lang-switch button selector: targets the header switcher (not <html data-lang>
+  // nor the segmented demos on the component page).
   document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.setAttribute('aria-current', btn.dataset.lang === savedLang ? 'true' : 'false');
     btn.addEventListener('click', () => {
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Active sidebar links ──────────────────────────────────
-  // Note : agtc-top-nav gère aria-current="page" en interne (ADR-060).
+  // Note: agtc-top-nav handles aria-current="page" internally (ADR-060).
   const p = window.location.pathname;
   document.querySelectorAll('.sidebar a').forEach(a => {
     if (p.endsWith(a.getAttribute('href')?.split('/').pop() || '')) {
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
     search.addEventListener('search', runFilter);
   }
 
-  // ── Code blocks : label de langue + bouton copier accessible (ADR-041) ──────
-  // Région live unique partagée pour annoncer « Copié ! » aux lecteurs d'écran.
+  // ── Code blocks: language label + accessible copy button (ADR-041) ──────────
+  // Single shared live region to announce "Copied!" to screen readers.
   let copyLive = document.getElementById('agtc-copy-live');
   if (!copyLive) {
     copyLive = document.createElement('span');
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre.code-block').forEach(pre => {
     const code = pre.querySelector('code');
 
-    // Label de langue depuis la classe lang-xxx (CD5)
+    // Language label from the lang-xxx class (CD5)
     const langClass = [...(code?.classList || [])].find(c => c.startsWith('lang-'));
     const lang = langClass ? langClass.slice(5) : '';
     if (lang) {
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Reveal au défilement ─────────────────────────────────
+  // ── Reveal on scroll ──────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
     if ('IntersectionObserver' in window && !reduceMotion) {
@@ -372,8 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── Lazy-load des illustrations SVG (P1 perf — hors du HTML initial) ──────
-  // Les SVG sont chargés et injectés inline → CSS custom properties (dark mode) conservées.
+  // ── Lazy-load of SVG illustrations (P1 perf — outside the initial HTML) ──
+  // SVGs are loaded and injected inline → CSS custom properties (dark mode) preserved.
   const lazyIllusEls = document.querySelectorAll('.illus-lazy[data-svg]');
   if (lazyIllusEls.length && 'IntersectionObserver' in window) {
     const illusObs = new IntersectionObserver(entries => {

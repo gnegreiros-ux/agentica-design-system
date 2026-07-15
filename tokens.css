@@ -428,7 +428,7 @@
   --agtc-primitive-color-black-11: rgba(0,0,0,0.80);
   --agtc-primitive-color-black-12: rgba(0,0,0,0.90);
 
-  /* ── Primitive spacing — grille 4px ── */
+  /* ── Primitive spacing — 4px grid ── */
   --agtc-primitive-space-0: 2px;
   --agtc-primitive-space-1: 4px;
   --agtc-primitive-space-2: 8px;

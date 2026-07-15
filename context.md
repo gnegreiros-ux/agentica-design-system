@@ -1,180 +1,180 @@
 # Agentica — AI Brief
-> Système de design agentique. Version 1.0.0. Site : https://designsystem.gnegreiros.com
-> Mis à jour : 2026-06-30. Auteur : Guilherme Negreiros.
+> Agentic design system. Version 1.0.0. Site: https://designsystem.gnegreiros.com
+> Last updated: 2026-06-30. Author: Guilherme Negreiros.
 
-## Comment utiliser ce brief
+## How to use this brief
 
-Copiez l'intégralité de ce fichier et collez-le comme premier message dans votre IA (Claude, Copilot, ChatGPT, Gemini…). Toutes les questions suivantes sur Agentica recevront des réponses précises et conformes aux décisions versionnées.
-
----
-
-## 1. Identité et mission
-
-**Nom :** Agentica (préfixe technique : agtc)
-**Organisation :** GNegreiros.com
-**Site :** https://designsystem.gnegreiros.com
-
-**Mission :** Encoder les décisions d'interface dans un format lisible par les humains et les agents IA — pour garantir cohérence, accessibilité et souveraineté numérique.
-
-**Principes directeurs :**
-1. Le dernier mot est humain. Les agents proposent, les humains approuvent.
-2. Si ce n'est pas un token, ce n'est pas une décision — toute valeur locale est une dette.
-3. La documentation instruit les machines, pas seulement les humains.
-4. Souveraineté numérique : outils, données et décisions restent sous contrôle organisationnel.
+Copy this entire file and paste it as the first message to your AI (Claude, Copilot, ChatGPT, Gemini…). All following questions about Agentica will get accurate answers consistent with the versioned decisions.
 
 ---
 
-## 2. Architecture des tokens (3 niveaux — règle absolue)
+## 1. Identity and mission
+
+**Name:** Agentica (technical prefix: agtc)
+**Organization:** GNegreiros.com
+**Site:** https://designsystem.gnegreiros.com
+
+**Mission:** Encode interface decisions in a format readable by both humans and AI agents — to guarantee consistency, accessibility, and digital sovereignty.
+
+**Guiding principles:**
+1. The human always has the final word. Agents propose, humans approve.
+2. If it isn't a token, it isn't a decision — any local value is debt.
+3. Documentation instructs machines, not just humans.
+4. Digital sovereignty: tools, data, and decisions stay under organizational control.
+
+---
+
+## 2. Token architecture (3 levels — absolute rule)
 
 ```
-Primitifs → Sémantiques → Composant
-(valeurs brutes)  (intention UX)  (contrats UI)
+Primitives → Semantic → Component
+(raw values)  (UX intent)  (UI contracts)
 ```
 
-| Niveau | Fichier source | Exemple |
+| Level | Source file | Example |
 |--------|---------------|---------|
-| Primitif | tokens/primitives.json | color.teal.9 = #34d3bb |
-| Sémantique | tokens/semantic.json | color.action.primary → teal.9 |
-| Composant | tokens/component.json | button.critical.requiresConfirmation = true |
+| Primitive | tokens/primitives.json | color.teal.9 = #34d3bb |
+| Semantic | tokens/semantic.json | color.action.primary → teal.9 |
+| Component | tokens/component.json | button.critical.requiresConfirmation = true |
 
-**Règles absolues (violations = dette immédiate) :**
-- JAMAIS de valeur en dur (couleur, espacement, radius) dans le code
-- Les tokens primitifs ne s'utilisent JAMAIS directement dans un composant
-- Les tokens sémantiques encodent l'INTENTION (ex: `color.action.primary`), pas la valeur (ex: `teal`)
-- Les tokens de composant sont des contrats — toute modification exige une approbation humaine
+**Absolute rules (violations = immediate debt):**
+- NEVER a hardcoded value (color, spacing, radius) in code
+- Primitive tokens are NEVER used directly in a component
+- Semantic tokens encode INTENT (e.g. `color.action.primary`), not the value (e.g. `teal`)
+- Component tokens are contracts — any change requires human approval
 
-**Convention de nommage CSS :**
+**CSS naming convention:**
 ```
---agtc-[niveau]-[catégorie]-[composant]-[variante]-[propriété]
+--agtc-[level]-[category]-[component]-[variant]-[property]
 
 --agtc-primitive-color-teal-9: #34d3bb
 --agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9)
 --agtc-component-button-primary-background: var(--agtc-semantic-color-action-primary)
 ```
 
-**Standard :** Format W3C DTCG (Design Tokens Community Group) — https://www.designtokens.org/
+**Standard:** W3C DTCG format (Design Tokens Community Group) — https://www.designtokens.org/
 
 ---
 
-## 3. Composants disponibles (17 Web Components Lit)
+## 3. Available components (17 Lit Web Components)
 
-| Composant | Usage principal |
+| Component | Primary usage |
 |-----------|----------------|
-| agtc-button | Action principale, secondaire, critique, fantôme |
-| agtc-input | Champ de saisie texte, email, password |
-| agtc-badge | Étiquette statut (success/warning/danger/info/neutral/brand) |
-| agtc-banner | Message informatif inline (6 variantes, dismissible) |
-| agtc-card | Conteneur composable pour contenu structuré |
-| agtc-feature-card | Carte marketing glassmorphism avec icône et titre |
-| agtc-checkbox | Case à cocher avec états indeterminate |
-| agtc-radio / agtc-radio-group | Sélection exclusive dans un groupe |
-| agtc-toggle | Interrupteur binaire avec retour visuel immédiat |
-| agtc-table | Tableau de données lisible en lecture seule |
-| agtc-code-block | Bloc de code avec copie accessible (aria-live) |
-| agtc-tabs | Navigation par onglets avec aria-selected |
-| agtc-segmented | Contrôle segmenté mono-sélection (ex: langue, densité) |
-| agtc-link | Lien avec détection automatique externe (noopener + icône) |
-| agtc-icon | Icône Lucide tokenisée |
-| agtc-top-nav | Navigation principale, tabs visuels full-height |
+| agtc-button | Primary, secondary, critical, ghost action |
+| agtc-input | Text, email, password entry field |
+| agtc-badge | Status label (success/warning/danger/info/neutral/brand) |
+| agtc-banner | Inline informational message (6 variants, dismissible) |
+| agtc-card | Composable container for structured content |
+| agtc-feature-card | Glassmorphism marketing card with icon and title |
+| agtc-checkbox | Checkbox with indeterminate states |
+| agtc-radio / agtc-radio-group | Exclusive selection within a group |
+| agtc-toggle | Binary switch with immediate visual feedback |
+| agtc-table | Readable, read-only data table |
+| agtc-code-block | Code block with accessible copy (aria-live) |
+| agtc-tabs | Tabbed navigation with aria-selected |
+| agtc-segmented | Single-select segmented control (e.g. language, density) |
+| agtc-link | Link with automatic external detection (noopener + icon) |
+| agtc-icon | Tokenized Lucide icon |
+| agtc-top-nav | Main navigation, full-height visual tabs |
 
-### Règles critiques — agtc-button
+### Critical rules — agtc-button
 
-- Maximum 1 bouton `primary` par section ou formulaire
-- La variante `critical` EXIGE un pattern de confirmation (token requiresConfirmation: true)
-- Libellé explicite obligatoire — jamais "OK" ou "Confirmer" seul sur une action critique
-- Largeur préservée pendant les états async (loading)
-- Variantes autorisées : `primary` | `secondary` | `critical` | `ghost`
-- INTERDIT : inventer une variante (`danger`, `destructive`) — escalader à un humain
+- Maximum 1 `primary` button per section or form
+- The `critical` variant REQUIRES a confirmation pattern (requiresConfirmation: true token)
+- An explicit label is mandatory — never "OK" or "Confirm" alone on a critical action
+- Width preserved during async (loading) states
+- Allowed variants: `primary` | `secondary` | `critical` | `ghost`
+- FORBIDDEN: inventing a variant (`danger`, `destructive`) — escalate to a human
 
 ---
 
-## 4. Accessibilité — WCAG 2.1 AA (non négociable)
+## 4. Accessibility — WCAG 2.1 AA (non-negotiable)
 
-| Règle | Standard | Token |
+| Rule | Standard | Token |
 |-------|----------|-------|
-| Contraste texte normal | 4.5:1 minimum | color.text.primary sur color.background.page |
-| Contraste texte large | 3.0:1 minimum | — |
-| Focus visible | Obligatoire sur tous les interactifs | color.border.focus |
-| Navigation clavier | 100% des interactions | — |
-| ARIA | Obligatoire sur tous les composants | aria-label, aria-describedby, aria-expanded |
-| Cibles tactiles | ≥ 24×24px (WCAG 2.5.8) | — |
+| Normal text contrast | 4.5:1 minimum | color.text.primary on color.background.page |
+| Large text contrast | 3.0:1 minimum | — |
+| Visible focus | Mandatory on every interactive element | color.border.focus |
+| Keyboard navigation | 100% of interactions | — |
+| ARIA | Mandatory on every component | aria-label, aria-describedby, aria-expanded |
+| Touch targets | ≥ 24×24px (WCAG 2.5.8) | — |
 
-Tests automatisés : axe-core (CI bloquant) + Playwright (E2E).
+Automated tests: axe-core (blocking in CI) + Playwright (E2E).
 
 ---
 
-## 5. Gouvernance des tokens (Token Change Request)
+## 5. Token governance (Token Change Request)
 
-| Type de changement | Qui peut le faire | Approbation requise |
+| Change type | Who can make it | Approval required |
 |---|---|---|
-| Valeur d'un token primitif | Dev ou agent | Principal Designer |
-| Ajout d'un token sémantique | Dev ou agent (via PR) | Design System Lead |
-| Modification d'un token de composant | Humain seulement | Principal Designer |
-| Suppression de token | Humain seulement | Principal Designer + audit d'impact |
+| Primitive token value | Dev or agent | Principal Designer |
+| Adding a semantic token | Dev or agent (via PR) | Design System Lead |
+| Modifying a component token | Human only | Principal Designer |
+| Deleting a token | Human only | Principal Designer + impact audit |
 
-Flux TCR : identifier → documenter → évaluer l'impact → approuver → modifier → compiler → tester → communiquer.
-
----
-
-## 6. Contextes éditoriaux
-
-**Mode Produit** (défaut, sans attribut) :
-- Espacement normal, typographie max heading.1 (40px), grille régulière
-- Usage : documentation de composants, tokens, décisions
-
-**Mode Marketing** (`data-context="marketing"`) :
-- Espacement sections 96px, gap hero 120px, typographie display (60px)
-- Usage : pages de conviction et d'onboarding
-
-Pages marketing : index.html, get-started.html, agents/index.html
-Toutes les autres pages sont en mode Produit.
+TCR flow: identify → document → assess impact → approve → modify → compile → test → communicate.
 
 ---
 
-## 7. Décisions architecturales clés — 65 ADRs (au 2026-06-30)
+## 6. Editorial contexts
 
-| ADR | Décision | Impact |
+**Product Mode** (default, no attribute):
+- Normal spacing, typography capped at heading.1 (40px), regular grid
+- Usage: component, token, and decision documentation
+
+**Marketing Mode** (`data-context="marketing"`):
+- 96px section spacing, 120px hero gap, display typography (60px)
+- Usage: conviction and onboarding pages
+
+Marketing pages: index.html, get-started.html, agents/index.html
+Every other page is in Product mode.
+
+---
+
+## 7. Key architectural decisions — 65 ADRs (as of 2026-06-30)
+
+| ADR | Decision | Impact |
 |-----|----------|--------|
-| ADR-001 | Architecture 3 niveaux de tokens | Non négociable — fondation du système |
-| ADR-004 | Gouvernance humaine — le dernier mot est toujours humain | Tous les agents |
-| ADR-005 | Variante `critical` remplace `danger` pour les actions irréversibles | agtc-button |
-| ADR-021 | Atkinson Hyperlegible comme police principale | Typographie |
-| ADR-047 | Jamais d'état :visited sur les éléments de navigation | CSS global |
-| ADR-052 | Conformité W3C DTCG — standard de facto pour les tokens | tokens/*.json |
-| ADR-057 | Deux contextes éditoriaux : Produit vs Marketing | Layout site |
-| ADR-059 | Fermeture de la hiérarchie 3 niveaux (18 tokens sémantiques ajoutés) | Tokens |
-| ADR-065 | Dark mode dual-mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |
+| ADR-001 | Three-level token architecture | Non-negotiable — the system's foundation |
+| ADR-004 | Human governance — the human always has the final word | All agents |
+| ADR-005 | The `critical` variant replaces `danger` for irreversible actions | agtc-button |
+| ADR-021 | Atkinson Hyperlegible as the main font | Typography |
+| ADR-047 | Never a :visited state on navigation elements | Global CSS |
+| ADR-052 | W3C DTCG compliance — the de facto token standard | tokens/*.json |
+| ADR-057 | Two editorial contexts: Product vs. Marketing | Site layout |
+| ADR-059 | Closing the three-level hierarchy (18 semantic tokens added) | Tokens |
+| ADR-065 | Dual-mode dark mode via semantic.dark.json + Style Dictionary | Storybook/Chromatic |
 
 ---
 
-## 8. Ce qu'un agent peut et ne peut pas faire
+## 8. What an agent can and cannot do
 
-| ✅ Autorisé | ❌ Interdit sans approbation |
+| ✅ Allowed | ❌ Forbidden without approval |
 |---|---|
-| Lire et appliquer les contrats de composants | Modifier tokens/component.json |
-| Générer du code depuis les tokens sémantiques | Utiliser des valeurs en dur |
-| Détecter les dérives et proposer des corrections | Merger sur main ou develop |
-| Créer des branches fix/ docs/ feature/ | Pusher directement sur main |
-| Ouvrir une PR avec description complète | Déployer en production seul |
-| Ajouter ou modifier un token sémantique (via PR) | Supprimer un token |
+| Read and apply component contracts | Modify tokens/component.json |
+| Generate code from semantic tokens | Use hardcoded values |
+| Detect drift and propose fixes | Merge to main or develop |
+| Create fix/ docs/ feature/ branches | Push directly to main |
+| Open a PR with a complete description | Deploy to production alone |
+| Add or modify a semantic token (via PR) | Delete a token |
 
 ---
 
-## 9. Pile technologique
+## 9. Tech stack
 
-| Couche | Technologie |
+| Layer | Technology |
 |--------|-------------|
 | Web Components | Lit (Google) |
-| Compilation tokens | Style Dictionary (W3C DTCG) |
-| Tests visuels | Chromatic (Storybook) |
-| Tests accessibilité | axe-core (CI bloquant) |
-| Tests E2E | Playwright |
+| Token compilation | Style Dictionary (W3C DTCG) |
+| Visual tests | Chromatic (Storybook) |
+| Accessibility tests | axe-core (blocking in CI) |
+| E2E tests | Playwright |
 | Documentation | Storybook |
-| Sync Figma | Tokens Studio |
-| Générateur site | Node.js custom (site/build.js) |
+| Figma sync | Tokens Studio |
+| Site generator | Custom Node.js (site/build.js) |
 | CI/CD | GitHub Actions |
 
 ---
 
-*Ce brief est généré automatiquement depuis les sources versionnées d'Agentica.*
-*Toute modification passe par le dépôt : https://github.com/gnegreiros-ux/agentic-design-system*
+*This brief is automatically generated from Agentica's versioned sources.*
+*Any change goes through the repository: https://github.com/gnegreiros-ux/agentic-design-system*
