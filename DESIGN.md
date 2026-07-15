@@ -16,7 +16,7 @@
 
 **System name:** Agentica (agtc)
 **Organization:** GNegreiros.com
-**Site:** https://designsystem.gnegreiros.com
+**Site:** https://agentica.design
 **Version:** 1.0.0
 **Last updated:** 2026-05-30
 **Owner:** Guilherme Negreiros

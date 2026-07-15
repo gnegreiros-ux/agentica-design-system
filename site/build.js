@@ -3243,7 +3243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Storybook published by Chromatic (main branch, always the latest baseline).
 // appId = 6a1c1e665ec5fe8fc0540983; stable permalink verified (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
-const SITE_URL      = 'https://designsystem.gnegreiros.com';
+const SITE_URL      = 'https://agentica.design';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
@@ -3326,16 +3326,16 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="og:site_name" content="Agentica">
 <meta property="og:title" content="${docTitle}">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
-<meta property="og:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
-<meta property="og:url" content="https://designsystem.gnegreiros.com/">
+<meta property="og:url" content="https://agentica.design/">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="designsystem.gnegreiros.com">
-<meta property="twitter:url" content="https://designsystem.gnegreiros.com/">
+<meta property="twitter:domain" content="agentica.design">
+<meta property="twitter:url" content="https://agentica.design/">
 <meta name="twitter:title" content="${docTitle}">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
-<meta name="twitter:image" content="https://designsystem.gnegreiros.com/social.png">
+<meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -7974,7 +7974,7 @@ function validateCssVars() {
 // ── AI Brief ──────────────────────────────────────────────────────────────────
 function aiBriefContent() {
   return `# Agentica — AI Brief
-> Agentic design system. Version 1.0.0. Site: https://designsystem.gnegreiros.com
+> Agentic design system. Version 1.0.0. Site: https://agentica.design
 > Last updated: 2026-06-30. Author: Guilherme Negreiros.
 
 ## How to use this brief
@@ -7987,7 +7987,7 @@ Copy this entire file and paste it as the first message to your AI (Claude, Copi
 
 **Name:** Agentica (technical prefix: agtc)
 **Organization:** GNegreiros.com
-**Site:** https://designsystem.gnegreiros.com
+**Site:** https://agentica.design
 
 **Mission:** Encode interface decisions in a format readable by both humans and AI agents — to guarantee consistency, accessibility, and digital sovereignty.
 

@@ -8,7 +8,7 @@
 > **Relations:** AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md
 
 **Author:** Guilherme Negreiros
-**Documentation site:** https://designsystem.gnegreiros.com
+**Documentation site:** https://agentica.design
 
 ---
 

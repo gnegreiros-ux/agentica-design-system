@@ -70,7 +70,7 @@ The merged HTML report (Chromium + Firefox + WebKit) is automatically published 
 **Accessing the report:**
 
 ```
-https://designsystem.gnegreiros.com/playwright-report/
+https://agentica.design/playwright-report/
 ```
 
 > Fallback if the report isn't published yet: Actions → download the

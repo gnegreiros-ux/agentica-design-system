@@ -68,7 +68,7 @@ In this model, the designer's role shifts. They no longer just produce artifacts
 Les composants deviennent des contrats. Les tokens portent une intention. La documentation s'instruit elle-même. Et les dérives sont détectées avant que vous les trouviez en production.
 Les humains gardent le dernier mot. Toujours. Ce que ça change pour les designers ? Le rôle évolue — de producteur d'artefacts à architecte de décisions reproductibles.
 Stack agnostique. Souverain. Auditable. Agentique.
-→ designsystem.gnegreiros.com
+→ agentica.design
 
 ---
 
@@ -78,4 +78,4 @@ Stack agnostique. Souverain. Auditable. Agentique.
 Components become contracts. Tokens carry intent. Documentation instructs itself. And drift is detected before you find it in production.
 Humans always have the final word. What does that change for designers? The role shifts — from artifact producer to architect of reproducible decisions.
 Stack agnostic. Sovereign. Auditable. Agentic.
-→ designsystem.gnegreiros.com
+→ agentica.design
