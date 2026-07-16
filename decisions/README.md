@@ -134,6 +134,8 @@ decisions that were already settled.
 | [ADR-069](ADR-069-migration-suivi-projet-github-projects.md) | Migrating project tracking to GitHub Projects (replaces ADR-016) | 2026-07-09 | ✅ Active |
 | [ADR-070](ADR-070-anglais-langue-par-defaut.md) | English as the repository's default language (community translation) | 2026-07-10 | ✅ Active |
 | [ADR-071](ADR-071-english-only-future-content.md) | English as the sole language for all future content (extends ADR-070) | 2026-07-14 | ✅ Active |
+| [ADR-072](ADR-072-npm-package-architecture.md) | Package architecture for npm publication: `@agentica/tokens` + `@agentica/components` | 2026-07-15 | ✅ Active |
+| [ADR-073](ADR-073-npm-scope-correction.md) | npm scope correction: `@agentica` → `@agentica-ds` (amends ADR-072) | 2026-07-16 | ✅ Active |
 
 ---
 
