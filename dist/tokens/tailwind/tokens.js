@@ -2,10 +2,10 @@
 // Requires dist/tokens/css/all.css to be loaded for var() to resolve.
 //
 // tailwind.config.js:
-//   const agtc = require("@agentica/tokens/tailwind");
-//   module.exports = { theme: { extend: agtc } };
+//   import agtc from "@agentica-ds/tokens/tailwind";
+//   export default { theme: { extend: agtc } };
 
-module.exports = {
+export default {
   "colors": {
     "agtc-color-action-primary": "var(--agtc-semantic-color-action-primary)",
     "agtc-color-action-primary-hover": "var(--agtc-semantic-color-action-primary-hover)",

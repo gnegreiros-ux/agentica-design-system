@@ -115,10 +115,10 @@ StyleDictionary.registerFormat({
       '// Requires dist/tokens/css/all.css to be loaded for var() to resolve.',
       '//',
       '// tailwind.config.js:',
-      '//   const agtc = require("@agentica/tokens/tailwind");',
-      '//   module.exports = { theme: { extend: agtc } };',
+      '//   import agtc from "@agentica-ds/tokens/tailwind";',
+      '//   export default { theme: { extend: agtc } };',
       '',
-      `module.exports = ${JSON.stringify({ colors, spacing, borderRadius }, null, 2)};`,
+      `export default ${JSON.stringify({ colors, spacing, borderRadius }, null, 2)};`,
     ].join('\n');
   },
 });

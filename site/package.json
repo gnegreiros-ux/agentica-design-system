@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Documentation site — Agentic design system",
   "homepage": "https://gnegreiros-ux.github.io/agentic-design-system/",
+  "private": true,
   "scripts": {
     "build": "node build.js && node audit-a11y.js",
     "audit": "node audit-a11y.js",
     "dev": "node build.js --watch"
   },
   "dependencies": {
+    "@agentica-ds/components": "*",
+    "@agentica-ds/tokens": "*",
     "lit": "^3.0.0",
     "lucide": "^0.511.0"
   },

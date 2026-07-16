@@ -1,0 +1,26 @@
+{
+  "name": "@agentica-ds/components",
+  "version": "0.1.0",
+  "description": "Agentica Lit Web Components — agtc-* elements, one ESM entry point per component plus a barrel export.",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "*.js"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./*": "./*.js",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "dependencies": {
+    "lucide": "^1.17.0"
+  },
+  "scripts": {
+    "build": "node build.js"
+  }
+}

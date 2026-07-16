@@ -29,8 +29,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        working-directory: site
-        run: npm ci
+        # npm install (not npm ci) at the repo root: site is now an npm workspaces
+        # member, so there is no site/package-lock.json anymore — same rationale as
+        # the other workflows' root installs (multi-platform lockfile reconciliation).
+        run: npm install --no-audit --no-fund
 
       - name: Build site
         working-directory: site

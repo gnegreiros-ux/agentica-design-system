@@ -1,0 +1,28 @@
+{
+  "name": "@agentica-ds/tokens",
+  "version": "0.1.0",
+  "description": "Agentica design tokens — compiled CSS custom properties, JS ES6 exports, and Tailwind config extension, plus the raw three-layer DTCG JSON source.",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "css",
+    "js",
+    "tailwind",
+    "tokens"
+  ],
+  "exports": {
+    "./css": "./css/all.css",
+    "./css/dark": "./css/dark.css",
+    "./css/primitives": "./css/primitives.css",
+    "./css/semantic": "./css/semantic.css",
+    "./css/components": "./css/components.css",
+    "./js": "./js/tokens.js",
+    "./tailwind": "./tailwind/tokens.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "node build.js"
+  }
+}
