@@ -2,6 +2,7 @@
   "name": "@agentica-ds/tokens",
   "version": "0.1.0",
   "description": "Agentica design tokens — compiled CSS custom properties, JS ES6 exports, and Tailwind config extension, plus the raw three-layer DTCG JSON source.",
+  "license": "MIT",
   "type": "module",
   "publishConfig": {
     "access": "public"
