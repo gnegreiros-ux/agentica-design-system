@@ -131,7 +131,7 @@ have changed visually (redesign, contrast fix, new token).
 
 ```bash
 # 1. Update the DS
-npm install @agentica/design-system@latest
+npm install @agentica-ds/tokens@latest @agentica-ds/components@latest
 
 # 2. Run your visual tests
 npx playwright test

@@ -2,6 +2,14 @@ node_modules/
 .tokens-build-tmp/
 .DS_Store
 
+# Generated npm package content (rebuilt by packages/*/build.js — see packages/*/package.json)
+packages/tokens/css/
+packages/tokens/js/
+packages/tokens/tailwind/
+packages/tokens/tokens/
+packages/components/agtc-*.js
+packages/components/index.js
+
 *storybook.log
 storybook-static
 
