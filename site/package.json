@@ -10,8 +10,8 @@
     "dev": "node build.js --watch"
   },
   "dependencies": {
-    "@agentica-ds/components": "workspace:*",
-    "@agentica-ds/tokens": "workspace:*",
+    "@agentica-ds/components": "*",
+    "@agentica-ds/tokens": "*",
     "lit": "^3.0.0",
     "lucide": "^0.511.0"
   },
