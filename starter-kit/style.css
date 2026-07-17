@@ -13,6 +13,23 @@ body {
   border-bottom: 1px solid var(--agtc-semantic-color-border-default);
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--agtc-semantic-space-comfortable-control-gap);
+}
+
+.logo h1 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Logo clair/sombre : même bascule que le site principal (site/build.js) —
+   affiche la variante blanche par défaut, la variante couleur en thème clair. */
+.logo-light { display: none; }
+[data-theme="light"] .logo-dark { display: none; }
+[data-theme="light"] .logo-light { display: block; }
+
 .page-content {
   max-width: 480px;
   margin: 0 auto;
