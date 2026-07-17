@@ -41,16 +41,19 @@ source (`npm run tokens`, `npm run build:components-package`) — required becau
 `packages/tokens/{css,js,tailwind,tokens}/` and `packages/components/agtc-*.js` are
 generated, gitignored output, never committed.
 
-Authentication uses an **`NPM_TOKEN` repository secret**: an npm **Automation token**
-(not a personal session token), which is purpose-built for unattended CI publishing and
-bypasses the interactive OTP/WebAuthn step-up-auth challenge that caused the friction
-described above.
+Authentication uses **npm Trusted Publishing** (OIDC): each package
+(`@agentica-ds/tokens` and `@agentica-ds/components`) is configured on npmjs.com to
+trust this exact GitHub repository + workflow file as a publisher. GitHub issues a
+short-lived, cryptographically signed OIDC token scoped to that specific workflow run;
+npm exchanges it for a short-lived publish credential. There is no static secret to
+store in the repository, nothing to leak, and nothing to rotate.
 
 ## Rejected alternatives
 
 | Alternative | Reason for rejection |
 |-------------|-----------------------|
 | Keep publishing manually from a maintainer's terminal | This session directly demonstrated the failure modes: non-interactive OTP/WebAuthn doesn't work, session tokens expire in ~24h, and one publish attempt failed outright and needed a retry. Doesn't scale past one person. |
+| npm Granular Access Token with "Bypass two-factor authentication" checked, stored as an `NPM_TOKEN` repository secret | Initially chosen, then reversed after npm's own token-creation UI displayed an explicit security warning for this option and pointed to Trusted Publishing as the intended alternative. A 2FA-bypass token is a static, long-lived secret: if a workflow, an action in the dependency chain, or a logging misconfiguration leaks it, an attacker can publish arbitrary malicious versions under `@agentica-ds/*` with no further check — the same class of failure behind real npm supply-chain incidents. npm is also actively restricting this option (2FA-bypass tokens lose account-change ability Aug 2026, direct-publish ability Jan 2027 per npm's own in-product notice), so it would have needed replacing soon regardless. |
 | Hand-rolled workflow calling `npm publish` per package directly | `changesets/action` already implements the version-detection, version-PR, and monorepo-package-enumeration logic correctly across the wider Changesets ecosystem. Reimplementing it duplicates well-tested behavior for no benefit. |
 | Trigger on every push to any branch or on pull requests | Publishing must only ever happen from `main`, matching every other workflow in this repo (`.claude/rules/git-workflow.md`: `main` is the protected, canonical branch). A PR only ever produces the "Version Packages" preview state, never a real publish. |
 
@@ -70,10 +73,11 @@ described above.
   is the human checkpoint before anything actually reaches the npm registry.
 
 **Accepted cost:**
-- Requires an `NPM_TOKEN` repository secret (an npm Automation token scoped to the
-  `agentica-ds` org) to be created and configured by a human with npm org admin
-  access. This ADR does not and cannot create that secret — it's a one-time manual
-  setup step, documented in the workflow file itself.
+- Requires npm Trusted Publishing to be configured for each package (each package's
+  Settings page on npmjs.com → Trusted Publisher → GitHub Actions → this repo + this
+  workflow filename) by a human with publish access. This ADR does not and cannot
+  configure that — it's a one-time manual setup step, documented in the workflow file
+  itself. Unlike a token, this has no expiry to track and nothing to rotate.
 
 ## Incidents or triggers
 
@@ -82,3 +86,10 @@ both packages by hand: an email OTP that initially failed to arrive, a CLI
 authentication token that expired within roughly 24 hours, and one `npm publish`
 attempt for `@agentica-ds/components` that failed with `E404` on the OTP-polling
 endpoint and required a manual retry.
+
+A second, smaller incident during implementation: the first draft of this ADR and its
+workflow specified an `NPM_TOKEN` Granular Access Token with 2FA bypass. While walking
+through generating that token, npm's own UI displayed *"There are security risks with
+this option. For automation or CI/CD uses, please use Trusted Publishing instead"* —
+caught before merge, before any secret was ever created or stored, and corrected in
+place to the Trusted Publishing approach described above.
