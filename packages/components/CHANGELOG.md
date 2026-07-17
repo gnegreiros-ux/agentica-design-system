@@ -1,5 +1,11 @@
 # @agentica-ds/components
 
+## 0.1.3
+
+### Patch Changes
+
+- Add keywords to package.json for npm search discoverability.
+
 ## 0.1.2
 
 ### Patch Changes
