@@ -121,8 +121,10 @@ in a file in the repo — nothing to log manually here.
 **Script:** `scripts/continuity/2-1-installation-produit.sh`
 
 - The installation flow documented in `site/dist/get-started.html` works without
-  any agent: clone, import `dist/tokens/css/all.css` + `dark.css`, mount the Web
-  Components (`agtc-*`, Lit as a peer dependency)
+  any agent: `npm install @agentica-ds/tokens @agentica-ds/components`, import
+  `@agentica-ds/tokens/css` + `/css/dark`, mount the Web Components (`agtc-*`,
+  Lit as a peer dependency). `starter-kit/` in the repository is a ready-to-copy
+  minimal project demonstrating the whole flow.
 - `guidelines/components/*.md` = human-readable contract, usable as-is
 - `DESIGN.md` = brand reference, usable as-is
 

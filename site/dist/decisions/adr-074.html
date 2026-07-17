@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica</title>
+<title>Automated npm publishing via `changesets/action` in CI — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica">
+<meta property="og:title" content="Automated npm publishing via `changesets/action` in CI — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Choosing Tokens Studio for Figma ↔ JSON synchronization — Agentica">
+<meta name="twitter:title" content="Automated npm publishing via `changesets/action` in CI — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,108 +114,55 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-011</code>
+    <code class="adr-number">ADR-074</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    
   </div>
-  <h1 class="adr-page-title">Choosing Tokens Studio for Figma ↔ JSON synchronization</h1>
+  <h1 class="adr-page-title">Automated npm publishing via `changesets/action` in CI</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-28</dd>
+      <dd>2026-07-17</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead, Principal Designer</dd>
+      <dd>Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>The design system operates on two surfaces simultaneously:</p>
-<ul><li><strong>Code</strong> — JSON tokens + Web Components compiled by Style Dictionary</li><li><strong>Figma</strong> — mockups and components used by the design team</li></ul>
-<p>Without synchronization between these two surfaces, teams work from two diverging sources of truth. The designer changes a token in Figma, the developer changes the JSON — the two systems silently drift apart.</p>
-<p>The digital sovereignty constraint (ADR-004, DESIGN.md) complicates the problem: the source of truth must stay in the git repo, not in Figma. Figma is a tool for consultation and design, not for token governance.</p>
-<p>The question was:</p>
-<blockquote><p><strong>How do we keep Figma and the JSON repo synchronized without reversing the direction of truth — JSON leads, Figma follows?</strong></p></blockquote>
-<hr>
+</div><h2>Context</h2>
+<p>ADR-072 decided that <code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> would be versioned independently via Changesets, but explicitly deferred the actual CI publish automation as "a separate implementation ticket, not part of this decision." Until now, publishing both 0.1.0 and 0.1.1 required running <code>npm publish</code> manually from a maintainer's own terminal for each package.</p>
+<p>That manual process surfaced real, repeated friction: npm's web-based login/OTP flow does not work when run non-interactively (it requires a live browser + Touch ID confirmation), the resulting CLI session token expired within roughly 24 hours forcing a full re-login mid-session, and one <code>npm publish</code> attempt for <code>@agentica-ds/components</code> failed outright with <code>E404</code> on npm's OTP-polling endpoint (<code>/-/v1/done</code>) and had to be retried by hand. None of this is viable for a frequent or unattended release cadence, and it ties every release to one maintainer's Mac being available.</p>
 <h2>Decision</h2>
-<p>Adopt <strong>Tokens Studio for Figma</strong> (a Figma plugin) as the synchronization bridge between the repo's JSON files and Figma's variables/styles.</p>
-<p>The synchronization direction is non-negotiable:</p>
-<pre class="code-block"><code class="lang-text">tokens/*.json  →  Tokens Studio  →  Figma Variables
-     ↑ source of truth                ↓ consumer</code></pre>
-<p>The plugin reads the JSON files from the GitHub repo (via Settings → GitHub sync) and imports the tokens into Figma in the same order as ADR-001: <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code>.</p>
-<p><strong>What designers must NOT do via Tokens Studio:</strong> modify tokens directly in Figma and push them to the repo. Every token change follows the TCR process (DESIGN.md) — Figma is read-only.</p>
-<hr>
+<p>Publishing is automated via the official <strong><code>changesets/action@v1</code></strong> GitHub Action, in a new <code>.github/workflows/release.yml</code> triggered on push to <code>main</code> (paths: <code>packages/&lt;strong&gt;</code>, <code>.changeset/&lt;/strong&gt;</code>).</p>
+<p>The action performs Changesets' standard dual role:</p>
+<ul><li>If there are pending changeset files in <code>.changeset/</code>, it opens or updates a</li></ul>
+<p>  <strong>"Version Packages" pull request</strong> (running <code>changeset version</code> — the same command   used manually for the 0.1.1 bump).</p>
+<ul><li>Once that PR is merged, the next run on <code>main</code> finds no pending changesets and</li></ul>
+<p>  instead runs <code>npx changeset publish</code>, which publishes any workspace package whose   local <code>package.json</code> version is ahead of what's live on the npm registry.</p>
+<p>Before the action runs, the workflow rebuilds each package's publishable content from source (<code>npm run tokens</code>, <code>npm run build:components-package</code>) — required because <code>packages/tokens/{css,js,tailwind,tokens}/</code> and <code>packages/components/agtc-*.js</code> are generated, gitignored output, never committed.</p>
+<p>Authentication uses <strong>npm Trusted Publishing</strong> (OIDC): each package (<code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code>) is configured on npmjs.com to trust this exact GitHub repository + workflow file as a publisher. GitHub issues a short-lived, cryptographically signed OIDC token scoped to that specific workflow run; npm exchanges it for a short-lived publish credential. There is no static secret to store in the repository, nothing to leak, and nothing to rotate.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Native Figma Variables only (no plugin)</strong></td><td>Figma Variables don't natively sync with a git repo. Every token update would require a manual update in Figma — a guaranteed source of drift. Acceptable for small teams, but not scalable.</td></tr><tr><td><strong>Theo / Style Dictionary → Figma export</strong></td><td>Style Dictionary can export to Figma-specific formats (specific JSON). But importing into Figma remains manual — no bidirectional sync and no management UI in Figma. Tokens Studio offers the management UI these exports lack.</td></tr><tr><td><strong>Custom sync script</strong></td><td>Maintainable short-term for a small token catalog. Not maintainable at scale (30 palettes × 12 steps × 3 layers = hundreds of tokens). Figma API updates would break the script without notice.</td></tr><tr><td><strong>Zeroheight / Supernova</strong></td><td>Design system documentation platforms with Figma sync. Focused on documentation, not on JSON-level token synchronization. Add a paid external dependency for a function Tokens Studio covers for free.</td></tr><tr><td><strong>No synchronization (two sources of truth)</strong></td><td>Explicitly rejected. The experience of teams without synchronization is documented: after a few sprints, designers work on tokens that no longer exist in the code, and developers are unaware of changes decided in Figma.</td></tr></tbody></table></div>
-<hr>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep publishing manually from a maintainer's terminal</td><td>This session directly demonstrated the failure modes: non-interactive OTP/WebAuthn doesn't work, session tokens expire in ~24h, and one publish attempt failed outright and needed a retry. Doesn't scale past one person.</td></tr><tr><td>npm Granular Access Token with "Bypass two-factor authentication" checked, stored as an <code>NPM_TOKEN</code> repository secret</td><td>Initially chosen, then reversed after npm's own token-creation UI displayed an explicit security warning for this option and pointed to Trusted Publishing as the intended alternative. A 2FA-bypass token is a static, long-lived secret: if a workflow, an action in the dependency chain, or a logging misconfiguration leaks it, an attacker can publish arbitrary malicious versions under <code>@agentica-ds/*</code> with no further check — the same class of failure behind real npm supply-chain incidents. npm is also actively restricting this option (2FA-bypass tokens lose account-change ability Aug 2026, direct-publish ability Jan 2027 per npm's own in-product notice), so it would have needed replacing soon regardless.</td></tr><tr><td>Hand-rolled workflow calling <code>npm publish</code> per package directly</td><td><code>changesets/action</code> already implements the version-detection, version-PR, and monorepo-package-enumeration logic correctly across the wider Changesets ecosystem. Reimplementing it duplicates well-tested behavior for no benefit.</td></tr><tr><td>Trigger on every push to any branch or on pull requests</td><td>Publishing must only ever happen from <code>main</code>, matching every other workflow in this repo (<code>.claude/rules/git-workflow.md</code>: <code>main</code> is the protected, canonical branch). A PR only ever produces the "Version Packages" preview state, never a real publish.</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<p><strong>For designers:</strong></p>
-<ul><li>Import workflow: Settings → Sync → GitHub → point to <code>tokens/</code></li><li>Import order: <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code></li><li>The tokens available in Figma are always the tokens defined in the repo —</li></ul>
-<p>  no local token is possible without going through the TCR process</p>
-<ul><li>Any local variable created directly in Figma = debt — to be flagged to the team</li></ul>
 <p><strong>For AI agents:</strong></p>
-<ul><li>Tokens Studio is not in the agent loop — agents work directly with the JSON</li></ul>
-<p>  files, never with Figma</p>
-<ul><li>The plugin guarantees that what designers see in Figma matches what agents</li></ul>
-<p>  read in the JSON — consistency of the shared source of truth</p>
-<p><strong>For governance:</strong></p>
-<ul><li>The JSON → Figma direction preserves digital sovereignty: tokens can't be</li></ul>
-<p>  modified "on the sly" via Figma and pushed to the repo</p>
-<ul><li>Every token modification stays traced in git, via TCR, with approval</li></ul>
-<p><strong>For Style Dictionary (ADR-003):</strong></p>
-<ul><li>Style Dictionary and Tokens Studio share the same source: <code>tokens/*.json</code></li><li>Both compile from the same JSON — no intermediate format to maintain</li><li>Style Dictionary generates code outputs (CSS, JS, Swift, Android)</li><li>Tokens Studio manages the design output (Figma Variables)</li></ul>
+<ul><li>Never commit <code>packages/tokens/{css,js,tailwind,tokens}/</code> or</li></ul>
+<p>  <code>packages/components/agtc-*.js</code>/<code>index.js</code> content — CI regenerates it from source on   every release run, exactly like the local build scripts.</p>
+<ul><li>A version bump is now driven by merging a changeset to <code>main</code> (opens/updates the</li></ul>
+<p>  "Version Packages" PR), not by manually editing <code>package.json</code> versions.</p>
+<p><strong>For developers:</strong></p>
+<ul><li>Adding a changeset (<code>npm run changeset</code>) and merging it is now the entire release</li></ul>
+<p>  trigger — no manual <code>npm publish</code> or OTP interaction required going forward.</p>
+<ul><li>The "Version Packages" PR's diff (version bumps + generated <code>CHANGELOG.md</code> entries)</li></ul>
+<p>  is the human checkpoint before anything actually reaches the npm registry.</p>
 <p><strong>Accepted cost:</strong></p>
-<ul><li>Tokens Studio is a third-party plugin (Figma Marketplace) — a dependency on</li></ul>
-<p>  its maintenance</p>
-<ul><li>The free version covers basic needs; some advanced features</li></ul>
-<p>  (automatic sync, webhooks) require a subscription</p>
-<ul><li>The plugin must be reinstalled/reconfigured if the repo is moved</li></ul>
-<hr>
+<ul><li>Requires npm Trusted Publishing to be configured for each package (each package's</li></ul>
+<p>  Settings page on npmjs.com → Trusted Publisher → GitHub Actions → this repo + this   workflow filename) by a human with publish access. This ADR does not and cannot   configure that — it's a one-time manual setup step, documented in the workflow file   itself. Unlike a token, this has no expiry to track and nothing to rotate.</p>
 <h2>Incidents or triggers</h2>
-<p>Foundational decision. Motivated by a systematic observation in teams without synchronization: Figma mockups use tokens named differently from the code, creating two parallel languages within the same team. A designer who talks about <code>Bleu Principal</code> and a developer who talks about <code>color.action.primary</code> are describing the same value without knowing it. Tokens Studio aligns both languages on the same JSON.</p></div><div class="lang-fr"><h2>Contexte</h2>
-<p>Le système de design opère sur deux surfaces simultanément :</p>
-<ul><li><strong>Le code</strong> — JSON tokens + Web Components compilés par Style Dictionary</li><li><strong>Figma</strong> — maquettes et composants utilisés par l'équipe design</li></ul>
-<p>Sans synchronisation entre ces deux surfaces, les équipes travaillent sur deux sources de vérité divergentes. Le designer modifie un token dans Figma, le développeur modifie le JSON — les deux systèmes dérivent silencieusement.</p>
-<p>La contrainte de souveraineté numérique (ADR-004, DESIGN.md) complique le problème : la source de vérité doit rester dans le repo git, pas dans Figma. Figma est un outil de consultation et de design, pas de gouvernance des tokens.</p>
-<p>La question posée était :</p>
-<blockquote><p><strong>Comment maintenir Figma et le repo JSON synchronisés sans inverser la direction de la vérité — le JSON commande, Figma suit ?</strong></p></blockquote>
-<hr>
-<h2>Décision</h2>
-<p>Adoption de <strong>Tokens Studio for Figma</strong> (plugin Figma) comme pont de synchronisation bidirectionnel entre les fichiers JSON du repo et les variables/styles Figma.</p>
-<p>La direction de synchronisation est non négociable :</p>
-<pre class="code-block"><code class="lang-text">tokens/*.json  →  Tokens Studio  →  Variables Figma
-     ↑ source de vérité               ↓ consommateur</code></pre>
-<p>Le plugin lit les fichiers JSON depuis le repo GitHub (via sync Settings → GitHub) et importe les tokens dans Figma dans le même ordre que l'ADR-001 : <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code>.</p>
-<p><strong>Ce que les designers NE doivent pas faire via Tokens Studio :</strong> modifier les tokens directement dans Figma et pousser vers le repo. Tout changement de token suit le processus TCR (DESIGN.md) — Figma est en lecture.</p>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Variables Figma natives uniquement (sans plugin)</strong></td><td>Figma Variables ne se synchronisent pas avec un repo git nativement. Chaque mise à jour de token nécessiterait une mise à jour manuelle dans Figma — source de dérive garantie. Acceptable pour de petites équipes, mais non scalable.</td></tr><tr><td><strong>Theo / Style Dictionary → export Figma</strong></td><td>Style Dictionary peut exporter vers des formats Figma (JSON spécifique). Mais l'import dans Figma reste manuel — pas de sync bidirectionnelle ni d'interface de gestion dans Figma. Tokens Studio offre l'UI de gestion que ces exports n'ont pas.</td></tr><tr><td><strong>Script de sync custom</strong></td><td>Maintenable à court terme pour un petit catalogue de tokens. Non maintenable à l'échelle (30 palettes × 12 steps × 3 couches = centaines de tokens). Les mises à jour de l'API Figma casseraient le script sans préavis.</td></tr><tr><td><strong>Zeroheight / Supernova</strong></td><td>Plateformes de documentation de design system avec sync Figma. Centrées sur la documentation, pas sur la synchronisation de tokens au niveau JSON. Ajoutent une dépendance externe payante pour une fonction que Tokens Studio couvre gratuitement.</td></tr><tr><td><strong>Pas de synchronisation (deux vérités)</strong></td><td>Rejeté explicitement. L'expérience des équipes sans synchronisation est documentée : après quelques sprints, les designers travaillent sur des tokens qui n'existent plus dans le code, et les développeurs ignorent des changements décidés dans Figma.</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les designers :</strong></p>
-<ul><li>Workflow d'import : Settings → Sync → GitHub → pointer vers <code>tokens/</code></li><li>Import dans l'ordre : <code>primitives.json</code> → <code>semantic.json</code> → <code>component.json</code></li><li>Les tokens disponibles dans Figma sont toujours les tokens définis dans le repo —</li></ul>
-<p>  pas de token local possible sans passer par le processus TCR</p>
-<ul><li>Toute variable locale créée directement dans Figma = dette — à signaler à l'équipe</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Tokens Studio n'est pas dans la boucle des agents — les agents travaillent</li></ul>
-<p>  directement avec les fichiers JSON, jamais avec Figma</p>
-<ul><li>Le plugin garantit que ce que les designers voient dans Figma correspond à ce</li></ul>
-<p>  que les agents lisent dans le JSON — cohérence de la source de vérité partagée</p>
-<p><strong>Pour la gouvernance :</strong></p>
-<ul><li>La direction JSON → Figma préserve la souveraineté numérique : les tokens</li></ul>
-<p>  ne peuvent pas être modifiés "en douce" via Figma et poussés vers le repo</p>
-<ul><li>Toute modification de token reste tracée dans git, via TCR, avec approbation</li></ul>
-<p><strong>Pour Style Dictionary (ADR-003) :</strong></p>
-<ul><li>Style Dictionary et Tokens Studio partagent la même source : <code>tokens/*.json</code></li><li>Les deux compilent depuis le même JSON — pas de format intermédiaire à maintenir</li><li>Style Dictionary génère les sorties code (CSS, JS, Swift, Android)</li><li>Tokens Studio gère la sortie design (Variables Figma)</li></ul>
-<p><strong>Coût accepté :</strong></p>
-<ul><li>Tokens Studio est un plugin tiers (Figma Marketplace) — dépendance à sa maintenance</li><li>La version gratuite couvre les besoins de base ; certaines fonctionnalités avancées</li></ul>
-<p>  (sync automatique, webhooks) nécessitent un abonnement</p>
-<ul><li>Le plugin doit être réinstallé/reconfiguré si le repo est déplacé</li></ul>
-<hr>
-<h2>Incidents ou déclencheurs</h2>
-<p>Décision fondatrice. Motivée par l'observation systématique dans les équipes sans synchronisation : les maquettes Figma utilisent des tokens nommés différemment du code, créant deux langages parallèles au sein de la même équipe. Un designer qui parle de <code>Bleu Principal</code> et un développeur qui parle de <code>color.action.primary</code> décrivent la même valeur sans le savoir. Tokens Studio aligne les deux langages sur le même JSON.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-010.html" class="agtc-button secondary">← ADR-010</a>
-    <a href="adr-012.html" class="agtc-button secondary">ADR-012 →</a>
+<p>Triggered directly by this session's real friction publishing <code>0.1.0</code> and <code>0.1.1</code> of both packages by hand: an email OTP that initially failed to arrive, a CLI authentication token that expired within roughly 24 hours, and one <code>npm publish</code> attempt for <code>@agentica-ds/components</code> that failed with <code>E404</code> on the OTP-polling endpoint and required a manual retry.</p>
+<p>A second, smaller incident during implementation: the first draft of this ADR and its workflow specified an <code>NPM_TOKEN</code> Granular Access Token with 2FA bypass. While walking through generating that token, npm's own UI displayed *"There are security risks with this option. For automation or CI/CD uses, please use Trusted Publishing instead"* — caught before merge, before any secret was ever created or stored, and corrected in place to the Trusted Publishing approach described above.</p>
+<p>A third incident, this time in the workflow's first real run: <code>changesets/action</code> correctly detected OIDC availability (*"No NPM_TOKEN found, but OIDC is available - using npm trusted publishing"*) but the publish itself failed with a bare <code>E404</code> for both packages, no auth-specific error at all. Root cause: <code>actions/setup-node@v5</code>'s <code>node-version: '20'</code> installs whatever npm ships bundled with Node 20, which predates npm's Trusted Publishing protocol support — the CLI didn't know to use the OIDC token it had access to. Fixed by adding an explicit <code>npm install -g npm@latest</code> step before installing dependencies. No registry state was affected (<code>E404</code> on <code>PUT</code> means nothing was written); both packages remained at their prior published version until the retry succeeded.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-073.html" class="agtc-button secondary">← ADR-073</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

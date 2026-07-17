@@ -31,6 +31,13 @@ node site/build.js
 # Generates site/dist/ (99 HTML files + site.css + agtc.js)
 ```
 
+### Where product-facing npm docs live
+
+If a product team asks how to consume Agentica (not maintain it), point them to:
+- `get-started.html` (site) — the npm install flow, one step at a time
+- `starter-kit/` (repo root) — a ready-to-copy minimal project (`npm install && npm run dev`)
+- `packages/tokens/README.md` and `packages/components/README.md` — per-package reference
+
 ---
 
 ## 2. Daily workflow
