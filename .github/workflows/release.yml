@@ -1,0 +1,56 @@
+name: Release — npm publish
+
+# ADR-074. Requires a one-time manual setup step (cannot be done by CI or an
+# agent): configure npm Trusted Publishing for both @agentica-ds/tokens and
+# @agentica-ds/components (each package's Settings page on npmjs.com ->
+# Trusted Publisher -> GitHub Actions -> this repo + this workflow file).
+# Trusted Publishing uses GitHub's OIDC identity for this exact workflow run
+# to get a short-lived npm publish credential — no static NPM_TOKEN secret
+# to store, leak, or rotate, and no interactive OTP/WebAuthn challenge.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - '.changeset/**'
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        # npm install (not npm ci) at the repo root — same multi-platform
+        # lockfile rationale as the other workflows.
+        run: npm install --no-audit --no-fund
+
+      - name: Build @agentica-ds/tokens package content
+        run: npm run tokens
+
+      - name: Build @agentica-ds/components package content
+        run: npm run build:components-package
+
+      - name: Create Release Pull Request or Publish to npm
+        uses: changesets/action@v1
+        with:
+          publish: npx changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
