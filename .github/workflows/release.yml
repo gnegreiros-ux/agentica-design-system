@@ -35,15 +35,19 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Update npm
         # Node 20's bundled npm doesn't speak the Trusted Publishing (OIDC)
         # protocol — the first real run failed with a bare E404 on publish
         # (no NPM_TOKEN, OIDC detected, but the npm binary itself didn't
-        # know how to use it). Force a version new enough to support it.
-        run: npm install -g npm@latest
+        # know how to use it). npm@latest (12.x) requires a newer Node than
+        # even 22 ships by default, so bump Node to 22 (matches the version
+        # already proven to work locally) and pin npm to the 11.x major
+        # (also proven working locally) rather than "latest", so a future
+        # npm major bump doesn't silently re-break this on an unrelated day.
+        run: npm install -g npm@11
 
       - name: Install dependencies
         # npm install (not npm ci) at the repo root — same multi-platform
