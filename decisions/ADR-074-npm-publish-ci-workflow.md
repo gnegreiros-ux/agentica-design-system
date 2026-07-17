@@ -93,3 +93,14 @@ through generating that token, npm's own UI displayed *"There are security risks
 this option. For automation or CI/CD uses, please use Trusted Publishing instead"* —
 caught before merge, before any secret was ever created or stored, and corrected in
 place to the Trusted Publishing approach described above.
+
+A third incident, this time in the workflow's first real run: `changesets/action`
+correctly detected OIDC availability (*"No NPM_TOKEN found, but OIDC is available -
+using npm trusted publishing"*) but the publish itself failed with a bare `E404` for
+both packages, no auth-specific error at all. Root cause: `actions/setup-node@v5`'s
+`node-version: '20'` installs whatever npm ships bundled with Node 20, which predates
+npm's Trusted Publishing protocol support — the CLI didn't know to use the OIDC token
+it had access to. Fixed by adding an explicit `npm install -g npm@latest` step before
+installing dependencies. No registry state was affected (`E404` on `PUT` means nothing
+was written); both packages remained at their prior published version until the retry
+succeeded.
