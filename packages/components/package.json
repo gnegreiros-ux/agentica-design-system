@@ -1,6 +1,6 @@
 {
   "name": "@agentica-ds/components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agentica Lit Web Components — agtc-* elements, one ESM entry point per component plus a barrel export.",
   "license": "MIT",
   "type": "module",
