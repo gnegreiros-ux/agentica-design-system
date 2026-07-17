@@ -1,0 +1,40 @@
+name: Regenerate lockfile (one-off, Linux)
+
+# One-off maintenance workflow: package-lock.json hasn't been regenerated since
+# npm workspaces were introduced (packages/tokens, packages/components, site).
+# Never regenerate this locally on macOS — the resulting lockfile lacks Linux
+# binary entries for optional native deps (esbuild, etc.), breaking CI. Same
+# rationale as the existing Playwright snapshot regeneration convention.
+# Delete this file once the lockfile is back in sync.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Regenerate package-lock.json
+        run: npm install --no-audit --no-fund
+
+      - name: Push to a branch if changed
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo "package-lock.json unchanged — nothing to push"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b chore/regen-lockfile-workspaces
+          git add package-lock.json
+          git commit -m "chore(deps): regenerate package-lock.json for npm workspaces"
+          git push --force origin chore/regen-lockfile-workspaces
