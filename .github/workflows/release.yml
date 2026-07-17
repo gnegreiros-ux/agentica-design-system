@@ -14,6 +14,7 @@ on:
     paths:
       - 'packages/**'
       - '.changeset/**'
+  workflow_dispatch:
 
 concurrency:
   group: release
@@ -36,6 +37,13 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Update npm
+        # Node 20's bundled npm doesn't speak the Trusted Publishing (OIDC)
+        # protocol — the first real run failed with a bare E404 on publish
+        # (no NPM_TOKEN, OIDC detected, but the npm binary itself didn't
+        # know how to use it). Force a version new enough to support it.
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         # npm install (not npm ci) at the repo root — same multi-platform
