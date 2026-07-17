@@ -1,9 +1,18 @@
 {
   "name": "@agentica-ds/tokens",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agentica design tokens — compiled CSS custom properties, JS ES6 exports, and Tailwind config extension, plus the raw three-layer DTCG JSON source.",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://agentica.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnegreiros-ux/agentic-design-system.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/gnegreiros-ux/agentic-design-system/issues"
+  },
   "publishConfig": {
     "access": "public"
   },

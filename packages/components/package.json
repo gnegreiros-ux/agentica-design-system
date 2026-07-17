@@ -1,9 +1,18 @@
 {
   "name": "@agentica-ds/components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agentica Lit Web Components — agtc-* elements, one ESM entry point per component plus a barrel export.",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://agentica.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnegreiros-ux/agentic-design-system.git",
+    "directory": "packages/components"
+  },
+  "bugs": {
+    "url": "https://github.com/gnegreiros-ux/agentic-design-system/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
