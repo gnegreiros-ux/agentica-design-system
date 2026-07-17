@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  background: var(--agtc-semantic-color-background-page);
+  color: var(--agtc-semantic-color-text-primary);
+  font-family: system-ui, sans-serif;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--agtc-semantic-space-comfortable-layout-component);
+  border-bottom: 1px solid var(--agtc-semantic-color-border-default);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--agtc-semantic-space-comfortable-control-gap);
+}
+
+.logo h1 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Logo clair/sombre : même bascule que le site principal (site/build.js) —
+   affiche la variante blanche par défaut, la variante couleur en thème clair. */
+.logo-light { display: none; }
+[data-theme="light"] .logo-dark { display: none; }
+[data-theme="light"] .logo-light { display: block; }
+
+.page-content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--agtc-semantic-space-comfortable-layout-section);
+}
+
+agtc-card h2 {
+  margin-top: 0;
+}
+
+agtc-input {
+  display: block;
+  margin-bottom: var(--agtc-semantic-space-comfortable-control-gap);
+}
+
+.badges {
+  display: flex;
+  gap: var(--agtc-semantic-space-comfortable-control-gap);
+  margin-bottom: var(--agtc-semantic-space-comfortable-layout-component);
+}
+
+.actions {
+  display: flex;
+  gap: var(--agtc-semantic-space-comfortable-control-gap);
+}

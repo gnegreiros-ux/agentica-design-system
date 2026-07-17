@@ -13,6 +13,8 @@ packages/components/index.js
 *storybook.log
 storybook-static
 
+starter-kit/dist/
+
 # Rapports et artefacts CI (non versionnés)
 axe-report.json
 smoke-report.json

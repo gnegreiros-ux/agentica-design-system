@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentica — Starter kit</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="page-header">
+    <div class="logo">
+      <img src="./assets/logo-color-white.svg" alt="Agentica" class="logo-dark" height="28" width="28">
+      <img src="./assets/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="28" width="28">
+      <h1>Agentica starter kit</h1>
+    </div>
+    <agtc-button id="theme-toggle" variant="secondary">Passer en sombre</agtc-button>
+  </header>
+
+  <main class="page-content">
+    <agtc-card variant="elevated">
+      <h2>Créer un compte</h2>
+      <p>Exemple minimal combinant tokens et composants Agentica.</p>
+
+      <agtc-input label="Nom complet" name="fullname"></agtc-input>
+      <agtc-input label="Courriel" name="email" type="email"></agtc-input>
+
+      <div class="badges">
+        <agtc-badge variant="success">Disponible</agtc-badge>
+        <agtc-badge variant="warning">Bêta</agtc-badge>
+      </div>
+
+      <div class="actions">
+        <agtc-button variant="primary">Créer le compte</agtc-button>
+        <agtc-button variant="secondary">Annuler</agtc-button>
+      </div>
+    </agtc-card>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
