@@ -119,10 +119,10 @@
 </p>
 
 <agtc-banner variant="info">
-  <strong><span class="lang-fr">Pré-version (v0.x)</span><span class="lang-en">Pre-release (v0.x)</span></strong>
+  <strong><span class="lang-fr">Disponible sur npm (v0.x)</span><span class="lang-en">Available on npm (v0.x)</span></strong>
   <span>
-    <span class="lang-fr">Aujourd'hui, Agentica se consomme directement depuis le dépôt (tokens compilés + Web Components). La publication sur <strong>npm est à venir</strong> — les commandes <code>npm</code> ci-dessous décrivent la trajectoire cible.</span>
-    <span class="lang-en">Today, Agentica is consumed directly from the repository (compiled tokens + Web Components). Publishing to <strong>npm is coming</strong> — the <code>npm</code> commands below describe the target path.</span>
+    <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0. Un exemple minimal complet et fonctionnel est disponible dans <a href="https://github.com/gnegreiros-ux/agentic-design-system/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> du dépôt.</span>
+    <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0. A complete, working minimal example lives in the repository's <a href="https://github.com/gnegreiros-ux/agentic-design-system/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
   </span>
 </agtc-banner>
 
@@ -147,27 +147,28 @@
 
 <h2><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></h2>
 
-<h3><span class="lang-fr">1. Récupérer les tokens</span><span class="lang-en">1. Get the tokens</span></h3>
+<h3><span class="lang-fr">1. Installer</span><span class="lang-en">1. Install</span></h3>
 <p>
-  <span class="lang-fr">Clonez le dépôt. Les tokens sont déjà compilés pour chaque plateforme dans <code>dist/tokens/</code>.</span>
-  <span class="lang-en">Clone the repository. Tokens are pre-compiled for every platform in <code>dist/tokens/</code>.</span>
+  <span class="lang-fr">Les paquets sont publiés sur le registre npm public. <code>lit</code> est une dépendance pair des composants.</span>
+  <span class="lang-en">The packages are published on the public npm registry. <code>lit</code> is a peer dependency of the components.</span>
 </p>
-<pre class="code-block"><code class="lang-bash"># Today — via the repository
-git clone https://github.com/gnegreiros-ux/agentic-design-system.git
+<pre class="code-block"><code class="lang-bash">npm install @agentica-ds/tokens @agentica-ds/components lit
 
-# Compiled tokens live in dist/tokens/:
-#   css/  js/  tailwind/  angular/  ios/  android/</code></pre>
+# angular/ios/android outputs aren't published to npm yet — clone the repo
+# and use dist/tokens/{angular,ios,android}/ for those platforms:
+# git clone https://github.com/gnegreiros-ux/agentic-design-system.git</code></pre>
 
 <h3><span class="lang-fr">2. Importer et consommer les variables CSS</span><span class="lang-en">2. Import and consume the CSS variables</span></h3>
 <p>
-  <span class="lang-fr">Liez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
-  <span class="lang-en">Link the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
+  <span class="lang-fr">Chargez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
+  <span class="lang-en">Load the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
 </p>
-<pre class="code-block"><code class="lang-html">&lt;!-- Import the generated CSS variables --&gt;
-&lt;link rel="stylesheet" href="dist/tokens/css/all.css"&gt;
-
-&lt;!-- Add dark.css for dark mode support --&gt;
-&lt;link rel="stylesheet" href="dist/tokens/css/dark.css"&gt;</code></pre>
+<pre class="code-block"><code class="lang-js">/* Bundler (Vite, Webpack, esbuild…) */
+import '@agentica-ds/tokens/css';
+import '@agentica-ds/tokens/css/dark'; /* dark mode support */</code></pre>
+<pre class="code-block"><code class="lang-html">&lt;!-- Plain HTML, no bundler --&gt;
+&lt;link rel="stylesheet" href="node_modules/@agentica-ds/tokens/css/all.css"&gt;
+&lt;link rel="stylesheet" href="node_modules/@agentica-ds/tokens/css/dark.css"&gt;</code></pre>
 <pre class="code-block"><code class="lang-css">/* Consume by INTENT — never hardcode values */
 .cta {
   background: var(--agtc-semantic-color-action-primary);
@@ -214,14 +215,24 @@ toggleBtn.addEventListener('click', () =&gt; {
 
 <h3><span class="lang-fr">3. Utiliser les Web Components</span><span class="lang-en">3. Use the Web Components</span></h3>
 <p>
-  <span class="lang-fr">Pour une intégration applicative, montez les Web Components <code>agtc-*</code> (Lit en dépendance pair). Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
-  <span class="lang-en">For app integration, mount the <code>agtc-*</code> Web Components (Lit as a peer dependency). They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
+  <span class="lang-fr">Montez les Web Components <code>agtc-*</code>. Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
+  <span class="lang-en">Mount the <code>agtc-*</code> Web Components. They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
 </p>
-<pre class="code-block"><code class="lang-html">&lt;!-- Component mode: Web Components (Lit) --&gt;
-&lt;script type="module" src="components/agtc-button.js"&gt;&lt;/script&gt;
+<pre class="code-block"><code class="lang-js">// Everything at once (barrel)
+import '@agentica-ds/components';
 
-&lt;agtc-button variant="primary"&gt;Save&lt;/agtc-button&gt;
+// Or one component at a time (tree-shaking)
+import '@agentica-ds/components/agtc-button.js';</code></pre>
+<pre class="code-block"><code class="lang-html">&lt;agtc-button variant="primary"&gt;Save&lt;/agtc-button&gt;
 &lt;agtc-button variant="critical"&gt;Delete folder&lt;/agtc-button&gt;</code></pre>
+
+<agtc-banner variant="info" icon="rocket">
+  <strong><span class="lang-fr">Exemple complet</span><span class="lang-en">Complete example</span></strong>
+  <span>
+    <span class="lang-fr">Un projet minimal fonctionnel (Vite, tokens clair/sombre, quatre composants) que vous pouvez copier tel quel : <a href="https://github.com/gnegreiros-ux/agentic-design-system/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
+    <span class="lang-en">A working minimal project (Vite, light/dark tokens, four components) you can copy as-is: <a href="https://github.com/gnegreiros-ux/agentic-design-system/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
+  </span>
+</agtc-banner>
 
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
@@ -239,10 +250,11 @@ toggleBtn.addEventListener('click', () =&gt; {
 <div class="table-wrap" tabindex="0"><table>
   <thead><tr>
     <th><span class="lang-fr">Plateforme</span><span class="lang-en">Platform</span></th>
-    <th><span class="lang-fr">Dossier</span><span class="lang-en">Folder</span></th>
+    <th><span class="lang-fr">Import</span><span class="lang-en">Import</span></th>
+    <th><span class="lang-fr">Source</span><span class="lang-en">Source</span></th>
     <th><span class="lang-fr">Format</span><span class="lang-en">Format</span></th>
   </tr></thead>
-  <tbody><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy"><code>css</code></span></td><td><code>dist/tokens/css/</code></td><td><span class="lang-fr">Variables CSS (custom properties)</span><span class="lang-en">CSS custom properties</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy"><code>js</code></span></td><td><code>dist/tokens/js/</code></td><td><span class="lang-fr">Exports ES6</span><span class="lang-en">ES6 exports</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy"><code>tailwind</code></span></td><td><code>dist/tokens/tailwind/</code></td><td><span class="lang-fr">Extension de configuration</span><span class="lang-en">Config extension</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy"><code>angular</code></span></td><td><code>dist/tokens/angular/</code></td><td><span class="lang-fr">SCSS Material M3</span><span class="lang-en">Material M3 SCSS</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy"><code>ios</code></span></td><td><code>dist/tokens/ios/</code></td><td><span class="lang-fr">Swift</span><span class="lang-en">Swift</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy"><code>android</code></span></td><td><code>dist/tokens/android/</code></td><td><span class="lang-fr">XML (couleurs + dimensions)</span><span class="lang-en">XML (colors + dimensions)</span></td></tr></tbody>
+  <tbody><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy"><code>css</code></span></td><td><code>@agentica-ds/tokens/css</code></td><td><agtc-badge variant="success" size="sm">npm</agtc-badge></td><td><span class="lang-fr">Variables CSS (custom properties)</span><span class="lang-en">CSS custom properties</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy"><code>js</code></span></td><td><code>@agentica-ds/tokens/js</code></td><td><agtc-badge variant="success" size="sm">npm</agtc-badge></td><td><span class="lang-fr">Exports ES6</span><span class="lang-en">ES6 exports</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy"><code>tailwind</code></span></td><td><code>@agentica-ds/tokens/tailwind</code></td><td><agtc-badge variant="success" size="sm">npm</agtc-badge></td><td><span class="lang-fr">Extension de configuration</span><span class="lang-en">Config extension</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy"><code>angular</code></span></td><td><code>dist/tokens/angular/</code></td><td><agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge></td><td><span class="lang-fr">SCSS Material M3</span><span class="lang-en">Material M3 SCSS</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy"><code>ios</code></span></td><td><code>dist/tokens/ios/</code></td><td><agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge></td><td><span class="lang-fr">Swift</span><span class="lang-en">Swift</span></td></tr><tr><td><span class="platform-cell"><img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy"><code>android</code></span></td><td><code>dist/tokens/android/</code></td><td><agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge></td><td><span class="lang-fr">XML (couleurs + dimensions)</span><span class="lang-en">XML (colors + dimensions)</span></td></tr></tbody>
 </table></div>
 
 <h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>

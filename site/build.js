@@ -4300,8 +4300,8 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
 
 <h3><span class="lang-fr">2.1 Ce qui ne change pas du tout</span><span class="lang-en">2.1 What doesn't change at all</span></h3>
 <p>
-  <span class="lang-fr">Le flux d'installation documenté sur <a href="get-started.html">la page Démarrer</a> fonctionne sans aucun agent : cloner, importer <code>dist/tokens/css/all.css</code> et <code>dark.css</code>, monter les Web Components <code>agtc-*</code>. <code>guidelines/components/*.md</code> et <code>DESIGN.md</code> sont des contrats lisibles humains, utilisables tels quels.</span>
-  <span class="lang-en">The installation flow documented on the <a href="get-started.html">Get started page</a> works with zero agent: clone, import <code>dist/tokens/css/all.css</code> and <code>dark.css</code>, mount the <code>agtc-*</code> Web Components. <code>guidelines/components/*.md</code> and <code>DESIGN.md</code> are human-readable contracts, usable as-is.</span>
+  <span class="lang-fr">Le flux d'installation documenté sur <a href="get-started.html">la page Démarrer</a> fonctionne sans aucun agent : <code>npm install @agentica-ds/tokens @agentica-ds/components</code>, importer <code>@agentica-ds/tokens/css</code> et <code>/css/dark</code>, monter les Web Components <code>agtc-*</code>. Le dossier <code>starter-kit/</code> du dépôt est un projet minimal prêt à copier. <code>guidelines/components/*.md</code> et <code>DESIGN.md</code> sont des contrats lisibles humains, utilisables tels quels.</span>
+  <span class="lang-en">The installation flow documented on the <a href="get-started.html">Get started page</a> works with zero agent: <code>npm install @agentica-ds/tokens @agentica-ds/components</code>, import <code>@agentica-ds/tokens/css</code> and <code>/css/dark</code>, mount the <code>agtc-*</code> Web Components. The repository's <code>starter-kit/</code> folder is a ready-to-copy minimal project. <code>guidelines/components/*.md</code> and <code>DESIGN.md</code> are human-readable contracts, usable as-is.</span>
 </p>
 <p><a href="${SCRIPTS}/2-1-installation-produit.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
@@ -7405,17 +7405,19 @@ function loadADRs() {
 function buildGetStarted() {
   const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
 
-  const cloneCode = esc(`# Today — via the repository
-git clone ${REPO}.git
+  const installCode = esc(`npm install @agentica-ds/tokens @agentica-ds/components lit
 
-# Compiled tokens live in dist/tokens/:
-#   css/  js/  tailwind/  angular/  ios/  android/`);
+# angular/ios/android outputs aren't published to npm yet — clone the repo
+# and use dist/tokens/{angular,ios,android}/ for those platforms:
+# git clone ${REPO}.git`);
 
-  const cssCode = esc(`<!-- Import the generated CSS variables -->
-<link rel="stylesheet" href="dist/tokens/css/all.css">
+  const cssCode = esc(`/* Bundler (Vite, Webpack, esbuild…) */
+import '@agentica-ds/tokens/css';
+import '@agentica-ds/tokens/css/dark'; /* dark mode support */`);
 
-<!-- Add dark.css for dark mode support -->
-<link rel="stylesheet" href="dist/tokens/css/dark.css">`);
+  const cssHtmlCode = esc(`<!-- Plain HTML, no bundler -->
+<link rel="stylesheet" href="node_modules/@agentica-ds/tokens/css/all.css">
+<link rel="stylesheet" href="node_modules/@agentica-ds/tokens/css/dark.css">`);
 
   const cssUseCode = esc(`/* Consume by INTENT — never hardcode values */
 .cta {
@@ -7451,24 +7453,30 @@ toggleBtn.addEventListener('click', () => {
   /* color: var(--agtc-semantic-color-text-primary); */    /* ❌ contraste insuffisant */
 }`);
 
-  const wcCode = esc(`<!-- Component mode: Web Components (Lit) -->
-<script type="module" src="components/agtc-button.js"></script>
+  const wcCode = esc(`// Everything at once (barrel)
+import '@agentica-ds/components';
 
-<agtc-button variant="primary">Save</agtc-button>
+// Or one component at a time (tree-shaking)
+import '@agentica-ds/components/agtc-button.js';`);
+
+  const wcHtmlCode = esc(`<agtc-button variant="primary">Save</agtc-button>
 <agtc-button variant="critical">Delete folder</agtc-button>`);
 
   // logo: file name inside integrations/ (brand color)
   const platforms = [
-    ['css',     'dist/tokens/css/',     'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
-    ['js',      'dist/tokens/js/',      'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
-    ['tailwind','dist/tokens/tailwind/','Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
-    ['angular', 'dist/tokens/angular/', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
-    ['ios',     'dist/tokens/ios/',     'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],
-    ['android', 'dist/tokens/android/', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)','<img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy">'],
+    ['css',     '@agentica-ds/tokens/css',     'npm', 'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
+    ['js',      '@agentica-ds/tokens/js',      'npm', 'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
+    ['tailwind','@agentica-ds/tokens/tailwind','npm', 'Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
+    ['angular', 'dist/tokens/angular/', 'clone', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
+    ['ios',     'dist/tokens/ios/',     'clone', 'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],
+    ['android', 'dist/tokens/android/', 'clone', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)','<img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy">'],
   ];
-  const platformRows = platforms.map(([p, file, fr, en, logo]) =>
-    `<tr><td><span class="platform-cell">${logo}<code>${p}</code></span></td><td><code>${file}</code></td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`
-  ).join('');
+  const platformRows = platforms.map(([p, file, source, fr, en, logo]) => {
+    const sourceBadge = source === 'npm'
+      ? `<agtc-badge variant="success" size="sm">npm</agtc-badge>`
+      : `<agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge>`;
+    return `<tr><td><span class="platform-cell">${logo}<code>${p}</code></span></td><td><code>${file}</code></td><td>${sourceBadge}</td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`;
+  }).join('');
 
   const body = `
 <h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
@@ -7478,10 +7486,10 @@ toggleBtn.addEventListener('click', () => {
 </p>
 
 <agtc-banner variant="info">
-  <strong><span class="lang-fr">Pré-version (v0.x)</span><span class="lang-en">Pre-release (v0.x)</span></strong>
+  <strong><span class="lang-fr">Disponible sur npm (v0.x)</span><span class="lang-en">Available on npm (v0.x)</span></strong>
   <span>
-    <span class="lang-fr">Aujourd'hui, Agentica se consomme directement depuis le dépôt (tokens compilés + Web Components). La publication sur <strong>npm est à venir</strong> — les commandes <code>npm</code> ci-dessous décrivent la trajectoire cible.</span>
-    <span class="lang-en">Today, Agentica is consumed directly from the repository (compiled tokens + Web Components). Publishing to <strong>npm is coming</strong> — the <code>npm</code> commands below describe the target path.</span>
+    <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0. Un exemple minimal complet et fonctionnel est disponible dans <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> du dépôt.</span>
+    <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0. A complete, working minimal example lives in the repository's <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
   </span>
 </agtc-banner>
 
@@ -7506,19 +7514,20 @@ toggleBtn.addEventListener('click', () => {
 
 <h2><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></h2>
 
-<h3><span class="lang-fr">1. Récupérer les tokens</span><span class="lang-en">1. Get the tokens</span></h3>
+<h3><span class="lang-fr">1. Installer</span><span class="lang-en">1. Install</span></h3>
 <p>
-  <span class="lang-fr">Clonez le dépôt. Les tokens sont déjà compilés pour chaque plateforme dans <code>dist/tokens/</code>.</span>
-  <span class="lang-en">Clone the repository. Tokens are pre-compiled for every platform in <code>dist/tokens/</code>.</span>
+  <span class="lang-fr">Les paquets sont publiés sur le registre npm public. <code>lit</code> est une dépendance pair des composants.</span>
+  <span class="lang-en">The packages are published on the public npm registry. <code>lit</code> is a peer dependency of the components.</span>
 </p>
-<pre class="code-block"><code class="lang-bash">${cloneCode}</code></pre>
+<pre class="code-block"><code class="lang-bash">${installCode}</code></pre>
 
 <h3><span class="lang-fr">2. Importer et consommer les variables CSS</span><span class="lang-en">2. Import and consume the CSS variables</span></h3>
 <p>
-  <span class="lang-fr">Liez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
-  <span class="lang-en">Link the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
+  <span class="lang-fr">Chargez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
+  <span class="lang-en">Load the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
 </p>
-<pre class="code-block"><code class="lang-html">${cssCode}</code></pre>
+<pre class="code-block"><code class="lang-js">${cssCode}</code></pre>
+<pre class="code-block"><code class="lang-html">${cssHtmlCode}</code></pre>
 <pre class="code-block"><code class="lang-css">${cssUseCode}</code></pre>
 
 <h3 id="dark-mode"><span class="lang-fr">2b. Mode sombre (dark mode)</span><span class="lang-en">2b. Dark mode</span></h3>
@@ -7539,10 +7548,19 @@ toggleBtn.addEventListener('click', () => {
 
 <h3><span class="lang-fr">3. Utiliser les Web Components</span><span class="lang-en">3. Use the Web Components</span></h3>
 <p>
-  <span class="lang-fr">Pour une intégration applicative, montez les Web Components <code>agtc-*</code> (Lit en dépendance pair). Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
-  <span class="lang-en">For app integration, mount the <code>agtc-*</code> Web Components (Lit as a peer dependency). They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
+  <span class="lang-fr">Montez les Web Components <code>agtc-*</code>. Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
+  <span class="lang-en">Mount the <code>agtc-*</code> Web Components. They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
 </p>
-<pre class="code-block"><code class="lang-html">${wcCode}</code></pre>
+<pre class="code-block"><code class="lang-js">${wcCode}</code></pre>
+<pre class="code-block"><code class="lang-html">${wcHtmlCode}</code></pre>
+
+<agtc-banner variant="info" icon="rocket">
+  <strong><span class="lang-fr">Exemple complet</span><span class="lang-en">Complete example</span></strong>
+  <span>
+    <span class="lang-fr">Un projet minimal fonctionnel (Vite, tokens clair/sombre, quatre composants) que vous pouvez copier tel quel : <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
+    <span class="lang-en">A working minimal project (Vite, light/dark tokens, four components) you can copy as-is: <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
+  </span>
+</agtc-banner>
 
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
@@ -7560,7 +7578,8 @@ toggleBtn.addEventListener('click', () => {
 <table>
   <thead><tr>
     <th><span class="lang-fr">Plateforme</span><span class="lang-en">Platform</span></th>
-    <th><span class="lang-fr">Dossier</span><span class="lang-en">Folder</span></th>
+    <th><span class="lang-fr">Import</span><span class="lang-en">Import</span></th>
+    <th><span class="lang-fr">Source</span><span class="lang-en">Source</span></th>
     <th><span class="lang-fr">Format</span><span class="lang-en">Format</span></th>
   </tr></thead>
   <tbody>${platformRows}</tbody>
