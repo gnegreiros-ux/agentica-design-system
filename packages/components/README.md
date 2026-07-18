@@ -3,8 +3,8 @@
 Agentica's Lit Web Components — `agtc-*` elements, one ESM entry point per component
 (for tree-shaking) plus a barrel export.
 
-Architecture decided in [ADR-072](https://github.com/gnegreiros-ux/agentic-design-system/blob/main/decisions/ADR-072-npm-package-architecture.md)
-(npm scope corrected in [ADR-073](https://github.com/gnegreiros-ux/agentic-design-system/blob/main/decisions/ADR-073-npm-scope-correction.md)).
+Architecture decided in [ADR-072](https://github.com/gnegreiros-ux/agentica-design-system/blob/main/decisions/ADR-072-npm-package-architecture.md)
+(npm scope corrected in [ADR-073](https://github.com/gnegreiros-ux/agentica-design-system/blob/main/decisions/ADR-073-npm-scope-correction.md)).
 
 ## Install
 

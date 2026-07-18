@@ -1,8 +1,8 @@
 {
-  "name": "agentic-design-system-site",
+  "name": "agentica-design-system-site",
   "version": "1.0.0",
   "description": "Documentation site — Agentic design system",
-  "homepage": "https://gnegreiros-ux.github.io/agentic-design-system/",
+  "homepage": "https://gnegreiros-ux.github.io/agentica-design-system/",
   "private": true,
   "scripts": {
     "build": "node build.js && node audit-a11y.js",

@@ -23,7 +23,7 @@ Strategic decisions, exceptions, and values belong to the teams.
 ## Kit structure
 
 ```
-agentic-design-system/
+agentica-design-system/
 │
 ├── README.md                          ← you are here
 ├── DESIGN.md                          ← portable brand contract

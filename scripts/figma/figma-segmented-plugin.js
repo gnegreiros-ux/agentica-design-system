@@ -307,7 +307,7 @@
     { label: "NN/g — Tabs",    url: "https://www.nngroup.com/articles/tabs-used-right/" },
     { label: "ARIA Tablist",   url: "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" },
     { label: "WCAG 4.1.3",     url: "https://www.w3.org/WAI/WCAG21/Understanding/status-messages" },
-    { label: "Tokens",         url: "https://github.com/gnegreiros-ux/agentic-design-system/blob/main/tokens/semantic.json" }
+    { label: "Tokens",         url: "https://github.com/gnegreiros-ux/agentica-design-system/blob/main/tokens/semantic.json" }
   ]));
 
   wrapper.appendChild(sHeader);
@@ -652,7 +652,7 @@
     { label: "NN/g — Tabs used right",  url: "https://www.nngroup.com/articles/tabs-used-right/" },
     { label: "ARIA APG — Tabs pattern", url: "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" },
     { label: "WCAG 2.4.11 Focus",       url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" },
-    { label: "ADR-055 focus-visible",   url: "https://github.com/gnegreiros-ux/agentic-design-system/blob/main/decisions/ADR-055-focus-visible-i18n-interactive.md" }
+    { label: "ADR-055 focus-visible",   url: "https://github.com/gnegreiros-ux/agentica-design-system/blob/main/decisions/ADR-055-focus-visible-i18n-interactive.md" }
   ]));
   wrapper.appendChild(sLinks);
 

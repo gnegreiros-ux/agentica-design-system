@@ -3288,7 +3288,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
       <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
       <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
-      <a href="${base}ia.html">IA</a>
+      <a href="${base}ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Documentation</span>
@@ -3304,7 +3304,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
-      <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
       <a href="${base}ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
     </div>
@@ -3375,7 +3375,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <a href="${base}pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
     <a href="${base}architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
     <a href="${base}qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
-    <a href="${base}ia.html">IA</a>
+    <a href="${base}ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
     <div class="docs-menu">
       <a href="${base}documentation.html" class="docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="docs-panel">
         <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
@@ -3401,7 +3401,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
         <div>
           <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
           <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
-          <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="${base}audit.html">Audit</a>
         </div>
       </div>
@@ -3420,7 +3420,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
       ${storybookIcon(18)}
     </a>
-    <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+    <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
       ${icon('github', 18)}
     </a>
   </div>
@@ -3544,7 +3544,7 @@ function contributionBanner() {
       <span class="lang-en">This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.</span>
     </p>
   </div>
-  <a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+  <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
     <span class="lang-fr">Voir sur GitHub</span>
     <span class="lang-en">View on GitHub</span>
   </a>
@@ -3833,7 +3833,7 @@ function buildHome(adrs) {
       <div class="hero-actions">
         <a class="cta-btn cta-btn-primary" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
         <a class="cta-btn cta-btn-secondary" href="components/index.html"><span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span></a>
-        <a class="cta-btn cta-btn-ghost" href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub →</a>
+        <a class="cta-btn cta-btn-ghost" href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub →</a>
       </div>
     </div>
     <figure class="illus illus-brand" aria-hidden="true">
@@ -3864,7 +3864,7 @@ function sidebarSite(base, current) {
     ['pourquoi.html', '<span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span>'],
     ['architecture.html', '<span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span>'],
     ['qualite.html', '<span class="lang-fr">Qualité</span><span class="lang-en">Quality</span>'],
-    ['ia.html', 'IA'],
+    ['ia.html', '<span class="lang-fr">IA</span><span class="lang-en">AI</span>'],
   ];
   const docLinks = [
     ['documentation.html', 'Documentation'],
@@ -4195,7 +4195,7 @@ function buildDocumentation() {
         <p><span class="lang-fr">Les outils et ressources du système.</span><span class="lang-en">System tools and resources.</span></p>
         <ul>
           <li><a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a></li>
-          <li><a href="https://github.com/gnegreiros-ux/agentic-design-system" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           <li><a href="audit.html">Audit</a></li>
         </ul>
       </div>
@@ -4208,7 +4208,7 @@ function buildDocumentation() {
 
 // ─── PAGE: CONTINUITÉ SANS AGENTS IA ────────────────────────────────────────
 function buildContinuite() {
-  const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
+  const REPO = 'https://github.com/gnegreiros-ux/agentica-design-system';
   const SCRIPTS = `${REPO}/blob/main/scripts/continuity`;
   const HOWTO = `${REPO}/blob/main/How-to-sans-agents.md`;
 
@@ -7403,7 +7403,7 @@ function loadADRs() {
 // (how to consume the tokens/components), living example (built 100% with
 // dogfooded components: agtc-banner, code-block, info-card, tables, button).
 function buildGetStarted() {
-  const REPO = 'https://github.com/gnegreiros-ux/agentic-design-system';
+  const REPO = 'https://github.com/gnegreiros-ux/agentica-design-system';
 
   const installCode = esc(`npm install @agentica-ds/tokens @agentica-ds/components lit
 
@@ -8269,7 +8269,7 @@ Every other page is in Product mode.
 ---
 
 *This brief is automatically generated from Agentica's versioned sources.*
-*Any change goes through the repository: https://github.com/gnegreiros-ux/agentic-design-system*
+*Any change goes through the repository: https://github.com/gnegreiros-ux/agentica-design-system*
 `;
 }
 

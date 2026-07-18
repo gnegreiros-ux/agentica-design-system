@@ -99,7 +99,7 @@ git push origin main
 
 ```bash
 # Check via the GitHub API
-curl -s "https://api.github.com/repos/gnegreiros-ux/agentic-design-system/actions/runs?per_page=1" \
+curl -s "https://api.github.com/repos/gnegreiros-ux/agentica-design-system/actions/runs?per_page=1" \
   | python3 -c "import json,sys; r=json.load(sys.stdin)['workflow_runs'][0]; print(r['head_sha'][:7], r['status'], r['conclusion'] or 'in progress')"
 ```
 
@@ -112,9 +112,9 @@ curl -s "https://api.github.com/repos/gnegreiros-ux/agentic-design-system/action
 
 Check at least these URLs after deployment:
 
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/` — home page
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/foundations/color.html` — foundation
-- [ ] `https://gnegreiros-ux.github.io/agentic-design-system/components/button.html` — component
+- [ ] `https://gnegreiros-ux.github.io/agentica-design-system/` — home page
+- [ ] `https://gnegreiros-ux.github.io/agentica-design-system/foundations/color.html` — foundation
+- [ ] `https://gnegreiros-ux.github.io/agentica-design-system/components/button.html` — component
 - [ ] Any new page added in this session
 
 Sign of success: sidebar shows 4 foundations, 3 components, no doubled-path links.
