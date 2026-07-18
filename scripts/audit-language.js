@@ -54,6 +54,11 @@ const EXCLUDED_FILES = new Set([
   // Genuinely bilingual accessibility-audit tool — titleFr/descFr paired with
   // titleEn/descEn throughout, same convention as site/build.js.
   'site/audit-lib.js',
+  // This audit's own source and its Playwright counterpart: both legitimately
+  // contain French words/accented characters as data (the detection regex, the
+  // stopword list, quoted example strings) — not leftover content to translate.
+  'scripts/audit-language.js',
+  'tests/functional/language.spec.js',
 ]);
 
 // labelFr/labelEn is a recognized bilingual component feature (ADR-070 chantier 6:

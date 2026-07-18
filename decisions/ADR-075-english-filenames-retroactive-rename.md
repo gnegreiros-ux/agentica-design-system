@@ -8,7 +8,7 @@
 ## Context
 
 ADR-070 fully translated `How-to-sans-agents.md`, `docs/agentica-notre-demarche.md`,
-`Brand/Agentica-synthèse.md`, and the 8 `scripts/continuity/*.sh` fallback scripts from
+`Brand/Agentica-synthèse.md`, and the 8 `scripts/continuity/*.sh` fallback scripts from <!-- lang-audit-ignore: quoting the pre-rename French filenames -->
 French to English, but explicitly kept every file **name** unchanged — a deliberate
 choice, reasoned in ADR-070 as avoiding broken cross-references throughout the
 repository.
@@ -16,7 +16,7 @@ repository.
 During a follow-up English-only validation pass (2026-07-18), the Design System Lead
 flagged this as an inconsistency: an external, non-French-speaking contributor
 browsing the repository tree sees French words in filenames (`sans-agents`,
-`notre-demarche`, `synthèse`, `outils-existants`, `installation-produit`, etc.) even
+`notre-demarche`, `synthèse`, `outils-existants`, `installation-produit`, etc.) even <!-- lang-audit-ignore: quoting the pre-rename French filenames -->
 though the file contents are already fully English — undermining the international
 legibility goal ADR-070 and ADR-071 were written to serve, at the exact surface
 (GitHub's file tree) ADR-070's own rationale for translating root docs first was built
@@ -33,7 +33,7 @@ reopen translation of file names in general (see Rejected alternatives).
 |---|---|
 | `How-to-sans-agents.md` | `How-to-without-agents.md` |
 | `docs/agentica-notre-demarche.md` | `docs/agentica-our-approach.md` |
-| `Brand/Agentica-synthèse.md` | `Brand/Agentica-synthesis.md` |
+| `Brand/Agentica-synthèse.md` <!-- lang-audit-ignore: quoting the pre-rename French filename --> | `Brand/Agentica-synthesis.md` |
 | `scripts/continuity/1-1-outils-existants.sh` | `scripts/continuity/1-1-existing-tools.sh` |
 | `scripts/continuity/1-2-quality-gate-manuel.sh` | `scripts/continuity/1-2-manual-quality-gate.sh` |
 | `scripts/continuity/1-3-figma-checklist.sh` | *(unchanged — already English)* |
