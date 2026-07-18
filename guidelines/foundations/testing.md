@@ -13,7 +13,7 @@ The design system distinguishes two separate responsibilities:
 
 | Scope | Owner | Repo | Tool |
 |-----------|-------------|-------|-------|
-| DS tests | DS team | `agentic-design-system` | Playwright (internal CI) |
+| DS tests | DS team | `agentica-design-system` | Playwright (internal CI) |
 | Product tests | Your team | Your repo | Playwright (your CI) |
 
 The DS cannot test your product on your behalf — it doesn't know your context,

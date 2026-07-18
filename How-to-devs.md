@@ -15,7 +15,7 @@
 ### Clone and install
 ```bash
 git clone [REPO_URL]
-cd agentic-design-system
+cd agentica-design-system
 npm install
 ```
 

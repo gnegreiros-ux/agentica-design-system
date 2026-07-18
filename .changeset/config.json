@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["agentic-design-system-site"]
+  "ignore": ["agentica-design-system-site"]
 }

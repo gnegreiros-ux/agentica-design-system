@@ -177,4 +177,4 @@ Every other page is in Product mode.
 ---
 
 *This brief is automatically generated from Agentica's versioned sources.*
-*Any change goes through the repository: https://github.com/gnegreiros-ux/agentic-design-system*
+*Any change goes through the repository: https://github.com/gnegreiros-ux/agentica-design-system*
