@@ -25,9 +25,12 @@ export default defineConfig({
   projects: [
     // Chromium: visual + functional tests (reference snapshots = Chromium only)
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    // Firefox and WebKit: functional and accessibility tests only (no visual snapshots)
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: '**/visual/**' },
-    { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: '**/visual/**' },
+    // Firefox and WebKit: functional and accessibility tests only (no visual snapshots).
+    // language.spec.js is also chromium-only — it's a content/CSS-mechanics check
+    // (display:none per data-lang), not browser-specific, so running it 3x adds cost
+    // with no extra signal across ~125 pages.
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: ['**/visual/**', '**/language.spec.js'] },
+    { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: ['**/visual/**', '**/language.spec.js'] },
     // Responsive breakpoints — mobile visual on Chromium only
     {
       name: 'mobile-chrome',

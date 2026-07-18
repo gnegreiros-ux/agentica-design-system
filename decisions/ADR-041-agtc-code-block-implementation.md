@@ -13,7 +13,7 @@
 ## Applied reference UX patterns
 
 > Added on 2026-06-03 via the `ux-pattern-review` workflow (ADR-036). Decision: **CD1–CD9 all approved**.
-> Detail and links: `guidelines/components/code-block.md` § PATTERNS UX DE RÉFÉRENCE.
+> Detail and links: `guidelines/components/code-block.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|
@@ -151,7 +151,7 @@ decision), so no new typography ADR is required.
 ## Patterns UX de référence appliqués
 
 > Ajouté le 2026-06-03 via le workflow `ux-pattern-review` (ADR-036). Décision : **CD1–CD9 tous approuvés**.
-> Détail et liens : `guidelines/components/code-block.md` § PATTERNS UX DE RÉFÉRENCE.
+> Détail et liens : `guidelines/components/code-block.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|

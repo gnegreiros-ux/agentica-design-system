@@ -147,7 +147,7 @@
 <p>In custom formats (Tailwind, Angular), <code>token.name</code> already includes the prefix defined in the platform. Writing <code>var(--agtc-${t.name})</code> produces a double prefix.</p>
 <p><strong>Solution:</strong> use <code>var(--${t.name})</code> in custom formats.</p>
 <h3>4. <code>_readme</code> tokens in CSS output</h3>
-<p>Documentation keys (<code>_readme</code>) in the JSON files were ending up as CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>).</p>
+<p>Documentation keys (<code>_readme</code>) in the JSON files were ending up as CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>). <!-- lang-audit-ignore: historical bug quote --></p>
 <p><strong>Solution:</strong> an <code>isReadme(t)</code> predicate that filters out any token whose path segment starts with <code>_</code>. Applied across all file filters.</p>
 <h3>5. <code>$schema</code> / <code>$metadata</code> collisions</h3>
 <p>The root keys <code>$schema</code> and <code>$metadata</code>, present in several JSON files, caused "Property Value Collision" warnings when merged.</p>
@@ -202,7 +202,7 @@ npm run tokens:watch  # automatic rebuild on changes in tokens/</code></pre>
 <p>Dans les formats custom (Tailwind, Angular), <code>token.name</code> inclut déjà le préfixe défini dans la plateforme. Écrire <code>var(--agtc-${t.name})</code> produit un double préfixe.</p>
 <p><strong>Solution :</strong> utiliser <code>var(--${t.name})</code> dans les formats custom.</p>
 <h3>4. Tokens <code>_readme</code> dans les sorties CSS</h3>
-<p>Des clés de documentation (<code>_readme</code>) dans les fichiers JSON se retrouvaient en CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>).</p>
+<p>Des clés de documentation (<code>_readme</code>) dans les fichiers JSON se retrouvaient en CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>). <!-- lang-audit-ignore: historical bug quote --></p>
 <p><strong>Solution :</strong> prédicat <code>isReadme(t)</code> qui filtre tout token dont un segment de chemin commence par <code>_</code>. Appliqué dans tous les filtres de fichiers.</p>
 <h3>5. Collisions <code>$schema</code> / <code>$metadata</code></h3>
 <p>Les clés racines <code>$schema</code> et <code>$metadata</code> présentes dans plusieurs fichiers JSON causaient des avertissements "Property Value Collision" à la fusion.</p>

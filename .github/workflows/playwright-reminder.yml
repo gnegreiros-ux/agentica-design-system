@@ -1,16 +1,16 @@
-name: Playwright — Rappel révision visuelle
+name: Playwright — Visual review reminder
 
-# Crée automatiquement une GitHub Issue étiquetée `visual-review` quand des fichiers
-# de composants (`components/`) sont modifiés sur main.
-# Objectif : alerter les designers qu'une révision visuelle Playwright est disponible
-# (artifact `playwright-report-chromium`) avant d'approuver le changement visuel.
+# Automatically creates a GitHub Issue labeled `visual-review` when component
+# files (`components/`) are modified on main.
+# Goal: alert designers that a Playwright visual review is available
+# (`playwright-report-chromium` artifact) before approving the visual change.
 #
-# Le workflow Playwright (playwright.yml) doit s'être exécuté sur le même push pour
-# que l'artifact soit disponible. Grâce à `needs` (optionnel ici), l'issue est créée
-# après le job playwright — pas avant.
+# The Playwright workflow (playwright.yml) must have run on the same push for
+# the artifact to be available. Thanks to `needs` (optional here), the issue is
+# created after the playwright job — not before.
 #
-# Configuration requise : l'action `actions/github-script` utilise le token GITHUB_TOKEN
-# (disponible automatiquement). Aucun secret supplémentaire nécessaire.
+# Required configuration: the `actions/github-script` action uses the GITHUB_TOKEN
+# token (available automatically). No additional secret needed.
 
 on:
   push:
@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   create-visual-review-issue:
-    name: Créer issue révision visuelle
+    name: Create visual review issue
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +32,13 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Lister les composants modifiés
+      - name: List modified components
         id: changes
         run: |
           CHANGED=$(git diff --name-only HEAD~1 HEAD -- components/ | sed 's|components/||' | sort -u | tr '\n' ', ' | sed 's/,$//')
           echo "components=${CHANGED}" >> $GITHUB_OUTPUT
 
-      - name: S'assurer que le label visual-review existe
+      - name: Ensure the visual-review label exists
         uses: actions/github-script@v7
         with:
           script: |
@@ -48,14 +48,14 @@ jobs:
                 repo: context.repo.repo,
                 name: 'visual-review',
                 color: '7057ff',
-                description: 'Révision visuelle Playwright requise avant approbation',
+                description: 'Playwright visual review required before approval',
               });
             } catch (e) {
-              // Label existe déjà — c'est OK
+              // Label already exists — that's fine
               if (!e.message.includes('already_exists') && e.status !== 422) throw e;
             }
 
-      - name: Créer l'issue de révision visuelle
+      - name: Create the visual review issue
         uses: actions/github-script@v7
         with:
           script: |
@@ -65,38 +65,38 @@ jobs:
             const report_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
             const body = [
-              `## Révision visuelle requise`,
+              `## Visual review required`,
               ``,
-              `Le commit \`${commit}\` a modifié des composants : **${components || 'voir ci-dessous'}**`,
+              `Commit \`${commit}\` modified components: **${components || 'see below'}**`,
               ``,
-              `Le workflow Playwright a généré un rapport de comparaison visuelle.`,
+              `The Playwright workflow generated a visual comparison report.`,
               ``,
-              `### Étapes pour les designers`,
+              `### Steps for designers`,
               ``,
-              `1. Ouvrir le [rapport Playwright](${report_url})`,
-              `2. Télécharger l'artifact \`playwright-report-chromium\``,
-              `3. Ouvrir \`index.html\` dans un navigateur`,
-              `4. Comparer les captures « actual » vs « expected » dans la section visuelle`,
-              `5. Si le changement est intentionnel → fermer cette issue et demander \`update_snapshots\``,
-              `6. Si c'est une régression → commenter et notifier l'équipe DS`,
+              `1. Open the [Playwright report](${report_url})`,
+              `2. Download the \`playwright-report-chromium\` artifact`,
+              `3. Open \`index.html\` in a browser`,
+              `4. Compare the "actual" vs "expected" captures in the visual section`,
+              `5. If the change is intentional → close this issue and request \`update_snapshots\``,
+              `6. If it's a regression → comment and notify the DS team`,
               ``,
-              `### Mettre à jour les snapshots de référence`,
+              `### Updating the reference snapshots`,
               ``,
               `\`\`\``,
-              `# Via GitHub Actions (approbation humaine requise — ADR-066)`,
+              `# Via GitHub Actions (human approval required — ADR-066)`,
               `Actions → Playwright → workflow_dispatch → update_snapshots: true`,
               ``,
-              `# En local`,
+              `# Locally`,
               `npm run playwright:update`,
               `git add tests/visual/snapshots/`,
-              `git commit -m "test(visual): met à jour les snapshots de référence"`,
+              `git commit -m "test(visual): update reference snapshots"`,
               `\`\`\``,
               ``,
               `---`,
-              `*Issue créée automatiquement par \`.github/workflows/playwright-reminder.yml\`*`,
+              `*Issue created automatically by \`.github/workflows/playwright-reminder.yml\`*`,
             ].join('\n');
 
-            // Vérifier si une issue `visual-review` ouverte existe déjà pour ce commit
+            // Check whether an open `visual-review` issue already exists for this commit
             const existing = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -105,21 +105,21 @@ jobs:
             });
 
             if (existing.data.length > 0) {
-              // Ajouter un commentaire sur l'issue existante plutôt que d'en créer une nouvelle
+              // Add a comment on the existing issue instead of creating a new one
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existing.data[0].number,
-                body: `**Nouveau changement composant — commit \`${commit}\`**\n\nComposants modifiés : ${components || 'voir diff'}\n\n[Rapport Playwright →](${report_url})`,
+                body: `**New component change — commit \`${commit}\`**\n\nModified components: ${components || 'see diff'}\n\n[Playwright report →](${report_url})`,
               });
-              console.log(`Commentaire ajouté sur l'issue #${existing.data[0].number}`);
+              console.log(`Comment added on issue #${existing.data[0].number}`);
             } else {
               const issue = await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `🎨 Révision visuelle — ${components || 'composants'} (${commit})`,
+                title: `🎨 Visual review — ${components || 'components'} (${commit})`,
                 body,
                 labels: ['visual-review'],
               });
-              console.log(`Issue #${issue.data.number} créée : ${issue.data.html_url}`);
+              console.log(`Issue #${issue.data.number} created: ${issue.data.html_url}`);
             }

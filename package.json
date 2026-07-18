@@ -18,6 +18,7 @@
     "storybook": "npm run tokens && storybook dev -p 6006",
     "build-storybook": "npm run tokens && storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
+    "lang-audit": "node scripts/audit-language.js",
     "axe": "node scripts/axe-audit.js",
     "axe:mobile": "node scripts/axe-audit.js --mobile",
     "axe:dark": "node scripts/axe-audit.js --dark",
@@ -26,7 +27,7 @@
     "playwright:update": "npx playwright test --update-snapshots",
     "playwright:report": "npx playwright show-report",
     "smoke": "node scripts/smoke-test.js",
-    "test": "npm run smoke && npm run axe:all"
+    "test": "npm run smoke && npm run lang-audit && npm run axe:all"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

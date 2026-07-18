@@ -13,7 +13,7 @@
 ## Applied reference UX patterns
 
 > Added on 2026-06-04 via the `ux-pattern-review` workflow (ADR-036). Decision: **LK1–LK8 all approved**.
-> Detail and links: `guidelines/components/link.md` § PATTERNS UX DE RÉFÉRENCE.
+> Detail and links: `guidelines/components/link.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|
@@ -124,7 +124,7 @@ during *dogfooding* (category A).
 ## Patterns UX de référence appliqués
 
 > Ajouté le 2026-06-04 via le workflow `ux-pattern-review` (ADR-036). Décision : **LK1–LK8 tous approuvés**.
-> Détail et liens : `guidelines/components/link.md` § PATTERNS UX DE RÉFÉRENCE.
+> Détail et liens : `guidelines/components/link.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|

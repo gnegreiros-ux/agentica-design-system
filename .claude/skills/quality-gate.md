@@ -29,6 +29,7 @@ Run this quality gate **after every modification**, regardless of size:
 | Pipeline | File | Status | Mandatory |
 |----------|---------|--------|-------------|
 | Token consistency | `pipelines/tokens-audit.md` | ✅ Active | Yes |
+| Language (English-only) | `pipelines/language-audit.md` | ✅ Active | Yes |
 | WCAG 2.2 | `pipelines/wcag.md` | ✅ Active | Yes |
 | UX pattern review | `pipelines/ux-patterns.md` | ✅ Active | Yes (new component + relevant UX change) |
 | Rule / ADR compliance | `pipelines/adr-conformity.md` | ✅ Active | Yes |

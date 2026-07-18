@@ -1,14 +1,14 @@
-name: Playwright — Tests visuels, fonctionnels et accessibilité
+name: Playwright — Visual, functional and accessibility tests
 
-# Tests de régression visuelle, fonctionnels et accessibilité du site (ADR-066 + ADR-007).
-# Périmètre : pages site/dist/ — pas les stories Storybook.
-# Remplace axe.yml pour les pages critiques — axe.yml reste pour l'audit exhaustif manuel.
-# Les snapshots PNG de référence sont committés dans tests/visual/snapshots/.
+# Visual regression, functional, and accessibility tests for the site (ADR-066 + ADR-007).
+# Scope: site/dist/ pages — not Storybook stories.
+# Replaces axe.yml for critical pages — axe.yml remains for the manual exhaustive audit.
+# Reference PNG snapshots are committed in tests/visual/snapshots/.
 #
-# Rapport HTML fusionné publié dans le sous-répertoire /playwright-report/ du site Pages.
-# URL : https://designsystem.gnegreiros.com/playwright-report/
-# Déployé dans gh-pages via peaceiris/actions-gh-pages (même mécanisme que deploy-site.yml).
-# keep_files: true — ne touche pas au reste du site.
+# Merged HTML report published to the /playwright-report/ subdirectory of the Pages site.
+# URL: https://designsystem.gnegreiros.com/playwright-report/
+# Deployed to gh-pages via peaceiris/actions-gh-pages (same mechanism as deploy-site.yml).
+# keep_files: true — doesn't touch the rest of the site.
 
 on:
   push:
@@ -19,8 +19,8 @@ on:
         type: boolean
         default: false
         description: >
-          Régénérer les snapshots de référence.
-          APPROBATION HUMAINE REQUISE — ne jamais activer automatiquement (ADR-066, ADR-004).
+          Regenerate the reference snapshots.
+          HUMAN APPROVAL REQUIRED — never enable automatically (ADR-066, ADR-004).
 
 permissions:
   contents: write
@@ -30,8 +30,8 @@ jobs:
     name: Playwright (${{ matrix.browser }})
     runs-on: ubuntu-latest
 
-    # Image Docker Microsoft — diffs déterministes entre CI Linux et macOS local.
-    # Sans cette image, les différences typographiques entre OS génèrent des faux positifs.
+    # Microsoft Docker image — deterministic diffs between Linux CI and local macOS.
+    # Without this image, typographic differences between OSes generate false positives.
     container:
       image: mcr.microsoft.com/playwright:v1.61.1-jammy
 
@@ -49,11 +49,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # npm install (non npm ci) : aligné sur les autres workflows — lockfile multi-plateforme
+        # npm install (not npm ci): aligned with the other workflows — cross-platform lockfile
         run: npm install --no-audit --no-fund
 
       - name: Build tokens
-        # Requis pour les custom properties CSS utilisées par les composants agtc-*
+        # Required for the CSS custom properties used by the agtc-* components
         run: npm run tokens
 
       - name: Build site
@@ -61,17 +61,17 @@ jobs:
 
       - name: Run Playwright tests
         env:
-          # HOME doit pointer vers un répertoire inscriptible dans le container Docker
+          # HOME must point to a writable directory inside the Docker container
           HOME: /root
         run: |
           if [ "${{ inputs.update_snapshots }}" = "true" ]; then
-            echo "⚠️  Mode mise à jour des snapshots — approbation humaine requise avant de committer"
+            echo "⚠️  Snapshot update mode — human approval required before committing"
             npx playwright test --project=${{ matrix.browser }} --update-snapshots --reporter=blob,html
           else
             npx playwright test --project=${{ matrix.browser }} --reporter=blob,html
           fi
 
-      - name: Upload rapport HTML par browser
+      - name: Upload per-browser HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -79,7 +79,7 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-      - name: Upload blob report (pour la fusion multi-browser)
+      - name: Upload blob report (for multi-browser merge)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -87,7 +87,7 @@ jobs:
           path: blob-report/
           retention-days: 1
 
-      - name: Upload snapshots mis à jour
+      - name: Upload updated snapshots
         if: ${{ inputs.update_snapshots == true }}
         uses: actions/upload-artifact@v4
         with:
@@ -96,7 +96,7 @@ jobs:
           retention-days: 7
 
   publish-report:
-    name: Publier rapport → designsystem.gnegreiros.com/playwright-report/
+    name: Publish report → designsystem.gnegreiros.com/playwright-report/
     needs: playwright
     if: always()
     runs-on: ubuntu-latest
@@ -108,20 +108,20 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install @playwright/test (pour merge-reports)
+      - name: Install @playwright/test (for merge-reports)
         run: npm install --no-save @playwright/test
 
-      - name: Télécharger tous les blob reports
+      - name: Download all blob reports
         uses: actions/download-artifact@v4
         with:
           pattern: blob-report-*
           path: all-blob-reports
           merge-multiple: true
 
-      - name: Fusionner les rapports multi-browser
+      - name: Merge multi-browser reports
         run: npx playwright merge-reports --reporter html all-blob-reports
 
-      - name: Publier dans /playwright-report/ (sans toucher au reste du site)
+      - name: Publish to /playwright-report/ (without touching the rest of the site)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -130,14 +130,14 @@ jobs:
           destination_dir: playwright-report
           keep_files: true
 
-      - name: Rapport publié — URL de consultation
+      - name: Report published — viewing URL
         run: |
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  ✅  Rapport Playwright publié"
+          echo "  ✅  Playwright report published"
           echo ""
           echo "  👉  https://designsystem.gnegreiros.com/playwright-report/"
           echo ""
-          echo "  Le rapport est disponible dans ~30 secondes"
-          echo "  (délai de propagation GitHub Pages)."
+          echo "  The report will be available in ~30 seconds"
+          echo "  (GitHub Pages propagation delay)."
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

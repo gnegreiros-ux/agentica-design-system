@@ -6,7 +6,7 @@
 > **Type:** contract
 > **Logical path:** decisions/ADR-070-anglais-langue-par-defaut.md
 > **Read before:** AGENTS.md, DESIGN.md, README.md
-> **Relations:** .claude/rules/project-overview.md, README.md, AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md, How-to-sans-agents.md
+> **Relations:** .claude/rules/project-overview.md, README.md, AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md, How-to-without-agents.md
 
 ---
 
@@ -108,7 +108,7 @@ the international community."
 > **Type:** contract
 > **Chemin logique:** decisions/ADR-070-anglais-langue-par-defaut.md
 > **Lecture avant:** AGENTS.md, DESIGN.md, README.md
-> **Relations:** .claude/rules/project-overview.md, README.md, AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md, How-to-sans-agents.md
+> **Relations:** .claude/rules/project-overview.md, README.md, AGENTS.md, DESIGN.md, How-to-designers.md, How-to-devs.md, How-to-without-agents.md
 
 ---
 

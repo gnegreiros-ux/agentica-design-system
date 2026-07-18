@@ -10,7 +10,7 @@
         "primary": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Action principale dark — teal clair accessible sur fond sombre (≥4.5:1)"
+          "$intent": "Primary action dark — accessible light teal on dark background (≥4.5:1)"
         },
         "primary-hover": {
           "$value": "#5fe0cd",
@@ -27,7 +27,7 @@
         "danger": {
           "$value": "#ff9592",
           "$type": "color",
-          "$intent": "Danger dark — rouge clair accessible sur fond sombre"
+          "$intent": "Danger dark — accessible light red on dark background"
         },
         "danger-subtle": {
           "$value": "#291415",
@@ -62,12 +62,12 @@
         "info-text": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Texte info dark — lisible sur fond info-subtle"
+          "$intent": "Info text dark — readable on info-subtle background"
         },
         "warning": {
           "$value": "#ffca16",
           "$type": "color",
-          "$intent": "Avertissement dark — jaune lumineux accessible sur fond sombre"
+          "$intent": "Warning dark — accessible bright yellow on dark background"
         },
         "warning-subtle": {
           "$value": "#241800",
@@ -77,7 +77,7 @@
         "warning-text": {
           "$value": "#ffca16",
           "$type": "color",
-          "$intent": "Texte avertissement dark — lisible sur fond warning-subtle"
+          "$intent": "Warning text dark — readable on warning-subtle background"
         }
       },
       "brand": {
@@ -94,7 +94,7 @@
         "primary-text": {
           "$value": "#34d3bb",
           "$type": "color",
-          "$intent": "Texte marque primaire dark — sur fond subtle"
+          "$intent": "Primary brand text dark — on subtle background"
         },
         "accent-subtle": {
           "$value": "#2a1520",
@@ -148,12 +148,12 @@
         "primary": {
           "$value": "#edeef0",
           "$type": "color",
-          "$intent": "Texte principal dark — quasi-blanc, fort contraste sur fond page (≥12:1)"
+          "$intent": "Primary text dark — near-white, high contrast on page background (≥12:1)"
         },
         "secondary": {
           "$value": "#a4abb8",
           "$type": "color",
-          "$intent": "Texte secondaire dark — gris moyen, ≥4.5:1 sur fond page"
+          "$intent": "Secondary text dark — medium gray, ≥4.5:1 on page background"
         },
         "disabled": {
           "$value": "#6b7280",

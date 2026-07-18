@@ -1,0 +1,32 @@
+name: Language — English-only content audit
+
+# Enforces ADR-070/071/075: all repository content is English-only, except the
+# public site (site/build.js, site/contenu.md) and the historical ADR log's
+# French sections (decisions/ADR-*.md, after the <!-- FR --> marker).
+#
+# Runs on every push and pull request — deliberately cheap (checkout + node,
+# no build, no browser install) so it catches new French content the moment
+# it's introduced, rather than being discovered weeks later in a manual pass
+# (see ADR-075: starter-kit/ was written in French three days after ADR-071
+# made English mandatory for new content, and nothing caught it at the time).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lang-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Run language audit
+        run: node scripts/audit-language.js --ci

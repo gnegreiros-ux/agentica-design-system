@@ -6,7 +6,7 @@ const toggle = document.getElementById('theme-toggle');
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  toggle.textContent = theme === 'dark' ? 'Passer en clair' : 'Passer en sombre';
+  toggle.textContent = theme === 'dark' ? 'Switch to light' : 'Switch to dark';
   localStorage.setItem('agentica-theme', theme);
 }
 

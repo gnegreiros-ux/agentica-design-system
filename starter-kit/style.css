@@ -24,8 +24,8 @@ body {
   margin: 0;
 }
 
-/* Logo clair/sombre : même bascule que le site principal (site/build.js) —
-   affiche la variante blanche par défaut, la variante couleur en thème clair. */
+/* Light/dark logo: same toggle as the main site (site/build.js) —
+   shows the white variant by default, the color variant in light theme. */
 .logo-light { display: none; }
 [data-theme="light"] .logo-dark { display: none; }
 [data-theme="light"] .logo-light { display: block; }
