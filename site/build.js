@@ -1417,6 +1417,26 @@ html[data-lang="en"] .lang-fr{display:none}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--agtc-space-3);margin:var(--agtc-space-5) 0}
 .grid-auto-220{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--agtc-space-3);margin-top:24px}
 
+/* ── QUICKSTART BLOCK (accent-bordered, precedes the numbered steps) ────── */
+.quickstart-block{margin:var(--agtc-space-6) 0;padding:var(--agtc-space-5);background:var(--agtc-semantic-color-background-subtle);border:1px solid var(--agtc-semantic-color-border-default);border-left:4px solid var(--agtc-semantic-color-action-primary);border-radius:var(--agtc-semantic-radius-card)}
+.quickstart-block .code-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-secondary);margin:0 0 var(--agtc-space-3)}
+
+/* ── NUMBERED STEP LIST (visual hierarchy for sequential how-to content) ── */
+.step-list{list-style:none;margin:var(--agtc-space-5) 0;padding:0;display:flex;flex-direction:column;gap:var(--agtc-space-5)}
+.step{display:flex;align-items:flex-start;gap:var(--agtc-space-5);padding:var(--agtc-space-5);background:var(--agtc-semantic-color-background-surface);border:1px solid var(--agtc-semantic-color-border-default);border-radius:var(--agtc-semantic-radius-card)}
+.step-num{flex-shrink:0;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-action-primary);font-weight:var(--agtc-semantic-fontWeight-bold);font-size:1rem}
+.step-body{flex:1;min-width:0}
+.step-body>strong{display:block;font-size:var(--agtc-semantic-typography-heading-5-size);margin-bottom:var(--agtc-space-2);color:var(--agtc-semantic-color-text-primary)}
+.step-body .code-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-secondary);margin:var(--agtc-space-4) 0 var(--agtc-space-1)}
+.step-body .code-label:first-child{margin-top:var(--agtc-space-2)}
+.step-substep{margin-top:var(--agtc-space-5);padding-left:var(--agtc-space-4);border-left:3px solid var(--agtc-semantic-color-border-default)}
+.step-substep-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);text-transform:uppercase;letter-spacing:var(--agtc-tracking-overline);color:var(--agtc-semantic-color-text-secondary);margin:0 0 6px}
+
+/* ── FRAMEWORK TABS PANELS ──────────────────────────────── */
+.framework-panel{padding:var(--agtc-space-1) 0}
+.framework-panel .code-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-secondary);margin:var(--agtc-space-4) 0 var(--agtc-space-1)}
+.framework-panel .code-label:first-of-type{margin-top:0}
+
 /* ── BANNER responsive (le contribution-banner consomme .agtc-banner — ADR-042) ── */
 @media(max-width:768px){.agtc-banner{flex-wrap:wrap}}
 
@@ -4210,19 +4230,19 @@ function buildDocumentation() {
 function buildContinuite() {
   const REPO = 'https://github.com/gnegreiros-ux/agentica-design-system';
   const SCRIPTS = `${REPO}/blob/main/scripts/continuity`;
-  const HOWTO = `${REPO}/blob/main/How-to-sans-agents.md`;
+  const HOWTO = `${REPO}/blob/main/How-to-without-agents.md`;
 
-  const outilsCode = esc(`bash scripts/continuity/1-1-outils-existants.sh
+  const outilsCode = esc(`bash scripts/continuity/1-1-existing-tools.sh
 # --skip-visual to skip Playwright/Chromatic (external services)`);
 
-  const gateCode = esc(`bash scripts/continuity/1-2-quality-gate-manuel.sh
+  const gateCode = esc(`bash scripts/continuity/1-2-manual-quality-gate.sh
 # Blocks until each step is confirmed (y/n)`);
 
   const produitCode = esc(`# Verify the installation of an Agentica clone
-bash scripts/continuity/2-1-installation-produit.sh <clone-path>
+bash scripts/continuity/2-1-product-installation.sh <clone-path>
 
 # Audit a consuming project against the tokens
-bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
+bash scripts/continuity/2-2-product-checklist.sh <project-path>`);
 
   const outilsRows = [
     ['Compile the tokens', 'npm run tokens'],
@@ -4272,7 +4292,7 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
   <tbody>${outilsRows}</tbody>
 </table>
 <pre class="code-block"><code class="lang-bash">${outilsCode}</code></pre>
-<p><a href="${SCRIPTS}/1-1-outils-existants.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/1-1-existing-tools.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">1.2 Quality gate manuel</span><span class="lang-en">1.2 Manual quality gate</span></h3>
 <p>
@@ -4280,7 +4300,7 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
   <span class="lang-en">The 8 pipelines from <code>quality-gate.md</code> translated into human steps: token consistency, WCAG, UX pattern review, ADR conformity, missing-ADR triggers, documentation, site rebuild, commit. Steps 3 and 5 are pure human judgment — no script can replace them, only remind that they must happen and block until confirmed.</span>
 </p>
 <pre class="code-block"><code class="lang-bash">${gateCode}</code></pre>
-<p><a href="${SCRIPTS}/1-2-quality-gate-manuel.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/1-2-manual-quality-gate.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">1.3 Gouvernance Figma sans script Plugin API</span><span class="lang-en">1.3 Figma governance without a Plugin API script</span></h3>
 <p>
@@ -4294,7 +4314,7 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
   <span class="lang-fr">Rédiger un ADR est déjà un exercice humain d'écriture, non affecté par l'absence d'agent. Le suivi de projet (statut, historique, backlog) vit dans GitHub Projects (ADR-069) — seulement un rappel qu'ADR et mise à jour du Project restent obligatoires à chaque session ou commit significatif.</span>
   <span class="lang-en">Writing an ADR is already a human writing task, unaffected by agent absence. Project tracking (status, history, backlog) lives in GitHub Projects (ADR-069) — just a reminder that ADRs and Project updates remain mandatory for every significant session or commit.</span>
 </p>
-<p><a href="${SCRIPTS}/1-4-adr-log-rappel.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/1-4-adr-log-reminder.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h2 id="equipes-produit"><span class="lang-fr">Équipes produit (consommatrices d'Agentica)</span><span class="lang-en">Product teams (consuming Agentica)</span></h2>
 
@@ -4303,7 +4323,7 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
   <span class="lang-fr">Le flux d'installation documenté sur <a href="get-started.html">la page Démarrer</a> fonctionne sans aucun agent : <code>npm install @agentica-ds/tokens @agentica-ds/components</code>, importer <code>@agentica-ds/tokens/css</code> et <code>/css/dark</code>, monter les Web Components <code>agtc-*</code>. Le dossier <code>starter-kit/</code> du dépôt est un projet minimal prêt à copier. <code>guidelines/components/*.md</code> et <code>DESIGN.md</code> sont des contrats lisibles humains, utilisables tels quels.</span>
   <span class="lang-en">The installation flow documented on the <a href="get-started.html">Get started page</a> works with zero agent: <code>npm install @agentica-ds/tokens @agentica-ds/components</code>, import <code>@agentica-ds/tokens/css</code> and <code>/css/dark</code>, mount the <code>agtc-*</code> Web Components. The repository's <code>starter-kit/</code> folder is a ready-to-copy minimal project. <code>guidelines/components/*.md</code> and <code>DESIGN.md</code> are human-readable contracts, usable as-is.</span>
 </p>
-<p><a href="${SCRIPTS}/2-1-installation-produit.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/2-1-product-installation.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">2.2 Ce qui demande une checklist de remplacement</span><span class="lang-en">2.2 What needs a replacement checklist</span></h3>
 <p>
@@ -4311,7 +4331,7 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
   <span class="lang-en">Hardcoded values: run the token audit against your own project, or a manual visual review against <code>tokens-system.md</code>. UX pattern: consult the 5 public sources from <code>ux-patterns-sources.md</code> directly and document the choice yourself. Accessibility: WebAIM Contrast Checker and the axe DevTools browser extension.</span>
 </p>
 <pre class="code-block"><code class="lang-bash">${produitCode}</code></pre>
-<p><a href="${SCRIPTS}/2-2-checklist-produit.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/2-2-product-checklist.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">2.3 Garde-fou anti-contournement</span><span class="lang-en">2.3 Anti-bypass safeguard</span></h3>
 <agtc-banner variant="warning">
@@ -4321,20 +4341,20 @@ bash scripts/continuity/2-2-checklist-produit.sh <project-path>`);
     <span class="lang-en">Without an agent easing design system adoption, a pressured team may be tempted to bypass Agentica entirely (a documented Spotify/Encore case study). <code>tokens-system.md</code> still applies — a hardcoded value is still forbidden, it is just checked by hand. If a deadline is untenable, the correct path is escalation (2.4), never silent bypass.</span>
   </span>
 </agtc-banner>
-<p><a href="${SCRIPTS}/2-3-anti-contournement.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/2-3-anti-bypass.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <h3><span class="lang-fr">2.4 Point de contact en cas de doute</span><span class="lang-en">2.4 Point of contact when in doubt</span></h3>
 <p>
   <span class="lang-fr">Toute question d'interprétation remonte au Design System Lead / Principal Designer humain — jamais d'improvisation silencieuse.</span>
   <span class="lang-en">Any interpretation question goes to the human Design System Lead / Principal Designer — never silent improvisation.</span>
 </p>
-<p><a href="${SCRIPTS}/2-4-contact-escalade.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
+<p><a href="${SCRIPTS}/2-4-escalation-contact.sh" target="_blank" rel="noopener noreferrer">${icon('github', 14)} <span class="lang-fr">Voir le script</span><span class="lang-en">View the script</span></a></p>
 
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">Guide complet</span><span class="lang-en">Full guide</span></strong>
   <span>
-    <span class="lang-fr">Ce résumé s'appuie sur <code>How-to-sans-agents.md</code>, qui détaille aussi le déclenchement du plan et la sortie de ce mode. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Lire la source complète →</a></span>
-    <span class="lang-en">This summary is based on <code>How-to-sans-agents.md</code>, which also details how the plan is triggered and exited. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Read the full source →</a></span>
+    <span class="lang-fr">Ce résumé s'appuie sur <code>How-to-without-agents.md</code>, qui détaille aussi le déclenchement du plan et la sortie de ce mode. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Lire la source complète →</a></span>
+    <span class="lang-en">This summary is based on <code>How-to-without-agents.md</code>, which also details how the plan is triggered and exited. <a href="${HOWTO}" target="_blank" rel="noopener noreferrer">Read the full source →</a></span>
   </span>
 </agtc-banner>
 
@@ -7502,17 +7522,6 @@ useEffect(() => {
 
 <agtc-table ref={tableRef}></agtc-table>`);
 
-  const frameworks = [
-    ['Angular',  'schemas: [CUSTOM_ELEMENTS_SCHEMA]',                                          'Thème Material M3 fourni (clone-only, voir tableau ci-dessous)', 'Material M3 theme provided (clone-only, see table below)'],
-    ['Vue',      'isCustomElement dans la config du compilateur',                              'Binding de props/events natif ensuite',                          'Native prop/event binding after that'],
-    ['React 19+','Aucune — support natif des Web Components',                                  'Aucun wrapper requis',                                            'No wrapper required'],
-    ['React &lt;19', 'Wrapper léger recommandé pour les propriétés complexes',                 'Les attributs simples (string/boolean) fonctionnent nativement', 'Simple (string/boolean) attributes work natively'],
-    ['Vanilla / autre', 'Aucune',                                                               'Import direct, comportement natif',                               'Direct import, native behavior'],
-  ];
-  const frameworkRows = frameworks.map(([name, config, fr, en]) =>
-    `<tr><td><code>${name}</code></td><td><code>${config}</code></td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`
-  ).join('');
-
   // logo: file name inside integrations/ (brand color)
   const platforms = [
     ['css',     '@agentica-ds/tokens/css',     'npm', 'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
@@ -7532,17 +7541,25 @@ useEffect(() => {
   const body = `
 <h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
 <p class="page-lead">
-  <span class="lang-fr">Adopter Agentica, c'est consommer des décisions — pas des valeurs. Trois niveaux de tokens, 14 composants, six plateformes de sortie, le tout auditable WCAG 2.2. Voici comment l'intégrer en quelques minutes.</span>
-  <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable. Here is how to integrate it in minutes.</span>
+  <span class="lang-fr">Adopter Agentica, c'est consommer des décisions — pas des valeurs. Trois niveaux de tokens, 14 composants, six plateformes de sortie, le tout auditable WCAG 2.2.</span>
+  <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable.</span>
 </p>
 
 <agtc-banner variant="info">
   <strong><span class="lang-fr">Disponible sur npm (v0.x)</span><span class="lang-en">Available on npm (v0.x)</span></strong>
   <span>
-    <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0. Un exemple minimal complet et fonctionnel est disponible dans <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> du dépôt.</span>
-    <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0. A complete, working minimal example lives in the repository's <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
+    <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0. Pressé ? Copiez <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> tel quel — c'est un projet complet et fonctionnel.</span>
+    <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0. In a hurry? Copy <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> as-is — it's a complete, working project.</span>
   </span>
 </agtc-banner>
+
+<div class="quickstart-block">
+  <p class="code-label"><span class="lang-fr">Démarrage rapide — le code complet, sans explication (le détail de chaque étape suit plus bas)</span><span class="lang-en">Quickstart — the full code, no explanation (the detailed walkthrough follows below)</span></p>
+  <pre class="code-block"><code class="lang-bash">${esc('npm install @agentica-ds/tokens @agentica-ds/components lit')}</code></pre>
+  <pre class="code-block"><code class="lang-js">${esc(`import '@agentica-ds/tokens/css';
+import '@agentica-ds/components';`)}</code></pre>
+  <pre class="code-block"><code class="lang-html">${esc('<agtc-button variant="primary">Save</agtc-button>')}</code></pre>
+</div>
 
 <h2 class="first"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></h2>
 <div class="grid-3">
@@ -7564,94 +7581,68 @@ useEffect(() => {
 </div>
 
 <h2><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></h2>
+<ol class="step-list">
+  <li class="step">
+    <span class="step-num" aria-hidden="true">1</span>
+    <div class="step-body">
+      <strong><span class="lang-fr">Installer</span><span class="lang-en">Install</span></strong>
+      <p>
+        <span class="lang-fr">Les paquets sont publiés sur le registre npm public. <code>lit</code> est une dépendance pair des composants.</span>
+        <span class="lang-en">The packages are published on the public npm registry. <code>lit</code> is a peer dependency of the components.</span>
+      </p>
+      <pre class="code-block"><code class="lang-bash">${installCode}</code></pre>
+    </div>
+  </li>
+  <li class="step">
+    <span class="step-num" aria-hidden="true">2</span>
+    <div class="step-body">
+      <strong><span class="lang-fr">Importer et consommer les variables CSS</span><span class="lang-en">Import and consume the CSS variables</span></strong>
+      <p>
+        <span class="lang-fr">Chargez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
+        <span class="lang-en">Load the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
+      </p>
+      <p class="code-label"><span class="lang-fr">Avec un bundler</span><span class="lang-en">With a bundler</span></p>
+      <pre class="code-block"><code class="lang-js">${cssCode}</code></pre>
+      <p class="code-label"><span class="lang-fr">Sans bundler (HTML pur)</span><span class="lang-en">No bundler (plain HTML)</span></p>
+      <pre class="code-block"><code class="lang-html">${cssHtmlCode}</code></pre>
+      <p class="code-label"><span class="lang-fr">Puis, dans les deux cas — utilisation par intention</span><span class="lang-en">Then, either way — usage by intent</span></p>
+      <pre class="code-block"><code class="lang-css">${cssUseCode}</code></pre>
 
-<h3><span class="lang-fr">1. Installer</span><span class="lang-en">1. Install</span></h3>
-<p>
-  <span class="lang-fr">Les paquets sont publiés sur le registre npm public. <code>lit</code> est une dépendance pair des composants.</span>
-  <span class="lang-en">The packages are published on the public npm registry. <code>lit</code> is a peer dependency of the components.</span>
-</p>
-<pre class="code-block"><code class="lang-bash">${installCode}</code></pre>
-
-<h3><span class="lang-fr">2. Importer et consommer les variables CSS</span><span class="lang-en">2. Import and consume the CSS variables</span></h3>
-<p>
-  <span class="lang-fr">Chargez la feuille de tokens, puis référencez les variables sémantiques par leur <strong>intention</strong>. C'est l'approche que ce site lui-même utilise.</span>
-  <span class="lang-en">Load the token sheet, then reference semantic variables by their <strong>intent</strong>. This is the approach this very site uses.</span>
-</p>
-<pre class="code-block"><code class="lang-js">${cssCode}</code></pre>
-<pre class="code-block"><code class="lang-html">${cssHtmlCode}</code></pre>
-<pre class="code-block"><code class="lang-css">${cssUseCode}</code></pre>
-
-<h3 id="dark-mode"><span class="lang-fr">2b. Mode sombre (dark mode)</span><span class="lang-en">2b. Dark mode</span></h3>
-<p>
-  <span class="lang-fr">Chargez <code>dark.css</code> après <code>all.css</code>. Ce fichier contient les 38 tokens qui changent de valeur en mode sombre, sous le sélecteur <code>[data-theme="dark"]</code>. Ajoutez ensuite l'attribut sur <code>&lt;html&gt;</code> et pilotez-le avec un toggle JS.</span>
-  <span class="lang-en">Load <code>dark.css</code> after <code>all.css</code>. This file contains the 38 tokens that change value in dark mode, under the <code>[data-theme="dark"]</code> selector. Then add the attribute on <code>&lt;html&gt;</code> and drive it with a JS toggle.</span>
-</p>
-<pre class="code-block"><code class="lang-html">${darkHtmlCode}</code></pre>
-<pre class="code-block"><code class="lang-js">${darkJsCode}</code></pre>
-<agtc-banner variant="info" icon="lightbulb">
-  <strong><span class="lang-fr">Composants à fond toujours sombre</span><span class="lang-en">Always-dark background components</span></strong>
-  <span>
-    <span class="lang-fr">Les composants glassmorphism ou overlay qui restent sombres quel que soit le thème de la page (ex: cartes hero, modales sombres) doivent utiliser <code>text.on-dark</code> — et <strong>jamais</strong> <code>text.primary</code>. <code>text.primary</code> est adaptatif (sombre en light, clair en dark) : sur un fond fixement sombre, le contraste peut tomber à 1.12:1.</span>
-    <span class="lang-en">Glassmorphism or overlay components that stay dark regardless of page theme (e.g. hero cards, dark modals) must use <code>text.on-dark</code> — <strong>never</strong> <code>text.primary</code>. <code>text.primary</code> is adaptive (dark in light mode, light in dark mode): on a fixed dark background, contrast can drop to 1.12:1.</span>
-  </span>
-</agtc-banner>
-<pre class="code-block"><code class="lang-css">${darkOnDarkCode}</code></pre>
-
-<h3><span class="lang-fr">3. Utiliser les Web Components</span><span class="lang-en">3. Use the Web Components</span></h3>
-<p>
-  <span class="lang-fr">Montez les Web Components <code>agtc-*</code>. Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
-  <span class="lang-en">Mount the <code>agtc-*</code> Web Components. They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
-</p>
-<pre class="code-block"><code class="lang-js">${wcCode}</code></pre>
-<pre class="code-block"><code class="lang-html">${wcHtmlCode}</code></pre>
-
-<agtc-banner variant="info" icon="rocket">
-  <strong><span class="lang-fr">Exemple complet</span><span class="lang-en">Complete example</span></strong>
-  <span>
-    <span class="lang-fr">Un projet minimal fonctionnel (Vite, tokens clair/sombre, quatre composants) que vous pouvez copier tel quel : <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
-    <span class="lang-en">A working minimal project (Vite, light/dark tokens, four components) you can copy as-is: <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a>.</span>
-  </span>
-</agtc-banner>
-
-<h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
-<p>
-  <span class="lang-fr">Les composants sont des Web Components natifs — aucun wrapper requis dans la plupart des cas. Chaque framework a néanmoins sa propre configuration pour reconnaître un élément personnalisé inconnu de son compilateur de template.</span>
-  <span class="lang-en">Components are native Web Components — no wrapper required in most cases. Each framework still has its own configuration to recognize a custom element its template compiler doesn't know about.</span>
-</p>
-<table>
-  <thead><tr>
-    <th><span class="lang-fr">Framework</span><span class="lang-en">Framework</span></th>
-    <th><span class="lang-fr">Configuration requise</span><span class="lang-en">Required configuration</span></th>
-    <th><span class="lang-fr">Notes</span><span class="lang-en">Notes</span></th>
-  </tr></thead>
-  <tbody>${frameworkRows}</tbody>
-</table>
-
-<h3><span class="lang-fr">Angular</span><span class="lang-en">Angular</span></h3>
-<p>
-  <span class="lang-fr">Ajoutez <code>CUSTOM_ELEMENTS_SCHEMA</code> au module (ou aux <code>schemas</code> d'un composant standalone). Le binding de propriétés et d'événements est ensuite natif.</span>
-  <span class="lang-en">Add <code>CUSTOM_ELEMENTS_SCHEMA</code> to the module (or to a standalone component's <code>schemas</code>). Property and event binding is then native.</span>
-</p>
-<pre class="code-block"><code class="lang-js">${ngCode}</code></pre>
-<p>
-  <span class="lang-fr">Le pipeline Style Dictionary génère aussi un thème Material Angular M3 à partir des mêmes tokens — clone-only, pas publié sur npm (voir le tableau des plateformes de sortie plus bas).</span>
-  <span class="lang-en">The Style Dictionary pipeline also generates a Material Angular M3 theme from the same tokens — clone-only, not published to npm (see the output-platforms table below).</span>
-</p>
-<pre class="code-block"><code class="lang-css">${ngScssCode}</code></pre>
-
-<h3><span class="lang-fr">Vue</span><span class="lang-en">Vue</span></h3>
-<p>
-  <span class="lang-fr">Déclarez le préfixe <code>agtc-</code> comme élément personnalisé dans la config du compilateur, pour que Vue ne tente pas de le résoudre comme un composant Vue.</span>
-  <span class="lang-en">Declare the <code>agtc-</code> prefix as a custom element in the compiler config, so Vue doesn't try to resolve it as a Vue component.</span>
-</p>
-<pre class="code-block"><code class="lang-js">${vueCode}</code></pre>
-
-<h3><span class="lang-fr">React</span><span class="lang-en">React</span></h3>
-<p>
-  <span class="lang-fr">React 19+ supporte nativement les Web Components. Pour une version antérieure, les attributs simples fonctionnent déjà nativement — seules les propriétés complexes (objets, tableaux) nécessitent une assignation via <code>ref</code>.</span>
-  <span class="lang-en">React 19+ natively supports Web Components. On an earlier version, simple attributes already work natively — only complex properties (objects, arrays) need a <code>ref</code>-based assignment.</span>
-</p>
-<pre class="code-block"><code class="lang-jsx">${reactCode}</code></pre>
+      <div class="step-substep" id="dark-mode">
+        <p class="step-substep-label"><span class="lang-fr">Optionnel</span><span class="lang-en">Optional</span></p>
+        <strong><span class="lang-fr">Mode sombre (dark mode)</span><span class="lang-en">Dark mode</span></strong>
+        <p>
+          <span class="lang-fr">Chargez <code>dark.css</code> après <code>all.css</code> (déjà fait ci-dessus si vous avez suivi l'exemple bundler). Ce fichier contient les 38 tokens qui changent de valeur en mode sombre, sous le sélecteur <code>[data-theme="dark"]</code>. Ajoutez ensuite l'attribut sur <code>&lt;html&gt;</code> et pilotez-le avec un toggle JS.</span>
+          <span class="lang-en">Load <code>dark.css</code> after <code>all.css</code> (already done above if you followed the bundler example). This file contains the 38 tokens that change value in dark mode, under the <code>[data-theme="dark"]</code> selector. Then add the attribute on <code>&lt;html&gt;</code> and drive it with a JS toggle.</span>
+        </p>
+        <pre class="code-block"><code class="lang-html">${darkHtmlCode}</code></pre>
+        <pre class="code-block"><code class="lang-js">${darkJsCode}</code></pre>
+        <agtc-banner variant="info" icon="lightbulb">
+          <strong><span class="lang-fr">Composants à fond toujours sombre</span><span class="lang-en">Always-dark background components</span></strong>
+          <span>
+            <span class="lang-fr">Les composants glassmorphism ou overlay qui restent sombres quel que soit le thème de la page (ex: cartes hero, modales sombres) doivent utiliser <code>text.on-dark</code> — et <strong>jamais</strong> <code>text.primary</code>. <code>text.primary</code> est adaptatif (sombre en light, clair en dark) : sur un fond fixement sombre, le contraste peut tomber à 1.12:1.</span>
+            <span class="lang-en">Glassmorphism or overlay components that stay dark regardless of page theme (e.g. hero cards, dark modals) must use <code>text.on-dark</code> — <strong>never</strong> <code>text.primary</code>. <code>text.primary</code> is adaptive (dark in light mode, light in dark mode): on a fixed dark background, contrast can drop to 1.12:1.</span>
+          </span>
+        </agtc-banner>
+        <pre class="code-block"><code class="lang-css">${darkOnDarkCode}</code></pre>
+      </div>
+    </div>
+  </li>
+  <li class="step">
+    <span class="step-num" aria-hidden="true">3</span>
+    <div class="step-body">
+      <strong><span class="lang-fr">Utiliser les Web Components</span><span class="lang-en">Use the Web Components</span></strong>
+      <p>
+        <span class="lang-fr">Montez les Web Components <code>agtc-*</code>. Ils portent les contrats comportementaux — par exemple, <code>critical</code> exige une confirmation.</span>
+        <span class="lang-en">Mount the <code>agtc-*</code> Web Components. They carry behavioural contracts — e.g. <code>critical</code> requires confirmation.</span>
+      </p>
+      <p class="code-label"><span class="lang-fr">Import</span><span class="lang-en">Import</span></p>
+      <pre class="code-block"><code class="lang-js">${wcCode}</code></pre>
+      <p class="code-label"><span class="lang-fr">Utilisation</span><span class="lang-en">Usage</span></p>
+      <pre class="code-block"><code class="lang-html">${wcHtmlCode}</code></pre>
+    </div>
+  </li>
+</ol>
 
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
@@ -7661,10 +7652,56 @@ useEffect(() => {
   </span>
 </agtc-banner>
 
-<h2><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></h2>
+<h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
 <p>
-  <span class="lang-fr">Une source JSON, compilée par Style Dictionary vers six cibles. Importez celle de votre stack.</span>
-  <span class="lang-en">One JSON source, compiled by Style Dictionary to six targets. Import the one for your stack.</span>
+  <span class="lang-fr"><strong>Optionnel</strong> — uniquement si vous utilisez Angular, Vue ou React. Les composants sont des Web Components natifs ; sinon, passez directement aux <a href="#plateformes">plateformes de sortie</a>.</span>
+  <span class="lang-en"><strong>Optional</strong> — only if you use Angular, Vue, or React. Components are native Web Components; otherwise, skip straight to <a href="#plateformes">output platforms</a>.</span>
+</p>
+
+<agtc-tabs id="framework-tabs" label="Choix du framework / Framework choice" selected="angular">
+  <div slot="angular" class="framework-panel">
+    <p><span class="lang-fr"><strong>Configuration requise :</strong> ajoutez <code>CUSTOM_ELEMENTS_SCHEMA</code> au module (ou aux <code>schemas</code> d'un composant standalone). Le binding de propriétés et d'événements est ensuite natif.</span>
+    <span class="lang-en"><strong>Required configuration:</strong> add <code>CUSTOM_ELEMENTS_SCHEMA</code> to the module (or to a standalone component's <code>schemas</code>). Property and event binding is then native.</span></p>
+    <pre class="code-block"><code class="lang-js">${ngCode}</code></pre>
+    <p>
+      <span class="lang-fr">Le pipeline Style Dictionary génère aussi un thème Material Angular M3 à partir des mêmes tokens — clone-only, pas publié sur npm (voir le tableau des plateformes de sortie plus bas).</span>
+      <span class="lang-en">The Style Dictionary pipeline also generates a Material Angular M3 theme from the same tokens — clone-only, not published to npm (see the output-platforms table below).</span>
+    </p>
+    <pre class="code-block"><code class="lang-css">${ngScssCode}</code></pre>
+  </div>
+  <div slot="vue" class="framework-panel">
+    <p><span class="lang-fr"><strong>Configuration requise :</strong> déclarez le préfixe <code>agtc-</code> comme élément personnalisé dans la config du compilateur, pour que Vue ne tente pas de le résoudre comme un composant Vue.</span>
+    <span class="lang-en"><strong>Required configuration:</strong> declare the <code>agtc-</code> prefix as a custom element in the compiler config, so Vue doesn't try to resolve it as a Vue component.</span></p>
+    <pre class="code-block"><code class="lang-js">${vueCode}</code></pre>
+  </div>
+  <div slot="react" class="framework-panel">
+    <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune en React 19+ (support natif). Avant 19, les attributs simples fonctionnent déjà nativement — seules les propriétés complexes (objets, tableaux) nécessitent une assignation via <code>ref</code>.</span>
+    <span class="lang-en"><strong>Required configuration:</strong> none on React 19+ (native support). Before 19, simple attributes already work natively — only complex properties (objects, arrays) need a <code>ref</code>-based assignment.</span></p>
+    <pre class="code-block"><code class="lang-jsx">${reactCode}</code></pre>
+  </div>
+  <div slot="vanilla" class="framework-panel">
+    <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune — import direct, comportement natif du navigateur.</span>
+    <span class="lang-en"><strong>Required configuration:</strong> none — direct import, native browser behavior.</span></p>
+  </div>
+</agtc-tabs>
+<script>
+  (function () {
+    var el = document.getElementById('framework-tabs');
+    if (el) {
+      el.tabs = [
+        { value: 'angular', label: 'Angular' },
+        { value: 'vue', label: 'Vue' },
+        { value: 'react', label: 'React' },
+        { value: 'vanilla', label: 'Vanilla / Other' },
+      ];
+    }
+  })();
+</script>
+
+<h2 id="plateformes"><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></h2>
+<p>
+  <span class="lang-fr">Une source JSON, compilée par Style Dictionary vers six cibles. <code>css</code>, <code>js</code> et <code>tailwind</code> sont publiés sur npm — ce sont les seuls formats qu'un projet JS/web installe via un gestionnaire de paquets. <code>angular</code>, <code>ios</code> et <code>android</code> restent clone-only : ce sont des sorties pour des écosystèmes qui ne consomment pas npm (Swift Package Manager, Gradle) — les publier sur npm ne les rendrait pas plus faciles à utiliser.</span>
+  <span class="lang-en">One JSON source, compiled by Style Dictionary to six targets. <code>css</code>, <code>js</code>, and <code>tailwind</code> are published to npm — the only formats a JS/web project installs via a package manager. <code>angular</code>, <code>ios</code>, and <code>android</code> stay clone-only: these are outputs for ecosystems that don't consume npm (Swift Package Manager, Gradle) — publishing them to npm wouldn't make them any easier to use.</span>
 </p>
 <table>
   <thead><tr>
@@ -7759,7 +7796,7 @@ function buildChangelog() {
           {fr:'Les 15 Text Styles de la librairie (typographie standard + nouvelle typographie mono de documentation) sont désormais intégralement bindés à des Variables Figma — plus aucune valeur de typographie codée en dur',en:'All 15 library Text Styles (standard typography + new documentation mono typography) are now fully bound to Figma Variables — no more hardcoded typography values'},
         ]},
         { fr:'Plan de continuité sans agents IA', en:'Continuity plan without AI agents', items:[
-          {fr:'Guide <code>How-to-sans-agents.md</code> et 8 scripts <code>scripts/continuity/</code> : marche à suivre humaine si l\'accès aux agents IA devient indisponible, pour l\'équipe système de design et les équipes produits consommatrices',en:'<code>How-to-sans-agents.md</code> guide and 8 <code>scripts/continuity/</code> scripts: human fallback procedure if AI agent access becomes unavailable, for both the design system team and consuming product teams'},
+          {fr:'Guide <code>How-to-without-agents.md</code> et 8 scripts <code>scripts/continuity/</code> : marche à suivre humaine si l\'accès aux agents IA devient indisponible, pour l\'équipe système de design et les équipes produits consommatrices',en:'<code>How-to-without-agents.md</code> guide and 8 <code>scripts/continuity/</code> scripts: human fallback procedure if AI agent access becomes unavailable, for both the design system team and consuming product teams'},
           {fr:'Nouvelle page <code>continuite.html</code> publiée sur le site (Mode Produit), synthétisant le plan par équipe',en:'New <code>continuite.html</code> page published on the site (Product Mode), summarizing the plan by team'},
         ]},
         { fr:'Site', en:'Site', items:[

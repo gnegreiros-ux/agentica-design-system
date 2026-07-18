@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Dynamic token resolution in the build — Agentica</title>
+<title>Retroactive English filenames for translated documents (amends ADR-070) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Dynamic token resolution in the build — Agentica">
+<meta property="og:title" content="Retroactive English filenames for translated documents (amends ADR-070) — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Dynamic token resolution in the build — Agentica">
+<meta name="twitter:title" content="Retroactive English filenames for translated documents (amends ADR-070) — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,148 +114,46 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-019</code>
+    <code class="adr-number">ADR-075</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    
   </div>
-  <h1 class="adr-page-title">Dynamic token resolution in the build</h1>
+  <h1 class="adr-page-title">Retroactive English filenames for translated documents (amends ADR-070)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-29</dd>
+      <dd>2026-07-18</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>ADR-018 had documented two remaining technical debts:</p>
-<p>1. <code>site/build.js</code> hardcoded every semantic value in a static <code>SEM</code> object 2. Non-color tokens in <code>semantic.json</code> (<code>{space.4}</code>, <code>{fontSize.md}</code>, etc.)    referenced primitives that didn't exist in <code>primitives.json</code></p>
-<p>Both debts needed to be addressed together: one made the other inevitable.</p>
-<h3>The debt in <code>build.js</code></h3>
-<pre class="code-block"><code class="lang-js">// Before — 37 hardcoded lines, a possible source of drift
-const SEM = {
-  'color-action-primary': '#0d74ce',
-  'space-control-padding-x': '16px',
-  // ...
-};</code></pre>
-<p>If a value changed in <code>primitives.json</code> or <code>semantic.json</code>, it didn't automatically propagate to the generated CSS — a human had to manually update <code>build.js</code>.</p>
-<h3>Unresolved non-color references</h3>
-<p><code>semantic.json</code> used <code>{space.4}</code>, <code>{radius.sm}</code>, <code>{fontSize.md}</code>, etc. None of these references existed in <code>primitives.json</code> (which contained only colors). <code>build.js</code> silently worked around this problem with hardcoded values.</p>
-<hr>
+</div><h2>Context</h2>
+<p>ADR-070 fully translated <code>How-to-sans-agents.md</code>, <code>docs/agentica-notre-demarche.md</code>, <code>Brand/Agentica-synthèse.md</code>, and the 8 <code>scripts/continuity/*.sh</code> fallback scripts from French to English, but explicitly kept every file <strong>name</strong> unchanged — a deliberate choice, reasoned in ADR-070 as avoiding broken cross-references throughout the repository.</p>
+<p>During a follow-up English-only validation pass (2026-07-18), the Design System Lead flagged this as an inconsistency: an external, non-French-speaking contributor browsing the repository tree sees French words in filenames (<code>sans-agents</code>, <code>notre-demarche</code>, <code>synthèse</code>, <code>outils-existants</code>, <code>installation-produit</code>, etc.) even though the file contents are already fully English — undermining the international legibility goal ADR-070 and ADR-071 were written to serve, at the exact surface (GitHub's file tree) ADR-070's own rationale for translating root docs first was built on ("an external contributor reads the repo tree before reaching the site").</p>
 <h2>Decision</h2>
-<h3>1. Add non-color primitives to <code>primitives.json</code></h3>
-<p>Five new categories added under <code>primitive</code> (at the same level as <code>color</code>):</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Category</th><th>Steps</th><th>Values</th></tr></thead><tbody><tr><td><code>space</code></td><td>2, 4, 5, 8</td><td>8px, 16px, 20px, 32px</td></tr><tr><td><code>fontSize</code></td><td>sm, md, xl</td><td>14px, 16px, 24px</td></tr><tr><td><code>fontWeight</code></td><td>regular, medium, bold</td><td>400, 500, 700</td></tr><tr><td><code>lineHeight</code></td><td>tight, normal</td><td>1.25, 1.5</td></tr><tr><td><code>radius</code></td><td>sm, md</td><td>6px, 10px</td></tr></tbody></table></div>
-<h3>2. Update references in <code>semantic.json</code></h3>
-<p>All non-color references migrate to <code>{primitive.X.Y}</code>:</p>
-<pre class="code-block"><code class="lang-json">"padding-x": { "value": "{primitive.space.4}" }
-"control":   { "value": "{primitive.radius.sm}" }
-"size":      { "value": "{primitive.fontSize.md}" }</code></pre>
-<p>All 35 semantic tokens (19 color + 16 non-color) now reference paths that resolve within <code>primitives.json</code>.</p>
-<h3>3. Dynamic resolver in <code>build.js</code></h3>
-<p>The hardcoded <code>SEM</code> object (37 lines) is replaced by three functions:</p>
-<pre class="code-block"><code class="lang-js">// Walks the token tree by dotted path
-function resolveRef(ref, data) {
-  return ref.split('.').reduce((node, key) =&gt; node?.[key], data);
-}
-
-// Resolves a {primitive.X.Y} value → final CSS value
-function resolveValue(val, data) { ... }
-
-// Flattens nested tokens into 'category-sub-name' CSS keys
-function flattenTokens(obj, data, prefix = '') { ... }
-
-const SEM = flattenTokens(semanticData.semantic, primitives);</code></pre>
-<p>Resolution happens at build time — any modification in <code>primitives.json</code> or <code>semantic.json</code> automatically propagates to <code>site/dist/tokens.css</code>.</p>
-<h3>4. Fix to <code>extractColorScales</code></h3>
-<p>Added an <code>if (step === '_readme') continue</code> guard in the inner loop, to protect against documentation entries in color scales.</p>
-<hr>
-<h2>Output invariant — zero visual change</h2>
-<p>The 35 resolved values after migration are <strong>strictly identical</strong> to those of the hardcoded <code>SEM</code> object they replace. Verifiable by diff:</p>
-<pre class="code-block"><code class="lang-text">--agtc-semantic-color-action-primary: #0d74ce    ← unchanged
---agtc-semantic-space-control-padding-x: 16px    ← unchanged
---agtc-semantic-typography-body-line-height: 1.5 ← unchanged</code></pre>
-<hr>
+<p>The 11 files below are renamed to English, and every cross-reference to them across the repository (root docs, ADRs, scripts, <code>site/build.js</code>) is updated to match. This amends ADR-070's "file paths are not renamed" clause for these specific files — it does not reopen translation of file names in general (see Rejected alternatives).</p>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Old name</th><th>New name</th></tr></thead><tbody><tr><td><code>How-to-sans-agents.md</code></td><td><code>How-to-without-agents.md</code></td></tr><tr><td><code>docs/agentica-notre-demarche.md</code></td><td><code>docs/agentica-our-approach.md</code></td></tr><tr><td><code>Brand/Agentica-synthèse.md</code></td><td><code>Brand/Agentica-synthesis.md</code></td></tr><tr><td><code>scripts/continuity/1-1-outils-existants.sh</code></td><td><code>scripts/continuity/1-1-existing-tools.sh</code></td></tr><tr><td><code>scripts/continuity/1-2-quality-gate-manuel.sh</code></td><td><code>scripts/continuity/1-2-manual-quality-gate.sh</code></td></tr><tr><td><code>scripts/continuity/1-3-figma-checklist.sh</code></td><td>*(unchanged — already English)*</td></tr><tr><td><code>scripts/continuity/1-4-adr-log-rappel.sh</code></td><td><code>scripts/continuity/1-4-adr-log-reminder.sh</code></td></tr><tr><td><code>scripts/continuity/2-1-installation-produit.sh</code></td><td><code>scripts/continuity/2-1-product-installation.sh</code></td></tr><tr><td><code>scripts/continuity/2-2-checklist-produit.sh</code></td><td><code>scripts/continuity/2-2-product-checklist.sh</code></td></tr><tr><td><code>scripts/continuity/2-3-anti-contournement.sh</code></td><td><code>scripts/continuity/2-3-anti-bypass.sh</code></td></tr><tr><td><code>scripts/continuity/2-4-contact-escalade.sh</code></td><td><code>scripts/continuity/2-4-escalation-contact.sh</code></td></tr></tbody></table></div>
+<p>Renamed via <code>git mv</code> (preserves history/blame). The <code>scripts/continuity/*.sh</code> file *contents* (comments, <code>echo</code>/prompt strings) were also translated to English in the same pass — they were the one area ADR-070's 6 chantiers never covered, since <code>scripts/</code> was not one of the six listed scopes.</p>
+<p>ADR-001 through ADR-074's own filenames (<code>ADR-0NN-slug-in-french.md</code>) are <strong>not</strong> in scope here — see Rejected alternatives.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Use Style Dictionary</strong></td><td>An external dependency for a build that doesn't need one. Style Dictionary adds non-trivial configuration and an abstraction for a resolver that's ~20 lines of code. A choice consistent with the project's philosophy: no dependency without justification.</td></tr><tr><td><strong>Keep the hardcoded SEM + add primitives</strong></td><td>Fixes the debt in <code>semantic.json</code> but leaves <code>build.js</code> desynchronized. A token change would still require two manual modifications.</td></tr><tr><td><strong>Multi-level recursive resolver (tokens referencing tokens)</strong></td><td>Not necessary: in this system, semantic tokens only ever reference primitives, never other semantics. The single-level resolver is sufficient and simpler to audit.</td></tr></tbody></table></div>
-<hr>
+<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Also rename <code>decisions/ADR-*.md</code> filenames to English slugs</td><td>Far larger blast radius (70+ files, every ADR cross-references others by filename, external links/citations may point at existing paths); ADR-071 already made the historical-log content bilingual without touching filenames — renaming 74 historical filenames is a separate, much costlier decision the Lead did not ask for in this pass.</td></tr><tr><td>Leave all 11 filenames as-is, per ADR-070's original reasoning</td><td>Was the status quo; superseded because it left French words visible on the one surface (GitHub's repository tree) that ADR-070 itself identified as a new contributor's first impression.</td></tr><tr><td>Redirect/symlink old paths instead of updating every reference</td><td>Adds a permanent maintenance shim for a one-time, fully-traceable rename that <code>git mv</code> + grep-and-replace already handles cleanly; no external consumer is known to link these paths directly (unlike npm package names in ADR-072/073).</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<p><strong>For the build pipeline:</strong></p>
-<ul><li>Any modification in <code>tokens/primitives.json</code> or <code>tokens/semantic.json</code></li></ul>
-<p>  automatically propagates to <code>site/dist/tokens.css</code> on the next build</p>
-<ul><li>No more silent desynchronization possible between tokens and generated CSS</li></ul>
 <p><strong>For AI agents:</strong></p>
-<ul><li>The full resolution chain is now traceable:</li></ul>
-<p>  <code>semantic.json</code> → <code>{primitive.X.Y}</code> → <code>primitives.json</code> → CSS value</p>
-<ul><li>No "magic" value remains in <code>build.js</code></li></ul>
-<p><strong>Technical debt cleared:</strong></p>
-<ul><li>Every reference in <code>semantic.json</code> now resolves</li><li><code>build.js</code> no longer contains hardcoded values for tokens</li><li>Both debts documented in ADR-018 are closed</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
-<p>ADR-018 avait documenté deux dettes techniques restantes :</p>
-<p>1. <code>site/build.js</code> hardcodait toutes les valeurs sémantiques dans un objet <code>SEM</code> statique 2. Les tokens non-couleur de <code>semantic.json</code> (<code>{space.4}</code>, <code>{fontSize.md}</code>, etc.)    référençaient des primitives inexistantes dans <code>primitives.json</code></p>
-<p>Ces deux dettes s'adressaient ensemble : l'une rendait l'autre inévitable.</p>
-<h3>La dette dans <code>build.js</code></h3>
-<pre class="code-block"><code class="lang-js">// Avant — 37 lignes hardcodées, source de dérive possible
-const SEM = {
-  'color-action-primary': '#0d74ce',
-  'space-control-padding-x': '16px',
-  // ...
-};</code></pre>
-<p>Si une valeur changeait dans <code>primitives.json</code> ou <code>semantic.json</code>, elle ne se propageait pas automatiquement dans le CSS généré — un humain devait mettre à jour <code>build.js</code> manuellement.</p>
-<h3>Les références non-couleur non résolues</h3>
-<p><code>semantic.json</code> utilisait <code>{space.4}</code>, <code>{radius.sm}</code>, <code>{fontSize.md}</code>, etc. Aucune de ces références n'existait dans <code>primitives.json</code> (qui ne contenait que des couleurs). <code>build.js</code> contournait silencieusement ce problème avec les valeurs hardcodées.</p>
-<hr>
-<h2>Décision</h2>
-<h3>1. Ajout des primitives non-couleur dans <code>primitives.json</code></h3>
-<p>Cinq nouvelles catégories ajoutées sous <code>primitive</code> (au même niveau que <code>color</code>) :</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Catégorie</th><th>Steps</th><th>Valeurs</th></tr></thead><tbody><tr><td><code>space</code></td><td>2, 4, 5, 8</td><td>8px, 16px, 20px, 32px</td></tr><tr><td><code>fontSize</code></td><td>sm, md, xl</td><td>14px, 16px, 24px</td></tr><tr><td><code>fontWeight</code></td><td>regular, medium, bold</td><td>400, 500, 700</td></tr><tr><td><code>lineHeight</code></td><td>tight, normal</td><td>1.25, 1.5</td></tr><tr><td><code>radius</code></td><td>sm, md</td><td>6px, 10px</td></tr></tbody></table></div>
-<h3>2. Mise à jour des références dans <code>semantic.json</code></h3>
-<p>Toutes les références non-couleur migrent vers <code>{primitive.X.Y}</code> :</p>
-<pre class="code-block"><code class="lang-json">"padding-x": { "value": "{primitive.space.4}" }
-"control":   { "value": "{primitive.radius.sm}" }
-"size":      { "value": "{primitive.fontSize.md}" }</code></pre>
-<p>L'ensemble des 35 tokens sémantiques (19 couleurs + 16 non-couleur) référencent maintenant des chemins résolvables dans <code>primitives.json</code>.</p>
-<h3>3. Résolveur dynamique dans <code>build.js</code></h3>
-<p>L'objet <code>SEM</code> hardcodé (37 lignes) est remplacé par trois fonctions :</p>
-<pre class="code-block"><code class="lang-js">// Parcourt l'arbre de tokens par chemin pointé
-function resolveRef(ref, data) {
-  return ref.split('.').reduce((node, key) =&gt; node?.[key], data);
-}
-
-// Résout une valeur {primitive.X.Y} → valeur CSS finale
-function resolveValue(val, data) { ... }
-
-// Aplatit les tokens imbriqués en clés CSS 'category-sub-name'
-function flattenTokens(obj, data, prefix = '') { ... }
-
-const SEM = flattenTokens(semanticData.semantic, primitives);</code></pre>
-<p>La résolution est faite au moment du build — toute modification dans <code>primitives.json</code> ou <code>semantic.json</code> se propage automatiquement dans <code>site/dist/tokens.css</code>.</p>
-<h3>4. Correction de <code>extractColorScales</code></h3>
-<p>Ajout d'un guard <code>if (step === '_readme') continue</code> dans la boucle interne, pour protéger contre les entrées de documentation dans les scales de couleur.</p>
-<hr>
-<h2>Invariant de sortie — zéro changement visuel</h2>
-<p>Les 35 valeurs résolues après migration sont <strong>strictement identiques</strong> à celles de l'objet <code>SEM</code> hardcodé qu'elles remplacent. Vérifiable par diff :</p>
-<pre class="code-block"><code class="lang-text">--agtc-semantic-color-action-primary: #0d74ce    ← inchangé
---agtc-semantic-space-control-padding-x: 16px    ← inchangé
---agtc-semantic-typography-body-line-height: 1.5 ← inchangé</code></pre>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Utiliser Style Dictionary</strong></td><td>Dépendance externe pour un build qui n'en a pas. Style Dictionary ajoute une configuration non triviale et une abstraction pour un résolveur qui s'écrit en ~20 lignes. Choix cohérent avec la philosophie du projet : pas de dépendance sans justification.</td></tr><tr><td><strong>Garder le SEM hardcodé + ajouter des primitives</strong></td><td>Résout la dette dans <code>semantic.json</code> mais laisse <code>build.js</code> désynchronisé. Un changement de token nécessiterait toujours deux modifications manuelles.</td></tr><tr><td><strong>Résolveur récursif multi-niveaux (tokens référençant des tokens)</strong></td><td>Non nécessaire : dans ce système, les tokens sémantiques référencent uniquement des primitives, jamais d'autres sémantiques. Le résolveur single-level est suffisant et plus simple à auditer.</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<p><strong>Pour le pipeline de build :</strong></p>
-<ul><li>Toute modification dans <code>tokens/primitives.json</code> ou <code>tokens/semantic.json</code></li></ul>
-<p>  se propage automatiquement dans <code>site/dist/tokens.css</code> au prochain build</p>
-<ul><li>Plus de désynchronisation silencieuse possible entre tokens et CSS généré</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>La chaîne de résolution complète est maintenant traçable :</li></ul>
-<p>  <code>semantic.json</code> → <code>{primitive.X.Y}</code> → <code>primitives.json</code> → valeur CSS</p>
-<ul><li>Aucune valeur "magique" ne subsiste dans <code>build.js</code></li></ul>
-<p><strong>Dette technique soldée :</strong></p>
-<ul><li>Toutes les références dans <code>semantic.json</code> se résolvent désormais</li><li><code>build.js</code> ne contient plus de valeurs hardcodées pour les tokens</li><li>Les deux dettes documentées dans ADR-018 sont closes</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-018.html" class="agtc-button secondary">← ADR-018</a>
-    <a href="adr-020.html" class="agtc-button secondary">ADR-020 →</a>
+<ul><li>Reference <code>How-to-without-agents.md</code>, <code>docs/agentica-our-approach.md</code>,</li></ul>
+<p>  <code>Brand/Agentica-synthesis.md</code>, and the renamed <code>scripts/continuity/*.sh</code> paths going   forward — the old French paths no longer exist on disk.</p>
+<ul><li><code>site/build.js</code>'s continuity page (script links, <code>HOWTO</code> constant) and <code>AGENTS.md</code> /</li></ul>
+<p>  <code>How-to-designers.md</code> / <code>How-to-devs.md</code> / <code>DESIGN.md</code> relations lines were updated in   the same pass — no dangling reference should remain (verified by repository-wide grep   for the old names).</p>
+<ul><li>This does not change ADR-070's "no filename renames" default for future translation</li></ul>
+<p>  work in general — it is a one-time correction for files whose content was already   fully translated but whose names were missed.</p>
+<p><strong>For humans:</strong></p>
+<ul><li><code>git log --follow</code> on any of the 11 files still surfaces the pre-rename history.</li><li>The public site is unaffected in substance: <code>site/build.js</code> already links to these</li></ul>
+<p>  paths via generated <code>&lt;a href&gt;</code> tags, which were updated to the new filenames as part   of this change; no URL structure on <code>agentica.design</code> itself changes.</p>
+<h2>Incidents or triggers</h2>
+<p>Explicit user request from Guilherme Negreiros, 2026-07-18, during a follow-up English validation pass following ADR-070/071: flagged French filenames (e.g. <code>How-to-sans-agents.md</code>) as a residual inconsistency and asked for a "round of validation that everything is in English" excluding the site's intentional French version. Given three options (rename everything and fix references, leave filenames as-is per ADR-070, or rename only the files with zero cross-references), the Lead chose the full rename.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-074.html" class="agtc-button secondary">← ADR-074</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
