@@ -234,6 +234,78 @@ import '@agentica-ds/components/agtc-button.js';</code></pre>
   </span>
 </agtc-banner>
 
+<h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
+<p>
+  <span class="lang-fr">Les composants sont des Web Components natifs — aucun wrapper requis dans la plupart des cas. Chaque framework a néanmoins sa propre configuration pour reconnaître un élément personnalisé inconnu de son compilateur de template.</span>
+  <span class="lang-en">Components are native Web Components — no wrapper required in most cases. Each framework still has its own configuration to recognize a custom element its template compiler doesn't know about.</span>
+</p>
+<div class="table-wrap" tabindex="0"><table>
+  <thead><tr>
+    <th><span class="lang-fr">Framework</span><span class="lang-en">Framework</span></th>
+    <th><span class="lang-fr">Configuration requise</span><span class="lang-en">Required configuration</span></th>
+    <th><span class="lang-fr">Notes</span><span class="lang-en">Notes</span></th>
+  </tr></thead>
+  <tbody><tr><td><code>Angular</code></td><td><code>schemas: [CUSTOM_ELEMENTS_SCHEMA]</code></td><td><span class="lang-fr">Thème Material M3 fourni (clone-only, voir tableau ci-dessous)</span><span class="lang-en">Material M3 theme provided (clone-only, see table below)</span></td></tr><tr><td><code>Vue</code></td><td><code>isCustomElement dans la config du compilateur</code></td><td><span class="lang-fr">Binding de props/events natif ensuite</span><span class="lang-en">Native prop/event binding after that</span></td></tr><tr><td><code>React 19+</code></td><td><code>Aucune — support natif des Web Components</code></td><td><span class="lang-fr">Aucun wrapper requis</span><span class="lang-en">No wrapper required</span></td></tr><tr><td><code>React &lt;19</code></td><td><code>Wrapper léger recommandé pour les propriétés complexes</code></td><td><span class="lang-fr">Les attributs simples (string/boolean) fonctionnent nativement</span><span class="lang-en">Simple (string/boolean) attributes work natively</span></td></tr><tr><td><code>Vanilla / autre</code></td><td><code>Aucune</code></td><td><span class="lang-fr">Import direct, comportement natif</span><span class="lang-en">Direct import, native behavior</span></td></tr></tbody>
+</table></div>
+
+<h3><span class="lang-fr">Angular</span><span class="lang-en">Angular</span></h3>
+<p>
+  <span class="lang-fr">Ajoutez <code>CUSTOM_ELEMENTS_SCHEMA</code> au module (ou aux <code>schemas</code> d'un composant standalone). Le binding de propriétés et d'événements est ensuite natif.</span>
+  <span class="lang-en">Add <code>CUSTOM_ELEMENTS_SCHEMA</code> to the module (or to a standalone component's <code>schemas</code>). Property and event binding is then native.</span>
+</p>
+<pre class="code-block"><code class="lang-js">// app.module.ts (NgModule) — or on a standalone component
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}</code></pre>
+<p>
+  <span class="lang-fr">Le pipeline Style Dictionary génère aussi un thème Material Angular M3 à partir des mêmes tokens — clone-only, pas publié sur npm (voir le tableau des plateformes de sortie plus bas).</span>
+  <span class="lang-en">The Style Dictionary pipeline also generates a Material Angular M3 theme from the same tokens — clone-only, not published to npm (see the output-platforms table below).</span>
+</p>
+<pre class="code-block"><code class="lang-css">// theme.scss — Material M3 theme generated from the same tokens
+// (clone-only — dist/tokens/angular/, not published to npm)
+@use "dist/tokens/angular/m3-theme" as *;
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme((
+  color: (primary: $agtc-primary-palette, theme-type: light),
+));</code></pre>
+
+<h3><span class="lang-fr">Vue</span><span class="lang-en">Vue</span></h3>
+<p>
+  <span class="lang-fr">Déclarez le préfixe <code>agtc-</code> comme élément personnalisé dans la config du compilateur, pour que Vue ne tente pas de le résoudre comme un composant Vue.</span>
+  <span class="lang-en">Declare the <code>agtc-</code> prefix as a custom element in the compiler config, so Vue doesn't try to resolve it as a Vue component.</span>
+</p>
+<pre class="code-block"><code class="lang-js">// vite.config.js
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) =&gt; tag.startsWith('agtc-'),
+        },
+      },
+    }),
+  ],
+};</code></pre>
+
+<h3><span class="lang-fr">React</span><span class="lang-en">React</span></h3>
+<p>
+  <span class="lang-fr">React 19+ supporte nativement les Web Components. Pour une version antérieure, les attributs simples fonctionnent déjà nativement — seules les propriétés complexes (objets, tableaux) nécessitent une assignation via <code>ref</code>.</span>
+  <span class="lang-en">React 19+ natively supports Web Components. On an earlier version, simple attributes already work natively — only complex properties (objects, arrays) need a <code>ref</code>-based assignment.</span>
+</p>
+<pre class="code-block"><code class="lang-jsx">// React 19+ — native, no wrapper needed
+&lt;agtc-button variant="primary"&gt;Save&lt;/agtc-button&gt;
+
+// React &lt; 19 — simple (string/boolean) attributes work natively;
+// complex properties (objects, arrays) need a ref + property assignment
+const tableRef = useRef(null);
+useEffect(() =&gt; {
+  if (tableRef.current) tableRef.current.columns = myColumns;
+}, [myColumns]);
+
+&lt;agtc-table ref={tableRef}&gt;&lt;/agtc-table&gt;</code></pre>
+
 <agtc-banner variant="brand" icon="shield-check">
   <strong><span class="lang-fr">La règle d'or</span><span class="lang-en">The golden rule</span></strong>
   <span>
