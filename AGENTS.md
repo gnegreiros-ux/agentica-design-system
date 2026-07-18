@@ -6,7 +6,7 @@
 > **Logical path:** AGENTS.md
 > **Author:** Guilherme Negreiros
 > **Read before:** DESIGN.md
-> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-sans-agents.md (fallback if agents are unavailable)
+> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
 

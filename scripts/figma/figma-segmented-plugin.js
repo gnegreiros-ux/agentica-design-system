@@ -1,5 +1,5 @@
 // Agentica Builder — Segmented (Phase 3 fin)
-// Colle ce fichier dans code.js de ton plugin local Figma
+// Paste this file into code.js of your local Figma plugin
 
 (async function () {
 
@@ -114,7 +114,7 @@
     return s;
   }
 
-  // mkLinksRow : pills de liens avec tokens
+  // mkLinksRow: link pills with tokens
   function mkLinksRow(links) {
     var row = figma.createFrame();
     row.name = "links-row";
@@ -398,7 +398,7 @@
   stHead.fills = vFill("color/background/subtle", "#f0f0f0");
   stHead.itemSpacing = 0;
 
-  [{ w: 160, label: "État" }, { w: 1120, label: "Description" }].forEach(function (col) {
+  [{ w: 160, label: "State" }, { w: 1120, label: "Description" }].forEach(function (col) {
     var cell = figma.createFrame();
     cell.layoutMode = "HORIZONTAL";
     cell.resize(col.w, 40);

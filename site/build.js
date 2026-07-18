@@ -5764,7 +5764,7 @@ function buildCard() {
   &lt;p&gt;<span class="lang-fr">Contenu de la carte.</span><span class="lang-en">Card content.</span>&lt;/p&gt;
 &lt;/agtc-card&gt;
 
-&lt;!-- Elevated avec header et footer --&gt;
+&lt;!-- Elevated with header and footer --&gt;
 &lt;agtc-card variant="elevated" padding="lg"&gt;
   &lt;span slot="header"&gt;<span class="lang-fr">Titre</span><span class="lang-en">Title</span>&lt;/span&gt;
   &lt;p&gt;<span class="lang-fr">Contenu principal.</span><span class="lang-en">Main content.</span>&lt;/p&gt;
@@ -7286,7 +7286,7 @@ ${p.steps.map(s => `  <div class="pipeline-step">
 <div class="table-wrap" tabindex="0"><table>
   <thead><tr><th><span class="lang-fr">Fichier modifié</span><span class="lang-en">Changed file</span></th><th><span class="lang-fr">Action</span><span class="lang-en">Action</span></th></tr></thead>
   <tbody>
-${p.trigger_table_fr.map((row, i) => `    <tr><td><code>${esc(row[0])}</code></td><td><span class="lang-fr">${esc(row[1])}</span><span class="lang-en">${esc(p.trigger_table_en[i][1])}</span></td></tr>`).join('\n')}
+${p.trigger_table_fr.map((row, i) => `    <tr><td><code><span class="lang-fr">${esc(row[0])}</span><span class="lang-en">${esc(p.trigger_table_en[i][0])}</span></code></td><td><span class="lang-fr">${esc(row[1])}</span><span class="lang-en">${esc(p.trigger_table_en[i][1])}</span></td></tr>`).join('\n')}
   </tbody>
 </table></div>` : '';
 
@@ -8027,7 +8027,7 @@ function buildAudit() {
         <span class="audit-date-main lang-fr">${dateStr}</span>
         <span class="audit-date-main lang-en">${dateStrEn}</span>
         <span class="audit-date-detail lang-fr">heure de Montréal</span>
-        <span class="audit-date-detail lang-en">Montréal time</span>
+        <span class="audit-date-detail lang-en">Montreal time</span>
       </span>
     </p>
   </div>

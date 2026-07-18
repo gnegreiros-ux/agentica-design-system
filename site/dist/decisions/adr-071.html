@@ -156,14 +156,14 @@
 <ul><li>ADR-001 through ADR-070 are being retroactively fully translated as a separate, batched</li></ul>
 <p>  effort. Until an individual ADR's turn comes up in that batch, it still carries only   chantier 5's lightweight EN summary — that is expected transitional state, not a defect.</p>
 <ul><li><code>site/build.js</code>'s <code>loadADRs()</code>/<code>buildADR()</code> need updating to parse a per-ADR EN/FR split</li></ul>
-<p>  and wrap each language in the existing <code>.lang-en</code>/<code>.lang-fr</code> toggle classes, and   <code>loadADRs()</code>'s metadata regexes (currently matching the French field label   the French "Décideurs" label) need to also match the English equivalent for ADRs that no longer   carry a French section.</p>
+<p>  and wrap each language in the existing <code>.lang-en</code>/<code>.lang-fr</code> toggle classes, and   <code>loadADRs()</code>'s metadata regexes (currently matching the French field label   the French "Décideurs" label) need to also match the English equivalent for ADRs that no longer <!-- lang-audit-ignore: quoting a literal field-label string -->   carry a French section.</p>
 <ul><li><code>decisions/README.md</code>'s "Translation strategy for this folder" section is rewritten to</li></ul>
 <p>  reflect this decision, superseding the chantier-5 rationale it currently documents.</p>
 <p><strong>For humans:</strong></p>
 <ul><li>Any new ADR is written directly in English — no French draft, no translation pass.</li><li>Historical ADRs remain available in French for readers who need it, but French is no</li></ul>
 <p>  longer the primary or canonical language of the project going forward.</p>
 <h2>Incidents or triggers</h2>
-<p>Explicit direction from Guilherme Negreiros (Design System Lead), 2026-07-14, immediately following the completion of ADR-070's 6 translation chantiers: *"Mon intention c'est qu'Agentica puisse être adoptée par des équipes du monde entier, pas seulement les francophones. À partir de maintenant tout doit être fait en anglais [...] Seulement les ADR déjà créés auront les deux langues, les prochains seront seulement en anglais."*</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p><!-- lang-audit-ignore: verbatim quote from the human decision-maker, preserved as historical record --> Explicit direction from Guilherme Negreiros (Design System Lead), 2026-07-14, immediately following the completion of ADR-070's 6 translation chantiers: *"Mon intention c'est qu'Agentica puisse être adoptée par des équipes du monde entier, pas seulement les <!-- lang-audit-ignore --> francophones. À partir de maintenant tout doit être fait en anglais [...] Seulement les <!-- lang-audit-ignore --> ADR déjà créés auront les deux langues, les prochains seront seulement en anglais."* <!-- lang-audit-ignore --></p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-070.html" class="agtc-button secondary">← ADR-070</a>
     <a href="adr-072.html" class="agtc-button secondary">ADR-072 →</a>
   </div></main>

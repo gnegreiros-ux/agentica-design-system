@@ -1,15 +1,15 @@
-name: axe-core — Audit complet (manuel)
+name: axe-core — Full audit (manual)
 
-# DÉPRÉCIÉ pour le CI automatique — l'audit axe-core est désormais intégré dans
+# DEPRECATED for automatic CI — the axe-core audit is now integrated into
 # playwright.yml via tests/functional/accessibility.spec.js (ADR-066).
 #
-# Ce workflow reste disponible pour les sessions de burn-down manuelles :
-#   - Audit exhaustif de TOUTES les pages (pas seulement les pages critiques)
-#   - 3 contextes : desktop-light, mobile-light, desktop-dark
-#   - Rapport JSON complet dans axe-report.json
+# This workflow remains available for manual burn-down sessions:
+#   - Exhaustive audit of ALL pages (not just critical pages)
+#   - 3 contexts: desktop-light, mobile-light, desktop-dark
+#   - Full JSON report in axe-report.json
 #
-# Pour l'audit de base (pages critiques × 2 thèmes → rapport HTML Playwright),
-# voir playwright.yml qui s'exécute à chaque push sur main.
+# For the baseline audit (critical pages × 2 themes → Playwright HTML report),
+# see playwright.yml, which runs on every push to main.
 
 on:
   workflow_dispatch:
@@ -29,8 +29,8 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # npm install (et non npm ci) : aligné sur le workflow Chromatic — le lockfile
-        # racine est multi-plateforme et npm install réconcilie les binaires Linux.
+        # npm install (not npm ci): aligned with the Chromatic workflow — the root
+        # lockfile is cross-platform and npm install reconciles the Linux binaries.
         run: npm install --no-audit --no-fund
 
       - name: Install Playwright Chromium
@@ -39,7 +39,7 @@ jobs:
       - name: Build site
         run: node site/build.js
 
-      - name: Audit axe-core (mode rapport)
+      - name: Audit axe-core (report mode)
         env:
           AXE_BLOCKING: 'false'
         run: npm run axe

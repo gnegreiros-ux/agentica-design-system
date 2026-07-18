@@ -96,7 +96,7 @@ existing content.
 - `site/build.js`'s `loadADRs()`/`buildADR()` need updating to parse a per-ADR EN/FR split
   and wrap each language in the existing `.lang-en`/`.lang-fr` toggle classes, and
   `loadADRs()`'s metadata regexes (currently matching the French field label
-  the French "Décideurs" label) need to also match the English equivalent for ADRs that no longer
+  the French "Décideurs" label) need to also match the English equivalent for ADRs that no longer <!-- lang-audit-ignore: quoting a literal field-label string -->
   carry a French section.
 - `decisions/README.md`'s "Translation strategy for this folder" section is rewritten to
   reflect this decision, superseding the chantier-5 rationale it currently documents.
@@ -108,8 +108,9 @@ existing content.
 
 ## Incidents or triggers
 
+<!-- lang-audit-ignore: verbatim quote from the human decision-maker, preserved as historical record -->
 Explicit direction from Guilherme Negreiros (Design System Lead), 2026-07-14, immediately
 following the completion of ADR-070's 6 translation chantiers: *"Mon intention c'est
-qu'Agentica puisse être adoptée par des équipes du monde entier, pas seulement les
-francophones. À partir de maintenant tout doit être fait en anglais [...] Seulement les
-ADR déjà créés auront les deux langues, les prochains seront seulement en anglais."*
+qu'Agentica puisse être adoptée par des équipes du monde entier, pas seulement les <!-- lang-audit-ignore -->
+francophones. À partir de maintenant tout doit être fait en anglais [...] Seulement les <!-- lang-audit-ignore -->
+ADR déjà créés auront les deux langues, les prochains seront seulement en anglais."* <!-- lang-audit-ignore -->

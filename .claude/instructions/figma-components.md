@@ -691,7 +691,7 @@ function mkLinksRow(links) {
     pill.paddingTop = 6; pill.paddingBottom = 6;
     pill.paddingLeft = 12; pill.paddingRight = 12;
     pill.cornerRadius = 100;
-    pill.fills = vFill("color/background/default", "#FFFFFF"); // 6.5:1 ✅ sur fond blanc
+    pill.fills = vFill("color/background/default", "#FFFFFF"); // 6.5:1 ✅ on white background
     pill.strokes = [figma.variables.setBoundVariableForPaint(
       {type:"SOLID", color:{r:0, g:0.420, b:0.361}}, // #006B5C
       "color", VARS["color/border/focus"]
@@ -703,7 +703,7 @@ function mkLinksRow(links) {
     txt.fontName = {family:"Atkinson Hyperlegible", style: ahStyle("Medium")};
     txt.fontSize = 12;
     txt.characters = `↗  ${link.label}`;
-    txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 sur blanc ✅
+    txt.fills = vFill("color/border/focus", "#006B5C"); // 6.5:1 on white ✅
     txt.hyperlink = {type:"URL", value:link.url};
     pill.appendChild(txt);
     row.appendChild(pill);

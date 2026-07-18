@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-# How-to-sans-agents.md §1.3 — checklist Figma manuelle, purement informationnel.
-# Usage : scripts/continuity/1-3-figma-checklist.sh
+# How-to-without-agents.md §1.3 — manual Figma checklist, purely informational.
+# Usage: scripts/continuity/1-3-figma-checklist.sh
 set -euo pipefail
 
 cat <<'EOF'
-=== Checklist Figma sans script Plugin API ===
-(dérivée de .claude/rules/figma-library-governance.md + .claude/instructions/figma-components.md)
+=== Figma checklist without the Plugin API script ===
+(derived from .claude/rules/figma-library-governance.md + .claude/instructions/figma-components.md)
 
-[ ] 1. Lire le composant code + stories AVANT de toucher Figma
-[ ] 2. Lier chaque fill/stroke/spacing à une Variable Figma existante
-       (panneau Inspect → Applied variables) — jamais de valeur en dur
-[ ] 3. Vérifier variantes ComponentSet = props du composant code, une par une
-       (audit par échantillonnage, prioriser les composants récemment modifiés)
-[ ] 4. Règle no-delete : déplacer vers une frame "_corbeille", jamais .remove()
-[ ] 5. Page de staging "🟡 Proposition — en attente d'approbation" avant publication
-[ ] 6. Rapport 10 points avant toute revue humaine (voir figma-library-governance.md §C)
-[ ] 7. Geler les chantiers Figma de grande ampleur ; se limiter aux corrections ciblées
+[ ] 1. Read the component code + stories BEFORE touching Figma
+[ ] 2. Bind every fill/stroke/spacing to an existing Figma Variable
+       (Inspect panel → Applied variables) — never a hardcoded value
+[ ] 3. Verify ComponentSet variants match the code component's props, one by one
+       (sample audit, prioritize recently modified components)
+[ ] 4. No-delete rule: move to a "_trash" frame, never .remove()
+[ ] 5. Staging page "🟡 Proposal — pending approval" before publishing
+[ ] 6. 10-point report before any human review (see figma-library-governance.md §C)
+[ ] 7. Freeze large-scale Figma initiatives; limit to targeted fixes
 
-Aucune automatisation possible ici (actions UI Figma) — cette checklist est à cocher
-manuellement avant de considérer une modification Figma comme terminée.
+No automation possible here (Figma UI actions) — this checklist must be checked off
+manually before a Figma change is considered complete.
 EOF

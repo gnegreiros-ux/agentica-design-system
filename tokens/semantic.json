@@ -212,12 +212,12 @@
         "info-text": {
           "$value": "{primitive.color.blue.12}",
           "$type": "color",
-          "$intent": "Texte information sur fond subtil clair (badge info, banner info)"
+          "$intent": "Information text on light subtle background (badge info, banner info)"
         },
         "warning-text": {
           "$value": "{primitive.color.orange.12}",
           "$type": "color",
-          "$intent": "Texte avertissement sur fond subtil clair (badge warning, banner warning)"
+          "$intent": "Warning text on light subtle background (badge warning, banner warning)"
         }
       },
       "background": {
@@ -286,7 +286,7 @@
         "overlay-dark": {
           "$value": "rgba(12, 15, 25, 0.78)",
           "$type": "color",
-          "$intent": "Fond glassmorphism sombre — carte translucide sur fond marketing (feature-card)",
+          "$intent": "Dark glassmorphism background — translucent card on marketing background (feature-card)",
           "$description": "Semi-transparent dark background for frosted-glass cards (pair with backdrop-filter:blur()). A literal value not aliased to a primitive, like overlay.scrim/dark/medium/subtle — no existing primitive covers this hue + opacity. Token debt fixed (Figma audit of 2026-07-07): replaces a hardcoded value in agtc-feature-card.js.",
           "$deprecated": false,
           "$extensions": {
@@ -398,12 +398,12 @@
         "on-action": {
           "$value": "{primitive.color.neutral.0}",
           "$type": "color",
-          "$intent": "Texte sur fond d'action (bouton primaire)"
+          "$intent": "Text on action background (primary button)"
         },
         "on-danger": {
           "$value": "{primitive.color.neutral.0}",
           "$type": "color",
-          "$intent": "Texte sur fond danger"
+          "$intent": "Text on danger background"
         },
         "on-dark": {
           "$value": "{primitive.color.white.1}",
@@ -433,7 +433,7 @@
         "on-code-strong": {
           "$value": "{primitive.color.gray.1}",
           "$type": "color",
-          "$intent": "Texte fort sur surface code — bouton copier (contraste maximal)"
+          "$intent": "Strong text on code surface — copy button (maximum contrast)"
         }
       },
       "border": {
@@ -558,7 +558,7 @@
         "primary-text": {
           "$value": "{primitive.color.teal.12}",
           "$type": "color",
-          "$intent": "Texte marque sur fond subtil clair (badge brand, label) — 12:1 sur fond blanc"
+          "$intent": "Brand text on light subtle background (badge brand, label) — 12:1 on white"
         },
         "primary-subtle": {
           "$value": "{primitive.color.teal.3}",
@@ -583,7 +583,7 @@
         "accent-text": {
           "$value": "{primitive.color.accent.11}",
           "$type": "color",
-          "$intent": "Texte accent sur fond clair — 7.1:1 WCAG AA+"
+          "$intent": "Accent text on light background — 7.1:1 WCAG AA+"
         },
         "secondary": {
           "$value": "{primitive.color.secondary.9}",
@@ -598,7 +598,7 @@
         "secondary-text": {
           "$value": "{primitive.color.secondary.12}",
           "$type": "color",
-          "$intent": "Texte secondaire sur fond clair — 13.8:1 WCAG AAA"
+          "$intent": "Secondary text on light background — 13.8:1 WCAG AAA"
         },
         "logo-black": {
           "$value": "{primitive.color.brand.black}",

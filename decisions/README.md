@@ -54,7 +54,7 @@ decisions that were already settled.
 
 > Note: this template applies to every ADR from ADR-071 onward (English-only, see
 > ADR-071). ADR-001 through ADR-070 predate it and still carry the original French
-> field/section labels (`Date :`, `Statut :`, `Décideurs :`, `Contexte`, `Décision`,
+> field/section labels (`Date :`, `Statut :`, `Décideurs :`, `Contexte`, `Décision`, <!-- lang-audit-ignore: quoting literal field-label strings -->
 > etc.) in their French section — see "Translation strategy" below.
 
 ---
@@ -137,6 +137,7 @@ decisions that were already settled.
 | [ADR-072](ADR-072-npm-package-architecture.md) | Package architecture for npm publication: `@agentica/tokens` + `@agentica/components` | 2026-07-15 | ✅ Active |
 | [ADR-073](ADR-073-npm-scope-correction.md) | npm scope correction: `@agentica` → `@agentica-ds` (amends ADR-072) | 2026-07-16 | ✅ Active |
 | [ADR-074](ADR-074-npm-publish-ci-workflow.md) | Automated npm publishing via `changesets/action` in CI | 2026-07-17 | ✅ Active |
+| [ADR-075](ADR-075-english-filenames-retroactive-rename.md) | Retroactive English filenames for translated documents (amends ADR-070) | 2026-07-18 | ✅ Active |
 
 ---
 

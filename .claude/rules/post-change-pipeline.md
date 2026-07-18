@@ -26,13 +26,14 @@ Active (blocking) pipelines:
 | # | Pipeline | File |
 |---|----------|------|
 | 1 | Token consistency | `pipelines/tokens-audit.md` |
-| 2 | WCAG 2.2 | `pipelines/wcag.md` |
-| 3 | UX pattern review | `pipelines/ux-patterns.md` |
-| 4 | Rule/ADR compliance | `pipelines/adr-conformity.md` |
-| 5 | Missing ADRs | `pipelines/adr-triggers.md` |
-| 6 | Documentation | `pipelines/docs.md` |
-| 7 | Site rebuild | `pipelines/site.md` |
-| 8 | Commit | `pipelines/commit.md` |
+| 2 | Language (English-only) | `pipelines/language-audit.md` |
+| 3 | WCAG 2.2 | `pipelines/wcag.md` |
+| 4 | UX pattern review | `pipelines/ux-patterns.md` |
+| 5 | Rule/ADR compliance | `pipelines/adr-conformity.md` |
+| 6 | Missing ADRs | `pipelines/adr-triggers.md` |
+| 7 | Documentation | `pipelines/docs.md` |
+| 8 | Site rebuild | `pipelines/site.md` |
+| 9 | Commit | `pipelines/commit.md` |
 
 Planned pipelines (non-blocking until activated):
 `style-dictionary.md` · `storybook.md` · `chromatic.md` · `axe-core.md` · `playwright.md`

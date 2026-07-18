@@ -13,7 +13,7 @@
 ## Applied reference UX patterns
 
 > Added on 2026-06-03 via the `ux-pattern-review` workflow (ADR-036). Decision: **N1–N9 all approved**.
-> Detail and links: `guidelines/components/banner.md` § PATTERNS UX DE RÉFÉRENCE.
+> Detail and links: `guidelines/components/banner.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|
@@ -136,7 +136,7 @@ To limit the number of tokens, each variant carries two tokens (`background`, `a
 ## Patterns UX de référence appliqués
 
 > Ajouté le 2026-06-03 via le workflow `ux-pattern-review` (ADR-036). Décision : **N1–N9 tous approuvés**.
-> Détail et liens : `guidelines/components/banner.md` § PATTERNS UX DE RÉFÉRENCE.
+> Détail et liens : `guidelines/components/banner.md` § UX Patterns Reference.
 
 | # | Pattern | Source |
 |---|---------|--------|

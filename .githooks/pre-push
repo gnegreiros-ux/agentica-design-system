@@ -1,15 +1,15 @@
 #!/bin/sh
-# Hook pre-push — rappel mise à jour snapshots Playwright (ADR-066)
+# Pre-push hook — Playwright snapshot update reminder (ADR-066)
 #
-# Détecte si des fichiers dans components/ ou tokens/ ont changé depuis
-# le dernier push et affiche un rappel si c'est le cas.
+# Detects whether files in components/ or tokens/ changed since
+# the last push and shows a reminder if so.
 #
-# Activer avec : git config core.hooksPath .githooks
+# Enable with: git config core.hooksPath .githooks
 
 REMOTE="$1"
 URL="$2"
 
-# Fichiers modifiés depuis le dernier commit poussé sur la branche courante
+# Files changed since the last commit pushed on the current branch
 CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null)
 
 COMPONENTS_CHANGED=$(echo "$CHANGED" | grep -E '^(components|tokens)/' | head -1)
@@ -17,22 +17,22 @@ COMPONENTS_CHANGED=$(echo "$CHANGED" | grep -E '^(components|tokens)/' | head -1
 if [ -n "$COMPONENTS_CHANGED" ]; then
   echo ""
   echo "╔══════════════════════════════════════════════════════════╗"
-  echo "║  ⚠️   Rappel — snapshots Playwright                      ║"
+  echo "║  ⚠️   Reminder — Playwright snapshots                    ║"
   echo "╠══════════════════════════════════════════════════════════╣"
-  echo "║  Des fichiers dans components/ ou tokens/ ont changé.   ║"
+  echo "║  Files in components/ or tokens/ have changed.           ║"
   echo "║                                                          ║"
-  echo "║  Si le changement est intentionnel, pensez à vérifier   ║"
-  echo "║  que les tests visuels Playwright restent valides :     ║"
+  echo "║  If the change is intentional, remember to verify        ║"
+  echo "║  that Playwright visual tests still pass:                ║"
   echo "║                                                          ║"
-  echo "║    node site/build.js                                   ║"
-  echo "║    npx playwright test --project=chromium               ║"
+  echo "║    node site/build.js                                    ║"
+  echo "║    npx playwright test --project=chromium                ║"
   echo "║                                                          ║"
-  echo "║  Si des snapshots doivent être mis à jour :             ║"
-  echo "║    npx playwright test --update-snapshots               ║"
-  echo "║    git add tests/visual/snapshots/                      ║"
-  echo "║    git commit -m 'test(visual): update snapshots'       ║"
+  echo "║  If snapshots need updating:                             ║"
+  echo "║    npx playwright test --update-snapshots                ║"
+  echo "║    git add tests/visual/snapshots/                       ║"
+  echo "║    git commit -m 'test(visual): update snapshots'        ║"
   echo "║                                                          ║"
-  echo "║  ADR-066 — dernier mot toujours humain.                 ║"
+  echo "║  ADR-066 — the last word is always human.                ║"
   echo "╚══════════════════════════════════════════════════════════╝"
   echo ""
 fi

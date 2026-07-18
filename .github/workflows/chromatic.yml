@@ -1,11 +1,11 @@
-name: Chromatic — Régression visuelle
+name: Chromatic — Visual regression
 
-# Tests de régression visuelle des composants (ADR-006).
-# Le token vit dans le secret GitHub CHROMATIC_PROJECT_TOKEN — jamais en clair dans le dépôt.
+# Component visual regression tests (ADR-006).
+# The token lives in the CHROMATIC_PROJECT_TOKEN GitHub secret — never in plaintext in the repo.
 
 on:
-  # Push désactivé — limite mensuelle de snapshots gratuits atteinte (2026-07-02).
-  # Relancer manuellement avant chaque release ou revue visuelle importante.
+  # Push disabled — free monthly snapshot limit reached (2026-07-02).
+  # Re-run manually before each release or major visual review.
   # push:
   #   branches: [main, develop]
   # pull_request:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # Chromatic compare avec la baseline — historique git complet requis
+          fetch-depth: 0 # Chromatic compares against the baseline — full git history required
 
       - uses: actions/setup-node@v5
         with:
@@ -35,19 +35,19 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # npm install (et non npm ci) : le lockfile racine porte la couverture
-        # multi-plateforme mais une arête transitive (@emnapi/core) sans nœud résolu
-        # fait échouer le mode strict de npm ci. npm install réconcilie et installe
-        # les binaires natifs Linux requis par le build Storybook.
+        # npm install (not npm ci): the root lockfile carries cross-platform coverage,
+        # but a transitive edge (@emnapi/core) with an unresolved node fails npm ci's
+        # strict mode. npm install reconciles and installs the native Linux binaries
+        # required by the Storybook build.
         run: npm install --no-audit --no-fund
 
       - name: Build tokens (Style Dictionary)
-        # Génère dist/tokens/css/all.css avec les --agtc-component-* requis par les Web Components.
-        # Sans cette étape, les composants Storybook apparaissent sans styles (tokens non résolus).
+        # Generates dist/tokens/css/all.css with the --agtc-component-* vars required by the Web Components.
+        # Without this step, Storybook components render unstyled (unresolved tokens).
         run: npm run tokens
 
-      - name: Publier sur Chromatic
+      - name: Publish to Chromatic
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          exitZeroOnChanges: true # un écart visuel ne bloque pas le CI — l'humain approuve dans Chromatic
+          exitZeroOnChanges: true # a visual diff doesn't block CI — a human approves in Chromatic

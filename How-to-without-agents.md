@@ -6,7 +6,7 @@
 > The human always has the final word — this guide doesn't change that principle, it only
 > changes who EXECUTES the tasks normally done by an agent.
 > **Type:** instruction
-> **Logical path:** How-to-sans-agents.md
+> **Logical path:** How-to-without-agents.md
 > **Author:** Guilherme Negreiros
 > **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
 > **Relations:** How-to-devs.md, How-to-designers.md, .claude/rules/post-change-pipeline.md,
@@ -49,7 +49,7 @@ never a conversation history with an agent.
 
 ### 1.1 What keeps running as-is (existing scripts, no agent needed)
 
-**Script:** `scripts/continuity/1-1-outils-existants.sh`
+**Script:** `scripts/continuity/1-1-existing-tools.sh`
 
 | Task | Command |
 |---|---|
@@ -65,7 +65,7 @@ ran them for convenience; a human runs them identically.
 
 ### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate.md`)
 
-**Script:** `scripts/continuity/1-2-quality-gate-manuel.sh`
+**Script:** `scripts/continuity/1-2-manual-quality-gate.sh`
 
 The 8 quality gate pipelines, translated into human steps:
 
@@ -105,7 +105,7 @@ Manual checklist derived from `figma-library-governance.md` + `figma-components.
 
 ### 1.4 ADR and project tracking — unchanged
 
-**Script:** `scripts/continuity/1-4-adr-log-rappel.sh`
+**Script:** `scripts/continuity/1-4-adr-log-reminder.sh`
 
 Writing ADRs: already a human exercise (writing), unaffected by the absence of an agent —
 just a reminder that it remains mandatory at every significant session/commit. Project
@@ -118,7 +118,7 @@ in a file in the repo — nothing to log manually here.
 
 ### 2.1 What doesn't change at all
 
-**Script:** `scripts/continuity/2-1-installation-produit.sh`
+**Script:** `scripts/continuity/2-1-product-installation.sh`
 
 - The installation flow documented in `site/dist/get-started.html` works without
   any agent: `npm install @agentica-ds/tokens @agentica-ds/components`, import
@@ -130,7 +130,7 @@ in a file in the repo — nothing to log manually here.
 
 ### 2.2 What needs a replacement checklist
 
-**Script:** `scripts/continuity/2-2-checklist-produit.sh`
+**Script:** `scripts/continuity/2-2-product-checklist.sh`
 
 - Check that a new product component doesn't hardcode a value → run
   `node scripts/audit-tokens.js --src-dir <path-to-project>` from a clone of Agentica,
@@ -143,7 +143,7 @@ in a file in the repo — nothing to log manually here.
 
 ### 2.3 Anti-bypass safeguard
 
-**Script:** `scripts/continuity/2-3-anti-contournement.sh`
+**Script:** `scripts/continuity/2-3-anti-bypass.sh`
 
 - Risk documented in design systems literature (Spotify/Encore case study):
   without an agent to ease design system adoption, a rushed team may be tempted
@@ -156,7 +156,7 @@ in a file in the repo — nothing to log manually here.
 
 ### 2.4 Point of contact when in doubt
 
-**Script:** `scripts/continuity/2-4-contact-escalade.sh`
+**Script:** `scripts/continuity/2-4-escalation-contact.sh`
 
 Without an agent, any interpretation question ("does this token apply
 here?") goes up to the human Design System Lead / Principal Designer — never

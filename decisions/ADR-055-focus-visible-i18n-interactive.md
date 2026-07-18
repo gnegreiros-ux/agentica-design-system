@@ -71,11 +71,11 @@ The button's text is computed dynamically from
 - **On language change**: every `.code-copy` button not in the "Copied!" state is updated in
   real time
 
-State after click: "Copié !" (FR) / "Copied!" (EN) — resets after 1.6s.
+State after click: "Copié !" (FR) / "Copied!" (EN) — resets after 1.6s. <!-- lang-audit-ignore: quoting the site's bilingual UI string -->
 
 ### 3. Clarifying the WCAG stat label
 
-"21 WCAG 2.1 AA" → "21 critères WCAG 2.1 AA couverts" (FR) / "21 WCAG 2.1 AA criteria covered"
+"21 WCAG 2.1 AA" → "21 critères WCAG 2.1 AA couverts" (FR) / "21 WCAG 2.1 AA criteria covered" <!-- lang-audit-ignore: quoting the site's bilingual UI string -->
 (EN) — explicit, unambiguous measurement.
 
 ---

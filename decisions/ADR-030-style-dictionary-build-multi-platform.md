@@ -48,7 +48,7 @@ defined in the platform. Writing `var(--agtc-${t.name})` produces a double prefi
 
 ### 4. `_readme` tokens in CSS output
 Documentation keys (`_readme`) in the JSON files were ending up as CSS variables
-(`--agtc-semantic-space-density-readme: Densité...`).
+(`--agtc-semantic-space-density-readme: Densité...`). <!-- lang-audit-ignore: historical bug quote -->
 
 **Solution:** an `isReadme(t)` predicate that filters out any token whose path
 segment starts with `_`. Applied across all file filters.
@@ -194,7 +194,7 @@ défini dans la plateforme. Écrire `var(--agtc-${t.name})` produit un double pr
 
 ### 4. Tokens `_readme` dans les sorties CSS
 Des clés de documentation (`_readme`) dans les fichiers JSON se retrouvaient en
-CSS variables (`--agtc-semantic-space-density-readme: Densité...`).
+CSS variables (`--agtc-semantic-space-density-readme: Densité...`). <!-- lang-audit-ignore: historical bug quote -->
 
 **Solution :** prédicat `isReadme(t)` qui filtre tout token dont un segment de
 chemin commence par `_`. Appliqué dans tous les filtres de fichiers.
