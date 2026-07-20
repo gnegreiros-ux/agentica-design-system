@@ -139,12 +139,12 @@
 <h2>Decision</h2>
 <p>The npm scope is corrected to <strong><code>@agentica-ds</code></strong>. Packages become <code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code>.</p>
 <p>Verified genuinely unclaimed (not just empty) via the same registry endpoint, compared against both the existing <code>agentica</code> org and a deliberately nonexistent scope:</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Scope</th><th><code>GET /-/org/{scope}/package</code></th></tr></thead><tbody><tr><td><code>agentica</code> (existing, unrelated org)</td><td><code>200</code> — 9 packages</td></tr><tr><td><code>agentica-ds</code> (chosen)</td><td><code>200</code> — <code>{}</code> (org shape, zero packages)</td></tr><tr><td>a deliberately nonexistent scope</td><td><code>404</code> — <code>{"error":"Scope not found"}</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Scope</th><th><code>GET /-/org/{scope}/package</code></th></tr></thead><tbody><tr><td><code>agentica</code> (existing, unrelated org)</td><td><code>200</code> — 9 packages</td></tr><tr><td><code>agentica-ds</code> (chosen)</td><td><code>200</code> — <code>{}</code> (org shape, zero packages)</td></tr><tr><td>a deliberately nonexistent scope</td><td><code>404</code> — <code>{"error":"Scope not found"}</code></td></tr></tbody></table></div>
 <p><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> individually also return <code>404</code>. The npm organization <code>agentica-ds</code> was created 2026-07-16 (owner: <code>gnegreiros</code>, free "Unlimited public packages" plan, 2FA enabled on the account).</p>
 <p>Alternatives considered: <code>agentica-design</code> (rejected — longer, no added clarity over <code>-ds</code>) and <code>agtc</code> (rejected — matches the existing CSS/component prefix, but reads as opaque outside the codebase; <code>-ds</code> is a conventional, self-explanatory design-system suffix).</p>
 <p>Every other decision in ADR-072 is unchanged: the two-package split, ESM-only, npm workspaces (not pnpm), Changesets, <code>site/</code> depending on both packages via <code>"workspace:*"</code>, and the npm organization (not a personal account) owning the scope.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><code>agentica-design</code></td><td>Longer than <code>agentica-ds</code> with no clarity gain; both are equally unambiguous.</td></tr><tr><td><code>agtc</code></td><td>Matches the existing internal prefix (<code>agtc-button</code>, <code>--agtc-*</code>) but is opaque to an external consumer browsing npm; <code>-ds</code> is a recognizable, conventional suffix.</td></tr><tr><td>Keep <code>@agentica</code> and contact the existing org's owner about the name</td><td>No contact path evidenced, no guarantee of a response, and blocks the "publication npm" initiative on a third party for no architectural benefit.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><code>agentica-design</code></td><td>Longer than <code>agentica-ds</code> with no clarity gain; both are equally unambiguous.</td></tr><tr><td><code>agtc</code></td><td>Matches the existing internal prefix (<code>agtc-button</code>, <code>--agtc-*</code>) but is opaque to an external consumer browsing npm; <code>-ds</code> is a recognizable, conventional suffix.</td></tr><tr><td>Keep <code>@agentica</code> and contact the existing org's owner about the name</td><td>No contact path evidenced, no guarantee of a response, and blocks the "publication npm" initiative on a third party for no architectural benefit.</td></tr></tbody></table></div>
 <h2>Consequences</h2>
 <p><strong>For AI agents:</strong></p>
 <ul><li>Any install instructions, documentation, or build tooling must reference</li></ul>
@@ -217,4 +217,5 @@
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>

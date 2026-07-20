@@ -133,7 +133,7 @@
 <hr>
 <h2>Reference UX patterns applied</h2>
 <blockquote><p>Added on 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>all approved</strong>. Details and links: <code>guidelines/components/button.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>A single primary action per context</td><td>IxDF — clear primary action</td></tr><tr><td>Explicit confirmation for <code>critical</code></td><td>NN/g — error prevention</td></tr><tr><td>Width preserved during <code>loading</code></td><td>Smashing</td></tr><tr><td>Never disable without stating why</td><td>Smashing — hidden vs disabled</td></tr><tr><td>Label describing the consequence</td><td>NN/g</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>A single primary action per context</td><td>IxDF — clear primary action</td></tr><tr><td>Explicit confirmation for <code>critical</code></td><td>NN/g — error prevention</td></tr><tr><td>Width preserved during <code>loading</code></td><td>Smashing</td></tr><tr><td>Never disable without stating why</td><td>Smashing — hidden vs disabled</td></tr><tr><td>Label describing the consequence</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
 <h2>Context</h2>
 <p>The design system has a complete button component contract (<code>tokens/component.json</code>, <code>guidelines/components/button.md</code>, <code>.claude/rules/components/button.md</code>). This ADR documents the technical decisions made to turn that contract into a functional Lit Web Component.</p>
@@ -225,7 +225,7 @@ button.loading .content { visibility: hidden; }</code></pre>
 <ul><li><code>icon="plus"</code> → no slotted node → the <code>&lt;agtc-icon name="plus"&gt;</code> fallback is displayed</li><li><code>&lt;agtc-icon slot="prefix"&gt;</code> → a slotted node is provided → the fallback is ignored, slot content is displayed</li><li>Both at once: slotted content always takes priority</li></ul>
 <p><strong>Prerequisite:</strong> <code>agtc-icon</code> must be registered by the consumer before using the <code>icon</code> / <code>icon-suffix</code> properties. The slots accept any HTML element.</p>
 <p><strong>Framework compatibility:</strong></p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Framework</th><th><code>icon="..."</code> property</th><th><code>slot="prefix"</code> slot</th></tr></thead><tbody><tr><td>Native HTML</td><td>✅</td><td>✅</td></tr><tr><td>React 18</td><td>✅</td><td>⚠️ needs <code>ref</code> + <code>setAttribute</code></td></tr><tr><td>React 19</td><td>✅</td><td>✅</td></tr><tr><td>Angular</td><td>✅</td><td>✅</td></tr><tr><td>Vue 3</td><td>✅</td><td>✅</td></tr><tr><td>Svelte</td><td>✅</td><td>✅</td></tr><tr><td>Figma Code Connect</td><td>✅</td><td>❌</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Framework</th><th><code>icon="..."</code> property</th><th><code>slot="prefix"</code> slot</th></tr></thead><tbody><tr><td>Native HTML</td><td>✅</td><td>✅</td></tr><tr><td>React 18</td><td>✅</td><td>⚠️ needs <code>ref</code> + <code>setAttribute</code></td></tr><tr><td>React 19</td><td>✅</td><td>✅</td></tr><tr><td>Angular</td><td>✅</td><td>✅</td></tr><tr><td>Vue 3</td><td>✅</td><td>✅</td></tr><tr><td>Svelte</td><td>✅</td><td>✅</td></tr><tr><td>Figma Code Connect</td><td>✅</td><td>❌</td></tr></tbody></table></div>
 <h3>12. <code>icon-only</code> mode — square padding and mandatory accessibility</h3>
 <p><strong>Problem:</strong> A button with no visible text must have equal padding and an accessible label. How do we enforce this without excessive complexity?</p>
 <p><strong>Decision: boolean <code>icon-only</code> attribute + mandatory <code>label</code> property.</strong></p>
@@ -241,7 +241,7 @@ button.loading .content { visibility: hidden; }</code></pre>
 <p><strong>Reason:</strong> <code>aria-label</code> on the <code>&lt;agtc-button&gt;</code> host wouldn't be read by assistive technologies (it applies to the custom element, not to the <code>&lt;button&gt;</code> inside the shadow DOM). Forwarding to the internal <code>&lt;button&gt;</code> is mandatory for accessibility.</p>
 <hr>
 <h2>Events</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Event</th><th>When</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>agtc-click</code></td><td>Any validated click (not disabled, not loading)</td><td><code>{ variant }</code></td></tr><tr><td><code>agtc-confirm-request</code></td><td>1st click on critical</td><td>—</td></tr><tr><td><code>agtc-confirm</code></td><td>2nd click on critical (action confirmed)</td><td>—</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Event</th><th>When</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>agtc-click</code></td><td>Any validated click (not disabled, not loading)</td><td><code>{ variant }</code></td></tr><tr><td><code>agtc-confirm-request</code></td><td>1st click on critical</td><td>—</td></tr><tr><td><code>agtc-confirm</code></td><td>2nd click on critical (action confirmed)</td><td>—</td></tr></tbody></table></div>
 <p>All events: <code>bubbles: true, composed: true</code> (they cross the Shadow DOM).</p>
 <hr>
 <h2>Usage</h2>
@@ -310,7 +310,7 @@ document.querySelector('agtc-button[variant="critical"]')
 <hr>
 <h2>Patterns UX de référence appliqués</h2>
 <blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>tous approuvés</strong>. Détail et liens : <code>guidelines/components/button.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Une seule action primaire par contexte</td><td>IxDF — clear primary action</td></tr><tr><td>Confirmation explicite pour <code>critical</code></td><td>NN/g — error prevention</td></tr><tr><td>Largeur préservée pendant le <code>loading</code></td><td>Smashing</td></tr><tr><td>Ne jamais désactiver sans indiquer la raison</td><td>Smashing — hidden vs disabled</td></tr><tr><td>Libellé décrivant la conséquence</td><td>NN/g</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Une seule action primaire par contexte</td><td>IxDF — clear primary action</td></tr><tr><td>Confirmation explicite pour <code>critical</code></td><td>NN/g — error prevention</td></tr><tr><td>Largeur préservée pendant le <code>loading</code></td><td>Smashing</td></tr><tr><td>Ne jamais désactiver sans indiquer la raison</td><td>Smashing — hidden vs disabled</td></tr><tr><td>Libellé décrivant la conséquence</td><td>NN/g</td></tr></tbody></table></div>
 <hr>
 <h2>Contexte</h2>
 <p>Le système de design dispose d'un contrat de composant button complet (<code>tokens/component.json</code>, <code>guidelines/components/button.md</code>, <code>.claude/rules/components/button.md</code>). Ce ADR documente les décisions techniques prises pour transformer ce contrat en Web Component Lit fonctionnel.</p>
@@ -402,7 +402,7 @@ button.loading .content { visibility: hidden; }</code></pre>
 <ul><li><code>icon="plus"</code> → aucun nœud slotté → fallback <code>&lt;agtc-icon name="plus"&gt;</code> s'affiche</li><li><code>&lt;agtc-icon slot="prefix"&gt;</code> → nœud slotté fourni → fallback ignoré, slot content affiché</li><li>Les deux simultanément : le contenu slotté a toujours la priorité</li></ul>
 <p><strong>Prérequis :</strong> <code>agtc-icon</code> doit être enregistré par le consommateur avant d'utiliser les propriétés <code>icon</code> / <code>icon-suffix</code>. Les slots acceptent n'importe quel élément HTML.</p>
 <p><strong>Compatibilité frameworks :</strong></p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Framework</th><th>Propriété <code>icon="..."</code></th><th>Slot <code>slot="prefix"</code></th></tr></thead><tbody><tr><td>HTML natif</td><td>✅</td><td>✅</td></tr><tr><td>React 18</td><td>✅</td><td>⚠️ besoin de <code>ref</code> + <code>setAttribute</code></td></tr><tr><td>React 19</td><td>✅</td><td>✅</td></tr><tr><td>Angular</td><td>✅</td><td>✅</td></tr><tr><td>Vue 3</td><td>✅</td><td>✅</td></tr><tr><td>Svelte</td><td>✅</td><td>✅</td></tr><tr><td>Figma Code Connect</td><td>✅</td><td>❌</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Framework</th><th>Propriété <code>icon="..."</code></th><th>Slot <code>slot="prefix"</code></th></tr></thead><tbody><tr><td>HTML natif</td><td>✅</td><td>✅</td></tr><tr><td>React 18</td><td>✅</td><td>⚠️ besoin de <code>ref</code> + <code>setAttribute</code></td></tr><tr><td>React 19</td><td>✅</td><td>✅</td></tr><tr><td>Angular</td><td>✅</td><td>✅</td></tr><tr><td>Vue 3</td><td>✅</td><td>✅</td></tr><tr><td>Svelte</td><td>✅</td><td>✅</td></tr><tr><td>Figma Code Connect</td><td>✅</td><td>❌</td></tr></tbody></table></div>
 <h3>12. Mode <code>icon-only</code> — padding carré et accessibilité obligatoire</h3>
 <p><strong>Problème :</strong> Un bouton sans texte visible doit avoir un padding égal et un label accessible. Comment enforcer cela sans complexité excessive ?</p>
 <p><strong>Décision : attribut booléen <code>icon-only</code> + propriété <code>label</code> obligatoire.</strong></p>
@@ -418,7 +418,7 @@ button.loading .content { visibility: hidden; }</code></pre>
 <p><strong>Raison :</strong> <code>aria-label</code> sur le host <code>&lt;agtc-button&gt;</code> ne serait pas lu par les assistants techniques (il s'applique à l'élément custom, pas au <code>&lt;button&gt;</code> dans le shadow DOM). Le forwarding vers le <code>&lt;button&gt;</code> interne est obligatoire pour l'accessibilité.</p>
 <hr>
 <h2>Événements</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Événement</th><th>Quand</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>agtc-click</code></td><td>Tout clic validé (non-disabled, non-loading)</td><td><code>{ variant }</code></td></tr><tr><td><code>agtc-confirm-request</code></td><td>1er clic sur critical</td><td>—</td></tr><tr><td><code>agtc-confirm</code></td><td>2e clic sur critical (action confirmée)</td><td>—</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Événement</th><th>Quand</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>agtc-click</code></td><td>Tout clic validé (non-disabled, non-loading)</td><td><code>{ variant }</code></td></tr><tr><td><code>agtc-confirm-request</code></td><td>1er clic sur critical</td><td>—</td></tr><tr><td><code>agtc-confirm</code></td><td>2e clic sur critical (action confirmée)</td><td>—</td></tr></tbody></table></div>
 <p>Tous les événements : <code>bubbles: true, composed: true</code> (traversent le Shadow DOM).</p>
 <hr>
 <h2>Usage</h2>
@@ -540,4 +540,5 @@ document.querySelector('agtc-button[variant="critical"]')
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>
