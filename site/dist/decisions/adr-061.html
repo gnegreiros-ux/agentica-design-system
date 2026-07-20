@@ -158,7 +158,7 @@
 <p>All patterns from ADR-060 apply. No new UX pattern — only technical implementation decisions (i18n, bundling, responsive shadow DOM).</p>
 <hr>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Import map + CDN for Lit</strong></td><td>External CDN dependency — against ADR-004 (digital sovereignty)</td></tr><tr><td><strong>CSS parts (<code>::part(nav)</code>)</strong></td><td>The <code>host.class::part()</code> syntax doesn't cover the child elements of the parts</td></tr><tr><td><strong><code>open</code> as an HTML attribute (reflect)</strong></td><td><code>classList.toggle</code> is simpler — <code>:host(.open)</code> is identical to <code>:host([open])</code> for this use case</td></tr><tr><td><strong>Handle language on the site side (re-binding)</strong></td><td>Fragile — would require listening for the language toggle on every page</td></tr><tr><td><strong>Vanilla component (without Lit)</strong></td><td>Two implementations of the same component — impossible to maintain</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Import map + CDN for Lit</strong></td><td>External CDN dependency — against ADR-004 (digital sovereignty)</td></tr><tr><td><strong>CSS parts (<code>::part(nav)</code>)</strong></td><td>The <code>host.class::part()</code> syntax doesn't cover the child elements of the parts</td></tr><tr><td><strong><code>open</code> as an HTML attribute (reflect)</strong></td><td><code>classList.toggle</code> is simpler — <code>:host(.open)</code> is identical to <code>:host([open])</code> for this use case</td></tr><tr><td><strong>Handle language on the site side (re-binding)</strong></td><td>Fragile — would require listening for the language toggle on every page</td></tr><tr><td><strong>Vanilla component (without Lit)</strong></td><td>Two implementations of the same component — impossible to maintain</td></tr></tbody></table></div>
 <hr>
 <h2>Consequences</h2>
 <p><strong>For the site:</strong></p>
@@ -198,7 +198,7 @@
 <p>Tous les patterns de ADR-060 s'appliquent. Aucun nouveau pattern UX — uniquement des décisions d'implémentation technique (i18n, bundling, shadow DOM responsive).</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Import map + CDN pour Lit</strong></td><td>Dépendance CDN externe — contre ADR-004 (souveraineté numérique)</td></tr><tr><td><strong>CSS parts (<code>::part(nav)</code>)</strong></td><td>La syntaxe <code>host.class::part()</code> ne couvre pas les éléments enfants des parts</td></tr><tr><td><strong><code>open</code> comme attribut HTML (reflect)</strong></td><td><code>classList.toggle</code> est plus simple — <code>:host(.open)</code> est identique à <code>:host([open])</code> pour ce use case</td></tr><tr><td><strong>Gérer la langue côté site (re-binding)</strong></td><td>Fragile — nécessiterait d'écouter le toggle de langue dans chaque page</td></tr><tr><td><strong>Composant vanilla (sans Lit)</strong></td><td>Deux implémentations du même composant — maintien impossible</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Import map + CDN pour Lit</strong></td><td>Dépendance CDN externe — contre ADR-004 (souveraineté numérique)</td></tr><tr><td><strong>CSS parts (<code>::part(nav)</code>)</strong></td><td>La syntaxe <code>host.class::part()</code> ne couvre pas les éléments enfants des parts</td></tr><tr><td><strong><code>open</code> comme attribut HTML (reflect)</strong></td><td><code>classList.toggle</code> est plus simple — <code>:host(.open)</code> est identique à <code>:host([open])</code> pour ce use case</td></tr><tr><td><strong>Gérer la langue côté site (re-binding)</strong></td><td>Fragile — nécessiterait d'écouter le toggle de langue dans chaque page</td></tr><tr><td><strong>Composant vanilla (sans Lit)</strong></td><td>Deux implémentations du même composant — maintien impossible</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
 <p><strong>Pour le site :</strong></p>
@@ -266,4 +266,5 @@
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>

@@ -154,7 +154,7 @@ table {
 <p>Tables generated from Markdown (ADRs, guidelines) also get wrapped in <code>.table-wrap</code> from <code>parseMd()</code> — consistency guaranteed regardless of the source.</p>
 <hr>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><code>display: block</code> on <code>&lt;table&gt;</code> on mobile</td><td>Breaks column semantics and alignment</td></tr><tr><td><code>word-break: break-all</code> without overflow</td><td>Columns readable but tokens unreadable (random breaking)</td></tr><tr><td>Manually wrapping each table</td><td>~30 calls to modify — risk of forgetting on each new table</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><code>display: block</code> on <code>&lt;table&gt;</code> on mobile</td><td>Breaks column semantics and alignment</td></tr><tr><td><code>word-break: break-all</code> without overflow</td><td>Columns readable but tokens unreadable (random breaking)</td></tr><tr><td>Manually wrapping each table</td><td>~30 calls to modify — risk of forgetting on each new table</td></tr></tbody></table></div>
 <hr>
 <h2>Consequences</h2>
 <ul><li>Any new table in the site becomes responsive automatically, with no extra action</li><li>Horizontal scroll appears only when the table is wider than the viewport</li><li>The <code>min-width: 420px</code> is an arbitrary threshold tuned for token tables — to revisit if very</li></ul>
@@ -185,7 +185,7 @@ table {
 <p>Les tables générées depuis le Markdown (ADRs, guidelines) passent aussi dans <code>.table-wrap</code> depuis <code>parseMd()</code> — cohérence garantie quelle que soit la source.</p>
 <hr>
 <h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><code>display: block</code> sur <code>&lt;table&gt;</code> en mobile</td><td>Casse la sémantique et l'alignement des colonnes</td></tr><tr><td><code>word-break: break-all</code> sans overflow</td><td>Colonnes lisibles mais tokens illisibles (coupure aléatoire)</td></tr><tr><td>Envelopper manuellement chaque table</td><td>~30 appels à modifier — risque d'oubli à chaque nouvelle table</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><code>display: block</code> sur <code>&lt;table&gt;</code> en mobile</td><td>Casse la sémantique et l'alignement des colonnes</td></tr><tr><td><code>word-break: break-all</code> sans overflow</td><td>Colonnes lisibles mais tokens illisibles (coupure aléatoire)</td></tr><tr><td>Envelopper manuellement chaque table</td><td>~30 appels à modifier — risque d'oubli à chaque nouvelle table</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
 <ul><li>Toute nouvelle table dans le site est automatiquement responsive sans action supplémentaire</li><li>Le scroll horizontal est présent uniquement quand la table est plus large que le viewport</li><li>La <code>min-width: 420px</code> est un seuil arbitraire adapté aux tables de tokens — à revoir si des</li></ul>
@@ -248,4 +248,5 @@ table {
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>

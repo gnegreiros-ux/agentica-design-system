@@ -1434,6 +1434,8 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── FRAMEWORK TABS PANELS ──────────────────────────────── */
 .framework-panel{padding:var(--agtc-space-1) 0}
+.framework-panel-head{display:flex;align-items:center;gap:var(--agtc-space-2);margin-bottom:var(--agtc-space-3);color:var(--agtc-semantic-color-action-primary)}
+.framework-panel-head strong{font-size:var(--agtc-semantic-typography-heading-5-size);color:var(--agtc-semantic-color-text-primary)}
 .framework-panel .code-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-secondary);margin:var(--agtc-space-4) 0 var(--agtc-space-1)}
 .framework-panel .code-label:first-of-type{margin-top:0}
 
@@ -2780,6 +2782,16 @@ body[data-context="marketing"] .role-card::after{
 .page-content{flex:1;overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
+/* h2 in the .content docs layout carries a decorative top rule (long-article look) —
+   neutralized here so h2 reads as a plain section title inside shell bands. */
+.page-content .site-section h2{border-top:none;padding-top:0;margin-top:0}
+/* Alternating background band — breaks the single-tone "long article" look on
+   content-heavy marketing pages (get-started.html) without a second gradient
+   (contexts-utilisation.md: max 1 gradient element per page). */
+.section-tint{background:var(--agtc-semantic-color-background-subtle)}
+/* .platform-logo-label is tuned for a dark band (text-on-dark-muted, see
+   .section-secondary usage) — override for the light .section-tint reuse. */
+.section-tint .platform-logo-label{color:var(--agtc-semantic-color-text-secondary)}
 
 /* Stats hero (réutilisées depuis rd-*) */
 .hero-stats{
@@ -3458,7 +3470,18 @@ ${footer}
 </button>
 <script src="${base}site.js"></script>
 </body>
-</html>`.replace(/(?<!table-wrap">)<table(\b[^>]*)>/g, '<div class="table-wrap" tabindex="0"><table$1>').replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
+
+</html>`
+    // Pre-existing bug fixed here: the negative lookbehind only recognized a hand-written
+    // wrapper with the exact literal `table-wrap">` immediately before <table — the
+    // established hand-wrap convention used across the site is
+    // `<div class="table-wrap" tabindex="0"><table>`, where `tabindex="0">` (not
+    // `table-wrap">`) is what actually sits right before <table>. The lookbehind never
+    // matched that, so every hand-wrapped table on the site was silently double-wrapped
+    // (invalid nested .table-wrap divs, harmless visually but structurally broken HTML).
+    // Fixed by matching the real preceding wrapper opening tag instead of a fixed literal.
+    .replace(/(?<!<div class="table-wrap"[^>]*>)<table(\b[^>]*)>/g, '<div class="table-wrap" tabindex="0"><table$1>')
+    .replace(/<\/table>(?!\s*<\/div>)/g, '</table></div>');
 }
 
 function sidebarFoundations(base, current) {
@@ -7522,66 +7545,97 @@ useEffect(() => {
 
 <agtc-table ref={tableRef}></agtc-table>`);
 
-  // logo: file name inside integrations/ (brand color)
+  // logoFile: file name (no extension) inside integrations/ (brand color)
   const platforms = [
-    ['css',     '@agentica-ds/tokens/css',     'npm', 'Variables CSS (custom properties)',      'CSS custom properties', '<img class="vendor-logo" src="integrations/css.svg" alt="CSS" width="20" height="20" loading="lazy">'],
-    ['js',      '@agentica-ds/tokens/js',      'npm', 'Exports ES6',                            'ES6 exports',            '<img class="vendor-logo" src="integrations/javascript.svg" alt="JavaScript" width="20" height="20" loading="lazy">'],
-    ['tailwind','@agentica-ds/tokens/tailwind','npm', 'Extension de configuration',             'Config extension',       '<img class="vendor-logo" src="integrations/tailwind.svg" alt="Tailwind CSS" width="20" height="20" loading="lazy">'],
-    ['angular', 'dist/tokens/angular/', 'clone', 'SCSS Material M3',                       'Material M3 SCSS',       '<img class="vendor-logo" src="integrations/angular.svg" alt="Angular" width="20" height="20" loading="lazy">'],
-    ['ios',     'dist/tokens/ios/',     'clone', 'Swift',                                  'Swift',                  '<img class="vendor-logo" src="integrations/swift.svg" alt="Swift (iOS)" width="20" height="20" loading="lazy">'],
-    ['android', 'dist/tokens/android/', 'clone', 'XML (couleurs + dimensions)',           'XML (colors + dimensions)','<img class="vendor-logo" src="integrations/android.svg" alt="Android" width="20" height="20" loading="lazy">'],
+    ['css',      'css',        '@agentica-ds/tokens/css',      'npm',   'CSS',          'Variables CSS (custom properties)',       'CSS custom properties'],
+    ['js',       'javascript', '@agentica-ds/tokens/js',       'npm',   'JavaScript',   'Exports ES6',                              'ES6 exports'],
+    ['tailwind', 'tailwind',   '@agentica-ds/tokens/tailwind', 'npm',   'Tailwind CSS', 'Extension de configuration',              'Config extension'],
+    ['angular',  'angular',    'dist/tokens/angular/',         'clone', 'Angular',      'SCSS Material M3',                         'Material M3 SCSS'],
+    ['ios',      'swift',      'dist/tokens/ios/',             'clone', 'Swift (iOS)',  'Swift',                                    'Swift'],
+    ['android',  'android',    'dist/tokens/android/',         'clone', 'Android',      'XML (couleurs + dimensions)',              'XML (colors + dimensions)'],
   ];
-  const platformRows = platforms.map(([p, file, source, fr, en, logo]) => {
-    const sourceBadge = source === 'npm'
-      ? `<agtc-badge variant="success" size="sm">npm</agtc-badge>`
-      : `<agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge>`;
-    return `<tr><td><span class="platform-cell">${logo}<code>${p}</code></span></td><td><code>${file}</code></td><td>${sourceBadge}</td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`;
+  const sourceBadge = source => source === 'npm'
+    ? `<agtc-badge variant="success" size="sm">npm</agtc-badge>`
+    : `<agtc-badge variant="neutral" size="sm"><span class="lang-fr">clone</span><span class="lang-en">clone</span></agtc-badge>`;
+  const platformRows = platforms.map(([id, logoFile, file, source, label, fr, en]) => {
+    const logoImg = `<img class="vendor-logo" src="integrations/${logoFile}.svg" alt="${label}" width="20" height="20" loading="lazy">`;
+    return `<tr><td><span class="platform-cell">${logoImg}<code>${id}</code></span></td><td><code>${file}</code></td><td>${sourceBadge(source)}</td><td><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></td></tr>`;
   }).join('');
+  // Showcase strip — same data, bigger logos, no detail (the table above/below carries the detail)
+  const platformLogoItems = platforms.map(([id, logoFile, file, source, label]) =>
+    `<div class="platform-logo-item"><img src="integrations/${logoFile}.svg" alt="" width="40" height="40" loading="lazy"><span class="platform-logo-label">${label}</span>${sourceBadge(source)}</div>`
+  ).join('');
+
+  const frameworkPanelHead = (logoFile, label) => `<div class="framework-panel-head"><img class="vendor-logo" src="integrations/${logoFile}.svg" alt="" width="24" height="24" loading="lazy"><strong>${label}</strong></div>`;
+  const frameworkPanelHeadIcon = (iconName, label) => `<div class="framework-panel-head">${icon(iconName, 20)}<strong>${label}</strong></div>`;
 
   const body = `
-<h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
-<p class="page-lead">
-  <span class="lang-fr">Adopter Agentica, c'est consommer des décisions — pas des valeurs. Trois niveaux de tokens, 14 composants, six plateformes de sortie, le tout auditable WCAG 2.2.</span>
-  <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable.</span>
-</p>
+<section class="site-section simple-hero">
+  <div class="shell">
+    <div class="copy" style="max-width:700px">
+      <p class="kicker"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></p>
+      <h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
+      <p>
+        <span class="lang-fr">Adopter Agentica, c'est consommer des décisions — pas des valeurs. Trois niveaux de tokens, 14 composants, six plateformes de sortie, le tout auditable WCAG 2.2.</span>
+        <span class="lang-en">Adopting Agentica means consuming decisions — not values. Three token levels, 14 components, six output platforms, all WCAG 2.2 auditable.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="#steps" class="cta-btn cta-btn-primary"><span class="lang-fr">Voir les 3 étapes ↓</span><span class="lang-en">See the 3 steps ↓</span></a>
+        <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary"><span class="lang-fr">Copier starter-kit →</span><span class="lang-en">Copy starter-kit →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
 
-<agtc-banner variant="info">
-  <strong><span class="lang-fr">Disponible sur npm (v0.x)</span><span class="lang-en">Available on npm (v0.x)</span></strong>
-  <span>
-    <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0. Pressé ? Copiez <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> tel quel — c'est un projet complet et fonctionnel.</span>
-    <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0. In a hurry? Copy <a href="${REPO}/tree/main/starter-kit" target="_blank" rel="noopener noreferrer"><code>starter-kit/</code></a> as-is — it's a complete, working project.</span>
-  </span>
-</agtc-banner>
-
-<div class="quickstart-block">
-  <p class="code-label"><span class="lang-fr">Démarrage rapide — le code complet, sans explication (le détail de chaque étape suit plus bas)</span><span class="lang-en">Quickstart — the full code, no explanation (the detailed walkthrough follows below)</span></p>
-  <pre class="code-block"><code class="lang-bash">${esc('npm install @agentica-ds/tokens @agentica-ds/components lit')}</code></pre>
-  <pre class="code-block"><code class="lang-js">${esc(`import '@agentica-ds/tokens/css';
+<section class="site-section section-tint" data-reveal>
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Démarrage rapide</span><span class="lang-en">Quickstart</span></p>
+    <agtc-banner variant="info">
+      <strong><span class="lang-fr">Disponible sur npm (v0.x)</span><span class="lang-en">Available on npm (v0.x)</span></strong>
+      <span>
+        <span class="lang-fr"><code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> sont publiés — API encore susceptible d'évoluer avant la 1.0.</span>
+        <span class="lang-en"><code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> are published — API may still evolve before 1.0.</span>
+      </span>
+    </agtc-banner>
+    <div class="quickstart-block">
+      <p class="code-label"><span class="lang-fr">Le code complet, sans explication (le détail de chaque étape suit plus bas)</span><span class="lang-en">The full code, no explanation (the detailed walkthrough follows below)</span></p>
+      <pre class="code-block"><code class="lang-bash">${esc('npm install @agentica-ds/tokens @agentica-ds/components lit')}</code></pre>
+      <pre class="code-block"><code class="lang-js">${esc(`import '@agentica-ds/tokens/css';
 import '@agentica-ds/components';`)}</code></pre>
-  <pre class="code-block"><code class="lang-html">${esc('<agtc-button variant="primary">Save</agtc-button>')}</code></pre>
-</div>
+      <pre class="code-block"><code class="lang-html">${esc('<agtc-button variant="primary">Save</agtc-button>')}</code></pre>
+    </div>
+  </div>
+</section>
 
-<h2 class="first"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></h2>
-<div class="grid-3">
-  <div class="info-card">
-    <div class="info-card-icon">${icon('layers', 20)}</div>
-    <div class="info-card-title"><span class="lang-fr">Tokens à 3 niveaux</span><span class="lang-en">3-level tokens</span></div>
-    <div class="info-card-body"><span class="lang-fr">Primitif → sémantique → composant. Les valeurs sont séparées des intentions — lisibles par les humains et les agents.</span><span class="lang-en">Primitive → semantic → component. Values are separated from intentions — readable by humans and agents.</span></div>
+<section class="site-section" data-reveal>
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></p>
+    <h2 class="first"><span class="lang-fr">Trois niveaux, un contrat</span><span class="lang-en">Three levels, one contract</span></h2>
+    <div class="grid-3">
+      <div class="info-card">
+        <div class="info-card-icon">${icon('layers', 20)}</div>
+        <div class="info-card-title"><span class="lang-fr">Tokens à 3 niveaux</span><span class="lang-en">3-level tokens</span></div>
+        <div class="info-card-body"><span class="lang-fr">Primitif → sémantique → composant. Les valeurs sont séparées des intentions — lisibles par les humains et les agents.</span><span class="lang-en">Primitive → semantic → component. Values are separated from intentions — readable by humans and agents.</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">${icon('component', 20)}</div>
+        <div class="info-card-title"><span class="lang-fr">14 composants</span><span class="lang-en">14 components</span></div>
+        <div class="info-card-body"><span class="lang-fr">Web Components framework-agnostic (Lit), ou classes CSS. Chaque composant est un contrat, pas une suggestion.</span><span class="lang-en">Framework-agnostic Web Components (Lit), or CSS classes. Each component is a contract, not a suggestion.</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">${icon('share-2', 20)}</div>
+        <div class="info-card-title"><span class="lang-fr">6 plateformes</span><span class="lang-en">6 platforms</span></div>
+        <div class="info-card-body"><span class="lang-fr">CSS, JS, Tailwind, Angular, iOS, Android — une seule source de vérité, compilée partout.</span><span class="lang-en">CSS, JS, Tailwind, Angular, iOS, Android — one source of truth, compiled everywhere.</span></div>
+      </div>
+    </div>
   </div>
-  <div class="info-card">
-    <div class="info-card-icon">${icon('component', 20)}</div>
-    <div class="info-card-title"><span class="lang-fr">14 composants</span><span class="lang-en">14 components</span></div>
-    <div class="info-card-body"><span class="lang-fr">Web Components framework-agnostic (Lit), ou classes CSS. Chaque composant est un contrat, pas une suggestion.</span><span class="lang-en">Framework-agnostic Web Components (Lit), or CSS classes. Each component is a contract, not a suggestion.</span></div>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">${icon('share-2', 20)}</div>
-    <div class="info-card-title"><span class="lang-fr">6 plateformes</span><span class="lang-en">6 platforms</span></div>
-    <div class="info-card-body"><span class="lang-fr">CSS, JS, Tailwind, Angular, iOS, Android — une seule source de vérité, compilée partout.</span><span class="lang-en">CSS, JS, Tailwind, Angular, iOS, Android — one source of truth, compiled everywhere.</span></div>
-  </div>
-</div>
+</section>
 
-<h2><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></h2>
-<ol class="step-list">
+<section class="site-section section-tint" id="steps" data-reveal>
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></p>
+    <h2><span class="lang-fr">De zéro à intégré</span><span class="lang-en">From zero to integrated</span></h2>
+    <ol class="step-list">
   <li class="step">
     <span class="step-num" aria-hidden="true">1</span>
     <div class="step-body">
@@ -7651,91 +7705,114 @@ import '@agentica-ds/components';`)}</code></pre>
     <span class="lang-en">Never a hardcoded value. Always through a semantic token. This indirection is what makes your decisions applicable by AI agents — without interpretation. <a href="tokens/index.html">See the three levels →</a></span>
   </span>
 </agtc-banner>
+  </div>
+</section>
 
-<h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
-<p>
-  <span class="lang-fr"><strong>Optionnel</strong> — uniquement si vous utilisez Angular, Vue ou React. Les composants sont des Web Components natifs ; sinon, passez directement aux <a href="#plateformes">plateformes de sortie</a>.</span>
-  <span class="lang-en"><strong>Optional</strong> — only if you use Angular, Vue, or React. Components are native Web Components; otherwise, skip straight to <a href="#plateformes">output platforms</a>.</span>
-</p>
-
-<agtc-tabs id="framework-tabs" label="Choix du framework / Framework choice" selected="angular">
-  <div slot="angular" class="framework-panel">
-    <p><span class="lang-fr"><strong>Configuration requise :</strong> ajoutez <code>CUSTOM_ELEMENTS_SCHEMA</code> au module (ou aux <code>schemas</code> d'un composant standalone). Le binding de propriétés et d'événements est ensuite natif.</span>
-    <span class="lang-en"><strong>Required configuration:</strong> add <code>CUSTOM_ELEMENTS_SCHEMA</code> to the module (or to a standalone component's <code>schemas</code>). Property and event binding is then native.</span></p>
-    <pre class="code-block"><code class="lang-js">${ngCode}</code></pre>
+<section class="site-section" data-reveal>
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Frameworks</span><span class="lang-en">Frameworks</span></p>
+    <h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
     <p>
-      <span class="lang-fr">Le pipeline Style Dictionary génère aussi un thème Material Angular M3 à partir des mêmes tokens — clone-only, pas publié sur npm (voir le tableau des plateformes de sortie plus bas).</span>
-      <span class="lang-en">The Style Dictionary pipeline also generates a Material Angular M3 theme from the same tokens — clone-only, not published to npm (see the output-platforms table below).</span>
+      <span class="lang-fr"><strong>Optionnel</strong> — uniquement si vous utilisez Angular, Vue ou React. Les composants sont des Web Components natifs ; sinon, passez directement aux <a href="#plateformes">plateformes de sortie</a>.</span>
+      <span class="lang-en"><strong>Optional</strong> — only if you use Angular, Vue, or React. Components are native Web Components; otherwise, skip straight to <a href="#plateformes">output platforms</a>.</span>
     </p>
-    <pre class="code-block"><code class="lang-css">${ngScssCode}</code></pre>
-  </div>
-  <div slot="vue" class="framework-panel">
-    <p><span class="lang-fr"><strong>Configuration requise :</strong> déclarez le préfixe <code>agtc-</code> comme élément personnalisé dans la config du compilateur, pour que Vue ne tente pas de le résoudre comme un composant Vue.</span>
-    <span class="lang-en"><strong>Required configuration:</strong> declare the <code>agtc-</code> prefix as a custom element in the compiler config, so Vue doesn't try to resolve it as a Vue component.</span></p>
-    <pre class="code-block"><code class="lang-js">${vueCode}</code></pre>
-  </div>
-  <div slot="react" class="framework-panel">
-    <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune en React 19+ (support natif). Avant 19, les attributs simples fonctionnent déjà nativement — seules les propriétés complexes (objets, tableaux) nécessitent une assignation via <code>ref</code>.</span>
-    <span class="lang-en"><strong>Required configuration:</strong> none on React 19+ (native support). Before 19, simple attributes already work natively — only complex properties (objects, arrays) need a <code>ref</code>-based assignment.</span></p>
-    <pre class="code-block"><code class="lang-jsx">${reactCode}</code></pre>
-  </div>
-  <div slot="vanilla" class="framework-panel">
-    <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune — import direct, comportement natif du navigateur.</span>
-    <span class="lang-en"><strong>Required configuration:</strong> none — direct import, native browser behavior.</span></p>
-  </div>
-</agtc-tabs>
-<script>
-  (function () {
-    var el = document.getElementById('framework-tabs');
-    if (el) {
-      el.tabs = [
-        { value: 'angular', label: 'Angular' },
-        { value: 'vue', label: 'Vue' },
-        { value: 'react', label: 'React' },
-        { value: 'vanilla', label: 'Vanilla / Other' },
-      ];
-    }
-  })();
-</script>
 
-<h2 id="plateformes"><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></h2>
-<p>
-  <span class="lang-fr">Une source JSON, compilée par Style Dictionary vers six cibles. <code>css</code>, <code>js</code> et <code>tailwind</code> sont publiés sur npm — ce sont les seuls formats qu'un projet JS/web installe via un gestionnaire de paquets. <code>angular</code>, <code>ios</code> et <code>android</code> restent clone-only : ce sont des sorties pour des écosystèmes qui ne consomment pas npm (Swift Package Manager, Gradle) — les publier sur npm ne les rendrait pas plus faciles à utiliser.</span>
-  <span class="lang-en">One JSON source, compiled by Style Dictionary to six targets. <code>css</code>, <code>js</code>, and <code>tailwind</code> are published to npm — the only formats a JS/web project installs via a package manager. <code>angular</code>, <code>ios</code>, and <code>android</code> stay clone-only: these are outputs for ecosystems that don't consume npm (Swift Package Manager, Gradle) — publishing them to npm wouldn't make them any easier to use.</span>
-</p>
-<table>
-  <thead><tr>
-    <th><span class="lang-fr">Plateforme</span><span class="lang-en">Platform</span></th>
-    <th><span class="lang-fr">Import</span><span class="lang-en">Import</span></th>
-    <th><span class="lang-fr">Source</span><span class="lang-en">Source</span></th>
-    <th><span class="lang-fr">Format</span><span class="lang-en">Format</span></th>
-  </tr></thead>
-  <tbody>${platformRows}</tbody>
-</table>
+    <agtc-tabs id="framework-tabs" label="Choix du framework / Framework choice" selected="angular">
+      <div slot="angular" class="framework-panel">
+        ${frameworkPanelHead('angular', 'Angular')}
+        <p><span class="lang-fr"><strong>Configuration requise :</strong> ajoutez <code>CUSTOM_ELEMENTS_SCHEMA</code> au module (ou aux <code>schemas</code> d'un composant standalone). Le binding de propriétés et d'événements est ensuite natif.</span>
+        <span class="lang-en"><strong>Required configuration:</strong> add <code>CUSTOM_ELEMENTS_SCHEMA</code> to the module (or to a standalone component's <code>schemas</code>). Property and event binding is then native.</span></p>
+        <pre class="code-block"><code class="lang-js">${ngCode}</code></pre>
+        <p>
+          <span class="lang-fr">Le pipeline Style Dictionary génère aussi un thème Material Angular M3 à partir des mêmes tokens — clone-only, pas publié sur npm (voir le tableau des plateformes de sortie plus bas).</span>
+          <span class="lang-en">The Style Dictionary pipeline also generates a Material Angular M3 theme from the same tokens — clone-only, not published to npm (see the output-platforms table below).</span>
+        </p>
+        <pre class="code-block"><code class="lang-css">${ngScssCode}</code></pre>
+      </div>
+      <div slot="vue" class="framework-panel">
+        ${frameworkPanelHead('vue', 'Vue')}
+        <p><span class="lang-fr"><strong>Configuration requise :</strong> déclarez le préfixe <code>agtc-</code> comme élément personnalisé dans la config du compilateur, pour que Vue ne tente pas de le résoudre comme un composant Vue.</span>
+        <span class="lang-en"><strong>Required configuration:</strong> declare the <code>agtc-</code> prefix as a custom element in the compiler config, so Vue doesn't try to resolve it as a Vue component.</span></p>
+        <pre class="code-block"><code class="lang-js">${vueCode}</code></pre>
+      </div>
+      <div slot="react" class="framework-panel">
+        ${frameworkPanelHead('react', 'React')}
+        <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune en React 19+ (support natif). Avant 19, les attributs simples fonctionnent déjà nativement — seules les propriétés complexes (objets, tableaux) nécessitent une assignation via <code>ref</code>.</span>
+        <span class="lang-en"><strong>Required configuration:</strong> none on React 19+ (native support). Before 19, simple attributes already work natively — only complex properties (objects, arrays) need a <code>ref</code>-based assignment.</span></p>
+        <pre class="code-block"><code class="lang-jsx">${reactCode}</code></pre>
+      </div>
+      <div slot="vanilla" class="framework-panel">
+        ${frameworkPanelHeadIcon('code', 'Vanilla / Other')}
+        <p><span class="lang-fr"><strong>Configuration requise :</strong> aucune — import direct, comportement natif du navigateur.</span>
+        <span class="lang-en"><strong>Required configuration:</strong> none — direct import, native browser behavior.</span></p>
+      </div>
+    </agtc-tabs>
+    <script>
+      (function () {
+        var el = document.getElementById('framework-tabs');
+        if (el) {
+          el.tabs = [
+            { value: 'angular', label: 'Angular' },
+            { value: 'vue', label: 'Vue' },
+            { value: 'react', label: 'React' },
+            { value: 'vanilla', label: 'Vanilla / Other' },
+          ];
+        }
+      })();
+    </script>
+  </div>
+</section>
 
-<h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
-<p>
-  <span class="lang-fr">Agentica n'est pas qu'une bibliothèque visuelle : c'est un jeu de règles lisibles par machine. Un agent lit les contrats de composants, les règles de gouvernance et les ADRs pour appliquer vos décisions sans improviser — et escalade vers un humain quand c'est requis.</span>
-  <span class="lang-en">Agentica is more than a visual library: it is a machine-readable rule set. An agent reads component contracts, governance rules and ADRs to apply your decisions without improvising — and escalates to a human when required.</span>
-</p>
-<div class="hero-actions">
-  <a href="agents/index.html" class="agtc-button primary">
-    <span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span>
-  </a>
-  <a href="components/index.html" class="agtc-button secondary">
-    <span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span>
-  </a>
-  <a href="${REPO}" target="_blank" rel="noopener noreferrer" class="agtc-button ghost">
-    ${icon('github', 16)} <span class="lang-fr">Code source</span><span class="lang-en">Source code</span>
-  </a>
-</div>`;
+<section class="site-section section-tint" id="plateformes" data-reveal>
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></p>
+    <h2><span class="lang-fr">Une source, six cibles</span><span class="lang-en">One source, six targets</span></h2>
+    <p>
+      <span class="lang-fr">Une source JSON, compilée par Style Dictionary vers six cibles. <code>css</code>, <code>js</code> et <code>tailwind</code> sont publiés sur npm — ce sont les seuls formats qu'un projet JS/web installe via un gestionnaire de paquets. <code>angular</code>, <code>ios</code> et <code>android</code> restent clone-only : ce sont des sorties pour des écosystèmes qui ne consomment pas npm (Swift Package Manager, Gradle) — les publier sur npm ne les rendrait pas plus faciles à utiliser.</span>
+      <span class="lang-en">One JSON source, compiled by Style Dictionary to six targets. <code>css</code>, <code>js</code>, and <code>tailwind</code> are published to npm — the only formats a JS/web project installs via a package manager. <code>angular</code>, <code>ios</code>, and <code>android</code> stay clone-only: these are outputs for ecosystems that don't consume npm (Swift Package Manager, Gradle) — publishing them to npm wouldn't make them any easier to use.</span>
+    </p>
+    <div class="platform-logos-grid">${platformLogoItems}</div>
+    <div class="table-wrap" tabindex="0"><table>
+      <thead><tr>
+        <th><span class="lang-fr">Plateforme</span><span class="lang-en">Platform</span></th>
+        <th><span class="lang-fr">Import</span><span class="lang-en">Import</span></th>
+        <th><span class="lang-fr">Source</span><span class="lang-en">Source</span></th>
+        <th><span class="lang-fr">Format</span><span class="lang-en">Format</span></th>
+      </tr></thead>
+      <tbody>${platformRows}</tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="site-section section-final" data-reveal>
+  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="kicker"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></p>
+    <h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
+    <p>
+      <span class="lang-fr">Agentica n'est pas qu'une bibliothèque visuelle : c'est un jeu de règles lisibles par machine. Un agent lit les contrats de composants, les règles de gouvernance et les ADRs pour appliquer vos décisions sans improviser — et escalade vers un humain quand c'est requis.</span>
+      <span class="lang-en">Agentica is more than a visual library: it is a machine-readable rule set. An agent reads component contracts, governance rules and ADRs to apply your decisions without improvising — and escalates to a human when required.</span>
+    </p>
+    <div class="hero-actions" style="justify-content:center">
+      <a href="agents/index.html" class="cta-btn cta-btn-primary">
+        <span class="lang-fr">Documentation agents →</span><span class="lang-en">Agent documentation →</span>
+      </a>
+      <a href="components/index.html" class="cta-btn cta-btn-secondary">
+        <span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span>
+      </a>
+      <a href="${REPO}" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-ghost">
+        ${icon('github', 16)} <span class="lang-fr">Code source</span><span class="lang-en">Source code</span>
+      </a>
+    </div>
+  </div>
+</section>
+`;
 
   write(path.join(DIST, 'get-started.html'), layout({
     title: 'Get started',
     pageTitle: 'Get started with Agentica',
     depth: 0,
-    sidebar: null,
-    fullWidth: false,
+    sidebar: sidebarSite('', 'get-started.html'),
+    fullWidth: true,
     context: 'marketing',
     body,
   }));

@@ -137,7 +137,7 @@
 <p>Adopt a <strong><code>no-visited-nav</code></strong> governance rule (see <code>.claude/rules/no-visited-nav.md</code>):</p>
 <blockquote><p>Every <strong>navigation element</strong> realigns its <code>:visited</code> color with the unvisited state. The rule applies to **the site, the <code>agtc-*</code> components, and consuming applications**.</p></blockquote>
 <h3>Rule scope</h3>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ In scope (no visited state)</th><th>❌ Out of scope (visited state allowed)</th></tr></thead><tbody><tr><td>Header nav (+ CTA), sidebar, TOC, tabs, breadcrumbs, pagination, menus, header/footer icon-buttons, footer nav links</td><td><strong>Content</strong> links in prose, result/archive lists where "already read" helps the user</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ In scope (no visited state)</th><th>❌ Out of scope (visited state allowed)</th></tr></thead><tbody><tr><td>Header nav (+ CTA), sidebar, TOC, tabs, breadcrumbs, pagination, menus, header/footer icon-buttons, footer nav links</td><td><strong>Content</strong> links in prose, result/archive lists where "already read" helps the user</td></tr></tbody></table></div>
 <blockquote><p>Sorting criterion: if the element is used to <strong>move around</strong> the product → navigation → no visited state. If it points to a <strong>resource to read</strong> → visited state allowed.</p></blockquote>
 <h3>Reference implementation (site)</h3>
 <p>A single, commented CSS block in <code>site/build.js</code>, neutralizing <code>:visited</code> on every navigation surface via a <strong>semantic token</strong> (never a hardcoded value), declared <strong>before</strong> the <code>:hover</code>/<code>.active</code> rules (at equal specificity, the later selector wins over a visited AND hovered link). The pre-existing piecemeal <code>:visited</code> declarations (<code>.top-nav</code>, <code>.github-btn</code>) are removed in favor of this consolidated block.</p>
@@ -168,7 +168,7 @@
 <p>Adoption d'une règle de gouvernance <strong><code>no-visited-nav</code></strong> (voir <code>.claude/rules/no-visited-nav.md</code>) :</p>
 <blockquote><p>Tout <strong>élément de navigation</strong> réaligne sa couleur <code>:visited</code> sur l'état non-visité. La règle s'applique au **site, aux composants <code>agtc-*</code> et aux applications consommatrices**.</p></blockquote>
 <h3>Périmètre de la règle</h3>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ Concerné (pas d'état visité)</th><th>❌ Non concerné (état visité autorisé)</th></tr></thead><tbody><tr><td>Nav header (+ CTA), sidebar, TOC, onglets, fil d'Ariane, pagination, menus, boutons-icônes header/footer, liens de pied de navigation</td><td>Liens de <strong>contenu</strong> dans la prose, listes de résultats/archives où « déjà lu » aide l'utilisateur</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>✅ Concerné (pas d'état visité)</th><th>❌ Non concerné (état visité autorisé)</th></tr></thead><tbody><tr><td>Nav header (+ CTA), sidebar, TOC, onglets, fil d'Ariane, pagination, menus, boutons-icônes header/footer, liens de pied de navigation</td><td>Liens de <strong>contenu</strong> dans la prose, listes de résultats/archives où « déjà lu » aide l'utilisateur</td></tr></tbody></table></div>
 <blockquote><p>Critère de tri : si l'élément sert à <strong>se déplacer</strong> dans le produit → navigation → pas d'état visité. S'il pointe vers une <strong>ressource à lire</strong> → état visité autorisé.</p></blockquote>
 <h3>Implémentation de référence (site)</h3>
 <p>Bloc CSS unique et commenté dans <code>site/build.js</code>, neutralisant <code>:visited</code> sur toutes les surfaces de navigation via <strong>token sémantique</strong> (jamais de valeur en dur), déclaré <strong>avant</strong> les règles <code>:hover</code>/<code>.active</code> (à spécificité égale, le sélecteur le plus tardif l'emporte sur un lien visité ET survolé). Les déclarations <code>:visited</code> ponctuelles préexistantes (<code>.top-nav</code>, <code>.github-btn</code>) sont supprimées au profit de ce bloc consolidé.</p>
@@ -248,4 +248,5 @@
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>
