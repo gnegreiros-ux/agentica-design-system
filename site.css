@@ -664,6 +664,8 @@ html[data-lang="en"] .lang-fr{display:none}
 
 /* ── FRAMEWORK TABS PANELS ──────────────────────────────── */
 .framework-panel{padding:var(--agtc-space-1) 0}
+.framework-panel-head{display:flex;align-items:center;gap:var(--agtc-space-2);margin-bottom:var(--agtc-space-3);color:var(--agtc-semantic-color-action-primary)}
+.framework-panel-head strong{font-size:var(--agtc-semantic-typography-heading-5-size);color:var(--agtc-semantic-color-text-primary)}
 .framework-panel .code-label{font-size:var(--agtc-semantic-typography-detail-size);font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-text-secondary);margin:var(--agtc-space-4) 0 var(--agtc-space-1)}
 .framework-panel .code-label:first-of-type{margin-top:0}
 
@@ -2010,6 +2012,16 @@ body[data-context="marketing"] .role-card::after{
 .page-content{flex:1;overflow:hidden;background:var(--agtc-semantic-color-background-page)}
 .page-content .site-section{padding-top:var(--agtc-semantic-marketing-space-section-breathing,96px)}
 .page-content .simple-hero{padding-top:3rem}
+/* h2 in the .content docs layout carries a decorative top rule (long-article look) —
+   neutralized here so h2 reads as a plain section title inside shell bands. */
+.page-content .site-section h2{border-top:none;padding-top:0;margin-top:0}
+/* Alternating background band — breaks the single-tone "long article" look on
+   content-heavy marketing pages (get-started.html) without a second gradient
+   (contexts-utilisation.md: max 1 gradient element per page). */
+.section-tint{background:var(--agtc-semantic-color-background-subtle)}
+/* .platform-logo-label is tuned for a dark band (text-on-dark-muted, see
+   .section-secondary usage) — override for the light .section-tint reuse. */
+.section-tint .platform-logo-label{color:var(--agtc-semantic-color-text-secondary)}
 
 /* Stats hero (réutilisées depuis rd-*) */
 .hero-stats{

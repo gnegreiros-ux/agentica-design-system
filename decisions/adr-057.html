@@ -134,7 +134,7 @@
 <hr>
 <h2>Decision</h2>
 <p>Formalize two usage contexts declared via a <code>data-context</code> attribute on <code>&lt;body&gt;</code>:</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribute</th><th>Context</th><th>Intent</th></tr></thead><tbody><tr><td>*(absent)* or <code>data-context="product"</code></td><td>Product Mode (SaaS)</td><td>Enable action — clarity, density, repeatability</td></tr><tr><td><code>data-context="marketing"</code></td><td>Marketing Mode (Narrative)</td><td>Communicate a vision — breathing room, editorial hierarchy</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribute</th><th>Context</th><th>Intent</th></tr></thead><tbody><tr><td>*(absent)* or <code>data-context="product"</code></td><td>Product Mode (SaaS)</td><td>Enable action — clarity, density, repeatability</td></tr><tr><td><code>data-context="marketing"</code></td><td>Marketing Mode (Narrative)</td><td>Communicate a vision — breathing room, editorial hierarchy</td></tr></tbody></table></div>
 <h3>Tokens added</h3>
 <p><strong>Primitives</strong> (<code>tokens/primitives.json</code>):</p>
 <ul><li><code>primitive.fontSize.6xl</code> — 60px (marketing display title)</li><li><code>primitive.space.24</code> — 96px (section breathing room)</li><li><code>primitive.space.30</code> — 120px (hero gap)</li></ul>
@@ -146,7 +146,7 @@
 <ul><li><code>index.html</code> (home) — introduces the vision</li><li><code>get-started.html</code> — onboarding, convinces</li><li><code>agents/index.html</code> — explains the agentic system</li></ul>
 <hr>
 <h2>Alternatives considered</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejected because</th></tr></thead><tbody><tr><td>Per-page JSON config file</td><td>Over-engineering for 3 pages; an HTML attribute is readable by both agents and CSS</td></tr><tr><td>Two separate CSS files (product.css / marketing.css)</td><td>Duplication; an attribute is enough to override the variables</td></tr><tr><td>CSS class on <code>&lt;body&gt;</code></td><td>A <code>data-</code> attribute is more semantically correct for a page state (not an interaction state)</td></tr><tr><td>Separate component tokens per mode</td><td>Would violate the approval rule (tokens/component.json) with no real benefit</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejected because</th></tr></thead><tbody><tr><td>Per-page JSON config file</td><td>Over-engineering for 3 pages; an HTML attribute is readable by both agents and CSS</td></tr><tr><td>Two separate CSS files (product.css / marketing.css)</td><td>Duplication; an attribute is enough to override the variables</td></tr><tr><td>CSS class on <code>&lt;body&gt;</code></td><td>A <code>data-</code> attribute is more semantically correct for a page state (not an interaction state)</td></tr><tr><td>Separate component tokens per mode</td><td>Would violate the approval rule (tokens/component.json) with no real benefit</td></tr></tbody></table></div>
 <hr>
 <h2>Consequences</h2>
 <ul><li><strong>Machine-readable rule</strong>: <code>.claude/rules/contexts-utilisation.md</code> — loaded every session.</li><li><strong>Guideline</strong>: <code>guidelines/foundations/contextes.md</code> — human + agent reference.</li><li><strong>DESIGN.md</strong>: section 7 added.</li><li><strong>Site</strong>: <code>foundations/contextes.html</code> added to the sidebar.</li><li><strong>Governance</strong>: <code>semantic.marketing.*</code> tokens follow the semantic-token TCR rule (Design</li></ul>
@@ -163,7 +163,7 @@
 <hr>
 <h2>Décision</h2>
 <p>Formaliser deux contextes d'utilisation déclarés par un attribut <code>data-context</code> sur <code>&lt;body&gt;</code> :</p>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribut</th><th>Contexte</th><th>Intention</th></tr></thead><tbody><tr><td>*(absent)* ou <code>data-context="product"</code></td><td>Mode Produit (SaaS)</td><td>Permettre d'agir — clarté, densité, répétabilité</td></tr><tr><td><code>data-context="marketing"</code></td><td>Mode Marketing (Narratif)</td><td>Communiquer une vision — respiration, hiérarchie éditoriale</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribut</th><th>Contexte</th><th>Intention</th></tr></thead><tbody><tr><td>*(absent)* ou <code>data-context="product"</code></td><td>Mode Produit (SaaS)</td><td>Permettre d'agir — clarté, densité, répétabilité</td></tr><tr><td><code>data-context="marketing"</code></td><td>Mode Marketing (Narratif)</td><td>Communiquer une vision — respiration, hiérarchie éditoriale</td></tr></tbody></table></div>
 <h3>Tokens ajoutés</h3>
 <p><strong>Primitifs</strong> (<code>tokens/primitives.json</code>) :</p>
 <ul><li><code>primitive.fontSize.6xl</code> — 60px (titre display marketing)</li><li><code>primitive.space.24</code> — 96px (respiration section)</li><li><code>primitive.space.30</code> — 120px (gap hero)</li></ul>
@@ -175,7 +175,7 @@
 <ul><li><code>index.html</code> (home) — introduit la vision</li><li><code>get-started.html</code> — onboarding, convainc</li><li><code>agents/index.html</code> — explique le système agentique</li></ul>
 <hr>
 <h2>Alternatives considérées</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejetée parce que</th></tr></thead><tbody><tr><td>Fichier de config JSON par page</td><td>Sur-ingénierie pour 3 pages ; attribut HTML lisible par les agents et les CSS</td></tr><tr><td>Deux CSS séparés (product.css / marketing.css)</td><td>Duplication ; un attribut suffit pour surcharger les variables</td></tr><tr><td>Classe CSS sur <code>&lt;body&gt;</code></td><td>Attribut <code>data-</code> plus sémantique pour un état de page (pas un état d'interaction)</td></tr><tr><td>Tokens de composant séparés par mode</td><td>Violerait la règle d'approbation (tokens/component.json) sans gain réel</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejetée parce que</th></tr></thead><tbody><tr><td>Fichier de config JSON par page</td><td>Sur-ingénierie pour 3 pages ; attribut HTML lisible par les agents et les CSS</td></tr><tr><td>Deux CSS séparés (product.css / marketing.css)</td><td>Duplication ; un attribut suffit pour surcharger les variables</td></tr><tr><td>Classe CSS sur <code>&lt;body&gt;</code></td><td>Attribut <code>data-</code> plus sémantique pour un état de page (pas un état d'interaction)</td></tr><tr><td>Tokens de composant séparés par mode</td><td>Violerait la règle d'approbation (tokens/component.json) sans gain réel</td></tr></tbody></table></div>
 <hr>
 <h2>Conséquences</h2>
 <ul><li><strong>Règle machine-readable</strong> : <code>.claude/rules/contexts-utilisation.md</code> — chargée à chaque session.</li><li><strong>Guideline</strong> : <code>guidelines/foundations/contextes.md</code> — référence humain + agent.</li><li><strong>DESIGN.md</strong> : section 7 ajoutée.</li><li><strong>Site</strong> : <code>foundations/contextes.html</code> ajoutée à la sidebar.</li><li><strong>Gouvernance</strong> : les tokens <code>semantic.marketing.*</code> suivent la règle TCR des tokens sémantiques</li></ul>
@@ -239,4 +239,5 @@
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>

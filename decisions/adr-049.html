@@ -140,7 +140,7 @@
 <blockquote><p><strong>Change in resolved value: NONE.</strong> The final value is strictly identical (<code>var(--agtc-component-card-elevated-shadow)</code> → <code>var(--agtc-semantic-shadow-card)</code> → same <code>rgba</code>). A pure indirection refactor — <strong>zero visual change</strong>.</p></blockquote>
 <hr>
 <h2>Scope</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td><code>semantic.shadow.card</code> (new); <code>component.card.elevated.shadow</code> → semantic reference</td><td>Any other shadow (already tokenized by ADR-046)</td></tr><tr><td>COMP mirror + the card doc's display line in <code>site/build.js</code></td><td>Modifying the shadow value (unchanged)</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded</th></tr></thead><tbody><tr><td><code>semantic.shadow.card</code> (new); <code>component.card.elevated.shadow</code> → semantic reference</td><td>Any other shadow (already tokenized by ADR-046)</td></tr><tr><td>COMP mirror + the card doc's display line in <code>site/build.js</code></td><td>Modifying the shadow value (unchanged)</td></tr></tbody></table></div>
 <hr>
 <h2>Rejected alternatives</h2>
 <ul><li><strong>Reuse <code>shadow.raised</code> for the resting card</strong>: <code>raised</code> (4/16px) is a stronger</li></ul>
@@ -165,7 +165,7 @@
 <blockquote><p><strong>Changement de valeur résolue = AUCUN.</strong> La valeur finale est strictement identique (<code>var(--agtc-component-card-elevated-shadow)</code> → <code>var(--agtc-semantic-shadow-card)</code> → même <code>rgba</code>). Refactoring d'indirection pur — <strong>zéro changement visuel</strong>.</p></blockquote>
 <hr>
 <h2>Périmètre</h2>
-<div class="table-wrap" tabindex="0"><div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu</th></tr></thead><tbody><tr><td><code>semantic.shadow.card</code> (nouveau) ; <code>component.card.elevated.shadow</code> → référence sémantique</td><td>Toute autre ombre (déjà tokenisée par ADR-046)</td></tr><tr><td>Miroir COMP + ligne d'affichage de la doc carte dans <code>site/build.js</code></td><td>Modification de la valeur d'ombre (inchangée)</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu</th></tr></thead><tbody><tr><td><code>semantic.shadow.card</code> (nouveau) ; <code>component.card.elevated.shadow</code> → référence sémantique</td><td>Toute autre ombre (déjà tokenisée par ADR-046)</td></tr><tr><td>Miroir COMP + ligne d'affichage de la doc carte dans <code>site/build.js</code></td><td>Modification de la valeur d'ombre (inchangée)</td></tr></tbody></table></div>
 <hr>
 <h2>Alternatives rejetées</h2>
 <ul><li><strong>Réutiliser <code>shadow.raised</code> pour la carte au repos</strong> : <code>raised</code> (4/16px) est une élévation plus</li></ul>
@@ -236,4 +236,5 @@
 </button>
 <script src="../site.js"></script>
 </body>
+
 </html>
