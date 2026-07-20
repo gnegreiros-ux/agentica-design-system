@@ -7587,7 +7587,7 @@ useEffect(() => {
   </div>
 </section>
 
-<section class="site-section section-tint" data-reveal>
+<section class="site-section section-tint">
   <div class="shell">
     <p class="kicker"><span class="lang-fr">Démarrage rapide</span><span class="lang-en">Quickstart</span></p>
     <agtc-banner variant="info">
@@ -7607,7 +7607,7 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
-<section class="site-section" data-reveal>
+<section class="site-section">
   <div class="shell">
     <p class="kicker"><span class="lang-fr">Ce que vous obtenez</span><span class="lang-en">What you get</span></p>
     <h2 class="first"><span class="lang-fr">Trois niveaux, un contrat</span><span class="lang-en">Three levels, one contract</span></h2>
@@ -7631,7 +7631,7 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
-<section class="site-section section-tint" id="steps" data-reveal>
+<section class="site-section section-tint" id="steps">
   <div class="shell">
     <p class="kicker"><span class="lang-fr">Trois étapes</span><span class="lang-en">Three steps</span></p>
     <h2><span class="lang-fr">De zéro à intégré</span><span class="lang-en">From zero to integrated</span></h2>
@@ -7708,7 +7708,7 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
-<section class="site-section" data-reveal>
+<section class="site-section">
   <div class="shell">
     <p class="kicker"><span class="lang-fr">Frameworks</span><span class="lang-en">Frameworks</span></p>
     <h2><span class="lang-fr">Intégration par framework</span><span class="lang-en">Framework integration</span></h2>
@@ -7763,7 +7763,7 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
-<section class="site-section section-tint" id="plateformes" data-reveal>
+<section class="site-section section-tint" id="plateformes">
   <div class="shell">
     <p class="kicker"><span class="lang-fr">Plateformes de sortie</span><span class="lang-en">Output platforms</span></p>
     <h2><span class="lang-fr">Une source, six cibles</span><span class="lang-en">One source, six targets</span></h2>
@@ -7784,7 +7784,7 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
-<section class="site-section section-final" data-reveal>
+<section class="site-section section-final">
   <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></p>
     <h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
