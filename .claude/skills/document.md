@@ -89,7 +89,13 @@ Run whatever subset of these actually applies to what was touched in Step 3:
 - `node site/build.js` — required if any site page or the changelog changed;
   confirm 0 orphaned CSS variables and no build error
 - `npm run lang-audit` — required if any bilingual site content was added or a
-  non-site file with English-only requirements was touched
+  non-site file with English-only requirements was touched. Run it **after**
+  `git add` on any new file, not before: the script scans `git ls-files`
+  (tracked files only), so a new untracked file passes a pre-add local run
+  clean and only fails once CI sees it as tracked — this exact gap shipped a
+  real failure once, from a French GitHub Projects status value quoted
+  verbatim in this skill's own report-format example below, added to a new
+  file and never re-scanned locally after staging
 - Structural HTML validation on any page whose template changed (balanced tags,
   no orphaned wrapper divs — see the `get-started.html` table-wrap incident for why
   this matters even when the build script reports success)
@@ -116,7 +122,7 @@ before staging, committing, or pushing anything — exactly like `quality-gate.m
 
 ### Documentation surfaces checked
 - [x] Site changelog — added 3 bullets under "npm publication" (Unreleased)
-- [x] GitHub Projects — ticket #NNN created/updated, status → Terminé
+- [x] GitHub Projects — ticket #NNN created/updated, status → Terminé <!-- lang-audit-ignore: literal GitHub Projects Status field value, which is French in this project -->
 - [ ] guidelines/components/*.md — N/A, no component behavior changed
 - [ ] decisions/ADR-0XX.md — N/A, no new architectural decision
 - [x] packages/tokens/README.md — N/A, already up to date
