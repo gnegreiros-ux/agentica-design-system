@@ -7823,6 +7823,15 @@ function buildChangelog() {
   // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
   const versions = [
     {
+      id: 'v0-2-1', ver: 'v0.2.1', date: '2026-07-20', badge: {fr:'Non lancée',en:'Unreleased'},
+      sections: [
+        { fr:'Gouvernance', en:'Governance', items:[
+          {fr:'Protection de branche configurée sur <code>main</code> et <code>develop</code> : PR obligatoire, check <code>lang-audit</code> requis, force-push et suppression bloqués — 0 approbation exigée tant que le dépôt a un seul mainteneur (auto-approbation impossible sur GitHub), avec bascule prévue vers 1/2 approbations dès l\'arrivée d\'un second contributeur (ADR-076)',en:'Branch protection configured on <code>main</code> and <code>develop</code>: PR required, <code>lang-audit</code> check required, force-push and deletion blocked — 0 required approvals while the repository has a single maintainer (GitHub cannot self-approve a PR), with a planned move to 1/2 approvals once a second contributor joins (ADR-076)'},
+          {fr:'Issue #9 (révision visuelle automatique, ouverte depuis le 2026-07-14) fermée : les snapshots des composants concernés avaient déjà été resynchronisés dans <code>70b44fa</code>, CI Playwright verte depuis',en:'Issue #9 (automatic visual review, open since 2026-07-14) closed: the affected components\' snapshots had already been re-synced in <code>70b44fa</code>, Playwright CI green since'},
+        ]},
+      ],
+    },
+    {
       id: 'v0-2-0', ver: 'v0.2.0', date: '2026-07-20', badge: {fr:'Bêta',en:'Beta'},
       sections: [
         { fr:'Tokens — Dark mode dual-mode', en:'Tokens — Dark mode dual-mode', items:[

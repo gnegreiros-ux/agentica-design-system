@@ -81,8 +81,21 @@ Same format as commits: `[type]([scope]): [description]`
 
 ## Protection rules
 
+**Current state (configured 2026-07-20, ADR-076):** `main` and `develop` both require
+a PR (no direct push), the `lang-audit` status check green, and block force-push/branch
+deletion — but **0 approving reviews required** on both, since `gnegreiros-ux` is
+currently the repository's sole collaborator and GitHub cannot self-approve a PR.
+
+**Target state once a second collaborator exists** (the rule this section originally
+described, restore verbatim per ADR-076's trigger clause):
 - `main`: merge only via PR + 2 approvals + green CI
 - `develop`: merge only via PR + 1 approval + green CI
+
+Other CI checks (`Playwright`, `build-and-deploy`) are not yet required checks — they
+only trigger on `push` to `main` today, not on `pull_request` (see ADR-076). Making them
+blocking pre-merge gates requires first adding a `pull_request` trigger to
+`playwright.yml`, a separate decision not yet made.
+
 - Any PR modifying `tokens/component.json` requires Principal Designer approval
 
 ---

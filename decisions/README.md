@@ -138,6 +138,7 @@ decisions that were already settled.
 | [ADR-073](ADR-073-npm-scope-correction.md) | npm scope correction: `@agentica` → `@agentica-ds` (amends ADR-072) | 2026-07-16 | ✅ Active |
 | [ADR-074](ADR-074-npm-publish-ci-workflow.md) | Automated npm publishing via `changesets/action` in CI | 2026-07-17 | ✅ Active |
 | [ADR-075](ADR-075-english-filenames-retroactive-rename.md) | Retroactive English filenames for translated documents (amends ADR-070) | 2026-07-18 | ✅ Active |
+| [ADR-076](ADR-076-branch-protection-solo-maintainer.md) | Branch protection on `main`/`develop` with 0 required approvals (solo maintainer) | 2026-07-20 | ✅ Active |
 
 ---
 
