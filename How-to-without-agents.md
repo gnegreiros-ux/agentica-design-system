@@ -56,6 +56,7 @@ never a conversation history with an agent.
 | Compile tokens | `npm run tokens` |
 | Rebuild the site | `node site/build.js` |
 | Token audit | `node scripts/audit-tokens.js --ci` |
+| English-only content audit | `npm run lang-audit` |
 | Accessibility audit | `npm run axe` |
 | Visual/E2E tests | `npx playwright test --project=chromium` |
 | Chromatic tests | `npm run chromatic` |
@@ -67,22 +68,27 @@ ran them for convenience; a human runs them identically.
 
 **Script:** `scripts/continuity/1-2-manual-quality-gate.sh`
 
-The 8 quality gate pipelines, translated into human steps:
+The 9 quality gate pipelines, translated into human steps:
 
 1. **Token consistency** → `node scripts/audit-tokens.js --ci` + manual greps from
    `pipelines/tokens-audit.md` (hardcoded hex/px values, ghost references, 4px grid,
    Minor Third scale)
-2. **WCAG** → `npm run axe` + manual contrast check (WebAIM Contrast Checker)
-3. **UX pattern review (ADR-036)** → consult the 5 sources in
+2. **English-only content (ADR-070/071/075)** → `npm run lang-audit` (repo-wide scan)
+   + a manual read-through of any new bilingual site copy — the automated scan can't
+   catch a French string stuck behind a `lang-fr`/`lang-en` toggle bug, only a real
+   render can (see `pipelines/language-audit.md`)
+3. **WCAG** → `npm run axe` + manual contrast check (WebAIM Contrast Checker)
+4. **UX pattern review (ADR-036)** → consult the 5 sources in
    `ux-patterns-sources.md` yourself, document the decision across the usual 6 surfaces —
    without an agent that "proposes," the human author proposes AND decides in the same step
-4. **ADR compliance** → manual greps listed in `pipelines/adr-conformity.md` (one per active ADR)
-5. **Missing ADR triggers** → answer the 4 questions from `pipelines/adr-triggers.md` yourself
-6. **Documentation** → the file checklist from `pipelines/docs.md`
-7. **Rebuild the site** → `node site/build.js`
-8. **Commit** → Conventional Commits format, never `--no-verify`
+5. **ADR compliance** → manual greps listed in `pipelines/adr-conformity.md` (one per active ADR)
+6. **Missing ADR triggers** → answer the 4 questions from `pipelines/adr-triggers.md` yourself
+7. **Documentation** → the file checklist from `pipelines/docs.md` (also the source list
+   behind the `/document` skill, unavailable without an agent — walk it by hand instead)
+8. **Rebuild the site** → `node site/build.js`
+9. **Commit** → Conventional Commits format, never `--no-verify`
 
-Steps 3 and 5 are steps of **pure human judgment** — no script can replace them,
+Steps 4 and 6 are steps of **pure human judgment** — no script can replace them,
 it can only remind that they must be done and block until they're confirmed.
 
 ### 1.3 Figma governance without Plugin API scripts

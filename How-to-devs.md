@@ -69,6 +69,10 @@ If a product team asks how to consume Agentica (not maintain it), point them to:
 # Orphaned tokens / ghost CSS variables
 node site/build.js   # validateCssVars() runs during the build, flags ghosts
 
+# English-only content policy (ADR-070/071/075) — active CI gate
+npm run lang-audit
+npx playwright test tests/functional/language.spec.js --project=chromium
+
 # WCAG accessibility — active CI pipeline (axe-core)
 # Triggers automatically on every push; check GitHub Actions runs
 
@@ -143,6 +147,14 @@ The hook displays a message if `components/` or `tokens/` changed since the last
 
 See `guidelines/foundations/testing.md` — starter kit for testing your product with the DS.
 
+### After finishing a chunk of work: `/document`
+
+Once a change is functionally done, run `/document` (`.claude/skills/document.md`)
+to catch up the documentation surfaces that live outside the files you just
+touched — GitHub Projects and the site changelog above all. It checks every row
+of `pipelines/docs.md`, writes the relevant ones, re-runs the build/tests, and
+proposes a commit — it never commits or pushes on its own.
+
 ---
 
 ## 4. Files to know
@@ -152,6 +164,7 @@ See `guidelines/foundations/testing.md` — starter kit for testing your product
 | `tokens/semantic.json` | Source of truth for UX intentions | Via TCR only |
 | `tokens/component.json` | UI contracts | Via TCR + approval |
 | `site/build.js` | Static site generator (CSS, HTML, JS) | On every layout or site component change |
+| `scripts/audit-language.js` | English-only content policy audit (`npm run lang-audit`) | If new French content is suspected outside the site's bilingual spans |
 | `.claude/rules/code-style.md` | CSS/HTML conventions — naming rules | If a new style rule is decided |
 | `.claude/rules/` | Rules and constraints for AI agents | If a new governance decision is made |
 | `AGENTS.md` | Agent router | If a new agent type is added |
