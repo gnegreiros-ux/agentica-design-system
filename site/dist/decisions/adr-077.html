@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Modular pre-commit quality gate — Agentica</title>
+<title>Enable `enforce_admins` on `main`/`develop` (amends ADR-076) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Modular pre-commit quality gate — Agentica">
+<meta property="og:title" content="Enable `enforce_admins` on `main`/`develop` (amends ADR-076) — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Modular pre-commit quality gate — Agentica">
+<meta name="twitter:title" content="Enable `enforce_admins` on `main`/`develop` (amends ADR-076) — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,120 +114,43 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-029</code>
+    <code class="adr-number">ADR-077</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">governance</span>
+    
   </div>
-  <h1 class="adr-page-title">Modular pre-commit quality gate</h1>
+  <h1 class="adr-page-title">Enable `enforce_admins` on `main`/`develop` (amends ADR-076)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-30</dd>
+      <dd>2026-07-20</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>ADR-027 introduced the concept of a pre-commit impact pipeline. However, the corresponding skill was too generic: it asked to "analyze impact" without precisely defining what that means.</p>
-<p><strong>Triggering incident:</strong> ADR-028 (Atkinson Hyperlegible Mono) was forgotten when the monospace font was added. The architectural decision was implemented without being documented — a direct violation of the system's governance principles.</p>
-<p><strong>Root cause:</strong> a vague checklist ("check for missing ADRs") with no explicit trigger matrix. An agent — or a human — can conscientiously go through a vague list and still miss a non-obvious item.</p>
-<hr>
+</div><h2>Context</h2>
+<p>ADR-076, merged earlier the same session, set <code>enforce_admins: false</code> on both <code>main</code> and <code>develop</code> — reasoned as an emergency safety valve for a solo maintainer with no second reviewer to fall back on.</p>
+<p>Within the same session, that valve was used unintentionally: a documentation commit (<code>c34df57</code>) was pushed directly to <code>develop</code> with <code>git push</code>, and GitHub reported <code>Bypassed rule violations for refs/heads/develop</code> — the PR-required rule was silently skipped because the admin bypass was available by default, not invoked deliberately. Investigating the incident also surfaced a second, independent gap: none of the repository's <code>push</code>-triggered CI workflows (<code>lang-audit</code> included) were scoped to <code>develop</code> at all (<code>branches: [main]</code> only), so even a non-bypassed direct push to <code>develop</code> would have shipped with zero CI validation.</p>
 <h2>Decision</h2>
-<p>Replace the monolithic pipeline with a <strong>modular quality gate</strong>:</p>
-<pre class="code-block"><code class="lang-text">.claude/skills/quality-gate.md          ← orchestrator
-.claude/skills/pipelines/
-├── tokens-audit.md                      ← ✅ active
-├── wcag.md                              ← ✅ active
-├── adr-conformity.md                    ← ✅ active
-├── adr-triggers.md                      ← ✅ active (trigger matrix)
-├── docs.md                              ← ✅ active
-├── site.md                              ← ✅ active
-├── commit.md                            ← ✅ active
-├── style-dictionary.md                  ← 🔜 planned
-├── storybook.md                         ← 🔜 planned
-├── chromatic.md                         ← 🔜 planned
-├── axe-core.md                          ← 🔜 planned
-└── playwright.md                        ← 🔜 planned</code></pre>
-<h3>Design principle</h3>
-<p><strong>Each pipeline is independent and has a standard interface:</strong></p>
-<ul><li>Explicit triggers (which files activate it)</li><li>Verifiable checks (no vague intent)</li><li>Clear status (<code>✅ Active</code> or <code>🔜 Planned</code>)</li><li>Execution command (when available)</li></ul>
-<p><strong>Adding a pipeline = creating a file.</strong> No modification of the orchestrator required.</p>
-<h3>Anti-omission ADR rule (the core issue)</h3>
-<p>The <code>adr-triggers.md</code> pipeline contains an explicit <strong>trigger matrix</strong>:</p>
-<blockquote><p>New font → typography ADR required. New component → component ADR required. etc.</p></blockquote>
-<p>This matrix makes forgetting an ADR structurally impossible if the pipeline is followed.</p>
-<hr>
+<p>1. <code>enforce_admins</code> is set to <code>true</code> on both <code>main</code> and <code>develop</code>. Direct pushes —    including by the repository admin — are rejected outright; every change,    admin or not, goes through a PR with <code>lang-audit</code> green. 2. <code>lang-audit.yml</code>'s <code>push</code> trigger is extended from <code>branches: [main]</code> to    <code>branches: [main, develop]</code> (PR #35), so a merge into <code>develop</code> is validated the    same way a merge into <code>main</code> already was, closing the CI gap independently of (1).</p>
+<p>This reverses the <code>enforce_admins: false</code> clause of ADR-076; every other clause of ADR-076 (0 required approvals, <code>lang-audit</code> as the sole required check, the trigger for moving to 1/2 approvals once a second collaborator exists) stands unchanged.</p>
 <h2>Rationale</h2>
-<h3>Why modular?</h3>
-<p>1. <strong>Extensibility</strong>: Style Dictionary, Storybook, Chromatic, axe-core, Playwright will be added progressively. A monolithic architecture would have required rewriting the pipeline on every addition.</p>
-<p>2. <strong>Traceability</strong>: Each pipeline has its own file, versioned separately. If a rule changes (e.g. WCAG 2.2 → 2.3), only one file is modified.</p>
-<p>3. <strong>Clarity for agents</strong>: An agent reads <code>adr-triggers.md</code> and knows exactly when to create an ADR — no room for interpretation.</p>
-<h3>Why stubs for inactive pipelines?</h3>
-<p>Anticipation of the project's evolution. The stubs:</p>
-<ul><li>Document the intent (what will be done)</li><li>Allow immediate activation (the commands are already prepared)</li><li>Clearly signal that these pipelines are not yet blocking</li></ul>
-<hr>
+<p>The premise behind ADR-076's <code>enforce_admins: false</code> — "an unconditional lock would have no safety valve" — assumed the bypass would be a deliberate, occasional emergency action. In practice, for a solo maintainer using ordinary <code>git push</code>, the bypass is silent and the default path, not an emergency one: nothing distinguishes a routine push from a genuine emergency, so the valve fires on routine work instead of being reserved for emergencies. Removing it costs nothing operationally, since 0 required approvals already means merging a self-authored PR is a single-click action — the discipline of branch → PR → merge is the only thing enforced, not review by a second person.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>A single checklist in one file</strong></td><td>Not extensible. Every added pipeline bloats the main file and creates merge conflicts.</td></tr><tr><td><strong>Automated bash script only</strong></td><td>Human approval is non-negotiable (ADR-004). A script can automate checks but not the decision.</td></tr><tr><td><strong>No structured pipeline</strong></td><td>Proven insufficient — the ADR-028 incident is direct proof.</td></tr></tbody></table></div>
-<hr>
+<ul><li>**Keep <code>enforce_admins: false</code>, rely on discipline alone (always open a PR, never</li></ul>
+<p>  <code>git push</code> to <code>main</code>/<code>develop</code> directly).** Rejected: this is exactly what failed   minutes earlier in this same session — discipline is not a substitute for a   technical control when the tool (<code>git push</code>) makes the unsafe path the shortest one.</p>
+<ul><li>**Leave <code>lang-audit</code> scoped to <code>main</code> only, since <code>enforce_admins: true</code> alone</li></ul>
+<p>  prevents direct pushes to <code>develop</code> going forward.** Rejected: <code>enforce_admins</code>   only stops *this* repository's collaborators from bypassing branch protection —   it does not, by itself, make <code>lang-audit</code> run on a <code>develop</code> push. The two gaps   (bypassable rule, and rule not actually checking anything on <code>develop</code>) are   independent and both needed fixing.</p>
 <h2>Consequences</h2>
-<p><strong>For AI agents:</strong></p>
-<ul><li>Systematic reference to <code>quality-gate.md</code> before any commit</li><li>The <code>adr-triggers.md</code> matrix makes a missing ADR detectable</li></ul>
-<p><strong>For the team:</strong></p>
-<ul><li>Adding a new pipeline = creating a file in <code>.claude/skills/pipelines/</code> + a line in <code>quality-gate.md</code></li><li>No modification of existing pipelines required</li></ul>
-<p><strong>For governance:</strong></p>
-<ul><li>Each pipeline is independently auditable</li><li>Stubs explicitly signal what is not yet covered</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
-<p>ADR-027 a introduit le concept de pipeline d'impact pré-commit. Cependant, la skill correspondante était trop générique : elle demandait d'"analyser l'impact" sans définir précisément ce que cela signifie.</p>
-<p><strong>Incident déclencheur :</strong> ADR-028 (Atkinson Hyperlegible Mono) a été oublié lors de l'ajout de la police monospace. La décision architecturale a été implémentée sans être documentée — violation directe des principes de gouvernance du système.</p>
-<p><strong>Cause racine :</strong> une checklist floue ("vérifier les ADRs manquants") sans matrice de déclenchement explicite. Un agent — ou un humain — peut consciencieusement parcourir une liste vague et manquer quand même un élément non évident.</p>
-<hr>
-<h2>Décision</h2>
-<p>Remplacer le pipeline monolithique par un <strong>quality gate modulaire</strong> :</p>
-<pre class="code-block"><code class="lang-text">.claude/skills/quality-gate.md          ← orchestrateur
-.claude/skills/pipelines/
-├── tokens-audit.md                      ← ✅ actif
-├── wcag.md                              ← ✅ actif
-├── adr-conformity.md                    ← ✅ actif
-├── adr-triggers.md                      ← ✅ actif (matrice de déclenchement)
-├── docs.md                              ← ✅ actif
-├── site.md                              ← ✅ actif
-├── commit.md                            ← ✅ actif
-├── style-dictionary.md                  ← 🔜 planifié
-├── storybook.md                         ← 🔜 planifié
-├── chromatic.md                         ← 🔜 planifié
-├── axe-core.md                          ← 🔜 planifié
-└── playwright.md                        ← 🔜 planifié</code></pre>
-<h3>Principe de conception</h3>
-<p><strong>Chaque pipeline est indépendant et a une interface standard :</strong></p>
-<ul><li>Déclencheurs explicites (quels fichiers l'activent)</li><li>Checks vérifiables (pas d'intention floue)</li><li>Statut clair (<code>✅ Actif</code> ou <code>🔜 Planifié</code>)</li><li>Commande d'exécution (quand disponible)</li></ul>
-<p><strong>Ajouter un pipeline = créer un fichier.</strong> Pas de modification de l'orchestrateur nécessaire.</p>
-<h3>Règle anti-oubli ADR (issue principale)</h3>
-<p>Le pipeline <code>adr-triggers.md</code> contient une <strong>matrice de déclenchement</strong> explicite :</p>
-<blockquote><p>Nouvelle police → ADR typo requis. Nouveau composant → ADR composant requis. etc.</p></blockquote>
-<p>Cette matrice rend l'oubli d'ADR structurellement impossible si le pipeline est suivi.</p>
-<hr>
-<h2>Argumentaire</h2>
-<h3>Pourquoi modulaire ?</h3>
-<p>1. <strong>Extensibilité</strong> : Style Dictionary, Storybook, Chromatic, axe-core, Playwright seront ajoutés progressivement. Une architecture monolithique aurait nécessité de réécrire le pipeline à chaque ajout.</p>
-<p>2. <strong>Traçabilité</strong> : Chaque pipeline a son propre fichier, versionné séparément. Si une règle change (ex: WCAG 2.2 → 2.3), un seul fichier est modifié.</p>
-<p>3. <strong>Clarté pour les agents</strong> : Un agent lit <code>adr-triggers.md</code> et sait exactement quand créer un ADR — pas de place pour l'interprétation.</p>
-<h3>Pourquoi des stubs pour les pipelines non actifs ?</h3>
-<p>Prévision de l'évolution du projet. Les stubs :</p>
-<ul><li>Documentent l'intention (ce qui sera fait)</li><li>Permettent l'activation immédiate (les commandes sont déjà préparées)</li><li>Signalent clairement que ces pipelines ne bloquent pas encore</li></ul>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Checklist unique dans un fichier</strong></td><td>Non extensible. Chaque ajout de pipeline alourdit le fichier principal et crée des conflits de merge.</td></tr><tr><td><strong>Script bash automatisé uniquement</strong></td><td>L'approbation humaine est non négociable (ADR-004). Un script peut automatiser les vérifications mais pas la décision.</td></tr><tr><td><strong>Pas de pipeline structuré</strong></td><td>Prouvé insuffisant — incident ADR-028 est la démonstration directe.</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>Référence systématique à <code>quality-gate.md</code> avant tout commit</li><li>La matrice <code>adr-triggers.md</code> rend l'oubli d'ADR détectable</li></ul>
-<p><strong>Pour l'équipe :</strong></p>
-<ul><li>Ajouter un nouveau pipeline = créer un fichier dans <code>.claude/skills/pipelines/</code> + une ligne dans <code>quality-gate.md</code></li><li>Aucune modification des pipelines existants requise</li></ul>
-<p><strong>Pour la gouvernance :</strong></p>
-<ul><li>Chaque pipeline est auditable indépendamment</li><li>Les stubs signalent explicitement ce qui n'est pas encore couvert</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-028.html" class="agtc-button secondary">← ADR-028</a>
-    <a href="adr-030.html" class="agtc-button secondary">ADR-030 →</a>
+<ul><li>Any future direct-push attempt to <code>main</code> or <code>develop</code>, admin or not, is rejected by</li></ul>
+<p>  GitHub; the only path in is <code>feature/</code>/<code>fix/</code> branch → PR → green <code>lang-audit</code> →   merge.</p>
+<ul><li>If GitHub Actions or the repository itself is ever in a state where no PR can be</li></ul>
+<p>  merged (e.g. lang-audit misconfigured and permanently red), recovering requires   temporarily disabling branch protection via repository settings before a fix can   land — an explicit, visible action, not a silent per-push bypass.</p>
+<ul><li><code>.claude/rules/git-workflow.md</code> is updated alongside this ADR to drop the "admin can</li></ul>
+<p>  bypass" language and describe the <code>develop</code> CI trigger.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-076.html" class="agtc-button secondary">← ADR-076</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
