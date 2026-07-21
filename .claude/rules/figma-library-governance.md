@@ -183,6 +183,33 @@ This list must be re-verified (WebSearch) at the start of any large-scale Figma 
 
 ---
 
+## Tokens Studio write-access restriction — `agentica/proposals` (ADR-078)
+
+> Prerequisite before any Tokens Studio write path into this repo is enabled (not
+> before ordinary read-only agent work covered by the rest of this file).
+
+Tokens Studio's API credentials are account-scoped, not branch/project-scoped — a key
+has full access to every org/project the account belongs to. If Tokens Studio's
+push-to-GitHub feature is ever turned on, it must write only to the `agentica/proposals`
+branch, never `main` directly.
+
+```
+Status (2026-07-20):
+✅ agentica/proposals branch created (off main)
+✅ main already refuses direct pushes, PR + green CI required (ADR-076/077) —
+   satisfies this ticket's branch-protection requirement, no extra config needed
+⬜ Dedicated GitHub service account + scoped PAT for Tokens Studio — human-only,
+   not yet done
+⬜ Tokens Studio's own GitHub-sync settings pointed at main for reads — human-only,
+   configured inside the Figma plugin panel, not exposed via API/MCP
+```
+
+Until the two `⬜` items are done, there is no active Tokens Studio write path into
+this repo at all (ADR-011: Tokens Studio is not in the agent loop) — this section
+documents readiness, not a currently-exercised control.
+
+---
+
 ## Mandatory audit — see §22 of `figma-components.md`
 
 The full audit (accessibility, display, variables, styles, states, variants,
