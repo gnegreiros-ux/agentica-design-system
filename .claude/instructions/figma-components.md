@@ -1428,7 +1428,7 @@ text from the system. Does adding the style lack legitimacy? No: a distinct
 emphasis weight (e.g. Bold for a CTA vs Regular for a form label) is a real
 typography decision, not a cosmetic detail — it deserves its own token,
 propagated everywhere: `tokens/semantic.json` (`typography.*` composite) →
-`tokens/figma.json` (generates the Text Style via Tokens Studio) →
+`tokens/figma-text-styles.json` (generates the Text Style via Tokens Studio) →
 `tokens/component.json` (component token referencing it) → compiled CSS
 (`npm run tokens`) → code component (`components/agtc-*.js`) → Figma (Text
 Style created/applied) → documentation (`guidelines/components/*.md`). Never

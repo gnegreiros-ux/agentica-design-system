@@ -1,7 +1,7 @@
 # ADR-078 — Restrict Tokens Studio write access to the `agentica/proposals` branch
 
-> **Date:** 2026-07-20
-> **Status:** ⚠️ Partial — see Consequences for what remains a human-only action
+> **Date:** 2026-07-20 (opened) — 2026-07-21 (closed as Active)
+> **Status:** ✅ Active
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Relations:** ADR-011 (Tokens Studio adoption), ADR-076/ADR-077 (branch protection on `main`/`develop`), `.claude/rules/figma-library-governance.md`, GitHub Projects — Figma-domain branch-security ticket (Priority P1, this session)
 
@@ -33,14 +33,24 @@ in place:
    through a PR with `lang-audit` green. This was configured for an unrelated reason
    (the `develop` bypass incident) but happens to also satisfy this ticket's
    requirement in full — no additional action needed here.
-2. **A dedicated service account + scoped PAT for Tokens Studio — not done, human-only.**
-   Requires creating a distinct GitHub identity (not `gnegreiros-ux`) and generating
-   its fine-grained personal access token, scoped to this repository only. Creating a
-   GitHub account is outside what an agent should do unsupervised — this step is left
-   to the Design System Lead.
-3. **Tokens Studio's own sync settings pointed at `main` for reads — not done,
-   human-only.** This is a setting inside the Tokens Studio plugin panel in Figma
-   itself, not exposed through the Figma API/MCP surface available to agents.
+2. **A dedicated service account + scoped PAT for Tokens Studio — done.** A separate
+   GitHub account, `agentica-tokens-bot`, was created and added to this repository as
+   a collaborator with **Write** permission (not Admin) — confirmed via
+   `GET /repos/.../collaborators/agentica-tokens-bot/permission` → `"role": "write"`.
+   Its fine-grained PAT could not yet be scoped to a single selected repository (the
+   "Only select repositories" option was unavailable on the brand-new account, even
+   after email verification) — a **classic PAT** with the `repo` scope was generated
+   instead, as an accepted interim substitute (see Rejected alternatives).
+3. **Tokens Studio's own sync settings pointed at `main` for reads — done and verified.**
+   Configured in the Tokens Studio plugin panel (`Repository: gnegreiros-ux/agentica-design-system`,
+   `Branch: main`, `Token storage location: tokens`). A pull was run and captured in a
+   HAR trace: 82 requests to `api.github.com`, all `200`/`204`, reading every file under
+   `tokens/` (`primitives.json`, `semantic.json`, `semantic.dark.json`, `component.json`,
+   `figma.json`, `$metadata.json`) plus `branches` and the `git/trees` listing on `main`.
+   No write request (`PUT`/`POST` to `contents`, `git/commits`, `git/refs`) appeared
+   anywhere in the trace — consistent with a pull-only test and with ADR-011's
+   read-only design. The pull produced no visible change in Figma, which is the
+   expected outcome when the repo and Figma are already in sync, not a failure.
 
 ## Rationale
 
@@ -61,16 +71,27 @@ protected branch.
   designated landing branch, a permissive Tokens Studio credential would still be free
   to push to `develop` or any other unprotected branch, or create arbitrary branches —
   `agentica/proposals` gives the write path a single, auditable destination.
+- **Wait for the fine-grained PAT's "Only select repositories" option to unlock before
+  issuing any credential.** Rejected: a classic PAT scoped to `repo` grants the same
+  practical access today, since `agentica-tokens-bot` is currently a collaborator on
+  exactly one repository — no broader blast radius than a correctly scoped fine-grained
+  token would have, just less future-proof if the account is ever added to a second
+  repository. Migrate to fine-grained once the option becomes available, rather than
+  block on it now.
 
 ## Consequences
 
-- `agentica/proposals` exists (branch off `main`, currently identical to it) — ready to
-  receive writes once a Tokens Studio service account is configured to target it.
-- **Two steps remain, both human-only, before this control is actually load-bearing:**
-  creating the dedicated service account + scoped PAT, and pointing Tokens Studio's
-  Figma-side sync settings at `main` for reads. Until both are done, this ADR describes
-  a prepared but not yet activated control — the underlying risk (an overprivileged
-  credential able to write to `main`) is already fully mitigated by `main`'s existing
-  branch protection regardless, so there is no active gap in the meantime.
-- This ADR's `Status` should move to ✅ Active once a human confirms both remaining
-  steps are complete — tracked on the GitHub Projects ticket this ADR references.
+- `agentica/proposals` exists (branch off `main`) as the designated landing branch for
+  any future Tokens Studio push.
+- `agentica-tokens-bot` (Write, not Admin) is a distinct GitHub identity from
+  `gnegreiros-ux` — its future PRs into `main` can receive genuine human review,
+  unlike the repository owner's own commits (ADR-076's self-approval constraint).
+- The classic PAT (`repo` scope) is broader than strictly necessary and should be
+  migrated to a fine-grained, repo-scoped token once `agentica-tokens-bot`'s account
+  restrictions lift — tracked as a follow-up, not a blocker, since the practical access
+  is already limited to this one repository.
+- Tokens Studio reads `tokens/*.json` from `main` successfully (verified via HAR trace,
+  2026-07-21) — the read direction of ADR-011 is fully operational end to end. No push
+  capability has been exercised or is expected to be, per ADR-011's read-only design;
+  `agentica/proposals` and this credential exist as a prepared safety rail should that
+  ever change, not because a push is currently planned.
