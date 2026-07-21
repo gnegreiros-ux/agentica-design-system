@@ -4,12 +4,12 @@
 > **Status:** ✅ Active
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Relations:** ADR-080 (Community File content triage — amended), `.claude/rules/figma-library-governance.md`,
-> GitHub Projects — Figma-domain "Séparer les composants Brand/logo dans un fichier Figma dédié" ticket (P2)
+> GitHub Projects — Figma-domain "Séparer les composants Brand/logo dans un fichier Figma dédié" ticket (P2) <!-- lang-audit-ignore: literal ticket title (French, board convention) -->
 
 ## Context
 
-ADR-080 (2026-07-21, earlier the same session) documented a "Discussion en cours,
-pas encore actionnée": splitting the Agentica brand/logo out of the main design
+ADR-080 (2026-07-21, earlier the same session) documented an open, not-yet-actioned
+discussion: splitting the Agentica brand/logo out of the main design
 system file into a separate published Figma library, consumed by the main file via
 cross-file instances — floated as a structural alternative to manually excluding the
 `FOUNDATIONS > logos` page at each Community File publish. That discussion explicitly
@@ -67,8 +67,7 @@ all for the page-level case.
 - `.claude/rules/figma-library-governance.md`'s Community File content triage section
   (added under ADR-080) is updated to drop `FOUNDATIONS > logos` from the exclusion
   table and record the new `Agentica | Brand` file key alongside the main file's.
-- The GitHub Projects "Séparer les composants Brand/logo dans un fichier Figma
-  dédié" ticket (P2) moves to Terminé.
+- The GitHub Projects "Séparer les composants Brand/logo dans un fichier Figma dédié" ticket (P2) moves to Terminé (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal ticket title + literal Status field value, both French by board convention -->
 - Before the Community File is ever actually published, ADR-080's Rule 2 audit must
   still be run in full against whatever components/patterns exist by then — this
   ADR does not shrink that audit's scope, only the Rule 1 page list.
