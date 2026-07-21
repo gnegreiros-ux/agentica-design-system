@@ -1,7 +1,7 @@
 ---
 paths:
   - "scripts/figma/**"
-  - "tokens/figma.json"
+  - "tokens/figma-text-styles.json"
 ---
 
 # Rule: figma-library-governance
@@ -194,19 +194,20 @@ push-to-GitHub feature is ever turned on, it must write only to the `agentica/pr
 branch, never `main` directly.
 
 ```
-Status (2026-07-20):
+Status (2026-07-21, ADR-078 Active):
 ✅ agentica/proposals branch created (off main)
 ✅ main already refuses direct pushes, PR + green CI required (ADR-076/077) —
    satisfies this ticket's branch-protection requirement, no extra config needed
-⬜ Dedicated GitHub service account + scoped PAT for Tokens Studio — human-only,
-   not yet done
-⬜ Tokens Studio's own GitHub-sync settings pointed at main for reads — human-only,
-   configured inside the Figma plugin panel, not exposed via API/MCP
+✅ Dedicated GitHub service account (agentica-tokens-bot, Write, not Admin) + PAT
+   — classic PAT (repo scope) for now, fine-grained migration pending account aging
+✅ Tokens Studio's GitHub-sync settings pointed at main, reads verified via HAR
+   trace (82 requests, all 200/204, zero writes attempted)
 ```
 
-Until the two `⬜` items are done, there is no active Tokens Studio write path into
-this repo at all (ADR-011: Tokens Studio is not in the agent loop) — this section
-documents readiness, not a currently-exercised control.
+There is still no active Tokens Studio write path into this repo — only the read
+direction (ADR-011) has ever been exercised. This section documents the safety rail
+that now exists should a push capability ever be turned on, not a currently-used
+push feature.
 
 ---
 
