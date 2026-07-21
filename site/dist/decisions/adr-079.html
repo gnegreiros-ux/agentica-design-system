@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>`agtc-input` implementation — Agentica</title>
+<title>Weekly scheduled cloud agent for the Figma §22 full-library audit — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="`agtc-input` implementation — Agentica">
+<meta property="og:title" content="Weekly scheduled cloud agent for the Figma §22 full-library audit — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="`agtc-input` implementation — Agentica">
+<meta name="twitter:title" content="Weekly scheduled cloud agent for the Figma §22 full-library audit — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,110 +114,52 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-033</code>
+    <code class="adr-number">ADR-079</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    
   </div>
-  <h1 class="adr-page-title">`agtc-input` implementation</h1>
+  <h1 class="adr-page-title">Weekly scheduled cloud agent for the Figma §22 full-library audit</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-31</dd>
+      <dd>2026-07-21</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p><code>agtc-input</code> is the system's second component. It covers text entry in forms — the most frequent entry point for user data.</p>
-<p>Three constraints guided the decisions:</p>
-<p>1. <strong>Accessibility</strong> — a text field with no visible label is inaccessible    (WCAG 1.3.1). Every state (error, disabled, read-only) must be    communicated to the accessibility tree, not just visually.</p>
-<p>2. <strong>Shadow DOM</strong> — the <code>&lt;label for="id"&gt;</code> association doesn't cross    Shadow DOM boundaries. The implementation must work around this limitation.</p>
-<p>3. <strong>Consistency with <code>agtc-button</code></strong> — same hybrid icon approach (property +    slot), same event conventions, same token structure.</p>
-<hr>
-<h2>Decisions</h2>
-<h3>Decision 1 — Label and input colocated in the Shadow DOM</h3>
-<p><strong>Problem:</strong> An external <code>&lt;label for="id"&gt;</code> can't point to an <code>&lt;input&gt;</code> inside the Shadow DOM.</p>
-<p><strong>Decision:</strong> The label is rendered inside the Shadow DOM with a <code>for</code> pointing to the internal <code>id</code> of the <code>&lt;input&gt;</code>. A static counter guarantees id uniqueness across instances.</p>
-<p><strong>Rejected alternative:</strong> <code>aria-label</code> on the input instead of a visible label. Rejected: violates WCAG 1.3.1 (the label must be persistent and visible, not only declared for AT).</p>
-<hr>
-<h3>Decision 2 — Focus ring on the <code>.control</code> wrapper, not on the input</h3>
-<p><strong>Problem:</strong> The native input has <code>outline: none</code> to allow custom styling. Focus must remain visible (WCAG 2.4.7).</p>
-<p><strong>Decision:</strong> The <code>.control</code> wrapper carries the focus ring via <code>:focus-within</code>. <code>outline: 2.5px solid</code> + <code>outline-offset: 2px</code> — identical to <code>agtc-button</code>.</p>
-<p><strong>Justification:</strong> The focus ring on the wrapper is visually cleaner (frames the whole control including icons) and remains WCAG compliant because the focus indicator is clearly visible.</p>
-<hr>
-<h3>Decision 3 — <code>aria-describedby</code> for helper-text and error-message</h3>
-<p>The ids <code>{_id}-helper</code> and <code>{_id}-error</code> are always present in the DOM. <code>aria-describedby</code> is built dynamically: only the relevant ids are included depending on the component's state.</p>
-<p>The error message carries <code>role="alert"</code> to announce the error to screen readers as soon as it appears, with no need to navigate to the element.</p>
-<hr>
-<h3>Decision 4 — Native show/hide toggle for <code>type="password"</code></h3>
-<p>An internal button is rendered automatically when <code>type="password"</code>. It toggles the input's <code>type</code> attribute between <code>password</code> and <code>text</code>.</p>
-<p><strong>Justification:</strong> Letting the user verify what they typed is an accessibility requirement (avoids errors on masked passwords). The button's aria-label switches between "Show password" and "Hide password".</p>
-<p>The <code>suffix</code> slot remains available for free composition if the consumer wants to replace the native toggle.</p>
-<hr>
-<h3>Decision 5 — <code>live()</code> directive for value synchronization</h3>
-<p>The input uses <code>.value="${live(this.value)}"</code> to synchronize the Lit property's value with the input's native value across re-renders.</p>
-<p>Without <code>live()</code>, Lit doesn't update the native value if the user has started typing (DOM drift). <code>live()</code> always compares against the current DOM value, guaranteeing consistency.</p>
-<hr>
-<h3>Decision 6 — Removal of native spinners on <code>type="number"</code></h3>
-<p>The native CSS spinners (<code>-webkit-inner-spin-button</code>) are removed. Control of the numeric value happens via keyboard (<code>↑</code>/<code>↓</code>) and direct input.</p>
-<p><strong>Justification:</strong> Native spinners are visually inconsistent across browsers and can't be styled with the system's tokens.</p>
-<hr>
-<h2>Reference UX patterns applied</h2>
-<blockquote><p>Added on 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Design System Lead decision: <strong>all patterns approved</strong>. Details and links in <code>guidelines/components/input.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Validation <code>onBlur</code>, re-validation while typing once in error</td><td>NN/g — How to Report Errors in Forms</td></tr><tr><td>Inline error + <code>role="alert"</code></td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Constructive error message</td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Persistent help text via <code>aria-describedby</code></td><td>NN/g</td></tr><tr><td>Required marker <code>*</code> + <code>aria-required</code></td><td>NN/g — Forms</td></tr><tr><td>Forgiving format (<code>tel</code>/<code>number</code>)</td><td>IxDF — forgiving formats</td></tr><tr><td>Visible label always present</td><td>NN/g</td></tr><tr><td>Anti hostile patterns (no clearing the field on error)</td><td>NN/g — Hostile Patterns in Error Messages</td></tr></tbody></table></div>
-<hr>
-<h2>Version 1.0 scope</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future version)</th></tr></thead><tbody><tr><td>7 native types</td><td><code>type="date"</code>, <code>type="file"</code></td></tr><tr><td>States: default / focus / invalid / disabled / readonly</td><td>Success state (positive validation)</td></tr><tr><td>Prefix/suffix icons (hybrid prop+slot)</td><td>Character counter</td></tr><tr><td>Built-in password toggle</td><td>Custom suggestions / autocomplete</td></tr><tr><td>helper-text + error-message</td><td>Multiline field (<code>agtc-textarea</code>)</td></tr></tbody></table></div>
-<hr>
-<h2>Tokens used</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Component tokens compiled from <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Error message color</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Disabled state background</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Disabled state text</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icons</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typography of the entered value</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typography of the label, helper, error</td></tr></tbody></table></div></div><div class="lang-fr"><h2>Contexte</h2>
-<p><code>agtc-input</code> est le deuxième composant du système. Il couvre la saisie de texte dans les formulaires — le point d'entrée le plus fréquent des données utilisateur.</p>
-<p>Trois contraintes ont guidé les décisions :</p>
-<p>1. <strong>Accessibilité</strong> — un champ de saisie sans label visible est inaccessible    (WCAG 1.3.1). Chaque état (erreur, désactivé, lecture seule) doit être    communiqué à l'arbre d'accessibilité, pas seulement visuellement.</p>
-<p>2. <strong>Shadow DOM</strong> — l'association <code>&lt;label for="id"&gt;</code> ne traverse pas les    frontières Shadow DOM. L'implémentation doit contourner cette limite.</p>
-<p>3. <strong>Cohérence avec <code>agtc-button</code></strong> — même approche icône hybride (propriété +    slot), mêmes conventions d'événements, même structure de tokens.</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — Label et input colocalisés dans le Shadow DOM</h3>
-<p><strong>Problème :</strong> <code>&lt;label for="id"&gt;</code> externe ne peut pas pointer vers un <code>&lt;input&gt;</code> dans le Shadow DOM.</p>
-<p><strong>Décision :</strong> Le label est rendu à l'intérieur du Shadow DOM avec un <code>for</code> pointant vers l'<code>id</code> interne de l'<code>&lt;input&gt;</code>. Un compteur statique garantit l'unicité des ids entre instances.</p>
-<p><strong>Alternative rejetée :</strong> <code>aria-label</code> sur l'input à la place du label visible. Rejeté : viole WCAG 1.3.1 (le label doit être persistant et visible, pas seulement déclaré pour les AT).</p>
-<hr>
-<h3>Décision 2 — Focus ring sur le wrapper <code>.control</code>, pas sur l'input</h3>
-<p><strong>Problème :</strong> L'input natif a <code>outline: none</code> pour permettre un style custom. Le focus doit rester visible (WCAG 2.4.7).</p>
-<p><strong>Décision :</strong> Le wrapper <code>.control</code> porte le focus ring via <code>:focus-within</code>. <code>outline: 2.5px solid</code> + <code>outline-offset: 2px</code> — identique à <code>agtc-button</code>.</p>
-<p><strong>Justification :</strong> Le focus ring sur le wrapper est visuellement plus propre (encadre l'ensemble du contrôle incluant les icônes) et reste WCAG conforme car l'indicateur de focus est clairement visible.</p>
-<hr>
-<h3>Décision 3 — <code>aria-describedby</code> pour helper-text et error-message</h3>
-<p>Les ids <code>{_id}-helper</code> et <code>{_id}-error</code> sont toujours présents dans le DOM. <code>aria-describedby</code> est construit dynamiquement : seuls les ids pertinents sont inclus selon l'état du composant.</p>
-<p>Le message d'erreur porte <code>role="alert"</code> pour annoncer l'erreur aux lecteurs d'écran dès qu'elle apparaît, sans nécessiter de navigation vers l'élément.</p>
-<hr>
-<h3>Décision 4 — Toggle show/hide natif pour <code>type="password"</code></h3>
-<p>Un bouton interne est rendu automatiquement quand <code>type="password"</code>. Il bascule l'attribut <code>type</code> de l'input entre <code>password</code> et <code>text</code>.</p>
-<p><strong>Justification :</strong> Permettre à l'utilisateur de vérifier sa saisie est une exigence d'accessibilité (évite les erreurs sur les mots de passe masqués). L'aria-label du bouton bascule entre "Afficher le mot de passe" et "Masquer le mot de passe".</p>
-<p>Le slot <code>suffix</code> reste disponible pour la composition libre si le consommateur veut remplacer le toggle natif.</p>
-<hr>
-<h3>Décision 5 — Directive <code>live()</code> pour la synchronisation de valeur</h3>
-<p>L'input utilise <code>.value="${live(this.value)}"</code> pour synchroniser la valeur de la propriété Lit avec la valeur native de l'input lors des re-renders.</p>
-<p>Sans <code>live()</code>, Lit ne met pas à jour la valeur native si l'utilisateur a commencé à taper (DOM drift). <code>live()</code> compare toujours contre la valeur DOM actuelle, garantissant la cohérence.</p>
-<hr>
-<h3>Décision 6 — Suppression des spinners natifs sur <code>type="number"</code></h3>
-<p>Les spinners CSS natifs (<code>-webkit-inner-spin-button</code>) sont supprimés. Le contrôle de la valeur numérique se fait via clavier (<code>↑</code>/<code>↓</code>) et saisie directe.</p>
-<p><strong>Justification :</strong> Les spinners natifs sont visuellement incohérents entre navigateurs et ne peuvent pas être stylés avec les tokens du système.</p>
-<hr>
-<h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision du Design System Lead : <strong>tous les patterns approuvés</strong>. Détail et liens dans <code>guidelines/components/input.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Validation à <code>onBlur</code>, re-validation à la frappe une fois en erreur</td><td>NN/g — How to Report Errors in Forms</td></tr><tr><td>Erreur inline + <code>role="alert"</code></td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Message d'erreur constructif</td><td>NN/g — Error-Message Guidelines</td></tr><tr><td>Help text persistant via <code>aria-describedby</code></td><td>NN/g</td></tr><tr><td>Required marker <code>*</code> + <code>aria-required</code></td><td>NN/g — Forms</td></tr><tr><td>Forgiving format (<code>tel</code>/<code>number</code>)</td><td>IxDF — forgiving formats</td></tr><tr><td>Label visible toujours présent</td><td>NN/g</td></tr><tr><td>Anti hostile patterns (pas d'effacement du champ en erreur)</td><td>NN/g — Hostile Patterns in Error Messages</td></tr></tbody></table></div>
-<hr>
-<h2>Périmètre de la version 1.0</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (version future)</th></tr></thead><tbody><tr><td>7 types natifs</td><td><code>type="date"</code>, <code>type="file"</code></td></tr><tr><td>États : default / focus / invalid / disabled / readonly</td><td>État success (validation positive)</td></tr><tr><td>Icônes prefix/suffix (hybride prop+slot)</td><td>Compteur de caractères</td></tr><tr><td>Toggle password intégré</td><td>Suggestions / autocomplete custom</td></tr><tr><td>helper-text + error-message</td><td>Champ multiligne (<code>agtc-textarea</code>)</td></tr></tbody></table></div>
-<hr>
-<h2>Tokens utilisés</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Usage</th></tr></thead><tbody><tr><td><code>--agtc-input-default-*</code></td><td>Tokens composant compilés depuis <code>tokens/component.json</code></td></tr><tr><td><code>--agtc-semantic-color-feedback-danger</code></td><td>Couleur message d'erreur</td></tr><tr><td><code>--agtc-semantic-color-background-subtle</code></td><td>Fond état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-disabled</code></td><td>Texte état disabled</td></tr><tr><td><code>--agtc-semantic-color-text-secondary</code></td><td>Helper text + icônes</td></tr><tr><td><code>--agtc-semantic-typography-body-*</code></td><td>Typographie de la valeur saisie</td></tr><tr><td><code>--agtc-semantic-typography-label-*</code></td><td>Typographie du label, helper, erreur</td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-032.html" class="agtc-button secondary">← ADR-032</a>
-    <a href="adr-034.html" class="agtc-button secondary">ADR-034 →</a>
+</div><h2>Context</h2>
+<p>The §22 audit (9 categories: accessibility, page display, variables, Text Styles, states, variants, in-page documentation, links, code↔Figma parity) has existed since 2026-07-08, but only ever triggers on a newly created/modified page, or on explicit human request ("audit", "check everything"). It has never run against the *existing* library as a whole.</p>
+<p>That gap caused a real incident: on 2026-07-09, 10 of the library's 11 Text Styles had zero Figma Variables bound to their <code>fontSize</code>/<code>fontFamily</code>/ <code>fontWeight</code>/<code>lineHeight</code> — literal values only, invisible unless someone opened each style and inspected its bindings. It was caught by a human manually comparing styles by eye, not by any systematic check, because no audit was running on pages nobody had recently touched.</p>
+<h2>Decision</h2>
+<p>A weekly scheduled cloud agent ("routine"), created via the <code>schedule</code> skill/<code>RemoteTrigger</code> API, runs the full §22 checklist against the *entire* Figma library every Monday at 06:00 America/Toronto (<code>10:00 UTC</code>, cron <code>0 10 * * 1</code>):</p>
+<ul><li><strong>Trigger ID:</strong> <code>trig_015wTFo2gJNztALS2bvFZ54d</code></li><li><strong>Scope:</strong> every page and component/ComponentSet in the file</li></ul>
+<p>  (<code>uXgPVB6cMLwAPqSwoa0dGq</code>), not a subset — the exact gap that let the   2026-07-09 incident go undetected</p>
+<ul><li><strong>Environment:</strong> the only cloud environment available on this account</li></ul>
+<p>  ("Portfolio web", <code>env_01GrYNDKPKbnLc4HE3dvaftU</code>) — not a deliberate choice,   there was no alternative to pick from</p>
+<ul><li><strong>Reporting:</strong> silent if clean; a GitHub issue (label <code>figma-audit</code>) if any</li></ul>
+<p>  violation is found, grouped by the 9 categories with exact node/style names;   a GitHub issue is also filed if the run fails outright (Figma unreachable,   MCP error), so a failed run can never be mistaken for a clean one</p>
+<ul><li><strong>Read-only:</strong> the routine never modifies the repo or the Figma file — audit</li></ul>
+<p>  and report only, exactly like the existing <code>playwright-reminder.yml</code> pattern   for visual regressions</p>
+<h2>Rationale</h2>
+<p>A recurring, unattended check is the only way to catch drift on pages nobody is actively touching — the 2026-07-09 incident's whole failure mode was that nothing was looking at *already-shipped* library content. Weekly matches how the library actually changes: in bursts around specific chantiers, not continuously, so daily would be noisy and monthly would let drift sit for too long between publications.</p>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>A GitHub Actions workflow, like <code>playwright.yml</code>.</strong> Rejected: §22's checks</li></ul>
+<p>  run inside the Figma Plugin API sandbox (<code>use_figma</code>/Figma MCP tools) against   a live Figma session — there is no headless, CI-runnable equivalent the way   Playwright drives a browser. A cloud agent with the Figma MCP connector   attached is the only mechanism available that can actually execute this.</p>
+<ul><li><strong>Trigger only before each Community File publication.</strong> Rejected (per</li></ul>
+<p>  discussion with the Design System Lead): no publication is currently   scheduled (the Community File chantier is still Backlog), so a   publication-triggered-only cadence would mean the audit effectively never   runs until then — reintroducing the exact "ad hoc" gap this ticket exists to   close.</p>
+<ul><li><strong>Always report, even when clean.</strong> Rejected: the Design System Lead chose</li></ul>
+<p>  issue-only-on-violation, matching <code>playwright-reminder.yml</code>'s existing   philosophy of only surfacing actionable problems.</p>
+<h2>Consequences</h2>
+<ul><li>Drift on any page, however old or untouched, surfaces within at most a week</li></ul>
+<p>  instead of only by chance human discovery.</p>
+<ul><li>The routine's prompt is self-contained (the cloud session starts with no</li></ul>
+<p>  memory of this conversation) and points at <code>.claude/instructions/figma-components.md</code>   §22 as the single source of truth for what counts as a violation — if §22's   checklist changes, the routine's behavior changes with it automatically,   with no separate copy to keep in sync.</p>
+<ul><li>First real-world validation (does <code>gh issue create</code> actually work from this</li></ul>
+<p>  cloud environment, does the Figma MCP connector reliably enumerate the whole   library) only happens at the first scheduled run (2026-07-27) — this ADR   will need a follow-up note if that run reveals a configuration gap.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-078.html" class="agtc-button secondary">← ADR-078</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

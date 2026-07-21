@@ -1671,7 +1671,12 @@ ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync if the render still s
 
 > Referenced by `.claude/rules/figma-library-governance.md`. Run on any newly
 > created/modified page, before declaring it done, and on every explicit
-> request ("audit", "check the whole file", "full screenshot").
+> request ("audit", "check the whole file", "full screenshot"). Also run
+> automatically, weekly, against the ENTIRE library (not just recently touched
+> pages) by a scheduled cloud agent — see ADR-079. That routine's prompt reads
+> this exact section as its source of truth, so keep this checklist accurate:
+> a change here changes what the weekly routine checks, with no separate copy
+> to update.
 
 ### 1. Accessibility
 - [ ] Focus ring visible on every focusable state — technique C40 (§20), never
