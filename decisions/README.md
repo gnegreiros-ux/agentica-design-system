@@ -140,6 +140,7 @@ decisions that were already settled.
 | [ADR-075](ADR-075-english-filenames-retroactive-rename.md) | Retroactive English filenames for translated documents (amends ADR-070) | 2026-07-18 | ✅ Active |
 | [ADR-076](ADR-076-branch-protection-solo-maintainer.md) | Branch protection on `main`/`develop` with 0 required approvals (solo maintainer) | 2026-07-20 | ✅ Active |
 | [ADR-077](ADR-077-enforce-admins-after-bypass-incident.md) | Enable `enforce_admins` on `main`/`develop` (amends ADR-076, after a bypass incident) | 2026-07-20 | ✅ Active |
+| [ADR-078](ADR-078-figma-tokens-studio-write-restriction.md) | Restrict Tokens Studio write access to the `agentica/proposals` branch | 2026-07-20 | ⚠️ Partial |
 
 ---
 
