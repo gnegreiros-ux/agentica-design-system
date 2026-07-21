@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Sat, 18 Jul 2026 17:56:26 GMT
+// Generated on Tue, 21 Jul 2026 19:44:24 GMT
 
 
 import UIKit
@@ -123,6 +123,11 @@ public class AgenticaTokens {
     public static let codeBlockDefaultPaddingY = 16px
     public static let codeBlockDefaultRadius = 10px
     public static let codeBlockDefaultText = #e8e8e8
+    public static let imageFallbackBackground = #f0f0f0
+    public static let imageFallbackIcon = #646464
+    public static let imageFallbackText = #646464
+    public static let imageSkeletonBackground = #f0f0f0
+    public static let imageSkeletonBackgroundPulse = #fafafa
     public static let inputDefaultBackground = #ffffff
     public static let inputDefaultBorder = #e8e8e8
     public static let inputDefaultBorderError = #ce2c31
