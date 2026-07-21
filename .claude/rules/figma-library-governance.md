@@ -231,6 +231,17 @@ Weekly-run outcome: silent if clean; a GitHub issue (label `figma-audit`) if
 any violation is found, or if the run itself fails — a failure is never left
 indistinguishable from a clean result.
 
+**Open risk, not yet confirmed either way (flagged 2026-07-21, during ADR-082
+verification):** `get_metadata` called without a `nodeId` — the call this
+routine's "enumerate every page" step depends on — was observed returning only
+a single page for a file, and one that didn't match the page the user actually
+had open locally at the time. If that reflects a real limitation (page
+enumeration silently scoped to less than the whole file) rather than a one-off
+glitch, it would undermine this routine's core premise. Check specifically
+during the 2026-07-27 first real run and its scheduled meta-check
+(`trig_01UViQKgDMyb4ATCBeMduYsS`) before trusting a "clean" result at face
+value.
+
 ---
 
 ## Community File content triage — brand identity stays private (ADR-080)
@@ -255,10 +266,16 @@ indistinguishable from a clean result.
    publication with no scheduled date
 ```
 
-Confirmed today (2026-07-21, reviewed live in the file): `COVER` and
-`FOUNDATIONS > logos` are the two pages matching the excluded category.
-Everything else reviewed (`INTRO`, the rest of `FOUNDATIONS`, every page
-under `COMPONENTS`, `PATTERNS`) is generic and included.
+`COVER` remains in the main file (`uXgPVB6cMLwAPqSwoa0dGq`) and stays excluded
+from any future Community File publish. `FOUNDATIONS > logos` no longer
+applies as a page-level exclusion (ADR-082) — that content was moved
+permanently, no back-reference, to a dedicated published library, **`Agentica
+| Brand`** (file key `F8jhyCeRJaJhF7W1inlFuc`), consumed by the main file via
+cross-file instances. The Rule 2 nested-instance audit above is unaffected and
+now concretely in scope: any component/pattern that places a logo instance
+from that library still needs auditing before a Community File publish — the
+structural split only removes the page-level exclusion, not the
+instance-embedding risk.
 
 ---
 
