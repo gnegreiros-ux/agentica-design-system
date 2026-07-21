@@ -3503,6 +3503,7 @@ const COMPONENT_PAGES = [
   ['icon.html',  'Icon'],
   ['input.html', 'Input'],
   ['badge.html', 'Badge'],
+  ['image.html', 'Image'],
   ['card.html',  'Card'],
   ['checkbox.html', 'Checkbox'],
   ['radio.html', 'Radio'],
@@ -5004,6 +5005,14 @@ function buildComponentsIndex() {
       <span class="lang-en">6 semantic variants, 2 sizes, icons, accessible icon-only mode.</span>
     </div>
   </a>
+  <a href="image.html" class="nav-card">
+    <span class="nav-card-icon">${icon('image',24)}</span>
+    <div class="nav-card-title">Image</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Lazy loading, largeur/hauteur anti-CLS, WebP + repli, skeleton en option.</span>
+      <span class="lang-en">Lazy loading, width/height anti-CLS, WebP + fallback, opt-in skeleton.</span>
+    </div>
+  </a>
   <a href="card.html" class="nav-card">
     <span class="nav-card-icon">${icon('layout-template',24)}</span>
     <div class="nav-card-title">Card</div>
@@ -5705,6 +5714,113 @@ function buildBadge() {
     title: 'Badge', depth: 1,
     sidebar: sidebarComponents('../','badge.html'),
     body: body + uxPatternsFromMd('badge') + contributionBanner()
+  }));
+}
+
+// ─── PAGE: IMAGE ─────────────────────────────────────────────────────────────
+function buildImage() {
+  const tokenRows = [
+    ['image-skeleton-background',       'semantic.color.background.subtle', SEM['color-background-subtle']],
+    ['image-skeleton-background-pulse', 'semantic.color.background.hover',  SEM['color-background-hover']],
+    ['image-fallback-background',       'semantic.color.background.subtle', SEM['color-background-subtle']],
+    ['image-fallback-icon',             'semantic.color.text.secondary',    SEM['color-text-secondary']],
+    ['image-fallback-text',             'semantic.color.text.secondary',    SEM['color-text-secondary']],
+  ];
+
+  const body = `
+<h1>Image</h1>
+<p class="page-lead">
+  <span class="lang-fr">Encapsule &lt;img&gt; avec les garanties qu'il n'impose pas par défaut : espace réservé (anti-CLS), lazy loading, support WebP, états de chargement et d'erreur.</span>
+  <span class="lang-en">Wraps &lt;img&gt; with the guarantees it doesn't enforce by default: reserved space (anti-CLS), lazy loading, WebP support, loading and error states.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Démonstration</span><span class="lang-en">Demo</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Par défaut — lazy, sans skeleton</span><span class="lang-en">Default — lazy, no skeleton</span></span>
+    <div class="demo-row" style="max-width:320px">
+      <agtc-image src="../img/IMG-AGENTICA.png" alt="Agentica illustration" width="768" height="512"></agtc-image>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">object-fit: cover / contain</span><span class="lang-en">object-fit: cover / contain</span></span>
+    <div class="demo-row" style="flex-wrap:wrap">
+      <div style="width:180px">
+        <agtc-image src="../img/IMG-AGENTICA.png" alt="Agentica illustration, cropped to fill a square" width="180" height="180" fit="cover"></agtc-image>
+      </div>
+      <div style="width:180px">
+        <agtc-image src="../img/IMG-AGENTICA.png" alt="Agentica illustration, letterboxed in a square" width="180" height="180" fit="contain"></agtc-image>
+      </div>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">État d'erreur — repli si l'image échoue</span><span class="lang-en">Error state — fallback on failed load</span></span>
+    <div class="demo-row" style="max-width:280px">
+      <agtc-image src="../img/does-not-exist.png" alt="An image that fails to load" width="600" height="300"></agtc-image>
+    </div>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>width</code> et <code>height</code> obligatoires — sinon le CLS que le composant existe pour éviter se produit quand même</span><span class="lang-en"><code>width</code> and <code>height</code> are required — otherwise the CLS this component exists to prevent still occurs</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>alt</code> obligatoire sauf <code>decorative</code> — WCAG 1.1.1</span><span class="lang-en"><code>alt</code> required unless <code>decorative</code> — WCAG 1.1.1</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>priority</code> sur une seule image par page (la véritable LCP)</span><span class="lang-en"><code>priority</code> on at most one image per page (the true LCP)</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr"><code>skeleton</code> par défaut sur chaque petite image inline — réservé aux images lourdes/hero</span><span class="lang-en"><code>skeleton</code> by default on every small inline image — reserved for heavy/hero images</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>alt</code> manquant sans <code>decorative</code> : avertissement console (WCAG 1.1.1)</span><span class="lang-en">Missing <code>alt</code> without <code>decorative</code>: console warning (WCAG 1.1.1)</span></li>
+  <li><span class="lang-fr">Image décorative : <code>alt=""</code> + <code>aria-hidden="true"</code></span><span class="lang-en">Decorative image: <code>alt=""</code> + <code>aria-hidden="true"</code></span></li>
+  <li><span class="lang-fr">État de repli : <code>role="img"</code> + <code>aria-label</code> reprenant le texte alternatif</span><span class="lang-en">Fallback state: <code>role="img"</code> + <code>aria-label</code> carrying the same alt text</span></li>
+  <li><span class="lang-fr">Animation du skeleton désactivée sous <code>prefers-reduced-motion</code></span><span class="lang-en">Skeleton animation disabled under <code>prefers-reduced-motion</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- <span class="lang-fr">De base — width/height obligatoires</span><span class="lang-en">Basic — width/height required</span> --&gt;
+&lt;agtc-image src="photo.jpg" alt="…" width="800" height="450"&gt;&lt;/agtc-image&gt;
+
+&lt;!-- WebP <span class="lang-fr">avec repli</span><span class="lang-en">with fallback</span> --&gt;
+&lt;agtc-image src="photo.jpg" src-webp="photo.webp" alt="…" width="800" height="450"&gt;&lt;/agtc-image&gt;
+
+&lt;!-- <span class="lang-fr">Skeleton en option (images lourdes/hero)</span><span class="lang-en">Opt-in skeleton (heavy/hero images)</span> --&gt;
+&lt;agtc-image src="hero.jpg" alt="…" width="1200" height="630" skeleton&gt;&lt;/agtc-image&gt;
+
+&lt;!-- LCP --&gt;
+&lt;agtc-image src="hero.jpg" alt="…" width="1200" height="630" priority&gt;&lt;/agtc-image&gt;</code></pre>
+
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Toujours fournir <code>width</code> et <code>height</code></span><span class="lang-en">Always provide <code>width</code> and <code>height</code></span></li>
+      <li><span class="lang-fr">Réserver <code>priority</code> à la véritable image LCP</span><span class="lang-en">Reserve <code>priority</code> for the true LCP image</span></li>
+      <li><span class="lang-fr">Utiliser <code>skeleton</code> pour les images lourdes/hero seulement</span><span class="lang-en">Use <code>skeleton</code> for heavy/hero images only</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Omettre <code>width</code>/<code>height</code></span><span class="lang-en">Omitting <code>width</code>/<code>height</code></span></li>
+      <li><span class="lang-fr"><code>decorative</code> sur une image porteuse de sens</span><span class="lang-en"><code>decorative</code> on a meaningful image</span></li>
+      <li><span class="lang-fr"><code>priority</code> sur plus d'une image par page</span><span class="lang-en"><code>priority</code> on more than one image per page</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/image.html'), layout({
+    title: 'Image', depth: 1,
+    sidebar: sidebarComponents('../','image.html'),
+    body: body + uxPatternsFromMd('image') + contributionBanner()
   }));
 }
 
@@ -8683,6 +8799,7 @@ function build() {
   buildIcon();
   buildInput();
   buildBadge();
+  buildImage();
   buildCard();
   buildCheckbox();
   buildRadio();

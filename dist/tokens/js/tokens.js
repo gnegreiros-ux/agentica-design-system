@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 18 Jul 2026 17:56:25 GMT
+ * Generated on Tue, 21 Jul 2026 19:44:24 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -825,3 +825,8 @@ export const TopNavCtaColor = "#ffffff";
 export const TopNavCtaPaddingX = "16px";
 export const TopNavCtaPaddingY = "8px";
 export const TopNavCtaRadius = "6px";
+export const ImageSkeletonBackground = "#f0f0f0";
+export const ImageSkeletonBackgroundPulse = "#fafafa";
+export const ImageFallbackBackground = "#f0f0f0";
+export const ImageFallbackIcon = "#646464";
+export const ImageFallbackText = "#646464";

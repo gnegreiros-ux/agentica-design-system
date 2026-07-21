@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implementation of `agtc-segmented` — Agentica</title>
+<title>Figma Community File license: CC BY 4.0 — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implementation of `agtc-segmented` — Agentica">
+<meta property="og:title" content="Figma Community File license: CC BY 4.0 — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Implementation of `agtc-segmented` — Agentica">
+<meta name="twitter:title" content="Figma Community File license: CC BY 4.0 — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,86 +114,38 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-044</code>
+    <code class="adr-number">ADR-081</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    
   </div>
-  <h1 class="adr-page-title">Implementation of `agtc-segmented`</h1>
+  <h1 class="adr-page-title">Figma Community File license: CC BY 4.0</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-04</dd>
+      <dd>2026-07-21</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Applied reference UX patterns</h2>
-<blockquote><p>Added on 2026-06-04 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>SG1–SG8 all approved</strong>. Detail and links: <code>guidelines/components/segmented.md</code> § UX Patterns Reference.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Single selection, always one active</td><td>Primer</td></tr><tr><td>SG2</td><td><code>&lt;button&gt;</code> group + <code>aria-current</code> + immediate effect (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, short labels</td><td>NN/g</td></tr><tr><td>SG4</td><td>Selection never conveyed by color alone</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Immediate effect</td><td>Primer</td></tr><tr><td>SG6</td><td>Per-segment <code>:focus-visible</code>, native Tab</td><td>Primer</td></tr><tr><td>SG7</td><td>Equal width, icon + label</td><td>NN/g</td></tr><tr><td>SG8</td><td><code>value</code> API + <code>change</code> event</td><td>Primer</td></tr></tbody></table></div>
-<hr>
-<h2>Context</h2>
-<p>The site uses an FR/EN toggle (~114 <code>lang-btn</code> usages): a <code>role="group"</code> containing two <code>&lt;button aria-pressed&gt;</code> elements, with immediate effect. <code>agtc-segmented</code> formalizes this single-selection segmented control. It's the <strong>5th and last component in category B</strong> of the 2026-06-03 gap analysis, after table, code-block, banner, and link.</p>
-<hr>
-<h2>Decisions</h2>
-<h3>Decision 1 — ARIA pattern: button group + <code>aria-current</code>, NOT a radiogroup (SG2)</h3>
-<p>This is the structuring decision. Three patterns were candidates:</p>
-<ul><li><strong>radiogroup</strong> (like <code>agtc-radio-group</code>, ADR-038): arrow keys + roving tabindex, "form choice"</li></ul>
-<p>  semantics implying a submission;</p>
-<ul><li><strong>tablist</strong>: changes a content panel;</li><li><strong><code>&lt;button&gt;</code> group + <code>aria-current</code></strong>: immediate effect, native Tab between segments.</li></ul>
-<p>Primer (GitHub) explicitly advises against radiogroup and tablist for a segmented control with an <strong>immediate effect</strong>. We therefore adopt the <strong>native button group</strong>: each segment is a <code>&lt;button&gt;</code> (native Tab/Enter/Space), the active segment carries <code>aria-current="true"</code>, the selection applies immediately. This is a <strong>deliberate departure</strong> from <code>agtc-radio-group</code> (radiogroup + arrow keys), justified by the difference in usage (instant setting vs. submitted form choice).</p>
-<h3>Decision 2 — Tokenized "rail" (track) style</h3>
-<p>Rail with a subtle background (<code>background.subtle</code>), the selected segment shown as a solid pill (<code>action.primary</code> + <code>on-action</code> text). The selected state combines <strong>solid fill + weight 700</strong> — never color alone (WCAG 1.4.1).</p>
-<h3>Decision 3 — Data-driven with immediate effect</h3>
-<p><code>options</code> (<code>{value,label,icon?}</code>) + <code>value</code>; each selection emits <code>change</code> (<code>detail:{value}</code>). No "apply" button (SG5). <code>label</code> required to name the group (console warning otherwise).</p>
-<h3>Decision 4 — "Mix" architecture (consistent with ADR-040→043)</h3>
-<p><code>&lt;agtc-segmented&gt;</code> component (shadow DOM, data-driven) <strong>+</strong> <code>.agtc-segmented</code> class for static HTML. Both consume <code>component.segmented.*</code>. The site's language toggle will be migrated to this contract during *dogfooding* (category A).</p>
-<hr>
-<h2>v1 Scope</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future evolution)</th></tr></thead><tbody><tr><td>Single selection, immediate effect, <code>aria-current</code></td><td>Multi-selection</td></tr><tr><td><code>options</code> (value/label/icon), <code>value</code>, <code>change</code></td><td>Content tabs (→ future <code>tabs</code>)</td></tr><tr><td><code>equal-width</code>, icons</td><td>Scrollable overflow</td></tr><tr><td>Tokenized rail, focus-visible</td><td>Multiple sizes (sm/lg)</td></tr></tbody></table></div>
-<hr>
+</div><h2>Context</h2>
+<p>The repository's <code>LICENSE</code> file (MIT) covers the <strong>code</strong> — Web Components, token JSON, site build, etc. It does not properly cover the <strong>Figma file</strong> (<code>uXgPVB6cMLwAPqSwoa0dGq</code>) that the still-Backlog "publish a Community File" chantier intends to publish. Figma's Community publishing flow requires the publisher to declare a license for the file itself, independent of any software license in the linked repository. This was the one remaining P1 item blocking that chantier — the decision could only be made by the Design System Lead, not an agent.</p>
+<h2>Decision</h2>
+<blockquote><p>The Figma Community File will be published under <strong>CC BY 4.0</strong> (Creative Commons Attribution 4.0 International) — chosen for consistency with the code's MIT license: both are permissive, both only require attribution, and neither restricts commercial reuse or modification.</p></blockquote>
 <h2>Rejected alternatives</h2>
-<ul><li><strong>radiogroup pattern</strong> (consistency with <code>agtc-radio-group</code>): unsuited to immediate effect (Primer) — rejected in favor of the button group.</li><li><strong><code>role="tablist"</code></strong>: reserved for content-panel changes.</li><li><strong>"Separate bordered buttons" style</strong> (like the current <code>lang-btn</code>): replaced by the pill rail, more readable and modern.</li><li><strong><code>aria-pressed</code> per segment</strong>: <code>aria-current="true"</code> better expresses "the current option" of a single selection.</li></ul>
-<hr>
+<ul><li><strong>CC0 (public domain, no attribution required).</strong> Rejected: less consistent</li></ul>
+<p>  with MIT, which does require preserving the copyright notice — CC0 would be   a strictly looser stance for the design assets than the project already   takes for the code.</p>
+<ul><li><strong>A restrictive/proprietary Figma Community license.</strong> Rejected: would put</li></ul>
+<p>  the design assets at odds with the project's existing permissive posture on   the code, for no stated benefit.</p>
 <h2>Consequences</h2>
-<ul><li>The site's FR/EN toggle will be able to migrate to <code>.agtc-segmented</code> during *dogfooding* (category A).</li><li><strong>Closes category B</strong> of the gap analysis (table, code-block, banner, link, segmented).</li><li>A future <code>tabs</code> component (content-panel change) remains distinct (its own ADR).</li></ul>
-<hr>
-<h2>Tokens added — <code>component.segmented.default.*</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Reference</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-04 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>SG1–SG8 tous approuvés</strong>. Détail et liens : <code>guidelines/components/segmented.md</code> § UX Patterns Reference.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>SG1</td><td>Mono-sélection, toujours un actif</td><td>Primer</td></tr><tr><td>SG2</td><td>Groupe de <code>&lt;button&gt;</code> + <code>aria-current</code> + effet immédiat (≠ radiogroup/tablist)</td><td>Primer</td></tr><tr><td>SG3</td><td>2–5 options, libellés courts</td><td>NN/g</td></tr><tr><td>SG4</td><td>Sélectionné pas par la couleur seule</td><td>WCAG 1.4.1</td></tr><tr><td>SG5</td><td>Effet immédiat</td><td>Primer</td></tr><tr><td>SG6</td><td><code>:focus-visible</code> par segment, Tab natif</td><td>Primer</td></tr><tr><td>SG7</td><td>Largeur égale, icône + libellé</td><td>NN/g</td></tr><tr><td>SG8</td><td>API <code>value</code> + événement <code>change</code></td><td>Primer</td></tr></tbody></table></div>
-<hr>
-<h2>Contexte</h2>
-<p>Le site utilise une bascule FR/EN (~114 usages <code>lang-btn</code>) : un <code>role="group"</code> contenant deux <code>&lt;button aria-pressed&gt;</code>, à effet immédiat. <code>agtc-segmented</code> formalise ce contrôle segmenté mono-sélection. C'est le <strong>5ᵉ et dernier composant de la catégorie B</strong> de la gap-analysis du 2026-06-03, après table, code-block, banner et link.</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — Pattern ARIA : groupe de boutons + <code>aria-current</code>, PAS un radiogroup (SG2)</h3>
-<p>C'est la décision structurante. Trois patterns étaient candidats :</p>
-<ul><li><strong>radiogroup</strong> (comme <code>agtc-radio-group</code>, ADR-038) : flèches + roving tabindex, sémantique « choix</li></ul>
-<p>  de formulaire » impliquant une soumission ;</p>
-<ul><li><strong>tablist</strong> : change un panneau de contenu ;</li><li><strong>groupe de <code>&lt;button&gt;</code> + <code>aria-current</code></strong> : effet immédiat, Tab natif entre segments.</li></ul>
-<p>Primer (GitHub) déconseille explicitement radiogroup et tablist pour un contrôle segmenté à <strong>effet immédiat</strong>. On retient donc le <strong>groupe de boutons natifs</strong> : chaque segment est un <code>&lt;button&gt;</code> (Tab/Entrée/Espace natifs), le segment actif porte <code>aria-current="true"</code>, la sélection s'applique immédiatement. C'est un <strong>écart assumé</strong> vis-à-vis de <code>agtc-radio-group</code> (radiogroup + flèches), justifié par la différence d'usage (réglage instantané vs choix de formulaire soumis).</p>
-<h3>Décision 2 — Style « rail » (track) tokenisé</h3>
-<p>Rail à fond subtil (<code>background.subtle</code>), segment sélectionné en pastille pleine (<code>action.primary</code> + texte <code>on-action</code>). L'état sélectionné combine <strong>fond plein + poids 700</strong> — jamais la couleur seule (WCAG 1.4.1).</p>
-<h3>Décision 3 — Piloté par données + effet immédiat</h3>
-<p><code>options</code> (<code>{value,label,icon?}</code>) + <code>value</code> ; chaque sélection émet <code>change</code> (<code>detail:{value}</code>). Pas de bouton « appliquer » (SG5). <code>label</code> requis pour nommer le groupe (avertissement console sinon).</p>
-<h3>Décision 4 — Architecture « mix » (cohérente avec ADR-040→043)</h3>
-<p>Composant <code>&lt;agtc-segmented&gt;</code> (shadow DOM, piloté par données) <strong>+</strong> classe <code>.agtc-segmented</code> pour le HTML statique. Les deux consomment <code>component.segmented.*</code>. La bascule de langue du site sera migrée vers ce contrat au *dogfooding* (catégorie A).</p>
-<hr>
-<h2>Périmètre v1</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (évolution future)</th></tr></thead><tbody><tr><td>Mono-sélection, effet immédiat, <code>aria-current</code></td><td>Multi-sélection</td></tr><tr><td><code>options</code> (value/label/icon), <code>value</code>, <code>change</code></td><td>Onglets de contenu (→ futur <code>tabs</code>)</td></tr><tr><td><code>equal-width</code>, icônes</td><td>Débordement / overflow scrollable</td></tr><tr><td>Rail tokenisé, focus-visible</td><td>Tailles multiples (sm/lg)</td></tr></tbody></table></div>
-<hr>
-<h2>Alternatives rejetées</h2>
-<ul><li><strong>Pattern radiogroup</strong> (cohérence avec <code>agtc-radio-group</code>) : inadapté à l'effet immédiat (Primer) — rejeté au profit du groupe de boutons.</li><li><strong><code>role="tablist"</code></strong> : réservé au changement de panneau de contenu.</li><li><strong>Style « boutons bordés séparés »</strong> (comme l'actuel <code>lang-btn</code>) : remplacé par le rail à pastille, plus lisible et moderne.</li><li><strong><code>aria-pressed</code> par segment</strong> : <code>aria-current="true"</code> exprime mieux « l'option courante » d'une mono-sélection.</li></ul>
-<hr>
-<h2>Conséquences</h2>
-<ul><li>La bascule FR/EN du site pourra migrer vers <code>.agtc-segmented</code> au *dogfooding* (catégorie A).</li><li><strong>Clôt la catégorie B</strong> de la gap-analysis (table, code-block, banner, link, segmented).</li><li>Un futur composant <code>tabs</code> (changement de panneau) reste distinct (son propre ADR).</li></ul>
-<hr>
-<h2>Tokens ajoutés — <code>component.segmented.default.*</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>track-background</code></td><td><code>semantic.color.background.subtle</code></td></tr><tr><td><code>text</code></td><td><code>semantic.color.text.secondary</code></td></tr><tr><td><code>text-hover</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>selected-background</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>selected-text</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-043.html" class="agtc-button secondary">← ADR-043</a>
-    <a href="adr-045.html" class="agtc-button secondary">ADR-045 →</a>
+<ul><li>No action needed in Figma today — the library is still early-stage (most</li></ul>
+<p>  components and every pattern remain to be built) and the Community File   publish itself has no scheduled date. This ADR fixes the license *decision*   ahead of that eventual publish, per ADR-080's pattern of resolving   publish-blocking questions before they're urgent.</p>
+<ul><li>When the Community File publish chantier is actually executed: set the</li></ul>
+<p>  file's Community license to CC BY 4.0 in Figma's publish flow, and state it   in the file's Community description (see ADR-080's Rule 2 pre-publication   audit and the not-yet-written cover/description/tags backlog item — both   still apply independently of this decision).</p>
+<ul><li>The GitHub Projects "Community File — Décider la licence" item (P1) is resolved and can move to Terminé (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal ticket title + literal Status field value, both French by board convention --></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-080.html" class="agtc-button secondary">← ADR-080</a>
+    <a href="adr-082.html" class="agtc-button secondary">ADR-082 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
