@@ -143,6 +143,7 @@ decisions that were already settled.
 | [ADR-078](ADR-078-figma-tokens-studio-write-restriction.md) | Restrict Tokens Studio write access to the `agentica/proposals` branch | 2026-07-20 | ✅ Active |
 | [ADR-079](ADR-079-figma-audit-scheduled-routine.md) | Weekly scheduled cloud agent for the Figma §22 full-library audit | 2026-07-21 | ✅ Active |
 | [ADR-080](ADR-080-figma-community-file-content-triage.md) | Figma Community File content triage rule: brand identity stays private | 2026-07-21 | ✅ Active |
+| [ADR-082](ADR-082-figma-brand-file-separation.md) | Brand/logo separated into a dedicated Figma library file (amends ADR-080) | 2026-07-21 | ✅ Active |
 
 ---
 
