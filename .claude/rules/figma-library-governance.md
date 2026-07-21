@@ -233,6 +233,35 @@ indistinguishable from a clean result.
 
 ---
 
+## Community File content triage — brand identity stays private (ADR-080)
+
+> Applies only when the still-Backlog "publish a Community File" chantier is
+> actually executed — not a constraint on ordinary work today.
+
+```
+✅ Any page whose content IS the Agentica brand identity (the logo mark
+   itself, not documentation about a generic concept) → excluded from
+   any future Community File publish
+✅ Any page documenting a generic, reusable design-system concept
+   (Foundations, Components, Patterns) → included, even pages that don't
+   exist yet — this is a category rule, not a fixed list
+✅ Before publication is ever executed: also audit every component/pattern
+   for a NESTED instance of the logo (e.g. a future top-nav or banner
+   pattern) — publishing a component that embeds the logo leaks it even
+   if the dedicated logos page itself is excluded
+❌ Do not require a placeholder/generic logo in ordinary design work today —
+   the pre-publication audit above catches embedding risk at the point it
+   actually matters, no need to route around the brand system now for a
+   publication with no scheduled date
+```
+
+Confirmed today (2026-07-21, reviewed live in the file): `COVER` and
+`FOUNDATIONS > logos` are the two pages matching the excluded category.
+Everything else reviewed (`INTRO`, the rest of `FOUNDATIONS`, every page
+under `COMPONENTS`, `PATTERNS`) is generic and included.
+
+---
+
 ## Rules for agents
 
 ```
