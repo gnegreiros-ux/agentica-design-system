@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Style Dictionary: multi-platform build with custom formats — Agentica</title>
+<title>Figma Community File content triage rule: brand identity stays private — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Style Dictionary: multi-platform build with custom formats — Agentica">
+<meta property="og:title" content="Figma Community File content triage rule: brand identity stays private — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Style Dictionary: multi-platform build with custom formats — Agentica">
+<meta name="twitter:title" content="Figma Community File content triage rule: brand identity stays private — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,134 +114,47 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-030</code>
+    <code class="adr-number">ADR-080</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     
   </div>
-  <h1 class="adr-page-title">Style Dictionary: multi-platform build with custom formats</h1>
+  <h1 class="adr-page-title">Figma Community File content triage rule: brand identity stays private</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-30</dd>
+      <dd>2026-07-21</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Guilherme Negreiros</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><p><strong>Date:</strong> 2026-05-30 <strong>Status:</strong> Accepted <strong>Decision-makers:</strong> Guilherme Negreiros <strong>Scope:</strong> Token compilation infrastructure</p>
-<hr>
-<h2>Context</h2>
-<p>Agentica tokens are defined in JSON (3 levels: primitive → semantic → component). They must be compiled into artifacts consumable by several stacks:</p>
-<ul><li><strong>CSS custom properties</strong> — Lit Web Components, any web team</li><li><strong>JavaScript ES6</strong> — tooling, scripts, tests</li><li><strong>Tailwind CSS</strong> — React/Shadcn teams extending their Tailwind config</li><li><strong>Material Angular M3</strong> — Angular teams defining their M3 theme</li><li><strong>iOS Swift</strong> — Apple mobile teams</li><li><strong>Android XML</strong> — Android mobile teams</li></ul>
-<p>Style Dictionary (ADR-003) was chosen as the compiler. This ADR documents the technical decisions made to get it working correctly with our token structure.</p>
-<hr>
-<h2>Problems solved</h2>
-<h3>1. DTCG format inconsistency</h3>
-<p>Primitives use <code>$value</code>/<code>$type</code> (W3C DTCG format), semantics use <code>value</code>/<code>$type</code> (SD v2 format). Style Dictionary v3 does not handle both simultaneously.</p>
-<p><strong>Solution:</strong> a custom parser (<code>registerParser</code>) that normalizes <code>$value → value</code> and <code>$type → type</code> before SD processes the files.</p>
-<h3>2. Level filtering with no native attribute</h3>
-<p>Tokens are filtered by level (primitive / semantic / component) to generate separate CSS files. SD v3 does not define this attribute automatically.</p>
-<p><strong>Solution:</strong> a custom <code>attribute/level</code> transform that reads <code>token.path[0]</code> and sets <code>token.attributes.level</code> accordingly.</p>
-<h3>3. Double prefix in custom formats</h3>
-<p>In custom formats (Tailwind, Angular), <code>token.name</code> already includes the prefix defined in the platform. Writing <code>var(--agtc-${t.name})</code> produces a double prefix.</p>
-<p><strong>Solution:</strong> use <code>var(--${t.name})</code> in custom formats.</p>
-<h3>4. <code>_readme</code> tokens in CSS output</h3>
-<p>Documentation keys (<code>_readme</code>) in the JSON files were ending up as CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>). <!-- lang-audit-ignore: historical bug quote --></p>
-<p><strong>Solution:</strong> an <code>isReadme(t)</code> predicate that filters out any token whose path segment starts with <code>_</code>. Applied across all file filters.</p>
-<h3>5. <code>$schema</code> / <code>$metadata</code> collisions</h3>
-<p>The root keys <code>$schema</code> and <code>$metadata</code>, present in several JSON files, caused "Property Value Collision" warnings when merged.</p>
-<p><strong>Solution:</strong> the parser strips the <code>ROOT_META_KEYS = {$schema, $metadata, _note}</code> keys, but only at the root level (depth === 0).</p>
-<hr>
-<h2>Decisions</h2>
-<h3>CSS prefix</h3>
-<p><code>agtc</code> — replaces the former <code>sda</code> prefix (brand rename, see git history).</p>
-<h3>CSS reference chain (<code>outputReferences: true</code>)</h3>
-<p>The <code>semantic.css</code> and <code>components.css</code> files use <code>outputReferences: true</code>. This produces cascading CSS references:</p>
-<pre class="code-block"><code class="lang-css">/* components.css */
---agtc-button-primary-background: var(--agtc-semantic-color-action-primary);
-
-/* semantic.css */
---agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9);
-
-/* primitives.css */
---agtc-primitive-color-teal-9: #12a594;</code></pre>
-<p>Benefit: modifying a primitive propagates automatically at runtime. Constraint: load all 3 files together, or use <code>all.css</code>.</p>
-<h3>Tailwind mapping</h3>
-<p>The <code>dist/tokens/tailwind/tokens.js</code> file exports only semantic tokens (not the primitives). Tailwind keys are prefixed <code>agtc-</code> to avoid collisions with the native Tailwind namespace.</p>
-<h3>Material Angular M3 mapping</h3>
-<p>Radix UI uses 12 steps (1=lightest, 12=darkest). M3 uses tonal stops (0-100, 100=lightest, 0=darkest). Mapping: Radix step → M3 stop: <code>{1:99, 2:95, 3:90, 4:80, 5:70, 6:60, 7:50, 8:40, 9:30, 10:20, 11:10, 12:0}</code>.</p>
-<p>Palettes mapped to M3 roles:</p>
-<ul><li><code>teal</code> → <code>primary</code></li><li><code>red</code> → <code>error</code></li><li><code>gray</code> → <code>neutral</code></li><li><code>accent</code> → <code>secondary</code></li></ul>
-<hr>
-<h2>Generated artifacts</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>File</th><th>Destination</th><th>Usage</th></tr></thead><tbody><tr><td><code>dist/tokens/css/primitives.css</code></td><td>Web</td><td>Raw values</td></tr><tr><td><code>dist/tokens/css/semantic.css</code></td><td>Web</td><td>UX intents (with <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/components.css</code></td><td>Web</td><td>Component contracts (with <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/all.css</code></td><td>Web</td><td>Everything in one file</td></tr><tr><td><code>dist/tokens/js/tokens.js</code></td><td>JS/TS</td><td>Named ES6 exports</td></tr><tr><td><code>dist/tokens/tailwind/tokens.js</code></td><td>React/Shadcn</td><td><code>theme.extend</code> extension</td></tr><tr><td><code>dist/tokens/angular/_m3-theme.scss</code></td><td>Angular M3</td><td>SCSS palettes + aliases</td></tr><tr><td><code>dist/tokens/ios/AgenticaTokens.swift</code></td><td>iOS</td><td>Swift class</td></tr><tr><td><code>dist/tokens/android/tokens.colors.xml</code></td><td>Android</td><td>Color resources</td></tr><tr><td><code>dist/tokens/android/tokens.dimens.xml</code></td><td>Android</td><td>Dimension resources</td></tr></tbody></table></div>
-<hr>
-<h2>Build command</h2>
-<pre class="code-block"><code class="lang-bash">npm run tokens        # single build
-npm run tokens:watch  # automatic rebuild on changes in tokens/</code></pre>
-<hr>
-<h2>Expected warnings (non-blocking)</h2>
-<pre class="code-block"><code class="lang-text">⚠️ semantic.css — filtered out token references were found
-⚠️ components.css — filtered out token references were found</code></pre>
-<p>These warnings are normal and expected. They indicate that <code>semantic.css</code> contains <code>var()</code> references pointing to tokens defined in <code>primitives.css</code>. This is the intended behavior — the files are designed to be loaded together.</p></div><div class="lang-fr"><p><strong>Date :</strong> 2026-05-30 <strong>Statut :</strong> Accepté <strong>Décideurs :</strong> Guilherme Negreiros <strong>Scope :</strong> Infrastructure de compilation des tokens</p>
-<hr>
-<h2>Contexte</h2>
-<p>Les tokens Agentica sont définis en JSON (3 niveaux : primitif → sémantique → composant). Ils doivent être compilés en artefacts consommables par plusieurs stacks :</p>
-<ul><li><strong>CSS custom properties</strong> — Web Components Lit, toute équipe web</li><li><strong>JavaScript ES6</strong> — outillage, scripts, tests</li><li><strong>Tailwind CSS</strong> — équipes React/Shadcn qui étendent leur config Tailwind</li><li><strong>Material Angular M3</strong> — équipes Angular qui définissent leur thème M3</li><li><strong>iOS Swift</strong> — équipes mobile Apple</li><li><strong>Android XML</strong> — équipes mobile Android</li></ul>
-<p>Style Dictionary (ADR-003) a été choisi comme compilateur. Ce ADR documente les décisions techniques prises pour le faire fonctionner correctement avec notre structure de tokens.</p>
-<hr>
-<h2>Problèmes résolus</h2>
-<h3>1. Inconsistance de format DTCG</h3>
-<p>Les primitifs utilisent <code>$value</code>/<code>$type</code> (format DTCG W3C), les sémantiques utilisent <code>value</code>/<code>$type</code> (format SD v2). Style Dictionary v3 ne gère pas les deux simultanément.</p>
-<p><strong>Solution :</strong> parseur personnalisé (<code>registerParser</code>) qui normalise <code>$value → value</code> et <code>$type → type</code> avant que SD traite les fichiers.</p>
-<h3>2. Filtrage par niveau sans attribut natif</h3>
-<p>Les tokens sont filtrés par niveau (primitif / sémantique / composant) pour générer des fichiers CSS séparés. SD v3 ne définit pas cet attribut automatiquement.</p>
-<p><strong>Solution :</strong> transform custom <code>attribute/level</code> qui lit <code>token.path[0]</code> et définit <code>token.attributes.level</code> en conséquence.</p>
-<h3>3. Double préfixe dans les formats custom</h3>
-<p>Dans les formats custom (Tailwind, Angular), <code>token.name</code> inclut déjà le préfixe défini dans la plateforme. Écrire <code>var(--agtc-${t.name})</code> produit un double préfixe.</p>
-<p><strong>Solution :</strong> utiliser <code>var(--${t.name})</code> dans les formats custom.</p>
-<h3>4. Tokens <code>_readme</code> dans les sorties CSS</h3>
-<p>Des clés de documentation (<code>_readme</code>) dans les fichiers JSON se retrouvaient en CSS variables (<code>--agtc-semantic-space-density-readme: Densité...</code>). <!-- lang-audit-ignore: historical bug quote --></p>
-<p><strong>Solution :</strong> prédicat <code>isReadme(t)</code> qui filtre tout token dont un segment de chemin commence par <code>_</code>. Appliqué dans tous les filtres de fichiers.</p>
-<h3>5. Collisions <code>$schema</code> / <code>$metadata</code></h3>
-<p>Les clés racines <code>$schema</code> et <code>$metadata</code> présentes dans plusieurs fichiers JSON causaient des avertissements "Property Value Collision" à la fusion.</p>
-<p><strong>Solution :</strong> le parseur strip les clés <code>ROOT_META_KEYS = {$schema, $metadata, _note}</code> au niveau racine uniquement (depth === 0).</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Préfixe CSS</h3>
-<p><code>agtc</code> — remplace l'ancien préfixe <code>sda</code> (renommage de marque, voir historique git).</p>
-<h3>Chaîne de références CSS (<code>outputReferences: true</code>)</h3>
-<p>Les fichiers <code>semantic.css</code> et <code>components.css</code> utilisent <code>outputReferences: true</code>. Cela produit des références CSS en cascade :</p>
-<pre class="code-block"><code class="lang-css">/* components.css */
---agtc-button-primary-background: var(--agtc-semantic-color-action-primary);
-
-/* semantic.css */
---agtc-semantic-color-action-primary: var(--agtc-primitive-color-teal-9);
-
-/* primitives.css */
---agtc-primitive-color-teal-9: #12a594;</code></pre>
-<p>Avantage : modifier un primitif se propage automatiquement à runtime. Contrainte : charger les 3 fichiers ensemble, ou utiliser <code>all.css</code>.</p>
-<h3>Mapping Tailwind</h3>
-<p>Le fichier <code>dist/tokens/tailwind/tokens.js</code> exporte uniquement les tokens sémantiques (pas les primitifs). Les clés Tailwind sont préfixées <code>agtc-</code> pour éviter les collisions avec le namespace Tailwind natif.</p>
-<h3>Mapping Material Angular M3</h3>
-<p>Radix UI utilise 12 steps (1=plus clair, 12=plus foncé). M3 utilise des stops tonaux (0-100, 100=plus clair, 0=plus foncé). Mapping : step Radix → stop M3 : <code>{1:99, 2:95, 3:90, 4:80, 5:70, 6:60, 7:50, 8:40, 9:30, 10:20, 11:10, 12:0}</code>.</p>
-<p>Palettes mappées aux rôles M3 :</p>
-<ul><li><code>teal</code> → <code>primary</code></li><li><code>red</code> → <code>error</code></li><li><code>gray</code> → <code>neutral</code></li><li><code>accent</code> → <code>secondary</code></li></ul>
-<hr>
-<h2>Artefacts générés</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Fichier</th><th>Destination</th><th>Usage</th></tr></thead><tbody><tr><td><code>dist/tokens/css/primitives.css</code></td><td>Web</td><td>Valeurs brutes</td></tr><tr><td><code>dist/tokens/css/semantic.css</code></td><td>Web</td><td>Intentions UX (avec <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/components.css</code></td><td>Web</td><td>Contrats composants (avec <code>var()</code> refs)</td></tr><tr><td><code>dist/tokens/css/all.css</code></td><td>Web</td><td>Tout en un fichier</td></tr><tr><td><code>dist/tokens/js/tokens.js</code></td><td>JS/TS</td><td>Exports ES6 nommés</td></tr><tr><td><code>dist/tokens/tailwind/tokens.js</code></td><td>React/Shadcn</td><td>Extension <code>theme.extend</code></td></tr><tr><td><code>dist/tokens/angular/_m3-theme.scss</code></td><td>Angular M3</td><td>Palettes + alias SCSS</td></tr><tr><td><code>dist/tokens/ios/AgenticaTokens.swift</code></td><td>iOS</td><td>Classe Swift</td></tr><tr><td><code>dist/tokens/android/tokens.colors.xml</code></td><td>Android</td><td>Ressources couleurs</td></tr><tr><td><code>dist/tokens/android/tokens.dimens.xml</code></td><td>Android</td><td>Ressources dimensions</td></tr></tbody></table></div>
-<hr>
-<h2>Commande de build</h2>
-<pre class="code-block"><code class="lang-bash">npm run tokens        # build unique
-npm run tokens:watch  # rebuild automatique sur changement dans tokens/</code></pre>
-<hr>
-<h2>Avertissements attendus (non bloquants)</h2>
-<pre class="code-block"><code class="lang-text">⚠️ semantic.css — filtered out token references were found
-⚠️ components.css — filtered out token references were found</code></pre>
-<p>Ces avertissements sont normaux et attendus. Ils indiquent que <code>semantic.css</code> contient des <code>var()</code> pointant vers des tokens définis dans <code>primitives.css</code>. C'est le comportement voulu — les fichiers sont conçus pour être chargés ensemble.</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-029.html" class="agtc-button secondary">← ADR-029</a>
-    <a href="adr-031.html" class="agtc-button secondary">ADR-031 →</a>
+</div><h2>Context</h2>
+<p>A Figma <strong>Community File</strong> is publicly visible and freely duplicable by anyone who finds it — once a third party duplicates it, that copy is theirs, with no way to revoke or retract it. The backlog chantier to publish this library as a Community File (still in Backlog, no publication date set — the library is early-stage, most components and every pattern still need to be built) requires deciding, ahead of that eventual publication, what content is safe to hand out this way and what must not be.</p>
+<p>Two categories of leak risk were identified while reviewing the file (<code>uXgPVB6cMLwAPqSwoa0dGq</code>) live in Figma: 1. <strong>Page-level</strong>: entire pages whose content is the Agentica brand identity    itself, not generic design-system documentation. 2. <strong>Component-embedding</strong>: a generic, otherwise-publishable component    (e.g. a future <code>top-nav</code> or a page-banner pattern) could nest an    *instance* of the logo component inside it — publishing that component    would carry the embedded logo along with it, even if the dedicated    <code>logos</code> page itself is excluded. Flagged by the Design System Lead during    this review: the logo is expected to be used inside top-nav/banner    patterns soon, once that work starts.</p>
+<h2>Decision</h2>
+<p><strong>Rule 1 — page-level exclusion (durable, applies to future pages too, not just today's inventory):</strong></p>
+<blockquote><p>Any page whose content specifically identifies Agentica/the organization (the brand mark itself, not documentation *about* generic design-system concepts) is excluded from the Community File. Any page documenting a generic, reusable design-system concept (Foundations, Components, Patterns) is included — including pages that don't exist yet.</p></blockquote>
+<p>Concrete instances of the excluded category today (reviewed live in Figma, 2026-07-21):</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Page</th><th>Why excluded</th></tr></thead><tbody><tr><td><code>COVER</code></td><td>Full Agentica brand mark composition + <code>agentica.design</code> domain</td></tr><tr><td><code>FOUNDATIONS &gt; logos</code></td><td>The logo itself: 5 full-lockup color variants (Teal/Color/Black/White/Color White) + 3 symbol-only variants</td></tr></tbody></table></div>
+<p>Everything else reviewed is generic and included: <code>INTRO</code>, <code>FOUNDATIONS &gt; icons/colors/spacing/typography</code>, every page under <code>COMPONENTS</code> (button, input, toggle, checkbox, radio, segmented, icon, tabs, top-nav, feature-card), and <code>PATTERNS</code> (currently an empty placeholder — nothing to triage yet).</p>
+<p><strong>Rule 2 — pre-publication component audit (not yet actionable, required before any actual publish):</strong></p>
+<blockquote><p>Before publication is ever executed (separate, still-Backlog chantier), audit every component and pattern in the file for a nested instance of the logo component. For each one found: either exclude that specific component from the publish, or replace the embedded logo instance with a generic placeholder before publishing.</p></blockquote>
+<p>This rule is deliberately <strong>not enforced today</strong> — the library is still being built (most components and every pattern remain to be created), and requiring placeholder branding in ordinary work now, years before any publish date, was explicitly rejected (see below) as unnecessary friction on current design work.</p>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Require a generic/placeholder logo everywhere in patterns starting now</strong></li></ul>
+<p>  (e.g. in <code>top-nav</code>, page banners), instead of the real Agentica mark.   Rejected: solves the embedding-leak problem structurally, but forces every   future component/pattern to route around the brand system's own logo   during ordinary design work, for a publication that isn't scheduled and   won't happen until the library is far more complete. The pre-publication   audit (Rule 2) catches the same risk at the point it actually matters —   right before publishing — without that ongoing cost today.</p>
+<ul><li><strong>Treat today's page inventory as the final exclusion list.</strong> Rejected per</li></ul>
+<p>  the Design System Lead: the library is at the very beginning of its   construction — new components and every pattern still need to be added.   A static list would silently go stale the moment a new page is created.   Rule 1 is written as a category-based principle for this reason, not an   enumeration.</p>
+<h2>Consequences</h2>
+<ul><li>No action is required in Figma right now — this ADR documents the rule the</li></ul>
+<p>  *eventual* publication must follow, not a change to make today.</p>
+<ul><li>When work begins on any pattern or component that visually incorporates the</li></ul>
+<p>  logo (top-nav, banners, etc.), that's expected and not a governance   violation — Rule 2's audit is a pre-publication gate, not a   pre-construction one.</p>
+<ul><li>Before the Community File publication chantier is ever</li></ul>
+<p>  actually executed, both rules must be applied: re-run the Rule 1 triage   (new pages may exist by then) and run the Rule 2 component-embedding audit   in full — neither is optional at that point.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-079.html" class="agtc-button secondary">← ADR-079</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
