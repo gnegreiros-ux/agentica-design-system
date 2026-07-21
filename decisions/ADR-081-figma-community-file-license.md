@@ -5,7 +5,7 @@
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Relations:** `LICENSE` (repo root), `.claude/rules/figma-library-governance.md`,
 > ADR-080 (Community File content triage), GitHub Projects — Figma-domain
-> "Community File — Décider la licence" ticket (Priority P1)
+> "Community File — Décider la licence" ticket (Priority P1) <!-- lang-audit-ignore: literal ticket title (French, board convention) -->
 
 ## Context
 
@@ -47,5 +47,4 @@ Lead, not an agent.
   in the file's Community description (see ADR-080's Rule 2 pre-publication
   audit and the not-yet-written cover/description/tags backlog item — both
   still apply independently of this decision).
-- The GitHub Projects "Community File — Décider la licence" item (P1) is
-  resolved and can move to Terminé.
+- The GitHub Projects "Community File — Décider la licence" item (P1) is resolved and can move to Terminé (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal ticket title + literal Status field value, both French by board convention -->
