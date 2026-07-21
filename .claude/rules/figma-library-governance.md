@@ -221,7 +221,15 @@ in-page documentation, links) is scripted and documented in
 ✅ On any newly created page, before declaring it complete
 ✅ On any page whose shared component (Icon, Text Style, Variable) has been modified
 ✅ At explicit user request ("audit", "check everything", "global screenshot")
+✅ Automatically, weekly, against the WHOLE library — scheduled cloud agent
+   (routine `trig_015wTFo2gJNztALS2bvFZ54d`, Mondays 06:00 America/Toronto),
+   ADR-079. Closes the gap the three triggers above leave open: none of them
+   ever re-checks a page nobody has recently touched.
 ```
+
+Weekly-run outcome: silent if clean; a GitHub issue (label `figma-audit`) if
+any violation is found, or if the run itself fails — a failure is never left
+indistinguishable from a clean result.
 
 ---
 
