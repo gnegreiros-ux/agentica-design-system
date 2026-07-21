@@ -95,7 +95,7 @@ Two questions guided the decisions:
   Reference table above.
 - Site: `agtc-image` gets a documentation page (`site/dist/components/image.html`),
   added to `COMPONENT_PAGES` and the components index catalog.
-- GitHub Projects `agtc-image` ticket (P2, Composants) moves to Terminé.
+- GitHub Projects `agtc-image` ticket (P2, Composants) moves to Terminé (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal Status field value, French by board convention -->
 - Not in scope for this ADR: migrating existing `<img>` usage on the site itself to
   `<agtc-image>` — that's a separate dogfooding decision, not required by the backlog
   ticket, which asked for the component to exist, not for a sitewide migration.
