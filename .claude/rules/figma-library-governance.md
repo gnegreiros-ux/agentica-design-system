@@ -262,6 +262,20 @@ under `COMPONENTS`, `PATTERNS`) is generic and included.
 
 ---
 
+## Community File license — CC BY 4.0 (ADR-081)
+
+> Applies only when the still-Backlog "publish a Community File" chantier is
+> actually executed — not a constraint on ordinary work today.
+
+The repo's `LICENSE` (MIT) covers the code only, not the Figma file itself.
+When the Community File is published, its Figma Community license must be set
+to **CC BY 4.0** — chosen for consistency with the code's permissive MIT
+license (attribution required, no restriction on reuse/modification/commercial
+use). Declare it in Figma's publish flow and state it in the file's Community
+description.
+
+---
+
 ## Rules for agents
 
 ```
