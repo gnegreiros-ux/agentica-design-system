@@ -27,7 +27,9 @@
     "playwright:update": "npx playwright test --update-snapshots",
     "playwright:report": "npx playwright show-report",
     "smoke": "node scripts/smoke-test.js",
-    "test": "npm run smoke && npm run lang-audit && npm run axe:all"
+    "relationships": "node scripts/extract-relationships.js --fix-report",
+    "validate:contracts": "node scripts/validate-contracts.js",
+    "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run axe:all"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
