@@ -62,7 +62,7 @@ longer means anything now that the only other version was dead code, not a real 
 - `npm run smoke`: 7/7 checks pass again.
 - No visual or functional change to the live site — `.site-nav` markup and the working mobile
   menu are untouched; only dead code was removed.
-- GitHub Projects: the linked ticket moved to Terminé.
+- GitHub Projects: the linked ticket moved to Terminé. <!-- lang-audit-ignore: literal Status field value, French by board convention -->
 - Any future decision to actually mount `<agtc-top-nav>` on the site (full dogfooding, per
   `project_site_as_lab`/dogfooding backlog category C) supersedes this ADR's point 1 and would
   need to update the smoke-test check back to a shadow-DOM one at that time.
