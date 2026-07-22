@@ -194,6 +194,32 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
 // concept, so a resolved literal fallback next to the token name is the correct pattern.
 const COLOR_EXCEPTION_LINE = /vFill\(|var\(--[\w-]+\s*,\s*#|:visited\s*(,|\{)|\w*[Tt]ok:\s*["']|["'](color|component)\/[\w-]+["']/;
 
+// Functions whose ENTIRE body is pedagogical/reference content (explaining the
+// token hierarchy to a human or AI reader) rather than applied styling — same
+// category as docs/*.md, just embedded inline in site/build.js instead of a
+// separate file. Scoped by name + brace-depth so individual lines inside don't
+// each need their own audit-ignore comment (many are markdown table rows,
+// where a trailing HTML comment would visibly break the table).
+const PEDAGOGICAL_FUNCTIONS = ['aiBriefContent'];
+
+function pedagogicalLineRanges(content) {
+  const ranges = [];
+  for (const name of PEDAGOGICAL_FUNCTIONS) {
+    const startMatch = content.match(new RegExp(`function\\s+${name}\\s*\\([^)]*\\)\\s*\\{`));
+    if (!startMatch) continue;
+    const startIdx = startMatch.index;
+    let depth = 0, end = content.length;
+    for (let i = startIdx; i < content.length; i++) {
+      if (content[i] === '{') depth++;
+      else if (content[i] === '}') { depth--; if (depth === 0) { end = i; break; } }
+    }
+    const startLine = content.slice(0, startIdx).split('\n').length;
+    const endLine   = content.slice(0, end).split('\n').length;
+    ranges.push([startLine, endLine]);
+  }
+  return ranges;
+}
+
 function auditHardcodedValues(sourceFiles) {
   section('3. Hardcoded values (AI drift vectors)');
   const violations = [];
@@ -203,14 +229,30 @@ function auditHardcodedValues(sourceFiles) {
     const content  = fs.readFileSync(file, 'utf8');
     const lines    = content.split('\n');
     const relFile  = path.relative(process.cwd(), file);
+    const pedagogicalRanges = pedagogicalLineRanges(content);
 
     for (const pattern of DRIFT_PATTERNS) {
       lines.forEach((line, idx) => {
+        const lineNo = idx + 1;
+        if (pedagogicalRanges.some(([s, e]) => lineNo >= s && lineNo <= e)) return;
         // Escape hatch for a genuine, reviewed false positive — mirrors
         // lang-audit-ignore in scripts/audit-language.js. Use sparingly, and only
         // for a line already justified by its own surrounding comment.
         if (line.includes('audit-ignore')) return;
-        if (colorPatternNames.has(pattern.name) && COLOR_EXCEPTION_LINE.test(line)) return;
+        // A line documenting an anti-pattern (guidelines/*.md "❌ Never a hardcoded
+        // px value" style examples) is showing the violation on
+        // purpose, as the thing to avoid — not committing it. Doesn't need a
+        // per-line audit-ignore comment, which would show up as literal visible
+        // text in a plain fenced checklist block (not parsed as HTML there).
+        if (/^\s*❌/.test(line)) return;
+        // Same anti-pattern-example intent as the ❌ check above, but rendered via
+        // the icon('circle-x'|'x', …) helper (site/build.js's own DOs/DON'Ts
+        // sections) instead of the literal emoji.
+        if (/icon\(\s*['"](circle-x|x)['"]/.test(line)) return;
+        // The var(--x, fallback-color) CSS-resilience pattern is just as
+        // legitimate when x is a primitive reference as when the whole thing is
+        // a bare color — same site/build.js pattern, same reasoning either way.
+        if ((colorPatternNames.has(pattern.name) || pattern.name === 'primitive-direct') && COLOR_EXCEPTION_LINE.test(line)) return;
         const matches = [...line.matchAll(new RegExp(pattern.regex.source, 'g'))];
         for (const match of matches) {
           violations.push({
@@ -342,9 +384,15 @@ function main() {
   // that read hex directly from tokens/*.json to apply Figma paints — the
   // Plugin API has no CSS var() concept, so a literal hex there is expected,
   // not drift (same reasoning as the vFill()/COLOR_EXCEPTION_LINE case below).
+  // docs/*.md is narrative/pedagogical prose (not a component contract like
+  // guidelines/ — those stay in scope, since they're meant to demonstrate
+  // correct token usage) — its illustrative hex citations, including inside
+  // fenced code-block diagrams where a per-line audit-ignore comment would
+  // visually corrupt the diagram, aren't real drift either.
   const DOCS_AND_PLUGIN_PATHS = [
     'decisions/',
     'scripts/figma/',
+    'docs/',
   ];
   const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS];
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))

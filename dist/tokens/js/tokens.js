@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 22 Jul 2026 13:50:28 GMT
+ * Generated on Wed, 22 Jul 2026 17:14:28 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -472,6 +472,7 @@ export const PrimitiveLetterSpacingLabel = "0.08em";
 export const PrimitiveLetterSpacingLoose = "0.09em";
 export const PrimitiveLetterSpacingOverline = "0.1em";
 export const PrimitiveLetterSpacingWidest = "0.12em";
+export const PrimitiveRadiusXs = "2px";
 export const PrimitiveRadiusSm = "6px";
 export const PrimitiveRadiusMd = "10px";
 export const PrimitiveFontFamilyBase = "'Atkinson Hyperlegible', system-ui, sans-serif";
@@ -585,6 +586,7 @@ export const SemanticSpaceComfortableControlPaddingY = "ceil(8px * 1.25 / 4) * 4
 export const SemanticSpaceComfortableControlGap = "ceil(8px * 1.25 / 4) * 4";
 export const SemanticSpaceComfortableLayoutSection = "ceil(32px * 1.25 / 4) * 4";
 export const SemanticSpaceComfortableLayoutComponent = "ceil(20px * 1.25 / 4) * 4";
+export const SemanticRadiusControlTight = "2px";
 export const SemanticRadiusControl = "6px";
 export const SemanticRadiusCard = "10px";
 export const SemanticRadiusPill = "9999px";

@@ -107,6 +107,7 @@ export default {
     "agtc-marketing-space-hero-gap": "var(--agtc-semantic-marketing-space-hero-gap)"
   },
   "borderRadius": {
+    "agtc-radius-control-tight": "var(--agtc-semantic-radius-control-tight)",
     "agtc-radius-control": "var(--agtc-semantic-radius-control)",
     "agtc-radius-card": "var(--agtc-semantic-radius-card)",
     "agtc-radius-pill": "var(--agtc-semantic-radius-pill)"

@@ -835,6 +835,11 @@
       }
     },
     "radius": {
+      "control-tight": {
+        "$value": "{primitive.radius.xs}",
+        "$type": "dimension",
+        "$intent": "Focus-ring corner softening on inline/small elements — agtc-link text focus outline, agtc-input password-toggle focus outline. Not for general control fills/borders, see radius.control."
+      },
       "control": {
         "$value": "{primitive.radius.sm}",
         "$type": "dimension",
