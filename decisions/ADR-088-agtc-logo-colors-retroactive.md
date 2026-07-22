@@ -55,4 +55,4 @@ This ADR makes that existing, already-enforced intent official instead of introd
   disappears — every `decision` field is now ADR-shaped and resolves to a real file.
 - No value, alias, or `$extensions.doNotUse` change — this ADR documents an existing, already
   correctly-enforced constraint, it does not alter it.
-- GitHub Projects: the linked ticket moved to Terminé.
+- GitHub Projects: the linked ticket moved to Terminé. <!-- lang-audit-ignore: literal Status field value, French by board convention -->
