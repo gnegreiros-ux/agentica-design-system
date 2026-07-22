@@ -623,7 +623,7 @@
                 "brand icon on a light background"
               ],
               "doNotUse": "Regular text (use text.primary), page background. Never for a generic UI component.",
-              "decision": "logo-identity"
+              "decision": "ADR-088"
             }
           }
         },
@@ -640,7 +640,7 @@
                 "secondary brand graphic element"
               ],
               "doNotUse": "Secondary text (use text.secondary), borders. Never for a generic UI component.",
-              "decision": "logo-identity"
+              "decision": "ADR-088"
             }
           }
         }

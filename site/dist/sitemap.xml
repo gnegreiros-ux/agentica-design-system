@@ -697,6 +697,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://agentica.design/decisions/adr-089.html</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://agentica.design/pipelines/quality-gate.html</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
