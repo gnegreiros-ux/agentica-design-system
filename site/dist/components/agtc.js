@@ -411,7 +411,7 @@
     `}};customElements.define("agtc-badge",S2);var Zb={neutral:"info",brand:"sparkles",info:"info",success:"circle-check",warning:"triangle-alert",danger:"octagon-alert"},Nb={neutral:"Information: ",brand:"Information: ",info:"Information: ",success:"Success: ",warning:"Warning: ",danger:"Error: "},w2=class extends s{static properties={variant:{type:String},heading:{type:String},icon:{type:String},noIcon:{type:Boolean,attribute:"no-icon"},dismissible:{type:Boolean},live:{type:String}};constructor(){super(),this.variant="info",this.noIcon=!1,this.dismissible=!1,this.live="off"}static styles=f`
     :host {
       display: block;
-      margin: 18px 0;
+      margin: var(--agtc-semantic-space-layout-component) 0;
     }
     :host([hidden]) { display: none; }
 
@@ -511,7 +511,7 @@
       color: var(--agtc-component-link-default-text);
       text-decoration: underline;
       text-underline-offset: 2px;
-      border-radius: 2px;
+      border-radius: var(--agtc-semantic-radius-control-tight);
       cursor: pointer;
     }
     :host([underline="hover"]) a,
@@ -562,8 +562,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 5px 12px;
+      gap: var(--agtc-semantic-space-component-padding-xs);
+      padding: var(--agtc-semantic-space-component-padding-xs) var(--agtc-semantic-space-component-padding-md);
       border: none;
       border-radius: calc(var(--agtc-component-segmented-default-radius) - 2px);
       background: none;
@@ -621,7 +621,7 @@
     .label {
       display: flex;
       align-items: baseline;
-      gap: 3px;
+      gap: var(--agtc-semantic-space-component-padding-2xs);
       font-size: var(--agtc-semantic-typography-label-size);
       font-weight: var(--agtc-semantic-typography-label-weight);
       line-height: var(--agtc-semantic-typography-label-line-height);
@@ -736,7 +736,7 @@
     .toggle-password:focus-visible {
       outline: 2px solid var(--agtc-semantic-color-border-focus);
       outline-offset: 1px;
-      border-radius: 2px;
+      border-radius: var(--agtc-semantic-radius-control-tight);
     }
 
     /* ── Help and error texts ──────────────────────────────────────────────── */
@@ -965,7 +965,7 @@
       inline-size: var(--agtc-semantic-icon-size-control);
       block-size: var(--agtc-semantic-icon-size-control);
       border: 1.5px solid var(--agtc-component-radio-default-border);
-      border-radius: 9999px;       /* round — radio convention */
+      border-radius: var(--agtc-semantic-radius-pill);       /* round — radio convention */
       background: var(--agtc-component-radio-default-background);
       transition: border-color 0.12s;
     }
@@ -989,7 +989,7 @@
       margin: auto;
       width: 50%;
       height: 50%;
-      border-radius: 9999px;
+      border-radius: var(--agtc-semantic-radius-pill);
       background: var(--agtc-component-radio-default-fill);
       transform: scale(0);
       transition: transform 0.12s;
@@ -1055,7 +1055,7 @@
       flex-shrink: 0;
       inline-size: 40px;
       block-size: 24px;
-      border-radius: 9999px;
+      border-radius: var(--agtc-semantic-radius-pill);
       background: var(--agtc-component-toggle-default-track-off);
       transition: background-color 0.15s;
     }
@@ -1067,7 +1067,7 @@
       left: 2px;
       width: 20px;
       height: 20px;
-      border-radius: 9999px;
+      border-radius: var(--agtc-semantic-radius-pill);
       background: var(--agtc-component-toggle-default-knob);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);  /* outlines the knob (WCAG 1.4.11) */
       transition: transform 0.15s;
@@ -1215,7 +1215,7 @@
          In Marketing context (data-context="marketing" on <body>), the site overrides
          these tokens via --agtc-component-card-typography-marketing-* in siteCSS(). */
       --card-title-size:       var(--agtc-component-card-typography-title-size,        var(--agtc-semantic-typography-label-size));
-      --card-title-weight:     var(--agtc-component-card-typography-title-weight,      var(--agtc-primitive-fontWeight-bold));
+      --card-title-weight:     var(--agtc-component-card-typography-title-weight,      var(--agtc-semantic-fontWeight-bold));
       --card-title-line-height:var(--agtc-component-card-typography-title-line-height, var(--agtc-semantic-typography-label-bold-line-height));
       --card-body-size:        var(--agtc-component-card-typography-body-size,         var(--agtc-semantic-typography-label-size));
       --card-body-weight:      var(--agtc-component-card-typography-body-weight,       var(--agtc-semantic-typography-label-weight));
@@ -1358,7 +1358,7 @@
     .tab {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--agtc-semantic-space-component-padding-xs);
       padding:
         var(--agtc-component-tabs-default-padding-y)
         var(--agtc-component-tabs-default-padding-x);
@@ -1384,14 +1384,14 @@
 
     .tab[aria-selected="true"] {
       color: var(--agtc-component-tabs-default-tab-text-active);
-      font-weight: 700;
+      font-weight: var(--agtc-semantic-fontWeight-bold);
       border-bottom-color: var(--agtc-component-tabs-default-indicator);
     }
 
     .tab:focus-visible {
       outline: 2px solid var(--agtc-component-tabs-default-border-focus);
       outline-offset: 2px;
-      border-radius: 2px;
+      border-radius: var(--agtc-semantic-radius-control-tight);
     }
 
     [role="tabpanel"] { padding-top: 16px; }
@@ -1440,7 +1440,7 @@
     `}};customElements.define("agtc-tabs",T2);var R2=class extends s{static properties={language:{type:String},filename:{type:String},copyLabel:{type:String,attribute:"copy-label"},copiedLabel:{type:String,attribute:"copied-label"},_copied:{state:!0}};constructor(){super(),this.copyLabel="Copy",this.copiedLabel="Copied!",this._copied=!1}static styles=f`
     :host {
       display: block;
-      margin: 18px 0;
+      margin: var(--agtc-semantic-space-layout-component) 0;
     }
 
     .block {
@@ -1461,7 +1461,7 @@
     .meta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--agtc-semantic-space-control-gap);
       color: var(--agtc-component-code-block-default-meta-text);
       font-size: var(--agtc-semantic-typography-detail-size);
       min-width: 0;
@@ -1483,11 +1483,11 @@
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--agtc-semantic-space-component-padding-xs);
       background: var(--agtc-component-code-block-default-copy-background);
       color: var(--agtc-component-code-block-default-copy-text);
       border: none;
-      border-radius: 4px;
+      border-radius: var(--agtc-semantic-radius-control);
       padding: var(--agtc-semantic-space-component-padding-xs) 10px;
       font-family: inherit;
       font-size: var(--agtc-semantic-typography-detail-size);
@@ -1664,7 +1664,7 @@
         margin: var(--agtc-semantic-space-component-padding-xs) 16px;
         border-radius: var(--agtc-semantic-radius-control);
         border-bottom: none;
-        padding: 10px 14px;
+        padding: var(--agtc-semantic-space-component-padding-md) var(--agtc-semantic-space-component-padding-lg);
       }
     }
   `;render(){return p`

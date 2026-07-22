@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Figma Community File content triage rule: brand identity stays private — Agentica</title>
+<title>`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Figma Community File content triage rule: brand identity stays private — Agentica">
+<meta property="og:title" content="`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Figma Community File content triage rule: brand identity stays private — Agentica">
+<meta name="twitter:title" content="`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,15 +114,15 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-080</code>
+    <code class="adr-number">ADR-085</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    
+    <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Figma Community File content triage rule: brand identity stays private</h1>
+  <h1 class="adr-page-title">`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-07-21</dd>
+      <dd>2026-07-22</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
@@ -130,31 +130,44 @@
     </div>
   </dl>
 </div><h2>Context</h2>
-<p>A Figma <strong>Community File</strong> is publicly visible and freely duplicable by anyone who finds it — once a third party duplicates it, that copy is theirs, with no way to revoke or retract it. The backlog chantier to publish this library as a Community File (still in Backlog, no publication date set — the library is early-stage, most components and every pattern still need to be built) requires deciding, ahead of that eventual publication, what content is safe to hand out this way and what must not be.</p>
-<p>Two categories of leak risk were identified while reviewing the file (<code>uXgPVB6cMLwAPqSwoa0dGq</code>) live in Figma: 1. <strong>Page-level</strong>: entire pages whose content is the Agentica brand identity    itself, not generic design-system documentation. 2. <strong>Component-embedding</strong>: a generic, otherwise-publishable component    (e.g. a future <code>top-nav</code> or a page-banner pattern) could nest an    *instance* of the logo component inside it — publishing that component    would carry the embedded logo along with it, even if the dedicated    <code>logos</code> page itself is excluded. Flagged by the Design System Lead during    this review: the logo is expected to be used inside top-nav/banner    patterns soon, once that work starts.</p>
+<p>The backlog carried a P2 ticket: ~5800 violations reported by <code>node scripts/audit-tokens.js --ci</code> (noted 2026-07-08, already down to ~2508 by this session — other work in between had organically reduced it), with the ticket explicitly flagging that "many are plausible" (e.g. direct <code>component.json</code> → <code>primitive.*</code> references) and asking for a triage with the Design System Lead.</p>
+<p>A full categorized breakdown of the ~2508 violations showed four structural buckets accounting for ~96% of the total, none of which represented real drift in authored, enforceable source:</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Category</th><th>Count</th><th>Why not real debt</th></tr></thead><tbody><tr><td><code>packages/tokens/{css,js,tailwind,tokens}/</code></td><td>1758 (70%)</td><td>Style Dictionary build output, gitignored, regenerated by <code>npm run tokens</code> — hex values there are the resolved primitives doing their job, not drift</td></tr><tr><td><code>decisions/*.md</code></td><td>392 (16%)</td><td>ADRs cite historical hex values while explaining a past decision (e.g. "teal.9 → <code>#12A594</code>") — an ADR is immutable once active (<code>decisions/README.md</code>), not enforceable current code</td></tr><tr><td><code>packages/components/agtc-*.js</code></td><td>~19</td><td>Verbatim gitignored copy of <code>components/*.js</code> — pure duplicate of violations already counted there</td></tr><tr><td><code>scripts/figma/*.js</code></td><td>45 (2%)</td><td>Figma Plugin API scripts read hex directly from <code>tokens/*.json</code> to apply Figma paints — the Plugin API has no CSS <code>var()</code> concept, literal hex is expected</td></tr></tbody></table></div>
+<p><code>site/audit-lib.js</code>'s <code>CONTRAST_PAIRS</code> fixture (30 violations) turned out to be a fifth, narrower case: literal hex used as WCAG contrast-check test data, already self-documented in a comment as intentional — but <code>audit-tokens.js</code> had no escape-hatch mechanism at all (unlike <code>scripts/audit-language.js</code>'s <code>lang-audit-ignore</code>), so a reviewed exception had no way to stop being reported.</p>
+<p>A sixth, unrelated finding surfaced while investigating the file most responsible for the remaining real debt (<code>site/build.js</code>, 182 of the post-exclusion 750 violations): 7 CSS custom properties — <code>--agtc-semantic-fontWeight-bold</code>, <code>--agtc-semantic-fontWeight-display</code>, <code>--agtc-semantic-radius-pill</code>, <code>--agtc-semantic-color-border-strong</code>, <code>--agtc-semantic-color-accent</code>, <code>--agtc-semantic-color-secondary</code>, <code>--agtc-semantic-color-tertiary</code> — were declared locally in <code>site/build.js</code>'s own <code>:root</code> extension block, under the <code>--agtc-semantic-*</code> prefix (implying they're part of the real token system), but were never actually added to <code>tokens/semantic.json</code>. The code even carried its own comment acknowledging this: "Brand semantic tokens (nouveaux — absents de tokens/semantic.json)". <code>--agtc-semantic-fontWeight-bold</code>/<code>-display</code> alone were used 60+ times throughout the file — an established de facto convention, not a one-off typo. This is <code>audit-tokens.js</code>'s separate "Phantom tokens" check (#2: used in code but not defined), distinct from the "hardcoded values" check (#3) that accounts for the bulk of the ~2508.</p>
 <h2>Decision</h2>
-<p><strong>Rule 1 — page-level exclusion (durable, applies to future pages too, not just today's inventory):</strong></p>
-<blockquote><p>Any page whose content specifically identifies Agentica/the organization (the brand mark itself, not documentation *about* generic design-system concepts) is excluded from the Community File. Any page documenting a generic, reusable design-system concept (Foundations, Components, Patterns) is included — including pages that don't exist yet.</p></blockquote>
-<p>Concrete instances of the excluded category today (reviewed live in Figma, 2026-07-21):</p>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Page</th><th>Why excluded</th></tr></thead><tbody><tr><td><code>COVER</code></td><td>Full Agentica brand mark composition + <code>agentica.design</code> domain</td></tr><tr><td><code>FOUNDATIONS &gt; logos</code></td><td>The logo itself: 5 full-lockup color variants (Teal/Color/Black/White/Color White) + 3 symbol-only variants</td></tr></tbody></table></div>
-<p>Everything else reviewed is generic and included: <code>INTRO</code>, <code>FOUNDATIONS &gt; icons/colors/spacing/typography</code>, every page under <code>COMPONENTS</code> (button, input, toggle, checkbox, radio, segmented, icon, tabs, top-nav, feature-card), and <code>PATTERNS</code> (currently an empty placeholder — nothing to triage yet).</p>
-<p><strong>Rule 2 — pre-publication component audit (not yet actionable, required before any actual publish):</strong></p>
-<blockquote><p>Before publication is ever executed (separate, still-Backlog chantier), audit every component and pattern in the file for a nested instance of the logo component. For each one found: either exclude that specific component from the publish, or replace the embedded logo instance with a generic placeholder before publishing.</p></blockquote>
-<p>This rule is deliberately <strong>not enforced today</strong> — the library is still being built (most components and every pattern remain to be created), and requiring placeholder branding in ordinary work now, years before any publish date, was explicitly rejected (see below) as unnecessary friction on current design work.</p>
+<p><strong>1. <code>scripts/audit-tokens.js</code> now excludes, by path:</strong></p>
+<ul><li><code>packages/tokens/{css,js,tailwind,tokens}/</code> and <code>packages/components/</code> — generated,</li></ul>
+<p>  gitignored build output (mirrors the exclusion <code>scripts/audit-language.js</code> already had).</p>
+<ul><li><code>decisions/</code> and <code>scripts/figma/</code> — historical ADR prose and Figma Plugin API scripts,</li></ul>
+<p>  neither of which is enforceable "current source" in the sense this audit checks.</p>
+<p><strong>2. <code>scripts/audit-tokens.js</code> gains an <code>audit-ignore</code> line-comment escape hatch</strong>, mirroring <code>lang-audit-ignore</code>: a line containing the string <code>audit-ignore</code> is skipped by the hardcoded- value check. Applied immediately to <code>site/audit-lib.js</code>'s <code>CONTRAST_PAIRS</code> (15 lines), the one already-self-documented case that needed it.</p>
+<p><strong>3. The 7 phantom tokens are promoted to real entries in <code>tokens/semantic.json</code></strong> (and one new primitive, <code>primitive.fontWeight.extrabold: 800</code> — no primitive step existed at that weight):</p>
+<ul><li><code>semantic.fontWeight.bold</code> / <code>.display</code> — generic reusable weight utilities, distinct from</li></ul>
+<p>  the existing per-context <code>typography.*.weight</code> tokens.</p>
+<ul><li><code>semantic.radius.pill</code> — raw <code>9999px</code> (no primitive step exists at that value; same</li></ul>
+<p>  precedent as <code>component.badge.md.radius</code>). This also <strong>fixes a real bug</strong>: the local shim   had it at <code>999px</code>, one digit short of the conventional "large enough to always fully round"   value — harmless in practice (every real instance is far smaller than 999px, so the visual   output is identical), but wrong on its face.</p>
+<ul><li><code>semantic.color.border.strong</code> — aliases <code>primitive.color.gray.6</code>, matching the local</li></ul>
+<p>  shim's value exactly.</p>
+<ul><li><code>semantic.color.brand.tertiary</code> — new; aliases <code>primitive.color.slate.9</code>, completing the</li></ul>
+<p>  accent/secondary/tertiary trio the code already treated as a set. <code>accent</code> and <code>secondary</code>   already existed as real tokens (<code>semantic.color.brand.accent</code>/<code>.secondary</code>) with values   identical to the fake local ones — <code>site/build.js</code>'s usages were renamed to point at the   real names instead of getting new aliases.</p>
+<ul><li>Dark-mode: <code>brand-secondary</code>'s dark override already existed and matched. <code>brand-accent</code></li></ul>
+<p>  and <code>brand-tertiary</code> had no dark override at all under their real names — the fake shim's   dark-tuned values (<code>#ff8aa1</code>, <code>#6b7280</code>, deliberately different from the light values for   contrast) were carried over to the real token names rather than dropped, to avoid a silent   dark-mode contrast regression.</p>
+<ul><li><code>border-strong</code>'s existing dark override already used the correct real name — no change</li></ul>
+<p>  needed there.</p>
+<p><strong>4. <code>site/build.js</code>'s local <code>:root</code> shim block removed</strong> (7 fake-semantic lines + 5 lines of duplicated primitive <code>accent</code>/<code>secondary</code> steps that were also just gitignored-primitives.css duplicates with identical values) — the real tokens now flow through <code>site/build.js</code>'s own <code>tokensCSS()</code> function, which independently flattens <code>tokens/semantic.json</code> (it does not consume Style Dictionary's compiled output directly).</p>
 <h2>Rejected alternatives</h2>
-<ul><li><strong>Require a generic/placeholder logo everywhere in patterns starting now</strong></li></ul>
-<p>  (e.g. in <code>top-nav</code>, page banners), instead of the real Agentica mark.   Rejected: solves the embedding-leak problem structurally, but forces every   future component/pattern to route around the brand system's own logo   during ordinary design work, for a publication that isn't scheduled and   won't happen until the library is far more complete. The pre-publication   audit (Rule 2) catches the same risk at the point it actually matters —   right before publishing — without that ongoing cost today.</p>
-<ul><li><strong>Treat today's page inventory as the final exclusion list.</strong> Rejected per</li></ul>
-<p>  the Design System Lead: the library is at the very beginning of its   construction — new components and every pattern still need to be added.   A static list would silently go stale the moment a new page is created.   Rule 1 is written as a category-based principle for this reason, not an   enumeration.</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Triage all ~2508 violations line-by-line with <code>audit-ignore</code> comments, no path exclusions</td><td>~2150 of them sit in gitignored generated output or immutable historical ADRs — annotating files that are either not committed or not meant to be edited again would be pointless busywork</td></tr><tr><td>Leave the 7 phantom tokens as an undocumented site-local convention</td><td>The naming already claims to be part of the real token system (<code>--agtc-semantic-*</code> prefix) and is used 60+ times — leaving it un-promoted keeps the phantom-token check permanently red for no reason, and keeps a real (if minor) <code>radius-pill</code> bug alive</td></tr><tr><td>Rename <code>brand-accent</code>/<code>brand-tertiary</code> dark-mode usages to fall back to the light value rather than adding dark overrides</td><td>Would have silently regressed dark-mode contrast — the fake shim's separate dark values were deliberate, not accidental</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<ul><li>No action is required in Figma right now — this ADR documents the rule the</li></ul>
-<p>  *eventual* publication must follow, not a change to make today.</p>
-<ul><li>When work begins on any pattern or component that visually incorporates the</li></ul>
-<p>  logo (top-nav, banners, etc.), that's expected and not a governance   violation — Rule 2's audit is a pre-publication gate, not a   pre-construction one.</p>
-<ul><li>Before the Community File publication chantier is ever</li></ul>
-<p>  actually executed, both rules must be applied: re-run the Rule 1 triage   (new pages may exist by then) and run the Rule 2 component-embedding audit   in full — neither is optional at that point.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-079.html" class="agtc-button secondary">← ADR-079</a>
-    <a href="adr-081.html" class="agtc-button secondary">ADR-081 →</a>
+<ul><li><code>node scripts/audit-tokens.js --ci</code>: 2508 → 247 violations (103 critical + 144 warnings,</li></ul>
+<p>  a 90% reduction). The remainder is genuine per-line triage in <code>site/build.js</code>,   <code>.stories.js</code>, and a few test files — no more systemic bucket.</p>
+<ul><li><code>tokens/semantic.json</code> gains <code>fontWeight.bold</code>/<code>.display</code>, <code>radius.pill</code>,</li></ul>
+<p>  <code>color.border.strong</code>, <code>color.brand.tertiary</code>; <code>tokens/primitives.json</code> gains   <code>fontWeight.extrabold</code>.</p>
+<ul><li>Verified visually (Playwright, light + dark) after the change: every renamed/promoted CSS</li></ul>
+<p>  custom property resolves to the exact same value as before in both themes — zero visual   regression, confirmed by direct computed-style comparison, not just a screenshot glance.</p>
+<ul><li>GitHub Projects "Dette audit-tokens.js" ticket stays at its board's in-progress status, not its done status (the board's Status field is French: Backlog/En cours/Terminé/etc.) — the remaining ~247 fine-grained items are being triaged in a follow-up pass within the same session. <!-- lang-audit-ignore: literal Status field values, French by board convention --></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-084.html" class="agtc-button secondary">← ADR-084</a>
+    <a href="adr-086.html" class="agtc-button secondary">ADR-086 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
