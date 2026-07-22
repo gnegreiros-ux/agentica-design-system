@@ -1940,7 +1940,7 @@ body.page{
 .ai-answer{margin:0}
 .ai-answer p{margin:0 0 .5rem;color:var(--site-muted);font-size:.875rem;line-height:1.55}
 .ai-answer p:last-child{margin-bottom:0}
-.ai-answer code{background:rgba(52,211,187,.12);color:var(--site-teal);padding:.1em .35em;border-radius:var(--agtc-semantic-radius-control-tight);font-size:.8rem}
+.ai-answer code{background:rgba(52,211,187,.03);color:var(--site-teal);padding:.1em .35em;border-radius:var(--agtc-semantic-radius-control-tight);font-size:.8rem}
 .ai-brief-section{padding-block:2.5rem;border-top:1px solid var(--site-line)}
 .ai-brief-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:.75rem}
 .ai-brief-header h2{margin:0}
@@ -1948,7 +1948,7 @@ body.page{
 /* Bloc pre natif — remplacement de agtc-code-block (non injectible via slot JS) */
 .brief-block{border-radius:var(--agtc-component-code-block-default-radius);overflow:hidden;background:var(--agtc-semantic-color-background-code);border:1px solid rgba(255,255,255,.08)}
 .brief-block-header{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:var(--agtc-semantic-color-background-code-raised);border-bottom:1px solid rgba(255,255,255,.07)}
-.brief-block-lang{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--agtc-semantic-color-text-on-code-muted);text-transform:uppercase}
+.brief-block-lang{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--agtc-semantic-color-text-on-code);text-transform:uppercase}
 .brief-copy-btn{padding:.35rem .8rem;border-radius:var(--agtc-semantic-radius-control);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--agtc-semantic-color-text-on-code-strong);font-size:.8rem;cursor:pointer;transition:background .15s}
 .brief-copy-btn:hover{background:var(--agtc-semantic-color-background-code-raised-hover)}
 .brief-pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;font-family:var(--agtc-semantic-typography-mono-family,"ui-monospace",monospace);font-size:.82rem;line-height:1.65;color:var(--agtc-semantic-color-text-on-code);white-space:pre-wrap;word-break:break-word;max-height:520px;overflow-y:auto}
