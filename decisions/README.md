@@ -147,9 +147,11 @@ decisions that were already settled.
 | [ADR-082](ADR-082-figma-brand-file-separation.md) | Brand/logo separated into a dedicated Figma library file (amends ADR-080) | 2026-07-21 | ✅ Active |
 | [ADR-083](ADR-083-agtc-image-implementation.md) | `agtc-image` implementation | 2026-07-21 | ✅ Active |
 | [ADR-084](ADR-084-illustrations-migrated-to-agtc-image-no-wrapper.md) | Home page illustrations migrated to `agtc-image` directly, no `agtc-illustration` wrapper | 2026-07-21 | ✅ Active |
+| [ADR-085](ADR-085-audit-tokens-debt-triage.md) | `audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens | 2026-07-22 | ✅ Active |
 | [ADR-086](ADR-086-relationships-registry-and-contract-validation.md) | Relationships registry and contract validation scripts (concepts borrowed from DSDS) | 2026-07-22 | ✅ Active |
 | [ADR-087](ADR-087-top-nav-mix-architecture-confirmed.md) | `agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed | 2026-07-22 | ✅ Active |
 | [ADR-088](ADR-088-agtc-logo-colors-retroactive.md) | Agentica logo colors formalized (retroactive) | 2026-07-22 | ✅ Active |
+| [ADR-089](ADR-089-audit-tokens-debt-zero-and-dark-mode-primitives.md) | `audit-tokens.js` debt reaches zero critical; real Radix dark primitives added | 2026-07-22 | ✅ Active |
 
 ---
 

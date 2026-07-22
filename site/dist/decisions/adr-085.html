@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Systematic visible focus and i18n of interactive elements — Agentica</title>
+<title>`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Systematic visible focus and i18n of interactive elements — Agentica">
+<meta property="og:title" content="`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Systematic visible focus and i18n of interactive elements — Agentica">
+<meta name="twitter:title" content="`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,126 +114,60 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-055</code>
+    <code class="adr-number">ADR-085</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Systematic visible focus and i18n of interactive elements</h1>
+  <h1 class="adr-page-title">`audit-tokens.js` debt triage: exclusions, `audit-ignore` escape hatch, 7 promoted tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-10</dd>
+      <dd>2026-07-22</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Human (approval) · Design System Lead (accessibility)</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>A WCAG 2.1 AA audit of the site identified several gaps in interactive elements:</p>
-<p>1. <strong>Missing <code>:focus-visible</code></strong> on several site UI components: sidebar links, token explorer    tabs, TOC links, navigation cards (<code>nav-card</code>), <code>menu-toggle</code> and <code>sidebar-toggle</code> buttons.    Only the <code>back-to-top</code> and <code>code-copy</code> buttons had one.</p>
-<p>2. <strong>Search input</strong>: <code>outline: none</code> alone with no sufficient visual compensation — the    <code>border-color</code> change on focus was subtle and did not meet WCAG 2.4.7.</p>
-<p>3. <strong>"Copy" button</strong>: static label in French only, not updated when switching FR ↔ EN language —    inconsistent with the rest of the bilingual site.</p>
-<p>4. <strong>"21 WCAG 2.1 AA" stat</strong>: ambiguous label, interpretable as a score or a violation count —    did not clearly communicate what it measured.</p>
-<hr>
-<h2>Decisions</h2>
-<h3>1. <code>:focus-visible</code> on every interactive element</h3>
-<p>Rule extended to: <code>.sidebar a</code>, <code>.nav-card</code>, <code>.exp-tab</code>, <code>.toc a</code>, <code>.menu-toggle</code>, <code>.sidebar-toggle</code>, <code>.explorer-search</code>.</p>
-<p>Pattern applied uniformly:</p>
-<pre class="code-block"><code class="lang-css">/* Navigation links */
-.sidebar a:focus-visible {
-  outline: none;
-  background: var(--agtc-semantic-color-background-subtle);
-  color: var(--agtc-semantic-color-text-primary);
-}
-
-/* Buttons */
-.menu-toggle:focus-visible,
-.sidebar-toggle:focus-visible {
-  outline: 2px solid var(--agtc-semantic-color-border-focus);
-  outline-offset: 2px;
-}
-
-/* Input */
-.explorer-search:focus-visible {
-  outline: none;
-  border-color: var(--agtc-semantic-color-border-focus);
-  box-shadow: 0 0 0 3px var(--agtc-semantic-color-action-focus-ring);
-}</code></pre>
-<p>All styles go through <strong>semantic tokens</strong> — no hardcoded value (<code>tokens-system.md</code> rule).</p>
-<h3>2. i18n of the "Copy" button</h3>
-<p>The button's text is computed dynamically from <code>document.documentElement.getAttribute('data-lang')</code> at two moments:</p>
-<ul><li><strong>On initialization</strong> (DOMContentLoaded): shows "Copier" or "Copy" depending on the active</li></ul>
-<p>  language</p>
-<ul><li><strong>On language change</strong>: every <code>.code-copy</code> button not in the "Copied!" state is updated in</li></ul>
-<p>  real time</p>
-<p>State after click: "Copié !" (FR) / "Copied!" (EN) — resets after 1.6s. <!-- lang-audit-ignore: quoting the site's bilingual UI string --></p>
-<h3>3. Clarifying the WCAG stat label</h3>
-<p>"21 WCAG 2.1 AA" → "21 critères WCAG 2.1 AA couverts" (FR) / "21 WCAG 2.1 AA criteria covered" <!-- lang-audit-ignore: quoting the site's bilingual UI string --> (EN) — explicit, unambiguous measurement.</p>
-<hr>
-<h2>Normative reference</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>WCAG criterion</th><th>Title</th><th>Decision covered</th></tr></thead><tbody><tr><td>2.4.7 (AA)</td><td>Focus Visible</td><td><code>:focus-visible</code> on all interactive elements</td></tr><tr><td>2.4.11 (AA, 2.2)</td><td>Focus Appearance</td><td>2px <code>outline</code> + 2px offset</td></tr><tr><td>3.1.2 (AA)</td><td>Language of Parts</td><td>Synchronized FR/EN labels</td></tr></tbody></table></div>
-<hr>
+</div><h2>Context</h2>
+<p>The backlog carried a P2 ticket: ~5800 violations reported by <code>node scripts/audit-tokens.js --ci</code> (noted 2026-07-08, already down to ~2508 by this session — other work in between had organically reduced it), with the ticket explicitly flagging that "many are plausible" (e.g. direct <code>component.json</code> → <code>primitive.*</code> references) and asking for a triage with the Design System Lead.</p>
+<p>A full categorized breakdown of the ~2508 violations showed four structural buckets accounting for ~96% of the total, none of which represented real drift in authored, enforceable source:</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Category</th><th>Count</th><th>Why not real debt</th></tr></thead><tbody><tr><td><code>packages/tokens/{css,js,tailwind,tokens}/</code></td><td>1758 (70%)</td><td>Style Dictionary build output, gitignored, regenerated by <code>npm run tokens</code> — hex values there are the resolved primitives doing their job, not drift</td></tr><tr><td><code>decisions/*.md</code></td><td>392 (16%)</td><td>ADRs cite historical hex values while explaining a past decision (e.g. "teal.9 → <code>#12A594</code>") — an ADR is immutable once active (<code>decisions/README.md</code>), not enforceable current code</td></tr><tr><td><code>packages/components/agtc-*.js</code></td><td>~19</td><td>Verbatim gitignored copy of <code>components/*.js</code> — pure duplicate of violations already counted there</td></tr><tr><td><code>scripts/figma/*.js</code></td><td>45 (2%)</td><td>Figma Plugin API scripts read hex directly from <code>tokens/*.json</code> to apply Figma paints — the Plugin API has no CSS <code>var()</code> concept, literal hex is expected</td></tr></tbody></table></div>
+<p><code>site/audit-lib.js</code>'s <code>CONTRAST_PAIRS</code> fixture (30 violations) turned out to be a fifth, narrower case: literal hex used as WCAG contrast-check test data, already self-documented in a comment as intentional — but <code>audit-tokens.js</code> had no escape-hatch mechanism at all (unlike <code>scripts/audit-language.js</code>'s <code>lang-audit-ignore</code>), so a reviewed exception had no way to stop being reported.</p>
+<p>A sixth, unrelated finding surfaced while investigating the file most responsible for the remaining real debt (<code>site/build.js</code>, 182 of the post-exclusion 750 violations): 7 CSS custom properties — <code>--agtc-semantic-fontWeight-bold</code>, <code>--agtc-semantic-fontWeight-display</code>, <code>--agtc-semantic-radius-pill</code>, <code>--agtc-semantic-color-border-strong</code>, <code>--agtc-semantic-color-accent</code>, <code>--agtc-semantic-color-secondary</code>, <code>--agtc-semantic-color-tertiary</code> — were declared locally in <code>site/build.js</code>'s own <code>:root</code> extension block, under the <code>--agtc-semantic-*</code> prefix (implying they're part of the real token system), but were never actually added to <code>tokens/semantic.json</code>. The code even carried its own comment acknowledging this: "Brand semantic tokens (nouveaux — absents de tokens/semantic.json)". <code>--agtc-semantic-fontWeight-bold</code>/<code>-display</code> alone were used 60+ times throughout the file — an established de facto convention, not a one-off typo. This is <code>audit-tokens.js</code>'s separate "Phantom tokens" check (#2: used in code but not defined), distinct from the "hardcoded values" check (#3) that accounts for the bulk of the ~2508.</p>
+<h2>Decision</h2>
+<p><strong>1. <code>scripts/audit-tokens.js</code> now excludes, by path:</strong></p>
+<ul><li><code>packages/tokens/{css,js,tailwind,tokens}/</code> and <code>packages/components/</code> — generated,</li></ul>
+<p>  gitignored build output (mirrors the exclusion <code>scripts/audit-language.js</code> already had).</p>
+<ul><li><code>decisions/</code> and <code>scripts/figma/</code> — historical ADR prose and Figma Plugin API scripts,</li></ul>
+<p>  neither of which is enforceable "current source" in the sense this audit checks.</p>
+<p><strong>2. <code>scripts/audit-tokens.js</code> gains an <code>audit-ignore</code> line-comment escape hatch</strong>, mirroring <code>lang-audit-ignore</code>: a line containing the string <code>audit-ignore</code> is skipped by the hardcoded- value check. Applied immediately to <code>site/audit-lib.js</code>'s <code>CONTRAST_PAIRS</code> (15 lines), the one already-self-documented case that needed it.</p>
+<p><strong>3. The 7 phantom tokens are promoted to real entries in <code>tokens/semantic.json</code></strong> (and one new primitive, <code>primitive.fontWeight.extrabold: 800</code> — no primitive step existed at that weight):</p>
+<ul><li><code>semantic.fontWeight.bold</code> / <code>.display</code> — generic reusable weight utilities, distinct from</li></ul>
+<p>  the existing per-context <code>typography.*.weight</code> tokens.</p>
+<ul><li><code>semantic.radius.pill</code> — raw <code>9999px</code> (no primitive step exists at that value; same</li></ul>
+<p>  precedent as <code>component.badge.md.radius</code>). This also <strong>fixes a real bug</strong>: the local shim   had it at <code>999px</code>, one digit short of the conventional "large enough to always fully round"   value — harmless in practice (every real instance is far smaller than 999px, so the visual   output is identical), but wrong on its face.</p>
+<ul><li><code>semantic.color.border.strong</code> — aliases <code>primitive.color.gray.6</code>, matching the local</li></ul>
+<p>  shim's value exactly.</p>
+<ul><li><code>semantic.color.brand.tertiary</code> — new; aliases <code>primitive.color.slate.9</code>, completing the</li></ul>
+<p>  accent/secondary/tertiary trio the code already treated as a set. <code>accent</code> and <code>secondary</code>   already existed as real tokens (<code>semantic.color.brand.accent</code>/<code>.secondary</code>) with values   identical to the fake local ones — <code>site/build.js</code>'s usages were renamed to point at the   real names instead of getting new aliases.</p>
+<ul><li>Dark-mode: <code>brand-secondary</code>'s dark override already existed and matched. <code>brand-accent</code></li></ul>
+<p>  and <code>brand-tertiary</code> had no dark override at all under their real names — the fake shim's   dark-tuned values (<code>#ff8aa1</code>, <code>#6b7280</code>, deliberately different from the light values for   contrast) were carried over to the real token names rather than dropped, to avoid a silent   dark-mode contrast regression.</p>
+<ul><li><code>border-strong</code>'s existing dark override already used the correct real name — no change</li></ul>
+<p>  needed there.</p>
+<p><strong>4. <code>site/build.js</code>'s local <code>:root</code> shim block removed</strong> (7 fake-semantic lines + 5 lines of duplicated primitive <code>accent</code>/<code>secondary</code> steps that were also just gitignored-primitives.css duplicates with identical values) — the real tokens now flow through <code>site/build.js</code>'s own <code>tokensCSS()</code> function, which independently flattens <code>tokens/semantic.json</code> (it does not consume Style Dictionary's compiled output directly).</p>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Triage all ~2508 violations line-by-line with <code>audit-ignore</code> comments, no path exclusions</td><td>~2150 of them sit in gitignored generated output or immutable historical ADRs — annotating files that are either not committed or not meant to be edited again would be pointless busywork</td></tr><tr><td>Leave the 7 phantom tokens as an undocumented site-local convention</td><td>The naming already claims to be part of the real token system (<code>--agtc-semantic-*</code> prefix) and is used 60+ times — leaving it un-promoted keeps the phantom-token check permanently red for no reason, and keeps a real (if minor) <code>radius-pill</code> bug alive</td></tr><tr><td>Rename <code>brand-accent</code>/<code>brand-tertiary</code> dark-mode usages to fall back to the light value rather than adding dark overrides</td><td>Would have silently regressed dark-mode contrast — the fake shim's separate dark values were deliberate, not accidental</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<ul><li>Any new interactive element added to the site <strong>must</strong> define a <code>:focus-visible</code> style before</li></ul>
-<p>  merge — verifiable via the axe-core audit (<code>wcag.md</code> pipeline)</p>
-<ul><li>The pattern <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></li></ul>
-<p>  is the canonical default for buttons</p>
-<ul><li>Navigation links use the "background change" pattern (no outline) to avoid a visual conflict</li></ul>
-<p>  with the active-state <code>border-left</code></p>
-<ul><li>Any new interactive element with visible text must be bilingual if the site is bilingual</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
-<p>Un audit WCAG 2.1 AA du site a identifié plusieurs lacunes sur les éléments interactifs :</p>
-<p>1. <strong><code>:focus-visible</code> absent</strong> sur plusieurs composants UI du site : liens sidebar, onglets    de l'explorateur de tokens, liens du TOC, cartes de navigation (<code>nav-card</code>), boutons    <code>menu-toggle</code> et <code>sidebar-toggle</code>. Seuls les boutons <code>back-to-top</code> et <code>code-copy</code> en    avaient un.</p>
-<p>2. <strong>Input de recherche</strong> : <code>outline: none</code> seul sans compensation visuelle suffisante — le    changement de <code>border-color</code> à la prise de focus était subtil et non conforme WCAG 2.4.7.</p>
-<p>3. <strong>Bouton "Copier"</strong> : libellé statique en français uniquement, non mis à jour lors du    changement de langue FR ↔ EN — incohérence avec le reste du site bilingue.</p>
-<p>4. <strong>Stat "21 WCAG 2.1 AA"</strong> : label ambigu, interprétable comme un score ou un nombre de    violations — ne communiquait pas clairement ce qu'il mesurait.</p>
-<hr>
-<h2>Décisions</h2>
-<h3>1. <code>:focus-visible</code> sur tous les éléments interactifs</h3>
-<p>Règle étendue à : <code>.sidebar a</code>, <code>.nav-card</code>, <code>.exp-tab</code>, <code>.toc a</code>, <code>.menu-toggle</code>, <code>.sidebar-toggle</code>, <code>.explorer-search</code>.</p>
-<p>Pattern appliqué uniformément :</p>
-<pre class="code-block"><code class="lang-css">/* Liens de navigation */
-.sidebar a:focus-visible {
-  outline: none;
-  background: var(--agtc-semantic-color-background-subtle);
-  color: var(--agtc-semantic-color-text-primary);
-}
-
-/* Boutons */
-.menu-toggle:focus-visible,
-.sidebar-toggle:focus-visible {
-  outline: 2px solid var(--agtc-semantic-color-border-focus);
-  outline-offset: 2px;
-}
-
-/* Input */
-.explorer-search:focus-visible {
-  outline: none;
-  border-color: var(--agtc-semantic-color-border-focus);
-  box-shadow: 0 0 0 3px var(--agtc-semantic-color-action-focus-ring);
-}</code></pre>
-<p>Tous les styles passent par des <strong>tokens sémantiques</strong> — aucune valeur en dur (règle <code>tokens-system.md</code>).</p>
-<h3>2. i18n du bouton "Copier"</h3>
-<p>Le texte du bouton est calculé dynamiquement depuis <code>document.documentElement.getAttribute('data-lang')</code> à deux moments :</p>
-<ul><li><strong>À l'initialisation</strong> (DOMContentLoaded) : affiche "Copier" ou "Copy" selon la langue active</li><li><strong>Au changement de langue</strong> : tous les boutons <code>.code-copy</code> non en état "Copié !" sont mis à</li></ul>
-<p>  jour en temps réel</p>
-<p>État après clic : "Copié !" (FR) / "Copied!" (EN) — reset après 1,6 s.</p>
-<h3>3. Clarification du label stat WCAG</h3>
-<p>"21 WCAG 2.1 AA" → "21 critères WCAG 2.1 AA couverts" (FR) / "21 WCAG 2.1 AA criteria covered" (EN) — mesure explicite, sans ambiguïté.</p>
-<hr>
-<h2>Référence normative</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Critère WCAG</th><th>Intitulé</th><th>Décision couverte</th></tr></thead><tbody><tr><td>2.4.7 (AA)</td><td>Focus visible</td><td><code>:focus-visible</code> sur tous les interactifs</td></tr><tr><td>2.4.11 (AA, 2.2)</td><td>Focus apparence</td><td><code>outline</code> 2px + offset 2px</td></tr><tr><td>3.1.2 (AA)</td><td>Langue des parties</td><td>Labels FR/EN synchronisés</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<ul><li>Tout nouvel élément interactif ajouté au site <strong>doit</strong> définir un style <code>:focus-visible</code></li></ul>
-<p>  avant merge — vérifiable via l'audit axe-core (pipeline <code>wcag.md</code>)</p>
-<ul><li>Le pattern <code>outline: 2px solid var(--agtc-semantic-color-border-focus); outline-offset: 2px</code></li></ul>
-<p>  est le défaut canonique pour les boutons</p>
-<ul><li>Les liens de navigation utilisent le pattern "background change" (sans outline) pour éviter le</li></ul>
-<p>  conflit visuel avec la <code>border-left</code> d'état actif</p>
-<ul><li>Tout nouvel élément interactif avec du texte visible doit être bilingue si le site est bilingue</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-054.html" class="agtc-button secondary">← ADR-054</a>
-    <a href="adr-056.html" class="agtc-button secondary">ADR-056 →</a>
+<ul><li><code>node scripts/audit-tokens.js --ci</code>: 2508 → 247 violations (103 critical + 144 warnings,</li></ul>
+<p>  a 90% reduction). The remainder is genuine per-line triage in <code>site/build.js</code>,   <code>.stories.js</code>, and a few test files — no more systemic bucket.</p>
+<ul><li><code>tokens/semantic.json</code> gains <code>fontWeight.bold</code>/<code>.display</code>, <code>radius.pill</code>,</li></ul>
+<p>  <code>color.border.strong</code>, <code>color.brand.tertiary</code>; <code>tokens/primitives.json</code> gains   <code>fontWeight.extrabold</code>.</p>
+<ul><li>Verified visually (Playwright, light + dark) after the change: every renamed/promoted CSS</li></ul>
+<p>  custom property resolves to the exact same value as before in both themes — zero visual   regression, confirmed by direct computed-style comparison, not just a screenshot glance.</p>
+<ul><li>GitHub Projects "Dette audit-tokens.js" ticket stays at its board's in-progress status, not its done status (the board's Status field is French: Backlog/En cours/Terminé/etc.) — the remaining ~247 fine-grained items are being triaged in a follow-up pass within the same session. <!-- lang-audit-ignore: literal Status field values, French by board convention --></li></ul><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-084.html" class="agtc-button secondary">← ADR-084</a>
+    <a href="adr-086.html" class="agtc-button secondary">ADR-086 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

@@ -124,14 +124,14 @@
     .demo-tablist { display:flex; border-bottom:1px solid var(--agtc-component-tabs-default-border); margin-bottom:16px; }
     .demo-tab { display:inline-flex; align-items:center; padding:var(--agtc-component-tabs-default-padding-y) var(--agtc-component-tabs-default-padding-x); background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; color:var(--agtc-component-tabs-default-tab-text); font-family:inherit; font-size:var(--agtc-semantic-typography-label-size); font-weight:var(--agtc-semantic-typography-label-weight); cursor:pointer; }
     .demo-tab--active { color:var(--agtc-component-tabs-default-tab-text-active); font-weight:var(--agtc-semantic-fontWeight-bold); border-bottom-color:var(--agtc-component-tabs-default-indicator); }
-    .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:2px; }
+    .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:var(--agtc-semantic-radius-control-tight); }
   </style>
   <div role="tablist" aria-label="Documentation" class="demo-tablist">
     <button role="tab" class="demo-tab demo-tab--active" aria-selected="true" type="button"><span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span></button>
     <button role="tab" class="demo-tab" aria-selected="false" type="button">Tokens</button>
     <button role="tab" class="demo-tab" aria-selected="false" type="button"><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></button>
   </div>
-  <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:14px"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
+  <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size)"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
 </div>
 
 <h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
@@ -241,7 +241,7 @@
         <img src="../img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="180" loading="lazy">
         <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="180" loading="lazy">
       </a>
-      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         Guilherme Negreiros
       </a>
