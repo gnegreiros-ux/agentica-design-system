@@ -51,8 +51,9 @@ DSDS's format:
 4. **A minor, related governance addendum**: `.claude/rules/project-overview.md` now requires
    moving a GitHub Projects ticket to `En cours` when work actually starts on it (observed:
    0/144 items had ever used that status — work always jumped straight from `Backlog` to
-   `Terminé`). Bundled into this ADR rather than given its own, since it's a one-line process
-   rule decided in the same session, not an architectural decision on its own. <!-- lang-audit-ignore: literal Status field values, French by board convention -->
+   `Terminé`). <!-- lang-audit-ignore: literal Status field values, French by board convention -->
+   Bundled into this ADR rather than given its own, since it's a one-line process
+   rule decided in the same session, not an architectural decision on its own.
 
 ### Credits
 
