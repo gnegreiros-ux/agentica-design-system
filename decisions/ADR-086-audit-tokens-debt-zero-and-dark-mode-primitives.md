@@ -58,7 +58,7 @@ Verified byte-for-byte identical output (Playwright: computed `getPropertyValue`
 before/after in both themes).
 
 **4. A second, entirely separate `[data-theme="dark"]` block removed as dead code**
-(`site/build.js`, "couleur brand principale cohérente avec les composants") — it set
+(`site/build.js`, originally commented as keeping the main brand color consistent with the components) — it set
 `action-primary`/`button-primary-background`/etc. to raw `var(--agtc-primitive-color-teal-9)`
 (`#12a594`), but `:root[data-theme="dark"]` (higher specificity: pseudo-class + attribute
 vs. attribute alone) already wins unconditionally. This block never actually applied —
@@ -98,7 +98,7 @@ components in ADR-085 §remaining-triage (not re-litigated here in full):
   `tokens-system.md` and this is out of scope here).
 - `@radix-ui/colors` added as a dev dependency (`package.json`) — build-time reference only,
   not shipped.
-- GitHub Projects "Dette audit-tokens.js" ticket (P2, Gouvernance) → Terminé.
+- GitHub Projects "Dette audit-tokens.js" ticket (P2, Gouvernance) moves to its board's done status (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal Status field value, French by board convention -->
 - Verified in-browser (Playwright, light + dark, multiple pages: home, typography foundations
   specimen, changelog, docs mega-menu) — 0 console errors, all spot-checked values render
   correctly, `validateCssVars()` reports 0 phantom variables throughout.
