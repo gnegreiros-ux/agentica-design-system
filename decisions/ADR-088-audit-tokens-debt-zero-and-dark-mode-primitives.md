@@ -1,10 +1,10 @@
-# ADR-087 — `audit-tokens.js` debt reaches zero critical; real Radix dark primitives added
+# ADR-088 — `audit-tokens.js` debt reaches zero critical; real Radix dark primitives added
 
 > **Date:** 2026-07-22
 > **Status:** ✅ Active
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Type:** contract
-> **Logical path:** decisions/ADR-087-audit-tokens-debt-zero-and-dark-mode-primitives.md
+> **Logical path:** decisions/ADR-088-audit-tokens-debt-zero-and-dark-mode-primitives.md
 > **Read before:** AGENTS.md, DESIGN.md, ADR-085 (audit-tokens.js triage — exclusions, escape hatch, 7 promoted tokens)
 > **Relations:** tokens/primitives.dark.json (new), tokens/semantic.dark.json, site/build.js, GitHub Projects — Gouvernance-domain "Dette audit-tokens.js" ticket (P2, closed by this ADR)
 

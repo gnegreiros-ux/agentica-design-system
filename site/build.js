@@ -813,7 +813,7 @@ body{
   border-right:1px solid rgba(255,255,255,.12);
 }
 .stat-item:last-child{border-right:none}
-.stat-band .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
+.stat-band .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-text-on-dark)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px;display:block}
 .stat-band .stat-text{color:rgba(255,255,255,.72)}
 
@@ -2913,22 +2913,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Mobile menu (agtc-top-nav) ───────────────────────────
-  const menuToggle = document.querySelector('.menu-toggle');
-  const topNav = document.querySelector('agtc-top-nav');
-  if (menuToggle && topNav) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = topNav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-    document.addEventListener('click', e => {
-      if (!menuToggle.contains(e.target) && !topNav.contains(e.target)) {
-        topNav.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
   // ── Sidebar drawer (mobile) ──────────────────────────────
   const sidebarToggle = document.querySelector('.sidebar-toggle');
   const sidebar = document.getElementById('site-sidebar');
@@ -3156,7 +3140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Menu mobile V2 ────────────────────────────────────────────────────────
+  // ── Mobile menu ───────────────────────────────────────────────────────────
   const v2MenuToggle = document.querySelector('[data-menu-toggle]');
   const v2MainNav    = document.querySelector('[data-main-nav]');
   if (v2MenuToggle && v2MainNav) {

@@ -99,7 +99,7 @@ body{
   border-right:1px solid rgba(255,255,255,.12);
 }
 .stat-item:last-child{border-right:none}
-.stat-band .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-action-primary)}
+.stat-band .stat-num{font-size:var(--agtc-font-size-display);font-weight:var(--agtc-semantic-fontWeight-display);display:block;letter-spacing:var(--agtc-tracking-snug);color:var(--agtc-semantic-color-text-on-dark)}
 .stat-text{font-size:var(--agtc-semantic-typography-label-size);color:var(--agtc-semantic-color-text-secondary);margin-top:4px;display:block}
 .stat-band .stat-text{color:rgba(255,255,255,.72)}
 
