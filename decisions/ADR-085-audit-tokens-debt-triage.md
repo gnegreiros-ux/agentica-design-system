@@ -112,6 +112,4 @@ consume Style Dictionary's compiled output directly).
 - Verified visually (Playwright, light + dark) after the change: every renamed/promoted CSS
   custom property resolves to the exact same value as before in both themes — zero visual
   regression, confirmed by direct computed-style comparison, not just a screenshot glance.
-- GitHub Projects "Dette audit-tokens.js" ticket stays **En cours** (not Terminé) — the
-  remaining ~247 fine-grained items are being triaged in a follow-up pass within the same
-  session.
+- GitHub Projects "Dette audit-tokens.js" ticket stays at its board's in-progress status, not its done status (the board's Status field is French: Backlog/En cours/Terminé/etc.) — the remaining ~247 fine-grained items are being triaged in a follow-up pass within the same session. <!-- lang-audit-ignore: literal Status field values, French by board convention -->
