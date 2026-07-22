@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica</title>
+<title>`agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica">
+<meta property="og:title" content="`agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Two usage contexts: Product (SaaS) and Marketing (Narrative) — Agentica">
+<meta name="twitter:title" content="`agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,77 +114,39 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-057</code>
+    <code class="adr-number">ADR-087</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    
+    <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Two usage contexts: Product (SaaS) and Marketing (Narrative)</h1>
+  <h1 class="adr-page-title">`agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-12</dd>
+      <dd>2026-07-22</dd>
     </div>
-    
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
+    </div>
   </dl>
-</div><div class="lang-en"><p><strong>Date:</strong> 2026-06-12 <strong>Status:</strong> Accepted <strong>Author:</strong> Guilherme Negreiros <strong>Relations:</strong> ADR-025 (density), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
-<hr>
-<h2>Context</h2>
-<p>The Agentica site produced homogeneous pages: marketing pages (home, get-started, agents) used the same spacing and typography patterns as documentation pages (components, foundations). Result: no difference in "tone" between convincing a visitor and documenting a component.</p>
-<p>The <code>Redesign/deux-contextes.md</code> file mandates formalizing two distinct modes. Some foundations already exist implicitly (<code>comfortable</code> density via ADR-025, the <code>typography.hero</code> token at 48px, the illustration palette via ADR-051), but no explicit contract links them to usage contexts.</p>
-<hr>
+</div><h2>Context</h2>
+<p><code>npm run smoke</code> had one failing check: <code>"agtc-top-nav — nav display flex (desktop)"</code>, looking for a real <code>&lt;agtc-top-nav&gt;</code> custom element on <code>index.html</code> and querying <code>nav</code> inside its shadow DOM. Investigation found the check itself was wrong, not the site: <code>index.html</code>'s navigation has always been hand-written markup (<code>.site-nav</code>) styled through the component's tokens — the same "mix" pattern already established and documented for <code>agtc-table</code> (ADR-040), <code>agtc-code-block</code> (ADR-041), and <code>agtc-banner</code> (ADR-042). <code>&lt;agtc-top-nav&gt;</code> itself exists and is used elsewhere (component demo page), but was never mounted on the live site nav.</p>
+<p>A related discovery made while fixing this: <code>site/build.js</code>'s embedded <code>site.js</code> had a fully dead code block —</p>
+<pre class="code-block"><code class="lang-js">const menuToggle = document.querySelector('.menu-toggle');
+const topNav = document.querySelector('agtc-top-nav');
+if (menuToggle &amp;&amp; topNav) { /* … */ }</code></pre>
+<p>Neither selector ever matches anything in the generated HTML (the real mobile-menu button is <code>&lt;button class="menu-btn" data-menu-toggle&gt;</code>, not <code>.menu-toggle</code>), so this <code>if</code> never ran. The site's actual mobile menu has worked all along through a separate, already-correct mechanism (<code>[data-menu-toggle]</code> / <code>[data-main-nav]</code>, labeled "Menu mobile V2" in a comment — a name that no longer means anything now that the only other version was dead code, not a real V1).</p>
 <h2>Decision</h2>
-<p>Formalize two usage contexts declared via a <code>data-context</code> attribute on <code>&lt;body&gt;</code>:</p>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribute</th><th>Context</th><th>Intent</th></tr></thead><tbody><tr><td>*(absent)* or <code>data-context="product"</code></td><td>Product Mode (SaaS)</td><td>Enable action — clarity, density, repeatability</td></tr><tr><td><code>data-context="marketing"</code></td><td>Marketing Mode (Narrative)</td><td>Communicate a vision — breathing room, editorial hierarchy</td></tr></tbody></table></div>
-<h3>Tokens added</h3>
-<p><strong>Primitives</strong> (<code>tokens/primitives.json</code>):</p>
-<ul><li><code>primitive.fontSize.6xl</code> — 60px (marketing display title)</li><li><code>primitive.space.24</code> — 96px (section breathing room)</li><li><code>primitive.space.30</code> — 120px (hero gap)</li></ul>
-<p><strong>Semantic</strong> (<code>tokens/semantic.json</code>) — <code>semantic.marketing.*</code> group:</p>
-<ul><li><code>marketing.typography.display.{size, weight, line-height}</code></li><li><code>marketing.typography.eyebrow.{size, weight}</code></li><li><code>marketing.space.section-breathing</code> → <code>primitive.space.24</code> (96px)</li><li><code>marketing.space.hero-gap</code> → <code>primitive.space.30</code> (120px)</li></ul>
-<h3>CSS mode-switching</h3>
-<p>A CSS block activated by <code>[data-context="marketing"]</code> replaces the spacing and hero typography tokens for the pages concerned, without touching components or component tokens.</p>
-<h3>Pages declared as marketing</h3>
-<ul><li><code>index.html</code> (home) — introduces the vision</li><li><code>get-started.html</code> — onboarding, convinces</li><li><code>agents/index.html</code> — explains the agentic system</li></ul>
-<hr>
-<h2>Alternatives considered</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejected because</th></tr></thead><tbody><tr><td>Per-page JSON config file</td><td>Over-engineering for 3 pages; an HTML attribute is readable by both agents and CSS</td></tr><tr><td>Two separate CSS files (product.css / marketing.css)</td><td>Duplication; an attribute is enough to override the variables</td></tr><tr><td>CSS class on <code>&lt;body&gt;</code></td><td>A <code>data-</code> attribute is more semantically correct for a page state (not an interaction state)</td></tr><tr><td>Separate component tokens per mode</td><td>Would violate the approval rule (tokens/component.json) with no real benefit</td></tr></tbody></table></div>
-<hr>
+<p>1. <strong><code>agtc-top-nav</code> is confirmed "mix" architecture</strong> for the site's main nav, consistent with    ADR-040/041/042: the component exists and is documented in    <code>guidelines/components/top-nav.md</code>/<code>.claude/rules/no-visited-nav.md</code> for consumers who mount    it directly, but the live site keeps its hand-written <code>.site-nav</code> markup, tokenized the same    way. No component code changes. 2. <strong><code>scripts/smoke-test.js</code>'s top-nav check now targets <code>.site-nav</code> directly</strong> (light DOM,    <code>display: flex</code>) instead of a shadow-DOM selector on an element that was never mounted. The    script gained light-DOM support (<code>shadowSelector: null</code> skips the shadow-root traversal and    the custom-element-upgrade wait) so this pattern is reusable for any future light-DOM-only    check. 3. <strong>The dead <code>agtc-top-nav</code>/<code>.menu-toggle</code> mobile-menu block removed</strong> from <code>site/build.js</code>. The    real mobile menu (<code>[data-menu-toggle]</code>/<code>[data-main-nav]</code>) is unaffected — it was already the    only one that ever ran. Its comment renamed from "Menu mobile V2" to "Mobile menu" now that    there is no other version to distinguish it from.</p>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Mount the real <code>&lt;agtc-top-nav&gt;</code> on <code>index.html</code> (full dogfooding)</td><td>Real risk on the site's highest-traffic, marketing-mode page for a check that exists to catch regressions, not to drive architecture; would need re-verifying the mobile menu, lang-switch, <code>:visited</code> handling, and Playwright snapshots all still match once the shadow DOM replaces hand-written markup — a separate, larger piece of work than fixing a wrong test</td></tr><tr><td>Leave the smoke-test check failing / delete it outright</td><td>It was catching a real (if misdiagnosed) drift risk — the site's nav display property regressing silently; better to point it at the actual markup than remove coverage</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<ul><li><strong>Machine-readable rule</strong>: <code>.claude/rules/contexts-utilisation.md</code> — loaded every session.</li><li><strong>Guideline</strong>: <code>guidelines/foundations/contextes.md</code> — human + agent reference.</li><li><strong>DESIGN.md</strong>: section 7 added.</li><li><strong>Site</strong>: <code>foundations/contextes.html</code> added to the sidebar.</li><li><strong>Governance</strong>: <code>semantic.marketing.*</code> tokens follow the semantic-token TCR rule (Design</li></ul>
-<p>  System Lead approval).</p>
-<hr>
-<h2>Conformance</h2>
-<ul><li>Tokens in DTCG format (ADR-052) ✅</li><li>No hardcoded value in the CSS — only <code>var(--agtc-*)</code> references ✅</li><li>The <code>tokens-system.md</code> rule is respected (primitive → semantic, never primitive inside</li></ul>
-<p>  component) ✅</p>
-<ul><li><code>data-context</code> attribute: decorative for agents, functional for CSS ✅</li></ul></div><div class="lang-fr"><p><strong>Date :</strong> 2026-06-12 <strong>Statut :</strong> Accepté <strong>Auteur :</strong> Guilherme Negreiros <strong>Relations :</strong> ADR-025 (densité), ADR-051 (illustration), ADR-052 (DTCG), <code>.claude/rules/contexts-utilisation.md</code>, <code>tokens/semantic.json</code>, <code>guidelines/foundations/contextes.md</code></p>
-<hr>
-<h2>Contexte</h2>
-<p>Le site Agentica produit des pages homogènes : les pages marketing (home, get-started, agents) utilisent les mêmes patterns d'espacement et de typographie que les pages documentation (composants, fondations). Résultat : aucune différence de "ton" entre convaincre un visiteur et documenter un composant.</p>
-<p>Le fichier <code>Redesign/deux-contextes.md</code> mandate la formalisation de deux modes distincts. Des fondations existent déjà implicitement (densité <code>comfortable</code> via ADR-025, token <code>typography.hero</code> 48px, palette d'illustration via ADR-051) mais aucun contrat explicite ne les relie à des contextes d'utilisation.</p>
-<hr>
-<h2>Décision</h2>
-<p>Formaliser deux contextes d'utilisation déclarés par un attribut <code>data-context</code> sur <code>&lt;body&gt;</code> :</p>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Attribut</th><th>Contexte</th><th>Intention</th></tr></thead><tbody><tr><td>*(absent)* ou <code>data-context="product"</code></td><td>Mode Produit (SaaS)</td><td>Permettre d'agir — clarté, densité, répétabilité</td></tr><tr><td><code>data-context="marketing"</code></td><td>Mode Marketing (Narratif)</td><td>Communiquer une vision — respiration, hiérarchie éditoriale</td></tr></tbody></table></div>
-<h3>Tokens ajoutés</h3>
-<p><strong>Primitifs</strong> (<code>tokens/primitives.json</code>) :</p>
-<ul><li><code>primitive.fontSize.6xl</code> — 60px (titre display marketing)</li><li><code>primitive.space.24</code> — 96px (respiration section)</li><li><code>primitive.space.30</code> — 120px (gap hero)</li></ul>
-<p><strong>Sémantiques</strong> (<code>tokens/semantic.json</code>) — groupe <code>semantic.marketing.*</code> :</p>
-<ul><li><code>marketing.typography.display.{size, weight, line-height}</code></li><li><code>marketing.typography.eyebrow.{size, weight}</code></li><li><code>marketing.space.section-breathing</code> → <code>primitive.space.24</code> (96px)</li><li><code>marketing.space.hero-gap</code> → <code>primitive.space.30</code> (120px)</li></ul>
-<h3>CSS mode-switching</h3>
-<p>Un bloc CSS activé par <code>[data-context="marketing"]</code> remplace les tokens d'espacement et de typographie hero pour les pages concernées, sans toucher aux composants ni aux tokens de composant.</p>
-<h3>Pages déclarées marketing</h3>
-<ul><li><code>index.html</code> (home) — introduit la vision</li><li><code>get-started.html</code> — onboarding, convainc</li><li><code>agents/index.html</code> — explique le système agentique</li></ul>
-<hr>
-<h2>Alternatives considérées</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Rejetée parce que</th></tr></thead><tbody><tr><td>Fichier de config JSON par page</td><td>Sur-ingénierie pour 3 pages ; attribut HTML lisible par les agents et les CSS</td></tr><tr><td>Deux CSS séparés (product.css / marketing.css)</td><td>Duplication ; un attribut suffit pour surcharger les variables</td></tr><tr><td>Classe CSS sur <code>&lt;body&gt;</code></td><td>Attribut <code>data-</code> plus sémantique pour un état de page (pas un état d'interaction)</td></tr><tr><td>Tokens de composant séparés par mode</td><td>Violerait la règle d'approbation (tokens/component.json) sans gain réel</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<ul><li><strong>Règle machine-readable</strong> : <code>.claude/rules/contexts-utilisation.md</code> — chargée à chaque session.</li><li><strong>Guideline</strong> : <code>guidelines/foundations/contextes.md</code> — référence humain + agent.</li><li><strong>DESIGN.md</strong> : section 7 ajoutée.</li><li><strong>Site</strong> : <code>foundations/contextes.html</code> ajoutée à la sidebar.</li><li><strong>Gouvernance</strong> : les tokens <code>semantic.marketing.*</code> suivent la règle TCR des tokens sémantiques</li></ul>
-<p>  (approbation Design System Lead).</p>
-<hr>
-<h2>Conformité</h2>
-<ul><li>Tokens au format DTCG (ADR-052) ✅</li><li>Aucune valeur en dur dans le CSS — uniquement des références <code>var(--agtc-*)</code> ✅</li><li>La règle <code>tokens-system.md</code> est respectée (primitif → sémantique, jamais primitif dans composant) ✅</li><li>Attribut <code>data-context</code> : décoratif pour les agents, fonctionnel pour le CSS ✅</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-056.html" class="agtc-button secondary">← ADR-056</a>
-    <a href="adr-058.html" class="agtc-button secondary">ADR-058 →</a>
+<ul><li><code>npm run smoke</code>: 7/7 checks pass again.</li><li>No visual or functional change to the live site — <code>.site-nav</code> markup and the working mobile</li></ul>
+<p>  menu are untouched; only dead code was removed.</p>
+<ul><li>GitHub Projects: the linked ticket moved to Terminé.</li><li>Any future decision to actually mount <code>&lt;agtc-top-nav&gt;</code> on the site (full dogfooding, per</li></ul>
+<p>  <code>project_site_as_lab</code>/dogfooding backlog category C) supersedes this ADR's point 1 and would   need to update the smoke-test check back to a shadow-DOM one at that time.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <span></span>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

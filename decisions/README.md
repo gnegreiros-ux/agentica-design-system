@@ -147,6 +147,7 @@ decisions that were already settled.
 | [ADR-082](ADR-082-figma-brand-file-separation.md) | Brand/logo separated into a dedicated Figma library file (amends ADR-080) | 2026-07-21 | ✅ Active |
 | [ADR-083](ADR-083-agtc-image-implementation.md) | `agtc-image` implementation | 2026-07-21 | ✅ Active |
 | [ADR-084](ADR-084-illustrations-migrated-to-agtc-image-no-wrapper.md) | Home page illustrations migrated to `agtc-image` directly, no `agtc-illustration` wrapper | 2026-07-21 | ✅ Active |
+| [ADR-087](ADR-087-top-nav-mix-architecture-confirmed.md) | `agtc-top-nav` confirmed as "mix" architecture, dead mobile-menu code removed | 2026-07-22 | ✅ Active |
 
 ---
 
