@@ -1716,7 +1716,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 
 /* ── REDUCED MOTION ───────────────────────────────────────── */
 @media(prefers-reduced-motion:reduce){
-  .hero::before,.layer-plane,.hero-badge .pulse{animation:none!important}
+  .hero::before,.layer-plane,.hero-badge .pulse,.illus-ambient{animation:none!important}
 }
 
 /* ── HERO — responsive ───────────────────────────────────── */
@@ -2453,15 +2453,15 @@ body.page{
 }
 .cta-btn-ghost:hover,.cta-btn-ghost:focus-visible{background:var(--agtc-surface-glass,rgba(255,255,255,.08))}
 
-/* Illustrations V2 */
+/* Illustrations — each figure now wraps agtc-image (decorative, fit=contain)
+   instead of a bare img; shadow DOM handles width/height/object-fit
+   internally, so no descendant img rule is needed here anymore. */
 .illus{position:relative;margin:0;line-height:0}
-.illus img{display:block;width:100%;height:auto;filter:none}
 .illus-hero{
   position:absolute;right:0;top:50%;transform:translateY(-50%);
   width:55%;height:auto;max-width:none;overflow:visible;margin:0;
   z-index:0;
 }
-.illus-hero img{width:100%;height:auto;object-fit:contain;filter:none}
 /* Texte limité à 40% du shell — image part de 45vw vers la droite */
 .hero .shell{position:static}
 .hero .hero-grid{grid-template-columns:1fr}
@@ -3644,7 +3644,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="illus illus-hero" aria-hidden="true">
-      <img src="img/IMG-HERO-SYSTEM.png" alt="" fetchpriority="high" width="720" height="540" loading="eager">
+      <agtc-image src="img/IMG-HERO-SYSTEM.png" decorative fit="contain" width="768" height="512" priority></agtc-image>
     </figure>
   </div>
 </section>
@@ -3664,7 +3664,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="illus illus-feature" aria-hidden="true">
-      <img src="img/IMG-CONTEXT-on-dark.png" alt="" loading="lazy" width="740" height="560">
+      <agtc-image src="img/IMG-CONTEXT-on-dark.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
@@ -3684,7 +3684,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="illus illus-ambient" aria-hidden="true">
-      <img src="img/IMG-HUMANS-AI.png" alt="" loading="lazy" width="720" height="540">
+      <agtc-image src="img/IMG-HUMANS-AI.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
@@ -3693,7 +3693,7 @@ function buildHome(adrs) {
 <section class="site-section" data-reveal>
   <div class="shell split">
     <figure class="illus" aria-hidden="true">
-      <img src="img/IMG-KNOWLEDGE-ASSETS.png" alt="" loading="lazy" width="680" height="520">
+      <agtc-image src="img/IMG-KNOWLEDGE-ASSETS.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
     <div class="copy">
       <p class="kicker"><span class="lang-fr">Les connaissances</span><span class="lang-en">Knowledge</span></p>
@@ -3724,7 +3724,7 @@ function buildHome(adrs) {
       </p>
     </div>
     <figure class="illus illus-feature" aria-hidden="true">
-      <img src="img/IMG-SINGLE-SOURCE.png" alt="" loading="lazy" width="740" height="560">
+      <agtc-image src="img/IMG-SINGLE-SOURCE.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
@@ -3809,7 +3809,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="illus" aria-hidden="true">
-      <img src="img/IMG-CONTRACTS.png" alt="" loading="lazy" width="680" height="520">
+      <agtc-image src="img/IMG-CONTRACTS.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
@@ -3818,7 +3818,7 @@ function buildHome(adrs) {
 <section class="site-section human-control" id="ia" data-reveal>
   <div class="shell overlap">
     <figure class="illus illus-feature" aria-hidden="true">
-      <img src="img/IMG-HUMAN-LOOP.png" alt="" loading="lazy" width="740" height="560">
+      <agtc-image src="img/IMG-HUMAN-LOOP.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
     <div class="copy copy-narrow">
       <p class="kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
@@ -3856,7 +3856,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="illus" aria-hidden="true">
-      <img src="img/IMG-DURABILITY.png" alt="" loading="lazy" width="760" height="500">
+      <agtc-image src="img/IMG-DURABILITY.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
@@ -3881,7 +3881,7 @@ function buildHome(adrs) {
       </div>
     </div>
     <figure class="illus illus-brand" aria-hidden="true">
-      <img src="img/IMG-AGENTICA.png" alt="" loading="lazy" width="680" height="520">
+      <agtc-image src="img/IMG-AGENTICA.png" decorative fit="contain" width="768" height="512"></agtc-image>
     </figure>
   </div>
 </section>
