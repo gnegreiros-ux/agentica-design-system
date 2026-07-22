@@ -654,8 +654,6 @@ function tokensCSS() {
   --agtc-site-sidebar-width:236px;
   --agtc-site-toc-width:208px;
   --agtc-content-max:1180px;
-  --agtc-semantic-radius-pill:999px;
-  --agtc-semantic-color-border-strong:var(--agtc-primitive-color-gray-6);
   --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
   --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
   --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
@@ -667,15 +665,6 @@ function tokensCSS() {
   --agtc-font-size-h2:2rem;         --agtc-font-size-h1:2.5rem;
   --agtc-font-size-display:clamp(2.5rem,5vw,3.5rem);
   --agtc-line-height-text:1.6;      --agtc-line-height-heading:1.05;
-  /* Accent (rose) and secondary (prune) brand primitives */
-  --agtc-primitive-color-accent-9:#ed6b86;   --agtc-primitive-color-accent-10:#e05f7b;
-  --agtc-primitive-color-accent-11:#a6294c;  --agtc-primitive-color-accent-12:#5d1f2e;
-  --agtc-primitive-color-accent-8:#c8818c;
-  --agtc-primitive-color-secondary-9:#463239; --agtc-primitive-color-secondary-11:#6b4b56;
-  /* Brand semantic tokens (nouveaux — absents de tokens/semantic.json) */
-  --agtc-semantic-color-accent:#ed6b86;
-  --agtc-semantic-color-secondary:#463239;
-  --agtc-semantic-color-tertiary:var(--agtc-primitive-color-slate-9);
   /* Brand gradients (teal → accent rose) */
   --agtc-gradient-brand:linear-gradient(115deg,var(--agtc-primitive-color-teal-11) 0%,var(--agtc-primitive-color-teal-9) 38%,var(--agtc-primitive-color-accent-9) 78%,var(--agtc-primitive-color-accent-10) 100%);
   --agtc-gradient-text:linear-gradient(100deg,var(--agtc-primitive-color-teal-8) 0%,var(--agtc-primitive-color-accent-8) 100%);
@@ -697,9 +686,6 @@ function tokensCSS() {
   --agtc-semantic-space-comfortable-control-padding-x:20px;
   --agtc-semantic-space-comfortable-control-padding-y:12px;
   --agtc-semantic-space-comfortable-control-gap:12px;
-  /* Font-weight sémantique — bold(700) et display(800) complètent la palette DTCG */
-  --agtc-semantic-fontWeight-bold:700;
-  --agtc-semantic-fontWeight-display:800;
   /* Tracking (letter-spacing) — échelle systémique, câblée sur semantic.typography.letter-spacing.* (ADR-068) */
   --agtc-tracking-tighter:var(--agtc-semantic-typography-letter-spacing-tighter);
   --agtc-tracking-tight:var(--agtc-semantic-typography-letter-spacing-tight);
@@ -742,10 +728,10 @@ function tokensCSS() {
   --agtc-semantic-color-border-strong:#363c48;
   --agtc-semantic-color-border-focus:#34d3bb;
   --agtc-semantic-color-border-danger:#ff9592;
-  --agtc-semantic-color-accent:#ff8aa1;
-  --agtc-semantic-color-secondary:#6b4b56;
+  --agtc-semantic-color-brand-accent:#ff8aa1;
   --agtc-semantic-color-brand-secondary:#6b4b56;
   --agtc-semantic-color-brand-secondary-text:#edd9df;
+  --agtc-semantic-color-brand-tertiary:#6b7280;
   /* Subtle + text — manquants en dark, provoquent des échecs de contraste */
   --agtc-semantic-color-brand-primary-subtle:#0d2924;
   --agtc-semantic-color-brand-primary-text:#34d3bb;
@@ -756,7 +742,6 @@ function tokensCSS() {
   --agtc-semantic-color-feedback-info-text:#34d3bb;
   /* text-on-danger : fond danger est rose clair en dark (#ff9592) → texte doit être foncé */
   --agtc-semantic-color-text-on-danger:#3d0f0f;
-  --agtc-semantic-color-tertiary:#6b7280;
   --agtc-semantic-color-illustration-ink:#14121a;
   --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
@@ -1650,7 +1635,7 @@ html { scroll-padding-top:calc(var(--agtc-header-height,64px) + 12px); }
 }
 .hero-badge .pulse{
   width:8px;height:8px;border-radius:50%;
-  background:var(--agtc-semantic-color-accent);
+  background:var(--agtc-semantic-color-brand-accent);
   animation:pulse 2s ease-in-out infinite;
 }
 .hero-eyebrow{
@@ -1844,9 +1829,9 @@ body{overflow-x:hidden}
 /* ── Brand band ──────────────────────────────────────────── */
 .brand-band{position:relative;width:100%;height:160px;overflow:hidden;background:var(--agtc-semantic-color-background-inverse)}
 .brand-band svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.brand-band .shape-plum{fill:var(--agtc-semantic-color-secondary)}
-.brand-band .shape-accent{fill:var(--agtc-semantic-color-accent)}
-.brand-band .shape-slate{fill:var(--agtc-semantic-color-tertiary)}
+.brand-band .shape-plum{fill:var(--agtc-semantic-color-brand-secondary)}
+.brand-band .shape-accent{fill:var(--agtc-semantic-color-brand-accent)}
+.brand-band .shape-slate{fill:var(--agtc-semantic-color-brand-tertiary)}
 .brand-band .shape-surface{fill:var(--agtc-semantic-color-background-page)}
 .brand-band .shape-teal{fill:var(--agtc-semantic-color-brand-primary)}
 .brand-band .shape{opacity:.96;transition:transform .9s cubic-bezier(.22,1,.36,1)}
@@ -2258,7 +2243,7 @@ body{overflow-x:hidden}
   --site-muted: var(--agtc-semantic-color-text-on-dark-muted);
   --site-faint: var(--agtc-semantic-color-text-on-dark-muted);
   --site-teal: var(--agtc-semantic-color-action-primary);
-  --site-rose: var(--agtc-semantic-color-accent);
+  --site-rose: var(--agtc-semantic-color-brand-accent);
   --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
   --site-radius: var(--agtc-semantic-radius-card, 16px);
   --site-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
@@ -2744,7 +2729,7 @@ body.page{
 /* Border-bottom animation cards — couleur principale */
 .role-card::after{background:var(--agtc-semantic-color-action-primary)}
 body[data-context="marketing"] .role-card::after{
-  background:linear-gradient(90deg,var(--agtc-semantic-color-action-primary),var(--agtc-semantic-color-accent,#e35d6a))
+  background:linear-gradient(90deg,var(--agtc-semantic-color-action-primary),var(--agtc-semantic-color-brand-accent,#e35d6a))
 }
 
 /* Footer V2 — 4 colonnes */

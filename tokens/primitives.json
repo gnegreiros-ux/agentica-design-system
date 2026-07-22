@@ -2383,6 +2383,11 @@
         "$value": "700",
         "$type": "fontWeight",
         "$description": "Bold — titres, emphase"
+      },
+      "extrabold": {
+        "$value": "800",
+        "$type": "fontWeight",
+        "$description": "Extrabold — display/hero scale headings, heaviest weight used in the type system"
       }
     },
     "lineHeight": {

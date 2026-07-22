@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Tue, 21 Jul 2026 19:44:24 GMT
+ * Generated on Wed, 22 Jul 2026 13:50:28 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -457,6 +457,7 @@ export const PrimitiveFontSize6xl = "3.75rem";
 export const PrimitiveFontWeightRegular = "400";
 export const PrimitiveFontWeightMedium = "500";
 export const PrimitiveFontWeightBold = "700";
+export const PrimitiveFontWeightExtrabold = "800";
 export const PrimitiveLineHeightReading = "1.6";
 export const PrimitiveLineHeightHeading = "1.1";
 export const PrimitiveLineHeightDisplay = "1.0";
@@ -531,6 +532,7 @@ export const SemanticColorBorderDanger = "#ce2c31";
 export const SemanticColorBorderOnDark = "rgba(255,255,255,0.18)";
 export const SemanticColorBorderSwatch = "rgba(0,0,0,0.10)";
 export const SemanticColorBorderOverlayDark = "rgba(255, 255, 255, 0.06)";
+export const SemanticColorBorderStrong = "#d9d9d9";
 export const SemanticColorVizScaleBar = "#fdbdbe";
 export const SemanticColorControlTrackOff = "#8d8d8d";
 export const SemanticColorControlTrackOffHover = "#838383";
@@ -550,6 +552,7 @@ export const SemanticColorBrandAccentText = "#a6294c";
 export const SemanticColorBrandSecondary = "#463239";
 export const SemanticColorBrandSecondaryHover = "#5f404b";
 export const SemanticColorBrandSecondaryText = "#432f36";
+export const SemanticColorBrandTertiary = "#8b9098";
 export const SemanticColorBrandLogoBlack = "#000000";
 export const SemanticColorBrandLogoGray = "#6B7280";
 export const SemanticShadowHeader = "0 2px 24px rgba(0,0,0,0.12)";
@@ -584,6 +587,9 @@ export const SemanticSpaceComfortableLayoutSection = "ceil(32px * 1.25 / 4) * 4"
 export const SemanticSpaceComfortableLayoutComponent = "ceil(20px * 1.25 / 4) * 4";
 export const SemanticRadiusControl = "6px";
 export const SemanticRadiusCard = "10px";
+export const SemanticRadiusPill = "9999px";
+export const SemanticFontWeightBold = "700";
+export const SemanticFontWeightDisplay = "800";
 export const SemanticTypographyFontFamily = "'Atkinson Hyperlegible', system-ui, sans-serif";
 export const SemanticTypographyMonoFamily = "'Atkinson Hyperlegible Mono', 'JetBrains Mono', 'Cascadia Code', monospace";
 export const SemanticTypographyDetailSize = "0.75rem";
