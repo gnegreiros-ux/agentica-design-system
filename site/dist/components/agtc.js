@@ -1096,7 +1096,13 @@
     }
     .label-text:empty { display: none; }
 
-    :host([disabled]) .track { opacity: 0.5; }
+    /* Same neutral used by checkbox/radio's checked+disabled state — state is
+       signaled by knob position (WCAG 1.4.1), so the track can drop the
+       off/on color distinction here without losing meaning. Reused rather
+       than opacity: opacity blends with whatever sits behind the track (page,
+       card, modal), so its effective color — and contrast against the knob —
+       drifts by context; a token stays fixed per theme. */
+    :host([disabled]) .track { background: var(--agtc-semantic-color-action-primary-disabled); }
     :host([disabled]) .label-text { color: var(--agtc-semantic-color-text-disabled); }
 
     @media (prefers-reduced-motion: reduce) {
