@@ -512,7 +512,7 @@
                 "agtc-radio",
                 "agtc-input"
               ],
-              "decision": "2026-09-02 contrast-audit finding, agent-proposed pending Design System Lead review"
+              "decision": "ADR-093"
             }
           }
         },

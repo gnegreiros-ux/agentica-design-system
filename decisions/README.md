@@ -155,6 +155,7 @@ decisions that were already settled.
 | [ADR-090](ADR-090-mandatory-figma-audit-script-per-session.md) | Consolidated Figma audit script, mandatory before ending any session that mutates the file | 2026-07-23 | ✅ Active |
 | [ADR-091](ADR-091-icon-per-variant-stroke-width-and-color-tokens.md) | Per-variant stroke-width and default-color tokens for `agtc-icon` — stroke-width no longer hardcoded | 2026-07-30 | ✅ Active |
 | [ADR-092](ADR-092-visited-safari-fallback-incident.md) | Safari `:visited` hex-fallback incident, consolidated record (amends ADR-047, ADR-059, ADR-060) | 2026-08-28 | ✅ Active |
+| [ADR-093](ADR-093-border-control-accessible-resting-boundary.md) | Accessible resting control boundary: new semantic token `border.control` (checkbox/radio/input) | 2026-09-09 | ✅ Active |
 
 ---
 
