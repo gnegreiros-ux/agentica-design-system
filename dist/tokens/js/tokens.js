@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 09 Sep 2026 14:48:57 GMT
+ * Generated on Wed, 09 Sep 2026 14:49:58 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -598,6 +598,7 @@ export const SemanticRadiusControlTight = "2px";
 export const SemanticRadiusControl = "6px";
 export const SemanticRadiusCard = "10px";
 export const SemanticRadiusPill = "9999px";
+export const SemanticRadiusControlInner = "4px";
 export const SemanticFontWeightBold = "700";
 export const SemanticFontWeightDisplay = "800";
 export const SemanticTypographyFontFamily = "'Atkinson Hyperlegible', system-ui, sans-serif";
