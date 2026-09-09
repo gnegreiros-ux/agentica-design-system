@@ -95,7 +95,7 @@ instantly, with no "Save" button.
 | On | Teal track, knob on the right |
 | Hover | Darkened track |
 | Focus | Teal outline — keyboard (Space toggles) |
-| Disabled | Reduced opacity, non-interactive |
+| Disabled | Neutral gray track (same token as checkbox/radio's disabled+checked state), non-interactive — state stays legible via knob position |
 
 ---
 
