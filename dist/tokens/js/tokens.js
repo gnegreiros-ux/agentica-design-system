@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 04 Sep 2026 17:44:00 GMT
+ * Generated on Wed, 09 Sep 2026 14:49:58 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -535,6 +535,7 @@ export const SemanticColorIconInline = "#202020";
 export const SemanticColorIconControl = "#646464";
 export const SemanticColorIconNav = "#646464";
 export const SemanticColorBorderDefault = "#e8e8e8";
+export const SemanticColorBorderControl = "#8d8d8d";
 export const SemanticColorBorderFocus = "#007a68";
 export const SemanticColorBorderDanger = "#ce2c31";
 export const SemanticColorBorderOnDark = "rgba(255,255,255,0.18)";
@@ -683,7 +684,7 @@ export const ButtonGhostBackgroundHover = "#f0f0f0";
 export const ButtonGhostText = "#007a68";
 export const ButtonGhostBorder = "transparent";
 export const InputDefaultBackground = "#ffffff";
-export const InputDefaultBorder = "#e8e8e8";
+export const InputDefaultBorder = "#8d8d8d";
 export const InputDefaultBorderFocus = "#007a68";
 export const InputDefaultBorderError = "#ce2c31";
 export const InputDefaultText = "#202020";
@@ -744,7 +745,7 @@ export const CardTypographyMarketingHeroTitleWeight = "700";
 export const CardTypographyMarketingBodySize = "1rem";
 export const CardTypographyMarketingMetaSize = "0.875rem";
 export const CheckboxDefaultBackground = "#ffffff";
-export const CheckboxDefaultBorder = "#e8e8e8";
+export const CheckboxDefaultBorder = "#8d8d8d";
 export const CheckboxDefaultBorderHover = "#007a68";
 export const CheckboxDefaultBorderFocus = "#007a68";
 export const CheckboxDefaultFill = "#007a68";
@@ -753,7 +754,7 @@ export const CheckboxDefaultCheck = "#ffffff";
 export const CheckboxDefaultLabel = "#202020";
 export const CheckboxDefaultRadius = "6px";
 export const RadioDefaultBackground = "#ffffff";
-export const RadioDefaultBorder = "#e8e8e8";
+export const RadioDefaultBorder = "#8d8d8d";
 export const RadioDefaultBorderHover = "#007a68";
 export const RadioDefaultBorderFocus = "#007a68";
 export const RadioDefaultFill = "#007a68";
