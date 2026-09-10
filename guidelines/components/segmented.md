@@ -84,6 +84,17 @@ Emits **`change`** (`detail: { value }`) on every selection.
 - **Always one active** — no empty state.
 - **2 to 5 short options**; beyond that, prefer `select` or tabs.
 
+> **No disabled state, by design (2026-09-09).** Researched against the project's UX
+> reference sources (NN/g, Smashing's "Hidden vs. Disabled in UX") and GitHub Primer's
+> SegmentedControl accessibility docs: none treat a whole-control disabled state as
+> standard for this pattern, and Primer's own accessibility page — already cited above
+> as a source for this component — doesn't mention one at all. Where a disabled state
+> exists in the wild, it applies to an individual segment, not the whole control.
+> `agtc-segmented.js` has never implemented a `disabled` property; 4 orphaned
+> `State=Disabled` Figma variants (whole-control, opacity-based) were removed from the
+> master for this reason rather than "fixed." A future per-segment disabled would be a
+> separate feature (new prop, UX pattern review, ADR) — not a resurrection of these.
+
 ---
 
 ## Anti-patterns
