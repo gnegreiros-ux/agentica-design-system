@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 09 Sep 2026 14:49:58 GMT
+ * Generated on Thu, 10 Sep 2026 12:30:54 GMT
  */
 
 :root {
@@ -77,6 +77,8 @@
   --agtc-primitive-fontSize-base: 1rem;
   --agtc-primitive-fontSize-sm: 0.875rem;
   --agtc-primitive-fontSize-xs: 0.75rem;
+  --agtc-primitive-space-160: 640px;
+  --agtc-primitive-space-120: 480px;
   --agtc-primitive-space-30: 120px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-20: 80px;
@@ -585,6 +587,9 @@
   --agtc-semantic-radius-card: var(--agtc-primitive-radius-md);
   --agtc-semantic-radius-control: var(--agtc-primitive-radius-sm);
   --agtc-semantic-radius-control-tight: var(--agtc-primitive-radius-xs);
+  --agtc-semantic-size-control-max-width-multiline: var(--agtc-primitive-space-160);
+  --agtc-semantic-size-control-max-width: var(--agtc-primitive-space-120);
+  --agtc-semantic-size-control-min-width: var(--agtc-primitive-space-16);
   --agtc-semantic-space-comfortable-layout-component: ceil(var(--agtc-primitive-space-5) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-comfortable-layout-section: ceil(var(--agtc-primitive-space-8) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-comfortable-control-gap: ceil(var(--agtc-primitive-space-2) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);

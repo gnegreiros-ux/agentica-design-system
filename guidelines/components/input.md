@@ -82,6 +82,31 @@ Allow the user to enter textual or structured data in a form.
 | Radius | `component.input.default.radius` |
 | Padding X | `component.input.default.padding-x` |
 | Padding Y | `component.input.default.padding-y` |
+| Min-width | `semantic.size.control.min-width` (64px) |
+| Max-width | `semantic.size.control.max-width` (480px) |
+
+---
+
+## Width contract (ADR-094)
+
+`.control` is bounded, not open-ended:
+
+| Bound | Value | Purpose |
+|-------|-------|---------|
+| `min-width` | 64px (`semantic.size.control.min-width`) | Floor only — stops the field collapsing to an unreadable sliver in a tight flex/grid parent (~7ch, common CSS baseline). Never a target width. |
+| `max-width` | 480px (`semantic.size.control.max-width`) | Ceiling only — a single-line field stretched wider than this reads as a mistake, not a design choice (Baymard/NN.g: field width is a content-length affordance). |
+
+```
+✅ Let width come from the container (percentage, FILL, grid column) — the min/max just clamp it
+✅ Use an intentional, narrower explicit width for short-answer fields (postal code, OTP, quantity)
+❌ Rely on max-width as a target width for every field regardless of expected content
+❌ Derive a custom min-width from a viewport calculation — 64px is a squeeze-floor, not "mobile full width"
+```
+
+> A future `agtc-textarea` has a **reserved** (not yet consumed) ceiling —
+> `semantic.size.control.max-width-multiline` (640px, ≈70 characters at `typography.body`) — sized
+> from WCAG 1.4.8's 80-character hard limit and the 45–75-character readability sweet spot
+> (Baymard, UXPin). See ADR-094 for the full research trail before building that component.
 
 ---
 

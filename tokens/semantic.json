@@ -908,6 +908,58 @@
         }
       }
     },
+    "size": {
+      "control": {
+        "min-width": {
+          "$value": "{primitive.space.16}",
+          "$type": "dimension",
+          "$intent": "Floor width for a single-line control (input) so it never collapses to an unreadable sliver when squeezed by a tight flex/grid parent — not a target width. ~7ch, common cross-framework CSS starting point.",
+          "$description": "64px. Sourced from convergent CSS baselines (input min-inline-size: 7ch) rather than a device-width calculation — a control's natural width should come from FILL/content sizing, not a viewport-derived floor (ADR-094).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-min-width",
+              "use": ["Input[field/control wrapper] min-width"],
+              "doNotUse": "As a target/default width — it is a floor only. Never derived from a viewport calculation.",
+              "components": ["agtc-input"],
+              "decision": "ADR-094"
+            }
+          }
+        },
+        "max-width": {
+          "$value": "{primitive.space.120}",
+          "$type": "dimension",
+          "$intent": "Ceiling width for a single-line control (input) so it never stretches disproportionately to its content in a wide container — per Baymard/NN.g, field width is a content-length affordance.",
+          "$description": "480px. Matches the observed convergence across production design systems for a generic single-line text field (Carbon/Ant/Material-adjacent practice); no field-type-specific override should rely on this as a target, only as a cap (ADR-094).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-max-width",
+              "use": ["Input[field/control wrapper] max-width"],
+              "doNotUse": "As a forced target width for short-answer fields (e.g. postal code, OTP) — those should use an intentional, narrower explicit width instead.",
+              "components": ["agtc-input"],
+              "decision": "ADR-094"
+            }
+          }
+        },
+        "max-width-multiline": {
+          "$value": "{primitive.space.160}",
+          "$type": "dimension",
+          "$intent": "Ceiling width for a future multi-line control (textarea) so wrapped lines stay within the readable/WCAG range — not yet consumed by any component (no agtc-textarea exists yet, ADR-094).",
+          "$description": "640px, a px approximation of ~70 characters at typography.body (16px) — WCAG 1.4.8 hard ceiling is 80 characters, best-practice readability sweet spot is 45–75. Code implementation should prefer `max-width: 70ch` directly (font-relative, robust to zoom/font-size) over this px value where the platform supports it; this token exists for Figma (px-only) and any context needing a fixed fallback.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-max-width-multiline",
+              "use": ["Reserved for a future agtc-textarea max-width — not consumed by any component yet"],
+              "doNotUse": "Do not bind this to agtc-input or any single-line control — use size.control.max-width instead.",
+              "components": [],
+              "decision": "ADR-094"
+            }
+          }
+        }
+      }
+    },
     "radius": {
       "control-tight": {
         "$value": "{primitive.radius.xs}",

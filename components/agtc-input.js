@@ -157,6 +157,9 @@ class AgtcInput extends LitElement {
       display: flex;
       align-items: center;
 
+      min-width: var(--agtc-semantic-size-control-min-width);
+      max-width: var(--agtc-semantic-size-control-max-width);
+
       background: var(--agtc-component-input-default-background);
       border: 1.5px solid var(--agtc-component-input-default-border);
       border-radius: var(--agtc-component-input-default-radius);
