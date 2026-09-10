@@ -1,0 +1,463 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/components/all-components.spec.js >> toggle — visual regressions >> page toggle — dark
+- Location: tests/visual/components/all-components.spec.js:13:7
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1280px by 3694px, received 1280px by 3688px. 71128 pixels (ratio 0.02 of all image pixels) are different.
+
+  Snapshot: toggle-dark.png
+
+Call log:
+  - Expect "toHaveScreenshot(toggle-dark.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1280px by 3694px, received 1280px by 3688px. 71128 pixels (ratio 0.02 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1280px by 3694px, received 1280px by 3688px. 71128 pixels (ratio 0.02 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "Agentica" [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "AI" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Human control":
+              - /url: ../ia.html
+            - link "Single source of truth":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Components":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Decisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuity":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Figma library":
+              - /url: ../resources.html
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentica-design-system
+            - link "Audit":
+              - /url: ../audit.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e19]:
+        - button "FR" [ref=e20] [cursor=pointer]
+        - button "EN" [ref=e21] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e22] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e23]
+      - link "GitHub — Code source du projet" [ref=e25] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - img [ref=e26]
+      - link "Figma — Librairie Agentica sur Figma Community" [ref=e29] [cursor=pointer]:
+        - /url: https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system
+        - img [ref=e30]
+  - generic [ref=e36]:
+    - navigation "Secondary navigation / Navigation secondaire" [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: Components
+        - link "Overview" [ref=e40] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e41] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e42] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e43] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e44] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Image" [ref=e45] [cursor=pointer]:
+          - /url: ../components/image.html
+        - link "Card" [ref=e46] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e47] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e48] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e49] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e50] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e51] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e52] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e53] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e54] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e55] [cursor=pointer]:
+          - /url: ../components/tabs.html
+    - main [ref=e56]:
+      - heading "Toggle" [level=1] [ref=e57]
+      - paragraph [ref=e58]:
+        - generic [ref=e59]:
+          - text: Immediate-effect on/off switch — the change applies instantly, no "Save" button. State is signaled by the
+          - strong [ref=e60]: knob position
+          - text: (non-color indicator, WCAG 1.4.1).
+      - heading "States" [level=2] [ref=e61]
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]: Off · On
+          - generic [ref=e65]:
+            - generic [ref=e69]: Dark mode
+            - generic [ref=e73]: Email notifications
+        - generic [ref=e74]:
+          - generic [ref=e75]: Disabled
+          - generic [ref=e76]:
+            - generic [ref=e80]: Sync
+            - generic [ref=e84]: Auto-save
+      - heading "Checkbox or toggle?" [level=2] [ref=e85]
+      - table [ref=e87]:
+        - rowgroup [ref=e88]:
+          - row "Checkbox Toggle" [ref=e89]:
+            - columnheader [ref=e90]
+            - columnheader "Checkbox" [ref=e91]
+            - columnheader "Toggle" [ref=e92]
+        - rowgroup [ref=e93]:
+          - row "Effect On submit Immediate" [ref=e94]:
+            - cell "Effect" [ref=e95]
+            - cell "On submit" [ref=e96]
+            - cell "Immediate" [ref=e97]:
+              - strong [ref=e99]: Immediate
+          - row "Use 0–N selection in a form Instant on/off setting" [ref=e100]:
+            - cell "Use" [ref=e101]
+            - cell "0–N selection in a form" [ref=e102]
+            - cell "Instant on/off setting" [ref=e103]
+          - row "Example « J'accepte les CGU » \"Dark mode\"" [ref=e104]:
+            - cell "Example" [ref=e105]
+            - cell "« J'accepte les CGU »" [ref=e106]
+            - cell "\"Dark mode\"" [ref=e107]
+      - heading "Absolute rules" [level=2] [ref=e108]
+      - list [ref=e109]:
+        - listitem [ref=e110]:
+          - img [ref=e112]
+          - text: Immediate effect — never in a submitted form
+        - listitem [ref=e115]:
+          - img [ref=e117]
+          - text: State signaled by position (not color alone)
+        - listitem [ref=e120]:
+          - img [ref=e122]
+          - generic [ref=e125]:
+            - text: Native
+            - code [ref=e126]: role="switch"
+            - text: ", Space key"
+        - listitem [ref=e127]:
+          - img [ref=e129]
+          - text: Interrogative label — prefer a concise one
+      - heading "Component tokens" [level=2] [ref=e133]
+      - table [ref=e135]:
+        - rowgroup [ref=e140]:
+          - row "Token CSS Reference Resolved value" [ref=e141]:
+            - columnheader "Token CSS" [ref=e142]
+            - columnheader "Reference" [ref=e143]
+            - columnheader "Resolved value" [ref=e144]
+        - rowgroup [ref=e145]:
+          - 'row "--agtc-toggle-default-track-off primitive.color.gray.9 #8d8d8d" [ref=e146]':
+            - cell "--agtc-toggle-default-track-off" [ref=e147]:
+              - code [ref=e148]: "--agtc-toggle-default-track-off"
+            - cell "primitive.color.gray.9" [ref=e149]:
+              - code [ref=e150]: primitive.color.gray.9
+            - cell "#8d8d8d" [ref=e151]
+          - 'row "--agtc-toggle-default-track-off-hover primitive.color.gray.10 #838383" [ref=e152]':
+            - cell "--agtc-toggle-default-track-off-hover" [ref=e153]:
+              - code [ref=e154]: "--agtc-toggle-default-track-off-hover"
+            - cell "primitive.color.gray.10" [ref=e155]:
+              - code [ref=e156]: primitive.color.gray.10
+            - cell "#838383" [ref=e157]
+          - 'row "--agtc-toggle-default-track-on semantic.color.action.primary #007a68" [ref=e158]':
+            - cell "--agtc-toggle-default-track-on" [ref=e159]:
+              - code [ref=e160]: "--agtc-toggle-default-track-on"
+            - cell "semantic.color.action.primary" [ref=e161]:
+              - code [ref=e162]: semantic.color.action.primary
+            - cell "#007a68" [ref=e163]
+          - 'row "--agtc-toggle-default-track-on-hover semantic.color.action.primary-hover #0d3d38" [ref=e164]':
+            - cell "--agtc-toggle-default-track-on-hover" [ref=e165]:
+              - code [ref=e166]: "--agtc-toggle-default-track-on-hover"
+            - cell "semantic.color.action.primary-hover" [ref=e167]:
+              - code [ref=e168]: semantic.color.action.primary-hover
+            - cell "#0d3d38" [ref=e169]
+          - 'row "--agtc-toggle-default-knob semantic.color.background.surface #ffffff" [ref=e170]':
+            - cell "--agtc-toggle-default-knob" [ref=e171]:
+              - code [ref=e172]: "--agtc-toggle-default-knob"
+            - cell "semantic.color.background.surface" [ref=e173]:
+              - code [ref=e174]: semantic.color.background.surface
+            - cell "#ffffff" [ref=e175]
+          - 'row "--agtc-toggle-default-border-focus semantic.color.border.focus #007a68" [ref=e176]':
+            - cell "--agtc-toggle-default-border-focus" [ref=e177]:
+              - code [ref=e178]: "--agtc-toggle-default-border-focus"
+            - cell "semantic.color.border.focus" [ref=e179]:
+              - code [ref=e180]: semantic.color.border.focus
+            - cell "#007a68" [ref=e181]
+          - 'row "--agtc-toggle-default-label semantic.color.text.primary #202020" [ref=e182]':
+            - cell "--agtc-toggle-default-label" [ref=e183]:
+              - code [ref=e184]: "--agtc-toggle-default-label"
+            - cell "semantic.color.text.primary" [ref=e185]:
+              - code [ref=e186]: semantic.color.text.primary
+            - cell "#202020" [ref=e187]
+      - heading "Implementation" [level=2] [ref=e188]
+      - generic [ref=e189]:
+        - code [ref=e190]: <agtc-toggle label=" Email notifications" name="email-notif"></agtc-toggle> <agtc-toggle label=" Dark mode" checked></agtc-toggle>
+        - generic [ref=e191]: html
+        - button "Copy code (html)" [ref=e192] [cursor=pointer]: Copy
+      - heading "UX Patterns Reference" [level=2] [ref=e193]
+      - blockquote [ref=e194]:
+        - paragraph [ref=e195]:
+          - text: Patterns approved by the Design System Lead via the
+          - code [ref=e196]: ux-pattern-review
+          - text: workflow (see
+          - code [ref=e197]: .claude/rules/ux-patterns-sources.md
+          - text: "and ADR-036). Decision:"
+          - strong [ref=e198]: all approved
+          - text: .
+      - table [ref=e200]:
+        - rowgroup [ref=e201]:
+          - row "Pattern Source Applied Justification" [ref=e202]:
+            - columnheader "Pattern" [ref=e203]
+            - columnheader "Source" [ref=e204]
+            - columnheader "Applied" [ref=e205]
+            - columnheader "Justification" [ref=e206]
+        - rowgroup [ref=e207]:
+          - row "role=\"switch\" + aria-checked NN/g — toggle switch ✅ Native <input type=\"checkbox\" role=\"switch\">" [ref=e208]:
+            - cell "role=\"switch\" + aria-checked" [ref=e209]:
+              - code [ref=e210]: role="switch"
+              - text: +
+              - code [ref=e211]: aria-checked
+            - cell "NN/g — toggle switch" [ref=e212]:
+              - link "NN/g — toggle switch" [ref=e213] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e214]
+            - cell "Native <input type=\"checkbox\" role=\"switch\">" [ref=e215]:
+              - text: Native
+              - code [ref=e216]: <input type="checkbox" role="switch">
+          - row "Immediate effect (no submit) NN/g ✅ agtc-change emitted on toggle" [ref=e217]:
+            - cell "Immediate effect (no submit)" [ref=e218]:
+              - strong [ref=e219]: Immediate effect
+              - text: (no submit)
+            - cell "NN/g" [ref=e220]:
+              - link "NN/g" [ref=e221] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e222]
+            - cell "agtc-change emitted on toggle" [ref=e223]:
+              - code [ref=e224]: agtc-change
+              - text: emitted on toggle
+          - row "State by knob position (not color alone) NN/g ✅ Knob slides left/right (WCAG 1.4.1)" [ref=e225]:
+            - cell "State by knob position (not color alone)" [ref=e226]:
+              - strong [ref=e227]: State by knob position
+              - text: (not color alone)
+            - cell "NN/g" [ref=e228]:
+              - link "NN/g" [ref=e229] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e230]
+            - cell "Knob slides left/right (WCAG 1.4.1)" [ref=e231]
+          - row "Delimited knob (contrast ≥ 3:1) NN/g ✅ White + shadow, gray.9 track (WCAG 1.4.11)" [ref=e232]:
+            - cell "Delimited knob (contrast ≥ 3:1)" [ref=e233]
+            - cell "NN/g" [ref=e234]:
+              - link "NN/g" [ref=e235] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e236]
+            - cell "White + shadow, gray.9 track (WCAG 1.4.11)" [ref=e237]
+          - row "Concise label describing the \"on\" state, frontloaded NN/g ✅ label writing rule" [ref=e238]:
+            - cell "Concise label describing the \"on\" state, frontloaded" [ref=e239]
+            - cell "NN/g" [ref=e240]:
+              - link "NN/g" [ref=e241] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e242]
+            - cell "label writing rule" [ref=e243]:
+              - code [ref=e244]: label
+              - text: writing rule
+          - 'row "Clickable label + target ≥ 24px NN/g · IxDF ✅ Enclosing <label>, min-height: 24px" [ref=e245]':
+            - cell "Clickable label + target ≥ 24px" [ref=e246]
+            - cell "NN/g · IxDF" [ref=e247]:
+              - link "NN/g" [ref=e248] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+              - text: ·
+              - link "IxDF" [ref=e249] [cursor=pointer]:
+                - /url: https://ixdf.org/literature/topics/ui-design-patterns
+            - cell "✅" [ref=e250]
+            - 'cell "Enclosing <label>, min-height: 24px" [ref=e251]':
+              - text: Enclosing
+              - code [ref=e252]: <label>
+              - text: ","
+              - code [ref=e253]: "min-height: 24px"
+          - row "Binary only NN/g ✅ Otherwise radio/checkbox" [ref=e254]:
+            - cell "Binary only" [ref=e255]
+            - cell "NN/g" [ref=e256]:
+              - link "NN/g" [ref=e257] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/toggle-switch-guidelines/
+            - cell "✅" [ref=e258]
+            - cell "Otherwise radio/checkbox" [ref=e259]
+      - generic [ref=e260]:
+        - img [ref=e262]
+        - generic [ref=e265]:
+          - strong [ref=e266]: Contribute to this project
+          - paragraph [ref=e267]: This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.
+        - link "View on GitHub" [ref=e268] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+          - generic [ref=e269]: View on GitHub
+    - navigation "Table of contents / Table des matières" [ref=e270]:
+      - generic [ref=e271]: On this page
+      - link "States" [ref=e272] [cursor=pointer]:
+        - /url: "#etats"
+      - link "Checkbox or toggle?" [ref=e273] [cursor=pointer]:
+        - /url: "#checkbox-ou-toggle"
+      - link "Absolute rules" [ref=e274] [cursor=pointer]:
+        - /url: "#regles-absolues"
+      - link "Component tokens" [ref=e275] [cursor=pointer]:
+        - /url: "#tokens-de-composant"
+      - link "Implementation" [ref=e276] [cursor=pointer]:
+        - /url: "#implementation"
+      - link "UX Patterns Reference" [ref=e277] [cursor=pointer]:
+        - /url: "#ux-patterns-reference"
+  - contentinfo [ref=e278]:
+    - generic [ref=e279]:
+      - generic [ref=e280]:
+        - link "Agentica — Accueil" [ref=e281] [cursor=pointer]:
+          - /url: ../index.html
+          - img "Agentica" [ref=e282]
+        - link "Guilherme Negreiros" [ref=e283] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e284]
+          - text: Guilherme Negreiros
+      - generic [ref=e288]:
+        - generic [ref=e289]: Navigation
+        - link "Home" [ref=e290] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Why" [ref=e291] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e292] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Quality" [ref=e293] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "AI" [ref=e294] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e295]:
+        - generic [ref=e296]: Documentation
+        - link "Understand" [ref=e297] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Get started" [ref=e298] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Foundations" [ref=e299] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Components" [ref=e300] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e301] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Decisions" [ref=e302] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuity" [ref=e303] [cursor=pointer]:
+          - /url: ../continuite.html
+        - link "Changelog" [ref=e304] [cursor=pointer]:
+          - /url: ../changelog.html
+      - generic [ref=e305]:
+        - generic [ref=e306]: Explorer
+        - link "Figma library" [ref=e307] [cursor=pointer]:
+          - /url: ../resources.html
+        - link "Storybook" [ref=e308] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e309] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - link "Audit" [ref=e310] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "AI Brief" [ref=e311] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e312]:
+      - generic [ref=e313]: © 2026 Guilherme Negreiros
+      - generic [ref=e314]: Built with Claude Code.
+  - button "Retour en haut" [ref=e315] [cursor=pointer]:
+    - img [ref=e316]
+    - generic [ref=e318]: Top
+  - status [ref=e319]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | // Visual regressions for every component page (except button.html, already covered)
+  4  | const PAGES = [
+  5  |   'badge', 'banner', 'card', 'checkbox', 'code-block',
+  6  |   'icon', 'input', 'link', 'radio', 'segmented',
+  7  |   'table', 'tabs', 'toggle',
+  8  | ];
+  9  | 
+  10 | for (const name of PAGES) {
+  11 |   test.describe(`${name} — visual regressions`, () => {
+  12 |     for (const theme of ['light', 'dark']) {
+  13 |       test(`page ${name} — ${theme}`, async ({ page }) => {
+  14 |         await page.goto(`/components/${name}.html`);
+  15 |         await page.waitForLoadState('networkidle');
+  16 |         await page.evaluate((t) =>
+  17 |           document.documentElement.setAttribute('data-theme', t), theme
+  18 |         );
+> 19 |         await expect(page).toHaveScreenshot(`${name}-${theme}.png`, { fullPage: true });
+     |                            ^ Error: expect(page).toHaveScreenshot(expected) failed
+  20 |       });
+  21 |     }
+  22 |   });
+  23 | }
+  24 | 
+```
