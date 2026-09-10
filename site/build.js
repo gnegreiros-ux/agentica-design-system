@@ -134,8 +134,49 @@ function resolveRef(ref, data) {
   return ref.split('.').reduce((node, key) => node?.[key], data);
 }
 
+// Resolves a dotted ref against whichever tree it's rooted in (primitive.* vs
+// semantic.*), following {alias} chains until a literal $value is reached.
+// Needed by the floor()/ceil() density formulas below, whose sub-refs cross
+// between both trees (e.g. {semantic.space.density.factor.comfortable}
+// itself aliases to {primitive.density.factor.comfortable}).
+function resolveRefDeep(ref) {
+  let node = resolveRef(ref, ref.startsWith('semantic.') ? semanticData : primitives);
+  let value = node?.['$value'];
+  while (typeof value === 'string') {
+    const m = value.match(/^\{(.+)\}$/);
+    if (!m) break;
+    node = resolveRef(m[1], m[1].startsWith('semantic.') ? semanticData : primitives);
+    value = node?.['$value'];
+  }
+  return value;
+}
+
+// ADR-025 "density math" tokens: floor({space} * {factor} / {grid-unit}) * {grid-unit}
+// (compact) or the ceil() equivalent (comfortable) — ties a spacing value to the
+// density scale while guaranteeing a 4px-aligned result. resolveValue's single-ref
+// alias branch can't evaluate this compound formula; handled here instead.
+const DENSITY_FORMULA_RE = /^(floor|ceil)\(\{([^}]+)\}\s*\*\s*\{([^}]+)\}\s*\/\s*\{([^}]+)\}\)\s*\*\s*\{([^}]+)\}$/;
+function resolveDensityFormula(val) {
+  const m = val.match(DENSITY_FORMULA_RE);
+  if (!m) return null;
+  const [, fn, numRef, factorRef, gridRefA, gridRefB] = m;
+  const numValue = String(resolveRefDeep(numRef) ?? '');
+  const numMatch = numValue.match(/^([\d.]+)(\D*)$/);
+  if (!numMatch) return null;
+  const num = parseFloat(numMatch[1]);
+  const unit = numMatch[2];
+  const factor = parseFloat(resolveRefDeep(factorRef));
+  const gridA = parseFloat(resolveRefDeep(gridRefA));
+  const gridB = parseFloat(resolveRefDeep(gridRefB));
+  if ([num, factor, gridA, gridB].some(Number.isNaN)) return null;
+  const result = Math[fn](num * factor / gridA) * gridB;
+  return `${result}${unit}`;
+}
+
 function resolveValue(val, data) {
   if (typeof val !== 'string') return String(val);
+  const density = resolveDensityFormula(val);
+  if (density !== null) return density;
   const m = val.match(/^\{(.+)\}$/);
   if (!m) return val;
   const node = resolveRef(m[1], data);
