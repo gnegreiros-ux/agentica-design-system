@@ -4799,9 +4799,9 @@ function buildTypography() {
 // ─── PAGE: ICONS FOUNDATION ─────────────────────────────────────────────────
 function buildIconsFoundation() {
   const sizes = [
-    ['inline',  SEM['icon-size-inline']  || '16px', SEM['icon-strokeWidth-inline']  || '2',    '<span class="lang-fr">Dans un texte courant, un label</span><span class="lang-en">In body text, a label</span>'],
-    ['control', SEM['icon-size-control'] || '20px', SEM['icon-strokeWidth-control'] || '1.75', '<span class="lang-fr">Dans un bouton, un input, un badge</span><span class="lang-en">In a button, input, or badge</span>'],
-    ['nav',     SEM['icon-size-nav']     || '24px', SEM['icon-strokeWidth-nav']     || '1.5',  '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
+    ['inline',  SEM['icon-size-inline']  || '16px', SEM['icon-strokeWidth-inline']  || '1',    '<span class="lang-fr">Dans un texte courant, un label</span><span class="lang-en">In body text, a label</span>'],
+    ['control', SEM['icon-size-control'] || '20px', SEM['icon-strokeWidth-control'] || '1.5',  '<span class="lang-fr">Dans un bouton, un input, un badge</span><span class="lang-en">In a button, input, or badge</span>'],
+    ['nav',     SEM['icon-size-nav']     || '24px', SEM['icon-strokeWidth-nav']     || '1.75', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
   ];
   const sizeRows = sizes.map(([name, val, sw, intent]) =>
     `<tr class="token-row"><td><code>--agtc-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--agtc-font-mono)">${val}</td><td style="font-family:var(--agtc-font-mono)">${sw}</td><td>${intent}</td></tr>`

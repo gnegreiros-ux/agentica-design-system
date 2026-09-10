@@ -135,7 +135,7 @@ in its default context.
 | Accessible label required when the icon carries the information | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Absolute rule — `label` → `aria-label` |
 | Decorative icons hidden from AT (`aria-hidden`) | [NN/g](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `decorative` → `aria-hidden="true"` |
 | Consistent, non-misleading meaning (same icon = same meaning everywhere) | [IF — transparency](https://catalogue.projectsbyif.com/) | ✅ | Semantic consistency enforced by the single Lucide library (ADR-022) |
-| Icon legibility at small render sizes (optical stroke correction) | [NN/g — icons & indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | `strokeWidth.inline`/`.control` thicker than the native Lucide weight — ADR-091 |
+| Icon legibility at small render sizes (optical stroke correction) | [NN/g — icons & indicators](https://www.nngroup.com/articles/design-pattern-guidelines/) | ✅ | Stroke weight scales per size — thinner at `inline` (1) up to bolder at `feature` (2) — diverging from Lucide's single native weight (1.5) — ADR-091 |
 
 ---
 
