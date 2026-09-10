@@ -3135,6 +3135,92 @@ titleText.characters = 'BEST PRACTICES';
      `badge` and `button`) is 8.47:1 — comfortably past WCAG AA (4.5:1) for normal text.
 2. `footer` → a `doc/footer` instance (same pattern)
 
+> **2026-09-08 incident — `button`'s real master (`380:2`) went missing from the entire file**
+> (confirmed absent from all 25 pages via `findAllWithCriteria({types:['COMPONENT_SET','COMPONENT']})`,
+> not just misplaced) partway through an unrelated session; root cause not identified. The user
+> recovered it via Figma's own version history / "Restore Component", not via any agent script —
+> an agent cannot re-create a deleted master by guessing its variant/property structure, and must
+> not try. The same audit found **two more pages with an empty master search**: `segmented` and
+> `top-nav` — both still unresolved as of this note, same recommended fix (version history).
+> Once the user manually rebuilt `button`'s `Main-component frame` body from the recovered
+> `380:2`, it was re-verified against `badge` (the file's reference page for this frame): real
+> `ComponentSet` embedded directly inside a `"[component] (copy for display)"` wrapper, label
+> text `Regular` weight bound to `semantic/color/text/secondary` (not `Bold`/brand-teal — the
+> exact regression called out earlier in this section) — this part is correct on both and not
+> the `header-row`/`row-label` naming, which belongs to `Main frame`'s showcase table, a
+> different frame, see above. **The label *group* names still matter — corrected by the user
+> the same day**: a first pass judged `button`'s generic `Frame 1`/`Frame 2` acceptable because
+> `badge` used the same generic names — wrong; the user then renamed both on `button`
+> (`Frame 1` → `Variant types`, `Frame 2` → `State types`) and the fix was mirrored onto `badge`
+> (`Frame 1` → `Variant types`, `Frame 2` → `Size types`). **Rule: every label-group frame is
+> named `"[Axis] types"`, where `[Axis]` is that ComponentSet's real variant property name for
+> the axis it lists** (`Variant`/`State` on `button`, `Variant`/`Size` on `badge` — never a
+> generic `Frame 1`/`Frame 2`, and never copy one component's axis names onto another's).
+>
+> **Known file-wide inconsistency, not yet resolved**: `checkbox`, `feature-card`, `icon`,
+> `input`, `radio`, `tabs`, `toggle`, `top-nav` all still use the **pre-§28 pattern** — the real
+> master `ComponentSet` sits hidden off-canvas (`x: 8000`, named `Composant principal` on most
+> of them) and `Main-component frame` shows a separate instance-based grid instead of the master
+> itself. `button` and `badge` are the only two pages on the newer pattern (master embedded
+> directly, visible, "live and editable" per §28.1's stated purpose of this frame). Migrating
+> the other 8 to match is a real, sizeable follow-up — confirm with the user before starting,
+> given the file-wide scope and the master-loss risk just described.
+
+> **2026-09-08/09 — all 9 pre-§28 pages migrated** (`checkbox`, `radio`, `toggle`, `tabs`,
+> `feature-card`, `icon`, `input` on 09-08; `segmented` and `top-nav` on 09-09 once the user
+> recovered their masters via Figma version history — both confirmed healthy first: real
+> `ComponentSet` present, 0 broken instances out of 124 (`segmented`)/179 (`top-nav`)). For each: the real master `ComponentSet`
+> was moved out of its off-canvas `x: 8000` holding spot into a new `wrapper` frame inside
+> `Main-component frame`'s `body`, alongside a heading `TEXT` and one label frame per variant
+> axis, each named `"[Axis] types"` (`Checked types`/`State types` on checkbox, `Selected
+> types`/`State types` on radio, `Checked types`/`State types` on toggle, `State types` only on
+> tabs/feature-card/icon — single-axis components get one label frame, not two). The old
+> instance-based display grid on each page was renamed `_OLD_... (superseded by embedded
+> master, 2026-09-08)` and moved to the page root, off-canvas (never left inside the old
+> auto-layout `body` — see the `appendChild`-onto-page-then-offset gotcha two paragraphs up,
+> which bit this exact migration once on `checkbox` before being caught and fixed the same way).
+>
+> **Real gotcha hit twice, worth the reminder**: deriving a row's label `y` from *any* member of
+> that row breaks the moment one variant in the row is visually taller than its siblings (a
+> `Focus` ring, an `Error` message line) — Figma's auto-grid still top-aligns the row at a
+> consistent `y` for most cells, but a taller cell can shift its own `y` up or down slightly to
+> stay centered, so a row can show 2 (or more) distinct `y` values instead of one. Hit on
+> `toggle` (`Focus` cells at `y=0`/`y=54` vs `y=6`/`y=60` for the rest of each row) and on
+> `input`'s `Error` row (extra height for the inline error message). Fix: derive each row's
+> label `y` from one **specific, consistent reference column** (e.g. the first column value, or
+> whichever column has every row populated) — never from "whatever `x`/`y` groups the raw
+> variant list falls into," which silently produces phantom extra rows sharing near-identical
+> label text.
+>
+> Verified after migrating all 9: every page's real master still resolves (`removed !== true`,
+> correct `parent`), and every `INSTANCE` on every page (174/78/138/93/121/86/147/124/179
+> respectively) still returns a real `getMainComponentAsync()` — zero broken links introduced
+> by the move.
+>
+> **`top-nav` doesn't fit the row×column grid shape at all — a third label layout, not a bug.**
+> Its master lays out all 6 variants in a single row (`y: 0` for every one), mixing both axes
+> together with an uneven split (`Type=Tab` has 4 `State`s, `Type=CTA` only 2) — there is no
+> second axis to put in a row-label column. Pattern used instead: two stacked single-row label
+> frames, no row-label column at all — `Type types` (one `Bold` label per **group** of columns
+> sharing a `Type`, positioned at that group's first column's `x`) above `State types` (one
+> `Regular` label per column, same as the single-axis case). Use this compound-header shape,
+> not a forced row×column grid, whenever a component's master lays out every variant at the
+> same `y` regardless of how many variant properties it has.
+>
+> **`segmented`'s `Main-component frame` needed to grow past 1440px — a genuine content-driven
+> exception, not a mistake to "fix" back to 1440.** Its real master is 1444px wide on its own
+> (the `Tabs=5` row's `State=Disabled` column pushes furthest right) — before any page margin or
+> row-label column is added, it already exceeds a 1440 frame. The gaps between the master's own
+> `State` columns (`Default` at `x:0`, `Focused` at `x:496`, `Disabled` at `x:992`) are real,
+> designer-set spacing on the live master, not something an agent should shrink to make it fit —
+> that would be editing the actual product component to solve a documentation-page layout
+> problem. Fixed by widening `segmented`'s `Main-component frame` alone to `1600` (resizing its
+> `doc/frame-header`/`body`/`doc/footer` children to match, all three were `FILL`-sized to the
+> old 1440), and re-deriving `Spec frame`'s `x` from the new width to preserve the mandatory
+> 360px gap (`3760`, not the usual `3600`). Every other page stays at exactly `1440`; check a
+> new page's real master width against `1440 - (page margin + row-label width)` before assuming
+> the standard width fits — if it doesn't, widen the frame, don't shrink the master.
+
 **`Spec frame`** body/footer, verified against `button`'s real live structure (2026-08-29 —
 the first `badge` build got this wrong: everything was dumped as flat siblings directly into
 `body`, no per-subsection wrapper, exhibits laid out `WRAP`/side-by-side instead of stacked):
