@@ -38,7 +38,8 @@ body{
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
-.storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+.storybook-btn:visited,
+.figma-btn:visited          {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
 .footer-links a:visited    {color:rgba(255,255,255,.75);color:var(--agtc-semantic-color-text-on-dark-secondary)}
 .audit-footer-link:visited {color:rgba(255,255,255,.52);color:var(--agtc-semantic-color-text-on-dark-muted)}
 /* Dark mode — valeurs résolues pour Safari (var() ignoré dans :visited) */
@@ -46,11 +47,12 @@ body{
 [data-theme="dark"] .toc a:visited,
 [data-theme="dark"] .nav-card:visited,
 [data-theme="dark"] .github-btn:visited,
-[data-theme="dark"] .storybook-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
-.github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
-.github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.github-btn:active,.storybook-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.github-btn:focus-visible,.storybook-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+[data-theme="dark"] .storybook-btn:visited,
+[data-theme="dark"] .figma-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
+.github-btn,.storybook-btn,.figma-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
+.github-btn:hover,.storybook-btn:hover,.figma-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.github-btn:active,.storybook-btn:active,.figma-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.github-btn:focus-visible,.storybook-btn:focus-visible,.figma-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:var(--agtc-header-height,64px);min-height:calc(100vh - var(--agtc-header-height,64px))}
@@ -481,6 +483,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}
+  .figma-btn{display:none}
   .lang-switch{margin-left:auto !important}
   .menu-toggle{flex-shrink:0}
   .nav-grid{grid-template-columns:repeat(2,1fr)}
@@ -2031,7 +2034,7 @@ body[data-context="marketing"] .role-card::after{
   .menu-btn{display:inline-flex;align-items:center}
   .site-header-tools{order:2;margin-left:auto}
   .menu-btn{order:3}
-  .site-header-tools .github-btn,.site-header-tools .storybook-btn{display:none}
+  .site-header-tools .github-btn,.site-header-tools .storybook-btn,.site-header-tools .figma-btn{display:none}
   .site-nav{
     position:fixed;
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;

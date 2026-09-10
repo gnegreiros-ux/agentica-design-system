@@ -134,8 +134,49 @@ function resolveRef(ref, data) {
   return ref.split('.').reduce((node, key) => node?.[key], data);
 }
 
+// Resolves a dotted ref against whichever tree it's rooted in (primitive.* vs
+// semantic.*), following {alias} chains until a literal $value is reached.
+// Needed by the floor()/ceil() density formulas below, whose sub-refs cross
+// between both trees (e.g. {semantic.space.density.factor.comfortable}
+// itself aliases to {primitive.density.factor.comfortable}).
+function resolveRefDeep(ref) {
+  let node = resolveRef(ref, ref.startsWith('semantic.') ? semanticData : primitives);
+  let value = node?.['$value'];
+  while (typeof value === 'string') {
+    const m = value.match(/^\{(.+)\}$/);
+    if (!m) break;
+    node = resolveRef(m[1], m[1].startsWith('semantic.') ? semanticData : primitives);
+    value = node?.['$value'];
+  }
+  return value;
+}
+
+// ADR-025 "density math" tokens: floor({space} * {factor} / {grid-unit}) * {grid-unit}
+// (compact) or the ceil() equivalent (comfortable) — ties a spacing value to the
+// density scale while guaranteeing a 4px-aligned result. resolveValue's single-ref
+// alias branch can't evaluate this compound formula; handled here instead.
+const DENSITY_FORMULA_RE = /^(floor|ceil)\(\{([^}]+)\}\s*\*\s*\{([^}]+)\}\s*\/\s*\{([^}]+)\}\)\s*\*\s*\{([^}]+)\}$/;
+function resolveDensityFormula(val) {
+  const m = val.match(DENSITY_FORMULA_RE);
+  if (!m) return null;
+  const [, fn, numRef, factorRef, gridRefA, gridRefB] = m;
+  const numValue = String(resolveRefDeep(numRef) ?? '');
+  const numMatch = numValue.match(/^([\d.]+)(\D*)$/);
+  if (!numMatch) return null;
+  const num = parseFloat(numMatch[1]);
+  const unit = numMatch[2];
+  const factor = parseFloat(resolveRefDeep(factorRef));
+  const gridA = parseFloat(resolveRefDeep(gridRefA));
+  const gridB = parseFloat(resolveRefDeep(gridRefB));
+  if ([num, factor, gridA, gridB].some(Number.isNaN)) return null;
+  const result = Math[fn](num * factor / gridA) * gridB;
+  return `${result}${unit}`;
+}
+
 function resolveValue(val, data) {
   if (typeof val !== 'string') return String(val);
+  const density = resolveDensityFormula(val);
+  if (density !== null) return density;
   const m = val.match(/^\{(.+)\}$/);
   if (!m) return val;
   const node = resolveRef(m[1], data);
@@ -752,7 +793,8 @@ body{
 .toc a:visited,
 .nav-card:visited,
 .github-btn:visited,
-.storybook-btn:visited     {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
+.storybook-btn:visited,
+.figma-btn:visited          {color:#646464;color:var(--agtc-semantic-color-text-secondary)}
 .footer-links a:visited    {color:rgba(255,255,255,.75);color:var(--agtc-semantic-color-text-on-dark-secondary)}
 .audit-footer-link:visited {color:rgba(255,255,255,.52);color:var(--agtc-semantic-color-text-on-dark-muted)}
 /* Dark mode — valeurs résolues pour Safari (var() ignoré dans :visited) */
@@ -760,11 +802,12 @@ body{
 [data-theme="dark"] .toc a:visited,
 [data-theme="dark"] .nav-card:visited,
 [data-theme="dark"] .github-btn:visited,
-[data-theme="dark"] .storybook-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
-.github-btn,.storybook-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
-.github-btn:hover,.storybook-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.github-btn:active,.storybook-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
-.github-btn:focus-visible,.storybook-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
+[data-theme="dark"] .storybook-btn:visited,
+[data-theme="dark"] .figma-btn:visited     {color:#a4abb8;color:var(--agtc-semantic-color-text-secondary)}
+.github-btn,.storybook-btn,.figma-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--agtc-semantic-radius-control);color:var(--agtc-semantic-color-text-secondary);text-decoration:none;transition:color .12s,background .12s;flex-shrink:0}
+.github-btn:hover,.storybook-btn:hover,.figma-btn:hover{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.github-btn:active,.storybook-btn:active,.figma-btn:active{background:var(--agtc-semantic-color-background-subtle);color:var(--agtc-semantic-color-text-primary)}
+.github-btn:focus-visible,.storybook-btn:focus-visible,.figma-btn:focus-visible{outline:2px solid var(--agtc-semantic-color-border-focus);outline-offset:2px}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
 .layout{display:flex;margin-top:var(--agtc-header-height,64px);min-height:calc(100vh - var(--agtc-header-height,64px))}
@@ -1195,6 +1238,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
   .logo-name{max-width:90px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .storybook-btn{display:none}
   .github-btn{display:none}
+  .figma-btn{display:none}
   .lang-switch{margin-left:auto !important}
   .menu-toggle{flex-shrink:0}
   .nav-grid{grid-template-columns:repeat(2,1fr)}
@@ -2745,7 +2789,7 @@ body[data-context="marketing"] .role-card::after{
   .menu-btn{display:inline-flex;align-items:center}
   .site-header-tools{order:2;margin-left:auto}
   .menu-btn{order:3}
-  .site-header-tools .github-btn,.site-header-tools .storybook-btn{display:none}
+  .site-header-tools .github-btn,.site-header-tools .storybook-btn,.site-header-tools .figma-btn{display:none}
   .site-nav{
     position:fixed;
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
@@ -3379,6 +3423,9 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     </a>
     <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
       ${icon('github', 18)}
+    </a>
+    <a href="${FIGMA_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer" class="figma-btn" aria-label="Figma — Librairie Agentica sur Figma Community">
+      ${icon('figma', 18)}
     </a>
   </div>
 </header>
@@ -8020,7 +8067,7 @@ function buildChangelog() {
   // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
   const versions = [
     {
-      id: 'v0-3-0', ver: 'v0.3.0', date: '2026-07-22', badge: {fr:'Non lancée',en:'Unreleased'},
+      id: 'v0-3-0', ver: 'v0.3.0', date: '2026-09-10', badge: {fr:'Communauté Figma',en:'Figma Community'},
       sections: [
         { fr:'Gouvernance', en:'Governance', items:[
           {fr:'Protection de branche configurée sur <code>main</code> et <code>develop</code> : PR obligatoire, check <code>lang-audit</code> requis, force-push et suppression bloqués — 0 approbation exigée tant que le dépôt a un seul mainteneur (auto-approbation impossible sur GitHub), avec bascule prévue vers 1/2 approbations dès l\'arrivée d\'un second contributeur (ADR-076)',en:'Branch protection configured on <code>main</code> and <code>develop</code>: PR required, <code>lang-audit</code> check required, force-push and deletion blocked — 0 required approvals while the repository has a single maintainer (GitHub cannot self-approve a PR), with a planned move to 1/2 approvals once a second contributor joins (ADR-076)'},
@@ -8035,8 +8082,12 @@ function buildChangelog() {
           {fr:'Licence de la future Community File tranchée : CC BY 4.0, cohérente avec le MIT du code (ADR-081)',en:'Future Community File licence decided: CC BY 4.0, consistent with the code\'s MIT licence (ADR-081)'},
           {fr:'Composants Brand/logo séparés dans un fichier Figma dédié, publié comme librairie et consommé par instances cross-file — la page logo n\'a plus besoin d\'être exclue manuellement du futur Community File (ADR-082)',en:'Brand/logo components separated into a dedicated Figma file, published as a library and consumed via cross-file instances — the logo page no longer needs manual exclusion from the future Community File (ADR-082)'},
           {fr:'Script d\'audit consolidé <code>scripts/figma/audit-figma-file.js</code> (7 checks : bindings orphelins, propriétés non liées, lineHeight cassé, clipping en cascade, débordements, références obsolètes après renommage, liens internes cassés) — exécution devenue obligatoire avant la fin de toute session Figma mutative, pas seulement aux déclencheurs existants du §22 (ADR-090)',en:'Consolidated audit script <code>scripts/figma/audit-figma-file.js</code> (7 checks: orphaned bindings, unbound properties, broken lineHeight, cascading clipping, overflows, stale references after a rename, broken internal links) — now mandatory before ending any mutating Figma session, not just the existing §22 triggers (ADR-090)'},
+          {fr:'Librairies Figma publiées sur Figma Community : <code>Agentica</code> (design system) et <code>Agentica | Lucide Icons</code> (3 449 icônes, taguée v1.1.0) — <code>Agentica | Brand</code> reste privée par décision explicite, vérifiée sans aucun logo imbriqué dans un composant publié',en:'Figma libraries published to Figma Community: <code>Agentica</code> (design system) and <code>Agentica | Lucide Icons</code> (3,449 icons, tagged v1.1.0) — <code>Agentica | Brand</code> stays private by explicit decision, verified with no logo nested inside any published component'},
+          {fr:'Les 43 pages du fichier <code>Agentica | Lucide Icons</code> (GETTING STARTED + 42 catégories) alignées sur le standard visuel du fichier principal : canvas gris, <code>Main frame</code> unique, en-tête sombre, footer REFERENCES avec de vrais liens hypertexte (lucide.dev, dépôt source, ADR-022, <code>agtc-icon.js</code>) au lieu des placeholders jamais finalisés',en:'All 43 pages of the <code>Agentica | Lucide Icons</code> file (GETTING STARTED + 42 categories) aligned to the main file\'s visual standard: gray canvas, single <code>Main frame</code>, dark header, REFERENCES footer with real hyperlinks (lucide.dev, source repo, ADR-022, <code>agtc-icon.js</code>) instead of never-finalized placeholders'},
+          {fr:'ADR-022 vérifié à jour (la licence Lucide est ISC depuis le 2026-07-31, aucune correction nécessaire côté dépôt) ; texte du fichier Figma corrigé pour refléter cet état (il décrivait encore la correction comme restant à faire) ; nettoyage de contenu hérité — 2 instances <code>doc/property-row</code> avec une valeur invisible erronée et 2 pages (Sports, Sustainability) portant chacune un doublon exact de leur en-tête et grille, tous déplacés en <code>_trash</code> plutôt que supprimés',en:'ADR-022 verified up to date (Lucide\'s license has been ISC since 2026-07-31, nothing to fix on the repo side); the Figma file\'s own text corrected to match (it still described the fix as pending); legacy content cleanup — 2 <code>doc/property-row</code> instances with an erroneous invisible value and 2 pages (Sports, Sustainability) each carrying an exact duplicate of their header and grid, all moved to <code>_trash</code> rather than deleted'},
         ]},
         { fr:'Composants', en:'Components', items:[
+          {fr:'Contrat de largeur pour les contrôles interactifs (ADR-094) : <code>semantic.size.control.{min-width,max-width}</code> (64px / 480px) — <code>agtc-input.js</code> désormais borné plutôt que de s\'étirer sans limite ou de descendre sous une largeur utilisable. Valeurs choisies après recherche (Baymard, NN/g, WCAG 1.4.8, Carbon Design System)',en:'Width contract for interactive controls (ADR-094): <code>semantic.size.control.{min-width,max-width}</code> (64px / 480px) — <code>agtc-input.js</code> now bounded instead of stretching unbounded or shrinking below a usable width. Values chosen after research (Baymard, NN/g, WCAG 1.4.8, Carbon Design System)'},
           {fr:'<code>agtc-image</code> — nouveau Web Component : <code>width</code>/<code>height</code> obligatoires (anti-CLS), <code>loading="lazy"</code> par défaut avec option <code>priority</code>, support WebP via <code>&lt;picture&gt;</code>, skeleton de chargement optionnel, repli si l\'image échoue (ADR-083)',en:'<code>agtc-image</code> — new Web Component: required <code>width</code>/<code>height</code> (anti-CLS), <code>loading="lazy"</code> by default with a <code>priority</code> opt-in, WebP support via <code>&lt;picture&gt;</code>, optional loading skeleton, fallback on failed load (ADR-083)'},
           {fr:'Les 9 illustrations de la home page migrées vers <code>agtc-image</code> ; composant <code>agtc-illustration</code> distinct abandonné (aurait fait doublon une fois le wrapper allégé) — ratio anti-CLS corrigé au passage (768×512, vrai ratio 3:2 des PNG sources) (ADR-084)',en:'All 9 home page illustrations migrated to <code>agtc-image</code>; a separate <code>agtc-illustration</code> component was dropped (would have duplicated it once the wrapper was scoped down) — anti-CLS ratio corrected along the way (768×512, the source PNGs\' true 3:2 ratio) (ADR-084)'},
           {fr:'<code>agtc-top-nav</code> confirmé comme architecture "mix" (comme <code>agtc-table</code>/<code>banner</code>/<code>code-block</code>) : le site utilise du HTML <code>.site-nav</code> écrit à la main plutôt que le composant réel, intentionnellement — un bloc de code mort pour un menu mobile qui ne s\'exécutait jamais supprimé au passage (ADR-087)',en:'<code>agtc-top-nav</code> confirmed as "mix" architecture (like <code>agtc-table</code>/<code>banner</code>/<code>code-block</code>): the site intentionally uses hand-written <code>.site-nav</code> HTML rather than the real component — a dead mobile-menu code block that never ran removed along the way (ADR-087)'},
@@ -8048,7 +8099,8 @@ function buildChangelog() {
           {fr:'Décision de couleurs du logo (<code>logo-black</code>/<code>logo-gray</code>) formalisée rétroactivement dans un ADR — la contrainte existait déjà dans le code mais n\'était jamais couverte par une décision documentée (ADR-088)',en:'Logo colour decision (<code>logo-black</code>/<code>logo-gray</code>) formalized retroactively in an ADR — the constraint already existed in code but was never covered by a documented decision (ADR-088)'},
         ]},
         { fr:'Site', en:'Site', items:[
-          {fr:'Nouvelle page <code>resources.html</code> (Mode Marketing) : promotion de la librairie Figma Agentica — fonctionnalités, étapes pour dupliquer le fichier, rappel de licence CC BY 4.0 (ADR-081)',en:'New <code>resources.html</code> page (Marketing Mode): promotes the Agentica Figma library — features, steps to duplicate the file, CC BY 4.0 licence reminder (ADR-081)'},
+          {fr:'Nouvelle page <code>resources.html</code> (Mode Marketing) : promotion de la librairie Figma Agentica — fonctionnalités, étapes pour dupliquer le fichier, rappel de licence CC BY 4.0 (ADR-081) ; mise à jour avec l\'URL réelle de la librairie Figma Community (remplace le placeholder) et une note de dépendance vers <code>Agentica | Lucide Icons</code>, publiée séparément',en:'New <code>resources.html</code> page (Marketing Mode): promotes the Agentica Figma library — features, steps to duplicate the file, CC BY 4.0 licence reminder (ADR-081); updated with the real Figma Community library URL (replacing the placeholder) and a dependency note pointing to the separately published <code>Agentica | Lucide Icons</code>'},
+          {fr:'Icône Figma ajoutée dans la barre d\'outils du header (à côté de GitHub et Storybook), pointant vers la librairie principale sur Figma Community',en:'Figma icon added to the header toolbar (next to GitHub and Storybook), linking to the main library on Figma Community'},
           {fr:'Section « Concevoir dans Figma, construire en code » ajoutée à <code>get-started.html</code> ; liens vers la librairie Figma ajoutés à <code>documentation.html</code>, au menu principal et au footer partagé',en:'"Design in Figma, build in code" section added to <code>get-started.html</code>; links to the Figma library added to <code>documentation.html</code>, the main nav menu and the shared footer'},
           {fr:'<code>sitemap.xml</code> : 6 pages Marketing historiques (<code>pourquoi</code>/<code>architecture</code>/<code>qualite</code>/<code>ia</code>/<code>documentation</code>/<code>continuite</code>) qui n\'y figuraient jamais, ajoutées avec <code>resources.html</code>',en:'<code>sitemap.xml</code>: 6 historical Marketing pages (<code>pourquoi</code>/<code>architecture</code>/<code>qualite</code>/<code>ia</code>/<code>documentation</code>/<code>continuite</code>) that were never listed there, added along with <code>resources.html</code>'},
         ]},
