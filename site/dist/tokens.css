@@ -443,6 +443,8 @@
   --agtc-primitive-space-20: 80px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-30: 120px;
+  --agtc-primitive-space-120: 480px;
+  --agtc-primitive-space-160: 640px;
 
   /* ── Semantic tokens — UX intentions ── */
   --agtc-semantic-color-action-primary: #007a68;
@@ -550,6 +552,9 @@
   --agtc-semantic-space-comfortable-control-gap: ceil({primitive.space.2} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
   --agtc-semantic-space-comfortable-layout-section: ceil({primitive.space.8} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
   --agtc-semantic-space-comfortable-layout-component: ceil({primitive.space.5} * {semantic.space.density.factor.comfortable} / {primitive.density.grid-unit}) * {primitive.density.grid-unit};
+  --agtc-semantic-size-control-min-width: 64px;
+  --agtc-semantic-size-control-max-width: 480px;
+  --agtc-semantic-size-control-max-width-multiline: 640px;
   --agtc-semantic-radius-control-tight: 2px;
   --agtc-semantic-radius-control: 6px;
   --agtc-semantic-radius-card: 10px;
