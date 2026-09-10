@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 22 Jul 2026 18:31:09 GMT
+ * Generated on Thu, 10 Sep 2026 12:30:54 GMT
  */
 
 :root {
@@ -445,6 +445,8 @@
   --agtc-primitive-space-20: 80px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-30: 120px;
+  --agtc-primitive-space-120: 480px;
+  --agtc-primitive-space-160: 640px;
   --agtc-primitive-fontSize-xs: 0.75rem;
   --agtc-primitive-fontSize-sm: 0.875rem;
   --agtc-primitive-fontSize-base: 1rem;
@@ -482,6 +484,10 @@
   --agtc-primitive-iconSize-md: 20px;
   --agtc-primitive-iconSize-lg: 24px;
   --agtc-primitive-iconSize-xl: 32px;
+  --agtc-primitive-strokeWidth-sm: 1;
+  --agtc-primitive-strokeWidth-md: 1.5;
+  --agtc-primitive-strokeWidth-lg: 1.75;
+  --agtc-primitive-strokeWidth-xl: 2;
   --agtc-primitive-density-factor-normal: 1;
   --agtc-primitive-density-factor-comfortable: 1.25;
   --agtc-primitive-density-factor-compact: 0.75;

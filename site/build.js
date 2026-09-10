@@ -93,7 +93,7 @@ function parseMd(text) {
 
 // ─── LUCIDE ICONS ─────────────────────────────────────────────────────────
 const lucideIcons = require('lucide');
-function icon(name, size = 24, color = 'currentColor') {
+function icon(name, size = 24, color = 'currentColor', strokeWidth = 1.5) {
   const key = name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
   const data = lucideIcons[key];
   if (!data) return '';
@@ -101,7 +101,7 @@ function icon(name, size = 24, color = 'currentColor') {
     const a = Object.entries(attrs || {}).map(([k, v]) => `${k}="${v}"`).join(' ');
     return `<${tag} ${a}/>`;
   }).join('');
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${children}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${children}</svg>`;
 }
 
 function storybookIcon(size = 18) {
@@ -1519,13 +1519,14 @@ details[open] .changelog-chevron{transform:rotate(180deg)}
 [data-context="marketing"] .kpi-card{
   padding:var(--agtc-semantic-space-comfortable-layout-component);
 }
-/* Icônes de card — 32px en contexte Marketing (semantic.icon.size.feature) */
+/* Icônes de card — 32px en contexte Marketing (semantic.icon.size.feature / strokeWidth.feature, ADR-091) */
 /* tool-card-icon exclus : cartes compactes horizontales → icon-size-nav (24px) dans tous contextes */
 [data-context="marketing"] .audience-icon svg,
 [data-context="marketing"] .info-card-icon svg,
 [data-context="marketing"] .nav-card-icon svg{
   width:var(--agtc-semantic-icon-size-feature);
   height:var(--agtc-semantic-icon-size-feature);
+  stroke-width:var(--agtc-semantic-icon-strokeWidth-feature);
 }
 
 /* ── SECTION-SECONDARY en contexte Marketing — uniformisation des niveaux ── */
@@ -2364,7 +2365,7 @@ body.page{
 
 /* Boutons V2 */
 .cta-btn{
-  display:inline-flex;align-items:center;min-height:44px;
+  display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap,8px);min-height:44px;
   padding:var(--agtc-component-button-primary-padding-y,11px) var(--agtc-component-button-primary-padding-x,24px);
   border:1.5px solid transparent;
   border-radius:var(--agtc-component-button-primary-radius,var(--agtc-semantic-radius-control,8px));
@@ -3197,6 +3198,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // appId = 6a1c1e665ec5fe8fc0540983; stable permalink verified (HTTP 200).
 const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
 const SITE_URL      = 'https://agentica.design';
+const FIGMA_COMMUNITY_URL = 'https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system';
+const FIGMA_LUCIDE_COMMUNITY_URL = 'https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
   const docTitle = pageTitle || `${title} — Agentica`;
@@ -3255,6 +3258,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
+      <a href="${base}resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
       <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
@@ -3352,6 +3356,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
         </div>
         <div>
           <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="${base}resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
           <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
           <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="${base}audit.html">Audit</a>
@@ -3838,6 +3843,7 @@ function sidebarSite(base, current) {
     ['decisions/index.html', '<span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span>'],
     ['agents/index.html', '<span class="lang-fr">Agents</span><span class="lang-en">Agents</span>'],
     ['continuite.html', '<span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span>'],
+    ['resources.html', '<span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span>'],
   ];
   const a = (href, label) => `<a href="${base}${href}"${current === href ? ' class="active" aria-current="page"' : ''}>${label}</a>`;
   // Returns only the inner content — layout() adds the <aside> (same as sidebarFoundations/sidebarComponents)
@@ -4158,6 +4164,7 @@ function buildDocumentation() {
         <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
         <p><span class="lang-fr">Les outils et ressources du système.</span><span class="lang-en">System tools and resources.</span></p>
         <ul>
+          <li><a href="resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a></li>
           <li><a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a></li>
           <li><a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           <li><a href="audit.html">Audit</a></li>
@@ -4168,6 +4175,129 @@ function buildDocumentation() {
 </section>
 `;
   write(path.join(DIST, 'documentation.html'), layout({ title: 'Documentation', pageTitle: 'Documentation — Agentica Portal', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'documentation.html'), body }));
+}
+
+// ─── PAGE: RESOURCES (Figma design kit) ─────────────────────────────────────
+function buildResources() {
+  const REPO = 'https://github.com/gnegreiros-ux/agentica-design-system';
+
+  const features = [
+    ['layers', 'Trois niveaux de tokens, vraiment liés', 'Three token levels, actually wired up',
+      'Primitif → sémantique → composant : les mêmes tokens que le code, bindés à de vraies Variables Figma — jamais une couleur ou un espacement codé en dur.',
+      'Primitive → semantic → component: the same tokens as the code, bound to real Figma Variables — never a hardcoded color or spacing value.'],
+    ['component', 'Composants qui matchent le code, variante pour variante', 'Components that match the code, variant for variant',
+      'Chaque ComponentSet expose exactement les mêmes variantes, états et propriétés que son équivalent <code>agtc-*</code> — jamais plus, jamais moins.',
+      'Every ComponentSet exposes exactly the same variants, states and properties as its <code>agtc-*</code> counterpart — never more, never less.'],
+    ['moon-star', 'Mode sombre natif', 'Dark mode built in',
+      'Chaque composant existe en light et en dark, sur les mêmes Variables — pas un thème rapporté après coup.',
+      'Every component exists in light and dark, on the same Variables — not a theme bolted on afterward.'],
+    ['shield-check', 'Accessible par défaut', 'Accessible by default',
+      'Contrastes vérifiés, focus visible à deux couleurs, structure lisible aux lecteurs d\'écran — WCAG 2.2 AA de base, pas une option.',
+      'Verified contrast, two-color visible focus, screen-reader-legible structure — WCAG 2.2 AA by default, not an option.'],
+    ['git-branch', 'Gouverné, jamais improvisé', 'Governed, never improvised',
+      'Le code fait foi ; Figma est audité en continu contre lui (§22). Une dérive visuelle est un bug, pas une nouvelle référence.',
+      'Code is the source of truth; Figma is continuously audited against it (§22). A visual drift is a bug, not a new reference.'],
+    ['heart', 'Gratuit et ouvert', 'Free and open',
+      'Publié sous licence Creative Commons CC BY 4.0 — cohérente avec le MIT du code : attribution requise, aucune restriction d\'usage ou de modification.',
+      'Published under a CC BY 4.0 Creative Commons license — consistent with the code\'s MIT license: attribution required, no restriction on reuse or modification.'],
+  ].map(([iconName, titleFr, titleEn, fr, en]) => `
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon(iconName, 20)}</div>
+        <h2><span class="lang-fr">${titleFr}</span><span class="lang-en">${titleEn}</span></h2>
+        <p><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></p>
+      </div>`).join('');
+
+  const steps = [
+    ['1', 'Dupliquer le fichier', 'Duplicate the file',
+      'Ouvrez la librairie sur Figma Community et cliquez « Duplicate » — vous obtenez votre propre copie éditable, indépendante du fichier source.',
+      'Open the library on Figma Community and click "Duplicate" — you get your own editable copy, independent from the source file.'],
+    ['2', 'Lier les Variables à votre projet', 'Link the Variables to your project',
+      'Activez la librairie dans vos autres fichiers Figma (icône bibliothèque) pour consommer ses composants et Variables par instance, comme un package npm.',
+      'Enable the library in your other Figma files (library icon) to consume its components and Variables by instance, the same way you\'d consume an npm package.'],
+    ['3', 'Suivre les contrats de composants', 'Follow the component contracts',
+      'Chaque composant documente ses règles d\'usage dans <code>guidelines/components/*.md</code> — les mêmes règles que celles que le code applique.',
+      'Every component documents its usage rules in <code>guidelines/components/*.md</code> — the same rules the code itself follows.'],
+  ].map(([num, titleFr, titleEn, fr, en]) => `
+      <li class="step">
+        <span class="step-num">${num}</span>
+        <div class="step-body">
+          <strong><span class="lang-fr">${titleFr}</span><span class="lang-en">${titleEn}</span></strong>
+          <p><span class="lang-fr">${fr}</span><span class="lang-en">${en}</span></p>
+        </div>
+      </li>`).join('');
+
+  const body = `
+<section class="site-section simple-hero">
+  <div class="shell">
+    <div class="copy" style="max-width:700px">
+      <p class="kicker"><span class="lang-fr">Kit de design</span><span class="lang-en">Design kit</span></p>
+      <h1>
+        <span class="lang-fr">La librairie Figma Agentica</span>
+        <span class="lang-en">The Agentica Figma library</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Chaque token, chaque composant, chaque état — construits pour refléter le code exactement. Dupliquez-la, liez les Variables à votre fichier, et concevez à partir de la même source de vérité que celle utilisée par vos équipes d'ingénierie.</span>
+        <span class="lang-en">Every token, every component, every state — built to mirror the code exactly. Duplicate it, wire the Variables into your file, and design from the same source of truth your engineers ship from.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="${FIGMA_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+          ${icon('figma', 16)} <span class="lang-fr">Ouvrir dans Figma Community ↗</span><span class="lang-en">Open in Figma Community ↗</span>
+        </a>
+        <a href="#comment-ca-marche" class="cta-btn cta-btn-secondary"><span class="lang-fr">Comment ça marche ↓</span><span class="lang-en">How it works ↓</span></a>
+      </div>
+      <p style="margin-top:.9rem;font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">
+        <span class="lang-fr">Dépend d'<a href="${FIGMA_LUCIDE_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer">Agentica | Lucide Icons ↗</a>, publiée séparément (3 449 icônes).</span>
+        <span class="lang-en">Depends on <a href="${FIGMA_LUCIDE_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer">Agentica | Lucide Icons ↗</a>, published separately (3,449 icons).</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="site-section" data-reveal>
+  <div class="shell">
+    <div class="editorial-grid">${features}</div>
+  </div>
+</section>
+
+<section class="site-section section-tint" id="comment-ca-marche">
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></p>
+    <h2><span class="lang-fr">De Figma Community à votre fichier</span><span class="lang-en">From Figma Community to your file</span></h2>
+    <ol class="step-list">${steps}</ol>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="shell" style="max-width:760px">
+    <agtc-banner variant="info">
+      <strong><span class="lang-fr">Le code fait foi, jamais l'inverse</span><span class="lang-en">Code is the source of truth, never the reverse</span></strong>
+      <span>
+        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec le <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT du code</a>.</span>
+        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license</a>.</span>
+      </span>
+    </agtc-banner>
+  </div>
+</section>
+
+<section class="site-section section-final">
+  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="kicker"><span class="lang-fr">Prêt à concevoir</span><span class="lang-en">Ready to design</span></p>
+    <h2><span class="lang-fr">Concevez avec les mêmes décisions que le code</span><span class="lang-en">Design with the same decisions as the code</span></h2>
+    <div class="hero-actions" style="justify-content:center">
+      <a href="${FIGMA_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+        ${icon('figma', 16)} <span class="lang-fr">Ouvrir dans Figma Community ↗</span><span class="lang-en">Open in Figma Community ↗</span>
+      </a>
+      <a href="components/index.html" class="cta-btn cta-btn-secondary">
+        <span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span>
+      </a>
+      <a href="${REPO}" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-ghost">
+        ${icon('github', 16)} <span class="lang-fr">Code source</span><span class="lang-en">Source code</span>
+      </a>
+    </div>
+  </div>
+</section>
+`;
+  write(path.join(DIST, 'resources.html'), layout({ title: 'Resources', pageTitle: 'Figma library — Agentica design kit', depth: 0, fullWidth: true, context: 'marketing', sidebar: sidebarSite('', 'resources.html'), body }));
 }
 
 // ─── PAGE: CONTINUITÉ SANS AGENTS IA ────────────────────────────────────────
@@ -4798,12 +4928,12 @@ function buildTypography() {
 // ─── PAGE: ICONS FOUNDATION ─────────────────────────────────────────────────
 function buildIconsFoundation() {
   const sizes = [
-    ['inline',  SEM['icon-size-inline']  || '16px', '<span class="lang-fr">Dans un texte courant, un label</span><span class="lang-en">In body text, a label</span>'],
-    ['control', SEM['icon-size-control'] || '20px', '<span class="lang-fr">Dans un bouton, un input, un badge</span><span class="lang-en">In a button, input, or badge</span>'],
-    ['nav',     SEM['icon-size-nav']     || '24px', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
+    ['inline',  SEM['icon-size-inline']  || '16px', SEM['icon-strokeWidth-inline']  || '1',    '<span class="lang-fr">Dans un texte courant, un label</span><span class="lang-en">In body text, a label</span>'],
+    ['control', SEM['icon-size-control'] || '20px', SEM['icon-strokeWidth-control'] || '1.5',  '<span class="lang-fr">Dans un bouton, un input, un badge</span><span class="lang-en">In a button, input, or badge</span>'],
+    ['nav',     SEM['icon-size-nav']     || '24px', SEM['icon-strokeWidth-nav']     || '1.75', '<span class="lang-fr">Navigation, en-tête, emphase</span><span class="lang-en">Navigation, header, emphasis</span>'],
   ];
-  const sizeRows = sizes.map(([name, val, intent]) =>
-    `<tr class="token-row"><td><code>--agtc-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--agtc-font-mono)">${val}</td><td>${intent}</td></tr>`
+  const sizeRows = sizes.map(([name, val, sw, intent]) =>
+    `<tr class="token-row"><td><code>--agtc-semantic-icon-size-${name}</code></td><td><code>semantic.icon.size.${name}</code></td><td style="font-family:var(--agtc-font-mono)">${val}</td><td style="font-family:var(--agtc-font-mono)">${sw}</td><td>${intent}</td></tr>`
   ).join('');
 
   const sampleIcons = ['home','search','settings','user','bell','heart','star','trash-2','check','x','arrow-right','plus','edit','download','upload','eye','lock','mail','calendar','file-text'];
@@ -4814,19 +4944,19 @@ function buildIconsFoundation() {
     </div>`
   ).join('');
 
-  const sizeDemo = sizes.map(([name, val]) =>
+  const sizeDemo = sizes.map(([name, val, sw]) =>
     `<div style="display:flex;align-items:center;gap:var(--agtc-space-4);padding:var(--agtc-space-3) 0;border-bottom:1px solid var(--agtc-semantic-color-border-default)">
       <div style="width:80px;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-detail-size)"><code>${name}</code></div>
-      ${icon('star', parseInt(val), 'var(--agtc-semantic-color-action-primary)')}
-      <div style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">${val} — <code>--agtc-semantic-icon-size-${name}</code></div>
+      ${icon('star', parseInt(val), 'var(--agtc-semantic-color-action-primary)', parseFloat(sw))}
+      <div style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">${val} · <code>stroke-width:${sw}</code> — <code>--agtc-semantic-icon-size-${name}</code></div>
     </div>`
   ).join('');
 
   const body = `
 <h1><span class="lang-fr">Icônes</span><span class="lang-en">Icons</span></h1>
 <p class="page-lead">
-  <span class="lang-fr">Bibliothèque officielle : <strong>Lucide Icons</strong> (MIT) — 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée. Référence canonique : <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
-  <span class="lang-en">Official library: <strong>Lucide Icons</strong> (MIT) — 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>), built-in WCAG 1.1.1 accessibility. Canonical reference: <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+  <span class="lang-fr">Bibliothèque officielle : <strong>Lucide Icons</strong> (licence ISC) — 1 500+ icônes, viewBox 24×24 strict, accessibilité WCAG 1.1.1 intégrée. L'épaisseur de trait varie par variante (voir tableau ci-dessous, ADR-091) pour compenser optiquement la mise à l'échelle. Référence canonique : <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
+  <span class="lang-en">Official library: <strong>Lucide Icons</strong> (ISC license) — 1,500+ icons, strict 24×24 viewBox, built-in WCAG 1.1.1 accessibility. Stroke width varies per variant (see table below, ADR-091) to optically compensate for scaling. Canonical reference: <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>.</span>
 </p>
 
 <h2 class="first"><span class="lang-fr">Tailles — 3 échelons sémantiques</span><span class="lang-en">Sizes — 3 semantic steps</span></h2>
@@ -4835,8 +4965,8 @@ function buildIconsFoundation() {
 </div>
 
 <h2><span class="lang-fr">Tokens sémantiques</span><span class="lang-en">Semantic tokens</span></h2>
-<table class="token-table"><colgroup><col style="width:44%"><col style="width:28%"><col style="width:14%"><col style="width:14%"></colgroup>
-  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
+<table class="token-table"><colgroup><col style="width:36%"><col style="width:24%"><col style="width:12%"><col style="width:12%"><col style="width:16%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th><th><span class="lang-fr">Trait</span><span class="lang-en">Stroke</span></th><th><span class="lang-fr">Intention</span><span class="lang-en">Intent</span></th></tr></thead>
   <tbody>${sizeRows}</tbody>
 </table>
 
@@ -5262,6 +5392,13 @@ function buildIcon() {
     ['icon-size-inline',  'semantic.icon.size.inline',  SEM['icon-size-inline']],
     ['icon-size-control', 'semantic.icon.size.control', SEM['icon-size-control']],
     ['icon-size-nav',     'semantic.icon.size.nav',     SEM['icon-size-nav']],
+    ['icon-strokeWidth-inline',  'semantic.icon.strokeWidth.inline',  SEM['icon-strokeWidth-inline']],
+    ['icon-strokeWidth-control', 'semantic.icon.strokeWidth.control', SEM['icon-strokeWidth-control']],
+    ['icon-strokeWidth-nav',     'semantic.icon.strokeWidth.nav',     SEM['icon-strokeWidth-nav']],
+    ['icon-strokeWidth-feature', 'semantic.icon.strokeWidth.feature', SEM['icon-strokeWidth-feature']],
+    ['color-icon-inline',  'semantic.color.icon.inline',  SEM['color-icon-inline']],
+    ['color-icon-control', 'semantic.color.icon.control', SEM['color-icon-control']],
+    ['color-icon-nav',     'semantic.color.icon.nav',     SEM['color-icon-nav']],
   ].map(([comp, sem, val]) =>
     `<tr class="token-row"><td><code>--agtc-semantic-${comp}</code></td><td><code>${sem}</code></td><td style="font-family:var(--agtc-font-mono)">${val || '—'}</td></tr>`
   ).join('');
@@ -5269,8 +5406,8 @@ function buildIcon() {
   const body = `
 <h1>Icon</h1>
 <p class="page-lead">
-  <span class="lang-fr">Composant d'icône universel basé sur Lucide Icons (MIT). 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>), accessibilité WCAG 1.1.1 intégrée.</span>
-  <span class="lang-en">Universal icon component based on Lucide Icons (MIT). 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>), built-in WCAG 1.1.1 accessibility.</span>
+  <span class="lang-fr">Composant d'icône universel basé sur Lucide Icons (licence ISC). 1 500+ icônes, viewBox 24×24 strict, accessibilité WCAG 1.1.1 intégrée. L'épaisseur de trait varie par taille (ADR-091) pour compenser optiquement la mise à l'échelle.</span>
+  <span class="lang-en">Universal icon component based on Lucide Icons (ISC license). 1,500+ icons, strict 24×24 viewBox, built-in WCAG 1.1.1 accessibility. Stroke width varies per size (ADR-091) to optically compensate for scaling.</span>
 </p>
 
 <h2 class="first">Tokens</h2>
@@ -5305,8 +5442,8 @@ function buildIcon() {
 
 <h3><span class="lang-fr">Bibliothèque — Lucide Icons</span><span class="lang-en">Library — Lucide Icons</span></h3>
 <p>
-  <span class="lang-fr">Lucide (MIT) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, cohérence géométrique stricte (<code>strokeWidth: 1.5px</code>). Référence canonique : <strong>lucide.dev</strong></span>
-  <span class="lang-en">Lucide (MIT) is the official icon library of the system. 1,500+ icons, strict geometric consistency (<code>strokeWidth: 1.5px</code>). Canonical reference: <strong>lucide.dev</strong></span>
+  <span class="lang-fr">Lucide (licence ISC ; les icônes toujours dérivées de Feather Icons portent en plus le crédit MIT d'origine de Feather) est la bibliothèque d'icônes officielle du système. 1 500+ icônes, viewBox 24×24 strict, épaisseur de trait tokenisée par taille (voir Tokens ci-dessus). Référence canonique : <strong>lucide.dev</strong></span>
+  <span class="lang-en">Lucide (ISC license; icons still derived from Feather Icons retain Feather's original MIT credit) is the official icon library of the system. 1,500+ icons, strict 24×24 viewBox, stroke width tokenized per size (see Tokens above). Canonical reference: <strong>lucide.dev</strong></span>
 </p>
 
 <h3><span class="lang-fr">API du composant</span><span class="lang-en">Component API</span></h3>
@@ -7406,6 +7543,13 @@ function buildRobotsAndSitemap(adrs) {
   const staticPages = [
     ['',                          'weekly',  '1.0'],
     ['get-started.html',          'monthly', '0.9'],
+    ['pourquoi.html',             'monthly', '0.8'],
+    ['architecture.html',         'monthly', '0.8'],
+    ['qualite.html',              'monthly', '0.8'],
+    ['ia.html',                   'monthly', '0.8'],
+    ['documentation.html',        'monthly', '0.8'],
+    ['continuite.html',           'monthly', '0.7'],
+    ['resources.html',            'monthly', '0.8'],
     ['foundations/index.html',    'monthly', '0.8'],
     ['foundations/color.html',    'monthly', '0.8'],
     ['foundations/spacing.html',  'monthly', '0.8'],
@@ -7820,6 +7964,23 @@ import '@agentica-ds/components';`)}</code></pre>
   </div>
 </section>
 
+<section class="site-section" id="figma">
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Outillage design</span><span class="lang-en">Design tooling</span></p>
+    <h2><span class="lang-fr">Concevoir dans Figma, construire en code</span><span class="lang-en">Design in Figma, build in code</span></h2>
+    <p>
+      <span class="lang-fr">La librairie Figma Agentica reflète exactement les mêmes tokens et composants que ce guide — pas une réinterprétation visuelle séparée. Dupliquez-la pour concevoir avec la même source de vérité que celle utilisée par le code.</span>
+      <span class="lang-en">The Agentica Figma library mirrors exactly the same tokens and components as this guide — not a separate visual reinterpretation. Duplicate it to design from the same source of truth the code ships from.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="${FIGMA_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+        ${icon('figma', 16)} <span class="lang-fr">Ouvrir dans Figma Community ↗</span><span class="lang-en">Open in Figma Community ↗</span>
+      </a>
+      <a href="resources.html" class="cta-btn cta-btn-secondary"><span class="lang-fr">En savoir plus →</span><span class="lang-en">Learn more →</span></a>
+    </div>
+  </div>
+</section>
+
 <section class="site-section section-final">
   <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></p>
@@ -7885,6 +8046,11 @@ function buildChangelog() {
           {fr:'Validation programmatique des contrats (<code>npm run validate:contracts</code>, désormais dans <code>npm test</code>) : forme DTCG, intégrité des références ADR, chemins de contrat, synchronisation tokens/guidelines, présence de la section UX Patterns Reference',en:'Programmatic contract validation (<code>npm run validate:contracts</code>, now part of <code>npm test</code>): DTCG shape, ADR reference integrity, contract paths, tokens/guidelines sync, UX Patterns Reference section presence'},
           {fr:'Nouvelle règle "discipline de statut" : toujours passer un ticket GitHub Projects à "En cours" au démarrage du travail, jamais directement à "Terminé"',en:'New "status discipline" rule: always move a GitHub Projects ticket to "In progress" when work starts, never jump straight to "Done"'},
           {fr:'Décision de couleurs du logo (<code>logo-black</code>/<code>logo-gray</code>) formalisée rétroactivement dans un ADR — la contrainte existait déjà dans le code mais n\'était jamais couverte par une décision documentée (ADR-088)',en:'Logo colour decision (<code>logo-black</code>/<code>logo-gray</code>) formalized retroactively in an ADR — the constraint already existed in code but was never covered by a documented decision (ADR-088)'},
+        ]},
+        { fr:'Site', en:'Site', items:[
+          {fr:'Nouvelle page <code>resources.html</code> (Mode Marketing) : promotion de la librairie Figma Agentica — fonctionnalités, étapes pour dupliquer le fichier, rappel de licence CC BY 4.0 (ADR-081)',en:'New <code>resources.html</code> page (Marketing Mode): promotes the Agentica Figma library — features, steps to duplicate the file, CC BY 4.0 licence reminder (ADR-081)'},
+          {fr:'Section « Concevoir dans Figma, construire en code » ajoutée à <code>get-started.html</code> ; liens vers la librairie Figma ajoutés à <code>documentation.html</code>, au menu principal et au footer partagé',en:'"Design in Figma, build in code" section added to <code>get-started.html</code>; links to the Figma library added to <code>documentation.html</code>, the main nav menu and the shared footer'},
+          {fr:'<code>sitemap.xml</code> : 6 pages Marketing historiques (<code>pourquoi</code>/<code>architecture</code>/<code>qualite</code>/<code>ia</code>/<code>documentation</code>/<code>continuite</code>) qui n\'y figuraient jamais, ajoutées avec <code>resources.html</code>',en:'<code>sitemap.xml</code>: 6 historical Marketing pages (<code>pourquoi</code>/<code>architecture</code>/<code>qualite</code>/<code>ia</code>/<code>documentation</code>/<code>continuite</code>) that were never listed there, added along with <code>resources.html</code>'},
         ]},
         { fr:'Dette de tokens résorbée', en:'Token debt resolved', items:[
           {fr:'<code>audit-tokens.js</code> : ~5 800 → 0 violation critique. Exclusions de chemin ajoutées (build généré, ADR historiques, scripts Figma, docs narratifs) + mécanisme <code>audit-ignore</code> (miroir de <code>lang-audit-ignore</code>) (ADR-085, ADR-089)',en:'<code>audit-tokens.js</code>: ~5,800 → 0 critical violations. Path exclusions added (generated build output, historical ADRs, Figma scripts, narrative docs) + an <code>audit-ignore</code> escape hatch (mirroring <code>lang-audit-ignore</code>) (ADR-085, ADR-089)'},
@@ -8730,6 +8896,7 @@ function build() {
   buildQualite();
   buildIA();
   buildDocumentation();
+  buildResources();
   buildContinuite();
   buildGetStarted();
   buildChangelog();

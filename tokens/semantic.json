@@ -436,11 +436,85 @@
           "$intent": "Strong text on code surface — copy button (maximum contrast)"
         }
       },
+      "icon": {
+        "inline": {
+          "$value": "{primitive.color.gray.12}",
+          "$type": "color",
+          "$intent": "Icon inline with body text — matches text.primary",
+          "$description": "Default color for an icon rendered inline with paragraph or label text (agtc-icon size=\"inline\"). Not consumed directly by the component — agtc-icon uses stroke:currentColor and inherits the surrounding text color at runtime, so it adapts automatically to any context (error text, dark mode, etc.). This token documents that default resolved color for the Figma Lucide Icons library (which has no currentColor equivalent) and for non-inheriting consumers (ADR-091).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-color-inline",
+              "use": ["agtc-icon size=inline default/documentation color", "Figma Lucide Icons library"],
+              "doNotUse": "An icon inside an interactive control (use icon.control) or a navigation icon (use icon.nav). Never overrides currentColor in code.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        },
+        "control": {
+          "$value": "{primitive.color.gray.11}",
+          "$type": "color",
+          "$intent": "Icon inside an interactive control — matches text.secondary, reduced visual weight",
+          "$description": "Default color for a utility icon inside an interactive control (agtc-icon size=\"control\") — e.g. an input adornment or a dropdown chevron. Same currentColor caveat as icon.inline: documents the typical resolved color, not a hardcoded override (ADR-091).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-color-control",
+              "use": ["agtc-icon size=control default/documentation color", "Figma Lucide Icons library"],
+              "doNotUse": "Inline or nav icons — use icon.inline / icon.nav. Never overrides currentColor in code.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        },
+        "nav": {
+          "$value": "{primitive.color.gray.11}",
+          "$type": "color",
+          "$intent": "Navigation icon — matches the sidebar/nav link's default rest-state text color",
+          "$description": "Default color for a navigation icon (agtc-icon size=\"nav\") — aligned with `.sidebar a`'s rest-state color (text.secondary), which turns text.primary/action.primary on hover/active via currentColor. Same currentColor caveat as icon.inline (ADR-091).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-color-nav",
+              "use": ["agtc-icon size=nav default/documentation color", "Figma Lucide Icons library"],
+              "doNotUse": "Inline or control icons — use icon.inline / icon.control. Never overrides currentColor in code.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        }
+      },
       "border": {
         "default": {
           "$value": "{primitive.color.gray.4}",
           "$type": "color",
-          "$intent": "Bordure standard"
+          "$intent": "Bordure standard — separator, card outline, non-essential structural boundary. Not for a resting interactive-control boundary (1.22:1 on white/gray.1 — fails WCAG 1.4.11's 3:1 non-text minimum) — use border.control instead."
+        },
+        "control": {
+          "$value": "{primitive.color.gray.9}",
+          "$type": "color",
+          "$intent": "Resting (unchecked/unfocused) boundary of an interactive control whose shape is the primary signifier of its presence — checkbox, radio, input. Accessible: 3.32:1 on gray.1/white (≥3:1 required, WCAG 1.4.11).",
+          "$description": "border.default (gray.4, 1.22:1) does not meet the WCAG 1.4.11 non-text contrast minimum for a control boundary that is the sole visual cue of the control's shape at rest — confirmed via axe-core on agtc-checkbox (2026-09-02). border.control exists for exactly that case; border.default remains correct for decorative/structural boundaries (card, table, tabs, badge) where the border is not the sole means of identifying the element.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-border-rest",
+              "use": [
+                "Checkbox[state=default] box border",
+                "Radio[state=default] outline",
+                "Input[state=default] field border"
+              ],
+              "doNotUse": "Decorative separator, card or table outline, tab divider — use border.default. Any state already carrying its own accessible border (hover/focus/danger) — those keep their own token.",
+              "components": [
+                "agtc-checkbox",
+                "agtc-radio",
+                "agtc-input"
+              ],
+              "decision": "ADR-093"
+            }
+          }
         },
         "focus": {
           "$value": "{primitive.color.teal.11}",
@@ -834,6 +908,58 @@
         }
       }
     },
+    "size": {
+      "control": {
+        "min-width": {
+          "$value": "{primitive.space.16}",
+          "$type": "dimension",
+          "$intent": "Floor width for a single-line control (input) so it never collapses to an unreadable sliver when squeezed by a tight flex/grid parent — not a target width. ~7ch, common cross-framework CSS starting point.",
+          "$description": "64px. Sourced from convergent CSS baselines (input min-inline-size: 7ch) rather than a device-width calculation — a control's natural width should come from FILL/content sizing, not a viewport-derived floor (ADR-094).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-min-width",
+              "use": ["Input[field/control wrapper] min-width"],
+              "doNotUse": "As a target/default width — it is a floor only. Never derived from a viewport calculation.",
+              "components": ["agtc-input"],
+              "decision": "ADR-094"
+            }
+          }
+        },
+        "max-width": {
+          "$value": "{primitive.space.120}",
+          "$type": "dimension",
+          "$intent": "Ceiling width for a single-line control (input) so it never stretches disproportionately to its content in a wide container — per Baymard/NN.g, field width is a content-length affordance.",
+          "$description": "480px. Matches the observed convergence across production design systems for a generic single-line text field (Carbon/Ant/Material-adjacent practice); no field-type-specific override should rely on this as a target, only as a cap (ADR-094).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-max-width",
+              "use": ["Input[field/control wrapper] max-width"],
+              "doNotUse": "As a forced target width for short-answer fields (e.g. postal code, OTP) — those should use an intentional, narrower explicit width instead.",
+              "components": ["agtc-input"],
+              "decision": "ADR-094"
+            }
+          }
+        },
+        "max-width-multiline": {
+          "$value": "{primitive.space.160}",
+          "$type": "dimension",
+          "$intent": "Ceiling width for a future multi-line control (textarea) so wrapped lines stay within the readable/WCAG range — not yet consumed by any component (no agtc-textarea exists yet, ADR-094).",
+          "$description": "640px, a px approximation of ~70 characters at typography.body (16px) — WCAG 1.4.8 hard ceiling is 80 characters, best-practice readability sweet spot is 45–75. Code implementation should prefer `max-width: 70ch` directly (font-relative, robust to zoom/font-size) over this px value where the platform supports it; this token exists for Figma (px-only) and any context needing a fixed fallback.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "control-max-width-multiline",
+              "use": ["Reserved for a future agtc-textarea max-width — not consumed by any component yet"],
+              "doNotUse": "Do not bind this to agtc-input or any single-line control — use size.control.max-width instead.",
+              "components": [],
+              "decision": "ADR-094"
+            }
+          }
+        }
+      }
+    },
     "radius": {
       "control-tight": {
         "$value": "{primitive.radius.xs}",
@@ -854,6 +980,11 @@
         "$value": "9999px",
         "$type": "dimension",
         "$intent": "Fully rounded radius — pill/circle shapes (badges, toggles, avatars). Raw value, no primitive alias: no primitive.radius step exists at this value, same precedent as component.badge.md.radius."
+      },
+      "control-inner": {
+        "$value": "4px",
+        "$type": "dimension",
+        "$intent": "Radius for a control nested inside a radius.control container, tight enough to read as concentric with it (agtc-segmented's individual segment, 6px track minus a 2px visual margin). Raw value, no primitive alias: no primitive.radius step exists at this value, same precedent as radius.pill."
       }
     },
     "fontWeight": {
@@ -1124,6 +1255,72 @@
           "$value": "{primitive.iconSize.xl}",
           "$type": "dimension",
           "$intent": "32px — Feature card icon, marketing section. Minimum required under data-context='marketing'. 4px grid: 8×4."
+        }
+      },
+      "strokeWidth": {
+        "inline": {
+          "$value": "{primitive.strokeWidth.sm}",
+          "$type": "number",
+          "$intent": "Lightest stroke — sits inline with body text, must not compete with the surrounding copy",
+          "$description": "Stroke weight for an icon inline with text (agtc-icon size=\"inline\", 16px). Thinnest step of the scale (ADR-091).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-stroke-width-inline",
+              "use": ["agtc-icon size=inline"],
+              "doNotUse": "Control, nav, or feature icons — use strokeWidth.control / strokeWidth.nav / strokeWidth.feature.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        },
+        "control": {
+          "$value": "{primitive.strokeWidth.md}",
+          "$type": "number",
+          "$intent": "Standard stroke weight for an interactive-control icon",
+          "$description": "Stroke weight for an icon inside an interactive control (agtc-icon size=\"control\", 20px).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-stroke-width-control",
+              "use": ["agtc-icon size=control"],
+              "doNotUse": "Inline, nav, or feature icons — use strokeWidth.inline / strokeWidth.nav / strokeWidth.feature.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        },
+        "nav": {
+          "$value": "{primitive.strokeWidth.lg}",
+          "$type": "number",
+          "$intent": "Bolder stroke — navigation/emphasis icons carry more visual weight for hierarchy",
+          "$description": "Stroke weight for a navigation or emphasis icon (agtc-icon size=\"nav\", 24px).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-stroke-width-nav",
+              "use": ["agtc-icon size=nav"],
+              "doNotUse": "Inline, control, or feature icons — use strokeWidth.inline / strokeWidth.control / strokeWidth.feature.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
+        },
+        "feature": {
+          "$value": "{primitive.strokeWidth.xl}",
+          "$type": "number",
+          "$intent": "Boldest stroke — feature/marketing card icons, maximum visual presence",
+          "$description": "Stroke weight for a feature icon (semantic.icon.size.feature, 32px) — marketing cards, hook sections. Not an agtc-icon `size` attribute value; applied via CSS in data-context=\"marketing\" (site/build.js).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "icon-stroke-width-feature",
+              "use": ["marketing feature-card icons (data-context=\"marketing\")"],
+              "doNotUse": "Inline, control, or nav icons — use strokeWidth.inline / strokeWidth.control / strokeWidth.nav.",
+              "components": ["agtc-icon"],
+              "decision": "ADR-091"
+            }
+          }
         }
       }
     },

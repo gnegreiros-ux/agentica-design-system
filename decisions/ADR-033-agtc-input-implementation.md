@@ -69,6 +69,17 @@ are included depending on the component's state.
 The error message carries `role="alert"` to announce the error to screen
 readers as soon as it appears, with no need to navigate to the element.
 
+**Figma parity (2026-09-05):** a file-wide audit found `helper-text` genuinely broken on the
+`Input` ComponentSet — `componentPropertyDefinitions` listed the property, but no variant
+actually rendered it (predicted by an earlier session note, now confirmed). Fixed by adding a
+new `helper-text` TEXT layer on all 15 variants, positioned in the auto-layout stack between
+`field` and `error-message` (mirroring the code's DOM order: control → helper → error), bound
+to the existing `Helper Text` property for its characters, plus a new `Show Helper Text`
+Boolean property (default `false`) for visibility — same pattern as `Show Label` (Decision 7
+below). Verified standalone and combined with an error state (correct stacking, correct
+colors). `error-message` was audited in the same pass and found already correctly wired on
+the 2 `State=Error` variants — no bug, no change needed there.
+
 ---
 
 ### Decision 4 — Native show/hide toggle for `type="password"`
@@ -107,6 +118,43 @@ browsers and can't be styled with the system's tokens.
 
 ---
 
+### Decision 7 — `hide-label`: visually-hidden label exception for icon-clarified search fields
+
+**Problem:** Search fields are a recognized UX pattern where a visible floating label is often
+considered redundant next to an icon + placeholder (e.g. a header search box). Decision 1 above
+already rejected `aria-label`-only labelling — this exception does not revisit that rejection.
+
+**Decision:** `hide-label` keeps the exact same real `<label for="id">` from Decision 1, fully
+in the DOM and linked, and only hides it *visually* via a `.visually-hidden` class (absolute
+positioning + 1×1px clip — the same technique already used by `agtc-table`'s `captionHidden`),
+never `display:none`/`visibility:hidden`, which would remove the accessible name entirely.
+Requires `icon` to be set — without a visible icon, the field's purpose would no longer be
+unambiguous, per W3C ARIA14's own condition for using an invisible label ("the context and
+visual appearance of the control make its purpose clear"). `updated()` logs a console warning
+if `hide-label` is set without `icon`, mirroring the existing missing-`label` warning.
+
+**Why this doesn't contradict Decision 1:** Decision 1 rejected removing the persistent,
+programmatically-associated label in favor of `aria-label`. `hide-label` keeps that same label
+element — it changes only its visual rendering, not its presence or association. WCAG 1.3.1 is
+satisfied identically to every other state of this component.
+
+**Approved via `ux-pattern-review` (ADR-036) on 2026-09-05** — see the new pattern row below and
+`guidelines/components/input.md` § UX Patterns Reference for the full source discussion,
+including NN/g's caveat that the *field itself* (not just the label) must stay visible.
+
+**Figma parity (2026-09-05):** per `figma-library-governance.md` rule 3 ("same architecture,
+same options as in code"), `hide-label` is wired as a real Figma component property on the
+`Input` ComponentSet, not just a static documentation exhibit. Figma cannot bind a negated
+boolean to a layer's `visible` state, so the property is named **`Show Label`** (Boolean,
+default `true`) — the inverse of the code attribute — and bound via
+`componentPropertyReferences.visible` on the `Label` layer of all 15 variants. `Show Label =
+false` reproduces `hide-label` exactly (verified: label removed from render, field reflows to
+the top, height 70→40). The Props table on the Figma page documents this naming inversion
+inline so a designer reconciling Figma with the code prop isn't confused by the flipped
+polarity.
+
+---
+
 ## Reference UX patterns applied
 
 > Added on 2026-06-01 via the `ux-pattern-review` workflow (ADR-036). Design System Lead
@@ -123,6 +171,7 @@ browsers and can't be styled with the system's tokens.
 | Forgiving format (`tel`/`number`) | IxDF — forgiving formats |
 | Visible label always present | NN/g |
 | Anti hostile patterns (no clearing the field on error) | NN/g — Hostile Patterns in Error Messages |
+| **Exception** (2026-09-05) — visually-hidden label for icon-clarified search fields (`hide-label`) | W3C WAI — Labelling Controls · W3C ARIA14 · NN/g — The Magnifying-Glass Icon |
 
 ---
 
@@ -223,6 +272,18 @@ sont inclus selon l'état du composant.
 Le message d'erreur porte `role="alert"` pour annoncer l'erreur aux lecteurs
 d'écran dès qu'elle apparaît, sans nécessiter de navigation vers l'élément.
 
+**Parité Figma (2026-09-05) :** un audit fichier-complet a révélé que `helper-text` était
+réellement cassé sur le ComponentSet `Input` — `componentPropertyDefinitions` listait la
+propriété, mais aucune variante ne la rendait réellement (prédit par une note de session
+antérieure, maintenant confirmé). Corrigé en ajoutant un nouveau calque TEXT `helper-text` sur
+les 15 variantes, positionné dans la pile auto-layout entre `field` et `error-message`
+(reflétant l'ordre DOM du code : contrôle → aide → erreur), lié à la propriété existante
+`Helper Text` pour son texte, plus une nouvelle propriété Boolean `Show Helper Text` (défaut
+`false`) pour la visibilité — même pattern que `Show Label` (Décision 7 ci-dessous). Vérifié
+seul et combiné avec un état d'erreur (empilement et couleurs corrects). `error-message` a été
+audité dans la même passe et confirmé déjà correctement câblé sur les 2 variantes
+`State=Error` — aucun bug, aucun changement nécessaire là.
+
 ---
 
 ### Décision 4 — Toggle show/hide natif pour `type="password"`
@@ -261,6 +322,46 @@ navigateurs et ne peuvent pas être stylés avec les tokens du système.
 
 ---
 
+### Décision 7 — `hide-label` : exception de label visuellement masqué pour les champs search clarifiés par une icône
+
+**Problème :** les champs de recherche sont un pattern UX reconnu où un label flottant visible
+est souvent jugé redondant à côté d'une icône + placeholder (ex. une barre de recherche
+d'en-tête). La Décision 1 ci-dessus a déjà rejeté un label uniquement en `aria-label` — cette
+exception ne revient pas sur ce rejet.
+
+**Décision :** `hide-label` conserve exactement le même vrai `<label for="id">` de la Décision 1,
+pleinement présent dans le DOM et lié, et le masque uniquement *visuellement* via une classe
+`.visually-hidden` (positionnement absolu + clip 1×1px — la même technique déjà utilisée par le
+`captionHidden` de `agtc-table`), jamais `display:none`/`visibility:hidden`, qui supprimerait
+entièrement le nom accessible. Nécessite `icon` — sans icône visible, le rôle du champ ne serait
+plus univoque, selon la condition même de la technique W3C ARIA14 ("le contexte et l'apparence
+visuelle du contrôle rendent son objectif clair"). `updated()` émet un avertissement console si
+`hide-label` est posé sans `icon`, à l'image de l'avertissement déjà existant pour `label`
+manquant.
+
+**Pourquoi ça ne contredit pas la Décision 1 :** la Décision 1 rejetait la suppression du label
+persistant et associé par programmation au profit d'un `aria-label` seul. `hide-label` conserve
+ce même élément label — seul son rendu visuel change, pas sa présence ni son association. Le
+WCAG 1.3.1 est respecté à l'identique de tout autre état de ce composant.
+
+**Approuvé via `ux-pattern-review` (ADR-036) le 2026-09-05** — voir la nouvelle ligne de pattern
+ci-dessous et `guidelines/components/input.md` § UX Patterns Reference pour la discussion
+complète des sources, y compris la réserve de NN/g selon laquelle le *champ lui-même* (pas
+seulement le label) doit rester visible.
+
+**Parité Figma (2026-09-05) :** selon la règle 3 de `figma-library-governance.md` ("même
+architecture, mêmes options que dans le code"), `hide-label` est câblé comme une vraie propriété
+de composant Figma sur le ComponentSet `Input`, pas juste un exemple statique. Figma ne peut pas
+lier un booléen nié à l'état `visible` d'un calque, donc la propriété est nommée **`Show Label`**
+(Boolean, défaut `true`) — l'inverse de l'attribut code — et liée via
+`componentPropertyReferences.visible` sur le calque `Label` des 15 variantes. `Show Label =
+false` reproduit exactement `hide-label` (vérifié : label retiré du rendu, champ remonté en
+haut, hauteur 70→40). Le tableau Props sur la page Figma documente cette inversion de nommage
+directement pour qu'un designer réconciliant Figma avec le prop du code ne soit pas surpris par
+la polarité inversée.
+
+---
+
 ## Patterns UX de référence appliqués
 
 > Ajouté le 2026-06-01 via le workflow `ux-pattern-review` (ADR-036). Décision du
@@ -277,6 +378,7 @@ navigateurs et ne peuvent pas être stylés avec les tokens du système.
 | Forgiving format (`tel`/`number`) | IxDF — forgiving formats |
 | Label visible toujours présent | NN/g |
 | Anti hostile patterns (pas d'effacement du champ en erreur) | NN/g — Hostile Patterns in Error Messages |
+| **Exception** (2026-09-05) — label visuellement masqué pour les champs search clarifiés par une icône (`hide-label`) | W3C WAI — Labelling Controls · W3C ARIA14 · NN/g — The Magnifying-Glass Icon |
 
 ---
 

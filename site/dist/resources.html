@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Figma library — Agentica design kit</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Figma library — Agentica design kit">
+<meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta property="og:image" content="https://agentica.design/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://agentica.design/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="agentica.design">
+<meta property="twitter:url" content="https://agentica.design/">
+<meta name="twitter:title" content="Figma library — Agentica design kit">
+<meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="twitter:image" content="https://agentica.design/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<script src="components/agtc.js" defer></script>
+</head>
+<body class="page" data-context="marketing">
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner" data-site-header>
+  <a class="brand" href="index.html" aria-label="Agentica — Accueil">
+    <img src="img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="152" fetchpriority="high">
+    <img src="img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="152" fetchpriority="high">
+  </a>
+  <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Navigation">
+    <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="site-nav" id="main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    <div class="docs-menu">
+      <a href="documentation.html" class="docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="docs-panel" id="docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="tokens/index.html">Tokens</a>
+          <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="pipelines/index.html">Pipelines</a>
+          <a href="continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+          <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="audit.html">Audit</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-cta" href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="site-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="false">FR</button>
+      <button type="button" data-lang="en" aria-current="true">EN</button>
+    </div>
+    <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+  </div>
+</header>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="layout" id="main-content" data-context="marketing">
+  <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Secondary navigation / Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label">Agentica</span><a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a><a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a><a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a><a href="ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a></div><div class="sidebar-group"><span class="sidebar-label">Documentation</span><a href="documentation.html">Documentation</a><a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a><a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a><a href="tokens/index.html">Tokens</a><a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a><a href="agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a><a href="continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a><a href="resources.html" class="active" aria-current="page"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a></div></aside>
+  <main class="page-content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
+<section class="site-section simple-hero">
+  <div class="shell">
+    <div class="copy" style="max-width:700px">
+      <p class="kicker"><span class="lang-fr">Kit de design</span><span class="lang-en">Design kit</span></p>
+      <h1>
+        <span class="lang-fr">La librairie Figma Agentica</span>
+        <span class="lang-en">The Agentica Figma library</span>
+      </h1>
+      <p>
+        <span class="lang-fr">Chaque token, chaque composant, chaque état — construits pour refléter le code exactement. Dupliquez-la, liez les Variables à votre fichier, et concevez à partir de la même source de vérité que celle utilisée par vos équipes d'ingénierie.</span>
+        <span class="lang-en">Every token, every component, every state — built to mirror the code exactly. Duplicate it, wire the Variables into your file, and design from the same source of truth your engineers ship from.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg> <span class="lang-fr">Ouvrir dans Figma Community ↗</span><span class="lang-en">Open in Figma Community ↗</span>
+        </a>
+        <a href="#comment-ca-marche" class="cta-btn cta-btn-secondary"><span class="lang-fr">Comment ça marche ↓</span><span class="lang-en">How it works ↓</span></a>
+      </div>
+      <p style="margin-top:.9rem;font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">
+        <span class="lang-fr">Dépend d'<a href="https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons" target="_blank" rel="noopener noreferrer">Agentica | Lucide Icons ↗</a>, publiée séparément (3 449 icônes).</span>
+        <span class="lang-en">Depends on <a href="https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons" target="_blank" rel="noopener noreferrer">Agentica | Lucide Icons ↗</a>, published separately (3,449 icons).</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="site-section" data-reveal>
+  <div class="shell">
+    <div class="editorial-grid">
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></div>
+        <h2><span class="lang-fr">Trois niveaux de tokens, vraiment liés</span><span class="lang-en">Three token levels, actually wired up</span></h2>
+        <p><span class="lang-fr">Primitif → sémantique → composant : les mêmes tokens que le code, bindés à de vraies Variables Figma — jamais une couleur ou un espacement codé en dur.</span><span class="lang-en">Primitive → semantic → component: the same tokens as the code, bound to real Figma Variables — never a hardcoded color or spacing value.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.536 11.293a1 1 0 0 0 0 1.414l2.376 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z"/><path d="M2.297 11.293a1 1 0 0 0 0 1.414l2.377 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414L6.088 8.916a1 1 0 0 0-1.414 0z"/><path d="M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z"/><path d="M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z"/></svg></div>
+        <h2><span class="lang-fr">Composants qui matchent le code, variante pour variante</span><span class="lang-en">Components that match the code, variant for variant</span></h2>
+        <p><span class="lang-fr">Chaque ComponentSet expose exactement les mêmes variantes, états et propriétés que son équivalent <code>agtc-*</code> — jamais plus, jamais moins.</span><span class="lang-en">Every ComponentSet exposes exactly the same variants, states and properties as its <code>agtc-*</code> counterpart — never more, never less.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></div>
+        <h2><span class="lang-fr">Mode sombre natif</span><span class="lang-en">Dark mode built in</span></h2>
+        <p><span class="lang-fr">Chaque composant existe en light et en dark, sur les mêmes Variables — pas un thème rapporté après coup.</span><span class="lang-en">Every component exists in light and dark, on the same Variables — not a theme bolted on afterward.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h2><span class="lang-fr">Accessible par défaut</span><span class="lang-en">Accessible by default</span></h2>
+        <p><span class="lang-fr">Contrastes vérifiés, focus visible à deux couleurs, structure lisible aux lecteurs d'écran — WCAG 2.2 AA de base, pas une option.</span><span class="lang-en">Verified contrast, two-color visible focus, screen-reader-legible structure — WCAG 2.2 AA by default, not an option.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+        <h2><span class="lang-fr">Gouverné, jamais improvisé</span><span class="lang-en">Governed, never improvised</span></h2>
+        <p><span class="lang-fr">Le code fait foi ; Figma est audité en continu contre lui (§22). Une dérive visuelle est un bug, pas une nouvelle référence.</span><span class="lang-en">Code is the source of truth; Figma is continuously audited against it (§22). A visual drift is a bug, not a new reference.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+        <h2><span class="lang-fr">Gratuit et ouvert</span><span class="lang-en">Free and open</span></h2>
+        <p><span class="lang-fr">Publié sous licence Creative Commons CC BY 4.0 — cohérente avec le MIT du code : attribution requise, aucune restriction d'usage ou de modification.</span><span class="lang-en">Published under a CC BY 4.0 Creative Commons license — consistent with the code's MIT license: attribution required, no restriction on reuse or modification.</span></p>
+      </div></div>
+  </div>
+</section>
+
+<section class="site-section section-tint" id="comment-ca-marche">
+  <div class="shell">
+    <p class="kicker"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></p>
+    <h2><span class="lang-fr">De Figma Community à votre fichier</span><span class="lang-en">From Figma Community to your file</span></h2>
+    <ol class="step-list">
+      <li class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <strong><span class="lang-fr">Dupliquer le fichier</span><span class="lang-en">Duplicate the file</span></strong>
+          <p><span class="lang-fr">Ouvrez la librairie sur Figma Community et cliquez « Duplicate » — vous obtenez votre propre copie éditable, indépendante du fichier source.</span><span class="lang-en">Open the library on Figma Community and click "Duplicate" — you get your own editable copy, independent from the source file.</span></p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <strong><span class="lang-fr">Lier les Variables à votre projet</span><span class="lang-en">Link the Variables to your project</span></strong>
+          <p><span class="lang-fr">Activez la librairie dans vos autres fichiers Figma (icône bibliothèque) pour consommer ses composants et Variables par instance, comme un package npm.</span><span class="lang-en">Enable the library in your other Figma files (library icon) to consume its components and Variables by instance, the same way you'd consume an npm package.</span></p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <strong><span class="lang-fr">Suivre les contrats de composants</span><span class="lang-en">Follow the component contracts</span></strong>
+          <p><span class="lang-fr">Chaque composant documente ses règles d'usage dans <code>guidelines/components/*.md</code> — les mêmes règles que celles que le code applique.</span><span class="lang-en">Every component documents its usage rules in <code>guidelines/components/*.md</code> — the same rules the code itself follows.</span></p>
+        </div>
+      </li></ol>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="shell" style="max-width:760px">
+    <agtc-banner variant="info">
+      <strong><span class="lang-fr">Le code fait foi, jamais l'inverse</span><span class="lang-en">Code is the source of truth, never the reverse</span></strong>
+      <span>
+        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec le <a href="https://github.com/gnegreiros-ux/agentica-design-system/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT du code</a>.</span>
+        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="https://github.com/gnegreiros-ux/agentica-design-system/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license</a>.</span>
+      </span>
+    </agtc-banner>
+  </div>
+</section>
+
+<section class="site-section section-final">
+  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+    <p class="kicker"><span class="lang-fr">Prêt à concevoir</span><span class="lang-en">Ready to design</span></p>
+    <h2><span class="lang-fr">Concevez avec les mêmes décisions que le code</span><span class="lang-en">Design with the same decisions as the code</span></h2>
+    <div class="hero-actions" style="justify-content:center">
+      <a href="https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg> <span class="lang-fr">Ouvrir dans Figma Community ↗</span><span class="lang-en">Open in Figma Community ↗</span>
+      </a>
+      <a href="components/index.html" class="cta-btn cta-btn-secondary">
+        <span class="lang-fr">Explorer les composants</span><span class="lang-en">Explore components</span>
+      </a>
+      <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> <span class="lang-fr">Code source</span><span class="lang-en">Source code</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+  
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <a class="brand" href="index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="180" loading="lazy">
+        <img src="img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="180" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Navigation</span>
+      <a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Documentation</span>
+      <a href="pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="tokens/index.html">Tokens</a>
+      <a href="decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+      <a href="continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+      <a href="changelog.html">Changelog</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Explorer</span>
+      <a href="resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+      <a href="https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="audit.html">Audit</a>
+      <a href="ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="site.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 22 Jul 2026 18:31:09 GMT
+ * Generated on Thu, 10 Sep 2026 12:30:54 GMT
  */
 
 :root {
@@ -20,6 +20,7 @@
   --agtc-component-button-ghost-border: transparent;
   --agtc-component-button-ghost-background: transparent;
   --agtc-component-button-secondary-background: transparent;
+  --agtc-semantic-radius-control-inner: 4px;
   --agtc-semantic-radius-pill: 9999px;
   --agtc-semantic-shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
   --agtc-semantic-shadow-card-hover: 0 4px 16px rgba(13,116,206,0.10);
@@ -35,6 +36,10 @@
   --agtc-primitive-density-factor-compact: 0.75;
   --agtc-primitive-density-factor-comfortable: 1.25;
   --agtc-primitive-density-factor-normal: 1;
+  --agtc-primitive-strokeWidth-xl: 2;
+  --agtc-primitive-strokeWidth-lg: 1.75;
+  --agtc-primitive-strokeWidth-md: 1.5;
+  --agtc-primitive-strokeWidth-sm: 1;
   --agtc-primitive-iconSize-xl: 32px;
   --agtc-primitive-iconSize-lg: 24px;
   --agtc-primitive-iconSize-md: 20px;
@@ -72,6 +77,8 @@
   --agtc-primitive-fontSize-base: 1rem;
   --agtc-primitive-fontSize-sm: 0.875rem;
   --agtc-primitive-fontSize-xs: 0.75rem;
+  --agtc-primitive-space-160: 640px;
+  --agtc-primitive-space-120: 480px;
   --agtc-primitive-space-30: 120px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-20: 80px;
@@ -522,6 +529,10 @@
   --agtc-semantic-marketing-typography-display-line-height: var(--agtc-primitive-lineHeight-display);
   --agtc-semantic-marketing-typography-display-weight: var(--agtc-primitive-fontWeight-bold);
   --agtc-semantic-marketing-typography-display-size: var(--agtc-primitive-fontSize-6xl);
+  --agtc-semantic-icon-strokeWidth-feature: var(--agtc-primitive-strokeWidth-xl);
+  --agtc-semantic-icon-strokeWidth-nav: var(--agtc-primitive-strokeWidth-lg);
+  --agtc-semantic-icon-strokeWidth-control: var(--agtc-primitive-strokeWidth-md);
+  --agtc-semantic-icon-strokeWidth-inline: var(--agtc-primitive-strokeWidth-sm);
   --agtc-semantic-icon-size-feature: var(--agtc-primitive-iconSize-xl);
   --agtc-semantic-icon-size-nav: var(--agtc-primitive-iconSize-lg);
   --agtc-semantic-icon-size-control: var(--agtc-primitive-iconSize-md);
@@ -576,6 +587,9 @@
   --agtc-semantic-radius-card: var(--agtc-primitive-radius-md);
   --agtc-semantic-radius-control: var(--agtc-primitive-radius-sm);
   --agtc-semantic-radius-control-tight: var(--agtc-primitive-radius-xs);
+  --agtc-semantic-size-control-max-width-multiline: var(--agtc-primitive-space-160);
+  --agtc-semantic-size-control-max-width: var(--agtc-primitive-space-120);
+  --agtc-semantic-size-control-min-width: var(--agtc-primitive-space-16);
   --agtc-semantic-space-comfortable-layout-component: ceil(var(--agtc-primitive-space-5) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-comfortable-layout-section: ceil(var(--agtc-primitive-space-8) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
   --agtc-semantic-space-comfortable-control-gap: ceil(var(--agtc-primitive-space-2) * var(--agtc-semantic-space-density-factor-comfortable) / var(--agtc-primitive-density-grid-unit)) * var(--agtc-primitive-density-grid-unit);
@@ -629,7 +643,11 @@
   --agtc-semantic-color-border-on-dark: var(--agtc-primitive-color-white-12);
   --agtc-semantic-color-border-danger: var(--agtc-primitive-color-red-11);
   --agtc-semantic-color-border-focus: var(--agtc-primitive-color-teal-11);
+  --agtc-semantic-color-border-control: var(--agtc-primitive-color-gray-9);
   --agtc-semantic-color-border-default: var(--agtc-primitive-color-gray-4);
+  --agtc-semantic-color-icon-nav: var(--agtc-primitive-color-gray-11);
+  --agtc-semantic-color-icon-control: var(--agtc-primitive-color-gray-11);
+  --agtc-semantic-color-icon-inline: var(--agtc-primitive-color-gray-12);
   --agtc-semantic-color-text-on-code-strong: var(--agtc-primitive-color-gray-1);
   --agtc-semantic-color-text-on-code-muted: var(--agtc-primitive-color-gray-8);
   --agtc-semantic-color-text-on-code: var(--agtc-primitive-color-gray-4);
@@ -760,7 +778,7 @@
   --agtc-component-radio-default-fill: var(--agtc-semantic-color-action-primary);
   --agtc-component-radio-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-component-radio-default-border-hover: var(--agtc-semantic-color-action-primary);
-  --agtc-component-radio-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-component-radio-default-border: var(--agtc-semantic-color-border-control);
   --agtc-component-radio-default-background: var(--agtc-semantic-color-background-surface);
   --agtc-component-checkbox-default-radius: var(--agtc-semantic-radius-control);
   --agtc-component-checkbox-default-label: var(--agtc-semantic-color-text-primary);
@@ -769,7 +787,7 @@
   --agtc-component-checkbox-default-fill: var(--agtc-semantic-color-action-primary);
   --agtc-component-checkbox-default-border-focus: var(--agtc-semantic-color-border-focus);
   --agtc-component-checkbox-default-border-hover: var(--agtc-semantic-color-action-primary);
-  --agtc-component-checkbox-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-component-checkbox-default-border: var(--agtc-semantic-color-border-control);
   --agtc-component-checkbox-default-background: var(--agtc-semantic-color-background-surface);
   --agtc-component-card-typography-marketing-meta-size: var(--agtc-semantic-typography-label-size);
   --agtc-component-card-typography-marketing-body-size: var(--agtc-semantic-typography-body-size);
@@ -819,7 +837,7 @@
   --agtc-component-input-default-text: var(--agtc-semantic-color-text-primary);
   --agtc-component-input-default-border-error: var(--agtc-semantic-color-border-danger);
   --agtc-component-input-default-border-focus: var(--agtc-semantic-color-border-focus);
-  --agtc-component-input-default-border: var(--agtc-semantic-color-border-default);
+  --agtc-component-input-default-border: var(--agtc-semantic-color-border-control);
   --agtc-component-input-default-background: var(--agtc-semantic-color-background-surface);
   --agtc-component-button-ghost-text: var(--agtc-semantic-color-action-primary);
   --agtc-component-button-ghost-background-hover: var(--agtc-semantic-color-background-subtle);

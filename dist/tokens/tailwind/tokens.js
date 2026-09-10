@@ -49,7 +49,11 @@ export default {
     "agtc-color-text-on-code": "var(--agtc-semantic-color-text-on-code)",
     "agtc-color-text-on-code-muted": "var(--agtc-semantic-color-text-on-code-muted)",
     "agtc-color-text-on-code-strong": "var(--agtc-semantic-color-text-on-code-strong)",
+    "agtc-color-icon-inline": "var(--agtc-semantic-color-icon-inline)",
+    "agtc-color-icon-control": "var(--agtc-semantic-color-icon-control)",
+    "agtc-color-icon-nav": "var(--agtc-semantic-color-icon-nav)",
     "agtc-color-border-default": "var(--agtc-semantic-color-border-default)",
+    "agtc-color-border-control": "var(--agtc-semantic-color-border-control)",
     "agtc-color-border-focus": "var(--agtc-semantic-color-border-focus)",
     "agtc-color-border-danger": "var(--agtc-semantic-color-border-danger)",
     "agtc-color-border-on-dark": "var(--agtc-semantic-color-border-on-dark)",
@@ -110,6 +114,7 @@ export default {
     "agtc-radius-control-tight": "var(--agtc-semantic-radius-control-tight)",
     "agtc-radius-control": "var(--agtc-semantic-radius-control)",
     "agtc-radius-card": "var(--agtc-semantic-radius-card)",
-    "agtc-radius-pill": "var(--agtc-semantic-radius-pill)"
+    "agtc-radius-pill": "var(--agtc-semantic-radius-pill)",
+    "agtc-radius-control-inner": "var(--agtc-semantic-radius-control-inner)"
   }
 };

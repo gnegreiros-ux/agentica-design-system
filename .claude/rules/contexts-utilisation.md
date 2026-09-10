@@ -32,6 +32,7 @@ When in doubt: if the page contains component or token documentation → Product
 | `qualite.html` | Marketing | `data-context="marketing"` |
 | `ia.html` | Marketing | `data-context="marketing"` |
 | `documentation.html` | Marketing | `data-context="marketing"` |
+| `resources.html` | Marketing | `data-context="marketing"` |
 | `continuite.html` | Product | *(none)* |
 | All others | Product | *(none)* |
 

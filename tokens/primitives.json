@@ -2310,6 +2310,16 @@
         "$value": "120px",
         "$type": "dimension",
         "$description": "4px × 30 — respiration hero marketing"
+      },
+      "120": {
+        "$value": "480px",
+        "$type": "dimension",
+        "$description": "4px × 120 — single-line control max-width ceiling (ADR-094)"
+      },
+      "160": {
+        "$value": "640px",
+        "$type": "dimension",
+        "$description": "4px × 160 — multi-line control max-width ceiling, ~70ch at body size (ADR-094)"
       }
     },
     "fontSize": {
@@ -2513,6 +2523,28 @@
         "$value": "32px",
         "$type": "dimension",
         "$description": "Feature icon — marketing cards, hook sections (4px grid: 8×4)"
+      }
+    },
+    "strokeWidth": {
+      "sm": {
+        "$value": "1",
+        "$type": "number",
+        "$description": "Thinnest stroke — inline icons (16px) sit next to body text; a light stroke keeps them from competing with the surrounding copy (ADR-091)."
+      },
+      "md": {
+        "$value": "1.5",
+        "$type": "number",
+        "$description": "Standard stroke — interactive control icons (20px)"
+      },
+      "lg": {
+        "$value": "1.75",
+        "$type": "number",
+        "$description": "Bolder stroke — navigation/emphasis icons (24px) carry more visual weight for hierarchy"
+      },
+      "xl": {
+        "$value": "2",
+        "$type": "number",
+        "$description": "Boldest stroke — feature icons (32px), marketing cards/hook sections. Matches primitive.iconSize.xl."
       }
     },
     "density": {

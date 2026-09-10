@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Wed, 22 Jul 2026 18:31:09 GMT
+// Generated on Thu, 10 Sep 2026 12:30:54 GMT
 
 
 import UIKit
@@ -104,7 +104,7 @@ public class AgenticaTokens {
     public static let cardTypographyTitleSize = 0.875rem
     public static let cardTypographyTitleWeight = 700
     public static let checkboxDefaultBackground = #ffffff
-    public static let checkboxDefaultBorder = #e8e8e8
+    public static let checkboxDefaultBorder = #8d8d8d
     public static let checkboxDefaultBorderFocus = #007a68
     public static let checkboxDefaultBorderHover = #007a68
     public static let checkboxDefaultCheck = #ffffff
@@ -129,7 +129,7 @@ public class AgenticaTokens {
     public static let imageSkeletonBackground = #f0f0f0
     public static let imageSkeletonBackgroundPulse = #fafafa
     public static let inputDefaultBackground = #ffffff
-    public static let inputDefaultBorder = #e8e8e8
+    public static let inputDefaultBorder = #8d8d8d
     public static let inputDefaultBorderError = #ce2c31
     public static let inputDefaultBorderFocus = #007a68
     public static let inputDefaultPaddingX = 16px
@@ -612,7 +612,9 @@ public class AgenticaTokens {
     public static let primitiveSpace1 = 4px
     public static let primitiveSpace10 = 40px
     public static let primitiveSpace12 = 48px
+    public static let primitiveSpace120 = 480px
     public static let primitiveSpace16 = 64px
+    public static let primitiveSpace160 = 640px
     public static let primitiveSpace2 = 8px
     public static let primitiveSpace20 = 80px
     public static let primitiveSpace24 = 96px
@@ -622,8 +624,12 @@ public class AgenticaTokens {
     public static let primitiveSpace5 = 20px
     public static let primitiveSpace6 = 24px
     public static let primitiveSpace8 = 32px
+    public static let primitiveStrokeWidthLg = 1.75
+    public static let primitiveStrokeWidthMd = 1.5
+    public static let primitiveStrokeWidthSm = 1
+    public static let primitiveStrokeWidthXl = 2
     public static let radioDefaultBackground = #ffffff
-    public static let radioDefaultBorder = #e8e8e8
+    public static let radioDefaultBorder = #8d8d8d
     public static let radioDefaultBorderFocus = #007a68
     public static let radioDefaultBorderHover = #007a68
     public static let radioDefaultFill = #007a68
@@ -649,6 +655,7 @@ public class AgenticaTokens {
     public static let semanticColorBackgroundPage = #fcfcfc
     public static let semanticColorBackgroundSubtle = #f0f0f0
     public static let semanticColorBackgroundSurface = #ffffff
+    public static let semanticColorBorderControl = #8d8d8d
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8
     public static let semanticColorBorderFocus = #007a68
@@ -686,6 +693,9 @@ public class AgenticaTokens {
     public static let semanticColorFeedbackWarningBorder = #ffc182
     public static let semanticColorFeedbackWarningSubtle = #ffefd6
     public static let semanticColorFeedbackWarningText = #582d1d
+    public static let semanticColorIconControl = #646464
+    public static let semanticColorIconInline = #202020
+    public static let semanticColorIconNav = #646464
     public static let semanticColorIllustrationAccent = #e93d82
     public static let semanticColorIllustrationBrand = #12a594
     public static let semanticColorIllustrationInk = #211f26
@@ -713,6 +723,10 @@ public class AgenticaTokens {
     public static let semanticIconSizeFeature = 32px
     public static let semanticIconSizeInline = 16px
     public static let semanticIconSizeNav = 24px
+    public static let semanticIconStrokeWidthControl = 1.5
+    public static let semanticIconStrokeWidthFeature = 2
+    public static let semanticIconStrokeWidthInline = 1
+    public static let semanticIconStrokeWidthNav = 1.75
     public static let semanticMarketingSpaceHeroGap = 120px
     public static let semanticMarketingSpaceSectionBreathing = 96px
     public static let semanticMarketingTypographyDisplayLineHeight = 1.0
@@ -723,12 +737,16 @@ public class AgenticaTokens {
     public static let semanticMarketingTypographyEyebrowWeight = 700
     public static let semanticRadiusCard = 10px
     public static let semanticRadiusControl = 6px
+    public static let semanticRadiusControlInner = 4px
     public static let semanticRadiusControlTight = 2px
     public static let semanticRadiusPill = 9999px
     public static let semanticShadowCard = 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)
     public static let semanticShadowCardHover = 0 4px 16px rgba(13,116,206,0.10)
     public static let semanticShadowHeader = 0 2px 24px rgba(0,0,0,0.12)
     public static let semanticShadowRaised = 0 4px 16px rgba(0,0,0,0.10)
+    public static let semanticSizeControlMaxWidth = 480px
+    public static let semanticSizeControlMaxWidthMultiline = 640px
+    public static let semanticSizeControlMinWidth = 64px
     public static let semanticSpaceComfortableControlGap = ceil(8px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingX = ceil(16px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingY = ceil(8px * 1.25 / 4) * 4
