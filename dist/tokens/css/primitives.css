@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 09 Sep 2026 14:49:57 GMT
+ * Generated on Thu, 10 Sep 2026 12:30:54 GMT
  */
 
 :root {
@@ -445,6 +445,8 @@
   --agtc-primitive-space-20: 80px;
   --agtc-primitive-space-24: 96px;
   --agtc-primitive-space-30: 120px;
+  --agtc-primitive-space-120: 480px;
+  --agtc-primitive-space-160: 640px;
   --agtc-primitive-fontSize-xs: 0.75rem;
   --agtc-primitive-fontSize-sm: 0.875rem;
   --agtc-primitive-fontSize-base: 1rem;

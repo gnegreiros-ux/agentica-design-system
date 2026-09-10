@@ -2310,6 +2310,16 @@
         "$value": "120px",
         "$type": "dimension",
         "$description": "4px × 30 — respiration hero marketing"
+      },
+      "120": {
+        "$value": "480px",
+        "$type": "dimension",
+        "$description": "4px × 120 — single-line control max-width ceiling (ADR-094)"
+      },
+      "160": {
+        "$value": "640px",
+        "$type": "dimension",
+        "$description": "4px × 160 — multi-line control max-width ceiling, ~70ch at body size (ADR-094)"
       }
     },
     "fontSize": {

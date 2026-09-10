@@ -1651,7 +1651,7 @@ body.page{
 
 /* Boutons V2 */
 .cta-btn{
-  display:inline-flex;align-items:center;min-height:44px;
+  display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap,8px);min-height:44px;
   padding:var(--agtc-component-button-primary-padding-y,11px) var(--agtc-component-button-primary-padding-x,24px);
   border:1.5px solid transparent;
   border-radius:var(--agtc-component-button-primary-radius,var(--agtc-semantic-radius-control,8px));

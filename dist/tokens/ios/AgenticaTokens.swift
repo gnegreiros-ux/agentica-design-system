@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Wed, 09 Sep 2026 14:49:58 GMT
+// Generated on Thu, 10 Sep 2026 12:30:54 GMT
 
 
 import UIKit
@@ -612,7 +612,9 @@ public class AgenticaTokens {
     public static let primitiveSpace1 = 4px
     public static let primitiveSpace10 = 40px
     public static let primitiveSpace12 = 48px
+    public static let primitiveSpace120 = 480px
     public static let primitiveSpace16 = 64px
+    public static let primitiveSpace160 = 640px
     public static let primitiveSpace2 = 8px
     public static let primitiveSpace20 = 80px
     public static let primitiveSpace24 = 96px
@@ -742,6 +744,9 @@ public class AgenticaTokens {
     public static let semanticShadowCardHover = 0 4px 16px rgba(13,116,206,0.10)
     public static let semanticShadowHeader = 0 2px 24px rgba(0,0,0,0.12)
     public static let semanticShadowRaised = 0 4px 16px rgba(0,0,0,0.10)
+    public static let semanticSizeControlMaxWidth = 480px
+    public static let semanticSizeControlMaxWidthMultiline = 640px
+    public static let semanticSizeControlMinWidth = 64px
     public static let semanticSpaceComfortableControlGap = ceil(8px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingX = ceil(16px * 1.25 / 4) * 4
     public static let semanticSpaceComfortableControlPaddingY = ceil(8px * 1.25 / 4) * 4
