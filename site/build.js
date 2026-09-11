@@ -3290,7 +3290,6 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}tokens/index.html">Tokens</a>
       <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
       <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
-      <a href="${base}changelog.html">Changelog</a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
@@ -3298,6 +3297,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
       <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
+      <a href="${base}changelog.html">Changelog</a>
       <a href="${base}ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
     </div>
   </div>
@@ -3396,6 +3396,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
           <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
           <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="${base}audit.html">Audit</a>
+          <a href="${base}changelog.html">Changelog</a>
         </div>
       </div>
     </div>
@@ -4122,6 +4123,11 @@ function buildIA() {
         <div class="editorial-icon">${icon('network', 20)}</div>
         <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
         <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon('puzzle', 20)}</div>
+        <h2><span class="lang-fr">Interopérabilité IA</span><span class="lang-en">AI interoperability</span></h2>
+        <p><span class="lang-fr">Agentica n'est pas construit pour un seul outil. <code>AGENTS.md</code> est la source de vérité de gouvernance, lue nativement par Codex, GitHub Copilot et (via un import) Gemini CLI — chacun avec sa propre parité de compétences et de rappels automatiques, vérifiée par un garde-fou CI. Voir <a href="agents/index.html#autres-outils">la comparaison par outil</a>.</span><span class="lang-en">Agentica isn't built for one tool alone. <code>AGENTS.md</code> is the governance source of truth, read natively by Codex, GitHub Copilot, and (via an import) Gemini CLI — each with its own skill and reminder parity, checked by a CI gate. See <a href="agents/index.html#autres-outils">the per-tool comparison</a>.</span></p>
       </div>
     </div>
   </div>

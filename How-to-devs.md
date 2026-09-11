@@ -155,6 +155,27 @@ touched — GitHub Projects and the site changelog above all. It checks every ro
 of `pipelines/docs.md`, writes the relevant ones, re-runs the build/tests, and
 proposes a commit — it never commits or pushes on its own.
 
+### Using another AI tool (Codex, Copilot, Gemini)
+
+`AGENTS.md` is the single source of truth for governance, read natively by Codex
+CLI and GitHub Copilot — clone the repo and it's there, no setup. Same for
+`.agents/skills/<name>/SKILL.md`, the open Agent Skills format both tools
+auto-load: it carries working ports of the 7 core Claude Code skills
+(`ai-component-metadata`, `ai-ds-composer`, `codebase-index`, `quality-gate`,
+`ux-pattern-review`, `document`, `post-change-pipeline`).
+
+Gemini CLI needs one extra step — it doesn't read `AGENTS.md` by default, so
+`GEMINI.md` (a thin `@AGENTS.md` import, same pattern as `CLAUDE.md`) carries it
+instead. Gemini also has a real hooks system, so two of Claude Code's reminder
+hooks (ADR-creation nudge, UX-pattern-review nudge) were rebuilt natively for it
+in `.gemini/settings.json` + `.gemini/hooks/*.js`.
+
+None of this is a guarantee of parity — `governance/ai-skills-reference.md`
+documents what's actually ported vs. still only described, and
+`governance/tool-parity/<tool>.md` (one per integrated tool, required by the
+`tool-parity` CI check) records, per control, what's replaced and what's an
+accepted gap.
+
 ---
 
 ## 4. Files to know
@@ -167,7 +188,8 @@ proposes a commit — it never commits or pushes on its own.
 | `scripts/audit-language.js` | English-only content policy audit (`npm run lang-audit`) | If new French content is suspected outside the site's bilingual spans |
 | `governance/rules/code-style.md` | CSS/HTML conventions — naming rules | If a new style rule is decided |
 | `governance/rules/` | Rules and constraints for AI agents | If a new governance decision is made |
-| `AGENTS.md` | Agent router | If a new agent type is added |
+| `AGENTS.md` | Agent router — single source of truth, read by every AI tool | If a new agent type is added |
+| `governance/ai-skills-reference.md` | What's ported to Codex/Copilot/Gemini vs. still only described | When a skill or pipeline changes |
 
 ---
 
