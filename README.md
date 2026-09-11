@@ -58,13 +58,22 @@ agentica-design-system/
 │   ├── instructions/
 │   │   ├── codebase-context.md        ← full technical context
 │   │   └── session-spec.md            ← condensed spec reloaded every AI session
-│   └── ai-skills-reference.md         ← what other AI tools should reproduce from .claude/skills/
+│   ├── ai-skills-reference.md         ← what .claude/skills/ automates, ported vs. still to reproduce
+│   └── tool-parity/                   ← per-tool sign-off: what's replaced, what's accepted absent
 │
 ├── .claude/
-│   └── skills/                        ← Claude Code-specific implementation (not portable)
+│   └── skills/                        ← Claude Code-native implementation (source of truth)
 │       ├── ai-component-metadata.md
 │       ├── ai-ds-composer.md
 │       └── codebase-index.md
+│
+├── .agents/
+│   └── skills/                        ← open Agent Skills format — Codex CLI + GitHub Copilot
+│       └── ai-component-metadata/SKILL.md   load these automatically, no setup
+│
+├── .gemini/
+│   ├── settings.json                  ← Gemini CLI hooks (real ADR/UX-pattern reminders)
+│   └── hooks/*.js
 │
 ├── components/
 │   └── ds-icon.js                     ← icon Web Component (Lucide)

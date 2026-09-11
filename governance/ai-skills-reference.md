@@ -7,7 +7,8 @@
 > **Type:** reference
 > **Logical path:** governance/ai-skills-reference.md
 > **Read before:** AGENTS.md
-> **Relations:** AGENTS.md, .claude/skills/, governance/rules/post-change-pipeline.md
+> **Relations:** AGENTS.md, .claude/skills/, .agents/skills/, .gemini/settings.json,
+> governance/rules/post-change-pipeline.md
 
 ---
 
@@ -18,26 +19,44 @@ invokable capabilities (slash commands, pre-commit orchestration, reusable revie
 checklists). It is Claude Code-specific implementation and does not move as part of
 the `governance/` migration — see AGENTS.md.
 
-Other AI tools have no shared standard for this yet. This file describes, tool-agnostically,
-**what each skill does and why it exists in Agentica**, so a team using a different
-assistant knows what behavior to reproduce with whatever mechanism their tool offers
-(a custom rule, a system prompt, a pre-commit hook, a saved prompt template). It is
-deliberately descriptive of the expected behavior, not prescriptive of any specific
-competing product's mechanism.
+As of 2026-09-11, two of Agentica's skills-delivery mechanisms are real, working
+cross-tool ports, not just described behavior to reproduce by hand:
+
+- **`.agents/skills/<name>/SKILL.md`** — the 7 core skills below (everything except
+  the pipeline checklists) ported to the open Agent Skills format
+  ([agentskills.io](https://agentskills.io), Linux Foundation AAIF-governed since
+  May 2026). Codex CLI and GitHub Copilot CLI (Agent Skills support added December
+  2025) both auto-load skills from this directory with no install step — clone the
+  repo, they're there.
+- **`.gemini/settings.json` + `.gemini/hooks/*.js`** — Gemini CLI has a real hooks
+  system (unlike Codex/Copilot), so Agentica's two reminder-style behaviors
+  (ADR-trigger, UX-pattern-review nudge) were rebuilt natively for it rather than
+  only described. See `governance/tool-parity/gemini.md` for exactly what's covered,
+  what isn't, and which parts are a best-evidenced guess pending verification
+  against a live Gemini CLI session (no access to one from this environment).
+  Gemini's own skills/extension format was deliberately **not** used — unlike
+  `.agents/skills/`, a Gemini extension requires an explicit
+  `gemini extensions install <url>` step and isn't auto-discovered from a cloned
+  repo, so it wouldn't travel with this repo the way the rest of this does.
+
+Everything else in this file is still descriptive, not a working port: **what each
+skill does and why it exists in Agentica**, so a team using a tool without a real
+port yet knows what behavior to reproduce with whatever mechanism their tool offers
+(a custom rule, a system prompt, a pre-commit hook, a saved prompt template).
 
 ---
 
 ## Core skills
 
-| Skill | File | Trigger |
-|-------|------|---------|
-| ai-component-metadata | `.claude/skills/ai-component-metadata.md` | Verifying a component is "agent-ready" |
-| ai-ds-composer | `.claude/skills/ai-ds-composer.md` | Composing an interface from a natural-language request |
-| codebase-index | `.claude/skills/codebase-index.md` | Needing an up-to-date map of the system's components/tokens/dependencies |
-| post-change-pipeline | `.claude/skills/post-change-pipeline.md` | After every modification, before every commit — mandatory, no exceptions |
-| quality-gate | `.claude/skills/quality-gate.md` | Pre-commit — orchestrates every active pipeline below |
-| ux-pattern-review | `.claude/skills/ux-pattern-review.md` | Before publishing a new component, or a UX-relevant change to an existing one |
-| document (`/document`) | `.claude/skills/document/SKILL.md` | Invoked manually at the end of a work session |
+| Skill | Claude Code file | Codex / Copilot port | Trigger |
+|-------|-------------------|------------------------|---------|
+| ai-component-metadata | `.claude/skills/ai-component-metadata.md` | `.agents/skills/ai-component-metadata/SKILL.md` | Verifying a component is "agent-ready" |
+| ai-ds-composer | `.claude/skills/ai-ds-composer.md` | `.agents/skills/ai-ds-composer/SKILL.md` | Composing an interface from a natural-language request |
+| codebase-index | `.claude/skills/codebase-index.md` | `.agents/skills/codebase-index/SKILL.md` | Needing an up-to-date map of the system's components/tokens/dependencies |
+| post-change-pipeline | `.claude/skills/post-change-pipeline.md` | `.agents/skills/post-change-pipeline/SKILL.md` | After every modification, before every commit — mandatory, no exceptions |
+| quality-gate | `.claude/skills/quality-gate.md` | `.agents/skills/quality-gate/SKILL.md` | Pre-commit — orchestrates every active pipeline below |
+| ux-pattern-review | `.claude/skills/ux-pattern-review.md` | `.agents/skills/ux-pattern-review/SKILL.md` | Before publishing a new component, or a UX-relevant change to an existing one |
+| document (`/document`) | `.claude/skills/document/SKILL.md` | `.agents/skills/document/SKILL.md` | Invoked manually at the end of a work session |
 
 ### ai-component-metadata
 Audits and enriches a component's structured metadata (props, states, token bindings,
