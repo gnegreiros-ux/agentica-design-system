@@ -31,6 +31,7 @@ agentica-design-system/
 ├── DESIGN.md                          ← portable brand contract
 ├── AGENTS.md                          ← AI agent router (single source of truth for governance)
 ├── CLAUDE.md                          ← thin adapter — imports AGENTS.md, Claude Code specifics only
+├── GEMINI.md                          ← thin adapter — imports AGENTS.md, Gemini CLI specifics only
 ├── How-to-designers.md                ← design system team guide (designers)
 ├── How-to-devs.md                     ← design system team guide (developers)
 │
