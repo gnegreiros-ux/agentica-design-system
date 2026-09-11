@@ -1,4 +1,4 @@
-# Agentica — Agentic Design System
+# Agentica™ — Agentic Design System
 
 Copyright © 2026 Guilherme Negreiros
 
