@@ -1,5 +1,7 @@
 # Agentica — Agentic Design System
 
+Copyright © 2026 Guilherme Negreiros
+
 > A design system structured to be read by humans **and** AI agents.
 > Based on work presented at the AI Design Systems Conference 2026 (Into Design Systems).
 > **Type:** instruction

@@ -143,7 +143,7 @@ decisions that were already settled.
 | [ADR-078](ADR-078-figma-tokens-studio-write-restriction.md) | Restrict Tokens Studio write access to the `agentica/proposals` branch | 2026-07-20 | ✅ Active |
 | [ADR-079](ADR-079-figma-audit-scheduled-routine.md) | Weekly scheduled cloud agent for the Figma §22 full-library audit | 2026-07-21 | ✅ Active |
 | [ADR-080](ADR-080-figma-community-file-content-triage.md) | Figma Community File content triage rule: brand identity stays private | 2026-07-21 | ✅ Active |
-| [ADR-081](ADR-081-figma-community-file-license.md) | Figma Community File license: CC BY 4.0 | 2026-07-21 | ✅ Active |
+| [ADR-081](ADR-081-figma-community-file-license.md) | Figma Community File license: CC BY 4.0 | 2026-07-21 | ⚠️ Superseded by ADR-095 |
 | [ADR-082](ADR-082-figma-brand-file-separation.md) | Brand/logo separated into a dedicated Figma library file (amends ADR-080) | 2026-07-21 | ✅ Active |
 | [ADR-083](ADR-083-agtc-image-implementation.md) | `agtc-image` implementation | 2026-07-21 | ✅ Active |
 | [ADR-084](ADR-084-illustrations-migrated-to-agtc-image-no-wrapper.md) | Home page illustrations migrated to `agtc-image` directly, no `agtc-illustration` wrapper | 2026-07-21 | ✅ Active |
@@ -156,6 +156,7 @@ decisions that were already settled.
 | [ADR-091](ADR-091-icon-per-variant-stroke-width-and-color-tokens.md) | Per-variant stroke-width and default-color tokens for `agtc-icon` — stroke-width no longer hardcoded | 2026-07-30 | ✅ Active |
 | [ADR-092](ADR-092-visited-safari-fallback-incident.md) | Safari `:visited` hex-fallback incident, consolidated record (amends ADR-047, ADR-059, ADR-060) | 2026-08-28 | ✅ Active |
 | [ADR-093](ADR-093-border-control-accessible-resting-boundary.md) | Accessible resting control boundary: new semantic token `border.control` (checkbox/radio/input) | 2026-09-09 | ✅ Active |
+| [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) | Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license (supersedes ADR-081) | 2026-09-11 | ✅ Active |
 
 ---
 
