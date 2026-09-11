@@ -77,10 +77,21 @@ function detectTools() {
 function parseAttestation(content) {
   const rows = {};
   for (const line of content.split('\n')) {
-    const m = line.match(/^\|\s*([a-z-]+)\s*\|[^|]*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*$/);
-    if (!m) continue;
-    const [, control, decision, confirmedBy, date] = m;
+    if (!/^\|\s*[a-z-]+\s*\|/.test(line)) continue;
+    const control = line.match(/^\|\s*([a-z-]+)\s*\|/)[1];
     if (!REQUIRED_CONTROLS.includes(control)) continue;
+    // Full split (not a lazy regex) so a stray literal "|" inside a cell — e.g.
+    // an escaped "Write\|Edit" or a shell pipe quoted in prose — surfaces as a
+    // malformed row instead of silently shifting columns and passing by accident.
+    const cells = line.split('|').map(c => c.trim());
+    // A well-formed "| control | reference | decision | confirmed by | date |"
+    // row split on "|" yields 7 entries: '', control, reference, decision,
+    // confirmedBy, date, ''.
+    if (cells.length !== 7) {
+      rows[control] = { malformed: true };
+      continue;
+    }
+    const [, , , decision, confirmedBy, date] = cells;
     rows[control] = { decision, confirmedBy, date };
   }
   return rows;
@@ -88,6 +99,9 @@ function parseAttestation(content) {
 
 function validAttestationRow(row) {
   if (!row) return { valid: false, reason: 'row missing from the table' };
+  if (row.malformed) {
+    return { valid: false, reason: 'malformed row — unexpected number of "|"-separated columns (check for a stray literal "|" inside a cell)' };
+  }
   if (!row.decision || row.decision.includes('_TODO_')) {
     return { valid: false, reason: 'Decision still a placeholder' };
   }
