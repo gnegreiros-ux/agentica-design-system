@@ -1,0 +1,45 @@
+name: Site — dist freshness
+
+# Enforces .claude/skills/pipelines/site.md: site/dist/ must reflect the
+# current site/build.js, tokens/, decisions/, and guidelines/ — a PR touching
+# any of those without rebuilding leaves a stale, committed site/dist/ that
+# nobody notices until the next unrelated rebuild silently absorbs the fix.
+#
+# Rebuilds and diffs against the committed site/dist/. site/dist/audit.html
+# is excluded on purpose — it embeds the actual build timestamp, so it always
+# differs between "committed" and "just rebuilt" even with zero real changes;
+# see this workflow's introducing commit for how that was confirmed.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  site-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        # npm install (not npm ci): same cross-platform lockfile rationale as
+        # deploy-site.yml and chromatic.yml.
+        run: npm install --no-audit --no-fund
+
+      - name: Build site
+        working-directory: site
+        run: node build.js
+
+      - name: Check site/dist/ is up to date
+        run: |
+          if ! git diff --exit-code -- site/dist -- ':(exclude)site/dist/audit.html'; then
+            echo "::error::site/dist/ is stale — run 'node site/build.js' and commit the result."
+            exit 1
+          fi

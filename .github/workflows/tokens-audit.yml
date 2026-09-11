@@ -1,0 +1,31 @@
+name: Tokens — hardcoded-value and structure audit
+
+# Enforces .claude/skills/pipelines/tokens-audit.md: no orphaned/phantom tokens,
+# no hardcoded color/spacing value bypassing the token system, three-layer
+# structure (primitive → semantic → component) stays consistent.
+#
+# Previously this only ran when Claude Code's quality-gate Skill was asked to
+# run it before a commit — compliance by instruction, not an actual gate, and
+# not something any other tool or human committer was bound by. This makes it
+# a real one: cheap (checkout + node, no build), runs on every push and PR.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tokens-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Run tokens audit
+        run: node scripts/audit-tokens.js --ci

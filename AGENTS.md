@@ -110,7 +110,8 @@ contract), `guidelines/` (foundations and components), and the `governance/rules
 Read `governance/ai-skills-reference.md` for what `.claude/skills/` automates and how to
 reproduce each control with your own tool. That's a reference, not an enforcement — if
 you're the first to wire this repo up for a tool other than Claude Code (a new
-`.codex/`, `.github/copilot-instructions.md`, `.cursor/`, `.windsurf/`, …), you must also
+`.github/copilot-instructions.md`, `.cursor/`, `.windsurf/`, `.gemini/`/`GEMINI.md`, …),
+you must also
 add `governance/tool-parity/<tool-slug>.md` (copy `governance/tool-parity/TEMPLATE.md`)
 recording, for every mandatory control, either how it's replaced or why its absence is
 accepted. `scripts/check-tool-parity.js` (CI: `.github/workflows/tool-parity.yml`) fails

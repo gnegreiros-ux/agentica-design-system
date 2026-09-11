@@ -100,15 +100,15 @@ quality-gate's building blocks, run in this order:
 
 | Pipeline | Status | Checks |
 |----------|--------|--------|
-| tokens-audit | ✅ Active | Token system consistency (primitive → semantic → component) |
+| tokens-audit | ✅ Active — **CI-enforced** | Token system consistency (primitive → semantic → component) |
 | language-audit | ✅ Active | English-only content policy (ADR-070/071/075) |
 | wcag | ✅ Active | WCAG 2.2 AA compliance checklist |
 | ux-patterns | ✅ Active | Blocking guardrail requiring `ux-pattern-review` before publishing |
 | adr-conformity | ✅ Active | Change complies with every active ADR |
 | adr-triggers | ✅ Active | Whether the change requires a new ADR |
 | docs | ✅ Active | Canonical checklist of every documentation surface to update |
-| site | ✅ Active | Rebuild and validate the static documentation site |
-| commit | ✅ Active | Commit message format and conventions |
+| site | ✅ Active — **CI-enforced** | Rebuild and validate the static documentation site |
+| commit | ✅ Active — **CI-enforced** | Commit message format and conventions |
 | chromatic | ✅ Active | Visual regression tests against the approved baseline |
 | axe-core | 🔜 Report mode | Automated accessibility audit (non-blocking during burn-down) |
 | storybook | 🔜 Planned | Story presence and consistency with the token system |
@@ -125,13 +125,39 @@ in order, before a commit is proposed.
 ## Tool parity gate — required, not just documented
 
 The table above is knowledge, not enforcement: nothing stops a team from reading it and
-still shipping with none of these 11 controls wired up for their tool. `.github/workflows/
-tool-parity.yml` (`scripts/check-tool-parity.js`) closes that gap mechanically. It scans
-the repo for known AI-tool config paths (`.codex/`, `.github/copilot-instructions.md`,
-`.cursor/`, `.windsurf/`, …) and, for each one it finds, requires a matching
-`governance/tool-parity/<tool-slug>.md` file where a human has recorded, for every control
-above, either `Replaced: <how>` or `Accepted absence: <why>` — signed with a name and a
-date. It does not judge whether the replacement is *good*, only that someone made and
-recorded the call instead of the gap going unnoticed. See `governance/tool-parity/
-TEMPLATE.md` to add a new tool's attestation, and `governance/rules/git-workflow.md` for
-why this check isn't yet required in branch protection.
+still shipping with none of these controls wired up for their tool. Four of the eleven —
+`tokens-audit`, `language-audit`, `site`, `commit` — no longer need that per-tool
+enforcement at all: as of 2026-09-11 they're tool-agnostic CI (`.github/workflows/
+tokens-audit.yml`, `lang-audit.yml`, `site-freshness.yml`, `commit-lint.yml`), running
+identically no matter which AI or human authored the commit. That leaves 7 genuinely
+tool-dependent controls (`wcag`, `ux-patterns`, `adr-conformity`, `adr-triggers`, `docs`,
+`chromatic`, `axe-core`) — mostly ones that depended on Claude Code's hook-based reminders
+or on Claude choosing to run a checklist conversationally.
+
+`.github/workflows/tool-parity.yml` (`scripts/check-tool-parity.js`) closes the remaining
+gap mechanically. It scans the repo for known AI-tool config paths (`.github/
+copilot-instructions.md`, `.cursor/`, `.windsurf/`, `.gemini/`/`GEMINI.md`, …) and, for
+each one it finds, requires a matching `governance/tool-parity/<tool-slug>.md` file where
+a human has recorded, for each of the 7 remaining controls, either `Replaced: <how>` or
+`Accepted absence: <why>` — signed with a name and a date. It does not judge whether the
+replacement is *good*, only that someone made and recorded the call instead of the gap
+going unnoticed.
+
+What "Replaced" can realistically mean differs by tool, checked against each tool's own
+docs (2026-09-11):
+- **Codex CLI** and **GitHub Copilot** (CLI + coding agent) have no hook/automation
+  mechanism at all — both are static-instructions-only (`AGENTS.md`, plus
+  `copilot-instructions.md`/`.instructions.md` for Copilot). A real "Replaced" for a
+  reminder-style control there has to be a tool-agnostic git hook or CI check, not
+  something native to the tool. Codex does support `.agents/skills/<name>/SKILL.md`,
+  a plausible path toward `.claude/skills/` parity specifically (separate from this
+  table's per-control decisions).
+- **Gemini CLI** has a real hooks system (`.gemini/settings.json`'s `hooks`, events
+  including `BeforeTool`/`AfterTool`/`BeforeAgent`, returning
+  `hookSpecificOutput.additionalContext`) structurally close to Claude Code's own
+  `PostToolUse` hooks — the one tool where a genuinely equivalent, tool-native
+  reminder mechanism is realistic to build.
+
+See `governance/tool-parity/TEMPLATE.md` (which carries these notes in full, plus exact
+sources) to add a new tool's attestation, and `governance/rules/git-workflow.md` for why
+this check isn't yet required in branch protection.

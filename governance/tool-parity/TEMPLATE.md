@@ -17,6 +17,14 @@ check — see .github/workflows/tool-parity.yml). This is deliberate: a human
 must make and sign an explicit call for every control, not just the ones
 that happen to be covered.
 
+`tokens-audit`, `language-audit`, `site`, and `commit` are NOT in the table
+below — as of 2026-09-11 they're enforced by tool-agnostic CI
+(`.github/workflows/tokens-audit.yml`, `lang-audit.yml`, `site-freshness.yml`,
+`commit-lint.yml`), identically for every tool and human. Nothing to attest
+per-tool there. Only the controls below can legitimately differ by which AI
+tool is driving a session — most of them because they depend on a hook/reminder
+mechanism that not every tool has (see the per-tool notes at the bottom).
+
 See governance/ai-skills-reference.md for what each control means and does
 in Agentica, and AGENTS.md for how this fits the wider governance model.
 -->
@@ -30,14 +38,34 @@ in Agentica, and AGENTS.md for how this fits the wider governance model.
 
 | Control | Reference (Claude Code) | Decision | Confirmed by | Date |
 |---|---|---|---|---|
-| tokens-audit | `.claude/skills/pipelines/tokens-audit.md` | _TODO_ | | |
-| language-audit | `.claude/skills/pipelines/language-audit.md` | _TODO_ | | |
 | wcag | `.claude/skills/pipelines/wcag.md` | _TODO_ | | |
 | ux-patterns | `.claude/skills/pipelines/ux-patterns.md` | _TODO_ | | |
 | adr-conformity | `.claude/skills/pipelines/adr-conformity.md` | _TODO_ | | |
 | adr-triggers | `.claude/skills/pipelines/adr-triggers.md` | _TODO_ | | |
 | docs | `.claude/skills/pipelines/docs.md` | _TODO_ | | |
-| site | `.claude/skills/pipelines/site.md` | _TODO_ | | |
-| commit | `.claude/skills/pipelines/commit.md` | _TODO_ | | |
-| chromatic | `.claude/skills/pipelines/chromatic.md` | _TODO_ | | |
+| chromatic | `.claude/skills/pipelines/chromatic.md` (currently manual-only for every tool — free-tier snapshot limit) | _TODO_ | | |
 | axe-core | `.claude/skills/pipelines/axe-core.md` (report mode, non-blocking even for Claude Code today) | _TODO_ | | |
+
+<!--
+Per-tool mechanism notes (researched 2026-09-11 against each tool's own docs —
+verify against current docs before relying on these, they move fast):
+
+- **Codex CLI** — no hooks system exists; reads AGENTS.md natively (root +
+  nested) and a global ~/.codex/AGENTS.md. The closest thing to a
+  file-write-triggered reminder is not available — `adr-triggers`/`ux-patterns`
+  realistically can only be "Accepted absence" or replaced by a *pre-commit git
+  hook* (tool-agnostic, not Codex-specific) rather than anything Codex itself
+  runs. Codex does support `.agents/skills/<name>/SKILL.md` — a real path
+  toward reproducing `.claude/skills/` itself, separate from this table's
+  per-control decisions.
+- **GitHub Copilot** (CLI + coding agent) — also no hooks; static instructions
+  only (`.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`,
+  AGENTS.md). Same constraint as Codex: a real "Replaced" for a reminder-style
+  control needs a tool-agnostic git hook, not a Copilot-native mechanism.
+- **Gemini CLI** — HAS a real hooks system (`.gemini/settings.json`'s `hooks`
+  object; events include `BeforeTool`/`AfterTool`/`BeforeAgent`; a hook returns
+  `hookSpecificOutput.additionalContext`, structurally very close to Claude
+  Code's `PostToolUse` + `additionalContext`). This is the one tool where a
+  genuine, Gemini-native equivalent of `.claude/settings.json`'s ADR/UX-pattern
+  reminder hooks is realistic to build and honestly call "Replaced".
+-->

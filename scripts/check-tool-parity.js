@@ -51,15 +51,32 @@ function section(title) { console.log(`\n${BOLD}${CYAN}── ${title} ${RESET}`
 // Add a tool here the moment its config file/dir first lands in the repo, using
 // only conventions confirmed by that tool's own docs (don't guess a path).
 const TOOL_CONFIGS = {
-  codex:    ['.codex'],
-  copilot:  ['.github/copilot-instructions.md'],
+  // Codex CLI has no repo-level config file of its own to detect — verified
+  // against developers.openai.com/codex docs (2026-09-11): it reads root/nested
+  // AGENTS.md like every other tool here, with no Codex-specific marker file.
+  // (A prior `.codex/hooks.json` in this repo turned out to be exactly that
+  // mistake — a fabricated path mimicking Claude's hook schema, which Codex
+  // has no mechanism to read at all. Don't reintroduce a `.codex` entry
+  // without a verified, official Codex doc naming a real repo-level file.)
+  copilot:  ['.github/copilot-instructions.md', '.github/instructions'],
   cursor:   ['.cursor', '.cursorrules'],
   windsurf: ['.windsurf', '.windsurfrules'],
+  // Gemini CLI: GEMINI.md is its default context filename (configurable via
+  // context.fileName in settings.json), and .gemini/settings.json carries a
+  // real hooks system structurally close to Claude Code's — verified against
+  // geminicli.com/docs (2026-09-11).
+  gemini:   ['.gemini', 'GEMINI.md'],
 };
 
+// tokens-audit, language-audit, site, and commit are deliberately absent: as of
+// 2026-09-11 they're tool-agnostic CI gates (.github/workflows/tokens-audit.yml,
+// lang-audit.yml, site-freshness.yml, commit-lint.yml) that run identically for
+// every tool and human. There's no per-tool decision left to attest for them —
+// asking every new tool's attestation to re-declare "Replaced: universal CI"
+// would be pure busywork. Only list a control here if its enforcement can
+// legitimately differ depending on which AI tool is driving the session.
 const REQUIRED_CONTROLS = [
-  'tokens-audit', 'language-audit', 'wcag', 'ux-patterns', 'adr-conformity',
-  'adr-triggers', 'docs', 'site', 'commit', 'chromatic', 'axe-core',
+  'wcag', 'ux-patterns', 'adr-conformity', 'adr-triggers', 'docs', 'chromatic', 'axe-core',
 ];
 
 function detectTools() {

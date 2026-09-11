@@ -107,6 +107,18 @@ future PR the moment any non-Claude AI tool config (`.github/copilot-instruction
 attestation alongside it. Flip it to required once there's an actual first case to prove
 the flow against — see `governance/tool-parity/`.
 
+**`tokens-audit`, `site-freshness`, `commit-lint`** (added 2026-09-11) turn three of the
+`quality-gate` Skill's pipelines from "Claude Code is instructed to run this before
+proposing a commit" into real, tool-agnostic CI gates — `tokens-audit.yml` and
+`site-freshness.yml` run on every `push`/`pull_request`, `commit-lint.yml` on
+`pull_request` only (it checks the commits a PR introduces, not repeat-scans history).
+All three currently pass clean on this branch. **Not yet added to
+`required_status_checks`** — same reasoning as everywhere else in this section: that's a
+deliberate step for a human to take once satisfied they're stable, not something this
+migration should flip on its own. Recommended next action: watch them pass on a few real
+PRs, then add all three (`tool-parity` included, once it has a real case) in one
+branch-protection update alongside the eventual second-collaborator changes above.
+
 There is no bypass for an emergency: if branch protection ever blocks a genuinely
 urgent fix (e.g. CI itself is broken), the fix is to temporarily disable the rule in
 repository settings, explicitly and visibly — not a per-push shortcut (ADR-077, after
