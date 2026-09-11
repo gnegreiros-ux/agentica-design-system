@@ -52,20 +52,26 @@ verify against current docs before relying on these, they move fast):
 
 - **Codex CLI** — no hooks system exists; reads AGENTS.md natively (root +
   nested) and a global ~/.codex/AGENTS.md. The closest thing to a
-  file-write-triggered reminder is not available — `adr-triggers`/`ux-patterns`
-  realistically can only be "Accepted absence" or replaced by a *pre-commit git
-  hook* (tool-agnostic, not Codex-specific) rather than anything Codex itself
-  runs. Codex does support `.agents/skills/<name>/SKILL.md` — a real path
-  toward reproducing `.claude/skills/` itself, separate from this table's
-  per-control decisions.
-- **GitHub Copilot** (CLI + coding agent) — also no hooks; static instructions
-  only (`.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`,
-  AGENTS.md). Same constraint as Codex: a real "Replaced" for a reminder-style
-  control needs a tool-agnostic git hook, not a Copilot-native mechanism.
+  file-write-triggered reminder is not available — a real "Replaced" for a
+  reminder-style control (`adr-triggers`, `ux-patterns`) needs a tool-agnostic
+  pre-commit git hook, not anything Codex itself runs. Codex does support
+  `.agents/skills/<name>/SKILL.md` (Agentica's are in that directory, ported
+  2026-09-11 — see `governance/ai-skills-reference.md`) — real parity for the
+  7 core Claude skills (`ai-component-metadata`, `ai-ds-composer`,
+  `codebase-index`, `quality-gate`, `ux-pattern-review`, `document`,
+  `post-change-pipeline`), separate from this table's per-control decisions,
+  which are about the *pipeline checklists* those skills point to.
+- **GitHub Copilot** (CLI + coding agent) — no hooks, but DOES support the same
+  `.agents/skills/<name>/SKILL.md` format as Codex (GitHub Copilot added Agent
+  Skills support December 2025) — same parity path as Codex above. For a
+  reminder-style *control* (not a skill), same constraint as Codex: needs a
+  tool-agnostic git hook, no Copilot-native equivalent exists.
 - **Gemini CLI** — HAS a real hooks system (`.gemini/settings.json`'s `hooks`
   object; events include `BeforeTool`/`AfterTool`/`BeforeAgent`; a hook returns
   `hookSpecificOutput.additionalContext`, structurally very close to Claude
-  Code's `PostToolUse` + `additionalContext`). This is the one tool where a
-  genuine, Gemini-native equivalent of `.claude/settings.json`'s ADR/UX-pattern
-  reminder hooks is realistic to build and honestly call "Replaced".
+  Code's `PostToolUse` + `additionalContext`). Agentica's ADR-trigger and
+  UX-pattern-review reminders were ported to `.gemini/settings.json` +
+  `.gemini/hooks/*.js` on 2026-09-11 — see `governance/tool-parity/gemini.md`
+  for exactly what that does and doesn't cover, including the parts that are
+  a best-evidenced guess rather than verified against a live session.
 -->

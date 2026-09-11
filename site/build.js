@@ -7428,6 +7428,46 @@ color: var(--agtc-primitive-color-blue-11); /* audit-ignore: anti-pattern exampl
     <tr><td><code>.claude/skills/codebase-index.md</code></td><td><span class="lang-fr">Index du dépôt pour navigation rapide</span><span class="lang-en">Repository index for fast navigation</span></td></tr>
   </tbody>
 </table>
+
+<h2 id="autres-outils"><span class="lang-fr">Utiliser Agentica avec un autre outil IA</span><span class="lang-en">Using Agentica with another AI tool</span></h2>
+<p>
+  <span class="lang-fr">Ce système de design n'est pas construit uniquement pour Claude Code. <code>AGENTS.md</code>, à la racine du dépôt, est le point d'entrée unique de gouvernance — lu nativement par la plupart des outils IA de développement. Chaque outil a ensuite son propre mécanisme pour les compétences (Skills) et les automatismes ; voici ce qui existe aujourd'hui pour Codex, GitHub Copilot et Gemini CLI.</span>
+  <span class="lang-en">This design system isn't built for Claude Code alone. <code>AGENTS.md</code>, at the repo root, is the single governance entry point — read natively by most AI coding tools. Each tool then has its own mechanism for skills and automation; here's what exists today for Codex, GitHub Copilot, and Gemini CLI.</span>
+</p>
+
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Outil</span><span class="lang-en">Tool</span></th>
+    <th><span class="lang-fr">Lit <code>AGENTS.md</code> ?</span><span class="lang-en">Reads <code>AGENTS.md</code>?</span></th>
+    <th><span class="lang-fr">Compétences (Skills)</span><span class="lang-en">Skills</span></th>
+    <th><span class="lang-fr">Rappels automatiques</span><span class="lang-en">Automatic reminders</span></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>Codex CLI</td>
+      <td><span class="lang-fr">Nativement, à la racine et imbriqué</span><span class="lang-en">Natively, root and nested</span></td>
+      <td><code>.agents/skills/</code> <span class="lang-fr">— chargées automatiquement, aucune installation</span><span class="lang-en">— auto-loaded, no install step</span></td>
+      <td><span class="lang-fr">Aucun — Codex n'a pas de système de hooks</span><span class="lang-en">None — Codex has no hooks system</span></td>
+    </tr>
+    <tr>
+      <td>GitHub Copilot <span class="lang-fr">(CLI et agent de codage)</span><span class="lang-en">(CLI and coding agent)</span></td>
+      <td><span class="lang-fr">Nativement, plus <code>.github/copilot-instructions.md</code></span><span class="lang-en">Natively, plus <code>.github/copilot-instructions.md</code></span></td>
+      <td><code>.agents/skills/</code> <span class="lang-fr">— même format que Codex, chargé automatiquement</span><span class="lang-en">— same format as Codex, auto-loaded</span></td>
+      <td><span class="lang-fr">Aucun — pas de système de hooks non plus</span><span class="lang-en">None — no hooks system either</span></td>
+    </tr>
+    <tr>
+      <td>Gemini CLI</td>
+      <td><span class="lang-fr">Pas nativement — via l'import <code>@AGENTS.md</code> dans <code>GEMINI.md</code></span><span class="lang-en">Not natively — via the <code>@AGENTS.md</code> import in <code>GEMINI.md</code></span></td>
+      <td><span class="lang-fr">Non empaqueté — le format d'extension de Gemini exige une installation explicite, donc ne suit pas le dépôt automatiquement</span><span class="lang-en">Not packaged — Gemini's extension format requires an explicit install step, so it doesn't travel with the repo automatically</span></td>
+      <td><code>.gemini/settings.json</code> <span class="lang-fr">— rappel ADR et rappel revue de patterns UX, natifs</span><span class="lang-en">— ADR and UX-pattern-review reminders, native</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  <span class="lang-fr">Cette parité n'est ni automatique ni garantie — <code>governance/ai-skills-reference.md</code> documente ce que chaque compétence Claude Code automatise et comment le reproduire ; <code>governance/tool-parity/</code> garde, pour chaque outil déjà intégré, une attestation signée par un humain listant explicitement ce qui est remplacé et ce qui est une absence acceptée. Un check CI (<code>tool-parity</code>) bloque toute config d'outil IA sans cette attestation.</span>
+  <span class="lang-en">This parity is neither automatic nor guaranteed — <code>governance/ai-skills-reference.md</code> documents what each Claude Code skill automates and how to reproduce it; <code>governance/tool-parity/</code> keeps, for every tool already integrated, a human-signed attestation explicitly listing what's replaced and what's an accepted absence. A CI check (<code>tool-parity</code>) blocks any AI-tool config that lacks that attestation.</span>
+</p>
 `;
 
   write(path.join(DIST, 'agents/index.html'), layout({
@@ -8058,6 +8098,31 @@ import '@agentica-ds/components';`)}</code></pre>
 function buildChangelog() {
   // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
   const versions = [
+    {
+      id: 'v0-3-2', ver: 'v0.3.2', date: '2026-09-11', badge: {fr:'Interopérabilité IA',en:'AI interoperability'},
+      sections: [
+        { fr:'Gouvernance — migration vers governance/', en:'Governance — migration to governance/', items:[
+          {fr:'<code>AGENTS.md</code> devient la seule source de vérité pour la gouvernance — lu nativement par Copilot, Cursor, Codex, Windsurf, Amp et Devin, pas seulement par Claude Code (issue #92, PR #93)',en:'<code>AGENTS.md</code> becomes the single source of truth for governance — read natively by Copilot, Cursor, Codex, Windsurf, Amp and Devin, not just Claude Code (issue #92, PR #93)'},
+          {fr:'<code>.claude/rules/</code> et <code>.claude/instructions/</code> déplacés vers <code>governance/rules/</code> et <code>governance/instructions/</code> (<code>git mv</code>, historique préservé) ; <code>.claude/skills/</code> reste en place — implémentation propre à Claude Code',en:'<code>.claude/rules/</code> and <code>.claude/instructions/</code> moved to <code>governance/rules/</code> and <code>governance/instructions/</code> (<code>git mv</code>, history preserved); <code>.claude/skills/</code> stays in place — Claude Code-specific implementation'},
+          {fr:'<code>CLAUDE.md</code> créé — adaptateur mince qui importe <code>@AGENTS.md</code>, ne contient que ce qui est spécifique à Claude Code',en:'<code>CLAUDE.md</code> created — a thin adapter importing <code>@AGENTS.md</code>, containing only what\'s Claude Code-specific'},
+          {fr:'<code>governance/ai-skills-reference.md</code> créé : documente ce que chaque skill Claude Code automatise et pourquoi, pour que les équipes sur un autre outil sachent quoi reproduire',en:'<code>governance/ai-skills-reference.md</code> created: documents what each Claude Code skill automates and why, so teams on a different tool know what to reproduce'},
+        ]},
+        { fr:'Gouvernance — garde-fou de parité entre outils', en:'Governance — tool parity gate', items:[
+          {fr:'<code>scripts/check-tool-parity.js</code> + <code>.github/workflows/tool-parity.yml</code> ajoutés (issue #94, PR #95) : pour chaque config d\'outil IA détectée dans le dépôt, exige une attestation <code>governance/tool-parity/&lt;outil&gt;.md</code> où un humain déclare, pour chaque contrôle, « Replaced » ou « Accepted absence » — signé et daté',en:'<code>scripts/check-tool-parity.js</code> + <code>.github/workflows/tool-parity.yml</code> added (issue #94, PR #95): for every AI-tool config detected in the repo, requires a <code>governance/tool-parity/&lt;tool&gt;.md</code> attestation where a human records, per control, "Replaced" or "Accepted absence" — signed and dated'},
+          {fr:'<code>.codex/hooks.json</code> supprimé : doublon égaré identique octet pour octet à <code>.claude/settings.json</code>, et Codex CLI n\'a de toute façon aucun système de hooks (confirmé dans sa documentation officielle) — n\'aurait jamais pu fonctionner',en:'<code>.codex/hooks.json</code> removed: a stray duplicate, byte-for-byte identical to <code>.claude/settings.json</code>, and Codex CLI has no hooks mechanism at all anyway (confirmed against its official docs) — could never have worked'},
+          {fr:'4 contrôles auparavant appliqués seulement « par instruction » à Claude Code deviennent de vrais gates CI indépendants de l\'outil : <code>tokens-audit.yml</code>, <code>site-freshness.yml</code>, <code>commit-lint.yml</code> rejoignent <code>lang-audit.yml</code> (déjà actif)',en:'4 controls previously enforced only "by instruction" to Claude Code become real, tool-agnostic CI gates: <code>tokens-audit.yml</code>, <code>site-freshness.yml</code>, <code>commit-lint.yml</code> join <code>lang-audit.yml</code> (already active)'},
+          {fr:'<code>tool-parity</code> et les 3 nouveaux gates ajoutés aux checks requis de protection de branche sur <code>main</code> et <code>develop</code>',en:'<code>tool-parity</code> and the 3 new gates added to required branch-protection checks on <code>main</code> and <code>develop</code>'},
+        ]},
+        { fr:'Gouvernance — portage des skills vers d\'autres outils IA', en:'Governance — porting skills to other AI tools', items:[
+          {fr:'7 skills cœur (<code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>quality-gate</code>, <code>ux-pattern-review</code>, <code>document</code>, <code>post-change-pipeline</code>) portées vers <code>.agents/skills/&lt;nom&gt;/SKILL.md</code> (PR #96), le format ouvert Agent Skills (agentskills.io, gouvernance Linux Foundation AAIF) — chargées automatiquement par Codex CLI et GitHub Copilot CLI, sans aucune installation',en:'7 core skills (<code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>quality-gate</code>, <code>ux-pattern-review</code>, <code>document</code>, <code>post-change-pipeline</code>) ported to <code>.agents/skills/&lt;name&gt;/SKILL.md</code> (PR #96), the open Agent Skills format (agentskills.io, Linux Foundation AAIF governance) — auto-loaded by Codex CLI and GitHub Copilot CLI, no install step'},
+          {fr:'<code>.gemini/settings.json</code> + <code>.gemini/hooks/*.js</code> ajoutés : Gemini CLI a un vrai système de hooks (contrairement à Codex/Copilot), les rappels ADR et revue de patterns UX y sont reconstruits nativement — attestation <code>governance/tool-parity/gemini.md</code> signée',en:'<code>.gemini/settings.json</code> + <code>.gemini/hooks/*.js</code> added: Gemini CLI has a real hooks system (unlike Codex/Copilot), the ADR and UX-pattern-review reminders were rebuilt natively for it — <code>governance/tool-parity/gemini.md</code> attestation signed'},
+        ]},
+        { fr:'Ménage', en:'Cleanup', items:[
+          {fr:'Code mort retiré de <code>site/build.js</code> : <code>applyThemeImages()</code> ne s\'appliquait plus à aucun élément généré depuis que la page d\'accueil est figée en mode sombre — <code>governance/rules/illustrations-source.md</code> corrigé en conséquence',en:'Dead code removed from <code>site/build.js</code>: <code>applyThemeImages()</code> no longer applied to any generated element since the home page was fixed to dark mode — <code>governance/rules/illustrations-source.md</code> updated to match'},
+          {fr:'Dossier <code>Redesign/</code> supprimé (vide, scratch personnel)',en:'<code>Redesign/</code> folder removed (empty, personal scratch)'},
+        ]},
+      ],
+    },
     {
       id: 'v0-3-1', ver: 'v0.3.1', date: '2026-09-11', badge: {fr:'Licence Apache 2.0',en:'Apache 2.0 license'},
       sections: [

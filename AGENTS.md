@@ -107,13 +107,19 @@ contract), `guidelines/` (foundations and components), and the `governance/rules
 
 ### Using a non-Claude AI tool
 
-Read `governance/ai-skills-reference.md` for what `.claude/skills/` automates and how to
-reproduce each control with your own tool. That's a reference, not an enforcement — if
-you're the first to wire this repo up for a tool other than Claude Code (a new
-`.github/copilot-instructions.md`, `.cursor/`, `.windsurf/`, `.gemini/`/`GEMINI.md`, …),
-you must also
-add `governance/tool-parity/<tool-slug>.md` (copy `governance/tool-parity/TEMPLATE.md`)
-recording, for every mandatory control, either how it's replaced or why its absence is
-accepted. `scripts/check-tool-parity.js` (CI: `.github/workflows/tool-parity.yml`) fails
-until that file exists and every row is signed off — it will not tell you the tool works
-correctly, only that a human made the call instead of the gap going unnoticed.
+If you're Codex CLI or GitHub Copilot: `.agents/skills/` already has working ports of
+Agentica's 7 core skills (open Agent Skills format — load them the way you normally
+load project skills, no setup needed). If you're Gemini CLI: `.gemini/settings.json` +
+`.gemini/hooks/*.js` already reproduce the ADR-trigger and UX-pattern-review reminder
+hooks natively.
+
+Read `governance/ai-skills-reference.md` for what all of `.claude/skills/` automates —
+including the pipeline checklists that aren't ported anywhere yet — and how to
+reproduce a control your tool doesn't have a working port for. If you're the first to
+wire this repo up for a tool that doesn't already have a `governance/tool-parity/*.md`
+file (check that directory first), you must add one (copy `governance/tool-parity/
+TEMPLATE.md`) recording, for every mandatory control, either how it's replaced or why
+its absence is accepted. `scripts/check-tool-parity.js` (CI: `.github/workflows/
+tool-parity.yml`) fails until that file exists and every row is signed off — it will
+not tell you the tool works correctly, only that a human made the call instead of the
+gap going unnoticed.
