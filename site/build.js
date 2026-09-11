@@ -2869,19 +2869,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const isHome = document.documentElement.dataset.page === 'home';
   document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
-  function applyThemeImages(theme) {
-    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
-      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
-    });
-  }
-  applyThemeImages(savedTheme);
-
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
-      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
@@ -8078,7 +8070,7 @@ function buildChangelog() {
         ]},
         { fr:'Marque', en:'Brand', items:[
           {fr:'Symbole ™ (pas ® — aucun enregistrement formel déposé, ex. OPIC/CIPO) ajouté au mot-symbole « Agentica » sur les 4 variantes de couleur du logo (<code>color</code>, <code>color white</code>, <code>white</code>, <code>black</code>, PR #90) : tracé vectoriel officiel exporté du fichier Figma dédié à la marque (pas un texte approximatif), positionné à droite du mot-symbole en exposant — convention standard de placement d\'une marque non enregistrée',en:'™ symbol (not ® — no formal registration filed, e.g. CIPO) added next to the "Agentica" wordmark across the logo\'s 4 color variants (<code>color</code>, <code>color white</code>, <code>white</code>, <code>black</code>, PR #90): official vector artwork exported from the dedicated Brand Figma file (not hand-drawn text), positioned to the right of the wordmark in superscript — the standard placement convention for an unregistered trademark'},
-          {fr:'Nouvelle variante <code>Logo Agentica - teal wordmark.svg</code> ajoutée (icône + texte teal uni, #12A594) — pas encore consommée par le site, ajoutée pour un usage futur',en:'New <code>Logo Agentica - teal wordmark.svg</code> variant added (solid-teal icon + wordmark, #12A594) — not yet consumed by the site, added for future use'},
+          {fr:'Nouvelle variante <code>Logo Agentica - teal wordmark.svg</code> ajoutée (icône + texte teal uni, #12A594) — pas encore consommée par le site, ajoutée pour un usage futur',en:'New <code>Logo Agentica - teal wordmark.svg</code> variant added (solid-teal icon + wordmark, #12A594) — not yet consumed by the site, added for future use'}, // audit-ignore: historical changelog prose naming an SVG asset's fixed color, not a live CSS declaration
           {fr:'Titre de <code>README.md</code> mis à jour en « Agentica™ »',en:'<code>README.md</code> title updated to "Agentica™"'},
         ]},
       ],

@@ -29,7 +29,10 @@
     "smoke": "node scripts/smoke-test.js",
     "relationships": "node scripts/extract-relationships.js --fix-report",
     "validate:contracts": "node scripts/validate-contracts.js",
-    "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run axe:all"
+    "tool-parity": "node scripts/check-tool-parity.js",
+    "tokens-audit": "node scripts/audit-tokens.js",
+    "commit-lint": "node scripts/check-commit-messages.js",
+    "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run tokens-audit -- --ci && npm run axe:all"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

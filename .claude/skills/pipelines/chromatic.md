@@ -1,7 +1,9 @@
 # Pipeline: chromatic
 
 > Visual regression tests via Chromatic (component captures).
-> **Status:** ✅ Active — CI workflow `.github/workflows/chromatic.yml`
+> **Status:** ✅ Active — CI workflow `.github/workflows/chromatic.yml` exists but its
+> automatic `push`/`pull_request` triggers are currently disabled (free-tier snapshot
+> limit reached 2026-07-02); `workflow_dispatch` (manual) only until re-enabled
 > **Trigger:** any change in `components/`, `tokens/`, `.storybook/`
 
 ---

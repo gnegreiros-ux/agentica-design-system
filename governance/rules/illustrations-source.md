@@ -53,24 +53,31 @@ only — they're meant for presentations and communications, not the website.
 
 ## Theme variants (dark / light)
 
-When an illustration has variants for both themes:
-- The base file `IMG-[NAME].png` may coexist but isn't required
-- The build uses the `-on-dark` and `-on-light` variants for the JS swap
-- The swap is handled by `applyThemeImages()` in `siteJS()` (build.js)
+**No live JS swap mechanism exists today** (removed 2026-09-11 — `applyThemeImages()` and
+its `.img-theme-aware[data-src-dark][data-src-light]` selector were dead code: the home
+page (`index.html`) is always dark mode, toggle hidden, so nothing ever applied that class
+or those attributes to a generated `<agtc-image>`). Illustrations declared in `build.js`
+today are a single hardcoded `src`, picked at authoring time for whichever theme the
+surrounding section actually renders in — not swapped at runtime.
 
-### References declared in build.js (home page)
+### References declared in build.js (home page, hardcoded)
 
-| Section | Dark | Light |
-|---------|------|-------|
-| Hero system | `IMG-HERO-SYSTEM-on-dark.png` | `IMG-HERO-SYSTEM-on-light.png` |
-| Context | `IMG-CONTEXT-on-dark.png` | `IMG-CONTEXT.png` |
-| Human loop | `IMG-HUMAN-LOOP.png` | `IMG-HUMAN-LOOP-on-light.png` |
-| Durability | `IMG-DURABILITY.png` | *(no variant — works on both)* |
+| Section | File used |
+|---------|-----------|
+| Hero system | `IMG-HERO-SYSTEM.png` |
+| Context | `IMG-CONTEXT-on-dark.png` |
+| Human loop | `IMG-HUMAN-LOOP.png` |
+| Durability | `IMG-DURABILITY.png` |
 
-To add a theme variant to an existing image:
-1. Add `IMG-[NAME]-on-dark.png` and/or `IMG-[NAME]-on-light.png` files to `Brand/illustrations/`
-2. In `build.js`, add `class="img-theme-aware"` + `data-src-dark` + `data-src-light` on the `<img>`
-3. `applyThemeImages()` handles the rest automatically
+`IMG-HERO-SYSTEM-on-dark.png`, `IMG-HERO-SYSTEM-on-light.png`, and `IMG-HUMAN-LOOP-on-light.png`
+exist in `Brand/illustrations/` but are currently unreferenced by `build.js` — see
+"Unreferenced files — pending owner review" below.
+
+To add a theme-specific illustration today: just point the `<agtc-image src="...">` at
+whichever `IMG-[NAME].png` (or `-on-dark`/`-on-light` variant) fits the section's actual
+background. If a genuine runtime swap is needed again in the future (e.g. a page gains a
+real light/dark toggle), it needs to be rebuilt — `git log` has the removed
+`applyThemeImages()` implementation for reference.
 
 ---
 
@@ -93,6 +100,28 @@ They're copied to `site/dist/img/` by the build but no site HTML page includes t
 | File | Usage |
 |------|-------|
 | `IMG-FUTURE.png` | Presentation slide 16 |
+
+### Unreferenced files — pending owner review (audited 2026-09-11)
+
+Found by a repo-cleanup pass: these `IMG-*.png` files are in `Brand/illustrations/`,
+untouched since 2026-06-26, and referenced by no site page — but nobody has confirmed
+whether they're kept for a presentation (→ move to the table above) or genuinely
+forgotten (→ safe to delete). Not touched by that pass; add a "Usage" row above and
+remove from here, or delete the file and this row, once reviewed.
+
+| File | Note |
+|------|------|
+| `IMG-ADOPTION.png` | |
+| `IMG-BUILDER.png` | |
+| `IMG-CONTEXT.png` | Base/light variant of Context — see Theme variants above, `-on-dark` is the one actually used |
+| `IMG-DESUETUDE.png` | |
+| `IMG-EXPERIMENT.png` | |
+| `IMG-HERO-SYSTEM-on-dark.png` | Orphaned by the `applyThemeImages()` removal above |
+| `IMG-HERO-SYSTEM-on-light.png` | Orphaned by the `applyThemeImages()` removal above |
+| `IMG-HUMAN-LOOP-on-light.png` | Orphaned by the `applyThemeImages()` removal above |
+| `IMG-HUMANS-AI_EN.png` | Possibly an EN-language variant of `IMG-HUMANS-AI.png` — worth checking if an EN swap was ever wired |
+| `IMG-MULTIPLIER.png` | |
+| `IMG-SITE.png` | |
 
 ---
 

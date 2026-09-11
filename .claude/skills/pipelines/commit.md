@@ -1,7 +1,8 @@
 # Pipeline: commit
 
 > Commit rules to apply systematically before every `git commit`.
-> **Status:** ✅ Active
+> **Status:** ✅ Active — **also** CI-enforced (`.github/workflows/commit-lint.yml`
+> checks every commit a PR introduces, independent of tool/human)
 > **Trigger:** systematic — last pipeline before the commit
 
 ---

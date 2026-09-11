@@ -93,10 +93,31 @@ described, restore verbatim per ADR-076's trigger clause):
 - `main`: merge only via PR + 2 approvals + green CI
 - `develop`: merge only via PR + 1 approval + green CI
 
-Other CI checks (`Playwright`, `build-and-deploy`) are not yet required checks — they
-only trigger on `push` to `main` today, not on `pull_request` (see ADR-076). Making them
-blocking pre-merge gates requires first adding a `pull_request` trigger to
-`playwright.yml`, a separate decision not yet made.
+Other CI checks (`Playwright`, `build-and-deploy`, `tool-parity`) are not yet required
+checks. `Playwright`/`build-and-deploy` only trigger on `push` to `main` today, not on
+`pull_request` (see ADR-076); making them blocking pre-merge gates requires first adding
+a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
+`tool-parity` (`.github/workflows/tool-parity.yml`, `scripts/check-tool-parity.js`) does
+already run on `pull_request` and currently passes clean (no non-Claude AI tool config
+detected — `.codex/hooks.json` turned out to be a stray duplicate of `.claude/settings.json`'s
+hooks, not real Codex integration, and was removed 2026-09-11). It's still excluded from
+`required_status_checks` deliberately: making it required would immediately block every
+future PR the moment any non-Claude AI tool config (`.github/copilot-instructions.md`,
+`.cursor/`, `.windsurf/`, …) lands without a complete `governance/tool-parity/*.md`
+attestation alongside it. Flip it to required once there's an actual first case to prove
+the flow against — see `governance/tool-parity/`.
+
+**`tokens-audit`, `site-freshness`, `commit-lint`** (added 2026-09-11) turn three of the
+`quality-gate` Skill's pipelines from "Claude Code is instructed to run this before
+proposing a commit" into real, tool-agnostic CI gates — `tokens-audit.yml` and
+`site-freshness.yml` run on every `push`/`pull_request`, `commit-lint.yml` on
+`pull_request` only (it checks the commits a PR introduces, not repeat-scans history).
+All three currently pass clean on this branch. **Not yet added to
+`required_status_checks`** — same reasoning as everywhere else in this section: that's a
+deliberate step for a human to take once satisfied they're stable, not something this
+migration should flip on its own. Recommended next action: watch them pass on a few real
+PRs, then add all three (`tool-parity` included, once it has a real case) in one
+branch-protection update alongside the eventual second-collaborator changes above.
 
 There is no bypass for an emergency: if branch protection ever blocks a genuinely
 urgent fix (e.g. CI itself is broken), the fix is to temporarily disable the rule in

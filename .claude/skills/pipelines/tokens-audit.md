@@ -1,7 +1,8 @@
 # Pipeline: tokens-audit
 
 > Verifies token system consistency after any modification.
-> **Status:** ✅ Active
+> **Status:** ✅ Active — **also** CI-enforced (`.github/workflows/tokens-audit.yml`,
+> runs on every push/PR), independent of which tool or human is committing.
 > **Trigger:** any change in `tokens/`, `site/build.js`, `components/`, `guidelines/`
 
 ---
