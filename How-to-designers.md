@@ -108,6 +108,11 @@ report and the review guide — designers don't need to go hunting for the artif
 | `governance/rules/` | What AI agents read on startup | After every major TCR or new rule |
 | `DESIGN.md` | Principles and governance | Quarterly review |
 
+`governance/rules/` isn't Claude Code-only reading — `AGENTS.md` (the router) is read
+natively by Codex, GitHub Copilot, and Gemini CLI too, so a governance decision written
+once applies whichever AI tool a teammate uses. See `governance/ai-skills-reference.md`
+if you're curious what that looks like in practice.
+
 ---
 
 ## 4. Non-negotiable rules

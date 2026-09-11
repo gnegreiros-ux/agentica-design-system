@@ -3290,7 +3290,6 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}tokens/index.html">Tokens</a>
       <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
       <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
-      <a href="${base}changelog.html">Changelog</a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
@@ -3298,6 +3297,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
       <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
+      <a href="${base}changelog.html">Changelog</a>
       <a href="${base}ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
     </div>
   </div>
@@ -3396,6 +3396,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
           <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
           <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="${base}audit.html">Audit</a>
+          <a href="${base}changelog.html">Changelog</a>
         </div>
       </div>
     </div>
@@ -4122,6 +4123,11 @@ function buildIA() {
         <div class="editorial-icon">${icon('network', 20)}</div>
         <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
         <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
+      </div>
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon('puzzle', 20)}</div>
+        <h2><span class="lang-fr">Interopérabilité IA</span><span class="lang-en">AI interoperability</span> <agtc-badge variant="brand" size="sm"><span class="lang-fr">Bêta</span><span class="lang-en">Beta</span></agtc-badge></h2>
+        <p><span class="lang-fr">Agentica n'est pas construit pour un seul outil. <code>AGENTS.md</code> est la source de vérité de gouvernance, lue nativement par Codex, GitHub Copilot et (via un import) Gemini CLI — chacun avec sa propre parité de compétences et de rappels automatiques, vérifiée par un garde-fou CI. Voir <a href="agents/index.html#autres-outils">la comparaison par outil</a>.</span><span class="lang-en">Agentica isn't built for one tool alone. <code>AGENTS.md</code> is the governance source of truth, read natively by Codex, GitHub Copilot, and (via an import) Gemini CLI — each with its own skill and reminder parity, checked by a CI gate. See <a href="agents/index.html#autres-outils">the per-tool comparison</a>.</span></p>
       </div>
     </div>
   </div>
@@ -7429,10 +7435,14 @@ color: var(--agtc-primitive-color-blue-11); /* audit-ignore: anti-pattern exampl
   </tbody>
 </table>
 
-<h2 id="autres-outils"><span class="lang-fr">Utiliser Agentica avec un autre outil IA</span><span class="lang-en">Using Agentica with another AI tool</span></h2>
+<h2 id="autres-outils"><span class="lang-fr">Utiliser Agentica avec un autre outil IA</span><span class="lang-en">Using Agentica with another AI tool</span> <agtc-badge variant="brand" size="sm"><span class="lang-fr">Bêta</span><span class="lang-en">Beta</span></agtc-badge></h2>
 <p>
   <span class="lang-fr">Ce système de design n'est pas construit uniquement pour Claude Code. <code>AGENTS.md</code>, à la racine du dépôt, est le point d'entrée unique de gouvernance — lu nativement par la plupart des outils IA de développement. Chaque outil a ensuite son propre mécanisme pour les compétences (Skills) et les automatismes ; voici ce qui existe aujourd'hui pour Codex, GitHub Copilot et Gemini CLI.</span>
   <span class="lang-en">This design system isn't built for Claude Code alone. <code>AGENTS.md</code>, at the repo root, is the single governance entry point — read natively by most AI coding tools. Each tool then has its own mechanism for skills and automation; here's what exists today for Codex, GitHub Copilot, and Gemini CLI.</span>
+</p>
+<p>
+  <span class="lang-fr"><strong>Pourquoi bêta :</strong> les portages Codex et Copilot (<code>.agents/skills/</code>) n'ont pas encore été essayés dans une vraie session de ces outils — construits contre leurs docs officielles, pas testés en conditions réelles. Les hooks Gemini (<code>.gemini/hooks/*.js</code>) sont testés uniquement en local contre des payloads simulés : le nom exact des champs qu'ils lisent est la meilleure estimation possible à partir de la documentation de Gemini CLI, pas une certitude confirmée en session réelle. Si un de ces mécanismes ne se déclenche pas comme attendu chez toi, ouvre une issue.</span>
+  <span class="lang-en"><strong>Why beta:</strong> the Codex and Copilot ports (<code>.agents/skills/</code>) haven't yet been tried in a real session of either tool — built against their official docs, not tested in real conditions. The Gemini hooks (<code>.gemini/hooks/*.js</code>) are tested only locally against simulated payloads: the exact field names they read are the best available estimate from Gemini CLI's docs, not something confirmed in a real session. If one of these doesn't fire as expected for you, please open an issue.</span>
 </p>
 
 <table>
