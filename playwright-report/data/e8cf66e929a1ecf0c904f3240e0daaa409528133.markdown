@@ -1,0 +1,479 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/components/all-components.spec.js >> link — visual regressions >> page link — light
+- Location: tests/visual/components/all-components.spec.js:13:7
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1280px by 3836px, received 1280px by 3838px. 53710 pixels (ratio 0.02 of all image pixels) are different.
+
+  Snapshot: link-light.png
+
+Call log:
+  - Expect "toHaveScreenshot(link-light.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1280px by 3836px, received 1280px by 3838px. 53710 pixels (ratio 0.02 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1280px by 3836px, received 1280px by 3838px. 53710 pixels (ratio 0.02 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "AI" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Human control":
+              - /url: ../ia.html
+            - link "Single source of truth":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Components":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Decisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuity":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Figma library":
+              - /url: ../resources.html
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentica-design-system
+            - link "Audit":
+              - /url: ../audit.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e20]:
+        - button "FR" [ref=e21] [cursor=pointer]
+        - button "EN" [ref=e22] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e23] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e24]
+      - link "GitHub — Code source du projet" [ref=e26] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - img [ref=e27]
+      - link "Figma — Librairie Agentica sur Figma Community" [ref=e30] [cursor=pointer]:
+        - /url: https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system
+        - img [ref=e31]
+  - generic [ref=e37]:
+    - navigation "Secondary navigation / Navigation secondaire" [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e40]: Components
+        - link "Overview" [ref=e41] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e42] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e43] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e44] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e45] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Image" [ref=e46] [cursor=pointer]:
+          - /url: ../components/image.html
+        - link "Card" [ref=e47] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e48] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e49] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e50] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e51] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e52] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e53] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e54] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e55] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e56] [cursor=pointer]:
+          - /url: ../components/tabs.html
+    - main [ref=e57]:
+      - heading "Link" [level=1] [ref=e58]
+      - paragraph [ref=e59]:
+        - generic [ref=e60]:
+          - text: Textual navigation link — internal or external, inline or nav. Underlined by default (WCAG 1.4.1), visible focus, secure external links (
+          - code [ref=e61]: noopener
+          - text: ) announced to screen readers.
+      - heading "Preview" [level=2] [ref=e62]
+      - generic [ref=e63]:
+        - paragraph [ref=e64]:
+          - text: See the
+          - link "component guideline" [ref=e66] [cursor=pointer]:
+            - /url: "#guideline"
+            - generic: component guideline
+          - text: for details.
+        - paragraph [ref=e67]:
+          - text: "External link:"
+          - link "NN/g — Visualizing Links (opens in a new tab)" [ref=e68] [cursor=pointer]:
+            - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - generic: NN/g — Visualizing Links
+            - img [ref=e71]
+            - generic [ref=e74]: (opens in a new tab)
+        - generic [ref=e75]:
+          - link "Home" [ref=e77] [cursor=pointer]:
+            - /url: "#a"
+            - generic: Home
+          - link "Components" [ref=e79] [cursor=pointer]:
+            - /url: "#b"
+            - generic: Components
+          - link "Tokens" [ref=e81] [cursor=pointer]:
+            - /url: "#c"
+            - generic: Tokens
+      - heading "Absolute rules" [level=2] [ref=e82]
+      - list [ref=e83]:
+        - listitem [ref=e84]:
+          - img [ref=e86]
+          - text: Underlined in body text — never distinguishable by color alone (WCAG 1.4.1)
+        - listitem [ref=e89]:
+          - img [ref=e91]
+          - generic [ref=e94]:
+            - text: "External link:"
+            - code [ref=e95]: rel="noopener noreferrer"
+            - text: + icon + hidden "new tab" text
+        - listitem [ref=e96]:
+          - img [ref=e98]
+          - text: Descriptive text, readable out of context
+        - listitem [ref=e101]:
+          - img [ref=e103]
+          - generic [ref=e107]:
+            - text: Never a link for an action — use
+            - code [ref=e108]: <agtc-button>
+        - listitem [ref=e109]:
+          - img [ref=e111]
+          - text: Never "click here"
+      - heading "Component tokens" [level=2] [ref=e115]
+      - table [ref=e117]:
+        - rowgroup [ref=e122]:
+          - row "Token CSS Reference Value" [ref=e123]:
+            - columnheader "Token CSS" [ref=e124]
+            - columnheader "Reference" [ref=e125]
+            - columnheader "Value" [ref=e126]
+        - rowgroup [ref=e127]:
+          - 'row "--agtc-component-link-default-text semantic.color.action.primary #007a68" [ref=e128]':
+            - cell "--agtc-component-link-default-text" [ref=e129]:
+              - code [ref=e130]: "--agtc-component-link-default-text"
+            - cell "semantic.color.action.primary" [ref=e131]:
+              - code [ref=e132]: semantic.color.action.primary
+            - cell "#007a68" [ref=e133]
+          - 'row "--agtc-component-link-default-text-hover semantic.color.action.primary-hover #0d3d38" [ref=e134]':
+            - cell "--agtc-component-link-default-text-hover" [ref=e135]:
+              - code [ref=e136]: "--agtc-component-link-default-text-hover"
+            - cell "semantic.color.action.primary-hover" [ref=e137]:
+              - code [ref=e138]: semantic.color.action.primary-hover
+            - cell "#0d3d38" [ref=e139]
+          - 'row "--agtc-component-link-default-border-focus semantic.color.border.focus #007a68" [ref=e140]':
+            - cell "--agtc-component-link-default-border-focus" [ref=e141]:
+              - code [ref=e142]: "--agtc-component-link-default-border-focus"
+            - cell "semantic.color.border.focus" [ref=e143]:
+              - code [ref=e144]: semantic.color.border.focus
+            - cell "#007a68" [ref=e145]
+      - heading "Accessibility" [level=2] [ref=e146]
+      - list [ref=e147]:
+        - listitem [ref=e148]: Permanent underline by default (beyond color) — WCAG 1.4.1
+        - listitem [ref=e149]:
+          - generic [ref=e150]:
+            - text: Tokenized
+            - code [ref=e151]: :focus-visible
+            - text: — WCAG 2.4.7
+        - listitem [ref=e152]:
+          - generic [ref=e153]:
+            - text: "External: icon"
+            - strong [ref=e154]: + hidden text
+            - text: (icon alone is not enough — WCAG H83)
+        - listitem [ref=e155]: Descriptive link text — WCAG 2.4.4
+      - heading "Implementation" [level=2] [ref=e156]
+      - generic [ref=e157]:
+        - code [ref=e158]: <!-- Inline (underlined by default) --> <agtc-link href="/guidelines/link"> guideline</agtc-link> <!-- External (new tab, secure, announced) --> <agtc-link href="https://lucide.dev" external>Lucide</agtc-link> <!-- Nav (underline on hover) --> <agtc-link href="/components" underline="hover"> Components</agtc-link>
+        - generic [ref=e159]: html
+        - button "Copy code (html)" [ref=e160] [cursor=pointer]: Copy
+      - heading "DOs and DON'Ts" [level=2] [ref=e161]
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - heading "Do" [level=3] [ref=e164]:
+            - img [ref=e165]
+            - text: Do
+          - list [ref=e168]:
+            - listitem [ref=e169]:
+              - generic [ref=e170]:
+                - text: Underline in body text;
+                - code [ref=e171]: hover
+                - text: only in nav
+            - listitem [ref=e172]: Mark external links (icon + AT text)
+            - listitem [ref=e173]: Write a label that describes the destination
+        - generic [ref=e174]:
+          - heading "Don't" [level=3] [ref=e175]:
+            - img [ref=e176]
+            - text: Don't
+          - list [ref=e180]:
+            - listitem [ref=e181]: A link to trigger a JS action — use a button
+            - listitem [ref=e182]:
+              - generic [ref=e183]:
+                - code [ref=e184]: target="_blank"
+                - text: without
+                - code [ref=e185]: rel="noopener"
+            - listitem [ref=e186]: "\"click here\" / \"read more\" alone"
+      - heading "UX Patterns Reference" [level=2] [ref=e187]
+      - blockquote [ref=e188]:
+        - paragraph [ref=e189]:
+          - text: Patterns approved via the
+          - code [ref=e190]: ux-pattern-review
+          - text: "workflow (ADR-036/043). Decision:"
+          - strong [ref=e191]: LK1–LK8 all approved
+          - text: .
+      - table [ref=e193]:
+        - rowgroup [ref=e194]:
+          - row "Pattern Source Applied Justification" [ref=e195]:
+            - columnheader "Pattern" [ref=e196]
+            - columnheader "Source" [ref=e197]
+            - columnheader "Applied" [ref=e198]
+            - columnheader "Justification" [ref=e199]
+        - rowgroup [ref=e200]:
+          - row "Underline in body text (beyond color) NN/g ✅ underline=\"always\" by default (WCAG 1.4.1)" [ref=e201]:
+            - cell "Underline in body text (beyond color)" [ref=e202]
+            - cell "NN/g" [ref=e203]:
+              - link "NN/g" [ref=e204] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "✅" [ref=e205]
+            - cell "underline=\"always\" by default (WCAG 1.4.1)" [ref=e206]:
+              - code [ref=e207]: underline="always"
+              - text: by default (WCAG 1.4.1)
+          - row "Visible :focus-visible NN/g ✅ Tokenized ring" [ref=e208]:
+            - cell "Visible :focus-visible" [ref=e209]:
+              - text: Visible
+              - code [ref=e210]: :focus-visible
+            - cell "NN/g" [ref=e211]:
+              - link "NN/g" [ref=e212] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "✅" [ref=e213]
+            - cell "Tokenized ring" [ref=e214]
+          - 'row "External link: rel=\"noopener noreferrer\" + icon + AT text WCAG H83 ✅ Hidden \"(opens in a new tab)\"" [ref=e215]':
+            - 'cell "External link: rel=\"noopener noreferrer\" + icon + AT text" [ref=e216]':
+              - text: "External link:"
+              - code [ref=e217]: rel="noopener noreferrer"
+              - text: + icon + AT text
+            - cell "WCAG H83" [ref=e218]:
+              - link "WCAG H83" [ref=e219] [cursor=pointer]:
+                - /url: https://www.w3.org/WAI/WCAG21/Techniques/html/H83
+            - cell "✅" [ref=e220]
+            - cell "Hidden \"(opens in a new tab)\"" [ref=e221]
+          - row "Auto-detect external + override Coder's Block ✅ http(s) other origin, external forces" [ref=e222]:
+            - cell "Auto-detect external + override" [ref=e223]
+            - cell "Coder's Block" [ref=e224]:
+              - link "Coder's Block" [ref=e225] [cursor=pointer]:
+                - /url: https://codersblock.com/blog/external-links-new-tabs-and-accessibility/
+            - cell "✅" [ref=e226]
+            - cell "http(s) other origin, external forces" [ref=e227]:
+              - text: http(s) other origin,
+              - code [ref=e228]: external
+              - text: forces
+          - row "Descriptive link text NN/g ✅ Console warning if generic" [ref=e229]:
+            - cell "Descriptive link text" [ref=e230]
+            - cell "NN/g" [ref=e231]:
+              - link "NN/g" [ref=e232] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "✅" [ref=e233]
+            - cell "Console warning if generic" [ref=e234]
+          - row "Link = navigation, button = action NN/g ✅ <a href> required" [ref=e235]:
+            - cell "Link = navigation, button = action" [ref=e236]
+            - cell "NN/g" [ref=e237]:
+              - link "NN/g" [ref=e238] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "✅" [ref=e239]
+            - cell "<a href> required" [ref=e240]:
+              - code [ref=e241]: <a href>
+              - text: required
+          - row "Distinct visited state NN/g ❌ Out of v1 — not very relevant in docs/apps; possible later addition" [ref=e242]:
+            - cell "Distinct visited state" [ref=e243]
+            - cell "NN/g" [ref=e244]:
+              - link "NN/g" [ref=e245] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "❌" [ref=e246]
+            - cell "Out of v1 — not very relevant in docs/apps; possible later addition" [ref=e247]
+          - row "Hover cue even without permanent underline NN/g ✅ hover/none underline on hover" [ref=e248]:
+            - cell "Hover cue even without permanent underline" [ref=e249]
+            - cell "NN/g" [ref=e250]:
+              - link "NN/g" [ref=e251] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/guidelines-for-visualizing-links/
+            - cell "✅" [ref=e252]
+            - cell "hover/none underline on hover" [ref=e253]:
+              - code [ref=e254]: hover
+              - text: /
+              - code [ref=e255]: none
+              - text: underline on hover
+      - generic [ref=e256]:
+        - img [ref=e258]
+        - generic [ref=e261]:
+          - strong [ref=e262]: Contribute to this project
+          - paragraph [ref=e263]: This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.
+        - link "View on GitHub" [ref=e264] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+          - generic [ref=e265]: View on GitHub
+    - navigation "Table of contents / Table des matières" [ref=e266]:
+      - generic [ref=e267]: On this page
+      - link "Preview" [ref=e268] [cursor=pointer]:
+        - /url: "#aper-u"
+      - link "Absolute rules" [ref=e269] [cursor=pointer]:
+        - /url: "#regles-absolues"
+      - link "Component tokens" [ref=e270] [cursor=pointer]:
+        - /url: "#tokens-de-composant"
+      - link "Accessibility" [ref=e271] [cursor=pointer]:
+        - /url: "#accessibilite"
+      - link "Implementation" [ref=e272] [cursor=pointer]:
+        - /url: "#implementation"
+      - link "DOs and DON'Ts" [ref=e273] [cursor=pointer]:
+        - /url: "#dos-et-don-ts"
+      - link "UX Patterns Reference" [ref=e274] [cursor=pointer]:
+        - /url: "#ux-patterns-reference"
+  - contentinfo [ref=e275]:
+    - generic [ref=e276]:
+      - generic [ref=e277]:
+        - link "Agentica — Accueil" [ref=e278] [cursor=pointer]:
+          - /url: ../index.html
+          - img [ref=e279]
+        - link "Guilherme Negreiros" [ref=e280] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e281]
+          - text: Guilherme Negreiros
+      - generic [ref=e285]:
+        - generic [ref=e286]: Navigation
+        - link "Home" [ref=e287] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Why" [ref=e288] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e289] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Quality" [ref=e290] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "AI" [ref=e291] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e292]:
+        - generic [ref=e293]: Documentation
+        - link "Understand" [ref=e294] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Get started" [ref=e295] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Foundations" [ref=e296] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Components" [ref=e297] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e298] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Decisions" [ref=e299] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuity" [ref=e300] [cursor=pointer]:
+          - /url: ../continuite.html
+        - link "Changelog" [ref=e301] [cursor=pointer]:
+          - /url: ../changelog.html
+      - generic [ref=e302]:
+        - generic [ref=e303]: Explorer
+        - link "Figma library" [ref=e304] [cursor=pointer]:
+          - /url: ../resources.html
+        - link "Storybook" [ref=e305] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e306] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - link "Audit" [ref=e307] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "AI Brief" [ref=e308] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e309]:
+      - generic [ref=e310]: © 2026 Guilherme Negreiros
+      - generic [ref=e311]: Built with Claude Code.
+  - button "Retour en haut" [ref=e312] [cursor=pointer]:
+    - img [ref=e313]
+    - generic [ref=e315]: Top
+  - status [ref=e316]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | // Visual regressions for every component page (except button.html, already covered)
+  4  | const PAGES = [
+  5  |   'badge', 'banner', 'card', 'checkbox', 'code-block',
+  6  |   'icon', 'input', 'link', 'radio', 'segmented',
+  7  |   'table', 'tabs', 'toggle',
+  8  | ];
+  9  | 
+  10 | for (const name of PAGES) {
+  11 |   test.describe(`${name} — visual regressions`, () => {
+  12 |     for (const theme of ['light', 'dark']) {
+  13 |       test(`page ${name} — ${theme}`, async ({ page }) => {
+  14 |         await page.goto(`/components/${name}.html`);
+  15 |         await page.waitForLoadState('networkidle');
+  16 |         await page.evaluate((t) =>
+  17 |           document.documentElement.setAttribute('data-theme', t), theme
+  18 |         );
+> 19 |         await expect(page).toHaveScreenshot(`${name}-${theme}.png`, { fullPage: true });
+     |                            ^ Error: expect(page).toHaveScreenshot(expected) failed
+  20 |       });
+  21 |     }
+  22 |   });
+  23 | }
+  24 | 
+```
