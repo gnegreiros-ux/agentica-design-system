@@ -98,12 +98,14 @@ checks. `Playwright`/`build-and-deploy` only trigger on `push` to `main` today, 
 `pull_request` (see ADR-076); making them blocking pre-merge gates requires first adding
 a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
 `tool-parity` (`.github/workflows/tool-parity.yml`, `scripts/check-tool-parity.js`) does
-already run on `pull_request` — it's excluded from `required_status_checks` deliberately,
-not for the same reason: making it required would immediately block every PR the moment
-any non-Claude AI tool config (`.codex/`, `.github/copilot-instructions.md`, `.cursor/`,
-`.windsurf/`, …) exists in the repo without a complete `governance/tool-parity/*.md`
-attestation — which is true today for `.codex/`. Flip it to required only once that gap
-is actually closed (or knowingly accepted) — see `governance/tool-parity/`.
+already run on `pull_request` and currently passes clean (no non-Claude AI tool config
+detected — `.codex/hooks.json` turned out to be a stray duplicate of `.claude/settings.json`'s
+hooks, not real Codex integration, and was removed 2026-09-11). It's still excluded from
+`required_status_checks` deliberately: making it required would immediately block every
+future PR the moment any non-Claude AI tool config (`.github/copilot-instructions.md`,
+`.cursor/`, `.windsurf/`, …) lands without a complete `governance/tool-parity/*.md`
+attestation alongside it. Flip it to required once there's an actual first case to prove
+the flow against — see `governance/tool-parity/`.
 
 There is no bypass for an emergency: if branch protection ever blocks a genuinely
 urgent fix (e.g. CI itself is broken), the fix is to temporarily disable the rule in
