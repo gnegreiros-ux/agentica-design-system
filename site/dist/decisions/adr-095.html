@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implementing `agtc-checkbox` — Agentica</title>
+<title>Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implementing `agtc-checkbox` — Agentica">
+<meta property="og:title" content="Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Implementing `agtc-checkbox` — Agentica">
+<meta name="twitter:title" content="Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -118,84 +118,38 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-037</code>
+    <code class="adr-number">ADR-095</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implementing `agtc-checkbox`</h1>
+  <h1 class="adr-page-title">Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-01</dd>
+      <dd>2026-09-11</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Reference UX patterns applied</h2>
-<blockquote><p>Added 2026-06-01 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>CB1 through CB7 approved</strong>, <strong>square</strong> shape retained, <strong>indeterminate</strong> state included. Detail and links: <code>guidelines/components/checkbox.md</code> § REFERENCE UX PATTERNS.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Checkbox (not toggle) for an independent item</td><td>NN/g — checkbox vs toggle</td></tr><tr><td>Square shape (round signals a radio)</td><td>NN/g — checkboxes</td></tr><tr><td>Clickable label (box or text, Fitts's law)</td><td>NN/g · IxDF</td></tr><tr><td>Touch target ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>Fully visible states</td><td>NN/g</td></tr><tr><td>Positive label (no negation)</td><td>NN/g</td></tr><tr><td>No pre-checked consent</td><td>IxDF</td></tr><tr><td>Native ARIA semantics</td><td>NN/g</td></tr></tbody></table></div>
-<hr>
-<h2>Context</h2>
-<p>The ToDo app reference surfaced the only atomic DS component missing for this type of interface: the checkbox. Card, input, button, and icon already exist.</p>
-<p>Three questions guided the decisions:</p>
-<p>1. <strong>Shape</strong> — the ToDo mockup shows circles, but NN/g recommends a square. 2. <strong>Technical element</strong> — custom-styled box vs. a hidden native <code>&lt;input&gt;</code>. 3. <strong>State scope</strong> — should <code>indeterminate</code> be included as early as v1?</p>
-<hr>
-<h2>Decisions</h2>
-<h3>Decision 1 — Square shape only</h3>
-<p>NN/g is explicit: *"A checkbox should be a small square."* A circle conventionally signals a radio button; using it for a checkbox is misleading.</p>
-<p><strong>Decision:</strong> <strong>square</strong> shape (<code>semantic.radius.control</code> radius). The round appearance of the reference mockup is <strong>discarded</strong> in favor of the usability convention.</p>
-<p><strong>Rejected alternative:</strong> a <code>shape="round"</code> attribute. Rejected to avoid encouraging a deviation from convention as early as v1; can be reopened via governance if a recurring need emerges.</p>
-<hr>
-<h3>Decision 2 — Hidden native <code>&lt;input type="checkbox"&gt;</code> + decorative styled box</h3>
-<p>The accessible element is a real <code>&lt;input type="checkbox"&gt;</code> (role, checked state, native keyboard handling via Space, accessible name via the implicit enclosing <code>&lt;label&gt;</code>). It is <strong>visually hidden</strong> but remains in the accessibility tree. The visible box (<code>.box</code> + SVG) is <strong>decorative</strong> (<code>aria-hidden</code>).</p>
-<p><strong>Rejected alternative:</strong> <code>&lt;div role="checkbox" tabindex="0"&gt;</code> with manual keyboard handling — a WCAG 4.1.2 anti-pattern (reimplementing a native control is fragile and costly for a11y).</p>
-<hr>
-<h3>Decision 3 — <code>indeterminate</code> state included in v1</h3>
-<p><code>indeterminate</code> anticipates the "select all" pattern for a group (partially checked parent). It is only expressed via the <strong>DOM property</strong> <code>input.indeterminate</code> (never an HTML attribute), synchronized in <code>updated()</code>, and exposes <code>aria-checked="mixed"</code> through the native element.</p>
-<p>Checking or unchecking automatically clears the indeterminate state.</p>
-<hr>
-<h3>Decision 4 — Clickable label and ≥ 24px target</h3>
-<p>The <code>&lt;label&gt;</code> encloses the box and the text: clicking either toggles the state (Fitts's law). The <code>.root</code> interactive zone has <code>min-height: 24px</code> to satisfy WCAG 2.5.8 (Target Size Minimum). The visual box size is 20px (<code>semantic.icon.size.control</code>).</p>
-<hr>
-<h2>v1 scope</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (v2)</th></tr></thead><tbody><tr><td>default/hover/focus/checked/indeterminate/disabled states</td><td><code>shape="round"</code> variant</td></tr><tr><td>Label via attribute or slot</td><td><code>agtc-radio</code> (exclusive choice)</td></tr><tr><td><code>agtc-change</code> event</td><td><code>agtc-toggle</code> (immediate on/off effect)</td></tr><tr><td><code>required</code> + <code>aria-required</code></td><td><code>agtc-checkbox-group</code> group (select-all handling)</td></tr></tbody></table></div>
-<hr>
-<h2>Tokens added to <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Semantic reference</th></tr></thead><tbody><tr><td><code>--agtc-checkbox-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-checkbox-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-checkbox-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-checkbox-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-checkbox-default-check</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>--agtc-checkbox-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-01 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>CB1 à CB7 approuvés</strong>, forme <strong>carrée</strong> retenue, état <strong>indeterminate inclus</strong>. Détail et liens : <code>guidelines/components/checkbox.md</code> § PATTERNS UX DE RÉFÉRENCE.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Checkbox (pas toggle) pour un item indépendant</td><td>NN/g — checkbox vs toggle</td></tr><tr><td>Forme carrée (le rond signale un radio)</td><td>NN/g — checkboxes</td></tr><tr><td>Label cliquable (case ou texte, loi de Fitts)</td><td>NN/g · IxDF</td></tr><tr><td>Cible tactile ≥ 24px</td><td>IxDF · WCAG 2.5.8</td></tr><tr><td>États visibles complets</td><td>NN/g</td></tr><tr><td>Libellé positif (pas de négation)</td><td>NN/g</td></tr><tr><td>Pas de pré-cochage de consentement</td><td>IxDF</td></tr><tr><td>Sémantique ARIA native</td><td>NN/g</td></tr></tbody></table></div>
-<hr>
-<h2>Contexte</h2>
-<p>La référence d'une ToDo app a mis en évidence le seul composant DS atomique manquant pour ce type d'interface : la case à cocher. Card, input, button et icon existent déjà.</p>
-<p>Trois questions ont guidé les décisions :</p>
-<p>1. <strong>Forme</strong> — la maquette ToDo montre des cercles, mais NN/g recommande le carré. 2. <strong>Élément technique</strong> — case stylée custom vs <code>&lt;input&gt;</code> natif masqué. 3. <strong>Périmètre des états</strong> — faut-il inclure <code>indeterminate</code> dès la v1 ?</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — Forme carrée uniquement</h3>
-<p>NN/g est explicite : *« A checkbox should be a small square »*. Le rond signale conventionnellement un bouton radio ; l'utiliser pour une checkbox induit en erreur.</p>
-<p><strong>Décision :</strong> forme <strong>carrée</strong> (rayon <code>semantic.radius.control</code>). L'apparence ronde de la maquette de référence est <strong>écartée</strong> au profit de la convention d'usabilité.</p>
-<p><strong>Alternative rejetée :</strong> attribut <code>shape="round"</code>. Rejeté pour ne pas encourager un écart à la convention dès la v1 ; pourra être rouvert via gouvernance si un besoin récurrent émerge.</p>
-<hr>
-<h3>Décision 2 — <code>&lt;input type="checkbox"&gt;</code> natif masqué + case stylée décorative</h3>
-<p>L'élément accessible est un vrai <code>&lt;input type="checkbox"&gt;</code> (rôle, état coché, gestion clavier native via Espace, nom accessible via le <code>&lt;label&gt;</code> implicite englobant). Il est <strong>visuellement masqué</strong> mais reste dans l'arbre d'accessibilité. La case visible (<code>.box</code> + SVG) est <strong>décorative</strong> (<code>aria-hidden</code>).</p>
-<p><strong>Alternative rejetée :</strong> <code>&lt;div role="checkbox" tabindex="0"&gt;</code> avec gestion clavier manuelle — anti-pattern WCAG 4.1.2 (réimplémenter un contrôle natif est fragile et coûteux en a11y).</p>
-<hr>
-<h3>Décision 3 — État <code>indeterminate</code> inclus en v1</h3>
-<p><code>indeterminate</code> anticipe le pattern « tout cocher » d'un groupe (parent partiellement coché). Il ne s'exprime que via la <strong>propriété DOM</strong> <code>input.indeterminate</code> (jamais un attribut HTML), synchronisée dans <code>updated()</code>, et expose <code>aria-checked="mixed"</code> via le natif.</p>
-<p>Cocher ou décocher lève automatiquement l'état indéterminé.</p>
-<hr>
-<h3>Décision 4 — Label cliquable et cible ≥ 24px</h3>
-<p>Le <code>&lt;label&gt;</code> englobe la case et le texte : cliquer l'un ou l'autre bascule l'état (loi de Fitts). La zone interactive <code>.root</code> a <code>min-height: 24px</code> pour satisfaire WCAG 2.5.8 (Target Size Minimum). La taille visuelle de la case est de 20px (<code>semantic.icon.size.control</code>).</p>
-<hr>
-<h2>Périmètre v1</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (v2)</th></tr></thead><tbody><tr><td>États default/hover/focus/checked/indeterminate/disabled</td><td>Variante <code>shape="round"</code></td></tr><tr><td>Label via attribut ou slot</td><td><code>agtc-radio</code> (choix exclusif)</td></tr><tr><td>Événement <code>agtc-change</code></td><td><code>agtc-toggle</code> (effet immédiat on/off)</td></tr><tr><td><code>required</code> + <code>aria-required</code></td><td>Groupe <code>agtc-checkbox-group</code> (gestion select-all)</td></tr></tbody></table></div>
-<hr>
-<h2>Tokens ajoutés dans <code>component.json</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence sémantique</th></tr></thead><tbody><tr><td><code>--agtc-checkbox-default-background</code></td><td><code>semantic.color.background.surface</code></td></tr><tr><td><code>--agtc-checkbox-default-border</code></td><td><code>semantic.color.border.default</code></td></tr><tr><td><code>--agtc-checkbox-default-border-hover</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-border-focus</code></td><td><code>semantic.color.border.focus</code></td></tr><tr><td><code>--agtc-checkbox-default-fill</code></td><td><code>semantic.color.action.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-fill-hover</code></td><td><code>semantic.color.action.primary-hover</code></td></tr><tr><td><code>--agtc-checkbox-default-check</code></td><td><code>semantic.color.text.on-action</code></td></tr><tr><td><code>--agtc-checkbox-default-label</code></td><td><code>semantic.color.text.primary</code></td></tr><tr><td><code>--agtc-checkbox-default-radius</code></td><td><code>semantic.radius.control</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-036.html" class="agtc-button secondary">← ADR-036</a>
-    <a href="adr-038.html" class="agtc-button secondary">ADR-038 →</a>
+</div><h2>Context</h2>
+<p>The repository's code license changed from MIT to Apache License 2.0 (Chantier 1 — Mise en licence). ADR-081 had chosen CC BY 4.0 for the future Figma Community File on the stated rationale that it was "consistent with the code's permissive MIT license." That rationale is now stale: the code is no longer MIT. Rather than rewrite ADR-081's history (an ADR is immutable once active — any modification is a new ADR, per <code>decisions/README.md</code>), this ADR records the updated reasoning and formally supersedes it.</p>
+<h2>Decision</h2>
+<blockquote><p>The code license changes to <strong>Apache License 2.0</strong>. The Figma Community File license <strong>stays CC BY 4.0</strong> — no change from ADR-081's outcome. The two licenses remain consistent with each other: both are permissive, both require only attribution, and neither restricts commercial reuse or modification. A different license for the Figma file was never required by the code's own license choice — CC BY 4.0 is the right license family for *design content* (a Figma file is not source code, and Creative Commons is the standard licensing family for design/creative assets, the way SPDX software licenses are for code); the code's own choice of Apache 2.0 over MIT does not change that reasoning.</p></blockquote>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Re-open the Figma Community File license decision (e.g. switch to Apache-family reasoning)</td><td>Apache License 2.0 is a software license — it has no defined meaning when applied to Figma design assets. CC BY 4.0 (or another Creative Commons license) remains the correct license family for the Figma file regardless of which permissive software license the code uses.</td></tr><tr><td>Silently rewrite ADR-081's rationale in place</td><td>Violates the registry's immutability rule (<code>decisions/README.md</code>: "An ADR is immutable once active — any modification = a new ADR"). The original MIT-based reasoning is left intact as the historical record; only its <code>Status</code> field and a deprecation note were added to ADR-081.</td></tr></tbody></table></div>
+<h2>Consequences</h2>
+<ul><li>ADR-081's <code>Status</code> field now reads "⚠️ Superseded by ADR-095", with a deprecation</li></ul>
+<p>  note pointing here — its Context/Decision/Rejected alternatives/Consequences sections   are otherwise untouched.</p>
+<ul><li><code>.claude/rules/figma-library-governance.md</code> — the "Community File license — CC BY 4.0"</li></ul>
+<p>  section is a live rules file, not a historical registry entry, so its stale "consistent   with the code's permissive MIT license" wording is corrected in place to reference   Apache License 2.0, and now points to this ADR alongside ADR-081.</p>
+<ul><li><code>decisions/README.md</code>'s ADR index gets a new row for ADR-095 and the ADR-081 row's</li></ul>
+<p>  Status column is updated to "⚠️ Superseded by ADR-095".</p>
+<ul><li>No action needed in Figma itself — same as ADR-081, the Community File publish has no</li></ul>
+<p>  scheduled date; this ADR only updates the paper trail ahead of that eventual publish.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-094.html" class="agtc-button secondary">← ADR-094</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

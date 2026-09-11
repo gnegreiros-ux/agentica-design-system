@@ -4245,8 +4245,8 @@ function buildResources() {
       'Le code fait foi ; Figma est audité en continu contre lui (§22). Une dérive visuelle est un bug, pas une nouvelle référence.',
       'Code is the source of truth; Figma is continuously audited against it (§22). A visual drift is a bug, not a new reference.'],
     ['heart', 'Gratuit et ouvert', 'Free and open',
-      'Publié sous licence Creative Commons CC BY 4.0 — cohérente avec le MIT du code : attribution requise, aucune restriction d\'usage ou de modification.',
-      'Published under a CC BY 4.0 Creative Commons license — consistent with the code\'s MIT license: attribution required, no restriction on reuse or modification.'],
+      'Publié sous licence Creative Commons CC BY 4.0 — cohérente avec l\'Apache License 2.0 du code : attribution requise, aucune restriction d\'usage ou de modification.',
+      'Published under a CC BY 4.0 Creative Commons license — consistent with the code\'s Apache License 2.0: attribution required, no restriction on reuse or modification.'],
   ].map(([iconName, titleFr, titleEn, fr, en]) => `
       <div class="editorial-block">
         <div class="editorial-icon">${icon(iconName, 20)}</div>
@@ -4319,8 +4319,8 @@ function buildResources() {
     <agtc-banner variant="info">
       <strong><span class="lang-fr">Le code fait foi, jamais l'inverse</span><span class="lang-en">Code is the source of truth, never the reverse</span></strong>
       <span>
-        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec le <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT du code</a>.</span>
-        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license</a>.</span>
+        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec l'<a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache License 2.0 du code</a>.</span>
+        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache License 2.0</a>.</span>
       </span>
     </agtc-banner>
   </div>
