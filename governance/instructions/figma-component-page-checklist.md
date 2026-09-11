@@ -2,15 +2,15 @@
 
 > Run against any Figma component page before marking it "Terminé" in GitHub Projects, and <!-- lang-audit-ignore: literal GitHub Projects Status field value -->
 > periodically against `↳ badge`/`↳ button` (the two reference pages) to catch drift between
-> them. Pair with `.claude/instructions/figma-component-page-method.md` (how to build/fix) —
+> them. Pair with `governance/instructions/figma-component-page-method.md` (how to build/fix) —
 > this file is what to verify, that one is how to get there. Section numbers refer to
-> `.claude/instructions/figma-components.md`, the full rationale/incident source.
+> `governance/instructions/figma-components.md`, the full rationale/incident source.
 > **Type:** instruction
-> **Logical path:** .claude/instructions/figma-component-page-checklist.md
+> **Logical path:** governance/instructions/figma-component-page-checklist.md
 > **Author:** Guilherme Negreiros
-> **Relations:** .claude/instructions/figma-component-page-method.md,
-> .claude/instructions/figma-components.md, scripts/figma/audit-figma-file.js,
-> .claude/rules/figma-library-governance.md
+> **Relations:** governance/instructions/figma-component-page-method.md,
+> governance/instructions/figma-components.md, scripts/figma/audit-figma-file.js,
+> governance/rules/figma-library-governance.md
 
 ---
 

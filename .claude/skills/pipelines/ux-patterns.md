@@ -13,7 +13,7 @@
 > to the human (with links) and their decision **documented everywhere**.
 
 Execution reference: `.claude/skills/ux-pattern-review.md`
-Sources and checklist: `.claude/rules/ux-patterns-sources.md`
+Sources and checklist: `governance/rules/ux-patterns-sources.md`
 
 ---
 

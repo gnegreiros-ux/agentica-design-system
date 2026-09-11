@@ -2,9 +2,9 @@
 
 > Style and naming conventions for this project.
 > **Type:** rule
-> **Logical path:** .claude/rules/code-style.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/git-workflow.md, .claude/rules/development.md
+> **Logical path:** governance/rules/code-style.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/git-workflow.md, governance/rules/development.md
 
 ---
 
@@ -138,4 +138,4 @@ Format: `--[prefix]-[level]-[component]-[variant]-[property]`
 
 ## Git
 
-See `.claude/rules/git-workflow.md` for commit and branch conventions.
+See `governance/rules/git-workflow.md` for commit and branch conventions.

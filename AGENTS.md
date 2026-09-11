@@ -6,7 +6,7 @@
 > **Logical path:** AGENTS.md
 > **Author:** Guilherme Negreiros
 > **Read before:** DESIGN.md
-> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
+> **Relations:** DESIGN.md, governance/rules/project-overview.md, governance/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
 
@@ -60,15 +60,16 @@ The orchestrator coordinates the agents. It decides:
 ## Files to read before any action
 
 ```
-DESIGN.md                              ← portable contract — always read first
-.claude/rules/project-overview.md      ← project context
-.claude/rules/tokens-system.md         ← token rules
-.claude/rules/ux-patterns-sources.md   ← sources + UX pattern review (before any component)
-.claude/rules/figma-components.md      ← Figma rules (properties, auto-layout, naming, API)
-.claude/instructions/codebase-context.md ← technical context
-.claude/instructions/session-spec.md   ← condensed spec for this session
-tokens/semantic.json                   ← source of truth for UX intentions
-decisions/                             ← why decisions were made (ADRs)
+DESIGN.md                                    ← portable contract — always read first
+governance/rules/project-overview.md         ← project context
+governance/rules/tokens-system.md            ← token rules
+governance/rules/ux-patterns-sources.md      ← sources + UX pattern review (before any component)
+governance/rules/figma-components.md         ← Figma rules (properties, auto-layout, naming, API)
+governance/instructions/codebase-context.md  ← technical context
+governance/instructions/session-spec.md      ← condensed spec for this session
+governance/ai-skills-reference.md            ← for non-Claude tools: what .claude/skills/ automates and how to reproduce it
+tokens/semantic.json                         ← source of truth for UX intentions
+decisions/                                   ← why decisions were made (ADRs)
 ```
 
 ---
@@ -90,7 +91,7 @@ decisions/                             ← why decisions were made (ADRs)
 
 Task tracking (statuses, backlog, priorities, dependencies) lives exclusively in
 [GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — never in a
-versioned file in the repo. See `.claude/rules/project-overview.md` (ADR-069).
+versioned file in the repo. See `governance/rules/project-overview.md` (ADR-069).
 
 ### Architectural decisions (ADR)
 
@@ -102,4 +103,4 @@ to create a new one.
 ### Domain context
 
 No `CONTEXT.md` at the root — domain context lives in `DESIGN.md` (portable brand
-contract), `guidelines/` (foundations and components), and the `.claude/rules/` rules.
+contract), `guidelines/` (foundations and components), and the `governance/rules/` rules.

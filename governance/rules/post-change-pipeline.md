@@ -2,9 +2,9 @@
 
 > Mandatory quality gate before any commit — non-negotiable for any agent or session.
 > **Type:** rule
-> **Logical path:** .claude/rules/post-change-pipeline.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/skills/quality-gate.md, .claude/skills/pipelines/, .claude/rules/git-workflow.md, decisions/ADR-029-quality-gate-pre-commit.md
+> **Logical path:** governance/rules/post-change-pipeline.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** .claude/skills/quality-gate.md, .claude/skills/pipelines/, governance/rules/git-workflow.md, decisions/ADR-029-quality-gate-pre-commit.md
 
 ---
 

@@ -2,9 +2,9 @@
 
 > Run in order before every commit touching `site/`, `tokens/`, `guidelines/`, or `decisions/`.
 > **Type:** instruction
-> **Logical path:** .claude/instructions/site-checklist.md
+> **Logical path:** governance/instructions/site-checklist.md
 > **Author:** Guilherme Negreiros
-> **Relations:** site/build.js, .claude/instructions/session-spec.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
+> **Relations:** site/build.js, governance/instructions/session-spec.md, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
 

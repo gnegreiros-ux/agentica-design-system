@@ -3,8 +3,8 @@
 > Absolute rules for managing tokens in this system.
 > These rules apply to every agent and every team.
 > **Type:** rule
-> **Logical path:** .claude/rules/tokens-system.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** governance/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, tokens/component.json, DESIGN.md
 
 ---

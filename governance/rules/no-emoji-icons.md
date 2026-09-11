@@ -3,9 +3,9 @@
 > Emoji are never used as iconography in the product, the site, or the Figma file.
 > Lucide (via `agtc-icon`, or a real Lucide component instance in Figma) is the only icon system.
 > **Type:** rule
-> **Logical path:** .claude/rules/no-emoji-icons.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/code-style.md
-> **Relations:** components/agtc-icon.js, guidelines/components/icon.md, .claude/instructions/figma-components.md
+> **Logical path:** governance/rules/no-emoji-icons.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/code-style.md
+> **Relations:** components/agtc-icon.js, guidelines/components/icon.md, governance/instructions/figma-components.md
 
 ---
 
@@ -28,7 +28,7 @@
 
 | ✅ In scope (no emoji, Lucide only) | ❌ Out of scope (emoji/Unicode symbols acceptable) |
 |---|---|
-| Any icon rendered on `agentica.design` (status cells, badges, table markers) | `✅`/`❌` checklist bullets in `.claude/rules/*.md` and `guidelines/*.md` — agent-facing documentation prose, not a UI icon |
+| Any icon rendered on `agentica.design` (status cells, badges, table markers) | `✅`/`❌` checklist bullets in `governance/rules/*.md` and `guidelines/*.md` — agent-facing documentation prose, not a UI icon |
 | Any icon inside a `agtc-*` component | Code-block examples inside prose that illustrate the `✅ Correct` / `❌ Forbidden` documentation convention itself (verbatim quotes of that convention, not a live UI element) |
 | Figma page names, frame names, or on-canvas content (e.g. a staging-page emoji prefix) | ADR/commit-message prose |
 
@@ -58,7 +58,7 @@
 ```
 ✅ Use <agtc-icon name="..."> for any status/UI icon added to the site or a component
 ✅ Use a real Lucide component instance for any icon added to the Figma file
-✅ Keep the ✅/❌ checklist convention in .claude/rules/*.md and guidelines/*.md as-is —
+✅ Keep the ✅/❌ checklist convention in governance/rules/*.md and guidelines/*.md as-is —
    it's documentation prose, not a UI icon, and converting it would require a non-existent
    text equivalent for a visual icon system
 ❌ Never add a new emoji as a status marker, badge, or page/frame name prefix in the site,

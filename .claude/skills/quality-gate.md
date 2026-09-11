@@ -3,7 +3,7 @@
 > Pre-commit orchestrator. Runs all active pipelines in order, generates an impact report, waits for human approval before any commit.
 > **Type:** skill
 > **Logical path:** .claude/skills/quality-gate.md
-> **Read before:** AGENTS.md, .claude/rules/post-change-pipeline.md
+> **Read before:** AGENTS.md, governance/rules/post-change-pipeline.md
 > **Relations:** .claude/skills/pipelines/, decisions/ADR-029-quality-gate-pre-commit.md
 
 ---

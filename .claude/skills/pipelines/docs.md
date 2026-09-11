@@ -23,8 +23,8 @@
 | `DESIGN.md` | Identity, governance, or principle change |
 | `README.md` | Project structure change |
 | `AGENTS.md` | New rule for agents |
-| `.claude/rules/` | New convention or rule change |
-| `.claude/instructions/` | Orchestration methodology or agent-facing process change |
+| `governance/rules/` | New convention or rule change |
+| `governance/instructions/` | Orchestration methodology or agent-facing process change |
 | `How-to-devs.md` / `How-to-designers.md` | Workflow change for the team maintaining the system |
 | `How-to-without-agents.md` + `scripts/continuity/*.sh` | Change to a tool/process that has a documented manual fallback |
 | Website (`site/build.js`) | Any visible change on the site |

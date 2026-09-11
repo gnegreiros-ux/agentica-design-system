@@ -4,7 +4,7 @@
 > **Type:** guideline
 > **Logical path:** guidelines/foundations/spacing.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, decisions/ADR-020-grille-4px.md
 
 ---

@@ -14,7 +14,7 @@
  * The relations already exist, scattered across three places that were never linked:
  *   - tokens/*.json  → $extensions["com.agentica.usage"].decision / .doNotUse / $metadata.contract
  *   - token $value aliases ("{semantic.color.action.primary}")
- *   - the "> **Relations:**" header on every guidelines/ and .claude/rules/ Markdown file
+ *   - the "> **Relations:**" header on every guidelines/ and governance/rules/ Markdown file
  *
  * This script walks those sources and writes a single generated index, so questions like
  * "what depends on semantic.color.feedback.danger?" are a lookup, not a repo-wide grep.
@@ -101,7 +101,7 @@ function extractTokenEdges() {
 
 function extractHeaderEdges() {
   const edges = [];
-  const dirs = ['guidelines/components', 'guidelines/foundations', '.claude/rules', '.claude/rules/components', '.claude/instructions', '.claude/skills'];
+  const dirs = ['guidelines/components', 'guidelines/foundations', 'governance/rules', 'governance/rules/components', 'governance/instructions', '.claude/skills'];
   const seen = new Set();
   for (const dir of dirs) {
     for (const file of listMarkdownFiles(dir)) {

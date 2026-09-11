@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/link.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-043-agtc-link-implementation.md, guidelines/components/button.md, DESIGN.md
 
 ---

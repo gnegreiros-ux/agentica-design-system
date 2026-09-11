@@ -4,7 +4,7 @@
 > **Type:** instruction
 > **Logical path:** decisions/README.md
 > **Read before:** AGENTS.md, DESIGN.md
-> **Relations:** .claude/instructions/session-spec.md, tokens/semantic.json, guidelines/components/
+> **Relations:** governance/instructions/session-spec.md, tokens/semantic.json, guidelines/components/
 
 ---
 

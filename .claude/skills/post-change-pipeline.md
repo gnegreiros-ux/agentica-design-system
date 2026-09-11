@@ -3,7 +3,7 @@
 > Mandatory pipeline before any commit — analyzes the impact of changes and submits a report for human approval.
 > **Type:** skill
 > **Logical path:** .claude/skills/post-change-pipeline.md
-> **Read before:** AGENTS.md, .claude/rules/git-workflow.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, governance/rules/git-workflow.md, governance/rules/tokens-system.md
 > **Relations:** site/build.js, tokens/, decisions/, decisions/ADR-069-migration-suivi-projet-github-projects.md
 
 ---
@@ -30,7 +30,7 @@ Apply the impact matrix:
 | `site/dist/` | Log only (dist is an output) |
 | `guidelines/` or `components/` | Site rebuild, log |
 | `decisions/ADR-*.md` | Site rebuild (ADR page), log |
-| `.claude/rules/` or `.claude/skills/` | Log |
+| `governance/rules/` or `.claude/skills/` | Log |
 | `AGENTS.md`, `DESIGN.md`, `README.md` | Log |
 
 Tracking for this work (status, domain) lives in GitHub Projects (ADR-069) — not in

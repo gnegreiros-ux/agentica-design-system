@@ -6,8 +6,8 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/top-nav.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** tokens/component.json, decisions/ADR-060-agtc-top-nav-implementation.md, guidelines/components/tabs.md, .claude/rules/no-visited-nav.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
+> **Relations:** tokens/component.json, decisions/ADR-060-agtc-top-nav-implementation.md, guidelines/components/tabs.md, governance/rules/no-visited-nav.md
 
 ---
 

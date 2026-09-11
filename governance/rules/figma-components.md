@@ -6,14 +6,14 @@ paths:
 
 # Rule: figma-components
 
-> Stub — full rules in `.claude/instructions/figma-components.md`.
+> Stub — full rules in `governance/instructions/figma-components.md`.
 > Load this file **only** when working on Figma scripts.
 > **Type:** rule
-> **Logical path:** .claude/rules/figma-components.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** .claude/instructions/figma-components.md, .claude/rules/tokens-system.md,
-> .claude/instructions/figma-component-page-method.md (step-by-step build/modify playbook,
-> distilled from this document), .claude/instructions/figma-component-page-checklist.md
+> **Logical path:** governance/rules/figma-components.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
+> **Relations:** governance/instructions/figma-components.md, governance/rules/tokens-system.md,
+> governance/instructions/figma-component-page-method.md (step-by-step build/modify playbook,
+> distilled from this document), governance/instructions/figma-component-page-checklist.md
 > (matching validation-audit checklist)
 
 ---
@@ -27,7 +27,7 @@ Never a direct `hexRgb()`, never a primitive token inside a component.
 
 ## Full document
 
-`.claude/instructions/figma-components.md` contains 28 sections:
+`governance/instructions/figma-components.md` contains 28 sections:
 §0 Fundamental rule · §0bis Mandatory audit before ending any session · §1 Component
 properties · §2 Auto-layout · §3 Architecture · §4 Naming · §5 Variables & Styles (tokens →
 hex mapping table) · §6 Performance · §7 Publication checklist · §8 Component page layout
@@ -72,6 +72,6 @@ mandatory live-verification step before building any piece — search design-ann
 an existing `doc/*` match first, inspect button's real live structure right before building,
 never build from this document's prose or an older page's pattern from memory
 
-**Read `.claude/instructions/figma-components.md` before any work on a Figma plugin script.**
-**Also read `.claude/rules/figma-library-governance.md`** — code-as-source-of-truth charter,
+**Read `governance/instructions/figma-components.md` before any work on a Figma plugin script.**
+**Also read `governance/rules/figma-library-governance.md`** — code-as-source-of-truth charter,
 tokens-only, architecture/rendering parity, best-practices watch.

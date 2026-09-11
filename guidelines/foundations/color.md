@@ -3,7 +3,7 @@
 > Color foundation of the design system — token rules and levels.
 > **Type:** guideline
 > **Logical path:** guidelines/foundations/color.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/primitives.json, tokens/semantic.json, guidelines/overview.md
 
 Rule: always semantic tokens, never primitives.

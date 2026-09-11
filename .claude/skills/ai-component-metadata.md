@@ -4,7 +4,7 @@
 > Use this skill to verify that a component is "agent-ready".
 > **Type:** skill
 > **Logical path:** .claude/skills/ai-component-metadata.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** guidelines/components/, tokens/component.json, .claude/skills/codebase-index.md
 
 ---

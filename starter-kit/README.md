@@ -28,7 +28,7 @@ and dark themes (`data-theme` on `<html>`), to verify both token sets load corre
 
 - **Tokens**: `style.css` only uses `var(--agtc-semantic-*)` — never a hardcoded
   value (color, spacing) — following the design system's rule
-  ([`tokens-system.md`](../.claude/rules/tokens-system.md)).
+  ([`tokens-system.md`](../governance/rules/tokens-system.md)).
 - **Components**: `agtc-button`, `agtc-card`, `agtc-input`, `agtc-badge` loaded via
   the `@agentica-ds/components` barrel — no bundling or custom build required.
 - **Dark theme**: loading `@agentica-ds/tokens/css/dark` on top of the base set,

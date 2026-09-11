@@ -6,8 +6,8 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/button.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/components/button.md
-> **Relations:** tokens/component.json, .claude/rules/components/button.md, DESIGN.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md, governance/rules/components/button.md
+> **Relations:** tokens/component.json, governance/rules/components/button.md, DESIGN.md
 
 ---
 

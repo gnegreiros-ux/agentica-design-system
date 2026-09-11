@@ -124,7 +124,7 @@ function getSourceFiles(dir) {
   const files = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
+    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'governance', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
       files.push(...getSourceFiles(fullPath));
     } else if (entry.isFile() && SOURCE_EXTENSIONS.includes(path.extname(entry.name))) {
       files.push(fullPath);
@@ -187,10 +187,10 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
 }
 
 // Documented, human-approved fallback shapes where a literal color sits next to its
-// token reference on purpose — not drift. See .claude/rules/no-visited-nav.md (ADR-047/059
+// token reference on purpose — not drift. See governance/rules/no-visited-nav.md (ADR-047/059
 // Safari :visited exception), the var(--x, #fallback) CSS resilience pattern used
 // throughout site/build.js, and the vFill(token, fallback) Figma-plugin equivalent
-// (.claude/instructions/figma-components.md §0) — Figma Plugin API has no CSS var()
+// (governance/instructions/figma-components.md §0) — Figma Plugin API has no CSS var()
 // concept, so a resolved literal fallback next to the token name is the correct pattern.
 const COLOR_EXCEPTION_LINE = /vFill\(|var\(--[\w-]+\s*,\s*#|:visited\s*(,|\{)|\w*[Tt]ok:\s*["']|["'](color|component)\/[\w-]+["']/;
 

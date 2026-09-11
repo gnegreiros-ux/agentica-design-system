@@ -4,8 +4,8 @@
 > This skill translates a request into a valid assembly of system components.
 > **Type:** skill
 > **Logical path:** .claude/skills/ai-ds-composer.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** guidelines/components/overview.md, .claude/rules/components/, tokens/component.json
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
+> **Relations:** guidelines/components/overview.md, governance/rules/components/, tokens/component.json
 
 ---
 
@@ -32,7 +32,7 @@ Consult `guidelines/components/overview.md` to identify:
 
 ### Step 3 — Compose
 Assemble the components while respecting:
-- Each component's rules (`.claude/rules/components/`)
+- Each component's rules (`governance/rules/components/`)
 - Visual hierarchy (only one primary per section)
 - Accessibility constraints (WCAG 2.1 AA)
 - Token dependencies

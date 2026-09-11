@@ -4,7 +4,7 @@
 > Enables knowing the system's complete state at any time.
 > **Type:** skill
 > **Logical path:** .claude/skills/codebase-index.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** guidelines/components/, tokens/component.json, .claude/skills/ai-component-metadata.md
 
 ---

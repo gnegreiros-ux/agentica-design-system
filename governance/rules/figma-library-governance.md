@@ -10,10 +10,10 @@ paths:
 > its representation. These rules apply to **every agent** creating or modifying a
 > component, page, or variable in the Figma file.
 > **Type:** rule
-> **Logical path:** .claude/rules/figma-library-governance.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/figma-components.md
-> **Relations:** .claude/instructions/figma-components.md (Plugin API mechanics + §22 audit),
-> .claude/rules/tokens-system.md, tokens/*.json, components/agtc-*.js, components/agtc-*.stories.js
+> **Logical path:** governance/rules/figma-library-governance.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md, governance/rules/figma-components.md
+> **Relations:** governance/instructions/figma-components.md (Plugin API mechanics + §22 audit),
+> governance/rules/tokens-system.md, tokens/*.json, components/agtc-*.js, components/agtc-*.stories.js
 
 ---
 
@@ -82,7 +82,7 @@ paths:
 
 ### B. Staging page "Proposal — pending approval"
 
-> Page name carries no emoji (`.claude/rules/no-emoji-icons.md`) — if a visual marker is wanted
+> Page name carries no emoji (`governance/rules/no-emoji-icons.md`) — if a visual marker is wanted
 > next to it in the page list, use a real Lucide icon instance, never an emoji character.
 
 ```
@@ -231,7 +231,7 @@ push feature.
 
 The full audit (accessibility, display, variables, styles, states, variants,
 in-page documentation, links) is scripted and documented in
-`.claude/instructions/figma-components.md` §22. It must be run:
+`governance/instructions/figma-components.md` §22. It must be run:
 
 ```
 ✅ On any newly created page, before declaring it complete
