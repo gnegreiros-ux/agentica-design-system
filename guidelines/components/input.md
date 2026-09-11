@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/input.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, DESIGN.md
 
 ---
@@ -155,7 +155,7 @@ Allow the user to enter textual or structured data in a form.
 ## UX Patterns Reference
 
 > Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
-> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
+> (see `governance/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
 | Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|

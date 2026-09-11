@@ -3,9 +3,9 @@
 > Construction rules for Figma components in the Agentica library.
 > Based on official Figma best practices (2024-2025) + lessons learned from the build session.
 > **Type:** rule
-> **Logical path:** .claude/instructions/figma-components.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
-> **Relations:** .claude/rules/tokens-system.md, .claude/rules/development.md
+> **Logical path:** governance/instructions/figma-components.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
+> **Relations:** governance/rules/tokens-system.md, governance/rules/development.md
 
 ---
 
@@ -1701,7 +1701,7 @@ ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync if the render still s
 
 ## 22. Mandatory full audit — 9 categories
 
-> Referenced by `.claude/rules/figma-library-governance.md`. Run on any newly
+> Referenced by `governance/rules/figma-library-governance.md`. Run on any newly
 > created/modified page, before declaring it done, and on every explicit
 > request ("audit", "check the whole file", "full screenshot"). Also run
 > automatically, weekly, against the ENTIRE library (not just recently touched
@@ -1897,7 +1897,7 @@ be **made visible**, never silent.
    2. If the code diverges, note the gap explicitly (e.g. a "fixed" row in the
       TOKENS USED table, as done for Feature-card) — never silently
    3. Offer the user a handoff prompt to the developer agent
-      (see `.claude/rules/figma-library-governance.md` — code is the source of truth)
+      (see `governance/rules/figma-library-governance.md` — code is the source of truth)
    4. Once the code is fixed, recheck Figma ↔ code and clear the gap note
 ❌ Never assume a "Figma-only" visual change will stay consistent with the code
    without an explicit propagation action

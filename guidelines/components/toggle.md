@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/toggle.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-039-agtc-toggle-implementation.md, guidelines/components/checkbox.md
 
 ---
@@ -114,7 +114,7 @@ instantly, with no "Save" button.
 ## UX Patterns Reference
 
 > Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
-> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
+> (see `governance/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
 | Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|

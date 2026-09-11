@@ -2,9 +2,9 @@
 
 > A single layout pattern for every page on the site. Non-negotiable.
 > **Type:** rule
-> **Logical path:** .claude/rules/layout-pattern.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/code-style.md, .claude/rules/development.md, site/build.js (layout function)
+> **Logical path:** governance/rules/layout-pattern.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/code-style.md, governance/rules/development.md, site/build.js (layout function)
 
 ---
 

@@ -2,8 +2,8 @@
 
 > Two usage contexts in the Agentica site — editorial "direction" decision.
 > **Type:** rule
-> **Logical path:** .claude/rules/contexts-utilisation.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Logical path:** governance/rules/contexts-utilisation.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/semantic.json (semantic.marketing.*), decisions/ADR-057, guidelines/foundations/contextes.md
 
 ---

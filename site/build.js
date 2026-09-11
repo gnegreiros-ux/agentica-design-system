@@ -513,7 +513,7 @@ const PIPELINES = [
     objective_en: 'Ensure every system modification is accompanied by its corresponding documentation, with no silent documentation debt.',
     steps: [
       { role_fr:'01 · Matrice', role_en:'01 · Matrix', title_fr:'Fichier modifié → documentation requise', title_en:'Modified file → required documentation', desc_fr:'Chaque type de changement a ses surfaces de documentation obligatoires (matrice guideline/ADR/log).', desc_en:'Each type of change has its mandatory documentation surfaces (guideline/ADR/log matrix).' },
-      { role_fr:'02 · Vérification', role_en:'02 · Verification', title_fr:'Toutes les surfaces documentées', title_en:'All surfaces documented', desc_fr:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · .claude/rules/ · Site rebuild', desc_en:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · .claude/rules/ · Site rebuild' },
+      { role_fr:'02 · Vérification', role_en:'02 · Verification', title_fr:'Toutes les surfaces documentées', title_en:'All surfaces documented', desc_fr:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · governance/rules/ · Site rebuild', desc_en:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · governance/rules/ · Site rebuild' },
       { role_fr:'03 · Parité', role_en:'03 · Parity', title_fr:'FR/EN — aucune langue absente', title_en:'FR/EN — no language missing', desc_fr:'Tout contenu ajouté en français → version anglaise requise (et vice versa). Aucune langue absente sur le site.', desc_en:'Any content added in French → English version required (and vice versa). No language missing on the site.' },
     ],
     checks_fr: ['guidelines/foundations/*.md mis à jour si fondation modifiée (couleur, typo, espacement)','guidelines/components/[composant].md mis à jour si composant modifié','decisions/ADR-0XX.md créé pour toute décision architecturale nouvelle','decisions/README.md mis à jour pour chaque nouvel ADR','GitHub Projects — item créé/mis à jour pour tout chantier significatif (ADR-069)','DESIGN.md mis à jour si identité, gouvernance ou principes changent','AGENTS.md mis à jour si nouvelle règle pour les agents','Parité bilingue FR/EN vérifiée sur toutes les pages modifiées'],
@@ -840,7 +840,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, .claude/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, governance/rules/layout-pattern.md */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -2233,7 +2233,7 @@ body{overflow-x:hidden}
 
 /* ═══════════════════════════════════════════════════════════
    REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
-   Namespace classes site : sémantique, sans préfixe de version — voir .claude/rules/code-style.md
+   Namespace classes site : sémantique, sans préfixe de version — voir governance/rules/code-style.md
    ═══════════════════════════════════════════════════════ */
 
 /* Variables V2 — dans :root pour accessibilité globale */
@@ -4396,8 +4396,8 @@ bash scripts/continuity/2-2-product-checklist.sh <project-path>`);
 
 <h2 class="first" id="equipe-systeme"><span class="lang-fr">Équipe système de design (maintien d'Agentica)</span><span class="lang-en">Design system team (maintaining Agentica)</span></h2>
 <p>
-  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>.claude/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
-  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>.claude/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
+  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>governance/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
+  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>governance/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
 </p>
 
 <h3><span class="lang-fr">1.1 Les outils existants tournent sans agent</span><span class="lang-en">1.1 Existing tools run without an agent</span></h3>
@@ -7338,11 +7338,11 @@ function buildAgents() {
   const readingOrder = [
     ['AGENTS.md','<span class="lang-fr">Routeur d\'agents — première lecture obligatoire</span><span class="lang-en">Agent router — mandatory first read</span>'],
     ['DESIGN.md','<span class="lang-fr">Contrat de marque portable</span><span class="lang-en">Portable brand contract</span>'],
-    ['.claude/rules/project-overview.md','<span class="lang-fr">Contexte général</span><span class="lang-en">General context</span>'],
-    ['.claude/rules/tokens-system.md','<span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span>'],
-    ['.claude/rules/development.md','<span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span>'],
+    ['governance/rules/project-overview.md','<span class="lang-fr">Contexte général</span><span class="lang-en">General context</span>'],
+    ['governance/rules/tokens-system.md','<span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span>'],
+    ['governance/rules/development.md','<span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span>'],
     ['guidelines/components/button.md','<span class="lang-fr">Contrat du composant concerné</span><span class="lang-en">Contract for the relevant component</span>'],
-    ['.claude/instructions/session-spec.md','<span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span>'],
+    ['governance/instructions/session-spec.md','<span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span>'],
   ];
 
   const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('shield-check',24), icon('book-open',24)];

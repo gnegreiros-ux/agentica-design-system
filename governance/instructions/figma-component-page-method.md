@@ -7,15 +7,15 @@
 > here and that file disagree, re-verify against the live Figma file, never against either
 > document from memory (§28.7).**
 > **Type:** instruction
-> **Logical path:** .claude/instructions/figma-component-page-method.md
+> **Logical path:** governance/instructions/figma-component-page-method.md
 > **Author:** Guilherme Negreiros
 > **Reference implementations:** `↳ badge` and `↳ button` — as of 2026-09-01 the only two pages
 > built to this method. Both must match — every fix this session was applied to both after the
 > user caught a divergence twice (fixed on one, forgotten on the other). Diff badge and button
 > before copying "the reference" if either might have drifted since.
-> **Relations:** `.claude/instructions/figma-components.md` (full detail, §0–§28), `.claude/rules/figma-components.md`
-> (stub), `.claude/rules/figma-library-governance.md` (code-is-source-of-truth charter),
-> `.claude/instructions/figma-component-page-checklist.md` (the matching audit checklist),
+> **Relations:** `governance/instructions/figma-components.md` (full detail, §0–§28), `governance/rules/figma-components.md`
+> (stub), `governance/rules/figma-library-governance.md` (code-is-source-of-truth charter),
+> `governance/instructions/figma-component-page-checklist.md` (the matching audit checklist),
 > `scripts/figma/audit-figma-file.js` (automated structural/binding audit)
 
 ---
@@ -694,5 +694,5 @@ table standing in for it. GitHub Projects status follows this bar exactly: don't
 
 Run `scripts/figma/audit-figma-file.js` against every page touched, before ending the session —
 not deferred to "when the whole file is done." Use
-`.claude/instructions/figma-component-page-checklist.md` to walk the full result set and any
+`governance/instructions/figma-component-page-checklist.md` to walk the full result set and any
 manual (not-yet-automated) checks it still requires.

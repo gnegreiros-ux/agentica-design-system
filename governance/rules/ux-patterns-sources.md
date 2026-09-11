@@ -10,8 +10,8 @@ paths:
 > Registry of UX reference sources and pattern-review checklist by component.
 > To consult before creating any component and before any relevant UX change.
 > **Type:** rule
-> **Logical path:** .claude/rules/ux-patterns-sources.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Logical path:** governance/rules/ux-patterns-sources.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
 > **Relations:** .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/
 
 ---

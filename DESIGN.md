@@ -60,7 +60,7 @@ official source: **https://www.designtokens.org/**. Conventions applied: `$value
 `$description`, cross-token aliases `{group.token}`, and `$schema` pointing to the DTCG format.
 This guarantees interoperability with Style Dictionary, Tokens Studio, and any compatible tool.
 In case of divergence between a local habit and the standard, **the standard prevails**
-(see `.claude/rules/tokens-system.md` and ADR-052).
+(see `governance/rules/tokens-system.md` and ADR-052).
 
 ---
 
@@ -120,7 +120,7 @@ The system distinguishes two editorial modes, declared via `data-context` on `<b
 | Attribute | *(absent)* | `data-context="marketing"` |
 
 **Selection rule:** if the page convinces or onboards → Marketing. If it documents → Product.
-See `.claude/rules/contexts-utilisation.md` and `guidelines/foundations/contextes.md`.
+See `governance/rules/contexts-utilisation.md` and `guidelines/foundations/contextes.md`.
 
 ---
 

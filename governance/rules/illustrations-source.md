@@ -8,9 +8,9 @@ paths:
 
 > Single source of truth for all illustrations — Brand/illustrations/.
 > **Type:** rule
-> **Logical path:** .claude/rules/illustrations-source.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/performance.md
-> **Relations:** site/build.js (copyImages), .claude/rules/performance.md
+> **Logical path:** governance/rules/illustrations-source.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/performance.md
+> **Relations:** site/build.js (copyImages), governance/rules/performance.md
 
 ---
 

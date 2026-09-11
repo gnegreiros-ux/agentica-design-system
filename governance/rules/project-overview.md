@@ -2,9 +2,9 @@
 
 > General context for this project — read first by any agent working in this repository.
 > **Type:** rule
-> **Logical path:** .claude/rules/project-overview.md
+> **Logical path:** governance/rules/project-overview.md
 > **Read before:** AGENTS.md, DESIGN.md
-> **Relations:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/instructions/codebase-context.md
+> **Relations:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md, governance/instructions/codebase-context.md
 
 ---
 
@@ -43,8 +43,8 @@ Agents observe, analyze, propose. Humans approve, decide, deploy.
 | `DESIGN.md` | Portable brand contract — human + agent readable |
 | `AGENTS.md` | Agent router — mandatory first read |
 | `tokens/` | Three levels: primitive → semantic → component |
-| `.claude/rules/` | Project constraints and decisions |
-| `.claude/instructions/` | Orchestration methodology |
+| `governance/rules/` | Project constraints and decisions |
+| `governance/instructions/` | Orchestration methodology |
 | `.claude/skills/` | Reusable executable capabilities |
 | `guidelines/` | Component and foundation documentation |
 

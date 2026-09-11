@@ -29,7 +29,8 @@ agentica-design-system/
 │
 ├── README.md                          ← you are here
 ├── DESIGN.md                          ← portable brand contract
-├── AGENTS.md                          ← AI agent router
+├── AGENTS.md                          ← AI agent router (single source of truth for governance)
+├── CLAUDE.md                          ← thin adapter — imports AGENTS.md, Claude Code specifics only
 ├── How-to-designers.md                ← design system team guide (designers)
 ├── How-to-devs.md                     ← design system team guide (developers)
 │
@@ -46,7 +47,7 @@ agentica-design-system/
 │
 ├── .eslintrc-ds.json                  ← anti-AI-drift lint (hex, arbitrary values)
 │
-├── .claude/
+├── governance/                        ← agent-agnostic — read natively by any AI tool
 │   ├── rules/                         ← project constraints and conventions
 │   │   ├── project-overview.md
 │   │   ├── tokens-system.md
@@ -57,7 +58,10 @@ agentica-design-system/
 │   ├── instructions/
 │   │   ├── codebase-context.md        ← full technical context
 │   │   └── session-spec.md            ← condensed spec reloaded every AI session
-│   └── skills/
+│   └── ai-skills-reference.md         ← what other AI tools should reproduce from .claude/skills/
+│
+├── .claude/
+│   └── skills/                        ← Claude Code-specific implementation (not portable)
 │       ├── ai-component-metadata.md
 │       ├── ai-ds-composer.md
 │       └── codebase-index.md
@@ -82,7 +86,7 @@ agentica-design-system/
 ## Quick start
 
 ### 1. Customize
-Replace the placeholders in `DESIGN.md` and `.claude/rules/project-overview.md`:
+Replace the placeholders in `DESIGN.md` and `governance/rules/project-overview.md`:
 - `[SYSTEM_NAME]`
 - `[ORGANIZATION_NAME]`
 - `[OWNER_NAME]`

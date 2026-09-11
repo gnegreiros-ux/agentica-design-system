@@ -4,7 +4,7 @@
 > **Type:** guideline
 > **Logical path:** guidelines/components/icon.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** components/agtc-icon.js, tokens/semantic.json, decisions/ADR-022-lucide-icons.md, guidelines/components/button.md
 
 ---

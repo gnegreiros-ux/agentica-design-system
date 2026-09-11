@@ -3,9 +3,9 @@
 > Development rules for this design system.
 > Read this if you generate code, open a PR, or work on components.
 > **Type:** rule
-> **Logical path:** .claude/rules/development.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/tokens-system.md, .claude/rules/git-workflow.md, .claude/rules/code-style.md
+> **Logical path:** governance/rules/development.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/tokens-system.md, governance/rules/git-workflow.md, governance/rules/code-style.md
 
 ---
 

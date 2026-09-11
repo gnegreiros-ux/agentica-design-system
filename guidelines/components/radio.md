@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/radio.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-038-agtc-radio-implementation.md, guidelines/components/checkbox.md
 
 ---
@@ -124,7 +124,7 @@ Allow choosing **exactly one** option in a mutually exclusive set.
 ## UX Patterns Reference
 
 > Patterns approved by the Design System Lead via the `ux-pattern-review` workflow
-> (see `.claude/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
+> (see `governance/rules/ux-patterns-sources.md` and ADR-036). Decision: **all approved**.
 
 | Pattern | Source | Applied | Justification |
 |---------|--------|----------|---------------|

@@ -5,7 +5,7 @@
 > Last updated: 2026-06-25
 > **Type:** contract
 > **Logical path:** guidelines/components/feature-card.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-063-agtc-feature-card.md
 
 ---
@@ -43,7 +43,7 @@ Present a capability, role, or feature in a compact editorial block — icon + t
 > Token debt fixed on 2026-07-07 (Figma audit): the `:host`'s `background` and `border`
 > used hardcoded `rgba()` values, and the marketing gradient referenced
 > `--agtc-semantic-color-accent` (non-existent, silent CSS fallback).
-> See `.claude/rules/tokens-system.md`.
+> See `governance/rules/tokens-system.md`.
 
 ## Attributes
 

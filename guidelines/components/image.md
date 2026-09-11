@@ -6,8 +6,8 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/image.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, .claude/rules/performance.md
-> **Relations:** tokens/component.json, .claude/rules/performance.md, DESIGN.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md, governance/rules/performance.md
+> **Relations:** tokens/component.json, governance/rules/performance.md, DESIGN.md
 
 ---
 
@@ -19,7 +19,7 @@ Render a raster image with the performance and accessibility guarantees a plain
 WebP support with a fallback format, and graceful loading/error states.
 
 **This component is not:**
-- An SVG illustration loader (use the `illus-lazy` pattern, `.claude/rules/performance.md`)
+- An SVG illustration loader (use the `illus-lazy` pattern, `governance/rules/performance.md`)
 - A background/decorative image applied via CSS (use `background-image` directly)
 - An icon (use `<agtc-icon>`)
 

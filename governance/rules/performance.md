@@ -8,9 +8,9 @@ paths:
 > Web performance standards for the Agentica site and all design system consumers.
 > Sourced from the 2026-06-22 audit (home page: 1,453 KB → 65 KB, 95% reduction).
 > **Type:** rule
-> **Logical path:** .claude/rules/performance.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** site/build.js, .claude/rules/development.md, .claude/rules/code-style.md
+> **Logical path:** governance/rules/performance.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** site/build.js, governance/rules/development.md, governance/rules/code-style.md
 
 ---
 
@@ -38,7 +38,7 @@ Any SVG illustration **> 10 KB** must be lazy-loaded — never inlined in the HT
 
 > **Note (2026-07-10):** the 3 SVG diagrams (`pipeline-tokens.svg`, `human-last-word.svg`,
 > `multi-platform.svg`) that illustrated this standard were replaced by the PNG illustration
-> system (`Brand/illustrations/`, see `.claude/rules/illustrations-source.md`) and
+> system (`Brand/illustrations/`, see `governance/rules/illustrations-source.md`) and
 > removed from the repository. The `illus-lazy`/`data-svg` pattern remains the mandatory
 > standard for any future SVG > 10 KB — the example below is generic, to be adapted to
 > the actual file name.

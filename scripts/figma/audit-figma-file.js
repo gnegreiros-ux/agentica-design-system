@@ -8,7 +8,7 @@
  * because Figma has no first-party way to run a script on save.
  *
  * Consolidates every regression class found during the 2026-07-23 audit
- * session (see .claude/instructions/figma-components.md §26 for the full
+ * session (see governance/instructions/figma-components.md §26 for the full
  * incident writeups) into one canonical, versioned check instead of five
  * scattered snippets living only in agent memory.
  *

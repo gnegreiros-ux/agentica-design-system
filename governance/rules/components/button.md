@@ -9,9 +9,9 @@ paths:
 > Button-specific rules for agents.
 > This file complements the full contract in `guidelines/components/button.md`.
 > **Type:** rule
-> **Logical path:** .claude/rules/components/button.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md, guidelines/components/button.md
-> **Relations:** guidelines/components/button.md, tokens/component.json, .claude/rules/tokens-system.md
+> **Logical path:** governance/rules/components/button.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md, guidelines/components/button.md
+> **Relations:** guidelines/components/button.md, tokens/component.json, governance/rules/tokens-system.md
 
 ---
 

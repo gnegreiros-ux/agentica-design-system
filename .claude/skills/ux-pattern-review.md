@@ -4,8 +4,8 @@
 > gather human approval, then document the decision on 6 surfaces.
 > **Type:** skill
 > **Logical path:** .claude/skills/ux-pattern-review.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/ux-patterns-sources.md
-> **Relations:** .claude/rules/ux-patterns-sources.md, .claude/skills/pipelines/ux-patterns.md, guidelines/components/, decisions/ADR-036-ux-pattern-review-pre-composant.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/ux-patterns-sources.md
+> **Relations:** governance/rules/ux-patterns-sources.md, .claude/skills/pipelines/ux-patterns.md, guidelines/components/, decisions/ADR-036-ux-pattern-review-pre-composant.md
 
 ---
 
@@ -13,7 +13,7 @@
 
 Before publishing a component — new or modified in a UX-relevant way — present to
 the human the **UX patterns suggested** by the 5 reference sources (see
-`.claude/rules/ux-patterns-sources.md`), **with direct links**, so they can **judge and approve**
+`governance/rules/ux-patterns-sources.md`), **with direct links**, so they can **judge and approve**
 which ones to apply. The decision is then **documented everywhere**.
 
 > **The human always has the final word.** This skill proposes, the human decides.
@@ -38,7 +38,7 @@ Identify:
 - The **nature of the change** (creation vs. modification; which UX aspect is affected).
 
 ### Step 2 — Consult the sources (hybrid)
-- Read the **type → priority sources matrix** in `.claude/rules/ux-patterns-sources.md`.
+- Read the **type → priority sources matrix** in `governance/rules/ux-patterns-sources.md`.
 - Do a **targeted WebFetch** on the priority source(s) for this component type.
 - Always include NN/g as the usability baseline.
 
@@ -54,7 +54,7 @@ help text, **validation timing**, required markers, progressive disclosure, dark
 - If in doubt about the impact (e.g. critical action, sensitive data): escalate.
 
 ### Step 5 — Document on the 6 surfaces
-Propagate the **Pattern Decision Record** (see `.claude/rules/ux-patterns-sources.md`):
+Propagate the **Pattern Decision Record** (see `governance/rules/ux-patterns-sources.md`):
 1. **Guideline** `guidelines/components/<comp>.md` → section `## UX Patterns Reference`.
 2. **Code** `components/agtc-<comp>.js` → "WHY" header comment block + links.
 3. **Storybook** `components/agtc-<comp>.stories.js` → `parameters.docs.description.component`.

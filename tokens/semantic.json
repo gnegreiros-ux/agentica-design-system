@@ -1326,7 +1326,7 @@
     },
     "marketing": {
       "_readme": {
-        "$value": "Tokens reserved for the Narrative Marketing context (data-context=marketing). See .claude/rules/contexts-utilisation.md and ADR-057.",
+        "$value": "Tokens reserved for the Narrative Marketing context (data-context=marketing). See governance/rules/contexts-utilisation.md and ADR-057.",
         "$type": "other"
       },
       "typography": {

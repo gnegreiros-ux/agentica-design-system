@@ -3,9 +3,9 @@
 > Navigation elements never carry a distinct `:visited` state.
 > **System-wide** scope rule (site, components, consumer applications).
 > **Type:** rule
-> **Logical path:** .claude/rules/no-visited-nav.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/development.md, .claude/rules/code-style.md, guidelines/components/link.md
+> **Logical path:** governance/rules/no-visited-nav.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/development.md, governance/rules/code-style.md, guidelines/components/link.md
 
 ---
 

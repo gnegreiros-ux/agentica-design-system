@@ -2,7 +2,7 @@
 
 > Condensed spec reloaded at every AI session — fast source of truth.
 > **Type:** instruction
-> **Logical path:** .claude/instructions/session-spec.md
+> **Logical path:** governance/instructions/session-spec.md
 > **Read before:** AGENTS.md, DESIGN.md
 > **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, decisions/
 

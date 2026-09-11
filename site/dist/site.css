@@ -85,7 +85,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, .claude/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, governance/rules/layout-pattern.md */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -1478,7 +1478,7 @@ body{overflow-x:hidden}
 
 /* ═══════════════════════════════════════════════════════════
    REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
-   Namespace classes site : sémantique, sans préfixe de version — voir .claude/rules/code-style.md
+   Namespace classes site : sémantique, sans préfixe de version — voir governance/rules/code-style.md
    ═══════════════════════════════════════════════════════ */
 
 /* Variables V2 — dans :root pour accessibilité globale */

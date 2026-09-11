@@ -2,9 +2,9 @@
 
 > Git conventions for this project. Read before opening a PR or making a commit.
 > **Type:** rule
-> **Logical path:** .claude/rules/git-workflow.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** .claude/rules/development.md, .claude/rules/tokens-system.md
+> **Logical path:** governance/rules/git-workflow.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/development.md, governance/rules/tokens-system.md
 
 ---
 

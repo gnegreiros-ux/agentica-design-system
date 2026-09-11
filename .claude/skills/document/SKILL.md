@@ -11,8 +11,8 @@ description: Post-work documentation orchestrator for this repository. Given wha
 > a commit and push.
 > **Type:** skill
 > **Logical path:** .claude/skills/document/SKILL.md
-> **Read before:** AGENTS.md, .claude/rules/post-change-pipeline.md
-> **Relations:** .claude/skills/pipelines/docs.md, .claude/skills/quality-gate.md, .claude/rules/git-workflow.md
+> **Read before:** AGENTS.md, governance/rules/post-change-pipeline.md
+> **Relations:** .claude/skills/pipelines/docs.md, .claude/skills/quality-gate.md, governance/rules/git-workflow.md
 
 ---
 

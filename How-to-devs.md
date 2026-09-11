@@ -5,7 +5,7 @@
 > **Type:** instruction
 > **Logical path:** How-to-devs.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
 > **Relations:** tokens/semantic.json, tokens/component.json, .eslintrc-ds.json, AGENTS.md, How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
@@ -82,7 +82,7 @@ npx playwright test --project=chromium
 
 # CSS naming — absolute rule (ADR-2026-06-30)
 # Zero version prefixes (v2-, ds-), zero hardcoded values
-# See .claude/rules/code-style.md
+# See governance/rules/code-style.md
 ```
 
 ---
@@ -165,8 +165,8 @@ proposes a commit — it never commits or pushes on its own.
 | `tokens/component.json` | UI contracts | Via TCR + approval |
 | `site/build.js` | Static site generator (CSS, HTML, JS) | On every layout or site component change |
 | `scripts/audit-language.js` | English-only content policy audit (`npm run lang-audit`) | If new French content is suspected outside the site's bilingual spans |
-| `.claude/rules/code-style.md` | CSS/HTML conventions — naming rules | If a new style rule is decided |
-| `.claude/rules/` | Rules and constraints for AI agents | If a new governance decision is made |
+| `governance/rules/code-style.md` | CSS/HTML conventions — naming rules | If a new style rule is decided |
+| `governance/rules/` | Rules and constraints for AI agents | If a new governance decision is made |
 | `AGENTS.md` | Agent router | If a new agent type is added |
 
 ---
@@ -179,4 +179,4 @@ proposes a commit — it never commits or pushes on its own.
 - ❌ Never a version prefix in CSS class names (`v2-`, `ds-`) — see `code-style.md`
 - ✅ Every semantic token change = TCR
 - ✅ `node site/build.js` before every commit touching the site
-- ✅ Agent rules live in `.claude/rules/` — read them before changing the architecture
+- ✅ Agent rules live in `governance/rules/` — read them before changing the architecture

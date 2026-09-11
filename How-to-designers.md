@@ -5,7 +5,7 @@
 > **Type:** instruction
 > **Logical path:** How-to-designers.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
 > **Relations:** tokens/semantic.json, tokens/component.json, guidelines/components/, DESIGN.md, How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
@@ -105,7 +105,7 @@ report and the review guide — designers don't need to go hunting for the artif
 | `tokens/semantic.json` | UX intentions — name with meaning | Via TCR only |
 | `tokens/component.json` | Visual decisions per component | Via TCR + approval |
 | `guidelines/components/[name].md` | Component contract | On every rule change |
-| `.claude/rules/` | What AI agents read on startup | After every major TCR or new rule |
+| `governance/rules/` | What AI agents read on startup | After every major TCR or new rule |
 | `DESIGN.md` | Principles and governance | Quarterly review |
 
 ---
@@ -117,4 +117,4 @@ report and the review guide — designers don't need to go hunting for the artif
 - ❌ Never a token change without a TCR
 - ✅ Name tokens by **intent**, not value (`color.feedback.danger`, not `color.red`)
 - ✅ Every component has a `.md` contract before shipping
-- ✅ Up-to-date `.claude/rules/` = reliable AI agents for the whole team
+- ✅ Up-to-date `governance/rules/` = reliable AI agents for the whole team

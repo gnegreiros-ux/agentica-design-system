@@ -3,9 +3,9 @@
 > Methodology for understanding and navigating this repository.
 > This file describes HOW to work in this system, not just WHAT to do.
 > **Type:** instruction
-> **Logical path:** .claude/instructions/codebase-context.md
+> **Logical path:** governance/instructions/codebase-context.md
 > **Read before:** AGENTS.md, DESIGN.md
-> **Relations:** AGENTS.md, .claude/rules/project-overview.md, .claude/rules/tokens-system.md
+> **Relations:** AGENTS.md, governance/rules/project-overview.md, governance/rules/tokens-system.md
 
 ---
 
@@ -16,8 +16,8 @@ Before any task, read in this order:
 ```
 1. AGENTS.md                               ← router, autonomy levels
 2. DESIGN.md                               ← global brand contract
-3. .claude/rules/project-overview.md       ← project context
-4. .claude/rules/tokens-system.md          ← token rules
+3. governance/rules/project-overview.md       ← project context
+4. governance/rules/tokens-system.md          ← token rules
 5. [task-specific file]                    ← depending on what you need to do
 ```
 
@@ -29,8 +29,8 @@ If two rules appear to conflict, apply in this priority order:
 
 ```
 1. DESIGN.md (global rules)
-2. .claude/rules/tokens-system.md (token rules)
-3. .claude/rules/[specific rule]
+2. governance/rules/tokens-system.md (token rules)
+3. governance/rules/[specific rule]
 4. guidelines/components/[component].md (contract)
 ```
 

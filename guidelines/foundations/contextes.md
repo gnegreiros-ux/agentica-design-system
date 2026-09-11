@@ -3,7 +3,7 @@
 > Editorial "direction" decision — how to distinguish pages that persuade from pages that document.
 > **Type:** guideline
 > **Logical path:** guidelines/foundations/contextes.md
-> **Read before:** DESIGN.md, .claude/rules/contexts-utilisation.md
+> **Read before:** DESIGN.md, governance/rules/contexts-utilisation.md
 > **Relations:** decisions/ADR-057, tokens/semantic.json (semantic.marketing.*)
 
 ---
