@@ -1,79 +1,76 @@
-# Contribuer à Agentica
+# Contributing to Agentica
 
-Merci de l'intérêt porté à Agentica. Ce document explique comment proposer
-une contribution et les conditions dans lesquelles elle sera acceptée.
+Thanks for your interest in Agentica. This document explains how to propose a
+contribution and the conditions under which it will be accepted.
 
-## Principe directeur
+## Guiding principle
 
-**Le dernier mot appartient toujours à l'humain.** Toute contribution —
-qu'elle touche aux tokens, aux composants, aux règles d'agents ou à la
-documentation — doit respecter ce principe : un agent IA peut proposer,
-détecter, générer ; une décision structurante reste validée par une personne.
+**The human always has the final word.** Every contribution — whether it
+touches tokens, components, agent rules, or documentation — must respect this
+principle: an AI agent may propose, detect, and generate; a structuring
+decision is always validated by a person.
 
-## Avant de contribuer
+## Before contributing
 
-- Ouvrez une issue pour discuter du changement envisagé avant d'investir du
-  temps dans une pull request, sauf pour les corrections mineures
-  (typos, liens cassés, clarifications de documentation).
-- Les changements touchant aux tokens primitifs (`tokens/primitives.json`)
-  ou à la gouvernance des agents (`AGENTS.md`, `governance/`) nécessitent
-  une discussion préalable — ce sont les couches les plus structurantes
-  du système.
+- Open an issue to discuss the intended change before investing time in a
+  pull request, except for minor fixes (typos, broken links, documentation
+  clarifications).
+- Changes touching primitive tokens (`tokens/primitives.json`) or agent
+  governance (`AGENTS.md`, `governance/`) require prior discussion — these
+  are the most structuring layers of the system.
 
 ## Certificate of Origin (DCO)
 
-Ce projet utilise le **Developer Certificate of Origin (DCO)** plutôt qu'un
-Contributor License Agreement (CLA) formel. En soumettant une contribution,
-vous certifiez que :
+This project uses the **Developer Certificate of Origin (DCO)** instead of a
+formal Contributor License Agreement (CLA). By submitting a contribution, you
+certify that:
 
-1. La contribution a été créée en tout ou en partie par vous et que vous
-   avez le droit de la soumettre sous la licence du projet ; ou
-2. La contribution est basée sur un travail antérieur qui, à votre
-   connaissance, est couvert par une licence open source appropriée, et
-   vous avez le droit de soumettre ce travail sous cette même licence
-   (ou une licence compatible), tel qu'indiqué dans la contribution ; ou
-3. La contribution vous a été fournie directement par une autre personne
-   qui a certifié (1), (2) ou (3), et vous ne l'avez pas modifiée ; et
-4. Vous comprenez et acceptez que ce projet et la contribution soient
-   publics, et qu'un enregistrement de la contribution (y compris toutes
-   les informations personnelles que vous soumettez avec, incluant votre
-   signature) soit conservé indéfiniment et puisse être redistribué de
-   façon compatible avec ce projet ou les licences open source concernées.
+1. The contribution was created in whole or in part by you and you have the
+   right to submit it under the project's license; or
+2. The contribution is based upon previous work that, to your knowledge, is
+   covered under an appropriate open source license, and you have the right
+   under that license to submit that work with modifications, as indicated in
+   the contribution; or
+3. The contribution was provided to you directly by some other person who
+   certified (1), (2), or (3), and you have not modified it; and
+4. You understand and agree that this project and the contribution are
+   public, and that a record of the contribution (including all personal
+   information you submit with it, including your sign-off) is maintained
+   indefinitely and may be redistributed consistent with this project or the
+   open source license(s) involved.
 
-Texte complet du DCO : https://developercertificate.org/
+Full DCO text: https://developercertificate.org/
 
-### Comment signer
+### How to sign off
 
-Chaque commit doit inclure une ligne `Signed-off-by` avec votre nom légal
-et une adresse courriel valide :
+Every commit must include a `Signed-off-by` line with your legal name and a
+valid email address:
 
 ```
-Signed-off-by: Jeanne Tremblay <jeanne.tremblay@example.com>
+Signed-off-by: Jane Doe <jane.doe@example.com>
 ```
 
-Git peut ajouter cette ligne automatiquement avec l'option `-s` :
+Git can add this line automatically with the `-s` flag:
 
 ```bash
-git commit -s -m "Description du changement"
+git commit -s -m "Description of the change"
 ```
 
-Les pull requests dont un commit n'est pas signé ne seront pas fusionnées
-tant que la signature n'est pas ajoutée (au besoin via `git commit --amend -s`
-ou `git rebase --signoff`).
+Pull requests with an unsigned commit will not be merged until the sign-off
+is added (via `git commit --amend -s` or `git rebase --signoff` as needed).
 
-## Processus de pull request
+## Pull request process
 
-1. Forkez le repo et créez une branche descriptive
+1. Fork the repo and create a descriptive branch
    (`fix/token-orphan-detection`, `docs/clarify-onboarding`, etc.).
-2. Assurez-vous que `node scripts/audit-tokens.js --ci` passe si vous
-   touchez aux tokens.
-3. Décrivez dans la pull request : le problème résolu, l'impact sur les
-   contrats existants (composants, tokens), et si un point nécessite une
-   validation humaine explicite.
-4. Une revue humaine est requise avant toute fusion — aucune fusion
-   automatique par un agent IA.
+2. Make sure `node scripts/audit-tokens.js --ci` passes if you touch tokens.
+3. In the pull request description, explain: the problem solved, the impact
+   on existing contracts (components, tokens), and whether any point needs
+   explicit human validation.
+4. A human review is required before any merge — no automatic merge by an AI
+   agent.
 
-## Code de conduite
+## Code of conduct
 
-Soyez respectueux et constructif. Les désaccords techniques sont normaux
-et bienvenus ; les échanges doivent rester professionnels.
+Be respectful and constructive. Technical disagreements are normal and
+welcome; exchanges must stay professional.

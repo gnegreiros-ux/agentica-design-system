@@ -1,48 +1,46 @@
-# Politique de marque — Agentica
+# Trademark policy — Agentica
 
-## Séparation code / marque
+## Code / brand separation
 
-Le code source de ce dépôt est distribué sous licence **Apache License,
-Version 2.0** (voir `LICENSE`). Cette licence vous autorise à utiliser,
-modifier, redistribuer et adapter le code librement, y compris à des fins
-commerciales, dans les conditions qu'elle définit.
+The source code in this repository is distributed under the **Apache
+License, Version 2.0** (see `LICENSE`). This license authorizes you to use,
+modify, redistribute, and adapt the code freely, including for commercial
+purposes, under the conditions it defines.
 
-Le nom **« Agentica »**, son logo et son identité visuelle associée
-(voir `Brand/`) **ne sont pas couverts par la licence Apache 2.0**. Ils
-constituent une marque distincte, actuellement en usage sous la mention
-**™ (non enregistrée)**, dont Guilherme Negreiros est le titulaire.
+The name **"Agentica"**, its logo, and the associated visual identity (see
+`Brand/`) **are not covered by the Apache 2.0 license**. They constitute a
+separate trademark, currently used under the **™ (unregistered)** notice,
+held by Guilherme Negreiros.
 
-## Ce que la licence Apache 2.0 vous autorise
+## What the Apache 2.0 license authorizes you to do
 
-- Utiliser, copier, modifier et redistribuer le code source.
-- Créer des travaux dérivés (forks) à des fins personnelles, commerciales
-  ou organisationnelles.
-- Déployer une instance modifiée d'Agentica au sein de votre organisation.
+- Use, copy, modify, and redistribute the source code.
+- Create derivative works (forks) for personal, commercial, or
+  organizational purposes.
+- Deploy a modified instance of Agentica within your organization.
 
-## Ce que la licence Apache 2.0 ne vous autorise pas
+## What the Apache 2.0 license does not authorize you to do
 
-Conformément à la section 6 de la licence Apache 2.0 (« Trademarks »),
-l'utilisation du code ne vous donne aucun droit sur le nom ou le logo
-« Agentica ». Concrètement :
+Per section 6 of the Apache 2.0 license ("Trademarks"), using the code
+grants you no rights to the "Agentica" name or logo. Concretely:
 
-- **Un fork substantiellement modifié doit être renommé.** Vous ne pouvez
-  pas distribuer une version modifiée du système sous le nom « Agentica »
-  ou un nom pouvant prêter à confusion avec celui-ci.
-- Vous ne pouvez pas utiliser le logo Agentica pour promouvoir votre propre
-  produit ou fork sans autorisation écrite préalable.
-- Vous pouvez mentionner factuellement que votre projet est « basé sur
-  Agentica » ou « un fork d'Agentica », à condition que cela reste une
-  attribution honnête et ne suggère pas une association officielle ou un
-  endossement.
+- **A substantially modified fork must be renamed.** You may not distribute
+  a modified version of the system under the name "Agentica" or a name that
+  could be confused with it.
+- You may not use the Agentica logo to promote your own product or fork
+  without prior written authorization.
+- You may factually state that your project is "based on Agentica" or "a
+  fork of Agentica," provided this remains honest attribution and does not
+  suggest an official association or endorsement.
 
-## Statut actuel de la marque
+## Current trademark status
 
-À ce stade, « Agentica » est utilisée sous la mention ™ (marque non
-enregistrée). Aucun enregistrement formel auprès d'un office de propriété
-intellectuelle (ex. OPIC) n'a encore été effectué ; cette démarche, si elle
-a lieu, ferait l'objet d'une communication séparée.
+At this stage, "Agentica" is used under the ™ notice (unregistered
+trademark). No formal registration with an intellectual property office
+(e.g. CIPO — the Canadian Intellectual Property Office) has been filed yet;
+should that happen, it will be communicated separately.
 
 ## Questions
 
-Pour toute question sur l'usage du nom ou du logo Agentica, ouvrez une
-issue sur ce dépôt.
+For any question about the use of the Agentica name or logo, open an issue
+on this repository.
