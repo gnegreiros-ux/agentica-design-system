@@ -1,0 +1,33 @@
+name: AI tool parity — attestation gate
+
+# Enforces that every non-Claude AI tool config found in the repo (see
+# scripts/check-tool-parity.js's TOOL_CONFIGS map) has a matching, fully
+# signed-off governance/tool-parity/<slug>.md attestation — one explicit
+# "Replaced: …" or "Accepted absence: …" call per mandatory control, made
+# and dated by a human. See governance/ai-skills-reference.md for context.
+#
+# Deliberately cheap (checkout + node, no build) so it fails fast on the same
+# PR that introduces or changes a tool config, rather than being discovered
+# later. NOT yet a required status check in branch protection — see this
+# workflow's introducing PR for why that's left as a separate, explicit step.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tool-parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Check tool parity attestations
+        run: node scripts/check-tool-parity.js --ci

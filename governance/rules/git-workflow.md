@@ -93,10 +93,17 @@ described, restore verbatim per ADR-076's trigger clause):
 - `main`: merge only via PR + 2 approvals + green CI
 - `develop`: merge only via PR + 1 approval + green CI
 
-Other CI checks (`Playwright`, `build-and-deploy`) are not yet required checks — they
-only trigger on `push` to `main` today, not on `pull_request` (see ADR-076). Making them
-blocking pre-merge gates requires first adding a `pull_request` trigger to
-`playwright.yml`, a separate decision not yet made.
+Other CI checks (`Playwright`, `build-and-deploy`, `tool-parity`) are not yet required
+checks. `Playwright`/`build-and-deploy` only trigger on `push` to `main` today, not on
+`pull_request` (see ADR-076); making them blocking pre-merge gates requires first adding
+a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
+`tool-parity` (`.github/workflows/tool-parity.yml`, `scripts/check-tool-parity.js`) does
+already run on `pull_request` — it's excluded from `required_status_checks` deliberately,
+not for the same reason: making it required would immediately block every PR the moment
+any non-Claude AI tool config (`.codex/`, `.github/copilot-instructions.md`, `.cursor/`,
+`.windsurf/`, …) exists in the repo without a complete `governance/tool-parity/*.md`
+attestation — which is true today for `.codex/`. Flip it to required only once that gap
+is actually closed (or knowingly accepted) — see `governance/tool-parity/`.
 
 There is no bypass for an emergency: if branch protection ever blocks a genuinely
 urgent fix (e.g. CI itself is broken), the fix is to temporarily disable the rule in

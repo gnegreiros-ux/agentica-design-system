@@ -119,3 +119,19 @@ quality-gate's building blocks, run in this order:
 checks, an i18n check, an accessibility check, a design-decision log requirement, a
 doc-sync check, a build verification step, and a commit-convention check — that all run,
 in order, before a commit is proposed.
+
+---
+
+## Tool parity gate — required, not just documented
+
+The table above is knowledge, not enforcement: nothing stops a team from reading it and
+still shipping with none of these 11 controls wired up for their tool. `.github/workflows/
+tool-parity.yml` (`scripts/check-tool-parity.js`) closes that gap mechanically. It scans
+the repo for known AI-tool config paths (`.codex/`, `.github/copilot-instructions.md`,
+`.cursor/`, `.windsurf/`, …) and, for each one it finds, requires a matching
+`governance/tool-parity/<tool-slug>.md` file where a human has recorded, for every control
+above, either `Replaced: <how>` or `Accepted absence: <why>` — signed with a name and a
+date. It does not judge whether the replacement is *good*, only that someone made and
+recorded the call instead of the gap going unnoticed. See `governance/tool-parity/
+TEMPLATE.md` to add a new tool's attestation, and `governance/rules/git-workflow.md` for
+why this check isn't yet required in branch protection.
