@@ -109,7 +109,7 @@ quality-gate's building blocks, run in this order:
 | docs | ✅ Active | Canonical checklist of every documentation surface to update |
 | site | ✅ Active — **CI-enforced** | Rebuild and validate the static documentation site |
 | commit | ✅ Active — **CI-enforced** | Commit message format and conventions |
-| chromatic | ✅ Active | Visual regression tests against the approved baseline |
+| chromatic | ⚠️ Active, manual-only | Visual regression tests against the approved baseline — `chromatic.yml` exists but its automatic `push`/`pull_request` triggers are currently disabled (free-tier snapshot limit); `workflow_dispatch` only |
 | axe-core | 🔜 Report mode | Automated accessibility audit (non-blocking during burn-down) |
 | storybook | 🔜 Planned | Story presence and consistency with the token system |
 | style-dictionary | 🔜 Planned | Token compilation output validation |
