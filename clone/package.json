@@ -1,0 +1,11 @@
+{
+  "name": "design-system-clone",
+  "version": "0.1.0",
+  "description": "A personalizable, npm-distributed starting point for a design system, built on a non-negotiable core (see core/README.md and GOVERNANCE.md).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit": "node core/audit/index.mjs",
+    "build": "npm run audit"
+  }
+}
