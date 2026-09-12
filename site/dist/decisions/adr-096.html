@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Implementation of `agtc-banner` — Agentica</title>
+<title>Semantic layout container-width tokens — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Implementation of `agtc-banner` — Agentica">
+<meta property="og:title" content="Semantic layout container-width tokens — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Implementation of `agtc-banner` — Agentica">
+<meta name="twitter:title" content="Semantic layout container-width tokens — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -119,84 +119,57 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-042</code>
+    <code class="adr-number">ADR-096</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Implementation of `agtc-banner`</h1>
+  <h1 class="adr-page-title">Semantic layout container-width tokens</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-03</dd>
+      <dd>2026-09-11</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Design System Lead</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Applied reference UX patterns</h2>
-<blockquote><p>Added on 2026-06-03 via the <code>ux-pattern-review</code> workflow (ADR-036). Decision: <strong>N1–N9 all approved</strong>. Detail and links: <code>guidelines/components/banner.md</code> § UX Patterns Reference.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>N1</td><td>Semantic variants (6)</td><td>NN/g</td></tr><tr><td>N2</td><td>Meaning never conveyed by color alone (icon + AT text)</td><td>NN/g</td></tr><tr><td>N3</td><td>Icon per variant</td><td>NN/g</td></tr><tr><td>N4</td><td>Static by default (no live region)</td><td>MDN — status role</td></tr><tr><td>N5</td><td>Assertive <code>role="alert"</code> used sparingly</td><td>A11Y Collective</td></tr><tr><td>N6</td><td>Accessible close button with no focus trap</td><td>MDN — alert role</td></tr><tr><td>N7</td><td>Title + body + action zone</td><td>NN/g</td></tr><tr><td>N8</td><td>Left accent border + subtle background</td><td>Dashboard</td></tr><tr><td>N9</td><td>No auto-dismiss for critical</td><td>NN/g</td></tr></tbody></table></div>
-<hr>
-<h2>Context</h2>
-<p>The site uses a <code>contribution-banner</code> (16 usages) — an info callout with a left accent border, icon, title + body, and an action ("View on GitHub"). It's a special case of a broader need: a <strong>contextual inline message</strong> with multiple severity levels.</p>
-<p><code>agtc-banner</code> generalizes this need. It's the 3rd component from the 2026-06-03 gap analysis (category B), after <code>agtc-table</code> and <code>agtc-code-block</code>.</p>
-<hr>
-<h2>Decisions</h2>
-<h3>Decision 1 — Inline message, not a toast or modal</h3>
-<p><code>agtc-banner</code> stays <strong>in the page flow</strong>. Temporary floating notifications (toast) and blocking interruptions (modal / <code>alertdialog</code>) are separate future components. This boundary avoids overloading a single component with contradictory responsibilities.</p>
-<h3>Decision 2 — 6 variants aligned with <code>agtc-badge</code></h3>
-<p><code>neutral, brand, info, success, warning, danger</code> — the same semantic intents as the badge, so that an agent, like a human, reasons consistently about severity across the system.</p>
-<h3>Decision 3 — Static by default; live region opt-in (N4/N5)</h3>
-<p>A central accessibility point: a banner <strong>present at page load</strong> must not be a live region (otherwise it gets announced, which is disruptive). The default is therefore <code>live="off"</code> (no <code>role</code>). For a <strong>dynamically inserted</strong> message, the consumer chooses <code>live="polite"</code> (→ <code>role="status"</code>) or <code>live="assertive"</code> (→ <code>role="alert"</code>, reserved for urgent cases). Severity remains accessible even without a live region thanks to a <strong>hidden prefix</strong> ("Error:", "Warning:"…), the icon being decorative.</p>
-<h3>Decision 4 — "Mix" architecture (consistent with ADR-040/041)</h3>
-<p><code>&lt;agtc-banner&gt;</code> component (shadow DOM, <code>default</code> + <code>actions</code> slots) for apps/Storybook <strong>+</strong> <code>.agtc-banner</code> class for the site's static HTML. Both consume <code>component.banner.*</code>. The <code>contribution-banner</code> will be migrated to <code>.agtc-banner</code> during *dogfooding* (category A).</p>
-<h3>Decision 5 — Per-variant tokens: <code>background</code> + <code>accent</code></h3>
-<p>To limit the number of tokens, each variant carries two tokens (<code>background</code>, <code>accent</code>), with <code>accent</code> serving <strong>both</strong> the left border and the icon. Text (title/body) is shared (<code>heading-text</code> = text.primary, <code>body-text</code> = text.secondary). Consistent with the existing <code>agtc-badge</code> precedent (reuse of the semantic feedback intents).</p>
-<hr>
-<h2>v1 Scope</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Included</th><th>Excluded (future component/evolution)</th></tr></thead><tbody><tr><td>6 variants, icon per variant (+ override / <code>no-icon</code>)</td><td>Toast (temporary floating)</td></tr><tr><td>Title, body, action zone (slots)</td><td>Modal / <code>alertdialog</code></td></tr><tr><td><code>dismissible</code> + <code>dismiss</code> event</td><td>Timed auto-dismiss</td></tr><tr><td><code>live</code> opt-in (off/polite/assertive)</td><td>Notification stacking / queue</td></tr><tr><td>Tokenized accent border + subtle background</td><td>"Solid" variants (full background)</td></tr></tbody></table></div>
-<hr>
+</div><h2>Context</h2>
+<p>This gap surfaced during a real AI-interoperability test: running GitHub Copilot against <code>Agentica-Copilot</code>, a clone of this repo, to build a standalone <code>demo/</code> page. Copilot needed a page container max-width and asked — correctly, per <code>AGENTS.md</code>'s escalation rule for any change touching a semantic token — whether to reuse <code>semantic.size.control.max-width</code> (480px). That token's contract (ADR-094) restricts it explicitly to <code>agtc-input</code>'s field wrapper; reusing it for a page container would have been a coincidental-value reuse, not a shared intent, and was rejected for that reason.</p>
+<p>Investigating to give Copilot a real answer found that <strong>no <code>semantic.layout</code> category exists at all</strong> — <code>tokens/semantic.json</code> has <code>color, shadow, space, size, radius, fontWeight, typography, icon, marketing</code>, nothing for page/section container widths. What exists in <code>site/build.js</code> instead is an inconsistent mix:</p>
+<ul><li>One real CSS extension token (<code>--agtc-content-max: 1180px</code>, ADR-058) for marketing sections —</li></ul>
+<p>  the one part of this that was already done right, just never promoted past extension-token   status.</p>
+<ul><li>One hardcoded constant (<code>960px</code> on <code>.content</code>) for documentation pages, carrying a documented</li></ul>
+<p>  <code>audit-ignore</code> exception per <code>governance/rules/layout-pattern.md</code>.</p>
+<ul><li>A cluster of raw, duplicated inline <code>max-width</code> values with no token at all: <code>600px</code>, <code>700px</code>,</li></ul>
+<p>  <code>720px</code>, <code>760px</code> (×2), <code>780px</code>, repeated across ~15 call sites in generated HTML.</p>
+<p>Before drafting this ADR, that last cluster was audited page-by-page (not just counted) to separate real, repeated intent from copy-paste drift — see commit <code>3fc935c7</code> (<code>chore(site): remove dead .rd-cta-inner CSS, align outlier max-widths to 700px</code>):</p>
+<ul><li><code>.rd-cta-inner</code> (720px) was dead CSS — defined, never referenced by any generated page — from</li></ul>
+<p>  the <code>Redesign/</code> mockup (ADR-058). Deleted.</p>
+<ul><li><code>.section-heading</code> (760px, one live use) and a one-off <code>resources.html</code> banner (760px inline,</li></ul>
+<p>  no evidence of a distinct intent) were both folded into <code>700px</code> — the value already used   identically at 7 other call sites for the same visual role (intro/hero copy block).</p>
+<p>What's left after that cleanup is two clean, internally consistent, already-repeated patterns (<code>600px</code> ×6, <code>700px</code> ×9) plus the two pre-existing values above (<code>960px</code> ×1, <code>1180px</code> ×7) plus one more real, undeduplicated pattern (<code>1280px</code> ×2, wide marketing sections). Five real values, each with a distinct, evidenced role — not five arbitrary numbers.</p>
+<p>Breakpoints (<code>@media(max-width:768px)</code> etc.) are a separate, larger, currently fully-ungoverned problem — out of scope here, see Consequences.</p>
+<h2>Decision</h2>
+<p>Add a new top-level semantic category, <code>semantic.layout</code>, with five tokens under <code>semantic.layout.container</code>:</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Role</th><th>Current call sites</th></tr></thead><tbody><tr><td><code>layout.container.cta</code></td><td>600px</td><td>Closing CTA block, centered (<code>.shell.section-final</code>)</td><td>6</td></tr><tr><td><code>layout.container.intro</code></td><td>700px</td><td>Hero/intro copy block (<code>.shell &gt; .copy</code>, <code>.section-heading</code>)</td><td>9</td></tr><tr><td><code>layout.container.docs</code></td><td>960px</td><td>Documentation page content (<code>.content</code>)</td><td>1</td></tr><tr><td><code>layout.container.default</code></td><td>1180px</td><td>Standard marketing section (promotes <code>--agtc-content-max</code>)</td><td>7</td></tr><tr><td><code>layout.container.wide</code></td><td>1280px</td><td>Wide/cinematic marketing sections (<code>.rd-inner</code>, <code>.rd-cinematic-inner</code>)</td><td>2</td></tr></tbody></table></div>
+<h3>Not aliased to <code>primitive.space.*</code></h3>
+<p>Unlike ADR-094's control-width tokens (which alias <code>primitive.space.120</code>/<code>.160</code>), these five values are declared as <strong>literal semantic values</strong>, not backed by new primitives. Reaching these numbers via the primitive space scale would require five new one-off primitives (<code>space.150</code>, <code>.175</code>, <code>.240</code>, <code>.295</code>, <code>.320</code> — pure <code>value ÷ 4</code> labels with no relation to the scale's existing progression). <code>primitive.space</code> represents a spacing/gap scale consumed at component and layout-gap granularity; a page's container width is a different design concern that only coincidentally shares a pixel unit with spacing. This follows the same precedent already used elsewhere in <code>tokens/semantic.json</code> for values with no meaningful primitive step (e.g. the marketing card border at 6% white opacity, documented as "a literal value not aliased to a primitive — the white scale stops at white.12 (18%), no step exists at 6%").</p>
+<h3><code>--agtc-content-max</code> migration</h3>
+<p><code>--agtc-content-max</code> (the ADR-058 extension token) is kept as a thin alias — <code>--agtc-content-max: var(--agtc-semantic-layout-container-default)</code> — rather than rewritten at its 7 call sites. This avoids a wide, purely-cosmetic diff across <code>site/build.js</code> for no behavior change; new code should reference the semantic variable directly, and the alias can be removed once no call site still references the old name.</p>
 <h2>Rejected alternatives</h2>
-<ul><li><strong><code>role="alert"</code> by default</strong>: would announce every static banner on load — disruptive (N4).</li><li><strong>Severity conveyed by color alone</strong>: inaccessible — icon + hidden prefix mandatory (N2).</li><li><strong>Merging toast/modal into this component</strong>: contradictory responsibilities (floating vs inline vs blocking).</li><li><strong>One token per sub-element and per variant</strong>: token explosion — <code>accent</code> pooled (border + icon).</li></ul>
-<hr>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Reuse <code>semantic.size.control.max-width</code> for the page container</td><td>The actual incident that triggered this ADR — contract violation (ADR-094 scopes it to <code>agtc-input</code>'s field wrapper only); two values that happen to be close in magnitude are not a shared intent.</td></tr><tr><td>No max-width constraint on page-level content</td><td>Not a governance-neutral choice — an unconstrained container is a real readability regression (unbounded line length), not a way to dodge the token question.</td></tr><tr><td>Alias the five values to new <code>primitive.space.*</code> entries</td><td>Conflates the spacing scale with a page-layout-container scale; the derived primitive names (150/175/240/295/320) don't correspond to any meaningful step in the existing progression, unlike ADR-094's 120/160 which at least remained in a component-sizing context.</td></tr><tr><td>Wait for a full breakpoints/grid token system before tokenizing container widths</td><td>Breakpoints are a separate, larger, currently fully-ungoverned area (raw, inconsistent <code>@media</code> values throughout <code>site/build.js</code>) — real future work, but blocking a scoped, already-deduplicated fix on it serves no one.</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<ul><li>The site's <code>contribution-banner</code> will be able to migrate to <code>.agtc-banner variant="brand"</code> during *dogfooding*.</li><li>Toast and modal remain to be designed (each with its own ADR).</li></ul>
-<hr>
-<h2>Tokens added — <code>component.banner.*</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Reference</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table></div></div><div class="lang-fr"><h2>Patterns UX de référence appliqués</h2>
-<blockquote><p>Ajouté le 2026-06-03 via le workflow <code>ux-pattern-review</code> (ADR-036). Décision : <strong>N1–N9 tous approuvés</strong>. Détail et liens : <code>guidelines/components/banner.md</code> § UX Patterns Reference.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>#</th><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>N1</td><td>Variantes sémantiques (6)</td><td>NN/g</td></tr><tr><td>N2</td><td>Sens jamais par la couleur seule (icône + texte AT)</td><td>NN/g</td></tr><tr><td>N3</td><td>Icône par variante</td><td>NN/g</td></tr><tr><td>N4</td><td>Statique par défaut (pas de live region)</td><td>MDN — status role</td></tr><tr><td>N5</td><td><code>role="alert"</code> assertif avec parcimonie</td><td>A11Y Collective</td></tr><tr><td>N6</td><td>Bouton fermer accessible sans piège de focus</td><td>MDN — alert role</td></tr><tr><td>N7</td><td>Titre + corps + zone d'action</td><td>NN/g</td></tr><tr><td>N8</td><td>Bordure d'accent gauche + fond subtil</td><td>Dashboard</td></tr><tr><td>N9</td><td>Pas d'auto-dismiss du critique</td><td>NN/g</td></tr></tbody></table></div>
-<hr>
-<h2>Contexte</h2>
-<p>Le site utilise un <code>contribution-banner</code> (16 usages) — un callout info avec bordure d'accent gauche, icône, titre + corps, et une action (« Voir sur GitHub »). C'est un cas particulier d'un besoin plus large : un <strong>message inline contextuel</strong> à plusieurs niveaux de sévérité.</p>
-<p><code>agtc-banner</code> généralise ce besoin. C'est le 3ᵉ composant de la gap-analysis du 2026-06-03 (catégorie B), après <code>agtc-table</code> et <code>agtc-code-block</code>.</p>
-<hr>
-<h2>Décisions</h2>
-<h3>Décision 1 — Message inline, pas toast ni modale</h3>
-<p><code>agtc-banner</code> reste <strong>dans le flux</strong> de la page. Les notifications flottantes temporaires (toast) et les interruptions bloquantes (modale / <code>alertdialog</code>) sont des composants distincts ultérieurs. Cette délimitation évite de surcharger un seul composant de responsabilités contradictoires.</p>
-<h3>Décision 2 — 6 variantes alignées sur <code>agtc-badge</code></h3>
-<p><code>neutral, brand, info, success, warning, danger</code> — mêmes intentions sémantiques que le badge, pour qu'un agent comme un humain raisonnent de façon cohérente sur la sévérité à travers le système.</p>
-<h3>Décision 3 — Statique par défaut ; live region en opt-in (N4/N5)</h3>
-<p>Point central d'accessibilité : un banner <strong>présent au chargement</strong> ne doit pas être une live region (sinon il s'annonce, ce qui perturbe). Le défaut est donc <code>live="off"</code> (aucun <code>role</code>). Pour un message <strong>inséré dynamiquement</strong>, le consommateur choisit <code>live="polite"</code> (→ <code>role="status"</code>) ou <code>live="assertive"</code> (→ <code>role="alert"</code>, réservé à l'urgent). La sévérité reste accessible même sans live region grâce à un <strong>préfixe masqué</strong> (« Erreur : », « Attention : »…), l'icône étant décorative.</p>
-<h3>Décision 4 — Architecture « mix » (cohérente avec ADR-040/041)</h3>
-<p>Composant <code>&lt;agtc-banner&gt;</code> (shadow DOM, slots <code>default</code> + <code>actions</code>) pour apps/Storybook <strong>+</strong> classe <code>.agtc-banner</code> pour le HTML statique du site. Les deux consomment <code>component.banner.*</code>. Le <code>contribution-banner</code> sera migré vers <code>.agtc-banner</code> lors du *dogfooding* (catégorie A).</p>
-<h3>Décision 5 — Tokens par variante : <code>background</code> + <code>accent</code></h3>
-<p>Pour limiter le nombre de tokens, chaque variante porte deux tokens (<code>background</code>, <code>accent</code>), l'<code>accent</code> servant à la <strong>fois</strong> la bordure gauche et l'icône. Les textes (titre/corps) sont partagés (<code>heading-text</code> = text.primary, <code>body-text</code> = text.secondary). Conforme au précédent <code>agtc-badge</code> (réutilisation des intentions feedback sémantiques).</p>
-<hr>
-<h2>Périmètre v1</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Inclus</th><th>Exclu (composant/évolution future)</th></tr></thead><tbody><tr><td>6 variantes, icône par variante (+ override / <code>no-icon</code>)</td><td>Toast (flottant temporaire)</td></tr><tr><td>Titre, corps, zone d'action (slots)</td><td>Modale / <code>alertdialog</code></td></tr><tr><td><code>dismissible</code> + événement <code>dismiss</code></td><td>Auto-dismiss temporisé</td></tr><tr><td><code>live</code> opt-in (off/polite/assertive)</td><td>Empilement / file de notifications</td></tr><tr><td>Bordure d'accent + fond subtil tokenisés</td><td>Variantes « solid » (fond plein)</td></tr></tbody></table></div>
-<hr>
-<h2>Alternatives rejetées</h2>
-<ul><li><strong><code>role="alert"</code> par défaut</strong> : annoncerait tout banner statique au chargement — perturbant (N4).</li><li><strong>Sévérité par la couleur seule</strong> : inaccessible — icône + préfixe masqué obligatoires (N2).</li><li><strong>Fusionner toast/modale dans ce composant</strong> : responsabilités contradictoires (flottant vs inline vs bloquant).</li><li><strong>Un token par sous-élément et par variante</strong> : explosion de tokens — <code>accent</code> mutualisé (bordure + icône).</li></ul>
-<hr>
-<h2>Conséquences</h2>
-<ul><li>Le <code>contribution-banner</code> du site pourra migrer vers <code>.agtc-banner variant="brand"</code> au *dogfooding*.</li><li>Toast et modale restent à concevoir (chacun son ADR).</li></ul>
-<hr>
-<h2>Tokens ajoutés — <code>component.banner.*</code></h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Référence</th></tr></thead><tbody><tr><td><code>neutral.background</code> / <code>neutral.accent</code></td><td><code>background.subtle</code> / <code>text.secondary</code></td></tr><tr><td><code>brand.background</code> / <code>brand.accent</code></td><td><code>brand.primary-subtle</code> / <code>brand.primary</code></td></tr><tr><td><code>info.background</code> / <code>info.accent</code></td><td><code>primitive.blue.3</code> / <code>feedback.info</code></td></tr><tr><td><code>success.background</code> / <code>success.accent</code></td><td><code>primitive.green.3</code> / <code>feedback.success</code></td></tr><tr><td><code>warning.background</code> / <code>warning.accent</code></td><td><code>primitive.orange.3</code> / <code>primitive.orange.11</code></td></tr><tr><td><code>danger.background</code> / <code>danger.accent</code></td><td><code>feedback.danger-subtle</code> / <code>feedback.danger</code></td></tr><tr><td><code>heading-text</code> / <code>body-text</code></td><td><code>text.primary</code> / <code>text.secondary</code></td></tr><tr><td><code>close-color</code> / <code>close-hover</code></td><td><code>text.secondary</code> / <code>text.primary</code></td></tr><tr><td><code>border-focus</code> / <code>radius</code> / <code>padding-x</code> / <code>padding-y</code></td><td><code>border.focus</code> / <code>radius.card</code> / <code>space.5</code> / <code>space.4</code></td></tr></tbody></table></div></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-041.html" class="agtc-button secondary">← ADR-041</a>
-    <a href="adr-043.html" class="agtc-button secondary">ADR-043 →</a>
+<ul><li>First new top-level <code>semantic</code> category since <code>marketing</code> (ADR-057).</li><li>Implemented in the same session: <code>tokens/semantic.json</code> carries the 5 tokens above; all 25</li></ul>
+<p>  <code>site/build.js</code> call sites now reference <code>var(--agtc-semantic-layout-container-*)</code>;   <code>--agtc-content-max</code> is a thin alias (<code>var(--agtc-semantic-layout-container-default, 1180px)</code>)   rather than a rewrite of its 7 sites. <code>npm run tokens</code> + <code>npm run build</code> (site) verified: 148   pages, 0 WCAG violation, 0 warning; <code>node scripts/audit-tokens.js</code> verified: no hardcoded   values, no phantom tokens, structure consistent (the pre-existing <code>button.ghost.border</code>   orphaned-token warning is unrelated to this change).</p>
+<ul><li>Governance: adding 5 semantic tokens — Design System Lead approval (this ADR), per</li></ul>
+<p>  <code>governance/rules/tokens-system.md</code>. No new primitives are added, so the Principal Designer   primitive-approval tier is not triggered.</p>
+<ul><li>Breakpoints remain unaddressed and fully ungoverned — flagged here as a distinct, separate</li></ul>
+<p>  future decision, not folded into this one.</p>
+<ul><li>Once implemented, this closes the actual gap the Copilot interoperability test surfaced: a</li></ul>
+<p>  page built against Agentica (by a human, or by any AI tool reading <code>tokens/semantic.json</code>) has   a real, documented answer for "how wide should my content container be," instead of guessing   or reusing an unrelated component token.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-095.html" class="agtc-button secondary">← ADR-095</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>

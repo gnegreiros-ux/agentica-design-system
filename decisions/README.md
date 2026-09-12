@@ -156,7 +156,9 @@ decisions that were already settled.
 | [ADR-091](ADR-091-icon-per-variant-stroke-width-and-color-tokens.md) | Per-variant stroke-width and default-color tokens for `agtc-icon` — stroke-width no longer hardcoded | 2026-07-30 | ✅ Active |
 | [ADR-092](ADR-092-visited-safari-fallback-incident.md) | Safari `:visited` hex-fallback incident, consolidated record (amends ADR-047, ADR-059, ADR-060) | 2026-08-28 | ✅ Active |
 | [ADR-093](ADR-093-border-control-accessible-resting-boundary.md) | Accessible resting control boundary: new semantic token `border.control` (checkbox/radio/input) | 2026-09-09 | ✅ Active |
+| [ADR-094](ADR-094-control-min-max-width.md) | Min/max-width for `agtc-input`'s single-line control, reserved ceiling for a future textarea | 2026-09-09 | ✅ Active |
 | [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) | Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license (supersedes ADR-081) | 2026-09-11 | ✅ Active |
+| [ADR-096](ADR-096-semantic-layout-container-tokens.md) | New `semantic.layout.container` category: 5 page-container max-width tokens, surfaced by an AI-interoperability test | 2026-09-11 | ✅ Active |
 
 ---
 

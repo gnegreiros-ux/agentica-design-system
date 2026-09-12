@@ -4,7 +4,7 @@
 //
 
 // Do not edit directly
-// Generated on Thu, 10 Sep 2026 18:26:16 GMT
+// Generated on Sat, 12 Sep 2026 00:22:51 GMT
 
 
 import UIKit
@@ -727,6 +727,11 @@ public class AgenticaTokens {
     public static let semanticIconStrokeWidthFeature = 2
     public static let semanticIconStrokeWidthInline = 1
     public static let semanticIconStrokeWidthNav = 1.75
+    public static let semanticLayoutContainerCta = 600px
+    public static let semanticLayoutContainerDefault = 1180px
+    public static let semanticLayoutContainerDocs = 960px
+    public static let semanticLayoutContainerIntro = 700px
+    public static let semanticLayoutContainerWide = 1280px
     public static let semanticMarketingSpaceHeroGap = 120px
     public static let semanticMarketingSpaceSectionBreathing = 96px
     public static let semanticMarketingTypographyDisplayLineHeight = 1.0
