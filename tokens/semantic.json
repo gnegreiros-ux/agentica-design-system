@@ -1374,6 +1374,94 @@
           "$intent": "120px — Vertical spacing of the marketing hero block. Never in a Product context."
         }
       }
+    },
+    "layout": {
+      "_readme": {
+        "$value": "Page/section container max-widths. Distinct from size.control.max-width (component-level, form-control width — ADR-094): these tokens govern page layout, never a single control. Literal values, not aliased to primitive.space — see ADR-096.",
+        "$type": "other"
+      },
+      "container": {
+        "cta": {
+          "$value": "600px",
+          "$type": "dimension",
+          "$intent": "Closing CTA block width, centered — narrower than the page's default reading column to focus attention on the call to action.",
+          "$description": "600px. Not aliased to a primitive (ADR-096). Matches the value already used identically across every marketing page's closing section before this token existed.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-cta",
+              "use": ["Closing CTA section, centered (.shell.section-final)"],
+              "doNotUse": "Component width — use size.control.max-width for form controls, not this token.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "intro": {
+          "$value": "700px",
+          "$type": "dimension",
+          "$intent": "Hero/intro copy block width — the page's opening text column.",
+          "$description": "700px. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-intro",
+              "use": ["Hero/intro copy block (.shell > .copy, .section-heading)"],
+              "doNotUse": "Component width — use size.control.max-width for form controls, not this token.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "docs": {
+          "$value": "960px",
+          "$type": "dimension",
+          "$intent": "Documentation page content width.",
+          "$description": "960px. Promotes the previously hardcoded, audit-exempted constant documented in governance/rules/layout-pattern.md. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-docs",
+              "use": ["Documentation page main content (.content)"],
+              "doNotUse": "Marketing pages — use layout.container.default or .wide instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "default": {
+          "$value": "1180px",
+          "$type": "dimension",
+          "$intent": "Standard marketing section container width.",
+          "$description": "1180px. Promotes the CSS extension token --agtc-content-max (ADR-058), which becomes an alias of this token. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-default",
+              "use": ["Standard marketing section container (.home-section, .hero-inner, .shell)"],
+              "doNotUse": "Wide/cinematic sections — use layout.container.wide instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "wide": {
+          "$value": "1280px",
+          "$type": "dimension",
+          "$intent": "Wide/cinematic marketing section container width.",
+          "$description": "1280px. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-wide",
+              "use": ["Wide/cinematic marketing sections (.rd-inner, .rd-cinematic-inner)"],
+              "doNotUse": "Standard sections — use layout.container.default instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        }
+      }
     }
   }
 }

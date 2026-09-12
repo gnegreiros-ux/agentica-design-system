@@ -699,7 +699,7 @@ function tokensCSS() {
   --agtc-site-header-padding-x:24px;
   --agtc-site-sidebar-width:236px;
   --agtc-site-toc-width:208px;
-  --agtc-content-max:1180px;
+  --agtc-content-max:var(--agtc-semantic-layout-container-default, 1180px); /* alias — ADR-096 */
   --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
   --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
   --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
@@ -840,7 +840,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, governance/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:var(--agtc-semantic-layout-container-docs)} /* audit-ignore: padding is the documented layout constant, governance/rules/layout-pattern.md — max-width now tokenized (ADR-096) */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -1882,7 +1882,7 @@ body{overflow-x:hidden}
    semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
 .rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
-.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-inner{max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
 .rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
 .rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
 @media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
@@ -2026,8 +2026,6 @@ body{overflow-x:hidden}
 
 .rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
-.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
-.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
@@ -2140,7 +2138,7 @@ body{overflow-x:hidden}
     var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
-.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
 /* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
    overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
    backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
@@ -2224,9 +2222,6 @@ body{overflow-x:hidden}
 /* Placeholder dans sections sombres (S7) */
 .rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-dark)}
-
-/* Centrage du CTA interne hero */
-.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
 
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
@@ -2482,7 +2477,7 @@ body.page{
   display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
-.section-heading{max-width:760px;margin-bottom:3rem}
+.section-heading{max-width:var(--agtc-semantic-layout-container-intro);margin-bottom:3rem}
 
 /* Cards rôles */
 .role-grid{
@@ -3894,7 +3889,7 @@ function buildPourquoi() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Notre vision</span><span class="lang-en">Our vision</span></p>
       <h1>
         <span class="lang-fr">Pourquoi Agentica existe</span>
@@ -3944,7 +3939,7 @@ function buildPourquoi() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></p>
     <h2><span class="lang-fr">Commencer avec Agentica</span><span class="lang-en">Get started with Agentica</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -3961,7 +3956,7 @@ function buildArchitecture() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
       <h1>
         <span class="lang-fr">Une seule source de vérité</span>
@@ -4003,7 +3998,7 @@ function buildArchitecture() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker">Tokens</p>
     <h2><span class="lang-fr">Explorer le système de tokens</span><span class="lang-en">Explore the token system</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4020,7 +4015,7 @@ function buildQualite() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
       <h1>
         <span class="lang-fr">La qualité est une propriété du système</span>
@@ -4070,7 +4065,7 @@ function buildQualite() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker">Audit</p>
     <h2><span class="lang-fr">Voir l'audit du système</span><span class="lang-en">View the system audit</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4087,7 +4082,7 @@ function buildIA() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
       <h1>
         <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
@@ -4134,7 +4129,7 @@ function buildIA() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></p>
     <h2><span class="lang-fr">Explorer les agents IA</span><span class="lang-en">Explore AI agents</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4151,7 +4146,7 @@ function buildDocumentation() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></p>
       <h1>
         <span class="lang-fr">Explorer Agentica</span>
@@ -4274,7 +4269,7 @@ function buildResources() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Kit de design</span><span class="lang-en">Design kit</span></p>
       <h1>
         <span class="lang-fr">La librairie Figma Agentica</span>
@@ -4313,7 +4308,7 @@ function buildResources() {
 </section>
 
 <section class="site-section">
-  <div class="shell" style="max-width:760px">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-intro)">
     <agtc-banner variant="info">
       <strong><span class="lang-fr">Le code fait foi, jamais l'inverse</span><span class="lang-en">Code is the source of truth, never the reverse</span></strong>
       <span>
@@ -4325,7 +4320,7 @@ function buildResources() {
 </section>
 
 <section class="site-section section-final">
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Prêt à concevoir</span><span class="lang-en">Ready to design</span></p>
     <h2><span class="lang-fr">Concevez avec les mêmes décisions que le code</span><span class="lang-en">Design with the same decisions as the code</span></h2>
     <div class="hero-actions" style="justify-content:center">
@@ -7841,7 +7836,7 @@ useEffect(() => {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></p>
       <h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
       <p>
@@ -8071,7 +8066,7 @@ import '@agentica-ds/components';`)}</code></pre>
 </section>
 
 <section class="site-section section-final">
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></p>
     <h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
     <p>

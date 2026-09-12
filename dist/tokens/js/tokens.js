@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 10 Sep 2026 18:26:16 GMT
+ * Generated on Sat, 12 Sep 2026 00:22:51 GMT
  */
 
 export const PrimitiveColorGray1 = "#fcfcfc";
@@ -667,6 +667,11 @@ export const SemanticMarketingTypographyEyebrowWeight = "700";
 export const SemanticMarketingTypographyEyebrowLetterSpacing = "0.12em";
 export const SemanticMarketingSpaceSectionBreathing = "96px";
 export const SemanticMarketingSpaceHeroGap = "120px";
+export const SemanticLayoutContainerCta = "600px";
+export const SemanticLayoutContainerIntro = "700px";
+export const SemanticLayoutContainerDocs = "960px";
+export const SemanticLayoutContainerDefault = "1180px";
+export const SemanticLayoutContainerWide = "1280px";
 export const ButtonFontSize = "0.875rem";
 export const ButtonFontWeight = "700";
 export const ButtonPrimaryBackground = "#007a68";

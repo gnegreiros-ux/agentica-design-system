@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 10 Sep 2026 18:26:16 GMT
+ * Generated on Sat, 12 Sep 2026 00:22:51 GMT
  */
 
 :root {
@@ -20,6 +20,11 @@
   --agtc-component-button-ghost-border: transparent;
   --agtc-component-button-ghost-background: transparent;
   --agtc-component-button-secondary-background: transparent;
+  --agtc-semantic-layout-container-wide: 1280px;
+  --agtc-semantic-layout-container-default: 1180px;
+  --agtc-semantic-layout-container-docs: 960px;
+  --agtc-semantic-layout-container-intro: 700px;
+  --agtc-semantic-layout-container-cta: 600px;
   --agtc-semantic-radius-control-inner: 4px;
   --agtc-semantic-radius-pill: 9999px;
   --agtc-semantic-shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
