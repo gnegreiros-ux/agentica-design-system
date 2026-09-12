@@ -1271,8 +1271,6 @@ body{overflow-x:hidden}
 
 .rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
-.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
-.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
@@ -1469,9 +1467,6 @@ body{overflow-x:hidden}
 /* Placeholder dans sections sombres (S7) */
 .rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-dark)}
-
-/* Centrage du CTA interne hero */
-.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
 
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
@@ -1727,7 +1722,7 @@ body.page{
   display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
-.section-heading{max-width:760px;margin-bottom:3rem}
+.section-heading{max-width:700px;margin-bottom:3rem}
 
 /* Cards rôles */
 .role-grid{
