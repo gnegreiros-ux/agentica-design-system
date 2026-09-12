@@ -42,6 +42,7 @@ Run this quality gate **after every modification**, regardless of size:
 | Chromatic | `pipelines/chromatic.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`) |
 | axe-core | `pipelines/axe-core.md` | 🔜 Planned | Once active |
 | Playwright | `pipelines/playwright.md` | 🔜 Planned | Once active |
+| Backlog reconciliation | `pipelines/backlog.md` | ✅ Active | Yes — at PR completion, not per-commit |
 
 ---
 
@@ -108,6 +109,14 @@ Run this quality gate **after every modification**, regardless of size:
 - [ ] Format: type(scope): short description
 - [ ] A single coherent commit
 - [ ] No /Users/... path in committed files
+
+### 8. Backlog reconciliation (at PR completion only — see `pipelines/backlog.md`)
+- [ ] Related GitHub Projects tickets read back and their `Status` matches what
+      the PR's full diff actually shipped
+- [ ] `Dépendance` text on any touched ticket still makes sense (no "Bloque" a <!-- lang-audit-ignore: verbatim GitHub Projects field/status names -->
+      now-`Terminé` target while still open itself) <!-- lang-audit-ignore: verbatim GitHub Projects field/status names -->
+- [ ] New work discovered but untracked → ticket created (Status/Domaine/Date, ADR-069)
+- or: N/A — mid-PR commit, not yet at merge time
 
 ### Points of attention
 - [escalations, special Principal Designer approvals]

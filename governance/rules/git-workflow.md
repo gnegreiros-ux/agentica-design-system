@@ -75,7 +75,20 @@ Same format as commits: `[type]([scope]): [description]`
 - [ ] Storybook story created/updated
 - [ ] Chromatic: captures approved
 - [ ] Unit tests pass
+
+## Backlog (`pipelines/backlog.md`)
+- [ ] GitHub Projects tickets related to this PR verified against the actual diff
+      and moved to their real status (never left in `Backlog`/`En cours` for
+      something this PR shipped) <!-- lang-audit-ignore: verbatim GitHub Projects Status option values -->
+- [ ] Any `Dépendance` text this PR made stale (e.g. blocking a ticket this PR <!-- lang-audit-ignore: verbatim GitHub Projects field/status names -->
+      just closed) corrected
+- [ ] New work this PR revealed but doesn't itself close → ticket created, not
+      left implicit in a commit message
 ```
+
+Run this backlog check **once, at the end of the PR** — after its last commit,
+before requesting merge — not after every individual commit (`pipelines/backlog.md`
+explains why the cadence differs from the rest of the quality gate).
 
 ---
 
@@ -134,6 +147,7 @@ An agent can:
 - ✅ Create a `fix/` or `docs/` branch
 - ✅ Make commits on a feature branch
 - ✅ Open a PR with a complete description
+- ✅ Must run the backlog check (`pipelines/backlog.md`) before asking for merge
 - ❌ Merge a PR without human approval
 - ❌ Push directly to `main` or `develop`
 - ❌ Modify `tokens/component.json` without explicit approval

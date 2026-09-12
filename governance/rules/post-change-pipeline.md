@@ -35,6 +35,12 @@ Active (blocking) pipelines:
 | 8 | Site rebuild | `pipelines/site.md` | ✅ `.github/workflows/site-freshness.yml` |
 | 9 | Commit | `pipelines/commit.md` | ✅ `.github/workflows/commit-lint.yml` (PR only) |
 | 10 | Visual regression | `pipelines/chromatic.md` | ⚠️ `.github/workflows/chromatic.yml` exists but its automatic `push`/`pull_request` triggers are currently disabled (free-tier snapshot limit) — manual (`workflow_dispatch`) only |
+| 11 | Backlog reconciliation | `pipelines/backlog.md` | — (GitHub Projects has no API surface for CI to check against) |
+
+Pipeline 11 runs at a different cadence than 1–10: once **at the end of a PR**,
+across every commit it introduced, not after each individual commit — see
+`pipelines/backlog.md` for why and `governance/rules/git-workflow.md`'s PR
+checklist for where it's required.
 
 A CI-enforced pipeline still belongs in `quality-gate`: the CI check is a backstop that
 catches it regardless of tool, not a replacement for running it proactively during the
