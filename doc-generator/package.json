@@ -1,0 +1,13 @@
+{
+  "name": "doc-generator",
+  "version": "0.1.0",
+  "description": "Generates a static documentation site from design-system.manifest.json — treats a Clone instance and a Master Skill instance identically, with no dependency on either.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "doc-generator": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "generate": "node bin/cli.mjs"
+  }
+}
