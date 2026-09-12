@@ -85,7 +85,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, governance/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:var(--agtc-semantic-layout-container-docs)} /* audit-ignore: padding is the documented layout constant, governance/rules/layout-pattern.md — max-width now tokenized (ADR-096) */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -1127,7 +1127,7 @@ body{overflow-x:hidden}
    semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
 .rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
-.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-inner{max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
 .rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
 .rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
 @media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
@@ -1271,8 +1271,6 @@ body{overflow-x:hidden}
 
 .rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
-.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
-.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
@@ -1385,7 +1383,7 @@ body{overflow-x:hidden}
     var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
-.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
 /* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
    overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
    backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
@@ -1469,9 +1467,6 @@ body{overflow-x:hidden}
 /* Placeholder dans sections sombres (S7) */
 .rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-dark)}
-
-/* Centrage du CTA interne hero */
-.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
 
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
@@ -1727,7 +1722,7 @@ body.page{
   display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
-.section-heading{max-width:760px;margin-bottom:3rem}
+.section-heading{max-width:var(--agtc-semantic-layout-container-intro);margin-bottom:3rem}
 
 /* Cards rôles */
 .role-grid{
