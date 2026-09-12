@@ -1,0 +1,79 @@
+# Non-Negotiable Foundation
+
+> **Canonical source**: this file is the single source of truth for the non-negotiable foundation. The Master Skill and the Clone each reference this file via `references/non-negotiable-foundation.md` — neither maintains an independently edited copy. Any change to a rule is made here, once, and propagates to both deliverables.
+
+## Purpose of this file
+
+This document defines the rules that no personalization, no agent, and no update can disable. It serves a dual purpose:
+
+- **For humans**: understand why each rule exists and what risk it prevents.
+- **For agents**: treat each rule as a hard constraint, to be respected even when a given task carries no explicit instruction about it.
+
+No rule in this file is modifiable in the personalization layer. Any attempt to bypass it (via configuration, prompt, or code) must be refused by the agent and flagged to the human.
+
+---
+
+## Rule 1 — WCAG 2.2 AA compliance, minimum
+
+**Statement**: Every generated component, page, or artifact meets at least WCAG (Web Content Accessibility Guidelines) 2.2 Level AA, including:
+- Color contrast (text, interactive elements, state indicators)
+- `alt` attributes on all meaningful visual content
+- Correct ARIA semantics (roles, states, properties)
+- Full keyboard navigation, with no focus traps
+- Screen reader compatibility (reading order, accessible labels)
+
+**Why**: Accessibility is not a cosmetic afterthought but a structural requirement. A design system that fails accessibility fails a real, significant share of its users — a particularly serious risk for any organization under legal accessibility obligations (public sector, regulated institutions).
+
+**Verification**: Systematic automated audit (see *Audit governance* below), run on every build/generation, before any publication.
+
+---
+
+## Rule 2 — The final word always belongs to a human
+
+**Statement**: No agent may automatically apply a structural change, an update to the foundation, or a design decision without explicit human validation. An agent can analyze, propose, generate a diff, or recommend — never execute an irreversible or consequential action on its own.
+
+**Why**: Automation speeds up production, but the responsibility for the decision stays human. This is what keeps the system a tool in service of the team, never a system that escapes its control.
+
+**Verification**: Every agent interface (CLI, CI/CD, coding assistant) includes an explicit pause point before any consequential action. A scheduled automated check (e.g. a recurring CI job) may *notify* that an action is available or needed — it may never execute it itself.
+
+---
+
+## Rule 3 — Never hard-coded style
+
+**Statement**: No component in the foundation ("core") accepts a hard-coded style value (hex color, pixel size, arbitrary spacing, etc.). Every visual value references a token.
+
+**Why**: Hard-coding breaks the system's traceability and consistency: an isolated value can't be audited, can't be updated globally, and can't be understood by an agent trying to reason about design decisions.
+
+**Verification**: Static lint (searching for literal values in style/component files) integrated into the audit; build fails if a hard-coded value is detected in the core.
+
+---
+
+## Rule 4 — Never consume a primitive token directly
+
+**Statement**: Components only consume semantic tokens (e.g. `color-text-danger`), never primitive tokens (e.g. `red-500`) directly.
+
+**Why**: A primitive token describes a raw value, not an intent. Consuming a primitive directly in a component makes it impossible to change theme, brand, or accessibility level without rewriting the component — and prevents an agent from understanding *why* a color is used in that spot.
+
+**Verification**: Static lint verifying that only semantic-layer tokens appear in core component files.
+
+---
+
+## Audit governance
+
+- The accessibility, hard-coded-style, and token-consumption audits **always run**, on every build, regardless of any personalization configuration.
+- The default accessibility audit engine is **axe-core**. It is replaceable by another tool via an interface/adapter defined by the core — without ever modifying the rest of the core.
+- A **public compliance badge** (WCAG, hard-coded style, primitive tokens) displayed on the generated site is **optional**, enabled only in the personalization/governance layer. Its absence never affects whether the audit itself runs — the badge is a display, never a condition.
+
+---
+
+## Update governance (Clone)
+
+- The Clone is distributed as an **npm package that receives updates over time**, not as a one-shot scaffold copied once.
+- Any update to the Clone's npm **core** requires **explicit human authorization** before it is applied — never automatic application.
+- A scheduled automated check (e.g. a GitHub Action) may detect that an update is available and **notify** the team — it may never apply it itself under any circumstance.
+
+---
+
+## What this foundation does not cover
+
+This file defines a floor, not a complete system. It prescribes no brand palette, no technical stack, no component structure — those choices belong entirely to the personalization layer and are documented separately.

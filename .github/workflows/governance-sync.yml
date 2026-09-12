@@ -1,0 +1,28 @@
+name: Governance — sync check
+
+# Enforces GOVERNANCE.md's Rule 2 (the final word always belongs to a human)
+# applied to itself: the generated reference copies consumed by the Master
+# Skill and the Clone must always match GOVERNANCE.md. This check only
+# notifies — it never regenerates or commits on its own behalf. If it fails,
+# a human runs `npm run sync:governance` and commits the result.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  governance-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Check governance references are in sync
+        run: node scripts/check-governance-sync.mjs
