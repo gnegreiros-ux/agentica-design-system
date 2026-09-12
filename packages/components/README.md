@@ -63,4 +63,4 @@ component's guideline document in the source repository's `guidelines/components
 
 ## License
 
-MIT
+Apache License 2.0
