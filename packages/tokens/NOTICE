@@ -1,14 +1,17 @@
 @agentica-ds/tokens
 Copyright 2026 Guilherme Negreiros
 
+This product is licensed under the Apache License, Version 2.0.
+See the LICENSE file for the full license text.
+
 ------------------------------------------------------------------------------
 Third-party components
 ------------------------------------------------------------------------------
 
 This package's compiled values incorporate or reference the following
-third-party components. Each remains under its own original license; this
-notice is informational only and does not change this package's own license
-(see LICENSE).
+third-party components. Each remains under its own original license;
+inclusion in this NOTICE does not change the terms of the Apache License
+2.0 above.
 
 1. Radix UI Colors (https://www.radix-ui.com/colors)
    License: MIT License

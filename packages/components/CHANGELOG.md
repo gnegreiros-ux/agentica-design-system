@@ -1,12 +1,21 @@
 # @agentica-ds/components
 
-## Unreleased
+## 1.0.0
 
 ### Major Changes
 
-- The next major version of this package will switch its license from MIT to Apache
-  License 2.0, in line with the main repository (see `decisions/ADR-095` and the root
-  `LICENSE`/`NOTICE` files). The license of already-published versions is unaffected.
+- Switch this package's license from MIT to Apache License 2.0, in line with the main
+  repository (ADR-095). `package.json`'s `license` field, `LICENSE`, `README.md`, and
+  `NOTICE` all updated to reflect the change. Already-published MIT versions are
+  unaffected — only this and later versions are Apache-2.0.
+
+### Patch Changes
+
+- 9ef26b6: Add a `NOTICE` file to each package attributing the third-party components it
+  incorporates or depends on (Radix UI Colors + Atkinson Hyperlegible for
+  `tokens`; Lit + Lucide for `components`), and include it in the published
+  tarball via `files`. Informational only — does not change either package's
+  own license.
 
 ## 0.1.3
 
