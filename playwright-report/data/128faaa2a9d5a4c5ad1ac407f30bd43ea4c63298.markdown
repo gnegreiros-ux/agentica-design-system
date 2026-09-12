@@ -1,0 +1,623 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: visual/components/all-components.spec.js >> table — visual regressions >> page table — dark
+- Location: tests/visual/components/all-components.spec.js:13:7
+
+# Error details
+
+```
+Error: expect(page).toHaveScreenshot(expected) failed
+
+  Expected an image 1404px by 5847px, received 1404px by 5815px. 118293 pixels (ratio 0.02 of all image pixels) are different.
+
+  Snapshot: table-dark.png
+
+Call log:
+  - Expect "toHaveScreenshot(table-dark.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - Expected an image 1404px by 5847px, received 1404px by 5815px. 118293 pixels (ratio 0.02 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - Expected an image 1404px by 5847px, received 1404px by 5815px. 118293 pixels (ratio 0.02 of all image pixels) are different.
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "Agentica" [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "AI" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Human control":
+              - /url: ../ia.html
+            - link "Single source of truth":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Components":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Decisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuity":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Figma library":
+              - /url: ../resources.html
+            - link "Storybook":
+              - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentica-design-system
+            - link "Audit":
+              - /url: ../audit.html
+            - link "Changelog":
+              - /url: ../changelog.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e19]:
+        - button "FR" [ref=e20] [cursor=pointer]
+        - button "EN" [ref=e21] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e22] [cursor=pointer]:
+        - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - img [ref=e23]
+      - link "GitHub — Code source du projet" [ref=e25] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - img [ref=e26]
+      - link "Figma — Librairie Agentica sur Figma Community" [ref=e29] [cursor=pointer]:
+        - /url: https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system
+        - img [ref=e30]
+  - generic [ref=e36]:
+    - navigation "Secondary navigation / Navigation secondaire" [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: Components
+        - link "Overview" [ref=e40] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e41] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e42] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e43] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e44] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Image" [ref=e45] [cursor=pointer]:
+          - /url: ../components/image.html
+        - link "Card" [ref=e46] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e47] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e48] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e49] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e50] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e51] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e52] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e53] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e54] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e55] [cursor=pointer]:
+          - /url: ../components/tabs.html
+    - main [ref=e56]:
+      - heading "Table" [level=1] [ref=e57]
+      - paragraph [ref=e58]:
+        - generic [ref=e59]:
+          - text: Read-only, scannable, accessible data table. The system's most-used component (token tables). Two forms — data-driven component and a class on a static
+          - code [ref=e60]: <table>
+          - text: — sharing the same tokens.
+      - heading "Preview — dividers (default)" [level=2] [ref=e61]
+      - generic [ref=e62]:
+        - table "Spacing token example" [ref=e64]:
+          - caption [ref=e65]: Spacing token example
+          - rowgroup [ref=e66]:
+            - row "Step Role Value" [ref=e67]:
+              - columnheader "Step" [ref=e68]
+              - columnheader "Role" [ref=e69]
+              - columnheader "Value" [ref=e70]
+          - rowgroup [ref=e71]:
+            - row "space-1 Minimal spacing 4px" [ref=e72]:
+              - cell "space-1" [ref=e73]:
+                - code [ref=e74]: space-1
+              - cell "Minimal spacing" [ref=e75]
+              - cell "4px" [ref=e76]
+            - row "space-2 Dense controls 8px" [ref=e77]:
+              - cell "space-2" [ref=e78]:
+                - code [ref=e79]: space-2
+              - cell "Dense controls" [ref=e80]
+              - cell "8px" [ref=e81]
+            - row "space-3 Standard padding 12px" [ref=e82]:
+              - cell "space-3" [ref=e83]:
+                - code [ref=e84]: space-3
+              - cell "Standard padding" [ref=e85]
+              - cell "12px" [ref=e86]
+            - row "space-4 Control spacing 16px" [ref=e87]:
+              - cell "space-4" [ref=e88]:
+                - code [ref=e89]: space-4
+              - cell "Control spacing" [ref=e90]
+              - cell "16px" [ref=e91]
+        - heading "Striped (option)" [level=2] [ref=e92]
+        - generic [ref=e93]:
+          - table "Spacing token example" [ref=e95]:
+            - caption [ref=e96]: Spacing token example
+            - rowgroup [ref=e97]:
+              - row "Step Role Value" [ref=e98]:
+                - columnheader "Step" [ref=e99]
+                - columnheader "Role" [ref=e100]
+                - columnheader "Value" [ref=e101]
+            - rowgroup [ref=e102]:
+              - row "space-1 Minimal spacing 4px" [ref=e103]:
+                - cell "space-1" [ref=e104]:
+                  - code [ref=e105]: space-1
+                - cell "Minimal spacing" [ref=e106]
+                - cell "4px" [ref=e107]
+              - row "space-2 Dense controls 8px" [ref=e108]:
+                - cell "space-2" [ref=e109]:
+                  - code [ref=e110]: space-2
+                - cell "Dense controls" [ref=e111]
+                - cell "8px" [ref=e112]
+              - row "space-3 Standard padding 12px" [ref=e113]:
+                - cell "space-3" [ref=e114]:
+                  - code [ref=e115]: space-3
+                - cell "Standard padding" [ref=e116]
+                - cell "12px" [ref=e117]
+              - row "space-4 Control spacing 16px" [ref=e118]:
+                - cell "space-4" [ref=e119]:
+                  - code [ref=e120]: space-4
+                - cell "Control spacing" [ref=e121]
+                - cell "16px" [ref=e122]
+          - heading "Absolute rules" [level=2] [ref=e123]
+          - list [ref=e124]:
+            - listitem [ref=e125]:
+              - img [ref=e127]
+              - generic [ref=e130]:
+                - text: Real semantic
+                - code [ref=e131]: <table>
+                - text: — never grid
+                - code [ref=e132]: <div>
+                - text: s
+            - listitem [ref=e133]:
+              - img [ref=e135]
+              - generic [ref=e138]:
+                - code [ref=e139]: scope="col"
+                - text: on every
+                - code [ref=e140]: <th>
+                - text: +
+                - code [ref=e141]: <caption>
+                - text: (visible or hidden)
+            - listitem [ref=e142]:
+              - img [ref=e144]
+              - text: Numeric values right-aligned
+            - listitem [ref=e147]:
+              - img [ref=e149]
+              - text: Never a table for layout
+            - listitem [ref=e153]:
+              - img [ref=e155]
+              - text: Never hardcoded color/spacing
+          - heading "Component tokens" [level=2] [ref=e159]
+          - table [ref=e161]:
+            - rowgroup [ref=e166]:
+              - row "Token CSS Reference Value" [ref=e167]:
+                - columnheader "Token CSS" [ref=e168]
+                - columnheader "Reference" [ref=e169]
+                - columnheader "Value" [ref=e170]
+            - rowgroup [ref=e171]:
+              - 'row "--agtc-component-table-default-header-background semantic.color.background.subtle #f0f0f0" [ref=e172]':
+                - cell "--agtc-component-table-default-header-background" [ref=e173]:
+                  - code [ref=e174]: "--agtc-component-table-default-header-background"
+                - cell "semantic.color.background.subtle" [ref=e175]:
+                  - code [ref=e176]: semantic.color.background.subtle
+                - cell "#f0f0f0" [ref=e177]
+              - 'row "--agtc-component-table-default-header-text semantic.color.text.secondary #646464" [ref=e178]':
+                - cell "--agtc-component-table-default-header-text" [ref=e179]:
+                  - code [ref=e180]: "--agtc-component-table-default-header-text"
+                - cell "semantic.color.text.secondary" [ref=e181]:
+                  - code [ref=e182]: semantic.color.text.secondary
+                - cell "#646464" [ref=e183]
+              - 'row "--agtc-component-table-default-cell-text semantic.color.text.primary #202020" [ref=e184]':
+                - cell "--agtc-component-table-default-cell-text" [ref=e185]:
+                  - code [ref=e186]: "--agtc-component-table-default-cell-text"
+                - cell "semantic.color.text.primary" [ref=e187]:
+                  - code [ref=e188]: semantic.color.text.primary
+                - cell "#202020" [ref=e189]
+              - 'row "--agtc-component-table-default-border semantic.color.border.default #e8e8e8" [ref=e190]':
+                - cell "--agtc-component-table-default-border" [ref=e191]:
+                  - code [ref=e192]: "--agtc-component-table-default-border"
+                - cell "semantic.color.border.default" [ref=e193]:
+                  - code [ref=e194]: semantic.color.border.default
+                - cell "#e8e8e8" [ref=e195]
+              - 'row "--agtc-component-table-default-row-hover semantic.color.background.hover #fafafa" [ref=e196]':
+                - cell "--agtc-component-table-default-row-hover" [ref=e197]:
+                  - code [ref=e198]: "--agtc-component-table-default-row-hover"
+                - cell "semantic.color.background.hover" [ref=e199]:
+                  - code [ref=e200]: semantic.color.background.hover
+                - cell "#fafafa" [ref=e201]
+              - 'row "--agtc-component-table-default-stripe semantic.color.background.subtle #f0f0f0" [ref=e202]':
+                - cell "--agtc-component-table-default-stripe" [ref=e203]:
+                  - code [ref=e204]: "--agtc-component-table-default-stripe"
+                - cell "semantic.color.background.subtle" [ref=e205]:
+                  - code [ref=e206]: semantic.color.background.subtle
+                - cell "#f0f0f0" [ref=e207]
+              - 'row "--agtc-component-table-default-caption-text semantic.color.text.secondary #646464" [ref=e208]':
+                - cell "--agtc-component-table-default-caption-text" [ref=e209]:
+                  - code [ref=e210]: "--agtc-component-table-default-caption-text"
+                - cell "semantic.color.text.secondary" [ref=e211]:
+                  - code [ref=e212]: semantic.color.text.secondary
+                - cell "#646464" [ref=e213]
+              - row "--agtc-component-table-default-radius semantic.radius.card 10px" [ref=e214]:
+                - cell "--agtc-component-table-default-radius" [ref=e215]:
+                  - code [ref=e216]: "--agtc-component-table-default-radius"
+                - cell "semantic.radius.card" [ref=e217]:
+                  - code [ref=e218]: semantic.radius.card
+                - cell "10px" [ref=e219]
+              - row "--agtc-component-table-default-font-size semantic.typography.label.size 0.875rem" [ref=e220]:
+                - cell "--agtc-component-table-default-font-size" [ref=e221]:
+                  - code [ref=e222]: "--agtc-component-table-default-font-size"
+                - cell "semantic.typography.label.size" [ref=e223]:
+                  - code [ref=e224]: semantic.typography.label.size
+                - cell "0.875rem" [ref=e225]
+              - row "--agtc-component-table-padding-x primitive.space.3 12px" [ref=e226]:
+                - cell "--agtc-component-table-padding-x" [ref=e227]:
+                  - code [ref=e228]: "--agtc-component-table-padding-x"
+                - cell "primitive.space.3" [ref=e229]:
+                  - code [ref=e230]: primitive.space.3
+                - cell "12px" [ref=e231]
+              - row "--agtc-component-table-padding-y-compact primitive.space.2 8px" [ref=e232]:
+                - cell "--agtc-component-table-padding-y-compact" [ref=e233]:
+                  - code [ref=e234]: "--agtc-component-table-padding-y-compact"
+                - cell "primitive.space.2" [ref=e235]:
+                  - code [ref=e236]: primitive.space.2
+                - cell "8px" [ref=e237]
+              - row "--agtc-component-table-padding-y-comfortable primitive.space.3 12px" [ref=e238]:
+                - cell "--agtc-component-table-padding-y-comfortable" [ref=e239]:
+                  - code [ref=e240]: "--agtc-component-table-padding-y-comfortable"
+                - cell "primitive.space.3" [ref=e241]:
+                  - code [ref=e242]: primitive.space.3
+                - cell "12px" [ref=e243]
+          - heading "Accessibility" [level=2] [ref=e244]
+          - list [ref=e245]:
+            - listitem [ref=e246]:
+              - generic [ref=e247]:
+                - text: Real semantic
+                - code [ref=e248]: <table>
+                - text: /
+                - code [ref=e249]: <thead>
+                - text: /
+                - code [ref=e250]: <tbody>
+                - text: structure
+            - listitem [ref=e251]:
+              - generic [ref=e252]:
+                - code [ref=e253]: scope="col"
+                - text: — cell↔header association
+            - listitem [ref=e254]:
+              - generic [ref=e255]:
+                - code [ref=e256]: <caption>
+                - text: describes the table (WCAG 1.3.1) — hideable via
+                - code [ref=e257]: caption-hidden
+            - listitem [ref=e258]: Keyboard-focusable scroll container, visible overflow indicator
+            - listitem [ref=e259]: 4.5:1 contrast verified (gray.12 text on white/gray.3)
+          - heading "Implementation" [level=2] [ref=e260]
+          - generic [ref=e261]:
+            - code [ref=e262]: "<!-- Data-driven component --> <agtc-table caption=\"Badge tokens\" caption-hidden></agtc-table> <script> const t = document.querySelector('agtc-table'); t.columns = [ { label: 'CSS token', align: 'start', width: '46%' }, { label: 'Reference', align: 'start' }, { label: 'Value', align: 'end' }, ]; t.rows = [ ['--agtc-badge-neutral-background', 'semantic.color.background.subtle', '#f0f0f0'], // audit-ignore: resolved value shown as reference data ]; </script> <!-- Class on a static table (light DOM, no JS) --> <table class=\"agtc-table striped\"> <caption class=\"visually-hidden\">Badge tokens</caption> <thead><tr><th scope=\"col\">Token</th><th scope=\"col\" class=\"num\">Value</th></tr></thead> <tbody><tr><td><code>--agtc-badge-neutral-text</code></td><td class=\"num\">#646464</td></tr></tbody> </table>"
+            - generic [ref=e263]: html
+            - button "Copy code (html)" [ref=e264] [cursor=pointer]: Copy
+          - heading "DOs and DON'Ts" [level=2] [ref=e265]
+          - generic [ref=e266]:
+            - generic [ref=e267]:
+              - heading "Do" [level=3] [ref=e268]:
+                - img [ref=e269]
+                - text: Do
+              - list [ref=e272]:
+                - listitem [ref=e273]:
+                  - generic [ref=e274]:
+                    - text: Always a
+                    - code [ref=e275]: <caption>
+                    - text: (hidden if needed) and
+                    - code [ref=e276]: scope
+                - listitem [ref=e277]:
+                  - generic [ref=e278]:
+                    - text: Right-align numeric values (
+                    - code [ref=e279]: class="num"
+                    - text: )
+                - listitem [ref=e280]: 1st column = readable identifier, columns ordered by importance
+            - generic [ref=e281]:
+              - heading "Don't" [level=3] [ref=e282]:
+                - img [ref=e283]
+                - text: Don't
+              - list [ref=e287]:
+                - listitem [ref=e288]:
+                  - generic [ref=e289]:
+                    - code [ref=e290]: <div>
+                    - text: s faking a table — inaccessible
+                - listitem [ref=e291]: A table to lay out non-tabular elements
+                - listitem [ref=e292]: Expecting v1 to sort/filter — it's read-only (door open)
+          - heading "UX Patterns Reference" [level=2] [ref=e293]
+          - blockquote [ref=e294]:
+            - paragraph [ref=e295]:
+              - text: Patterns approved via the
+              - code [ref=e296]: ux-pattern-review
+              - text: "workflow (ADR-036/040). Decision:"
+              - strong [ref=e297]: T1–T10 all approved
+              - text: .
+          - table [ref=e299]:
+            - rowgroup [ref=e300]:
+              - row "Pattern Source Applied Justification" [ref=e301]:
+                - columnheader "Pattern" [ref=e302]
+                - columnheader "Source" [ref=e303]
+                - columnheader "Applied" [ref=e304]
+                - columnheader "Justification" [ref=e305]
+            - rowgroup [ref=e306]:
+              - row "Semantic HTML + scope=\"col\" Smashing — Table Patterns ✅ Cell↔header association (missing from the site's original HTML)" [ref=e307]:
+                - cell "Semantic HTML + scope=\"col\"" [ref=e308]:
+                  - text: Semantic HTML +
+                  - code [ref=e309]: scope="col"
+                - cell "Smashing — Table Patterns" [ref=e310]:
+                  - link "Smashing — Table Patterns" [ref=e311] [cursor=pointer]:
+                    - /url: https://www.smashingmagazine.com/2019/01/table-design-patterns-web/
+                - cell "✅" [ref=e312]
+                - cell "Cell↔header association (missing from the site's original HTML)" [ref=e313]
+              - row "<caption> describing the table Smashing ✅ Hideable via caption-hidden (WCAG 1.3.1)" [ref=e314]:
+                - cell "<caption> describing the table" [ref=e315]:
+                  - code [ref=e316]: <caption>
+                  - text: describing the table
+                - cell "Smashing" [ref=e317]:
+                  - link "Smashing" [ref=e318] [cursor=pointer]:
+                    - /url: https://www.smashingmagazine.com/2019/01/table-design-patterns-web/
+                - cell "✅" [ref=e319]
+                - cell "Hideable via caption-hidden (WCAG 1.3.1)" [ref=e320]:
+                  - text: Hideable via
+                  - code [ref=e321]: caption-hidden
+                  - text: (WCAG 1.3.1)
+              - row "Text alignment left, numeric right NN/g — Data Tables ✅ align per column, default start" [ref=e322]:
+                - cell "Text alignment left, numeric right" [ref=e323]
+                - cell "NN/g — Data Tables" [ref=e324]:
+                  - link "NN/g — Data Tables" [ref=e325] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                - cell "✅" [ref=e326]
+                - cell "align per column, default start" [ref=e327]:
+                  - code [ref=e328]: align
+                  - text: per column, default
+                  - code [ref=e329]: start
+              - row "Row separators (zebra striping optional) NN/g ✅ Separators by default, striped optional — user choice" [ref=e330]:
+                - cell "Row separators (zebra striping optional)" [ref=e331]
+                - cell "NN/g" [ref=e332]:
+                  - link "NN/g" [ref=e333] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                - cell "✅" [ref=e334]
+                - cell "Separators by default, striped optional — user choice" [ref=e335]:
+                  - text: Separators by default,
+                  - code [ref=e336]: striped
+                  - text: optional — user choice
+              - row "Row hover NN/g ✅ row-hover" [ref=e337]:
+                - cell "Row hover" [ref=e338]
+                - cell "NN/g" [ref=e339]:
+                  - link "NN/g" [ref=e340] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                - cell "✅" [ref=e341]
+                - cell "row-hover" [ref=e342]:
+                  - code [ref=e343]: row-hover
+              - row "Sticky header NN/g · Smashing ✅ Optional via sticky-header" [ref=e344]:
+                - cell "Sticky header" [ref=e345]
+                - cell "NN/g · Smashing" [ref=e346]:
+                  - link "NN/g" [ref=e347] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                  - text: ·
+                  - link "Smashing" [ref=e348] [cursor=pointer]:
+                    - /url: https://www.smashingmagazine.com/2019/01/table-design-patterns-web/
+                - cell "✅" [ref=e349]
+                - cell "Optional via sticky-header" [ref=e350]:
+                  - text: Optional via
+                  - code [ref=e351]: sticky-header
+              - row "Horizontal scroll + overflow indicator Smashing ✅ overflow-x container + edge shadows (long token names)" [ref=e352]:
+                - cell "Horizontal scroll + overflow indicator" [ref=e353]
+                - cell "Smashing" [ref=e354]:
+                  - link "Smashing" [ref=e355] [cursor=pointer]:
+                    - /url: https://www.smashingmagazine.com/2019/01/table-design-patterns-web/
+                - cell "✅" [ref=e356]
+                - cell "overflow-x container + edge shadows (long token names)" [ref=e357]:
+                  - code [ref=e358]: overflow-x
+                  - text: container + edge shadows (long token names)
+              - row "1st column = readable identifier, order = importance NN/g ✅ Token table convention" [ref=e359]:
+                - cell "1st column = readable identifier, order = importance" [ref=e360]
+                - cell "NN/g" [ref=e361]:
+                  - link "NN/g" [ref=e362] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                - cell "✅" [ref=e363]
+                - cell "Token table convention" [ref=e364]
+              - row "compact density by default Dashboard Design Patterns ✅ density=\"comfortable\" available" [ref=e365]:
+                - cell "compact density by default" [ref=e366]:
+                  - code [ref=e367]: compact
+                  - text: density by default
+                - cell "Dashboard Design Patterns" [ref=e368]:
+                  - link "Dashboard Design Patterns" [ref=e369] [cursor=pointer]:
+                    - /url: https://dashboarddesignpatterns.github.io/patterns.html
+                - cell "✅" [ref=e370]
+                - cell "density=\"comfortable\" available" [ref=e371]:
+                  - code [ref=e372]: density="comfortable"
+                  - text: available
+              - 'row "Sort / filter / pagination NN/g ✅ (open door) Out of v1: static docs tables; columns/rows API designed to accommodate them without breaking changes (future column.sortable + @sort)" [ref=e373]':
+                - cell "Sort / filter / pagination" [ref=e374]
+                - cell "NN/g" [ref=e375]:
+                  - link "NN/g" [ref=e376] [cursor=pointer]:
+                    - /url: https://www.nngroup.com/articles/data-tables/
+                - cell "✅ (open door)" [ref=e377]
+                - 'cell "Out of v1: static docs tables; columns/rows API designed to accommodate them without breaking changes (future column.sortable + @sort)" [ref=e378]':
+                  - strong [ref=e379]: Out of v1
+                  - text: ": static docs tables;"
+                  - code [ref=e380]: columns
+                  - text: /
+                  - code [ref=e381]: rows
+                  - text: API designed to accommodate them without breaking changes (future
+                  - code [ref=e382]: column.sortable
+                  - text: +
+                  - code [ref=e383]: "@sort"
+                  - text: )
+          - generic [ref=e384]:
+            - img [ref=e386]
+            - generic [ref=e389]:
+              - strong [ref=e390]: Contribute to this project
+              - paragraph [ref=e391]: This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.
+            - link "View on GitHub" [ref=e392] [cursor=pointer]:
+              - /url: https://github.com/gnegreiros-ux/agentica-design-system
+              - generic [ref=e393]: View on GitHub
+    - navigation "Table of contents / Table des matières" [ref=e394]:
+      - generic [ref=e395]: On this page
+      - link "Preview — dividers (default)" [ref=e396] [cursor=pointer]:
+        - /url: "#aper-u-separateurs-defaut"
+      - link "Striped (option)" [ref=e397] [cursor=pointer]:
+        - /url: "#zebrage-option"
+      - link "Absolute rules" [ref=e398] [cursor=pointer]:
+        - /url: "#regles-absolues"
+      - link "Component tokens" [ref=e399] [cursor=pointer]:
+        - /url: "#tokens-de-composant"
+      - link "Accessibility" [ref=e400] [cursor=pointer]:
+        - /url: "#accessibilite"
+      - link "Implementation" [ref=e401] [cursor=pointer]:
+        - /url: "#implementation"
+      - link "DOs and DON'Ts" [ref=e402] [cursor=pointer]:
+        - /url: "#dos-et-don-ts"
+      - link "UX Patterns Reference" [ref=e403] [cursor=pointer]:
+        - /url: "#ux-patterns-reference"
+  - contentinfo [ref=e404]:
+    - generic [ref=e405]:
+      - generic [ref=e406]:
+        - link "Agentica — Accueil" [ref=e407] [cursor=pointer]:
+          - /url: ../index.html
+          - img "Agentica" [ref=e408]
+        - link "Guilherme Negreiros" [ref=e409] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e410]
+          - text: Guilherme Negreiros
+      - generic [ref=e414]:
+        - generic [ref=e415]: Navigation
+        - link "Home" [ref=e416] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Why" [ref=e417] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e418] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Quality" [ref=e419] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "AI" [ref=e420] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e421]:
+        - generic [ref=e422]: Documentation
+        - link "Understand" [ref=e423] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Get started" [ref=e424] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Foundations" [ref=e425] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Components" [ref=e426] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e427] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Decisions" [ref=e428] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuity" [ref=e429] [cursor=pointer]:
+          - /url: ../continuite.html
+      - generic [ref=e430]:
+        - generic [ref=e431]: Explorer
+        - link "Figma library" [ref=e432] [cursor=pointer]:
+          - /url: ../resources.html
+        - link "Storybook" [ref=e433] [cursor=pointer]:
+          - /url: https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/
+        - link "GitHub" [ref=e434] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - link "Audit" [ref=e435] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "Changelog" [ref=e436] [cursor=pointer]:
+          - /url: ../changelog.html
+        - link "AI Brief" [ref=e437] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e438]:
+      - generic [ref=e439]: © 2026 Guilherme Negreiros
+      - generic [ref=e440]: Built with Claude Code.
+  - button "Retour en haut" [ref=e441] [cursor=pointer]:
+    - img [ref=e442]
+    - generic [ref=e444]: Top
+  - status [ref=e445]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | // Visual regressions for every component page (except button.html, already covered)
+  4  | const PAGES = [
+  5  |   'badge', 'banner', 'card', 'checkbox', 'code-block',
+  6  |   'icon', 'input', 'link', 'radio', 'segmented',
+  7  |   'table', 'tabs', 'toggle',
+  8  | ];
+  9  | 
+  10 | for (const name of PAGES) {
+  11 |   test.describe(`${name} — visual regressions`, () => {
+  12 |     for (const theme of ['light', 'dark']) {
+  13 |       test(`page ${name} — ${theme}`, async ({ page }) => {
+  14 |         await page.goto(`/components/${name}.html`);
+  15 |         await page.waitForLoadState('networkidle');
+  16 |         await page.evaluate((t) =>
+  17 |           document.documentElement.setAttribute('data-theme', t), theme
+  18 |         );
+> 19 |         await expect(page).toHaveScreenshot(`${name}-${theme}.png`, { fullPage: true });
+     |                            ^ Error: expect(page).toHaveScreenshot(expected) failed
+  20 |       });
+  21 |     }
+  22 |   });
+  23 | }
+  24 | 
+```
