@@ -25,6 +25,8 @@
     "access": "public"
   },
   "files": [
+    "LICENSE",
+    "NOTICE",
     "agtc-*.js",
     "index.js"
   ],

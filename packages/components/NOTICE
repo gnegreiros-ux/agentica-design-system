@@ -1,0 +1,26 @@
+@agentica-ds/components
+Copyright 2026 Guilherme Negreiros
+
+------------------------------------------------------------------------------
+Third-party components
+------------------------------------------------------------------------------
+
+This package incorporates or depends on the following third-party
+components. Each remains under its own original license; this notice is
+informational only and does not change this package's own license (see
+LICENSE).
+
+1. Lit (https://lit.dev)
+   License: BSD 3-Clause "New" or "Revised" License
+   Copyright (c) 2017 Google LLC
+   Used as: Web Components framework (peer dependency)
+
+2. Lucide (https://lucide.dev)
+   License: ISC License
+   Copyright (c) 2020, Lucide Contributors
+   Used as: icon set consumed by the `agtc-icon` component (dependency)
+
+------------------------------------------------------------------------------
+
+The full license texts for the above components are available at their
+respective project repositories or at https://spdx.org/licenses/.
