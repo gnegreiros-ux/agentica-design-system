@@ -10,7 +10,7 @@ const DIST       = path.join(__dirname, 'dist');
 const TOKENS_DIR = path.join(ROOT, 'tokens');
 const DEC_DIR    = path.join(ROOT, 'decisions');
 
-const { execSync }               = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const { runAudit, MANUAL_CHECKS } = require('./audit-lib');
 
 const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); };
@@ -7606,6 +7606,84 @@ ${commandBlock}
   }));
 }
 
+// ─── SITEMAP LASTMOD (deterministic — no build-clock date) ─────────────────
+// A sitemap <lastmod> stamped with the build's wall-clock date changes on
+// every rebuild, even with zero content changes — which made the
+// site-freshness CI check (rebuilds dist/ and diffs it against the
+// committed copy) fail on any day after dist/ was last committed. Instead,
+// each page's lastmod is the most recent git commit date across the actual
+// source files that feed that page — identical output on every rebuild
+// until one of those sources really changes.
+const gitDateCache = new Map();
+function gitLastCommitISO(relPath) {
+  if (gitDateCache.has(relPath)) return gitDateCache.get(relPath);
+  let iso = null;
+  try {
+    iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', relPath], { cwd: ROOT, encoding: 'utf8' }).trim() || null;
+  } catch { /* not tracked by git yet — no history to derive a date from */ }
+  gitDateCache.set(relPath, iso);
+  return iso;
+}
+
+// Every page must resolve to at least one source (BASE_SITEMAP_SOURCES is
+// never empty) — there is no fallback to new Date() for any page.
+const BASE_SITEMAP_SOURCES = [
+  'site/build.js',
+  'tokens/primitives.json',
+  'tokens/semantic.json',
+  'tokens/semantic.dark.json',
+];
+
+// Component pages whose body includes a "UX Patterns Reference" section
+// injected from guidelines/components/*.md (see uxPatternsFromMd) — that
+// file is a real content source for the page, on top of build.js.
+const COMPONENT_GUIDELINE_SOURCE = {
+  'components/button.html': 'button',
+  'components/input.html': 'input',
+  'components/badge.html': 'badge',
+  'components/card.html': 'card',
+  'components/checkbox.html': 'checkbox',
+  'components/radio.html': 'radio',
+  'components/toggle.html': 'toggle',
+  'components/table.html': 'table',
+  'components/code-block.html': 'code-block',
+  'components/banner.html': 'banner',
+  'components/link.html': 'link',
+  'components/segmented.html': 'segmented',
+  'components/tabs.html': 'tabs',
+};
+
+function sitemapSources(pagePath, adrs) {
+  if (pagePath === 'decisions/index.html') {
+    // Lists every ADR (title, status, date) — changes whenever any ADR does.
+    return [...BASE_SITEMAP_SOURCES, ...adrs.map(a => `decisions/${a.file}`)];
+  }
+  const adrMatch = pagePath.match(/^decisions\/(adr-\d+)\.html$/);
+  if (adrMatch) {
+    const adr = adrs.find(a => a.slug === adrMatch[1]);
+    if (!adr) throw new Error(`sitemap: no ADR data found for page "${pagePath}"`);
+    return [...BASE_SITEMAP_SOURCES, `decisions/${adr.file}`];
+  }
+  if (COMPONENT_GUIDELINE_SOURCE[pagePath]) {
+    return [...BASE_SITEMAP_SOURCES, `guidelines/components/${COMPONENT_GUIDELINE_SOURCE[pagePath]}.md`];
+  }
+  return BASE_SITEMAP_SOURCES;
+}
+
+function pageLastmod(sources) {
+  let maxTs = -Infinity;
+  for (const src of sources) {
+    const iso = gitLastCommitISO(src);
+    if (!iso) continue;
+    const ts = new Date(iso).getTime();
+    if (ts > maxTs) maxTs = ts;
+  }
+  if (maxTs === -Infinity) {
+    throw new Error(`sitemap: no git history for any of [${sources.join(', ')}] — cannot compute lastmod`);
+  }
+  return new Date(maxTs).toISOString().split('T')[0];
+}
+
 // ─── ROBOTS.TXT + SITEMAP.XML ────────────────────────────────────────────────
 function buildRobotsAndSitemap(adrs) {
   // robots.txt
@@ -7621,8 +7699,6 @@ function buildRobotsAndSitemap(adrs) {
   ].join('\n'));
 
   // sitemap.xml — every public page
-  const today = new Date().toISOString().split('T')[0];
-
   // Static pages (frequency + priority)
   const staticPages = [
     ['',                          'weekly',  '1.0'],
@@ -7670,9 +7746,10 @@ function buildRobotsAndSitemap(adrs) {
 
   const allPages = [...staticPages, ...adrPages, ...pipelinePages];
 
-  const urls = allPages.map(([path, freq, prio]) => {
-    const url = path ? `${SITE_URL}/${path}` : SITE_URL;
-    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
+  const urls = allPages.map(([pagePath, freq, prio]) => {
+    const url = pagePath ? `${SITE_URL}/${pagePath}` : SITE_URL;
+    const lastmod = pageLastmod(sitemapSources(pagePath, adrs));
+    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
   }).join('\n');
 
   write(path.join(DIST, 'sitemap.xml'), [
