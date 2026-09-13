@@ -32,6 +32,8 @@
     "tool-parity": "node scripts/check-tool-parity.js",
     "tokens-audit": "node scripts/audit-tokens.js",
     "commit-lint": "node scripts/check-commit-messages.js",
+    "sync:governance": "node scripts/sync-governance.mjs",
+    "check:governance-sync": "node scripts/check-governance-sync.mjs",
     "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run tokens-audit -- --ci && npm run axe:all"
   },
   "peerDependencies": {
