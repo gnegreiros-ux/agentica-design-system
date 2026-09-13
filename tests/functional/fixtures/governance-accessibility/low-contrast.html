@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>C2-02 fixture — insufficient color contrast</title>
+  <style>
+    /* Deliberate violation: WCAG 1.4.3 requires a 4.5:1 contrast ratio for
+       normal text. "silver" text on a "white" background is roughly
+       1.8:1 — the one thing this fixture exists to violate.
+       CSS named colors on purpose, not hex/rgb/hsl: this fixture lives
+       under tests/, which scripts/audit-tokens.js's unscoped scan (the
+       real tokens-audit CI check) also walks — a literal hex/rgb/hsl value
+       here would trip that unrelated check on every PR. Named colors are
+       outside its DRIFT_PATTERNS entirely, so this fixture never fights
+       with a check it isn't testing. */
+    body { background: white; padding: 2rem; }
+    .low-contrast { color: silver; background: white; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>C2-02 — Rule 1 violation: contrast below 4.5:1</h1>
+    <p class="low-contrast">This paragraph fails the minimum contrast ratio on purpose.</p>
+  </main>
+</body>
+</html>

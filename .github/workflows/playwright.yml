@@ -21,6 +21,21 @@ on:
         description: >
           Regenerate the reference snapshots.
           HUMAN APPROVAL REQUIRED — never enable automatically (ADR-066, ADR-004).
+  # PR gate for the decoupling v0.4.0 test suite (tests/governance/ + the two
+  # accessibility specs) only — deliberately NOT the full visual/functional
+  # matrix below, which stays push-to-main-only (ADR-076 rejected making
+  # that 3x-per-PR-iteration cost a blocking gate). Scoped by path so an
+  # unrelated PR never runs it. Not a required status check in branch
+  # protection — that decision is out of scope for this lot.
+  pull_request:
+    paths:
+      - 'tests/governance/**'
+      - 'tests/functional/accessibility.spec.js'
+      - 'tests/functional/governance-accessibility.spec.js'
+      - 'clone/**'
+      - 'GOVERNANCE.md'
+      - 'scripts/audit-tokens.js'
+      - 'scripts/check-governance-sync.mjs'
 
 permissions:
   contents: write
@@ -28,6 +43,9 @@ permissions:
 jobs:
   playwright:
     name: Playwright (${{ matrix.browser }})
+    # Full matrix stays push-to-main-only — see the pull_request trigger's
+    # comment above. Never runs for the PR-gate event.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     # Microsoft Docker image — deterministic diffs between Linux CI and local macOS.
@@ -98,7 +116,7 @@ jobs:
   publish-report:
     name: Publish report → designsystem.gnegreiros.com/playwright-report/
     needs: playwright
-    if: always()
+    if: always() && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -141,3 +159,47 @@ jobs:
           echo "  The report will be available in ~30 seconds"
           echo "  (GitHub Pages propagation delay)."
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+  governance-checks:
+    name: Governance & accessibility fixtures (PR gate)
+    # Only for the pull_request event — see that trigger's comment above.
+    # Deliberately its own job rather than folded into the `playwright`
+    # matrix: runs only the decoupling v0.4.0 suite (tests/governance/ +
+    # the two accessibility specs), on chromium only, not the full
+    # visual/functional/3-browser matrix.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build tokens
+        run: npm run tokens
+
+      - name: Build site
+        run: node site/build.js
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run governance and governance-accessibility tests
+        run: npx playwright test tests/governance tests/functional/accessibility.spec.js tests/functional/governance-accessibility.spec.js --project=chromium --reporter=list
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-checks-report
+          path: playwright-report/
+          retention-days: 7
