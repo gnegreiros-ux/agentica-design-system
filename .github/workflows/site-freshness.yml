@@ -23,6 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Full history: site/build.js derives each sitemap.xml page's
+          # <lastmod> from `git log -- <source file>`, which needs the real
+          # commit history, not the default shallow (depth-1) checkout.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v5
         with:
