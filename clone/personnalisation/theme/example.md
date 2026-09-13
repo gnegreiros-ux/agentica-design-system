@@ -35,7 +35,7 @@ If a real team need isn't covered by any core semantic token, declare a new one 
     },
     "feedback": {
       "success": { "value": "{color.brand.primary}" },
-      "error": { "value": "#C62828" },
+      "error": { "value": "{color.brand.error}" },
       "warning": { "value": "{color.brand.accent}" },
       "info": { "value": "{color.brand.secondary}" }
     }

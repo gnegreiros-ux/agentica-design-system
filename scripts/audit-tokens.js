@@ -394,7 +394,19 @@ function main() {
     'scripts/figma/',
     'docs/',
   ];
-  const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS];
+  // clone/personnalisation/branding/ is the Clone's primitive-token
+  // authoring layer (see clone/personnalisation/GUIDE.md) — a raw hex/rgb/hsl
+  // value there is correct by design, the same way tokens/primitives.json is
+  // (that file is never scanned here at all, since .json isn't in
+  // SOURCE_EXTENSIONS). This is a different reason than DOCS_AND_PLUGIN_PATHS
+  // above (that's narrative citation of a value; this is the primitive layer
+  // itself) — kept as its own list so the two don't get conflated. theme/ and
+  // core/ deliberately stay in scope: a semantic token must only ever
+  // reference a primitive (Rule 4 of GOVERNANCE.md), never a raw value.
+  const PRIMITIVE_LAYER_PATHS = [
+    'clone/personnalisation/branding/',
+  ];
+  const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS, ...PRIMITIVE_LAYER_PATHS];
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f =>

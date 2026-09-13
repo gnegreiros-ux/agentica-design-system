@@ -24,7 +24,8 @@ Font choice is not purely aesthetic — weigh legibility (e.g. typefaces designe
     "brand": {
       "primary": { "value": "#2E7D32" },
       "accent": { "value": "#F9A825" },
-      "secondary": { "value": "#37474F" }
+      "secondary": { "value": "#37474F" },
+      "error": { "value": "#C62828" }
     }
   },
   "typography": {
