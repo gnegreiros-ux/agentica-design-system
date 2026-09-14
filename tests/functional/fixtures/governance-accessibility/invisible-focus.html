@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>C2-03 fixture — no visible focus indicator</title>
+  <style>
+    body { padding: 2rem; }
+    /* Deliberate violation: WCAG 2.4.7 requires a visible focus indicator
+       on every interactive element. Removing the outline with nothing to
+       replace it is the one thing this fixture exists to violate. Not
+       detectable by axe-core's static analysis — see
+       tests/functional/governance-accessibility.spec.js for why, and for
+       the real keyboard-interaction check that proves this violation
+       instead. */
+    button:focus { outline: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>C2-03 — Rule 1 violation: focus indicator not visible</h1>
+    <button type="button">Focus me with Tab</button>
+  </main>
+</body>
+</html>
