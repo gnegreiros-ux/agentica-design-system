@@ -5,7 +5,7 @@ description: Pre-commit orchestrator for the Agentica repository — runs every 
 
 # Skill: quality-gate
 
-> Cross-tool port of `.claude/skills/quality-gate.md` (Claude Code's native
+> Cross-tool port of `.claude/skills/quality-gate/SKILL.md` (Claude Code's native
 > implementation) — see `governance/ai-skills-reference.md` for the full picture of
 > what Agentica's skills automate, including which of these pipelines are now
 > tool-agnostic CI gates rather than something this skill needs to run itself. This

@@ -4,7 +4,7 @@
 > **Type:** guideline
 > **Logical path:** guidelines/components/overview.md
 > **Read before:** AGENTS.md, DESIGN.md
-> **Relations:** guidelines/components/button.md, .claude/skills/ai-ds-composer.md
+> **Relations:** guidelines/components/button.md, .claude/skills/ai-ds-composer/SKILL.md
 
 Every component is a contract.
 

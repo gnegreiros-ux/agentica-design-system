@@ -1,8 +1,13 @@
+---
+name: post-change-pipeline
+description: Mandatory impact analysis before any commit to the Agentica repository — identifies which files changed, what downstream updates that requires (site rebuild, ADR, CSS token regeneration), presents the impact as a report, and waits for explicit human approval before executing anything. Use before every commit, however small.
+---
+
 # Skill: post-change-pipeline
 
 > Mandatory pipeline before any commit — analyzes the impact of changes and submits a report for human approval.
 > **Type:** skill
-> **Logical path:** .claude/skills/post-change-pipeline.md
+> **Logical path:** .claude/skills/post-change-pipeline/SKILL.md
 > **Read before:** AGENTS.md, governance/rules/git-workflow.md, governance/rules/tokens-system.md
 > **Relations:** site/build.js, tokens/, decisions/, decisions/ADR-069-migration-suivi-projet-github-projects.md
 

@@ -34,7 +34,7 @@ in Agentica, and AGENTS.md for how this fits the wider governance model.
 > **Tool config detected at:** `<path>`
 > **Type:** attestation
 > **Logical path:** governance/tool-parity/<slug>.md
-> **Relations:** governance/ai-skills-reference.md, AGENTS.md, .claude/skills/quality-gate.md
+> **Relations:** governance/ai-skills-reference.md, AGENTS.md, .claude/skills/quality-gate/SKILL.md
 
 | Control | Reference (Claude Code) | Decision | Confirmed by | Date |
 |---|---|---|---|---|

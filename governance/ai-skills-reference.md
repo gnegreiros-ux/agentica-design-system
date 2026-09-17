@@ -50,12 +50,12 @@ port yet knows what behavior to reproduce with whatever mechanism their tool off
 
 | Skill | Claude Code file | Codex / Copilot port | Trigger |
 |-------|-------------------|------------------------|---------|
-| ai-component-metadata | `.claude/skills/ai-component-metadata.md` | `.agents/skills/ai-component-metadata/SKILL.md` | Verifying a component is "agent-ready" |
-| ai-ds-composer | `.claude/skills/ai-ds-composer.md` | `.agents/skills/ai-ds-composer/SKILL.md` | Composing an interface from a natural-language request |
-| codebase-index | `.claude/skills/codebase-index.md` | `.agents/skills/codebase-index/SKILL.md` | Needing an up-to-date map of the system's components/tokens/dependencies |
-| post-change-pipeline | `.claude/skills/post-change-pipeline.md` | `.agents/skills/post-change-pipeline/SKILL.md` | After every modification, before every commit — mandatory, no exceptions |
-| quality-gate | `.claude/skills/quality-gate.md` | `.agents/skills/quality-gate/SKILL.md` | Pre-commit — orchestrates every active pipeline below |
-| ux-pattern-review | `.claude/skills/ux-pattern-review.md` | `.agents/skills/ux-pattern-review/SKILL.md` | Before publishing a new component, or a UX-relevant change to an existing one |
+| ai-component-metadata | `.claude/skills/ai-component-metadata/SKILL.md` | `.agents/skills/ai-component-metadata/SKILL.md` | Verifying a component is "agent-ready" |
+| ai-ds-composer | `.claude/skills/ai-ds-composer/SKILL.md` | `.agents/skills/ai-ds-composer/SKILL.md` | Composing an interface from a natural-language request |
+| codebase-index | `.claude/skills/codebase-index/SKILL.md` | `.agents/skills/codebase-index/SKILL.md` | Needing an up-to-date map of the system's components/tokens/dependencies |
+| post-change-pipeline | `.claude/skills/post-change-pipeline/SKILL.md` | `.agents/skills/post-change-pipeline/SKILL.md` | After every modification, before every commit — mandatory, no exceptions |
+| quality-gate | `.claude/skills/quality-gate/SKILL.md` | `.agents/skills/quality-gate/SKILL.md` | Pre-commit — orchestrates every active pipeline below |
+| ux-pattern-review | `.claude/skills/ux-pattern-review/SKILL.md` | `.agents/skills/ux-pattern-review/SKILL.md` | Before publishing a new component, or a UX-relevant change to an existing one |
 | document (`/document`) | `.claude/skills/document/SKILL.md` | `.agents/skills/document/SKILL.md` | Invoked manually at the end of a work session |
 
 ### ai-component-metadata

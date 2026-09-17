@@ -5,7 +5,7 @@ description: Assemble Agentica interface patterns from a natural-language reques
 
 # Skill: ai-ds-composer
 
-> Cross-tool port of `.claude/skills/ai-ds-composer.md` (Claude Code's native
+> Cross-tool port of `.claude/skills/ai-ds-composer/SKILL.md` (Claude Code's native
 > implementation) — see `governance/ai-skills-reference.md` for the full picture of
 > what Agentica's skills automate. This file follows the open Agent Skills format
 > (agentskills.io) so Codex CLI and GitHub Copilot CLI load it automatically from

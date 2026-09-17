@@ -1,9 +1,14 @@
+---
+name: ai-ds-composer
+description: Assemble Agentica interface patterns from a natural-language request, guaranteeing the result respects the system's component rules, tokens, and contracts — never inventing a component, a variant, or a token. Use when asked to compose, assemble, or build a UI/interface/screen from a description using Agentica components.
+---
+
 # Skill: ai-ds-composer
 
 > Reusable capability: assemble interface patterns from natural language.
 > This skill translates a request into a valid assembly of system components.
 > **Type:** skill
-> **Logical path:** .claude/skills/ai-ds-composer.md
+> **Logical path:** .claude/skills/ai-ds-composer/SKILL.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** guidelines/components/overview.md, governance/rules/components/, tokens/component.json
 

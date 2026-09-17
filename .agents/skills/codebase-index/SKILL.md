@@ -5,7 +5,7 @@ description: Maintain an up-to-date map of Agentica's design system — which co
 
 # Skill: codebase-index
 
-> Cross-tool port of `.claude/skills/codebase-index.md` (Claude Code's native
+> Cross-tool port of `.claude/skills/codebase-index/SKILL.md` (Claude Code's native
 > implementation) — see `governance/ai-skills-reference.md` for the full picture of
 > what Agentica's skills automate. This file follows the open Agent Skills format
 > (agentskills.io) so Codex CLI and GitHub Copilot CLI load it automatically from

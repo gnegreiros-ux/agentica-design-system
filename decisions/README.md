@@ -159,6 +159,7 @@ decisions that were already settled.
 | [ADR-094](ADR-094-control-min-max-width.md) | Min/max-width for `agtc-input`'s single-line control, reserved ceiling for a future textarea | 2026-09-09 | ✅ Active |
 | [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) | Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license (supersedes ADR-081) | 2026-09-11 | ✅ Active |
 | [ADR-096](ADR-096-semantic-layout-container-tokens.md) | New `semantic.layout.container` category: 5 page-container max-width tokens, surfaced by an AI-interoperability test | 2026-09-11 | ✅ Active |
+| [ADR-097](ADR-097-invocable-skill-directory-convention.md) | Invocable skills live at `.claude/skills/<name>/SKILL.md` (frontmatter + citation block) | 2026-09-17 | ✅ Active |
 
 ---
 
@@ -181,3 +182,18 @@ decisions that were already settled.
 - An ADR is immutable once `active` — any modification = a new ADR
 - Agents read this folder to understand the *why*, not just the *what*
 - Every major TCR (Token Change Request) must reference or create an ADR
+
+### Stale paths inside an ADR body are expected, not a defect
+
+An ADR's `Context`/`Decision`/`Consequences` prose and its `Relations:` line
+describe repo state *at the time the decision was made*. When a referenced file is
+later renamed or moved for purely mechanical reasons — see
+`decisions/CHANGELOG-structure.md`, which logs exactly this kind of move — the ADR
+body is **not** edited to follow it, and its `Status:` does not change either: the
+decision the ADR records is still fully in force, only the path is stale. Rewriting
+the body would erase what the decision-maker actually saw at the time.
+`Status: Superseded by ADR-NNN` is reserved for a genuinely new decision that
+replaces the old one — see [ADR-081](ADR-081-figma-community-file-license.md),
+superseded by ADR-095, for a real example — never for a file that simply moved. A
+stale path inside an ADR's body is a normal, permanent feature of that ADR, not
+something to "fix" on sight.

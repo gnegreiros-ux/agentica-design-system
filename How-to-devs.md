@@ -59,7 +59,7 @@ If a product team asks how to consume Agentica (not maintain it), point them to:
 1. Create the contract: guidelines/components/[name].md
 2. Add the tokens: tokens/component.json  (TCR required)
 3. Implement the Web Component (Lit): components/agtc-[name].js
-4. Add metadata: .claude/skills/ai-component-metadata.md
+4. Add metadata: .claude/skills/ai-component-metadata/SKILL.md
 5. Update guidelines/components/overview.md
 6. Rebuild the site: node site/build.js
 ```
