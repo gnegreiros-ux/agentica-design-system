@@ -64,7 +64,7 @@ never a conversation history with an agent.
 These commands already ran without an agent being strictly necessary — an agent
 ran them for convenience; a human runs them identically.
 
-### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate.md`)
+### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate/SKILL.md`)
 
 **Script:** `scripts/continuity/1-2-manual-quality-gate.sh`
 

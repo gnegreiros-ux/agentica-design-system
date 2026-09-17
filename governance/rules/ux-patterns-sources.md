@@ -12,7 +12,7 @@ paths:
 > **Type:** rule
 > **Logical path:** governance/rules/ux-patterns-sources.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
-> **Relations:** .claude/skills/ux-pattern-review.md, .claude/skills/pipelines/ux-patterns.md, decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/
+> **Relations:** .claude/skills/ux-pattern-review/SKILL.md, .claude/skills/pipelines/ux-patterns.md, decisions/ADR-036-ux-pattern-review-pre-composant.md, guidelines/components/
 
 ---
 

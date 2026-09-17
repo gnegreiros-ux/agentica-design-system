@@ -5,7 +5,7 @@ description: Before publishing a new or UX-relevant-modified Agentica component,
 
 # Skill: ux-pattern-review
 
-> Cross-tool port of `.claude/skills/ux-pattern-review.md` (Claude Code's native
+> Cross-tool port of `.claude/skills/ux-pattern-review/SKILL.md` (Claude Code's native
 > implementation) — see `governance/ai-skills-reference.md` for the full picture of
 > what Agentica's skills automate. This file follows the open Agent Skills format
 > (agentskills.io) so Codex CLI and GitHub Copilot CLI load it automatically from

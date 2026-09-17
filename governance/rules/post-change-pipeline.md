@@ -4,7 +4,7 @@
 > **Type:** rule
 > **Logical path:** governance/rules/post-change-pipeline.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
-> **Relations:** .claude/skills/quality-gate.md, .claude/skills/pipelines/, governance/rules/git-workflow.md, decisions/ADR-029-quality-gate-pre-commit.md
+> **Relations:** .claude/skills/quality-gate/SKILL.md, .claude/skills/pipelines/, governance/rules/git-workflow.md, decisions/ADR-029-quality-gate-pre-commit.md
 
 ---
 
@@ -19,7 +19,7 @@ It cannot be skipped, shortened, or deferred.
 
 ## Execution reference
 
-See `.claude/skills/quality-gate.md` — orchestrator for all pipelines.
+See `.claude/skills/quality-gate/SKILL.md` — orchestrator for all pipelines.
 
 Active (blocking) pipelines:
 

@@ -64,9 +64,9 @@ agentica-design-system/
 │
 ├── .claude/
 │   └── skills/                        ← Claude Code-native implementation (source of truth)
-│       ├── ai-component-metadata.md
-│       ├── ai-ds-composer.md
-│       └── codebase-index.md
+│       ├── ai-component-metadata/SKILL.md
+│       ├── ai-ds-composer/SKILL.md
+│       └── codebase-index/SKILL.md
 │
 ├── .agents/
 │   └── skills/                        ← open Agent Skills format — Codex CLI + GitHub Copilot
