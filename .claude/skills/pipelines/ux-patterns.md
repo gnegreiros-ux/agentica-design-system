@@ -12,7 +12,7 @@
 > No component is published without the **reference UX patterns** having been presented
 > to the human (with links) and their decision **documented everywhere**.
 
-Execution reference: `.claude/skills/ux-pattern-review.md`
+Execution reference: `.claude/skills/ux-pattern-review/SKILL.md`
 Sources and checklist: `governance/rules/ux-patterns-sources.md`
 
 ---

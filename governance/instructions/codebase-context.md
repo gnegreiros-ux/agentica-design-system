@@ -41,7 +41,7 @@ If in doubt: **escalate to a human. Do not improvise.**
 ## Audit methodology
 
 ### Token audit
-1. Read `.claude/skills/ai-component-metadata.md`
+1. Read `.claude/skills/ai-component-metadata/SKILL.md`
 2. Scan all code files for hardcoded values
 3. Scan for deprecated tokens
 4. Generate a structured report (list by file, by type of drift)

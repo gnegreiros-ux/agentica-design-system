@@ -1,9 +1,14 @@
+---
+name: ux-pattern-review
+description: Before publishing a new or UX-relevant-modified Agentica component, look up the reference UX patterns from the 5 source-of-truth references, present them to the human with direct links for approval, then document the decision across 6 surfaces (guideline, code, story, site, ADR, GitHub Projects). Use when creating a new component or making a UX-relevant change (new variant/state, validation logic, error/help display, interaction) to an existing one.
+---
+
 # Skill: ux-pattern-review
 
 > Reusable capability: present the reference UX patterns for a component,
 > gather human approval, then document the decision on 6 surfaces.
 > **Type:** skill
-> **Logical path:** .claude/skills/ux-pattern-review.md
+> **Logical path:** .claude/skills/ux-pattern-review/SKILL.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/ux-patterns-sources.md
 > **Relations:** governance/rules/ux-patterns-sources.md, .claude/skills/pipelines/ux-patterns.md, guidelines/components/, decisions/ADR-036-ux-pattern-review-pre-composant.md
 

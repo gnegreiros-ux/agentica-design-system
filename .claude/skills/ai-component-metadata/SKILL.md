@@ -1,11 +1,16 @@
+---
+name: ai-component-metadata
+description: Audit and enrich Agentica component metadata to verify a component is "agent-ready" — has the structured intent, variants, rules, accessibility, behavior, dependencies, anti-patterns, owner, approval level, and version an agent needs to analyze, validate, and use it correctly. Use when asked to audit component metadata, check if a component is agent-ready, or score component completeness.
+---
+
 # Skill: ai-component-metadata
 
 > Reusable capability: audit and enrich component metadata.
 > Use this skill to verify that a component is "agent-ready".
 > **Type:** skill
-> **Logical path:** .claude/skills/ai-component-metadata.md
+> **Logical path:** .claude/skills/ai-component-metadata/SKILL.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
-> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/codebase-index.md
+> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/codebase-index/SKILL.md
 
 ---
 

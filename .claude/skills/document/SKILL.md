@@ -12,7 +12,7 @@ description: Post-work documentation orchestrator for this repository. Given wha
 > **Type:** skill
 > **Logical path:** .claude/skills/document/SKILL.md
 > **Read before:** AGENTS.md, governance/rules/post-change-pipeline.md
-> **Relations:** .claude/skills/pipelines/docs.md, .claude/skills/quality-gate.md, governance/rules/git-workflow.md
+> **Relations:** .claude/skills/pipelines/docs.md, .claude/skills/quality-gate/SKILL.md, governance/rules/git-workflow.md
 
 ---
 

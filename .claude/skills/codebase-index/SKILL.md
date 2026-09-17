@@ -1,11 +1,16 @@
+---
+name: codebase-index
+description: Maintain an up-to-date map of Agentica's design system — which components exist, their token dependencies, and where drift is occurring (orphaned/phantom tokens, components without a contract). Use when asked to index the design system, map component dependencies, or check for token drift.
+---
+
 # Skill: codebase-index
 
 > Reusable capability: index and map the design system.
 > Enables knowing the system's complete state at any time.
 > **Type:** skill
-> **Logical path:** .claude/skills/codebase-index.md
+> **Logical path:** .claude/skills/codebase-index/SKILL.md
 > **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
-> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/ai-component-metadata.md
+> **Relations:** guidelines/components/, tokens/component.json, .claude/skills/ai-component-metadata/SKILL.md
 
 ---
 

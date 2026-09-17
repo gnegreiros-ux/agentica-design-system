@@ -23,7 +23,7 @@ work.
 > **Tool config detected at:** `.gemini/settings.json`
 > **Type:** attestation
 > **Logical path:** governance/tool-parity/gemini.md
-> **Relations:** governance/ai-skills-reference.md, AGENTS.md, .claude/skills/quality-gate.md,
+> **Relations:** governance/ai-skills-reference.md, AGENTS.md, .claude/skills/quality-gate/SKILL.md,
 > .gemini/settings.json, .gemini/hooks/adr-reminder.js, .gemini/hooks/ux-pattern-reminder.js
 
 | Control | Reference (Claude Code) | Decision | Confirmed by | Date |

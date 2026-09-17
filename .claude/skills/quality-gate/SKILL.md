@@ -1,8 +1,13 @@
+---
+name: quality-gate
+description: Pre-commit orchestrator for the Agentica repository — runs every active quality pipeline (tokens, WCAG, UX patterns, ADR compliance, docs, site rebuild, commit format) in order, generates one impact report, and waits for explicit human approval before any commit. Use before every commit, however small — this is the full gate; the lighter post-change-pipeline skill covers only impact analysis.
+---
+
 # Skill: quality-gate
 
 > Pre-commit orchestrator. Runs all active pipelines in order, generates an impact report, waits for human approval before any commit.
 > **Type:** skill
-> **Logical path:** .claude/skills/quality-gate.md
+> **Logical path:** .claude/skills/quality-gate/SKILL.md
 > **Read before:** AGENTS.md, governance/rules/post-change-pipeline.md
 > **Relations:** .claude/skills/pipelines/, decisions/ADR-029-quality-gate-pre-commit.md
 
@@ -28,21 +33,21 @@ Run this quality gate **after every modification**, regardless of size:
 
 | Pipeline | File | Status | Mandatory |
 |----------|---------|--------|-------------|
-| Token consistency | `pipelines/tokens-audit.md` | ✅ Active | Yes |
-| Language (English-only) | `pipelines/language-audit.md` | ✅ Active | Yes |
-| WCAG 2.2 | `pipelines/wcag.md` | ✅ Active | Yes |
-| UX pattern review | `pipelines/ux-patterns.md` | ✅ Active | Yes (new component + relevant UX change) |
-| Rule / ADR compliance | `pipelines/adr-conformity.md` | ✅ Active | Yes |
-| Missing ADRs | `pipelines/adr-triggers.md` | ✅ Active | Yes |
-| Documentation | `pipelines/docs.md` | ✅ Active | Yes |
-| Site rebuild | `pipelines/site.md` | ✅ Active | Yes |
-| Commit | `pipelines/commit.md` | ✅ Active | Yes |
-| Style Dictionary | `pipelines/style-dictionary.md` | 🔜 Planned | Once active |
-| Storybook | `pipelines/storybook.md` | 🔜 Planned | Once active |
-| Chromatic | `pipelines/chromatic.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`) |
-| axe-core | `pipelines/axe-core.md` | 🔜 Planned | Once active |
-| Playwright | `pipelines/playwright.md` | 🔜 Planned | Once active |
-| Backlog reconciliation | `pipelines/backlog.md` | ✅ Active | Yes — at PR completion, not per-commit |
+| Token consistency | `../pipelines/tokens-audit.md` | ✅ Active | Yes |
+| Language (English-only) | `../pipelines/language-audit.md` | ✅ Active | Yes |
+| WCAG 2.2 | `../pipelines/wcag.md` | ✅ Active | Yes |
+| UX pattern review | `../pipelines/ux-patterns.md` | ✅ Active | Yes (new component + relevant UX change) |
+| Rule / ADR compliance | `../pipelines/adr-conformity.md` | ✅ Active | Yes |
+| Missing ADRs | `../pipelines/adr-triggers.md` | ✅ Active | Yes |
+| Documentation | `../pipelines/docs.md` | ✅ Active | Yes |
+| Site rebuild | `../pipelines/site.md` | ✅ Active | Yes |
+| Commit | `../pipelines/commit.md` | ✅ Active | Yes |
+| Style Dictionary | `../pipelines/style-dictionary.md` | 🔜 Planned | Once active |
+| Storybook | `../pipelines/storybook.md` | 🔜 Planned | Once active |
+| Chromatic | `../pipelines/chromatic.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`) |
+| axe-core | `../pipelines/axe-core.md` | 🔜 Planned | Once active |
+| Playwright | `../pipelines/playwright.md` | 🔜 Planned | Once active |
+| Backlog reconciliation | `../pipelines/backlog.md` | ✅ Active | Yes — at PR completion, not per-commit |
 
 ---
 
@@ -110,7 +115,7 @@ Run this quality gate **after every modification**, regardless of size:
 - [ ] A single coherent commit
 - [ ] No /Users/... path in committed files
 
-### 8. Backlog reconciliation (at PR completion only — see `pipelines/backlog.md`)
+### 8. Backlog reconciliation (at PR completion only — see `../pipelines/backlog.md`)
 - [ ] Related GitHub Projects tickets read back and their `Status` matches what
       the PR's full diff actually shipped
 - [ ] `Dépendance` text on any touched ticket still makes sense (no "Bloque" a <!-- lang-audit-ignore: verbatim GitHub Projects field/status names -->
@@ -126,7 +131,7 @@ Run this quality gate **after every modification**, regardless of size:
 
 ## Adding a new pipeline
 
-1. Create `.claude/skills/pipelines/[name].md` with the standard format (see `pipelines/style-dictionary.md` as a stub example)
+1. Create `.claude/skills/pipelines/[name].md` with the standard format (see `../pipelines/style-dictionary.md` as a stub example)
 2. Add a line to the "Available pipelines" table above
 3. Set the status to `✅ Active` once the pipeline is operational
 4. Create an ADR if the pipeline represents a significant architectural decision
