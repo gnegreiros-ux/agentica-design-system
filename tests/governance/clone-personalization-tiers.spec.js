@@ -22,7 +22,7 @@
 // test — assert the personalization is visible in the actual build output.
 
 import { test, expect } from '@playwright/test';
-import { cpSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -56,11 +56,33 @@ function realPersonalizationTiers() {
     .map((entry) => entry.name);
 }
 
+function realCoreDirectories() {
+  return readdirSync(join(CLONE_DIR, 'core'), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+}
+
 test.describe('C3-01 — legitimate personalization at every real tier', () => {
   const tiers = realPersonalizationTiers();
 
   test('the Clone exposes at least one personalization tier to test', () => {
     expect(tiers.length).toBeGreaterThan(0);
+  });
+
+  test('every personalization tier documents itself with an example.md', () => {
+    for (const tier of tiers) {
+      const examplePath = join(CLONE_DIR, 'personnalisation', tier, 'example.md');
+      expect(existsSync(examplePath), `personnalisation/${tier}/ is missing its example.md`).toBe(true);
+    }
+  });
+
+  test('no personalization tier name collides with a directory under core/', () => {
+    const coreDirs = realCoreDirectories();
+    for (const tier of tiers) {
+      expect(coreDirs, `personnalisation/${tier}/ collides with a directory of the same name under core/`).not.toContain(
+        tier
+      );
+    }
   });
 
   for (const tier of tiers) {
@@ -76,11 +98,13 @@ test.describe('C3-01 — legitimate personalization at every real tier', () => {
         const targetFile = join(tmpClone, 'personnalisation', tier, 'test-personalization.md');
         writeFileSync(targetFile, `# Test personalization — ${tier}\n\n${marker}\n`);
 
-        // The build must not require any change under core/ to accept this.
+        execFileSync('npm', ['run', 'build'], { cwd: tmpClone, stdio: 'pipe' });
+
+        // Snapshotted after the build runs, not just after the manual write above —
+        // this must catch the build itself touching core/, not only prove that
+        // writing to personnalisation/ alone didn't (which is true by construction).
         const coreAfter = snapshotDirectory(join(tmpClone, 'core'));
         expect(coreAfter, `Personalizing ${tier}/ must never require a change under core/`).toEqual(coreBefore);
-
-        execFileSync('npm', ['run', 'build'], { cwd: tmpClone, stdio: 'pipe' });
 
         expect(readFileSync(targetFile, 'utf8')).toContain(marker);
       } finally {

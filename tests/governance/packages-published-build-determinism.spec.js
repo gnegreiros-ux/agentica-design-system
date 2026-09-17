@@ -80,6 +80,24 @@
 // (afterAll, unconditionally) so this test leaves the tracked tree exactly
 // as it found it, pass or fail — CI runs on an ephemeral checkout, so this
 // only matters for a local run, but the isolation rule applies here too.
+//
+// ISOLATION, READ CAREFULLY — this file imports mkdtempSync, but that does
+// NOT mean every test below runs in a sandbox. Only the last test (R3/R4
+// parity) does: it builds a stories-free copy of components/ inside an
+// mkdtempSync tmp dir. The other three (determinism-across-two-builds,
+// components verbatim copy, tokens verbatim copy) call rebuildPackages(),
+// which writes straight into this repo's real, shared packages/tokens/,
+// packages/components/, and (transitively) dist/tokens/ — there is no
+// per-test tmp dir for those, on purpose (see the paragraph above: no cheap
+// way to sandbox style-dictionary's own root-relative config). This is an
+// accepted trade-off, not an oversight: `test.describe.configure({ mode:
+// 'serial' })` below prevents these tests from interleaving with each
+// other, and the dist/tokens/ backup/restore above keeps the tracked tree
+// clean regardless. It does mean this file must never gain a sibling test —
+// here or added later to tests/governance/ — that reads or writes
+// packages/tokens/, packages/components/, or dist/tokens/ without also
+// being serialized against this one; Playwright's fullyParallel default
+// would then let it run concurrently and observe a mid-rebuild state.
 
 import { test, expect } from '@playwright/test';
 import { cpSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
