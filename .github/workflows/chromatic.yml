@@ -4,12 +4,12 @@ name: Chromatic — Visual regression
 # The token lives in the CHROMATIC_PROJECT_TOKEN GitHub secret — never in plaintext in the repo.
 
 on:
-  # Périmètre volontairement étroit : le compte Chromatic gratuit a une
-  # limite de snapshots déjà atteinte (même raison que la désactivation
-  # du 2026-07-02). Chromatic n'est donc pas une vérification continue
-  # sur ce projet, mais un outil ponctuel — déclenché seulement quand un
-  # changement visuel est plausible. `push` est volontairement absent
-  # pour ne pas reconsommer ce quota à chaque commit.
+  # Scope intentionally narrow: the free Chromatic account has already
+  # hit its snapshot limit (same reason it was disabled on 2026-07-02).
+  # Chromatic is therefore not a continuous check on this project, but a
+  # point-in-time tool — triggered only when a visual change is plausible.
+  # `push` is intentionally absent so it doesn't re-consume this quota on
+  # every commit.
   pull_request:
     paths:
       - 'components/**'
