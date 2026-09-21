@@ -47,6 +47,11 @@ const readJson = (fp) => { try { return JSON.parse(fs.readFileSync(fp, 'utf8'));
 function esc(t) {
   return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+// Plain-text contexts (<title>, og:title, twitter:title) cannot render code spans:
+// drop only the backticks and keep their content verbatim (it may hold * _ < >).
+function stripCodeSpans(t) {
+  return String(t).replace(/`([^`]+)`/g, '$1');
+}
 function inl(t) {
   return t
     .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
@@ -3233,7 +3238,7 @@ const FIGMA_COMMUNITY_URL = 'https://www.figma.com/community/file/16798948760036
 const FIGMA_LUCIDE_COMMUNITY_URL = 'https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
-  const docTitle = esc(pageTitle || `${title} — Agentica`);
+  const docTitle = esc(stripCodeSpans(pageTitle || `${title} — Agentica`));
   const base = depth > 0 ? '../' : '';
   // GET STARTED = CTA (cta:true) — primary adoption action (ADR-060).
   // Items defined here, passed to the agtc-top-nav component via an inline script.
