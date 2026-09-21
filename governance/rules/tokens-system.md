@@ -60,7 +60,7 @@ Primitive tokens   →   Semantic tokens   →   Component tokens
 ```
 ❌ FORBIDDEN: color: #3B82F6                 → use var(--ds-color-action-primary)
 ❌ FORBIDDEN: padding: 16px                  → use var(--ds-space-control-padding-x)
-❌ FORBIDDEN: primitive token in a component → go through the semantic token
+❌ FORBIDDEN: primitive token in a component → go through the semantic token (blocking in CI: audit-tokens.js --ci, ADR-098)
 ❌ FORBIDDEN: modifying a component token without human approval
 ```
 

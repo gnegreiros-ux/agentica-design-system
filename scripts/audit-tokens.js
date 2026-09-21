@@ -8,7 +8,7 @@
  *   1. Orphaned tokens  — defined in component.json but never used in code
  *   2. Phantom tokens   — used in code but not defined in semantic.json
  *   3. Hardcoded values — arbitrary hex, rgb, px in code (AI drift vectors)
- *   4. Direct references to primitives in components
+ *   4. Direct references to primitives in components (blocking in --ci, ADR-098)
  *
  * Usage:
  *   node scripts/audit-tokens.js
@@ -55,7 +55,7 @@ const DRIFT_PATTERNS = [
   { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Hardcoded hsl() value' },
   { name: 'tailwind-arbitrary', regex: /(?:p|m|text|bg|border)-\[[\d.]+(?:px|rem|em)[^\]]*\]/g, severity: 'error', message: 'Tailwind arbitrary value' },
   { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Inline px value with no token' },
-  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'warning', message: 'Primitive token used directly' },
+  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'error',   message: 'Primitive token used directly' },
 ];
 
 // ─── Utilities ──────────────────────────────────────────────────────────────
@@ -249,10 +249,11 @@ function auditHardcodedValues(sourceFiles) {
         // the icon('circle-x'|'x', …) helper (site/build.js's own DOs/DON'Ts
         // sections) instead of the literal emoji.
         if (/icon\(\s*['"](circle-x|x)['"]/.test(line)) return;
-        // The var(--x, fallback-color) CSS-resilience pattern is just as
-        // legitimate when x is a primitive reference as when the whole thing is
-        // a bare color — same site/build.js pattern, same reasoning either way.
-        if ((colorPatternNames.has(pattern.name) || pattern.name === 'primitive-direct') && COLOR_EXCEPTION_LINE.test(line)) return;
+        // COLOR_EXCEPTION_LINE covers literal-color shapes only. It deliberately
+        // does NOT apply to primitive-direct (Rule 4 of GOVERNANCE.md, ADR-098):
+        // a primitive reference with a literal-color fallback after it is still a
+        // primitive reference, and the fallback must never launder it.
+        if (colorPatternNames.has(pattern.name) && COLOR_EXCEPTION_LINE.test(line)) return;
         const matches = [...line.matchAll(new RegExp(pattern.regex.source, 'g'))];
         for (const match of matches) {
           violations.push({
