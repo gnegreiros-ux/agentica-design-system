@@ -3233,7 +3233,7 @@ const FIGMA_COMMUNITY_URL = 'https://www.figma.com/community/file/16798948760036
 const FIGMA_LUCIDE_COMMUNITY_URL = 'https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
-  const docTitle = pageTitle || `${title} — Agentica`;
+  const docTitle = esc(pageTitle || `${title} — Agentica`);
   const base = depth > 0 ? '../' : '';
   // GET STARTED = CTA (cta:true) — primary adoption action (ADR-060).
   // Items defined here, passed to the agtc-top-nav component via an inline script.
