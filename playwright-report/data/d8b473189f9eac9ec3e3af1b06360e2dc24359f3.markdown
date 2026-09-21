@@ -1,0 +1,100 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: governance/tokens-audit-primitive-token.spec.js >> audit-tokens.js --ci fails on a primitive token consumed directly (Rule 4)
+- Location: tests/governance/tokens-audit-primitive-token.spec.js:37:1
+
+# Error details
+
+```
+Error: audit-tokens.js --ci must exit non-zero on a primitive token consumed directly (Rule 4) — currently does not, see the file header comment
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+# Test source
+
+```ts
+  1  | // C2-05 — Rule 4 (never consume a primitive token directly): asserts what
+  2  | // GOVERNANCE.md's Rule 4 requires — scripts/audit-tokens.js --ci must fail
+  3  | // when a component consumes a primitive token directly.
+  4  | //
+  5  | // KNOWN, DOCUMENTED GAP — this test currently fails (red), and is expected
+  6  | // to until the gap below is closed as its own, separate piece of work:
+  7  | // scripts/audit-tokens.js declares its "primitive-direct" detection with
+  8  | // `severity: 'warning'` (see DRIFT_PATTERNS in that file), and --ci mode
+  9  | // only exits non-zero when criticalCount > 0 — which counts errors,
+  10 | // phantom tokens, and structure issues, but never warnings. Verified
+  11 | // directly: a fixture consuming `var(--agtc-primitive-...)` produces exit
+  12 | // code 0 today. GOVERNANCE.md describes Rule 4 as non-negotiable and
+  13 | // enforced by a build-failing static lint — the tooling does not yet do
+  14 | // that for this specific pattern.
+  15 | //
+  16 | // Not fixed here: closing this gap means changing audit-tokens.js's
+  17 | // severity for "primitive-direct", and this lot's rules forbid touching
+  18 | // that file to make a test pass. This test intentionally encodes the
+  19 | // requirement, not the current behavior, and is reported red rather than
+  20 | // silently adjusted to match what the tool does today.
+  21 | 
+  22 | import { test, expect } from '@playwright/test';
+  23 | import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+  24 | import { tmpdir } from 'node:os';
+  25 | import { dirname, join } from 'node:path';
+  26 | import { fileURLToPath } from 'node:url';
+  27 | import { execFileSync } from 'node:child_process';
+  28 | import { runWithTruncationRetry } from './support/run-with-truncation-retry.mjs';
+  29 | 
+  30 | const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+  31 | const AUDIT_SCRIPT_PATH = join(ROOT, 'scripts', 'audit-tokens.js');
+  32 | 
+  33 | function runAuditScoped(srcDir) {
+  34 |   return execFileSync('node', [AUDIT_SCRIPT_PATH, '--src-dir', srcDir, '--ci'], { encoding: 'utf8' });
+  35 | }
+  36 | 
+  37 | test('audit-tokens.js --ci fails on a primitive token consumed directly (Rule 4)', () => {
+  38 |   const tmpDir = mkdtempSync(join(tmpdir(), 'tokens-audit-primitive-'));
+  39 |   try {
+  40 |     // Rule 4 violation, written out in full: components only consume
+  41 |     // semantic tokens, never primitive tokens directly. This direct
+  42 |     // primitive reference is the one deliberate violation this fixture
+  43 |     // exists to exercise.
+  44 |     writeFileSync(join(tmpDir, 'component.css'), '.example { color: var(--agtc-primitive-color-red-500); }\n');
+  45 | 
+  46 |     function runOnce() {
+  47 |       let threw = false;
+  48 |       let output = '';
+  49 |       try {
+  50 |         output = runAuditScoped(tmpDir);
+  51 |       } catch (error) {
+  52 |         threw = true;
+  53 |         output = `${error.stdout ?? ''}${error.stderr ?? ''}`;
+  54 |       }
+  55 |       return { threw, output };
+  56 |     }
+  57 | 
+  58 |     // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs)
+  59 |     // — only kicks in when the capture looks truncated, never unconditionally.
+  60 |     // Not expected to matter here today: this run currently exits 0 (see the
+  61 |     // header comment), a natural exit with no process.exit() truncation risk.
+  62 |     const { threw, output } = runWithTruncationRetry(runOnce, 'primitive-direct');
+  63 | 
+  64 |     expect(
+  65 |       threw,
+  66 |       'audit-tokens.js --ci must exit non-zero on a primitive token consumed directly (Rule 4) — currently does not, see the file header comment'
+> 67 |     ).toBe(true);
+     |       ^ Error: audit-tokens.js --ci must exit non-zero on a primitive token consumed directly (Rule 4) — currently does not, see the file header comment
+  68 |     expect(output).toContain('primitive-direct');
+  69 |   } finally {
+  70 |     rmSync(tmpDir, { recursive: true, force: true });
+  71 |   }
+  72 | });
+  73 | 
+```
