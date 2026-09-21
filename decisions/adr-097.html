@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Atkinson Hyperlegible as the primary typeface — Agentica</title>
+<title>Invocable skills live at `.claude/skills/&lt;name&gt;/SKILL.md` — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Atkinson Hyperlegible as the primary typeface — Agentica">
+<meta property="og:title" content="Invocable skills live at `.claude/skills/&lt;name&gt;/SKILL.md` — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Atkinson Hyperlegible as the primary typeface — Agentica">
+<meta name="twitter:title" content="Invocable skills live at `.claude/skills/&lt;name&gt;/SKILL.md` — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -119,114 +119,45 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-021</code>
+    <code class="adr-number">ADR-097</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">contract</span>
+    <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Atkinson Hyperlegible as the primary typeface</h1>
+  <h1 class="adr-page-title">Invocable skills live at `.claude/skills/&lt;name&gt;/SKILL.md`</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-29</dd>
+      <dd>2026-09-17</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>The system used Inter (Google Fonts) as its default font — a common choice but with no documented accessibility rationale. The font was not tokenized: the value was hardcoded in <code>site/build.js</code> and was not part of the token system.</p>
-<p>Two problems needed solving: 1. No accessibility rationale existed for the typographic choice 2. Since the font was not a token, agents could not trace it or enforce it</p>
-<hr>
+</div><h2>Context</h2>
+<p>Claude Code only discovers a custom skill as invocable when it sits at <code>.claude/skills/&lt;name&gt;/SKILL.md</code> — the directory is what the loader scans for. A flat file at <code>.claude/skills/&lt;name&gt;.md</code> is invisible to it regardless of what the file contains: it can be read as plain documentation, but it never appears in the list of skills the model can invoke by name, and no error or warning says so.</p>
+<p>The directory is confirmed to be the actual lock, not the YAML frontmatter: moving the 6 flat files below into their own <code>&lt;name&gt;/SKILL.md</code> directory made all 6 appear in the session's invocable-skill list immediately, before any frontmatter existed on any of them — the loader showed each one with a degraded fallback description (the file's own <code># Skill: &lt;name&gt;</code> heading). Only after a <code>name</code>/<code>description</code> frontmatter was added to each file did the loader's listing switch to the real, purpose-written description. Frontmatter improves what the loader shows when deciding relevance; it is not what makes the file discoverable in the first place.</p>
+<p>Of this repository's 7 custom skills, 6 (<code>quality-gate</code>, <code>ux-pattern-review</code>, <code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>post-change-pipeline</code>) were flat files. Only <code>document</code> happened to already use the directory format, which is the only reason it ever worked. The other 6 were never invocable — not "sometimes skipped," genuinely absent from every session's skill list.</p>
+<p>This was not a theoretical gap. <code>quality-gate</code> is documented in <code>AGENTS.md</code> and <code>governance/rules/post-change-pipeline.md</code> as the mandatory pre-commit gate — "no commit without it having run and been approved by the human" — yet it never actually ran as an invocation during the entire v0.4.0 Master Skill + Clone decoupling effort (the work landing in <code>5b28fc2c</code>, <code>975c4fc3</code>, <code>802fb0f3</code>, <code>10904c04</code>), including the C1, C2, and C3 test-suite batches applied by hand. The gate was silently absent for that entire body of work, and nothing in the session, the repo, or the tooling surfaced that absence — it looked, from the outside, exactly like a session that had simply chosen not to invoke it. Found while scoping GitHub issue #122, volet 1.</p>
 <h2>Decision</h2>
-<h3>Font: Atkinson Hyperlegible</h3>
-<p>Designed by <strong>Applied Design Works</strong> for the <strong>Braille Institute of America</strong> (2019, royalty-free — Open Font License). Clinically validated to improve legibility for people with low vision.</p>
-<p><strong>Technical differentiators:</strong></p>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Ambiguous pair</th><th>Inter</th><th>Atkinson Hyperlegible</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Similar</td><td>Deliberately distinct</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Similar</td><td>Deliberately distinct</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Mirrored</td><td>Intentional asymmetries</td></tr><tr><td><code>n</code> / <code>u</code> / <code>m</code></td><td>Similar</td><td>Accentuated counter-forms</td></tr></tbody></table></div>
-<p><strong>Available weights:</strong> Regular (400) and Bold (700) only.</p>
-<blockquote><p>⚠️ The <code>primitive.fontWeight.medium</code> (500) token has no equivalent in Atkinson Hyperlegible. Browsers round it down to 400 (Regular). This behavior is acceptable and documented — labels and controls remain legible at 400.</p></blockquote>
-<h3>Tokenization</h3>
-<p>The font is now a primitive token (<code>primitive.fontFamily.base</code>) referenced by a semantic token (<code>semantic.typography.fontFamily</code>). It is no longer hardcoded in the build.</p>
-<pre class="code-block"><code class="lang-json">// primitives.json
-"fontFamily": {
-  "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif" }
-}
-
-// semantic.json
-"typography": {
-  "fontFamily": { "value": "{primitive.fontFamily.base}" }
-}</code></pre>
-<h3>Resolution chain in the build</h3>
-<pre class="code-block"><code class="lang-text">semantic.typography.fontFamily
-  → {primitive.fontFamily.base}
-  → 'Atkinson Hyperlegible', system-ui, sans-serif
-  → --agtc-semantic-typography-fontFamily in tokens.css</code></pre>
-<h3>Google Fonts import</h3>
-<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
-<hr>
-<h2>WCAG rationale</h2>
-<p>WCAG 2.x does not prescribe a specific font, but success criterion <strong>1.4.8 (Visual Presentation, AAA)</strong> recommends that text be readable without effort. Atkinson Hyperlegible is the most direct response to this principle at the AA+ level.</p>
-<p>Braille Institute clinical study (2019): a measured improvement in reading accuracy for users with reduced visual acuity, with no degradation for sighted users.</p>
-<hr>
+<p>Every invocable skill in this repository lives at <code>.claude/skills/&lt;name&gt;/SKILL.md</code> — the directory is the non-negotiable part; a flat <code>.claude/skills/&lt;name&gt;.md</code> file is never used for anything meant to be invocable — and starts with:</p>
+<p>1. A YAML frontmatter block with <code>name</code> (matching the directory) and <code>description</code>    (what it does and when to use it — this is what the skill loader surfaces to    decide relevance, so it must stand alone without the rest of the file). This does    not gate discovery — a directory alone is enough for that — but a skill without it    is only ever shown to the loader as its raw heading, which is not a usable    description for relevance-matching. 2. Immediately below the frontmatter, the existing citation metadata block this    repository already uses on every governed file (<code>&lt;strong&gt;Type:&lt;/strong&gt;</code>, <code>&lt;strong&gt;Logical path:&lt;/strong&gt;</code>,    <code>&lt;strong&gt;Read before:&lt;/strong&gt;</code>, <code>&lt;strong&gt;Relations:&lt;/strong&gt;</code>) — kept, not merged into the frontmatter and    not dropped. The frontmatter serves the skill loader; the citation block serves    human readers and other tools (Codex/Copilot via <code>.agents/skills/</code>, Gemini CLI)    navigating the file as documentation. They answer different questions and both    stay.</p>
+<p>This applies to the 6 skills migrated under this decision and to every skill created in this repository from now on — a new skill is never added as a flat file, even as a draft.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Inter</strong></td><td>Common choice with no documented accessibility rationale. Ambiguous pairs left unaddressed.</td></tr><tr><td><strong>Lexie Readable</strong></td><td>Less widespread, less maintained, not available on Google Fonts.</td></tr><tr><td><strong>OpenDyslexic</strong></td><td>Aesthetic too distinctive for a general-purpose design system. Effectiveness studies are contested.</td></tr><tr><td><strong>System font stack</strong></td><td>Cross-platform inconsistency. No control over character differentiation.</td></tr><tr><td><strong>Atkinson Hyperlegible Next</strong></td><td>2024+ version, still experimental. To be reconsidered in v2.</td></tr></tbody></table></div>
-<hr>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Keep flat files, rely on manual invocation discipline</td><td>This is the exact status quo that produced the incident above — a human or agent believing a gate ran because a file describing it exists, with no signal otherwise.</td></tr><tr><td>Merge the citation block's fields into the frontmatter as custom YAML keys</td><td>Breaks the convention already established by <code>document/SKILL.md</code> and the <code>.agents/skills/*/SKILL.md</code> ports, which read the citation block as prose alongside other governed files, not as skill-loader metadata.</td></tr><tr><td>Auto-generate <code>SKILL.md</code> from the flat file via a build/lint step</td><td>Adds an indirection and a new mandatory script for what is fundamentally a location-and-header problem; the fix belongs in the file at rest, not in a generation step someone can forget to run.</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<p><strong>For the token system:</strong></p>
-<ul><li><code>primitive.fontFamily.base</code> and <code>semantic.typography.fontFamily</code> added</li><li>Any future change to the font goes through these tokens (traceable, auditable)</li></ul>
-<p><strong>For AI agents:</strong></p>
-<ul><li>The font is now an intent (<code>semantic.typography.fontFamily</code>) rather than a hardcoded value</li><li>Agents can reference and enforce the token in components</li></ul>
-<p><strong>For users:</strong></p>
-<ul><li>Better legibility for people with low vision</li><li>No degradation for anyone else — Atkinson Hyperlegible is a complete workhorse typeface</li></ul>
-<p><strong>Documented limitation:</strong></p>
-<ul><li>No 500 weight — <code>fontWeight.medium</code> rounds down to 400 in browsers</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
-<p>Le système utilisait Inter (Google Fonts) comme police par défaut — choix courant mais sans justification d'accessibilité documentée. La police n'était pas tokenisée : la valeur était hardcodée dans <code>site/build.js</code> et ne faisait pas partie du système de tokens.</p>
-<p>Deux problèmes à résoudre : 1. Aucun argumentaire d'accessibilité pour le choix typographique 2. La police n'étant pas un token, les agents ne pouvaient pas la tracer ni la faire respecter</p>
-<hr>
-<h2>Décision</h2>
-<h3>Police : Atkinson Hyperlegible</h3>
-<p>Conçue par <strong>Applied Design Works</strong> pour le <strong>Braille Institute of America</strong> (2019, libre de droits — Open Font License). Cliniquement validée pour améliorer la lisibilité auprès des personnes à basse vision.</p>
-<p><strong>Différenciateurs techniques :</strong></p>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Paire ambiguë</th><th>Inter</th><th>Atkinson Hyperlegible</th></tr></thead><tbody><tr><td><code>l</code> / <code>1</code> / <code>I</code></td><td>Similaires</td><td>Délibérément distincts</td></tr><tr><td><code>O</code> / <code>0</code></td><td>Similaires</td><td>Délibérément distincts</td></tr><tr><td><code>b</code> / <code>d</code> / <code>p</code> / <code>q</code></td><td>Miroirs</td><td>Asymétries intentionnelles</td></tr><tr><td><code>n</code> / <code>u</code> / <code>m</code></td><td>Similaires</td><td>Contre-formes accentuées</td></tr></tbody></table></div>
-<p><strong>Graisses disponibles :</strong> Regular (400) et Bold (700) uniquement.</p>
-<blockquote><p>⚠️ Le token <code>primitive.fontWeight.medium</code> (500) n'a pas d'équivalent dans Atkinson Hyperlegible. Les navigateurs l'arrondissent à 400 (Regular). Ce comportement est acceptable et documenté — les labels et contrôles restent lisibles à 400.</p></blockquote>
-<h3>Tokenisation</h3>
-<p>La police est désormais un token primitif (<code>primitive.fontFamily.base</code>) référencé par un token sémantique (<code>semantic.typography.fontFamily</code>). Elle n'est plus hardcodée dans le build.</p>
-<pre class="code-block"><code class="lang-json">// primitives.json
-"fontFamily": {
-  "base": { "$value": "'Atkinson Hyperlegible', system-ui, sans-serif" }
-}
-
-// semantic.json
-"typography": {
-  "fontFamily": { "value": "{primitive.fontFamily.base}" }
-}</code></pre>
-<h3>Chaîne de résolution dans le build</h3>
-<pre class="code-block"><code class="lang-text">semantic.typography.fontFamily
-  → {primitive.fontFamily.base}
-  → 'Atkinson Hyperlegible', system-ui, sans-serif
-  → --agtc-semantic-typography-fontFamily dans tokens.css</code></pre>
-<h3>Import Google Fonts</h3>
-<pre class="code-block"><code class="lang-css">@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap');</code></pre>
-<hr>
-<h2>Argumentaire WCAG</h2>
-<p>WCAG 2.x ne prescrit pas de police spécifique mais le critère <strong>1.4.8 (Visual Presentation, AAA)</strong> recommande que le texte soit lisible sans effort. Atkinson Hyperlegible est la réponse la plus directe à ce principe au niveau AA+.</p>
-<p>Étude clinique Braille Institute (2019) : amélioration mesurée de la précision de lecture pour les utilisateurs à acuité visuelle réduite, sans dégradation pour les utilisateurs normo-voyants.</p>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Inter</strong></td><td>Choix courant sans justification d'accessibilité. Paires ambiguës non traitées.</td></tr><tr><td><strong>Lexie Readable</strong></td><td>Moins répandue, moins maintenue, non disponible sur Google Fonts.</td></tr><tr><td><strong>OpenDyslexic</strong></td><td>Esthétique trop marquée pour un design system généraliste. Études d'efficacité contestées.</td></tr><tr><td><strong>System font stack</strong></td><td>Incohérence cross-plateforme. Aucun contrôle sur la différenciation des caractères.</td></tr><tr><td><strong>Atkinson Hyperlegible Next</strong></td><td>Version 2024+, encore expérimentale. À reconsidérer en v2.</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<p><strong>Pour le système de tokens :</strong></p>
-<ul><li><code>primitive.fontFamily.base</code> et <code>semantic.typography.fontFamily</code> ajoutés</li><li>Toute modification future de la police passe par ces tokens (traçable, auditable)</li></ul>
-<p><strong>Pour les agents IA :</strong></p>
-<ul><li>La police est maintenant une intention (<code>semantic.typography.fontFamily</code>) et non une valeur hardcodée</li><li>Les agents peuvent référencer et faire respecter le token dans les composants</li></ul>
-<p><strong>Pour les utilisateurs :</strong></p>
-<ul><li>Meilleure lisibilité pour les personnes à basse vision</li><li>Aucune dégradation pour les autres — Atkinson Hyperlegible est une police de labeur complète</li></ul>
-<p><strong>Limitation documentée :</strong></p>
-<ul><li>Pas de graisse 500 — <code>fontWeight.medium</code> s'arrondit à 400 dans les navigateurs</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-020.html" class="agtc-button secondary">← ADR-020</a>
-    <a href="adr-022.html" class="agtc-button secondary">ADR-022 →</a>
+<ul><li>The 6 skills above are invocable for the first time since they were written;</li></ul>
+<p>  <code>governance/ai-skills-reference.md</code> and every other live reference to their old   flat-file path are updated to <code>.claude/skills/&lt;name&gt;/SKILL.md</code> (see   <code>decisions/CHANGELOG-structure.md</code> for the full list of files touched).</p>
+<ul><li><code>ADR-027</code>, <code>ADR-029</code>, and <code>ADR-036</code> — which document the impact-pipeline mechanism</li></ul>
+<p>  and what <code>quality-gate</code> and <code>ux-pattern-review</code> *do* — are unaffected and stay   fully <code>✅ Active</code>: this ADR is about where a skill's file lives, not about what any   skill decides or does, so it supersedes nothing. The relocation of the files those   three ADRs reference is a mechanical move, logged in   <code>decisions/CHANGELOG-structure.md</code>, not a decision change.</p>
+<ul><li>Historical ADRs that mention a now-moved flat-file path in their body text</li></ul>
+<p>  (ADR-027, ADR-029, ADR-036, and any component-implementation ADR referencing   <code>ai-component-metadata.md</code>) are not edited for this — see the immutability note   in <code>decisions/README.md</code>. They reflect repo state at decision time, not current   state.</p>
+<ul><li>Any future skill PR that reintroduces a flat <code>.claude/skills/&lt;name&gt;.md</code> file is a</li></ul>
+<p>  regression to this ADR, not a valid simplification — the absence of an error when   a skill is flat is exactly what let this go unnoticed for as long as it did.</p>
+<h2>Incidents or triggers</h2>
+<p><code>quality-gate</code> never ran as a real invocation across the full v0.4.0 decoupling effort (Master Skill + Clone boundary work, C1/C2/C3 test suites), with no error or signal exposing the gap. Surfaced while scoping GitHub issue #122, volet 1 (2026-09-17).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-096.html" class="agtc-button secondary">← ADR-096</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
