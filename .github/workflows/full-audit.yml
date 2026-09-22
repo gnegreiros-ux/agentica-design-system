@@ -1,0 +1,68 @@
+name: Full audit — smoke, contracts, site-wide accessibility
+
+# Runs the three checks `npm test` chains that have no other CI coverage:
+# `smoke` (scripts/smoke-test.js), `validate:contracts` (scripts/validate-contracts.js),
+# and `axe:all` (scripts/axe-audit.js). Deliberately NOT `npm test` itself — that
+# chain also includes `lang-audit` and `tokens-audit --ci`, which already run as
+# their own required checks (lang-audit.yml, tokens-audit.yml); running them again
+# here would waste CI time and report the same violation under two job names.
+#
+# Found via the #127 inventory (2026-09-19): none of these three had ever run in
+# any CI workflow — `npm test` itself is called by no workflow at all. axe-audit.js
+# in particular scans every page in site/dist/ (149 pages, 3 contexts each), while
+# the existing Playwright accessibility.spec.js only covers 10. The inventory found
+# 139 of those 149 pages had never been checked for accessibility by anything.
+#
+# TEMPORARY: non-blocking (`continue-on-error` on each check step) for this reason —
+# a first-ever run on 139 never-audited pages is expected to surface real violations,
+# and this must not become a Chromatic-style silent gate (auto-triggers disabled for
+# 2.5 months without anyone noticing, see PR #135). Flip to blocking — remove the
+# three `continue-on-error` lines below, and add this job to branch protection's
+# required checks — only once a human has read at least one full run's output and
+# either (a) confirmed zero violations, or (b) triaged every violation found (fixed,
+# or explicitly tracked in an issue). Do not leave this non-blocking silently.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  full-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        # npm install (not npm ci): aligned with the other workflows — cross-platform lockfile
+        run: npm install --no-audit --no-fund
+
+      - name: Build tokens
+        run: npm run tokens
+
+      - name: Build site
+        run: node site/build.js
+
+      - name: Install Playwright Chromium
+        # smoke-test.js and axe-audit.js use the raw `playwright` package
+        # directly, not @playwright/test — same browser install either way.
+        run: npx playwright install --with-deps chromium
+
+      - name: Smoke test (component token resolution)
+        continue-on-error: true # see the TEMPORARY note above — first-ever run
+        run: npm run smoke
+
+      - name: Validate contracts (governance layer)
+        continue-on-error: true # see the TEMPORARY note above — first-ever run
+        run: npm run validate:contracts
+
+      - name: Accessibility audit — every generated page
+        continue-on-error: true # see the TEMPORARY note above — first-ever run, 139/149 pages never checked before
+        run: npm run axe:all
