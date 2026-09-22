@@ -49,6 +49,50 @@ logged when it is:
 
 ---
 
+## EXEC-014 — 2026-09-22 — `main` branch protection: required review count raised to 1, independent of ADR-076's own trigger; `enforce_admins` drift found and corrected
+
+**Status:** Active
+
+**Decision:** Two changes applied to `main`'s branch protection via the GitHub API
+(`gh api`), read back and confirmed after each:
+
+1. `required_pull_request_reviews.required_approving_review_count` raised from `0` to
+   `1`, via `PATCH .../protection/required_pull_request_reviews` (the other three
+   fields on that endpoint — `dismiss_stale_reviews`, `require_code_owner_reviews`,
+   `require_last_push_approval` — resent unchanged at `false` to avoid the endpoint
+   resetting them). `required_status_checks.contexts` (`lang-audit`, `tool-parity`,
+   `tokens-audit`, `site-freshness`, `commit-lint`) was not touched by this endpoint
+   and confirmed unchanged by a full protection read afterward.
+2. `enforce_admins.enabled` was found to be `true` — live, undocumented drift from
+   ADR-076's decision (`false`), with no ADR or EXEC-LOG entry recording when or why it
+   changed. Restored to `false` via `DELETE .../protection/enforce_admins`, confirmed
+   by re-reading the protection object.
+
+**Why:** gnegreiros-ux asked explicitly for at least one human approval required
+before any merge to `main`. This is **not** the trigger ADR-076 itself names for
+raising the review count ("the moment a second collaborator is added") — that
+condition has not occurred; the count was raised anyway, for a different reason (a
+human-approval gate on every merge, including one opened by an agent). ADR-076's
+"Decision" section still reads `0`; a reader of that ADR alone would believe the count
+is still `0`. This entry is the record of the actual current value and the reason it
+diverges from the ADR's own stated condition — the ADR itself stays unedited, per this
+file's immutability convention.
+
+The `enforce_admins` restoration is a separate correction, not part of the requested
+change: with the review count now at `1` and this repository still solo-maintainer
+(no second collaborator to provide that approval), `enforce_admins: true` would have
+left no safety valve at all — exactly the failure mode ADR-076's own "Rejected
+alternatives" section warned against for 1–2 required approvals on a solo repo. Caught
+before opening the PR this branch-protection check exists to guard
+(`tests/governance/playwright-workflow-gate-coverage.spec.js`, characterizing #149),
+which would otherwise have risked being unmergeable by its own author.
+
+**Related:** ADR-076, `tests/governance/playwright-workflow-gate-coverage.spec.js`.
+
+**Logged by:** Claude (decided by gnegreiros-ux)
+
+---
+
 ## EXEC-013 — 2026-09-21 — Merge protocol and proof for the two follow-up PRs (#140, #142)
 
 **Status:** Active
