@@ -58,5 +58,16 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
+    // Dedicated server for doc-generator-accessibility.spec.js (C5-06) — the
+    // generator's own output, never mixed into site/dist. The command
+    // regenerates the fixture site before serving it, so the served content
+    // always matches the current doc-generator/ source, not a stale commit.
+    {
+      command:
+        'node doc-generator/bin/cli.mjs tests/functional/fixtures/doc-generator/design-system.manifest.json tests/functional/fixtures/doc-generator-dist && npx serve tests/functional/fixtures/doc-generator-dist -p 8082 --no-clipboard',
+      url: 'http://localhost:8082',
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
   ],
 });

@@ -14,6 +14,7 @@ packages/components/index.js
 storybook-static
 
 starter-kit/dist/
+tests/functional/fixtures/doc-generator-dist/
 
 # Rapports et artefacts CI (non versionnés)
 axe-report.json
