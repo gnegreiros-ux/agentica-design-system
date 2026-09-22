@@ -61,6 +61,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Mark the workspace as a safe git directory
+        # In this container git rejects the checkout ("dubious ownership"), which made
+        # site/build.js's git-derived sitemap lastmod fail (#137).
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - uses: actions/setup-node@v5
         with:
           node-version: '20'

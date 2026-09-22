@@ -160,6 +160,7 @@ decisions that were already settled.
 | [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) | Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license (supersedes ADR-081) | 2026-09-11 | ✅ Active |
 | [ADR-096](ADR-096-semantic-layout-container-tokens.md) | New `semantic.layout.container` category: 5 page-container max-width tokens, surfaced by an AI-interoperability test | 2026-09-11 | ✅ Active |
 | [ADR-097](ADR-097-invocable-skill-directory-convention.md) | Invocable skills live at `.claude/skills/<name>/SKILL.md` (frontmatter + citation block) | 2026-09-17 | ✅ Active |
+| [ADR-098](ADR-098-primitive-direct-blocking-in-ci.md) | `primitive-direct` hardened from warning to error in `audit-tokens.js` (amends ADR-012) | 2026-09-21 | ✅ Active |
 
 ---
 
