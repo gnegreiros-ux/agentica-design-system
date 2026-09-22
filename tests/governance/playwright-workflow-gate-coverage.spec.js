@@ -57,7 +57,7 @@ function isCoveredByPaths(relPath, patterns) {
   });
 }
 
-test('playwright.yml PR-gate path filter covers every tests/governance/ spec and the two governance accessibility specs', () => {
+test('playwright.yml PR-gate path filter covers every tests/governance/ spec and the three governance-relevant accessibility specs', () => {
   const workflowText = readFileSync(WORKFLOW_PATH, 'utf8');
   const declaredPaths = extractPullRequestPaths(workflowText);
 
@@ -68,6 +68,7 @@ test('playwright.yml PR-gate path filter covers every tests/governance/ spec and
   const requiredAccessibilitySpecs = [
     'tests/functional/accessibility.spec.js',
     'tests/functional/governance-accessibility.spec.js',
+    'tests/functional/doc-generator-accessibility.spec.js',
   ];
 
   for (const relPath of [...governanceSpecs, ...requiredAccessibilitySpecs]) {

@@ -1,0 +1,14 @@
+{
+  "governance": "governance.md",
+  "tokens": {
+    "primitive": "tokens/primitive.json",
+    "semantic": "tokens/semantic.json",
+    "component": "tokens/component.json"
+  },
+  "components": "components/",
+  "audit": {
+    "engine": "axe-core",
+    "badgeEnabled": true
+  },
+  "site": "site.config.json"
+}

@@ -32,7 +32,10 @@ on:
       - 'tests/governance/**'
       - 'tests/functional/accessibility.spec.js'
       - 'tests/functional/governance-accessibility.spec.js'
+      - 'tests/functional/doc-generator-accessibility.spec.js'
+      - 'tests/functional/fixtures/doc-generator/**'
       - 'clone/**'
+      - 'doc-generator/**'
       - 'GOVERNANCE.md'
       - 'scripts/audit-tokens.js'
       - 'scripts/check-governance-sync.mjs'
@@ -199,7 +202,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run governance and governance-accessibility tests
-        run: npx playwright test tests/governance tests/functional/accessibility.spec.js tests/functional/governance-accessibility.spec.js --project=chromium --reporter=list
+        run: npx playwright test tests/governance tests/functional/accessibility.spec.js tests/functional/governance-accessibility.spec.js tests/functional/doc-generator-accessibility.spec.js --project=chromium --reporter=list
 
       - name: Upload report
         if: always()
