@@ -54,7 +54,7 @@ No rule in this file is modifiable in the personalization layer. Any attempt to 
 
 **Why**: A primitive token describes a raw value, not an intent. Consuming a primitive directly in a component makes it impossible to change theme, brand, or accessibility level without rewriting the component — and prevents an agent from understanding *why* a color is used in that spot.
 
-**Verification**: Static lint verifying that only semantic-layer tokens appear in core component files.
+**Verification**: Static lint verifying that only semantic-layer tokens appear in core component files. A direct primitive reference **fails the build** — the lint's severity for this rule is blocking, never advisory (a warning-only lint does not satisfy this rule).
 
 ---
 
