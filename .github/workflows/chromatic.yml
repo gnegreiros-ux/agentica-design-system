@@ -4,18 +4,26 @@ name: Chromatic — Visual regression
 # The token lives in the CHROMATIC_PROJECT_TOKEN GitHub secret — never in plaintext in the repo.
 
 on:
-  # Push disabled — free monthly snapshot limit reached (2026-07-02).
-  # Re-run manually before each release or major visual review.
-  # push:
-  #   branches: [main, develop]
-  # pull_request:
-  #   paths:
-  #     - 'components/**'
-  #     - 'tokens/**'
-  #     - '.storybook/**'
-  #     - 'package.json'
-  #     - 'package-lock.json'
-  #     - '.github/workflows/chromatic.yml'
+  # Scope intentionally narrow: the free Chromatic account has already
+  # hit its snapshot limit (same reason it was disabled on 2026-07-02).
+  # Chromatic is therefore not a continuous check on this project, but a
+  # point-in-time tool — triggered only when a visual change is plausible.
+  # `push` is intentionally absent so it doesn't re-consume this quota on
+  # every commit.
+  pull_request:
+    paths:
+      - 'components/**'
+      - 'tokens/**'
+      - 'guidelines/**'
+      - 'decisions/ADR-*.md'
+      - 'site/build.js'
+      - 'style-dictionary/**'
+      - 'scripts/smoke-test.js'
+      - 'scripts/validate-contracts.js'
+      - 'scripts/axe-audit.js'
+      - '.github/workflows/full-audit.yml'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
