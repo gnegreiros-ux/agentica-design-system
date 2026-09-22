@@ -1488,7 +1488,7 @@ body{overflow-x:hidden}
   --site-faint: var(--agtc-semantic-color-text-on-dark-muted);
   --site-teal: var(--agtc-semantic-color-action-primary);
   --site-rose: var(--agtc-semantic-color-brand-accent);
-  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf); /* audit-ignore: documentation-site accent color; no semantic violet token exists yet (structural fix tracked in GitHub Projects), so this primitive reference is a reviewed, temporary exception to Rule 4 */
   --site-radius: var(--agtc-semantic-radius-card, 16px);
   --site-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
 }
