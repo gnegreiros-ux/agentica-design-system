@@ -161,6 +161,7 @@ decisions that were already settled.
 | [ADR-096](ADR-096-semantic-layout-container-tokens.md) | New `semantic.layout.container` category: 5 page-container max-width tokens, surfaced by an AI-interoperability test | 2026-09-11 | ✅ Active |
 | [ADR-097](ADR-097-invocable-skill-directory-convention.md) | Invocable skills live at `.claude/skills/<name>/SKILL.md` (frontmatter + citation block) | 2026-09-17 | ✅ Active |
 | [ADR-098](ADR-098-primitive-direct-blocking-in-ci.md) | `primitive-direct` hardened from warning to error in `audit-tokens.js` (amends ADR-012) | 2026-09-21 | ✅ Active |
+| [ADR-099](ADR-099-workstream-version-follows-published-packages.md) | Workstream version (root `package.json`, git tags) tracks the published package state instead of its own counter — repo tags `v1.0.0` once the decoupling v0.4.0 workstream closes | 2026-09-23 | ✅ Active |
 
 ---
 
