@@ -15,14 +15,14 @@
 Two separate version numbers exist for "Agentica" with no stated relationship between them:
 
 - The repo's own workstream tags (`v0.1.0` → `v0.4.0`, root `package.json` at `0.4.0`) track
-  the découplage chantier's own milestones, most recently synced 0.1.0 → 0.4.0 in PR #116.
+  the decoupling workstream's own milestones, most recently synced 0.1.0 → 0.4.0 in PR #116.
 - `@agentica-ds/tokens` and `@agentica-ds/components`, the two published npm packages, are
   both currently live at `1.0.0` on the registry — with no corresponding git tag (the last
   package-scoped tags in git history are `@agentica-ds/tokens@0.1.3` and
   `@agentica-ds/components@0.1.3`).
 
 Anyone asking "what version of Agentica is this" gets two different, unrelated answers. This
-surfaced 2026-09-23 while closing out the découplage v0.4.0 test campaign
+surfaced 2026-09-23 while closing out the decoupling v0.4.0 test campaign
 (`Temp/plan-de-tests-decouplage-v0.4.0.md` §10, gitignored, local), which flagged it as a
 clarification to resolve before declaring the workstream closed.
 
@@ -32,7 +32,7 @@ The repo-level/workstream version (root `package.json`, `vX.Y.Z` git tags) is no
 independent counter. It reflects milestones in the actually-published package state, not its
 own separate release cadence.
 
-Concretely: once the découplage v0.4.0 workstream (`GOVERNANCE.md`, Clone, Master Skill,
+Concretely: once the decoupling v0.4.0 workstream (`GOVERNANCE.md`, Clone, Master Skill,
 doc-generator, and its test campaign) is fully closed, the repo is tagged **`v1.0.0`** —
 matching the version already live for `@agentica-ds/tokens` and `@agentica-ds/components` —
 instead of continuing its own separate `0.x` counter. Root `package.json` stays at `0.4.0`
@@ -52,7 +52,7 @@ other.
 
 ## Consequences
 
-- Root `package.json` and the repo's `vX.Y.Z` tags move to `1.0.0` **once the découplage v0.4.0
+- Root `package.json` and the repo's `vX.Y.Z` tags move to `1.0.0` **once the decoupling v0.4.0
   workstream is actually closed** (test campaign included) — not before.
 - `@agentica-ds/tokens` and `@agentica-ds/components` keep versioning independently of each
   other via Changesets, exactly as ADR-072 already decided. This ADR does not touch that.
@@ -62,6 +62,6 @@ other.
 
 ## Incidents or triggers
 
-Discovered 2026-09-23 while closing §10 (exit criteria) of the découplage v0.4.0 test plan —
+Discovered 2026-09-23 while closing §10 (exit criteria) of the decoupling v0.4.0 test plan —
 point 4's own text already named this as "a clarification to resolve before closure, before the
 question comes up under the pressure of a publication."
