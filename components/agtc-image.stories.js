@@ -1,4 +1,11 @@
 import { html } from 'lit';
+// Local, bundled fixtures (not a remote placeholder service): Chromatic's
+// capture browser doesn't reliably fetch third-party images, so every story
+// using picsum.photos snapshotted blank (issue 151). Each fixture prints its
+// own format, so the WebP story shows which source the browser picked.
+import landscapeJpg from './fixtures/landscape.jpg';
+import landscapeWebp from './fixtures/landscape.webp';
+import wideJpg from './fixtures/wide.jpg';
 
 /** @type { import('@storybook/web-components').Meta } */
 export default {
@@ -33,7 +40,7 @@ export default {
     skeleton:   { control: 'boolean' },
   },
   args: {
-    src: 'https://picsum.photos/seed/agentica/800/450',
+    src: landscapeJpg,
     alt: 'Placeholder photo',
     width: 800,
     height: 450,
@@ -63,8 +70,8 @@ export const Default = {
   render: () => html`
     <div style="max-width:480px">
       <agtc-image
-        src="https://picsum.photos/seed/agentica-1/800/450"
-        alt="A random placeholder photo"
+        src="${landscapeJpg}"
+        alt="A placeholder photo"
         width="800"
         height="450"
       ></agtc-image>
@@ -77,8 +84,8 @@ export const WithSkeleton = {
   render: () => html`
     <div style="max-width:480px">
       <agtc-image
-        src="https://picsum.photos/seed/agentica-2/800/450?delay=800"
-        alt="A random placeholder photo, artificially delayed"
+        src="${landscapeJpg}"
+        alt="A placeholder photo, with a skeleton shown until it loads"
         width="800"
         height="450"
         skeleton
@@ -92,7 +99,7 @@ export const Priority = {
   render: () => html`
     <div style="max-width:480px">
       <agtc-image
-        src="https://picsum.photos/seed/agentica-3/1200/630"
+        src="${landscapeJpg}"
         alt="Hero image, loaded eagerly with high fetch priority"
         width="1200"
         height="630"
@@ -110,15 +117,15 @@ export const ObjectFit = {
     <div style="display:flex;gap:var(--agtc-semantic-space-component-padding-lg);flex-wrap:wrap">
       <div style="width:220px">
         <p style="font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">cover</p>
-        <agtc-image src="https://picsum.photos/seed/fit-cover/900/400" alt="Wide photo, cropped to fill a square" width="220" height="220" fit="cover"></agtc-image>
+        <agtc-image src="${wideJpg}" alt="Wide photo, cropped to fill a square" width="220" height="220" fit="cover"></agtc-image>
       </div>
       <div style="width:220px">
         <p style="font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">contain</p>
-        <agtc-image src="https://picsum.photos/seed/fit-contain/900/400" alt="Wide photo, letterboxed in a square" width="220" height="220" fit="contain"></agtc-image>
+        <agtc-image src="${wideJpg}" alt="Wide photo, letterboxed in a square" width="220" height="220" fit="contain"></agtc-image>
       </div>
       <div style="width:220px">
         <p style="font-size:0.75rem;color:var(--agtc-semantic-color-text-secondary);margin:0 0 8px;">fill</p>
-        <agtc-image src="https://picsum.photos/seed/fit-fill/900/400" alt="Wide photo, stretched to fill a square" width="220" height="220" fit="fill"></agtc-image>
+        <agtc-image src="${wideJpg}" alt="Wide photo, stretched to fill a square" width="220" height="220" fit="fill"></agtc-image>
       </div>
     </div>
   `,
@@ -131,7 +138,7 @@ export const Decorative = {
   render: () => html`
     <div style="max-width:320px">
       <agtc-image
-        src="https://picsum.photos/seed/agentica-deco/600/300"
+        src="${wideJpg}"
         decorative
         width="600"
         height="300"
@@ -161,8 +168,8 @@ export const WebpWithFallback = {
   render: () => html`
     <div style="max-width:480px">
       <agtc-image
-        src="https://picsum.photos/seed/agentica-webp/800/450.jpg"
-        src-webp="https://picsum.photos/seed/agentica-webp/800/450.webp"
+        src="${landscapeJpg}"
+        src-webp="${landscapeWebp}"
         alt="Photo served as WebP where supported, JPEG fallback otherwise"
         width="800"
         height="450"
