@@ -16,6 +16,8 @@ import '../components/agtc-banner.js';
 import '../components/agtc-link.js';
 import '../components/agtc-segmented.js';
 import '../components/agtc-image.js';
+import '../components/agtc-tabs.js';
+import '../components/agtc-top-nav.js';
 
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { allModes } from './modes.js';
