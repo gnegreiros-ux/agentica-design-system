@@ -83,9 +83,16 @@ class AgtcTopNav extends LitElement {
   _isActive(href) {
     const p = this.current;
     const parts = href.replace(/^(\.\.\/)+/, '/').split('/').filter(Boolean);
+    // A directory-style href ('../tokens/', the form the guideline documents)
+    // points at that directory's index — without this, 'tokens' was read as a
+    // file name and no link was ever marked active.
+    if (href.endsWith('/')) parts.push('index.html');
     const hFile = parts[parts.length - 1] || '';
     const hDir  = parts.length > 1 ? parts[parts.length - 2] : '';
     if (hDir && SECTIONS.includes(hDir)) return p.includes('/' + hDir + '/');
+    if (hFile === 'index.html' && hDir) {
+      return p.endsWith('/' + hDir + '/') || p.endsWith('/' + hDir + '/index.html');
+    }
     if (hFile === 'index.html' && !hDir) {
       return p === '/' || (p.endsWith('/index.html') && SECTIONS.every(s => !p.includes('/' + s + '/')));
     }
