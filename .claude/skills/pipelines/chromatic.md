@@ -1,9 +1,10 @@
 # Pipeline: chromatic
 
 > Visual regression tests via Chromatic (component captures).
-> **Status:** ✅ Active — CI workflow `.github/workflows/chromatic.yml` exists but its
-> automatic `push`/`pull_request` triggers are currently disabled (free-tier snapshot
-> limit reached 2026-07-02); `workflow_dispatch` (manual) only until re-enabled
+> **Status:** ✅ Active — `.github/workflows/chromatic.yml` runs on `push` to any branch
+> except `main`, only when `components/`, `.storybook/`, `tokens/`, `style-dictionary/` or
+> `package*.json` change, with TurboSnap (`onlyChanged`) — free-tier snapshot quota, hit
+> 2026-07-02 and again 2026-09. `workflow_dispatch` for a manual run
 > **Trigger:** any change in `components/`, `tokens/`, `.storybook/`
 
 ---
