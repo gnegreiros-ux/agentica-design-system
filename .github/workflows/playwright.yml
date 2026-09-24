@@ -39,6 +39,11 @@ on:
       - 'GOVERNANCE.md'
       - 'scripts/audit-tokens.js'
       - 'scripts/check-governance-sync.mjs'
+      # Storybook registration guard (tests/governance/storybook-component-
+      # registration.spec.js): a new component or a preview.js change must be
+      # checked before merge, not only on the push-to-main run.
+      - 'components/**'
+      - '.storybook/preview.js'
 
 permissions:
   contents: write
