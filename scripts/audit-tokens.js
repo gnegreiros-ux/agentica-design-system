@@ -377,6 +377,10 @@ function main() {
     'packages/tokens/tailwind/',
     'packages/tokens/tokens/',
     'packages/components/',
+    // doc-generator output built fresh by playwright.config.js's webServer for
+    // the C5-06 accessibility spec (gitignored) — only ever skipped before by
+    // accident, via the 'dist' substring in its name.
+    'tests/functional/fixtures/doc-generator-dist/',
   ];
   // decisions/*.md cite historical hex values as part of explaining a past
   // decision (e.g. "teal.9 -> a resolved hex") — an ADR is immutable once active
@@ -408,11 +412,14 @@ function main() {
     'clone/personnalisation/branding/',
   ];
   const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS, ...PRIMITIVE_LAYER_PATHS];
+  // No substring test on 'dist' here: dist/ directories are already skipped by
+  // exact basename in getSourceFiles(), while f.includes('dist') matched the
+  // absolute path — any file under distribution/, a *dist*.js name, or a clone
+  // living under e.g. ~/distrib/ silently escaped the whole audit.
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f =>
         !f.includes('node_modules') &&
-        !f.includes('dist') &&
         !EXCLUDED_PATHS.some(p => f.includes(p))
       );
 
@@ -445,10 +452,12 @@ function main() {
     generateReport({ orphaned, phantoms, violations, structureIssues });
   }
 
-  // CI mode — exit 1 on critical violations
+  // CI mode — exit 1 on critical violations. process.exitCode, not
+  // process.exit(): exit() can terminate before piped stdout is flushed,
+  // truncating the violation details in CI logs (issue 118).
   if (CONFIG.ciMode && criticalCount > 0) {
     log(`${RED}CI: failed — fix critical violations before merging.${RESET}\n`);
-    process.exit(1);
+    process.exitCode = 1;
   }
 }
 
