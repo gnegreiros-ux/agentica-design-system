@@ -5,10 +5,9 @@ name: Site — dist freshness
 # any of those without rebuilding leaves a stale, committed site/dist/ that
 # nobody notices until the next unrelated rebuild silently absorbs the fix.
 #
-# Rebuilds and diffs against the committed site/dist/. site/dist/audit.html
-# is excluded on purpose — it embeds the actual build timestamp, so it always
-# differs between "committed" and "just rebuilt" even with zero real changes;
-# see this workflow's introducing commit for how that was confirmed.
+# Rebuilds and diffs against the committed site/dist/, audit.html included:
+# its date now comes from `git log` over the audit's sources instead of the
+# build clock (issue 134), so a stale committed audit verdict fails here too.
 
 on:
   push:
@@ -25,7 +24,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           # Full history: site/build.js derives each sitemap.xml page's
-          # <lastmod> from `git log -- <source file>`, which needs the real
+          # <lastmod> and audit.html's date from `git log`, which needs the real
           # commit history, not the default shallow (depth-1) checkout.
           fetch-depth: 0
 
@@ -44,7 +43,7 @@ jobs:
 
       - name: Check site/dist/ is up to date
         run: |
-          if ! git diff --exit-code -- site/dist -- ':(exclude)site/dist/audit.html'; then
+          if ! git diff --exit-code -- site/dist; then
             echo "::error::site/dist/ is stale — run 'node site/build.js' and commit the result."
             exit 1
           fi

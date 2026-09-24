@@ -192,6 +192,13 @@ StyleDictionary.registerFormat({
 });
 
 // ─── BUILD ─────────────────────────────────────────────────────────────────
+// Built-in formats (css/variables, javascript/es6, ios-swift, android/*) stamp
+// "Generated on <wall-clock date>" in their header — two builds of the same
+// tokens then differ byte for byte, so a published @agentica-ds/tokens tarball
+// can't be matched to its commit, and every rebuild adds diff noise to the
+// tracked dist/tokens/ (issues 123, 134). Keep the rest of the default header.
+const stableHeader = defaultHeader => defaultHeader.filter(line => !line.startsWith('Generated on'));
+
 const sd = StyleDictionary.extend({
   source: ['tokens/primitives.json', 'tokens/semantic.json', 'tokens/component.json'],
 
@@ -205,24 +212,25 @@ const sd = StyleDictionary.extend({
         {
           destination: 'primitives.css',
           format: 'css/variables',
+          options: { fileHeader: stableHeader },
           filter: t => t.attributes?.level === 'primitive' && !isReadme(t),
         },
         {
           destination: 'semantic.css',
           format: 'css/variables',
-          options: { outputReferences: true },
+          options: { outputReferences: true, fileHeader: stableHeader },
           filter: t => t.attributes?.level === 'semantic' && !isReadme(t),
         },
         {
           destination: 'components.css',
           format: 'css/variables',
-          options: { outputReferences: true },
+          options: { outputReferences: true, fileHeader: stableHeader },
           filter: t => t.attributes?.level === 'component' && !isReadme(t),
         },
         {
           destination: 'all.css',
           format: 'css/variables',
-          options: { outputReferences: true },
+          options: { outputReferences: true, fileHeader: stableHeader },
           filter: t => !isReadme(t),
         },
       ],
@@ -236,6 +244,7 @@ const sd = StyleDictionary.extend({
         {
           destination: 'tokens.js',
           format: 'javascript/es6',
+          options: { fileHeader: stableHeader },
           filter: t => !isReadme(t),
         },
       ],
@@ -275,6 +284,7 @@ const sd = StyleDictionary.extend({
         {
           destination: 'AgenticaTokens.swift',
           format: 'ios-swift/class.swift',
+          options: { fileHeader: stableHeader },
           className: 'AgenticaTokens',
           filter: t => !isReadme(t),
         },
@@ -289,11 +299,13 @@ const sd = StyleDictionary.extend({
         {
           destination: 'tokens.colors.xml',
           format: 'android/colors',
+          options: { fileHeader: stableHeader },
           filter: t => !isReadme(t),
         },
         {
           destination: 'tokens.dimens.xml',
           format: 'android/dimens',
+          options: { fileHeader: stableHeader },
           filter: t => !isReadme(t),
         },
       ],
