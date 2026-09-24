@@ -121,6 +121,7 @@ production or during a random manual review.
 |------|-------|
 | 2026-05-28 | Decision adopted (ADR-006) |
 | 2026-06-01 | **Activation** — `chromatic.md` pipeline → Active, `.github/workflows/chromatic.yml` CI workflow added |
+| 2026-09-24 | **Snapshot quota** — free-tier limit hit again: trigger moved from `pull_request` to `push` on non-`main` branches (required by TurboSnap), paths narrowed to what builds Storybook (`components/`, `.storybook/`, `tokens/`, `style-dictionary/`, `package*.json`), TurboSnap (`onlyChanged`) enabled |
 
 **Token management.** `CHROMATIC_PROJECT_TOKEN` lives exclusively in GitHub
 secrets — never in clear text in the repo (not in `package.json`, not in a
@@ -253,6 +254,7 @@ revue manuelle aléatoire.
 |------|-----------|
 | 2026-05-28 | Décision adoptée (ADR-006) |
 | 2026-06-01 | **Activation** — pipeline `chromatic.md` → Actif, workflow CI `.github/workflows/chromatic.yml` ajouté |
+| 2026-09-24 | **Quota de snapshots** — limite du plan gratuit de nouveau atteinte : déclencheur passé de `pull_request` à `push` sur les branches autres que `main` (requis par TurboSnap), chemins réduits à ce qui construit Storybook (`components/`, `.storybook/`, `tokens/`, `style-dictionary/`, `package*.json`), TurboSnap (`onlyChanged`) activé |
 
 **Gestion du token.** Le `CHROMATIC_PROJECT_TOKEN` vit exclusivement dans les secrets
 GitHub — jamais en clair dans le dépôt (ni `package.json`, ni workflow). Le token initial

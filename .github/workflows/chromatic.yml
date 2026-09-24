@@ -5,23 +5,29 @@ name: Chromatic — Visual regression
 
 on:
   # Scope intentionally narrow: the free Chromatic account has already
-  # hit its snapshot limit (same reason it was disabled on 2026-07-02).
-  # Chromatic is therefore not a continuous check on this project, but a
-  # point-in-time tool — triggered only when a visual change is plausible.
-  # `push` is intentionally absent so it doesn't re-consume this quota on
-  # every commit.
-  pull_request:
+  # hit its snapshot limit (disabled on 2026-07-02, over quota again in
+  # 2026-09). Chromatic is therefore not a continuous check on this project,
+  # but a point-in-time tool — triggered only when a visual change is
+  # plausible.
+  #
+  # Paths = only what builds Storybook (components, its config, the tokens
+  # it renders with, dependencies). site/build.js, guidelines/, decisions/
+  # and scripts/ used to be listed too: they never reach Storybook, yet
+  # site/build.js alone (the site changelog) triggered a full ~208-snapshot
+  # build on almost every PR.
+  #
+  # `push` on every branch except main, not `pull_request`: TurboSnap
+  # (onlyChanged below) is not compatible with the pull_request trigger —
+  # it runs on an ephemeral merge commit that isn't in git history, so
+  # changed-file detection is unreliable (chromatic.com/docs/turbosnap/setup).
+  # main stays excluded so merges don't re-consume the quota.
+  push:
+    branches-ignore: [main]
     paths:
       - 'components/**'
+      - '.storybook/**'
       - 'tokens/**'
-      - 'guidelines/**'
-      - 'decisions/ADR-*.md'
-      - 'site/build.js'
       - 'style-dictionary/**'
-      - 'scripts/smoke-test.js'
-      - 'scripts/validate-contracts.js'
-      - 'scripts/axe-audit.js'
-      - '.github/workflows/full-audit.yml'
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch:
@@ -59,3 +65,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true # a visual diff doesn't block CI — a human approves in Chromatic
+          # TurboSnap: only snapshot stories whose dependency graph changed;
+          # the rest are copied (billed at 1/5) or bypassed. Needs the full git
+          # history above; the CLI adds --stats-json to build-storybook itself.
+          onlyChanged: true
