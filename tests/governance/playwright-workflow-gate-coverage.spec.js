@@ -62,7 +62,7 @@ const GATE_JOB_NAME = 'Governance & accessibility fixtures (PR gate)';
 const GATE_JOB_ID = 'governance-checks';
 
 // Every tests/functional/ spec NOT covered by the gate's path filter must be
-// named here, with a real reason — never a placeholder. All seven existing
+// named here, with a real reason — never a placeholder. All eight existing
 // exclusions test the production site itself (real site/dist pages on
 // baseURL :8080), not the decoupling governance suite: they belong to the
 // full visual/functional/3-browser matrix that ADR-076 deliberately kept
@@ -84,6 +84,10 @@ const EXCLUDED_FUNCTIONAL_SPECS = [
   {
     path: 'tests/functional/components/toggle.spec.js',
     reason: 'Production-site interaction test on toggle.html — same push-to-main-only matrix.',
+  },
+  {
+    path: 'tests/functional/components/top-nav.spec.js',
+    reason: 'Production-site interaction test (agtc-top-nav active link, injected on button.html) — same push-to-main-only matrix.',
   },
   {
     path: 'tests/functional/language.spec.js',
