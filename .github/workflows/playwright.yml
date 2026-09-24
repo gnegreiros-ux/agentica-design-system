@@ -113,13 +113,21 @@ jobs:
           path: blob-report/
           retention-days: 1
 
+      # always(): a single unrelated failing test must not discard baselines
+      # that were correctly regenerated in this runner (#141). The warning below
+      # flags an artifact produced by a partially red run — review it before
+      # committing, and only take the files you expected to change.
       - name: Upload updated snapshots
-        if: ${{ inputs.update_snapshots == true }}
+        if: ${{ always() && inputs.update_snapshots == true }}
         uses: actions/upload-artifact@v4
         with:
           name: snapshots-updated-${{ matrix.browser }}
           path: tests/visual/snapshots/
           retention-days: 7
+
+      - name: Flag snapshots from a failed run
+        if: ${{ failure() && inputs.update_snapshots == true }}
+        run: echo "::warning title=Snapshots from a failed run::snapshots-updated-${{ matrix.browser }} was uploaded although some tests failed — review the failures and diff the artifact before committing any baseline."
 
   publish-report:
     name: Publish report → designsystem.gnegreiros.com/playwright-report/
