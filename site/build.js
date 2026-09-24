@@ -52,6 +52,14 @@ function esc(t) {
 function stripCodeSpans(t) {
   return String(t).replace(/`([^`]+)`/g, '$1');
 }
+// HTML contexts for a short one-line title (ADR H1, decisions index link):
+// escape everything, and render `code` spans as <code>. Unlike inl(), the text
+// outside code spans is escaped too, and no other Markdown is interpreted.
+function codeSpans(t) {
+  return String(t).split(/(`[^`]+`)/).map(part =>
+    /^`[^`]+`$/.test(part) ? `<code>${esc(part.slice(1, -1))}</code>` : esc(part)
+  ).join('');
+}
 function inl(t) {
   return t
     .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
@@ -1176,6 +1184,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .adr-num{font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:var(--agtc-semantic-typography-label-weight)}
 .adr-title a:hover{text-decoration:underline}
+.adr-title code{word-break:normal}
 /* ── agtc-badge (classe — moitié light DOM du mix, ADR-034 ; dogfooding cat. A) ── */
 .agtc-badge{display:inline-flex;align-items:center;gap:var(--agtc-space-1);font-weight:var(--agtc-semantic-typography-label-weight);line-height:1;white-space:nowrap;border:1px solid transparent;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size)}
 .agtc-badge.sm{padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);font-size:var(--agtc-component-badge-sm-font-size)}
@@ -7216,7 +7225,7 @@ function buildDecisionsIndex(adrs) {
   const rows = adrs.map(a => `
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
-  <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
+  <td class="adr-title"><a href="${a.slug}.html">${codeSpans(a.title)}</a></td>
   <td><agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
@@ -7296,7 +7305,7 @@ function buildADR(adr, adrs) {
     ${statusBadge}
     ${typeBadge}
   </div>
-  <h1 class="adr-page-title">${esc(adr.title)}</h1>
+  <h1 class="adr-page-title">${codeSpans(adr.title)}</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -8216,6 +8225,7 @@ function buildChangelog() {
           {fr:'<code>scripts/audit-tokens.js</code> : le filtre <code>f.includes(\'dist\')</code> testait une sous-chaîne du chemin absolu — tout fichier dont le chemin contenait « dist » (un dossier <code>distribution/</code>, ou un clone du repo sous <code>~/distrib/</code>) échappait silencieusement à tout l\'audit, y compris <code>primitive-direct</code> désormais bloquant. Retiré : les dossiers <code>dist/</code> restent exclus par nom exact dans <code>getSourceFiles()</code>. Seule sortie générée qui n\'était exclue que par ce hasard, <code>tests/functional/fixtures/doc-generator-dist/</code>, est désormais listée explicitement dans <code>GENERATED_PATHS</code>. Et <code>--ci</code> fixe <code>process.exitCode</code> au lieu d\'appeler <code>process.exit(1)</code>, qui pouvait tronquer le détail des violations dans les logs CI (issue #118)',en:'<code>scripts/audit-tokens.js</code>: the <code>f.includes(\'dist\')</code> filter tested a substring of the absolute path — any file whose path contained “dist” (a <code>distribution/</code> folder, or a clone of the repo under <code>~/distrib/</code>) silently escaped the whole audit, including the now-blocking <code>primitive-direct</code>. Removed: <code>dist/</code> directories stay excluded by exact name in <code>getSourceFiles()</code>. The only generated output that was excluded by that accident, <code>tests/functional/fixtures/doc-generator-dist/</code>, is now listed explicitly in <code>GENERATED_PATHS</code>. And <code>--ci</code> sets <code>process.exitCode</code> instead of calling <code>process.exit(1)</code>, which could truncate the violation details in CI logs (issue #118)'}, // audit-ignore: issue number, not a color
           {fr:'<code>playwright.yml</code> : l\'étape « Upload updated snapshots » s\'exécute désormais en <code>always()</code> — un seul test rouge sans rapport ne jette plus les baselines correctement régénérées par <code>update_snapshots=true</code>, qui étaient jusqu\'ici écartées sans erreur (étape <code>skipped</code>). Un avertissement signale dans le résumé du run tout artefact issu d\'un run partiellement rouge, à relire avant de committer (issue #141)',en:'<code>playwright.yml</code>: the “Upload updated snapshots” step now runs under <code>always()</code> — a single unrelated failing test no longer discards baselines correctly regenerated by <code>update_snapshots=true</code>, which were until now silently dropped (step <code>skipped</code>). A warning in the run summary flags any artifact coming from a partially red run, to review before committing (issue #141)'}, // audit-ignore: issue number, not a color
           {fr:'Builds reproductibles : <code>style-dictionary/build.cjs</code> retire la ligne <code>Generated on &lt;date&gt;</code> que ses formats intégrés (CSS, JS, iOS, Android) tamponnaient avec l\'horloge — deux builds du même commit sont désormais identiques à l\'octet près, pour le paquet <code>@agentica-ds/tokens</code> publié comme pour <code>dist/tokens/</code> versionné. Le test C3-09 retire son contournement et compare les vrais octets publiés. Même correction pour <code>audit.html</code> : sa date provient de <code>git log</code> sur les sources de l\'audit plutôt que de l\'heure du build, ce qui permet à <code>site-freshness</code> de le vérifier à nouveau — un verdict d\'audit périmé resté commité passait jusqu\'ici inaperçu (issues #123, #134)',en:'Reproducible builds: <code>style-dictionary/build.cjs</code> drops the <code>Generated on &lt;date&gt;</code> line its built-in formats (CSS, JS, iOS, Android) stamped from the clock — two builds of the same commit are now byte-identical, for the published <code>@agentica-ds/tokens</code> package as well as the tracked <code>dist/tokens/</code>. The C3-09 test drops its workaround and compares the real published bytes. Same fix for <code>audit.html</code>: its date now comes from <code>git log</code> over the audit\'s sources instead of the build clock, so <code>site-freshness</code> checks it again — a stale committed audit verdict used to go unnoticed (issues #123, #134)'}, // audit-ignore: issue numbers, not colors
+          {fr:'Titres d\'ADR : les spans de code Markdown (44 titres, ex. <code>agtc-input</code>) s\'affichent désormais en <code>&lt;code&gt;</code> dans le H1 de chaque page de décision et dans l\'index des décisions, au lieu de backticks bruts. Le texte est échappé d\'abord, puis enveloppé — le contenu d\'un span peut contenir <code>*</code>, <code>_</code> ou <code>&lt;</code>. Dans l\'index, le code d\'un titre n\'est plus coupé en plein mot (issue #147, volet B de #145)',en:'ADR titles: Markdown code spans (44 titles, e.g. <code>agtc-input</code>) now render as <code>&lt;code&gt;</code> in each decision page\'s H1 and in the decisions index, instead of raw backticks. Text is escaped first, then wrapped — a span\'s content may hold <code>*</code>, <code>_</code> or <code>&lt;</code>. In the index, code in a title no longer breaks mid-word (issue #147, part B of #145)'}, // audit-ignore: issue numbers, not colors
         ]},
       ],
     },
