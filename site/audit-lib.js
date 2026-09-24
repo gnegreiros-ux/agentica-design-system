@@ -245,7 +245,9 @@ function auditContrast() {
 function collectPages(excludeFile) {
   const pages = [];
   function walk(dir) {
-    fs.readdirSync(dir).forEach(f => {
+    // Sorted: readdir order is filesystem-dependent (sorted on APFS, not on
+    // ext4), and audit.html lists violations in page order.
+    fs.readdirSync(dir).sort().forEach(f => {
       const fp = path.join(dir, f);
       if (fs.statSync(fp).isDirectory()) walk(fp);
       else if (f.endsWith('.html') && fp !== excludeFile) pages.push(fp);

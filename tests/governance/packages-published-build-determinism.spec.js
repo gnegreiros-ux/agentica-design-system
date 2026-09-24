@@ -40,17 +40,13 @@
 // so they were never affected. Confirmed by diffing two consecutive builds
 // directly: the header line was the only difference.
 //
-// This is a real, un-fixed gap, not a cosmetic one — tracked in
-// https://github.com/gnegreiros-ux/agentica-design-system/issues/123.
-// It means two builds of the same commit produce different tarballs,
-// which is exactly the property this test exists to check, and exactly
-// the reason the network-based "matches what's actually on the npm
-// registry" half of C3-09 was ruled out in the first place: even a
-// network read would never land on a stable target to compare against.
-// The exclusion below keeps this file executable without that gap
-// swallowing every other assertion in it — it does not close #123, and
-// must be removed once #123 lands (style-dictionary's own fileHeader
-// option can drop the timestamp without touching the rest of the format).
+// That gap is tracked in, and was fixed by,
+// https://github.com/gnegreiros-ux/agentica-design-system/issues/123:
+// style-dictionary/build.cjs now passes a fileHeader option that drops the
+// timestamp line (keeping "Do not edit directly") on every built-in-format
+// output. Until then this file stripped that line before hashing to stay
+// executable; the exclusion is gone, so the idempotence check below now
+// compares the real bytes that get published.
 //   2. R3/R4 parity: scripts/audit-tokens.js --src-dir, run against the
 //      freshly built packages/components/ and against a stories-free copy
 //      of components/, must reach the same critical-violation verdict —
@@ -145,23 +141,12 @@ function restoreTree(dir, backup) {
   }
 }
 
-// KNOWN, UN-FIXED GAP — https://github.com/gnegreiros-ux/agentica-design-system/issues/123
-// style-dictionary's built-in css/variables and javascript/es6 formats
-// stamp a wall-clock "Generated on <date>" comment, making two builds of
-// the same commit byte-different. Excluded here only so this file stays
-// executable — this is NOT the C5-05 "normal, expected" timestamp case
-// (a build identifier that's supposed to change); it is a real
-// reproducibility defect in a package already published to npm. Remove
-// this exclusion once #123 is fixed, rather than carrying it forward.
-const GENERATED_ON_LINE = /^.*Generated on .+$/gm;
-
 function snapshot(dir, { exclude = [] } = {}) {
   const snap = {};
   for (const file of listFiles(dir)) {
     const rel = relative(dir, file);
     if (exclude.includes(rel)) continue;
-    const content = readFileSync(file, 'utf8').replace(GENERATED_ON_LINE, '');
-    snap[rel] = createHash('sha256').update(content).digest('hex');
+    snap[rel] = createHash('sha256').update(readFileSync(file)).digest('hex');
   }
   return snap;
 }
