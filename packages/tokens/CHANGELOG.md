@@ -1,5 +1,15 @@
 # @agentica-ds/tokens
 
+## 1.0.1
+
+### Patch Changes
+
+- 66c7b28: Drop the `Generated on <date>` line from the header comment of the built CSS and JS
+  files (`all.css`, `components.css`, `primitives.css`, `semantic.css`, `js/tokens.js`).
+  It was stamped with the build clock, so two builds of the same commit produced
+  different tarballs; the build is now byte-for-byte reproducible. No token name or
+  value changes.
+
 ## 1.0.0
 
 ### Major Changes
