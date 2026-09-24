@@ -1,0 +1,182 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: governance/playwright-workflow-gate-coverage.spec.js >> every tests/governance/ and tests/functional/ spec is covered by the PR gate or explicitly, individually excluded
+- Location: tests/governance/playwright-workflow-gate-coverage.spec.js:151:1
+
+# Error details
+
+```
+Error: tests/functional/components/top-nav.spec.js is neither covered by pull_request.paths nor listed in EXCLUDED_FUNCTIONAL_SPECS — it would silently never run on a PR. Either add it to the path filter, or add it to EXCLUDED_FUNCTIONAL_SPECS with a real reason.
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+# Test source
+
+```ts
+  77  |     path: 'tests/functional/components/segmented.spec.js',
+  78  |     reason: 'Production-site interaction test on segmented.html — same push-to-main-only matrix as button.spec.js.',
+  79  |   },
+  80  |   {
+  81  |     path: 'tests/functional/components/tabs.spec.js',
+  82  |     reason: 'Production-site interaction test on tabs.html — same push-to-main-only matrix.',
+  83  |   },
+  84  |   {
+  85  |     path: 'tests/functional/components/toggle.spec.js',
+  86  |     reason: 'Production-site interaction test on toggle.html — same push-to-main-only matrix.',
+  87  |   },
+  88  |   {
+  89  |     path: 'tests/functional/language.spec.js',
+  90  |     reason: 'Bilingual-rendering check (ADR-070/071/075) across the whole production site — same push-to-main-only matrix, not a governance-suite concern.',
+  91  |   },
+  92  |   {
+  93  |     path: 'tests/functional/nav.spec.js',
+  94  |     reason: 'Production-site navigation (mega menu) test — same push-to-main-only matrix.',
+  95  |   },
+  96  |   {
+  97  |     path: 'tests/functional/sidebar.spec.js',
+  98  |     reason: 'Production-site docs-sidebar test — same push-to-main-only matrix.',
+  99  |   },
+  100 | ];
+  101 | 
+  102 | function findSpecsRecursive(dir) {
+  103 |   const out = [];
+  104 |   for (const entry of readdirSync(dir)) {
+  105 |     const full = join(dir, entry);
+  106 |     if (statSync(full).isDirectory()) {
+  107 |       out.push(...findSpecsRecursive(full));
+  108 |     } else if (entry.endsWith('.spec.js')) {
+  109 |       out.push(full);
+  110 |     }
+  111 |   }
+  112 |   return out;
+  113 | }
+  114 | 
+  115 | function toRepoRelative(absolutePath) {
+  116 |   return absolutePath.slice(ROOT.length + 1).split('\\').join('/');
+  117 | }
+  118 | 
+  119 | function isCoveredByPaths(relPath, patterns) {
+  120 |   return patterns.some((pattern) => {
+  121 |     if (pattern.endsWith('/**')) {
+  122 |       const prefix = pattern.slice(0, -3);
+  123 |       return relPath === prefix || relPath.startsWith(`${prefix}/`);
+  124 |     }
+  125 |     return relPath === pattern;
+  126 |   });
+  127 | }
+  128 | 
+  129 | function loadWorkflow() {
+  130 |   const workflowText = readFileSync(WORKFLOW_PATH, 'utf8');
+  131 |   // js-yaml's default schema (YAML 1.2) parses a bare `on:` key as the
+  132 |   // literal string "on", not the boolean true — verified directly against
+  133 |   // this exact file before relying on it (some other YAML parsers/schemas
+  134 |   // are known to coerce `on:` to a boolean, which would break this read).
+  135 |   const doc = loadYaml(workflowText);
+  136 |   return { doc, declaredPaths: doc.on.pull_request.paths };
+  137 | }
+  138 | 
+  139 | function findGovernanceChecksRunCommand(doc) {
+  140 |   const job = doc.jobs[GATE_JOB_ID];
+  141 |   if (!job) {
+  142 |     throw new Error(`No "${GATE_JOB_ID}" job found in playwright.yml — has the gate job been renamed?`);
+  143 |   }
+  144 |   const runStep = job.steps.find((step) => typeof step.run === 'string' && step.run.includes('playwright test'));
+  145 |   if (!runStep) {
+  146 |     throw new Error(`No step running "playwright test" found in the "${GATE_JOB_ID}" job — has it been restructured?`);
+  147 |   }
+  148 |   return runStep.run;
+  149 | }
+  150 | 
+  151 | test('every tests/governance/ and tests/functional/ spec is covered by the PR gate or explicitly, individually excluded', () => {
+  152 |   const { declaredPaths } = loadWorkflow();
+  153 | 
+  154 |   const governanceSpecs = findSpecsRecursive(join(ROOT, 'tests', 'governance')).map(toRepoRelative);
+  155 |   const functionalSpecs = findSpecsRecursive(join(ROOT, 'tests', 'functional')).map(toRepoRelative);
+  156 | 
+  157 |   const excludedPaths = new Set(EXCLUDED_FUNCTIONAL_SPECS.map((entry) => entry.path));
+  158 | 
+  159 |   // Every governance spec must be covered — there is no legitimate exclusion
+  160 |   // for a governance test from its own gate.
+  161 |   for (const relPath of governanceSpecs) {
+  162 |     expect(
+  163 |       isCoveredByPaths(relPath, declaredPaths),
+  164 |       `${relPath} is not covered by playwright.yml's pull_request.paths filter — a governance spec must never be excluded from its own gate`
+  165 |     ).toBe(true);
+  166 |   }
+  167 | 
+  168 |   // Every functional spec is either covered or explicitly excluded with a reason.
+  169 |   for (const relPath of functionalSpecs) {
+  170 |     const covered = isCoveredByPaths(relPath, declaredPaths);
+  171 |     const excluded = excludedPaths.has(relPath);
+  172 |     expect(
+  173 |       covered || excluded,
+  174 |       `${relPath} is neither covered by pull_request.paths nor listed in EXCLUDED_FUNCTIONAL_SPECS — ` +
+  175 |         `it would silently never run on a PR. Either add it to the path filter, or add it to ` +
+  176 |         `EXCLUDED_FUNCTIONAL_SPECS with a real reason.`
+> 177 |     ).toBe(true);
+      |       ^ Error: tests/functional/components/top-nav.spec.js is neither covered by pull_request.paths nor listed in EXCLUDED_FUNCTIONAL_SPECS — it would silently never run on a PR. Either add it to the path filter, or add it to EXCLUDED_FUNCTIONAL_SPECS with a real reason.
+  178 |     if (covered && excluded) {
+  179 |       throw new Error(`${relPath} is both covered by the path filter and listed as excluded — remove it from EXCLUDED_FUNCTIONAL_SPECS, the entry is stale.`);
+  180 |     }
+  181 |   }
+  182 | 
+  183 |   // The exclusion list itself must not drift: every entry must name a real,
+  184 |   // still-existing, still-uncovered functional spec — never a write-once
+  185 |   // escape hatch nobody audits again.
+  186 |   const functionalSpecsSet = new Set(functionalSpecs);
+  187 |   for (const entry of EXCLUDED_FUNCTIONAL_SPECS) {
+  188 |     expect(entry.reason && entry.reason.length > 0, `EXCLUDED_FUNCTIONAL_SPECS entry for ${entry.path} has no reason`).toBeTruthy();
+  189 |     expect(
+  190 |       functionalSpecsSet.has(entry.path),
+  191 |       `EXCLUDED_FUNCTIONAL_SPECS names ${entry.path}, which no longer exists under tests/functional/ — remove this stale entry`
+  192 |     ).toBe(true);
+  193 |   }
+  194 | });
+  195 | 
+  196 | test('tests/governance appears as a whole directory in both pull_request.paths and the governance-checks run command', () => {
+  197 |   const { doc, declaredPaths } = loadWorkflow();
+  198 |   const runCommand = findGovernanceChecksRunCommand(doc);
+  199 | 
+  200 |   expect(
+  201 |     declaredPaths,
+  202 |     `pull_request.paths must include 'tests/governance/**' as a whole-directory entry (found: ${JSON.stringify(declaredPaths)})`
+  203 |   ).toContain('tests/governance/**');
+  204 | 
+  205 |   const runCommandTokens = runCommand.trim().split(/\s+/);
+  206 |   expect(
+  207 |     runCommandTokens,
+  208 |     `the ${GATE_JOB_ID} job's run command must pass 'tests/governance' as a whole directory (found command: ${runCommand})`
+  209 |   ).toContain('tests/governance');
+  210 | });
+  211 | 
+  212 | test('main branch protection does not yet require the PR gate as a status check — characterizes #149', () => {
+  213 |   let requiredContexts;
+  214 |   try {
+  215 |     const raw = execFileSync(
+  216 |       'gh',
+  217 |       ['api', `repos/${REPO_SLUG}/branches/main/protection/required_status_checks`, '--jq', '.contexts'],
+  218 |       { encoding: 'utf8' }
+  219 |     );
+  220 |     requiredContexts = JSON.parse(raw);
+  221 |   } catch (error) {
+  222 |     test.skip(true, `gh CLI unavailable or not authorized to read ${REPO_SLUG}'s branch protection — cannot verify #149 from here (${error.message})`);
+  223 |     return;
+  224 |   }
+  225 | 
+  226 |   expect(
+  227 |     requiredContexts,
+  228 |     `"${GATE_JOB_NAME}" is now a required status check on main — #149 has been resolved. Update this test to assert it IS required (and close https://github.com/${REPO_SLUG}/issues/149 if not already done)`
+  229 |   ).not.toContain(GATE_JOB_NAME);
+  230 | });
+  231 | 
+```
