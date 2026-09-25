@@ -18,6 +18,33 @@ function describeType(value) {
   return typeof value;
 }
 
+// audit.lastResult (optional, ADR-100): the verdict of an audit that actually
+// ran before generation. The compliance badge renders it; without it the badge
+// says "not verified" — never a claim the audit did not produce.
+const ISO_DATE_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/;
+
+function validateLastResult(lastResult, wrongType) {
+  const at = (field) => `audit.lastResult.${field}`;
+  if (typeof lastResult !== 'object' || lastResult === null || Array.isArray(lastResult)) {
+    wrongType.push(`audit.lastResult (expected an object, got ${describeType(lastResult)})`);
+    return;
+  }
+  const { passed, violationCount, ranAt, engine } = lastResult;
+  if (typeof passed !== 'boolean') wrongType.push(`${at('passed')} (expected a boolean, got ${describeType(passed)})`);
+  if (!Number.isInteger(violationCount) || violationCount < 0) {
+    wrongType.push(`${at('violationCount')} (expected an integer >= 0, got ${JSON.stringify(violationCount) ?? 'undefined'})`);
+  }
+  if (typeof ranAt !== 'string' || !ISO_DATE_TIME.test(ranAt) || Number.isNaN(Date.parse(ranAt))) {
+    wrongType.push(`${at('ranAt')} (expected an ISO 8601 date-time string, got ${JSON.stringify(ranAt) ?? 'undefined'})`);
+  }
+  if (typeof engine !== 'string' || engine === '') {
+    wrongType.push(`${at('engine')} (expected a non-empty string, got ${engine === '' ? 'an empty string' : describeType(engine)})`);
+  }
+  if (passed === true && Number.isInteger(violationCount) && violationCount > 0) {
+    wrongType.push(`audit.lastResult (passed is true but violationCount is ${violationCount} — contradictory verdict)`);
+  }
+}
+
 export function readManifest(manifestPath) {
   const absolutePath = resolve(manifestPath);
 
@@ -62,6 +89,7 @@ export function readManifest(manifestPath) {
     else if (typeof manifest.audit.badgeEnabled !== 'boolean') {
       wrongType.push(`audit.badgeEnabled (expected a boolean, got ${describeType(manifest.audit.badgeEnabled)})`);
     }
+    if (manifest.audit.lastResult !== undefined) validateLastResult(manifest.audit.lastResult, wrongType);
   }
 
   requireString('site', manifest.site);
