@@ -5,18 +5,14 @@
 // rejected manifest means outDir is never even created — asserted directly below,
 // not inferred from the process exit code alone.
 //
-// Three cases, matching manifest.mjs's actual checks: a missing top-level field, a
-// JSON syntax error, and the one field this generator does type-check —
-// audit.badgeEnabled (typeof !== 'boolean', not just truthiness like every other
-// field). The two other "wrong type" cases the plan originally grouped under
-// C5-04 are NOT here:
-// - tokens.*/components/audit.engine given a wrong type is a separate
-//   characterization test (doc-generator-manifest-type-safety.spec.js, #128) —
-//   readManifest() never type-checks those fields at all, so this generator
-//   currently accepts them and produces a silently wrong site, exit 0.
-// - governance/site given a wrong type crashes with an opaque message instead of
-//   a partial site, tracked as issue #129 (message-quality gap only) — no test,
-//   per the C5 plan.
+// Cases, matching manifest.mjs's actual checks: a missing top-level field, a
+// JSON syntax error, and a wrong type — every path/label field must be a
+// non-empty string and audit.badgeEnabled a boolean. Until issue 128 was fixed
+// only badgeEnabled was type-checked: a non-string components value was
+// stringified into the page ("[object Object]", exit 0), and a non-string
+// governance/site crashed inside node:path without naming the field (issue
+// 129). The last case covers the other half of 129: manifest.site pointing at
+// a file that is not valid JSON must name the field and both files.
 
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
@@ -89,6 +85,47 @@ test.describe('C5-04 — invalid manifest fails loudly, never a partial site', (
     expect(threw, 'malformed JSON must make the CLI exit non-zero').toBe(true);
     expect(output).toContain('not valid JSON');
     expect(existsSync(outDir), 'outDir must not exist at all after malformed JSON').toBe(false);
+  });
+
+  test('a non-string components value is rejected, naming the field and both types, no output written', () => {
+    const manifest = validManifest({ components: { thisShouldBeAString: true } });
+    const manifestPath = join(manifestDir, 'design-system.manifest.json');
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+
+    const { threw, output } = runGeneratorExpectingFailure(manifestPath, outDir);
+
+    expect(threw, 'components must be a string path, not an object stringified into the page').toBe(true);
+    expect(output).toContain('components (expected a non-empty string, got object)');
+    expect(output).not.toContain('[object Object]');
+    expect(existsSync(outDir), 'outDir must not exist at all after a rejected manifest').toBe(false);
+  });
+
+  test('a non-string governance value is rejected by name, not as an opaque node:path error', () => {
+    const manifest = validManifest({ governance: 42 });
+    const manifestPath = join(manifestDir, 'design-system.manifest.json');
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+
+    const { threw, output } = runGeneratorExpectingFailure(manifestPath, outDir);
+
+    expect(threw).toBe(true);
+    expect(output).toContain('governance (expected a non-empty string, got number)');
+    expect(output, 'the raw node:path message never named the manifest field').not.toContain('paths[1]');
+    expect(existsSync(outDir)).toBe(false);
+  });
+
+  test('manifest.site pointing to invalid JSON names the field, the manifest and the file, no output written', () => {
+    const manifest = validManifest({ site: 'site-broken.json' });
+    const manifestPath = join(manifestDir, 'design-system.manifest.json');
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+    writeFileSync(join(manifestDir, 'site-broken.json'), '{ not json');
+
+    const { threw, output } = runGeneratorExpectingFailure(manifestPath, outDir);
+
+    expect(threw).toBe(true);
+    expect(output).toContain('Manifest field "site"');
+    expect(output).toContain(manifestPath);
+    expect(output).toContain(join(manifestDir, 'site-broken.json'));
+    expect(existsSync(outDir)).toBe(false);
   });
 
   test('audit.badgeEnabled with the wrong type is rejected, naming the field, no output written', () => {

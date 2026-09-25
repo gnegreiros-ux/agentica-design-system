@@ -20,7 +20,18 @@ export function generateSite({ manifestPath, outDir }) {
 
   const governanceContent = readIfExists(resolveFromManifest(manifest.governance));
   const siteConfigRaw = readIfExists(resolveFromManifest(manifest.site));
-  const siteConfig = siteConfigRaw ? JSON.parse(siteConfigRaw) : {};
+  let siteConfig = {};
+  if (siteConfigRaw) {
+    try {
+      siteConfig = JSON.parse(siteConfigRaw);
+    } catch (error) {
+      // Name the manifest field and both files: the raw JSON.parse message
+      // only gave a position, never which manifest or field was at fault.
+      throw new Error(
+        `Manifest field "site" in ${resolve(manifestPath)} points to ${resolveFromManifest(manifest.site)}, which is not valid JSON: ${error.message}`
+      );
+    }
+  }
   const siteTitle = siteConfig.siteTitle ?? 'Design System';
 
   mkdirSync(outDir, { recursive: true });

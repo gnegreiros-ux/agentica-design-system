@@ -8,6 +8,16 @@ import { resolve } from 'node:path';
 
 const REQUIRED_TOKEN_LAYERS = ['primitive', 'semantic', 'component'];
 
+// Every field below is a path or a label: it must be a non-empty string. A
+// truthiness check alone let an object or a number through, which was then
+// stringified into the generated site ("[object Object]") or crashed deep in
+// node:path with a message that never named the field (issues 128, 129).
+function describeType(value) {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value;
+}
+
 export function readManifest(manifestPath) {
   const absolutePath = resolve(manifestPath);
 
@@ -28,30 +38,40 @@ export function readManifest(manifestPath) {
   }
 
   const missing = [];
-  if (!manifest.governance) missing.push('governance');
+  const wrongType = [];
+  const requireString = (name, value) => {
+    if (value === undefined || value === null || value === '') missing.push(name);
+    else if (typeof value !== 'string') wrongType.push(`${name} (expected a non-empty string, got ${describeType(value)})`);
+  };
+
+  requireString('governance', manifest.governance);
 
   if (!manifest.tokens) {
     missing.push('tokens');
   } else {
-    for (const layer of REQUIRED_TOKEN_LAYERS) {
-      if (!manifest.tokens[layer]) missing.push(`tokens.${layer}`);
-    }
+    for (const layer of REQUIRED_TOKEN_LAYERS) requireString(`tokens.${layer}`, manifest.tokens[layer]);
   }
 
-  if (!manifest.components) missing.push('components');
+  requireString('components', manifest.components);
 
   if (!manifest.audit) {
     missing.push('audit');
   } else {
-    if (!manifest.audit.engine) missing.push('audit.engine');
-    if (typeof manifest.audit.badgeEnabled !== 'boolean') missing.push('audit.badgeEnabled');
+    requireString('audit.engine', manifest.audit.engine);
+    if (manifest.audit.badgeEnabled === undefined) missing.push('audit.badgeEnabled');
+    else if (typeof manifest.audit.badgeEnabled !== 'boolean') {
+      wrongType.push(`audit.badgeEnabled (expected a boolean, got ${describeType(manifest.audit.badgeEnabled)})`);
+    }
   }
 
-  if (!manifest.site) missing.push('site');
+  requireString('site', manifest.site);
 
-  if (missing.length > 0) {
+  const problems = [];
+  if (missing.length > 0) problems.push(`missing required field(s): ${missing.join(', ')}`);
+  if (wrongType.length > 0) problems.push(`field(s) with the wrong type: ${wrongType.join(', ')}`);
+  if (problems.length > 0) {
     throw new Error(
-      `${absolutePath} is missing required field(s): ${missing.join(', ')}. Fix the manifest — this generator does not guess a fallback.`
+      `${absolutePath} has ${problems.join('; ')}. Fix the manifest — this generator does not guess a fallback.`
     );
   }
 
