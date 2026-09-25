@@ -13,6 +13,17 @@ function readIfExists(path) {
   return readFileSync(path, 'utf8');
 }
 
+// ADR-100: the badge renders a recorded verdict, never the badgeEnabled flag.
+// badgeEnabled only decides whether a compliance line is shown at all.
+function complianceLine({ badgeEnabled, lastResult }) {
+  if (!badgeEnabled) return 'Compliance badge: disabled';
+  if (!lastResult) return 'Compliance: <strong>not verified</strong> — no audit result recorded';
+  const { passed, violationCount, ranAt, engine } = lastResult;
+  const verdict = passed ? 'passed' : 'failed';
+  const count = `${violationCount} violation${violationCount === 1 ? '' : 's'}`;
+  return `Compliance: <strong>${verdict}</strong> — ${count}, audited <time datetime="${escapeHtml(ranAt)}">${escapeHtml(ranAt)}</time> with <code>${escapeHtml(engine)}</code>`;
+}
+
 export function generateSite({ manifestPath, outDir }) {
   const manifest = readManifest(manifestPath);
   const manifestDir = dirname(resolve(manifestPath));
@@ -61,7 +72,7 @@ export function generateSite({ manifestPath, outDir }) {
 </section>
 <section>
   <h2>Audit</h2>
-  <p>Engine: <code>${escapeHtml(manifest.audit.engine)}</code> — Compliance badge: ${manifest.audit.badgeEnabled ? 'enabled' : 'disabled'}</p>
+  <p>Engine: <code>${escapeHtml(manifest.audit.engine)}</code> — ${complianceLine(manifest.audit)}</p>
 </section>
 `.trim(),
     })

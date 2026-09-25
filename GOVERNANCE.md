@@ -62,7 +62,7 @@ No rule in this file is modifiable in the personalization layer. Any attempt to 
 
 - The accessibility, hard-coded-style, and token-consumption audits **always run**, on every build, regardless of any personalization configuration.
 - The default accessibility audit engine is **axe-core**. It is replaceable by another tool via an interface/adapter defined by the core — without ever modifying the rest of the core.
-- A **public compliance badge** (WCAG, hard-coded style, primitive tokens) displayed on the generated site is **optional**, enabled only in the personalization/governance layer. Its absence never affects whether the audit itself runs — the badge is a display, never a condition.
+- A **public compliance badge** (WCAG, hard-coded style, primitive tokens) displayed on the generated site is **optional**, enabled only in the personalization/governance layer. Its absence never affects whether the audit itself runs — the badge is a display, never a condition. When displayed, the badge shows the last recorded audit verdict — its result, date and engine. With no recorded verdict, it says the site is not verified: it never states a compliance the audit did not produce.
 
 ---
 

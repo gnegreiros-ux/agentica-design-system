@@ -1,22 +1,17 @@
-// C5-07 (reduced scope, per the C5 plan) — characterization of #130, not a green
-// test. doc-generator/src/build.mjs never runs any audit: the "Compliance badge"
-// line in generateSite() is an unconditional echo of manifest.audit.badgeEnabled —
-// `${manifest.audit.badgeEnabled ? 'enabled' : 'disabled'}` — with no read of
-// manifest.audit.engine's value and no check that manifest.governance actually
-// resolved to real content. This test proves the gap concretely: point
-// governance at a file that does not exist (so the page's own Governance section
-// says "not found at build time") while badgeEnabled stays true — the badge still
-// reads "enabled" in the same page, even though nothing that could be called an
-// audit ever ran against anything.
+// C5-07 — the compliance badge renders a recorded audit verdict, never the
+// badgeEnabled flag (ADR-100, issue 130). This file used to be a
+// characterization test proving the opposite: with badgeEnabled: true, the
+// generated site read "Compliance badge: enabled" even when governance pointed
+// nowhere and no audit had ever run.
 //
-// Same characterization convention as the other C5-04/#128 test and C2-05 (see
-// EXEC-005 in decisions/EXECUTION-LOG.md): asserts the current, wrong behavior by
-// name, not `test.fail()`, so it goes red the day #130 makes the badge reflect a
-// real audit verdict instead of echoing a flag.
+// doc-generator stays a pure renderer — it never runs an audit. badgeEnabled
+// only decides whether a compliance line is shown; its content comes from the
+// optional audit.lastResult, written by an audit step that actually ran before
+// generation. Four rendering cases, plus the lastResult validation.
 
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,38 +19,91 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CLI_PATH = join(ROOT, 'doc-generator', 'bin', 'cli.mjs');
 
-test('#130 — compliance badge reads "enabled" even though governance points nowhere and no audit ever ran', () => {
-  const tmpRoot = mkdtempSync(join(tmpdir(), 'doc-generator-badge-'));
+const RECORDED = { passed: true, violationCount: 0, ranAt: '2026-09-25T10:00:00Z', engine: 'axe-core' };
+
+let tmpRoot;
+let instanceDir;
+let outDir;
+
+test.beforeEach(() => {
+  tmpRoot = mkdtempSync(join(tmpdir(), 'doc-generator-badge-'));
+  instanceDir = join(tmpRoot, 'instance');
+  mkdirSync(instanceDir, { recursive: true });
+  writeFileSync(join(instanceDir, 'site.config.json'), JSON.stringify({ siteTitle: 'Badge Test', navigation: [] }));
+  outDir = join(tmpRoot, 'dist-docs');
+});
+
+test.afterEach(() => {
+  rmSync(tmpRoot, { recursive: true, force: true });
+});
+
+function writeManifest(audit) {
+  const manifest = {
+    governance: 'this-file-does-not-exist.md', // no audit could have run against anything
+    tokens: { primitive: 'p.json', semantic: 's.json', component: 'c.json' },
+    components: 'components/',
+    audit: { engine: 'axe-core', ...audit },
+    site: 'site.config.json',
+  };
+  const manifestPath = join(instanceDir, 'design-system.manifest.json');
+  writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+  return manifestPath;
+}
+
+function generate(audit) {
+  execFileSync('node', [CLI_PATH, writeManifest(audit), outDir], { encoding: 'utf8', stdio: 'pipe' });
+  return readFileSync(join(outDir, 'index.html'), 'utf8');
+}
+
+function generateExpectingFailure(audit) {
   try {
-    const instanceDir = join(tmpRoot, 'instance');
-    mkdirSync(instanceDir, { recursive: true });
-    writeFileSync(join(instanceDir, 'site.config.json'), JSON.stringify({ siteTitle: 'Badge Test', navigation: [] }));
-
-    const manifest = {
-      governance: 'this-file-does-not-exist.md', // deliberately absent
-      tokens: { primitive: 'p.json', semantic: 's.json', component: 'c.json' },
-      components: 'components/',
-      audit: { engine: 'nonexistent-engine', badgeEnabled: true },
-      site: 'site.config.json',
-    };
-    const manifestPath = join(instanceDir, 'design-system.manifest.json');
-    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-
-    const outDir = join(tmpRoot, 'dist-docs');
-    execFileSync('node', [CLI_PATH, manifestPath, outDir], { encoding: 'utf8' });
-
-    const indexHtml = readFileSync(join(outDir, 'index.html'), 'utf8');
-
-    expect(
-      indexHtml,
-      '#130: the Governance section should confirm the file was never found — otherwise this test fixture is not proving what it claims'
-    ).toContain('not found at build time');
-    expect(
-      indexHtml,
-      '#130: the compliance badge reads "enabled" with no audit ever having run and governance missing entirely — ' +
-        'it echoes audit.badgeEnabled, not a real verdict. Fix #130 to gate the badge on an actual audit result, then rewrite this as a green test.'
-    ).toContain('Compliance badge: enabled');
-  } finally {
-    rmSync(tmpRoot, { recursive: true, force: true });
+    execFileSync('node', [CLI_PATH, writeManifest(audit), outDir], { encoding: 'utf8', stdio: 'pipe' });
+  } catch (error) {
+    return `${error.stdout ?? ''}${error.stderr ?? ''}`;
   }
+  throw new Error('expected the generator to reject this manifest');
+}
+
+test('badge requested, no recorded verdict → "not verified", never "enabled"', () => {
+  const html = generate({ badgeEnabled: true });
+  expect(html, 'fixture sanity: governance must really be missing').toContain('not found at build time');
+  expect(html).toContain('<strong>not verified</strong> — no audit result recorded');
+  expect(html).not.toContain('Compliance badge: enabled');
+  expect(html).not.toMatch(/<strong>passed<\/strong>/);
+});
+
+test('badge requested, passing verdict → result, count, date and engine', () => {
+  const html = generate({ badgeEnabled: true, lastResult: RECORDED });
+  expect(html).toContain('<strong>passed</strong> — 0 violations, audited');
+  expect(html).toContain('<time datetime="2026-09-25T10:00:00Z">');
+  expect(html).toContain('with <code>axe-core</code>');
+});
+
+test('badge requested, failing verdict → "failed" with the violation count', () => {
+  const html = generate({ badgeEnabled: true, lastResult: { ...RECORDED, passed: false, violationCount: 1 } });
+  expect(html).toContain('<strong>failed</strong> — 1 violation, audited');
+});
+
+test('badge not requested → no compliance claim, even with a recorded verdict', () => {
+  const html = generate({ badgeEnabled: false, lastResult: RECORDED });
+  expect(html).toContain('Compliance badge: disabled');
+  expect(html).not.toMatch(/<strong>(passed|failed|not verified)<\/strong>/);
+});
+
+test('invalid lastResult is rejected, naming each field, no output written', () => {
+  const output = generateExpectingFailure({
+    badgeEnabled: true,
+    lastResult: { passed: 'yes', violationCount: -1, ranAt: 'yesterday', engine: '' },
+  });
+  expect(output).toContain('audit.lastResult.passed (expected a boolean, got string)');
+  expect(output).toContain('audit.lastResult.violationCount (expected an integer >= 0, got -1)');
+  expect(output).toContain('audit.lastResult.ranAt (expected an ISO 8601 date-time string, got "yesterday")');
+  expect(output).toContain('audit.lastResult.engine (expected a non-empty string, got an empty string)');
+  expect(existsSync(outDir)).toBe(false);
+});
+
+test('a contradictory verdict (passed with violations) is rejected', () => {
+  const output = generateExpectingFailure({ badgeEnabled: true, lastResult: { ...RECORDED, violationCount: 2 } });
+  expect(output).toContain('passed is true but violationCount is 2 — contradictory verdict');
+  expect(existsSync(outDir)).toBe(false);
 });
