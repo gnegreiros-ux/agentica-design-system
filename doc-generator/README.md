@@ -24,7 +24,7 @@ Defaults: `design-system.manifest.json` in the current directory, output written
 }
 ```
 
-A missing or incomplete manifest fails with a clear error message — this tool never guesses a fallback structure.
+A missing or incomplete manifest fails with a clear error message — this tool never guesses a fallback structure. Every path/label field must be a non-empty string and `audit.badgeEnabled` a boolean; a wrong type is rejected with the field name, the expected type and the type received. If `site` points to a file that isn't valid JSON, the error names the `site` field, the manifest and that file. In every rejection case, no output is written.
 
 ## Output is never versioned
 
