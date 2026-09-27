@@ -20,7 +20,8 @@ This system follows the **DTCG format** as the token interoperability standard:
 |-----------------|---------------------------|
 | `$value` | Token value (primitives) — e.g. `"$value": "#fcfcfc"` |
 | `$type` | Token type — `color`, `dimension`, etc. (mandatory, see `code-style.md`) |
-| `$description` | Human + agent readable description |
+| `$description` | The single human + agent readable description, on tokens, groups and file roots (`$intent` retired — ADR-102) |
+| `$extensions` | Team data under two vendor keys only: `com.agentica.usage` (token usage: role, use, doNotUse, alternative, decision, components) and `com.agentica.governance` (file/component contract, replaces `$metadata`) — ADR-102 |
 | `{group.token}` alias | Cross-token reference — e.g. `{primitive.color.teal.11}` |
 | `$schema` | `https://design-tokens.github.io/community-group/format/` |
 
