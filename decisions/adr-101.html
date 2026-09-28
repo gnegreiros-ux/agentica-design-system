@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Pre-commit impact pipeline with human approval — Agentica</title>
+<title>The Playwright PR gate becomes a required check on main, scoped by path inside the job — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Pre-commit impact pipeline with human approval — Agentica">
+<meta property="og:title" content="The Playwright PR gate becomes a required check on main, scoped by path inside the job — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Pre-commit impact pipeline with human approval — Agentica">
+<meta name="twitter:title" content="The Playwright PR gate becomes a required check on main, scoped by path inside the job — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -119,92 +119,44 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-027</code>
+    <code class="adr-number">ADR-101</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">Pre-commit impact pipeline with human approval</h1>
+  <h1 class="adr-page-title">The Playwright PR gate becomes a required check on <code>main</code>, scoped by path inside the job</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-05-30</dd>
+      <dd>2026-09-25</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>During the earliest work sessions with AI agents on this repository, a problematic pattern was observed: agents were committing changes without proposing the necessary collateral updates (kit log, site rebuild, ADR). The human had to systematically request these updates afterward, creating:</p>
-<ul><li>An inconsistent git history (changes and their consequences split across separate commits)</li><li>An incomplete kit log, or one updated from memory (rather than in real time)</li><li>Missed site rebuilds after modifying <code>build.js</code> or the tokens</li><li>Weakened governance: the human did not know what they were implicitly approving</li></ul>
-<p>This project rests on a foundational principle: <strong>the human always has the final word</strong>. This principle requires an operational mechanism — not merely a stated intention.</p>
-<hr>
+</div><h2>Context</h2>
+<p>The <code>Governance &amp; accessibility fixtures (PR gate)</code> job of <code>playwright.yml</code> runs the decoupling v0.4.0 suite (<code>tests/governance/</code> + the accessibility specs) on pull requests. It was never a required status check on <code>main</code>, so a red gate did not block a merge: PR #124 was merged with it red (C2-05, #117).</p>
+<p>It could not simply be added to <code>required_status_checks</code>: its workflow was scoped with a trigger-level <code>pull_request.paths</code> filter, and a required check whose workflow is skipped by such a filter never reports — it stays "pending" and blocks the merge of every PR that doesn't touch those paths (#149).</p>
 <h2>Decision</h2>
-<h3>Mandatory pre-commit pipeline</h3>
-<p>Any agent working on this repository must, after every modification and before any commit, execute the following pipeline:</p>
-<p><strong>Step 1 — Impact analysis</strong> Identify the modified files via <code>git diff --name-only</code> and apply the impact matrix defined in <code>.claude/skills/post-change-pipeline.md</code>.</p>
-<p><strong>Step 2 — Structured report</strong> Present the human with a report of proposed updates as a checklist, spelling out the reasoning for each item.</p>
-<p><strong>Step 3 — Wait for approval</strong> Execute nothing before an explicit response from the human. Absence of a response is not approval.</p>
-<p><strong>Step 4 — Ordered execution</strong> Execute only the approved tasks, in order: tokens → site rebuild → log → ADRs → commit.</p>
-<h3>Impact matrix</h3>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Modified files</th><th>Updates evaluated</th></tr></thead><tbody><tr><td><code>tokens/primitives.json</code></td><td>Site rebuild, log, ADR if a new token</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Site rebuild, log, <code>tokens.css</code></td></tr><tr><td><code>tokens/component.json</code></td><td>Site rebuild, log, <strong>Principal Designer approval</strong></td></tr><tr><td><code>site/build.js</code></td><td>Site rebuild</td></tr><tr><td><code>guidelines/</code>, <code>components/</code></td><td>Site rebuild, log</td></tr><tr><td><code>decisions/ADR-*.md</code></td><td>Site rebuild (ADR page), log</td></tr><tr><td><code>.claude/rules/</code>, <code>.claude/skills/</code></td><td>Log, ADR if an architectural decision</td></tr><tr><td>Any change</td><td>Kit log (always)</td></tr></tbody></table></div>
-<h3>Intelligent detection</h3>
-<p>The pipeline proposes only the relevant updates based on the files actually modified — not a systematic exhaustive checklist. The goal is to minimize friction while guaranteeing completeness.</p>
-<hr>
-<h2>Rationale</h2>
-<h3>Why an explicit pipeline rather than a git hook?</h3>
-<p>A pre-commit hook runs with no human context — it can reject a commit but cannot propose alternative updates or wait for approval. The agent-human pipeline is intentionally conversational: it submits a report, waits for a decision, then executes.</p>
-<h3>Why detect impact from modified files?</h3>
-<p>A static checklist (always check everything) creates decision fatigue. Detection via <code>git diff</code> proposes only what is actually relevant, making every impact report meaningful and actionable.</p>
-<h3>Why is the execution order prescribed?</h3>
-<p>The tokens → site → log → ADR → commit order guarantees that each artifact is produced before being referenced in the next. A log updated before the rebuild would contain a state that does not yet exist on disk.</p>
-<hr>
+<p>1. <strong>No trigger-level path filter on the gate's <code>pull_request</code> trigger.</strong> The gate job runs    on every PR and always reports a status. 2. <strong>The path scope moves inside the job</strong>, as the <code>gate</code> list of a    <code>dorny/paths-filter</code> step. Every later step is guarded by that step's output: a PR    with no gate-relevant change passes in a few seconds; a PR with one runs the full suite. 3. <strong>One job, no <code>needs:</code>.</strong> If path detection lived in a separate job, a failure there    would *skip* the gate job — and GitHub counts a skipped required check as passing. In a    single job, a detection failure fails the required check itself. 4. <strong><code>Governance &amp; accessibility fixtures (PR gate)</code> is added to <code>main</code>'s    <code>required_status_checks</code></strong> — a human step, done by the maintainer once this change is    merged (branch protection is not versioned in the repo). 5. The scope list also includes <code>.github/workflows/playwright.yml</code> itself, so a change to    the gate's definition proves it still runs.</p>
+<p><code>tests/governance/playwright-workflow-gate-coverage.spec.js</code> locks points 1–3 (no trigger filter, no whole-job skip, every step guarded) and reads the scope from the paths-filter list instead of <code>pull_request.paths</code>.</p>
+<p>This amends ADR-076's "<code>lang-audit</code> only" required-check list for this one job. The full 3-browser visual/functional matrix stays push-to-main-only, as ADR-076 decided.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td><strong>Automatic pre-commit hook</strong></td><td>No human feedback loop — violates the "the human has the final word" principle</td></tr><tr><td><strong>Exhaustive checklist on every commit</strong></td><td>Decision fatigue, items irrelevant to the actual changes</td></tr><tr><td><strong>Trust the agent to decide alone</strong></td><td>Inconsistent git history observed in practice during the earliest sessions</td></tr><tr><td><strong>Update the log after the commit</strong></td><td>Log decoupled from the change — unreliable history</td></tr></tbody></table></div>
-<hr>
+<ul><li><strong>Keep the trigger filter and add the check as required.</strong> Rejected: deadlocks every</li></ul>
+<p>  out-of-scope PR (the exact problem described in #149).</p>
+<ul><li><strong>Separate <code>changes</code> job + <code>needs:</code> + an umbrella job with <code>if: always()</code>.</strong> Rejected:</li></ul>
+<p>  more moving parts for the same result, and the dependent-job-skipped-counts-as-pass   trap must then be handled explicitly in the umbrella job's logic.</p>
+<ul><li><strong>Run the governance suite unconditionally on every PR.</strong> Rejected: ~2–3 minutes of</li></ul>
+<p>  install + build + Chromium on PRs (docs, site copy, changesets) that cannot affect it.</p>
 <h2>Consequences</h2>
-<p><strong>For agents:</strong></p>
-<ul><li>Read <code>.claude/rules/post-change-pipeline.md</code> before any commit</li><li>Execute <code>.claude/skills/post-change-pipeline.md</code> after every modification</li><li>Never commit without an approved report</li></ul>
-<p><strong>For the human:</strong></p>
-<ul><li>Receive a structured report before every commit</li><li>Approve or amend the list of proposed updates</li><li>Retain control over what enters the git history</li></ul>
-<p><strong>For the project:</strong></p>
-<ul><li>Consistent git history: every commit is complete and self-sufficient</li><li>Kit log faithful to the actual state of the repository</li><li>Operational governance, not merely declarative</li></ul></div><div class="lang-fr"><h2>Contexte</h2>
-<p>Lors des premières sessions de travail avec des agents IA sur ce dépôt, un pattern problématique a été observé : les agents committaient des changements sans proposer les mises à jour collatérales nécessaires (log du kit, site rebuild, ADR). L'humain devait systématiquement demander ces mises à jour après coup, créant :</p>
-<ul><li>Un historique git incohérent (modifications et leurs conséquences dans des commits séparés)</li><li>Un log du kit incomplet ou mis à jour de mémoire (plutôt qu'en temps réel)</li><li>Des oublis de rebuild site après modification de <code>build.js</code> ou des tokens</li><li>Une gouvernance affaiblie : l'humain ne savait pas ce qu'il approuvait implicitement</li></ul>
-<p>Ce projet repose sur le principe fondamental : <strong>le dernier mot est toujours humain</strong>. Ce principe nécessite un mécanisme opérationnel — pas seulement une intention déclarée.</p>
-<hr>
-<h2>Décision</h2>
-<h3>Pipeline obligatoire pré-commit</h3>
-<p>Tout agent travaillant sur ce dépôt doit, après chaque modification et avant tout commit, exécuter le pipeline suivant :</p>
-<p><strong>Étape 1 — Analyse d'impact</strong> Identifier les fichiers modifiés via <code>git diff --name-only</code> et appliquer la matrice d'impact définie dans <code>.claude/skills/post-change-pipeline.md</code>.</p>
-<p><strong>Étape 2 — Rapport structuré</strong> Présenter à l'humain un rapport avec les mises à jour proposées sous forme de checklist, en explicitant le raisonnement pour chaque item.</p>
-<p><strong>Étape 3 — Attente d'approbation</strong> Ne rien exécuter avant une réponse explicite de l'humain. L'absence de réponse n'est pas une approbation.</p>
-<p><strong>Étape 4 — Exécution ordonnée</strong> Exécuter uniquement les tâches approuvées, dans l'ordre : tokens → site rebuild → log → ADRs → commit.</p>
-<h3>Matrice d'impact</h3>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Fichiers modifiés</th><th>Mises à jour évaluées</th></tr></thead><tbody><tr><td><code>tokens/primitives.json</code></td><td>Site rebuild, log, ADR si nouveau token</td></tr><tr><td><code>tokens/semantic.json</code></td><td>Site rebuild, log, <code>tokens.css</code></td></tr><tr><td><code>tokens/component.json</code></td><td>Site rebuild, log, <strong>approbation Principal Designer</strong></td></tr><tr><td><code>site/build.js</code></td><td>Site rebuild</td></tr><tr><td><code>guidelines/</code>, <code>components/</code></td><td>Site rebuild, log</td></tr><tr><td><code>decisions/ADR-*.md</code></td><td>Site rebuild (page ADR), log</td></tr><tr><td><code>.claude/rules/</code>, <code>.claude/skills/</code></td><td>Log, ADR si décision architecturale</td></tr><tr><td>Tout changement</td><td>Log du kit (toujours)</td></tr></tbody></table></div>
-<h3>Détection intelligente</h3>
-<p>Le pipeline ne propose que les mises à jour pertinentes selon les fichiers réellement modifiés — pas une checklist exhaustive systématique. L'objectif est de minimiser la friction tout en garantissant la complétude.</p>
-<hr>
-<h2>Argumentaire</h2>
-<h3>Pourquoi un pipeline explicite plutôt qu'un hook git ?</h3>
-<p>Un hook pre-commit s'exécute sans contexte humain — il peut rejeter un commit mais ne peut pas proposer des mises à jour alternatives ni attendre une approbation. Le pipeline agent-humain est intentionnellement conversationnel : il soumet un rapport, attend une décision, puis exécute.</p>
-<h3>Pourquoi la détection d'impact par fichiers modifiés ?</h3>
-<p>Une checklist statique (toujours vérifier tout) crée de la fatigue décisionnelle. La détection par <code>git diff</code> ne propose que ce qui est réellement pertinent, rendant chaque rapport d'impact significatif et actionnable.</p>
-<h3>Pourquoi l'ordre d'exécution est-il prescrit ?</h3>
-<p>L'ordre tokens → site → log → ADR → commit garantit que chaque artefact est produit avant d'être référencé dans le suivant. Un log mis à jour avant le rebuild contiendrait un état qui n'existe pas encore sur disque.</p>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td><strong>Hook pre-commit automatique</strong></td><td>Pas de boucle de rétroaction humaine — viole le principe "le dernier mot est humain"</td></tr><tr><td><strong>Checklist exhaustive à chaque commit</strong></td><td>Fatigue décisionnelle, items non pertinents selon les changements</td></tr><tr><td><strong>Confiance à l'agent pour décider seul</strong></td><td>Historique git incohérent observé en pratique lors des premières sessions</td></tr><tr><td><strong>Mise à jour du log après le commit</strong></td><td>Log découplé du changement — historique peu fiable</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<p><strong>Pour les agents :</strong></p>
-<ul><li>Lire <code>.claude/rules/post-change-pipeline.md</code> avant tout commit</li><li>Exécuter <code>.claude/skills/post-change-pipeline.md</code> après chaque modification</li><li>Ne jamais commiter sans rapport approuvé</li></ul>
-<p><strong>Pour l'humain :</strong></p>
-<ul><li>Recevoir un rapport structuré avant chaque commit</li><li>Approuver ou modifier la liste des mises à jour proposées</li><li>Garder le contrôle sur ce qui entre dans l'historique git</li></ul>
-<p><strong>Pour le projet :</strong></p>
-<ul><li>Historique git cohérent : chaque commit est complet et auto-suffisant</li><li>Log du kit fidèle à l'état réel du dépôt</li><li>Gouvernance opérationnelle, pas seulement déclarative</li></ul></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-026.html" class="agtc-button secondary">← ADR-026</a>
-    <a href="adr-028.html" class="agtc-button secondary">ADR-028 →</a>
+<ul><li>Every PR now triggers <code>playwright.yml</code>; on out-of-scope PRs only the gate job starts and</li></ul>
+<p>  finishes almost immediately (the matrix and report jobs remain skipped on <code>pull_request</code>).</p>
+<ul><li>One more third-party action (<code>dorny/paths-filter@v3</code>), with <code>pull-requests: read</code> on the</li></ul>
+<p>  gate job only.</p>
+<ul><li>Once the check is required, the characterization test for #149 in the coverage spec</li></ul>
+<p>  ("does not yet require the PR gate") fails on purpose, as it was written to: it must   then be flipped to assert the check <strong>is</strong> required, and #149 closed.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-100.html" class="agtc-button secondary">← ADR-100</a>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
