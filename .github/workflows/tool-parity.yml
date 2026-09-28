@@ -8,8 +8,8 @@ name: AI tool parity — attestation gate
 #
 # Deliberately cheap (checkout + node, no build) so it fails fast on the same
 # PR that introduces or changes a tool config, rather than being discovered
-# later. NOT yet a required status check in branch protection — see this
-# workflow's introducing PR for why that's left as a separate, explicit step.
+# later. A required status check on main and develop (see
+# governance/rules/git-workflow.md, "Protection rules").
 
 on:
   push:
