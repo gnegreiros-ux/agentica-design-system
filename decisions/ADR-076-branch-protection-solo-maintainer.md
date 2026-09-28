@@ -1,7 +1,7 @@
 # ADR-076 — Branch protection on `main`/`develop` with 0 required approvals (solo maintainer)
 
 > **Date:** 2026-07-20
-> **Status:** ✅ Active
+> **Status:** ✅ Active — required-check list amended by ADR-101 (Playwright PR gate)
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Relations:** `.claude/rules/git-workflow.md` (protection rules section, amended), ADR-069 (GitHub Projects governance)
 
