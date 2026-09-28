@@ -654,6 +654,7 @@ public class AgenticaTokens {
     public static let semanticColorBackgroundPage = #fcfcfc
     public static let semanticColorBackgroundSubtle = #f0f0f0
     public static let semanticColorBackgroundSurface = #ffffff
+    public static let semanticColorBackgroundSurfaceRaised = #ffffff
     public static let semanticColorBorderControl = #8d8d8d
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8

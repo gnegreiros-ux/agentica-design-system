@@ -138,6 +138,11 @@
           "$type": "color",
           "$intent": "Raised surface, dark — cards, panels"
         },
+        "surface-raised": {
+          "$value": "#1b1f27",
+          "$type": "color",
+          "$description": "Raised surface dark — one step lighter than surface (#13161d) so menus and popovers read as elevated; a shadow alone barely shows on a dark background (issue #210)."
+        },
         "subtle": {
           "$value": "#1b1f27",
           "$type": "color",
@@ -241,6 +246,23 @@
           "$type": "color",
           "$intent": "Dark masses of dark-mode illustrations — contrast anchor"
         }
+      }
+    },
+    "shadow": {
+      "header": {
+        "$value": "0 2px 24px rgba(0,0,0,0.50)",
+        "$type": "other",
+        "$description": "Fixed header shadow dark — same geometry as light, opacity ×4 so the separation stays visible on a dark background (issue #210)."
+      },
+      "raised": {
+        "$value": "0 4px 16px rgba(0,0,0,0.50)",
+        "$type": "other",
+        "$description": "Raised-element shadow dark — dropdown menus, mobile nav. Same geometry as light, opacity ×5; pairs with background.surface-raised (issue #210)."
+      },
+      "card": {
+        "$value": "0 1px 3px rgba(0,0,0,0.50), 0 1px 2px rgba(0,0,0,0.40)",
+        "$type": "other",
+        "$description": "Resting card shadow dark — same geometry as light, opacity ×5 (issue #210)."
       }
     }
   }

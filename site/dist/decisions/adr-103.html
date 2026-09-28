@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>agtc-image implementation — Agentica</title>
+<title>Dark-mode elevation: a dark variant for every shadow, and a raised surface — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="agtc-image implementation — Agentica">
+<meta property="og:title" content="Dark-mode elevation: a dark variant for every shadow, and a raised surface — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="agtc-image implementation — Agentica">
+<meta name="twitter:title" content="Dark-mode elevation: a dark variant for every shadow, and a raised surface — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -119,49 +119,47 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-083</code>
+    <code class="adr-number">ADR-103</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title"><code>agtc-image</code> implementation</h1>
+  <h1 class="adr-page-title">Dark-mode elevation: a dark variant for every shadow, and a raised surface</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-07-21</dd>
+      <dd>2026-09-28</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
       <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><h2>Reference UX patterns applied</h2>
-<blockquote><p>Reviewed 2026-07-21 via the <code>ux-pattern-review</code> workflow (ADR-036), before any code was written. Decision: <strong>all suggested patterns approved</strong>; skeleton/placeholder explicitly requested for v1 rather than deferred. Details and links: <code>guidelines/components/image.md</code> § UX Patterns Reference.</p></blockquote>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Pattern</th><th>Source</th></tr></thead><tbody><tr><td>Decorative vs meaningful image distinction (<code>alt=""</code> + <code>aria-hidden</code>)</td><td>WCAG 1.1.1 / NN/g — mirrors the pattern already approved on <code>agtc-icon</code></td></tr><tr><td>Skeleton screen while loading, opt-in</td><td>NN/g — Skeleton Screens 101</td></tr><tr><td>Graceful fallback on load failure (icon + visible alt)</td><td>General error-handling principle — no dedicated image-specific pattern found in the 5 reference sources</td></tr><tr><td><code>object-fit</code> configurable (<code>cover</code>/<code>contain</code>/<code>fill</code>)</td><td>Design system decision, not a reference-source pattern</td></tr></tbody></table></div>
-<hr>
-<h2>Context</h2>
-<p>The backlog carried a P2 ticket: build <code>agtc-image</code> — a component wrapping <code>&lt;img&gt;</code> with lazy loading, explicit <code>width</code>/<code>height</code> to prevent layout shift (CLS), <code>fetchpriority</code>, and WebP support. No prior component in this system addressed raster images specifically (<code>agtc-icon</code> covers SVG icons; the <code>illus-lazy</code> pattern in <code>.claude/rules/performance.md</code> covers large inline SVG illustrations — neither fits a photo or a raster asset loaded via <code>&lt;img src&gt;</code>).</p>
-<p>Two questions guided the decisions:</p>
-<p>1. <strong>Loading feedback</strong> — should the component show anything while the image loads,    or just reserve space via <code>width</code>/<code>height</code> and let the browser paint when ready? 2. <strong>WebP delivery</strong> — should the component generate/convert WebP itself, or expect    both formats to already exist?</p>
-<hr>
+</div><h2>Context</h2>
+<p><code>semantic.shadow.*</code> (ADR-046) had no dark variant: <code>semantic.dark.json</code> only held colours. A black shadow at 10–12 % opacity nearly vanishes on a dark background, so in dark mode raised elements lost their elevation. The site compensated with its own scale outside the tokens (<code>--agtc-shadow-sm/md/lg</code> in <code>site/build.js</code>), darker in dark mode — which <code>agtc-top-nav</code> then consumed and shipped without (issue #208).</p>
+<p>Human rule, 2026-09-28: <strong>both modes must always offer the same options, adapted to each mode.</strong></p>
+<p>The research note on issue #210 compared five reference systems. All of them do two things in dark mode:</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>System</th><th>Dark-mode elevation</th></tr></thead><tbody><tr><td>Atlassian</td><td>Separate <code>elevation.surface.*</code> and <code>elevation.shadow.*</code> tokens; the higher the surface, the lighter it is; *raised* and *overlay* pair a surface with a shadow in both modes</td></tr><tr><td>Apple HIG (iOS)</td><td>*Base* and *elevated* background sets; elevated backgrounds are lighter</td></tr><tr><td>Material 3</td><td>Tonal difference first; shadows express distance, sparingly</td></tr><tr><td>Carbon</td><td>Layers lighten at each level (g100: <code>#161616</code> → <code>#262626</code> → <code>#393939</code>); shadow token <code>.3</code> → <code>.8</code> opacity</td></tr><tr><td>Radix Themes</td><td>Same shadow geometry in both modes, much stronger black alphas in dark</td></tr></tbody></table></div>
 <h2>Decision</h2>
-<p>1. <strong>Skeleton is opt-in (<code>skeleton</code> prop), included in v1.</strong> A pulse-animated    placeholder (tokenized background, disabled under <code>prefers-reduced-motion</code>) can be    requested per-instance. Default is off — reserving aspect-ratio via <code>width</code>/<code>height</code>    already prevents CLS on its own; a skeleton is genuinely useful only for    heavy/hero images where the load itself is perceptible, and forcing it on every    small inline image (avatar, thumbnail) would add unnecessary visual noise. 2. <strong>WebP via <code>&lt;picture&gt;</code> + consumer-supplied fallback, no conversion.</strong> <code>src-webp</code>    renders a <code>&lt;picture&gt;</code> with a WebP <code>&lt;source&gt;</code> and <code>src</code> as the fallback format; both    files must already exist. This repository does no build-time image processing    (<code>.claude/rules/illustrations-source.md</code> — <code>Brand/illustrations/</code> PNGs are    hand-authored, not generated), so automatic conversion would be a new, unscoped    capability rather than a component concern. 3. <strong><code>width</code>/<code>height</code> are required, not optional.</strong> Missing either logs a console    warning — the same escalation pattern used elsewhere in this system (<code>agtc-badge</code>    icon-only without <code>label</code>, <code>agtc-icon</code> unknown name) — because a missing    <code>width</code>/<code>height</code> defeats the component's core anti-CLS purpose rather than being a    cosmetic gap. 4. <strong>Failed loads render a fallback (icon + visible alt), never a broken-image hole.</strong>    Consistent with WCAG 1.1.1: the alt text remains available to sighted users too,    not just assistive technology. 5. <strong><code>priority</code> bundles <code>loading="eager"</code> + <code>fetchpriority="high"</code></strong> rather than two    separate props — in practice they're always set together for the single LCP image    on a page (<code>.claude/rules/performance.md</code> Standard 3), so splitting them would only    invite an inconsistent combination.</p>
-<hr>
+<p>1. **Every non-deprecated <code>semantic.shadow.*</code> token has a variant in <code>semantic.dark.json</code><strong>    — same geometry, opacity raised about ×4–5 (<code>header</code>, <code>raised</code>, <code>card</code> → about <code>.50</code>). 2. </strong>New token <code>semantic.color.background.surface-raised</code><strong> for dropdown menus, popovers and    mobile nav panels, paired with <code>shadow.raised</code>: the same white as <code>surface</code> in light mode,    one step lighter than <code>surface</code> in dark mode (<code>#1b1f27</code> over <code>#13161d</code>). In dark mode the    surface, not the shadow, carries most of the elevation. 3. </strong>No light ring built into the shadow<strong> (unlike Radix): raised panels already draw    <code>border.default</code>; a ring would double it. 4. </strong>The site's own shadow scale is removed.<strong> Its four uses consume the tokens    (<code>sm</code> → <code>shadow.header</code>, <code>md</code>/<code>lg</code> → <code>shadow.raised</code>); raised site panels and the    <code>agtc-top-nav</code> mobile panel use <code>surface-raised</code>. 5. </strong>Guardrail:** <code>scripts/audit-tokens.js</code> check 6 fails <code>--ci</code> when a non-deprecated    <code>semantic.shadow.*</code> token has no dark variant (governance test    <code>tests/governance/tokens-audit-dark-shadow-parity.spec.js</code>). 6. <code>semantic.shadow.card-hover</code> is marked <code>$deprecated</code> (decided in issue #206), so it gets    no dark variant; issue #209 adds its <code>alternative</code> once ADR-102 is merged.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Skeleton always on by default</td><td>Unnecessary visual overhead for small inline images; <code>width</code>/<code>height</code> already solves CLS without it</td></tr><tr><td>Automatic WebP conversion at build/runtime</td><td>No image-processing pipeline exists in this repo today (<code>illustrations-source.md</code>); out of scope for a single component</td></tr><tr><td><code>width</code>/<code>height</code> optional, silently falling back to intrinsic size</td><td>Silently reintroduces the exact CLS problem this component exists to prevent</td></tr><tr><td>Separate <code>loading</code> and <code>fetchpriority</code> props</td><td>The two are only ever meaningfully combined for the LCP image; a single <code>priority</code> prop prevents an inconsistent combination</td></tr></tbody></table></div>
-<hr>
+<ul><li><strong>Darker shadows only</strong> — every reference system also lightens raised surfaces in dark</li></ul>
+<p>  mode; on Agentica's near-black page a shadow alone stays barely visible (checked on   before/after captures, issue #210).</p>
+<ul><li><strong>Reuse <code>background.subtle</code> for raised panels</strong> — it already means "secondary background,</li></ul>
+<p>  discreet hover"; mixing an elevation role into it would couple two decisions.</p>
+<ul><li>**Keep the site's <code>--agtc-shadow-*</code> scale** — it looks like tokens but is not, and a</li></ul>
+<p>  component already shipped depending on it (issue #208).</p>
 <h2>Consequences</h2>
-<ul><li><code>tokens/component.json</code> gains an <code>image</code> group: <code>skeleton.background</code>,</li></ul>
-<p>  <code>skeleton.background-pulse</code>, <code>fallback.background</code>, <code>fallback.icon</code>, <code>fallback.text</code>   — all aliasing existing semantic tokens, no new primitives.</p>
-<ul><li><code>components/agtc-image.js</code> + <code>agtc-image.stories.js</code> created; registered in</li></ul>
-<p>  <code>components/index.js</code>.</p>
-<ul><li><code>guidelines/components/image.md</code> — full contract, including the UX Patterns</li></ul>
-<p>  Reference table above.</p>
-<ul><li>Site: <code>agtc-image</code> gets a documentation page (<code>site/dist/components/image.html</code>),</li></ul>
-<p>  added to <code>COMPONENT_PAGES</code> and the components index catalog.</p>
-<ul><li>GitHub Projects <code>agtc-image</code> ticket (P2, Composants) moves to Terminé (the board's Status field is French: Backlog/En cours/Terminé/etc.). <!-- lang-audit-ignore: literal Status field value, French by board convention --></li><li>Not in scope for this ADR: migrating existing <code>&lt;img&gt;</code> usage on the site itself to</li></ul>
-<p>  <code>&lt;agtc-image&gt;</code> — that's a separate dogfooding decision, not required by the backlog   ticket, which asked for the component to exist, not for a sitewide migration.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-082.html" class="agtc-button secondary">← ADR-082</a>
-    <a href="adr-084.html" class="agtc-button secondary">ADR-084 →</a>
+<ul><li><code>@agentica-ds/tokens</code> gains one token and three dark values (minor); <code>agtc-top-nav</code>'s</li></ul>
+<p>  mobile panel background changes in dark mode (components patch).</p>
+<ul><li>Values are a starting point, tuned on before/after captures; adjusting them is a value fix</li></ul>
+<p>  under this ADR, not a new decision.</p>
+<ul><li>The dark values in <code>semantic.dark.json</code> are literal, like the rest of that file; aliasing</li></ul>
+<p>  them to dark primitives is part of issue #212.</p>
+<ul><li>Figma parity (variables and effect styles) is issue #213.</li><li>Generalising the parity rule to every theme-sensitive token is issue #212 (its own ADR).</li></ul>
+<h2>Implementation</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Date</th><th>Event</th></tr></thead><tbody><tr><td>2026-09-28</td><td>Decision adopted (issue #210); tokens, check 6, site and <code>agtc-top-nav</code> updated</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <span></span>
+    <span></span>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
