@@ -106,7 +106,15 @@ described, restore verbatim per ADR-076's trigger clause):
 - `main`: merge only via PR + 2 approvals + green CI
 - `develop`: merge only via PR + 1 approval + green CI
 
-Other CI checks (`Playwright`, `build-and-deploy`, `tool-parity`) are not yet required
+**`Governance & accessibility fixtures (PR gate)`** (`playwright.yml`, ADR-101, #149)
+runs on every PR and is meant to be a required check: its `pull_request` trigger has no
+`paths` filter (a required check skipped by one stays "pending" and blocks every PR), and
+its scope lives inside the job, in a `dorny/paths-filter` step whose output guards every
+later step. Never put a trigger-level `paths` filter back on it, and never split the
+detection into a separate `needs:` job (a skipped required check counts as passing).
+`tests/governance/playwright-workflow-gate-coverage.spec.js` enforces both.
+
+Other CI checks (the 3-browser `Playwright` matrix, `build-and-deploy`, `tool-parity`) are not yet required
 checks. `Playwright`/`build-and-deploy` only trigger on `push` to `main` today, not on
 `pull_request` (see ADR-076); making them blocking pre-merge gates requires first adding
 a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
