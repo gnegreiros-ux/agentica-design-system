@@ -25,6 +25,12 @@ This system follows the **DTCG format** as the token interoperability standard:
 | `{group.token}` alias | Cross-token reference — e.g. `{primitive.color.teal.11}` |
 | `$schema` | `https://design-tokens.github.io/community-group/format/` |
 
+> **Light / dark parity (ADR-103):** both modes always offer the same options, adapted to each
+> mode. Every non-deprecated `semantic.shadow.*` token has a variant in `semantic.dark.json`
+> (`scripts/audit-tokens.js` check 6, blocking in CI). Raised panels (menus, popovers, mobile
+> nav) pair `background.surface-raised` with `shadow.raised`. Generalisation to every
+> theme-sensitive token: issue #212.
+
 > Any evolution of the `tokens/*.json` file format must remain **DTCG-compliant**.
 > In case of divergence between a local habit and the standard, the
 > designtokens.org standard prevails. Decision: **ADR-052**.

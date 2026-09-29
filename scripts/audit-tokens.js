@@ -9,12 +9,18 @@
  *   2. Phantom tokens   — used in code but not defined in semantic.json
  *   3. Hardcoded values — arbitrary hex, rgb, px in code (AI drift vectors)
  *   4. Direct references to primitives in components (blocking in --ci, ADR-098)
+ *   5. Undefined custom properties in components — a components/agtc-*.js file
+ *      consuming a var(--agtc-*) that the token package does not define and that
+ *      has no fallback (issue 208)
+ *   6. Dark-mode shadow parity — every non-deprecated semantic.shadow.* token has a
+ *      variant in semantic.dark.json (issue 210)
  *
  * Usage:
  *   node scripts/audit-tokens.js
  *   node scripts/audit-tokens.js --fix-report          → generates a JSON report
  *   node scripts/audit-tokens.js --ci                  → exit 1 on critical violations
  *   node scripts/audit-tokens.js --src-dir <path>       → analyzes a specific source directory
+ *   node scripts/audit-tokens.js --tokens-dir <path>    → reads token files from another directory (tests)
  *
  * Escape hatch: a line containing `audit-ignore` is skipped — use sparingly, only for
  * a genuine, reviewed false positive already justified by its own surrounding comment.
@@ -36,9 +42,10 @@ const TOKEN_PREFIXES = {
 };
 
 const _srcArgIdx = process.argv.indexOf('--src-dir');
+const _tokensArgIdx = process.argv.indexOf('--tokens-dir');
 
 const CONFIG = {
-  tokensDir:   path.resolve(__dirname, '../tokens'),
+  tokensDir:   _tokensArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_tokensArgIdx + 1]) : path.resolve(__dirname, '../tokens'),
   sourceDir:   _srcArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_srcArgIdx + 1]) : null,
   outputFile:  path.resolve(__dirname, '../audit-report.json'),
   ciMode:      process.argv.includes('--ci'),
@@ -184,6 +191,70 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
     phantoms.forEach(p => error(`Phantom: ${p.cssVar}  in  ${p.file}`));
   }
   return phantoms;
+}
+
+// A web component ships in @agentica-ds/components without the site's CSS, so every
+// var(--agtc-*) it consumes must come from @agentica-ds/tokens — otherwise it resolves
+// to nothing for every consumer. The site hides this class of bug: it defines its own
+// --agtc-* variables (e.g. --agtc-shadow-md, issue 208) that look like tokens but are
+// not. Scoped to component source files (agtc-*.js, not stories): the site and docs
+// legitimately define their own variables. A var() with a fallback is allowed — the
+// component then works standalone (e.g. --agtc-icon-size, --agtc-header-height).
+const COMPONENT_FILE = /(^|[\\/])agtc-[\w-]+\.js$/;
+
+function auditUndefinedComponentVars(primitives, semantic, component, sourceFiles) {
+  section('5. Undefined custom properties in components (not in the token package, no fallback)');
+  const definedVars = new Set([
+    ...collectCssVarNames(primitives, '--agtc-'),
+    ...collectCssVarNames(semantic.semantic || semantic, TOKEN_PREFIXES.semantic),
+    ...collectCssVarNames(component, TOKEN_PREFIXES.component),
+  ]);
+  const undefinedVars = [];
+  const varRegex = /var\(\s*(--agtc-[\w-]+)\s*([,)])/g;
+  for (const file of sourceFiles.filter(f => COMPONENT_FILE.test(f) && !f.includes('.stories.'))) {
+    const lines = fs.readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, i) => {
+      if (line.includes('audit-ignore')) return;
+      for (const match of line.matchAll(varRegex)) {
+        const [, cssVar, next] = match;
+        if (next === ')' && !definedVars.has(cssVar)) {
+          undefinedVars.push({ cssVar, file: path.relative(process.cwd(), file), line: i + 1 });
+        }
+      }
+    });
+  }
+
+  if (undefinedVars.length === 0) {
+    ok('Every custom property consumed by a component is a token or has a fallback');
+  } else {
+    undefinedVars.forEach(v => error(`Undefined in the token package: ${v.cssVar}  in  ${v.file}:${v.line}`));
+  }
+  return undefinedVars;
+}
+
+// Both modes must always offer the same options, adapted to each mode (human rule,
+// 2026-09-28). A shadow tuned for a light background nearly vanishes on a dark one, so
+// a shadow token that exists in light mode without a dark variant is a missing option,
+// not an inherited one. Deprecated tokens are skipped. Generalising this to every
+// theme-sensitive token (with an explicit "same in both modes" marker) is issue 212.
+function auditDarkShadowParity(semantic, semanticDark) {
+  section('6. Dark-mode shadow parity (every semantic.shadow.* has a dark variant)');
+  const light = (semantic.semantic || semantic).shadow || {};
+  const dark  = (semanticDark.semantic || semanticDark).shadow || {};
+  const active = extractTokenKeys(light).filter(key => {
+    const token = key.split('.').reduce((node, part) => node?.[part], light);
+    return !token.$deprecated;
+  });
+  const missing = active
+    .filter(key => key.split('.').reduce((node, part) => node?.[part], dark)?.$value === undefined)
+    .map(key => `semantic.shadow.${key}`);
+
+  if (missing.length === 0) {
+    ok(`Every semantic.shadow.* token has a dark variant (${active.length} checked, deprecated ones skipped)`);
+  } else {
+    missing.forEach(token => error(`No dark variant in semantic.dark.json: ${token}`));
+  }
+  return missing;
 }
 
 // Documented, human-approved fallback shapes where a literal color sits next to its
@@ -337,6 +408,8 @@ function generateReport(results) {
     summary: {
       orphanedTokens:   results.orphaned.length,
       phantomTokens:    results.phantoms.length,
+      undefinedComponentVars: results.undefinedVars.length,
+      darkShadowGaps:   results.darkShadowGaps.length,
       hardcodedErrors:  results.violations.filter(v => v.severity === 'error').length,
       hardcodedWarnings:results.violations.filter(v => v.severity === 'warning').length,
       structureIssues:  results.structureIssues.length,
@@ -359,6 +432,7 @@ function main() {
   const primitives = loadTokens('primitives.json');
   const semantic   = loadTokens('semantic.json');
   const component  = loadTokens('component.json');
+  const semanticDark = loadTokens('semantic.dark.json');
 
   // Fetch the source files — priority: --src-dir > src/ > root
   const srcDir     = CONFIG.sourceDir || path.resolve(__dirname, '../src');
@@ -428,12 +502,14 @@ function main() {
   // Run the audits
   const orphaned       = auditOrphanedTokens(component, sourceFiles);
   const phantoms       = auditPhantomTokens(semantic, sourceFiles);
+  const undefinedVars  = auditUndefinedComponentVars(primitives, semantic, component, sourceFiles);
+  const darkShadowGaps = auditDarkShadowParity(semantic, semanticDark);
   const violations     = auditHardcodedValues(sourceFiles);
   const structureIssues = auditTokenStructure(primitives, semantic, component);
 
   // Summary
   section('Summary');
-  const criticalCount = phantoms.length +
+  const criticalCount = phantoms.length + undefinedVars.length + darkShadowGaps.length +
     violations.filter(v => v.severity === 'error').length +
     structureIssues.length;
   const warnCount = orphaned.length +
@@ -449,7 +525,7 @@ function main() {
 
   // JSON report
   if (CONFIG.fixReport) {
-    generateReport({ orphaned, phantoms, violations, structureIssues });
+    generateReport({ orphaned, phantoms, undefinedVars, darkShadowGaps, violations, structureIssues });
   }
 
   // CI mode — exit 1 on critical violations. process.exitCode, not

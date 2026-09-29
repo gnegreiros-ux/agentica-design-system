@@ -509,6 +509,7 @@ export const SemanticColorFeedbackInfoText = "#113264";
 export const SemanticColorFeedbackWarningText = "#582d1d";
 export const SemanticColorBackgroundPage = "#fcfcfc";
 export const SemanticColorBackgroundSurface = "#ffffff";
+export const SemanticColorBackgroundSurfaceRaised = "#ffffff";
 export const SemanticColorBackgroundSubtle = "#f0f0f0";
 export const SemanticColorBackgroundHover = "#fafafa";
 export const SemanticColorBackgroundInverse = "#0f1117";

@@ -670,6 +670,7 @@
   --agtc-semantic-color-background-inverse: var(--agtc-primitive-color-neutral-950);
   --agtc-semantic-color-background-hover: var(--agtc-primitive-color-neutral-50);
   --agtc-semantic-color-background-subtle: var(--agtc-primitive-color-gray-3);
+  --agtc-semantic-color-background-surface-raised: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-surface: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-page: var(--agtc-primitive-color-gray-1);
   --agtc-semantic-color-feedback-warning-text: var(--agtc-primitive-color-orange-12);
