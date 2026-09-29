@@ -1,10 +1,10 @@
 # Getting-Started Checklist
 
-A checklist for a team feeding decisions it has already made (palette, type scale, spacing, etc.) into its Clone instance, so nothing gets missed. See `GUIDE.md` for the narrative explanation of each item below.
+A checklist for a team feeding decisions it has already made (palette, type scale, spacing, etc.) into its Clone instance, so nothing gets missed. See `GUIDE.md` for the narrative explanation of each item below, and `../README.md` for how to get started.
 
 ## Prerequisite — component architecture
 
-- [ ] The Web Components (default) vs. framework-specific decision is already made and documented in an ADR (from the Master Skill's `00-component-architecture.md` phase) before personalization starts — if not, stop and settle this first.
+- [ ] The Web Components (default) vs. framework-specific decision is made and written down before personalization starts. If you came from the Master Skill, it's already recorded in the ADR produced by its component-architecture phase. If not, keep the default (Web Components) unless your team has a reason not to, and record the choice as your first decision note (for example in `governance/decisions.md`).
 
 ## Visual foundations
 
@@ -27,7 +27,7 @@ A checklist for a team feeding decisions it has already made (palette, type scal
 ### Spacing, radius, breakpoints
 - [ ] Primitives declared for every category the core actually uses
 
-- [ ] Every core semantic token in the categories above is mapped to a primitive in `theme/` — none left orphaned
+- [ ] Every semantic token your components use in the categories above is mapped to a primitive in `theme/` — none left orphaned (version 0.1.0 of the core doesn't ship its own semantic-token list yet — see `../README.md`, *Current limitations*)
 
 ## New semantic tokens (only if a category requires it)
 
@@ -62,5 +62,5 @@ A checklist for a team feeding decisions it has already made (palette, type scal
 
 ## Final verification
 
-- [ ] Lint/audit runs with no errors after adding these decisions
+- [ ] `npm run build` still ends with `All core audits passed.` after adding these decisions
 - [ ] Human review completed before the first documentation generation

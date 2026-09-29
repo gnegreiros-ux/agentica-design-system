@@ -19,7 +19,7 @@ const CANONICAL_NOTE_PATTERN = /^> \*\*Canonical source\*\*:.*\n/m;
 const DERIVED_NOTE =
   '> **Source of truth**: this content is derived from `GOVERNANCE.md`, the ' +
   'single canonical source for the non-negotiable foundation. Do not edit ' +
-  'this file directly — run `npm run sync:governance` after updating ' +
+  'this file directly — in the canonical repository, run `npm run sync:governance` after updating ' +
   '`GOVERNANCE.md`.\n';
 
 // Destinations confirmed 2026-09-12 for the v0.4.0 decoupling initiative
