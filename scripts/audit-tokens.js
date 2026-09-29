@@ -9,6 +9,9 @@
  *   2. Phantom tokens   — used in code but not defined in semantic.json
  *   3. Hardcoded values — arbitrary hex, rgb, px in code (AI drift vectors)
  *   4. Direct references to primitives in components (blocking in --ci, ADR-098)
+ *   5. Undefined custom properties in components — a components/agtc-*.js file
+ *      consuming a var(--agtc-*) that the token package does not define and that
+ *      has no fallback (issue 208)
  *
  * Usage:
  *   node scripts/audit-tokens.js
@@ -186,6 +189,45 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   return phantoms;
 }
 
+// A web component ships in @agentica-ds/components without the site's CSS, so every
+// var(--agtc-*) it consumes must come from @agentica-ds/tokens — otherwise it resolves
+// to nothing for every consumer. The site hides this class of bug: it defines its own
+// --agtc-* variables (e.g. --agtc-shadow-md, issue 208) that look like tokens but are
+// not. Scoped to component source files (agtc-*.js, not stories): the site and docs
+// legitimately define their own variables. A var() with a fallback is allowed — the
+// component then works standalone (e.g. --agtc-icon-size, --agtc-header-height).
+const COMPONENT_FILE = /(^|[\\/])agtc-[\w-]+\.js$/;
+
+function auditUndefinedComponentVars(primitives, semantic, component, sourceFiles) {
+  section('5. Undefined custom properties in components (not in the token package, no fallback)');
+  const definedVars = new Set([
+    ...collectCssVarNames(primitives, '--agtc-'),
+    ...collectCssVarNames(semantic.semantic || semantic, TOKEN_PREFIXES.semantic),
+    ...collectCssVarNames(component, TOKEN_PREFIXES.component),
+  ]);
+  const undefinedVars = [];
+  const varRegex = /var\(\s*(--agtc-[\w-]+)\s*([,)])/g;
+  for (const file of sourceFiles.filter(f => COMPONENT_FILE.test(f) && !f.includes('.stories.'))) {
+    const lines = fs.readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, i) => {
+      if (line.includes('audit-ignore')) return;
+      for (const match of line.matchAll(varRegex)) {
+        const [, cssVar, next] = match;
+        if (next === ')' && !definedVars.has(cssVar)) {
+          undefinedVars.push({ cssVar, file: path.relative(process.cwd(), file), line: i + 1 });
+        }
+      }
+    });
+  }
+
+  if (undefinedVars.length === 0) {
+    ok('Every custom property consumed by a component is a token or has a fallback');
+  } else {
+    undefinedVars.forEach(v => error(`Undefined in the token package: ${v.cssVar}  in  ${v.file}:${v.line}`));
+  }
+  return undefinedVars;
+}
+
 // Documented, human-approved fallback shapes where a literal color sits next to its
 // token reference on purpose — not drift. See governance/rules/no-visited-nav.md (ADR-047/059
 // Safari :visited exception), the var(--x, #fallback) CSS resilience pattern used
@@ -337,6 +379,7 @@ function generateReport(results) {
     summary: {
       orphanedTokens:   results.orphaned.length,
       phantomTokens:    results.phantoms.length,
+      undefinedComponentVars: results.undefinedVars.length,
       hardcodedErrors:  results.violations.filter(v => v.severity === 'error').length,
       hardcodedWarnings:results.violations.filter(v => v.severity === 'warning').length,
       structureIssues:  results.structureIssues.length,
@@ -428,12 +471,13 @@ function main() {
   // Run the audits
   const orphaned       = auditOrphanedTokens(component, sourceFiles);
   const phantoms       = auditPhantomTokens(semantic, sourceFiles);
+  const undefinedVars  = auditUndefinedComponentVars(primitives, semantic, component, sourceFiles);
   const violations     = auditHardcodedValues(sourceFiles);
   const structureIssues = auditTokenStructure(primitives, semantic, component);
 
   // Summary
   section('Summary');
-  const criticalCount = phantoms.length +
+  const criticalCount = phantoms.length + undefinedVars.length +
     violations.filter(v => v.severity === 'error').length +
     structureIssues.length;
   const warnCount = orphaned.length +
@@ -449,7 +493,7 @@ function main() {
 
   // JSON report
   if (CONFIG.fixReport) {
-    generateReport({ orphaned, phantoms, violations, structureIssues });
+    generateReport({ orphaned, phantoms, undefinedVars, violations, structureIssues });
   }
 
   // CI mode — exit 1 on critical violations. process.exitCode, not

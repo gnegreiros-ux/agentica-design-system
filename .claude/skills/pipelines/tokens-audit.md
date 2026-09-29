@@ -49,6 +49,13 @@ Verify that every token referenced in `semantic.json` exists in `primitives.json
 Verify that every token referenced in `component.json` exists in `semantic.json`:
 - Every `var(--agtc-semantic-X)` → token in `semantic.json`
 
+Verify that every custom property a component consumes ships with the token package
+(`scripts/audit-tokens.js` check 5, blocking in `--ci`, issue #208):
+- Every `var(--agtc-*)` in `components/agtc-*.js` (stories excluded) → a primitive,
+  semantic or component token, **or** a `var()` fallback. A variable the site defines
+  for itself (e.g. `--agtc-shadow-md`) does not count: the component ships without the
+  site's CSS.
+
 ### 3. Orphan tokens
 
 Verify that every token in `primitives.json` is referenced at least once by `semantic.json`.

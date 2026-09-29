@@ -1645,7 +1645,7 @@
         border-bottom: 1px solid var(--agtc-semantic-color-border-default);
         padding: var(--agtc-semantic-space-component-padding-sm) 0;
         z-index: 99;
-        box-shadow: var(--agtc-shadow-md);
+        box-shadow: var(--agtc-semantic-shadow-raised);
         margin-left: 0;
         align-self: auto;
       }
