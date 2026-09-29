@@ -22,24 +22,27 @@
 //   entirely — the same "artifact never exercised on a real case" pattern
 //   as issue #127.
 // - Default-required-unless-excluded: every functional spec must either be
-//   covered by the gate's pull_request.paths filter, or be named in
+//   covered by the gate's path filter (the paths-filter `gate` list, #149), or be named in
 //   EXCLUDED_FUNCTIONAL_SPECS below with its own one-line reason. A spec
 //   that is neither fails this test by name. An EXCLUDED_FUNCTIONAL_SPECS
 //   entry that no longer exists on disk also fails — the exclusion list is
 //   itself audited, not a write-once escape hatch.
 // - Separately verifies tests/governance appears as a whole-directory entry
-//   in both pull_request.paths and the governance-checks job's actual run
+//   in both the gate's path filter and the governance-checks job's actual run
 //   command — not just that individual files under it happen to be covered.
 //
-// Three independent claims, three tests:
+// Four independent claims, four tests:
 // 1. Every tests/governance/ spec and every tests/functional/ spec is either
 //    covered by the gate's path filter or explicitly, individually excluded
 //    with a reason. Local, deterministic, no network.
 // 2. tests/governance appears as a directory in both the path filter and the
 //    job's run command — not merely implied by individual file coverage.
-// 3. The gate is not (yet) a required status check on `main` — a
-//    characterization of the current gap, tracked as
-//    https://github.com/gnegreiros-ux/agentica-design-system/issues/149.
+// 3. The gate always reports on every PR (#149, ADR-101): no trigger-level
+//    path filter, no whole-job skip, every real step guarded by the
+//    paths-filter output — the precondition for it being a required check.
+// 4. The gate IS a required status check on `main` (#149, ADR-101 — made
+//    required on 2026-09-28, right after the in-job path scoping merged in
+//    #215). Guards against it being dropped from branch protection.
 //    This needs a live read of GitHub's branch-protection API, which has no
 //    local source of truth in this repo (no committed settings file) and
 //    returns 401 even for this public repo without authentication. Rather
@@ -137,7 +140,27 @@ function loadWorkflow() {
   // this exact file before relying on it (some other YAML parsers/schemas
   // are known to coerce `on:` to a boolean, which would break this read).
   const doc = loadYaml(workflowText);
-  return { doc, declaredPaths: doc.on.pull_request.paths };
+  // Since #149 the gate's scope is no longer a trigger-level `paths` filter
+  // (a required check skipped that way never reports and blocks every PR)
+  // but the `gate` filter of the job's own paths-filter step.
+  const filterStep = findPathsFilterStep(doc);
+  const filters = loadYaml(filterStep.with.filters);
+  if (!Array.isArray(filters.gate)) {
+    throw new Error('The paths-filter step in the governance-checks job has no `gate` filter list — has it been renamed?');
+  }
+  return { doc, declaredPaths: filters.gate, filterStep };
+}
+
+function findPathsFilterStep(doc) {
+  const job = doc.jobs[GATE_JOB_ID];
+  if (!job) {
+    throw new Error(`No "${GATE_JOB_ID}" job found in playwright.yml — has the gate job been renamed?`);
+  }
+  const step = job.steps.find((s) => typeof s.uses === 'string' && s.uses.startsWith('dorny/paths-filter@'));
+  if (!step) {
+    throw new Error(`No dorny/paths-filter step found in the "${GATE_JOB_ID}" job — where is the gate's path scope defined now?`);
+  }
+  return step;
 }
 
 function findGovernanceChecksRunCommand(doc) {
@@ -165,7 +188,7 @@ test('every tests/governance/ and tests/functional/ spec is covered by the PR ga
   for (const relPath of governanceSpecs) {
     expect(
       isCoveredByPaths(relPath, declaredPaths),
-      `${relPath} is not covered by playwright.yml's pull_request.paths filter — a governance spec must never be excluded from its own gate`
+      `${relPath} is not covered by the gate's paths-filter \`gate\` list in playwright.yml — a governance spec must never be excluded from its own gate`
     ).toBe(true);
   }
 
@@ -175,7 +198,7 @@ test('every tests/governance/ and tests/functional/ spec is covered by the PR ga
     const excluded = excludedPaths.has(relPath);
     expect(
       covered || excluded,
-      `${relPath} is neither covered by pull_request.paths nor listed in EXCLUDED_FUNCTIONAL_SPECS — ` +
+      `${relPath} is neither covered by the gate's paths-filter list nor listed in EXCLUDED_FUNCTIONAL_SPECS — ` +
         `it would silently never run on a PR. Either add it to the path filter, or add it to ` +
         `EXCLUDED_FUNCTIONAL_SPECS with a real reason.`
     ).toBe(true);
@@ -197,13 +220,13 @@ test('every tests/governance/ and tests/functional/ spec is covered by the PR ga
   }
 });
 
-test('tests/governance appears as a whole directory in both pull_request.paths and the governance-checks run command', () => {
+test('tests/governance appears as a whole directory in both the gate path filter and the governance-checks run command', () => {
   const { doc, declaredPaths } = loadWorkflow();
   const runCommand = findGovernanceChecksRunCommand(doc);
 
   expect(
     declaredPaths,
-    `pull_request.paths must include 'tests/governance/**' as a whole-directory entry (found: ${JSON.stringify(declaredPaths)})`
+    `the gate's paths-filter list must include 'tests/governance/**' as a whole-directory entry (found: ${JSON.stringify(declaredPaths)})`
   ).toContain('tests/governance/**');
 
   const runCommandTokens = runCommand.trim().split(/\s+/);
@@ -213,7 +236,34 @@ test('tests/governance appears as a whole directory in both pull_request.paths a
   ).toContain('tests/governance');
 });
 
-test('main branch protection does not yet require the PR gate as a status check — characterizes #149', () => {
+test('the PR gate always reports on every PR — no trigger-level path filter, no whole-job skip, every real step guarded', () => {
+  const { doc, filterStep } = loadWorkflow();
+  const trigger = doc.on.pull_request ?? {};
+
+  // A required check whose workflow is skipped by a trigger-level filter
+  // stays "pending" forever and blocks every unrelated PR (#149).
+  expect(trigger.paths, 'pull_request must not carry a `paths` filter — scope the gate inside the job instead (#149)').toBeUndefined();
+  expect(trigger['paths-ignore'], 'pull_request must not carry a `paths-ignore` filter (#149)').toBeUndefined();
+
+  const job = doc.jobs[GATE_JOB_ID];
+  expect(job.if, 'the gate job may only be conditioned on the event type, never on changed paths').toBe("github.event_name == 'pull_request'");
+  expect(job.needs, 'the gate job must not depend on another job — a failed dependency skips it, and GitHub counts a skipped required check as passing').toBeUndefined();
+
+  // Every step after detection must be guarded by its output, so a PR with
+  // no gate-relevant change passes quickly, and one with a change really runs.
+  const steps = job.steps;
+  const filterIndex = steps.indexOf(filterStep);
+  expect(filterStep.id, 'the paths-filter step needs an id for later steps to read its output').toBeTruthy();
+  for (const step of steps.slice(filterIndex + 1)) {
+    const label = step.name ?? step.uses;
+    expect(
+      typeof step.if === 'string' && step.if.includes(`steps.${filterStep.id}.outputs.gate`),
+      `step "${label}" is not guarded by steps.${filterStep.id}.outputs.gate`
+    ).toBe(true);
+  }
+});
+
+test('main branch protection requires the PR gate as a status check (#149)', () => {
   let requiredContexts;
   try {
     const raw = execFileSync(
@@ -229,6 +279,6 @@ test('main branch protection does not yet require the PR gate as a status check 
 
   expect(
     requiredContexts,
-    `"${GATE_JOB_NAME}" is now a required status check on main — #149 has been resolved. Update this test to assert it IS required (and close https://github.com/${REPO_SLUG}/issues/149 if not already done)`
-  ).not.toContain(GATE_JOB_NAME);
+    `"${GATE_JOB_NAME}" is no longer a required status check on main — a PR could merge without the governance suite having run. Restore it in branch protection (ADR-101, #149)`
+  ).toContain(GATE_JOB_NAME);
 });
