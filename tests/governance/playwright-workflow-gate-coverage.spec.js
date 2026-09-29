@@ -40,9 +40,9 @@
 // 3. The gate always reports on every PR (#149, ADR-101): no trigger-level
 //    path filter, no whole-job skip, every real step guarded by the
 //    paths-filter output — the precondition for it being a required check.
-// 4. The gate is not (yet) a required status check on `main` — a
-//    characterization of the current gap, tracked as
-//    https://github.com/gnegreiros-ux/agentica-design-system/issues/149.
+// 4. The gate IS a required status check on `main` (#149, ADR-101 — made
+//    required on 2026-09-28, right after the in-job path scoping merged in
+//    #215). Guards against it being dropped from branch protection.
 //    This needs a live read of GitHub's branch-protection API, which has no
 //    local source of truth in this repo (no committed settings file) and
 //    returns 401 even for this public repo without authentication. Rather
@@ -263,7 +263,7 @@ test('the PR gate always reports on every PR — no trigger-level path filter, n
   }
 });
 
-test('main branch protection does not yet require the PR gate as a status check — characterizes #149', () => {
+test('main branch protection requires the PR gate as a status check (#149)', () => {
   let requiredContexts;
   try {
     const raw = execFileSync(
@@ -279,6 +279,6 @@ test('main branch protection does not yet require the PR gate as a status check 
 
   expect(
     requiredContexts,
-    `"${GATE_JOB_NAME}" is now a required status check on main — #149 has been resolved. Update this test to assert it IS required (and close https://github.com/${REPO_SLUG}/issues/149 if not already done)`
-  ).not.toContain(GATE_JOB_NAME);
+    `"${GATE_JOB_NAME}" is no longer a required status check on main — a PR could merge without the governance suite having run. Restore it in branch protection (ADR-101, #149)`
+  ).toContain(GATE_JOB_NAME);
 });
