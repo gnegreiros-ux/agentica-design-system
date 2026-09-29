@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica</title>
+<title>Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica">
+<meta property="og:title" content="Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="Mobile navigation: sidebar as a sliding drawer and contextual button in the content — Agentica">
+<meta name="twitter:title" content="Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -119,74 +119,73 @@
   <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
 <div class="adr-header">
   <div class="adr-header-eyebrow">
-    <code class="adr-number">ADR-053</code>
+    <code class="adr-number">ADR-102</code>
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
-    <span class="adr-type">pattern</span>
+    <span class="adr-type">contract</span>
   </div>
-  <h1 class="adr-page-title">Mobile navigation: sidebar as a sliding drawer and contextual button in the content</h1>
+  <h1 class="adr-page-title">Token annotation schema: <code>$description</code> plus two vendor namespaces in <code>$extensions</code></h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
-      <dd>2026-06-10</dd>
+      <dd>2026-09-27</dd>
     </div>
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
-      <dd>Human (approval) · Design System Lead (navigation)</dd>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
     </div>
   </dl>
-</div><div class="lang-en"><h2>Context</h2>
-<p>On mobile (≤768px), the secondary navigation sidebar (Foundations, Components, Decisions) rendered in the normal page flow — <strong>before the content</strong> — because it precedes <code>&lt;main&gt;</code> in the DOM and the layout switches to <code>flex-direction: column</code>. The first visible element was therefore the navigation list, not the page title.</p>
-<p>Additionally, on pages without a sidebar (home, Tokens, Agents), the drawer-access button was present in the header even though it had no effect — it was contextual but positioned globally.</p>
-<hr>
+</div><h2>Context</h2>
+<p>The HM-01 hygiene report (issue #187, 2026-09-27) measured how well tokens are annotated for agents. It found an annotation scheme already in place, but never formalised and partly non-conformant with the standard ADR-052 binds us to:</p>
+<p>1. <strong><code>$extensions["com.agentica.usage"]</code></strong> — <code>role</code>, <code>use[]</code>, <code>doNotUse</code>, <code>components[]</code>,    <code>decision</code> — was introduced on 2026-06-19 (commit <code>34471f79</code>) on 31 semantic tokens and is    read by <code>scripts/lib/contracts.js</code> and <code>scripts/extract-relationships.js</code> (ADR-086). The    <code>$metadata._extensions-convention</code> note of <code>semantic.json</code> and <code>component.json</code> points to    ADR-052 for its definition, but ADR-052 never defines it. 2. <strong><code>$intent</code></strong> carries most of the human-readable meaning (87 % of semantic tokens, 100 % of    dark-mode tokens, 18 % of component tokens), while <code>$description</code> — the only description field    the standard defines — covers 18 % of semantic tokens and 0 % of component tokens. 3. <strong><code>$metadata</code></strong> sits at the root of 6 token files (<code>level</code>, <code>description</code>, <code>version</code>, <code>rule</code>,    <code>_extensions-convention</code>, <code>tokenSetOrder</code>) and on 18 groups of <code>component.json</code> (<code>intent</code>,    <code>owner</code>, <code>contract</code>, and <code>button.critical</code>'s confirmation rules), where    <code>scripts/validate-contracts.js</code> and <code>scripts/extract-relationships.js</code> read it. 4. <strong>5 pseudo-tokens <code>_readme</code></strong> (<code>$type: "other"</code>) store group documentation as tokens;    <code>style-dictionary/build.cjs</code> filters them out with <code>isReadme</code>.</p>
+<p>Checked against the *Design Tokens Format Module 2025.10* (draft of 2026-09-08) and its official JSON Schema (<code>https://www.designtokens.org/schemas/2025.10/format.json</code>):</p>
+<ul><li>§5.1.1 reserves the <code>$</code> prefix for properties defined by the format, current and future.</li><li>§5.2 lists the properties a token may carry beyond <code>$value</code>: <code>$description</code>, <code>$type</code>,</li></ul>
+<p>  <code>$extensions</code>, <code>$deprecated</code>.</p>
+<ul><li>§5.2.3 makes <code>$extensions</code> the place for proprietary, team- or vendor-specific data, under a</li></ul>
+<p>  vendor-specific key; tools MUST preserve extension data they do not understand.</p>
+<ul><li>The schema's <code>token.json</code> allows only <code>$value</code>, <code>$type</code>, <code>$ref</code>, <code>$description</code>, <code>$extensions</code>,</li></ul>
+<p>  <code>$deprecated</code>, and <code>group.json</code> only <code>$type</code>, <code>$description</code>, <code>$extensions</code>, <code>$extends</code>,   <code>$deprecated</code>, <code>$root</code> plus child names — both with <code>additionalProperties: false</code>.</p>
+<p>So a token carrying <code>$intent</code>, or a file or group carrying <code>$metadata</code>, fails the official schema, and no conformant tool has to keep those fields. The raw <code>tokens/*.json</code> files also ship inside <code>@agentica-ds/tokens</code>, so this is not only an internal concern.</p>
 <h2>Decision</h2>
-<h3>1. Sidebar turned into a sliding drawer (mobile only)</h3>
-<p>At <code>max-width: 768px</code>, the sidebar is repositioned to <code>position: fixed</code> (out of flow), sliding in from the left via <code>transform: translateX(-100%)</code> → <code>translateX(0)</code>. It no longer interferes with the content's reading order.</p>
-<p>Drawer behavior:</p>
-<ul><li>Opens via the toggle button (see point 2)</li><li>Closes via: the toggle button, clicking the overlay, the <code>Escape</code> key, clicking a navigation link</li><li>A semi-transparent overlay (<code>rgba(0,0,0,.40)</code> + <code>backdrop-filter: blur(2px)</code>) covers the content</li><li><code>document.body.overflow: hidden</code> while open (prevents background scrolling)</li><li>ARIA: <code>aria-expanded</code> on the button, <code>aria-hidden</code> on the overlay</li></ul>
-<h3>2. Drawer-access button placed in the content, before the <code>&lt;h1&gt;</code></h3>
-<p>The <code>sidebar-toggle</code> button is rendered <strong>inside <code>&lt;main&gt;</code></strong>, right before the page title — only on pages that have a sidebar. It is never present in the header, nor on pages without a sidebar.</p>
-<p>Rationale:</p>
-<ul><li><strong>Contextual</strong>: visible only where it's useful</li><li><strong>Readability</strong>: the header stays identical on every page</li><li><strong>Logical sequence</strong>: the user sees the navigation button before the title, and can access it</li></ul>
-<p>  immediately before reading</p>
-<p>Button style: <code>background-subtle</code> background + border + <code>panel-left</code> icon + "Navigation" label (FR/EN) — reads as an action, not just an opaque icon.</p>
-<hr>
+<h3>1. <code>$description</code> is the single human-readable description</h3>
+<ul><li>Every token and group description lives in <code>$description</code>. <strong><code>$intent</code> is retired</strong> and folded</li></ul>
+<p>  into <code>$description</code>. When both exist, they become one text with no loss of information   (contrast ratios, pitfalls, ADR references).</p>
+<ul><li>A group's <code>$intent</code> or <code>$metadata.intent</code> / <code>$metadata.description</code> becomes that group's</li></ul>
+<p>  <code>$description</code> (the schema allows it on groups and on the file root).</p>
+<ul><li><code>_readme</code> pseudo-tokens become the <code>$description</code> of their parent group.</li></ul>
+<h3>2. <code>$extensions["com.agentica.usage"]</code> — how to use a token (token level)</h3>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Content</th></tr></thead><tbody><tr><td><code>role</code></td><td>string</td><td><strong>yes</strong></td><td>Semantic role in one or two words (e.g. <code>danger</code>, <code>primary-action</code>)</td></tr><tr><td><code>use</code></td><td>string[]</td><td><strong>yes</strong></td><td>Allowed usages, as component selectors: <code>Button[variant=critical]</code></td></tr><tr><td><code>doNotUse</code></td><td>string</td><td><strong>yes</strong></td><td>Explicit contraindications, in prose</td></tr><tr><td><code>alternative</code></td><td>string[]</td><td>no — expected whenever <code>doNotUse</code> names a better token</td><td>Full token paths to use instead: <code>semantic.color.brand.accent</code></td></tr><tr><td><code>decision</code></td><td>string | string[]</td><td><strong>yes when an ADR justifies the token</strong></td><td><code>ADR-XXX</code> identifiers only</td></tr><tr><td><code>components</code></td><td>string[]</td><td>no</td><td>Consuming components, same selector syntax as <code>use</code>; derivable from code</td></tr></tbody></table></div>
+<p><code>alternative</code> is new. <code>doNotUse</code> stays prose for humans; <code>alternative</code> gives agents a machine-readable target, which HM-08 (issue #198) needs to test that an agent refuses a contraindicated token and proposes the documented one, and which lets <code>extract-relationships.js</code> stop parsing token paths out of prose.</p>
+<p>A token is <strong>agent-ready</strong> when it has a <code>$description</code> and a <code>com.agentica.usage</code> block that satisfies the required fields above. This is the definition the hygiene score (HM-07, issue #192) measures.</p>
+<h3>3. <code>$extensions["com.agentica.governance"]</code> — the contract of a file or a component (root and group level)</h3>
+<p>Everything <code>$metadata</code> held besides descriptive text moves here, unchanged in content: <code>level</code>, <code>version</code>, <code>rule</code> (file roots); <code>owner</code>, <code>contract</code>, and behavioural rules such as <code>requires-confirmation</code>, <code>prevents-double-click</code>, <code>audit-log</code>, <code>min-contrast</code> (component groups). The two namespaces stay separate on purpose: <code>usage</code> describes how to use one token, <code>governance</code> describes who owns a file or component and what contract binds it.</p>
+<p><code>_extensions-convention</code> is dropped: this ADR is the reference. <code>tokenSetOrder</code> in <code>primitives*.json</code> is removed unless Tokens Studio is shown to read it there (it normally reads <code>tokens/$metadata.json</code>). <code>tokens/$metadata.json</code> itself is a Tokens Studio configuration file, not a token file: it stays as is and is excluded from DTCG validation.</p>
+<h3>4. Dark mode inherits annotations</h3>
+<p>Annotations live in <code>semantic.json</code> only. <code>semantic.dark.json</code> carries value deltas; it holds a <code>$description</code> only for information specific to the dark theme (for example its own contrast ratios), never a copy of the light-mode text.</p>
+<h3>5. Shared vocabulary with the component <code>api</code> field (#177)</h3>
+<p>When a component prop refers to a token in the <code>api</code> metadata of issue #177, it uses the token's <strong>full path</strong> (<code>component.button.primary.background</code>), and variants use the same selector syntax as <code>use</code> (<code>Button[variant=critical]</code>). One notation for token paths and one for component variants, across token annotations and component metadata.</p>
+<h3>6. Rule for agents</h3>
+<p>Every new or modified token entry follows this schema. No new <code>$</code>-prefixed key outside those the DTCG schema allows; team-specific data goes under one of the two <code>com.agentica.*</code> namespaces.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Button in the header (always visible)</td><td>Present on pages without a sidebar — misleading and useless</td></tr><tr><td>Sidebar above the content (initial behavior)</td><td>The user reads the navigation before the page — unnecessary cognitive load</td></tr><tr><td>Dropdown menu integrated into the mobile top-nav</td><td>Confuses primary and secondary navigation</td></tr></tbody></table></div>
-<hr>
+<ul><li><strong>Keep <code>$intent</code> as a documented exception</strong> — ADR-052 says the standard prevails; the</li></ul>
+<p>  official schema rejects the key, and no tool is required to preserve it. Rejected.</p>
+<ul><li><strong>Move <code>$intent</code> into <code>$extensions["com.agentica.usage"].intent</code></strong> — conformant, but keeps two</li></ul>
+<p>  descriptions per token where the standard provides one, and hides the main description from   every generic DTCG tool (documentation generators, Tokens Studio). Rejected in favour of   <code>$description</code>.</p>
+<ul><li><strong>One namespace for everything (<code>com.agentica.usage</code>)</strong> — mixes a token's usage with a</li></ul>
+<p>  component's ownership and contract, which different people read and approve. Rejected.</p>
+<ul><li><strong>Duplicate annotations into <code>semantic.dark.json</code></strong> — two copies drift; the intent of a token</li></ul>
+<p>  does not change with the theme. Rejected.</p>
 <h2>Consequences</h2>
-<ul><li>On desktop (> 768px): no change — the sidebar stays in flow, the button is hidden via</li></ul>
-<p>  <code>display: none</code></p>
-<ul><li>The drawer JS must be present on every page with a sidebar (injected via <code>layout()</code>)</li><li>Any new page with a sidebar automatically inherits this behavior (conditional rendering in</li></ul>
-<p>  <code>layout()</code>)</p>
-<ul><li><strong>To watch:</strong> if a page accumulates many sidebar links, consider a per-group accordion (future</li></ul>
-<p>  ADR)</p></div><div class="lang-fr"><h2>Contexte</h2>
-<p>Sur mobile (≤ 768 px), la sidebar de navigation secondaire (Fondations, Composants, Décisions) s'affichait dans le flux normal de la page — <strong>avant le contenu</strong> — car elle précède <code>&lt;main&gt;</code> dans le DOM et le layout passe en <code>flex-direction: column</code>. Le premier élément visible était donc la liste de navigation, non le titre de page.</p>
-<p>Par ailleurs, sur les pages sans sidebar (accueil, Tokens, Agents), le bouton d'accès au drawer était présent dans le header alors qu'il n'avait aucun effet — il était contextuel mais positionné de manière globale.</p>
-<hr>
-<h2>Décision</h2>
-<h3>1. Sidebar transformée en drawer coulissant (mobile uniquement)</h3>
-<p>Sur <code>max-width: 768px</code>, la sidebar est repositionnée en <code>position: fixed</code> (hors flux), glissant depuis la gauche via <code>transform: translateX(-100%)</code> → <code>translateX(0)</code>. Elle n'interfère plus avec l'ordre de lecture du contenu.</p>
-<p>Comportement du drawer :</p>
-<ul><li>Ouverture via bouton toggle (voir point 2)</li><li>Fermeture via : bouton toggle, clic sur l'overlay, touche <code>Escape</code>, clic sur un lien de navigation</li><li>Overlay semi-transparent (<code>rgba(0,0,0,.40)</code> + <code>backdrop-filter: blur(2px)</code>) recouvre le contenu</li><li><code>document.body.overflow: hidden</code> pendant l'ouverture (empêche le scroll en arrière-plan)</li><li>ARIA : <code>aria-expanded</code> sur le bouton, <code>aria-hidden</code> sur l'overlay</li></ul>
-<h3>2. Bouton d'accès au drawer placé dans le contenu, avant le <code>&lt;h1&gt;</code></h3>
-<p>Le bouton <code>sidebar-toggle</code> est rendu <strong>dans <code>&lt;main&gt;</code></strong>, juste avant le titre de page — uniquement sur les pages possédant une sidebar. Il n'est jamais présent dans le header ni sur les pages sans sidebar.</p>
-<p>Justification :</p>
-<ul><li><strong>Contextuel</strong> : visible uniquement là où il est utile</li><li><strong>Lisibilité</strong> : le header reste identique sur toutes les pages</li><li><strong>Séquence logique</strong> : l'utilisateur voit le bouton navigation avant le titre, peut y accéder</li></ul>
-<p>  immédiatement avant de lire</p>
-<p>Style du bouton : fond <code>background-subtle</code> + bordure + icône <code>panel-left</code> + label "Navigation" (FR/EN) — lisible comme action, pas juste une icône opaque.</p>
-<hr>
-<h2>Alternatives rejetées</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Raison du rejet</th></tr></thead><tbody><tr><td>Bouton dans le header (toujours visible)</td><td>Présent sur pages sans sidebar — trompeur et inutile</td></tr><tr><td>Sidebar au-dessus du contenu (comportement initial)</td><td>L'utilisateur lit la navigation avant la page — charge cognitive inutile</td></tr><tr><td>Menu déroulant intégré au top-nav mobile</td><td>Confond navigation principale et secondaire</td></tr></tbody></table></div>
-<hr>
-<h2>Conséquences</h2>
-<ul><li>Sur desktop (> 768 px) : aucun changement — la sidebar reste dans le flux, le bouton est masqué</li></ul>
-<p>  via <code>display: none</code></p>
-<ul><li>Le JS du drawer doit être présent sur toutes les pages avec sidebar (injecté via <code>layout()</code>)</li><li>Toute nouvelle page avec sidebar hérite automatiquement du comportement (rendu conditionnel dans</li></ul>
-<p>  <code>layout()</code>)</p>
-<ul><li><strong>À surveiller :</strong> si une page accumule beaucoup de liens sidebar, envisager un accordéon par</li></ul>
-<p>  groupe (ADR futur)</p></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
-    <a href="adr-052.html" class="agtc-button secondary">← ADR-052</a>
-    <a href="adr-054.html" class="agtc-button secondary">ADR-054 →</a>
+<ul><li><strong>Build output is unaffected.</strong> Verified on 2026-09-27 in a sandbox copy of <code>tokens/</code>: the full</li></ul>
+<p>  migration (<code>$intent</code> → <code>$description</code>, <code>$metadata</code> → <code>$description</code> + <code>com.agentica.governance</code>,   <code>_readme</code> → group <code>$description</code>) was applied to every file, and Style Dictionary 3.9.2 produced   the 11 files of <code>dist/tokens/**</code> byte-for-byte identical to the current build, with no warning.   After that migration no token file contains a key outside the DTCG 2025.10 schema.</p>
+<ul><li><strong>Migration is a separate change</strong> (issue #203, HM-02b): one PR that migrates the existing files</li></ul>
+<p>  and adapts <code>scripts/lib/contracts.js</code>, <code>scripts/validate-contracts.js</code>,   <code>scripts/extract-relationships.js</code>, <code>style-dictionary/build.cjs</code> and one mention in   <code>site/build.js</code>. It touches component contracts, so it requires human escalation and a TCR.   Until it merges, existing files keep the legacy keys; new entries already follow this ADR.</p>
+<ul><li><strong>Annotation work</strong> (HM-04 #190, HM-05 #191) writes content only, on this schema.</li><li><strong>Remaining non-conformance — value formats (out of scope).</strong> Structure aside, token *values*</li></ul>
+<p>  still follow an older DTCG draft: colours are hex strings (the 2025.10 schema requires a   <code>{colorSpace, components}</code> object), dimensions are strings like <code>"16px"</code> (it requires   <code>{value, unit}</code>), some numbers are strings, and <code>$type: "other"</code> is not a DTCG type. This affects   about 670 literal values (595 colours, 67 dimensions, 11 numbers — mostly in <code>primitives*.json</code>;   aliases are not affected) and the Style Dictionary 3 pipeline. It needs its own decision; the   schema check added by #203 is therefore scoped to keys, not values.</p>
+<ul><li>ADR-052's "to follow up" item (DTCG schema validation) is partly addressed by #203 (structure).</li></ul>
+<h2>Implementation</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Date</th><th>Event</th></tr></thead><tbody><tr><td>2026-09-27</td><td>Decision adopted (issue #188); sandbox Style Dictionary check passed; migration ticket #203 opened</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-101.html" class="agtc-button secondary">← ADR-101</a>
+    <a href="adr-103.html" class="agtc-button secondary">ADR-103 →</a>
   </div></main>
   <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
 </div>
