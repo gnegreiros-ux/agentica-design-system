@@ -127,7 +127,12 @@ jobs:
   publish-report:
     name: Publish report → designsystem.gnegreiros.com/playwright-report/
     needs: playwright
-    if: always() && github.event_name != 'pull_request'
+    # main only: the public report (designsystem.gnegreiros.com/playwright-report/)
+    # always reflects main. A workflow_dispatch on another branch — e.g. a
+    # visual check of a PR before merge — must not overwrite it with that
+    # branch's expected failures; its HTML reports (with the diff images)
+    # stay downloadable as the run's playwright-report-<browser> artifacts.
+    if: always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
