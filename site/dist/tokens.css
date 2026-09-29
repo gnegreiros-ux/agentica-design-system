@@ -466,6 +466,7 @@
   --agtc-semantic-color-feedback-warning-text: #582d1d;
   --agtc-semantic-color-background-page: #fcfcfc;
   --agtc-semantic-color-background-surface: #ffffff;
+  --agtc-semantic-color-background-surface-raised: #ffffff;
   --agtc-semantic-color-background-subtle: #f0f0f0;
   --agtc-semantic-color-background-hover: #fafafa;
   --agtc-semantic-color-background-inverse: #0f1117;
@@ -806,9 +807,6 @@
   --agtc-site-sidebar-width:236px;
   --agtc-site-toc-width:208px;
   --agtc-content-max:var(--agtc-semantic-layout-container-default, 1180px); /* alias — ADR-096 */
-  --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
-  --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
-  --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
   --agtc-shadow-glow:0 0 0 1px rgba(13,155,138,.20),0 12px 32px -8px rgba(13,155,138,.30);
   --agtc-drop-shadow-sm:0 1px 2px rgba(0,0,0,.3);
   --agtc-font-size-detail:.75rem;   --agtc-font-size-label:.875rem;
@@ -873,6 +871,7 @@
   --agtc-semantic-color-brand-tertiary:#6b7280;
   --agtc-semantic-color-background-page:#0a0c11;
   --agtc-semantic-color-background-surface:#13161d;
+  --agtc-semantic-color-background-surface-raised:#1b1f27;
   --agtc-semantic-color-background-subtle:#1b1f27;
   --agtc-semantic-color-background-hover:#232833;
   --agtc-semantic-color-background-inverse:#120c0f;
@@ -892,9 +891,9 @@
   --agtc-semantic-color-border-focus:#34d3bb;
   --agtc-semantic-color-border-danger:#ff9592;
   --agtc-semantic-color-illustration-ink:#14121a;
-  --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
-  --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
-  --agtc-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);
+  --agtc-semantic-shadow-header:0 2px 24px rgba(0,0,0,0.50);
+  --agtc-semantic-shadow-raised:0 4px 16px rgba(0,0,0,0.50);
+  --agtc-semantic-shadow-card:0 1px 3px rgba(0,0,0,0.50), 0 1px 2px rgba(0,0,0,0.40);
   --agtc-shadow-glow:0 0 0 1px rgba(52,211,187,.28),0 14px 36px -8px rgba(52,211,187,.22);
   color-scheme:dark;
 }

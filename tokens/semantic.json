@@ -248,6 +248,11 @@
           "$type": "color",
           "$intent": "Card, panel, modal background"
         },
+        "surface-raised": {
+          "$value": "{primitive.color.neutral.0}",
+          "$type": "color",
+          "$description": "Raised surface — dropdown menus, popovers, mobile nav panel. Pairs with shadow.raised. Same white as surface in light mode; one step lighter than surface in dark mode, where a shadow alone barely shows (elevated surfaces get lighter — Atlassian, Apple HIG, Carbon). See issue #210."
+        },
         "subtle": {
           "$value": "{primitive.color.gray.3}",
           "$type": "color",
@@ -734,7 +739,8 @@
       "card-hover": {
         "$value": "0 4px 16px rgba(13,116,206,0.10)",
         "$type": "other",
-        "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)"
+        "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)",
+        "$deprecated": "Never consumed; tinted with the pre-ADR-048 blue rgba(13,116,206), not the current teal. Use component.card.elevated.shadow. Decided in issue #206; removal only at a major version (issue #209)."
       },
       "card": {
         "$value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)",

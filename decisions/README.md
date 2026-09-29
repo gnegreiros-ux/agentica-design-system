@@ -164,6 +164,7 @@ decisions that were already settled.
 | [ADR-099](ADR-099-workstream-version-follows-published-packages.md) | Workstream version (root `package.json`, git tags) tracks the published package state instead of its own counter — repo tags `v1.0.0` once the decoupling v0.4.0 workstream closes | 2026-09-23 | ✅ Active |
 | [ADR-100](ADR-100-compliance-badge-renders-a-recorded-verdict.md) | The compliance badge renders a recorded audit verdict (`audit.lastResult`), never the `badgeEnabled` flag — "not verified" when none is recorded; a stub audit never records one | 2026-09-25 | ✅ Active |
 | [ADR-101](ADR-101-pr-gate-required-check-in-job-path-scoping.md) | The Playwright PR gate becomes a required check on `main`: no trigger-level `paths` filter, the scope moves into the job (`dorny/paths-filter`), every later step guarded | 2026-09-25 | ✅ Active |
+| [ADR-103](ADR-103-dark-mode-elevation.md) | Dark-mode elevation: every non-deprecated `semantic.shadow.*` has a dark variant (audit check 6), new `background.surface-raised` for menus/popovers, site-only `--agtc-shadow-*` scale removed | 2026-09-28 | ✅ Active |
 
 ---
 

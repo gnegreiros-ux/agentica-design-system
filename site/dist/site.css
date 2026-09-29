@@ -24,7 +24,7 @@ body{
   -webkit-backdrop-filter:saturate(150%) blur(14px);
   border-top:3px solid var(--agtc-semantic-color-action-primary);
   border-bottom:1px solid var(--agtc-semantic-color-border-default);
-  box-shadow:var(--agtc-shadow-sm);
+  box-shadow:var(--agtc-semantic-shadow-header);
   display:flex;align-items:center;padding:0 var(--agtc-site-header-padding-x);gap:var(--agtc-space-4);
 }
 .logo{display:flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);text-decoration:none;flex-shrink:0}
@@ -468,6 +468,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
     transform:translateX(-100%);
     transition:transform .28s cubic-bezier(.4,0,.2,1);
     border-right:1px solid var(--agtc-semantic-color-border-default);
+    background:var(--agtc-semantic-color-background-surface-raised);
     box-shadow:var(--agtc-semantic-shadow-raised);
     overflow-y:auto;
     height:calc(100vh - var(--agtc-header-height,64px));
@@ -1030,7 +1031,7 @@ body{overflow-x:hidden}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── Principle card ──────────────────────────────────────── */
-.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-semantic-shadow-raised)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
@@ -1577,7 +1578,7 @@ body.page{
   display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;padding:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;border:1px solid var(--site-line);border-radius:18px /* audit-ignore: outer panel radius, see the nested div:first-child/nth-child(3) 17px = 18px minus the 1px border, concentric by design */;
   background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
-  box-shadow:var(--agtc-shadow-lg);
+  box-shadow:var(--agtc-semantic-shadow-raised);
   opacity:0;transform:translateY(-8px);pointer-events:none;
   transition:opacity .18s ease,transform .18s ease;
 }
@@ -2036,8 +2037,8 @@ body[data-context="marketing"] .role-card::after{
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
     display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
     border:1px solid var(--site-line);border-radius:var(--agtc-semantic-radius-card,16px);
-    background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
-    box-shadow:var(--agtc-shadow-lg);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-surface-raised) 96%,transparent);
+    box-shadow:var(--agtc-semantic-shadow-raised);
     opacity:0;visibility:hidden;transform:translateY(-8px);
     transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
     pointer-events:none;

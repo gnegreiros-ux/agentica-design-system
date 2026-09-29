@@ -1641,7 +1641,7 @@
         left: 0;
         right: 0;
         flex-direction: column;
-        background: var(--agtc-semantic-color-background-surface);
+        background: var(--agtc-semantic-color-background-surface-raised);
         border-bottom: 1px solid var(--agtc-semantic-color-border-default);
         padding: var(--agtc-semantic-space-component-padding-sm) 0;
         z-index: 99;

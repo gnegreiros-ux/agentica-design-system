@@ -12,12 +12,15 @@
  *   5. Undefined custom properties in components — a components/agtc-*.js file
  *      consuming a var(--agtc-*) that the token package does not define and that
  *      has no fallback (issue 208)
+ *   6. Dark-mode shadow parity — every non-deprecated semantic.shadow.* token has a
+ *      variant in semantic.dark.json (issue 210)
  *
  * Usage:
  *   node scripts/audit-tokens.js
  *   node scripts/audit-tokens.js --fix-report          → generates a JSON report
  *   node scripts/audit-tokens.js --ci                  → exit 1 on critical violations
  *   node scripts/audit-tokens.js --src-dir <path>       → analyzes a specific source directory
+ *   node scripts/audit-tokens.js --tokens-dir <path>    → reads token files from another directory (tests)
  *
  * Escape hatch: a line containing `audit-ignore` is skipped — use sparingly, only for
  * a genuine, reviewed false positive already justified by its own surrounding comment.
@@ -39,9 +42,10 @@ const TOKEN_PREFIXES = {
 };
 
 const _srcArgIdx = process.argv.indexOf('--src-dir');
+const _tokensArgIdx = process.argv.indexOf('--tokens-dir');
 
 const CONFIG = {
-  tokensDir:   path.resolve(__dirname, '../tokens'),
+  tokensDir:   _tokensArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_tokensArgIdx + 1]) : path.resolve(__dirname, '../tokens'),
   sourceDir:   _srcArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_srcArgIdx + 1]) : null,
   outputFile:  path.resolve(__dirname, '../audit-report.json'),
   ciMode:      process.argv.includes('--ci'),
@@ -228,6 +232,31 @@ function auditUndefinedComponentVars(primitives, semantic, component, sourceFile
   return undefinedVars;
 }
 
+// Both modes must always offer the same options, adapted to each mode (human rule,
+// 2026-09-28). A shadow tuned for a light background nearly vanishes on a dark one, so
+// a shadow token that exists in light mode without a dark variant is a missing option,
+// not an inherited one. Deprecated tokens are skipped. Generalising this to every
+// theme-sensitive token (with an explicit "same in both modes" marker) is issue 212.
+function auditDarkShadowParity(semantic, semanticDark) {
+  section('6. Dark-mode shadow parity (every semantic.shadow.* has a dark variant)');
+  const light = (semantic.semantic || semantic).shadow || {};
+  const dark  = (semanticDark.semantic || semanticDark).shadow || {};
+  const active = extractTokenKeys(light).filter(key => {
+    const token = key.split('.').reduce((node, part) => node?.[part], light);
+    return !token.$deprecated;
+  });
+  const missing = active
+    .filter(key => key.split('.').reduce((node, part) => node?.[part], dark)?.$value === undefined)
+    .map(key => `semantic.shadow.${key}`);
+
+  if (missing.length === 0) {
+    ok(`Every semantic.shadow.* token has a dark variant (${active.length} checked, deprecated ones skipped)`);
+  } else {
+    missing.forEach(token => error(`No dark variant in semantic.dark.json: ${token}`));
+  }
+  return missing;
+}
+
 // Documented, human-approved fallback shapes where a literal color sits next to its
 // token reference on purpose — not drift. See governance/rules/no-visited-nav.md (ADR-047/059
 // Safari :visited exception), the var(--x, #fallback) CSS resilience pattern used
@@ -380,6 +409,7 @@ function generateReport(results) {
       orphanedTokens:   results.orphaned.length,
       phantomTokens:    results.phantoms.length,
       undefinedComponentVars: results.undefinedVars.length,
+      darkShadowGaps:   results.darkShadowGaps.length,
       hardcodedErrors:  results.violations.filter(v => v.severity === 'error').length,
       hardcodedWarnings:results.violations.filter(v => v.severity === 'warning').length,
       structureIssues:  results.structureIssues.length,
@@ -402,6 +432,7 @@ function main() {
   const primitives = loadTokens('primitives.json');
   const semantic   = loadTokens('semantic.json');
   const component  = loadTokens('component.json');
+  const semanticDark = loadTokens('semantic.dark.json');
 
   // Fetch the source files — priority: --src-dir > src/ > root
   const srcDir     = CONFIG.sourceDir || path.resolve(__dirname, '../src');
@@ -472,12 +503,13 @@ function main() {
   const orphaned       = auditOrphanedTokens(component, sourceFiles);
   const phantoms       = auditPhantomTokens(semantic, sourceFiles);
   const undefinedVars  = auditUndefinedComponentVars(primitives, semantic, component, sourceFiles);
+  const darkShadowGaps = auditDarkShadowParity(semantic, semanticDark);
   const violations     = auditHardcodedValues(sourceFiles);
   const structureIssues = auditTokenStructure(primitives, semantic, component);
 
   // Summary
   section('Summary');
-  const criticalCount = phantoms.length + undefinedVars.length +
+  const criticalCount = phantoms.length + undefinedVars.length + darkShadowGaps.length +
     violations.filter(v => v.severity === 'error').length +
     structureIssues.length;
   const warnCount = orphaned.length +
@@ -493,7 +525,7 @@ function main() {
 
   // JSON report
   if (CONFIG.fixReport) {
-    generateReport({ orphaned, phantoms, undefinedVars, violations, structureIssues });
+    generateReport({ orphaned, phantoms, undefinedVars, darkShadowGaps, violations, structureIssues });
   }
 
   // CI mode — exit 1 on critical violations. process.exitCode, not
