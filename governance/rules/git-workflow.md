@@ -101,24 +101,39 @@ to either `main` or `develop`), and block force-push/branch deletion. **0 approv
 reviews required** on both, since `gnegreiros-ux` is currently the repository's sole
 collaborator and GitHub cannot self-approve a PR.
 
+**Required status checks, as read from branch protection on 2026-09-28** (branches must
+also be up to date with the base):
+- `main`: `lang-audit`, `tool-parity`, `tokens-audit`, `site-freshness`, `commit-lint`,
+  `Governance & accessibility fixtures (PR gate)` (added 2026-09-28, ADR-101, #149)
+- `develop`: `lang-audit`, `tool-parity`, `tokens-audit`, `site-freshness`, `commit-lint`
+
+Branch protection lives in GitHub settings, not in a committed file — re-read it
+(`gh api repos/gnegreiros-ux/agentica-design-system/branches/main/protection`) rather than
+trusting this list when it matters.
+
 **Target state once a second collaborator exists** (the rule this section originally
 described, restore verbatim per ADR-076's trigger clause):
 - `main`: merge only via PR + 2 approvals + green CI
 - `develop`: merge only via PR + 1 approval + green CI
 
-Other CI checks (`Playwright`, `build-and-deploy`, `tool-parity`) are not yet required
+**`Governance & accessibility fixtures (PR gate)`** (`playwright.yml`, ADR-101, #149)
+runs on every PR and is a required check on `main`: its `pull_request` trigger has no
+`paths` filter (a required check skipped by one stays "pending" and blocks every PR), and
+its scope lives inside the job, in a `dorny/paths-filter` step whose output guards every
+later step. Never put a trigger-level `paths` filter back on it, and never split the
+detection into a separate `needs:` job (a skipped required check counts as passing).
+`tests/governance/playwright-workflow-gate-coverage.spec.js` enforces both, and asserts
+the check stays required (a live read with the maintainer's `gh` session; skipped, with a
+reason, where `gh` can't read branch protection — e.g. the CI default token).
+
+Other CI checks (the 3-browser `Playwright` matrix, `build-and-deploy`) are not yet required
 checks. `Playwright`/`build-and-deploy` only trigger on `push` to `main` today, not on
 `pull_request` (see ADR-076); making them blocking pre-merge gates requires first adding
 a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
-`tool-parity` (`.github/workflows/tool-parity.yml`, `scripts/check-tool-parity.js`) does
-already run on `pull_request` and currently passes clean (no non-Claude AI tool config
-detected — `.codex/hooks.json` turned out to be a stray duplicate of `.claude/settings.json`'s
-hooks, not real Codex integration, and was removed 2026-09-11). It's still excluded from
-`required_status_checks` deliberately: making it required would immediately block every
-future PR the moment any non-Claude AI tool config (`.github/copilot-instructions.md`,
-`.cursor/`, `.windsurf/`, …) lands without a complete `governance/tool-parity/*.md`
-attestation alongside it. Flip it to required once there's an actual first case to prove
-the flow against — see `governance/tool-parity/`.
+`tool-parity` (`.github/workflows/tool-parity.yml`, `scripts/check-tool-parity.js`) runs on
+`pull_request` and is now a required check on both `main` and `develop`: any non-Claude AI
+tool config (`.github/copilot-instructions.md`, `.cursor/`, `.windsurf/`, …) must land with a
+complete `governance/tool-parity/*.md` attestation in the same PR, or the PR cannot merge.
 
 **`tokens-audit`, `site-freshness`, `commit-lint`** (added 2026-09-11) turn three of the
 `quality-gate` Skill's pipelines from "Claude Code is instructed to run this before

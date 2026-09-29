@@ -21,29 +21,19 @@ on:
         description: >
           Regenerate the reference snapshots.
           HUMAN APPROVAL REQUIRED — never enable automatically (ADR-066, ADR-004).
-  # PR gate for the decoupling v0.4.0 test suite (tests/governance/ + the two
+  # PR gate for the decoupling v0.4.0 test suite (tests/governance/ + the
   # accessibility specs) only — deliberately NOT the full visual/functional
   # matrix below, which stays push-to-main-only (ADR-076 rejected making
-  # that 3x-per-PR-iteration cost a blocking gate). Scoped by path so an
-  # unrelated PR never runs it. Not a required status check in branch
-  # protection — that decision is out of scope for this lot.
+  # that 3x-per-PR-iteration cost a blocking gate).
+  #
+  # No `paths` filter on this trigger, on purpose (#149, ADR-101): the gate
+  # is a required status check on main, and a required check whose workflow
+  # is skipped by a trigger-level path filter never reports and stays
+  # "pending" forever — it would block every unrelated PR. The path scoping
+  # lives inside the governance-checks job instead (its "Detect
+  # gate-relevant changes" step): the job always runs and always reports,
+  # and only does the real work when a gate-relevant path changed.
   pull_request:
-    paths:
-      - 'tests/governance/**'
-      - 'tests/functional/accessibility.spec.js'
-      - 'tests/functional/governance-accessibility.spec.js'
-      - 'tests/functional/doc-generator-accessibility.spec.js'
-      - 'tests/functional/fixtures/doc-generator/**'
-      - 'clone/**'
-      - 'doc-generator/**'
-      - 'GOVERNANCE.md'
-      - 'scripts/audit-tokens.js'
-      - 'scripts/check-governance-sync.mjs'
-      # Storybook registration guard (tests/governance/storybook-component-
-      # registration.spec.js): a new component or a preview.js change must be
-      # checked before merge, not only on the push-to-main run.
-      - 'components/**'
-      - '.storybook/preview.js'
 
 permissions:
   contents: write
@@ -186,39 +176,85 @@ jobs:
     # Only for the pull_request event — see that trigger's comment above.
     # Deliberately its own job rather than folded into the `playwright`
     # matrix: runs only the decoupling v0.4.0 suite (tests/governance/ +
-    # the two accessibility specs), on chromium only, not the full
+    # the accessibility specs), on chromium only, not the full
     # visual/functional/3-browser matrix.
+    #
+    # Required status check on main (#149, ADR-101). The job must therefore
+    # never be skipped as a whole on a PR: scoping is done per step, below.
+    # A single job (not a separate "changes" job + `needs:`) on purpose — if
+    # path detection itself failed in a separate job, the dependent job
+    # would be *skipped*, which GitHub counts as a pass for a required
+    # check. Here a detection failure fails the required check itself.
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
+      pull-requests: read # paths-filter lists the PR's changed files via the API
 
     steps:
       - uses: actions/checkout@v5
 
+      - name: Detect gate-relevant changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          # Single source of truth for the gate's scope — read by
+          # tests/governance/playwright-workflow-gate-coverage.spec.js.
+          filters: |
+            gate:
+              - 'tests/governance/**'
+              - 'tests/functional/accessibility.spec.js'
+              - 'tests/functional/governance-accessibility.spec.js'
+              - 'tests/functional/doc-generator-accessibility.spec.js'
+              - 'tests/functional/fixtures/doc-generator/**'
+              - 'clone/**'
+              - 'doc-generator/**'
+              - 'GOVERNANCE.md'
+              - 'scripts/audit-tokens.js'
+              - 'scripts/check-governance-sync.mjs'
+              # Storybook registration guard (tests/governance/storybook-
+              # component-registration.spec.js): a new component or a
+              # preview.js change must be checked before merge, not only on
+              # the push-to-main run.
+              - 'components/**'
+              - '.storybook/preview.js'
+              # The gate's own definition: a change to this workflow must
+              # prove it still runs.
+              - '.github/workflows/playwright.yml'
+
+      - name: No gate-relevant change — nothing to run
+        if: steps.changes.outputs.gate != 'true'
+        run: echo "No gate-relevant path changed in this PR — the governance suite is not run; the required check passes."
+
       - uses: actions/setup-node@v5
+        if: steps.changes.outputs.gate == 'true'
         with:
           node-version: '20'
           cache: npm
 
       - name: Install dependencies
+        if: steps.changes.outputs.gate == 'true'
         run: npm install --no-audit --no-fund
 
       - name: Build tokens
+        if: steps.changes.outputs.gate == 'true'
         run: npm run tokens
 
       - name: Build site
+        if: steps.changes.outputs.gate == 'true'
         run: node site/build.js
 
       - name: Install Playwright Chromium
+        if: steps.changes.outputs.gate == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Run governance and governance-accessibility tests
+        if: steps.changes.outputs.gate == 'true'
         run: npx playwright test tests/governance tests/functional/accessibility.spec.js tests/functional/governance-accessibility.spec.js tests/functional/doc-generator-accessibility.spec.js --project=chromium --reporter=list
 
       - name: Upload report
-        if: always()
+        if: always() && steps.changes.outputs.gate == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: governance-checks-report
