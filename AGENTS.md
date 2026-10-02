@@ -82,6 +82,7 @@ decisions/                                   ← why decisions were made (ADRs)
 - ❌ Deploy to production without human validation
 - ❌ Ignore an accessibility violation report
 - ❌ Bypass lint rules
+- ❌ Add a token field outside the annotation schema of ADR-102 — descriptions go in `$description`; team data goes in `$extensions["com.agentica.usage"]` (how to use a token) or `$extensions["com.agentica.governance"]` (contract of a file or component); never a new `$`-prefixed key
 
 ---
 
