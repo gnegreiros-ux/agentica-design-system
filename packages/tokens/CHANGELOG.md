@@ -1,5 +1,25 @@
 # @agentica-ds/tokens
 
+## 1.1.0
+
+### Minor Changes
+
+- 086088a: Dark-mode elevation (ADR-103). New token `semantic.color.background.surface-raised`
+  (`--agtc-semantic-color-background-surface-raised`) for dropdown menus, popovers and mobile
+  nav panels — white like `surface` in light mode, one step lighter than `surface` in dark
+  mode. `semantic.shadow.header`, `shadow.raised` and `shadow.card` now have dark variants in
+  `dark.css` (same geometry, stronger opacity) so elevation stays visible on dark backgrounds.
+  `semantic.shadow.card-hover` is deprecated (never consumed; use
+  `component.card.elevated.shadow`); it is not removed.
+
+### Patch Changes
+
+- 66c7b28: Drop the `Generated on <date>` line from the header comment of the built CSS and JS
+  files (`all.css`, `components.css`, `primitives.css`, `semantic.css`, `js/tokens.js`).
+  It was stamped with the build clock, so two builds of the same commit produced
+  different tarballs; the build is now byte-for-byte reproducible. No token name or
+  value changes.
+
 ## 1.0.0
 
 ### Major Changes
