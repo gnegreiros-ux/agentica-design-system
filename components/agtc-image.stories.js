@@ -1,6 +1,6 @@
 import { html } from 'lit';
-// Local, bundled fixtures (not a remote placeholder service): Chromatic's
-// capture browser doesn't reliably fetch third-party images, so every story
+// Local, bundled fixtures (not a remote placeholder service): a
+// headless capture browser doesn't reliably fetch third-party images, so every story
 // using picsum.photos snapshotted blank (issue 151). Each fixture prints its
 // own format, so the WebP story shows which source the browser picked.
 import landscapeJpg from './fixtures/landscape.jpg';

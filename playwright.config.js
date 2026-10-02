@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -69,5 +70,16 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
+    // Built Storybook for tests/visual/storybook/stories.spec.js (ADR-104),
+    // only when it has been built (`npm run build-storybook`) — runs that
+    // don't need story snapshots (e.g. the PR governance gate) don't build it.
+    ...(existsSync('storybook-static/index.json')
+      ? [{
+          command: 'npx serve storybook-static -p 6007 --no-clipboard',
+          url: 'http://localhost:6007',
+          reuseExistingServer: !process.env.CI,
+          timeout: 30_000,
+        }]
+      : []),
   ],
 });

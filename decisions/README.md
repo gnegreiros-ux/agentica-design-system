@@ -68,7 +68,7 @@ decisions that were already settled.
 | [ADR-003](ADR-003-style-dictionary.md) | Choosing Style Dictionary for token compilation | 2026-05-28 | ✅ Active |
 | [ADR-004](ADR-004-gouvernance-humaine.md) | Human governance: the human always has the final word | 2026-05-28 | ✅ Active |
 | [ADR-005](ADR-005-variante-critical-vs-danger.md) | Replacing the `danger` variant with `critical` | 2026-05-28 | ✅ Active |
-| [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choosing Chromatic for visual regression testing | 2026-05-28 | ✅ Active |
+| [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choosing Chromatic for visual regression testing | 2026-05-28 | ⚠️ Superseded by ADR-066 / ADR-104 |
 | [ADR-007](ADR-007-axe-core-accessibilite.md) | Choosing axe-core for accessibility testing | 2026-05-28 | ✅ Active |
 | [ADR-008](ADR-008-radix-colors.md) | Choosing Radix UI Colors for the primitive palette | 2026-05-28 | ✅ Active |
 | [ADR-009](ADR-009-storybook.md) | Choosing Storybook for component documentation | 2026-05-28 | ✅ Active |
@@ -166,6 +166,7 @@ decisions that were already settled.
 | [ADR-101](ADR-101-pr-gate-required-check-in-job-path-scoping.md) | The Playwright PR gate becomes a required check on `main`: no trigger-level `paths` filter, the scope moves into the job (`dorny/paths-filter`), every later step guarded | 2026-09-25 | ✅ Active |
 | [ADR-102](ADR-102-token-annotation-schema.md) | Token annotation schema: `$description` is the single description (`$intent` retired), `$extensions["com.agentica.usage"]` (role, use, doNotUse, alternative, decision, components) at token level, `$extensions["com.agentica.governance"]` replaces `$metadata` — migration in #203 | 2026-09-27 | ✅ Active |
 | [ADR-103](ADR-103-dark-mode-elevation.md) | Dark-mode elevation: every non-deprecated `semantic.shadow.*` has a dark variant (audit check 6), new `background.surface-raised` for menus/popovers, site-only `--agtc-shadow-*` scale removed | 2026-09-28 | ✅ Active |
+| [ADR-104](ADR-104-storybook-visual-coverage-and-hosting-without-chromatic.md) | Storybook without Chromatic: every story gets a Playwright snapshot (light + dark), Storybook published with the site at `/storybook/`, Chromatic removed entirely | 2026-10-02 | ✅ Active |
 
 ---
 

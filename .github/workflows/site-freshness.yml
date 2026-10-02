@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         # npm install (not npm ci): same cross-platform lockfile rationale as
-        # deploy-site.yml and chromatic.yml.
+        # deploy-site.yml and playwright.yml.
         run: npm install --no-audit --no-fund
 
       - name: Build site

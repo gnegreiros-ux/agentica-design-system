@@ -42,7 +42,7 @@ the only thing enforcing them, and only if actually invoked.
 | Rule / ADR compliance | — | manual review against `decisions/` | Yes |
 | Missing ADRs | — | manual — does this change need a new ADR? | Yes |
 | Documentation | — | see the `document` skill | Yes |
-| Chromatic (visual regression) | ⚠️ workflow exists, manual-only (free-tier limit) | `npm run chromatic` | If change touches `components/`, `tokens/`, `.storybook/` |
+| Playwright visual regression (site pages + every Storybook story, ADR-104) | ✅ CI on push to `main`; baselines regenerated via `workflow_dispatch` only | `npx playwright test --project=chromium` (after `node site/build.js` and `npm run build-storybook`) | If change touches `components/`, `tokens/`, `.storybook/`, `site/` — list the snapshots expected to change |
 | axe-core | ⚠️ report mode, non-blocking | `npm run axe:all` | Recommended |
 
 ## Execution sequence

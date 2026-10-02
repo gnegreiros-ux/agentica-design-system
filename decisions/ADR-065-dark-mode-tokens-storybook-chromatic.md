@@ -1,7 +1,7 @@
 # ADR-065 — Dual-mode dark mode: `semantic.dark.json` + Style Dictionary + Storybook/Chromatic
 
 **Date:** 2026-06-29
-**Status:** Active
+**Status:** Active — the Chromatic modes part (`.storybook/modes.js`, `parameters.chromatic`) is superseded by ADR-104; light + dark story snapshots are now taken by Playwright
 **Author:** Guilherme Negreiros
 **Relations:** ADR-003 (Style Dictionary), ADR-006 (Chromatic), ADR-009 (Storybook), ADR-058 (dark theme), ADR-064 (V2 light mode)
 

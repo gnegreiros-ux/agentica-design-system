@@ -129,7 +129,7 @@
 | ADR-003 | Choice of Style Dictionary for token compilation | ✅ Active |
 | ADR-004 | Human governance: the human always has the final word | ✅ Active |
 | ADR-005 | Replacement of the `danger` variant with `critical` | ✅ Active |
-| ADR-006 | Choice of Chromatic for visual regression testing | ✅ Active |
+| ADR-006 | Choice of Chromatic for visual regression testing | ⚠️ Superseded by ADR-066 / ADR-104 |
 | ADR-007 | Choice of axe-core for accessibility testing | ✅ Active |
 | ADR-008 | Choice of Radix UI Colors for the primitive palette | ✅ Active |
 | ADR-009 | Choice of Storybook for component documentation | ✅ Active |

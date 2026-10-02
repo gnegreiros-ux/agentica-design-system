@@ -34,7 +34,7 @@ Active (blocking) pipelines:
 | 7 | Documentation | `pipelines/docs.md` | — |
 | 8 | Site rebuild | `pipelines/site.md` | ✅ `.github/workflows/site-freshness.yml` |
 | 9 | Commit | `pipelines/commit.md` | ✅ `.github/workflows/commit-lint.yml` (PR only) |
-| 10 | Visual regression | `pipelines/chromatic.md` | ✅ `.github/workflows/chromatic.yml` — `push` to non-`main` branches touching `components/`, `.storybook/`, `tokens/`, `style-dictionary/` or `package*.json`, TurboSnap on (free-tier snapshot quota); `workflow_dispatch` for a manual run |
+| 10 | Visual regression | `pipelines/playwright.md` | ✅ `.github/workflows/playwright.yml` — push to `main`: site pages + every Storybook story, light + dark (ADR-066, ADR-104); baselines via `workflow_dispatch` only |
 | 11 | Backlog reconciliation | `pipelines/backlog.md` | — (GitHub Projects has no API surface for CI to check against) |
 
 Pipeline 11 runs at a different cadence than 1–10: once **at the end of a PR**,

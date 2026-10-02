@@ -75,8 +75,10 @@ const TOOL_CONFIGS = {
 // asking every new tool's attestation to re-declare "Replaced: universal CI"
 // would be pure busywork. Only list a control here if its enforcement can
 // legitimately differ depending on which AI tool is driving the session.
+// 'chromatic' left this list with Chromatic itself (ADR-104): visual regression
+// is now the Playwright suite in playwright.yml — a CI gate, same for every tool.
 const REQUIRED_CONTROLS = [
-  'wcag', 'ux-patterns', 'adr-conformity', 'adr-triggers', 'docs', 'chromatic', 'axe-core',
+  'wcag', 'ux-patterns', 'adr-conformity', 'adr-triggers', 'docs', 'axe-core',
 ];
 
 function detectTools() {
