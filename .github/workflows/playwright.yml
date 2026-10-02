@@ -1,7 +1,8 @@
 name: Playwright — Visual, functional and accessibility tests
 
-# Visual regression, functional, and accessibility tests for the site (ADR-066 + ADR-007).
-# Scope: site/dist/ pages — not Storybook stories.
+# Visual regression, functional, and accessibility tests for the site (ADR-066 + ADR-007),
+# plus visual snapshots of every Storybook story (ADR-104, replaces Chromatic).
+# Scope: site/dist/ pages, and the built Storybook (storybook-static/) on Chromium.
 # Replaces axe.yml for critical pages — axe.yml remains for the manual exhaustive audit.
 # Reference PNG snapshots are committed in tests/visual/snapshots/.
 #
@@ -79,6 +80,14 @@ jobs:
 
       - name: Build site
         run: node site/build.js
+
+      - name: Build Storybook
+        # Served on :6007 by playwright.config.js for the story snapshots
+        # (tests/visual/storybook/, ADR-104) — the visual coverage Chromatic
+        # used to provide. Only Chromium takes visual snapshots; the other
+        # browsers skip tests/visual/ entirely, so they don't need the build.
+        if: matrix.browser == 'chromium'
+        run: npx storybook build --quiet
 
       - name: Run Playwright tests
         env:

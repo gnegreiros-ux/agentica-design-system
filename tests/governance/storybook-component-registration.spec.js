@@ -1,7 +1,7 @@
 // Every component with a Storybook story must actually be defined when that
 // story renders. A custom element that is never registered doesn't error — it
-// renders as an empty unknown tag (or its raw light DOM), and Chromatic
-// happily baselines that. It went unnoticed twice: agtc-image (#151, fixed in
+// renders as an empty unknown tag (or its raw light DOM), and a visual
+// snapshot happily baselines that (Chromatic did, before ADR-104). It went unnoticed twice: agtc-image (#151, fixed in
 // #161) and agtc-tabs + agtc-top-nav (#162, fixed in #165), whose baselines
 // had never checked the real components — hiding a real top-nav bug (#164).
 //
@@ -63,8 +63,8 @@ test('every storied component is reachable from preview.js or its own story', ()
   expect(
     unregistered.map((f) => relative(ROOT, f)),
     'these components have stories but are never imported by .storybook/preview.js or their '
-      + 'own story file — the custom element is never defined, so their stories (and Chromatic '
-      + 'baselines) show an empty or raw element. Import the component in preview.js.',
+      + 'own story file — the custom element is never defined, so their stories (and their '
+      + 'visual snapshots) show an empty or raw element. Import the component in preview.js.',
   ).toEqual([]);
 });
 

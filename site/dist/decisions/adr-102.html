@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica">
+<meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta property="og:image" content="https://agentica.design/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://agentica.design/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="agentica.design">
+<meta property="twitter:url" content="https://agentica.design/">
+<meta name="twitter:title" content="Token annotation schema: $description plus two vendor namespaces in $extensions — Agentica">
+<meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="twitter:image" content="https://agentica.design/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<script src="../components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner" data-site-header>
+  <a class="brand" href="../index.html" aria-label="Agentica — Accueil">
+    <img src="../img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="163" fetchpriority="high">
+    <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="163" fetchpriority="high">
+  </a>
+  <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Navigation">
+    <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="site-nav" id="main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="../ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    <div class="docs-menu">
+      <a href="../documentation.html" class="docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="docs-panel" id="docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="../pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="../architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="../tokens/index.html">Tokens</a>
+          <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="../pipelines/index.html">Pipelines</a>
+          <a href="../continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="../resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+          <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../audit.html">Audit</a>
+          <a href="../changelog.html">Changelog</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-cta" href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="site-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="false">FR</button>
+      <button type="button" data-lang="en" aria-current="true">EN</button>
+    </div>
+    <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+    <a href="https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system" target="_blank" rel="noopener noreferrer" class="figma-btn" aria-label="Figma — Librairie Agentica sur Figma Community">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>
+    </a>
+  </div>
+</header>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="layout" id="main-content">
+  <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Secondary navigation / Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a><a href="adr-045.html">ADR-045</a><a href="adr-046.html">ADR-046</a><a href="adr-047.html">ADR-047</a><a href="adr-048.html">ADR-048</a><a href="adr-049.html">ADR-049</a><a href="adr-050.html">ADR-050</a><a href="adr-051.html">ADR-051</a><a href="adr-052.html">ADR-052</a><a href="adr-053.html">ADR-053</a><a href="adr-054.html">ADR-054</a><a href="adr-055.html">ADR-055</a><a href="adr-056.html">ADR-056</a><a href="adr-057.html">ADR-057</a><a href="adr-058.html">ADR-058</a><a href="adr-059.html">ADR-059</a><a href="adr-060.html">ADR-060</a><a href="adr-061.html">ADR-061</a><a href="adr-062.html">ADR-062</a><a href="adr-063.html">ADR-063</a><a href="adr-064.html">ADR-064</a><a href="adr-065.html">ADR-065</a><a href="adr-066.html">ADR-066</a><a href="adr-067.html">ADR-067</a><a href="adr-068.html">ADR-068</a><a href="adr-069.html">ADR-069</a><a href="adr-070.html">ADR-070</a><a href="adr-071.html">ADR-071</a><a href="adr-072.html">ADR-072</a><a href="adr-073.html">ADR-073</a><a href="adr-074.html">ADR-074</a><a href="adr-075.html">ADR-075</a><a href="adr-076.html">ADR-076</a><a href="adr-077.html">ADR-077</a><a href="adr-078.html">ADR-078</a><a href="adr-079.html">ADR-079</a><a href="adr-080.html">ADR-080</a><a href="adr-081.html">ADR-081</a><a href="adr-082.html">ADR-082</a><a href="adr-083.html">ADR-083</a><a href="adr-084.html">ADR-084</a><a href="adr-085.html">ADR-085</a><a href="adr-086.html">ADR-086</a><a href="adr-087.html">ADR-087</a><a href="adr-088.html">ADR-088</a><a href="adr-089.html">ADR-089</a><a href="adr-090.html">ADR-090</a><a href="adr-091.html">ADR-091</a><a href="adr-092.html">ADR-092</a><a href="adr-093.html">ADR-093</a><a href="adr-094.html">ADR-094</a><a href="adr-095.html">ADR-095</a><a href="adr-096.html">ADR-096</a><a href="adr-097.html">ADR-097</a><a href="adr-098.html">ADR-098</a><a href="adr-099.html">ADR-099</a><a href="adr-100.html">ADR-100</a><a href="adr-101.html">ADR-101</a><a href="adr-102.html">ADR-102</a><a href="adr-103.html">ADR-103</a><a href="adr-104.html">ADR-104</a></div></aside>
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
+<div class="adr-header">
+  <div class="adr-header-eyebrow">
+    <code class="adr-number">ADR-102</code>
+    <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
+    <span class="adr-type">contract</span>
+  </div>
+  <h1 class="adr-page-title">Token annotation schema: <code>$description</code> plus two vendor namespaces in <code>$extensions</code></h1>
+  <dl class="adr-meta">
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
+      <dd>2026-09-27</dd>
+    </div>
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
+    </div>
+  </dl>
+</div><h2>Context</h2>
+<p>The HM-01 hygiene report (issue #187, 2026-09-27) measured how well tokens are annotated for agents. It found an annotation scheme already in place, but never formalised and partly non-conformant with the standard ADR-052 binds us to:</p>
+<p>1. <strong><code>$extensions["com.agentica.usage"]</code></strong> — <code>role</code>, <code>use[]</code>, <code>doNotUse</code>, <code>components[]</code>,    <code>decision</code> — was introduced on 2026-06-19 (commit <code>34471f79</code>) on 31 semantic tokens and is    read by <code>scripts/lib/contracts.js</code> and <code>scripts/extract-relationships.js</code> (ADR-086). The    <code>$metadata._extensions-convention</code> note of <code>semantic.json</code> and <code>component.json</code> points to    ADR-052 for its definition, but ADR-052 never defines it. 2. <strong><code>$intent</code></strong> carries most of the human-readable meaning (87 % of semantic tokens, 100 % of    dark-mode tokens, 18 % of component tokens), while <code>$description</code> — the only description field    the standard defines — covers 18 % of semantic tokens and 0 % of component tokens. 3. <strong><code>$metadata</code></strong> sits at the root of 6 token files (<code>level</code>, <code>description</code>, <code>version</code>, <code>rule</code>,    <code>_extensions-convention</code>, <code>tokenSetOrder</code>) and on 18 groups of <code>component.json</code> (<code>intent</code>,    <code>owner</code>, <code>contract</code>, and <code>button.critical</code>'s confirmation rules), where    <code>scripts/validate-contracts.js</code> and <code>scripts/extract-relationships.js</code> read it. 4. <strong>5 pseudo-tokens <code>_readme</code></strong> (<code>$type: "other"</code>) store group documentation as tokens;    <code>style-dictionary/build.cjs</code> filters them out with <code>isReadme</code>.</p>
+<p>Checked against the *Design Tokens Format Module 2025.10* (draft of 2026-09-08) and its official JSON Schema (<code>https://www.designtokens.org/schemas/2025.10/format.json</code>):</p>
+<ul><li>§5.1.1 reserves the <code>$</code> prefix for properties defined by the format, current and future.</li><li>§5.2 lists the properties a token may carry beyond <code>$value</code>: <code>$description</code>, <code>$type</code>,</li></ul>
+<p>  <code>$extensions</code>, <code>$deprecated</code>.</p>
+<ul><li>§5.2.3 makes <code>$extensions</code> the place for proprietary, team- or vendor-specific data, under a</li></ul>
+<p>  vendor-specific key; tools MUST preserve extension data they do not understand.</p>
+<ul><li>The schema's <code>token.json</code> allows only <code>$value</code>, <code>$type</code>, <code>$ref</code>, <code>$description</code>, <code>$extensions</code>,</li></ul>
+<p>  <code>$deprecated</code>, and <code>group.json</code> only <code>$type</code>, <code>$description</code>, <code>$extensions</code>, <code>$extends</code>,   <code>$deprecated</code>, <code>$root</code> plus child names — both with <code>additionalProperties: false</code>.</p>
+<p>So a token carrying <code>$intent</code>, or a file or group carrying <code>$metadata</code>, fails the official schema, and no conformant tool has to keep those fields. The raw <code>tokens/*.json</code> files also ship inside <code>@agentica-ds/tokens</code>, so this is not only an internal concern.</p>
+<h2>Decision</h2>
+<h3>1. <code>$description</code> is the single human-readable description</h3>
+<ul><li>Every token and group description lives in <code>$description</code>. <strong><code>$intent</code> is retired</strong> and folded</li></ul>
+<p>  into <code>$description</code>. When both exist, they become one text with no loss of information   (contrast ratios, pitfalls, ADR references).</p>
+<ul><li>A group's <code>$intent</code> or <code>$metadata.intent</code> / <code>$metadata.description</code> becomes that group's</li></ul>
+<p>  <code>$description</code> (the schema allows it on groups and on the file root).</p>
+<ul><li><code>_readme</code> pseudo-tokens become the <code>$description</code> of their parent group.</li></ul>
+<h3>2. <code>$extensions["com.agentica.usage"]</code> — how to use a token (token level)</h3>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Content</th></tr></thead><tbody><tr><td><code>role</code></td><td>string</td><td><strong>yes</strong></td><td>Semantic role in one or two words (e.g. <code>danger</code>, <code>primary-action</code>)</td></tr><tr><td><code>use</code></td><td>string[]</td><td><strong>yes</strong></td><td>Allowed usages, as component selectors: <code>Button[variant=critical]</code></td></tr><tr><td><code>doNotUse</code></td><td>string</td><td><strong>yes</strong></td><td>Explicit contraindications, in prose</td></tr><tr><td><code>alternative</code></td><td>string[]</td><td>no — expected whenever <code>doNotUse</code> names a better token</td><td>Full token paths to use instead: <code>semantic.color.brand.accent</code></td></tr><tr><td><code>decision</code></td><td>string | string[]</td><td><strong>yes when an ADR justifies the token</strong></td><td><code>ADR-XXX</code> identifiers only</td></tr><tr><td><code>components</code></td><td>string[]</td><td>no</td><td>Consuming components, same selector syntax as <code>use</code>; derivable from code</td></tr></tbody></table></div>
+<p><code>alternative</code> is new. <code>doNotUse</code> stays prose for humans; <code>alternative</code> gives agents a machine-readable target, which HM-08 (issue #198) needs to test that an agent refuses a contraindicated token and proposes the documented one, and which lets <code>extract-relationships.js</code> stop parsing token paths out of prose.</p>
+<p>A token is <strong>agent-ready</strong> when it has a <code>$description</code> and a <code>com.agentica.usage</code> block that satisfies the required fields above. This is the definition the hygiene score (HM-07, issue #192) measures.</p>
+<h3>3. <code>$extensions["com.agentica.governance"]</code> — the contract of a file or a component (root and group level)</h3>
+<p>Everything <code>$metadata</code> held besides descriptive text moves here, unchanged in content: <code>level</code>, <code>version</code>, <code>rule</code> (file roots); <code>owner</code>, <code>contract</code>, and behavioural rules such as <code>requires-confirmation</code>, <code>prevents-double-click</code>, <code>audit-log</code>, <code>min-contrast</code> (component groups). The two namespaces stay separate on purpose: <code>usage</code> describes how to use one token, <code>governance</code> describes who owns a file or component and what contract binds it.</p>
+<p><code>_extensions-convention</code> is dropped: this ADR is the reference. <code>tokenSetOrder</code> in <code>primitives*.json</code> is removed unless Tokens Studio is shown to read it there (it normally reads <code>tokens/$metadata.json</code>). <code>tokens/$metadata.json</code> itself is a Tokens Studio configuration file, not a token file: it stays as is and is excluded from DTCG validation.</p>
+<h3>4. Dark mode inherits annotations</h3>
+<p>Annotations live in <code>semantic.json</code> only. <code>semantic.dark.json</code> carries value deltas; it holds a <code>$description</code> only for information specific to the dark theme (for example its own contrast ratios), never a copy of the light-mode text.</p>
+<h3>5. Shared vocabulary with the component <code>api</code> field (#177)</h3>
+<p>When a component prop refers to a token in the <code>api</code> metadata of issue #177, it uses the token's <strong>full path</strong> (<code>component.button.primary.background</code>), and variants use the same selector syntax as <code>use</code> (<code>Button[variant=critical]</code>). One notation for token paths and one for component variants, across token annotations and component metadata.</p>
+<h3>6. Rule for agents</h3>
+<p>Every new or modified token entry follows this schema. No new <code>$</code>-prefixed key outside those the DTCG schema allows; team-specific data goes under one of the two <code>com.agentica.*</code> namespaces.</p>
+<h2>Rejected alternatives</h2>
+<ul><li><strong>Keep <code>$intent</code> as a documented exception</strong> — ADR-052 says the standard prevails; the</li></ul>
+<p>  official schema rejects the key, and no tool is required to preserve it. Rejected.</p>
+<ul><li><strong>Move <code>$intent</code> into <code>$extensions["com.agentica.usage"].intent</code></strong> — conformant, but keeps two</li></ul>
+<p>  descriptions per token where the standard provides one, and hides the main description from   every generic DTCG tool (documentation generators, Tokens Studio). Rejected in favour of   <code>$description</code>.</p>
+<ul><li><strong>One namespace for everything (<code>com.agentica.usage</code>)</strong> — mixes a token's usage with a</li></ul>
+<p>  component's ownership and contract, which different people read and approve. Rejected.</p>
+<ul><li><strong>Duplicate annotations into <code>semantic.dark.json</code></strong> — two copies drift; the intent of a token</li></ul>
+<p>  does not change with the theme. Rejected.</p>
+<h2>Consequences</h2>
+<ul><li><strong>Build output is unaffected.</strong> Verified on 2026-09-27 in a sandbox copy of <code>tokens/</code>: the full</li></ul>
+<p>  migration (<code>$intent</code> → <code>$description</code>, <code>$metadata</code> → <code>$description</code> + <code>com.agentica.governance</code>,   <code>_readme</code> → group <code>$description</code>) was applied to every file, and Style Dictionary 3.9.2 produced   the 11 files of <code>dist/tokens/**</code> byte-for-byte identical to the current build, with no warning.   After that migration no token file contains a key outside the DTCG 2025.10 schema.</p>
+<ul><li><strong>Migration is a separate change</strong> (issue #203, HM-02b): one PR that migrates the existing files</li></ul>
+<p>  and adapts <code>scripts/lib/contracts.js</code>, <code>scripts/validate-contracts.js</code>,   <code>scripts/extract-relationships.js</code>, <code>style-dictionary/build.cjs</code> and one mention in   <code>site/build.js</code>. It touches component contracts, so it requires human escalation and a TCR.   Until it merges, existing files keep the legacy keys; new entries already follow this ADR.</p>
+<ul><li><strong>Annotation work</strong> (HM-04 #190, HM-05 #191) writes content only, on this schema.</li><li><strong>Remaining non-conformance — value formats (out of scope).</strong> Structure aside, token *values*</li></ul>
+<p>  still follow an older DTCG draft: colours are hex strings (the 2025.10 schema requires a   <code>{colorSpace, components}</code> object), dimensions are strings like <code>"16px"</code> (it requires   <code>{value, unit}</code>), some numbers are strings, and <code>$type: "other"</code> is not a DTCG type. This affects   about 670 literal values (595 colours, 67 dimensions, 11 numbers — mostly in <code>primitives*.json</code>;   aliases are not affected) and the Style Dictionary 3 pipeline. It needs its own decision; the   schema check added by #203 is therefore scoped to keys, not values.</p>
+<ul><li>ADR-052's "to follow up" item (DTCG schema validation) is partly addressed by #203 (structure).</li></ul>
+<h2>Implementation</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Date</th><th>Event</th></tr></thead><tbody><tr><td>2026-09-27</td><td>Decision adopted (issue #188); sandbox Style Dictionary check passed; migration ticket #203 opened</td></tr></tbody></table></div><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-101.html" class="agtc-button secondary">← ADR-101</a>
+    <a href="adr-103.html" class="agtc-button secondary">ADR-103 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <a class="brand" href="../index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="../img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="192" loading="lazy">
+        <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="192" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Navigation</span>
+      <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="../ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Documentation</span>
+      <a href="../pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="../tokens/index.html">Tokens</a>
+      <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+      <a href="../continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Explorer</span>
+      <a href="../resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+      <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="../audit.html">Audit</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="../ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="../site.js"></script>
+</body>
+
+</html>

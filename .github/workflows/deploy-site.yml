@@ -9,6 +9,9 @@ on:
       - 'guidelines/**'
       - 'site/**'
       - '.github/workflows/**'
+      # Storybook is published with the site (ADR-104)
+      - 'components/**'
+      - '.storybook/**'
   workflow_dispatch:
 
 permissions:
@@ -46,6 +49,18 @@ jobs:
       - name: Audit WCAG 2.2
         working-directory: site
         run: node audit-a11y.js
+
+      - name: Build tokens
+        # Storybook imports dist/tokens/css/*.css
+        run: npm run tokens
+
+      - name: Build Storybook into the published site
+        # Published at https://agentica.design/storybook/ (ADR-104) — replaces the
+        # Chromatic-hosted Storybook. Copied into site/dist only inside this job,
+        # never committed: site-freshness.yml compares the committed dist with
+        # site/build.js's output, which doesn't include Storybook.
+        run: |
+          npx storybook build --quiet --output-dir site/dist/storybook
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

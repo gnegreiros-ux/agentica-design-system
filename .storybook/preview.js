@@ -20,7 +20,6 @@ import '../components/agtc-tabs.js';
 import '../components/agtc-top-nav.js';
 
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import { allModes } from './modes.js';
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
@@ -50,11 +49,6 @@ const preview = {
           { id: 'region',               enabled: false },
         ],
       },
-    },
-    chromatic: {
-      // Captures light + dark in parallel for each story.
-      // Reference: https://www.chromatic.com/docs/modes/
-      modes: allModes,
     },
   },
 };

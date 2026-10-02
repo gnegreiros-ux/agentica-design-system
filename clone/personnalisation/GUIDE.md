@@ -2,7 +2,9 @@
 
 This is the only directory a team modifies when adopting the Clone. `core/` (see `../core/README.md`) is never touched, by a team, an update, or an agent acting on its behalf.
 
-Each section below covers one subfolder: what it's for, and a concrete example — the full example lives in that subfolder's `example.md`.
+New here? Start with `../README.md` — it lists what to install (only Node.js), the order to work in, and how to check your instance at the end.
+
+Each section below covers one subfolder: what it's for, and a concrete example — the full example lives in that subfolder's `example.md`. Keep `example.md` as a reference and put your own decisions in a new file next to it (suggested names are in `../README.md`).
 
 ## branding/
 
@@ -28,11 +30,11 @@ Where the team configures what the documentation generator reads at generation t
 
 ## What stays non-negotiable even here
 
-Being inside the personalization zone never means everything is permitted. The following, from `GOVERNANCE.md`, apply here exactly as they apply in `core/`:
+Being inside the personalization zone never means everything is permitted. The following, from `GOVERNANCE.md` (shipped in this package as `../core/references/non-negotiable-foundation.md`), apply here exactly as they apply in `core/`:
 
 1. **WCAG 2.2 AA compliance, minimum** — every component, page, or artifact this personalization touches must still meet it.
 2. **The final word always belongs to a human** — no agent applies a structural or governance change here without explicit human validation.
 3. **Never hard-coded style** — every primitive declared in `branding/` still needs a name; nothing in `core/` ever consumes a raw value.
 4. **Never consume a primitive token directly** — a component reaches a primitive only through a semantic token in `theme/`, never around it.
 
-See `GOVERNANCE.md` for the full statement, rationale, and verification method for each rule.
+See `../core/references/non-negotiable-foundation.md` for the full statement, rationale, and verification method for each rule.

@@ -22,11 +22,8 @@ npm run axe
 if [[ "$SKIP_VISUAL" == false ]]; then
   echo "[1.1] Playwright tests (npx playwright test --project=chromium)"
   npx playwright test --project=chromium
-
-  echo "[1.1] Chromatic (npm run chromatic)"
-  npm run chromatic
 else
-  echo "[1.1] --skip-visual: Playwright and Chromatic skipped (require external services)"
+  echo "[1.1] --skip-visual: Playwright skipped (needs the built site and browsers)"
 fi
 
 echo "[1.1] OK — all existing tools ran without an AI agent."

@@ -17,7 +17,6 @@
     "version-packages": "changeset version",
     "storybook": "npm run tokens && storybook dev -p 6006",
     "build-storybook": "npm run tokens && storybook build",
-    "chromatic": "chromatic --exit-zero-on-changes",
     "lang-audit": "node scripts/audit-language.js",
     "axe": "node scripts/axe-audit.js",
     "axe:mobile": "node scripts/axe-audit.js --mobile",
@@ -42,7 +41,6 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "@changesets/cli": "^2.27.1",
-    "@chromatic-com/storybook": "^5.2.1",
     "@playwright/test": "^1.61.1",
     "@radix-ui/colors": "^3.0.0",
     "@storybook/addon-a11y": "^10.4.1",

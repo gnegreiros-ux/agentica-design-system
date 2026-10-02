@@ -11,7 +11,7 @@
 
 ## Tech stack
 
-See `package.json` for the exact dependency versions (Lit, Style Dictionary, Chromatic,
+See `package.json` for the exact dependency versions (Lit, Style Dictionary,
 axe-core, Playwright, Storybook). Figma sync uses Tokens Studio (a Figma plugin, not an
 npm dependency).
 
@@ -88,6 +88,6 @@ Before opening a PR, verify:
 
 | Env | URL | Trigger |
 |-----|-----|---------------|
-| Preview | PR Chromatic | Automatic on every PR |
+| Storybook | agentica.design/storybook/ | Merge to `main` (ADR-104) |
 | Staging | staging.design-system.org | Merge to `develop` |
 | Production | design-system.org | Merge to `main` + approval |

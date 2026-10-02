@@ -59,7 +59,6 @@ never a conversation history with an agent.
 | English-only content audit | `npm run lang-audit` |
 | Accessibility audit | `npm run axe` |
 | Visual/E2E tests | `npx playwright test --project=chromium` |
-| Chromatic tests | `npm run chromatic` |
 
 These commands already ran without an agent being strictly necessary — an agent
 ran them for convenience; a human runs them identically.

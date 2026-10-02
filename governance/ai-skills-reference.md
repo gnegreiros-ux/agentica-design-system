@@ -128,7 +128,7 @@ quality-gate's building blocks, run in this order:
 | docs | ✅ Active | Canonical checklist of every documentation surface to update |
 | site | ✅ Active — **CI-enforced** | Rebuild and validate the static documentation site |
 | commit | ✅ Active — **CI-enforced** | Commit message format and conventions |
-| chromatic | ✅ Active, path-scoped | Visual regression tests against the approved baseline — `chromatic.yml` runs on `push` to non-`main` branches touching `components/`, `.storybook/`, `tokens/`, `style-dictionary/` or `package*.json`, with TurboSnap (free-tier snapshot quota); `workflow_dispatch` for a manual run |
+| playwright | ✅ Active — **CI-enforced** | Visual regression against committed baselines — site pages and every Storybook story, light + dark (`playwright.yml` on push to `main`; ADR-066, ADR-104 — replaces Chromatic). Baselines regenerated via `workflow_dispatch` only |
 | axe-core | 🔜 Report mode | Automated accessibility audit (non-blocking during burn-down) |
 | storybook | 🔜 Planned | Story presence and consistency with the token system |
 | style-dictionary | 🔜 Planned | Token compilation output validation |
@@ -148,9 +148,9 @@ still shipping with none of these controls wired up for their tool. Four of the 
 `tokens-audit`, `language-audit`, `site`, `commit` — no longer need that per-tool
 enforcement at all: as of 2026-09-11 they're tool-agnostic CI (`.github/workflows/
 tokens-audit.yml`, `lang-audit.yml`, `site-freshness.yml`, `commit-lint.yml`), running
-identically no matter which AI or human authored the commit. That leaves 7 genuinely
+identically no matter which AI or human authored the commit. That leaves 6 genuinely
 tool-dependent controls (`wcag`, `ux-patterns`, `adr-conformity`, `adr-triggers`, `docs`,
-`chromatic`, `axe-core`) — mostly ones that depended on Claude Code's hook-based reminders
+`axe-core`; `chromatic` left the list with Chromatic itself, ADR-104) — mostly ones that depended on Claude Code's hook-based reminders
 or on Claude choosing to run a checklist conversationally.
 
 `.github/workflows/tool-parity.yml` (`scripts/check-tool-parity.js`) closes the remaining

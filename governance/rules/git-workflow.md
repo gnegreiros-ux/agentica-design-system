@@ -73,7 +73,7 @@ Same format as commits: `[type]([scope]): [description]`
 
 ## Tests
 - [ ] Storybook story created/updated
-- [ ] Chromatic: captures approved
+- [ ] Visual snapshots: expected changes listed, regenerated via CI and diffed (ADR-066, ADR-104)
 - [ ] Unit tests pass
 
 ## Backlog (`pipelines/backlog.md`)
