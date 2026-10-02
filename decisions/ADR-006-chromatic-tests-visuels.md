@@ -1,7 +1,7 @@
 # ADR-006 — Choosing Chromatic for visual regression testing
 
 > **Date:** 2026-05-28
-> **Status:** ✅ Active
+> **Status:** ⚠️ Superseded — by ADR-066 (Playwright replaces Chromatic, 2026-07-02); residues removed by ADR-104 (2026-10-02)
 > **Decision-makers:** Design System Lead, Tech Lead
 > **Type:** contract
 > **Logical path:** decisions/ADR-006-chromatic-tests-visuels.md

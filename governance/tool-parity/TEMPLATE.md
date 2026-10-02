@@ -43,7 +43,6 @@ in Agentica, and AGENTS.md for how this fits the wider governance model.
 | adr-conformity | `.claude/skills/pipelines/adr-conformity.md` | _TODO_ | | |
 | adr-triggers | `.claude/skills/pipelines/adr-triggers.md` | _TODO_ | | |
 | docs | `.claude/skills/pipelines/docs.md` | _TODO_ | | |
-| chromatic | `.claude/skills/pipelines/chromatic.md` (currently manual-only for every tool — free-tier snapshot limit) | _TODO_ | | |
 | axe-core | `.claude/skills/pipelines/axe-core.md` (report mode, non-blocking even for Claude Code today) | _TODO_ | | |
 
 <!--

@@ -44,9 +44,8 @@ Run this quality gate **after every modification**, regardless of size:
 | Commit | `../pipelines/commit.md` | ✅ Active | Yes |
 | Style Dictionary | `../pipelines/style-dictionary.md` | 🔜 Planned | Once active |
 | Storybook | `../pipelines/storybook.md` | 🔜 Planned | Once active |
-| Chromatic | `../pipelines/chromatic.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`) |
 | axe-core | `../pipelines/axe-core.md` | 🔜 Planned | Once active |
-| Playwright | `../pipelines/playwright.md` | 🔜 Planned | Once active |
+| Playwright (visual regression, incl. Storybook stories) | `../pipelines/playwright.md` | ✅ Active | Yes (change to `components/`, `tokens/`, `.storybook/`, `site/`) — flag expected snapshot changes |
 | Backlog reconciliation | `../pipelines/backlog.md` | ✅ Active | Yes — at PR completion, not per-commit |
 
 ---
