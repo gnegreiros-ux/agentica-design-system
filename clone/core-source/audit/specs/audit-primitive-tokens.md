@@ -1,7 +1,8 @@
 # Spec — Direct-primitive-token-consumption audit engine
 
-**Component:** `clone/core/audit/primitive-tokens.mjs`
+**Component:** `core-source/audit/primitive-tokens.mjs`
 **Current status:** stub, no engine wired in
+**Rule text:** see this package's shipped copy of `GOVERNANCE.md`, `core-source/references/non-negotiable-foundation.md`.
 **Scope of this spec:** detect any direct reference to a primitive token in a component, instead of a semantic token. Distinct from the WCAG/axe-core spec and the hardcoded-styles spec.
 
 > **Correction 2026-10-07 (human review):** the original version of this spec described a non-blocking mode for this brick. `GOVERNANCE.md` Rule 4 ("Verification") is explicit: *"A direct primitive reference fails the build — the lint's severity for this rule is blocking, never advisory"*. This spec was corrected to reflect **blocking** behavior — only the WCAG brick (`audit-wcag-axe-core.md`) stays non-blocking.
@@ -12,7 +13,7 @@
 
 - Foundation rule: "never consume a primitive token directly — only semantic tokens are a valid consumption" (GOVERNANCE.md Rule 4).
 - The audit **always** runs, whether the public compliance badge is displayed or not.
-- Engine hidden behind an **adapter interface**, replaceable without touching the rest of `core/`.
+- Engine hidden behind an **adapter interface**, replaceable without touching the rest of `core-source/`.
 - **Blocking mode** for this rule: a direct primitive reference fails the build (GOVERNANCE.md Rule 4, severity always blocking, never advisory). **Human has the final word** still applies to the *content* of the report and to any documented exception (e.g. an ADR), but not to the build failure itself — no automatic fix is applied.
 
 ## 2. Objective of this brick

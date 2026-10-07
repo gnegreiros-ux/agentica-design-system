@@ -28,15 +28,15 @@ function buildIsolatedWorkspace() {
   tmpRoot = realpathSync(tmpRoot);
 
   mkdirSync(join(tmpRoot, 'scripts'), { recursive: true });
-  mkdirSync(join(tmpRoot, 'clone', 'core', 'references'), { recursive: true });
+  mkdirSync(join(tmpRoot, 'clone', 'core-source', 'references'), { recursive: true });
   mkdirSync(join(tmpRoot, 'master-skill', 'references'), { recursive: true });
 
   cpSync(join(ROOT, 'scripts', 'sync-governance.mjs'), join(tmpRoot, 'scripts', 'sync-governance.mjs'));
   cpSync(join(ROOT, 'scripts', 'check-governance-sync.mjs'), join(tmpRoot, 'scripts', 'check-governance-sync.mjs'));
   cpSync(join(ROOT, 'GOVERNANCE.md'), join(tmpRoot, 'GOVERNANCE.md'));
   cpSync(
-    join(ROOT, 'clone', 'core', 'references', 'non-negotiable-foundation.md'),
-    join(tmpRoot, 'clone', 'core', 'references', 'non-negotiable-foundation.md')
+    join(ROOT, 'clone', 'core-source', 'references', 'non-negotiable-foundation.md'),
+    join(tmpRoot, 'clone', 'core-source', 'references', 'non-negotiable-foundation.md')
   );
   cpSync(
     join(ROOT, 'master-skill', 'references', 'non-negotiable-foundation.md'),
@@ -56,7 +56,7 @@ test('check-governance-sync.mjs fails when a reference copy has drifted', () => 
     // The violation this test proves is caught: a generated copy hand-edited
     // directly instead of regenerated via `npm run sync:governance` — exactly
     // what GOVERNANCE.md's Rule 2 (and this file's own header comment) forbid.
-    const driftedCopy = join(tmpRoot, 'clone', 'core', 'references', 'non-negotiable-foundation.md');
+    const driftedCopy = join(tmpRoot, 'clone', 'core-source', 'references', 'non-negotiable-foundation.md');
     writeFileSync(driftedCopy, `${readFileSync(driftedCopy, 'utf8')}\nHand-edited drift — not from GOVERNANCE.md.\n`);
 
     expect(

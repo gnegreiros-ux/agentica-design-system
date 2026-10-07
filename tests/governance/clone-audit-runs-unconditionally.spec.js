@@ -7,16 +7,17 @@
 // illustrative markdown, never read by any .mjs/.js file under clone/.
 //
 // This test proves only the narrower, real claim available today:
-// clone/core/audit/index.mjs invokes all three core audits unconditionally,
-// inside one Promise.all with no conditional (if/ternary/&&/||) around any
-// of the three calls, and imports no config or personalization module that
-// could gate them. It does NOT prove "a disabled badge doesn't affect the
-// audit" — there is no badge to disable yet.
+// clone/core-source/audit/index.mjs invokes all three core audits
+// unconditionally, inside one Promise.all with no conditional
+// (if/ternary/&&/||) around any of the three calls, and imports no config
+// or personalization module that could gate them. It does NOT prove "a
+// disabled badge doesn't affect the audit" — there is no badge to disable
+// yet.
 //
 // TODO (tracked, not done here): once a real badge/personalization-config
-// mechanism is wired into core/audit, rewrite this as a behavioral test —
-// actually disable the badge, run the build, assert the audit still runs
-// and its verdict is still reachable. Same reduced-scope treatment as
+// mechanism is wired into core-source/audit, rewrite this as a behavioral
+// test — actually disable the badge, run the build, assert the audit still
+// runs and its verdict is still reachable. Same reduced-scope treatment as
 // C2-08 in tests/governance/clone-audit-adapter-substitution.spec.js.
 
 import { test, expect } from '@playwright/test';
@@ -25,9 +26,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const INDEX_PATH = join(ROOT, 'clone', 'core', 'audit', 'index.mjs');
+const INDEX_PATH = join(ROOT, 'clone', 'core-source', 'audit', 'index.mjs');
 
-test('clone/core/audit/index.mjs invokes all three core audits unconditionally', () => {
+test('clone/core-source/audit/index.mjs invokes all three core audits unconditionally', () => {
   const source = readFileSync(INDEX_PATH, 'utf8');
 
   const importLines = source.match(/^import .+$/gm) ?? [];

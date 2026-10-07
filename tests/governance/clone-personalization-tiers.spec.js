@@ -5,21 +5,23 @@
 // stale list.
 //
 // REDUCED SCOPE, same treatment as C2-07/C2-08 — verified by inventory:
-// clone/ is at skeleton stage. Its three core audits (clone/core/audit/
-// {hardcoded-style,primitive-tokens,accessibility}.mjs) are stubs that
-// always pass, and nothing under clone/core/ reads any file under
-// personnalisation/ (confirmed in clone-audit-runs-unconditionally.spec.js,
-// C2-07). Two consequences:
+// clone/ is at skeleton stage. Its three core audits (clone/core-source/
+// audit/{hardcoded-style,primitive-tokens,accessibility}.mjs) are stubs
+// that always pass, and nothing under clone/core-source/ reads any file
+// under personnalisation/ (confirmed in
+// clone-audit-runs-unconditionally.spec.js, C2-07). Two consequences:
 //   - "the build stays green" is real but weak today — the stubs pass
 //     regardless of what personnalisation/ contains.
 //   - "the personalization is applied in the output" cannot mean "reflected
-//     in a build artifact" yet, since core/ produces none. This test proves
-//     the narrower, real claim: content added at each tier is (a) accepted
-//     without requiring any change under core/, (b) still present after the
-//     build runs, and (c) the build's exit code stays 0.
-// TODO (tracked, not done here): once core/ has real components that
-// consume personalization/theme/branding, rewrite this as a behavioral
-// test — assert the personalization is visible in the actual build output.
+//     in a build artifact" yet, since core-source/ produces none. This test
+//     proves the narrower, real claim: content added at each tier is (a)
+//     accepted without requiring any change under core-source/, (b) still
+//     present after the build runs, and (c) the build's exit code stays 0.
+// TODO (tracked, not done here): where a real component source consumed
+// by personalization/theme/branding would come from is undecided (see
+// ADR-105, issue #225) — once it exists, rewrite this as a behavioral
+// test that asserts the personalization is visible in the actual build
+// output.
 
 import { test, expect } from '@playwright/test';
 import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
@@ -57,7 +59,7 @@ function realPersonalizationTiers() {
 }
 
 function realCoreDirectories() {
-  return readdirSync(join(CLONE_DIR, 'core'), { withFileTypes: true })
+  return readdirSync(join(CLONE_DIR, 'core-source'), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
 }
@@ -76,10 +78,10 @@ test.describe('C3-01 — legitimate personalization at every real tier', () => {
     }
   });
 
-  test('no personalization tier name collides with a directory under core/', () => {
+  test('no personalization tier name collides with a directory under core-source/', () => {
     const coreDirs = realCoreDirectories();
     for (const tier of tiers) {
-      expect(coreDirs, `personnalisation/${tier}/ collides with a directory of the same name under core/`).not.toContain(
+      expect(coreDirs, `personnalisation/${tier}/ collides with a directory of the same name under core-source/`).not.toContain(
         tier
       );
     }
@@ -92,7 +94,7 @@ test.describe('C3-01 — legitimate personalization at every real tier', () => {
         const tmpClone = join(tmpRoot, 'clone');
         cpSync(CLONE_DIR, tmpClone, { recursive: true });
 
-        const coreBefore = snapshotDirectory(join(tmpClone, 'core'));
+        const coreBefore = snapshotDirectory(join(tmpClone, 'core-source'));
 
         const marker = `personalization-marker-${tier}-${Date.now()}`;
         const targetFile = join(tmpClone, 'personnalisation', tier, 'test-personalization.md');
@@ -101,10 +103,10 @@ test.describe('C3-01 — legitimate personalization at every real tier', () => {
         execFileSync('npm', ['run', 'build'], { cwd: tmpClone, stdio: 'pipe' });
 
         // Snapshotted after the build runs, not just after the manual write above —
-        // this must catch the build itself touching core/, not only prove that
+        // this must catch the build itself touching core-source/, not only prove that
         // writing to personnalisation/ alone didn't (which is true by construction).
-        const coreAfter = snapshotDirectory(join(tmpClone, 'core'));
-        expect(coreAfter, `Personalizing ${tier}/ must never require a change under core/`).toEqual(coreBefore);
+        const coreAfter = snapshotDirectory(join(tmpClone, 'core-source'));
+        expect(coreAfter, `Personalizing ${tier}/ must never require a change under core-source/`).toEqual(coreBefore);
 
         expect(readFileSync(targetFile, 'utf8')).toContain(marker);
       } finally {

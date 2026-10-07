@@ -1,7 +1,8 @@
 # Spec — WCAG audit engine (axe-core)
 
-**Component:** `clone/core/audit/accessibility.mjs`
+**Component:** `core-source/audit/accessibility.mjs`
 **Current status:** stub, no engine wired in
+**Rule text:** see this package's shipped copy of `GOVERNANCE.md`, `core-source/references/non-negotiable-foundation.md`.
 **Scope of this spec:** the first concrete audit brick — WCAG 2.2 AA verification via axe-core (GOVERNANCE.md, Rule 1). The other two foundation categories (hardcoded styles, direct primitive token consumption) are covered by separate specs, out of scope here.
 
 > **Correction 2026-10-07 (human review):** the original version of this spec targeted WCAG 2.1 AA. `GOVERNANCE.md` Rule 1 requires WCAG **2.2** AA minimum — this spec was corrected to align. axe-core supports the `wcag22aa` tag set.
@@ -11,7 +12,7 @@
 ## 1. Framework reminder (non-negotiable, already decided)
 
 - The audit **always** runs, whether the public compliance badge is displayed or not.
-- The engine is hidden behind an **adapter interface**: axe-core is the default engine, but must be replaceable without ever touching the rest of `core/`.
+- The engine is hidden behind an **adapter interface**: axe-core is the default engine, but must be replaceable without ever touching the rest of `core-source/`.
 - **Non-blocking mode**: the audit reports, it never blocks a merge or applies an automatic fix. (GOVERNANCE.md does not make Rule 1 build-blocking — only *verification* before publication is required; see Rule 1 "Verification".)
 - **Human has the final word**: no auto-applied fix. The report is informational, never an action.
 
@@ -24,7 +25,7 @@ Provide an audit module that:
 
 ## 3. Adapter contract (common interface)
 
-Any audit engine (axe-core or a future replacement) must expose the same input/output shape, so `clone/core/audit/` stays agnostic of the actual engine.
+Any audit engine (axe-core or a future replacement) must expose the same input/output shape, so `clone/core-source/audit/` stays agnostic of the actual engine.
 
 **Expected input:**
 - a reference to the rendered DOM (page or component) — e.g. a Playwright/Puppeteer context, or a serialized HTML fragment

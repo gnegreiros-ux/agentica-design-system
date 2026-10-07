@@ -1,7 +1,8 @@
 # Spec — Hardcoded-styles audit engine
 
-**Component:** `clone/core/audit/hardcoded-style.mjs`
+**Component:** `core-source/audit/hardcoded-style.mjs`
 **Current status:** stub, no engine wired in
+**Rule text:** see this package's shipped copy of `GOVERNANCE.md`, `core-source/references/non-negotiable-foundation.md`.
 **Scope of this spec:** detect any style value written as a literal (color, spacing, typography, etc.) instead of a token reference. Distinct from the WCAG/axe-core spec and the primitive-tokens spec.
 
 > **Correction 2026-10-07 (human review):** the original version of this spec described a non-blocking mode for this brick. `GOVERNANCE.md` Rule 3 ("Verification") is explicit: *"build fails if a hard-coded value is detected in the core"*. This spec was corrected to reflect **blocking** behavior — only the WCAG brick (`audit-wcag-axe-core.md`) stays non-blocking.
@@ -12,7 +13,7 @@
 
 - Foundation rule: "never a hardcoded style — core components only accept token references" (GOVERNANCE.md Rule 3).
 - The audit **always** runs, whether the public compliance badge is displayed or not.
-- Engine hidden behind an **adapter interface**, replaceable without touching the rest of `core/`.
+- Engine hidden behind an **adapter interface**, replaceable without touching the rest of `core-source/`.
 - **Blocking mode** for this rule: a detected violation fails the build (GOVERNANCE.md Rule 3, severity always blocking, never advisory). **Human has the final word** still applies to the *content* of the report and to any documented exception (e.g. an ADR), but not to the build failure itself — no automatic fix is applied; the build fails and a human either fixes the source or documents an explicit exception.
 
 ## 2. Objective of this brick

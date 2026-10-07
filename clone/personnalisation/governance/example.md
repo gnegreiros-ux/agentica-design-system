@@ -2,7 +2,7 @@
 
 ## Compliance badge
 
-Whether to show the public compliance badge on the generated documentation site. The audit itself always runs, badge or not (see the *Audit governance* section of `GOVERNANCE.md`, shipped as `../../core/references/non-negotiable-foundation.md`). The badge never shows this flag as a verdict: it displays the last recorded audit result, or "not verified" when none is recorded (ADR-100 in the canonical repository) — a stub or skeleton audit never records one.
+Whether to show the public compliance badge on the generated documentation site. The audit itself always runs, badge or not (see the *Audit governance* section of `GOVERNANCE.md`, shipped as `../../core-source/references/non-negotiable-foundation.md`). The badge never shows this flag as a verdict: it displays the last recorded audit result, or "not verified" when none is recorded (ADR-100 in the canonical repository) — a stub or skeleton audit never records one.
 
 ```md
 badgeEnabled: false
@@ -10,7 +10,7 @@ badgeEnabled: false
 
 ## Audit adapter
 
-Declare an alternative to axe-core here, if the team uses one — it must respect the interface defined by `core/`.
+Declare an alternative to axe-core here, if the team uses one — it must respect the interface defined by `core-source/`.
 
 ```md
 auditEngine: axe-core   # default; replace only via the core's adapter interface

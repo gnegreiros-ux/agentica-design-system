@@ -27,7 +27,7 @@ const DERIVED_NOTE =
 // same repository. Add further destinations here — never hard-code a single
 // output path.
 export const DESTINATIONS = [
-  join(ROOT, 'clone', 'core', 'references', 'non-negotiable-foundation.md'),
+  join(ROOT, 'clone', 'core-source', 'references', 'non-negotiable-foundation.md'),
   join(ROOT, 'master-skill', 'references', 'non-negotiable-foundation.md'),
 ];
 

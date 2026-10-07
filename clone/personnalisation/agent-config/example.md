@@ -1,6 +1,6 @@
 # Agent config — example
 
-Add project-specific agent trigger conditions here, without ever narrowing the scope of the conditions already defined in `core/`.
+Add project-specific agent trigger conditions here, without ever narrowing the scope of the conditions already defined in `core-source/`.
 
 Reminder (Rule 2): every condition added here still respects the principle that the final word belongs to a human — a trigger condition can make an agent propose or analyze, never merge a pull request or apply a structural change unattended.
 

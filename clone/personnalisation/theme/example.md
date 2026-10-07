@@ -1,10 +1,10 @@
 # Theme — example
 
-This is where an existing semantic token (defined in `core/`) is mapped to a primitive value declared in `../branding/`.
+This is where an existing semantic token (defined in `core-source/`) is mapped to a primitive value declared in `../branding/`.
 
 ## Mapping direction
 
-Semantic → primitive, never the other way. A `core/` component never sees a primitive directly (Rule 4).
+Semantic → primitive, never the other way. A `core-source/` component never sees a primitive directly (Rule 4).
 
 ## Coverage check
 
@@ -16,7 +16,7 @@ If the team supports a dark mode, every semantic token has both a light value an
 
 ## Extending the semantic vocabulary
 
-If a real team need isn't covered by any core semantic token, declare a new one here — in a dedicated file in `theme/`, never in `core/`. A new semantic token must:
+If a real team need isn't covered by any core semantic token, declare a new one here — in a dedicated file in `theme/`, never in `core-source/`. A new semantic token must:
 
 - Reference only a primitive from `../branding/`, never a hard-coded value (Rule 3).
 - Follow the same naming convention as the core's semantic taxonomy.

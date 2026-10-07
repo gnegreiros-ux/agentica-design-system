@@ -1,6 +1,6 @@
 # Branding — example
 
-This is where a team declares the primitive tokens specific to its own brand. Nothing here is consumed directly by a `core/` component — Rule 4 always applies; these primitives get mapped to semantic tokens in `../theme/`.
+This is where a team declares the primitive tokens specific to its own brand. Nothing here is consumed directly by a `core-source/` component — Rule 4 always applies; these primitives get mapped to semantic tokens in `../theme/`.
 
 ## What to declare here
 
@@ -41,4 +41,4 @@ Font choice is not purely aesthetic — weigh legibility (e.g. typefaces designe
 }
 ```
 
-Reminder: a primitive declared here stays a primitive — Rule 4 still applies. No `core/` component will ever consume it directly.
+Reminder: a primitive declared here stays a primitive — Rule 4 still applies. No `core-source/` component will ever consume it directly.

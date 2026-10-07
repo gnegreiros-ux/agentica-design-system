@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "audit": "node core/audit/index.mjs",
+    "audit": "node core-source/audit/index.mjs",
     "build": "npm run audit"
   }
 }

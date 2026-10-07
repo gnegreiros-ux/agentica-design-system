@@ -167,6 +167,7 @@ decisions that were already settled.
 | [ADR-102](ADR-102-token-annotation-schema.md) | Token annotation schema: `$description` is the single description (`$intent` retired), `$extensions["com.agentica.usage"]` (role, use, doNotUse, alternative, decision, components) at token level, `$extensions["com.agentica.governance"]` replaces `$metadata` — migration in #203 | 2026-09-27 | ✅ Active |
 | [ADR-103](ADR-103-dark-mode-elevation.md) | Dark-mode elevation: every non-deprecated `semantic.shadow.*` has a dark variant (audit check 6), new `background.surface-raised` for menus/popovers, site-only `--agtc-shadow-*` scale removed | 2026-09-28 | ✅ Active |
 | [ADR-104](ADR-104-storybook-visual-coverage-and-hosting-without-chromatic.md) | Storybook without Chromatic: every story gets a Playwright snapshot (light + dark), Storybook published with the site at `/storybook/`, Chromatic removed entirely | 2026-10-02 | ✅ Active |
+| [ADR-105](ADR-105-clone-core-source-rename.md) | "core" names two things — `GOVERNANCE.md`'s abstract foundation concept (untouched) and the Clone's literal source path, renamed `clone/core/` → `clone/core-source/` to stop the collision | 2026-10-07 | ✅ Active |
 
 ---
 

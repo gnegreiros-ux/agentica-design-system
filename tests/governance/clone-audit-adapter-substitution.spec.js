@@ -1,22 +1,22 @@
-// C2-08 (reduced scope) — clone/core has no real engine wired to axe-core
-// yet at this skeleton stage: the default "axe-core" adapter in
-// clone/core/audit/accessibility.mjs is itself a stub ("no core components
-// to scan yet"), not real axe-core. This test therefore proves only the
-// narrower, real claim: substituting a fake adapter into the exported
-// runAccessibilityAudit(adapter) interface produces the substituted
-// adapter's verdict, and modifies zero files under clone/core/. It does
-// NOT prove "a real engine was swapped for axe-core" — there is no real
-// engine here to swap out.
+// C2-08 (reduced scope) — clone/core-source has no real engine wired to
+// axe-core yet at this skeleton stage: the default "axe-core" adapter in
+// clone/core-source/audit/accessibility.mjs is itself a stub ("no core
+// components to scan yet"), not real axe-core. This test therefore proves
+// only the narrower, real claim: substituting a fake adapter into the
+// exported runAccessibilityAudit(adapter) interface produces the
+// substituted adapter's verdict, and modifies zero files under
+// clone/core-source/. It does NOT prove "a real engine was swapped for
+// axe-core" — there is no real engine here to swap out.
 
 import { test, expect } from '@playwright/test';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { runAccessibilityAudit } from '../../clone/core/audit/accessibility.mjs';
+import { runAccessibilityAudit } from '../../clone/core-source/audit/accessibility.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const CLONE_CORE_DIR = join(ROOT, 'clone', 'core');
+const CLONE_CORE_DIR = join(ROOT, 'clone', 'core-source');
 
 function listFiles(dir) {
   const out = [];
@@ -40,7 +40,7 @@ function snapshotDirectory(dir) {
   return snapshot;
 }
 
-test('substituting an audit adapter touches no file under clone/core/', async () => {
+test('substituting an audit adapter touches no file under clone/core-source/', async () => {
   const before = snapshotDirectory(CLONE_CORE_DIR);
 
   const fakeAdapter = {
@@ -56,5 +56,5 @@ test('substituting an audit adapter touches no file under clone/core/', async ()
   expect(result.message).toBe('fake engine — predictable, deterministic verdict');
 
   const after = snapshotDirectory(CLONE_CORE_DIR);
-  expect(after, 'Substituting an audit adapter must not modify any file under clone/core/').toEqual(before);
+  expect(after, 'Substituting an audit adapter must not modify any file under clone/core-source/').toEqual(before);
 });
