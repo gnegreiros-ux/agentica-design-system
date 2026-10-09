@@ -49,6 +49,30 @@ logged when it is:
 
 ---
 
+## EXEC-015 — 2026-10-09 — GitHub Projects attachment criterion
+
+**Status:** Active
+
+**Decision:** An issue is attached to GitHub Projects if a defined action —
+even conditional or deferred — is attached to the issue itself, not only
+when the action is immediate.
+Consequence: #225 carries an implicit action (create the
+`personnalisation/composants/` tier decided on 2026-09-12, not yet
+implemented) and is reclassified into the Project for consistency. #227
+stays outside the Project (pure finding, no action of its own; it narrates
+gaps already tracked under other actionable issues).
+
+**Why:** #227 exposed the absence of a formal criterion (not defined in
+governance/rules/project-overview.md nor in ADR-069). A first proposed
+correlation ("has a 'Proposed fix' section = actionable") was contradicted
+by #226, which has a deferred action yet is already in the Project.
+
+**Related:** #225, #226, #227
+
+**Logged by:** Claude (decided by gnegreiros-ux)
+
+---
+
 ## EXEC-014 — 2026-09-22 — `main` branch protection: required review count raised to 1, independent of ADR-076's own trigger; `enforce_admins` drift found and corrected
 
 **Status:** Active
