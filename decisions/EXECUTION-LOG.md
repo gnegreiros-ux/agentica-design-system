@@ -49,6 +49,43 @@ logged when it is:
 
 ---
 
+## EXEC-016 — 2026-10-13 — Cherry-pick onto #228 instead of `--admin`, to keep main's required checks continuously green
+
+**Status:** Active
+
+**Decision:** #228 (`docs/audit-engine-backlog-specs`) was failing two of
+`main`'s required status checks (`tokens-audit`, `site-freshness`) with
+causes already fixed, each in its own dependent PR (#232, #233 respectively
+— both cut from #228's head, so neither could merge before #228 existed on
+`main`). Rather than merging #228 with `gh pr merge --admin` (bypassing
+`main`'s required checks for that one merge), the two fix commits —
+`594bbb0c` (#232) and `a7702cf6` (#233) — were cherry-picked directly onto
+`docs/audit-engine-backlog-specs`, pushed, and #228 was merged normally
+(`--merge`, no bypass) once `tokens-audit` and `site-freshness` reported
+green on the branch itself.
+Consequence: #232 and #233 closed as `CLOSED` (not `MERGED`) rather than
+merged — their content was already present on `main` via #228. Identity
+confirmed by patch-id before any push: rebasing each branch onto the
+cherry-picked head produced `skipped previously applied commit <sha>` and
+an empty diff, tested in a disposable worktree first. Each PR carries an
+absorption comment linking #228 and citing that test
+(https://github.com/gnegreiros-ux/agentica-design-system/pull/232#issuecomment-6155683801,
+https://github.com/gnegreiros-ux/agentica-design-system/pull/233#issuecomment-6155685893).
+
+**Why:** `--admin` would have preserved the documented merge order
+(#228 first) but weakens, even briefly, the guarantee that
+`tokens-audit`/`site-freshness` protect `main` continuously — a bypass is a
+real gap in that protection, not a cosmetic one, regardless of how short the
+window. Cherry-picking the already-approved fixes onto #228 itself let it
+merge through the same gate every other PR has to clear, with no exception
+made for it.
+
+**Related:** #228 (mergeCommit `b9d50472da58382e014784c8aebcc7bfe6af8942`), #232, #233
+
+**Logged by:** Claude (decided by gnegreiros-ux)
+
+---
+
 ## EXEC-015 — 2026-10-09 — GitHub Projects attachment criterion
 
 **Status:** Active
