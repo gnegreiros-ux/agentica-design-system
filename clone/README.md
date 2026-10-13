@@ -76,7 +76,7 @@ request for the canonical repository, not a local patch.
 | How it gets there | Written and versioned in that repository | Installed from npm, pinned to an exact version |
 | Editable | Yes — this is where the code is written | Never — replaced wholesale on update, never patched in place |
 | Contains | The 4 non-negotiable rules, the audit engine, agent rules, doc-generator hooks | Identical — one as source, one as a published artifact |
-| Components | Never holds component source — not deposited by an instance, not of its own | Same — where an audit's component source comes from is undecided today (see ADR-105, issue #225) |
+| Components | Never holds component source — not deposited by an instance, not of its own | Same — where an audit's component source comes from is undecided today (see ADR-105, issue #225) <!-- audit-ignore: issue number, not a color --> |
 
 **Naming convention, from here on:** `core-source/` always means this directory — the
 Clone's source. (In the canonical repository's own file tree it sits at
