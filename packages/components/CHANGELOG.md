@@ -1,5 +1,23 @@
 # @agentica-ds/components
 
+## 1.0.1
+
+### Patch Changes
+
+- 6f946ce: `agtc-top-nav`: directory-style hrefs (`'../tokens/'`, `'/tokens/'` — the form the component
+  guideline documents) are now marked active (`aria-current="page"` + indicator) on their section's
+  pages. Previously the last segment was read as a file name, so no link was ever active with that
+  form. Hrefs ending in `section/index.html` behave as before; a non-section `dir/index.html` href is
+  now active only on that directory instead of on any `index.html` page.
+- b4e9e0e: `agtc-top-nav`: the mobile menu panel's shadow now uses the `semantic.shadow.raised`
+  token (`--agtc-semantic-shadow-raised`). It consumed `--agtc-shadow-md`, a variable
+  defined only by the documentation site's CSS — so in any app using the package, the
+  mobile menu had no shadow at all. It now renders the same shadow as other raised
+  menus, wherever the component is used.
+- 086088a: `agtc-top-nav`: the mobile menu panel background uses the new
+  `background.surface-raised` token, so in dark mode the panel reads as raised above the
+  page instead of blending into it. No change in light mode.
+
 ## 1.0.0
 
 ### Major Changes
