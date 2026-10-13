@@ -30,7 +30,7 @@ test('sync-governance.mjs produces no diff on a second consecutive run', () => {
 
     const scriptPath = join(tmpRoot, 'scripts', 'sync-governance.mjs');
     const destinations = [
-      join(tmpRoot, 'clone', 'core', 'references', 'non-negotiable-foundation.md'),
+      join(tmpRoot, 'clone', 'core-source', 'references', 'non-negotiable-foundation.md'),
       join(tmpRoot, 'master-skill', 'references', 'non-negotiable-foundation.md'),
     ];
 

@@ -5,7 +5,7 @@
 // content:
 //   - clone/personnalisation/branding/  → must PASS (legitimate exclusion)
 //   - clone/personnalisation/theme/     → must FAIL (in scope)
-//   - clone/core/                       → must FAIL (in scope)
+//   - clone/core-source/                → must FAIL (in scope)
 //
 // Runs against a copy of the real scripts/audit-tokens.js in an isolated
 // temporary directory that mirrors just the relevant subtree, never the
@@ -39,7 +39,7 @@ function buildIsolatedWorkspace() {
   const locations = {
     excluded: join('clone', 'personnalisation', 'branding'),
     theme: join('clone', 'personnalisation', 'theme'),
-    core: join('clone', 'core'),
+    core: join('clone', 'core-source'),
   };
 
   for (const relDir of Object.values(locations)) {
@@ -88,7 +88,7 @@ test('PRIMITIVE_LAYER_PATHS excludes only clone/personnalisation/branding/', () 
     ).toContain(themePath);
     expect(
       output,
-      `clone/core/ must stay in scope — identical content, different path (expected to find: ${corePath})`
+      `clone/core-source/ must stay in scope — identical content, different path (expected to find: ${corePath})`
     ).toContain(corePath);
   } finally {
     rmSync(tmpRoot, { recursive: true, force: true });

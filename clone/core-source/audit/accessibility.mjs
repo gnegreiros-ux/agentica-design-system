@@ -1,10 +1,11 @@
 // Rule 1 (GOVERNANCE.md): every generated component meets WCAG 2.2 AA,
 // minimum. Default engine is axe-core, replaceable via this adapter
-// interface without ever modifying the rest of core/ (GOVERNANCE.md's
+// interface without ever modifying the rest of core-source/ (GOVERNANCE.md's
 // Audit governance section).
 //
-// Stub at this skeleton stage: core/ has no components yet to scan. Swapping
-// in real axe-core wiring happens once core/ actually contains components.
+// Stub at this skeleton stage: core-source/ has no components yet to scan.
+// Swapping in real axe-core wiring happens once a real component source to
+// scan exists — see ADR-105, issue #225.
 
 const axeCoreAdapter = {
   name: 'axe-core',

@@ -66,6 +66,7 @@ governance/rules/tokens-system.md            ← token rules
 governance/rules/ux-patterns-sources.md      ← sources + UX pattern review (before any component)
 governance/rules/figma-components.md         ← Figma rules (properties, auto-layout, naming, API)
 governance/instructions/codebase-context.md  ← technical context
+governance/instructions/verification-standards.md ← how to verify and report your own work
 governance/instructions/session-spec.md      ← condensed spec for this session
 governance/ai-skills-reference.md            ← for non-Claude tools: what .claude/skills/ automates and how to reproduce it
 tokens/semantic.json                         ← source of truth for UX intentions

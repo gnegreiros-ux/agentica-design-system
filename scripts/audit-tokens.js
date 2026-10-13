@@ -480,7 +480,7 @@ function main() {
   // SOURCE_EXTENSIONS). This is a different reason than DOCS_AND_PLUGIN_PATHS
   // above (that's narrative citation of a value; this is the primitive layer
   // itself) — kept as its own list so the two don't get conflated. theme/ and
-  // core/ deliberately stay in scope: a semantic token must only ever
+  // core-source/ deliberately stay in scope: a semantic token must only ever
   // reference a primitive (Rule 4 of GOVERNANCE.md), never a raw value.
   const PRIMITIVE_LAYER_PATHS = [
     'clone/personnalisation/branding/',

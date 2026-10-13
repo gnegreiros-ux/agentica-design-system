@@ -1,8 +1,8 @@
 # Design System Clone — start here
 
 This package is a starting point for your own design system: a non-negotiable core
-(`core/`) plus a personalization layer (`personnalisation/`) where your team records its
-own brand and governance decisions.
+(`core-source/`) plus a personalization layer (`personnalisation/`) where your team
+records its own brand and governance decisions.
 
 **Unpacked, this folder *is* your Clone.** There is nothing to clone, and nothing to
 install besides Node.js.
@@ -57,23 +57,44 @@ build is green.
 
 ## Rules that apply everywhere, including in `personnalisation/`
 
-`core/references/non-negotiable-foundation.md` holds the four non-negotiable rules
+`core-source/references/non-negotiable-foundation.md` holds the four non-negotiable rules
 (accessibility, human final word, no hard-coded style, no direct primitive consumption).
 It is a read-only copy of `GOVERNANCE.md`, the canonical source kept in the repository
 this package is published from — whenever a file here mentions `GOVERNANCE.md`, that copy
 is the one to read.
 
-**Never edit anything under `core/`.** If a change seems to require it, that's a request
-for the canonical repository, not a local patch.
+**Never edit anything under `core-source/`.** If a change seems to require it, that's a
+request for the canonical repository, not a local patch.
+
+## Two forms of "core"
+
+"Core" refers to two different things depending on who's looking at it (see ADR-105):
+
+| | Source | Installed |
+|---|---|---|
+| Where it lives | The canonical repository this package is published from | `node_modules/` in your project |
+| How it gets there | Written and versioned in that repository | Installed from npm, pinned to an exact version |
+| Editable | Yes — this is where the code is written | Never — replaced wholesale on update, never patched in place |
+| Contains | The 4 non-negotiable rules, the audit engine, agent rules, doc-generator hooks | Identical — one as source, one as a published artifact |
+| Components | Never holds component source — not deposited by an instance, not of its own | Same — where an audit's component source comes from is undecided today (see ADR-105, issue #225) <!-- audit-ignore: issue number, not a color --> |
+
+**Naming convention, from here on:** `core-source/` always means this directory — the
+Clone's source. (In the canonical repository's own file tree it sits at
+`clone/core-source/`; your own unpacked copy has no `clone/` wrapper — `core-source/`
+is at the root, next to this README.) Unqualified "core," with no path, always means
+`GOVERNANCE.md`'s abstract foundation concept (Rules 3–4: no hardcoded style, no direct
+primitive-token consumption). A sentence needing both says so explicitly — never relies
+on either word alone.
 
 ## Current limitations (version 0.1.0)
 
 This is an early, skeleton release. Be aware that:
 
-- **The core does not ship a list of semantic tokens yet.** There is no reference list of
-  the semantic tokens your theme should cover. Until there is, map the families shown in
-  `personnalisation/theme/example.md` (text, feedback) and any others your components need.
+- **`core-source/` does not ship a list of semantic tokens yet.** There is no reference
+  list of the semantic tokens your theme should cover. Until there is, map the families
+  shown in `personnalisation/theme/example.md` (text, feedback) and any others your
+  components need.
 - **Nothing reads `personnalisation/` yet.** Your files are recorded decisions; no build
   step turns them into CSS or components at this stage.
-- **The core audits are placeholders.** `npm run build` checks the package runs, not that
-  your tokens are valid or accessible. Review contrast and naming yourself.
+- **The audits in `core-source/` are placeholders.** `npm run build` checks the package
+  runs, not that your tokens are valid or accessible. Review contrast and naming yourself.

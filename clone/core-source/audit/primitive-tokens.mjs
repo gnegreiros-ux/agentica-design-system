@@ -1,9 +1,10 @@
 // Rule 4 (GOVERNANCE.md): components only consume semantic tokens, never
 // primitive tokens directly.
 //
-// Stub at this skeleton stage: core/ has no components yet to scan. Real
-// detection logic (verifying only semantic-layer tokens appear in core
-// component files) lands once core/ actually contains components.
+// Stub at this skeleton stage: core-source/ has no components yet to scan.
+// Real detection logic (verifying only semantic-layer tokens appear in
+// component files) lands once a real component source to scan exists —
+// see ADR-105, issue #225.
 
 export async function checkPrimitiveTokenUsage() {
   return {

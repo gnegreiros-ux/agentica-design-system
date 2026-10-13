@@ -57,3 +57,45 @@ referencing the old `ux-pattern-review.md` path was also left as-is: it is a sta
 harmless permission-cache entry, not a documentation surface.
 
 Related: GitHub issue #122, volet 1.
+
+---
+
+## 2026-10-07 — Clone's source directory renamed `clone/core/` → `clone/core-source/`
+
+Governing decision: [ADR-105](ADR-105-clone-core-source-rename.md).
+
+`clone/core/`, the Clone's source directory, renamed in place to `clone/core-source/` —
+a sibling of `personnalisation/`, not moved under `packages/`. The move disambiguates
+the directory's literal path from `GOVERNANCE.md`'s own, unrelated use of "core" as an
+abstract foundation concept (Rules 3–4), which is untouched by this move.
+
+Functional references updated in the same change: `clone/package.json` (`audit` script),
+`scripts/sync-governance.mjs` (`DESTINATIONS`), and six test files —
+`tests/governance/clone-audit-adapter-substitution.spec.js`,
+`tests/governance/clone-audit-runs-unconditionally.spec.js`,
+`tests/governance/clone-personalization-tiers.spec.js`,
+`tests/governance/clone-core-reinstall-preserves-personalization.spec.js`,
+`tests/governance/governance-sync-idempotence.spec.js`, and
+`tests/governance/governance-drift-detection.spec.js`.
+
+Prose updated for accuracy in files that travel with the renamed directory and ship in
+the npm package: `clone/README.md`, `clone/core-source/README.md`, the three audit
+`.mjs` stub comments, the three audit specs under `clone/core-source/audit/specs/`
+(their `clone/` path prefix also dropped from the `**Component:**` line, so the
+reference resolves against the package root the way `clone-package-self-contained.spec.js`
+checks it; each also gained a one-line pointer to the shipped
+`non-negotiable-foundation.md` so its `` `GOVERNANCE.md` `` citation isn't dangling),
+`clone/personnalisation/GUIDE.md`, and the four `clone/personnalisation/*/example.md`
+files that mentioned `core/`. `tests/governance/tokens-audit-primitive-layer-scope.spec.js`'s
+fixture label (`'core'` → `'core-source'`) and `scripts/audit-tokens.js`'s nearby comment
+were relabeled for the same reason, with no change to `PRIMITIVE_LAYER_PATHS` itself.
+
+Not touched, deliberately, per ADR-105: `GOVERNANCE.md`, `clone/core-source/references/non-negotiable-foundation.md`
+(generated, verbatim copy of `GOVERNANCE.md`'s own "core" vocabulary), `ADR-100`'s body
+(stale path expected, per the immutability note in `decisions/README.md`), and the one
+`site/build.js` changelog entry dated for the `sync-governance.mjs` delivery (a dated
+record of repo state at the time it was written).
+
+Related: issue #225 (separate, pre-existing gap found while verifying this rename —
+the personalization architecture decided 2026-09-12 named a `personnalisation/composants/`
+tier that was never built; out of scope for this move).
