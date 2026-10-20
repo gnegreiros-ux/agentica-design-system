@@ -1,29 +1,29 @@
 name: Site — auto-heal dist on main
 
-# ADR-106 : filet de sécurité post-merge pour l'issue #236. site-freshness.yml
-# (déclenché sur pull_request) reste la seule porte de revue humaine — ce
-# workflow ne la remplace pas, il répare après coup les rares cas où un push
-# direct sur main (ou un oubli malgré la review) laisse site/dist/ périmé.
+# ADR-106: post-merge safety net for issue #236. site-freshness.yml
+# (triggered on pull_request) remains the only human review gate — this
+# workflow does not replace it, it repairs after the fact the rare cases
+# where a direct push to main (or an oversight despite review) leaves
+# site/dist/ stale.
 #
-# Se déclenche uniquement sur push vers main : jamais sur pull_request, donc
-# jamais sur une PR venant d'un fork — pas de token GITHUB_TOKEN exposé à du
-# code non revu. Le code qui tourne ici a déjà passé la review humaine
-# (main est protégée) ou est un push direct déjà autorisé par le mainteneur
-# unique.
+# Triggers only on push to main: never on pull_request, so never on a PR
+# coming from a fork — no GITHUB_TOKEN exposed to unreviewed code. The code
+# that runs here has already passed human review (main is protected) or is
+# a direct push already authorized by the sole maintainer.
 
 on:
   push:
     branches: [main]
 
-# Lecture + écriture sur le contenu seulement — pas de pull-requests, pas
-# d'issues, pas de packages. Le token par défaut (GITHUB_TOKEN), pas un PAT.
+# Read + write on contents only — no pull-requests, no issues, no packages.
+# The default token (GITHUB_TOKEN), not a PAT.
 permissions:
   contents: write
 
-# Sérialise les exécutions : si deux push arrivent coup sur coup, la seconde
-# attend que la première ait fini de commit+push plutôt que de se baser sur
-# un état désynchronisé. On n'annule pas les runs en cours (cancel-in-progress:
-# false) pour ne jamais interrompre un commit déjà poussé à mi-chemin.
+# Serializes runs: if two pushes land back to back, the second waits for the
+# first to finish commit+push rather than working from a desynchronized
+# state. Running jobs are not canceled (cancel-in-progress: false), so a
+# commit already pushed halfway through is never interrupted.
 concurrency:
   group: site-dist-autoheal
   cancel-in-progress: false
@@ -31,10 +31,10 @@ concurrency:
 jobs:
   autoheal:
     runs-on: ubuntu-latest
-    # Garde-fou anti-boucle : ne pas re-traiter le commit que ce job vient
-    # lui-même de produire. (Le re-déclenchement d'un 2e run par ce push
-    # serait de toute façon un no-op car site/dist/ est exclu du calcul de
-    # auditSourcesDate() — voir ADR-106 — mais ça évite même ce rebuild inutile.)
+    # Anti-loop guard: don't re-process the commit this job just produced
+    # itself. (A second run re-triggered by this push would be a no-op
+    # anyway, since site/dist/ is excluded from auditSourcesDate()'s
+    # calculation — see ADR-106 — but this avoids even that redundant rebuild.)
     if: ${{ !contains(github.event.head_commit.message, '[auto-healed]') }}
     steps:
       - uses: actions/checkout@v5
