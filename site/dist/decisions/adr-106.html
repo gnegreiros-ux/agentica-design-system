@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="author" content="Guilherme Negreiros">
-<title>site/dist/ auto-rebuild post-merge sur main (issue #236) — Agentica</title>
+<title>site/dist/ auto-rebuild post-merge on main (issue #236) — Agentica</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Agentica">
-<meta property="og:title" content="site/dist/ auto-rebuild post-merge sur main (issue #236) — Agentica">
+<meta property="og:title" content="site/dist/ auto-rebuild post-merge on main (issue #236) — Agentica">
 <meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
 <meta property="twitter:url" content="https://agentica.design/">
-<meta name="twitter:title" content="site/dist/ auto-rebuild post-merge sur main (issue #236) — Agentica">
+<meta name="twitter:title" content="site/dist/ auto-rebuild post-merge on main (issue #236) — Agentica">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -123,7 +123,7 @@
     <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
     <span class="adr-type">governance</span>
   </div>
-  <h1 class="adr-page-title">site/dist/ auto-rebuild post-merge sur main (issue #236)</h1>
+  <h1 class="adr-page-title">site/dist/ auto-rebuild post-merge on main (issue #236)</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -135,23 +135,23 @@
     </div>
   </dl>
 </div><h2>Context</h2>
-<p><code>site-freshness.yml</code> échoue en CI quand une PR touche un chemin listé dans <code>AUDIT_SOURCES</code> (<code>site/build.js:7704</code> — <code>site</code>, <code>tokens</code>, <code>decisions</code>, <code>guidelines</code>, <code>components</code>, <code>Brand</code>, <code>package.json</code>, <code>package-lock.json</code>) sans que <code>site/dist/</code> ait été rebuild dans le même commit. <code>auditSourcesDate()</code> est déjà déterministe — elle dérive la date d'audit via <code>git log -1 --format=%cI</code> sur <code>AUDIT_SOURCES</code> en excluant explicitement <code>site/dist/</code> — donc ce n'est pas un bug de non-déterminisme (déjà corrigé pour le cas sitemap.xml, PR #114 ; récidive partielle PR #156). Le problème réel, documenté par l'issue #236, est un contrat non appliqué : rien n'oblige mécaniquement à rebuilder <code>site/dist/</code> dès qu'un chemin d'<code>AUDIT_SOURCES</code> change — seule la discipline humaine (ou la mémoire d'un ancien échec CI) le fait aujourd'hui.</p>
+<p><code>site-freshness.yml</code> fails in CI when a PR touches a path listed in <code>AUDIT_SOURCES</code> (<code>site/build.js:7704</code> — <code>site</code>, <code>tokens</code>, <code>decisions</code>, <code>guidelines</code>, <code>components</code>, <code>Brand</code>, <code>package.json</code>, <code>package-lock.json</code>) without <code>site/dist/</code> having been rebuilt in the same commit. <code>auditSourcesDate()</code> is already deterministic — it derives the audit date via <code>git log -1 --format=%cI</code> on <code>AUDIT_SOURCES</code>, explicitly excluding <code>site/dist/</code> — so this is not a non-determinism bug (already fixed for the sitemap.xml case, PR #114; partial recurrence PR #156). The real problem, documented by issue #236, is an unenforced contract: nothing mechanically requires rebuilding <code>site/dist/</code> as soon as an <code>AUDIT_SOURCES</code> path changes — only human discipline (or the memory of a past CI failure) does so today.</p>
 <h2>Decision</h2>
-<p>Solution hybride à deux étages :</p>
-<p>1. <strong>Sur les PR : aucun changement.</strong> <code>site-freshness.yml</code> continue d'échouer    avec un message clair si <code>site/dist/</code> est périmé. Cette porte reste la    revue humaine de référence — elle ne committe jamais à la place de    l'auteur de la PR. 2. <strong>Après merge sur <code>main</code> : nouveau workflow <code>site-dist-autoheal.yml</code></strong>    (déclencheur <code>push</code> sur <code>main</code> uniquement) qui rebuild <code>site/dist/</code> et,    si une différence est détectée, la committe automatiquement sous un    auteur bot dédié (<code>agentica-bot &lt;bot@agentica.design&gt;</code>), message    <code>chore(site): auto-rebuild dist [auto-healed]</code>, citant l'issue #236 et    cet ADR.</p>
-<p><code>agentica-bot &lt;bot@agentica.design&gt;</code> est préféré à une identité native de la plateforme CI (ex. <code>github-actions[bot]</code>) pour une raison de souveraineté numérique et de portabilité : un nom propriétaire d'une plateforme ne survivrait pas à un changement de CI, alors que <code>agentica-bot</code> est un nom entièrement contrôlé par le projet, dans son propre domaine (<code>agentica.design</code>).</p>
-<p>Le workflow est conçu pour ne jamais boucler : son seul chemin d'écriture (<code>site/dist/</code>) est explicitement exclu du calcul de <code>auditSourcesDate()</code> (<code>:(exclude)site/dist</code>), donc son propre commit ne peut jamais redéclencher un nouveau cycle de rebuild différent. Un garde <code>[auto-healed]</code> dans le message de commit évite même le rebuild redondant d'un éventuel second run.</p>
+<p>Two-stage hybrid solution:</p>
+<p>1. <strong>On PRs: no change.</strong> <code>site-freshness.yml</code> keeps failing with a clear    message if <code>site/dist/</code> is stale. This gate remains the reference human    review — it never commits on behalf of the PR's author. 2. <strong>After merge to <code>main</code>: new workflow <code>site-dist-autoheal.yml</code></strong>    (triggered on <code>push</code> to <code>main</code> only) that rebuilds <code>site/dist/</code> and,    if a difference is detected, commits it automatically under a    dedicated bot author (<code>agentica-bot &lt;bot@agentica.design&gt;</code>), with the    message <code>chore(site): auto-rebuild dist [auto-healed]</code>, citing issue    #236 and this ADR.</p>
+<p><code>agentica-bot &lt;bot@agentica.design&gt;</code> is preferred over a CI platform's native identity (e.g. <code>github-actions[bot]</code>) for a reason of digital sovereignty and portability: a platform-owned name would not survive a CI change, whereas <code>agentica-bot</code> is a name entirely controlled by the project, in its own domain (<code>agentica.design</code>).</p>
+<p>The workflow is designed to never loop: its only write path (<code>site/dist/</code>) is explicitly excluded from <code>auditSourcesDate()</code>'s calculation (<code>:(exclude)site/dist</code>), so its own commit can never re-trigger a new, different rebuild cycle. An <code>[auto-healed]</code> guard in the commit message avoids even the redundant rebuild of a possible second run.</p>
 <h2>Rejected alternatives</h2>
-<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Auto-commit directement sur les PR (même mécanisme, déclenché sur <code>pull_request</code>)</td><td>Une PR venant d'un fork n'a pas accès en écriture au dépôt cible — <code>GITHUB_TOKEN</code> y est en lecture seule par défaut, et lui donner l'écriture (<code>pull_request_target</code> ou équivalent) ouvrirait une voie d'exécution de code non revu avec un token d'écriture. Rejeté pour raison de sécurité, pas de confort.</td></tr><tr><td>Restreindre <code>AUDIT_SOURCES</code> pour réduire la fréquence des échecs</td><td>Viderait le check de son sens : <code>AUDIT_SOURCES</code> existe précisément parce que ces chemins (<code>decisions/</code>, <code>guidelines/</code>, etc.) influencent le contenu publié par <code>site/build.js</code>. Réduire la liste, ce serait accepter que <code>site/dist/</code> diverge silencieusement de ses propres sources plutôt que de corriger l'absence de contrat.</td></tr><tr><td>Ne rien faire (statu quo)</td><td>A déjà produit deux incidents documentés (PR #114, récidive PR #156) et l'issue #236 — la discipline humaine seule ne suffit pas.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Auto-commit directly on PRs (same mechanism, triggered on <code>pull_request</code>)</td><td>A PR coming from a fork has no write access to the target repository — <code>GITHUB_TOKEN</code> is read-only there by default, and granting it write access (<code>pull_request_target</code> or equivalent) would open a path for unreviewed code to run with a write token. Rejected for security, not convenience.</td></tr><tr><td>Restrict <code>AUDIT_SOURCES</code> to reduce how often it fails</td><td>Would empty the check of its purpose: <code>AUDIT_SOURCES</code> exists precisely because these paths (<code>decisions/</code>, <code>guidelines/</code>, etc.) influence the content <code>site/build.js</code> publishes. Shrinking the list would mean accepting that <code>site/dist/</code> silently diverges from its own sources, instead of fixing the missing contract.</td></tr><tr><td>Do nothing (status quo)</td><td>Already produced two documented incidents (PR #114, recurrence PR #156) and issue #236 — human discipline alone is not enough.</td></tr></tbody></table></div>
 <h2>Consequences</h2>
-<ul><li>Nouveau fichier <code>.github/workflows/site-dist-autoheal.yml</code>, scope minimal</li></ul>
-<p>  <code>permissions: contents: write</code>, jamais sur <code>pull_request</code>.</p>
-<ul><li><code>main</code> peut recevoir, en plus des commits humains, des commits automatiques</li></ul>
-<p>  signés <code>agentica-bot</code>, toujours limités à <code>site/dist/</code> et toujours   immédiatement après un push qui en avait besoin.</p>
-<ul><li>Risques résiduels à surveiller : échec silencieux du job (notification</li></ul>
-<p>  GitHub par défaut seulement, pas d'alerte supplémentaire configurée) ;   conflit de push concurrent sur <code>main</code> (le job échoue visiblement, ne force   jamais — <code>git push</code> sans <code>--force</code>).</p>
+<ul><li>New file <code>.github/workflows/site-dist-autoheal.yml</code>, minimal scope</li></ul>
+<p>  <code>permissions: contents: write</code>, never on <code>pull_request</code>.</p>
+<ul><li><code>main</code> can receive, in addition to human commits, automatic commits</li></ul>
+<p>  signed by <code>agentica-bot</code>, always limited to <code>site/dist/</code> and always   immediately after a push that needed one.</p>
+<ul><li>Residual risks to watch: silent job failure (default GitHub</li></ul>
+<p>  notification only, no additional alert configured); concurrent push   conflict on <code>main</code> (the job fails visibly, never forces —   <code>git push</code> without <code>--force</code>).</p>
 <h2>Incidents or triggers</h2>
-<p>Issue #236. Historique : PR #114 (fix <code>lastmod</code> dérivé de git log), récidive PR #156 (même classe de problème sur un chemin non couvert à l'époque).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>Issue #236. History: PR #114 (fix <code>lastmod</code> derived from git log), recurrence PR #156 (same class of problem on a path not covered at the time).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-105.html" class="agtc-button secondary">← ADR-105</a>
     <span></span>
   </div></main>
