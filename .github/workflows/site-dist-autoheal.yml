@@ -1,0 +1,71 @@
+name: Site — auto-heal dist on main
+
+# ADR-106: post-merge safety net for issue #236. site-freshness.yml
+# (triggered on pull_request) remains the only human review gate — this
+# workflow does not replace it, it repairs after the fact the rare cases
+# where a direct push to main (or an oversight despite review) leaves
+# site/dist/ stale.
+#
+# Triggers only on push to main: never on pull_request, so never on a PR
+# coming from a fork — no GITHUB_TOKEN exposed to unreviewed code. The code
+# that runs here has already passed human review (main is protected) or is
+# a direct push already authorized by the sole maintainer.
+
+on:
+  push:
+    branches: [main]
+
+# Read + write on contents only — no pull-requests, no issues, no packages.
+# The default token (GITHUB_TOKEN), not a PAT.
+permissions:
+  contents: write
+
+# Serializes runs: if two pushes land back to back, the second waits for the
+# first to finish commit+push rather than working from a desynchronized
+# state. Running jobs are not canceled (cancel-in-progress: false), so a
+# commit already pushed halfway through is never interrupted.
+concurrency:
+  group: site-dist-autoheal
+  cancel-in-progress: false
+
+jobs:
+  autoheal:
+    runs-on: ubuntu-latest
+    # Anti-loop guard: don't re-process the commit this job just produced
+    # itself. (A second run re-triggered by this push would be a no-op
+    # anyway, since site/dist/ is excluded from auditSourcesDate()'s
+    # calculation — see ADR-106 — but this avoids even that redundant rebuild.)
+    if: ${{ !contains(github.event.head_commit.message, '[auto-healed]') }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Full history: site/build.js derives each sitemap.xml page's
+          # <lastmod> and audit.html's date from `git log`, which needs the real
+          # commit history, not the default shallow (depth-1) checkout.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build site
+        working-directory: site
+        run: node build.js
+
+      - name: Commit site/dist/ if stale
+        run: |
+          if git diff --quiet --exit-code -- site/dist; then
+            echo "site/dist/ already up to date — nothing to heal."
+            exit 0
+          fi
+          git config user.name "agentica-bot"
+          git config user.email "bot@agentica.design"
+          git add site/dist
+          git commit -m "chore(site): auto-rebuild dist [auto-healed]
+
+          site/dist/ was stale relative to AUDIT_SOURCES after this push.
+          Rebuilt automatically per ADR-106 (issue #236)."
+          git push origin HEAD:main
