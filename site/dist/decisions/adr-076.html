@@ -162,7 +162,10 @@
 <ul><li><strong>Trigger to revisit this ADR:</strong> the moment a second collaborator is added to the</li></ul>
 <p>  repository, <code>required_approving_review_count</code> should move to 1 (<code>develop</code>) / 2   (<code>main</code>) per the original <code>git-workflow.md</code> intent, since self-approval is no longer   the blocking constraint.</p>
 <ul><li>Visual regressions (Playwright) remain caught only after merge, via the existing</li></ul>
-<p>  <code>playwright-reminder.yml</code> issue flow (see the closure of issue #9 this same session   for a concrete instance of that flow).</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+<p>  <code>playwright-reminder.yml</code> issue flow (see the closure of issue #9 this same session   for a concrete instance of that flow).</p>
+<h2>Notes</h2>
+<ul><li><strong>2026-10-22:</strong> The Context section above (point 2) describes <code>chromatic.yml</code> as</li></ul>
+<p>  "currently disabled (monthly snapshot quota reached)" — accurate at the time this   ADR was written. Since then, ADR-104 (2026-10-02) removed <code>chromatic.yml</code> and every   other Chromatic residue from the repository entirely; the workflow no longer exists   in any form. The sentence above is left unchanged as a record of the state at the   time of this decision.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
     <a href="adr-075.html" class="agtc-button secondary">← ADR-075</a>
     <a href="adr-077.html" class="agtc-button secondary">ADR-077 →</a>
   </div></main>
