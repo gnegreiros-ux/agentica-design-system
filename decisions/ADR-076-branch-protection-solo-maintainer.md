@@ -86,3 +86,12 @@ either block all work or require constant admin bypassing — both worse than no
 - Visual regressions (Playwright) remain caught only after merge, via the existing
   `playwright-reminder.yml` issue flow (see the closure of issue #9 this same session
   for a concrete instance of that flow).
+
+## Notes
+
+- **2026-10-22:** The Context section above (point 2) describes `chromatic.yml` as
+  "currently disabled (monthly snapshot quota reached)" — accurate at the time this
+  ADR was written. Since then, ADR-104 (2026-10-02) removed `chromatic.yml` and every
+  other Chromatic residue from the repository entirely; the workflow no longer exists
+  in any form. The sentence above is left unchanged as a record of the state at the
+  time of this decision.

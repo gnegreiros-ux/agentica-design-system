@@ -578,27 +578,6 @@ const PIPELINES = [
     command: 'git add [specific files]\ngit diff --staged\ngit commit -m "$(cat <<\'EOF\'\ntype(scope): description\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n)"\ngit push',
   },
   {
-    id: 'chromatic', icon: 'camera', status: 'active', blocking: true, order: 9,
-    title_fr: 'Régression visuelle (Chromatic)', title_en: 'Visual regression (Chromatic)',
-    trigger_fr: 'components/, tokens/, .storybook/', trigger_en: 'components/, tokens/, .storybook/',
-    desc_short_fr: 'Publie les stories sur Chromatic et compare les captures avec le baseline approuvé — tout changement visuel non intentionnel bloque le commit.',
-    desc_short_en: 'Publishes stories to Chromatic and compares captures against the approved baseline — any unintentional visual change blocks the commit.',
-    marketing_fr: 'Aucune régression visuelle silencieuse. Chaque pixel qui change est capturé, comparé au baseline et soumis à approbation. Les designers contrôlent les évolutions visuelles — pas les accidents de code.',
-    marketing_en: 'No silent visual regression. Every changed pixel is captured, compared to the baseline and submitted for approval. Designers control visual changes — not code accidents.',
-    objective_fr: 'Détecter et bloquer toute régression visuelle non intentionnelle sur les composants avant qu\'elle n\'atteigne le dépôt.',
-    objective_en: 'Detect and block any unintentional visual regression on components before it reaches the repository.',
-    steps: [
-      { role_fr:'01 · Déclencheur', role_en:'01 · Trigger', title_fr:'Composants, tokens ou Storybook modifiés', title_en:'Components, tokens or Storybook modified', desc_fr:'components/ · tokens/ · .storybook/ — tout changement visuel potentiel.', desc_en:'components/ · tokens/ · .storybook/ — any potential visual change.' },
-      { role_fr:'02 · Capture', role_en:'02 · Capture', title_fr:'Publication + comparaison baseline', title_en:'Publication + baseline comparison', desc_fr:'npm run chromatic → Storybook publié sur Chromatic → captures comparées au baseline approuvé.', desc_en:'npm run chromatic → Storybook published on Chromatic → captures compared against approved baseline.' },
-      { role_fr:'03 · Résultat', role_en:'03 · Outcome', title_fr:'Approbation ou blocage', title_en:'Approval or block', desc_fr:'Chromatic exit 0 ou changements explicitement approuvés → commit autorisé. Régressions détectées → commit bloqué.', desc_en:'Chromatic exit 0 or changes explicitly approved → commit cleared. Regressions detected → commit blocked.' },
-    ],
-    checks_fr: ['Chromatic exit 0 ou changements visuels explicitement approuvés','Aucune régression non intentionnelle sur les composants existants','Captures de tous les états : default, hover, focus, disabled, loading','CHROMATIC_PROJECT_TOKEN en variable d\'environnement (jamais en clair dans le dépôt)','Workflow CI .github/workflows/chromatic.yml actif'],
-    checks_en: ['Chromatic exit 0 or visual changes explicitly approved','No unintentional regression on existing components','Captures of all states: default, hover, focus, disabled, loading','CHROMATIC_PROJECT_TOKEN as environment variable (never in plain text in repo)','CI workflow .github/workflows/chromatic.yml active'],
-    trigger_table_fr: [['components/agtc-*.js','Oui — capture + comparaison baseline'],['tokens/*.json','Oui — impact visuel potentiel'],[ '.storybook/','Oui — configuration des captures'],['site/build.js','Non — pas de stories Storybook']],
-    trigger_table_en: [['components/agtc-*.js','Yes — capture + baseline comparison'],['tokens/*.json','Yes — potential visual impact'],['.storybook/','Yes — capture configuration'],['site/build.js','No — no Storybook stories']],
-    command: 'export CHROMATIC_PROJECT_TOKEN=chpt_xxx\nnpm run chromatic\n# CI: CHROMATIC_PROJECT_TOKEN GitHub secret injected automatically',
-  },
-  {
     id: 'axe-core', icon: 'check-circle', status: 'active', blocking: false, order: 10,
     title_fr: 'Audit automatique axe-core', title_en: 'axe-core automated audit',
     trigger_fr: 'components/, site/build.js, tokens/', trigger_en: 'components/, site/build.js, tokens/',
@@ -641,7 +620,7 @@ const PIPELINES = [
     command: 'npx style-dictionary build --config style-dictionary/config.json\n# Activation : npm install style-dictionary + configurer style-dictionary/config.json',
   },
   {
-    id: 'playwright', icon: 'mouse-pointer-click', status: 'planned', blocking: false, order: 12,
+    id: 'playwright', icon: 'mouse-pointer-click', status: 'active', blocking: true, order: 12,
     title_fr: 'Tests E2E Playwright', title_en: 'Playwright E2E tests',
     trigger_fr: 'site/build.js, components/', trigger_en: 'site/build.js, components/',
     desc_short_fr: 'Tests de parcours critiques sur le site de documentation — navigation, bascule FR/EN, explorateur de tokens, skip-link et navigation clavier sur les composants.',
@@ -4374,7 +4353,6 @@ bash scripts/continuity/2-2-product-checklist.sh <project-path>`);
     ['Audit tokens', 'node scripts/audit-tokens.js --ci'],
     ['Accessibility audit', 'npm run axe'],
     ['Visual/E2E tests', 'npx playwright test --project=chromium'],
-    ['Chromatic tests', 'npm run chromatic'],
   ].map(([task, cmd]) => `<tr><td>${task}</td><td><code>${cmd}</code></td></tr>`).join('');
 
   const body = `
@@ -7525,7 +7503,7 @@ function buildPipelinesIndex() {
 
 <div class="stat-band" role="region" aria-label="Statistiques des pipelines">
   <div class="stat-item"><span class="stat-num">10</span><span class="stat-text"><span class="lang-fr">Pipelines actifs</span><span class="lang-en">Active pipelines</span></span></div>
-  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text"><span class="lang-fr">En préparation</span><span class="lang-en">In progress</span></span></div>
+  <div class="stat-item"><span class="stat-num">2</span><span class="stat-text"><span class="lang-fr">En préparation</span><span class="lang-en">In progress</span></span></div>
   <div class="stat-item"><span class="stat-num">${PIPELINES.length}</span><span class="stat-text"><span class="lang-fr">Pipelines au total</span><span class="lang-en">Total pipelines</span></span></div>
 </div>
 
