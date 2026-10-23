@@ -13,14 +13,11 @@ name: Full audit — smoke, contracts, site-wide accessibility
 # the existing Playwright accessibility.spec.js only covers 10. The inventory found
 # 139 of those 149 pages had never been checked for accessibility by anything.
 #
-# TEMPORARY: non-blocking (`continue-on-error` on each check step) for this reason —
-# a first-ever run on 139 never-audited pages is expected to surface real violations,
-# and this must not become a Chromatic-style silent gate (auto-triggers disabled for
-# 2.5 months without anyone noticing, see PR #135). Flip to blocking — remove the
-# three `continue-on-error` lines below, and add this job to branch protection's
-# required checks — only once a human has read at least one full run's output and
-# either (a) confirmed zero violations, or (b) triaged every violation found (fixed,
-# or explicitly tracked in an issue). Do not leave this non-blocking silently.
+# Blocking since 2026-10-23 (#243): 15 runs observed since 2026-09-18 surfaced
+# exactly one real violation (run 38475014319, 2026-10-13 — [serious]
+# color-contrast on index.html, fixed in the next push), masked behind a green
+# job by `continue-on-error`. The exit condition this comment used to describe
+# (a human triaging at least one full run's output) is met — see #243/#244/#245.
 
 on:
   push:
@@ -56,13 +53,17 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Smoke test (component token resolution)
-        continue-on-error: true # see the TEMPORARY note above — first-ever run
         run: npm run smoke
 
       - name: Validate contracts (governance layer)
-        continue-on-error: true # see the TEMPORARY note above — first-ever run
         run: npm run validate:contracts
 
       - name: Accessibility audit — every generated page
-        continue-on-error: true # see the TEMPORARY note above — first-ever run, 139/149 pages never checked before
         run: npm run axe:all
+
+      - name: Alert on failure
+        if: failure()
+        run: |
+          echo "## ❌ Full audit failed" >> "$GITHUB_STEP_SUMMARY"
+          echo "One of smoke / validate:contracts / axe:all failed on this push to main." >> "$GITHUB_STEP_SUMMARY"
+          echo "See the job log above for which step and why." >> "$GITHUB_STEP_SUMMARY"
