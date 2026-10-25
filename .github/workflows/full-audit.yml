@@ -22,10 +22,15 @@ name: Full audit — smoke, contracts, site-wide accessibility
 on:
   push:
     branches: [main]
-  # develop (#243): PR-only, not on every push to develop — a full build +
+  # PR-only for both targets, not on every push to develop — a full build +
   # 157-page audit on every commit would be too costly for that branch's pace.
+  #
+  # `main` MUST be included here (#248): `full-audit` is a required status
+  # check on `main` (added alongside #243), and a required check with no
+  # trigger matching the pull_request event never reports — GitHub then
+  # blocks every PR into main waiting on a check that can never run.
   pull_request:
-    branches: [develop]
+    branches: [main, develop]
 
 permissions:
   contents: read
