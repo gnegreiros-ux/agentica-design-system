@@ -22,6 +22,15 @@ name: Full audit — smoke, contracts, site-wide accessibility
 on:
   push:
     branches: [main]
+  # PR-only for both targets, not on every push to develop — a full build +
+  # 157-page audit on every commit would be too costly for that branch's pace.
+  #
+  # `main` MUST be included here (#248): `full-audit` is a required status
+  # check on `main` (added alongside #243), and a required check with no
+  # trigger matching the pull_request event never reports — GitHub then
+  # blocks every PR into main waiting on a check that can never run.
+  pull_request:
+    branches: [main, develop]
 
 permissions:
   contents: read
@@ -65,5 +74,5 @@ jobs:
         if: failure()
         run: |
           echo "## ❌ Full audit failed" >> "$GITHUB_STEP_SUMMARY"
-          echo "One of smoke / validate:contracts / axe:all failed on this push to main." >> "$GITHUB_STEP_SUMMARY"
+          echo "One of smoke / validate:contracts / axe:all failed." >> "$GITHUB_STEP_SUMMARY"
           echo "See the job log above for which step and why." >> "$GITHUB_STEP_SUMMARY"
