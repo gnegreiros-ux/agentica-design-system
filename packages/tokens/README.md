@@ -73,4 +73,4 @@ these CSS custom properties by DOM inheritance, not by JS import. Load
 
 ## License
 
-MIT
+Apache License 2.0

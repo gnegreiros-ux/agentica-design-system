@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/segmented.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-044-agtc-segmented-implementation.md, guidelines/components/radio.md, guidelines/components/toggle.md, DESIGN.md
 
 ---

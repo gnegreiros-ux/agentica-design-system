@@ -4,7 +4,7 @@
 > **Type:** instruction
 > **Logical path:** decisions/README.md
 > **Read before:** AGENTS.md, DESIGN.md
-> **Relations:** .claude/instructions/session-spec.md, tokens/semantic.json, guidelines/components/
+> **Relations:** governance/instructions/session-spec.md, tokens/semantic.json, guidelines/components/
 
 ---
 
@@ -68,7 +68,7 @@ decisions that were already settled.
 | [ADR-003](ADR-003-style-dictionary.md) | Choosing Style Dictionary for token compilation | 2026-05-28 | ✅ Active |
 | [ADR-004](ADR-004-gouvernance-humaine.md) | Human governance: the human always has the final word | 2026-05-28 | ✅ Active |
 | [ADR-005](ADR-005-variante-critical-vs-danger.md) | Replacing the `danger` variant with `critical` | 2026-05-28 | ✅ Active |
-| [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choosing Chromatic for visual regression testing | 2026-05-28 | ✅ Active |
+| [ADR-006](ADR-006-chromatic-tests-visuels.md) | Choosing Chromatic for visual regression testing | 2026-05-28 | ⚠️ Superseded by ADR-066 / ADR-104 |
 | [ADR-007](ADR-007-axe-core-accessibilite.md) | Choosing axe-core for accessibility testing | 2026-05-28 | ✅ Active |
 | [ADR-008](ADR-008-radix-colors.md) | Choosing Radix UI Colors for the primitive palette | 2026-05-28 | ✅ Active |
 | [ADR-009](ADR-009-storybook.md) | Choosing Storybook for component documentation | 2026-05-28 | ✅ Active |
@@ -143,7 +143,7 @@ decisions that were already settled.
 | [ADR-078](ADR-078-figma-tokens-studio-write-restriction.md) | Restrict Tokens Studio write access to the `agentica/proposals` branch | 2026-07-20 | ✅ Active |
 | [ADR-079](ADR-079-figma-audit-scheduled-routine.md) | Weekly scheduled cloud agent for the Figma §22 full-library audit | 2026-07-21 | ✅ Active |
 | [ADR-080](ADR-080-figma-community-file-content-triage.md) | Figma Community File content triage rule: brand identity stays private | 2026-07-21 | ✅ Active |
-| [ADR-081](ADR-081-figma-community-file-license.md) | Figma Community File license: CC BY 4.0 | 2026-07-21 | ✅ Active |
+| [ADR-081](ADR-081-figma-community-file-license.md) | Figma Community File license: CC BY 4.0 | 2026-07-21 | ⚠️ Superseded by ADR-095 |
 | [ADR-082](ADR-082-figma-brand-file-separation.md) | Brand/logo separated into a dedicated Figma library file (amends ADR-080) | 2026-07-21 | ✅ Active |
 | [ADR-083](ADR-083-agtc-image-implementation.md) | `agtc-image` implementation | 2026-07-21 | ✅ Active |
 | [ADR-084](ADR-084-illustrations-migrated-to-agtc-image-no-wrapper.md) | Home page illustrations migrated to `agtc-image` directly, no `agtc-illustration` wrapper | 2026-07-21 | ✅ Active |
@@ -156,6 +156,18 @@ decisions that were already settled.
 | [ADR-091](ADR-091-icon-per-variant-stroke-width-and-color-tokens.md) | Per-variant stroke-width and default-color tokens for `agtc-icon` — stroke-width no longer hardcoded | 2026-07-30 | ✅ Active |
 | [ADR-092](ADR-092-visited-safari-fallback-incident.md) | Safari `:visited` hex-fallback incident, consolidated record (amends ADR-047, ADR-059, ADR-060) | 2026-08-28 | ✅ Active |
 | [ADR-093](ADR-093-border-control-accessible-resting-boundary.md) | Accessible resting control boundary: new semantic token `border.control` (checkbox/radio/input) | 2026-09-09 | ✅ Active |
+| [ADR-094](ADR-094-control-min-max-width.md) | Min/max-width for `agtc-input`'s single-line control, reserved ceiling for a future textarea | 2026-09-09 | ✅ Active |
+| [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) | Apache License 2.0 for the code; CC BY 4.0 remains the Figma Community File license (supersedes ADR-081) | 2026-09-11 | ✅ Active |
+| [ADR-096](ADR-096-semantic-layout-container-tokens.md) | New `semantic.layout.container` category: 5 page-container max-width tokens, surfaced by an AI-interoperability test | 2026-09-11 | ✅ Active |
+| [ADR-097](ADR-097-invocable-skill-directory-convention.md) | Invocable skills live at `.claude/skills/<name>/SKILL.md` (frontmatter + citation block) | 2026-09-17 | ✅ Active |
+| [ADR-098](ADR-098-primitive-direct-blocking-in-ci.md) | `primitive-direct` hardened from warning to error in `audit-tokens.js` (amends ADR-012) | 2026-09-21 | ✅ Active |
+| [ADR-099](ADR-099-workstream-version-follows-published-packages.md) | Workstream version (root `package.json`, git tags) tracks the published package state instead of its own counter — repo tags `v1.0.0` once the decoupling v0.4.0 workstream closes | 2026-09-23 | ✅ Active |
+| [ADR-100](ADR-100-compliance-badge-renders-a-recorded-verdict.md) | The compliance badge renders a recorded audit verdict (`audit.lastResult`), never the `badgeEnabled` flag — "not verified" when none is recorded; a stub audit never records one | 2026-09-25 | ✅ Active |
+| [ADR-101](ADR-101-pr-gate-required-check-in-job-path-scoping.md) | The Playwright PR gate becomes a required check on `main`: no trigger-level `paths` filter, the scope moves into the job (`dorny/paths-filter`), every later step guarded | 2026-09-25 | ✅ Active |
+| [ADR-102](ADR-102-token-annotation-schema.md) | Token annotation schema: `$description` is the single description (`$intent` retired), `$extensions["com.agentica.usage"]` (role, use, doNotUse, alternative, decision, components) at token level, `$extensions["com.agentica.governance"]` replaces `$metadata` — migration in #203 | 2026-09-27 | ✅ Active |
+| [ADR-103](ADR-103-dark-mode-elevation.md) | Dark-mode elevation: every non-deprecated `semantic.shadow.*` has a dark variant (audit check 6), new `background.surface-raised` for menus/popovers, site-only `--agtc-shadow-*` scale removed | 2026-09-28 | ✅ Active |
+| [ADR-104](ADR-104-storybook-visual-coverage-and-hosting-without-chromatic.md) | Storybook without Chromatic: every story gets a Playwright snapshot (light + dark), Storybook published with the site at `/storybook/`, Chromatic removed entirely | 2026-10-02 | ✅ Active |
+| [ADR-105](ADR-105-clone-core-source-rename.md) | "core" names two things — `GOVERNANCE.md`'s abstract foundation concept (untouched) and the Clone's literal source path, renamed `clone/core/` → `clone/core-source/` to stop the collision | 2026-10-07 | ✅ Active |
 
 ---
 
@@ -178,3 +190,18 @@ decisions that were already settled.
 - An ADR is immutable once `active` — any modification = a new ADR
 - Agents read this folder to understand the *why*, not just the *what*
 - Every major TCR (Token Change Request) must reference or create an ADR
+
+### Stale paths inside an ADR body are expected, not a defect
+
+An ADR's `Context`/`Decision`/`Consequences` prose and its `Relations:` line
+describe repo state *at the time the decision was made*. When a referenced file is
+later renamed or moved for purely mechanical reasons — see
+`decisions/CHANGELOG-structure.md`, which logs exactly this kind of move — the ADR
+body is **not** edited to follow it, and its `Status:` does not change either: the
+decision the ADR records is still fully in force, only the path is stale. Rewriting
+the body would erase what the decision-maker actually saw at the time.
+`Status: Superseded by ADR-NNN` is reserved for a genuinely new decision that
+replaces the old one — see [ADR-081](ADR-081-figma-community-file-license.md),
+superseded by ADR-095, for a real example — never for a file that simply moved. A
+stale path inside an ADR's body is a normal, permanent feature of that ADR, not
+something to "fix" on sight.

@@ -1,8 +1,8 @@
 {
   "name": "agentica-design-system",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Agentica — Agentic design system",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -17,7 +17,6 @@
     "version-packages": "changeset version",
     "storybook": "npm run tokens && storybook dev -p 6006",
     "build-storybook": "npm run tokens && storybook build",
-    "chromatic": "chromatic --exit-zero-on-changes",
     "lang-audit": "node scripts/audit-language.js",
     "axe": "node scripts/axe-audit.js",
     "axe:mobile": "node scripts/axe-audit.js --mobile",
@@ -29,7 +28,12 @@
     "smoke": "node scripts/smoke-test.js",
     "relationships": "node scripts/extract-relationships.js --fix-report",
     "validate:contracts": "node scripts/validate-contracts.js",
-    "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run axe:all"
+    "tool-parity": "node scripts/check-tool-parity.js",
+    "tokens-audit": "node scripts/audit-tokens.js",
+    "commit-lint": "node scripts/check-commit-messages.js",
+    "sync:governance": "node scripts/sync-governance.mjs",
+    "check:governance-sync": "node scripts/check-governance-sync.mjs",
+    "test": "npm run smoke && npm run lang-audit && npm run validate:contracts && npm run tokens-audit -- --ci && npm run axe:all"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
@@ -37,7 +41,6 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "@changesets/cli": "^2.27.1",
-    "@chromatic-com/storybook": "^5.2.1",
     "@playwright/test": "^1.61.1",
     "@radix-ui/colors": "^3.0.0",
     "@storybook/addon-a11y": "^10.4.1",
@@ -47,6 +50,7 @@
     "@storybook/web-components-vite": "^10.4.1",
     "@vitest/browser-playwright": "^4.1.7",
     "@vitest/coverage-v8": "^4.1.7",
+    "js-yaml": "^4.3.0",
     "lit": "^3.0.0",
     "playwright": "^1.60.0",
     "storybook": "^10.4.1",

@@ -2,12 +2,12 @@
 
 > Style spec for Agentica system illustrations — "Tactile Tech" style.
 > **Status:** ✅ Approved (human, 2026-06-06) — formalized by ADR-051. Each illustration
-> produced remains subject to individual approval (see `.claude/rules/ux-patterns-sources.md`).
+> produced remains subject to individual approval (see `governance/rules/ux-patterns-sources.md`).
 > **Type:** guideline
 > **Logical path:** guidelines/foundations/illustration.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** guidelines/foundations/color.md, tokens/semantic.json, decisions/ADR-051,
-> .claude/rules/illustrations-source.md
+> governance/rules/illustrations-source.md
 
 ---
 
@@ -76,7 +76,7 @@ outside the repo) to the closest primitive step, teal already being common to th
 ## Illustrations produced (v1 — replaced)
 
 > **2026-07-10:** these 3 SVG diagrams were replaced by the PNG illustration system
-> (`Brand/illustrations/`, see `.claude/rules/illustrations-source.md`) before ever being
+> (`Brand/illustrations/`, see `governance/rules/illustrations-source.md`) before ever being
 > integrated into the site — step 4 of the pipeline below therefore never happened for these
 > files. The `illustrations/` folder was removed from the repo; the table is kept for
 > historical reference.

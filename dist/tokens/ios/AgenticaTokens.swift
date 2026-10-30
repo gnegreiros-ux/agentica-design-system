@@ -4,7 +4,6 @@
 //
 
 // Do not edit directly
-// Generated on Thu, 10 Sep 2026 18:26:16 GMT
 
 
 import UIKit
@@ -655,6 +654,7 @@ public class AgenticaTokens {
     public static let semanticColorBackgroundPage = #fcfcfc
     public static let semanticColorBackgroundSubtle = #f0f0f0
     public static let semanticColorBackgroundSurface = #ffffff
+    public static let semanticColorBackgroundSurfaceRaised = #ffffff
     public static let semanticColorBorderControl = #8d8d8d
     public static let semanticColorBorderDanger = #ce2c31
     public static let semanticColorBorderDefault = #e8e8e8
@@ -727,6 +727,11 @@ public class AgenticaTokens {
     public static let semanticIconStrokeWidthFeature = 2
     public static let semanticIconStrokeWidthInline = 1
     public static let semanticIconStrokeWidthNav = 1.75
+    public static let semanticLayoutContainerCta = 600px
+    public static let semanticLayoutContainerDefault = 1180px
+    public static let semanticLayoutContainerDocs = 960px
+    public static let semanticLayoutContainerIntro = 700px
+    public static let semanticLayoutContainerWide = 1280px
     public static let semanticMarketingSpaceHeroGap = 120px
     public static let semanticMarketingSpaceSectionBreathing = 96px
     public static let semanticMarketingTypographyDisplayLineHeight = 1.0

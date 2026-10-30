@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "AfterTool": [
+      {
+        "matcher": "write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .gemini/hooks/adr-reminder.js",
+            "name": "adr-reminder",
+            "description": "Reminds to consider an ADR when tokens/, guidelines/, or components/ is written to"
+          }
+        ]
+      },
+      {
+        "matcher": "write_file|replace",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .gemini/hooks/ux-pattern-reminder.js",
+            "name": "ux-pattern-reminder",
+            "description": "Reminds to run the ux-pattern-review skill when a component file changes"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -18,7 +18,7 @@ cat <<'EOF'
 Reminders to confirm manually (cannot be scripted from this repository):
   - Contrast: https://webaim.org/resources/contrastchecker/
   - Accessibility: "axe DevTools" browser extension
-  - UX pattern: consult the 5 sources in .claude/rules/ux-patterns-sources.md
+  - UX pattern: consult the 5 sources in governance/rules/ux-patterns-sources.md
     and document the chosen approach directly in the consuming project
 EOF
 

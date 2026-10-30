@@ -5,7 +5,7 @@ set -euo pipefail
 
 cat <<'EOF'
 === Figma checklist without the Plugin API script ===
-(derived from .claude/rules/figma-library-governance.md + .claude/instructions/figma-components.md)
+(derived from governance/rules/figma-library-governance.md + governance/instructions/figma-components.md)
 
 [ ] 1. Read the component code + stories BEFORE touching Figma
 [ ] 2. Bind every fill/stroke/spacing to an existing Figma Variable

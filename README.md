@@ -1,4 +1,6 @@
-# Agentica — Agentic Design System
+# Agentica™ — Agentic Design System
+
+Copyright © 2026 Guilherme Negreiros
 
 > A design system structured to be read by humans **and** AI agents.
 > Based on work presented at the AI Design Systems Conference 2026 (Into Design Systems).
@@ -27,7 +29,9 @@ agentica-design-system/
 │
 ├── README.md                          ← you are here
 ├── DESIGN.md                          ← portable brand contract
-├── AGENTS.md                          ← AI agent router
+├── AGENTS.md                          ← AI agent router (single source of truth for governance)
+├── CLAUDE.md                          ← thin adapter — imports AGENTS.md, Claude Code specifics only
+├── GEMINI.md                          ← thin adapter — imports AGENTS.md, Gemini CLI specifics only
 ├── How-to-designers.md                ← design system team guide (designers)
 ├── How-to-devs.md                     ← design system team guide (developers)
 │
@@ -44,7 +48,7 @@ agentica-design-system/
 │
 ├── .eslintrc-ds.json                  ← anti-AI-drift lint (hex, arbitrary values)
 │
-├── .claude/
+├── governance/                        ← agent-agnostic — read natively by any AI tool
 │   ├── rules/                         ← project constraints and conventions
 │   │   ├── project-overview.md
 │   │   ├── tokens-system.md
@@ -55,10 +59,22 @@ agentica-design-system/
 │   ├── instructions/
 │   │   ├── codebase-context.md        ← full technical context
 │   │   └── session-spec.md            ← condensed spec reloaded every AI session
-│   └── skills/
-│       ├── ai-component-metadata.md
-│       ├── ai-ds-composer.md
-│       └── codebase-index.md
+│   ├── ai-skills-reference.md         ← what .claude/skills/ automates, ported vs. still to reproduce
+│   └── tool-parity/                   ← per-tool sign-off: what's replaced, what's accepted absent
+│
+├── .claude/
+│   └── skills/                        ← Claude Code-native implementation (source of truth)
+│       ├── ai-component-metadata/SKILL.md
+│       ├── ai-ds-composer/SKILL.md
+│       └── codebase-index/SKILL.md
+│
+├── .agents/
+│   └── skills/                        ← open Agent Skills format — Codex CLI + GitHub Copilot
+│       └── ai-component-metadata/SKILL.md   load these automatically, no setup
+│
+├── .gemini/
+│   ├── settings.json                  ← Gemini CLI hooks (real ADR/UX-pattern reminders)
+│   └── hooks/*.js
 │
 ├── components/
 │   └── ds-icon.js                     ← icon Web Component (Lucide)
@@ -80,7 +96,7 @@ agentica-design-system/
 ## Quick start
 
 ### 1. Customize
-Replace the placeholders in `DESIGN.md` and `.claude/rules/project-overview.md`:
+Replace the placeholders in `DESIGN.md` and `governance/rules/project-overview.md`:
 - `[SYSTEM_NAME]`
 - `[ORGANIZATION_NAME]`
 - `[OWNER_NAME]`

@@ -8,13 +8,19 @@
  *   1. Orphaned tokens  — defined in component.json but never used in code
  *   2. Phantom tokens   — used in code but not defined in semantic.json
  *   3. Hardcoded values — arbitrary hex, rgb, px in code (AI drift vectors)
- *   4. Direct references to primitives in components
+ *   4. Direct references to primitives in components (blocking in --ci, ADR-098)
+ *   5. Undefined custom properties in components — a components/agtc-*.js file
+ *      consuming a var(--agtc-*) that the token package does not define and that
+ *      has no fallback (issue 208)
+ *   6. Dark-mode shadow parity — every non-deprecated semantic.shadow.* token has a
+ *      variant in semantic.dark.json (issue 210)
  *
  * Usage:
  *   node scripts/audit-tokens.js
  *   node scripts/audit-tokens.js --fix-report          → generates a JSON report
  *   node scripts/audit-tokens.js --ci                  → exit 1 on critical violations
  *   node scripts/audit-tokens.js --src-dir <path>       → analyzes a specific source directory
+ *   node scripts/audit-tokens.js --tokens-dir <path>    → reads token files from another directory (tests)
  *
  * Escape hatch: a line containing `audit-ignore` is skipped — use sparingly, only for
  * a genuine, reviewed false positive already justified by its own surrounding comment.
@@ -36,9 +42,10 @@ const TOKEN_PREFIXES = {
 };
 
 const _srcArgIdx = process.argv.indexOf('--src-dir');
+const _tokensArgIdx = process.argv.indexOf('--tokens-dir');
 
 const CONFIG = {
-  tokensDir:   path.resolve(__dirname, '../tokens'),
+  tokensDir:   _tokensArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_tokensArgIdx + 1]) : path.resolve(__dirname, '../tokens'),
   sourceDir:   _srcArgIdx !== -1 ? path.resolve(process.cwd(), process.argv[_srcArgIdx + 1]) : null,
   outputFile:  path.resolve(__dirname, '../audit-report.json'),
   ciMode:      process.argv.includes('--ci'),
@@ -55,7 +62,7 @@ const DRIFT_PATTERNS = [
   { name: 'hsl-color',       regex: /hsl\s*\([^)]+\)/g,                severity: 'error',   message: 'Hardcoded hsl() value' },
   { name: 'tailwind-arbitrary', regex: /(?:p|m|text|bg|border)-\[[\d.]+(?:px|rem|em)[^\]]*\]/g, severity: 'error', message: 'Tailwind arbitrary value' },
   { name: 'inline-px',       regex: /(?:padding|margin|font-size|gap|border-radius)\s*:\s*\d+px/g, severity: 'warning', message: 'Inline px value with no token' },
-  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'warning', message: 'Primitive token used directly' },
+  { name: 'primitive-direct', regex: new RegExp('var\\(' + TOKEN_PREFIXES.primitive, 'g'), severity: 'error',   message: 'Primitive token used directly' },
 ];
 
 // ─── Utilities ──────────────────────────────────────────────────────────────
@@ -124,7 +131,7 @@ function getSourceFiles(dir) {
   const files = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
+    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'governance', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
       files.push(...getSourceFiles(fullPath));
     } else if (entry.isFile() && SOURCE_EXTENSIONS.includes(path.extname(entry.name))) {
       files.push(fullPath);
@@ -186,11 +193,75 @@ function auditPhantomTokens(semanticTokens, sourceFiles) {
   return phantoms;
 }
 
+// A web component ships in @agentica-ds/components without the site's CSS, so every
+// var(--agtc-*) it consumes must come from @agentica-ds/tokens — otherwise it resolves
+// to nothing for every consumer. The site hides this class of bug: it defines its own
+// --agtc-* variables (e.g. --agtc-shadow-md, issue 208) that look like tokens but are
+// not. Scoped to component source files (agtc-*.js, not stories): the site and docs
+// legitimately define their own variables. A var() with a fallback is allowed — the
+// component then works standalone (e.g. --agtc-icon-size, --agtc-header-height).
+const COMPONENT_FILE = /(^|[\\/])agtc-[\w-]+\.js$/;
+
+function auditUndefinedComponentVars(primitives, semantic, component, sourceFiles) {
+  section('5. Undefined custom properties in components (not in the token package, no fallback)');
+  const definedVars = new Set([
+    ...collectCssVarNames(primitives, '--agtc-'),
+    ...collectCssVarNames(semantic.semantic || semantic, TOKEN_PREFIXES.semantic),
+    ...collectCssVarNames(component, TOKEN_PREFIXES.component),
+  ]);
+  const undefinedVars = [];
+  const varRegex = /var\(\s*(--agtc-[\w-]+)\s*([,)])/g;
+  for (const file of sourceFiles.filter(f => COMPONENT_FILE.test(f) && !f.includes('.stories.'))) {
+    const lines = fs.readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, i) => {
+      if (line.includes('audit-ignore')) return;
+      for (const match of line.matchAll(varRegex)) {
+        const [, cssVar, next] = match;
+        if (next === ')' && !definedVars.has(cssVar)) {
+          undefinedVars.push({ cssVar, file: path.relative(process.cwd(), file), line: i + 1 });
+        }
+      }
+    });
+  }
+
+  if (undefinedVars.length === 0) {
+    ok('Every custom property consumed by a component is a token or has a fallback');
+  } else {
+    undefinedVars.forEach(v => error(`Undefined in the token package: ${v.cssVar}  in  ${v.file}:${v.line}`));
+  }
+  return undefinedVars;
+}
+
+// Both modes must always offer the same options, adapted to each mode (human rule,
+// 2026-09-28). A shadow tuned for a light background nearly vanishes on a dark one, so
+// a shadow token that exists in light mode without a dark variant is a missing option,
+// not an inherited one. Deprecated tokens are skipped. Generalising this to every
+// theme-sensitive token (with an explicit "same in both modes" marker) is issue 212.
+function auditDarkShadowParity(semantic, semanticDark) {
+  section('6. Dark-mode shadow parity (every semantic.shadow.* has a dark variant)');
+  const light = (semantic.semantic || semantic).shadow || {};
+  const dark  = (semanticDark.semantic || semanticDark).shadow || {};
+  const active = extractTokenKeys(light).filter(key => {
+    const token = key.split('.').reduce((node, part) => node?.[part], light);
+    return !token.$deprecated;
+  });
+  const missing = active
+    .filter(key => key.split('.').reduce((node, part) => node?.[part], dark)?.$value === undefined)
+    .map(key => `semantic.shadow.${key}`);
+
+  if (missing.length === 0) {
+    ok(`Every semantic.shadow.* token has a dark variant (${active.length} checked, deprecated ones skipped)`);
+  } else {
+    missing.forEach(token => error(`No dark variant in semantic.dark.json: ${token}`));
+  }
+  return missing;
+}
+
 // Documented, human-approved fallback shapes where a literal color sits next to its
-// token reference on purpose — not drift. See .claude/rules/no-visited-nav.md (ADR-047/059
+// token reference on purpose — not drift. See governance/rules/no-visited-nav.md (ADR-047/059
 // Safari :visited exception), the var(--x, #fallback) CSS resilience pattern used
 // throughout site/build.js, and the vFill(token, fallback) Figma-plugin equivalent
-// (.claude/instructions/figma-components.md §0) — Figma Plugin API has no CSS var()
+// (governance/instructions/figma-components.md §0) — Figma Plugin API has no CSS var()
 // concept, so a resolved literal fallback next to the token name is the correct pattern.
 const COLOR_EXCEPTION_LINE = /vFill\(|var\(--[\w-]+\s*,\s*#|:visited\s*(,|\{)|\w*[Tt]ok:\s*["']|["'](color|component)\/[\w-]+["']/;
 
@@ -249,10 +320,11 @@ function auditHardcodedValues(sourceFiles) {
         // the icon('circle-x'|'x', …) helper (site/build.js's own DOs/DON'Ts
         // sections) instead of the literal emoji.
         if (/icon\(\s*['"](circle-x|x)['"]/.test(line)) return;
-        // The var(--x, fallback-color) CSS-resilience pattern is just as
-        // legitimate when x is a primitive reference as when the whole thing is
-        // a bare color — same site/build.js pattern, same reasoning either way.
-        if ((colorPatternNames.has(pattern.name) || pattern.name === 'primitive-direct') && COLOR_EXCEPTION_LINE.test(line)) return;
+        // COLOR_EXCEPTION_LINE covers literal-color shapes only. It deliberately
+        // does NOT apply to primitive-direct (Rule 4 of GOVERNANCE.md, ADR-098):
+        // a primitive reference with a literal-color fallback after it is still a
+        // primitive reference, and the fallback must never launder it.
+        if (colorPatternNames.has(pattern.name) && COLOR_EXCEPTION_LINE.test(line)) return;
         const matches = [...line.matchAll(new RegExp(pattern.regex.source, 'g'))];
         for (const match of matches) {
           violations.push({
@@ -336,6 +408,8 @@ function generateReport(results) {
     summary: {
       orphanedTokens:   results.orphaned.length,
       phantomTokens:    results.phantoms.length,
+      undefinedComponentVars: results.undefinedVars.length,
+      darkShadowGaps:   results.darkShadowGaps.length,
       hardcodedErrors:  results.violations.filter(v => v.severity === 'error').length,
       hardcodedWarnings:results.violations.filter(v => v.severity === 'warning').length,
       structureIssues:  results.structureIssues.length,
@@ -358,6 +432,7 @@ function main() {
   const primitives = loadTokens('primitives.json');
   const semantic   = loadTokens('semantic.json');
   const component  = loadTokens('component.json');
+  const semanticDark = loadTokens('semantic.dark.json');
 
   // Fetch the source files — priority: --src-dir > src/ > root
   const srcDir     = CONFIG.sourceDir || path.resolve(__dirname, '../src');
@@ -376,6 +451,10 @@ function main() {
     'packages/tokens/tailwind/',
     'packages/tokens/tokens/',
     'packages/components/',
+    // doc-generator output built fresh by playwright.config.js's webServer for
+    // the C5-06 accessibility spec (gitignored) — only ever skipped before by
+    // accident, via the 'dist' substring in its name.
+    'tests/functional/fixtures/doc-generator-dist/',
   ];
   // decisions/*.md cite historical hex values as part of explaining a past
   // decision (e.g. "teal.9 -> a resolved hex") — an ADR is immutable once active
@@ -394,12 +473,27 @@ function main() {
     'scripts/figma/',
     'docs/',
   ];
-  const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS];
+  // clone/personnalisation/branding/ is the Clone's primitive-token
+  // authoring layer (see clone/personnalisation/GUIDE.md) — a raw hex/rgb/hsl
+  // value there is correct by design, the same way tokens/primitives.json is
+  // (that file is never scanned here at all, since .json isn't in
+  // SOURCE_EXTENSIONS). This is a different reason than DOCS_AND_PLUGIN_PATHS
+  // above (that's narrative citation of a value; this is the primitive layer
+  // itself) — kept as its own list so the two don't get conflated. theme/ and
+  // core-source/ deliberately stay in scope: a semantic token must only ever
+  // reference a primitive (Rule 4 of GOVERNANCE.md), never a raw value.
+  const PRIMITIVE_LAYER_PATHS = [
+    'clone/personnalisation/branding/',
+  ];
+  const EXCLUDED_PATHS = [...GENERATED_PATHS, ...DOCS_AND_PLUGIN_PATHS, ...PRIMITIVE_LAYER_PATHS];
+  // No substring test on 'dist' here: dist/ directories are already skipped by
+  // exact basename in getSourceFiles(), while f.includes('dist') matched the
+  // absolute path — any file under distribution/, a *dist*.js name, or a clone
+  // living under e.g. ~/distrib/ silently escaped the whole audit.
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f =>
         !f.includes('node_modules') &&
-        !f.includes('dist') &&
         !EXCLUDED_PATHS.some(p => f.includes(p))
       );
 
@@ -408,12 +502,14 @@ function main() {
   // Run the audits
   const orphaned       = auditOrphanedTokens(component, sourceFiles);
   const phantoms       = auditPhantomTokens(semantic, sourceFiles);
+  const undefinedVars  = auditUndefinedComponentVars(primitives, semantic, component, sourceFiles);
+  const darkShadowGaps = auditDarkShadowParity(semantic, semanticDark);
   const violations     = auditHardcodedValues(sourceFiles);
   const structureIssues = auditTokenStructure(primitives, semantic, component);
 
   // Summary
   section('Summary');
-  const criticalCount = phantoms.length +
+  const criticalCount = phantoms.length + undefinedVars.length + darkShadowGaps.length +
     violations.filter(v => v.severity === 'error').length +
     structureIssues.length;
   const warnCount = orphaned.length +
@@ -429,13 +525,15 @@ function main() {
 
   // JSON report
   if (CONFIG.fixReport) {
-    generateReport({ orphaned, phantoms, violations, structureIssues });
+    generateReport({ orphaned, phantoms, undefinedVars, darkShadowGaps, violations, structureIssues });
   }
 
-  // CI mode — exit 1 on critical violations
+  // CI mode — exit 1 on critical violations. process.exitCode, not
+  // process.exit(): exit() can terminate before piped stdout is flushed,
+  // truncating the violation details in CI logs (issue 118).
   if (CONFIG.ciMode && criticalCount > 0) {
     log(`${RED}CI: failed — fix critical violations before merging.${RESET}\n`);
-    process.exit(1);
+    process.exitCode = 1;
   }
 }
 

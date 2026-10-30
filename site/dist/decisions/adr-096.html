@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="author" content="Guilherme Negreiros">
+<title>Semantic layout container-width tokens — Agentica</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agentica">
+<meta property="og:title" content="Semantic layout container-width tokens — Agentica">
+<meta property="og:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta property="og:image" content="https://agentica.design/social.png">
+<meta property="og:image:width" content="1076">
+<meta property="og:image:height" content="681">
+<meta property="og:url" content="https://agentica.design/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="agentica.design">
+<meta property="twitter:url" content="https://agentica.design/">
+<meta name="twitter:title" content="Semantic layout container-width tokens — Agentica">
+<meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
+<meta name="twitter:image" content="https://agentica.design/social.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<script>(function(){var t=localStorage.getItem('agtc-theme')||( window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../site.css">
+<script src="../components/agtc.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">
+  <span class="lang-fr">Aller au contenu</span>
+  <span class="lang-en">Skip to content</span>
+</a>
+<header class="site-header" role="banner" data-site-header>
+  <a class="brand" href="../index.html" aria-label="Agentica — Accueil">
+    <img src="../img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="163" fetchpriority="high">
+    <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="163" fetchpriority="high">
+  </a>
+  <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Navigation">
+    <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+    <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <line x1="5" y1="5" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="5" x2="5" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="site-nav" id="main-nav" aria-label="Navigation principale" data-main-nav>
+    <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+    <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+    <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+    <a href="../ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    <div class="docs-menu">
+      <a href="../documentation.html" class="docs-trigger" data-docs-trigger aria-expanded="false" aria-controls="docs-panel">
+        <span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span>
+      </a>
+      <div class="docs-panel" id="docs-panel" data-docs-panel hidden>
+        <div>
+          <h2><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></h2>
+          <a href="../pourquoi.html"><span class="lang-fr">Introduction</span><span class="lang-en">Introduction</span></a>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../ia.html"><span class="lang-fr">Contrôle humain</span><span class="lang-en">Human control</span></a>
+          <a href="../architecture.html"><span class="lang-fr">Source unique de vérité</span><span class="lang-en">Single source of truth</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></h2>
+          <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+          <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+          <a href="../tokens/index.html">Tokens</a>
+          <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+          <a href="../agents/index.html"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></a>
+          <a href="../pipelines/index.html">Pipelines</a>
+          <a href="../continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+        </div>
+        <div>
+          <h2><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></h2>
+          <a href="../resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+          <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer">Storybook</a>
+          <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../audit.html">Audit</a>
+          <a href="../changelog.html">Changelog</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-cta" href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+  </nav>
+  <div class="site-header-tools" aria-label="Liens rapides">
+    <button class="theme-toggle" aria-label="Basculer thème sombre / Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="agtc-segmented lang-switch lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-current="false">FR</button>
+      <button type="button" data-lang="en" aria-current="true">EN</button>
+    </div>
+    <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer" class="storybook-btn" aria-label="Storybook — Catalogue interactif des composants">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.34.24l-.12 2.71a.18.18 0 0 0 .29.15l1.06-.8.9.7a.18.18 0 0 0 .28-.14L18.65.1l1.33-.1a1.2 1.2 0 0 1 1.28 1.2v21.6A1.2 1.2 0 0 1 20 24l-16.1-.72a1.2 1.2 0 0 1-1.15-1.16L2 2.32a1.2 1.2 0 0 1 1.13-1.27l13.2-.83.01.02zM13.27 9.3c0 .47 3.16.24 3.59-.08 0-3.2-1.72-4.89-4.86-4.89-3.15 0-4.9 1.72-4.9 4.29 0 4.45 6 4.53 6 6.96 0 .7-.32 1.1-1.05 1.1-.96 0-1.35-.49-1.3-2.16 0-.36-3.65-.48-3.77 0-.27 4.03 2.23 5.2 5.1 5.2 2.79 0 4.97-1.49 4.97-4.18 0-4.77-6.1-4.64-6.1-7 0-.97.72-1.1 1.13-1.1.45 0 1.25.07 1.19 1.87z"/></svg>
+    </a>
+    <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub — Code source du projet">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    </a>
+    <a href="https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system" target="_blank" rel="noopener noreferrer" class="figma-btn" aria-label="Figma — Librairie Agentica sur Figma Community">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>
+    </a>
+  </div>
+</header>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="layout" id="main-content">
+  <aside class="sidebar" id="site-sidebar" role="navigation" aria-label="Secondary navigation / Navigation secondaire"><div class="sidebar-group"><span class="sidebar-label"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></span><a href="index.html"><span class="lang-fr">Index des ADRs</span><span class="lang-en">ADR index</span></a><a href="adr-001.html">ADR-001</a><a href="adr-002.html">ADR-002</a><a href="adr-003.html">ADR-003</a><a href="adr-004.html">ADR-004</a><a href="adr-005.html">ADR-005</a><a href="adr-006.html">ADR-006</a><a href="adr-007.html">ADR-007</a><a href="adr-008.html">ADR-008</a><a href="adr-009.html">ADR-009</a><a href="adr-010.html">ADR-010</a><a href="adr-011.html">ADR-011</a><a href="adr-012.html">ADR-012</a><a href="adr-013.html">ADR-013</a><a href="adr-014.html">ADR-014</a><a href="adr-015.html">ADR-015</a><a href="adr-016.html">ADR-016</a><a href="adr-017.html">ADR-017</a><a href="adr-018.html">ADR-018</a><a href="adr-019.html">ADR-019</a><a href="adr-020.html">ADR-020</a><a href="adr-021.html">ADR-021</a><a href="adr-022.html">ADR-022</a><a href="adr-023.html">ADR-023</a><a href="adr-024.html">ADR-024</a><a href="adr-025.html">ADR-025</a><a href="adr-026.html">ADR-026</a><a href="adr-027.html">ADR-027</a><a href="adr-028.html">ADR-028</a><a href="adr-029.html">ADR-029</a><a href="adr-030.html">ADR-030</a><a href="adr-031.html">ADR-031</a><a href="adr-032.html">ADR-032</a><a href="adr-033.html">ADR-033</a><a href="adr-034.html">ADR-034</a><a href="adr-035.html">ADR-035</a><a href="adr-036.html">ADR-036</a><a href="adr-037.html">ADR-037</a><a href="adr-038.html">ADR-038</a><a href="adr-039.html">ADR-039</a><a href="adr-040.html">ADR-040</a><a href="adr-041.html">ADR-041</a><a href="adr-042.html">ADR-042</a><a href="adr-043.html">ADR-043</a><a href="adr-044.html">ADR-044</a><a href="adr-045.html">ADR-045</a><a href="adr-046.html">ADR-046</a><a href="adr-047.html">ADR-047</a><a href="adr-048.html">ADR-048</a><a href="adr-049.html">ADR-049</a><a href="adr-050.html">ADR-050</a><a href="adr-051.html">ADR-051</a><a href="adr-052.html">ADR-052</a><a href="adr-053.html">ADR-053</a><a href="adr-054.html">ADR-054</a><a href="adr-055.html">ADR-055</a><a href="adr-056.html">ADR-056</a><a href="adr-057.html">ADR-057</a><a href="adr-058.html">ADR-058</a><a href="adr-059.html">ADR-059</a><a href="adr-060.html">ADR-060</a><a href="adr-061.html">ADR-061</a><a href="adr-062.html">ADR-062</a><a href="adr-063.html">ADR-063</a><a href="adr-064.html">ADR-064</a><a href="adr-065.html">ADR-065</a><a href="adr-066.html">ADR-066</a><a href="adr-067.html">ADR-067</a><a href="adr-068.html">ADR-068</a><a href="adr-069.html">ADR-069</a><a href="adr-070.html">ADR-070</a><a href="adr-071.html">ADR-071</a><a href="adr-072.html">ADR-072</a><a href="adr-073.html">ADR-073</a><a href="adr-074.html">ADR-074</a><a href="adr-075.html">ADR-075</a><a href="adr-076.html">ADR-076</a><a href="adr-077.html">ADR-077</a><a href="adr-078.html">ADR-078</a><a href="adr-079.html">ADR-079</a><a href="adr-080.html">ADR-080</a><a href="adr-081.html">ADR-081</a><a href="adr-082.html">ADR-082</a><a href="adr-083.html">ADR-083</a><a href="adr-084.html">ADR-084</a><a href="adr-085.html">ADR-085</a><a href="adr-086.html">ADR-086</a><a href="adr-087.html">ADR-087</a><a href="adr-088.html">ADR-088</a><a href="adr-089.html">ADR-089</a><a href="adr-090.html">ADR-090</a><a href="adr-091.html">ADR-091</a><a href="adr-092.html">ADR-092</a><a href="adr-093.html">ADR-093</a><a href="adr-094.html">ADR-094</a><a href="adr-095.html">ADR-095</a><a href="adr-096.html">ADR-096</a><a href="adr-097.html">ADR-097</a><a href="adr-098.html">ADR-098</a><a href="adr-099.html">ADR-099</a><a href="adr-100.html">ADR-100</a><a href="adr-101.html">ADR-101</a><a href="adr-102.html">ADR-102</a><a href="adr-103.html">ADR-103</a><a href="adr-104.html">ADR-104</a><a href="adr-105.html">ADR-105</a><a href="adr-106.html">ADR-106</a></div></aside>
+  <main class="content" role="main"><button class="sidebar-toggle" aria-label="Secondary navigation / Navigation secondaire" aria-expanded="false" aria-controls="site-sidebar" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg><span class="sidebar-toggle-label"><span class="lang-fr">Navigation</span><span class="lang-en">Navigation</span></span></button>
+<div class="adr-header">
+  <div class="adr-header-eyebrow">
+    <code class="adr-number">ADR-096</code>
+    <agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge>
+    <span class="adr-type">contract</span>
+  </div>
+  <h1 class="adr-page-title">Semantic layout container-width tokens</h1>
+  <dl class="adr-meta">
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
+      <dd>2026-09-11</dd>
+    </div>
+    <div class="adr-meta-item">
+      <dt><span class="lang-fr">Décideurs</span><span class="lang-en">Decision makers</span></dt>
+      <dd>Guilherme Negreiros — Design System Lead</dd>
+    </div>
+  </dl>
+</div><h2>Context</h2>
+<p>This gap surfaced during a real AI-interoperability test: running GitHub Copilot against <code>Agentica-Copilot</code>, a clone of this repo, to build a standalone <code>demo/</code> page. Copilot needed a page container max-width and asked — correctly, per <code>AGENTS.md</code>'s escalation rule for any change touching a semantic token — whether to reuse <code>semantic.size.control.max-width</code> (480px). That token's contract (ADR-094) restricts it explicitly to <code>agtc-input</code>'s field wrapper; reusing it for a page container would have been a coincidental-value reuse, not a shared intent, and was rejected for that reason.</p>
+<p>Investigating to give Copilot a real answer found that <strong>no <code>semantic.layout</code> category exists at all</strong> — <code>tokens/semantic.json</code> has <code>color, shadow, space, size, radius, fontWeight, typography, icon, marketing</code>, nothing for page/section container widths. What exists in <code>site/build.js</code> instead is an inconsistent mix:</p>
+<ul><li>One real CSS extension token (<code>--agtc-content-max: 1180px</code>, ADR-058) for marketing sections —</li></ul>
+<p>  the one part of this that was already done right, just never promoted past extension-token   status.</p>
+<ul><li>One hardcoded constant (<code>960px</code> on <code>.content</code>) for documentation pages, carrying a documented</li></ul>
+<p>  <code>audit-ignore</code> exception per <code>governance/rules/layout-pattern.md</code>.</p>
+<ul><li>A cluster of raw, duplicated inline <code>max-width</code> values with no token at all: <code>600px</code>, <code>700px</code>,</li></ul>
+<p>  <code>720px</code>, <code>760px</code> (×2), <code>780px</code>, repeated across ~15 call sites in generated HTML.</p>
+<p>Before drafting this ADR, that last cluster was audited page-by-page (not just counted) to separate real, repeated intent from copy-paste drift — see commit <code>3fc935c7</code> (<code>chore(site): remove dead .rd-cta-inner CSS, align outlier max-widths to 700px</code>):</p>
+<ul><li><code>.rd-cta-inner</code> (720px) was dead CSS — defined, never referenced by any generated page — from</li></ul>
+<p>  the <code>Redesign/</code> mockup (ADR-058). Deleted.</p>
+<ul><li><code>.section-heading</code> (760px, one live use) and a one-off <code>resources.html</code> banner (760px inline,</li></ul>
+<p>  no evidence of a distinct intent) were both folded into <code>700px</code> — the value already used   identically at 7 other call sites for the same visual role (intro/hero copy block).</p>
+<p>What's left after that cleanup is two clean, internally consistent, already-repeated patterns (<code>600px</code> ×6, <code>700px</code> ×9) plus the two pre-existing values above (<code>960px</code> ×1, <code>1180px</code> ×7) plus one more real, undeduplicated pattern (<code>1280px</code> ×2, wide marketing sections). Five real values, each with a distinct, evidenced role — not five arbitrary numbers.</p>
+<p>Breakpoints (<code>@media(max-width:768px)</code> etc.) are a separate, larger, currently fully-ungoverned problem — out of scope here, see Consequences.</p>
+<h2>Decision</h2>
+<p>Add a new top-level semantic category, <code>semantic.layout</code>, with five tokens under <code>semantic.layout.container</code>:</p>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Token</th><th>Value</th><th>Role</th><th>Current call sites</th></tr></thead><tbody><tr><td><code>layout.container.cta</code></td><td>600px</td><td>Closing CTA block, centered (<code>.shell.section-final</code>)</td><td>6</td></tr><tr><td><code>layout.container.intro</code></td><td>700px</td><td>Hero/intro copy block (<code>.shell &gt; .copy</code>, <code>.section-heading</code>)</td><td>9</td></tr><tr><td><code>layout.container.docs</code></td><td>960px</td><td>Documentation page content (<code>.content</code>)</td><td>1</td></tr><tr><td><code>layout.container.default</code></td><td>1180px</td><td>Standard marketing section (promotes <code>--agtc-content-max</code>)</td><td>7</td></tr><tr><td><code>layout.container.wide</code></td><td>1280px</td><td>Wide/cinematic marketing sections (<code>.rd-inner</code>, <code>.rd-cinematic-inner</code>)</td><td>2</td></tr></tbody></table></div>
+<h3>Not aliased to <code>primitive.space.*</code></h3>
+<p>Unlike ADR-094's control-width tokens (which alias <code>primitive.space.120</code>/<code>.160</code>), these five values are declared as <strong>literal semantic values</strong>, not backed by new primitives. Reaching these numbers via the primitive space scale would require five new one-off primitives (<code>space.150</code>, <code>.175</code>, <code>.240</code>, <code>.295</code>, <code>.320</code> — pure <code>value ÷ 4</code> labels with no relation to the scale's existing progression). <code>primitive.space</code> represents a spacing/gap scale consumed at component and layout-gap granularity; a page's container width is a different design concern that only coincidentally shares a pixel unit with spacing. This follows the same precedent already used elsewhere in <code>tokens/semantic.json</code> for values with no meaningful primitive step (e.g. the marketing card border at 6% white opacity, documented as "a literal value not aliased to a primitive — the white scale stops at white.12 (18%), no step exists at 6%").</p>
+<h3><code>--agtc-content-max</code> migration</h3>
+<p><code>--agtc-content-max</code> (the ADR-058 extension token) is kept as a thin alias — <code>--agtc-content-max: var(--agtc-semantic-layout-container-default)</code> — rather than rewritten at its 7 call sites. This avoids a wide, purely-cosmetic diff across <code>site/build.js</code> for no behavior change; new code should reference the semantic variable directly, and the alias can be removed once no call site still references the old name.</p>
+<h2>Rejected alternatives</h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th>Alternative</th><th>Reason for rejection</th></tr></thead><tbody><tr><td>Reuse <code>semantic.size.control.max-width</code> for the page container</td><td>The actual incident that triggered this ADR — contract violation (ADR-094 scopes it to <code>agtc-input</code>'s field wrapper only); two values that happen to be close in magnitude are not a shared intent.</td></tr><tr><td>No max-width constraint on page-level content</td><td>Not a governance-neutral choice — an unconstrained container is a real readability regression (unbounded line length), not a way to dodge the token question.</td></tr><tr><td>Alias the five values to new <code>primitive.space.*</code> entries</td><td>Conflates the spacing scale with a page-layout-container scale; the derived primitive names (150/175/240/295/320) don't correspond to any meaningful step in the existing progression, unlike ADR-094's 120/160 which at least remained in a component-sizing context.</td></tr><tr><td>Wait for a full breakpoints/grid token system before tokenizing container widths</td><td>Breakpoints are a separate, larger, currently fully-ungoverned area (raw, inconsistent <code>@media</code> values throughout <code>site/build.js</code>) — real future work, but blocking a scoped, already-deduplicated fix on it serves no one.</td></tr></tbody></table></div>
+<h2>Consequences</h2>
+<ul><li>First new top-level <code>semantic</code> category since <code>marketing</code> (ADR-057).</li><li>Implemented in the same session: <code>tokens/semantic.json</code> carries the 5 tokens above; all 25</li></ul>
+<p>  <code>site/build.js</code> call sites now reference <code>var(--agtc-semantic-layout-container-*)</code>;   <code>--agtc-content-max</code> is a thin alias (<code>var(--agtc-semantic-layout-container-default, 1180px)</code>)   rather than a rewrite of its 7 sites. <code>npm run tokens</code> + <code>npm run build</code> (site) verified: 148   pages, 0 WCAG violation, 0 warning; <code>node scripts/audit-tokens.js</code> verified: no hardcoded   values, no phantom tokens, structure consistent (the pre-existing <code>button.ghost.border</code>   orphaned-token warning is unrelated to this change).</p>
+<ul><li>Governance: adding 5 semantic tokens — Design System Lead approval (this ADR), per</li></ul>
+<p>  <code>governance/rules/tokens-system.md</code>. No new primitives are added, so the Principal Designer   primitive-approval tier is not triggered.</p>
+<ul><li>Breakpoints remain unaddressed and fully ungoverned — flagged here as a distinct, separate</li></ul>
+<p>  future decision, not folded into this one.</p>
+<ul><li>Once implemented, this closes the actual gap the Copilot interoperability test surfaced: a</li></ul>
+<p>  page built against Agentica (by a human, or by any AI tool reading <code>tokens/semantic.json</code>) has   a real, documented answer for "how wide should my content container be," instead of guessing   or reusing an unrelated component token.</p><div style="display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--agtc-semantic-color-border-default)">
+    <a href="adr-095.html" class="agtc-button secondary">← ADR-095</a>
+    <a href="adr-097.html" class="agtc-button secondary">ADR-097 →</a>
+  </div></main>
+  <nav class="toc" id="page-toc" aria-label="Table of contents / Table des matières"></nav>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <a class="brand" href="../index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
+        <img src="../img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="192" loading="lazy">
+        <img src="../img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="192" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        Guilherme Negreiros
+      </a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Navigation</span>
+      <a href="../index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+      <a href="../pourquoi.html"><span class="lang-fr">Pourquoi</span><span class="lang-en">Why</span></a>
+      <a href="../architecture.html"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></a>
+      <a href="../qualite.html"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></a>
+      <a href="../ia.html"><span class="lang-fr">IA</span><span class="lang-en">AI</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Documentation</span>
+      <a href="../pourquoi.html"><span class="lang-fr">Comprendre</span><span class="lang-en">Understand</span></a>
+      <a href="../get-started.html"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></a>
+      <a href="../foundations/index.html"><span class="lang-fr">Fondations</span><span class="lang-en">Foundations</span></a>
+      <a href="../components/index.html"><span class="lang-fr">Composants</span><span class="lang-en">Components</span></a>
+      <a href="../tokens/index.html">Tokens</a>
+      <a href="../decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
+      <a href="../continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-heading">Explorer</span>
+      <a href="../resources.html"><span class="lang-fr">Librairie Figma</span><span class="lang-en">Figma library</span></a>
+      <a href="https://agentica.design/storybook/" target="_blank" rel="noopener noreferrer">Storybook</a>
+      <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="../audit.html">Audit</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="../ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Guilherme Negreiros</span>
+    <span><span class="lang-fr">Construit avec Claude Code.</span><span class="lang-en">Built with Claude Code.</span></span>
+  </div>
+</footer>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+  <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
+</button>
+<script src="../site.js"></script>
+</body>
+
+</html>

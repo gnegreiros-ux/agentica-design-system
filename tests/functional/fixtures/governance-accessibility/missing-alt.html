@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>C2-01 fixture — missing alt text</title>
+</head>
+<body>
+  <main>
+    <h1>C2-01 — Rule 1 violation: meaningful image without alt text</h1>
+    <!-- Deliberate violation: WCAG 1.1.1 requires alt text on meaningful
+         visual content. This <img> has none, on purpose — the one thing
+         this fixture exists to violate. Never served as part of the
+         production site build (site/dist/); served in isolation on its own
+         port, see playwright.config.js. -->
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7" />
+  </main>
+</body>
+</html>

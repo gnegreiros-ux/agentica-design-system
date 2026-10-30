@@ -29,7 +29,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # npm install (not npm ci): aligned with the Chromatic workflow — the root
+        # npm install (not npm ci): aligned with the other workflows — the root
         # lockfile is cross-platform and npm install reconciles the Linux binaries.
         run: npm install --no-audit --no-fund
 

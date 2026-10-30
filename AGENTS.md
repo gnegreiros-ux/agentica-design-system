@@ -6,7 +6,7 @@
 > **Logical path:** AGENTS.md
 > **Author:** Guilherme Negreiros
 > **Read before:** DESIGN.md
-> **Relations:** DESIGN.md, .claude/rules/project-overview.md, .claude/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
+> **Relations:** DESIGN.md, governance/rules/project-overview.md, governance/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
 
@@ -60,15 +60,17 @@ The orchestrator coordinates the agents. It decides:
 ## Files to read before any action
 
 ```
-DESIGN.md                              ← portable contract — always read first
-.claude/rules/project-overview.md      ← project context
-.claude/rules/tokens-system.md         ← token rules
-.claude/rules/ux-patterns-sources.md   ← sources + UX pattern review (before any component)
-.claude/rules/figma-components.md      ← Figma rules (properties, auto-layout, naming, API)
-.claude/instructions/codebase-context.md ← technical context
-.claude/instructions/session-spec.md   ← condensed spec for this session
-tokens/semantic.json                   ← source of truth for UX intentions
-decisions/                             ← why decisions were made (ADRs)
+DESIGN.md                                    ← portable contract — always read first
+governance/rules/project-overview.md         ← project context
+governance/rules/tokens-system.md            ← token rules
+governance/rules/ux-patterns-sources.md      ← sources + UX pattern review (before any component)
+governance/rules/figma-components.md         ← Figma rules (properties, auto-layout, naming, API)
+governance/instructions/codebase-context.md  ← technical context
+governance/instructions/verification-standards.md ← how to verify and report your own work
+governance/instructions/session-spec.md      ← condensed spec for this session
+governance/ai-skills-reference.md            ← for non-Claude tools: what .claude/skills/ automates and how to reproduce it
+tokens/semantic.json                         ← source of truth for UX intentions
+decisions/                                   ← why decisions were made (ADRs)
 ```
 
 ---
@@ -81,6 +83,7 @@ decisions/                             ← why decisions were made (ADRs)
 - ❌ Deploy to production without human validation
 - ❌ Ignore an accessibility violation report
 - ❌ Bypass lint rules
+- ❌ Add a token field outside the annotation schema of ADR-102 — descriptions go in `$description`; team data goes in `$extensions["com.agentica.usage"]` (how to use a token) or `$extensions["com.agentica.governance"]` (contract of a file or component); never a new `$`-prefixed key
 
 ---
 
@@ -90,7 +93,7 @@ decisions/                             ← why decisions were made (ADRs)
 
 Task tracking (statuses, backlog, priorities, dependencies) lives exclusively in
 [GitHub Projects](https://github.com/users/gnegreiros-ux/projects/1) — never in a
-versioned file in the repo. See `.claude/rules/project-overview.md` (ADR-069).
+versioned file in the repo. See `governance/rules/project-overview.md` (ADR-069).
 
 ### Architectural decisions (ADR)
 
@@ -102,4 +105,23 @@ to create a new one.
 ### Domain context
 
 No `CONTEXT.md` at the root — domain context lives in `DESIGN.md` (portable brand
-contract), `guidelines/` (foundations and components), and the `.claude/rules/` rules.
+contract), `guidelines/` (foundations and components), and the `governance/rules/` rules.
+
+### Using a non-Claude AI tool
+
+If you're Codex CLI or GitHub Copilot: `.agents/skills/` already has working ports of
+Agentica's 7 core skills (open Agent Skills format — load them the way you normally
+load project skills, no setup needed). If you're Gemini CLI: `.gemini/settings.json` +
+`.gemini/hooks/*.js` already reproduce the ADR-trigger and UX-pattern-review reminder
+hooks natively.
+
+Read `governance/ai-skills-reference.md` for what all of `.claude/skills/` automates —
+including the pipeline checklists that aren't ported anywhere yet — and how to
+reproduce a control your tool doesn't have a working port for. If you're the first to
+wire this repo up for a tool that doesn't already have a `governance/tool-parity/*.md`
+file (check that directory first), you must add one (copy `governance/tool-parity/
+TEMPLATE.md`) recording, for every mandatory control, either how it's replaced or why
+its absence is accepted. `scripts/check-tool-parity.js` (CI: `.github/workflows/
+tool-parity.yml`) fails until that file exists and every row is signed off — it will
+not tell you the tool works correctly, only that a human made the call instead of the
+gap going unnoticed.

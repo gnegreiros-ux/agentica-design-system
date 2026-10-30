@@ -248,6 +248,11 @@
           "$type": "color",
           "$intent": "Card, panel, modal background"
         },
+        "surface-raised": {
+          "$value": "{primitive.color.neutral.0}",
+          "$type": "color",
+          "$description": "Raised surface — dropdown menus, popovers, mobile nav panel. Pairs with shadow.raised. Same white as surface in light mode; one step lighter than surface in dark mode, where a shadow alone barely shows (elevated surfaces get lighter — Atlassian, Apple HIG, Carbon). See issue #210."
+        },
         "subtle": {
           "$value": "{primitive.color.gray.3}",
           "$type": "color",
@@ -734,7 +739,8 @@
       "card-hover": {
         "$value": "0 4px 16px rgba(13,116,206,0.10)",
         "$type": "other",
-        "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)"
+        "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)",
+        "$deprecated": "Never consumed; tinted with the pre-ADR-048 blue rgba(13,116,206), not the current teal. Use component.card.elevated.shadow. Decided in issue #206; removal only at a major version (issue #209)."
       },
       "card": {
         "$value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)",
@@ -1326,7 +1332,7 @@
     },
     "marketing": {
       "_readme": {
-        "$value": "Tokens reserved for the Narrative Marketing context (data-context=marketing). See .claude/rules/contexts-utilisation.md and ADR-057.",
+        "$value": "Tokens reserved for the Narrative Marketing context (data-context=marketing). See governance/rules/contexts-utilisation.md and ADR-057.",
         "$type": "other"
       },
       "typography": {
@@ -1372,6 +1378,94 @@
           "$value": "{primitive.space.30}",
           "$type": "dimension",
           "$intent": "120px — Vertical spacing of the marketing hero block. Never in a Product context."
+        }
+      }
+    },
+    "layout": {
+      "_readme": {
+        "$value": "Page/section container max-widths. Distinct from size.control.max-width (component-level, form-control width — ADR-094): these tokens govern page layout, never a single control. Literal values, not aliased to primitive.space — see ADR-096.",
+        "$type": "other"
+      },
+      "container": {
+        "cta": {
+          "$value": "600px",
+          "$type": "dimension",
+          "$intent": "Closing CTA block width, centered — narrower than the page's default reading column to focus attention on the call to action.",
+          "$description": "600px. Not aliased to a primitive (ADR-096). Matches the value already used identically across every marketing page's closing section before this token existed.",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-cta",
+              "use": ["Closing CTA section, centered (.shell.section-final)"],
+              "doNotUse": "Component width — use size.control.max-width for form controls, not this token.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "intro": {
+          "$value": "700px",
+          "$type": "dimension",
+          "$intent": "Hero/intro copy block width — the page's opening text column.",
+          "$description": "700px. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-intro",
+              "use": ["Hero/intro copy block (.shell > .copy, .section-heading)"],
+              "doNotUse": "Component width — use size.control.max-width for form controls, not this token.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "docs": {
+          "$value": "960px",
+          "$type": "dimension",
+          "$intent": "Documentation page content width.",
+          "$description": "960px. Promotes the previously hardcoded, audit-exempted constant documented in governance/rules/layout-pattern.md. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-docs",
+              "use": ["Documentation page main content (.content)"],
+              "doNotUse": "Marketing pages — use layout.container.default or .wide instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "default": {
+          "$value": "1180px",
+          "$type": "dimension",
+          "$intent": "Standard marketing section container width.",
+          "$description": "1180px. Promotes the CSS extension token --agtc-content-max (ADR-058), which becomes an alias of this token. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-default",
+              "use": ["Standard marketing section container (.home-section, .hero-inner, .shell)"],
+              "doNotUse": "Wide/cinematic sections — use layout.container.wide instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
+        },
+        "wide": {
+          "$value": "1280px",
+          "$type": "dimension",
+          "$intent": "Wide/cinematic marketing section container width.",
+          "$description": "1280px. Not aliased to a primitive (ADR-096).",
+          "$deprecated": false,
+          "$extensions": {
+            "com.agentica.usage": {
+              "role": "layout-container-wide",
+              "use": ["Wide/cinematic marketing sections (.rd-inner, .rd-cinematic-inner)"],
+              "doNotUse": "Standard sections — use layout.container.default instead.",
+              "components": [],
+              "decision": "ADR-096"
+            }
+          }
         }
       }
     }

@@ -1,38 +1,45 @@
 # Pipeline: playwright
 
-> E2E tests for critical journeys on the documentation site.
-> **Status:** 🔜 Planned — non-blocking until activated
-> **Trigger:** any change in `site/build.js`, `components/`
+> Visual regression, functional and accessibility tests (ADR-066, ADR-104).
+> **Status:** ✅ Active — `.github/workflows/playwright.yml`
+> **Trigger:** any change in `components/`, `tokens/`, `.storybook/`, `site/`
 
 ---
 
-## Objective
+## What runs, and when
 
-Once activated, this pipeline:
-1. Runs E2E tests on the deployed site (or locally)
-2. Validates critical journeys (navigation, FR/EN switch, token explorer)
-3. Integrates the axe-core audit per page
+| Suite | Scope | When |
+|---|---|---|
+| `tests/visual/` | Site pages (home, docs, component pages), light + dark; **every Storybook story**, light + dark (`tests/visual/storybook/`, ADR-104 — replaces Chromatic) | Push to `main` (Chromium only) |
+| `tests/functional/` | Navigation, sidebar, language, component interactions, accessibility | Push to `main` (Chromium, Firefox, WebKit) |
+| `tests/governance/` + accessibility specs | Governance suite | Every PR — required check `Governance & accessibility fixtures (PR gate)` (ADR-101) |
 
----
+Reference PNGs live in `tests/visual/snapshots/`. Report:
+https://designsystem.gnegreiros.com/playwright-report/
 
-## Command (future)
+## Before committing a visual change
+
+A change to `components/`, `tokens/`, `.storybook/` or the site's look will change
+reference snapshots. Flag it in the impact report:
+
+- [ ] Snapshots expected to change — listed
+- [ ] After merge (or on the PR branch): regenerate via CI, never locally (macOS rendering
+      ≠ Linux CI):
 
 ```bash
-npx playwright test
+gh workflow run playwright.yml --ref <branch> -f update_snapshots=true
 ```
 
-## Critical journeys to cover
+- [ ] Download the `snapshots-updated-chromium` artifact, diff it against the committed
+      snapshots, and commit only the files expected to change — human approval required
+      (ADR-004, ADR-066).
 
-- [ ] Main navigation — all links functional
-- [ ] FR ↔ EN switch — content changes correctly
-- [ ] Token explorer filter — consistent results
-- [ ] Skip-link button — focus lands on `#main-content`
-- [ ] Every component — hover, focus, disabled states keyboard-accessible
+## Running locally (checks only, never to produce baselines)
 
-## Activation
+```bash
+node site/build.js && npm run build-storybook
+npx playwright test --project=chromium
+```
 
-1. `npm install @playwright/test`
-2. `npx playwright install`
-3. Create `tests/` with the specs
-4. Change the status to `✅ Active`
-5. Reference ADR-010
+`tests/visual/storybook/` needs `storybook-static/` (built by `npm run build-storybook`);
+without it, that suite is skipped locally and fails in CI.

@@ -8,9 +8,9 @@
 > **Type:** instruction
 > **Logical path:** How-to-without-agents.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/project-overview.md
-> **Relations:** How-to-devs.md, How-to-designers.md, .claude/rules/post-change-pipeline.md,
-> .claude/rules/figma-library-governance.md, .claude/rules/tokens-system.md,
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** How-to-devs.md, How-to-designers.md, governance/rules/post-change-pipeline.md,
+> governance/rules/figma-library-governance.md, governance/rules/tokens-system.md,
 > scripts/continuity/
 
 ---
@@ -38,7 +38,7 @@
 ## 1.0 Resilience already in place (nothing to build under pressure)
 
 Tokens (`tokens/*.json`), contracts (`guidelines/components/*.md`), rules
-(`.claude/rules/*.md`), and component code (`components/agtc-*.js`) are already
+(`governance/rules/*.md`), and component code (`components/agtc-*.js`) are already
 **flat files versioned in Git** — not locked inside a tool or an AI session.
 Nothing to export or back up urgently: the source of truth has always been the repo,
 never a conversation history with an agent.
@@ -59,12 +59,11 @@ never a conversation history with an agent.
 | English-only content audit | `npm run lang-audit` |
 | Accessibility audit | `npm run axe` |
 | Visual/E2E tests | `npx playwright test --project=chromium` |
-| Chromatic tests | `npm run chromatic` |
 
 These commands already ran without an agent being strictly necessary — an agent
 ran them for convenience; a human runs them identically.
 
-### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate.md`)
+### 1.2 Manual quality gate (replaces `.claude/skills/quality-gate/SKILL.md`)
 
 **Script:** `scripts/continuity/1-2-manual-quality-gate.sh`
 
@@ -173,7 +172,7 @@ written for humans).
 
 ## 3. Out of scope
 
-`.claude/rules/contexts-utilisation.md` and `.claude/rules/layout-pattern.md` govern
+`governance/rules/contexts-utilisation.md` and `governance/rules/layout-pattern.md` govern
 only `site/build.js` (the Agentica showcase site itself) — not relevant for an
 external consumer, do not duplicate in the product section.
 

@@ -26,6 +26,7 @@ export default {
     "agtc-color-feedback-warning-text": "var(--agtc-semantic-color-feedback-warning-text)",
     "agtc-color-background-page": "var(--agtc-semantic-color-background-page)",
     "agtc-color-background-surface": "var(--agtc-semantic-color-background-surface)",
+    "agtc-color-background-surface-raised": "var(--agtc-semantic-color-background-surface-raised)",
     "agtc-color-background-subtle": "var(--agtc-semantic-color-background-subtle)",
     "agtc-color-background-hover": "var(--agtc-semantic-color-background-hover)",
     "agtc-color-background-inverse": "var(--agtc-semantic-color-background-inverse)",

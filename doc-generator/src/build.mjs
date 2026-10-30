@@ -1,0 +1,89 @@
+// Generates a static documentation site from a manifest already validated
+// by readManifest(). This function has no branching on where the manifest
+// came from — a Clone-produced instance and a Master-Skill-produced
+// instance are read and rendered identically.
+
+import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { readManifest } from './manifest.mjs';
+import { renderPage, escapeHtml } from './templates.mjs';
+
+function readIfExists(path) {
+  if (!path || !existsSync(path)) return null;
+  return readFileSync(path, 'utf8');
+}
+
+// ADR-100: the badge renders a recorded verdict, never the badgeEnabled flag.
+// badgeEnabled only decides whether a compliance line is shown at all.
+function complianceLine({ badgeEnabled, lastResult }) {
+  if (!badgeEnabled) return 'Compliance badge: disabled';
+  if (!lastResult) return 'Compliance: <strong>not verified</strong> — no audit result recorded';
+  const { passed, violationCount, ranAt, engine } = lastResult;
+  const verdict = passed ? 'passed' : 'failed';
+  const count = `${violationCount} violation${violationCount === 1 ? '' : 's'}`;
+  return `Compliance: <strong>${verdict}</strong> — ${count}, audited <time datetime="${escapeHtml(ranAt)}">${escapeHtml(ranAt)}</time> with <code>${escapeHtml(engine)}</code>`;
+}
+
+export function generateSite({ manifestPath, outDir }) {
+  const manifest = readManifest(manifestPath);
+  const manifestDir = dirname(resolve(manifestPath));
+  const resolveFromManifest = (relativePath) => resolve(manifestDir, relativePath);
+
+  const governanceContent = readIfExists(resolveFromManifest(manifest.governance));
+  const siteConfigRaw = readIfExists(resolveFromManifest(manifest.site));
+  let siteConfig = {};
+  if (siteConfigRaw) {
+    try {
+      siteConfig = JSON.parse(siteConfigRaw);
+    } catch (error) {
+      // Name the manifest field and both files: the raw JSON.parse message
+      // only gave a position, never which manifest or field was at fault.
+      throw new Error(
+        `Manifest field "site" in ${resolve(manifestPath)} points to ${resolveFromManifest(manifest.site)}, which is not valid JSON: ${error.message}`
+      );
+    }
+  }
+  const siteTitle = siteConfig.siteTitle ?? 'Design System';
+
+  mkdirSync(outDir, { recursive: true });
+
+  writeFileSync(
+    resolve(outDir, 'index.html'),
+    renderPage({
+      title: siteTitle,
+      body: `
+<h1>${escapeHtml(siteTitle)}</h1>
+<nav>${(siteConfig.navigation ?? []).map((item) => `<a href="#">${escapeHtml(item)}</a>`).join(' &middot; ')}</nav>
+<section>
+  <h2>Governance</h2>
+  <p>Source: <code>${escapeHtml(manifest.governance)}</code>${governanceContent ? ' — <a href="governance.html">view</a>' : ' (not found at build time)'}</p>
+</section>
+<section>
+  <h2>Tokens</h2>
+  <ul>
+    <li>Primitive: <code>${escapeHtml(manifest.tokens.primitive)}</code></li>
+    <li>Semantic: <code>${escapeHtml(manifest.tokens.semantic)}</code></li>
+    <li>Component: <code>${escapeHtml(manifest.tokens.component)}</code></li>
+  </ul>
+</section>
+<section>
+  <h2>Components</h2>
+  <p>Source: <code>${escapeHtml(manifest.components)}</code></p>
+</section>
+<section>
+  <h2>Audit</h2>
+  <p>Engine: <code>${escapeHtml(manifest.audit.engine)}</code> — ${complianceLine(manifest.audit)}</p>
+</section>
+`.trim(),
+    })
+  );
+
+  if (governanceContent) {
+    writeFileSync(
+      resolve(outDir, 'governance.html'),
+      renderPage({ title: `${siteTitle} — Governance`, body: `<pre>${escapeHtml(governanceContent)}</pre>` })
+    );
+  }
+
+  return { outDir: resolve(outDir) };
+}

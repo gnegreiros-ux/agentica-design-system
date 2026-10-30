@@ -6,7 +6,7 @@
 > Any modification requires Principal Designer approval.
 > **Type:** contract
 > **Logical path:** guidelines/components/code-block.md
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/component.json, decisions/ADR-041-agtc-code-block-implementation.md, decisions/ADR-028-atkinson-hyperlegible-mono.md, DESIGN.md
 
 ---

@@ -1,7 +1,8 @@
 # Pipeline: site
 
 > Rebuild and validation of the static documentation site.
-> **Status:** ✅ Active
+> **Status:** ✅ Active — **also** CI-enforced (`.github/workflows/site-freshness.yml`
+> rebuilds and diffs `site/dist/` on every push/PR, independent of tool/human)
 > **Trigger:** any change in `site/build.js`, `tokens/`, `decisions/`, `guidelines/`
 
 ---

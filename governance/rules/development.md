@@ -1,0 +1,93 @@
+# Rule: development
+
+> Development rules for this design system.
+> Read this if you generate code, open a PR, or work on components.
+> **Type:** rule
+> **Logical path:** governance/rules/development.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/project-overview.md
+> **Relations:** governance/rules/tokens-system.md, governance/rules/git-workflow.md, governance/rules/code-style.md
+
+---
+
+## Tech stack
+
+See `package.json` for the exact dependency versions (Lit, Style Dictionary,
+axe-core, Playwright, Storybook). Figma sync uses Tokens Studio (a Figma plugin, not an
+npm dependency).
+
+---
+
+## Code rules — absolute
+
+```
+❌ Never a hardcoded value (color, spacing, radius)
+❌ Never inline styles unless documented as an exception
+❌ Never a primitive token inside a component
+✅ Always via CSS Custom Properties: var(--ds-[token])
+✅ Always use Web Components for shared elements
+✅ Always appropriate ARIA attributes
+✅ Always a visible :focus-visible
+```
+
+---
+
+## Web Component structure (Lit)
+
+```javascript
+import { LitElement, html, css } from 'lit';
+
+class DsButton extends LitElement {
+  static properties = {
+    variant: { type: String },  // 'primary' | 'secondary' | 'critical' | 'ghost'
+    disabled: { type: Boolean },
+    loading: { type: Boolean }
+  };
+
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+    button {
+      background: var(--agtc-component-button-primary-background);
+      color: var(--agtc-component-button-primary-text);
+      border-radius: var(--agtc-component-button-primary-radius);
+      padding: var(--agtc-component-button-primary-padding-y) var(--agtc-component-button-primary-padding-x);
+      font-size: var(--agtc-component-button-primary-font-size);
+      font-weight: var(--agtc-component-button-primary-font-weight);
+      border: none;
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid var(--agtc-semantic-color-border-focus);
+      outline-offset: 2px;
+    }
+    button:disabled {
+      background: var(--agtc-component-button-primary-background-disabled);
+      cursor: not-allowed;
+    }
+  `;
+}
+customElements.define('ds-button', DsButton);
+```
+
+---
+
+## PR rules
+
+Before opening a PR, verify:
+- [ ] No token value hardcoded
+- [ ] All referenced tokens exist in the JSON files
+- [ ] axe-core returns zero critical violations
+- [ ] Focus is visible on all interactive elements
+- [ ] Storybook story created/updated
+- [ ] `guidelines/components/[component].md` updated if behavior changes
+
+---
+
+## Environments
+
+| Env | URL | Trigger |
+|-----|-----|---------------|
+| Storybook | agentica.design/storybook/ | Merge to `main` (ADR-104) |
+| Staging | staging.design-system.org | Merge to `develop` |
+| Production | design-system.org | Merge to `main` + approval |

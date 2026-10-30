@@ -207,10 +207,8 @@ So we put **automatic guardrails** in place:
   │  axe-core         Checks accessibility — contrast,      │
   │                   keyboard navigation, ARIA             │
   │                                                         │
-  │  Chromatic        Takes screenshots and                 │
-  │                   detects visual regressions             │
-  │                                                         │
-  │  Playwright       User interaction tests                │
+  │  Playwright       Takes screenshots, detects visual     │
+  │                   regressions, tests user interactions  │
   │                                                         │
   └─────────────────────────────────────────────────────────┘
               │

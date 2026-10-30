@@ -24,7 +24,7 @@ body{
   -webkit-backdrop-filter:saturate(150%) blur(14px);
   border-top:3px solid var(--agtc-semantic-color-action-primary);
   border-bottom:1px solid var(--agtc-semantic-color-border-default);
-  box-shadow:var(--agtc-shadow-sm);
+  box-shadow:var(--agtc-semantic-shadow-header);
   display:flex;align-items:center;padding:0 var(--agtc-site-header-padding-x);gap:var(--agtc-space-4);
 }
 .logo{display:flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);text-decoration:none;flex-shrink:0}
@@ -85,7 +85,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, .claude/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:var(--agtc-semantic-layout-container-docs)} /* audit-ignore: padding is the documented layout constant, governance/rules/layout-pattern.md — max-width now tokenized (ADR-096) */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -416,6 +416,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .adr-num{font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:var(--agtc-semantic-typography-label-weight)}
 .adr-title a:hover{text-decoration:underline}
+.adr-title code{word-break:normal}
 /* ── agtc-badge (classe — moitié light DOM du mix, ADR-034 ; dogfooding cat. A) ── */
 .agtc-badge{display:inline-flex;align-items:center;gap:var(--agtc-space-1);font-weight:var(--agtc-semantic-typography-label-weight);line-height:1;white-space:nowrap;border:1px solid transparent;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size)}
 .agtc-badge.sm{padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);font-size:var(--agtc-component-badge-sm-font-size)}
@@ -467,6 +468,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
     transform:translateX(-100%);
     transition:transform .28s cubic-bezier(.4,0,.2,1);
     border-right:1px solid var(--agtc-semantic-color-border-default);
+    background:var(--agtc-semantic-color-background-surface-raised);
     box-shadow:var(--agtc-semantic-shadow-raised);
     overflow-y:auto;
     height:calc(100vh - var(--agtc-header-height,64px));
@@ -1029,7 +1031,7 @@ body{overflow-x:hidden}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── Principle card ──────────────────────────────────────── */
-.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-semantic-shadow-raised)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
@@ -1127,7 +1129,7 @@ body{overflow-x:hidden}
    semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
 .rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
-.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-inner{max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
 .rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
 .rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
 @media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
@@ -1271,8 +1273,6 @@ body{overflow-x:hidden}
 
 .rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
-.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
-.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
@@ -1385,7 +1385,7 @@ body{overflow-x:hidden}
     var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
-.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
 /* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
    overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
    backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
@@ -1470,15 +1470,12 @@ body{overflow-x:hidden}
 .rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-dark)}
 
-/* Centrage du CTA interne hero */
-.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
-
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
 
 /* ═══════════════════════════════════════════════════════════
    REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
-   Namespace classes site : sémantique, sans préfixe de version — voir .claude/rules/code-style.md
+   Namespace classes site : sémantique, sans préfixe de version — voir governance/rules/code-style.md
    ═══════════════════════════════════════════════════════ */
 
 /* Variables V2 — dans :root pour accessibilité globale */
@@ -1493,7 +1490,7 @@ body{overflow-x:hidden}
   --site-faint: var(--agtc-semantic-color-text-on-dark-muted);
   --site-teal: var(--agtc-semantic-color-action-primary);
   --site-rose: var(--agtc-semantic-color-brand-accent);
-  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf); /* audit-ignore: documentation-site accent color; no semantic violet token exists yet (structural fix tracked in GitHub Projects), so this primitive reference is a reviewed, temporary exception to Rule 4 */
   --site-radius: var(--agtc-semantic-radius-card, 16px);
   --site-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
 }
@@ -1581,7 +1578,7 @@ body.page{
   display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;padding:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;border:1px solid var(--site-line);border-radius:18px /* audit-ignore: outer panel radius, see the nested div:first-child/nth-child(3) 17px = 18px minus the 1px border, concentric by design */;
   background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
-  box-shadow:var(--agtc-shadow-lg);
+  box-shadow:var(--agtc-semantic-shadow-raised);
   opacity:0;transform:translateY(-8px);pointer-events:none;
   transition:opacity .18s ease,transform .18s ease;
 }
@@ -1727,7 +1724,7 @@ body.page{
   display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
-.section-heading{max-width:760px;margin-bottom:3rem}
+.section-heading{max-width:var(--agtc-semantic-layout-container-intro);margin-bottom:3rem}
 
 /* Cards rôles */
 .role-grid{
@@ -2040,8 +2037,8 @@ body[data-context="marketing"] .role-card::after{
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
     display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
     border:1px solid var(--site-line);border-radius:var(--agtc-semantic-radius-card,16px);
-    background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
-    box-shadow:var(--agtc-shadow-lg);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-surface-raised) 96%,transparent);
+    box-shadow:var(--agtc-semantic-shadow-raised);
     opacity:0;visibility:hidden;transform:translateY(-8px);
     transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
     pointer-events:none;

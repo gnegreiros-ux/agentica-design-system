@@ -21,7 +21,7 @@
  *                             tokens/component.json (catches a renamed/removed token
  *                             left stale in prose)
  *   5. UX Patterns Reference — every guidelines/components/*.md has this section,
- *                              per .claude/rules/ux-patterns-sources.md's 6-surface rule
+ *                              per governance/rules/ux-patterns-sources.md's 6-surface rule
  *
  * A "required sections" check beyond #5 was considered and dropped: the 17 existing
  * guideline files do NOT share one fixed template (e.g. tabs.md has no "## Intent",

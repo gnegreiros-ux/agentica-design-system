@@ -1,0 +1,47 @@
+Agentica — Agentic Design System
+Copyright 2026 Guilherme Negreiros
+
+This product includes software developed by Guilherme Negreiros
+(https://agentica.design).
+
+This product is licensed under the Apache License, Version 2.0.
+See the LICENSE file for the full license text.
+
+------------------------------------------------------------------------------
+Third-party components
+------------------------------------------------------------------------------
+
+This project incorporates or references the following third-party
+components. Each remains under its own original license; inclusion in
+this NOTICE does not change the terms of the Apache License 2.0 above.
+
+1. Lit (https://lit.dev)
+   License: BSD 3-Clause "New" or "Revised" License
+   Copyright (c) 2017 Google LLC
+   Used as: Web Components framework (peer dependency)
+
+2. Lucide (https://lucide.dev)
+   License: ISC License
+   Copyright (c) 2020, Lucide Contributors
+   Used as: icon set for the `ds-icon` component
+
+3. Style Dictionary (https://styledictionary.com)
+   License: Apache License, Version 2.0
+   Copyright (c) Amazon.com, Inc. or its affiliates
+   Used as: design token compilation (JSON → CSS/JS/iOS/Android)
+
+4. Radix UI Colors (https://www.radix-ui.com/colors)
+   License: MIT License
+   Copyright (c) 2022 WorkOS
+   Used as: primitive color scale values referenced in the token system
+
+5. Atkinson Hyperlegible (https://brailleinstitute.org/freefont)
+   License: SIL Open Font License, Version 1.1
+   Copyright (c) Braille Institute of America, Inc.
+   Used as: primary brand typeface, loaded via Google Fonts CDN
+   (font files are not vendored in this repository)
+
+------------------------------------------------------------------------------
+
+The full license texts for the above components are available at their
+respective project repositories or at https://spdx.org/licenses/.

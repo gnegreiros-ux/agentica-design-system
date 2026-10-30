@@ -4,7 +4,7 @@
 > **Type:** guideline
 > **Logical path:** guidelines/foundations/typography.md
 > **Author:** Guilherme Negreiros
-> **Read before:** AGENTS.md, DESIGN.md, .claude/rules/tokens-system.md
+> **Read before:** AGENTS.md, DESIGN.md, governance/rules/tokens-system.md
 > **Relations:** tokens/semantic.json, tokens/primitives.json, decisions/ADR-021-atkinson-hyperlegible.md, decisions/ADR-023-echelle-typographique-minor-third.md
 
 ---

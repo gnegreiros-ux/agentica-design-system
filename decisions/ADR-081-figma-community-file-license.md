@@ -1,11 +1,18 @@
 # ADR-081 — Figma Community File license: CC BY 4.0
 
 > **Date:** 2026-07-21
-> **Status:** ✅ Active
+> **Status:** ⚠️ Superseded by [ADR-095](ADR-095-apache-2-0-code-license-cc-by-4-0-figma-coexistence.md) (2026-09-11)
 > **Decision-makers:** Guilherme Negreiros — Design System Lead
 > **Relations:** `LICENSE` (repo root), `.claude/rules/figma-library-governance.md`,
 > ADR-080 (Community File content triage), GitHub Projects — Figma-domain
 > "Community File — Décider la licence" ticket (Priority P1) <!-- lang-audit-ignore: literal ticket title (French, board convention) -->
+
+> **Deprecation note (2026-09-11):** the repository's code license changed from MIT to
+> Apache License 2.0 (see `LICENSE`, `NOTICE`). The CC BY 4.0 decision for the Figma
+> Community File below still stands unchanged — see ADR-095 for why the two licenses
+> remain consistent with each other. This document remains as the historical record of
+> the original decision and its original (now outdated) MIT-based rationale, in keeping
+> with the rule "an ADR is never deleted."
 
 ## Context
 

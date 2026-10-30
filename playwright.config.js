@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -28,9 +29,10 @@ export default defineConfig({
     // Firefox and WebKit: functional and accessibility tests only (no visual snapshots).
     // language.spec.js is also chromium-only — it's a content/CSS-mechanics check
     // (display:none per data-lang), not browser-specific, so running it 3x adds cost
-    // with no extra signal across ~125 pages.
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: ['**/visual/**', '**/language.spec.js'] },
-    { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: ['**/visual/**', '**/language.spec.js'] },
+    // with no extra signal across ~125 pages. Same reasoning for governance/: plain
+    // Node assertions (no `page` fixture), browser-independent by construction.
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: ['**/visual/**', '**/language.spec.js', '**/governance/**'] },
+    { name: 'webkit',  use: { ...devices['Desktop Safari'] },  testIgnore: ['**/visual/**', '**/language.spec.js', '**/governance/**'] },
     // Responsive breakpoints — mobile visual on Chromium only
     {
       name: 'mobile-chrome',
@@ -39,11 +41,45 @@ export default defineConfig({
     },
   ],
 
-  // Local server — built by the CI workflow before the test
-  webServer: {
-    command: 'npx serve site/dist -p 8080 --no-clipboard',
-    url: 'http://localhost:8080',
-    reuseExistingServer: !process.env.CI,
-    timeout: 30_000,
-  },
+  // Local servers — built by the CI workflow before the test
+  webServer: [
+    {
+      command: 'npx serve site/dist -p 8080 --no-clipboard',
+      url: 'http://localhost:8080',
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    // Dedicated server for governance-accessibility.spec.js's fixtures
+    // (C2-01 to C2-03) — a separate port, never mixed into site/dist, so a
+    // deliberate WCAG violation is never part of what site-freshness.yml
+    // or the production build track.
+    {
+      command: 'npx serve tests/functional/fixtures/governance-accessibility -p 8081 --no-clipboard',
+      url: 'http://localhost:8081',
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    // Dedicated server for doc-generator-accessibility.spec.js (C5-06) — the
+    // generator's own output, never mixed into site/dist. The command
+    // regenerates the fixture site before serving it, so the served content
+    // always matches the current doc-generator/ source, not a stale commit.
+    {
+      command:
+        'node doc-generator/bin/cli.mjs tests/functional/fixtures/doc-generator/design-system.manifest.json tests/functional/fixtures/doc-generator-dist && npx serve tests/functional/fixtures/doc-generator-dist -p 8082 --no-clipboard',
+      url: 'http://localhost:8082',
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    // Built Storybook for tests/visual/storybook/stories.spec.js (ADR-104),
+    // only when it has been built (`npm run build-storybook`) — runs that
+    // don't need story snapshots (e.g. the PR governance gate) don't build it.
+    ...(existsSync('storybook-static/index.json')
+      ? [{
+          command: 'npx serve storybook-static -p 6007 --no-clipboard',
+          url: 'http://localhost:6007',
+          reuseExistingServer: !process.env.CI,
+          timeout: 30_000,
+        }]
+      : []),
+  ],
 });

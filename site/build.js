@@ -10,7 +10,7 @@ const DIST       = path.join(__dirname, 'dist');
 const TOKENS_DIR = path.join(ROOT, 'tokens');
 const DEC_DIR    = path.join(ROOT, 'decisions');
 
-const { execSync }               = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const { runAudit, MANUAL_CHECKS } = require('./audit-lib');
 
 const ensureDir = (d) => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); };
@@ -46,6 +46,19 @@ const readJson = (fp) => { try { return JSON.parse(fs.readFileSync(fp, 'utf8'));
 // ─── MARKDOWN (minimal, no deps) ───────────────────────────────────────────
 function esc(t) {
   return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+// Plain-text contexts (<title>, og:title, twitter:title) cannot render code spans:
+// drop only the backticks and keep their content verbatim (it may hold * _ < >).
+function stripCodeSpans(t) {
+  return String(t).replace(/`([^`]+)`/g, '$1');
+}
+// HTML contexts for a short one-line title (ADR H1, decisions index link):
+// escape everything, and render `code` spans as <code>. Unlike inl(), the text
+// outside code spans is escaped too, and no other Markdown is interpreted.
+function codeSpans(t) {
+  return String(t).split(/(`[^`]+`)/).map(part =>
+    /^`[^`]+`$/.test(part) ? `<code>${esc(part.slice(1, -1))}</code>` : esc(part)
+  ).join('');
 }
 function inl(t) {
   return t
@@ -513,7 +526,7 @@ const PIPELINES = [
     objective_en: 'Ensure every system modification is accompanied by its corresponding documentation, with no silent documentation debt.',
     steps: [
       { role_fr:'01 · Matrice', role_en:'01 · Matrix', title_fr:'Fichier modifié → documentation requise', title_en:'Modified file → required documentation', desc_fr:'Chaque type de changement a ses surfaces de documentation obligatoires (matrice guideline/ADR/log).', desc_en:'Each type of change has its mandatory documentation surfaces (guideline/ADR/log matrix).' },
-      { role_fr:'02 · Vérification', role_en:'02 · Verification', title_fr:'Toutes les surfaces documentées', title_en:'All surfaces documented', desc_fr:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · .claude/rules/ · Site rebuild', desc_en:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · .claude/rules/ · Site rebuild' },
+      { role_fr:'02 · Vérification', role_en:'02 · Verification', title_fr:'Toutes les surfaces documentées', title_en:'All surfaces documented', desc_fr:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · governance/rules/ · Site rebuild', desc_en:'guidelines/ · decisions/ · GitHub Projects · DESIGN.md · AGENTS.md · governance/rules/ · Site rebuild' },
       { role_fr:'03 · Parité', role_en:'03 · Parity', title_fr:'FR/EN — aucune langue absente', title_en:'FR/EN — no language missing', desc_fr:'Tout contenu ajouté en français → version anglaise requise (et vice versa). Aucune langue absente sur le site.', desc_en:'Any content added in French → English version required (and vice versa). No language missing on the site.' },
     ],
     checks_fr: ['guidelines/foundations/*.md mis à jour si fondation modifiée (couleur, typo, espacement)','guidelines/components/[composant].md mis à jour si composant modifié','decisions/ADR-0XX.md créé pour toute décision architecturale nouvelle','decisions/README.md mis à jour pour chaque nouvel ADR','GitHub Projects — item créé/mis à jour pour tout chantier significatif (ADR-069)','DESIGN.md mis à jour si identité, gouvernance ou principes changent','AGENTS.md mis à jour si nouvelle règle pour les agents','Parité bilingue FR/EN vérifiée sur toutes les pages modifiées'],
@@ -565,27 +578,6 @@ const PIPELINES = [
     command: 'git add [specific files]\ngit diff --staged\ngit commit -m "$(cat <<\'EOF\'\ntype(scope): description\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n)"\ngit push',
   },
   {
-    id: 'chromatic', icon: 'camera', status: 'active', blocking: true, order: 9,
-    title_fr: 'Régression visuelle (Chromatic)', title_en: 'Visual regression (Chromatic)',
-    trigger_fr: 'components/, tokens/, .storybook/', trigger_en: 'components/, tokens/, .storybook/',
-    desc_short_fr: 'Publie les stories sur Chromatic et compare les captures avec le baseline approuvé — tout changement visuel non intentionnel bloque le commit.',
-    desc_short_en: 'Publishes stories to Chromatic and compares captures against the approved baseline — any unintentional visual change blocks the commit.',
-    marketing_fr: 'Aucune régression visuelle silencieuse. Chaque pixel qui change est capturé, comparé au baseline et soumis à approbation. Les designers contrôlent les évolutions visuelles — pas les accidents de code.',
-    marketing_en: 'No silent visual regression. Every changed pixel is captured, compared to the baseline and submitted for approval. Designers control visual changes — not code accidents.',
-    objective_fr: 'Détecter et bloquer toute régression visuelle non intentionnelle sur les composants avant qu\'elle n\'atteigne le dépôt.',
-    objective_en: 'Detect and block any unintentional visual regression on components before it reaches the repository.',
-    steps: [
-      { role_fr:'01 · Déclencheur', role_en:'01 · Trigger', title_fr:'Composants, tokens ou Storybook modifiés', title_en:'Components, tokens or Storybook modified', desc_fr:'components/ · tokens/ · .storybook/ — tout changement visuel potentiel.', desc_en:'components/ · tokens/ · .storybook/ — any potential visual change.' },
-      { role_fr:'02 · Capture', role_en:'02 · Capture', title_fr:'Publication + comparaison baseline', title_en:'Publication + baseline comparison', desc_fr:'npm run chromatic → Storybook publié sur Chromatic → captures comparées au baseline approuvé.', desc_en:'npm run chromatic → Storybook published on Chromatic → captures compared against approved baseline.' },
-      { role_fr:'03 · Résultat', role_en:'03 · Outcome', title_fr:'Approbation ou blocage', title_en:'Approval or block', desc_fr:'Chromatic exit 0 ou changements explicitement approuvés → commit autorisé. Régressions détectées → commit bloqué.', desc_en:'Chromatic exit 0 or changes explicitly approved → commit cleared. Regressions detected → commit blocked.' },
-    ],
-    checks_fr: ['Chromatic exit 0 ou changements visuels explicitement approuvés','Aucune régression non intentionnelle sur les composants existants','Captures de tous les états : default, hover, focus, disabled, loading','CHROMATIC_PROJECT_TOKEN en variable d\'environnement (jamais en clair dans le dépôt)','Workflow CI .github/workflows/chromatic.yml actif'],
-    checks_en: ['Chromatic exit 0 or visual changes explicitly approved','No unintentional regression on existing components','Captures of all states: default, hover, focus, disabled, loading','CHROMATIC_PROJECT_TOKEN as environment variable (never in plain text in repo)','CI workflow .github/workflows/chromatic.yml active'],
-    trigger_table_fr: [['components/agtc-*.js','Oui — capture + comparaison baseline'],['tokens/*.json','Oui — impact visuel potentiel'],[ '.storybook/','Oui — configuration des captures'],['site/build.js','Non — pas de stories Storybook']],
-    trigger_table_en: [['components/agtc-*.js','Yes — capture + baseline comparison'],['tokens/*.json','Yes — potential visual impact'],['.storybook/','Yes — capture configuration'],['site/build.js','No — no Storybook stories']],
-    command: 'export CHROMATIC_PROJECT_TOKEN=chpt_xxx\nnpm run chromatic\n# CI: CHROMATIC_PROJECT_TOKEN GitHub secret injected automatically',
-  },
-  {
     id: 'axe-core', icon: 'check-circle', status: 'active', blocking: false, order: 10,
     title_fr: 'Audit automatique axe-core', title_en: 'axe-core automated audit',
     trigger_fr: 'components/, site/build.js, tokens/', trigger_en: 'components/, site/build.js, tokens/',
@@ -628,7 +620,7 @@ const PIPELINES = [
     command: 'npx style-dictionary build --config style-dictionary/config.json\n# Activation : npm install style-dictionary + configurer style-dictionary/config.json',
   },
   {
-    id: 'playwright', icon: 'mouse-pointer-click', status: 'planned', blocking: false, order: 12,
+    id: 'playwright', icon: 'mouse-pointer-click', status: 'active', blocking: true, order: 12,
     title_fr: 'Tests E2E Playwright', title_en: 'Playwright E2E tests',
     trigger_fr: 'site/build.js, components/', trigger_en: 'site/build.js, components/',
     desc_short_fr: 'Tests de parcours critiques sur le site de documentation — navigation, bascule FR/EN, explorateur de tokens, skip-link et navigation clavier sur les composants.',
@@ -699,10 +691,7 @@ function tokensCSS() {
   --agtc-site-header-padding-x:24px;
   --agtc-site-sidebar-width:236px;
   --agtc-site-toc-width:208px;
-  --agtc-content-max:1180px;
-  --agtc-shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
-  --agtc-shadow-md:0 4px 12px rgba(16,24,40,.07),0 2px 6px rgba(16,24,40,.05);
-  --agtc-shadow-lg:0 18px 40px -12px rgba(16,24,40,.18),0 8px 16px -8px rgba(16,24,40,.10);
+  --agtc-content-max:var(--agtc-semantic-layout-container-default, 1180px); /* alias — ADR-096 */
   --agtc-shadow-glow:0 0 0 1px rgba(13,155,138,.20),0 12px 32px -8px rgba(13,155,138,.30);
   --agtc-drop-shadow-sm:0 1px 2px rgba(0,0,0,.3);
   --agtc-font-size-detail:.75rem;   --agtc-font-size-label:.875rem;
@@ -743,9 +732,6 @@ function tokensCSS() {
 /* ── Dark mode — semantic overrides only (generated from tokens/semantic.dark.json, ADR-085) ── */
 :root[data-theme="dark"] {
 ${Object.entries(SEM_DARK).map(([k, v]) => `  --agtc-semantic-${k}:${v};`).join('\n')}
-  --agtc-shadow-sm:0 1px 2px rgba(0,0,0,.4);
-  --agtc-shadow-md:0 4px 14px rgba(0,0,0,.45);
-  --agtc-shadow-lg:0 20px 44px -12px rgba(0,0,0,.6);
   --agtc-shadow-glow:0 0 0 1px rgba(52,211,187,.28),0 14px 36px -8px rgba(52,211,187,.22);
   color-scheme:dark;
 }`);
@@ -779,7 +765,7 @@ body{
   -webkit-backdrop-filter:saturate(150%) blur(14px);
   border-top:3px solid var(--agtc-semantic-color-action-primary);
   border-bottom:1px solid var(--agtc-semantic-color-border-default);
-  box-shadow:var(--agtc-shadow-sm);
+  box-shadow:var(--agtc-semantic-shadow-header);
   display:flex;align-items:center;padding:0 var(--agtc-site-header-padding-x);gap:var(--agtc-space-4);
 }
 .logo{display:flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);text-decoration:none;flex-shrink:0}
@@ -840,7 +826,7 @@ body{
   background:var(--agtc-semantic-color-background-surface);color:var(--agtc-semantic-color-action-primary);
   border-left-color:var(--agtc-semantic-color-action-primary);border-left-width:3px;font-weight:var(--agtc-semantic-typography-label-weight);
 }
-.content{flex:1;padding:52px 64px;max-width:960px} /* audit-ignore: documented layout constant, .claude/rules/layout-pattern.md */
+.content{flex:1;padding:52px 64px;max-width:var(--agtc-semantic-layout-container-docs)} /* audit-ignore: padding is the documented layout constant, governance/rules/layout-pattern.md — max-width now tokenized (ADR-096) */
 
 /* ── HOME LAYOUT ────────────────────────────────────────── */
 .home-layout{margin-top:var(--agtc-header-height,64px)}
@@ -1171,6 +1157,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
 .adr-num{font-family:var(--agtc-font-mono);font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)}
 .adr-title a{color:var(--agtc-semantic-color-action-primary);text-decoration:none;font-weight:var(--agtc-semantic-typography-label-weight)}
 .adr-title a:hover{text-decoration:underline}
+.adr-title code{word-break:normal}
 /* ── agtc-badge (classe — moitié light DOM du mix, ADR-034 ; dogfooding cat. A) ── */
 .agtc-badge{display:inline-flex;align-items:center;gap:var(--agtc-space-1);font-weight:var(--agtc-semantic-typography-label-weight);line-height:1;white-space:nowrap;border:1px solid transparent;padding:var(--agtc-component-badge-md-padding-y) var(--agtc-component-badge-md-padding-x);border-radius:var(--agtc-component-badge-md-radius);font-size:var(--agtc-component-badge-md-font-size)}
 .agtc-badge.sm{padding:var(--agtc-component-badge-sm-padding-y) var(--agtc-component-badge-sm-padding-x);font-size:var(--agtc-component-badge-sm-font-size)}
@@ -1222,6 +1209,7 @@ td code{color:var(--agtc-semantic-color-action-primary);word-break:break-all}
     transform:translateX(-100%);
     transition:transform .28s cubic-bezier(.4,0,.2,1);
     border-right:1px solid var(--agtc-semantic-color-border-default);
+    background:var(--agtc-semantic-color-background-surface-raised);
     box-shadow:var(--agtc-semantic-shadow-raised);
     overflow-y:auto;
     height:calc(100vh - var(--agtc-header-height,64px));
@@ -1784,7 +1772,7 @@ body{overflow-x:hidden}
 .kpi-source a{color:var(--agtc-semantic-color-action-primary)}
 
 /* ── Principle card ──────────────────────────────────────── */
-.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-shadow-md)}
+.principle-icon{width:48px;height:48px;border-radius:var(--agtc-semantic-radius-card);display:flex;align-items:center;justify-content:center;color:var(--agtc-semantic-color-text-on-action);background:var(--agtc-semantic-color-action-primary);margin-bottom:var(--agtc-space-4);box-shadow:var(--agtc-semantic-shadow-raised)}
 
 /* ── Mini cards ──────────────────────────────────────────── */
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--agtc-space-4);margin:var(--agtc-space-6) 0}
@@ -1882,7 +1870,7 @@ body{overflow-x:hidden}
    semantic.* — jamais de valeur en dur. ADR-057, ADR-058. */
 .rd-section{width:100%;overflow:hidden;border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-section-alt{background:var(--agtc-semantic-color-background-subtle)}
-.rd-inner{max-width:1280px;margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
+.rd-inner{max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:var(--agtc-semantic-marketing-space-section-breathing) clamp(1.5rem,5vw,5rem)}
 .rd-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
 .rd-grid-rev{direction:rtl}.rd-grid-rev > *{direction:ltr}
 @media(max-width:860px){.rd-grid,.rd-grid-rev{grid-template-columns:1fr;gap:3rem;direction:ltr}}
@@ -2026,8 +2014,6 @@ body{overflow-x:hidden}
 
 .rd-statement{font-size:clamp(1.25rem,2.5vw,1.875rem);font-style:normal;font-weight:var(--agtc-semantic-fontWeight-bold);color:var(--agtc-semantic-color-action-primary);border-left:none;padding-left:0;margin-top:3rem;line-height:1.25;letter-spacing:var(--agtc-tracking-tighter)}
 
-.rd-cta-inner{text-align:center;max-width:720px;margin:0 auto}
-.rd-cta-inner .rd-lead{margin:0 auto 2rem;color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .rd-doc-nav{text-align:center;padding:var(--agtc-space-8,64px) clamp(1.5rem,5vw,5rem);border-top:1px solid var(--agtc-semantic-color-border-default)}
 .rd-doc-nav a{color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-font-size-detail)}
@@ -2140,7 +2126,7 @@ body{overflow-x:hidden}
     var(--agtc-semantic-color-overlay-medium) 100%
   );
 }
-.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
+.rd-cinematic-inner{position:relative;z-index:2;width:100%;max-width:var(--agtc-semantic-layout-container-wide);margin:0 auto;padding:0 clamp(1rem,3vw,3rem);display:flex}
 /* Container texte — glassmorphism : fond sombre semi-transparent + verre dépoli.
    overlay.scrim = rgba(15,17,23,.65) → image visible à 35% à travers le verre.
    backdrop-filter:blur uniformise le fond derrière → contraste texte prévisible. */
@@ -2225,15 +2211,12 @@ body{overflow-x:hidden}
 .rd-section-wow .rd-illus-placeholder{background:var(--agtc-surface-glass);border-color:var(--agtc-surface-glass-border);color:var(--agtc-semantic-color-text-on-dark-muted)}
 .rd-section-wow .rd-illus-placeholder strong{color:var(--agtc-semantic-color-text-on-dark)}
 
-/* Centrage du CTA interne hero */
-.rd-cta-inner .rd-eyebrow{display:flex;justify-content:center;margin-bottom:0.5rem}
-
 /* Illustration simple (ni full ni center) utilisée dans rd-grid-* */
 .rd-illus img{width:100%;height:auto;display:block}
 
 /* ═══════════════════════════════════════════════════════════
    REDESIGN V2 — styles adoptés depuis Codex (ADR-06x)
-   Namespace classes site : sémantique, sans préfixe de version — voir .claude/rules/code-style.md
+   Namespace classes site : sémantique, sans préfixe de version — voir governance/rules/code-style.md
    ═══════════════════════════════════════════════════════ */
 
 /* Variables V2 — dans :root pour accessibilité globale */
@@ -2248,7 +2231,7 @@ body{overflow-x:hidden}
   --site-faint: var(--agtc-semantic-color-text-on-dark-muted);
   --site-teal: var(--agtc-semantic-color-action-primary);
   --site-rose: var(--agtc-semantic-color-brand-accent);
-  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf);
+  --site-violet: var(--agtc-primitive-color-violet-9, #6e56cf); /* audit-ignore: documentation-site accent color; no semantic violet token exists yet (structural fix tracked in GitHub Projects), so this primitive reference is a reviewed, temporary exception to Rule 4 */
   --site-radius: var(--agtc-semantic-radius-card, 16px);
   --site-shell: min(var(--agtc-content-max, 1180px), calc(100vw - 48px));
 }
@@ -2336,7 +2319,7 @@ body.page{
   display:grid;width:min(660px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;padding:1px /* audit-ignore: hairline grid-divider technique, not a spacing decision */;border:1px solid var(--site-line);border-radius:18px /* audit-ignore: outer panel radius, see the nested div:first-child/nth-child(3) 17px = 18px minus the 1px border, concentric by design */;
   background:var(--agtc-gradient-aurora),var(--agtc-surface-glass);
-  box-shadow:var(--agtc-shadow-lg);
+  box-shadow:var(--agtc-semantic-shadow-raised);
   opacity:0;transform:translateY(-8px);pointer-events:none;
   transition:opacity .18s ease,transform .18s ease;
 }
@@ -2482,7 +2465,7 @@ body.page{
   display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);
   align-items:center;gap:clamp(2rem,6vw,6rem);
 }
-.section-heading{max-width:760px;margin-bottom:3rem}
+.section-heading{max-width:var(--agtc-semantic-layout-container-intro);margin-bottom:3rem}
 
 /* Cards rôles */
 .role-grid{
@@ -2795,8 +2778,8 @@ body[data-context="marketing"] .role-card::after{
     inset:calc(var(--agtc-header-height,64px) + var(--agtc-space-2,8px)) var(--agtc-space-4,16px) auto;
     display:flex;flex-direction:column;align-items:stretch;padding:.6rem;
     border:1px solid var(--site-line);border-radius:var(--agtc-semantic-radius-card,16px);
-    background:color-mix(in srgb,var(--agtc-semantic-color-background-page) 96%,transparent);
-    box-shadow:var(--agtc-shadow-lg);
+    background:color-mix(in srgb,var(--agtc-semantic-color-background-surface-raised) 96%,transparent);
+    box-shadow:var(--agtc-semantic-shadow-raised);
     opacity:0;visibility:hidden;transform:translateY(-8px);
     transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
     pointer-events:none;
@@ -2869,19 +2852,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const isHome = document.documentElement.dataset.page === 'home';
   document.documentElement.setAttribute('data-theme', isHome ? 'dark' : savedTheme);
 
-  function applyThemeImages(theme) {
-    document.querySelectorAll('.img-theme-aware[data-src-dark][data-src-light]').forEach(img => {
-      img.src = theme === 'dark' ? img.dataset.srcDark : img.dataset.srcLight;
-    });
-  }
-  applyThemeImages(savedTheme);
-
   document.querySelectorAll('[data-theme-toggle], .theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('agtc-theme', next);
-      applyThemeImages(next);
       btn.setAttribute('aria-label', next === 'dark' ? 'Basculer en thème clair / Switch to light theme' : 'Basculer en thème sombre / Switch to dark theme');
       if (btn.classList.contains('theme-btn')) btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
@@ -3240,13 +3215,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─── HTML LAYOUT ───────────────────────────────────────────────────────────
 // Storybook published by Chromatic (main branch, always the latest baseline).
 // appId = 6a1c1e665ec5fe8fc0540983; stable permalink verified (HTTP 200).
-const STORYBOOK_URL = 'https://main--6a1c1e665ec5fe8fc0540983.chromatic.com/';
+// Published with the site by deploy-site.yml (ADR-104) — no longer hosted by Chromatic.
+const STORYBOOK_URL = 'https://agentica.design/storybook/';
 const SITE_URL      = 'https://agentica.design';
 const FIGMA_COMMUNITY_URL = 'https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system';
 const FIGMA_LUCIDE_COMMUNITY_URL = 'https://www.figma.com/community/file/1679898717194296424/agentica-lucide-icons';
 
 function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, body, fullWidth = false, context = '', homePage = false }) {
-  const docTitle = pageTitle || `${title} — Agentica`;
+  const docTitle = esc(stripCodeSpans(pageTitle || `${title} — Agentica`));
   const base = depth > 0 ? '../' : '';
   // GET STARTED = CTA (cta:true) — primary adoption action (ADR-060).
   // Items defined here, passed to the agtc-top-nav component via an inline script.
@@ -3273,8 +3249,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   <div class="footer-grid">
     <div class="footer-col">
       <a class="brand" href="${base}index.html" aria-label="Agentica — Accueil" style="margin-bottom:.5rem">
-        <img src="${base}img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="180" loading="lazy">
-        <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="180" loading="lazy">
+        <img src="${base}img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="40" width="192" loading="lazy">
+        <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="40" width="192" loading="lazy">
       </a>
       <a href="https://www.linkedin.com/in/gnegreiros/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s" class="footer-linkedin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -3298,7 +3274,6 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${base}tokens/index.html">Tokens</a>
       <a href="${base}decisions/index.html"><span class="lang-fr">Décisions</span><span class="lang-en">Decisions</span></a>
       <a href="${base}continuite.html"><span class="lang-fr">Continuité</span><span class="lang-en">Continuity</span></a>
-      <a href="${base}changelog.html">Changelog</a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Explorer</span>
@@ -3306,6 +3281,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
       <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
       <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="${base}audit.html">Audit</a>
+      <a href="${base}changelog.html">Changelog</a>
       <a href="${base}ai-brief.html"><span class="lang-fr">Brief IA</span><span class="lang-en">AI Brief</span></a>
     </div>
   </div>
@@ -3356,8 +3332,8 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 </a>
 <header class="site-header" role="banner" data-site-header>
   <a class="brand" href="${base}index.html" aria-label="Agentica — Accueil">
-    <img src="${base}img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="152" fetchpriority="high">
-    <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="152" fetchpriority="high">
+    <img src="${base}img/logo-color-white.svg" alt="Agentica" class="logo-dark" height="34" width="163" fetchpriority="high">
+    <img src="${base}img/logo-color.svg" alt="" aria-hidden="true" class="logo-light" height="34" width="163" fetchpriority="high">
   </a>
   <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Navigation">
     <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
@@ -3404,6 +3380,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
           <a href="${STORYBOOK_URL}" target="_blank" rel="noopener noreferrer">Storybook</a>
           <a href="https://github.com/gnegreiros-ux/agentica-design-system" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="${base}audit.html">Audit</a>
+          <a href="${base}changelog.html">Changelog</a>
         </div>
       </div>
     </div>
@@ -3901,7 +3878,7 @@ function buildPourquoi() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Notre vision</span><span class="lang-en">Our vision</span></p>
       <h1>
         <span class="lang-fr">Pourquoi Agentica existe</span>
@@ -3951,7 +3928,7 @@ function buildPourquoi() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Explorer</span><span class="lang-en">Explore</span></p>
     <h2><span class="lang-fr">Commencer avec Agentica</span><span class="lang-en">Get started with Agentica</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -3968,7 +3945,7 @@ function buildArchitecture() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></p>
       <h1>
         <span class="lang-fr">Une seule source de vérité</span>
@@ -4010,7 +3987,7 @@ function buildArchitecture() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker">Tokens</p>
     <h2><span class="lang-fr">Explorer le système de tokens</span><span class="lang-en">Explore the token system</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4027,7 +4004,7 @@ function buildQualite() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Qualité</span><span class="lang-en">Quality</span></p>
       <h1>
         <span class="lang-fr">La qualité est une propriété du système</span>
@@ -4077,7 +4054,7 @@ function buildQualite() {
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker">Audit</p>
     <h2><span class="lang-fr">Voir l'audit du système</span><span class="lang-en">View the system audit</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4094,7 +4071,7 @@ function buildIA() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Intelligence artificielle</span><span class="lang-en">Artificial intelligence</span></p>
       <h1>
         <span class="lang-fr">Automatiser sans abandonner le contrôle</span>
@@ -4131,12 +4108,17 @@ function buildIA() {
         <h2><span class="lang-fr">Orchestration multi-agents</span><span class="lang-en">Multi-agent orchestration</span></h2>
         <p><span class="lang-fr">Agentica définit des skills, des pipelines et des règles pour orchestrer plusieurs agents en parallèle : tokens, WCAG, patterns UX, documentation, ADRs — chaque gate est exécuté automatiquement.</span><span class="lang-en">Agentica defines skills, pipelines and rules to orchestrate multiple agents in parallel: tokens, WCAG, UX patterns, documentation, ADRs — each gate runs automatically.</span></p>
       </div>
+      <div class="editorial-block">
+        <div class="editorial-icon">${icon('puzzle', 20)}</div>
+        <h2><span class="lang-fr">Interopérabilité IA</span><span class="lang-en">AI interoperability</span> <agtc-badge variant="brand" size="sm"><span class="lang-fr">Bêta</span><span class="lang-en">Beta</span></agtc-badge></h2>
+        <p><span class="lang-fr">Agentica n'est pas construit pour un seul outil. <code>AGENTS.md</code> est la source de vérité de gouvernance, lue nativement par Codex, GitHub Copilot et (via un import) Gemini CLI — chacun avec sa propre parité de compétences et de rappels automatiques, vérifiée par un garde-fou CI. Voir <a href="agents/index.html#autres-outils">la comparaison par outil</a>.</span><span class="lang-en">Agentica isn't built for one tool alone. <code>AGENTS.md</code> is the governance source of truth, read natively by Codex, GitHub Copilot, and (via an import) Gemini CLI — each with its own skill and reminder parity, checked by a CI gate. See <a href="agents/index.html#autres-outils">the per-tool comparison</a>.</span></p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="site-section section-final" data-reveal>
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents</span><span class="lang-en">Agents</span></p>
     <h2><span class="lang-fr">Explorer les agents IA</span><span class="lang-en">Explore AI agents</span></h2>
     <div class="hero-actions" style="justify-content:center;margin-top:2rem">
@@ -4153,7 +4135,7 @@ function buildDocumentation() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Documentation</span><span class="lang-en">Documentation</span></p>
       <h1>
         <span class="lang-fr">Explorer Agentica</span>
@@ -4245,8 +4227,8 @@ function buildResources() {
       'Le code fait foi ; Figma est audité en continu contre lui (§22). Une dérive visuelle est un bug, pas une nouvelle référence.',
       'Code is the source of truth; Figma is continuously audited against it (§22). A visual drift is a bug, not a new reference.'],
     ['heart', 'Gratuit et ouvert', 'Free and open',
-      'Publié sous licence Creative Commons CC BY 4.0 — cohérente avec le MIT du code : attribution requise, aucune restriction d\'usage ou de modification.',
-      'Published under a CC BY 4.0 Creative Commons license — consistent with the code\'s MIT license: attribution required, no restriction on reuse or modification.'],
+      'Publié sous licence Creative Commons CC BY 4.0 — cohérente avec l\'Apache License 2.0 du code : attribution requise, aucune restriction d\'usage ou de modification.',
+      'Published under a CC BY 4.0 Creative Commons license — consistent with the code\'s Apache License 2.0: attribution required, no restriction on reuse or modification.'],
   ].map(([iconName, titleFr, titleEn, fr, en]) => `
       <div class="editorial-block">
         <div class="editorial-icon">${icon(iconName, 20)}</div>
@@ -4276,7 +4258,7 @@ function buildResources() {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Kit de design</span><span class="lang-en">Design kit</span></p>
       <h1>
         <span class="lang-fr">La librairie Figma Agentica</span>
@@ -4315,19 +4297,19 @@ function buildResources() {
 </section>
 
 <section class="site-section">
-  <div class="shell" style="max-width:760px">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-intro)">
     <agtc-banner variant="info">
       <strong><span class="lang-fr">Le code fait foi, jamais l'inverse</span><span class="lang-en">Code is the source of truth, never the reverse</span></strong>
       <span>
-        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec le <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT du code</a>.</span>
-        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license</a>.</span>
+        <span class="lang-fr">La librairie Figma représente le code — elle ne l'invente jamais. En cas d'écart, c'est Figma qui est corrigé. Licence CC BY 4.0 (attribution requise), cohérente avec l'<a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache License 2.0 du code</a>.</span>
+        <span class="lang-en">The Figma library represents the code — it never invents it. When they diverge, Figma is what gets fixed. CC BY 4.0 license (attribution required), consistent with the code's <a href="${REPO}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache License 2.0</a>.</span>
       </span>
     </agtc-banner>
   </div>
 </section>
 
 <section class="site-section section-final">
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Prêt à concevoir</span><span class="lang-en">Ready to design</span></p>
     <h2><span class="lang-fr">Concevez avec les mêmes décisions que le code</span><span class="lang-en">Design with the same decisions as the code</span></h2>
     <div class="hero-actions" style="justify-content:center">
@@ -4371,7 +4353,6 @@ bash scripts/continuity/2-2-product-checklist.sh <project-path>`);
     ['Audit tokens', 'node scripts/audit-tokens.js --ci'],
     ['Accessibility audit', 'npm run axe'],
     ['Visual/E2E tests', 'npx playwright test --project=chromium'],
-    ['Chromatic tests', 'npm run chromatic'],
   ].map(([task, cmd]) => `<tr><td>${task}</td><td><code>${cmd}</code></td></tr>`).join('');
 
   const body = `
@@ -4396,8 +4377,8 @@ bash scripts/continuity/2-2-product-checklist.sh <project-path>`);
 
 <h2 class="first" id="equipe-systeme"><span class="lang-fr">Équipe système de design (maintien d'Agentica)</span><span class="lang-en">Design system team (maintaining Agentica)</span></h2>
 <p>
-  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>.claude/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
-  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>.claude/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
+  <span class="lang-fr">Les tokens (<code>tokens/*.json</code>), les contrats (<code>guidelines/components/*.md</code>), les règles (<code>governance/rules/*.md</code>) et le code des composants sont déjà des fichiers plats versionnés dans Git — rien à exporter ni sauvegarder dans l'urgence.</span>
+  <span class="lang-en">Tokens (<code>tokens/*.json</code>), contracts (<code>guidelines/components/*.md</code>), rules (<code>governance/rules/*.md</code>) and component code are already flat, versioned files in Git — nothing to export or back up in an emergency.</span>
 </p>
 
 <h3><span class="lang-fr">1.1 Les outils existants tournent sans agent</span><span class="lang-en">1.1 Existing tools run without an agent</span></h3>
@@ -5511,7 +5492,7 @@ function buildIcon() {
     <th><span class="lang-fr">Requis</span><span class="lang-en">Required</span></th>
   </tr></thead>
   <tbody>
-    <tr><td><code>name</code></td><td>String</td><td><span class="lang-fr">Nom Lucide (ex : <code>trash-2</code>)</span><span class="lang-en">Lucide name (e.g. <code>trash-2</code>)</span></td><td>—</td><td>✅</td></tr>
+    <tr><td><code>name</code></td><td>String</td><td><span class="lang-fr">Nom Lucide (ex : <code>trash-2</code>)</span><span class="lang-en">Lucide name (e.g. <code>trash-2</code>)</span></td><td>—</td><td><span class='icon-ok'>${icon('circle-check', 16)}</span></td></tr>
     <tr><td><code>size</code></td><td>String</td><td><code>inline</code> / <code>control</code> / <code>nav</code></td><td><code>control</code></td><td>—</td></tr>
     <tr><td><code>label</code></td><td>String</td><td><span class="lang-fr">Texte accessible</span><span class="lang-en">Accessible text</span></td><td>—</td><td><span class="lang-fr">Si non décoratif</span><span class="lang-en">If not decorative</span></td></tr>
     <tr><td><code>decorative</code></td><td>Boolean</td><td><span class="lang-fr">Icône purement ornementale</span><span class="lang-en">Purely decorative icon</span></td><td><code>false</code></td><td>—</td></tr>
@@ -7218,7 +7199,7 @@ function buildDecisionsIndex(adrs) {
   const rows = adrs.map(a => `
 <tr>
   <td class="adr-num" style="white-space:nowrap">ADR-${String(a.num).padStart(3,'0')}</td>
-  <td class="adr-title"><a href="${a.slug}.html">${esc(a.title)}</a></td>
+  <td class="adr-title"><a href="${a.slug}.html">${codeSpans(a.title)}</a></td>
   <td><agtc-badge variant="success" size="sm"><span class="lang-fr">Actif</span><span class="lang-en">Active</span></agtc-badge></td>
   <td style="white-space:nowrap">${a.date}</td>
 </tr>`).join('');
@@ -7298,7 +7279,7 @@ function buildADR(adr, adrs) {
     ${statusBadge}
     ${typeBadge}
   </div>
-  <h1 class="adr-page-title">${esc(adr.title)}</h1>
+  <h1 class="adr-page-title">${codeSpans(adr.title)}</h1>
   <dl class="adr-meta">
     <div class="adr-meta-item">
       <dt><span class="lang-fr">Date</span><span class="lang-en">Date</span></dt>
@@ -7338,11 +7319,11 @@ function buildAgents() {
   const readingOrder = [
     ['AGENTS.md','<span class="lang-fr">Routeur d\'agents — première lecture obligatoire</span><span class="lang-en">Agent router — mandatory first read</span>'],
     ['DESIGN.md','<span class="lang-fr">Contrat de marque portable</span><span class="lang-en">Portable brand contract</span>'],
-    ['.claude/rules/project-overview.md','<span class="lang-fr">Contexte général</span><span class="lang-en">General context</span>'],
-    ['.claude/rules/tokens-system.md','<span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span>'],
-    ['.claude/rules/development.md','<span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span>'],
+    ['governance/rules/project-overview.md','<span class="lang-fr">Contexte général</span><span class="lang-en">General context</span>'],
+    ['governance/rules/tokens-system.md','<span class="lang-fr">Règles des tokens</span><span class="lang-en">Token rules</span>'],
+    ['governance/rules/development.md','<span class="lang-fr">Règles de développement</span><span class="lang-en">Development rules</span>'],
     ['guidelines/components/button.md','<span class="lang-fr">Contrat du composant concerné</span><span class="lang-en">Contract for the relevant component</span>'],
-    ['.claude/instructions/session-spec.md','<span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span>'],
+    ['governance/instructions/session-spec.md','<span class="lang-fr">Quick reference pour la session</span><span class="lang-en">Session quick reference</span>'],
   ];
 
   const agentIcons = [icon('pen-tool',24), icon('code-2',24), icon('shield-check',24), icon('book-open',24)];
@@ -7431,11 +7412,55 @@ color: var(--agtc-primitive-color-blue-11); /* audit-ignore: anti-pattern exampl
 <table>
   <thead><tr><th>Skill</th><th><span class="lang-fr">Rôle</span><span class="lang-en">Role</span></th></tr></thead>
   <tbody>
-    <tr><td><code>.claude/skills/ai-ds-composer.md</code></td><td><span class="lang-fr">Compose des interfaces depuis du langage naturel en respectant les contrats</span><span class="lang-en">Composes interfaces from natural language following the contracts</span></td></tr>
-    <tr><td><code>.claude/skills/ai-component-metadata.md</code></td><td><span class="lang-fr">Génère les métadonnées de composant</span><span class="lang-en">Generates component metadata</span></td></tr>
-    <tr><td><code>.claude/skills/codebase-index.md</code></td><td><span class="lang-fr">Index du dépôt pour navigation rapide</span><span class="lang-en">Repository index for fast navigation</span></td></tr>
+    <tr><td><code>.claude/skills/ai-ds-composer/SKILL.md</code></td><td><span class="lang-fr">Compose des interfaces depuis du langage naturel en respectant les contrats</span><span class="lang-en">Composes interfaces from natural language following the contracts</span></td></tr>
+    <tr><td><code>.claude/skills/ai-component-metadata/SKILL.md</code></td><td><span class="lang-fr">Génère les métadonnées de composant</span><span class="lang-en">Generates component metadata</span></td></tr>
+    <tr><td><code>.claude/skills/codebase-index/SKILL.md</code></td><td><span class="lang-fr">Index du dépôt pour navigation rapide</span><span class="lang-en">Repository index for fast navigation</span></td></tr>
   </tbody>
 </table>
+
+<h2 id="autres-outils"><span class="lang-fr">Utiliser Agentica avec un autre outil IA</span><span class="lang-en">Using Agentica with another AI tool</span> <agtc-badge variant="brand" size="sm"><span class="lang-fr">Bêta</span><span class="lang-en">Beta</span></agtc-badge></h2>
+<p>
+  <span class="lang-fr">Ce système de design n'est pas construit uniquement pour Claude Code. <code>AGENTS.md</code>, à la racine du dépôt, est le point d'entrée unique de gouvernance — lu nativement par la plupart des outils IA de développement. Chaque outil a ensuite son propre mécanisme pour les compétences (Skills) et les automatismes ; voici ce qui existe aujourd'hui pour Codex, GitHub Copilot et Gemini CLI.</span>
+  <span class="lang-en">This design system isn't built for Claude Code alone. <code>AGENTS.md</code>, at the repo root, is the single governance entry point — read natively by most AI coding tools. Each tool then has its own mechanism for skills and automation; here's what exists today for Codex, GitHub Copilot, and Gemini CLI.</span>
+</p>
+<p>
+  <span class="lang-fr"><strong>Pourquoi bêta :</strong> les portages Codex et Copilot (<code>.agents/skills/</code>) n'ont pas encore été essayés dans une vraie session de ces outils — construits contre leurs docs officielles, pas testés en conditions réelles. Les hooks Gemini (<code>.gemini/hooks/*.js</code>) sont testés uniquement en local contre des payloads simulés : le nom exact des champs qu'ils lisent est la meilleure estimation possible à partir de la documentation de Gemini CLI, pas une certitude confirmée en session réelle. Si un de ces mécanismes ne se déclenche pas comme attendu chez toi, ouvre une issue.</span>
+  <span class="lang-en"><strong>Why beta:</strong> the Codex and Copilot ports (<code>.agents/skills/</code>) haven't yet been tried in a real session of either tool — built against their official docs, not tested in real conditions. The Gemini hooks (<code>.gemini/hooks/*.js</code>) are tested only locally against simulated payloads: the exact field names they read are the best available estimate from Gemini CLI's docs, not something confirmed in a real session. If one of these doesn't fire as expected for you, please open an issue.</span>
+</p>
+
+<table>
+  <thead><tr>
+    <th><span class="lang-fr">Outil</span><span class="lang-en">Tool</span></th>
+    <th><span class="lang-fr">Lit <code>AGENTS.md</code> ?</span><span class="lang-en">Reads <code>AGENTS.md</code>?</span></th>
+    <th><span class="lang-fr">Compétences (Skills)</span><span class="lang-en">Skills</span></th>
+    <th><span class="lang-fr">Rappels automatiques</span><span class="lang-en">Automatic reminders</span></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>Codex CLI</td>
+      <td><span class="lang-fr">Nativement, à la racine et imbriqué</span><span class="lang-en">Natively, root and nested</span></td>
+      <td><code>.agents/skills/</code> <span class="lang-fr">— chargées automatiquement, aucune installation</span><span class="lang-en">— auto-loaded, no install step</span></td>
+      <td><span class="lang-fr">Aucun — Codex n'a pas de système de hooks</span><span class="lang-en">None — Codex has no hooks system</span></td>
+    </tr>
+    <tr>
+      <td>GitHub Copilot <span class="lang-fr">(CLI et agent de codage)</span><span class="lang-en">(CLI and coding agent)</span></td>
+      <td><span class="lang-fr">Nativement, plus <code>.github/copilot-instructions.md</code></span><span class="lang-en">Natively, plus <code>.github/copilot-instructions.md</code></span></td>
+      <td><code>.agents/skills/</code> <span class="lang-fr">— même format que Codex, chargé automatiquement</span><span class="lang-en">— same format as Codex, auto-loaded</span></td>
+      <td><span class="lang-fr">Aucun — pas de système de hooks non plus</span><span class="lang-en">None — no hooks system either</span></td>
+    </tr>
+    <tr>
+      <td>Gemini CLI</td>
+      <td><span class="lang-fr">Pas nativement — via l'import <code>@AGENTS.md</code> dans <code>GEMINI.md</code></span><span class="lang-en">Not natively — via the <code>@AGENTS.md</code> import in <code>GEMINI.md</code></span></td>
+      <td><span class="lang-fr">Non empaqueté — le format d'extension de Gemini exige une installation explicite, donc ne suit pas le dépôt automatiquement</span><span class="lang-en">Not packaged — Gemini's extension format requires an explicit install step, so it doesn't travel with the repo automatically</span></td>
+      <td><code>.gemini/settings.json</code> <span class="lang-fr">— rappel ADR et rappel revue de patterns UX, natifs</span><span class="lang-en">— ADR and UX-pattern-review reminders, native</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  <span class="lang-fr">Cette parité n'est ni automatique ni garantie — <code>governance/ai-skills-reference.md</code> documente ce que chaque compétence Claude Code automatise et comment le reproduire ; <code>governance/tool-parity/</code> garde, pour chaque outil déjà intégré, une attestation signée par un humain listant explicitement ce qui est remplacé et ce qui est une absence acceptée. Un check CI (<code>tool-parity</code>) bloque toute config d'outil IA sans cette attestation.</span>
+  <span class="lang-en">This parity is neither automatic nor guaranteed — <code>governance/ai-skills-reference.md</code> documents what each Claude Code skill automates and how to reproduce it; <code>governance/tool-parity/</code> keeps, for every tool already integrated, a human-signed attestation explicitly listing what's replaced and what's an accepted absence. A CI check (<code>tool-parity</code>) blocks any AI-tool config that lacks that attestation.</span>
+</p>
 `;
 
   write(path.join(DIST, 'agents/index.html'), layout({
@@ -7478,7 +7503,7 @@ function buildPipelinesIndex() {
 
 <div class="stat-band" role="region" aria-label="Statistiques des pipelines">
   <div class="stat-item"><span class="stat-num">10</span><span class="stat-text"><span class="lang-fr">Pipelines actifs</span><span class="lang-en">Active pipelines</span></span></div>
-  <div class="stat-item"><span class="stat-num">3</span><span class="stat-text"><span class="lang-fr">En préparation</span><span class="lang-en">In progress</span></span></div>
+  <div class="stat-item"><span class="stat-num">2</span><span class="stat-text"><span class="lang-fr">En préparation</span><span class="lang-en">In progress</span></span></div>
   <div class="stat-item"><span class="stat-num">${PIPELINES.length}</span><span class="stat-text"><span class="lang-fr">Pipelines au total</span><span class="lang-en">Total pipelines</span></span></div>
 </div>
 
@@ -7569,6 +7594,101 @@ ${commandBlock}
   }));
 }
 
+// ─── SITEMAP LASTMOD (deterministic — no build-clock date) ─────────────────
+// A sitemap <lastmod> stamped with the build's wall-clock date changes on
+// every rebuild, even with zero content changes — which made the
+// site-freshness CI check (rebuilds dist/ and diffs it against the
+// committed copy) fail on any day after dist/ was last committed. Instead,
+// each page's lastmod is the most recent git commit date across the actual
+// source files that feed that page — identical output on every rebuild
+// until one of those sources really changes.
+const gitDateCache = new Map();
+function gitLastCommitISO(relPath) {
+  if (gitDateCache.has(relPath)) return gitDateCache.get(relPath);
+  let iso = null;
+  try {
+    iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', relPath], { cwd: ROOT, encoding: 'utf8' }).trim() || null;
+  } catch { /* not tracked by git yet — no history to derive a date from */ }
+  gitDateCache.set(relPath, iso);
+  return iso;
+}
+
+// Every page must resolve to at least one source (BASE_SITEMAP_SOURCES is
+// never empty) — there is no fallback to new Date() for any page.
+const BASE_SITEMAP_SOURCES = [
+  'site/build.js',
+  'tokens/primitives.json',
+  'tokens/semantic.json',
+  'tokens/semantic.dark.json',
+];
+
+// Component pages whose body includes a "UX Patterns Reference" section
+// injected from guidelines/components/*.md (see uxPatternsFromMd) — that
+// file is a real content source for the page, on top of build.js.
+const COMPONENT_GUIDELINE_SOURCE = {
+  'components/button.html': 'button',
+  'components/input.html': 'input',
+  'components/badge.html': 'badge',
+  'components/card.html': 'card',
+  'components/checkbox.html': 'checkbox',
+  'components/radio.html': 'radio',
+  'components/toggle.html': 'toggle',
+  'components/table.html': 'table',
+  'components/code-block.html': 'code-block',
+  'components/banner.html': 'banner',
+  'components/link.html': 'link',
+  'components/segmented.html': 'segmented',
+  'components/tabs.html': 'tabs',
+};
+
+function sitemapSources(pagePath, adrs) {
+  if (pagePath === 'decisions/index.html') {
+    // Lists every ADR (title, status, date) — changes whenever any ADR does.
+    return [...BASE_SITEMAP_SOURCES, ...adrs.map(a => `decisions/${a.file}`)];
+  }
+  const adrMatch = pagePath.match(/^decisions\/(adr-\d+)\.html$/);
+  if (adrMatch) {
+    const adr = adrs.find(a => a.slug === adrMatch[1]);
+    if (!adr) throw new Error(`sitemap: no ADR data found for page "${pagePath}"`);
+    return [...BASE_SITEMAP_SOURCES, `decisions/${adr.file}`];
+  }
+  if (COMPONENT_GUIDELINE_SOURCE[pagePath]) {
+    return [...BASE_SITEMAP_SOURCES, `guidelines/components/${COMPONENT_GUIDELINE_SOURCE[pagePath]}.md`];
+  }
+  return BASE_SITEMAP_SOURCES;
+}
+
+function pageLastmod(sources) {
+  let maxTs = -Infinity;
+  for (const src of sources) {
+    const iso = gitLastCommitISO(src);
+    if (!iso) continue;
+    const ts = new Date(iso).getTime();
+    if (ts > maxTs) maxTs = ts;
+  }
+  if (maxTs === -Infinity) {
+    throw new Error(`sitemap: no git history for any of [${sources.join(', ')}] — cannot compute lastmod`);
+  }
+  return new Date(maxTs).toISOString().split('T')[0];
+}
+
+// ─── AUDIT DATE (deterministic — same reasoning as sitemap lastmod) ─────────
+// audit.html used to show runAudit()'s wall-clock timestamp, so it changed on
+// every rebuild and had to be excluded from site-freshness — which then let a
+// stale verdict stay committed unnoticed (issue 134). The audit is a pure
+// function of the sources that build site/dist/, so the date shown is the
+// last commit touching any of them. site/dist/ itself is excluded, otherwise
+// committing a rebuild would move the date and re-stale the page.
+const AUDIT_SOURCES = [
+  'site', 'tokens', 'decisions', 'guidelines', 'components', 'Brand',
+  'package.json', 'package-lock.json',
+];
+function auditSourcesDate() {
+  const iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', ...AUDIT_SOURCES, ':(exclude)site/dist'], { cwd: ROOT, encoding: 'utf8' }).trim();
+  if (!iso) throw new Error(`audit: no git history for any of [${AUDIT_SOURCES.join(', ')}] — cannot compute the audit date`);
+  return new Date(iso);
+}
+
 // ─── ROBOTS.TXT + SITEMAP.XML ────────────────────────────────────────────────
 function buildRobotsAndSitemap(adrs) {
   // robots.txt
@@ -7584,8 +7704,6 @@ function buildRobotsAndSitemap(adrs) {
   ].join('\n'));
 
   // sitemap.xml — every public page
-  const today = new Date().toISOString().split('T')[0];
-
   // Static pages (frequency + priority)
   const staticPages = [
     ['',                          'weekly',  '1.0'],
@@ -7633,9 +7751,10 @@ function buildRobotsAndSitemap(adrs) {
 
   const allPages = [...staticPages, ...adrPages, ...pipelinePages];
 
-  const urls = allPages.map(([path, freq, prio]) => {
-    const url = path ? `${SITE_URL}/${path}` : SITE_URL;
-    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
+  const urls = allPages.map(([pagePath, freq, prio]) => {
+    const url = pagePath ? `${SITE_URL}/${pagePath}` : SITE_URL;
+    const lastmod = pageLastmod(sitemapSources(pagePath, adrs));
+    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
   }).join('\n');
 
   write(path.join(DIST, 'sitemap.xml'), [
@@ -7799,7 +7918,7 @@ useEffect(() => {
   const body = `
 <section class="site-section simple-hero">
   <div class="shell">
-    <div class="copy" style="max-width:700px">
+    <div class="copy" style="max-width:var(--agtc-semantic-layout-container-intro)">
       <p class="kicker"><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></p>
       <h1><span class="lang-fr">Démarrer</span><span class="lang-en">Get started</span></h1>
       <p>
@@ -8029,7 +8148,7 @@ import '@agentica-ds/components';`)}</code></pre>
 </section>
 
 <section class="site-section section-final">
-  <div class="shell" style="max-width:600px;margin-inline:auto;text-align:center">
+  <div class="shell" style="max-width:var(--agtc-semantic-layout-container-cta);margin-inline:auto;text-align:center">
     <p class="kicker"><span class="lang-fr">Agents IA</span><span class="lang-en">AI agents</span></p>
     <h2><span class="lang-fr">Pour les agents IA</span><span class="lang-en">For AI agents</span></h2>
     <p>
@@ -8066,6 +8185,137 @@ import '@agentica-ds/components';`)}</code></pre>
 function buildChangelog() {
   // Chaque version : [id, version, date, badge?, sections:[{titleFr,titleEn,items:[{fr,en}]}]]
   const versions = [
+    {
+      id: 'unreleased', ver: 'Unreleased', date: '',
+      sections: [
+        { fr:'Gouvernance — skills Claude Code et tests du découplage', en:'Governance — Claude Code skills and decoupling tests', items:[
+          {fr:'6 skills personnalisés (<code>quality-gate</code>, <code>ux-pattern-review</code>, <code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>post-change-pipeline</code>) déplacés de fichiers plats <code>.claude/skills/&lt;nom&gt;.md</code>, invisibles au loader de Claude Code, vers le format qu\'il découvre réellement (<code>&lt;nom&gt;/SKILL.md</code>). Constaté dans cet ordre : le répertoire seul a suffi à faire apparaître les 6 dans la liste des skills invocables, avant l\'ajout de tout frontmatter (description de repli affichée à ce stade) ; le frontmatter YAML ajouté ensuite n\'a fait que remplacer cette description de repli par la description réelle. Convention actée dans <code>ADR-097</code> (#122, PR #125)',en:'6 custom skills (<code>quality-gate</code>, <code>ux-pattern-review</code>, <code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>post-change-pipeline</code>) moved from flat <code>.claude/skills/&lt;name&gt;.md</code> files, invisible to Claude Code\'s skill loader, to the format it actually discovers (<code>&lt;name&gt;/SKILL.md</code>). Observed in this order: the directory alone was enough to make all 6 appear in the invocable-skill list, before any frontmatter was added (a fallback description shown at that stage); the YAML frontmatter added afterward only replaced that fallback with the real description. Convention recorded in <code>ADR-097</code> (#122, PR #125)'}, // audit-ignore: PR/issue numbers, not colors
+          {fr:'<code>decisions/CHANGELOG-structure.md</code> créé : journal des déplacements/renommages mécaniques, distinct du <i>pourquoi</i> immuable d\'une ADR ; <code>decisions/README.md</code> gagne une note précisant qu\'un déplacement de fichier ne rend jamais seul une ADR <code>Superseded</code> (ADR-097, PR #125)',en:'<code>decisions/CHANGELOG-structure.md</code> created: a log of mechanical relocations/renames, distinct from an ADR\'s immutable <i>why</i>; <code>decisions/README.md</code> gains a note that a file move alone never marks an ADR <code>Superseded</code> (ADR-097, PR #125)'}, // audit-ignore: PR number, not a color
+          {fr:'3 des 9 tests de la campagne C3 (frontière core/personnalisation du Clone) ajoutés sous <code>tests/governance/</code> : personnalisation appliquée à chacun des 5 paliers réels sans changement sous <code>core/</code> (<code>clone-personalization-tiers.spec.js</code>), réinstallation de <code>core/</code> qui écrase une modification directe sans perdre la personnalisation adjacente (<code>clone-core-reinstall-preserves-personalization.spec.js</code>), et — validation locale, sans lecture réseau, donc sans comparaison au paquet réellement publié sur le registre npm — la preuve que reconstruire <code>@agentica-ds/tokens</code>/<code>@agentica-ds/components</code> depuis la source versionnée est déterministe (deux reconstructions consécutives identiques), strictement identique à cette source (copie verbatim de <code>components/</code> et des quatre <code>tokens/*.json</code>), sans dérive R3/R4 (<code>packages-published-build-determinism.spec.js</code>). Les 6 autres tests de la campagne restent différés ou hors périmètre : <code>C3-03/04/05/07</code> faute de paquet npm distribué pour le core du Clone, <code>C3-06</code> faute d\'un <code>agentica.config.js</code> existant à valider, <code>C3-08</code> hors périmètre (test humain à froid) (PR #124)',en:'3 of campaign C3\'s 9 tests (the Clone\'s core/personalization boundary) added under <code>tests/governance/</code>: personalization applied at each of the 5 real tiers with no change under <code>core/</code> (<code>clone-personalization-tiers.spec.js</code>), reinstalling <code>core/</code> overwrites a direct modification without losing the adjacent personalization (<code>clone-core-reinstall-preserves-personalization.spec.js</code>), and — local validation, no network read, so no comparison against the package actually published on the npm registry — proof that rebuilding <code>@agentica-ds/tokens</code>/<code>@agentica-ds/components</code> from tracked source is deterministic (two consecutive rebuilds identical), strictly identical to that source (verbatim copy of <code>components/</code> and the four <code>tokens/*.json</code> files), with no R3/R4 drift (<code>packages-published-build-determinism.spec.js</code>). The campaign\'s 6 remaining tests stay deferred or out of scope: <code>C3-03/04/05/07</code> for lack of a distributed npm package for the Clone\'s core, <code>C3-06</code> for lack of an existing <code>agentica.config.js</code> to validate, <code>C3-08</code> out of scope (a cold, human usability test) (PR #124)'}, // audit-ignore: PR number, not a color
+          {fr:'Campagne C4 (Master Skill) exécutée de bout en bout, protocole du plan de tests respecté à la lettre : dossier isolé hors du repo, agent neuf sans accès à ce dépôt. Les 5 phases s\'enchaînent dans l\'ordre attendu avec une pause de confirmation humaine à chacune des 5 frontières (<code>C4-02</code>, <code>C4-03</code> ✅), et l\'instance produite fait réellement mordre ses propres lints et validations de tokens dans les deux sens, rouge sur violation injectée puis vert après nettoyage (<code>C4-04</code> ✅, portée réduite — aucun <code>core/</code> construit à ce stade pour exercer la règle d\'accessibilité). Un vrai défaut trouvé (<code>C4-01</code> ❌ au sens strict) : les scripts d\'audit produits en Phase 03 plantaient sur l\'absence de <code>core/</code> au lieu de sortir proprement, révélé seulement après le commit fondateur, lors d\'une vérification <code>npm install</code> + <code>npm run audit</code> demandée après coup — pas une étape du script lui-même. Corrigé dans <code>master-skill/execution/03-audit-setup.md</code> : la phase doit désormais s\'exécuter réellement avant d\'être présentée à l\'humain, gérer l\'absence de <code>core/</code> par un exit propre, et produire un <code>.gitignore</code>',en:'Campaign C4 (Master Skill) run end-to-end, the test plan\'s protocol followed to the letter: an isolated folder outside the repo, a fresh agent with no access to this repository. The 5 phases run in the expected order with an explicit human-confirmation pause at each of the 5 boundaries (<code>C4-02</code>, <code>C4-03</code> ✅), and the produced instance makes its own lints and token validations genuinely bite in both directions — red on an injected violation, green after cleanup (<code>C4-04</code> ✅, reduced scope — no <code>core/</code> was built at this stage to exercise the accessibility rule). One real defect found (<code>C4-01</code> ❌ in the strict sense): the audit scripts produced in Phase 03 crashed on the absence of <code>core/</code> instead of exiting cleanly, only surfaced after the founding commit, during an <code>npm install</code> + <code>npm run audit</code> check requested afterward — not a step of the script itself. Fixed in <code>master-skill/execution/03-audit-setup.md</code>: the phase must now actually run before being presented to the human, handle the absence of <code>core/</code> with a clean exit, and produce a <code>.gitignore</code>'},
+        ]},
+        { fr:'Audit — règle 4 bloquante en CI', en:'Audit — Rule 4 now blocking in CI', items:[
+          {fr:'<code>scripts/audit-tokens.js</code> : le motif <code>primitive-direct</code> passe de <code>warning</code> à <code>error</code> — <code>--ci</code> échoue désormais sur toute primitive consommée directement (règle 4 de <code>GOVERNANCE.md</code>, ADR-098, amende le comportement décrit dans ADR-012). L\'exemption des replis littéraux <code>var(--x, #fff)</code> ne couvre plus ce motif. Seule occurrence réelle : <code>--site-violet</code>, conservée sous <code>audit-ignore</code> justifié en attendant un token sémantique violet',en:'<code>scripts/audit-tokens.js</code>: the <code>primitive-direct</code> pattern moves from <code>warning</code> to <code>error</code> — <code>--ci</code> now fails on any primitive consumed directly (Rule 4 of <code>GOVERNANCE.md</code>, ADR-098, amends the behavior described in ADR-012). The literal-fallback exemption <code>var(--x, #fff)</code> no longer covers this pattern. Only real occurrence: <code>--site-violet</code>, kept under a justified <code>audit-ignore</code> until a semantic violet token exists'},
+          {fr:'<code>scripts/audit-tokens.js</code> : le filtre <code>f.includes(\'dist\')</code> testait une sous-chaîne du chemin absolu — tout fichier dont le chemin contenait « dist » (un dossier <code>distribution/</code>, ou un clone du repo sous <code>~/distrib/</code>) échappait silencieusement à tout l\'audit, y compris <code>primitive-direct</code> désormais bloquant. Retiré : les dossiers <code>dist/</code> restent exclus par nom exact dans <code>getSourceFiles()</code>. Seule sortie générée qui n\'était exclue que par ce hasard, <code>tests/functional/fixtures/doc-generator-dist/</code>, est désormais listée explicitement dans <code>GENERATED_PATHS</code>. Et <code>--ci</code> fixe <code>process.exitCode</code> au lieu d\'appeler <code>process.exit(1)</code>, qui pouvait tronquer le détail des violations dans les logs CI (issue #118)',en:'<code>scripts/audit-tokens.js</code>: the <code>f.includes(\'dist\')</code> filter tested a substring of the absolute path — any file whose path contained “dist” (a <code>distribution/</code> folder, or a clone of the repo under <code>~/distrib/</code>) silently escaped the whole audit, including the now-blocking <code>primitive-direct</code>. Removed: <code>dist/</code> directories stay excluded by exact name in <code>getSourceFiles()</code>. The only generated output that was excluded by that accident, <code>tests/functional/fixtures/doc-generator-dist/</code>, is now listed explicitly in <code>GENERATED_PATHS</code>. And <code>--ci</code> sets <code>process.exitCode</code> instead of calling <code>process.exit(1)</code>, which could truncate the violation details in CI logs (issue #118)'}, // audit-ignore: issue number, not a color
+          {fr:'<code>playwright.yml</code> : l\'étape « Upload updated snapshots » s\'exécute désormais en <code>always()</code> — un seul test rouge sans rapport ne jette plus les baselines correctement régénérées par <code>update_snapshots=true</code>, qui étaient jusqu\'ici écartées sans erreur (étape <code>skipped</code>). Un avertissement signale dans le résumé du run tout artefact issu d\'un run partiellement rouge, à relire avant de committer (issue #141)',en:'<code>playwright.yml</code>: the “Upload updated snapshots” step now runs under <code>always()</code> — a single unrelated failing test no longer discards baselines correctly regenerated by <code>update_snapshots=true</code>, which were until now silently dropped (step <code>skipped</code>). A warning in the run summary flags any artifact coming from a partially red run, to review before committing (issue #141)'}, // audit-ignore: issue number, not a color
+          {fr:'Builds reproductibles : <code>style-dictionary/build.cjs</code> retire la ligne <code>Generated on &lt;date&gt;</code> que ses formats intégrés (CSS, JS, iOS, Android) tamponnaient avec l\'horloge — deux builds du même commit sont désormais identiques à l\'octet près, pour le paquet <code>@agentica-ds/tokens</code> publié comme pour <code>dist/tokens/</code> versionné. Le test C3-09 retire son contournement et compare les vrais octets publiés. Même correction pour <code>audit.html</code> : sa date provient de <code>git log</code> sur les sources de l\'audit plutôt que de l\'heure du build, ce qui permet à <code>site-freshness</code> de le vérifier à nouveau — un verdict d\'audit périmé resté commité passait jusqu\'ici inaperçu (issues #123, #134)',en:'Reproducible builds: <code>style-dictionary/build.cjs</code> drops the <code>Generated on &lt;date&gt;</code> line its built-in formats (CSS, JS, iOS, Android) stamped from the clock — two builds of the same commit are now byte-identical, for the published <code>@agentica-ds/tokens</code> package as well as the tracked <code>dist/tokens/</code>. The C3-09 test drops its workaround and compares the real published bytes. Same fix for <code>audit.html</code>: its date now comes from <code>git log</code> over the audit\'s sources instead of the build clock, so <code>site-freshness</code> checks it again — a stale committed audit verdict used to go unnoticed (issues #123, #134)'}, // audit-ignore: issue numbers, not colors
+          {fr:'Titres d\'ADR : les spans de code Markdown (44 titres, ex. <code>agtc-input</code>) s\'affichent désormais en <code>&lt;code&gt;</code> dans le H1 de chaque page de décision et dans l\'index des décisions, au lieu de backticks bruts. Le texte est échappé d\'abord, puis enveloppé — le contenu d\'un span peut contenir <code>*</code>, <code>_</code> ou <code>&lt;</code>. Dans l\'index, le code d\'un titre n\'est plus coupé en plein mot (issue #147, volet B de #145)',en:'ADR titles: Markdown code spans (44 titles, e.g. <code>agtc-input</code>) now render as <code>&lt;code&gt;</code> in each decision page\'s H1 and in the decisions index, instead of raw backticks. Text is escaped first, then wrapped — a span\'s content may hold <code>*</code>, <code>_</code> or <code>&lt;</code>. In the index, code in a title no longer breaks mid-word (issue #147, part B of #145)'}, // audit-ignore: issue numbers, not colors
+          {fr:'Storybook : les 7 stories d\'<code>agtc-image</code> s\'affichaient vides (14 captures Chromatic refusées). Deux causes : <code>.storybook/preview.js</code> n\'importait pas <code>agtc-image.js</code>, donc l\'élément n\'était jamais défini, et chaque story chargeait une image externe (<code>picsum.photos</code>) que le navigateur de capture de Chromatic ne récupère pas de façon fiable. Composant désormais enregistré, et images remplacées par des fixtures locales embarquées (<code>components/fixtures/</code>, JPEG + WebP) qui affichent leur propre format — la story WebP montre ainsi quelle source le navigateur a choisie (issue #151)',en:'Storybook: the 7 <code>agtc-image</code> stories rendered blank (14 Chromatic snapshots denied). Two causes: <code>.storybook/preview.js</code> never imported <code>agtc-image.js</code>, so the element was never defined, and every story loaded an external image (<code>picsum.photos</code>) that Chromatic\'s capture browser doesn\'t reliably fetch. The component is now registered, and the images are replaced by local bundled fixtures (<code>components/fixtures/</code>, JPEG + WebP) that print their own format — so the WebP story shows which source the browser picked (issue #151)'}, // audit-ignore: issue number, not a color
+          {fr:'Storybook : <code>agtc-tabs</code> et <code>agtc-top-nav</code> n\'étaient jamais définis non plus (absents de <code>.storybook/preview.js</code>, non importés par leurs stories) — leurs 8 stories affichaient le HTML brut et leurs baselines Chromatic n\'avaient jamais vérifié le composant. Les deux sont désormais enregistrés ; les 104 stories ne contiennent plus aucun élément <code>agtc-*</code> non défini. Ce premier rendu réel a révélé un défaut de <code>agtc-top-nav</code>, suivi à part (issues #162, #164)',en:'Storybook: <code>agtc-tabs</code> and <code>agtc-top-nav</code> were never defined either (missing from <code>.storybook/preview.js</code>, not imported by their stories) — their 8 stories showed raw HTML and their Chromatic baselines had never checked the component. Both are now registered; none of the 104 stories contains an undefined <code>agtc-*</code> element anymore. This first real render surfaced an <code>agtc-top-nav</code> defect, tracked separately (issues #162, #164)'}, // audit-ignore: issue number, not a color
+          {fr:'<code>agtc-top-nav</code> : les hrefs de type dossier (<code>\'../tokens/\'</code>), la forme documentée par la guideline du composant, sont désormais marqués actifs (<code>aria-current="page"</code> + indicateur) sur les pages de leur section — le dernier segment était lu comme un nom de fichier, aucun lien n\'était donc jamais actif avec cette forme. Le site, qui passe des hrefs <code>section/index.html</code>, n\'était pas touché. Test fonctionnel ajouté (<code>tests/functional/components/top-nav.spec.js</code>) ; les stories Storybook montrent enfin l\'état actif (issue #164)',en:'<code>agtc-top-nav</code>: directory-style hrefs (<code>\'../tokens/\'</code>), the form the component guideline documents, are now marked active (<code>aria-current="page"</code> + indicator) on their section\'s pages — the last segment was read as a file name, so no link was ever active with that form. The site, which passes <code>section/index.html</code> hrefs, was unaffected. Functional test added (<code>tests/functional/components/top-nav.spec.js</code>); the Storybook stories finally show the active state (issue #164)'}, // audit-ignore: issue number, not a color
+          {fr:'<code>agtc-top-nav</code> : l\'ombre du panneau du menu mobile utilise désormais le token <code>semantic.shadow.raised</code>. Elle consommait <code>--agtc-shadow-md</code>, une variable définie uniquement par le CSS du site : dans toute application utilisant le paquet, le menu mobile n\'avait aucune ombre. Nouveau contrôle 5 de <code>scripts/audit-tokens.js</code> (bloquant en CI) : un composant ne peut consommer une variable <code>--agtc-*</code> absente de <code>@agentica-ds/tokens</code> que s\'il lui donne une valeur de repli ; test de gouvernance ajouté. Variante sombre des ombres suivie dans #210 (issue #208)',en:'<code>agtc-top-nav</code>: the mobile menu panel shadow now uses the <code>semantic.shadow.raised</code> token. It consumed <code>--agtc-shadow-md</code>, a variable defined only by the site CSS, so in any app using the package the mobile menu had no shadow. New check 5 in <code>scripts/audit-tokens.js</code> (blocking in CI): a component may only consume a <code>--agtc-*</code> variable missing from <code>@agentica-ds/tokens</code> if it gives it a fallback; governance test added. Dark-mode shadow variants tracked in #210 (issue #208)'}, // audit-ignore: issue number, not a color
+          {fr:'ADR-103 — élévation en mode sombre : chaque token <code>semantic.shadow.*</code> non déprécié a désormais une variante sombre (même géométrie, opacité renforcée), et un nouveau token <code>background.surface-raised</code> éclaircit les menus, popovers et panneaux mobiles en sombre, comme chez Atlassian, Apple, Carbon et Radix. L\'échelle d\'ombres propre au site (<code>--agtc-shadow-sm/md/lg</code>) est retirée au profit des tokens. Nouveau contrôle 6 de <code>scripts/audit-tokens.js</code> (bloquant en CI) : une ombre sans variante sombre fait échouer l\'audit. <code>shadow.card-hover</code> est déprécié (issue #210)',en:'ADR-103 — dark-mode elevation: every non-deprecated <code>semantic.shadow.*</code> token now has a dark variant (same geometry, stronger opacity), and a new <code>background.surface-raised</code> token lightens menus, popovers and mobile panels in dark mode, as Atlassian, Apple, Carbon and Radix do. The site-only shadow scale (<code>--agtc-shadow-sm/md/lg</code>) is removed in favour of the tokens. New check 6 in <code>scripts/audit-tokens.js</code> (blocking in CI): a shadow with no dark variant fails the audit. <code>shadow.card-hover</code> is deprecated (issue #210)'}, // audit-ignore: issue number, not a color
+          {fr:'Garde-fou <code>tests/governance/storybook-component-registration.spec.js</code> : échoue si un composant qui a des stories n\'est importé ni par <code>.storybook/preview.js</code> ni par sa propre story (en suivant les imports de façon transitive) — l\'élément n\'y serait jamais défini et Chromatic figerait un rendu vide. Ce trou était passé inaperçu deux fois (<code>agtc-image</code>, puis <code>agtc-tabs</code> et <code>agtc-top-nav</code>). Vérification statique, sans build Storybook, confrontée à un vrai build sur les 104 stories. Le gate PR Playwright se déclenche désormais aussi sur <code>components/**</code> et <code>.storybook/preview.js</code>, pour que ce contrôle tourne avant le merge',en:'Guard <code>tests/governance/storybook-component-registration.spec.js</code>: fails if a component with stories is imported neither by <code>.storybook/preview.js</code> nor by its own story (following imports transitively) — the element would never be defined there and Chromatic would baseline an empty render. That gap went unnoticed twice (<code>agtc-image</code>, then <code>agtc-tabs</code> and <code>agtc-top-nav</code>). Static check, no Storybook build, cross-checked against a real build on all 104 stories. The Playwright PR gate now also triggers on <code>components/**</code> and <code>.storybook/preview.js</code>, so this check runs before merge'},
+          {fr:'Chromatic : quota de snapshots du plan gratuit de nouveau atteint. <code>chromatic.yml</code> ne se déclenche plus que sur ce qui construit Storybook (<code>components/</code>, <code>.storybook/</code>, <code>tokens/</code>, <code>style-dictionary/</code>, <code>package*.json</code>) — <code>site/build.js</code>, qui porte ce changelog, relançait à lui seul un build complet d\'environ 208 snapshots sur presque chaque PR. TurboSnap (<code>onlyChanged</code>) activé : seules les stories dont les dépendances ont changé sont capturées. Déclencheur passé de <code>pull_request</code> à <code>push</code> hors <code>main</code>, condition de TurboSnap. ADR-006 et documents de gouvernance mis à jour',en:'Chromatic: free-tier snapshot quota hit again. <code>chromatic.yml</code> now only triggers on what builds Storybook (<code>components/</code>, <code>.storybook/</code>, <code>tokens/</code>, <code>style-dictionary/</code>, <code>package*.json</code>) — <code>site/build.js</code>, which holds this changelog, alone triggered a full ~208-snapshot build on almost every PR. TurboSnap (<code>onlyChanged</code>) enabled: only stories whose dependencies changed get captured. Trigger moved from <code>pull_request</code> to <code>push</code> outside <code>main</code>, a TurboSnap requirement. ADR-006 and governance docs updated'},
+          {fr:'<code>doc-generator</code> : chaque champ chemin/libellé du manifeste (<code>governance</code>, <code>site</code>, <code>tokens.*</code>, <code>components</code>, <code>audit.engine</code>) doit être une chaîne non vide — un mauvais type est rejeté en nommant le champ, le type attendu et le type reçu. Avant, un objet passait et s\'affichait « [object Object] » dans le site généré (sortie 0), et un nombre faisait planter <code>node:path</code> sans nommer le champ. Un fichier <code>site</code> qui n\'est pas du JSON valide nomme désormais le champ, le manifeste et le fichier. Aucune sortie écrite dans tous les cas de rejet ; le test de caractérisation #128 est remplacé par de vrais tests de rejet (issues #128, #129)',en:'<code>doc-generator</code>: every path/label manifest field (<code>governance</code>, <code>site</code>, <code>tokens.*</code>, <code>components</code>, <code>audit.engine</code>) must be a non-empty string — a wrong type is rejected, naming the field, the expected type and the type received. Before, an object went through and showed up as “[object Object]” in the generated site (exit 0), and a number crashed <code>node:path</code> without naming the field. A <code>site</code> file that isn\'t valid JSON now names the field, the manifest and the file. No output is written in any rejection case; the #128 characterization test is replaced by real rejection tests (issues #128, #129)'}, // audit-ignore: issue numbers, not colors
+          {fr:'ADR-100 — le badge de conformité du <code>doc-generator</code> affiche un verdict d\'audit enregistré, jamais le drapeau <code>badgeEnabled</code>. Nouveau champ optionnel <code>audit.lastResult</code> (<code>passed</code>, <code>violationCount</code>, <code>ranAt</code>, <code>engine</code>), validé à la lecture ; sans lui, le site affiche « not verified » au lieu de « enabled ». Un audit stub n\'en enregistre jamais — celui du Clone l\'est encore, les sites affichent donc honnêtement « not verified ». <code>GOVERNANCE.md</code> gagne une phrase de principe, indépendante de tout outil (issue #130)',en:'ADR-100 — the <code>doc-generator</code> compliance badge shows a recorded audit verdict, never the <code>badgeEnabled</code> flag. New optional field <code>audit.lastResult</code> (<code>passed</code>, <code>violationCount</code>, <code>ranAt</code>, <code>engine</code>), validated on read; without it the site shows “not verified” instead of “enabled”. A stub audit never records one — the Clone\'s still is, so sites honestly show “not verified”. <code>GOVERNANCE.md</code> gains one tool-agnostic principle sentence (issue #130)'}, // audit-ignore: issue number, not a color
+          {fr:'ADR-101 — le gate PR de <code>playwright.yml</code> (« Governance &amp; accessibility fixtures ») peut devenir un check obligatoire de <code>main</code> : le filtre <code>paths</code> du déclencheur <code>pull_request</code> est retiré (un check obligatoire sauté par ce filtre reste « en attente » et bloque toute PR) et le périmètre passe dans le job, via une étape <code>dorny/paths-filter</code> qui conditionne chaque étape suivante. Une PR hors périmètre passe en quelques secondes ; le test de couverture du gate verrouille ce montage (issue #149)',en:'ADR-101 — the <code>playwright.yml</code> PR gate (“Governance &amp; accessibility fixtures”) can become a required check on <code>main</code>: the <code>pull_request</code> trigger\'s <code>paths</code> filter is removed (a required check skipped by it stays “pending” and blocks every PR) and the scope moves inside the job, via a <code>dorny/paths-filter</code> step that guards every later step. An out-of-scope PR passes in seconds; the gate coverage test locks this setup (issue #149)'}, // audit-ignore: issue number, not a color
+          {fr:'Clone : le test à froid C3-08 (2026-09-29) a bloqué dès l\'entrée — le package déballé n\'avait aucun point d\'entrée ni aucune indication sur l\'installation. Nouveau <code>clone/README.md</code> (Node seul requis, étapes, noms de fichiers suggérés, limites de la 0.1.0) ; le guide, la checklist et les exemples renvoient à la copie livrée de <code>GOVERNANCE.md</code> (<code>core/references/non-negotiable-foundation.md</code>) au lieu d\'un fichier absent ; le prérequis de la checklist ne suppose plus le Master Skill. Garde-fou <code>tests/governance/clone-package-self-contained.spec.js</code> sur le tarball réel',en:'Clone: the C3-08 cold walkthrough (2026-09-29) was blocked at the very start — the unpacked package had no entry point and nothing on installation. New <code>clone/README.md</code> (Node only, steps, suggested file names, 0.1.0 limitations); the guide, checklist and examples point to the shipped copy of <code>GOVERNANCE.md</code> (<code>core/references/non-negotiable-foundation.md</code>) instead of a missing file; the checklist prerequisite no longer assumes the Master Skill. Guard <code>tests/governance/clone-package-self-contained.spec.js</code> on the real tarball'},
+          {fr:'ADR-104 — Chromatic est retiré du dépôt (ADR-066 l\'avait déjà remplacé par Playwright, sans finir le travail). Chaque story Storybook a maintenant sa capture Playwright, en clair et en sombre (<code>tests/visual/storybook/</code>, stories lues dans l\'index du build, jamais codées en dur). Storybook est publié avec le site sur <code>agentica.design/storybook/</code> au lieu de l\'hébergement Chromatic, qui ne suivait plus <code>main</code>. Supprimés : <code>chromatic.yml</code>, le script et l\'addon Chromatic, <code>.storybook/modes.js</code>, le contrôle <code>chromatic</code> des attestations de parité ; ADR-006 remplacée',en:'ADR-104 — Chromatic is removed from the repository (ADR-066 had already replaced it with Playwright, without finishing the job). Every Storybook story now has a Playwright snapshot, light and dark (<code>tests/visual/storybook/</code>, stories read from the build\'s index, never hard-coded). Storybook is published with the site at <code>agentica.design/storybook/</code> instead of Chromatic hosting, which no longer followed <code>main</code>. Removed: <code>chromatic.yml</code>, the Chromatic script and addon, <code>.storybook/modes.js</code>, the <code>chromatic</code> tool-parity control; ADR-006 superseded'},
+        ]},
+        { fr:'Tokens — schéma d\'annotation', en:'Tokens — annotation schema', items:[
+          {fr:'ADR-102 — schéma d\'annotation des tokens, vérifié contre le JSON Schema officiel DTCG 2025.10 : <code>$description</code> devient l\'unique description (<code>$intent</code>, refusé par le schéma, y est fondu) ; <code>$extensions["com.agentica.usage"]</code> décrit l\'usage d\'un token (<code>role</code>, <code>use</code>, <code>doNotUse</code> obligatoires ; nouveau champ <code>alternative</code> lisible par un agent) ; <code>$extensions["com.agentica.governance"]</code> remplace <code>$metadata</code>. Sorties Style Dictionary identiques octet pour octet après migration en bac à sable ; la migration des fichiers existants suit (issue #203)',en:'ADR-102 — token annotation schema, checked against the official DTCG 2025.10 JSON Schema: <code>$description</code> becomes the single description (<code>$intent</code>, rejected by the schema, is folded into it); <code>$extensions["com.agentica.usage"]</code> describes how to use a token (<code>role</code>, <code>use</code>, <code>doNotUse</code> required; new agent-readable <code>alternative</code> field); <code>$extensions["com.agentica.governance"]</code> replaces <code>$metadata</code>. Style Dictionary output byte-for-byte identical after a sandbox migration; migrating existing files follows (issue #203)'}, // audit-ignore: issue number, not a color
+        ]},
+      ],
+    },
+    {
+      id: 'v0-4-0', ver: 'v0.4.0', date: '2026-09-13', badge: {fr:'Master Skill + Clone',en:'Master Skill + Clone'},
+      sections: [
+        { fr:'Gouvernance — GOVERNANCE.md, source canonique', en:'Governance — GOVERNANCE.md, canonical source', items:[
+          {fr:'<code>GOVERNANCE.md</code> créé à la racine du dépôt (PR #108) : source unique, brand-agnostique, des 4 règles non-négociables (WCAG 2.2 AA minimum, dernier mot toujours humain, jamais de style codé en dur, jamais de token primitif consommé directement), plus les sections Audit governance et Update governance. Ni le Master Skill ni le Clone ne gardent de copie éditée indépendamment',en:'<code>GOVERNANCE.md</code> created at the repo root (PR #108): a single, brand-agnostic source for the 4 non-negotiable rules (WCAG 2.2 AA minimum, the final word always belongs to a human, never a hard-coded style, never a primitive token consumed directly), plus Audit governance and Update governance sections. Neither the Master Skill nor the Clone keep an independently edited copy'}, // audit-ignore: PR number, not a color
+          {fr:'<code>scripts/sync-governance.mjs</code> + <code>scripts/check-governance-sync.mjs</code> ajoutés : génèrent <code>references/non-negotiable-foundation.md</code> à chaque destination (<code>clone/core/references/</code>, <code>master-skill/references/</code>), exécution manuelle uniquement (<code>npm run sync:governance</code>), avec un check CI <code>governance-sync</code> qui échoue sur toute divergence sans jamais la corriger lui-même',en:'<code>scripts/sync-governance.mjs</code> + <code>scripts/check-governance-sync.mjs</code> added: generate <code>references/non-negotiable-foundation.md</code> at each destination (<code>clone/core/references/</code>, <code>master-skill/references/</code>), manual execution only (<code>npm run sync:governance</code>), with a <code>governance-sync</code> CI check that fails on any drift without ever fixing it itself'},
+        ]},
+        { fr:'Clone — squelette npm, core/personnalisation', en:'Clone — npm skeleton, core/personnalisation', items:[
+          {fr:'<code>clone/</code> structuré comme package npm distribué (pas un scaffold one-shot) avec séparation stricte <code>core/</code> (jamais modifié) / <code>personnalisation/</code> (seule zone modifiable) — PR #109. Stubs d\'audit posés dans <code>core/audit/</code> pour les 3 vérifications de build (accessibilité via un adaptateur axe-core remplaçable, style codé en dur, consommation de token primitif)',en:'<code>clone/</code> structured as a distributed npm package (not a one-shot scaffold) with a strict <code>core/</code> (never modified) / <code>personnalisation/</code> (only modifiable zone) separation — PR #109. Audit stubs added under <code>core/audit/</code> for the 3 build-time checks (accessibility via a replaceable axe-core adapter, hard-coded style, primitive-token consumption)'}, // audit-ignore: PR number, not a color
+          {fr:'Guide de personnalisation complet ajouté (PR #112) : <code>GUIDE.md</code> + <code>CHECKLIST.md</code>, et 5 sous-dossiers (<code>branding/</code>, <code>theme/</code>, <code>governance/</code>, <code>agent-config/</code>, <code>docs-site/</code>) chacun avec un exemple travaillé',en:'Full personalization guide added (PR #112): <code>GUIDE.md</code> + <code>CHECKLIST.md</code>, and 5 subfolders (<code>branding/</code>, <code>theme/</code>, <code>governance/</code>, <code>agent-config/</code>, <code>docs-site/</code>) each with a worked example'}, // audit-ignore: PR number, not a color
+        ]},
+        { fr:'Master Skill — format Agent Skills, logique d\'exécution', en:'Master Skill — Agent Skills format, execution logic', items:[
+          {fr:'<code>master-skill/</code> structuré au format Agent Skills (<code>SKILL.md</code>, pour publication sur skills.sh) — PR #110, sans aucune dépendance technique vers le Clone',en:'<code>master-skill/</code> structured in the Agent Skills format (<code>SKILL.md</code>, for publication on skills.sh) — PR #110, with no technical dependency on the Clone'}, // audit-ignore: PR number, not a color
+          {fr:'Logique d\'exécution rédigée (PR #111) : 5 phases (<code>00</code> architecture composants, <code>01</code> gouvernance, <code>02</code> tokens, <code>03</code> audit, <code>04</code> instructions agent) plus un checklist consolidé des points d\'arrêt humains. Web Components recommandé par défaut comme couche core (Brad Frost, <i>The Design System Ecosystem</i>) — toute dérogation exige un ADR documenté nommant le risque assumé',en:'Execution logic written (PR #111): 5 phases (<code>00</code> component architecture, <code>01</code> governance, <code>02</code> tokens, <code>03</code> audit, <code>04</code> agent instructions) plus a consolidated human-gates checklist. Web Components recommended by default as the core layer (Brad Frost, <i>The Design System Ecosystem</i>) — any deviation requires a documented ADR naming the assumed risk'}, // audit-ignore: PR number, not a color
+        ]},
+        { fr:'Générateur de documentation', en:'Documentation generator', items:[
+          {fr:'<code>doc-generator/</code> ajouté (PR #113) : package indépendant, jamais bundlé, qui lit un contrat <code>design-system.manifest.json</code> et génère un site statique — indifféremment que l\'instance vienne du Clone ou du Master Skill, vérifié sur deux manifests simulés. Sortie jamais versionnée',en:'<code>doc-generator/</code> added (PR #113): a standalone, never-bundled package that reads a <code>design-system.manifest.json</code> contract and generates a static site — identically whether the instance came from the Clone or the Master Skill, verified against two simulated manifests. Output is never versioned'}, // audit-ignore: PR number, not a color
+        ]},
+        { fr:'Audit — couche primitive du Clone', en:'Audit — the Clone\'s primitive layer', items:[
+          {fr:'<code>scripts/audit-tokens.js</code> gagne <code>PRIMITIVE_LAYER_PATHS</code> (PR #112) : exempte <code>clone/personnalisation/branding/</code> — la couche primitive du Clone — de la détection de valeurs codées en dur, un vrai trou structurel distinct de l\'exemption narrative <code>DOCS_AND_PLUGIN_PATHS</code> déjà en place ; <code>theme/</code> et <code>core/</code> restent dans le périmètre. Corrige au passage un vrai bug de contenu que l\'audit avait révélé : une valeur hex brute dans le mapping <code>feedback.error</code> de <code>theme/example.md</code>, remplacée par une vraie référence de primitif',en:'<code>scripts/audit-tokens.js</code> gains <code>PRIMITIVE_LAYER_PATHS</code> (PR #112): exempts <code>clone/personnalisation/branding/</code> — the Clone\'s primitive layer — from hardcoded-value detection, a real structural gap distinct from the existing narrative <code>DOCS_AND_PLUGIN_PATHS</code> exemption; <code>theme/</code> and <code>core/</code> stay in scope. Also fixes a real content bug the audit surfaced: a raw hex value in <code>theme/example.md</code>\'s <code>feedback.error</code> mapping, replaced with a proper primitive reference'}, // audit-ignore: PR number, not a color
+        ]},
+      ],
+    },
+    {
+      id: 'v0-3-3', ver: 'v0.3.3', date: '2026-09-12', badge: {fr:'Packages npm v1.0.0',en:'npm packages v1.0.0'},
+      sections: [
+        { fr:'Site — interopérabilité IA', en:'Site — AI interoperability', items:[
+          {fr:'5ᵉ bloc éditorial « Interopérabilité IA » ajouté à <code>ia.html</code>, pointant vers le comparatif par outil déjà publié sur <code>agents/index.html#autres-outils</code> (PR #97, suite de la PR #96)',en:'5th editorial block "AI interoperability" added to <code>ia.html</code>, linking to the per-tool comparison already shipped on <code>agents/index.html#autres-outils</code> (PR #97, following PR #96)'},
+          {fr:'<code>How-to-devs.md</code> : nouvelle sous-section « Utiliser un autre outil IA (Codex, Copilot, Gemini) » + ligne <code>governance/ai-skills-reference.md</code> dans son tableau de fichiers ; note plus courte sur <code>How-to-designers.md</code> ; <code>How-to-without-agents.md</code> volontairement laissé tel quel — guide de repli zéro-agent, un axe différent du support multi-outils',en:'<code>How-to-devs.md</code>: new "Using another AI tool (Codex, Copilot, Gemini)" subsection + a <code>governance/ai-skills-reference.md</code> row in its Files table; shorter note on <code>How-to-designers.md</code>; <code>How-to-without-agents.md</code> deliberately left alone — the zero-agent fallback guide, a different axis from multi-tool support'},
+          {fr:'Lien Changelog déplacé de la colonne « Documentation » vers « Explorer », dans le menu du header et le footer',en:'Changelog link moved from the "Documentation" to the "Explorer" column, in both the header menu and the footer'},
+          {fr:'Contenu « Interopérabilité IA » marqué Bêta',en:'"AI interoperability" content marked Beta'},
+        ]},
+        { fr:'Tokens — largeur de conteneur de page', en:'Tokens — page container width', items:[
+          {fr:'Nouvelle catégorie <code>semantic.layout</code> : 5 tokens de largeur max de conteneur (<code>cta</code> 600px, <code>intro</code> 700px, <code>docs</code> 960px, <code>default</code> 1180px, <code>wide</code> 1280px, ADR-096) ; 25 valeurs <code>max-width</code> brutes/dupliquées de <code>site/build.js</code> migrées vers ces tokens, <code>--agtc-content-max</code> devenu un simple alias',en:'New <code>semantic.layout</code> category: 5 page-container max-width tokens (<code>cta</code> 600px, <code>intro</code> 700px, <code>docs</code> 960px, <code>default</code> 1180px, <code>wide</code> 1280px, ADR-096); 25 raw/duplicated <code>max-width</code> values in <code>site/build.js</code> migrated to these tokens, <code>--agtc-content-max</code> now a thin alias'},
+          {fr:'Lacune révélée par un vrai test d\'interopérabilité : GitHub Copilot, sur un clone du dépôt, a eu besoin d\'une largeur de conteneur de page, a correctement refusé de réutiliser <code>semantic.size.control.max-width</code> hors de son contrat (ADR-094), et a escaladé selon la règle d\'<code>AGENTS.md</code> sur tout changement touchant un token sémantique — aucune réponse gouvernée n\'existait pour la largeur de mise en page, comblé ici',en:'Gap surfaced by a real AI-tool interoperability test: GitHub Copilot, on a clone of this repo, needed a page container width, correctly refused to reuse <code>semantic.size.control.max-width</code> outside its ADR-094 contract, and escalated per <code>AGENTS.md</code>\'s rule for any change touching a semantic token — no governed answer existed for page-layout width, now closed'},
+          {fr:'Ménage : CSS morte <code>.rd-cta-inner</code> supprimée, 2 valeurs isolées à 760px repliées sur le motif 700px déjà cohérent',en:'Cleanup: dead <code>.rd-cta-inner</code> CSS removed, 2 outlier 760px values folded into the already-consistent 700px pattern'},
+        ]},
+        { fr:'Gouvernance — pipeline de vérification du backlog', en:'Governance — backlog verification pipeline', items:[
+          {fr:'<code>pipelines/backlog.md</code> ajouté : pipeline obligatoire qui vérifie/valide/complète GitHub Projects par rapport au diff complet d\'une PR, exécuté une fois à la fin de la PR (pas à chaque commit) — référencé depuis <code>post-change-pipeline.md</code>, <code>quality-gate.md</code> et le gabarit de PR de <code>git-workflow.md</code>. Déclenché par un audit le jour même ayant trouvé 22 statuts de ticket obsolètes et 7 références « Dépendance » périmées en comparant le tableau au <code>git log</code>',en:'<code>pipelines/backlog.md</code> added: a mandatory pipeline that verifies/validates/completes GitHub Projects against a PR\'s full diff, run once at PR completion (not per-commit) — referenced from <code>post-change-pipeline.md</code>, <code>quality-gate.md</code>, and <code>git-workflow.md</code>\'s PR template. Prompted by a same-day audit finding 22 stale ticket statuses and 7 stale "Dépendance" references by comparing the board against <code>git log</code>'},
+        ]},
+        { fr:'npm — relicenciement Apache 2.0, v1.0.0', en:'npm — Apache 2.0 relicense, v1.0.0', items:[
+          {fr:'<code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> passent de MIT à <b>Apache License 2.0</b>, exécutant le plan déjà annoncé dans le <code>CHANGELOG.md</code> de chaque package aux côtés du changement de licence du dépôt (ADR-095, v0.3.1) : <code>package.json</code>, <code>LICENSE</code>, section License du <code>README.md</code> et <code>NOTICE</code> mis à jour dans les deux packages, versions passées de 0.1.3 à <b>1.0.0</b>. Les versions MIT déjà publiées (jusqu\'à 0.1.3) restent inchangées',en:'<code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> switch from MIT to <b>Apache License 2.0</b>, executing the plan each package\'s <code>CHANGELOG.md</code> already announced alongside the repo-wide license switch (ADR-095, v0.3.1): <code>package.json</code>, <code>LICENSE</code>, the <code>README.md</code> License section and <code>NOTICE</code> updated in both packages, versions bumped 0.1.3 → <b>1.0.0</b>. Already-published MIT versions (up to 0.1.3) are unaffected'},
+        ]},
+        { fr:'CI & tests', en:'CI & tests', items:[
+          {fr:'Test Playwright de langue corrigé : 9 pages ADR (adr-081 à adr-089) citant littéralement le statut français « Terminé » (ADR-069) n\'avaient jamais été ajoutées aux exceptions connues, alors que le commentaire <code>lang-audit-ignore</code> qu\'elles portent déjà ne peut pas être vu par un scan du texte rendu — la CI était rouge sur chaque push vers <code>main</code> depuis le 2026-09-11 (10 runs consécutifs en échec)',en:'Playwright language test fixed: 9 ADR pages (adr-081 through adr-089) literally quoting the French "Terminé" status (ADR-069) had never been added to the known exceptions, even though the <code>lang-audit-ignore</code> comment they already carry can\'t be seen by a scan of rendered text — CI had been red on every push to <code>main</code> since 2026-09-11 (10 consecutive failing runs)'},
+          {fr:'41 snapshots de référence Playwright (chromium) régénérés (<code>workflow_dispatch</code>, approbation humaine préalable) — devenus obsolètes depuis le symbole ™ du logo, l\'icône Figma du header, le bouton copier des blocs de code et le reflow de <code>semantic.layout.container</code> ; chaque diff inspecté individuellement, aucune régression',en:'41 chromium Playwright reference snapshots regenerated (<code>workflow_dispatch</code>, human-approved beforehand) — stale since the logo\'s ™ mark, the Figma header icon, the code-block copy button, and the <code>semantic.layout.container</code> reflow; every diff inspected individually, none a regression'},
+          {fr:'Check CI <code>site-freshness</code> corrigé : chaque <code>&lt;lastmod&gt;</code> de <code>sitemap.xml</code> (145 URLs) était stampé avec l\'horloge du build (<code>new Date()</code>) au lieu du contenu réel des pages — le check (qui reconstruit <code>dist/</code> et le diffe contre la version commitée) échouait donc un jour sur deux, indépendamment de tout vrai changement. Chaque <code>lastmod</code> est désormais le commit Git le plus récent parmi les sources réelles de la page ; stabilité vérifiée sur plusieurs builds avec horloge de processus falsifiée (même jour, +3 jours, −5 jours, +1 an) — sortie identique bit à bit dans tous les cas',en:'CI <code>site-freshness</code> check fixed: every <code>&lt;lastmod&gt;</code> in <code>sitemap.xml</code> (145 URLs) was stamped with the build\'s wall clock (<code>new Date()</code>) instead of the pages\' real content — the check (which rebuilds <code>dist/</code> and diffs it against the committed copy) therefore failed every other day, regardless of any real change. Each <code>lastmod</code> is now the most recent git commit across the page\'s actual sources; stability verified across several builds with a faked process clock (same day, +3 days, −5 days, +1 year) — bit-identical output in every case'},
+        ]},
+        { fr:'Composants — corrections', en:'Components — fixes', items:[
+          {fr:'Storybook : fond et couleur de texte non peints en mode sombre dans la preview — désormais posés depuis les mêmes tokens sémantiques que le site',en:'Storybook: preview background/text color left unpainted in dark mode — now set from the same semantic tokens the site itself uses'},
+          {fr:'<code>agtc-checkbox</code> : les 2 glyphs SVG codés en dur (coche/tiret) remplacés par <code>agtc-icon</code> (Lucide), cohérent avec badge/banner/button/link/segmented/tabs',en:'<code>agtc-checkbox</code>: the 2 hardcoded inline SVG glyphs (check/dash) replaced with <code>agtc-icon</code> (Lucide), consistent with badge/banner/button/link/segmented/tabs'},
+          {fr:'<code>agtc-feature-card</code> : marge basse de l\'icône codée en dur (<code>.875rem</code>) remplacée par le token <code>semantic.space.component.padding.lg</code>',en:'<code>agtc-feature-card</code>: hardcoded icon <code>margin-bottom</code> (<code>.875rem</code>) replaced with the <code>semantic.space.component.padding.lg</code> token'},
+          {fr:'Émoji ✅ du tableau de props du composant <code>icon</code> lui-même remplacé par le motif Lucide <code>circle-check</code> déjà utilisé ailleurs sur cette page (<code>governance/rules/no-emoji-icons.md</code>)',en:'✅ emoji in the <code>icon</code> component\'s own props table replaced with the Lucide <code>circle-check</code> pattern already used elsewhere on that page (<code>governance/rules/no-emoji-icons.md</code>)'},
+        ]},
+      ],
+    },
+    {
+      id: 'v0-3-2', ver: 'v0.3.2', date: '2026-09-11', badge: {fr:'Interopérabilité IA',en:'AI interoperability'},
+      sections: [
+        { fr:'Gouvernance — migration vers governance/', en:'Governance — migration to governance/', items:[
+          {fr:'<code>AGENTS.md</code> devient la seule source de vérité pour la gouvernance — lu nativement par Copilot, Cursor, Codex, Windsurf, Amp et Devin, pas seulement par Claude Code (issue #92, PR #93)',en:'<code>AGENTS.md</code> becomes the single source of truth for governance — read natively by Copilot, Cursor, Codex, Windsurf, Amp and Devin, not just Claude Code (issue #92, PR #93)'},
+          {fr:'<code>.claude/rules/</code> et <code>.claude/instructions/</code> déplacés vers <code>governance/rules/</code> et <code>governance/instructions/</code> (<code>git mv</code>, historique préservé) ; <code>.claude/skills/</code> reste en place — implémentation propre à Claude Code',en:'<code>.claude/rules/</code> and <code>.claude/instructions/</code> moved to <code>governance/rules/</code> and <code>governance/instructions/</code> (<code>git mv</code>, history preserved); <code>.claude/skills/</code> stays in place — Claude Code-specific implementation'},
+          {fr:'<code>CLAUDE.md</code> créé — adaptateur mince qui importe <code>@AGENTS.md</code>, ne contient que ce qui est spécifique à Claude Code',en:'<code>CLAUDE.md</code> created — a thin adapter importing <code>@AGENTS.md</code>, containing only what\'s Claude Code-specific'},
+          {fr:'<code>governance/ai-skills-reference.md</code> créé : documente ce que chaque skill Claude Code automatise et pourquoi, pour que les équipes sur un autre outil sachent quoi reproduire',en:'<code>governance/ai-skills-reference.md</code> created: documents what each Claude Code skill automates and why, so teams on a different tool know what to reproduce'},
+        ]},
+        { fr:'Gouvernance — garde-fou de parité entre outils', en:'Governance — tool parity gate', items:[
+          {fr:'<code>scripts/check-tool-parity.js</code> + <code>.github/workflows/tool-parity.yml</code> ajoutés (issue #94, PR #95) : pour chaque config d\'outil IA détectée dans le dépôt, exige une attestation <code>governance/tool-parity/&lt;outil&gt;.md</code> où un humain déclare, pour chaque contrôle, « Replaced » ou « Accepted absence » — signé et daté',en:'<code>scripts/check-tool-parity.js</code> + <code>.github/workflows/tool-parity.yml</code> added (issue #94, PR #95): for every AI-tool config detected in the repo, requires a <code>governance/tool-parity/&lt;tool&gt;.md</code> attestation where a human records, per control, "Replaced" or "Accepted absence" — signed and dated'},
+          {fr:'<code>.codex/hooks.json</code> supprimé : doublon égaré identique octet pour octet à <code>.claude/settings.json</code>, et Codex CLI n\'a de toute façon aucun système de hooks (confirmé dans sa documentation officielle) — n\'aurait jamais pu fonctionner',en:'<code>.codex/hooks.json</code> removed: a stray duplicate, byte-for-byte identical to <code>.claude/settings.json</code>, and Codex CLI has no hooks mechanism at all anyway (confirmed against its official docs) — could never have worked'},
+          {fr:'4 contrôles auparavant appliqués seulement « par instruction » à Claude Code deviennent de vrais gates CI indépendants de l\'outil : <code>tokens-audit.yml</code>, <code>site-freshness.yml</code>, <code>commit-lint.yml</code> rejoignent <code>lang-audit.yml</code> (déjà actif)',en:'4 controls previously enforced only "by instruction" to Claude Code become real, tool-agnostic CI gates: <code>tokens-audit.yml</code>, <code>site-freshness.yml</code>, <code>commit-lint.yml</code> join <code>lang-audit.yml</code> (already active)'},
+          {fr:'<code>tool-parity</code> et les 3 nouveaux gates ajoutés aux checks requis de protection de branche sur <code>main</code> et <code>develop</code>',en:'<code>tool-parity</code> and the 3 new gates added to required branch-protection checks on <code>main</code> and <code>develop</code>'},
+        ]},
+        { fr:'Gouvernance — portage des skills vers d\'autres outils IA', en:'Governance — porting skills to other AI tools', items:[
+          {fr:'7 skills cœur (<code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>quality-gate</code>, <code>ux-pattern-review</code>, <code>document</code>, <code>post-change-pipeline</code>) portées vers <code>.agents/skills/&lt;nom&gt;/SKILL.md</code> (PR #96), le format ouvert Agent Skills (agentskills.io, gouvernance Linux Foundation AAIF) — chargées automatiquement par Codex CLI et GitHub Copilot CLI, sans aucune installation',en:'7 core skills (<code>ai-component-metadata</code>, <code>ai-ds-composer</code>, <code>codebase-index</code>, <code>quality-gate</code>, <code>ux-pattern-review</code>, <code>document</code>, <code>post-change-pipeline</code>) ported to <code>.agents/skills/&lt;name&gt;/SKILL.md</code> (PR #96), the open Agent Skills format (agentskills.io, Linux Foundation AAIF governance) — auto-loaded by Codex CLI and GitHub Copilot CLI, no install step'},
+          {fr:'<code>.gemini/settings.json</code> + <code>.gemini/hooks/*.js</code> ajoutés : Gemini CLI a un vrai système de hooks (contrairement à Codex/Copilot), les rappels ADR et revue de patterns UX y sont reconstruits nativement — attestation <code>governance/tool-parity/gemini.md</code> signée',en:'<code>.gemini/settings.json</code> + <code>.gemini/hooks/*.js</code> added: Gemini CLI has a real hooks system (unlike Codex/Copilot), the ADR and UX-pattern-review reminders were rebuilt natively for it — <code>governance/tool-parity/gemini.md</code> attestation signed'},
+        ]},
+        { fr:'Ménage', en:'Cleanup', items:[
+          {fr:'Code mort retiré de <code>site/build.js</code> : <code>applyThemeImages()</code> ne s\'appliquait plus à aucun élément généré depuis que la page d\'accueil est figée en mode sombre — <code>governance/rules/illustrations-source.md</code> corrigé en conséquence',en:'Dead code removed from <code>site/build.js</code>: <code>applyThemeImages()</code> no longer applied to any generated element since the home page was fixed to dark mode — <code>governance/rules/illustrations-source.md</code> updated to match'},
+          {fr:'Dossier <code>Redesign/</code> supprimé (vide, scratch personnel)',en:'<code>Redesign/</code> folder removed (empty, personal scratch)'},
+        ]},
+      ],
+    },
+    {
+      id: 'v0-3-1', ver: 'v0.3.1', date: '2026-09-11', badge: {fr:'Licence Apache 2.0',en:'Apache 2.0 license'},
+      sections: [
+        { fr:'Licence', en:'License', items:[
+          {fr:'Passage du code du dépôt de MIT à <b>Apache License 2.0</b> (issue #87, PR #88) : <code>LICENSE</code> remplacé, <code>NOTICE</code> ajouté (crédite Lit — BSD-3-Clause, Lucide — ISC, Style Dictionary — Apache-2.0, <code>@radix-ui/colors</code> — MIT, Atkinson Hyperlegible — SIL OFL 1.1), <code>package.json</code> <code>license</code> → <code>Apache-2.0</code>, mention de copyright ajoutée à <code>README.md</code>',en:'Repository code license switched from MIT to <b>Apache License 2.0</b> (issue #87, PR #88): <code>LICENSE</code> replaced, <code>NOTICE</code> added (credits Lit — BSD-3-Clause, Lucide — ISC, Style Dictionary — Apache-2.0, <code>@radix-ui/colors</code> — MIT, Atkinson Hyperlegible — SIL OFL 1.1), <code>package.json</code> <code>license</code> → <code>Apache-2.0</code>, copyright notice added to <code>README.md</code>'},
+          {fr:'<code>CONTRIBUTING.md</code> ajouté : contributions externes régies par le Developer Certificate of Origin (commit <code>Signed-off-by</code>), pas de Contributor License Agreement',en:'<code>CONTRIBUTING.md</code> added: external contributions governed by the Developer Certificate of Origin (<code>Signed-off-by</code> commits), no Contributor License Agreement'},
+          {fr:'<code>TRADEMARK.md</code> ajouté : séparation code/marque — le nom et le logo Agentica restent une marque distincte, actuellement non enregistrée (™), non couverte par la licence Apache 2.0 du code',en:'<code>TRADEMARK.md</code> added: code/brand separation — the Agentica name and logo remain a separate, currently unregistered (™) trademark, not covered by the code\'s Apache 2.0 license'},
+          {fr:'ADR-095 créé : documente pourquoi CC BY 4.0 (licence prévue pour le futur fichier Figma Community, ADR-081) reste cohérente avec Apache 2.0 — les deux licences sont permissives et ne demandent qu\'une attribution. ADR-081 marqué <code>Superseded</code> plutôt que réécrit (un ADR est immuable une fois actif) ; <code>.claude/rules/figma-library-governance.md</code> et la copy publique du site (page Resources, bandeau parité Figma/code) corrigées pour ne plus citer le MIT',en:'ADR-095 created: documents why CC BY 4.0 (the license set aside for the future Figma Community File, ADR-081) stays consistent with Apache 2.0 — both licenses are permissive and require only attribution. ADR-081 marked <code>Superseded</code> rather than rewritten (an ADR is immutable once active); <code>.claude/rules/figma-library-governance.md</code> and the site\'s public copy (Resources page, Figma/code-parity banner) fixed to stop citing MIT'},
+          {fr:'Relicenciement des sous-packages npm <code>@agentica-ds/tokens</code> et <code>@agentica-ds/components</code> différé : les versions déjà publiées restent MIT, seule la prochaine version majeure de chacun passera à Apache-2.0 (entrée <code>Unreleased</code> ajoutée à chaque <code>CHANGELOG.md</code>, suivi dans l\'issue #89, laissée ouverte jusqu\'à publication)',en:'Relicensing of the <code>@agentica-ds/tokens</code> and <code>@agentica-ds/components</code> npm sub-packages deferred: already-published versions stay MIT, only the next major version of each switches to Apache-2.0 (<code>Unreleased</code> entry added to each <code>CHANGELOG.md</code>, tracked in issue #89, left open until publication)'},
+        ]},
+        { fr:'Marque', en:'Brand', items:[
+          {fr:'Symbole ™ (pas ® — aucun enregistrement formel déposé, ex. OPIC/CIPO) ajouté au mot-symbole « Agentica » sur les 4 variantes de couleur du logo (<code>color</code>, <code>color white</code>, <code>white</code>, <code>black</code>, PR #90) : tracé vectoriel officiel exporté du fichier Figma dédié à la marque (pas un texte approximatif), positionné à droite du mot-symbole en exposant — convention standard de placement d\'une marque non enregistrée',en:'™ symbol (not ® — no formal registration filed, e.g. CIPO) added next to the "Agentica" wordmark across the logo\'s 4 color variants (<code>color</code>, <code>color white</code>, <code>white</code>, <code>black</code>, PR #90): official vector artwork exported from the dedicated Brand Figma file (not hand-drawn text), positioned to the right of the wordmark in superscript — the standard placement convention for an unregistered trademark'},
+          {fr:'Nouvelle variante <code>Logo Agentica - teal wordmark.svg</code> ajoutée (icône + texte teal uni, #12A594) — pas encore consommée par le site, ajoutée pour un usage futur',en:'New <code>Logo Agentica - teal wordmark.svg</code> variant added (solid-teal icon + wordmark, #12A594) — not yet consumed by the site, added for future use'}, // audit-ignore: historical changelog prose naming an SVG asset's fixed color, not a live CSS declaration
+          {fr:'Titre de <code>README.md</code> mis à jour en « Agentica™ »',en:'<code>README.md</code> title updated to "Agentica™"'},
+        ]},
+      ],
+    },
     {
       id: 'v0-3-0', ver: 'v0.3.0', date: '2026-09-10', badge: {fr:'Communauté Figma',en:'Figma Community'},
       sections: [
@@ -8295,13 +8545,14 @@ function buildAudit() {
   const auditFile = path.join(DIST, 'audit.html');
   // Exclude audit.html itself from the analysis (it doesn't exist yet at this stage)
   const r = runAudit({ excludeFile: auditFile });
+  const auditDate = auditSourcesDate();
 
-  const dateStr = r.timestamp.toLocaleDateString('fr-CA', {
+  const dateStr = auditDate.toLocaleDateString('fr-CA', {
     year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit',
     timeZone: 'America/Toronto'
   });
-  const dateStrEn = r.timestamp.toLocaleDateString('en-CA', {
+  const dateStrEn = auditDate.toLocaleDateString('en-CA', {
     year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit',
     timeZone: 'America/Toronto'

@@ -1,9 +1,13 @@
 /**
  * Do not edit directly
- * Generated on Thu, 10 Sep 2026 18:26:16 GMT
  */
 
 :root {
+  --agtc-semantic-layout-container-wide: 1280px;
+  --agtc-semantic-layout-container-default: 1180px;
+  --agtc-semantic-layout-container-docs: 960px;
+  --agtc-semantic-layout-container-intro: 700px;
+  --agtc-semantic-layout-container-cta: 600px;
   --agtc-semantic-radius-control-inner: 4px;
   --agtc-semantic-radius-pill: 9999px;
   --agtc-semantic-shadow-card: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
@@ -161,6 +165,7 @@
   --agtc-semantic-color-background-inverse: var(--agtc-primitive-color-neutral-950);
   --agtc-semantic-color-background-hover: var(--agtc-primitive-color-neutral-50);
   --agtc-semantic-color-background-subtle: var(--agtc-primitive-color-gray-3);
+  --agtc-semantic-color-background-surface-raised: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-surface: var(--agtc-primitive-color-neutral-0);
   --agtc-semantic-color-background-page: var(--agtc-primitive-color-gray-1);
   --agtc-semantic-color-feedback-warning-text: var(--agtc-primitive-color-orange-12);

@@ -25,7 +25,7 @@ echo "Manually verify contrast at https://webaim.org/resources/contrastchecker/ 
 confirm "Contrast manually verified for new tokens/colors?"
 
 echo "=== 3/8 — UX pattern review (ADR-036) ==="
-echo "Consult .claude/rules/ux-patterns-sources.md — 5 sources — and document the decision across the 6 surfaces."
+echo "Consult governance/rules/ux-patterns-sources.md — 5 sources — and document the decision across the 6 surfaces."
 confirm "UX pattern review done and documented across the 6 surfaces?"
 
 echo "=== 4/8 — ADR conformance ==="

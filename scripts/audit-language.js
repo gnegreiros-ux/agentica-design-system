@@ -7,8 +7,8 @@
  * Repository policy: all content is English-only, except two explicitly bilingual
  * zones — the public site (site/build.js, site/contenu.md) and the historical
  * ADR log (decisions/ADR-*.md, French preserved after a `<!-- FR -->` marker).
- * Everything else (root docs, guidelines/, .claude/, scripts/, .github/,
- * component code, starter-kit/, tokens/*.json) must be English-only.
+ * Everything else (root docs, guidelines/, governance/, .claude/skills/, scripts/,
+ * .github/, component code, starter-kit/, tokens/*.json) must be English-only.
  *
  * This script exists because that policy was previously enforced by hand, once,
  * per translation initiative — with no repeatable check to catch new French

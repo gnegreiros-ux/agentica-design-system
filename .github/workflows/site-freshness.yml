@@ -1,0 +1,49 @@
+name: Site — dist freshness
+
+# Enforces .claude/skills/pipelines/site.md: site/dist/ must reflect the
+# current site/build.js, tokens/, decisions/, and guidelines/ — a PR touching
+# any of those without rebuilding leaves a stale, committed site/dist/ that
+# nobody notices until the next unrelated rebuild silently absorbs the fix.
+#
+# Rebuilds and diffs against the committed site/dist/, audit.html included:
+# its date now comes from `git log` over the audit's sources instead of the
+# build clock (issue 134), so a stale committed audit verdict fails here too.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  site-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Full history: site/build.js derives each sitemap.xml page's
+          # <lastmod> and audit.html's date from `git log`, which needs the real
+          # commit history, not the default shallow (depth-1) checkout.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        # npm install (not npm ci): same cross-platform lockfile rationale as
+        # deploy-site.yml and playwright.yml.
+        run: npm install --no-audit --no-fund
+
+      - name: Build site
+        working-directory: site
+        run: node build.js
+
+      - name: Check site/dist/ is up to date
+        run: |
+          if ! git diff --exit-code -- site/dist; then
+            echo "::error::site/dist/ is stale — run 'node site/build.js' and commit the result."
+            exit 1
+          fi

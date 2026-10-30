@@ -1,0 +1,28 @@
+name: Commits — Conventional Commits format
+
+# Enforces .claude/skills/pipelines/commit.md / governance/rules/git-workflow.md's
+# commit convention (type(scope): description) on every commit a PR introduces.
+# PR-only by design: a commit already on main/develop was necessarily part of a
+# merged PR (already checked, or grandfathered from before this workflow existed)
+# — re-scanning all of history on every push would be noise, not signal.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history needed to diff against the PR base
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Check commit message format
+        run: node scripts/check-commit-messages.js "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" --ci

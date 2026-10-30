@@ -54,6 +54,19 @@ const KNOWN_EXCEPTIONS = {
   'decisions/adr-071.html': ['Décideurs', 'Mon intention', 'francophones', 'seulement en anglais'], // literal field-label quote + verbatim human quote
   'decisions/adr-075.html': ['notre-demarche', 'synthèse', 'Synthèse'], // documenting the pre-rename French filenames (ADR-075)
   'foundations/typography.html': ['Æ Ç É'], // Atkinson Hyperlegible glyph specimen — intentional
+  // The 9 entries below all quote the literal GitHub Projects Status field value
+  // "Terminé" (ADR-069's Status options are French: Backlog/En cours/Terminé/etc.) —
+  // each already has a `lang-audit-ignore` HTML comment for scripts/audit-language.js,
+  // which doesn't help here since comments never reach innerText (see file header).
+  'decisions/adr-081.html': ['Terminé'],
+  'decisions/adr-082.html': ['Terminé'],
+  'decisions/adr-083.html': ['Terminé'],
+  'decisions/adr-084.html': ['Terminé'],
+  'decisions/adr-085.html': ['Terminé'],
+  'decisions/adr-086.html': ['Terminé'],
+  'decisions/adr-087.html': ['Terminé'],
+  'decisions/adr-088.html': ['Terminé'],
+  'decisions/adr-089.html': ['Terminé'],
 };
 
 test.describe('Language — English rendering has no French leftovers', () => {

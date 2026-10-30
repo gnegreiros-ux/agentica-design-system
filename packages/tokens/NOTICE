@@ -1,0 +1,30 @@
+@agentica-ds/tokens
+Copyright 2026 Guilherme Negreiros
+
+This product is licensed under the Apache License, Version 2.0.
+See the LICENSE file for the full license text.
+
+------------------------------------------------------------------------------
+Third-party components
+------------------------------------------------------------------------------
+
+This package's compiled values incorporate or reference the following
+third-party components. Each remains under its own original license;
+inclusion in this NOTICE does not change the terms of the Apache License
+2.0 above.
+
+1. Radix UI Colors (https://www.radix-ui.com/colors)
+   License: MIT License
+   Copyright (c) 2022 WorkOS
+   Used as: primitive color scale values referenced in the token system
+
+2. Atkinson Hyperlegible (https://brailleinstitute.org/freefont)
+   License: SIL Open Font License, Version 1.1
+   Copyright (c) Braille Institute of America, Inc.
+   Used as: primary brand typeface referenced by typography tokens, loaded
+   via Google Fonts CDN (font files are not vendored in this package)
+
+------------------------------------------------------------------------------
+
+The full license texts for the above components are available at their
+respective project repositories or at https://spdx.org/licenses/.
