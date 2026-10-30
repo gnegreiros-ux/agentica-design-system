@@ -101,11 +101,13 @@ to either `main` or `develop`), and block force-push/branch deletion. **0 approv
 reviews required** on both, since `gnegreiros-ux` is currently the repository's sole
 collaborator and GitHub cannot self-approve a PR.
 
-**Required status checks, as read from branch protection on 2026-09-28** (branches must
+**Required status checks, as read from branch protection on 2026-10-30** (branches must
 also be up to date with the base):
 - `main`: `lang-audit`, `tool-parity`, `tokens-audit`, `site-freshness`, `commit-lint`,
-  `Governance & accessibility fixtures (PR gate)` (added 2026-09-28, ADR-101, #149)
-- `develop`: `lang-audit`, `tool-parity`, `tokens-audit`, `site-freshness`, `commit-lint`
+  `Governance & accessibility fixtures (PR gate)` (added 2026-09-28, ADR-101, #149),
+  `full-audit` (added 2026-10-23, #243)
+- `develop`: `lang-audit`, `tool-parity`, `tokens-audit`, `site-freshness`, `commit-lint`,
+  `full-audit` (added 2026-10-30, #243 — see below)
 
 Branch protection lives in GitHub settings, not in a committed file — re-read it
 (`gh api repos/gnegreiros-ux/agentica-design-system/branches/main/protection`) rather than
@@ -134,6 +136,28 @@ a `pull_request` trigger to `playwright.yml`, a separate decision not yet made.
 `pull_request` and is now a required check on both `main` and `develop`: any non-Claude AI
 tool config (`.github/copilot-instructions.md`, `.cursor/`, `.windsurf/`, …) must land with a
 complete `governance/tool-parity/*.md` attestation in the same PR, or the PR cannot merge.
+
+**`full-audit`** (`.github/workflows/full-audit.yml`, #243) runs `smoke`, `validate:contracts`,
+and `axe:all` (157 pages × 3 contexts, WCAG AA) — blocking since 2026-10-23, after
+`continue-on-error` on all three steps masked a real failure behind a green job (#243,
+caught via #227's follow-up audit). Triggers on `push` to `main` and on `pull_request`
+targeting either `main` or `develop` — PR-only on `develop`'s side, not on every push
+there, to avoid a full build + 157-page audit on every commit. `main` had to be added to
+the `pull_request` branches too (#248): a required check with no trigger matching the
+`pull_request` event never reports, which blocked every PR into `main` until fixed.
+Confirmed green on a real PR targeting `develop` (#250, run triggered by `pull_request`
+to `develop`, not `main`) before being added to `develop`'s required checks on
+2026-10-30, same reasoning as every other check in this section.
+
+`develop` had drifted 229 commits behind `main` since 2026-09-10 — unnoticed until #250
+tried to resync it and found `full-audit.yml` didn't even exist there yet. That same
+resync PR hit one of its own 229 historic commits (`e5498b8`, merged well before
+`commit-lint` existed) failing the now-current convention — `commit-lint` scans every
+commit a PR *introduces*, and with `develop` this far behind, all of history counted as
+introduced. Resolved via the documented emergency bypass below: `commit-lint` removed
+from `develop`'s required checks for the few minutes needed to merge #250, then restored
+immediately after. Not a precedent for routine drift — `develop` should not be allowed to
+fall this far behind again.
 
 **`tokens-audit`, `site-freshness`, `commit-lint`** (added 2026-09-11) turn three of the
 `quality-gate` Skill's pipelines from "Claude Code is instructed to run this before
