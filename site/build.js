@@ -3463,6 +3463,7 @@ const COMPONENT_PAGES = [
   ['link.html', 'Link'],
   ['segmented.html', 'Segmented'],
   ['tabs.html',      'Tabs'],
+  ['top-nav.html',   'Top-nav'],
 ];
 
 function sidebarComponents(base, current) {
@@ -5169,6 +5170,14 @@ function buildComponentsIndex() {
     <div class="nav-card-desc">
       <span class="lang-fr">Onglets horizontaux in-page (tablist/tab/tabpanel), activation auto, href optionnel.</span>
       <span class="lang-en">Horizontal in-page tabs (tablist/tab/tabpanel), auto activation, optional href.</span>
+    </div>
+  </a>
+  <a href="top-nav.html" class="nav-card">
+    <span class="nav-card-icon">${icon('layout-panel-top',24)}</span>
+    <div class="nav-card-title">Top-nav</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Navigation inter-pages horizontale, indicateur bordure pleine hauteur, CTA intégré.</span>
+      <span class="lang-en">Horizontal inter-page navigation, full-height border indicator, built-in CTA.</span>
     </div>
   </a>
 </div>
@@ -6947,6 +6956,126 @@ function buildTabs() {
   }));
 }
 
+// ─── PAGE: TOP-NAV ───────────────────────────────────────────────────────────
+function buildTopNav() {
+  const tokenRows = [
+    ['top-nav-tab-color',                'semantic.color.text.secondary',        SEM['color-text-secondary']],
+    ['top-nav-tab-color-hover',          'semantic.color.text.primary',          SEM['color-text-primary']],
+    ['top-nav-tab-background-hover',     'semantic.color.background.subtle',     SEM['color-background-subtle']],
+    ['top-nav-tab-color-active',         'semantic.color.action.primary',        SEM['color-action-primary']],
+    ['top-nav-tab-indicator-color',      'semantic.color.action.primary',        SEM['color-action-primary']],
+    ['top-nav-tab-font-weight-active',   'semantic.fontWeight.bold',             SEM['fontWeight-bold']],
+    ['top-nav-tab-focus-ring',           'semantic.color.border.focus',          SEM['color-border-focus']],
+    ['top-nav-cta-background',           'semantic.color.action.primary',        SEM['color-action-primary']],
+    ['top-nav-cta-background-hover',     'semantic.color.action.primary-hover',  SEM['color-action-primary-hover']],
+    ['top-nav-cta-color',                'semantic.color.text.on-action',        SEM['color-text-on-action']],
+    ['top-nav-cta-radius',               'semantic.radius.control',              SEM['radius-control']],
+  ];
+
+  const body = `
+<h1>Top-nav</h1>
+<p class="page-lead">
+  <span class="lang-fr">Navigation principale horizontale, en liens inter-pages. Visuellement inspirée du pattern tabs (indicateur bordure pleine hauteur), mais sémantiquement correcte : <code>&lt;nav&gt;</code> + <code>&lt;a&gt;</code> + <code>aria-current="page"</code>, jamais <code>role="tablist"</code>.</span>
+  <span class="lang-en">Main horizontal navigation, inter-page links. Visually inspired by the tabs pattern (full-height border-bottom indicator), but semantically correct: <code>&lt;nav&gt;</code> + <code>&lt;a&gt;</code> + <code>aria-current="page"</code>, never <code>role="tablist"</code>.</span>
+</p>
+
+<div class="infobox" role="note">
+  <span class="infobox-icon">${icon('info', 20)}</span>
+  <span class="infobox-body">
+    <span class="lang-fr">Le site Agentica lui-même n'utilise pas <code>&lt;agtc-top-nav&gt;</code> sur ses propres pages — sa navigation est du HTML écrit à la main (<code>.site-nav</code>) qui consomme les mêmes tokens (ADR-087). Ce choix d'intégration du site ne change rien au contrat ci-dessous, applicable à tout consommateur qui monte le vrai composant.</span>
+    <span class="lang-en">The Agentica site itself does not mount <code>&lt;agtc-top-nav&gt;</code> on its own pages — its nav is hand-written HTML (<code>.site-nav</code>) consuming the same tokens (ADR-087). This site-integration choice does not change the contract below, which applies to any consumer that mounts the real component.</span>
+  </span>
+</div>
+
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<div class="demo-box" style="padding:0;overflow:hidden">
+  <div style="display:flex;align-items:stretch;height:64px;background:var(--agtc-semantic-color-background-surface);border-bottom:1px solid var(--agtc-semantic-color-border-default);border-top:3px solid var(--agtc-semantic-color-action-primary);padding:0 24px">
+    <agtc-top-nav nav-label="Main navigation" id="demo-top-nav"></agtc-top-nav>
+  </div>
+</div>
+<script defer>
+(function () {
+  const nav = document.getElementById('demo-top-nav');
+  if (!nav) return;
+  nav.items = [
+    { labelFr: 'Tokens',      labelEn: 'Tokens',      href: '#' },
+    { labelFr: 'Composants',  labelEn: 'Components',  href: '#', },
+    { labelFr: 'Fondations',  labelEn: 'Foundations', href: '#' },
+    { labelFr: 'Démarrer',    labelEn: 'Get started',  href: '#', cta: true },
+  ];
+  nav.current = '#components-demo-active';
+})();
+</script>
+
+<h2><span class="lang-fr">Distinction avec <code>agtc-tabs</code></span><span class="lang-en">Distinction from <code>agtc-tabs</code></span></h2>
+<div class="table-wrap" tabindex="0"><table><thead><tr><th></th><th><code>agtc-top-nav</code></th><th><code>agtc-tabs</code></th></tr></thead><tbody>
+<tr><td><span class="lang-fr">Sémantique ARIA</span><span class="lang-en">ARIA semantics</span></td><td><code>role=navigation</code> + <code>&lt;a&gt;</code></td><td><code>role=tablist</code> + <code>role=tab</code> + <code>role=tabpanel</code></td></tr>
+<tr><td><span class="lang-fr">Navigation clavier</span><span class="lang-en">Keyboard navigation</span></td><td>Tab + Enter</td><td><span class="lang-fr">Flèches ←/→ + Home/End</span><span class="lang-en">Arrows ←/→ + Home/End</span></td></tr>
+<tr><td><span class="lang-fr">État actif</span><span class="lang-en">Active state</span></td><td><code>aria-current="page"</code></td><td><code>aria-selected="true"</code></td></tr>
+<tr><td><span class="lang-fr">Effet</span><span class="lang-en">Effect</span></td><td><span class="lang-fr">Navigation inter-pages</span><span class="lang-en">Inter-page navigation</span></td><td><span class="lang-fr">Panneau de contenu in-page</span><span class="lang-en">In-page content panel</span></td></tr>
+</tbody></table></div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>nav-label</code> toujours fourni — <code>aria-label</code> obligatoire pour les technologies d'assistance</span><span class="lang-en"><code>nav-label</code> always provided — <code>aria-label</code> mandatory for AT</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Bouton d'adoption marqué <code>cta:true</code> — jamais comme un onglet standard</span><span class="lang-en">Adoption button marked <code>cta:true</code> — never as a standard tab</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais <code>role="tablist"</code> — c'est une navigation inter-pages</span><span class="lang-en">Never <code>role="tablist"</code> — this is inter-page navigation</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de fond rempli persistant sur le lien actif</span><span class="lang-en">Never a persistent filled background on the active link</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([k,r,v]) => `<tr class="token-row"><td><code>--agtc-component-${k}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>&lt;nav aria-label="…"&gt;</code> — landmark obligatoire, nommé via <code>nav-label</code></span><span class="lang-en"><code>&lt;nav aria-label="…"&gt;</code> — required landmark, named via <code>nav-label</code></span></li>
+  <li><span class="lang-fr"><code>aria-current="page"</code> appliqué automatiquement au lien actif</span><span class="lang-en"><code>aria-current="page"</code> automatically applied to the active link</span></li>
+  <li><span class="lang-fr"><code>:focus-visible</code> — anneau visible sur tous les liens (WCAG 2.4.7)</span><span class="lang-en"><code>:focus-visible</code> — visible ring on all links (WCAG 2.4.7)</span></li>
+  <li><span class="lang-fr"><code>:visited</code> neutralisé — cohérence visuelle (ADR-047)</span><span class="lang-en"><code>:visited</code> neutralized — visual consistency (ADR-047)</span></li>
+  <li><span class="lang-fr">Cibles tactiles ≥ 44px (hauteur d'en-tête 64px) — WCAG 2.5.5</span><span class="lang-en">Touch targets ≥ 44px (header height 64px) — WCAG 2.5.5</span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;agtc-top-nav nav-label="Main navigation"&gt;&lt;/agtc-top-nav&gt;
+&lt;script&gt;
+  const nav = document.querySelector('agtc-top-nav');
+  nav.items = [
+    { label: 'Tokens',      href: '../tokens/' },
+    { label: 'Components',  href: '../components/' },
+    { label: 'Get started', href: '../get-started.html', cta: true },
+  ];
+  nav.current = window.location.pathname;
+&lt;/script&gt;</code></pre>
+
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Gérer la langue (<code>labelFr</code>/<code>labelEn</code>) côté consommateur, pas dans le composant</span><span class="lang-en">Handle language (<code>labelFr</code>/<code>labelEn</code>) on the consumer side, not in the component</span></li>
+      <li><span class="lang-fr">Utiliser pour une navigation inter-pages réelle</span><span class="lang-en">Use for real inter-page navigation</span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Utiliser pour un contenu in-page sans changement de page (→ <code>agtc-tabs</code>)</span><span class="lang-en">Use for in-page content with no page change (→ <code>agtc-tabs</code>)</span></li>
+      <li><span class="lang-fr">Ajouter un <code>border-radius</code> aux liens d'onglet</span><span class="lang-en">Add <code>border-radius</code> to the tab links</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/top-nav.html'), layout({
+    title: 'Top-nav', depth: 1,
+    sidebar: sidebarComponents('../','top-nav.html'),
+    body: body + uxPatternsFromMd('top-nav') + contributionBanner()
+  }));
+}
+
 // ─── PAGE: TOKEN EXPLORER ───────────────────────────────────────────────────
 function buildTokens() {
   const scaleSteps = Object.values(COLOR_SCALES).reduce((a,s) => a + Object.keys(s).length, 0);
@@ -7639,6 +7768,7 @@ const COMPONENT_GUIDELINE_SOURCE = {
   'components/link.html': 'link',
   'components/segmented.html': 'segmented',
   'components/tabs.html': 'tabs',
+  'components/top-nav.html': 'top-nav',
 };
 
 function sitemapSources(pagePath, adrs) {
@@ -7736,6 +7866,7 @@ function buildRobotsAndSitemap(adrs) {
     ['components/segmented.html', 'monthly', '0.7'],
     ['components/tabs.html',      'monthly', '0.7'],
     ['components/icon.html',      'monthly', '0.7'],
+    ['components/top-nav.html',   'monthly', '0.7'],
     ['tokens/index.html',         'monthly', '0.8'],
     ['decisions/index.html',      'monthly', '0.8'],
     ['agents/index.html',         'monthly', '0.8'],
@@ -9225,6 +9356,7 @@ function build() {
   buildLink();
   buildSegmented();
   buildTabs();
+  buildTopNav();
   buildTokens();
   buildDecisionsIndex(adrs);
   adrs.forEach(adr => buildADR(adr, adrs));
