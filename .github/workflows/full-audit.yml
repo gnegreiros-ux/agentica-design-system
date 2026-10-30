@@ -76,3 +76,19 @@ jobs:
           echo "## ❌ Full audit failed" >> "$GITHUB_STEP_SUMMARY"
           echo "One of smoke / validate:contracts / axe:all failed." >> "$GITHUB_STEP_SUMMARY"
           echo "See the job log above for which step and why." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        # Unlike the deprecated axe.yml (which had its own upload-artifact step),
+        # this workflow wrote smoke-report.json / axe-report.json to the runner
+        # and discarded them on teardown — no report was ever consultable after
+        # the fact, for any of its runs, including the one that actually failed
+        # (#244). `if: always()` so a failed run's reports — the ones worth
+        # reading — are archived too, not just successful ones.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-audit-reports
+          path: |
+            smoke-report.json
+            axe-report.json
+          retention-days: 30
