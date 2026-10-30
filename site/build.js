@@ -3463,6 +3463,7 @@ const COMPONENT_PAGES = [
   ['link.html', 'Link'],
   ['segmented.html', 'Segmented'],
   ['tabs.html',      'Tabs'],
+  ['feature-card.html', 'Feature Card'],
 ];
 
 function sidebarComponents(base, current) {
@@ -5171,6 +5172,14 @@ function buildComponentsIndex() {
       <span class="lang-en">Horizontal in-page tabs (tablist/tab/tabpanel), auto activation, optional href.</span>
     </div>
   </a>
+  <a href="feature-card.html" class="nav-card">
+    <span class="nav-card-icon">${icon('sparkles',24)}</span>
+    <div class="nav-card-title">Feature Card</div>
+    <div class="nav-card-desc">
+      <span class="lang-fr">Bloc éditorial icône + titre + corps, bordure animée, variantes default/marketing.</span>
+      <span class="lang-en">Icon + title + body editorial block, animated border, default/marketing variants.</span>
+    </div>
+  </a>
 </div>
 `;
 
@@ -6034,6 +6043,108 @@ function buildCard() {
     title: 'Card', depth: 1,
     sidebar: sidebarComponents('../','card.html'),
     body: body + uxPatternsFromMd('card') + contributionBanner()
+  }));
+}
+
+// ─── PAGE: FEATURE CARD ──────────────────────────────────────────────────────
+function buildFeatureCard() {
+  const tokenRows = [
+    ['background',            'semantic.color.background.overlay-dark', SEM['color-background-overlay-dark']],
+    ['border',                'semantic.color.border.overlay-dark',      SEM['color-border-overlay-dark']],
+    ['accent',                'semantic.color.action.primary',           SEM['color-action-primary']],
+    ['accent-marketing-end',  'semantic.color.brand.accent',             SEM['color-brand-accent']],
+    ['icon-gap',              'semantic.space.component.padding-lg',     SEM['space-component-padding-lg']],
+    ['title',                 'semantic.color.action.primary',           SEM['color-action-primary']],
+    ['body',                  'semantic.color.text.on-dark-secondary',   SEM['color-text-on-dark-secondary']],
+  ];
+
+  const iconShield = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>`;
+  const iconSparkles = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>`;
+
+  const body = `
+<h1>Feature Card</h1>
+<p class="page-lead">
+  <span class="lang-fr">Bloc éditorial compact — icône + titre + corps — avec une affordance d'interactivité visuelle (bordure animée). Pour les sections narratives « valeur par rôle ».</span>
+  <span class="lang-en">Compact editorial block — icon + title + body — with a visual interactivity affordance (animated border). For "value by role" narrative sections.</span>
+</p>
+
+<h2 class="first"><span class="lang-fr">Variantes</span><span class="lang-en">Variants</span></h2>
+<div class="demo-box" style="background:var(--agtc-semantic-color-background-inverse,#0c0f19);padding:24px">
+  <div class="demo-row" style="gap:16px;flex-wrap:wrap;align-items:flex-start">
+    <agtc-feature-card heading="Accessibilité" heading-level="3" style="max-width:280px">
+      ${iconShield}
+      <span class="lang-fr">WCAG 2.1 AA vérifié automatiquement avant chaque commit.</span>
+      <span class="lang-en">WCAG 2.1 AA automatically checked before every commit.</span>
+    </agtc-feature-card>
+    <agtc-feature-card heading="Designers" variant="marketing" heading-level="3" style="max-width:280px">
+      ${iconSparkles}
+      <span class="lang-fr">Tokens sémantiques, contrats de composants et décisions documentées.</span>
+      <span class="lang-en">Semantic tokens, component contracts, and documented decisions.</span>
+    </agtc-feature-card>
+  </div>
+</div>
+
+<h2><span class="lang-fr">Règles absolues</span><span class="lang-en">Absolute rules</span></h2>
+<ul>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr">Icône fonctionnelle uniquement — jamais décorative</span><span class="lang-en">Functional icon only — never decorative</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>heading-level</code> ajusté selon la hiérarchie de la page — jamais de niveau sauté</span><span class="lang-en"><code>heading-level</code> adjusted to the page hierarchy — never a skipped level</span></li>
+  <li><span class='icon-ok'>${icon('circle-check', 16)}</span> <span class="lang-fr"><code>variant="marketing"</code> seulement sur <code>data-context="marketing"</code></span><span class="lang-en"><code>variant="marketing"</code> only on <code>data-context="marketing"</code></span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais de bouton primaire à l'intérieur — ce n'est pas une zone d'action</span><span class="lang-en">Never a primary button inside — not an action zone</span></li>
+  <li><span class='icon-no'>${icon('circle-x', 16)}</span> <span class="lang-fr">Jamais d'image raster — SVG uniquement dans le slot icon</span><span class="lang-en">Never a raster image — SVG only in the icon slot</span></li>
+</ul>
+
+<h2><span class="lang-fr">Tokens de composant</span><span class="lang-en">Component tokens</span></h2>
+<table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Token CSS</th><th><span class="lang-fr">Référence</span><span class="lang-en">Reference</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
+  <tbody>${tokenRows.map(([,r,v]) => `<tr class="token-row"><td><code>--agtc-${r.replace(/\./g,'-')}</code></td><td><code>${r}</code></td><td class="mono-sm">${v||'—'}</td></tr>`).join('')}</tbody>
+</table>
+
+<h2><span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span></h2>
+<ul>
+  <li><span class="lang-fr"><code>role="heading"</code> + <code>aria-level</code> dans le shadow DOM — lu correctement par les lecteurs d'écran quel que soit le contexte</span><span class="lang-en"><code>role="heading"</code> + <code>aria-level</code> in the shadow DOM — read correctly by screen readers regardless of context</span></li>
+  <li><span class="lang-fr"><code>prefers-reduced-motion: reduce</code> — bordure pleine largeur dès le départ, sans animation</span><span class="lang-en"><code>prefers-reduced-motion: reduce</code> — full-width border from the start, no animation</span></li>
+  <li><span class="lang-fr">Le slot <code>icon</code> doit contenir un SVG avec <code>aria-hidden="true"</code> — le titre est le libellé sémantique</span><span class="lang-en">The <code>icon</code> slot must contain an SVG with <code>aria-hidden="true"</code> — the title is the semantic label</span></li>
+  <li><span class="lang-fr">Indication de focus visible — <code>:host(:focus-within)::after</code></span><span class="lang-en">Visible focus indication — <code>:host(:focus-within)::after</code></span></li>
+</ul>
+
+<h2><span class="lang-fr">Implémentation</span><span class="lang-en">Implementation</span></h2>
+<pre class="code-block"><code class="lang-html">&lt;!-- Contexte SaaS — variante par défaut --&gt;
+&lt;agtc-feature-card heading="Accessibility" heading-level="3"&gt;
+  &lt;svg slot="icon" ...&gt;&lt;/svg&gt;
+  WCAG 2.1 AA automatically checked before every commit.
+&lt;/agtc-feature-card&gt;
+
+&lt;!-- Contexte marketing --&gt;
+&lt;agtc-feature-card heading="Designers" variant="marketing" heading-level="3"&gt;
+  &lt;svg slot="icon" ...&gt;&lt;/svg&gt;
+  Semantic tokens, component contracts, and documented decisions.
+&lt;/agtc-feature-card&gt;</code></pre>
+
+<h2><span class="lang-fr">DOs et DON'Ts</span><span class="lang-en">DOs and DON'Ts</span></h2>
+<div class="dos-donts">
+  <div class="do-section">
+    <h3>${icon('circle-check',16)} <span class="lang-fr">À faire</span><span class="lang-en">Do</span></h3>
+    <ul>
+      <li><span class="lang-fr">Icône qui représente l'intention du bloc, pas une décoration</span><span class="lang-en">Icon that represents the block's intent, not decoration</span></li>
+      <li><span class="lang-fr">1 à 2 phrases courtes dans le corps — pas de liste imbriquée</span><span class="lang-en">1 to 2 short sentences in the body — no nested list</span></li>
+      <li><span class="lang-fr">Un seul niveau de titre par section, ajusté avec <code>heading-level</code></span><span class="lang-en">One heading level per section, adjusted with <code>heading-level</code></span></li>
+    </ul>
+  </div>
+  <div class="dont-section">
+    <h3>${icon('circle-x',16)} <span class="lang-fr">À éviter</span><span class="lang-en">Don't</span></h3>
+    <ul>
+      <li><span class="lang-fr">Bouton primaire à l'intérieur — ce n'est pas une zone d'action</span><span class="lang-en">Primary button inside — not an action zone</span></li>
+      <li><span class="lang-fr"><code>variant="marketing"</code> hors d'une page <code>data-context="marketing"</code></span><span class="lang-en"><code>variant="marketing"</code> outside a <code>data-context="marketing"</code> page</span></li>
+      <li><span class="lang-fr">Utiliser pour de la navigation — placer un <code>&lt;a&gt;</code> à l'intérieur si cliquable</span><span class="lang-en">Use for navigation — place an <code>&lt;a&gt;</code> inside if clickable</span></li>
+    </ul>
+  </div>
+</div>
+`;
+
+  write(path.join(DIST, 'components/feature-card.html'), layout({
+    title: 'Feature Card', depth: 1,
+    sidebar: sidebarComponents('../','feature-card.html'),
+    body: body + uxPatternsFromMd('feature-card') + contributionBanner()
   }));
 }
 
@@ -7639,6 +7750,7 @@ const COMPONENT_GUIDELINE_SOURCE = {
   'components/link.html': 'link',
   'components/segmented.html': 'segmented',
   'components/tabs.html': 'tabs',
+  'components/feature-card.html': 'feature-card',
 };
 
 function sitemapSources(pagePath, adrs) {
@@ -7736,6 +7848,7 @@ function buildRobotsAndSitemap(adrs) {
     ['components/segmented.html', 'monthly', '0.7'],
     ['components/tabs.html',      'monthly', '0.7'],
     ['components/icon.html',      'monthly', '0.7'],
+    ['components/feature-card.html', 'monthly', '0.7'],
     ['tokens/index.html',         'monthly', '0.8'],
     ['decisions/index.html',      'monthly', '0.8'],
     ['agents/index.html',         'monthly', '0.8'],
@@ -9216,6 +9329,7 @@ function build() {
   buildBadge();
   buildImage();
   buildCard();
+  buildFeatureCard();
   buildCheckbox();
   buildRadio();
   buildToggle();
