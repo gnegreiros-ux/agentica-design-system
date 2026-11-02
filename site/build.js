@@ -6363,16 +6363,6 @@ function buildRadio() {
 
 // ─── PAGE: TOGGLE ────────────────────────────────────────────────────────────
 function buildToggle() {
-  function toggle(on, dim) {
-    const track = on ? 'var(--agtc-component-toggle-default-track-on)' : 'var(--agtc-component-toggle-default-track-off)';
-    const x = on ? '18px' : '2px';
-    // Hardcoded knob shadow: faithfully mirrors the agtc-toggle component (WCAG 1.4.11 delimiter, not tokenized in the contract).
-    return `<span style="position:relative;display:inline-block;width:40px;height:24px;border-radius:var(--agtc-semantic-radius-pill);background:${track};flex-shrink:0${dim?';opacity:.5':''}"><span style="position:absolute;top:2px;left:${x};width:20px;height:20px;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-component-toggle-default-knob);box-shadow:0 1px 2px rgba(0,0,0,.25)"></span></span>`;
-  }
-  function row(on, label, dim) {
-    return `<span${dim?' aria-disabled="true"':''} style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px">${toggle(on, dim)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
-  }
-
   const tokenRows = [
     ['toggle-default-track-off',       'primitive.color.gray.9',              '#8d8d8d'], // audit-ignore: resolved value shown as reference data
     ['toggle-default-track-off-hover', 'primitive.color.gray.10',             '#838383'], // audit-ignore: resolved value shown as reference data
@@ -6395,15 +6385,15 @@ function buildToggle() {
   <div class="demo-group">
     <span class="demo-group-label">Off · On</span>
     <div class="demo-row demo-col">
-      ${row(false, '<span class="lang-fr">Mode sombre</span><span class="lang-en">Dark mode</span>')}
-      ${row(true, '<span class="lang-fr">Notifications par e-mail</span><span class="lang-en">Email notifications</span>')}
+      <agtc-toggle label="Mode sombre"></agtc-toggle>
+      <agtc-toggle label="Notifications par e-mail" checked></agtc-toggle>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
     <div class="demo-row demo-col">
-      ${row(false, '<span class="lang-fr">Synchronisation</span><span class="lang-en">Sync</span>', true)}
-      ${row(true, '<span class="lang-fr">Sauvegarde auto</span><span class="lang-en">Auto-save</span>', true)}
+      <agtc-toggle label="Synchronisation" disabled></agtc-toggle>
+      <agtc-toggle label="Sauvegarde auto" checked disabled></agtc-toggle>
     </div>
   </div>
 </div>
