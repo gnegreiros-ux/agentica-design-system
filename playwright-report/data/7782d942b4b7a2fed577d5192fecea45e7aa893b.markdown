@@ -1,0 +1,564 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: functional/language.spec.js >> Language — English rendering has no French leftovers >> components/feature-card.html — clean in English mode
+- Location: tests/functional/language.spec.js:76:5
+
+# Error details
+
+```
+Error: French content visible in components/feature-card.html with data-lang=en:
+  line 77: "é" in "<!-- Contexte SaaS — variante par défaut -->"
+
+expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 3
+
+- Array []
++ Array [
++   "  line 77: \"é\" in \"<!-- Contexte SaaS — variante par défaut -->\"",
++ ]
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Agentica — Accueil" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img [ref=e5]
+    - navigation "Navigation principale" [ref=e6]:
+      - link "Home" [ref=e7] [cursor=pointer]:
+        - /url: ../index.html
+      - link "Why" [ref=e8] [cursor=pointer]:
+        - /url: ../pourquoi.html
+      - link "Architecture" [ref=e9] [cursor=pointer]:
+        - /url: ../architecture.html
+      - link "Quality" [ref=e10] [cursor=pointer]:
+        - /url: ../qualite.html
+      - link "AI" [ref=e11] [cursor=pointer]:
+        - /url: ../ia.html
+      - generic [ref=e12]:
+        - link "Documentation" [ref=e13] [cursor=pointer]:
+          - /url: ../documentation.html
+        - generic:
+          - generic:
+            - heading "Understand" [level=2]
+            - link "Introduction":
+              - /url: ../pourquoi.html
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Human control":
+              - /url: ../ia.html
+            - link "Single source of truth":
+              - /url: ../architecture.html
+          - generic:
+            - heading "Reference" [level=2]
+            - link "Foundations":
+              - /url: ../foundations/index.html
+            - link "Components":
+              - /url: ../components/index.html
+            - link "Tokens":
+              - /url: ../tokens/index.html
+            - link "Decisions":
+              - /url: ../decisions/index.html
+            - link "Agents":
+              - /url: ../agents/index.html
+            - link "Pipelines":
+              - /url: ../pipelines/index.html
+            - link "Continuity":
+              - /url: ../continuite.html
+          - generic:
+            - heading "Explore" [level=2]
+            - link "Figma library":
+              - /url: ../resources.html
+            - link "Storybook":
+              - /url: https://agentica.design/storybook/
+            - link "GitHub":
+              - /url: https://github.com/gnegreiros-ux/agentica-design-system
+            - link "Audit":
+              - /url: ../audit.html
+            - link "Changelog":
+              - /url: ../changelog.html
+      - link "Get started" [ref=e14] [cursor=pointer]:
+        - /url: ../get-started.html
+    - generic "Liens rapides" [ref=e15]:
+      - button "Basculer thème sombre / Switch to dark theme" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+      - group "Language" [ref=e20]:
+        - button "FR" [ref=e21] [cursor=pointer]
+        - button "EN" [ref=e22] [cursor=pointer]
+      - link "Storybook — Catalogue interactif des composants" [ref=e23] [cursor=pointer]:
+        - /url: https://agentica.design/storybook/
+        - img [ref=e24]
+      - link "GitHub — Code source du projet" [ref=e26] [cursor=pointer]:
+        - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - img [ref=e27]
+      - link "Figma — Librairie Agentica sur Figma Community" [ref=e30] [cursor=pointer]:
+        - /url: https://www.figma.com/community/file/1679894876003692613/agentica-agentic-design-system
+        - img [ref=e31]
+  - generic [ref=e37]:
+    - navigation "Secondary navigation / Navigation secondaire" [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e40]: Components
+        - link "Overview" [ref=e41] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Button" [ref=e42] [cursor=pointer]:
+          - /url: ../components/button.html
+        - link "Icon" [ref=e43] [cursor=pointer]:
+          - /url: ../components/icon.html
+        - link "Input" [ref=e44] [cursor=pointer]:
+          - /url: ../components/input.html
+        - link "Badge" [ref=e45] [cursor=pointer]:
+          - /url: ../components/badge.html
+        - link "Image" [ref=e46] [cursor=pointer]:
+          - /url: ../components/image.html
+        - link "Card" [ref=e47] [cursor=pointer]:
+          - /url: ../components/card.html
+        - link "Checkbox" [ref=e48] [cursor=pointer]:
+          - /url: ../components/checkbox.html
+        - link "Radio" [ref=e49] [cursor=pointer]:
+          - /url: ../components/radio.html
+        - link "Toggle" [ref=e50] [cursor=pointer]:
+          - /url: ../components/toggle.html
+        - link "Table" [ref=e51] [cursor=pointer]:
+          - /url: ../components/table.html
+        - link "Code Block" [ref=e52] [cursor=pointer]:
+          - /url: ../components/code-block.html
+        - link "Banner" [ref=e53] [cursor=pointer]:
+          - /url: ../components/banner.html
+        - link "Link" [ref=e54] [cursor=pointer]:
+          - /url: ../components/link.html
+        - link "Segmented" [ref=e55] [cursor=pointer]:
+          - /url: ../components/segmented.html
+        - link "Tabs" [ref=e56] [cursor=pointer]:
+          - /url: ../components/tabs.html
+        - link "Feature Card" [ref=e57] [cursor=pointer]:
+          - /url: ../components/feature-card.html
+        - link "Top-nav" [ref=e58] [cursor=pointer]:
+          - /url: ../components/top-nav.html
+    - main [ref=e59]:
+      - heading "Feature Card" [level=1] [ref=e60]
+      - paragraph [ref=e61]: Compact editorial block — icon + title + body — with a visual interactivity affordance (animated border). For "value by role" narrative sections.
+      - heading "Variants" [level=2] [ref=e62]
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - img [ref=e67]
+          - heading "Accessibilité" [level=3] [ref=e69]
+          - generic [ref=e70]:
+            - generic: WCAG 2.1 AA automatically checked before every commit.
+        - generic [ref=e71]:
+          - img [ref=e73]
+          - heading "Designers" [level=3] [ref=e75]
+          - generic [ref=e76]:
+            - generic: Semantic tokens, component contracts, and documented decisions.
+      - heading "Absolute rules" [level=2] [ref=e77]
+      - list [ref=e78]:
+        - listitem [ref=e79]:
+          - img [ref=e81]
+          - text: Functional icon only — never decorative
+        - listitem [ref=e84]:
+          - img [ref=e86]
+          - generic [ref=e89]:
+            - code [ref=e90]: heading-level
+            - text: adjusted to the page hierarchy — never a skipped level
+        - listitem [ref=e91]:
+          - img [ref=e93]
+          - generic [ref=e96]:
+            - code [ref=e97]: variant="marketing"
+            - text: only on
+            - code [ref=e98]: data-context="marketing"
+        - listitem [ref=e99]:
+          - img [ref=e101]
+          - text: Never a primary button inside — not an action zone
+        - listitem [ref=e105]:
+          - img [ref=e107]
+          - text: Never a raster image — SVG only in the icon slot
+      - heading "Component tokens" [level=2] [ref=e111]
+      - table [ref=e113]:
+        - rowgroup [ref=e118]:
+          - row "Token CSS Reference Value" [ref=e119]:
+            - columnheader "Token CSS" [ref=e120]
+            - columnheader "Reference" [ref=e121]
+            - columnheader "Value" [ref=e122]
+        - rowgroup [ref=e123]:
+          - row "--agtc-semantic-color-background-overlay-dark semantic.color.background.overlay-dark rgba(12, 15, 25, 0.78)" [ref=e124]:
+            - cell "--agtc-semantic-color-background-overlay-dark" [ref=e125]:
+              - code [ref=e126]: "--agtc-semantic-color-background-overlay-dark"
+            - cell "semantic.color.background.overlay-dark" [ref=e127]:
+              - code [ref=e128]: semantic.color.background.overlay-dark
+            - cell "rgba(12, 15, 25, 0.78)" [ref=e129]
+          - row "--agtc-semantic-color-border-overlay-dark semantic.color.border.overlay-dark rgba(255, 255, 255, 0.06)" [ref=e130]:
+            - cell "--agtc-semantic-color-border-overlay-dark" [ref=e131]:
+              - code [ref=e132]: "--agtc-semantic-color-border-overlay-dark"
+            - cell "semantic.color.border.overlay-dark" [ref=e133]:
+              - code [ref=e134]: semantic.color.border.overlay-dark
+            - cell "rgba(255, 255, 255, 0.06)" [ref=e135]
+          - 'row "--agtc-semantic-color-action-primary semantic.color.action.primary #007a68" [ref=e136]':
+            - cell "--agtc-semantic-color-action-primary" [ref=e137]:
+              - code [ref=e138]: "--agtc-semantic-color-action-primary"
+            - cell "semantic.color.action.primary" [ref=e139]:
+              - code [ref=e140]: semantic.color.action.primary
+            - cell "#007a68" [ref=e141]
+          - 'row "--agtc-semantic-color-brand-accent semantic.color.brand.accent #ed6b86" [ref=e142]':
+            - cell "--agtc-semantic-color-brand-accent" [ref=e143]:
+              - code [ref=e144]: "--agtc-semantic-color-brand-accent"
+            - cell "semantic.color.brand.accent" [ref=e145]:
+              - code [ref=e146]: semantic.color.brand.accent
+            - cell "#ed6b86" [ref=e147]
+          - row "--agtc-semantic-space-component-padding-lg semantic.space.component.padding-lg 16px" [ref=e148]:
+            - cell "--agtc-semantic-space-component-padding-lg" [ref=e149]:
+              - code [ref=e150]: "--agtc-semantic-space-component-padding-lg"
+            - cell "semantic.space.component.padding-lg" [ref=e151]:
+              - code [ref=e152]: semantic.space.component.padding-lg
+            - cell "16px" [ref=e153]
+          - 'row "--agtc-semantic-color-action-primary semantic.color.action.primary #007a68" [ref=e154]':
+            - cell "--agtc-semantic-color-action-primary" [ref=e155]:
+              - code [ref=e156]: "--agtc-semantic-color-action-primary"
+            - cell "semantic.color.action.primary" [ref=e157]:
+              - code [ref=e158]: semantic.color.action.primary
+            - cell "#007a68" [ref=e159]
+          - row "--agtc-semantic-color-text-on-dark-secondary semantic.color.text.on-dark-secondary rgba(255,255,255,0.75)" [ref=e160]:
+            - cell "--agtc-semantic-color-text-on-dark-secondary" [ref=e161]:
+              - code [ref=e162]: "--agtc-semantic-color-text-on-dark-secondary"
+            - cell "semantic.color.text.on-dark-secondary" [ref=e163]:
+              - code [ref=e164]: semantic.color.text.on-dark-secondary
+            - cell "rgba(255,255,255,0.75)" [ref=e165]
+      - heading "Accessibility" [level=2] [ref=e166]
+      - list [ref=e167]:
+        - listitem [ref=e168]:
+          - generic [ref=e169]:
+            - code [ref=e170]: role="heading"
+            - text: +
+            - code [ref=e171]: aria-level
+            - text: in the shadow DOM — read correctly by screen readers regardless of context
+        - listitem [ref=e172]:
+          - generic [ref=e173]:
+            - code [ref=e174]: "prefers-reduced-motion: reduce"
+            - text: — full-width border from the start, no animation
+        - listitem [ref=e175]:
+          - generic [ref=e176]:
+            - text: The
+            - code [ref=e177]: icon
+            - text: slot must contain an SVG with
+            - code [ref=e178]: aria-hidden="true"
+            - text: — the title is the semantic label
+        - listitem [ref=e179]:
+          - generic [ref=e180]:
+            - text: Visible focus indication —
+            - code [ref=e181]: :host(:focus-within)::after
+      - heading "Implementation" [level=2] [ref=e182]
+      - generic [ref=e183]:
+        - code [ref=e184]: <!-- Contexte SaaS — variante par défaut --> <agtc-feature-card heading="Accessibility" heading-level="3"> <svg slot="icon" ...></svg> WCAG 2.1 AA automatically checked before every commit. </agtc-feature-card> <!-- Contexte marketing --> <agtc-feature-card heading="Designers" variant="marketing" heading-level="3"> <svg slot="icon" ...></svg> Semantic tokens, component contracts, and documented decisions. </agtc-feature-card>
+        - generic [ref=e185]: html
+        - button "Copy code (html)" [ref=e186] [cursor=pointer]: Copy
+      - heading "DOs and DON'Ts" [level=2] [ref=e187]
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - heading "Do" [level=3] [ref=e190]:
+            - img [ref=e191]
+            - text: Do
+          - list [ref=e194]:
+            - listitem [ref=e195]: Icon that represents the block's intent, not decoration
+            - listitem [ref=e196]: 1 to 2 short sentences in the body — no nested list
+            - listitem [ref=e197]:
+              - generic [ref=e198]:
+                - text: One heading level per section, adjusted with
+                - code [ref=e199]: heading-level
+        - generic [ref=e200]:
+          - heading "Don't" [level=3] [ref=e201]:
+            - img [ref=e202]
+            - text: Don't
+          - list [ref=e206]:
+            - listitem [ref=e207]: Primary button inside — not an action zone
+            - listitem [ref=e208]:
+              - generic [ref=e209]:
+                - code [ref=e210]: variant="marketing"
+                - text: outside a
+                - code [ref=e211]: data-context="marketing"
+                - text: page
+            - listitem [ref=e212]:
+              - generic [ref=e213]:
+                - text: Use for navigation — place an
+                - code [ref=e214]: <a>
+                - text: inside if clickable
+      - heading "UX Patterns Reference" [level=2] [ref=e215]
+      - paragraph [ref=e216]: Review approved on 2026-06-25 (ADR-063).
+      - table [ref=e218]:
+        - rowgroup [ref=e219]:
+          - row "Pattern Source Applied Justification" [ref=e220]:
+            - columnheader "Pattern" [ref=e221]
+            - columnheader "Source" [ref=e222]
+            - columnheader "Applied" [ref=e223]
+            - columnheader "Justification" [ref=e224]
+        - rowgroup [ref=e225]:
+          - 'row "Icon + title pairing NN/g — Icons & Indicators ✅ Functional signal: the icon helps identify the block before reading the title" [ref=e226]':
+            - cell "Icon + title pairing" [ref=e227]
+            - cell "NN/g — Icons & Indicators" [ref=e228]:
+              - link "NN/g — Icons & Indicators" [ref=e229] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/design-pattern-guidelines/
+            - cell "✅" [ref=e230]
+            - 'cell "Functional signal: the icon helps identify the block before reading the title" [ref=e231]'
+          - row "Controlled interactivity affordance IxDF — UI Design Patterns ✅ scaleX animation only on hover/focus — no distracting idle animation" [ref=e232]:
+            - cell "Controlled interactivity affordance" [ref=e233]
+            - cell "IxDF — UI Design Patterns" [ref=e234]:
+              - link "IxDF — UI Design Patterns" [ref=e235] [cursor=pointer]:
+                - /url: https://ixdf.org/literature/topics/ui-design-patterns
+            - cell "✅" [ref=e236]
+            - cell "scaleX animation only on hover/focus — no distracting idle animation" [ref=e237]:
+              - code [ref=e238]: scaleX
+              - text: animation only on hover/focus — no distracting idle animation
+          - row "Non-interactive by default Smashing Magazine — Card patterns ✅ :host is neither <a> nor <button> — the action goes inside if needed" [ref=e239]:
+            - cell "Non-interactive by default" [ref=e240]
+            - cell "Smashing Magazine — Card patterns" [ref=e241]:
+              - link "Smashing Magazine — Card patterns" [ref=e242] [cursor=pointer]:
+                - /url: https://www.smashingmagazine.com/category/design-patterns/
+            - cell "✅" [ref=e243]
+            - cell ":host is neither <a> nor <button> — the action goes inside if needed" [ref=e244]:
+              - code [ref=e245]: :host
+              - text: is neither
+              - code [ref=e246]: <a>
+              - text: nor
+              - code [ref=e247]: <button>
+              - text: — the action goes inside if needed
+          - row "Touch targets ≥ 24×24px IxDF — Touch Targets ✅ 36px icon, non-interactive — compliant with WCAG 2.5.8" [ref=e248]:
+            - cell "Touch targets ≥ 24×24px" [ref=e249]
+            - cell "IxDF — Touch Targets" [ref=e250]:
+              - link "IxDF — Touch Targets" [ref=e251] [cursor=pointer]:
+                - /url: https://ixdf.org/literature/topics/ui-design-patterns
+            - cell "✅" [ref=e252]
+            - cell "36px icon, non-interactive — compliant with WCAG 2.5.8" [ref=e253]
+          - row "Flexible heading level NN/g — Visual Hierarchy ✅ heading-level attribute (default 3) — avoids skipped levels in page hierarchy" [ref=e254]:
+            - cell "Flexible heading level" [ref=e255]
+            - cell "NN/g — Visual Hierarchy" [ref=e256]:
+              - link "NN/g — Visual Hierarchy" [ref=e257] [cursor=pointer]:
+                - /url: https://www.nngroup.com/articles/design-pattern-guidelines/
+            - cell "✅" [ref=e258]
+            - cell "heading-level attribute (default 3) — avoids skipped levels in page hierarchy" [ref=e259]:
+              - code [ref=e260]: heading-level
+              - text: attribute (default 3) — avoids skipped levels in page hierarchy
+          - row "Contextual variant Dashboard Design Patterns ✅ default / marketing — adapts emphasis without duplicating the component" [ref=e261]:
+            - cell "Contextual variant" [ref=e262]
+            - cell "Dashboard Design Patterns" [ref=e263]:
+              - link "Dashboard Design Patterns" [ref=e264] [cursor=pointer]:
+                - /url: https://dashboarddesignpatterns.github.io/patterns.html
+            - cell "✅" [ref=e265]
+            - cell "default / marketing — adapts emphasis without duplicating the component" [ref=e266]:
+              - code [ref=e267]: default
+              - text: /
+              - code [ref=e268]: marketing
+              - text: — adapts emphasis without duplicating the component
+          - row "prefers-reduced-motion IxDF — Accessibility ✅ Border always visible (scaleX(1)), transition disabled" [ref=e269]:
+            - cell "prefers-reduced-motion" [ref=e270]:
+              - code [ref=e271]: prefers-reduced-motion
+            - cell "IxDF — Accessibility" [ref=e272]:
+              - link "IxDF — Accessibility" [ref=e273] [cursor=pointer]:
+                - /url: https://ixdf.org/literature/topics/ui-design-patterns
+            - cell "✅" [ref=e274]
+            - cell "Border always visible (scaleX(1)), transition disabled" [ref=e275]:
+              - text: Border always visible (
+              - code [ref=e276]: scaleX(1)
+              - text: ), transition disabled
+          - row "Accessible markup IF — Data Patterns Catalogue ✅ role=\"heading\" + aria-level in the shadow DOM — SR-agnostic of the wrapper tag" [ref=e277]:
+            - cell "Accessible markup" [ref=e278]
+            - cell "IF — Data Patterns Catalogue" [ref=e279]:
+              - link "IF — Data Patterns Catalogue" [ref=e280] [cursor=pointer]:
+                - /url: https://catalogue.projectsbyif.com/
+            - cell "✅" [ref=e281]
+            - cell "role=\"heading\" + aria-level in the shadow DOM — SR-agnostic of the wrapper tag" [ref=e282]:
+              - code [ref=e283]: role="heading"
+              - text: +
+              - code [ref=e284]: aria-level
+              - text: in the shadow DOM — SR-agnostic of the wrapper tag
+      - generic [ref=e285]:
+        - img [ref=e287]
+        - generic [ref=e290]:
+          - strong [ref=e291]: Contribute to this project
+          - paragraph [ref=e292]: This system welcomes contributions — tokens, components, architectural decisions, accessibility fixes, or documentation. Every improvement counts.
+        - link "View on GitHub" [ref=e293] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+          - generic [ref=e294]: View on GitHub
+    - navigation "Table of contents / Table des matières" [ref=e295]:
+      - generic [ref=e296]: On this page
+      - link "Variants" [ref=e297] [cursor=pointer]:
+        - /url: "#variantes"
+      - link "Absolute rules" [ref=e298] [cursor=pointer]:
+        - /url: "#regles-absolues"
+      - link "Component tokens" [ref=e299] [cursor=pointer]:
+        - /url: "#tokens-de-composant"
+      - link "Accessibility" [ref=e300] [cursor=pointer]:
+        - /url: "#accessibilite"
+      - link "Implementation" [ref=e301] [cursor=pointer]:
+        - /url: "#implementation"
+      - link "DOs and DON'Ts" [ref=e302] [cursor=pointer]:
+        - /url: "#dos-et-don-ts"
+      - link "UX Patterns Reference" [ref=e303] [cursor=pointer]:
+        - /url: "#ux-patterns-reference"
+  - contentinfo [ref=e304]:
+    - generic [ref=e305]:
+      - generic [ref=e306]:
+        - link "Agentica — Accueil" [ref=e307] [cursor=pointer]:
+          - /url: ../index.html
+          - img [ref=e308]
+        - link "Guilherme Negreiros" [ref=e309] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/gnegreiros/
+          - img [ref=e310]
+          - text: Guilherme Negreiros
+      - generic [ref=e314]:
+        - generic [ref=e315]: Navigation
+        - link "Home" [ref=e316] [cursor=pointer]:
+          - /url: ../index.html
+        - link "Why" [ref=e317] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Architecture" [ref=e318] [cursor=pointer]:
+          - /url: ../architecture.html
+        - link "Quality" [ref=e319] [cursor=pointer]:
+          - /url: ../qualite.html
+        - link "AI" [ref=e320] [cursor=pointer]:
+          - /url: ../ia.html
+      - generic [ref=e321]:
+        - generic [ref=e322]: Documentation
+        - link "Understand" [ref=e323] [cursor=pointer]:
+          - /url: ../pourquoi.html
+        - link "Get started" [ref=e324] [cursor=pointer]:
+          - /url: ../get-started.html
+        - link "Foundations" [ref=e325] [cursor=pointer]:
+          - /url: ../foundations/index.html
+        - link "Components" [ref=e326] [cursor=pointer]:
+          - /url: ../components/index.html
+        - link "Tokens" [ref=e327] [cursor=pointer]:
+          - /url: ../tokens/index.html
+        - link "Decisions" [ref=e328] [cursor=pointer]:
+          - /url: ../decisions/index.html
+        - link "Continuity" [ref=e329] [cursor=pointer]:
+          - /url: ../continuite.html
+      - generic [ref=e330]:
+        - generic [ref=e331]: Explorer
+        - link "Figma library" [ref=e332] [cursor=pointer]:
+          - /url: ../resources.html
+        - link "Storybook" [ref=e333] [cursor=pointer]:
+          - /url: https://agentica.design/storybook/
+        - link "GitHub" [ref=e334] [cursor=pointer]:
+          - /url: https://github.com/gnegreiros-ux/agentica-design-system
+        - link "Audit" [ref=e335] [cursor=pointer]:
+          - /url: ../audit.html
+        - link "Changelog" [ref=e336] [cursor=pointer]:
+          - /url: ../changelog.html
+        - link "AI Brief" [ref=e337] [cursor=pointer]:
+          - /url: ../ai-brief.html
+    - generic [ref=e338]:
+      - generic [ref=e339]: © 2026 Guilherme Negreiros
+      - generic [ref=e340]: Built with Claude Code.
+  - button "Retour en haut" [ref=e341] [cursor=pointer]:
+    - img [ref=e342]
+    - generic [ref=e344]: Top
+  - status [ref=e345]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | import fs from 'fs';
+  3  | import path from 'path';
+  4  | import { fileURLToPath } from 'url';
+  5  | 
+  6  | // English-only content policy (ADR-070/071/075). scripts/audit-language.js catches
+  7  | // French text left untranslated in source files, but it cannot catch a different bug
+  8  | // class: a page that IS correctly bilingual by design, where one data cell (a table
+  9  | // row, a nav link) is hardcoded as a single string instead of a lang-fr/lang-en pair
+  10 | // — so it never toggles and stays visibly French even with data-lang="en". That bug
+  11 | // is only visible by actually rendering the page (see the `ia.html` nav link and the
+  12 | // get-started.html Framework Integration table, both fixed 2026-07-18 this way — a
+  13 | // text-content scan alone would never have flagged them, since French prose is
+  14 | // expected to exist somewhere on those pages).
+  15 | //
+  16 | // This spec renders every generated page with data-lang="en" and reads the VISIBLE
+  17 | // text only (innerText, not textContent — innerText excludes anything hidden by the
+  18 | // site's `html[data-lang="en"] .lang-fr{display:none}` CSS rule, textContent would not).
+  19 | 
+  20 | const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  21 | const DIST = path.resolve(__dirname, '../../site/dist');
+  22 | 
+  23 | // Same curated word list as scripts/audit-language.js — kept in sync by hand, see
+  24 | // that file's comment for why these specific words (no plausible English collision).
+  25 | const STOPWORD_RE = /\b(?:être|où|équipe|système|chemin|aucun|aucune|jamais|doivent|également|vérifier|toujours|avec|dans|sont|cette|ces)\b/;
+  26 | const ACCENT_RE = /[àâäéèêëïîôöùûüçÀÂÄÉÈÊËÏÎÔÖÙÛÜÇœŒ]/;
+  27 | 
+  28 | function listPages(dir, base = '') {
+  29 |   const pages = [];
+  30 |   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+  31 |     const rel = base ? `${base}/${entry.name}` : entry.name;
+  32 |     if (entry.isDirectory()) {
+  33 |       pages.push(...listPages(path.join(dir, entry.name), rel));
+  34 |     } else if (entry.name.endsWith('.html')) {
+  35 |       pages.push(rel);
+  36 |     }
+  37 |   }
+  38 |   return pages;
+  39 | }
+  40 | 
+  41 | const pages = fs.existsSync(DIST) ? listPages(DIST) : [];
+  42 | 
+  43 | // Content that IS French by design and correctly renders regardless of data-lang:
+  44 | // a verbatim historical quote, a literal field-label/filename being documented, a
+  45 | // bilingual inline code comment, a font glyph specimen. Narrow on purpose (page +
+  46 | // distinguishing substring) so a real regression on the same page still gets caught.
+  47 | // An HTML-comment marker (the source-file `lang-audit-ignore` convention used by
+  48 | // scripts/audit-language.js) doesn't work here — comments never reach innerText.
+  49 | const KNOWN_EXCEPTIONS = {
+  50 |   'agents/index.html': ['Interdit —'], // naming-rule code example: bilingual comment in one line, by design
+  51 |   'changelog.html': ['Domaine'], // quoting the literal GitHub Projects custom field name
+  52 |   'decisions/adr-030.html': ['Densité'], // historical bug quote (the bug this ADR fixed)
+  53 |   'decisions/adr-055.html': ['Copié', 'critères'], // quoting the site's bilingual UI strings
+  54 |   'decisions/adr-071.html': ['Décideurs', 'Mon intention', 'francophones', 'seulement en anglais'], // literal field-label quote + verbatim human quote
+  55 |   'decisions/adr-075.html': ['notre-demarche', 'synthèse', 'Synthèse'], // documenting the pre-rename French filenames (ADR-075)
+  56 |   'foundations/typography.html': ['Æ Ç É'], // Atkinson Hyperlegible glyph specimen — intentional
+  57 |   // The 9 entries below all quote the literal GitHub Projects Status field value
+  58 |   // "Terminé" (ADR-069's Status options are French: Backlog/En cours/Terminé/etc.) —
+  59 |   // each already has a `lang-audit-ignore` HTML comment for scripts/audit-language.js,
+  60 |   // which doesn't help here since comments never reach innerText (see file header).
+  61 |   'decisions/adr-081.html': ['Terminé'],
+  62 |   'decisions/adr-082.html': ['Terminé'],
+  63 |   'decisions/adr-083.html': ['Terminé'],
+  64 |   'decisions/adr-084.html': ['Terminé'],
+  65 |   'decisions/adr-085.html': ['Terminé'],
+  66 |   'decisions/adr-086.html': ['Terminé'],
+  67 |   'decisions/adr-087.html': ['Terminé'],
+  68 |   'decisions/adr-088.html': ['Terminé'],
+  69 |   'decisions/adr-089.html': ['Terminé'],
+  70 | };
+  71 | 
+  72 | test.describe('Language — English rendering has no French leftovers', () => {
+  73 |   test.skip(pages.length === 0, 'site/dist not built — run node site/build.js first');
+  74 | 
+  75 |   for (const pagePath of pages) {
+  76 |     test(`${pagePath} — clean in English mode`, async ({ page }) => {
+  77 |       await page.goto(`/${pagePath}?lang=en`);
+  78 |       await page.waitForLoadState('networkidle');
+  79 | 
+  80 |       const visibleText = await page.evaluate(() => document.body.innerText);
+  81 |       const exceptions = KNOWN_EXCEPTIONS[pagePath] || [];
+  82 |       const hits = [];
+  83 |       visibleText.split('\n').forEach((line, idx) => {
+  84 |         if (exceptions.some(ex => line.includes(ex))) return;
+  85 |         const match = line.match(ACCENT_RE) || line.match(STOPWORD_RE);
+  86 |         if (match) hits.push(`  line ${idx + 1}: "${match[0]}" in "${line.trim().slice(0, 100)}"`);
+  87 |       });
+  88 | 
+> 89 |       expect(hits, `French content visible in ${pagePath} with data-lang=en:\n${hits.join('\n')}`).toEqual([]);
+     |                                                                                                    ^ Error: French content visible in components/feature-card.html with data-lang=en:
+  90 |     });
+  91 |   }
+  92 | });
+  93 | 
+```
