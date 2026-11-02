@@ -6161,18 +6161,6 @@ function buildCheckbox() {
 
 // ─── PAGE: RADIO ─────────────────────────────────────────────────────────────
 function buildRadio() {
-  const RING = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:var(--agtc-semantic-radius-pill);flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
-  function radio(state) {
-    if (state === 'selected')
-      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-background-surface)"><span style="width:50%;height:50%;border-radius:var(--agtc-semantic-radius-pill);background:var(--agtc-semantic-color-action-primary)"></span></span>`;
-    if (state === 'disabled')
-      return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-subtle)"></span>`;
-    return `<span style="${RING};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)"></span>`;
-  }
-  function row(state, label, dim) {
-    return `<span${dim?' aria-disabled="true"':''} style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px${dim?';opacity:.6':''}">${radio(state)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
-  }
-
   const tokenRows = [
     ['radio-default-background',   'semantic.color.background.surface',   SEM['color-background-surface']],
     ['radio-default-border',       'semantic.color.border.default',       SEM['color-border-default']],
@@ -6194,9 +6182,11 @@ function buildRadio() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Groupe « Formule »</span><span class="lang-en">"Plan" group</span></span>
     <div class="demo-row demo-col">
-      ${row('default', 'Gratuit')}
-      ${row('selected', 'Pro')}
-      ${row('disabled', '<span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span>', true)}
+      <agtc-radio-group name="plan" value="pro" label="Formule">
+        <agtc-radio value="free"><span class="lang-fr">Gratuit</span><span class="lang-en">Free</span></agtc-radio>
+        <agtc-radio value="pro">Pro</agtc-radio>
+        <agtc-radio value="team" disabled><span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span></agtc-radio>
+      </agtc-radio-group>
     </div>
   </div>
 </div>
