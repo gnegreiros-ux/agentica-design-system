@@ -25,7 +25,19 @@
 // <agtc-top-nav> on its OWN guideline/preview page — that is a different
 // decision than whether the site's live nav consumes it — so it is NOT grounds
 // to stay on this list once its page exists and renders the component.
-
+//
+// DOCUMENTED_ALTERNATE_FORM is different from PENDING_REMEDIATION: these
+// components' own contract (an ADR) documents a second, equally first-class
+// static-site form in addition to the Web Component — e.g. code-block
+// (ADR-041): `.code-block` class on a plain `<pre><code>`, enhanced by
+// site/build.js's siteJS() with a real <button>, aria-label (language
+// included), and role="status"/aria-live copy feedback — verified against
+// that script, not assumed. axe-core auditing that real DOM already covers
+// the actual implementation; forcing a literal <agtc-code-block> tag onto
+// this page would not make the audit more real, only cosmetically satisfy
+// this test. code-block was originally miscategorized into
+// PENDING_REMEDIATION by the #227/#245 audit, which only grepped for the
+// Web Component tag and didn't check whether an alternate form was in play.
 import { test, expect } from '@playwright/test';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -39,8 +51,12 @@ const DIST_COMPONENTS_DIR = join(ROOT, 'site', 'dist', 'components');
 // preview to render the real <agtc-x>. Never add an entry without a reason above
 // this line and an issue reference.
 const PENDING_REMEDIATION = new Set([
-  'card', 'checkbox', 'code-block', 'icon', 'input', 'radio', 'table', 'tabs', 'toggle', // #245: hand-coded mock preview
+  'card', 'checkbox', 'icon', 'input', 'radio', 'table', 'tabs', 'toggle', // #245: hand-coded mock preview
   'feature-card', 'top-nav', // #245: no guideline page generated in site/dist/components/ at all
+]);
+
+const DOCUMENTED_ALTERNATE_FORM = new Set([
+  'code-block', // ADR-041 — see comment above
 ]);
 
 const components = readdirSync(GUIDELINES_DIR)
@@ -58,8 +74,8 @@ function hasLiveInstance(name) {
 test('every published component not on the pending-remediation list renders its real element on its guideline page', () => {
   expect(components.length, 'no guidelines/components/*.md found — did the layout change?').toBeGreaterThan(0);
 
-  const toCheck = components.filter((name) => !PENDING_REMEDIATION.has(name));
-  expect(toCheck.length, 'PENDING_REMEDIATION covers every published component — nothing left to guard').toBeGreaterThan(0);
+  const toCheck = components.filter((name) => !PENDING_REMEDIATION.has(name) && !DOCUMENTED_ALTERNATE_FORM.has(name));
+  expect(toCheck.length, 'PENDING_REMEDIATION + DOCUMENTED_ALTERNATE_FORM cover every published component — nothing left to guard').toBeGreaterThan(0);
 
   const regressed = toCheck.filter((name) => !hasLiveInstance(name));
 
