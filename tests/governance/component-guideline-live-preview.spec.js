@@ -1,5 +1,5 @@
 // Every published component's guideline page must render the REAL Web Component
-// in its "Aperçu/Preview" section, not a hand-coded visual mock or an escaped
+// in its "Preview" section, not a hand-coded visual mock or an escaped
 // code sample. axe-core (axe-audit.js, ADR-007) scans site/dist/*.html — if the
 // page shows a hand-rolled <span>/<svg> replica instead of the real
 // <agtc-X> instance, the audit checks the replica's accessibility, not the
