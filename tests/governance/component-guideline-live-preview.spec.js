@@ -51,12 +51,17 @@ const DIST_COMPONENTS_DIR = join(ROOT, 'site', 'dist', 'components');
 // preview to render the real <agtc-x>. Never add an entry without a reason above
 // this line and an issue reference.
 const PENDING_REMEDIATION = new Set([
-  'card', 'checkbox', 'icon', 'input', 'radio', 'table', 'tabs', 'toggle', // #245: hand-coded mock preview
+  'card', 'checkbox', 'icon', 'input', 'radio', 'tabs', 'toggle', // #245: hand-coded mock preview
   'feature-card', 'top-nav', // #245: no guideline page generated in site/dist/components/ at all
 ]);
 
 const DOCUMENTED_ALTERNATE_FORM = new Set([
   'code-block', // ADR-041 — see comment above
+  'table', // ADR-040 — same reasoning: `<table class="agtc-table">` on components/table.html
+           // is a real semantic <table>/<thead>/<tbody>/<th scope="col">/<caption>, the
+           // documented static-site form of the "mix" — no JS enhancement needed (unlike
+           // code-block's copy button) since the accessibility contract here is satisfied
+           // entirely by the native HTML already present. Also miscategorized by #227/#245.
 ]);
 
 const components = readdirSync(GUIDELINES_DIR)
