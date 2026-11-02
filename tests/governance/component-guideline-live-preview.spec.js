@@ -90,10 +90,20 @@ test('the live-instance check actually distinguishes a real element from an esca
   expect(hasLiveInstance('badge')).toBe(true);
   // A page that only shows the tag as an escaped <pre><code> sample must not
   // pass — guards against the regex matching the escaped form by accident.
-  const escapedOnlyPage = join(DIST_COMPONENTS_DIR, 'checkbox.html');
-  if (existsSync(escapedOnlyPage)) {
-    const src = readFileSync(escapedOnlyPage, 'utf8');
-    expect(src.includes('&lt;agtc-checkbox')).toBe(true); // the escaped sample is really there
-    expect(/<agtc-checkbox[\s>]/.test(src)).toBe(false); // but no live instance
-  }
+  // Picked dynamically from whatever is still on PENDING_REMEDIATION, rather
+  // than a hardcoded name: a fixed name (originally 'checkbox') breaks this
+  // self-check the moment that one specific component gets fixed, even though
+  // the burn-down list still has plenty of other escaped-only pages to prove
+  // the regex against. Skips (doesn't vacuously pass) only once every single
+  // component has been fixed — at which point this self-check needs a
+  // deliberately-constructed fixture instead of borrowing a real page.
+  const stillPending = [...PENDING_REMEDIATION].filter((name) => components.includes(name) && existsSync(join(DIST_COMPONENTS_DIR, `${name}.html`)));
+  expect(stillPending.length, 'every PENDING_REMEDIATION page is already fixed — replace this self-check with a dedicated fixture instead of relying on the burn-down list').toBeGreaterThan(0);
+
+  const escapedOnlyName = stillPending.find((name) => !hasLiveInstance(name));
+  expect(escapedOnlyName, `expected at least one PENDING_REMEDIATION page without a live instance — found none among: ${stillPending.join(', ')}`).toBeTruthy();
+
+  const src = readFileSync(join(DIST_COMPONENTS_DIR, `${escapedOnlyName}.html`), 'utf8');
+  expect(src.includes(`&lt;agtc-${escapedOnlyName}`), `expected an escaped <agtc-${escapedOnlyName}> code sample on its own guideline page`).toBe(true);
+  expect(new RegExp(`<agtc-${escapedOnlyName}[\\s>]`).test(src)).toBe(false); // but no live instance
 });
