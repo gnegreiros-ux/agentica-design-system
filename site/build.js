@@ -6163,24 +6163,6 @@ function buildFeatureCard() {
 
 // ─── PAGE: CHECKBOX ──────────────────────────────────────────────────────────
 function buildCheckbox() {
-  // Static tokenized rendering of a (square) box. state: 'default' | 'checked' | 'indeterminate' | 'disabled' | 'disabled-checked'
-  const BOX = 'width:var(--agtc-semantic-icon-size-control);height:var(--agtc-semantic-icon-size-control);border-radius:var(--agtc-semantic-radius-control);flex-shrink:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center';
-  const GLYPH = 'width:78%;height:78%;fill:none;stroke:var(--agtc-semantic-color-text-on-action);stroke-width:3;stroke-linecap:round;stroke-linejoin:round';
-  function box(state) {
-    if (state === 'checked')
-      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-action-primary)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M5 12.5l4 4L19 7"/></svg></span>`;
-    if (state === 'indeterminate')
-      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary);background:var(--agtc-semantic-color-action-primary)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M6 12h12"/></svg></span>`;
-    if (state === 'disabled-checked')
-      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-action-primary-disabled);background:var(--agtc-semantic-color-action-primary-disabled)"><svg viewBox="0 0 24 24" style="${GLYPH}"><path d="M5 12.5l4 4L19 7"/></svg></span>`;
-    if (state === 'disabled')
-      return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-subtle)"></span>`;
-    return `<span style="${BOX};border:1.5px solid var(--agtc-semantic-color-border-default);background:var(--agtc-semantic-color-background-surface)"></span>`;
-  }
-  function row(state, label, dim) {
-    return `<span${dim?' aria-disabled="true"':''} style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-control-gap);min-height:24px${dim?';opacity:.6':''}">${box(state)}<span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-${dim?'disabled':'primary'})">${label}</span></span>`;
-  }
-
   const tokenRows = [
     ['checkbox-default-background',   'semantic.color.background.surface',   SEM['color-background-surface']],
     ['checkbox-default-border',       'semantic.color.border.default',       SEM['color-border-default']],
@@ -6205,16 +6187,16 @@ function buildCheckbox() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Default · Checked · Indeterminate</span><span class="lang-en">Default · Checked · Indeterminate</span></span>
     <div class="demo-row demo-col">
-      ${row('default', '<span class="lang-fr">Recevoir la newsletter</span><span class="lang-en">Receive the newsletter</span>')}
-      ${row('checked', '<span class="lang-fr">Notifications activées</span><span class="lang-en">Notifications enabled</span>')}
-      ${row('indeterminate', '<span class="lang-fr">Tout sélectionner (partiel)</span><span class="lang-en">Select all (partial)</span>')}
+      <agtc-checkbox label="Recevoir la newsletter" name="newsletter"></agtc-checkbox>
+      <agtc-checkbox label="Notifications activées" checked></agtc-checkbox>
+      <agtc-checkbox label="Tout sélectionner (partiel)" indeterminate></agtc-checkbox>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
     <div class="demo-row demo-col">
-      ${row('disabled', '<span class="lang-fr">Option indisponible</span><span class="lang-en">Option unavailable</span>', true)}
-      ${row('disabled-checked', '<span class="lang-fr">Option verrouillée</span><span class="lang-en">Locked option</span>', true)}
+      <agtc-checkbox label="Option indisponible" disabled></agtc-checkbox>
+      <agtc-checkbox label="Option verrouillée" checked disabled></agtc-checkbox>
     </div>
   </div>
 </div>
