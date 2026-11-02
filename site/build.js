@@ -5965,12 +5965,6 @@ function buildCard() {
     ['card-padding-lg',          'primitive.space.6',                   ''],
   ];
 
-  const cardDemo = (variant, labelFr, labelEn, extraStyle='') =>
-    `<div style="border-radius:var(--agtc-component-card-default-radius);padding:var(--agtc-component-card-default-padding);background:var(--agtc-component-card-${variant}-background);border:1px solid var(--agtc-component-card-${variant}-border);${extraStyle}">
-      <strong style="display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-primary)">${variant}</strong>
-      <span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">${labelFr}</span><span class="lang-en">${labelEn}</span></span>
-    </div>`;
-
   const body = `
 <h1>Card</h1>
 <p class="page-lead">
@@ -5983,9 +5977,30 @@ function buildCard() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Trois variantes</span><span class="lang-en">Three variants</span></span>
     <div class="demo-row" style="gap:var(--agtc-space-4);align-items:flex-start;flex-wrap:wrap">
-      ${cardDemo('default', 'Bordure fine, usage général.', 'Thin border, general use.')}
-      ${cardDemo('elevated', 'Ombre portée, mise en avant.', 'Drop shadow, highlighted.', 'box-shadow:var(--agtc-component-card-elevated-shadow)')}
-      ${cardDemo('flat', 'Fond subtil, sections secondaires.', 'Subtle background, secondary sections.')}
+      <agtc-card style="flex:1;min-width:200px">
+        <strong style="display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-primary)">default</strong>
+        <span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Bordure fine, usage général.</span><span class="lang-en">Thin border, general use.</span></span>
+      </agtc-card>
+      <agtc-card variant="elevated" style="flex:1;min-width:200px">
+        <strong style="display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-primary)">elevated</strong>
+        <span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Ombre portée, mise en avant.</span><span class="lang-en">Drop shadow, highlighted.</span></span>
+      </agtc-card>
+      <agtc-card variant="flat" style="flex:1;min-width:200px">
+        <strong style="display:block;margin-bottom:8px;color:var(--agtc-semantic-color-text-primary)">flat</strong>
+        <span style="font-size:var(--agtc-semantic-typography-body-size);color:var(--agtc-semantic-color-text-secondary)"><span class="lang-fr">Fond subtil, sections secondaires.</span><span class="lang-en">Subtle background, secondary sections.</span></span>
+      </agtc-card>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Header + footer</span><span class="lang-en">Header + footer</span></span>
+    <div class="demo-row">
+      <agtc-card style="max-width:320px">
+        <span slot="header"><span class="lang-fr">Paramètres du compte</span><span class="lang-en">Account settings</span></span>
+        <p><span class="lang-fr">Gérez vos informations personnelles.</span><span class="lang-en">Manage your personal information.</span></p>
+        <div slot="footer">
+          <agtc-button variant="primary"><span class="lang-fr">Enregistrer</span><span class="lang-en">Save</span></agtc-button>
+        </div>
+      </agtc-card>
     </div>
   </div>
 </div>
