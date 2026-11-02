@@ -6833,10 +6833,6 @@ function buildTabs() {
     ['tabs-default-padding-y',       'semantic.space.control.padding-y', SEM['space-control-padding-y']],
   ];
 
-  // Static demo: plain HTML tablist (no Web Component)
-  const demoTab = (label, active) =>
-    `<button role="tab" class="demo-tab${active ? ' demo-tab--active' : ''}" aria-selected="${active ? 'true' : 'false'}" type="button">${label}</button>`;
-
   const body = `
 <h1>Tabs</h1>
 <p class="page-lead">
@@ -6846,19 +6842,22 @@ function buildTabs() {
 
 <h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
 <div class="demo-box">
-  <style>
-    .demo-tablist { display:flex; border-bottom:1px solid var(--agtc-component-tabs-default-border); margin-bottom:16px; }
-    .demo-tab { display:inline-flex; align-items:center; padding:var(--agtc-component-tabs-default-padding-y) var(--agtc-component-tabs-default-padding-x); background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; color:var(--agtc-component-tabs-default-tab-text); font-family:inherit; font-size:var(--agtc-semantic-typography-label-size); font-weight:var(--agtc-semantic-typography-label-weight); cursor:pointer; }
-    .demo-tab--active { color:var(--agtc-component-tabs-default-tab-text-active); font-weight:var(--agtc-semantic-fontWeight-bold); border-bottom-color:var(--agtc-component-tabs-default-indicator); }
-    .demo-tab:focus-visible { outline:2px solid var(--agtc-component-tabs-default-border-focus); outline-offset:2px; border-radius:var(--agtc-semantic-radius-control-tight); }
-  </style>
-  <div role="tablist" aria-label="Documentation" class="demo-tablist">
-    ${demoTab('<span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span>', true)}
-    ${demoTab('Tokens', false)}
-    ${demoTab('<span class="lang-fr">Accessibilité</span><span class="lang-en">Accessibility</span>', false)}
-  </div>
-  <p style="margin:0;color:var(--agtc-semantic-color-text-secondary);font-size:var(--agtc-semantic-typography-label-size)"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></p>
+  <agtc-tabs label="Documentation" selected="overview" id="demo-tabs">
+    <div slot="overview"><span class="lang-fr">Contenu du panneau « Aperçu ».</span><span class="lang-en">Panel content for "Overview".</span></div>
+    <div slot="tokens"><span class="lang-fr">Contenu du panneau « Tokens ».</span><span class="lang-en">Panel content for "Tokens".</span></div>
+    <div slot="accessibility"><span class="lang-fr">Contenu du panneau « Accessibilité ».</span><span class="lang-en">Panel content for "Accessibility".</span></div>
+  </agtc-tabs>
 </div>
+<script defer>
+(function () {
+  const tabs = document.getElementById('demo-tabs');
+  if (!tabs) return;
+  const lang = document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'fr';
+  tabs.tabs = lang === 'en'
+    ? [{ value: 'overview', label: 'Overview' }, { value: 'tokens', label: 'Tokens' }, { value: 'accessibility', label: 'Accessibility' }]
+    : [{ value: 'overview', label: 'Aperçu' }, { value: 'tokens', label: 'Tokens' }, { value: 'accessibility', label: 'Accessibilité' }];
+})();
+</script>
 
 <h2><span class="lang-fr">Quand l'utiliser</span><span class="lang-en">When to use</span></h2>
 <table class="token-table"><colgroup><col style="width:34%"><col style="width:66%"></colgroup>
