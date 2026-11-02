@@ -5438,7 +5438,31 @@ function buildIcon() {
   <span class="lang-en">Universal icon component based on Lucide Icons (ISC license). 1,500+ icons, strict 24×24 viewBox, built-in WCAG 1.1.1 accessibility. Stroke width varies per size (ADR-091) to optically compensate for scaling.</span>
 </p>
 
-<h2 class="first">Tokens</h2>
+<h2 class="first"><span class="lang-fr">Aperçu</span><span class="lang-en">Preview</span></h2>
+<div class="demo-box">
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Tailles — inline · control · nav</span><span class="lang-en">Sizes — inline · control · nav</span></span>
+    <div class="demo-row" style="gap:var(--agtc-space-5);align-items:center">
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="inline" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">inline</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="control" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">control</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="nav" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">nav</span></span>
+    </div>
+  </div>
+  <div class="demo-group">
+    <span class="demo-group-label"><span class="lang-fr">Sémantique (<code>label</code>) vs décorative</span><span class="lang-en">Semantic (<code>label</code>) vs decorative</span></span>
+    <div class="demo-row" style="gap:var(--agtc-space-5);align-items:center">
+      <agtc-button variant="ghost" aria-label="Close">
+        <agtc-icon name="x" size="control" label="Close"></agtc-icon>
+      </agtc-button>
+      <agtc-button variant="critical">
+        <agtc-icon name="trash-2" size="control" decorative></agtc-icon>
+        <span class="lang-fr">Supprimer</span><span class="lang-en">Delete</span>
+      </agtc-button>
+    </div>
+  </div>
+</div>
+
+<h2>Tokens</h2>
 <table class="token-table"><colgroup><col style="width:45%"><col style="width:35%"><col style="width:20%"></colgroup>
   <thead><tr><th>CSS Custom Property</th><th><span class="lang-fr">Token sémantique</span><span class="lang-en">Semantic token</span></th><th><span class="lang-fr">Valeur</span><span class="lang-en">Value</span></th></tr></thead>
   <tbody>${tokenRows}</tbody>
