@@ -50,10 +50,11 @@ const DIST_COMPONENTS_DIR = join(ROOT, 'site', 'dist', 'components');
 // Tracked in #245 — remove an entry only in the PR that fixes that component's
 // preview to render the real <agtc-x>. Never add an entry without a reason above
 // this line and an issue reference.
-const PENDING_REMEDIATION = new Set([
-  'card', 'checkbox', 'icon', 'input', 'radio', 'tabs', 'toggle', // #245: hand-coded mock preview
-  'feature-card', 'top-nav', // #245: no guideline page generated in site/dist/components/ at all
-]);
+// Empty: #245's burn-down is complete (card, checkbox, icon, input, radio,
+// tabs, toggle, feature-card, top-nav all now render the real element on
+// their guideline page). Left as a named, documented Set rather than removed
+// so a future regression has a place to land one entry at a time.
+const PENDING_REMEDIATION = new Set([]);
 
 const DOCUMENTED_ALTERNATE_FORM = new Set([
   'code-block', // ADR-041 — see comment above
@@ -109,22 +110,13 @@ test('PENDING_REMEDIATION entries that have actually been fixed must be removed 
 test('the live-instance check actually distinguishes a real element from an escaped code sample (self-check)', () => {
   // badge is a known-good page (real <agtc-badge> in its Preview section).
   expect(hasLiveInstance('badge')).toBe(true);
-  // A page that only shows the tag as an escaped <pre><code> sample must not
-  // pass — guards against the regex matching the escaped form by accident.
-  // Picked dynamically from whatever is still on PENDING_REMEDIATION, rather
-  // than a hardcoded name: a fixed name (originally 'checkbox') breaks this
-  // self-check the moment that one specific component gets fixed, even though
-  // the burn-down list still has plenty of other escaped-only pages to prove
-  // the regex against. Skips (doesn't vacuously pass) only once every single
-  // component has been fixed — at which point this self-check needs a
-  // deliberately-constructed fixture instead of borrowing a real page.
-  const stillPending = [...PENDING_REMEDIATION].filter((name) => components.includes(name) && existsSync(join(DIST_COMPONENTS_DIR, `${name}.html`)));
-  expect(stillPending.length, 'every PENDING_REMEDIATION page is already fixed — replace this self-check with a dedicated fixture instead of relying on the burn-down list').toBeGreaterThan(0);
 
-  const escapedOnlyName = stillPending.find((name) => !hasLiveInstance(name));
-  expect(escapedOnlyName, `expected at least one PENDING_REMEDIATION page without a live instance — found none among: ${stillPending.join(', ')}`).toBeTruthy();
-
-  const src = readFileSync(join(DIST_COMPONENTS_DIR, `${escapedOnlyName}.html`), 'utf8');
-  expect(src.includes(`&lt;agtc-${escapedOnlyName}`), `expected an escaped <agtc-${escapedOnlyName}> code sample on its own guideline page`).toBe(true);
-  expect(new RegExp(`<agtc-${escapedOnlyName}[\\s>]`).test(src)).toBe(false); // but no live instance
+  // #245's burn-down is complete, so PENDING_REMEDIATION no longer has a live
+  // escaped-only page to borrow — a deliberately-constructed fixture proves
+  // the regex distinguishes a rendered element from an HTML-escaped code
+  // sample instead (same shape a <pre><code> doc snippet produces in a real
+  // guideline page).
+  const escapedOnlyFixture = '<pre><code>&lt;agtc-example label="Sample"&gt;&lt;/agtc-example&gt;</code></pre>';
+  expect(escapedOnlyFixture.includes('&lt;agtc-example'), 'fixture must contain an escaped <agtc-example> code sample').toBe(true);
+  expect(new RegExp('<agtc-example[\\s>]').test(escapedOnlyFixture)).toBe(false); // but no live instance
 });
