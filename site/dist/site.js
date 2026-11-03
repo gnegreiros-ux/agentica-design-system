@@ -45,9 +45,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Language toggle ─────────────────────────────────────
+  // Live agtc-* instances on guideline pages (#268): unlike the rest of the
+  // page, their label/helper-text/error-message attributes aren't duplicated
+  // in lang-fr/lang-en spans — the component renders its own text in its
+  // shadow DOM, so CSS display:none can't pick a variant. Elements that
+  // need a translated attribute carry data-label-fr/-en (and
+  // data-helper-fr/-en, data-error-fr/-en) alongside a default (English)
+  // attribute value; this syncs them whenever the language changes.
+  function syncLiveLabels(lang) {
+    document.querySelectorAll('[data-label-fr]').forEach(el => {
+      el.setAttribute('label', lang === 'fr' ? el.dataset.labelFr : el.dataset.labelEn);
+    });
+    document.querySelectorAll('[data-helper-fr]').forEach(el => {
+      el.setAttribute('helper-text', lang === 'fr' ? el.dataset.helperFr : el.dataset.helperEn);
+    });
+    document.querySelectorAll('[data-error-fr]').forEach(el => {
+      el.setAttribute('error-message', lang === 'fr' ? el.dataset.errorFr : el.dataset.errorEn);
+    });
+    document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+      el.setAttribute('placeholder', lang === 'fr' ? el.dataset.placeholderFr : el.dataset.placeholderEn);
+    });
+  }
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
+  syncLiveLabels(savedLang);
   // Language toggle — consumes the .agtc-segmented control (ADR-044).
   // .lang-switch button selector: targets the header switcher (not <html data-lang>
   // nor the segmented demos on the component page).
@@ -63,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
       // Update copy button labels when language switches
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      syncLiveLabels(lang);
       buildToc();
     });
   });
@@ -85,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         b.setAttribute('aria-pressed', a ? 'true' : 'false');
       });
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      syncLiveLabels(lang);
       buildToc();
     });
   });
