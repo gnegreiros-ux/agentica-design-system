@@ -19,7 +19,8 @@
 //     present after the build runs, and (c) the build's exit code stays 0.
 // TODO (tracked, not done here): where a real component source consumed
 // by personalization/theme/branding would come from is undecided (see
-// ADR-105, issue #225) — once it exists, rewrite this as a behavioral
+// ADR-105, issue #225 — audit-ignore: issue number, not a color) — once
+// it exists, rewrite this as a behavioral
 // test that asserts the personalization is visible in the actual build
 // output.
 

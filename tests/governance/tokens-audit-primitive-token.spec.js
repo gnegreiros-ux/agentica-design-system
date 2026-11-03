@@ -4,7 +4,7 @@
 //
 // scripts/audit-tokens.js declares its "primitive-direct" detection with
 // `severity: 'error'` (see DRIFT_PATTERNS in that file), and --ci mode exits
-// non-zero on any error, so a fixture consuming `var(--agtc-primitive-...)`
+// non-zero on any error, so a fixture consuming `var(--agtc-primitive-...)` // audit-ignore: prose describing the pattern, not applied CSS
 // makes the run fail. The severity was `warning` — and this test red, as a
 // documented gap — until ADR-098 hardened it. This test guards against that
 // regression: if the severity is ever softened back, or an exemption starts
@@ -32,7 +32,7 @@ test('audit-tokens.js --ci fails on a primitive token consumed directly (Rule 4)
     // semantic tokens, never primitive tokens directly. This direct
     // primitive reference is the one deliberate violation this fixture
     // exists to exercise.
-    writeFileSync(join(tmpDir, 'component.css'), '.example { color: var(--agtc-primitive-color-red-500); }\n');
+    writeFileSync(join(tmpDir, 'component.css'), '.example { color: var(--agtc-primitive-color-red-500); }\n'); // audit-ignore: deliberate fixture violation this test exercises, not applied CSS
 
     function runOnce() {
       let threw = false;
@@ -46,7 +46,7 @@ test('audit-tokens.js --ci fails on a primitive token consumed directly (Rule 4)
       return { threw, output };
     }
 
-    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs)
+    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs) // audit-ignore: issue number, not a color
     // — only kicks in when the capture looks truncated, never unconditionally.
     // The failing run ends in process.exit(1), so a truncated capture is exactly
     // the case that retry exists for.

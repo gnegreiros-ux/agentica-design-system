@@ -131,7 +131,13 @@ function getSourceFiles(dir) {
   const files = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'governance', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
+    // 'governance' deliberately NOT in this list (#229): matching by basename // audit-ignore: issue number, not a color
+    // alone excludes any directory named "governance" anywhere in the tree,
+    // not just the root one — silently swallowing tests/governance/ (real
+    // .spec.js source, in scope) along with the narrative root governance/
+    // this list was written for. The root governance/ is excluded below by
+    // full path instead, which doesn't have that collision.
+    if (entry.isDirectory() && !['node_modules', '.git', 'dist', '.claude', 'storybook-static', 'playwright-report', 'test-results', 'Temp'].includes(entry.name)) {
       files.push(...getSourceFiles(fullPath));
     } else if (entry.isFile() && SOURCE_EXTENSIONS.includes(path.extname(entry.name))) {
       files.push(fullPath);
@@ -490,10 +496,18 @@ function main() {
   // exact basename in getSourceFiles(), while f.includes('dist') matched the
   // absolute path — any file under distribution/, a *dist*.js name, or a clone
   // living under e.g. ~/distrib/ silently escaped the whole audit.
+  //
+  // Root governance/ (rule/instruction, narrative — not applied code, same
+  // reasoning as DOCS_AND_PLUGIN_PATHS) excluded by full path, anchored to
+  // rootDir, rather than by basename (#229): a plain .includes('governance/') // audit-ignore: issue number, not a color
+  // here would match tests/governance/ too, reproducing the exact bug this
+  // fix removes from getSourceFiles() above.
+  const rootGovernanceDir = path.join(rootDir, 'governance') + path.sep;
   const sourceFiles = (CONFIG.sourceDir || fs.existsSync(srcDir))
     ? getSourceFiles(srcDir)
     : getSourceFiles(rootDir).filter(f =>
         !f.includes('node_modules') &&
+        !f.startsWith(rootGovernanceDir) &&
         !EXCLUDED_PATHS.some(p => f.includes(p))
       );
 

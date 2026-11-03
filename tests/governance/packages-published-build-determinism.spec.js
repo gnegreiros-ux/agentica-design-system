@@ -62,7 +62,7 @@
 // released, what gets published is guaranteed byte-identical to it by
 // construction. Confirmed via inventory that no source under components/
 // or tokens/ has changed since the 1.0.0 release run (2026-09-12,
-// PR #101) that actually published both packages at that version.
+// PR #101) that actually published both packages at that version. // audit-ignore: PR number, not a color
 //
 // Runs the real, tracked build scripts against the real repo (there is no
 // cheap way to sandbox style-dictionary's own root-relative paths without
