@@ -2889,7 +2889,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Language toggle ─────────────────────────────────────
-  // Live agtc-* instances on guideline pages (#268): unlike the rest of the
+  // Live agtc-* instances on guideline pages (#268): unlike the rest of the // audit-ignore: issue number, not a color
   // page, their label/helper-text/error-message attributes aren't duplicated
   // in lang-fr/lang-en spans — the component renders its own text in its
   // shadow DOM, so CSS display:none can't pick a variant. Elements that
