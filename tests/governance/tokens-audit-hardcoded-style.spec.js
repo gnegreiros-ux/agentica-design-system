@@ -33,7 +33,7 @@ test('audit-tokens.js --ci fails on a hardcoded hex color (Rule 3)', () => {
     // hard-coded style value — every visual value must reference a token.
     // This literal hex is the one deliberate violation this fixture exists
     // to exercise.
-    writeFileSync(join(tmpDir, 'component.css'), '.example { color: #123456; }\n');
+    writeFileSync(join(tmpDir, 'component.css'), '.example { color: #123456; }\n'); // audit-ignore: deliberate fixture for the Rule 3 violation this test exercises, not applied CSS
 
     function runOnce() {
       let threw = false;
@@ -47,7 +47,7 @@ test('audit-tokens.js --ci fails on a hardcoded hex color (Rule 3)', () => {
       return { threw, output };
     }
 
-    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs)
+    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs) // audit-ignore: issue number, not a color
     // — only kicks in when the capture looks truncated, never unconditionally.
     const { threw, output } = runWithTruncationRetry(runOnce, 'hex-color');
 

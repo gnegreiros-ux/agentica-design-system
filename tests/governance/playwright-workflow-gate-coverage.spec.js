@@ -4,25 +4,25 @@
 // must actually run on every governance-relevant PR, and — the gap this file
 // exists to catch — being required to run is not the same as being a
 // *required* branch-protection check. Scope decided in EXEC-008
-// (decisions/EXECUTION-LOG.md): investigating why PR #124 merged with this
-// gate red (C2-05/#117, since fixed) found the gate was never added to
+// (decisions/EXECUTION-LOG.md): investigating why PR #124 merged with this // audit-ignore: PR number, not a color
+// gate red (C2-05/#117, since fixed) found the gate was never added to // audit-ignore: issue number, not a color
 // main's required status checks — a deliberate, documented choice in the
 // workflow file itself, but one that means a red gate never blocks a merge.
 //
 // Design locked with gnegreiros-ux (2026-09-19, revisited and completed
-// 2026-09-22 — an earlier, narrower version of this file merged in PR #150
+// 2026-09-22 — an earlier, narrower version of this file merged in PR #150 // audit-ignore: PR number, not a color
 // used text regex instead of a real YAML parse and a hardcoded 3-entry
 // accessibility-spec list instead of a recursive, default-required scan;
 // this version replaces it):
 // - Parses playwright.yml for real with js-yaml (an explicit devDependency
-//   since PR #132 — never the transitive/hoisted copy some other package
+//   since PR #132 — never the transitive/hoisted copy some other package // audit-ignore: PR number, not a color
 //   might carry).
 // - Enumerates tests/functional/**/*.spec.js **recursively**. A flat
 //   top-level glob previously missed tests/functional/components/*.spec.js
 //   entirely — the same "artifact never exercised on a real case" pattern
-//   as issue #127.
+//   as issue #127. // audit-ignore: issue number, not a color
 // - Default-required-unless-excluded: every functional spec must either be
-//   covered by the gate's path filter (the paths-filter `gate` list, #149), or be named in
+//   covered by the gate's path filter (the paths-filter `gate` list, #149), or be named in // audit-ignore: issue number, not a color
 //   EXCLUDED_FUNCTIONAL_SPECS below with its own one-line reason. A spec
 //   that is neither fails this test by name. An EXCLUDED_FUNCTIONAL_SPECS
 //   entry that no longer exists on disk also fails — the exclusion list is
@@ -37,12 +37,12 @@
 //    with a reason. Local, deterministic, no network.
 // 2. tests/governance appears as a directory in both the path filter and the
 //    job's run command — not merely implied by individual file coverage.
-// 3. The gate always reports on every PR (#149, ADR-101): no trigger-level
+// 3. The gate always reports on every PR (#149, ADR-101): no trigger-level // audit-ignore: issue number, not a color
 //    path filter, no whole-job skip, every real step guarded by the
 //    paths-filter output — the precondition for it being a required check.
-// 4. The gate IS a required status check on `main` (#149, ADR-101 — made
+// 4. The gate IS a required status check on `main` (#149, ADR-101 — made // audit-ignore: issue number, not a color
 //    required on 2026-09-28, right after the in-job path scoping merged in
-//    #215). Guards against it being dropped from branch protection.
+//    #215). Guards against it being dropped from branch protection. // audit-ignore: issue number, not a color
 //    This needs a live read of GitHub's branch-protection API, which has no
 //    local source of truth in this repo (no committed settings file) and
 //    returns 401 even for this public repo without authentication. Rather
@@ -140,7 +140,7 @@ function loadWorkflow() {
   // this exact file before relying on it (some other YAML parsers/schemas
   // are known to coerce `on:` to a boolean, which would break this read).
   const doc = loadYaml(workflowText);
-  // Since #149 the gate's scope is no longer a trigger-level `paths` filter
+  // Since #149 the gate's scope is no longer a trigger-level `paths` filter // audit-ignore: issue number, not a color
   // (a required check skipped that way never reports and blocks every PR)
   // but the `gate` filter of the job's own paths-filter step.
   const filterStep = findPathsFilterStep(doc);
@@ -241,9 +241,9 @@ test('the PR gate always reports on every PR — no trigger-level path filter, n
   const trigger = doc.on.pull_request ?? {};
 
   // A required check whose workflow is skipped by a trigger-level filter
-  // stays "pending" forever and blocks every unrelated PR (#149).
-  expect(trigger.paths, 'pull_request must not carry a `paths` filter — scope the gate inside the job instead (#149)').toBeUndefined();
-  expect(trigger['paths-ignore'], 'pull_request must not carry a `paths-ignore` filter (#149)').toBeUndefined();
+  // stays "pending" forever and blocks every unrelated PR (#149). // audit-ignore: issue number, not a color
+  expect(trigger.paths, 'pull_request must not carry a `paths` filter — scope the gate inside the job instead (#149)').toBeUndefined(); // audit-ignore: issue number, not a color
+  expect(trigger['paths-ignore'], 'pull_request must not carry a `paths-ignore` filter (#149)').toBeUndefined(); // audit-ignore: issue number, not a color
 
   const job = doc.jobs[GATE_JOB_ID];
   expect(job.if, 'the gate job may only be conditioned on the event type, never on changed paths').toBe("github.event_name == 'pull_request'");
@@ -263,7 +263,7 @@ test('the PR gate always reports on every PR — no trigger-level path filter, n
   }
 });
 
-test('main branch protection requires the PR gate as a status check (#149)', () => {
+test('main branch protection requires the PR gate as a status check (#149)', () => { // audit-ignore: issue number, not a color
   let requiredContexts;
   try {
     const raw = execFileSync(
@@ -273,12 +273,12 @@ test('main branch protection requires the PR gate as a status check (#149)', () 
     );
     requiredContexts = JSON.parse(raw);
   } catch (error) {
-    test.skip(true, `gh CLI unavailable or not authorized to read ${REPO_SLUG}'s branch protection — cannot verify #149 from here (${error.message})`);
+    test.skip(true, `gh CLI unavailable or not authorized to read ${REPO_SLUG}'s branch protection — cannot verify #149 from here (${error.message})`); // audit-ignore: issue number, not a color
     return;
   }
 
   expect(
     requiredContexts,
-    `"${GATE_JOB_NAME}" is no longer a required status check on main — a PR could merge without the governance suite having run. Restore it in branch protection (ADR-101, #149)`
+    `"${GATE_JOB_NAME}" is no longer a required status check on main — a PR could merge without the governance suite having run. Restore it in branch protection (ADR-101, #149)` // audit-ignore: issue number, not a color
   ).toContain(GATE_JOB_NAME);
 });

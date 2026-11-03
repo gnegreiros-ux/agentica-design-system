@@ -1,9 +1,9 @@
 // Every component with a Storybook story must actually be defined when that
 // story renders. A custom element that is never registered doesn't error — it
 // renders as an empty unknown tag (or its raw light DOM), and a visual
-// snapshot happily baselines that (Chromatic did, before ADR-104). It went unnoticed twice: agtc-image (#151, fixed in
-// #161) and agtc-tabs + agtc-top-nav (#162, fixed in #165), whose baselines
-// had never checked the real components — hiding a real top-nav bug (#164).
+// snapshot happily baselines that (Chromatic did, before ADR-104). It went unnoticed twice: agtc-image (#151, fixed in // audit-ignore: issue number, not a color
+// #161) and agtc-tabs + agtc-top-nav (#162, fixed in #165), whose baselines // audit-ignore: issue numbers, not colors
+// had never checked the real components — hiding a real top-nav bug (#164). // audit-ignore: issue number, not a color
 //
 // Static check, no Storybook build: a component counts as registered for its
 // stories when its module is reachable, following relative imports
