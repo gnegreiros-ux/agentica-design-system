@@ -59,10 +59,27 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const run_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const commit = context.sha.substring(0, 7);
             const components = '${{ steps.changes.outputs.components }}';
-            const report_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            // #242: context.runId is THIS reminder workflow's own run (a single
+            // "Create visual review issue" job, no Playwright job, no artifact)
+            // — never the playwright.yml run that actually produces the
+            // playwright-report-chromium artifact. Both workflows trigger on the
+            // same `push` to main, so look up playwright.yml's own run for this
+            // exact commit instead. No `needs:` link between the two workflows
+            // (see the file header), so a run for this sha may not exist yet —
+            // falls back to the repo's Actions tab for that workflow, scoped to
+            // the commit, rather than a broken runs/<reminder-id> link.
+            const { data: playwrightRuns } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'playwright.yml',
+              head_sha: context.sha,
+            });
+            const report_url = playwrightRuns.workflow_runs.length > 0
+              ? `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${playwrightRuns.workflow_runs[0].id}`
+              : `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/playwright.yml?query=${encodeURIComponent(`+sha:${context.sha}`)}`;
 
             const body = [
               `## Visual review required`,
