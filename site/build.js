@@ -2889,9 +2889,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Language toggle ─────────────────────────────────────
+  // Live agtc-* instances on guideline pages (#268): unlike the rest of the // audit-ignore: issue number, not a color
+  // page, their label/helper-text/error-message attributes aren't duplicated
+  // in lang-fr/lang-en spans — the component renders its own text in its
+  // shadow DOM, so CSS display:none can't pick a variant. Elements that
+  // need a translated attribute carry data-label-fr/-en (and
+  // data-helper-fr/-en, data-error-fr/-en) alongside a default (English)
+  // attribute value; this syncs them whenever the language changes.
+  function syncLiveLabels(lang) {
+    document.querySelectorAll('[data-label-fr]').forEach(el => {
+      el.setAttribute('label', lang === 'fr' ? el.dataset.labelFr : el.dataset.labelEn);
+    });
+    document.querySelectorAll('[data-helper-fr]').forEach(el => {
+      el.setAttribute('helper-text', lang === 'fr' ? el.dataset.helperFr : el.dataset.helperEn);
+    });
+    document.querySelectorAll('[data-error-fr]').forEach(el => {
+      el.setAttribute('error-message', lang === 'fr' ? el.dataset.errorFr : el.dataset.errorEn);
+    });
+    document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+      el.setAttribute('placeholder', lang === 'fr' ? el.dataset.placeholderFr : el.dataset.placeholderEn);
+    });
+  }
   const urlLang = new URLSearchParams(window.location.search).get('lang');
   const savedLang = urlLang || sessionStorage.getItem('agtc-lang') || 'en';
   document.documentElement.setAttribute('data-lang', savedLang);
+  syncLiveLabels(savedLang);
   // Language toggle — consumes the .agtc-segmented control (ADR-044).
   // .lang-switch button selector: targets the header switcher (not <html data-lang>
   // nor the segmented demos on the component page).
@@ -2907,6 +2929,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'));
       // Update copy button labels when language switches
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      syncLiveLabels(lang);
       buildToc();
     });
   });
@@ -2929,6 +2952,7 @@ document.addEventListener('DOMContentLoaded', () => {
         b.setAttribute('aria-pressed', a ? 'true' : 'false');
       });
       document.querySelectorAll('.code-copy').forEach(b => { if (!b.textContent.includes('!')) b.textContent = lang === 'en' ? 'Copy' : 'Copier'; });
+      syncLiveLabels(lang);
       buildToc();
     });
   });
@@ -5461,9 +5485,9 @@ function buildIcon() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Tailles — inline · control · nav</span><span class="lang-en">Sizes — inline · control · nav</span></span>
     <div class="demo-row" style="gap:var(--agtc-space-5);align-items:center">
-      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="inline" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">inline</span></span>
-      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="control" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">control</span></span>
-      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="nav" label="Favori"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">nav</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="inline" label="Favorite" data-label-fr="Favori" data-label-en="Favorite"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">inline</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="control" label="Favorite" data-label-fr="Favori" data-label-en="Favorite"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">control</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><agtc-icon name="star" size="nav" label="Favorite" data-label-fr="Favori" data-label-en="Favorite"></agtc-icon> <span style="font-size:var(--agtc-semantic-typography-detail-size);color:var(--agtc-semantic-color-text-secondary)">nav</span></span>
     </div>
   </div>
   <div class="demo-group">
@@ -5616,19 +5640,19 @@ function buildInput() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Défaut</span><span class="lang-en">Default</span></span>
     <div class="demo-row demo-col">
-      <agtc-input label="Nom complet" name="fullname" placeholder="Jean Dupont" helper-text="Tel qu'il apparaît sur votre document officiel."></agtc-input>
+      <agtc-input label="Full name" data-label-fr="Nom complet" data-label-en="Full name" name="fullname" placeholder="John Doe" data-placeholder-fr="Jean Dupont" data-placeholder-en="John Doe" helper-text="As it appears on your official document." data-helper-fr="Tel qu'il apparaît sur votre document officiel." data-helper-en="As it appears on your official document."></agtc-input>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Erreur</span><span class="lang-en">Error</span></span>
     <div class="demo-row demo-col">
-      <agtc-input label="Adresse e-mail" type="email" value="jean@" invalid error-message="Format d'adresse invalide."></agtc-input>
+      <agtc-input label="Email address" data-label-fr="Adresse e-mail" data-label-en="Email address" type="email" value="jean@" invalid error-message="Invalid email format." data-error-fr="Format d'adresse invalide." data-error-en="Invalid email format."></agtc-input>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
     <div class="demo-row demo-col">
-      <agtc-input label="Code d'accès" value="••••••" disabled></agtc-input>
+      <agtc-input label="Access code" data-label-fr="Code d'accès" data-label-en="Access code" value="••••••" disabled></agtc-input>
     </div>
   </div>
 </div>
@@ -6211,16 +6235,16 @@ function buildCheckbox() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Default · Checked · Indeterminate</span><span class="lang-en">Default · Checked · Indeterminate</span></span>
     <div class="demo-row demo-col">
-      <agtc-checkbox label="Recevoir la newsletter" name="newsletter"></agtc-checkbox>
-      <agtc-checkbox label="Notifications activées" checked></agtc-checkbox>
-      <agtc-checkbox label="Tout sélectionner (partiel)" indeterminate></agtc-checkbox>
+      <agtc-checkbox label="Receive the newsletter" data-label-fr="Recevoir la newsletter" data-label-en="Receive the newsletter" name="newsletter"></agtc-checkbox>
+      <agtc-checkbox label="Notifications enabled" data-label-fr="Notifications activées" data-label-en="Notifications enabled" checked></agtc-checkbox>
+      <agtc-checkbox label="Select all (partial)" data-label-fr="Tout sélectionner (partiel)" data-label-en="Select all (partial)" indeterminate></agtc-checkbox>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
     <div class="demo-row demo-col">
-      <agtc-checkbox label="Option indisponible" disabled></agtc-checkbox>
-      <agtc-checkbox label="Option verrouillée" checked disabled></agtc-checkbox>
+      <agtc-checkbox label="Option unavailable" data-label-fr="Option indisponible" data-label-en="Option unavailable" disabled></agtc-checkbox>
+      <agtc-checkbox label="Locked option" data-label-fr="Option verrouillée" data-label-en="Locked option" checked disabled></agtc-checkbox>
     </div>
   </div>
 </div>
@@ -6312,7 +6336,7 @@ function buildRadio() {
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Groupe « Formule »</span><span class="lang-en">"Plan" group</span></span>
     <div class="demo-row demo-col">
-      <agtc-radio-group name="plan" value="pro" label="Formule">
+      <agtc-radio-group name="plan" value="pro" label="Plan" data-label-fr="Formule" data-label-en="Plan">
         <agtc-radio value="free"><span class="lang-fr">Gratuit</span><span class="lang-en">Free</span></agtc-radio>
         <agtc-radio value="pro">Pro</agtc-radio>
         <agtc-radio value="team" disabled><span class="lang-fr">Équipe (bientôt)</span><span class="lang-en">Team (soon)</span></agtc-radio>
@@ -6385,15 +6409,15 @@ function buildToggle() {
   <div class="demo-group">
     <span class="demo-group-label">Off · On</span>
     <div class="demo-row demo-col">
-      <agtc-toggle label="Mode sombre"></agtc-toggle>
-      <agtc-toggle label="Notifications par e-mail" checked></agtc-toggle>
+      <agtc-toggle label="Dark mode" data-label-fr="Mode sombre" data-label-en="Dark mode"></agtc-toggle>
+      <agtc-toggle label="Email notifications" data-label-fr="Notifications par e-mail" data-label-en="Email notifications" checked></agtc-toggle>
     </div>
   </div>
   <div class="demo-group">
     <span class="demo-group-label"><span class="lang-fr">Désactivé</span><span class="lang-en">Disabled</span></span>
     <div class="demo-row demo-col">
-      <agtc-toggle label="Synchronisation" disabled></agtc-toggle>
-      <agtc-toggle label="Sauvegarde auto" checked disabled></agtc-toggle>
+      <agtc-toggle label="Sync" data-label-fr="Synchronisation" data-label-en="Sync" disabled></agtc-toggle>
+      <agtc-toggle label="Auto-save" data-label-fr="Sauvegarde auto" data-label-en="Auto-save" checked disabled></agtc-toggle>
     </div>
   </div>
 </div>
