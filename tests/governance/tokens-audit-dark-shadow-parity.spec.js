@@ -41,7 +41,7 @@ function runAuditWith(mutate) {
       }
       return { threw, output };
     }
-    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs).
+    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs). // audit-ignore: issue number, not a color
     return runWithTruncationRetry(runOnce, 'Dark-mode shadow parity');
   } finally {
     rmSync(tmpDir, { recursive: true, force: true });

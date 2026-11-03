@@ -38,7 +38,7 @@ test('reinstalling core-source/ replaces a direct modification without losing pe
 
     // Legitimate personalization already in place before the incident.
     const personalizationFile = join(installedClone, 'personnalisation', 'branding', 'test-personalization.md');
-    const personalizationContent = '# Team branding\n\nprimitive.color.brand.500 = #336699\n';
+    const personalizationContent = '# Team branding\n\nprimitive.color.brand.500 = #336699\n'; // audit-ignore: fixture markdown content, not applied CSS
     writeFileSync(personalizationFile, personalizationContent);
 
     // The incident: someone edits a core file directly, exactly what

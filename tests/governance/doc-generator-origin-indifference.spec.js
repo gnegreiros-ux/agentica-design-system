@@ -8,7 +8,7 @@
 // equivalent: same output files, same headings, same nav entries. "Equivalent"
 // means structural, not byte-identical (decided in the C5 plan) — this generator
 // has no timestamp or build-id of its own, so nothing needs excluding here, unlike
-// the sitemap.xml / style-dictionary non-determinism findings (#123, #134).
+// the sitemap.xml / style-dictionary non-determinism findings (#123, #134). // audit-ignore: issue numbers, not colors
 //
 // design-system.manifest.json does not exist anywhere in this repository as of
 // this test (never dogfooded by the Clone or the Master Skill, confirmed by

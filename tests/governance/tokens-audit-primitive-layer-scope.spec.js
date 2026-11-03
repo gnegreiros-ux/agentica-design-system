@@ -27,7 +27,7 @@ import { runWithTruncationRetry } from './support/run-with-truncation-retry.mjs'
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 // Identical, on purpose — see the file header comment.
-const IDENTICAL_VIOLATION = '.example { color: #654321; }\n';
+const IDENTICAL_VIOLATION = '.example { color: #654321; }\n'; // audit-ignore: deliberate fixture violation this test exercises, not applied CSS
 
 function buildIsolatedWorkspace() {
   let tmpRoot = mkdtempSync(join(tmpdir(), 'tokens-scope-'));
@@ -69,7 +69,7 @@ test('PRIMITIVE_LAYER_PATHS excludes only clone/personnalisation/branding/', () 
       return { threw: false, output };
     }
 
-    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs)
+    // Bounded retry, workaround for #118 (see support/run-with-truncation-retry.mjs) // audit-ignore: issue number, not a color
     // — only kicks in when the capture looks truncated, never unconditionally.
     // Anchored on corePath rather than "CI: failed" alone, since either one
     // being present already proves the run reached this fixture's section.

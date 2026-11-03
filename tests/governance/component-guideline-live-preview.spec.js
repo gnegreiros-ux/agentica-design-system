@@ -5,7 +5,7 @@
 // <agtc-X> instance, the audit checks the replica's accessibility, not the
 // component's actual shadow DOM / ARIA implementation. A real but invisible gap:
 // the page renders fine, axe-core reports 0 violations, and the component itself
-// stays unaudited (#245, found via the #227 follow-up — 11/17 components were
+// stays unaudited (#245, found via the #227 follow-up — 11/17 components were // audit-ignore: issue numbers, not colors
 // in exactly this state, discovered only by grepping for a literal <agtc-X> tag
 // rather than trusting that a page mentioning the component's name means it
 // renders it).
@@ -18,7 +18,7 @@
 //
 // PENDING_REMEDIATION is a burn-down list, not a permanent exception list: each
 // entry is removed in the same PR that makes that component's guideline page
-// render the real element (one component at a time, per #245's decision — never
+// render the real element (one component at a time, per #245's decision — never // audit-ignore: issue number, not a color
 // batch-remove several at once; that defeats the point of catching one
 // regression at a time). A documented, permanent architectural exception (like
 // top-nav choosing not to dogfood on the site itself) still needs a real
@@ -36,7 +36,7 @@
 // the actual implementation; forcing a literal <agtc-code-block> tag onto
 // this page would not make the audit more real, only cosmetically satisfy
 // this test. code-block was originally miscategorized into
-// PENDING_REMEDIATION by the #227/#245 audit, which only grepped for the
+// PENDING_REMEDIATION by the #227/#245 audit, which only grepped for the // audit-ignore: issue numbers, not colors
 // Web Component tag and didn't check whether an alternate form was in play.
 import { test, expect } from '@playwright/test';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -47,10 +47,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const GUIDELINES_DIR = join(ROOT, 'guidelines', 'components');
 const DIST_COMPONENTS_DIR = join(ROOT, 'site', 'dist', 'components');
 
-// Tracked in #245 — remove an entry only in the PR that fixes that component's
+// Tracked in #245 — remove an entry only in the PR that fixes that component's // audit-ignore: issue number, not a color
 // preview to render the real <agtc-x>. Never add an entry without a reason above
 // this line and an issue reference.
-// Empty: #245's burn-down is complete (card, checkbox, icon, input, radio,
+// Empty: #245's burn-down is complete (card, checkbox, icon, input, radio, // audit-ignore: issue number, not a color
 // tabs, toggle, feature-card, top-nav all now render the real element on
 // their guideline page). Left as a named, documented Set rather than removed
 // so a future regression has a place to land one entry at a time.
@@ -62,7 +62,7 @@ const DOCUMENTED_ALTERNATE_FORM = new Set([
            // is a real semantic <table>/<thead>/<tbody>/<th scope="col">/<caption>, the
            // documented static-site form of the "mix" — no JS enhancement needed (unlike
            // code-block's copy button) since the accessibility contract here is satisfied
-           // entirely by the native HTML already present. Also miscategorized by #227/#245.
+           // entirely by the native HTML already present. Also miscategorized by #227/#245. // audit-ignore: issue numbers, not colors
 ]);
 
 const components = readdirSync(GUIDELINES_DIR)
@@ -111,7 +111,7 @@ test('the live-instance check actually distinguishes a real element from an esca
   // badge is a known-good page (real <agtc-badge> in its Preview section).
   expect(hasLiveInstance('badge')).toBe(true);
 
-  // #245's burn-down is complete, so PENDING_REMEDIATION no longer has a live
+  // #245's burn-down is complete, so PENDING_REMEDIATION no longer has a live // audit-ignore: issue number, not a color
   // escaped-only page to borrow — a deliberately-constructed fixture proves
   // the regex distinguishes a rendered element from an HTML-escaped code
   // sample instead (same shape a <pre><code> doc snippet produces in a real
