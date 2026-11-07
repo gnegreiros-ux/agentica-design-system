@@ -1760,10 +1760,13 @@ function scanUnboundPaints(root) {
 ### 4. Styles (Text Styles)
 - [ ] Every `TEXT` has a non-empty `textStyleId` (§19) — never manual
       fontName/fontSize that "resembles" an existing style
-- [ ] **Every Text Style has all 4 properties (`fontSize`, `fontFamily`, `fontWeight`,
-      `lineHeight`) bound to a Variable** — never a literal value, even if the
-      displayed value looks correct (see the `scanUnboundTextStyleProperties`
-      script below)
+- [ ] **Every Text Style has `fontSize`, `fontFamily`, and `fontWeight` bound to a
+      Variable** — never a literal value, even if the displayed value looks correct
+      (see the `scanUnboundTextStyleProperties` script below)
+- [ ] **`lineHeight` is the one documented exception: it must be a literal, UNBOUND
+      `{unit:"PERCENT", value: ratio*100}` — never bound to a Variable.** See §26.1
+      "Amendment 2026-11-06". Binding it is what causes the bug this checklist exists
+      to prevent, not a gap to close.
 
 ```javascript
 function scanMissingTextStyles(root) {
@@ -1786,31 +1789,56 @@ function scanMissingTextStyles(root) {
 > typography). Only caught because a human compared a correctly bound Text
 > Style against the existing ones.
 
+> **Correction (2026-11-06, issue #256 finding #18).** That 2026-07-09 incident's fix
+> (and this checklist, until today) treated `lineHeight` the same as the other 3
+> properties — "bind it to a Variable, same as fontSize/fontFamily/fontWeight." That
+> instruction is what caused the recurring bug tracked in §26.1: Figma always resolves a
+> Variable-bound `lineHeight` as `{unit:"PIXELS", value: <raw ratio>}`, regardless of
+> what the variable semantically represents, so a correctly-scaled ratio (e.g. `1.6`
+> meaning 160%) renders as 1.6 literal pixels. On a HUG-sized text box this collapses it
+> to ~2px. **The correct, permanent target state for `lineHeight` is a literal unbound
+> percent value, not a binding** — `scanUnboundTextStyleProperties()` below reflects
+> this (only 3 required properties, `lineHeight` reported separately as a unit/value
+> sanity check, not a "missing binding").
+
 ```javascript
-// Scan every local Text Style — detects unbound properties
+// Scan every local Text Style — detects unbound fontSize/fontFamily/fontWeight,
+// and separately sanity-checks lineHeight (which must stay UNBOUND — see above).
 async function scanUnboundTextStyleProperties() {
   const styles = await figma.getLocalTextStylesAsync();
-  const required = ['fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
+  const required = ['fontSize', 'fontFamily', 'fontWeight']; // lineHeight excluded on purpose
   const issues = [];
   for (const s of styles) {
     const bound = Object.keys(s.boundVariables || {});
     const missing = required.filter(k => !bound.includes(k));
     if (missing.length) issues.push({ style: s.name, missing });
+    if (bound.includes('lineHeight')) {
+      issues.push({ style: s.name, wrongfullyBound: 'lineHeight — must be a literal unbound percent, see §26.1' });
+    }
+    if (s.lineHeight.unit === 'PIXELS' && s.lineHeight.value < 10) {
+      issues.push({ style: s.name, brokenLineHeight: s.lineHeight });
+    }
   }
   return issues;
 }
 ```
 
 ```
-✅ Always bind fontSize/fontFamily/fontWeight/lineHeight on EVERY Text Style created
-   — never just a text description pointing at the token name
+✅ Always bind fontSize/fontFamily/fontWeight on EVERY Text Style created — never just
+   a text description pointing at the token name
+✅ Set lineHeight as a literal, UNBOUND {unit:"PERCENT", value: ratio*100} — resolve the
+   ratio from the token yourself, compare against the component's actual code first
+   (§26.1 Amendment 2026-11-06), then set the number directly
 ✅ Run scanUnboundTextStyleProperties() on the WHOLE library (not just newly
    created styles) on every §22 audit — the debt can be old and invisible
 ✅ If a composite token (e.g. detail-bold, label-bold) referenced by chrome text
    has no matching Figma Variable, create it as an alias to the right primitive
-   BEFORE binding the Text Style — never leave a Text Style unbound
-❌ Never treat a "correct-looking" literal value as sufficient — without a
-   binding, a future primitive change (e.g. a typographic rescale) won't propagate
+   BEFORE binding the Text Style's fontSize/fontFamily/fontWeight — never leave those
+   three unbound
+❌ Never treat a "correct-looking" literal fontSize/fontFamily/fontWeight as sufficient
+   — without a binding, a future primitive change won't propagate
+❌ Never bind lineHeight to a Variable "for consistency with the other three" — that is
+   the bug, not the fix (§26.1)
 ```
 
 ### 4bis. Local fonts — check `loadFontAsync` BEFORE building on a font
@@ -2138,6 +2166,51 @@ an ad-hoc text node for a unitless-multiplier token — set a plain, unbound
 `{unit:"PERCENT", value:100}` instead, same as the Text Style fix above.
 `scripts/figma/audit-figma-file.js`'s `findBrokenLineHeights()` now scans both Text Styles and
 any `TEXT` node with a Variable-bound `lineHeight`, not just Text Styles.
+
+**Amendment (2026-11-06, full file-wide sweep, issue #256):** the 2026-07-23 fix only ever
+touched the 15 published Text Styles — it never swept the actual bound `TEXT` node population,
+even though `findBrokenLineHeights()` had been detecting both since 2026-07-27. Between then and
+now, every component page (badge, button, checkbox, feature-card, input, radio, segmented, tabs,
+toggle, top-nav) plus GETTING STARTED/FOUNDATIONS/colors accumulated hundreds of nodes with this
+exact broken binding — invisible on fixed-size text, but a HUG-sized box (any text with
+`layoutSizingVertical: 'HUG'` or `textAutoResize` including `HEIGHT`) collapses to ~2px, so its
+background hugs the glyphs with zero top/bottom padding (reported as a padding bug on Segmented's
+"Option A" pill before the real cause was traced back here). **Two durable fixes, not just a
+re-run of the sweep:**
+
+1. **Prevention — never bind `lineHeight` to a Variable on a TEXT node at all, ever**, not even
+   when the token is a correctly-scaled ratio. Figma has no way to express percent-semantics
+   through a bound FLOAT Variable — this is a structural Plugin API limitation, not a one-off
+   mistake, so "be careful next time" cannot fix it. Always compute the literal value and set it
+   unbound:
+   ```javascript
+   // ❌ NEVER — Figma always resolves this as {unit:"PIXELS", value: <raw ratio>}
+   node.setBoundVariable('lineHeight', lineHeightVariable);
+
+   // ✅ ALWAYS — resolve the ratio yourself, set it as a literal, unbound percent
+   node.lineHeight = { unit: 'PERCENT', value: ratio * 100 };
+   ```
+   This applies to Text Styles too (`figma.createTextStyle()` / editing one): set `lineHeight`
+   directly, never `setBoundVariable('lineHeight', …)`.
+2. **When `findBrokenLineHeights()` returns non-empty, fix every reported node in the same pass
+   across every page — never a sample.** The 2026-07-23 incident and this one share the same root
+   cause: a partial fix (Text Styles only, or "the page I was already on") leaves the rest of the
+   population to silently keep growing until the next person happens to notice. Before picking the
+   percent value for each node, **always compare against the component's actual code**
+   (`components/agtc-*.js`) rather than assuming the currently-bound token is correct — several
+   components hardcode a line-height that diverges from the semantic token Figma had bound:
+   `badge` → `1` (100%), `segmented` → `1.2` (120%), `tabs` → `1.4` (140%),
+   `feature-card` heading → `1.3` (130%, body stays `1.6`/160%, matching the token). Components
+   that reference the semantic CSS var directly (`button`, `checkbox`, `input`, `radio`,
+   `toggle`) have no divergence — keep the token's own ratio, only the unit was ever wrong.
+3. **Gotcha when fixing many nodes in one script:** if the fix touches both a component's master
+   and its instances in the same loop, Figma cascades the master's new value to every instance
+   immediately — an instance id captured earlier in a batch (while still broken) can be re-read
+   later in the same loop *after* it already inherited the fix. Re-applying the `ratio * 100`
+   transform to an already-fixed value produces a second multiplication (observed: 160% → 16000%,
+   a 2240px-tall node). Always re-check a node's live value immediately before mutating it, and
+   re-scan the whole page afterward for both signatures (still-collapsed AND implausibly tall) —
+   see `feedback_figma_lineheight_cascade_double_apply` in agent memory for the full incident.
 
 ### 26.2 A decorative background must be a HUG parent of its content, never an independent sibling
 

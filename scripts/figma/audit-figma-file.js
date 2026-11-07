@@ -161,6 +161,25 @@ function findUnboundComponentProps(page) {
 // when the variable stores a unitless multiplier (1.0). That token had never been
 // exercised before, so no prior audit ever saw it. Any text node with a lineHeight bound
 // to a Variable is equally at risk, not just Text Styles — scan both.
+//
+// 2026-11-06 (issue #256): this check already caught the whole population correctly —
+// the recurrence was a FIX gap, not a detection gap. The 2026-07-23 fix only touched the
+// 15 Text Styles; the bound-node population kept growing silently for months because
+// nothing forced a full-file sweep. If this function returns ANY results:
+//   1. Fix every result across every page in the same pass — never a sample/one page.
+//   2. NEVER re-bind lineHeight to a Variable as the fix — Figma has no way to express
+//      percent-semantics through a bound FLOAT Variable (structural API limitation, not
+//      a one-off mistake). Always set a literal, unbound {unit:'PERCENT', value: ratio*100}.
+//   3. Before picking the value, compare against the component's actual code
+//      (components/agtc-*.js) — several components hardcode a line-height that diverges
+//      from whichever token Figma happens to have bound (see governance/instructions/
+//      figma-components.md §26.1, "Amendment 2026-11-06" for the full fix recipe and the
+//      known divergences: badge, segmented, tabs, feature-card heading).
+//   4. If a fix script can touch both a component master and its instances in the same
+//      loop, re-check each node's LIVE value immediately before mutating — a master fix
+//      cascades to instances mid-loop, and re-applying the transform to an already-fixed
+//      instance produces a second multiplication (160% → 16000%). Re-scan the page after
+//      for both the broken signature and an implausibly-tall one before moving on.
 async function findBrokenLineHeights(page) {
   const styles = await figma.getLocalTextStylesAsync();
   const brokenStyles = styles
