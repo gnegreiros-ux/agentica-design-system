@@ -90,6 +90,30 @@ const KNOWN_RENAMES = {
   // 'INTRO': 'GETTING STARTED', // executed + swept clean 2026-07-24 (Phase 0bis, 22/22 pages) — entry retired
 };
 
+// ── doc/* chrome exclusion (2026-11-11, issue #256 scope correction) ──────
+// doc/eyebrow-tag, doc/page-frame, doc/section-header, doc/token-row,
+// doc/property-row, doc/spec-panel, doc/hug-indicator, doc/dos-donts-card,
+// doc/footer, doc/mode-frame, doc/variant-exhibit, doc/props-row,
+// doc/annotation-badge, doc/measurement-* (and any future doc/* addition) are
+// internal chrome that PRESENTS this library's own documentation pages — not
+// Agentica product components, never shipped to a consumer. A full re-scan
+// counted the same handful of doc/* instances once per page as if each
+// repetition were an independent product violation (~4650 "missing
+// textStyleId", ~655 "contrast violations" before filtering — ~90% of both
+// were doc/* repeats, not real product-component debt). Every scan below
+// must skip any node under a doc/* instance; see governance/instructions/
+// figma-components.md §22 "Scope (2026-11-11)" for the full writeup. doc/*
+// issues get their own pass later, on their own terms — this is a scoping
+// fix, not a decision to ignore them.
+function isUnderDocChrome(node) {
+  let n = node;
+  while (n && n.type !== 'PAGE') {
+    if (typeof n.name === 'string' && n.name.toLowerCase().startsWith('doc/')) return true;
+    n = n.parent;
+  }
+  return false;
+}
+
 // ── 1. Orphaned variable bindings ────────────────────────────────────────
 async function findOrphanedVariables(page, knownGoodCollectionIds) {
   const cache = new Map();
@@ -139,6 +163,7 @@ function findUnboundComponentProps(page) {
     // anything nested inside them, e.g. a "pill" wrapper) count.
     const nodes = root.type === 'COMPONENT_SET' ? root.findAll(() => true) : [root, ...root.findAll(() => true)];
     for (const n of nodes) {
+      if (isUnderDocChrome(n)) continue;
       if (!('layoutMode' in n) || n.layoutMode === 'NONE') continue;
       const bv = n.boundVariables || {};
       const propsToCheck = ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'itemSpacing', 'topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'];
@@ -226,6 +251,7 @@ function findOverflows(root) {
     if (!('children' in n)) return;
     for (const child of n.children) {
       if (child.visible === false) continue;
+      if (isUnderDocChrome(child)) continue;
       if ('absoluteBoundingBox' in child && 'absoluteBoundingBox' in n) {
         const cb = child.absoluteBoundingBox;
         const pb = n.absoluteBoundingBox;

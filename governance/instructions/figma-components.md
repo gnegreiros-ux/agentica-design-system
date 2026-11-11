@@ -1614,6 +1614,7 @@ function resolveBackground(node, canvasBg = {r:1,g:1,b:1}) {
   return bg;
 }
 // Usage on a text node: requiredRatio depends on fontSize/fontWeight (see thresholds above)
+// Skip doc/* chrome first — see "Scope (2026-11-11)" above §22 — isUnderDocChrome(textNode)
 const bg = resolveBackground(textNode);
 const fg = textNode.fills[0].color;
 const ratio = contrastRatio(fg, bg);
@@ -1710,6 +1711,49 @@ ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync if the render still s
 > a change here changes what the weekly routine checks, with no separate copy
 > to update.
 
+### Scope (2026-11-11) — exclude `doc/*` chrome from every scan below
+
+**Every scan function in this section (and in `scripts/figma/audit-figma-file.js`)
+must skip any node descending from an instance of a `doc/*` component** —
+`doc/eyebrow-tag`, `doc/page-frame`, `doc/section-header`, `doc/token-row`,
+`doc/property-row`, `doc/spec-panel`, `doc/hug-indicator`, `doc/dos-donts-card`,
+`doc/footer`, `doc/mode-frame`, `doc/variant-exhibit`, `doc/props-row`,
+`doc/annotation-badge`, `doc/measurement-*`, and any future `doc/*` addition.
+These are internal chrome built to **present** this library's own documentation
+pages (page headers, section titles, spec tables, token rows) — they are not
+Agentica product components and never ship to a consumer.
+
+**Why this matters:** a 2026-11-11 full-file re-scan for issue #256 (§22.1
+contrast, §22.2 overflow, §22.3 unbound fills/strokes, #19 empty `textStyleId`)
+initially reported ~4650 missing-`textStyleId` nodes, ~655 contrast violations,
+and ~256 unbound fills/strokes — the real majority of every one of those counts
+was the same handful of `doc/*` chrome instances (the "v0.3.0" eyebrow badge,
+the page-frame title/subtitle, spec-panel numbering, property-row token names)
+repeated once per page, not independent per-page product bugs. Re-scanning with
+the exclusion above cut the real, actionable scope down by roughly 90% (e.g.
+`↳ badge` went from 324 missing `textStyleId` to 28, all genuine). Counting
+`doc/*` repetitions as "library violations" wildly overstates the real debt and
+wastes a fix pass re-touching the same already-correct chrome 17 times.
+
+**Not a decision to ignore `doc/*` issues** — they get their own pass later,
+scoped and fixed on their own terms (most are fixed once at the master level
+and cascade to every instance, like the §26.1 lineHeight fix). This note only
+keeps them out of the *product component* audit scope and its violation counts.
+
+```javascript
+// Canonical exclusion — prepend to every §22 scan function below and in
+// scripts/figma/audit-figma-file.js. Walks ancestors, not just the node's own
+// name, since the doc/* instance is usually several levels above the flagged leaf.
+function isUnderDocChrome(node) {
+  let n = node;
+  while (n && n.type !== 'PAGE') {
+    if (typeof n.name === 'string' && n.name.toLowerCase().startsWith('doc/')) return true;
+    n = n.parent;
+  }
+  return false;
+}
+```
+
 ### 1. Accessibility
 - [ ] Focus ring visible on every focusable state — technique C40 (§20), never
       a simple outline touching the element (see the 2026-07-07 "bigger button
@@ -1733,9 +1777,11 @@ ring.color = { r:0, g:0.478, b:0.408, a:1 }; // force-sync if the render still s
 
 ```javascript
 // Scan for fills/strokes not bound to a Variable on a ComponentSet
+// Excludes doc/* chrome — see "Scope (2026-11-11)" above §22.
 function scanUnboundPaints(root) {
   const issues = [];
   function walk(node) {
+    if (isUnderDocChrome(node)) return;
     if ('fills' in node && Array.isArray(node.fills)) {
       node.fills.forEach((f, i) => {
         if (f.type === 'SOLID' && f.visible !== false && !f.boundVariables?.color) {
@@ -1769,9 +1815,11 @@ function scanUnboundPaints(root) {
       to prevent, not a gap to close.
 
 ```javascript
+// Excludes doc/* chrome — see "Scope (2026-11-11)" above §22.
 function scanMissingTextStyles(root) {
   const issues = [];
   root.findAllWithCriteria({ types: ['TEXT'] }).forEach(t => {
+    if (isUnderDocChrome(t)) return;
     if (!t.textStyleId) issues.push({ node: t.name, characters: t.characters.slice(0, 30) });
   });
   return issues;
