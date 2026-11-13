@@ -55,9 +55,12 @@ Primitives (`color/teal/500`) expose the implementation, not the intent — see 
    not just before declaring the whole file "done"
 ✅ Fan out one use_figma call per touched page in a single message (skill's multi-page rule),
    paste the script's function bodies + a call to auditPage(page) in each
+✅ ALSO run findComponentTokensSkippingSemantic() (§26.13) once per file — separately from the
+   per-page fan-out, since it scans the global `component` variable collection, not a page — any
+   session that touches component variables, or ends a Figma session at all, should run it
 ✅ If the audit returns anything in orphanedVariables, unboundComponentProps,
-   brokenLineHeights, staleNameReferences, or brokenLinks, treat it as a blocking regression —
-   fix it in the same session, don't defer
+   brokenLineHeights, staleNameReferences, brokenLinks, or findComponentTokensSkippingSemantic(),
+   treat it as a blocking regression — fix it in the same session, don't defer
 ✅ clippedEffects and overflows entries are candidates to verify visually (§26.10 caveat), not
    automatic failures — check with a screenshot before deciding
 ❌ Never end a Figma session on "it looks right in the screenshot" alone — the orphaned-variable
@@ -2578,6 +2581,64 @@ textNode.layoutSizingHorizontal = 'FILL'; // width updates immediately, tracks t
 Root cause not fully isolated (Figma's Plugin API gives no error to introspect), but the
 practical rule holds regardless: for this class of "stale-FIXED-child-after-a-parent-resize"
 overflow, reach for `layoutSizingHorizontal = 'FILL'` before spending another call on `.resize()`.
+
+### 26.13 A `component`-collection variable can alias a `primitive` directly, skipping `semantic` — `component.json` being correct does NOT mean Figma matches it
+
+**2026-11-12 incident.** Issue #256's "TCR requise" ticket (3 WCAG-contrast labels at 4.4:1,
+apparently needing an approved token-value change) turned out to be a false positive — the user
+checked the **actual rendered Badge component** with the Stark Figma plugin and found excellent
+contrast (10.27:1 warning, 11.25:1 info). The real bug: `badge/warning/text`,
+`badge/warning/background`, `badge/info/text`, `badge/info/background` were in Figma bound
+**directly to `primitive/color/*` variables**, skipping the semantic layer — while
+`tokens/component.json` (the code source of truth) correctly chains
+`component → {semantic.color.feedback.warning-text} → primitive`. Comparing to `badge/danger/*`
+in the same file (correctly aliasing `.../color/feedback/danger-subtle`) is what made the
+divergence visible — nothing about `badge/warning`/`badge/info` looked broken on its own.
+
+A full read-only scan of the `component` collection (123 color variables) found **16 violations
+across 4 components** (badge: 4, toggle: 2, banner: 4, code-block: 6) — this was never isolated
+to the 2 pairs the ticket named. **Code being correct is not evidence Figma matches it** — these
+are two independently-maintained graphs (`component.json` vs. Figma's own variable aliases), and
+nothing currently keeps them in sync automatically.
+
+```javascript
+// Read-only sweep — run once per FILE (collection-level, not per-page; do not repeat per page)
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+const byId = {}; for (const c of collections) byId[c.id] = c.name;
+const allVars = await figma.variables.getLocalVariablesAsync('COLOR');
+const varById = {}; for (const v of allVars) varById[v.id] = v;
+const compVars = allVars.filter(v => byId[v.variableCollectionId] === 'component');
+
+const violations = [];
+for (const v of compVars) {
+  for (const val of Object.values(v.valuesByMode)) {
+    if (val?.type === 'VARIABLE_ALIAS') {
+      const target = varById[val.id];
+      if (target && byId[target.variableCollectionId] === 'primitives') {
+        violations.push({ componentVar: v.name, targetVar: target.name });
+      }
+    }
+  }
+}
+```
+
+```
+✅ Run this scan at the COLLECTION level, once per file — not inside the per-page auditPage()
+   loop (variables are global, not page-scoped; repeating it 11 times wastes calls for free)
+✅ Before rebinding a violation, resolve BOTH the current primitive-bound color and the proposed
+   semantic variable's color (match collection modes by NAME — "Light"/"Dark" — never assume
+   shared modeIds across collections, see §26.4-adjacent gotcha) to confirm the fix is a pure
+   structural no-op before mutating; this is what made it safe to batch all 16 in one write
+✅ Cross-check the correct semantic target against tokens/component.json (or the equivalent
+   source file) per violation — don't guess from the variable's name alone
+❌ Never conclude a contrast/token finding is real just because a Figma-side audit (or a token
+   named "warning"/"info") says so — check what the ACTUAL instanced product component resolves
+   to (a contrast-checker plugin like Stark run on the real instance, or just reading the bound
+   variable's resolved value) before escalating to a TCR
+❌ Never assume this check only applies to the component(s) a ticket already named — scan the
+   WHOLE collection every time; likely also worth extending to non-color properties
+   (spacing/radius) bound the same way — not yet audited as of this writeup
+```
 
 ---
 

@@ -52,6 +52,15 @@
  *      2026-07-30 incident used width-matching alone and it masked the real
  *      defect (no wrapper) — findMissingWrapper() is the check that actually
  *      catches that class of bug.
+ *   10. findComponentTokensSkippingSemantic (§26.13) — FILE-LEVEL, run ONCE,
+ *      not per page: any `component`-collection color variable aliasing a
+ *      `primitive` variable directly, skipping the semantic layer (ADR-059).
+ *      2026-11-12 incident: 16 such violations (badge/toggle/banner/code-block)
+ *      found despite `tokens/component.json` being correct — Figma's variable
+ *      graph had silently diverged from code. Before rebinding any result,
+ *      resolve the correct semantic target from `tokens/component.json` and
+ *      confirm the resolved color is unchanged (match collection modes by
+ *      NAME, not modeId) — see §26.13 for the full recipe and rationale.
  *
  * How to run:
  *   - One page per `use_figma` call (page-switch-once rule). Call
@@ -59,11 +68,16 @@
  *   - Fan out across all pages in ONE assistant message (N parallel
  *     use_figma calls) per the figma-use skill's multi-page rule — do not
  *     loop pages inside a single script.
+ *   - Call `findComponentTokensSkippingSemantic()` SEPARATELY, exactly ONCE
+ *     per file (it scans the global `component` variable collection, not a
+ *     page) — do not fold it into the per-page fan-out, and do not repeat it
+ *     once per page.
  *   - A clean page returns { orphanedVariables: [], unboundComponentProps: [],
  *     brokenLineHeights: [], clippedEffects: [], overflows: [],
  *     staleNameReferences: [], brokenLinks: [], missingWrapper: [],
  *     widthMismatches: [] } — every array empty. Anything else is a
- *     regression to fix before calling the page "done".
+ *     regression to fix before calling the page "done". A clean file-level
+ *     scan returns [] from findComponentTokensSkippingSemantic().
  *
  * Example invocation (inside a use_figma script):
  *   const page = await figma.getNodeByIdAsync('35:8');
@@ -396,6 +410,48 @@ function findWidthMismatches(page) {
   return candidates
     .filter((c) => Math.abs(c.width - mainWidth) > 0.5)
     .map((c) => ({ nodeId: c.id, nodeName: c.name, width: c.width, expectedWidth: mainWidth }));
+}
+
+// ── 10. Component tokens skipping the semantic layer — FILE-LEVEL, run ONCE ──
+// (§26.13) Scans the whole `component` variable collection for any COLOR
+// variable whose value aliases a `primitives`-collection variable DIRECTLY,
+// instead of aliasing a `semantic`-collection variable. tokens/component.json
+// being correct in code is NOT evidence Figma's own variable graph matches it
+// — the two are independently maintained. 2026-11-12: found 16 such
+// violations (badge, toggle, banner, code-block) that had never been caught
+// by any prior audit, discovered only because a user ran a contrast checker
+// (Stark) on the actual rendered component and found the Figma-side "problem"
+// didn't match reality.
+//
+// This is a FILE-level check (variables are global, not page-scoped) — call
+// it once per file, never inside the per-page auditPage() loop.
+//
+// Fixing a result: look up the correct semantic target in tokens/component.json
+// for that exact variable path, then resolve BOTH the current (primitive) and
+// proposed (semantic) variable's color in the SAME mode — matching collections'
+// modes by NAME ("Light"/"Dark"/"component"), never assuming shared modeIds —
+// before rebinding, to confirm the fix is visually a no-op.
+async function findComponentTokensSkippingSemantic() {
+  const collections = await figma.variables.getLocalVariableCollectionsAsync();
+  const byId = {};
+  for (const c of collections) byId[c.id] = c.name;
+  const allVars = await figma.variables.getLocalVariablesAsync('COLOR');
+  const varById = {};
+  for (const v of allVars) varById[v.id] = v;
+
+  const violations = [];
+  for (const v of allVars) {
+    if (byId[v.variableCollectionId] !== 'component') continue;
+    for (const val of Object.values(v.valuesByMode)) {
+      if (val && val.type === 'VARIABLE_ALIAS') {
+        const target = varById[val.id];
+        if (target && byId[target.variableCollectionId] === 'primitives') {
+          violations.push({ componentVar: v.name, componentVarId: v.id, targetVar: target.name });
+        }
+      }
+    }
+  }
+  return violations;
 }
 
 // ── Orchestrator ───────────────────────────────────────────────────────────
