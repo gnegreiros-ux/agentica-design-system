@@ -1544,38 +1544,46 @@ programmatic check had been run, only a quick visual read-through.
 ### A. Dimensions — no overflow, no misalignment
 
 **Pass criterion:** for every child node (excluding `_prefixed` decorative nodes
-with `layoutPositioning:"ABSOLUTE"`, and excluding intentional focus rings with
-`strokeAlign:"OUTSIDE"`), the child's bounds must stay inside its direct
-parent's bounds.
+with `layoutPositioning:"ABSOLUTE"`, and excluding intentional focus rings),
+the child's bounds must stay inside its direct parent's bounds.
 
-```javascript
-// Run on every modified page — detects any overflow
-function findOverflows(root) {
-  const issues = [];
-  function walk(node) {
-    if (!('children' in node)) return;
-    for (const child of node.children) {
-      const isDecorative = child.name.startsWith('_') && child.layoutPositioning === 'ABSOLUTE';
-      const isFocusRing = child.strokeAlign === 'OUTSIDE';
-      if (!isDecorative && !isFocusRing && 'width' in node) {
-        const overflowsRight  = child.x + child.width  > node.width  + 0.5;
-        const overflowsBottom = child.y + child.height > node.height + 0.5;
-        const overflowsLeft   = child.x < -0.5;
-        const overflowsTop    = child.y < -0.5;
-        if (overflowsRight || overflowsBottom || overflowsLeft || overflowsTop) {
-          issues.push({ parent: node.name, child: child.name, parentSize: [node.width, node.height], childBounds: [child.x, child.y, child.x+child.width, child.y+child.height] });
-        }
-      }
-      walk(child);
-    }
-  }
-  walk(root);
-  return issues;
-}
-```
+> **Amendment 2026-11-13 (recurring §22 false positive, issues #224/#231/#237/#249/#273).**
+> The exemption originally only recognized `strokeAlign:"OUTSIDE"`. The library's actual
+> `focus-ring` nodes on Input, Tabs, and Top-nav each achieve the same intentional 2px
+> outward ring (matching CSS `outline-offset:2px`) with a **different** `strokeAlign`
+> value — `INSIDE` (Input, Top-nav) or `CENTER` (Tabs) — by pre-expanding the rect's own
+> geometry (e.g. `width: parent.width + 4, x: -2`) instead of relying on `OUTSIDE`'s
+> automatic outward offset. All three were flagged as "overflow" every week for 5+
+> consecutive runs even though nothing was visually wrong — verified by comparing the
+> geometry across all three pages (consistent `x:-2, y:-2`-style offset, not a per-page
+> accident) before changing the exemption, rather than touching the Figma file. The
+> exemption now matches on node name (`focus-ring`) rather than on one specific technique.
 
-Run `findOverflows(pageNode)` (or on a specific `ComponentSet`/instance) and
-treat any non-empty result as a blocker — not just a flag.
+> **Amendment 2026-11-13 #2 (recurring §22 false positive, issues #224/#231/#237/#249/#273,
+> "Button icon-suffix overflows ~16-25 Variant×State combinations").** This function never
+> excluded `visible === false` children. Button's `icon-prefix`/`icon-suffix` slots are
+> hidden (`visible:false`) on every variant that doesn't use them, and their stale `x`
+> (last computed when a sibling icon was visible and participating in the HUG layout) then
+> reads as "overflowing" a frame that actually sized itself correctly around only its
+> *visible* content. Checked all 25 flagged instances directly (`suffixVisible`/`suffixOverflows`
+> per node) before touching anything: **0 of 25 were visible** — confirmed false positive,
+> not a real layout bug, so nothing in the Figma file needed to change. The script-file
+> version of this check (`scripts/figma/audit-figma-file.js`) already had the `visible ===
+> false` skip and never produced this false positive; only this governance-doc copy lacked
+> it — the two had drifted out of sync.
+
+> **Amendment 2026-11-16 (single source of truth).** This function used to be embedded here
+> as its own copy, separate from the one in `scripts/figma/audit-figma-file.js` — the two
+> amendments above exist *because* those copies had silently drifted apart (one had the
+> `visible` guard and the narrower focus-ring exemption, the other didn't). Per ADR-079's own
+> stated intent ("no separate copy to keep in sync"), the code block is removed from here —
+> **`scripts/figma/audit-figma-file.js`'s `findOverflows()` (§5 in its header doc-comment) is
+> now the only copy.** Read that file fresh before every run; never retype or paste a
+> remembered version of it into a `use_figma` call.
+
+Run `findOverflows(pageNode)` (or on a specific `ComponentSet`/instance) from
+`scripts/figma/audit-figma-file.js` and treat any non-empty result as a blocker — not just a
+flag.
 
 **Instance-swap special case (icons, avatars, etc.):** test the resize with at
 least one "at-risk" value (content close to the edges), not only the default
