@@ -200,7 +200,7 @@
   </url>
   <url>
     <loc>https://agentica.design/decisions/index.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -692,7 +692,7 @@
   </url>
   <url>
     <loc>https://agentica.design/decisions/adr-079.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
