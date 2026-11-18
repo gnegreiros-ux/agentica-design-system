@@ -266,6 +266,12 @@ function findOverflows(root) {
     for (const child of n.children) {
       if (child.visible === false) continue;
       if (isUnderDocChrome(child)) continue;
+      // Amendment 2026-11-13 (recurring §22 false positive, issues #224/#231/#237/#249/#273):
+      // the library's focus-ring nodes intentionally extend 2px past their parent
+      // (matching CSS outline-offset:2px) using whichever strokeAlign achieves that on
+      // each component (OUTSIDE, INSIDE, or CENTER with a pre-expanded rect) — exempt by
+      // name, not by one specific technique. See figma-components.md §21.A for the writeup.
+      if (child.name === 'focus-ring') continue;
       if ('absoluteBoundingBox' in child && 'absoluteBoundingBox' in n) {
         const cb = child.absoluteBoundingBox;
         const pb = n.absoluteBoundingBox;

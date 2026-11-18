@@ -81,3 +81,52 @@ long between publications.
   cloud environment, does the Figma MCP connector reliably enumerate the whole
   library) only happens at the first scheduled run (2026-07-27) — this ADR
   will need a follow-up note if that run reveals a configuration gap.
+
+## Amendment 2026-11-16 — dedupe before filing, single source of truth for the checks
+
+**Trigger.** Issues #224, #231, #237, #249, #273 (2026-10-05 through 2026-11-09, 5
+consecutive weekly runs) repeated largely the same findings without any of them being
+actioned. Triage on 2026-11-13 found that most weren't real unfixed bugs at all:
+- `findOverflows()` existed as **two independently-maintained copies** —
+  `scripts/figma/audit-figma-file.js` (used by day-to-day sessions) and a second copy
+  embedded in `figma-components.md` §21.A (apparently what the weekly routine itself was
+  pasting in) — and they had drifted apart: the doc's copy was missing a `visible === false`
+  guard and had a narrower focus-ring exemption, producing two classes of false positive
+  ("Button icon-suffix overflows" and "focus-ring overflows") every single week.
+- One finding (Button `Variant=Ghost, State=Disabled` unbound stroke, #231) had already been
+  fixed in an unrelated earlier session; the GitHub issue was simply never closed, so every
+  subsequent run kept re-reporting it as open.
+- One finding ("all 15 Text Styles missing bound lineHeight") was actually **enforcing a
+  policy the routine itself had reversed one week earlier** (§26.1 "Amendment 2026-11-06":
+  `lineHeight` must stay an unbound literal, binding it is the bug) — the routine's own
+  checklist read was stale relative to its own governing document.
+
+This ADR's original Consequences section already stated the *intent* — "no separate copy to
+keep in sync" — but never enforced it, and said nothing about what the routine should do with
+an issue once filed. Both gaps are closed below. See the full writeup and verification steps in
+the agent memory `feedback_figma_22_audit_stale_false_positives_2026-11-13`.
+
+**Decision.**
+1. **Single source of truth, enforced, not just intended.** Every check function the routine
+   runs must live in exactly one place: `scripts/figma/audit-figma-file.js`. Any copy embedded
+   in a governance doc for readability must be removed or replaced with a pointer to that file
+   — never a second, independently-edited body. The routine (and any human session) must
+   `Read` that file fresh at the start of every run, never retype or paste a remembered version
+   of a check into `use_figma`.
+2. **Dedupe before filing.** Before creating a new `figma-audit`-labeled issue, the routine
+   must list currently open `figma-audit` issues (`gh issue list --label figma-audit --state
+   open`) and, for each finding it is about to report:
+   - if an open issue already reports the same finding, do **not** file a duplicate — leave the
+     existing issue as the record (optionally comment with the re-confirmed date);
+   - if an open issue's finding no longer reproduces, close it with a one-line comment saying
+     so, rather than leaving it open and silently re-reporting unrelated findings in a new issue
+     alongside it.
+3. **No silent policy staleness.** Before running the checklist, the routine must treat
+   `figma-components.md` §22/§21/§26 as live documentation that may have changed since its last
+   run — it must not rely on a cached or memorized understanding of what counts as a violation,
+   particularly where an amendment has reversed an earlier rule (as §26.1 did for `lineHeight`).
+
+**Consequence.** A finding that stops reproducing gets closed instead of silently
+re-accumulating across weekly issues; a finding that does reproduce gets one open issue to
+track, not five; and the two checks that drifted this time cannot drift again because there is
+only one copy of each left to edit.
