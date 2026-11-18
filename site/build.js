@@ -39,7 +39,22 @@ function bundleComponents() {
     console.log('  bundled: site/dist/components/agtc.js');
   }
 }
-const write = (fp, c) => { ensureDir(path.dirname(fp)); fs.writeFileSync(fp, c, 'utf8'); };
+// Canonical URL for an .html file in site/dist/, derived from its own path —
+// no per-call-site parameter needed. 'index.html' at any depth maps to its
+// directory (trailing slash); the dist root's index.html maps to SITE_URL itself.
+function canonicalUrlFor(fp) {
+  const rel = path.relative(DIST, fp).split(path.sep).join('/');
+  if (rel === 'index.html') return SITE_URL;
+  if (rel.endsWith('/index.html')) return `${SITE_URL}/${rel.slice(0, -'index.html'.length)}`;
+  return `${SITE_URL}/${rel}`;
+}
+const write = (fp, c) => {
+  ensureDir(path.dirname(fp));
+  if (fp.endsWith('.html') && c.includes('__CANONICAL_URL__')) {
+    c = c.split('__CANONICAL_URL__').join(canonicalUrlFor(fp));
+  }
+  fs.writeFileSync(fp, c, 'utf8');
+};
 const read  = (fp) => { try { return fs.readFileSync(fp, 'utf8'); } catch { return ''; } };
 const readJson = (fp) => { try { return JSON.parse(fs.readFileSync(fp, 'utf8')); } catch { return {}; } };
 
@@ -3330,13 +3345,29 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
 <meta property="og:image" content="https://agentica.design/social.png">
 <meta property="og:image:width" content="1076">
 <meta property="og:image:height" content="681">
-<meta property="og:url" content="https://agentica.design/">
+<meta property="og:url" content="__CANONICAL_URL__">
+<link rel="canonical" href="__CANONICAL_URL__">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="agentica.design">
-<meta property="twitter:url" content="https://agentica.design/">
+<meta property="twitter:url" content="__CANONICAL_URL__">
 <meta name="twitter:title" content="${docTitle}">
 <meta name="twitter:description" content="Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.">
 <meta name="twitter:image" content="https://agentica.design/social.png">
+<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Agentica',
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon-32x32.png`,
+  sameAs: ['https://github.com/gnegreiros-ux/agentica-design-system'],
+})}</script>
+<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Agentica',
+  url: SITE_URL,
+  description: 'Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.',
+})}</script>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -7949,10 +7980,32 @@ function buildRobotsAndSitemap(adrs) {
   // robots.txt
   write(path.join(DIST, 'robots.txt'), [
     'User-agent: *',
+    'Content-Signal: search=yes, ai-input=yes, ai-train=no',
     'Allow: /',
     '',
     '# Pages internes — non indexées',
     'Disallow: /audit.html',
+    '',
+    '# Bots d’entraînement IA bloqués (citation et usage par agent restent permis)',
+    'User-agent: GPTBot',
+    'Disallow: /',
+    'User-agent: ClaudeBot',
+    'Disallow: /',
+    'User-agent: CCBot',
+    'Disallow: /',
+    'User-agent: meta-externalagent',
+    'Disallow: /',
+    'User-agent: Bytespider',
+    'Disallow: /',
+    '',
+    '# Jetons d’opt-out d’entraînement (pas des robots d’exploration)',
+    'User-agent: Google-Extended',
+    'Disallow: /',
+    'User-agent: Applebot-Extended',
+    'Disallow: /',
+    '',
+    '# Délibérément autorisés : OAI-SearchBot, Claude-SearchBot, PerplexityBot,',
+    '# DuckAssistBot — ce sont eux qui permettent une citation dans les réponses IA.',
     '',
     `Sitemap: ${SITE_URL}/sitemap.xml`,
     '',
