@@ -6,7 +6,7 @@
 > **Logical path:** AGENTS.md
 > **Author:** Guilherme Negreiros
 > **Read before:** DESIGN.md
-> **Relations:** DESIGN.md, governance/rules/project-overview.md, governance/instructions/codebase-context.md, How-to-without-agents.md (fallback if agents are unavailable)
+> **Relations:** DESIGN.md, governance/rules/project-overview.md, governance/instructions/codebase-context.md, governance/rules/agentica-as-ai-interaction-system.md (maps the agent roles below onto the AI Interaction Atlas's 6 dimensions), How-to-without-agents.md (fallback if agents are unavailable)
 
 ---
 
