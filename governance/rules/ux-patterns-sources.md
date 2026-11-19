@@ -29,7 +29,7 @@ systematically rather than improvising.
 
 ---
 
-## The 5 reference sources
+## The 6 reference sources
 
 | # | Source | Link | What it covers | Mostly relevant for |
 |---|--------|------|-------------------|-------------------------|
@@ -38,6 +38,13 @@ systematically rather than improvising.
 | 3 | **Dashboard Design Patterns** | https://dashboarddesignpatterns.github.io/patterns.html | Component patterns (data / meta / visual / interaction) + composition (screenspace / structure / page layout / color) | Dashboards, data viz, tables, cards, layout |
 | 4 | **Interaction Design Foundation** | https://ixdf.org/literature/topics/ui-design-patterns | Navigation & wayfinding, forms & input (lazy registration, forgiving formats, required markers, progressive disclosure), interaction, feedback, dark patterns | Forms, inputs, navigation, feedback |
 | 5 | **Smashing Magazine** | https://www.smashingmagazine.com/category/design-patterns/ | Modals vs pages, notifications, forms & error messages, data tables, nested filters, hidden vs disabled, accessibility | Forms, tables, modals, notifications, states |
+| 6 | **AI Interaction Atlas** (quietloudlab) | https://ai-interaction.com/ | Open-source (Apache 2.0) taxonomy of AI interaction system dimensions: AI Patterns (probabilistic capabilities), Human Actions (agency/review/approve), System Operations (deterministic infra), Data Modalities, Constraints, Touchpoints | Components surfacing an AI/agentic behavior: confidence indicators, review/approve actions, agent status, AI-generated content disclosure |
+
+> Note on source 6: it is a **vocabulary for system-level decisions** (who decides, what is
+> probabilistic vs deterministic, what constraint governs the behavior), not a library of
+> visual UI patterns like sources 1-5. Use it to frame *which decision* a component is
+> making before picking its visual pattern from the other sources — it does not replace
+> IF's AI-transparency patterns, it complements them at a level above the UI.
 
 > Source content is consulted in a **hybrid** way: this registry serves as a versioned
 > baseline, and the `ux-pattern-review` skill performs a **targeted WebFetch** on the
