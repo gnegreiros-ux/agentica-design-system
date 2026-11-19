@@ -329,7 +329,13 @@
           "$value": "rgba(15, 17, 23, 0.88)",
           "$type": "color",
           "$intent": "Strong scrim — cinematic gradient on the text side (0% to 28% zone).",
-          "$description": "Initial value of the rd-bg-fade gradient. White text on this background reaches a ratio ≥ 7:1 (WCAG AAA)."
+          "$description": "Initial value of the rd-bg-fade gradient. White text on this background reaches a ratio ≥ 7:1 (WCAG AAA).",
+          "$deprecated": "Never consumed — rd-bg-fade now composes background.inverse with overlay.subtle/medium instead of this single stop; this token's description no longer matches the gradient's real implementation. Use semantic.color.background.inverse. Decided in issue #206; removal only at a major version (issue #209).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "alternative": ["semantic.color.background.inverse"]
+            }
+          }
         },
         "medium": {
           "$value": "rgba(15, 17, 23, 0.50)",
@@ -637,7 +643,13 @@
         "primary-hover": {
           "$value": "{primitive.color.teal.10}",
           "$type": "color",
-          "$intent": "Hover of the primary color"
+          "$intent": "Hover of the primary color",
+          "$deprecated": "Never consumed as a hover color in its own right — brand color is identity, not interaction (ADR-048/050). Use semantic.color.action.primary-hover. Decided in issue #206; removal only at a major version (issue #209).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "alternative": ["semantic.color.action.primary-hover"]
+            }
+          }
         },
         "primary-text": {
           "$value": "{primitive.color.teal.12}",
@@ -657,7 +669,13 @@
         "accent-hover": {
           "$value": "{primitive.color.accent.10}",
           "$type": "color",
-          "$intent": "Hover of the accent"
+          "$intent": "Hover of the accent",
+          "$deprecated": "Never consumed as a hover color in its own right — brand color is identity, not interaction (ADR-048/050). Use semantic.color.action.primary-hover. Decided in issue #206; removal only at a major version (issue #209).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "alternative": ["semantic.color.action.primary-hover"]
+            }
+          }
         },
         "accent-subtle": {
           "$value": "{primitive.color.accent.3}",
@@ -677,7 +695,13 @@
         "secondary-hover": {
           "$value": "{primitive.color.secondary.10}",
           "$type": "color",
-          "$intent": "Hover of the secondary color"
+          "$intent": "Hover of the secondary color",
+          "$deprecated": "Never consumed as a hover color in its own right — brand color is identity, not interaction (ADR-048/050). Use semantic.color.action.primary-hover. Decided in issue #206; removal only at a major version (issue #209).",
+          "$extensions": {
+            "com.agentica.usage": {
+              "alternative": ["semantic.color.action.primary-hover"]
+            }
+          }
         },
         "secondary-text": {
           "$value": "{primitive.color.secondary.12}",
@@ -740,7 +764,12 @@
         "$value": "0 4px 16px rgba(13,116,206,0.10)",
         "$type": "other",
         "$intent": "Card hover shadow — brand-tinted lift (action.primary, ADR-046)",
-        "$deprecated": "Never consumed; tinted with the pre-ADR-048 blue rgba(13,116,206), not the current teal. Use component.card.elevated.shadow. Decided in issue #206; removal only at a major version (issue #209)."
+        "$deprecated": "Never consumed; tinted with the pre-ADR-048 blue rgba(13,116,206), not the current teal. Use component.card.elevated.shadow. Decided in issue #206; removal only at a major version (issue #209).",
+        "$extensions": {
+          "com.agentica.usage": {
+            "alternative": ["component.card.elevated.shadow"]
+          }
+        }
       },
       "card": {
         "$value": "0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06)",
@@ -840,7 +869,8 @@
         "page-gutter": {
           "$value": "{primitive.space.20}",
           "$type": "dimension",
-          "$intent": "80px — Horizontal gutter of documentation page sections (1440px layout). See ADR-052."
+          "$intent": "80px — Horizontal gutter of documentation page sections (1440px layout). See ADR-052.",
+          "$deprecated": "Never consumed as a design-system API token — this is the site's own page-section gutter value, and its $intent cites the wrong ADR (052 is not a page-gutter decision). No design-system alternative: site layout values belong in site/build.js, not tokens/semantic.json. Decided in issue #206; removal only at a major version (issue #209)."
         }
       },
       "compact": {
