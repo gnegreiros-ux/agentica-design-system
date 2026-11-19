@@ -474,10 +474,15 @@ function main() {
   // correct token usage) — its illustrative hex citations, including inside
   // fenced code-block diagrams where a per-line audit-ignore comment would
   // visually corrupt the diagram, aren't real drift either.
+  // .changeset/*.md is the same kind of narrative prose as decisions/ above, just
+  // shorter-lived (consumed and deleted on release) — a bare issue reference like
+  // "#206" matches the hex-color regex (digits 0-9 are all valid hex), which isn't // audit-ignore: issue number, not a color
+  // drift, just a token/changeset-id string colliding with the color pattern.
   const DOCS_AND_PLUGIN_PATHS = [
     'decisions/',
     'scripts/figma/',
     'docs/',
+    '.changeset/',
   ];
   // clone/personnalisation/branding/ is the Clone's primitive-token
   // authoring layer (see clone/personnalisation/GUIDE.md) — a raw hex/rgb/hsl
