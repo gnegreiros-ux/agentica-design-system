@@ -46,7 +46,7 @@ cd site && node build.js
 > inconsistent.
 >
 > Separately, `audit.html`'s date string can still fail `site-freshness` even after this —
-> `toLocaleDateString`'s fr/en connector (`,` vs `à`/`at`) differs between local Node
+> `toLocaleDateString`'s fr/en connector (`,` vs `à`/`at`) differs between local Node <!-- lang-audit-ignore: quoted literal output characters, not French prose -->
 > builds and CI's `actions/setup-node` Node, with no known way to reproduce CI's exact
 > output locally. If the diff is only that connector, read the exact expected string from
 > the failing run's log (`gh run view <id> --log | grep -A12 "diff --git a/site/dist/
