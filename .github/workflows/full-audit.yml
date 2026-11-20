@@ -85,7 +85,7 @@ jobs:
         # (#244). `if: always()` so a failed run's reports — the ones worth
         # reading — are archived too, not just successful ones.
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: full-audit-reports
           path: |
