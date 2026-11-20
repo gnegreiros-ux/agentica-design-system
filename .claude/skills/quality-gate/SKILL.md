@@ -58,9 +58,15 @@ Run this quality gate **after every modification**, regardless of size:
 3. Run each active pipeline                → generate report items
 4. Present the full report                 → checklist format below
 5. Wait for explicit approval               → "Yes, go ahead" or requested changes
-6. Execute the approved tasks              → in order: tokens → site → docs → commit
-7. Commit in a single coherent commit      → conventional commits, no --no-verify
+6. Execute the approved tasks              → in order: tokens → docs → commit → site → commit
+7. Commit in one or two coherent commits   → conventional commits, no --no-verify
 ```
+
+> Step 6's order isn't a typo: when the change touches an `AUDIT_SOURCES` path (see
+> `pipelines/site.md`), the site rebuild must happen **after** the content commit, in its
+> own follow-up commit — rebuilding first reads a stale `git log` date and fails
+> `site-freshness` on the PR every time. See `pipelines/commit.md`'s commit-scope
+> exception and `pipelines/site.md`'s "Timing" note for the full mechanism and sequence.
 
 ---
 

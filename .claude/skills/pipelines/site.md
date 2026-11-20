@@ -26,6 +26,33 @@
 cd site && node build.js
 ```
 
+> **Timing (2026-11-20, recurring `site-freshness` failures on #278/#290/#296):**
+> `auditSourcesDate()` sets `sitemap.xml`'s `<lastmod>` and `audit.html`'s date from
+> `git log -1` over `site`, `tokens`, `decisions`, `guidelines`, `components`, `Brand`,
+> `package.json`/`package-lock.json` (excluding `site/dist` itself). If the change you're
+> rebuilding for touches any of those paths — which includes `site/build.js` itself, so
+> almost always — a rebuild run **before** that content is committed reads the *previous*
+> commit's date and is stale the moment you commit. This isn't a flake; it reproduces every
+> time, and running the build again pre-commit doesn't fix it either (same stale read).
+>
+> **Required sequence when this applies:**
+> 1. Commit the content change first (without `site/dist/`).
+> 2. Run `node site/build.js` *now that the commit exists*.
+> 3. Commit `site/dist/` separately: `chore(site): rebuild dist after commit`.
+> 4. Push both before opening/updating the PR.
+>
+> This is the one documented exception to `pipelines/commit.md`'s "never a partial
+> commit" rule — both commits land in the same PR before merge, so `main` is never left
+> inconsistent.
+>
+> Separately, `audit.html`'s date string can still fail `site-freshness` even after this —
+> `toLocaleDateString`'s fr/en connector (`,` vs `à`/`at`) differs between local Node
+> builds and CI's `actions/setup-node` Node, with no known way to reproduce CI's exact
+> output locally. If the diff is only that connector, read the exact expected string from
+> the failing run's log (`gh run view <id> --log | grep -A12 "diff --git a/site/dist/
+> audit.html"`) and hand-patch those two lines rather than rebuilding again. See memory
+> `feedback_audit_html_date_icu_nondeterminism`.
+
 ---
 
 ## Post-build checks
