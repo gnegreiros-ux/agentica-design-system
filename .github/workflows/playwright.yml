@@ -103,7 +103,7 @@ jobs:
 
       - name: Upload per-browser HTML report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
@@ -111,7 +111,7 @@ jobs:
 
       - name: Upload blob report (for multi-browser merge)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: blob-report-${{ matrix.browser }}
           path: blob-report/
@@ -123,7 +123,7 @@ jobs:
       # committing, and only take the files you expected to change.
       - name: Upload updated snapshots
         if: ${{ always() && inputs.update_snapshots == true }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: snapshots-updated-${{ matrix.browser }}
           path: tests/visual/snapshots/
@@ -269,7 +269,7 @@ jobs:
 
       - name: Upload report
         if: always() && steps.changes.outputs.gate == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: governance-checks-report
           path: playwright-report/
