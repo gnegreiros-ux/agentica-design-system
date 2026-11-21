@@ -29,6 +29,19 @@ Valid types: `feat` `fix` `token` `docs` `a11y` `style` `refactor` `test` `chore
 - ✅ All files related to the change in the same commit
 - ❌ Never a partial commit that leaves the repo in an inconsistent state (e.g. ADR created but site not rebuilt)
 
+> **Exception (2026-11-20, recurring `site-freshness` failures on #278/#290/#296):**
+> when the change touches an `AUDIT_SOURCES` path (`site/build.js`'s own list — `site`,
+> `tokens`, `decisions`, `guidelines`, `components`, `Brand`, `package.json`/
+> `package-lock.json`), rebuilding `site/dist/` *before* that content commit is **always
+> stale** — `auditSourcesDate()` reads `git log` for those paths, which can't see a commit
+> that doesn't exist yet. Rebuilding before committing was tried and failed identically on
+> three separate PRs. The correct sequence is **two commits, same PR**: commit the content
+> first, *then* run `node site/build.js` and commit `site/dist/` separately
+> (`chore(site): rebuild dist after commit`). Both land together before merge, so this
+> never leaves `main` in an inconsistent state — it only changes which commit inside the
+> PR carries the rebuild. See `pipelines/site.md` for the full sequence and the separate
+> Node/ICU date-formatting gotcha this interacts with.
+
 ### 3. Files to never commit
 
 - ❌ `.env` files or secrets

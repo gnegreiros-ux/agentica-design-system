@@ -1581,6 +1581,19 @@ the child's bounds must stay inside its direct parent's bounds.
 > now the only copy.** Read that file fresh before every run; never retype or paste a
 > remembered version of it into a `use_figma` call.
 
+> **Amendment 2026-11-20 (issue #277, confirmed real — not every §22.2 finding is stale).**
+> After the 2026-11-16 consolidation, re-running the current script against the live file
+> confirmed `Icon` ComponentSet's `Size=Feature` variant genuinely overflowed: the
+> ComponentSet frame was 32px tall, but the Feature variant (a 32×32 icon at `y:8`, matching
+> the same 8px top padding as `Inline`/`Control`/`Nav`) needed 40px to fit without clipping.
+> Fix: grew the ComponentSet to 40px height, and its fixed-layout (`layoutMode:NONE`) parent
+> `wrapper` frame from 112 to 120px to avoid pushing the overflow up one level; the
+> auto-layout ancestors above that (`body`, `Main-component frame`) resized automatically.
+> Re-ran `findOverflows()` after — empty. Takeaway: the 2026-11-13/2026-11-16 amendments
+> fixed a *detection* bug (false positives); this one was a real, unrelated layout bug that
+> happened to surface in the same weekly report — don't assume every post-fix finding is
+> automatically stale, re-verify each one against the live file.
+
 Run `findOverflows(pageNode)` (or on a specific `ComponentSet`/instance) from
 `scripts/figma/audit-figma-file.js` and treat any non-empty result as a blocker — not just a
 flag.
@@ -1750,6 +1763,20 @@ wastes a fix pass re-touching the same already-correct chrome 17 times.
 scoped and fixed on their own terms (most are fixed once at the master level
 and cascade to every instance, like the §26.1 lineHeight fix). This note only
 keeps them out of the *product component* audit scope and its violation counts.
+
+### Scope (2026-11-20) — exclude the `↳ cover` page entirely, permanently
+
+**Never scan or fix anything on the `↳ cover` page.** Unlike the `doc/*` exclusion above
+(a scoping fix pending its own later pass), this is a permanent, page-level exclusion by
+explicit user decision — not something to revisit or re-litigate in a future triage. Skip
+this page in the per-page fan-out entirely; don't file `figma-audit` findings against it,
+and close any that slip through without further investigation.
+
+**Why:** triaging issue #277 found two colors on this page (the `COVER` frame's navy
+background, the `Agentica` text's cyan stroke) with no matching variable in any collection
+— not a gap to fix, since the page is explicitly brand/cover-art content ("stays private...
+excluded from any future Figma Community publish", per ADR-080), not a product surface
+the token system governs.
 
 ```javascript
 // Canonical exclusion — prepend to every §22 scan function below and in

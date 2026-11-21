@@ -63,6 +63,10 @@
  *      NAME, not modeId) — see §26.13 for the full recipe and rationale.
  *
  * How to run:
+ *   - NEVER scan the `↳ cover` page (2026-11-20, issue #277) — it's bespoke
+ *     brand/cover-art content, not a product surface, and is permanently out
+ *     of scope. Skip it when building the per-page fan-out. See
+ *     governance/instructions/figma-components.md §22 "Scope (2026-11-20)".
  *   - One page per `use_figma` call (page-switch-once rule). Call
  *     `auditPage(pageId)` after `figma.setCurrentPageAsync(page)`.
  *   - Fan out across all pages in ONE assistant message (N parallel
