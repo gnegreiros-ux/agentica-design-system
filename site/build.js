@@ -3166,6 +3166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const setBackToTopState = () => {
       const visible = window.scrollY > window.innerHeight;
       backToTop.classList.toggle('is-visible', visible);
+      backToTop.setAttribute('tabindex', visible ? '0' : '-1');
     };
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     window.addEventListener('scroll', setBackToTopState, { passive: true });
@@ -3295,6 +3296,10 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         Guilherme Negreiros
       </a>
+      <a href="mailto:guilherme@gnegreiros.com" style="display:inline-flex;align-items:center;gap:var(--agtc-semantic-space-component-padding-xs);color:var(--site-muted);text-decoration:none;font-size:.9rem;transition:color .12s;margin-top:4px" class="footer-contact">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        Contact
+      </a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Navigation</span>
@@ -3359,6 +3364,7 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   name: 'Agentica',
   url: SITE_URL,
   logo: `${SITE_URL}/favicon-32x32.png`,
+  email: 'guilherme@gnegreiros.com',
   sameAs: ['https://github.com/gnegreiros-ux/agentica-design-system'],
 })}</script>
 <script type="application/ld+json">${JSON.stringify({
@@ -3367,6 +3373,24 @@ function layout({ title, pageTitle, depth = 0, section = '', sidebar = null, bod
   name: 'Agentica',
   url: SITE_URL,
   description: 'Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.',
+})}</script>
+<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': '__CANONICAL_URL__#webpage',
+  url: '__CANONICAL_URL__',
+  mainEntityOfPage: '__CANONICAL_URL__',
+  headline: stripCodeSpans(pageTitle || `${title} — Agentica`),
+  description: 'Agentica — a design system built for humans who decide and AI agents who execute. Tokens, components, governance, and WCAG 2.1.',
+  dateModified: pageLastmod(BASE_SITEMAP_SOURCES),
+  isPartOf: { '@type': 'WebSite', name: 'Agentica', url: SITE_URL },
+  author: {
+    '@type': 'Person',
+    name: 'Guilherme Negreiros',
+    url: 'https://www.linkedin.com/in/gnegreiros/',
+    sameAs: ['https://github.com/gnegreiros-ux'],
+  },
+  publisher: { '@type': 'Organization', name: 'Agentica', url: SITE_URL },
 })}</script>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -3468,7 +3492,7 @@ ${sidebar ? `<div class="sidebar-overlay" aria-hidden="true"></div>` : ''}
   ${tocHtml}
 </div>
 ${footer}
-<button class="back-to-top" aria-label="Retour en haut" data-back-to-top>
+<button class="back-to-top" aria-label="Retour en haut" data-back-to-top tabindex="-1">
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
   <span class="lang-fr">Haut</span><span class="lang-en">Top</span>
 </button>
@@ -8536,6 +8560,11 @@ function buildChangelog() {
           {fr:'Issue #277 (24 signalements §22) triée directement contre le fichier Figma réel plutôt que supposée valide ou périmée en bloc : 4 signalements overflow (<code>icon-suffix</code> sur Button, <code>focus-ring</code> sur Input/Tabs/Top-nav) confirmés périmés — l\'issue datait d\'avant le correctif de consolidation du 2026-11-18 (PR #278). Un signalement réel confirmé et corrigé : le <code>ComponentSet</code> <code>Icon</code> ne faisait que 32px de haut alors que sa variante <code>Size=Feature</code> (icône 32×32) en demandait 40 — agrandi, cascade vérifiée sur les frames parentes, 0 overflow après coup',en:'Issue #277 (24 §22 findings) triaged directly against the live Figma file rather than assumed valid or stale wholesale: 4 overflow findings (<code>icon-suffix</code> on Button, <code>focus-ring</code> on Input/Tabs/Top-nav) confirmed stale — the issue predated the 2026-11-18 consolidation fix (PR #278). One finding confirmed real and fixed: the <code>Icon</code> <code>ComponentSet</code> was only 32px tall while its <code>Size=Feature</code> variant (a 32×32 icon) needed 40 — grown, cascade verified on parent frames, 0 overflow afterward'}, // audit-ignore: issue/PR numbers, not colors
           {fr:'9 des 11 fills/strokes non liés du même tri reliés à des variables sémantiques existantes, valeur résolue identique au pixel près pour 4 d\'entre eux (gris <code>text/secondary</code>, blanc <code>text/on-dark</code>) ; 5 reliés à <code>text/primary</code> malgré un léger écart assumé (<code>#000000</code> → <code>#202020</code>, cohérent avec le reste du fichier). La page <code>↳ cover</code> est désormais exclue en permanence de tout audit/correction Figma (contenu de marque, pas une surface produit) — voir <code>figma-components.md</code> §22',en:'9 of 11 unbound fills/strokes from the same triage bound to existing semantic variables, resolved value pixel-identical for 4 of them (gray <code>text/secondary</code>, white <code>text/on-dark</code>); 5 bound to <code>text/primary</code> despite a small accepted shift (<code>#000000</code> → <code>#202020</code>, consistent with the rest of the file). The <code>↳ cover</code> page is now permanently excluded from every Figma audit/fix pass (brand content, not a product surface) — see <code>figma-components.md</code> §22'}, // audit-ignore: issue number, not a color
           {fr:'Gap de process découvert pendant le tri : les contrôles §22.1 (contraste) et §22.4 (<code>textStyleId</code> manquant) n\'ont jamais fait partie de <code>scripts/figma/audit-figma-file.js</code> consolidé par la PR #278 — toujours exécutés via des scripts ad hoc non versionnés. Suivi séparément (issue #295)',en:'Process gap found during triage: §22.1 (contrast) and §22.4 (missing <code>textStyleId</code>) checks were never part of the <code>scripts/figma/audit-figma-file.js</code> consolidated by PR #278 — still run via unversioned ad hoc scripts. Tracked separately (issue #295)'}, // audit-ignore: issue/PR numbers, not colors
+        ]},
+        { fr:'Lisibilité par agents IA — données structurées et focus clavier', en:'AI agent readiness — structured data and keyboard focus', items:[
+          {fr:'Suite à un scan Agent Analyzer (agentexperiences.com) sur <code>agentica.design</code> (79/100) : chaque page gagne une entité <code>WebPage</code> en JSON-LD (<code>headline</code>, <code>dateModified</code> dérivé du même mécanisme git déterministe que le sitemap, auteur <code>Person</code> avec <code>url</code>/<code>sameAs</code> vers des profils réels — LinkedIn, GitHub) en plus des entités <code>Organization</code>/<code>WebSite</code> déjà présentes, qui ne décrivaient jamais la page elle-même. Corrige les 2 échecs « auteur sans profil lié » et « type de page absent du JSON-LD »',en:'Following an Agent Analyzer scan (agentexperiences.com) of <code>agentica.design</code> (79/100): every page gains a <code>WebPage</code> JSON-LD entity (<code>headline</code>, <code>dateModified</code> derived from the same deterministic git mechanism as the sitemap, a <code>Person</code> author with <code>url</code>/<code>sameAs</code> pointing to real profiles — LinkedIn, GitHub) alongside the existing <code>Organization</code>/<code>WebSite</code> entities, which never described the page itself. Fixes the 2 failing checks "author with no linked profile" and "page type missing from JSON-LD"'},
+          {fr:'Le bouton « retour en haut », masqué visuellement (<code>opacity:0</code>) avant le premier défilement mais jusqu\'ici atteignable au clavier (Tab), reçoit <code>tabindex="-1"</code> par défaut, basculé à <code>0</code> seulement une fois visible — corrige le dernier échec du scan (contrôle de l\'arbre d\'accessibilité)',en:'The "back to top" button, visually hidden (<code>opacity:0</code>) before the first scroll but until now reachable by keyboard (Tab), gets <code>tabindex="-1"</code> by default, switched to <code>0</code> only once visible — fixes the scan\'s last failing check (accessibility-tree audit)'},
+          {fr:'Lien de contact (<code>mailto:</code>) ajouté au footer de chaque page, à côté du lien LinkedIn, et l\'entité <code>Organization</code> du JSON-LD gagne un champ <code>email</code> — corrige l\'avertissement « qui gère le site, comment le joindre » du même scan',en:'A contact (<code>mailto:</code>) link added to every page\'s footer, next to the LinkedIn link, and the JSON-LD <code>Organization</code> entity gains an <code>email</code> field — fixes the same scan\'s "who runs the site, how to reach them" warning'},
         ]},
       ],
     },
