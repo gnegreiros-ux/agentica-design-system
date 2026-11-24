@@ -307,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const setBackToTopState = () => {
       const visible = window.scrollY > window.innerHeight;
       backToTop.classList.toggle('is-visible', visible);
+      backToTop.setAttribute('tabindex', visible ? '0' : '-1');
     };
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     window.addEventListener('scroll', setBackToTopState, { passive: true });
