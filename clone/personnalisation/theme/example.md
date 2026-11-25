@@ -35,7 +35,7 @@ never changes between modes, only what it points to.
 
 ## Example (fictional values — replace with your own)
 
-Mapped against the complete `branding/example.md` primitives. This covers every family
+Mapped against the complete `../branding/example.md` primitives. This covers every family
 the core actually needs (text, feedback, background, border) in both modes — not just
 the cases you've happened to hit so far.
 

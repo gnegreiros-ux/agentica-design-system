@@ -19,7 +19,7 @@ Font choice is not purely aesthetic — weigh legibility (e.g. typefaces designe
 ## Format
 
 A **JSON file of DTCG-style tokens** — the same shape as the canonical repository's own
-`tokens/*.json` (built with Style Dictionary, see ADR-030). Not CSS custom properties, not
+token files (built with Style Dictionary, see ADR-030). Not CSS custom properties, not
 a theme object consumed directly by a component: this file only *declares* primitives.
 Nothing here is wired to any output yet — see "Current limitations" in `../../README.md`.
 
